@@ -6,6 +6,7 @@ import {
   type Concept,
 } from "@/components/lab/accordion-concepts"
 import { CatalogShell } from "@/components/catalog/catalog-shell"
+import { AVATAR_CHECKS } from "@/components/lab/avatar-checks"
 import { ConceptPreview } from "@/components/lab/concept-preview"
 
 /**
@@ -126,6 +127,69 @@ function ControlsSection() {
   )
 }
 
+/**
+ * Прогон категории на нестандартных настройках: то же, что человек получит,
+ * если после Copy for AI задаст компоненту свои пропы. Каждый кадр показан
+ * дважды — на светлой и на тёмной подложке, потому что тему компоненты берут
+ * из окружения, а не носят с собой.
+ */
+function AvatarCheckSection() {
+  return (
+    <section
+      id="avatar-check"
+      className="border-shell-border scroll-mt-20 border-t pt-10"
+    >
+      <header className="flex max-w-3xl flex-col gap-3">
+        <h2 className="text-shell-fg text-2xl font-semibold tracking-tight">
+          Прогон категории «Аватар»
+        </h2>
+        <p className="text-shell-muted text-sm leading-relaxed">
+          Все {AVATAR_CHECKS.length} компонента категории с настройками,
+          заведомо отличными от дефолтных: другой размер, другое состояние,
+          свои подписи и подставленные фотографии. Слева светлая подложка,
+          справа тёмная — под кадром перечислено, что именно подкручено.
+        </p>
+      </header>
+
+      <ol className="mt-8 flex flex-col gap-4">
+        {AVATAR_CHECKS.map((check) => (
+          <li
+            key={check.name}
+            className="border-shell-border bg-shell-panel flex flex-col gap-3 rounded-xl border p-4"
+          >
+            <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+              <span className="text-shell-muted font-mono text-xs">
+                {check.name}
+              </span>
+              <span className="text-shell-fg text-sm font-medium">
+                {check.title}
+              </span>
+              <span className="text-shell-muted text-xs">
+                {check.notes.join(" · ")}
+              </span>
+            </div>
+
+            <div className="grid gap-3 md:grid-cols-2">
+              <div
+                data-preview-theme="light"
+                className="bg-preview-surface flex min-h-32 items-center justify-center overflow-hidden rounded-lg p-6"
+              >
+                {check.node}
+              </div>
+              <div
+                data-preview-theme="dark"
+                className="bg-preview-surface flex min-h-32 items-center justify-center overflow-hidden rounded-lg p-6"
+              >
+                {check.node}
+              </div>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+  )
+}
+
 export default function LabPage() {
   return (
     <CatalogShell locale="ru">
@@ -173,6 +237,12 @@ export default function LabPage() {
             >
               Аргументы
             </a>
+            <a
+              href="#avatar-check"
+              className="hover:text-shell-fg focus-visible:ring-shell-ring rounded-sm transition-colors focus-visible:ring-2 focus-visible:outline-none"
+            >
+              Прогон «Аватар»
+            </a>
           </nav>
         </header>
 
@@ -181,6 +251,7 @@ export default function LabPage() {
             <ConceptSection key={concept.id} concept={concept} />
           ))}
           <ControlsSection />
+          <AvatarCheckSection />
         </div>
       </main>
     </CatalogShell>
