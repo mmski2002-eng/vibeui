@@ -1,10 +1,8 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Avatar021Props = Omit<
-  ComponentPropsWithoutRef<"button">,
-  "children"
-> & {
+export type Avatar021Props = Omit<ComponentProps<"button">, "children"> & {
   name?: string
+  src?: string
   state?: "unseen" | "seen" | "none"
   /** Подписи: компонент несёт русские, проект подставляет свои. */
   stateText?: Record<string, string>
@@ -18,7 +16,7 @@ export type Avatar021Props = Omit<
 // но остаётся кольцом, иначе непонятно, есть ли у человека история вообще.
 const STYLES = `
 :where([data-vibeui-block="avatar-021"]){
---vibeui-avatar-021-size:3.25rem;
+--vibeui-avatar-021-size:2.5rem;
 --vibeui-avatar-021-ring:0.1875rem;
 --vibeui-avatar-021-gap:0.1875rem;
 --vibeui-avatar-021-seen:light-dark(oklch(0.78 0.012 265),oklch(0.45 0.012 265));
@@ -52,15 +50,18 @@ background:var(--vibeui-avatar-021-seen);
 display:grid;place-items:center;
 width:var(--vibeui-avatar-021-size);height:var(--vibeui-avatar-021-size);
 border-radius:9999px;
-background:oklch(0.9 0.06 var(--vibeui-avatar-021-hue,265));
-color:oklch(0.36 0.12 var(--vibeui-avatar-021-hue,265));
+background:light-dark(oklch(0.9 0.06 var(--vibeui-avatar-021-hue,265)),oklch(0.34 0.065 var(--vibeui-avatar-021-hue,265)));
+color:light-dark(oklch(0.36 0.12 var(--vibeui-avatar-021-hue,265)),oklch(0.88 0.063 var(--vibeui-avatar-021-hue,265)));
 font-size:calc(var(--vibeui-avatar-021-size) * 0.34);font-weight:700;line-height:1;
 }
-[data-vibeui-block="avatar-021"][data-size="sm"]{--vibeui-avatar-021-size:2.25rem}
-[data-vibeui-block="avatar-021"][data-size="lg"]{--vibeui-avatar-021-size:4.5rem;--vibeui-avatar-021-ring:0.25rem;--vibeui-avatar-021-gap:0.25rem}
+[data-vibeui-block="avatar-021"][data-size="sm"]{--vibeui-avatar-021-size:2rem}
+[data-vibeui-block="avatar-021"][data-size="lg"]{--vibeui-avatar-021-size:3.5rem;--vibeui-avatar-021-ring:0.25rem;--vibeui-avatar-021-gap:0.25rem}
 [data-vibeui-block="avatar-021"] [data-part="sr"]{
 position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;
 }
+[data-vibeui-block="avatar-021"] [data-part="face"]{overflow:hidden}
+[data-vibeui-block="avatar-021"] [data-part="face"] img{width:100%;height:100%;border-radius:inherit;object-fit:cover;display:block}
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="avatar-021"]{color-scheme:dark}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="avatar-021"] *{animation:none!important;transition:none!important}}
 `
 
@@ -93,6 +94,7 @@ function initials(name: string) {
  */
 export function Avatar021({
   name = "Анна Реброва",
+  src,
   state = "unseen",
   stateText = STATE_LABEL,
   size = "md",
@@ -114,6 +116,7 @@ export function Avatar021({
       <button
         {...props}
         type={type}
+        data-slot="avatar"
         data-vibeui-block="avatar-021"
         data-state={state}
         data-size={size}
@@ -122,7 +125,7 @@ export function Avatar021({
       >
         <span data-part="ring" aria-hidden="true" />
         <span data-part="face" aria-hidden="true">
-          {initials(name)}
+          {src ? <img src={src} alt="" /> : initials(name)}
         </span>
         {/* Состояние словом: цвет кольца скринридер не читает. */}
         <span data-part="sr">

@@ -1,11 +1,8 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Avatar005Badge = "verified" | "admin" | "new"
 
-export type Avatar005Props = Omit<
-  ComponentPropsWithoutRef<"span">,
-  "children"
-> & {
+export type Avatar005Props = Omit<ComponentProps<"span">, "children"> & {
   name?: string
   src?: string
   badge?: Avatar005Badge
@@ -18,11 +15,10 @@ export type Avatar005Props = Omit<
 // сама по себе ничего не сообщает.
 const STYLES = `
 :where([data-vibeui-block="avatar-005"]){
---vibeui-avatar-005-size:3rem;
+--vibeui-avatar-005-size:2.5rem;
 --vibeui-avatar-005-hue:250;
 --vibeui-avatar-005-bg:light-dark(oklch(0.92 0.05 var(--vibeui-avatar-005-hue)),oklch(0.34 0.065 var(--vibeui-avatar-005-hue)));
 --vibeui-avatar-005-fg:light-dark(oklch(0.38 0.09 var(--vibeui-avatar-005-hue)),oklch(0.88 0.063 var(--vibeui-avatar-005-hue)));
---vibeui-avatar-005-cut:light-dark(oklch(1 0 0),oklch(0.19 0.01 265));
 --vibeui-avatar-005-badge:light-dark(oklch(0.58 0.15 250),oklch(0.72 0.15 250));
 --vibeui-avatar-005-badge-fg:oklch(0.99 0.01 250);
 --vibeui-avatar-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -32,8 +28,8 @@ position:relative;display:inline-flex;flex:none;vertical-align:middle;
 width:var(--vibeui-avatar-005-size);height:var(--vibeui-avatar-005-size);
 font-family:var(--vibeui-avatar-005-font);
 }
-[data-vibeui-block="avatar-005"][data-size="sm"]{--vibeui-avatar-005-size:2.25rem}
-[data-vibeui-block="avatar-005"][data-size="lg"]{--vibeui-avatar-005-size:4rem}
+[data-vibeui-block="avatar-005"][data-size="sm"]{--vibeui-avatar-005-size:2rem}
+[data-vibeui-block="avatar-005"][data-size="lg"]{--vibeui-avatar-005-size:3.5rem}
 [data-vibeui-block="avatar-005"][data-badge="admin"]{--vibeui-avatar-005-badge:light-dark(oklch(0.68 0.16 75),oklch(0.82 0.16 75));--vibeui-avatar-005-badge-fg:oklch(0.24 0.06 75)}
 [data-vibeui-block="avatar-005"][data-badge="new"]{--vibeui-avatar-005-badge:light-dark(oklch(0.62 0.17 152),oklch(0.76 0.17 152));--vibeui-avatar-005-badge-fg:oklch(0.99 0.01 152)}
 [data-vibeui-block="avatar-005"] [data-part="shape"]{
@@ -43,14 +39,19 @@ background:var(--vibeui-avatar-005-bg);color:var(--vibeui-avatar-005-fg);
 font-size:calc(var(--vibeui-avatar-005-size) * 0.34);font-weight:650;line-height:1;user-select:none;
 }
 [data-vibeui-block="avatar-005"] img{width:100%;height:100%;object-fit:cover;display:block}
-/* Значок вырезает под собой кружок обводкой: на светлой и на тёмной
-   фотографии он одинаково отделён от неё. */
+/* Вырез под значком: центр совпадает с его центром, радиус — его радиус
+   плюс зазор. Обводка цветом подложки на фотографии выдаёт себя. */
+[data-vibeui-block="avatar-005"] [data-part="shape"]{
+mask-image:radial-gradient(circle calc(var(--vibeui-avatar-005-size) * 0.19 + 2px) at calc(100% - var(--vibeui-avatar-005-size) * 0.17) calc(100% - var(--vibeui-avatar-005-size) * 0.17),transparent 99%,#000 100%);
+}
+/* Значок сидит в вырезе портрета: на светлой и на тёмной фотографии он
+   одинаково отделён от неё, а обводка цветом подложки — нет. */
 [data-vibeui-block="avatar-005"] [data-part="badge"]{
 position:absolute;right:-2%;bottom:-2%;
 display:flex;align-items:center;justify-content:center;
 width:calc(var(--vibeui-avatar-005-size) * 0.38);
 height:calc(var(--vibeui-avatar-005-size) * 0.38);
-border-radius:9999px;box-shadow:0 0 0 2px var(--vibeui-avatar-005-cut);
+border-radius:9999px;
 background:var(--vibeui-avatar-005-badge);color:var(--vibeui-avatar-005-badge-fg);
 font-size:calc(var(--vibeui-avatar-005-size) * 0.2);font-weight:700;line-height:1;
 }
@@ -64,6 +65,7 @@ transform:rotate(45deg);
 position:absolute;width:1px;height:1px;overflow:hidden;
 clip-path:inset(50%);white-space:nowrap;
 }
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="avatar-005"]{color-scheme:dark}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="avatar-005"] *{animation:none!important;transition:none!important}}
 `
 
@@ -120,6 +122,7 @@ export function Avatar005({
       </style>
       <span
         {...props}
+        data-slot="avatar"
         data-vibeui-block="avatar-005"
         data-size={size}
         data-badge={badge}

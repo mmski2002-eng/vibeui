@@ -1,10 +1,9 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Avatar031Props = Omit<
-  ComponentPropsWithoutRef<"ul">,
-  "children"
-> & {
+export type Avatar031Props = Omit<ComponentProps<"ul">, "children"> & {
   names?: string[]
+  photos?: string[]
+  visible?: number
   overlap?: number
   size?: "sm" | "md" | "lg"
 }
@@ -19,7 +18,7 @@ const STYLES = `
 :where([data-vibeui-block="avatar-031"]){
 --vibeui-avatar-031-size:2.5rem;
 --vibeui-avatar-031-overlap:55;
---vibeui-avatar-031-surface:oklch(1 0 0);
+--vibeui-avatar-031-surface:light-dark(oklch(1 0 0),oklch(0.19 0.01 265));
 --vibeui-avatar-031-accent:light-dark(oklch(0.55 0.2 262),oklch(0.69 0.2 262));
 --vibeui-avatar-031-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -47,10 +46,12 @@ appearance:none;cursor:pointer;padding:0;border:0;
 width:var(--vibeui-avatar-031-size);height:var(--vibeui-avatar-031-size);
 border-radius:9999px;
 box-shadow:0 0 0 0.125rem var(--vibeui-avatar-031-surface);
-background:oklch(0.9 0.06 var(--vibeui-avatar-031-hue,265));
-color:oklch(0.36 0.12 var(--vibeui-avatar-031-hue,265));
+background:light-dark(oklch(0.9 0.06 var(--vibeui-avatar-031-hue,265)),oklch(0.34 0.065 var(--vibeui-avatar-031-hue,265)));
+color:light-dark(oklch(0.36 0.12 var(--vibeui-avatar-031-hue,265)),oklch(0.88 0.063 var(--vibeui-avatar-031-hue,265)));
 font:inherit;font-size:calc(var(--vibeui-avatar-031-size) * 0.34);font-weight:700;line-height:1;
 }
+[data-vibeui-block="avatar-031"] [data-part="face"]{overflow:hidden}
+[data-vibeui-block="avatar-031"] [data-part="face"] img{width:100%;height:100%;border-radius:inherit;object-fit:cover;display:block}
 [data-vibeui-block="avatar-031"] [data-part="face"]:focus-visible{outline:2px solid var(--vibeui-avatar-031-accent);outline-offset:2px}
 /* Порядок наложения слева направо: без него стопка читается наоборот. */
 [data-vibeui-block="avatar-031"] [data-part="cell"]:nth-child(1){z-index:5}
@@ -60,7 +61,8 @@ font:inherit;font-size:calc(var(--vibeui-avatar-031-size) * 0.34);font-weight:70
 [data-vibeui-block="avatar-031"] [data-part="cell"]:nth-child(5){z-index:1}
 [data-vibeui-block="avatar-031"] [data-part="cell"]{position:relative}
 [data-vibeui-block="avatar-031"][data-size="sm"]{--vibeui-avatar-031-size:2rem}
-[data-vibeui-block="avatar-031"][data-size="lg"]{--vibeui-avatar-031-size:3.25rem}
+[data-vibeui-block="avatar-031"][data-size="lg"]{--vibeui-avatar-031-size:3.5rem}
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="avatar-031"]{color-scheme:dark}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="avatar-031"] *{animation:none!important;transition:none!important}}
 `
 
@@ -86,7 +88,16 @@ function initials(name: string) {
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Avatar031({
-  names = ["Анна Реброва", "Илья Мохов", "Ким Сон", "Пётр Гай", "Мария Лоза"],
+  names = [
+    "Анна Реброва",
+    "Марк Ильин",
+    "Мария Гурова",
+    "Олег Дроздов",
+    "Ирина Ким",
+  ],
+  photos = [],
+  visible = 5,
+
   overlap = 55,
   size = "md",
   className,
@@ -105,27 +116,34 @@ export function Avatar031({
       </style>
       <ul
         {...props}
+        data-slot="avatar"
         data-vibeui-block="avatar-031"
         data-size={size}
         className={className}
         style={palette}
       >
-        {names.slice(0, 5).map((person) => (
-          <li
-            key={person}
-            data-part="cell"
-            style={
-              {
-                "--vibeui-avatar-031-hue": hue(person),
-              } as CSSProperties
-            }
-          >
-            {/* Каждое лицо — своя цель: закрытый наполовину кружок не нажать. */}
-            <button type="button" data-part="face" aria-label={person}>
-              <span aria-hidden="true">{initials(person)}</span>
-            </button>
-          </li>
-        ))}
+        {names
+          .slice(0, Math.max(1, Math.min(8, visible)))
+          .map((person, index) => (
+            <li
+              key={person}
+              data-part="cell"
+              style={
+                {
+                  "--vibeui-avatar-031-hue": hue(person),
+                } as CSSProperties
+              }
+            >
+              {/* Каждое лицо — своя цель: закрытый наполовину кружок не нажать. */}
+              <button type="button" data-part="face" aria-label={person}>
+                {photos[index] ? (
+                  <img src={photos[index]} alt="" />
+                ) : (
+                  <span aria-hidden="true">{initials(person)}</span>
+                )}
+              </button>
+            </li>
+          ))}
       </ul>
     </>
   )

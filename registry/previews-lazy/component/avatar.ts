@@ -121,34 +121,9 @@ export const PREVIEWS = {
       (module) => module.Avatar023,
     ),
   ),
-  "avatar-024": dynamic(() =>
-    import("@/registry/components/avatar/avatar-024/avatar-024").then(
-      (module) => module.Avatar024,
-    ),
-  ),
-  "avatar-025": dynamic(() =>
-    import("@/registry/components/avatar/avatar-025/avatar-025").then(
-      (module) => module.Avatar025,
-    ),
-  ),
-  "avatar-026": dynamic(() =>
-    import("@/registry/components/avatar/avatar-026/avatar-026").then(
-      (module) => module.Avatar026,
-    ),
-  ),
-  "avatar-027": dynamic(() =>
-    import("@/registry/components/avatar/avatar-027/avatar-027").then(
-      (module) => module.Avatar027,
-    ),
-  ),
   "avatar-028": dynamic(() =>
     import("@/registry/components/avatar/avatar-028/avatar-028").then(
       (module) => module.Avatar028,
-    ),
-  ),
-  "avatar-029": dynamic(() =>
-    import("@/registry/components/avatar/avatar-029/avatar-029").then(
-      (module) => module.Avatar029,
     ),
   ),
   "avatar-030": dynamic(() =>
@@ -159,11 +134,6 @@ export const PREVIEWS = {
   "avatar-031": dynamic(() =>
     import("@/registry/components/avatar/avatar-031/avatar-031").then(
       (module) => module.Avatar031,
-    ),
-  ),
-  "avatar-032": dynamic(() =>
-    import("@/registry/components/avatar/avatar-032/avatar-032").then(
-      (module) => module.Avatar032,
     ),
   ),
   "avatar-033": dynamic(() =>
@@ -179,6 +149,21 @@ export const PREVIEWS = {
   "avatar-035": dynamic(() =>
     import("@/registry/components/avatar/avatar-035/avatar-035").then(
       (module) => module.Avatar035,
+    ),
+  ),
+  "avatar-036": dynamic(() =>
+    import("@/registry/components/avatar/avatar-036/avatar-036").then(
+      (module) => module.Avatar036,
+    ),
+  ),
+  "avatar-037": dynamic(() =>
+    import("@/registry/components/avatar/avatar-037/avatar-037").then(
+      (module) => module.Avatar037,
+    ),
+  ),
+  "avatar-039": dynamic(() =>
+    import("@/registry/components/avatar/avatar-039/avatar-039").then(
+      (module) => module.Avatar039,
     ),
   ),
 } satisfies PreviewMap

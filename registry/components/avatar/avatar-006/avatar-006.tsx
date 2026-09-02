@@ -1,10 +1,7 @@
 import { useId } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Avatar006Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Avatar006Props = Omit<ComponentProps<"div">, "children"> & {
   name?: string
   src?: string
   label?: string
@@ -12,6 +9,8 @@ export type Avatar006Props = Omit<
   accept?: string
   /** Пусто — подложки нет, компонент лежит на фоне страницы. */
   background?: string
+  /** Цвет текста. Пусто — берётся из темы окружения, приглушённый выводится из него. */
+  textColor?: string
 }
 
 // Идея компонента: смена фотографии без единой строки JS. Поле выбора файла
@@ -23,7 +22,7 @@ const STYLES = `
 --vibeui-avatar-006-size:5rem;
 --vibeui-avatar-006-bg:transparent;
 --vibeui-avatar-006-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-avatar-006-muted:light-dark(oklch(0.52 0.014 265),oklch(0.68 0.01 265));
+--vibeui-avatar-006-muted:color-mix(in oklab,var(--vibeui-avatar-006-fg) 68%,transparent);
 --vibeui-avatar-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.31 0.01 265));
 --vibeui-avatar-006-hue:250;
 --vibeui-avatar-006-shape:light-dark(oklch(0.92 0.05 var(--vibeui-avatar-006-hue)),oklch(0.34 0.065 var(--vibeui-avatar-006-hue)));
@@ -66,6 +65,7 @@ position:absolute;width:1px;height:1px;opacity:0;
 [data-vibeui-block="avatar-006"] [data-part="text"]{display:flex;flex-direction:column;gap:0.1875rem;min-width:0}
 [data-vibeui-block="avatar-006"] [data-part="name"]{font-size:0.9375rem;font-weight:600;line-height:1.2}
 [data-vibeui-block="avatar-006"] [data-part="hint"]{font-size:0.75rem;line-height:1.4;color:var(--vibeui-avatar-006-muted)}
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="avatar-006"]{color-scheme:dark}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="avatar-006"] *{animation:none!important;transition:none!important}}
 `
 
@@ -119,11 +119,12 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Avatar006({
   background = "",
-  name = "Анна Петрова",
+  name = "Анна Реброва",
   src = "",
   label = "Сменить фото",
   hint = "JPG или PNG, квадрат, до 2 МБ",
   accept = "image/png,image/jpeg",
+  textColor,
   className,
   style,
   ...props
@@ -137,6 +138,7 @@ export function Avatar006({
           colorScheme: schemeForBackground(background),
         }
       : null),
+    ...(textColor ? { "--vibeui-avatar-006-fg": textColor } : null),
     ...style,
   } as CSSProperties
 
@@ -147,6 +149,7 @@ export function Avatar006({
       </style>
       <div
         {...props}
+        data-slot="avatar"
         data-vibeui-block="avatar-006"
         className={className}
         style={palette}

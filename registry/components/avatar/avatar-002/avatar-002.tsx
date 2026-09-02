@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Avatar002Props = Omit<
-  ComponentPropsWithoutRef<"span">,
-  "children"
-> & {
+export type Avatar002Props = Omit<ComponentProps<"span">, "children"> & {
   name?: string
   src?: string
   size?: "sm" | "md" | "lg"
@@ -15,7 +12,7 @@ export type Avatar002Props = Omit<
 // прочитает имя дважды. Имя отдаётся скринридеру отдельной скрытой строкой.
 const STYLES = `
 :where([data-vibeui-block="avatar-002"]){
---vibeui-avatar-002-size:3rem;
+--vibeui-avatar-002-size:2.5rem;
 --vibeui-avatar-002-hue:250;
 --vibeui-avatar-002-bg:light-dark(oklch(0.92 0.05 var(--vibeui-avatar-002-hue)),oklch(0.34 0.065 var(--vibeui-avatar-002-hue)));
 --vibeui-avatar-002-fg:light-dark(oklch(0.38 0.09 var(--vibeui-avatar-002-hue)),oklch(0.88 0.063 var(--vibeui-avatar-002-hue)));
@@ -26,8 +23,8 @@ const STYLES = `
 position:relative;display:inline-flex;flex:none;vertical-align:middle;
 width:var(--vibeui-avatar-002-size);height:var(--vibeui-avatar-002-size);
 }
-[data-vibeui-block="avatar-002"][data-size="sm"]{--vibeui-avatar-002-size:2.25rem}
-[data-vibeui-block="avatar-002"][data-size="lg"]{--vibeui-avatar-002-size:4rem}
+[data-vibeui-block="avatar-002"][data-size="sm"]{--vibeui-avatar-002-size:2rem}
+[data-vibeui-block="avatar-002"][data-size="lg"]{--vibeui-avatar-002-size:3.5rem}
 /* Инициалы — подложка: если фотография не загрузится, останутся они. */
 [data-vibeui-block="avatar-002"] [data-part="fallback"]{
 position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
@@ -44,6 +41,7 @@ border-radius:9999px;box-shadow:inset 0 0 0 1px var(--vibeui-avatar-002-ring);
 position:absolute;width:1px;height:1px;overflow:hidden;
 clip-path:inset(50%);white-space:nowrap;
 }
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="avatar-002"]{color-scheme:dark}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="avatar-002"] *{animation:none!important;transition:none!important}}
 `
 
@@ -74,7 +72,7 @@ function initials(name: string) {
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Avatar002({
-  name = "Анна Петрова",
+  name = "Анна Реброва",
   src = "",
   size = "md",
   className,
@@ -93,6 +91,7 @@ export function Avatar002({
       </style>
       <span
         {...props}
+        data-slot="avatar"
         data-vibeui-block="avatar-002"
         data-size={size}
         className={className}

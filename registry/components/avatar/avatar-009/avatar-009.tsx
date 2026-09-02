@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Avatar009Props = Omit<
-  ComponentPropsWithoutRef<"span">,
-  "children"
-> & {
+export type Avatar009Props = Omit<ComponentProps<"span">, "children"> & {
   name?: string
   /** Показать три точки: ассистент печатает ответ. */
   typing?: boolean
@@ -16,7 +13,7 @@ export type Avatar009Props = Omit<
 // инициалов: человека в переписке обозначает круг, машину — нет. Точки
 // «печатает» гасятся при prefers-reduced-motion, иначе они дёргают внимание.
 const STYLES = `:where([data-vibeui-block="avatar-009"]){
---vibeui-avatar-009-size:2.75rem;
+--vibeui-avatar-009-size:2.5rem;
 --vibeui-avatar-009-accent:light-dark(oklch(0.62 0.17 285),oklch(0.76 0.17 285));
 --vibeui-avatar-009-fg:light-dark(oklch(0.99 0.005 285),oklch(0.94 0.002 285));
 --vibeui-avatar-009-dot:light-dark(oklch(0.99 0.005 285),oklch(0.88 0.005 285));
@@ -33,7 +30,7 @@ radial-gradient(120% 120% at 25% 15%,color-mix(in oklab,var(--vibeui-avatar-009-
 linear-gradient(140deg,var(--vibeui-avatar-009-accent),oklch(0.42 0.13 265));
 color:var(--vibeui-avatar-009-fg);font-family:var(--vibeui-avatar-009-font);
 }
-[data-vibeui-block="avatar-009"][data-size="sm"]{--vibeui-avatar-009-size:2.25rem}
+[data-vibeui-block="avatar-009"][data-size="sm"]{--vibeui-avatar-009-size:2rem}
 [data-vibeui-block="avatar-009"][data-size="lg"]{--vibeui-avatar-009-size:3.5rem}
 /* Глиф: кольцо с точкой внутри — знак машины, а не буква имени. */
 [data-vibeui-block="avatar-009"] [data-part="glyph"]{
@@ -67,6 +64,7 @@ animation:vibeui-avatar-009-blink 1.1s ease-in-out infinite;
 position:absolute;width:1px;height:1px;overflow:hidden;
 clip-path:inset(50%);white-space:nowrap;
 }
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="avatar-009"]{color-scheme:dark}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="avatar-009"] *{animation:none!important;transition:none!important}
 [data-vibeui-block="avatar-009"] [data-part="typing"] i{opacity:.8}
@@ -98,6 +96,7 @@ export function Avatar009({
       </style>
       <span
         {...props}
+        data-slot="avatar"
         data-vibeui-block="avatar-009"
         data-size={size}
         className={className}

@@ -1,12 +1,15 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Avatar017Props = Omit<ComponentPropsWithoutRef<"a">, "children"> & {
+export type Avatar017Props = Omit<ComponentProps<"a">, "children"> & {
   name?: string
+  src?: string
   role?: string
   meta?: string
   action?: string
   /** Пусто — подложки нет, компонент лежит на фоне страницы. */
   background?: string
+  /** Цвет текста. Пусто — берётся из темы окружения, приглушённый выводится из него. */
+  textColor?: string
 }
 
 // Идея компонента: строка человека, кликабельная целиком. Ссылка растянута
@@ -20,7 +23,7 @@ const STYLES = `
 --vibeui-avatar-017-size:2.5rem;
 --vibeui-avatar-017-bg:transparent;
 --vibeui-avatar-017-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
---vibeui-avatar-017-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.01 265));
+--vibeui-avatar-017-muted:color-mix(in oklab,var(--vibeui-avatar-017-fg) 68%,transparent);
 --vibeui-avatar-017-border:light-dark(oklch(0.91 0.006 265),oklch(0.31 0.01 265));
 --vibeui-avatar-017-hover:oklch(0.55 0.02 265 / 5%);
 --vibeui-avatar-017-accent:light-dark(oklch(0.55 0.2 262),oklch(0.69 0.2 262));
@@ -28,6 +31,7 @@ const STYLES = `
 }
 /* Строка целиком — цель ссылки, кнопка поднята над ней z-index. */
 [data-vibeui-block="avatar-017"]{
+container-type:inline-size;flex-wrap:wrap;
 position:relative;display:flex;align-items:center;gap:0.625rem;
 box-sizing:border-box;width:100%;max-width:24rem;padding:0.5rem 0.625rem;
 background:var(--vibeui-avatar-017-bg);
@@ -41,8 +45,8 @@ font-family:var(--vibeui-avatar-017-font);color:var(--vibeui-avatar-017-fg);
 display:grid;place-items:center;flex:none;
 width:var(--vibeui-avatar-017-size);height:var(--vibeui-avatar-017-size);
 border-radius:9999px;
-background:oklch(0.9 0.06 var(--vibeui-avatar-017-hue,265));
-color:oklch(0.36 0.12 var(--vibeui-avatar-017-hue,265));
+background:light-dark(oklch(0.9 0.06 var(--vibeui-avatar-017-hue,265)),oklch(0.34 0.065 var(--vibeui-avatar-017-hue,265)));
+color:light-dark(oklch(0.36 0.12 var(--vibeui-avatar-017-hue,265)),oklch(0.88 0.063 var(--vibeui-avatar-017-hue,265)));
 font-size:calc(var(--vibeui-avatar-017-size) * 0.34);font-weight:700;
 }
 [data-vibeui-block="avatar-017"] [data-part="text"]{display:flex;flex-direction:column;gap:0.0625rem;min-width:0;flex:1 1 auto}
@@ -67,6 +71,12 @@ background:var(--vibeui-avatar-017-bg);color:inherit;
 font:inherit;font-size:0.75rem;font-weight:650;
 }
 [data-vibeui-block="avatar-017"] [data-part="action"]:focus-visible{outline:2px solid var(--vibeui-avatar-017-accent);outline-offset:2px}
+[data-vibeui-block="avatar-017"] [data-part="face"]{overflow:hidden}
+[data-vibeui-block="avatar-017"] [data-part="face"] img{width:100%;height:100%;border-radius:inherit;object-fit:cover;display:block}
+@container (max-width: 22rem){
+[data-vibeui-block="avatar-017"] [data-part="action"]{width:100%;margin-left:calc(var(--vibeui-avatar-017-size) + 0.625rem)}
+}
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="avatar-017"]{color-scheme:dark}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="avatar-017"] *{animation:none!important;transition:none!important}}
 `
 
@@ -115,11 +125,13 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Avatar017({
   background = "",
-  name = "Ким Сон",
+  name = "Ирина Ким",
+  src,
   role = "Аналитик",
   meta = "был в сети 20 минут назад",
   action = "Написать",
   href = "#",
+  textColor,
   className,
   style,
   ...props
@@ -132,6 +144,7 @@ export function Avatar017({
           colorScheme: schemeForBackground(background),
         }
       : null),
+    ...(textColor ? { "--vibeui-avatar-017-fg": textColor } : null),
     ...style,
   } as CSSProperties
 
@@ -140,9 +153,14 @@ export function Avatar017({
       <style href="vibeui-avatar-017" precedence="medium">
         {STYLES}
       </style>
-      <div data-vibeui-block="avatar-017" className={className} style={palette}>
+      <div
+        data-slot="avatar"
+        data-vibeui-block="avatar-017"
+        className={className}
+        style={palette}
+      >
         <span data-part="face" aria-hidden="true">
-          {initials(name)}
+          {src ? <img src={src} alt="" /> : initials(name)}
         </span>
         <span data-part="text">
           <span data-part="name">

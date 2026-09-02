@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Avatar007Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Avatar007Props = Omit<ComponentProps<"div">, "children"> & {
   name?: string
   role?: string
   /** Подписи состояний: компонент несёт русские, проект подставляет свои. */
@@ -14,6 +11,10 @@ export type Avatar007Props = Omit<
   status?: "online" | "away" | "offline"
   /** Пусто — подложки нет, компонент лежит на фоне страницы. */
   background?: string
+  /** Цвет основного текста. Пусто — берётся из темы окружения. */
+  textColor?: string
+  /** Цвет приглушённого текста. Пусто — выводится из основного. */
+  mutedColor?: string
 }
 
 // Идея компонента: строка личности — аватар и три поля текста. Имя, роль и
@@ -21,10 +22,10 @@ export type Avatar007Props = Omit<
 // не переносятся: в списке из тридцати человек строки обязаны быть одной
 // высоты. Статус подписан словом, а не только точкой — цвет не для всех.
 const STYLES = `:where([data-vibeui-block="avatar-007"]){
---vibeui-avatar-007-size:2.75rem;
+--vibeui-avatar-007-size:2.5rem;
 --vibeui-avatar-007-bg:transparent;
 --vibeui-avatar-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-avatar-007-muted:light-dark(oklch(0.52 0.014 265),oklch(0.68 0.01 265));
+--vibeui-avatar-007-muted:color-mix(in oklab,var(--vibeui-avatar-007-fg) 68%,transparent);
 --vibeui-avatar-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.31 0.01 265));
 --vibeui-avatar-007-hue:250;
 --vibeui-avatar-007-shape:light-dark(oklch(0.92 0.05 var(--vibeui-avatar-007-hue)),oklch(0.34 0.065 var(--vibeui-avatar-007-hue)));
@@ -34,6 +35,7 @@ const STYLES = `:where([data-vibeui-block="avatar-007"]){
 --vibeui-avatar-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="avatar-007"]{
+container-type:inline-size;flex-wrap:wrap;
 position:relative;display:flex;align-items:center;gap:0.75rem;
 box-sizing:border-box;width:100%;max-width:22rem;padding:0.75rem;
 background:var(--vibeui-avatar-007-bg);
@@ -72,6 +74,10 @@ font-size:0.75rem;color:var(--vibeui-avatar-007-muted);
 [data-vibeui-block="avatar-007"] [data-part="dot"]{
 width:0.4375rem;height:0.4375rem;border-radius:9999px;background:var(--vibeui-avatar-007-status);
 }
+@container (max-width: 20rem){
+[data-vibeui-block="avatar-007"] [data-part="state"]{width:100%;margin-left:calc(var(--vibeui-avatar-007-size) + 0.75rem);justify-content:flex-start}
+}
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="avatar-007"]{color-scheme:dark}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="avatar-007"] *{animation:none!important;transition:none!important}}
 `
 
@@ -138,6 +144,8 @@ export function Avatar007({
   href = "#",
   status = "online",
   statusText = STATUS_TEXT,
+  textColor,
+  mutedColor,
   className,
   style,
   ...props
@@ -150,6 +158,8 @@ export function Avatar007({
           colorScheme: schemeForBackground(background),
         }
       : null),
+    ...(textColor ? { "--vibeui-avatar-007-fg": textColor } : null),
+    ...(mutedColor ? { "--vibeui-avatar-007-muted": mutedColor } : null),
     ...style,
   } as CSSProperties
 
@@ -160,6 +170,7 @@ export function Avatar007({
       </style>
       <div
         {...props}
+        data-slot="avatar"
         data-vibeui-block="avatar-007"
         data-status={status}
         className={className}

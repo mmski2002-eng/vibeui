@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Avatar011Props = Omit<
-  ComponentPropsWithoutRef<"span">,
-  "children"
-> & {
+export type Avatar011Props = Omit<ComponentProps<"span">, "children"> & {
   name?: string
   src?: string
   size?: "sm" | "md" | "lg"
@@ -16,7 +13,7 @@ export type Avatar011Props = Omit<
 // артикли и кавычки при этом пропускаются.
 const STYLES = `
 :where([data-vibeui-block="avatar-011"]){
---vibeui-avatar-011-size:2.75rem;
+--vibeui-avatar-011-size:2.5rem;
 --vibeui-avatar-011-accent:light-dark(oklch(0.55 0.13 255),oklch(0.69 0.13 255));
 --vibeui-avatar-011-surface:light-dark(oklch(1 0 0),oklch(0.2 0.01 265));
 --vibeui-avatar-011-bg:color-mix(in oklab,var(--vibeui-avatar-011-accent) 16%,var(--vibeui-avatar-011-surface));
@@ -37,13 +34,14 @@ font-family:var(--vibeui-avatar-011-font);
 font-size:calc(var(--vibeui-avatar-011-size) * 0.4);font-weight:700;line-height:1;
 letter-spacing:-0.02em;user-select:none;
 }
-[data-vibeui-block="avatar-011"][data-size="sm"]{--vibeui-avatar-011-size:2.25rem}
+[data-vibeui-block="avatar-011"][data-size="sm"]{--vibeui-avatar-011-size:2rem}
 [data-vibeui-block="avatar-011"][data-size="lg"]{--vibeui-avatar-011-size:3.5rem}
 [data-vibeui-block="avatar-011"] img{width:100%;height:100%;object-fit:contain;display:block;padding:12%;box-sizing:border-box}
 [data-vibeui-block="avatar-011"] [data-part="text"]{
 position:absolute;width:1px;height:1px;overflow:hidden;
 clip-path:inset(50%);white-space:nowrap;
 }
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="avatar-011"]{color-scheme:dark}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="avatar-011"] *{animation:none!important;transition:none!important}}
 `
 
@@ -78,6 +76,7 @@ export function Avatar011({
       </style>
       <span
         {...props}
+        data-slot="avatar"
         data-vibeui-block="avatar-011"
         data-size={size}
         className={className}

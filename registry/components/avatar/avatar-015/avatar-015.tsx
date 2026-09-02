@@ -1,13 +1,11 @@
 "use client"
 
 import { useRef, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Avatar015Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Avatar015Props = Omit<ComponentProps<"div">, "children"> & {
   name?: string
+  src?: string
   hint?: string
   editLabel?: string
   captureLabel?: string
@@ -15,6 +13,8 @@ export type Avatar015Props = Omit<
   accent?: string
   /** Пусто — подложки нет, компонент лежит на фоне страницы. */
   background?: string
+  /** Цвет текста. Пусто — берётся из темы окружения, приглушённый выводится из него. */
+  textColor?: string
 }
 
 // Идея компонента: аватар с меню правки. Меню — HTML popover, поэтому закрытие
@@ -26,9 +26,10 @@ export type Avatar015Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="avatar-015"]){
 --vibeui-avatar-015-size:4.5rem;
+--vibeui-avatar-015-edit:1.75rem;
 --vibeui-avatar-015-bg:transparent;
 --vibeui-avatar-015-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
---vibeui-avatar-015-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.01 265));
+--vibeui-avatar-015-muted:color-mix(in oklab,var(--vibeui-avatar-015-fg) 68%,transparent);
 --vibeui-avatar-015-border:light-dark(oklch(0.9 0.006 265),oklch(0.31 0.01 265));
 --vibeui-avatar-015-hover:oklch(0.55 0.02 265 / 9%);
 --vibeui-avatar-015-accent:light-dark(oklch(0.55 0.2 262),oklch(0.69 0.2 262));
@@ -49,18 +50,23 @@ font-family:var(--vibeui-avatar-015-font);color:var(--vibeui-avatar-015-fg);
 display:grid;place-items:center;
 width:var(--vibeui-avatar-015-size);height:var(--vibeui-avatar-015-size);
 border-radius:9999px;
-background:oklch(0.9 0.07 var(--vibeui-avatar-015-hue,265));
-color:oklch(0.35 0.13 var(--vibeui-avatar-015-hue,265));
+background:light-dark(oklch(0.9 0.07 var(--vibeui-avatar-015-hue,265)),oklch(0.35 0.07 var(--vibeui-avatar-015-hue,265)));
+color:light-dark(oklch(0.35 0.13 var(--vibeui-avatar-015-hue,265)),oklch(0.89 0.065 var(--vibeui-avatar-015-hue,265)));
 font-size:calc(var(--vibeui-avatar-015-size) * 0.32);font-weight:700;
 }
-/* Кнопка в углу и мелкая: правка не должна закрывать лицо. */
+/* Кнопка в углу и мелкая: правка не должна закрывать лицо. Отделяет её вырез
+   в портрете, а не обводка цветом подложки: обводка выдаёт себя, как только
+   под кнопкой оказывается фотография или подложку меняет проект. */
 [data-vibeui-block="avatar-015"] [data-part="edit"]{
-position:absolute;right:-0.125rem;bottom:-0.125rem;
+position:absolute;right:0;bottom:0;
 appearance:none;cursor:pointer;
-width:1.75rem;height:1.75rem;border-radius:9999px;
-border:2px solid var(--vibeui-avatar-015-bg);
+width:var(--vibeui-avatar-015-edit);height:var(--vibeui-avatar-015-edit);
+border:0;border-radius:9999px;
 background:var(--vibeui-avatar-015-accent);color:oklch(1 0 0);
 font:inherit;font-size:0.75rem;line-height:1;
+}
+[data-vibeui-block="avatar-015"] [data-part="face"]{
+mask-image:radial-gradient(circle calc(var(--vibeui-avatar-015-edit) / 2 + 2px) at calc(100% - var(--vibeui-avatar-015-edit) / 2) calc(100% - var(--vibeui-avatar-015-edit) / 2),transparent 99%,#000 100%);
 }
 [data-vibeui-block="avatar-015"] [data-part="edit"]:focus-visible{outline:2px solid var(--vibeui-avatar-015-accent);outline-offset:2px}
 [data-vibeui-block="avatar-015"] [data-part="menu"]{
@@ -96,6 +102,9 @@ color:var(--vibeui-avatar-015-danger);
 [data-vibeui-block="avatar-015"] [data-part="text"]{display:flex;flex-direction:column;gap:0.125rem;min-width:0}
 [data-vibeui-block="avatar-015"] [data-part="name"]{font-size:0.9375rem;font-weight:650}
 [data-vibeui-block="avatar-015"] [data-part="hint"]{font-size:0.75rem;line-height:1.4;color:var(--vibeui-avatar-015-muted)}
+[data-vibeui-block="avatar-015"] [data-part="face"]{overflow:hidden}
+[data-vibeui-block="avatar-015"] [data-part="face"] img{width:100%;height:100%;border-radius:inherit;object-fit:cover;display:block}
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="avatar-015"]{color-scheme:dark}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="avatar-015"] *{animation:none!important;transition:none!important}}
 `
 
@@ -145,11 +154,13 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 export function Avatar015({
   background = "",
   name = "Анна Реброва",
+  src,
   hint = "PNG или JPG до 2 МБ, квадрат от 200 пикселей",
   editLabel = "Загрузить фото",
   captureLabel = "Сделать снимок",
   removeLabel = "Удалить фото",
   accent,
+  textColor,
   className,
   style,
   ...props
@@ -166,6 +177,7 @@ export function Avatar015({
           colorScheme: schemeForBackground(background),
         }
       : null),
+    ...(textColor ? { "--vibeui-avatar-015-fg": textColor } : null),
     ...style,
   } as CSSProperties
 
@@ -176,13 +188,14 @@ export function Avatar015({
       </style>
       <div
         {...props}
+        data-slot="avatar"
         data-vibeui-block="avatar-015"
         className={className}
         style={palette}
       >
         <span data-part="slot">
           <span data-part="face" aria-hidden="true">
-            {initials(name)}
+            {src ? <img src={src} alt="" /> : initials(name)}
           </span>
           <button
             type="button"

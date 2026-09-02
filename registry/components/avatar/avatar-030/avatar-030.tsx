@@ -1,14 +1,14 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Avatar030Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Avatar030Props = Omit<ComponentProps<"div">, "children"> & {
   name?: string
+  src?: string
   role?: string
   size?: "sm" | "md" | "lg"
   /** Пусто — подложки нет, компонент лежит на фоне страницы. */
   background?: string
+  /** Цвет текста. Пусто — берётся из темы окружения, приглушённый выводится из него. */
+  textColor?: string
 }
 
 // Идея компонента: карточка человека для сетки, где должность занимает ровно
@@ -19,16 +19,17 @@ export type Avatar030Props = Omit<
 // хвост режется line-clamp: высота фиксирована, содержимое остаётся читаемым.
 const STYLES = `
 :where([data-vibeui-block="avatar-030"]){
---vibeui-avatar-030-size:3.5rem;
+--vibeui-avatar-030-size:2.5rem;
 --vibeui-avatar-030-line:1.0625rem;
 --vibeui-avatar-030-bg:transparent;
 --vibeui-avatar-030-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
---vibeui-avatar-030-muted:light-dark(oklch(0.5 0.014 265),oklch(0.68 0.01 265));
+--vibeui-avatar-030-muted:color-mix(in oklab,var(--vibeui-avatar-030-fg) 68%,transparent);
 --vibeui-avatar-030-border:light-dark(oklch(0.91 0.006 265),oklch(0.31 0.01 265));
 --vibeui-avatar-030-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Своя светлая подложка: тёмный текст обязан читаться на любом фоне. */
 [data-vibeui-block="avatar-030"]{
+container-type:inline-size;
 display:flex;flex-direction:column;align-items:center;gap:0.5rem;
 box-sizing:border-box;width:100%;max-width:11rem;
 padding:1rem 0.875rem 1.125rem;text-align:center;
@@ -41,8 +42,8 @@ font-family:var(--vibeui-avatar-030-font);color:var(--vibeui-avatar-030-fg);
 display:grid;place-items:center;flex:none;
 width:var(--vibeui-avatar-030-size);height:var(--vibeui-avatar-030-size);
 border-radius:9999px;
-background:oklch(0.9 0.06 var(--vibeui-avatar-030-hue,265));
-color:oklch(0.36 0.12 var(--vibeui-avatar-030-hue,265));
+background:light-dark(oklch(0.9 0.06 var(--vibeui-avatar-030-hue,265)),oklch(0.34 0.065 var(--vibeui-avatar-030-hue,265)));
+color:light-dark(oklch(0.36 0.12 var(--vibeui-avatar-030-hue,265)),oklch(0.88 0.063 var(--vibeui-avatar-030-hue,265)));
 font-size:calc(var(--vibeui-avatar-030-size) * 0.32);font-weight:700;line-height:1;
 }
 [data-vibeui-block="avatar-030"] [data-part="name"]{
@@ -57,8 +58,14 @@ min-height:calc(var(--vibeui-avatar-030-line) * 2);
 font-size:0.75rem;line-height:var(--vibeui-avatar-030-line);
 color:var(--vibeui-avatar-030-muted);
 }
-[data-vibeui-block="avatar-030"][data-size="sm"]{--vibeui-avatar-030-size:2.75rem;max-width:9.5rem}
-[data-vibeui-block="avatar-030"][data-size="lg"]{--vibeui-avatar-030-size:4.5rem;max-width:12.5rem}
+[data-vibeui-block="avatar-030"][data-size="sm"]{--vibeui-avatar-030-size:2rem;max-width:9.5rem}
+[data-vibeui-block="avatar-030"][data-size="lg"]{--vibeui-avatar-030-size:3.5rem;max-width:12.5rem}
+[data-vibeui-block="avatar-030"] [data-part="face"]{overflow:hidden}
+[data-vibeui-block="avatar-030"] [data-part="face"] img{width:100%;height:100%;border-radius:inherit;object-fit:cover;display:block}
+@container (max-width: 14rem){
+[data-vibeui-block="avatar-030"] [data-part="role"]{-webkit-line-clamp:1;line-clamp:1}
+}
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="avatar-030"]{color-scheme:dark}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="avatar-030"] *{animation:none!important;transition:none!important}}
 `
 
@@ -108,8 +115,10 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 export function Avatar030({
   background = "",
   name = "Мария Гурова",
+  src,
   role = "Руководитель направления клиентского опыта",
   size = "md",
+  textColor,
   className,
   style,
   ...props
@@ -122,6 +131,7 @@ export function Avatar030({
           colorScheme: schemeForBackground(background),
         }
       : null),
+    ...(textColor ? { "--vibeui-avatar-030-fg": textColor } : null),
     ...style,
   } as CSSProperties
 
@@ -132,13 +142,14 @@ export function Avatar030({
       </style>
       <div
         {...props}
+        data-slot="avatar"
         data-vibeui-block="avatar-030"
         data-size={size}
         className={className}
         style={palette}
       >
         <span data-part="face" aria-hidden="true">
-          {initials(name)}
+          {src ? <img src={src} alt="" /> : initials(name)}
         </span>
         <span data-part="name">{name}</span>
         {/* Полная должность остаётся в title: обрезка не должна её терять. */}

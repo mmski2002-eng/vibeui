@@ -1,15 +1,15 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Avatar028Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Avatar028Props = Omit<ComponentProps<"div">, "children"> & {
   name?: string
+  src?: string
   email?: string
   items?: string[]
   signOutLabel?: string
   /** Пусто — подложки нет, компонент лежит на фоне страницы. */
   background?: string
+  /** Цвет текста. Пусто — берётся из темы окружения, приглушённый выводится из него. */
+  textColor?: string
 }
 
 // Идея компонента: аватар в шапке, который сам открывает меню профиля. Меню —
@@ -19,10 +19,10 @@ export type Avatar028Props = Omit<
 // это единственное место, где видно, под кем ты сидишь. Выход отделён чертой:
 // соседство с «настройками» стоит случайного выхода из системы.
 const STYLES = `:where([data-vibeui-block="avatar-028"]){
---vibeui-avatar-028-size:2.25rem;
+--vibeui-avatar-028-size:2.5rem;
 --vibeui-avatar-028-bg:transparent;
 --vibeui-avatar-028-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
---vibeui-avatar-028-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.01 265));
+--vibeui-avatar-028-muted:color-mix(in oklab,var(--vibeui-avatar-028-fg) 68%,transparent);
 --vibeui-avatar-028-border:light-dark(oklch(0.91 0.006 265),oklch(0.31 0.01 265));
 --vibeui-avatar-028-hover:oklch(0.55 0.02 265 / 9%);
 --vibeui-avatar-028-accent:light-dark(oklch(0.55 0.2 262),oklch(0.69 0.2 262));
@@ -38,10 +38,11 @@ display:grid;place-items:center;
 appearance:none;cursor:pointer;padding:0;
 width:var(--vibeui-avatar-028-size);height:var(--vibeui-avatar-028-size);
 border:0;border-radius:9999px;
-background:oklch(0.9 0.06 var(--vibeui-avatar-028-hue,265));
-color:oklch(0.36 0.12 var(--vibeui-avatar-028-hue,265));
+background:light-dark(oklch(0.9 0.06 var(--vibeui-avatar-028-hue,265)),oklch(0.34 0.065 var(--vibeui-avatar-028-hue,265)));
+color:light-dark(oklch(0.36 0.12 var(--vibeui-avatar-028-hue,265)),oklch(0.88 0.063 var(--vibeui-avatar-028-hue,265)));
 font:inherit;font-size:calc(var(--vibeui-avatar-028-size) * 0.36);font-weight:700;line-height:1;
 }
+[data-vibeui-block="avatar-028"] [data-part="trigger"] img{width:100%;height:100%;border-radius:inherit;object-fit:cover;display:block}
 [data-vibeui-block="avatar-028"] [data-part="trigger"]:hover{box-shadow:0 0 0 0.1875rem light-dark(oklch(0.55 0.02 265 / 16%),oklch(0.66 0.02 265 / 16%))}
 [data-vibeui-block="avatar-028"] [data-part="trigger"]:focus-visible{outline:2px solid var(--vibeui-avatar-028-accent);outline-offset:2px}
 [data-vibeui-block="avatar-028"] [data-part="menu"]{
@@ -88,6 +89,7 @@ margin-top:0.3125rem;padding-top:0.625rem;min-height:2.375rem;
 border-top:1px solid var(--vibeui-avatar-028-border);border-radius:0 0 0.5rem 0.5rem;
 color:var(--vibeui-avatar-028-danger);
 }
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="avatar-028"]{color-scheme:dark}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="avatar-028"] *{animation:none!important;transition:none!important}}
 `
 
@@ -137,9 +139,11 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 export function Avatar028({
   background = "",
   name = "Анна Реброва",
+  src,
   email = "anna@vibeui.dev",
   items = ["Профиль", "Настройки", "Оформление"],
   signOutLabel = "Выйти",
+  textColor,
   className,
   style,
   ...props
@@ -152,6 +156,7 @@ export function Avatar028({
           colorScheme: schemeForBackground(background),
         }
       : null),
+    ...(textColor ? { "--vibeui-avatar-028-fg": textColor } : null),
     ...style,
   } as CSSProperties
 
@@ -162,6 +167,7 @@ export function Avatar028({
       </style>
       <div
         {...props}
+        data-slot="avatar"
         data-vibeui-block="avatar-028"
         className={className}
         style={palette}
@@ -173,7 +179,11 @@ export function Avatar028({
           aria-haspopup="menu"
           aria-label={`Меню профиля: ${name}`}
         >
-          <span aria-hidden="true">{initials(name)}</span>
+          {src ? (
+            <img src={src} alt="" />
+          ) : (
+            <span aria-hidden="true">{initials(name)}</span>
+          )}
         </button>
         <div
           id="vibeui-avatar-028-menu"

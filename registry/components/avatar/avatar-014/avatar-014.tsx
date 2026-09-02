@@ -1,10 +1,8 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Avatar014Props = Omit<
-  ComponentPropsWithoutRef<"span">,
-  "children"
-> & {
+export type Avatar014Props = Omit<ComponentProps<"span">, "children"> & {
   name?: string
+  src?: string
   role?: string
   shape?: "hex" | "squircle" | "circle"
   size?: "sm" | "md" | "lg"
@@ -17,7 +15,7 @@ export type Avatar014Props = Omit<
 // сдвиг — без него буквы кажутся смещёнными вверх. Обводка нарисована
 // подложкой под clip-path: обычный border режется вместе с фигурой.
 const STYLES = `:where([data-vibeui-block="avatar-014"]){
---vibeui-avatar-014-size:3rem;
+--vibeui-avatar-014-size:2.5rem;
 --vibeui-avatar-014-ring:light-dark(oklch(0.9 0.006 265),oklch(0.19 0.01 265));
 --vibeui-avatar-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -34,8 +32,8 @@ background:var(--vibeui-avatar-014-ring);
 [data-vibeui-block="avatar-014"] [data-part="face"]{
 display:grid;place-items:center;
 width:calc(100% - 2px);height:calc(100% - 2px);
-background:oklch(0.9 0.07 var(--vibeui-avatar-014-hue,265));
-color:oklch(0.35 0.13 var(--vibeui-avatar-014-hue,265));
+background:light-dark(oklch(0.9 0.07 var(--vibeui-avatar-014-hue,265)),oklch(0.35 0.07 var(--vibeui-avatar-014-hue,265)));
+color:light-dark(oklch(0.35 0.13 var(--vibeui-avatar-014-hue,265)),oklch(0.89 0.065 var(--vibeui-avatar-014-hue,265)));
 font-size:calc(var(--vibeui-avatar-014-size) * 0.34);font-weight:700;line-height:1;
 }
 [data-vibeui-block="avatar-014"] [data-part="frame"],
@@ -56,11 +54,13 @@ border-radius:34%;
 [data-vibeui-block="avatar-014"][data-shape="circle"] [data-part="face"]{
 border-radius:9999px;
 }
-[data-vibeui-block="avatar-014"][data-size="sm"]{--vibeui-avatar-014-size:2.25rem}
-[data-vibeui-block="avatar-014"][data-size="lg"]{--vibeui-avatar-014-size:4rem}
+[data-vibeui-block="avatar-014"] [data-part="face"] img{width:100%;height:100%;object-fit:cover;display:block}
+[data-vibeui-block="avatar-014"][data-size="sm"]{--vibeui-avatar-014-size:2rem}
+[data-vibeui-block="avatar-014"][data-size="lg"]{--vibeui-avatar-014-size:3.5rem}
 [data-vibeui-block="avatar-014"] [data-part="text"]{display:flex;flex-direction:column;gap:0.0625rem;min-width:0}
-[data-vibeui-block="avatar-014"] [data-part="name"]{font-size:0.875rem;font-weight:650}
+[data-vibeui-block="avatar-014"] [data-part="name"]{font-size:0.875rem;font-weight:650;color:light-dark(oklch(0.22 0.015 265),oklch(0.95 0.006 265))}
 [data-vibeui-block="avatar-014"] [data-part="role"]{font-size:0.75rem;color:light-dark(oklch(0.55 0.014 265),oklch(0.66 0.014 265))}
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="avatar-014"]{color-scheme:dark}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="avatar-014"] *{animation:none!important;transition:none!important}}
 `
 
@@ -86,7 +86,8 @@ function initials(name: string) {
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Avatar014({
-  name = "Илья Мохов",
+  name = "Марк Ильин",
+  src,
   role = "Фронтенд",
   shape = "hex",
   size = "md",
@@ -106,6 +107,7 @@ export function Avatar014({
       </style>
       <span
         {...props}
+        data-slot="avatar"
         data-vibeui-block="avatar-014"
         data-shape={shape}
         data-size={size}
@@ -113,7 +115,9 @@ export function Avatar014({
         style={palette}
       >
         <span data-part="frame" aria-hidden="true">
-          <span data-part="face">{initials(name)}</span>
+          <span data-part="face">
+            {src ? <img src={src} alt="" /> : initials(name)}
+          </span>
         </span>
         <span data-part="text">
           <span data-part="name">{name}</span>

@@ -1,16 +1,18 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Avatar023Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Avatar023Props = Omit<ComponentProps<"div">, "children"> & {
   names?: string[]
+  photos?: string[]
   label?: string
   /** Подпись перед перечислением: «Участников 5». */
   membersText?: string
   size?: "sm" | "md" | "lg"
   /** Пусто — подложки нет, компонент лежит на фоне страницы. */
   background?: string
+  /** Цвет основного текста. Пусто — берётся из темы окружения. */
+  textColor?: string
+  /** Цвет приглушённого текста. Пусто — выводится из основного. */
+  mutedColor?: string
 }
 
 // Идея компонента: аватар группового чата — четыре лица внутри одного круга.
@@ -19,15 +21,16 @@ export type Avatar023Props = Omit<
 // меняется от числа лиц (одно, два, три, четыре) — иначе при трёх участниках
 // в углу висела бы пустая клетка. Пятый и дальше сворачиваются в счётчик.
 const STYLES = `:where([data-vibeui-block="avatar-023"]){
---vibeui-avatar-023-size:3rem;
+--vibeui-avatar-023-size:2.5rem;
 --vibeui-avatar-023-bg:transparent;
 --vibeui-avatar-023-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
---vibeui-avatar-023-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.01 265));
+--vibeui-avatar-023-muted:color-mix(in oklab,var(--vibeui-avatar-023-fg) 68%,transparent);
 --vibeui-avatar-023-border:light-dark(oklch(0.91 0.006 265),oklch(0.31 0.01 265));
 --vibeui-avatar-023-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Своя светлая подложка: тёмный текст обязан читаться на любом фоне. */
 [data-vibeui-block="avatar-023"]{
+container-type:inline-size;flex-wrap:wrap;
 display:flex;align-items:center;gap:0.625rem;
 box-sizing:border-box;width:100%;max-width:18rem;padding:0.5rem 0.75rem;
 background:var(--vibeui-avatar-023-bg);
@@ -49,10 +52,12 @@ border-radius:9999px;
 [data-vibeui-block="avatar-023"][data-count="3"] [data-part="tile"]:first-child{grid-row:span 2}
 [data-vibeui-block="avatar-023"] [data-part="tile"]{
 display:grid;place-items:center;min-width:0;
-background:oklch(0.9 0.06 var(--vibeui-avatar-023-tile,265));
-color:oklch(0.36 0.12 var(--vibeui-avatar-023-tile,265));
+background:light-dark(oklch(0.9 0.06 var(--vibeui-avatar-023-tile,265)),oklch(0.34 0.065 var(--vibeui-avatar-023-tile,265)));
+color:light-dark(oklch(0.36 0.12 var(--vibeui-avatar-023-tile,265)),oklch(0.88 0.063 var(--vibeui-avatar-023-tile,265)));
 font-size:calc(var(--vibeui-avatar-023-size) * 0.2);font-weight:700;line-height:1;
 }
+[data-vibeui-block="avatar-023"] [data-part="tile"]{overflow:hidden}
+[data-vibeui-block="avatar-023"] [data-part="tile"] img{width:100%;height:100%;border-radius:inherit;object-fit:cover;display:block}
 [data-vibeui-block="avatar-023"][data-count="1"] [data-part="tile"]{font-size:calc(var(--vibeui-avatar-023-size) * 0.34)}
 [data-vibeui-block="avatar-023"] [data-rest="true"]{
 background:light-dark(oklch(0.93 0.008 265),oklch(0.3 0.008 265));color:light-dark(oklch(0.42 0.014 265),oklch(0.86 0.014 265));
@@ -67,8 +72,12 @@ overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 font-size:0.75rem;color:var(--vibeui-avatar-023-muted);
 overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 }
-[data-vibeui-block="avatar-023"][data-size="sm"]{--vibeui-avatar-023-size:2.25rem}
-[data-vibeui-block="avatar-023"][data-size="lg"]{--vibeui-avatar-023-size:4rem}
+[data-vibeui-block="avatar-023"][data-size="sm"]{--vibeui-avatar-023-size:2rem}
+[data-vibeui-block="avatar-023"][data-size="lg"]{--vibeui-avatar-023-size:3.5rem}
+@container (max-width: 18rem){
+[data-vibeui-block="avatar-023"] [data-part="text"]{min-width:100%}
+}
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="avatar-023"]{color-scheme:dark}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="avatar-023"] *{animation:none!important;transition:none!important}}
 `
 
@@ -117,10 +126,19 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Avatar023({
   background = "",
-  names = ["Анна Реброва", "Илья Мохов", "Ким Сон", "Пётр Гай", "Мария Лоза"],
+  names = [
+    "Анна Реброва",
+    "Марк Ильин",
+    "Мария Гурова",
+    "Олег Дроздов",
+    "Ирина Ким",
+  ],
+  photos = [],
   label = "Команда каталога",
   membersText = "Участников",
   size = "md",
+  textColor,
+  mutedColor,
   className,
   style,
   ...props
@@ -132,6 +150,8 @@ export function Avatar023({
           colorScheme: schemeForBackground(background),
         }
       : null),
+    ...(textColor ? { "--vibeui-avatar-023-fg": textColor } : null),
+    ...(mutedColor ? { "--vibeui-avatar-023-muted": mutedColor } : null),
     ...style,
   } as CSSProperties
 
@@ -145,6 +165,7 @@ export function Avatar023({
       </style>
       <div
         {...props}
+        data-slot="avatar"
         data-vibeui-block="avatar-023"
         data-count={rest > 0 ? 4 : shown.length}
         data-size={size}
@@ -152,7 +173,7 @@ export function Avatar023({
         style={palette}
       >
         <span data-part="mosaic" aria-hidden="true">
-          {shown.map((person) => (
+          {shown.map((person, index) => (
             <span
               key={person}
               data-part="tile"
@@ -162,7 +183,11 @@ export function Avatar023({
                 } as CSSProperties
               }
             >
-              {initials(person)}
+              {photos[index] ? (
+                <img src={photos[index]} alt="" />
+              ) : (
+                initials(person)
+              )}
             </span>
           ))}
           {rest > 0 ? (

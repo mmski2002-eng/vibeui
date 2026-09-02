@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Avatar004Props = Omit<
-  ComponentPropsWithoutRef<"span">,
-  "children"
-> & {
+export type Avatar004Props = Omit<ComponentProps<"span">, "children"> & {
   name?: string
   src?: string
   /** Заполнение кольца в процентах: прогресс профиля, курса, задачи. */
@@ -18,7 +15,7 @@ export type Avatar004Props = Omit<
 // Значение продублировано текстом для скринридера: цвет не читается вслух.
 const STYLES = `
 :where([data-vibeui-block="avatar-004"]){
---vibeui-avatar-004-size:3.5rem;
+--vibeui-avatar-004-size:2.5rem;
 --vibeui-avatar-004-thickness:0.1875rem;
 --vibeui-avatar-004-gap:0.125rem;
 --vibeui-avatar-004-value:0deg;
@@ -29,13 +26,17 @@ const STYLES = `
 --vibeui-avatar-004-accent:light-dark(oklch(0.62 0.17 265),oklch(0.76 0.17 265));
 --vibeui-avatar-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Размер задаёт портрет, кольцо растёт наружу: в строке со «обычными»
+   аватарами лица тогда одинаковые, а не мельче на толщину кольца. */
 [data-vibeui-block="avatar-004"]{
 position:relative;display:inline-flex;align-items:center;justify-content:center;flex:none;
-width:var(--vibeui-avatar-004-size);height:var(--vibeui-avatar-004-size);
+box-sizing:border-box;
+width:calc(var(--vibeui-avatar-004-size) + (var(--vibeui-avatar-004-thickness) + var(--vibeui-avatar-004-gap)) * 2);
+height:calc(var(--vibeui-avatar-004-size) + (var(--vibeui-avatar-004-thickness) + var(--vibeui-avatar-004-gap)) * 2);
 vertical-align:middle;font-family:var(--vibeui-avatar-004-font);
 }
-[data-vibeui-block="avatar-004"][data-size="sm"]{--vibeui-avatar-004-size:2.75rem;--vibeui-avatar-004-thickness:0.15rem}
-[data-vibeui-block="avatar-004"][data-size="lg"]{--vibeui-avatar-004-size:4.5rem;--vibeui-avatar-004-thickness:0.25rem}
+[data-vibeui-block="avatar-004"][data-size="sm"]{--vibeui-avatar-004-size:2rem;--vibeui-avatar-004-thickness:0.15rem}
+[data-vibeui-block="avatar-004"][data-size="lg"]{--vibeui-avatar-004-size:3.5rem;--vibeui-avatar-004-thickness:0.25rem}
 /* Кольцо: conic-gradient, вырезанный маской, без SVG и без расчёта дуги. */
 [data-vibeui-block="avatar-004"] [data-part="ring"]{
 position:absolute;inset:0;border-radius:9999px;
@@ -44,8 +45,7 @@ mask:radial-gradient(farthest-side,transparent calc(100% - var(--vibeui-avatar-0
 }
 [data-vibeui-block="avatar-004"] [data-part="shape"]{
 position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;
-width:calc(100% - (var(--vibeui-avatar-004-thickness) + var(--vibeui-avatar-004-gap)) * 2);
-height:calc(100% - (var(--vibeui-avatar-004-thickness) + var(--vibeui-avatar-004-gap)) * 2);
+width:var(--vibeui-avatar-004-size);height:var(--vibeui-avatar-004-size);
 border-radius:9999px;background:var(--vibeui-avatar-004-bg);color:var(--vibeui-avatar-004-fg);
 font-size:calc(var(--vibeui-avatar-004-size) * 0.28);font-weight:650;line-height:1;user-select:none;
 }
@@ -54,6 +54,7 @@ font-size:calc(var(--vibeui-avatar-004-size) * 0.28);font-weight:650;line-height
 position:absolute;width:1px;height:1px;overflow:hidden;
 clip-path:inset(50%);white-space:nowrap;
 }
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="avatar-004"]{color-scheme:dark}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="avatar-004"] *{animation:none!important;transition:none!important}}
 `
 
@@ -84,7 +85,7 @@ function initials(name: string) {
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Avatar004({
-  name = "Анна Петрова",
+  name = "Анна Реброва",
   src = "",
   value = 72,
   size = "md",
@@ -108,6 +109,7 @@ export function Avatar004({
       </style>
       <span
         {...props}
+        data-slot="avatar"
         data-vibeui-block="avatar-004"
         data-size={size}
         className={className}

@@ -1,15 +1,17 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Avatar033Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Avatar033Props = Omit<ComponentProps<"div">, "children"> & {
   name?: string
+  src?: string
   state?: "speaking" | "listening" | "muted"
   /** Подписи: компонент несёт русские, проект подставляет свои. */
   stateText?: Record<string, string>
   /** Пусто — подложки нет, компонент лежит на фоне страницы. */
   background?: string
+  /** Цвет основного текста. Пусто — берётся из темы окружения. */
+  textColor?: string
+  /** Цвет приглушённого текста. Пусто — выводится из основного. */
+  mutedColor?: string
 }
 
 // Идея компонента: строка участника звонка. Кто говорит — видно по кольцу,
@@ -22,7 +24,7 @@ const STYLES = `:where([data-vibeui-block="avatar-033"]){
 --vibeui-avatar-033-size:2.5rem;
 --vibeui-avatar-033-bg:transparent;
 --vibeui-avatar-033-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
---vibeui-avatar-033-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.01 265));
+--vibeui-avatar-033-muted:color-mix(in oklab,var(--vibeui-avatar-033-fg) 68%,transparent);
 --vibeui-avatar-033-border:light-dark(oklch(0.91 0.006 265),oklch(0.31 0.01 265));
 --vibeui-avatar-033-live:oklch(0.62 0.15 152);
 --vibeui-avatar-033-off:oklch(0.6 0.19 25);
@@ -30,6 +32,7 @@ const STYLES = `:where([data-vibeui-block="avatar-033"]){
 }
 /* Своя светлая подложка: тёмный текст обязан читаться на любом фоне. */
 [data-vibeui-block="avatar-033"]{
+container-type:inline-size;flex-wrap:wrap;
 display:flex;align-items:center;gap:0.75rem;
 box-sizing:border-box;width:100%;max-width:19rem;padding:0.5rem 0.75rem;
 background:var(--vibeui-avatar-033-bg);
@@ -42,8 +45,8 @@ font-family:var(--vibeui-avatar-033-font);color:var(--vibeui-avatar-033-fg);
 display:grid;place-items:center;
 width:var(--vibeui-avatar-033-size);height:var(--vibeui-avatar-033-size);
 border-radius:9999px;
-background:oklch(0.9 0.06 var(--vibeui-avatar-033-hue,265));
-color:oklch(0.36 0.12 var(--vibeui-avatar-033-hue,265));
+background:light-dark(oklch(0.9 0.06 var(--vibeui-avatar-033-hue,265)),oklch(0.34 0.065 var(--vibeui-avatar-033-hue,265)));
+color:light-dark(oklch(0.36 0.12 var(--vibeui-avatar-033-hue,265)),oklch(0.88 0.063 var(--vibeui-avatar-033-hue,265)));
 font-size:calc(var(--vibeui-avatar-033-size) * 0.34);font-weight:700;line-height:1;
 }
 /* Пульс расходится от портрета: движение ловится боковым зрением. */
@@ -85,6 +88,12 @@ overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 [data-vibeui-block="avatar-033"] [data-part="state"]{font-size:0.75rem;color:var(--vibeui-avatar-033-muted)}
 [data-vibeui-block="avatar-033"][data-state="speaking"] [data-part="state"]{color:var(--vibeui-avatar-033-live);font-weight:600}
 [data-vibeui-block="avatar-033"][data-state="muted"] [data-part="state"]{color:var(--vibeui-avatar-033-off)}
+[data-vibeui-block="avatar-033"] [data-part="face"]{overflow:hidden}
+[data-vibeui-block="avatar-033"] [data-part="face"] img{width:100%;height:100%;border-radius:inherit;object-fit:cover;display:block}
+@container (max-width: 20rem){
+[data-vibeui-block="avatar-033"] [data-part="text"]{min-width:100%}
+}
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="avatar-033"]{color-scheme:dark}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="avatar-033"] *{animation:none!important;transition:none!important}
 /* Без движения состояние всё равно видно: ровное кольцо того же цвета. */
@@ -143,9 +152,12 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Avatar033({
   background = "",
-  name = "Ким Сон",
+  name = "Ирина Ким",
+  src,
   state = "speaking",
   stateText = STATE_LABEL,
+  textColor,
+  mutedColor,
   className,
   style,
   ...props
@@ -158,6 +170,8 @@ export function Avatar033({
           colorScheme: schemeForBackground(background),
         }
       : null),
+    ...(textColor ? { "--vibeui-avatar-033-fg": textColor } : null),
+    ...(mutedColor ? { "--vibeui-avatar-033-muted": mutedColor } : null),
     ...style,
   } as CSSProperties
 
@@ -168,6 +182,7 @@ export function Avatar033({
       </style>
       <div
         {...props}
+        data-slot="avatar"
         data-vibeui-block="avatar-033"
         data-state={state}
         className={className}
@@ -176,7 +191,7 @@ export function Avatar033({
         <span data-part="slot">
           <span data-part="pulse" aria-hidden="true" />
           <span data-part="face" aria-hidden="true">
-            {initials(name)}
+            {src ? <img src={src} alt="" /> : initials(name)}
           </span>
           <span data-part="mic" aria-hidden="true" />
         </span>

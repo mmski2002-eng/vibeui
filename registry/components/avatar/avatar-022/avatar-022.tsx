@@ -1,16 +1,16 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Avatar022Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Avatar022Props = Omit<ComponentProps<"div">, "children"> & {
   name?: string
+  src?: string
   typing?: boolean
   idleText?: string
   /** Подпись во время набора текста. */
   typingText?: string
   /** Пусто — подложки нет, компонент лежит на фоне страницы. */
   background?: string
+  /** Цвет текста. Пусто — берётся из темы окружения, приглушённый выводится из него. */
+  textColor?: string
 }
 
 // Идея компонента: аватар с индикатором набора текста. Пузырёк с точками висит
@@ -20,10 +20,10 @@ export type Avatar022Props = Omit<
 // участников не дёргается, когда кто-то начинает и перестаёт печатать.
 const STYLES = `
 :where([data-vibeui-block="avatar-022"]){
---vibeui-avatar-022-size:2.75rem;
+--vibeui-avatar-022-size:2.5rem;
 --vibeui-avatar-022-bg:transparent;
 --vibeui-avatar-022-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
---vibeui-avatar-022-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.01 265));
+--vibeui-avatar-022-muted:color-mix(in oklab,var(--vibeui-avatar-022-fg) 68%,transparent);
 --vibeui-avatar-022-border:light-dark(oklch(0.91 0.006 265),oklch(0.31 0.01 265));
 --vibeui-avatar-022-accent:light-dark(oklch(0.55 0.2 262),oklch(0.69 0.2 262));
 --vibeui-avatar-022-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -42,8 +42,8 @@ font-family:var(--vibeui-avatar-022-font);color:var(--vibeui-avatar-022-fg);
 display:grid;place-items:center;
 width:var(--vibeui-avatar-022-size);height:var(--vibeui-avatar-022-size);
 border-radius:9999px;
-background:oklch(0.9 0.06 var(--vibeui-avatar-022-hue,265));
-color:oklch(0.36 0.12 var(--vibeui-avatar-022-hue,265));
+background:light-dark(oklch(0.9 0.06 var(--vibeui-avatar-022-hue,265)),oklch(0.34 0.065 var(--vibeui-avatar-022-hue,265)));
+color:light-dark(oklch(0.36 0.12 var(--vibeui-avatar-022-hue,265)),oklch(0.88 0.063 var(--vibeui-avatar-022-hue,265)));
 font-size:calc(var(--vibeui-avatar-022-size) * 0.34);font-weight:700;line-height:1;
 }
 /* Пузырёк отделён обводкой цвета карточки: карточка своя, цвет известен. */
@@ -76,6 +76,9 @@ color:var(--vibeui-avatar-022-muted);
 overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 }
 [data-vibeui-block="avatar-022"][data-typing="true"] [data-part="state"]{color:var(--vibeui-avatar-022-accent)}
+[data-vibeui-block="avatar-022"] [data-part="face"]{overflow:hidden}
+[data-vibeui-block="avatar-022"] [data-part="face"] img{width:100%;height:100%;border-radius:inherit;object-fit:cover;display:block}
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="avatar-022"]{color-scheme:dark}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="avatar-022"] *{animation:none!important;transition:none!important}}
 `
 
@@ -125,9 +128,11 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 export function Avatar022({
   background = "",
   name = "Анна Реброва",
+  src,
   typing = true,
   idleText = "в сети",
   typingText = "печатает…",
+  textColor,
   className,
   style,
   ...props
@@ -140,6 +145,7 @@ export function Avatar022({
           colorScheme: schemeForBackground(background),
         }
       : null),
+    ...(textColor ? { "--vibeui-avatar-022-fg": textColor } : null),
     ...style,
   } as CSSProperties
 
@@ -150,6 +156,7 @@ export function Avatar022({
       </style>
       <div
         {...props}
+        data-slot="avatar"
         data-vibeui-block="avatar-022"
         data-typing={typing}
         className={className}
@@ -157,7 +164,7 @@ export function Avatar022({
       >
         <span data-part="slot">
           <span data-part="face" aria-hidden="true">
-            {initials(name)}
+            {src ? <img src={src} alt="" /> : initials(name)}
           </span>
           {typing ? (
             <span data-part="bubble" aria-hidden="true">

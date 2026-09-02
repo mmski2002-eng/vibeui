@@ -28,18 +28,15 @@ import { Avatar020 } from "@/registry/components/avatar/avatar-020/avatar-020"
 import { Avatar021 } from "@/registry/components/avatar/avatar-021/avatar-021"
 import { Avatar022 } from "@/registry/components/avatar/avatar-022/avatar-022"
 import { Avatar023 } from "@/registry/components/avatar/avatar-023/avatar-023"
-import { Avatar024 } from "@/registry/components/avatar/avatar-024/avatar-024"
-import { Avatar025 } from "@/registry/components/avatar/avatar-025/avatar-025"
-import { Avatar026 } from "@/registry/components/avatar/avatar-026/avatar-026"
-import { Avatar027 } from "@/registry/components/avatar/avatar-027/avatar-027"
 import { Avatar028 } from "@/registry/components/avatar/avatar-028/avatar-028"
-import { Avatar029 } from "@/registry/components/avatar/avatar-029/avatar-029"
 import { Avatar030 } from "@/registry/components/avatar/avatar-030/avatar-030"
 import { Avatar031 } from "@/registry/components/avatar/avatar-031/avatar-031"
-import { Avatar032 } from "@/registry/components/avatar/avatar-032/avatar-032"
 import { Avatar033 } from "@/registry/components/avatar/avatar-033/avatar-033"
 import { Avatar034 } from "@/registry/components/avatar/avatar-034/avatar-034"
 import { Avatar035 } from "@/registry/components/avatar/avatar-035/avatar-035"
+import { Avatar036 } from "@/registry/components/avatar/avatar-036/avatar-036"
+import { Avatar037 } from "@/registry/components/avatar/avatar-037/avatar-037"
+import { Avatar039 } from "@/registry/components/avatar/avatar-039/avatar-039"
 
 export const PREVIEWS = {
   "avatar-001": Avatar001,
@@ -65,16 +62,13 @@ export const PREVIEWS = {
   "avatar-021": Avatar021,
   "avatar-022": Avatar022,
   "avatar-023": Avatar023,
-  "avatar-024": Avatar024,
-  "avatar-025": Avatar025,
-  "avatar-026": Avatar026,
-  "avatar-027": Avatar027,
   "avatar-028": Avatar028,
-  "avatar-029": Avatar029,
   "avatar-030": Avatar030,
   "avatar-031": Avatar031,
-  "avatar-032": Avatar032,
   "avatar-033": Avatar033,
   "avatar-034": Avatar034,
   "avatar-035": Avatar035,
+  "avatar-036": Avatar036,
+  "avatar-037": Avatar037,
+  "avatar-039": Avatar039,
 } satisfies Record<string, ComponentType<PreviewProps>>

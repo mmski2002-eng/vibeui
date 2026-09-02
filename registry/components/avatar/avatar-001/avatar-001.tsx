@@ -1,11 +1,8 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Avatar001Status = "none" | "online" | "away" | "busy"
 
-export type Avatar001Props = Omit<
-  ComponentPropsWithoutRef<"span">,
-  "children"
-> & {
+export type Avatar001Props = Omit<ComponentProps<"span">, "children"> & {
   name?: string
   /** Ссылка на фото. Без неё показываются инициалы. */
   src?: string
@@ -13,9 +10,11 @@ export type Avatar001Props = Omit<
   status?: Avatar001Status
 }
 
-// Идея компонента: фон выводится из имени, а не задаётся руками. В списке из
-// сорока человек без фотографий аватары всё равно различимы, и один и тот же
-// человек всегда одного цвета — на любой странице и после перезагрузки.
+// Идея компонента: базовый аватар — фотография, точка присутствия и три
+// размера. Фотография есть не у всех, поэтому запасной вариант не серый
+// силуэт, а инициалы на фоне, выведенном из имени: в списке из сорока человек
+// такие кружки остаются различимыми, и один человек всегда одного цвета — на
+// любой странице и после перезагрузки.
 const STYLES = `
 :where([data-vibeui-block="avatar-001"]){
 --vibeui-avatar-001-size:2.5rem;
@@ -58,6 +57,7 @@ box-shadow:0 0 0 2px var(--vibeui-avatar-001-ring);
 position:absolute;width:1px;height:1px;overflow:hidden;
 clip-path:inset(50%);white-space:nowrap;
 }
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="avatar-001"]{color-scheme:dark}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="avatar-001"] *{animation:none!important;transition:none!important}}
 `
 
@@ -89,11 +89,11 @@ function hueOf(name: string): number {
 }
 
 /**
- * Аватар с инициалами, цвет которого выводится из имени.
+ * Базовый аватар: фотография, точка присутствия и три размера.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Avatar001({
-  name = "Анна Ковалёва",
+  name = "Анна Реброва",
   src,
   size = "md",
   status = "online",
@@ -113,6 +113,7 @@ export function Avatar001({
       </style>
       <span
         {...props}
+        data-slot="avatar"
         data-vibeui-block="avatar-001"
         data-size={size}
         data-status={status}
