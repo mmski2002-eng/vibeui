@@ -1,14 +1,10 @@
 "use client"
 
 import { useId, useMemo, useState } from "react"
-import type {
-  ComponentPropsWithoutRef,
-  CSSProperties,
-  KeyboardEvent,
-} from "react"
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Autocomplete003Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange" | "defaultValue"
 > & {
   label?: string
@@ -34,7 +30,7 @@ const STYLES = `
 :where([data-vibeui-block="autocomplete-003"]){
 --vibeui-autocomplete-003-bg:transparent;
 --vibeui-autocomplete-003-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-autocomplete-003-muted:light-dark(oklch(0.52 0.014 265),oklch(0.7 0.012 265));
+--vibeui-autocomplete-003-muted:color-mix(in oklab,var(--vibeui-autocomplete-003-fg) 68%,transparent);
 --vibeui-autocomplete-003-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-autocomplete-003-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.011 265));
 --vibeui-autocomplete-003-panel:light-dark(oklch(1 0 0),oklch(0.24 0.011 265));
@@ -85,7 +81,7 @@ border:0;background:transparent;color:inherit;font:inherit;font-size:0.875rem;
 [data-vibeui-block="autocomplete-003"] input:focus{outline:none}
 [data-vibeui-block="autocomplete-003"] input::placeholder{color:var(--vibeui-autocomplete-003-muted)}
 [data-vibeui-block="autocomplete-003"] [data-part="list"]{
-margin:0;padding:0.25rem;list-style:none;max-height:9rem;overflow-y:auto;
+margin:0;padding:0.25rem;list-style:none;max-height:9rem;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--vibeui-autocomplete-003-border) transparent;
 border:1px solid var(--vibeui-autocomplete-003-border);
 border-radius:var(--vibeui-autocomplete-003-radius);
 background:var(--vibeui-autocomplete-003-panel);
@@ -96,6 +92,7 @@ border-radius:0.375rem;font-size:0.875rem;cursor:pointer;
 }
 [data-vibeui-block="autocomplete-003"] [data-part="option"][data-active="true"]{background:var(--vibeui-autocomplete-003-active)}
 [data-vibeui-block="autocomplete-003"] [data-part="hint"]{font-size:0.75rem;color:var(--vibeui-autocomplete-003-muted)}
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="autocomplete-003"]{color-scheme:dark}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="autocomplete-003"] *{animation:none!important;transition:none!important}}
 `
 
@@ -208,6 +205,7 @@ export function Autocomplete003({
       </style>
       <div
         {...props}
+        data-slot="autocomplete"
         data-vibeui-block="autocomplete-003"
         className={className}
         style={palette}

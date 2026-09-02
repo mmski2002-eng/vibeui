@@ -2,6 +2,165 @@
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "items": [
     {
+      "name": "autocomplete-014",
+      "type": "registry:component",
+      "title": "Мультивыбор с галочками",
+      "description": "Множественный выбор списком, а не фишками: выбранное остаётся на своём месте, список не закрывается после каждой галочки.",
+      "categories": ["autocomplete"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "autocomplete-014/autocomplete-014.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/autocomplete-014.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-autocomplete-014-*. Выбор хранится массивом строк, порядок списка не меняется — выбранное не всплывает наверх, поэтому глаз не теряет позицию. Строка — настоящий label с input[type=checkbox]: клавиатура, состояние и объявление для скринридера приходят от браузера, а не имитируются ролями. Нажимается вся строка, а не сама галочка: попасть в квадрат 15px пальцем почти невозможно. Курсор ведут стрелки, переключает Enter — пробел занят набором в поле поиска. Счётчик выбранного помечен role=\"status\", поэтому изменение читается вслух. Раскладка подвала считается от ширины самой панели через container-query. Тема берётся из color-scheme через light-dark(), классовую тёмную тему компонент включает себе сам.",
+      "meta": {
+        "tags": ["autocomplete", "multiselect", "checkbox", "filter"],
+        "ai": {
+          "export": "Autocomplete014",
+          "usage": "<Autocomplete014 label=\"Направления\" options={skills} onChange={setSkills} />",
+          "summary": "Множественный выбор списком с галочками: поиск сверху, выбранное остаётся на своих местах, счётчик и сброс снизу. Список не закрывается после выбора, курсор ведут стрелки, переключает Enter. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "список, который не закрывается после каждой галочки: закрытие — главная беда мультивыбора",
+            "порядок опций: выбранное не всплывает наверх, иначе глаз теряет позицию после каждого клика",
+            "настоящий input[type=checkbox] вместо div с ролью: состояние и клавиатура приходят от браузера",
+            "нажатие по всей строке, а не по квадрату галочки — пальцем в него не попасть",
+            "Enter как переключатель: пробел набирается в поле поиска",
+            "счётчик выбранного с role=\"status\" — иначе изменение остаётся немым",
+            "локальную палитру --vibeui-autocomplete-014-* и не подменять её токенами вашей темы"
+          ],
+          "adapt": [
+            "массив options и начальный выбор defaultValue",
+            "подписи label, placeholder, emptyLabel и clearLabel",
+            "формулировку счётчика через countText с {count} и {total}",
+            "цвета accent и background"
+          ],
+          "notes": [
+            "Компонент не ограничивает число выбранного: предел задаёт вызывающий код, если он нужен.",
+            "Список показывает все опции сразу, без раскрытия: так видно, из чего выбираешь. Для сотен опций добавьте свой ограничитель высоты.",
+            "Выбранное не выносится фишками наверх — это соседний компонент категории; здесь ответ на вопрос «что выбрано» даёт сам список."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Направления",
+            "maxLength": 30
+          },
+          {
+            "prop": "placeholder",
+            "label": "Плейсхолдер",
+            "type": "text",
+            "default": "Поиск по направлениям",
+            "maxLength": 40
+          },
+          {
+            "prop": "clearLabel",
+            "label": "Кнопка сброса",
+            "type": "text",
+            "default": "Сбросить",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Checkbox Multiselect",
+            "description": "Multiple choice as a list rather than chips: what you picked stays in place, and the list does not close after every tick.",
+            "ai": {
+              "summary": "Multiple choice as a checkbox list: search on top, picks staying in place, a counter and a reset below. The list does not close after a pick, arrows move the cursor and Enter toggles. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "a list that does not close after every tick: closing is the classic curse of multiselect",
+                "the order of the options: picks do not float to the top, or the eye loses its place after every click",
+                "a real input[type=checkbox] instead of a div with a role: state and keyboard come from the browser",
+                "the whole row as the target rather than the 15px box — a finger cannot hit that",
+                "Enter as the toggle: space is typed into the search field",
+                "the counter with role=\"status\" — otherwise the change stays silent",
+                "the local --vibeui-autocomplete-014-* palette — do not swap it for your theme tokens"
+              ],
+              "adapt": [
+                "the options array and the initial defaultValue",
+                "the label, placeholder, emptyLabel and clearLabel captions",
+                "the counter wording via countText with {count} and {total}",
+                "the accent and background colours"
+              ],
+              "notes": [
+                "The component does not cap the number of picks: a limit belongs to the calling code if you need one.",
+                "The list shows every option at once, without a disclosure: that is how you see what you are choosing from. For hundreds of options add your own height limit.",
+                "Picks are not lifted into chips above the field — that is the neighbouring component; here the list itself answers “what is selected”."
+              ],
+              "usage": "<Autocomplete014 label=\"Skills\" options={skills} onChange={setSkills} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Skills"
+              },
+              "placeholder": {
+                "label": "Placeholder",
+                "default": "Search skills"
+              },
+              "clearLabel": {
+                "label": "Reset button",
+                "default": "Reset"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "Skills",
+                "placeholder": "Search skills",
+                "options": [
+                  "Product design",
+                  "Frontend",
+                  "Backend",
+                  "Analytics",
+                  "Mobile",
+                  "Support",
+                  "Marketing"
+                ],
+                "defaultValue": ["Frontend", "Analytics"],
+                "emptyLabel": "Nothing found",
+                "clearLabel": "Reset",
+                "countText": "{count} of {total} selected"
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "label",
+          "placeholder",
+          "clearLabel",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
+      }
+    },
+    {
       "name": "autocomplete-001",
       "type": "registry:component",
       "title": "Поле со списком datalist",
@@ -154,7 +313,7 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": ["label", "placeholder", "hint", "accent", "background"]
       }
     },
     {
@@ -177,7 +336,8 @@
         "tags": ["autocomplete", "combobox", "keyboard", "a11y"],
         "preview": {
           "props": {
-            "defaultOpen": true
+            "defaultOpen": true,
+            "options": ["Казань", "Калуга", "Краснодар"]
           }
         },
         "ai": {
@@ -231,12 +391,6 @@
             "type": "text",
             "default": "Ничего не нашлось",
             "maxLength": 40
-          },
-          {
-            "prop": "defaultOpen",
-            "label": "Список открыт",
-            "type": "boolean",
-            "default": false
           },
           {
             "prop": "accent",
@@ -296,9 +450,6 @@
                 "label": "Empty state",
                 "default": "Nothing found"
               },
-              "defaultOpen": {
-                "label": "Open list"
-              },
               "accent": {
                 "label": "Accent"
               },
@@ -313,25 +464,18 @@
                 "placeholder": "Start typing",
                 "emptyLabel": "Nothing found",
                 "defaultOpen": true,
-                "options": [
-                  "Amsterdam",
-                  "Barcelona",
-                  "Berlin",
-                  "Bristol",
-                  "Dublin",
-                  "Lisbon",
-                  "London",
-                  "Madrid",
-                  "Manchester",
-                  "Porto",
-                  "Prague",
-                  "Vienna"
-                ]
+                "options": ["Kazan", "Kaluga", "Krasnodar"]
               }
             }
           }
         },
-        "cardControls": ["defaultOpen", "accent", "background"]
+        "cardControls": [
+          "label",
+          "placeholder",
+          "emptyLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -406,12 +550,6 @@
             "max": 8
           },
           {
-            "prop": "hintText",
-            "label": "Строка под полем",
-            "type": "text",
-            "default": "{count} из {max} · Backspace снимает последнюю"
-          },
-          {
             "prop": "accent",
             "label": "Акцент",
             "type": "color",
@@ -468,10 +606,6 @@
               "max": {
                 "label": "Limit"
               },
-              "hintText": {
-                "label": "Hint",
-                "default": "{count} of {max} · Backspace removes the last"
-              },
               "accent": {
                 "label": "Accent"
               },
@@ -490,7 +624,13 @@
             }
           }
         },
-        "cardControls": ["max", "accent", "background"]
+        "cardControls": ["label", "placeholder", "max", "accent", "background"],
+        "preview": {
+          "props": {
+            "options": ["Next.js", "Tailwind", "Node.js"],
+            "defaultValue": ["React", "TypeScript"]
+          }
+        }
       }
     },
     {
@@ -523,7 +663,8 @@
             "aria-activedescendant при фокусе в поле вместо переноса фокуса на строку",
             "подсказки горячих клавиш справа: они учат коротким путям",
             "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
-            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "подсветку совпадения в строке: человек должен видеть, за что зацепился поиск"
           ],
           "adapt": [
             "массив commands: подпись, раздел и горячая клавиша",
@@ -538,7 +679,8 @@
             "Компонент — сама строка, без модального окна. Нужен вызов по Cmd+K — оберните в диалог из категории dialog.",
             "Порядок групп задаёт порядок массива: сортировать команды по алфавиту внутри группы полезно, между группами — нет.",
             "Символ ⌘ в подсказке уместен на macOS; на Windows подставляйте Ctrl в вызывающем коде.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "Сочетание клавиш приходит в hint целиком: модификатор не вшит в разметку, потому что на Windows и Linux это Ctrl, а не ⌘."
           ]
         },
         "controls": [
@@ -589,7 +731,8 @@
                 "aria-activedescendant with focus in the field instead of moving focus to a row",
                 "the shortcut hints on the right: they teach the faster path",
                 "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
-                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
+                "the match highlight inside the row: people need to see what the search caught on"
               ],
               "adapt": [
                 "the commands array: label, group and shortcut",
@@ -604,7 +747,8 @@
                 "This is the search bar itself, not a modal. For a Cmd+K launcher wrap it in a dialog from the dialog category.",
                 "Group order follows the array: sorting commands inside a group helps, sorting across groups does not.",
                 "The ⌘ glyph suits macOS; substitute Ctrl in the caller on Windows.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "The shortcut arrives in hint as a whole: the modifier is not baked into the markup, because on Windows and Linux it is Ctrl, not ⌘."
               ],
               "usage": "<Autocomplete004\n  commands={[{ label: \"New project\", group: \"Actions\", hint: \"N\" }]}\n  onSelect={(label) => console.log(label)}\n/>"
             },
@@ -636,46 +780,50 @@
                 "listLabel": "Commands",
                 "commands": [
                   {
+                    "group": "Actions",
                     "label": "Create a project",
+                    "hint": "⌘ N"
+                  },
+                  {
                     "group": "Actions",
-                    "hint": "N"
+                    "label": "Invite a teammate"
                   },
                   {
-                    "label": "Invite a teammate",
-                    "group": "Actions"
-                  },
-                  {
-                    "label": "Upload files",
-                    "group": "Actions",
-                    "hint": "U"
-                  },
-                  {
-                    "label": "Billing and invoices",
-                    "group": "Settings"
-                  },
-                  {
-                    "label": "Notifications",
-                    "group": "Settings"
-                  },
-                  {
-                    "label": "Access keys",
-                    "group": "Settings"
-                  },
-                  {
-                    "label": "Documentation",
-                    "group": "Help",
-                    "hint": "?"
-                  },
-                  {
-                    "label": "Contact support",
-                    "group": "Help"
+                    "group": "Settings",
+                    "label": "Billing"
                   }
                 ]
               }
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "placeholder",
+          "emptyLabel",
+          "listLabel",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "props": {
+            "commands": [
+              {
+                "group": "Действия",
+                "label": "Создать проект",
+                "hint": "⌘ N"
+              },
+              {
+                "group": "Действия",
+                "label": "Пригласить в команду"
+              },
+              {
+                "group": "Настройки",
+                "label": "Оплата и счета"
+              }
+            ]
+          },
+          "width": "full"
+        }
       }
     },
     {
@@ -713,7 +861,8 @@
             "aria-busy и role=\"status\": ожидание должно быть слышно, а не только видно",
             "правило prefers-reduced-motion, гасящее вращение спиннера",
             "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
-            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "подсветку совпадения в строке: человек должен видеть, за что зацепился поиск"
           ],
           "adapt": [
             "функцию search — свой запрос к API",
@@ -780,7 +929,8 @@
                 "aria-busy and role=\"status\": waiting has to be heard, not only seen",
                 "the prefers-reduced-motion rule that stops the spinner",
                 "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
-                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
+                "the match highlight inside the row: people need to see what the search caught on"
               ],
               "adapt": [
                 "the search function — your own API call",
@@ -833,7 +983,13 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "placeholder",
+          "delay",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -866,7 +1022,8 @@
             "табличные цифры у цены и остатка — колонки иначе прыгают",
             "grid-раскладку строки вместо вложенных флексов",
             "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
-            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "подсветку совпадения в строке: человек должен видеть, за что зацепился поиск"
           ],
           "adapt": [
             "массив items и названия полей под свою номенклатуру",
@@ -898,13 +1055,6 @@
             "type": "text",
             "default": "Название или артикул",
             "maxLength": 40
-          },
-          {
-            "prop": "outOfStockLabel",
-            "label": "Нулевой остаток",
-            "type": "text",
-            "default": "нет в наличии",
-            "maxLength": 30
           },
           {
             "prop": "emptyLabel",
@@ -939,7 +1089,8 @@
                 "tabular figures for price and stock — the columns jump otherwise",
                 "the grid row layout instead of nested flexboxes",
                 "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
-                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
+                "the match highlight inside the row: people need to see what the search caught on"
               ],
               "adapt": [
                 "the items array and the field names for your catalogue",
@@ -966,10 +1117,6 @@
               "placeholder": {
                 "label": "Placeholder",
                 "default": "Name or SKU"
-              },
-              "outOfStockLabel": {
-                "label": "Out of stock",
-                "default": "out of stock"
               },
               "emptyLabel": {
                 "label": "Empty state",
@@ -1009,19 +1156,45 @@
                     "meta": "SKU 52-104",
                     "price": "£28.50",
                     "stock": 0
-                  },
-                  {
-                    "title": "Ethernet Cat 6 cable, 5 m",
-                    "meta": "SKU 63-770",
-                    "price": "£11.90",
-                    "stock": 118
                   }
                 ]
               }
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "placeholder",
+          "emptyLabel",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "props": {
+            "defaultQuery": "кабель",
+            "items": [
+              {
+                "title": "Кабель USB-C / USB-C, 1 м",
+                "meta": "Артикул 41-208",
+                "price": "790 ₽",
+                "stock": 34
+              },
+              {
+                "title": "Кабель HDMI 2.1, 3 м",
+                "meta": "Артикул 52-104",
+                "price": "2 450 ₽",
+                "stock": 0
+              },
+              {
+                "title": "Кабель Ethernet Cat 6, 5 м",
+                "meta": "Артикул 63-770",
+                "price": "990 ₽",
+                "stock": 118
+              }
+            ]
+          },
+          "width": "full"
+        }
       }
     },
     {
@@ -1172,11 +1345,7 @@
                   "usb stick 256 gb",
                   "travel hair dryer"
                 ],
-                "defaultRecent": [
-                  "headphones",
-                  "30 l backpack",
-                  "coffee grinder"
-                ],
+                "defaultRecent": ["headphones", "30 l backpack"],
                 "panelText": {
                   "recent": "Recent searches",
                   "suggestions": "Suggestions",
@@ -1187,7 +1356,18 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "placeholder",
+          "clearLabel",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "props": {
+            "defaultRecent": ["беспроводные наушники", "монитор 27"]
+          }
+        }
       }
     },
     {
@@ -1337,7 +1517,13 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "placeholder",
+          "idleHint",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1360,7 +1546,27 @@
         "tags": ["autocomplete", "phone", "country", "form"],
         "preview": {
           "props": {
-            "defaultOpen": true
+            "defaultOpen": true,
+            "countries": [
+              {
+                "name": "Россия",
+                "code": "RU",
+                "dial": "+7",
+                "flag": "🇷🇺"
+              },
+              {
+                "name": "Казахстан",
+                "code": "KZ",
+                "dial": "+7",
+                "flag": "🇰🇿"
+              },
+              {
+                "name": "Беларусь",
+                "code": "BY",
+                "dial": "+375",
+                "flag": "🇧🇾"
+              }
+            ]
           }
         },
         "ai": {
@@ -1375,7 +1581,8 @@
             "флаги эмодзи вместо спрайта: набор картинок весит больше самого поля",
             "разделение полей: страна и номер — разные значения, не склеивайте их в одну строку",
             "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
-            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "подсветку совпадения в строке: человек должен видеть, за что зацепился поиск"
           ],
           "adapt": [
             "массив countries под свою географию",
@@ -1417,12 +1624,6 @@
             "options": ["RU", "KZ", "BY", "AM", "GE", "RS", "TR", "AE"]
           },
           {
-            "prop": "defaultOpen",
-            "label": "Список открыт",
-            "type": "boolean",
-            "default": false
-          },
-          {
             "prop": "accent",
             "label": "Акцент",
             "type": "color",
@@ -1448,7 +1649,8 @@
                 "emoji flags instead of a sprite: an image set outweighs the field itself",
                 "keeping the fields apart: country and number are separate values, do not merge them",
                 "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
-                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
+                "the match highlight inside the row: people need to see what the search caught on"
               ],
               "adapt": [
                 "the countries array for your geography",
@@ -1479,9 +1681,6 @@
               },
               "defaultCode": {
                 "label": "Country"
-              },
-              "defaultOpen": {
-                "label": "Open list"
               },
               "accent": {
                 "label": "Accent"
@@ -1514,36 +1713,6 @@
                     "code": "BY",
                     "dial": "+375",
                     "flag": "🇧🇾"
-                  },
-                  {
-                    "name": "Armenia",
-                    "code": "AM",
-                    "dial": "+374",
-                    "flag": "🇦🇲"
-                  },
-                  {
-                    "name": "Georgia",
-                    "code": "GE",
-                    "dial": "+995",
-                    "flag": "🇬🇪"
-                  },
-                  {
-                    "name": "Serbia",
-                    "code": "RS",
-                    "dial": "+381",
-                    "flag": "🇷🇸"
-                  },
-                  {
-                    "name": "Turkey",
-                    "code": "TR",
-                    "dial": "+90",
-                    "flag": "🇹🇷"
-                  },
-                  {
-                    "name": "UAE",
-                    "code": "AE",
-                    "dial": "+971",
-                    "flag": "🇦🇪"
                   }
                 ],
                 "countryText": {
@@ -1557,7 +1726,13 @@
             }
           }
         },
-        "cardControls": ["defaultOpen", "defaultCode", "accent", "background"]
+        "cardControls": [
+          "label",
+          "placeholder",
+          "defaultCode",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1590,7 +1765,8 @@
             "отличие строки создания цветом и плюсом: она меняет данные, а не выбирает из них",
             "счётчик меток снизу — он подтверждает, что новая метка появилась",
             "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
-            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "подсветку совпадения в строке: человек должен видеть, за что зацепился поиск"
           ],
           "adapt": [
             "стартовый список defaultOptions",
@@ -1631,12 +1807,6 @@
             "maxLength": 40
           },
           {
-            "prop": "hintText",
-            "label": "Строка под списком",
-            "type": "text",
-            "default": "Меток: {count}. Enter выбирает строку под курсором"
-          },
-          {
             "prop": "accent",
             "label": "Акцент",
             "type": "color",
@@ -1662,7 +1832,8 @@
                 "the colour and plus mark on the create row: it changes data rather than picking from it",
                 "the label counter below — it confirms the new label exists",
                 "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
-                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
+                "the match highlight inside the row: people need to see what the search caught on"
               ],
               "adapt": [
                 "the starting defaultOptions list",
@@ -1694,10 +1865,6 @@
                 "label": "Create row",
                 "default": "Create “{value}”"
               },
-              "hintText": {
-                "label": "Hint",
-                "default": "Labels: {count}. Enter picks the highlighted row"
-              },
               "accent": {
                 "label": "Accent"
               },
@@ -1711,14 +1878,26 @@
                 "label": "Label",
                 "placeholder": "Find or create",
                 "defaultQuery": "refact",
-                "defaultOptions": ["Urgent", "Bug", "Design", "Docs", "Idea"],
+                "defaultOptions": ["Urgent", "Bug"],
                 "createLabel": "Create “{value}”",
                 "hintText": "Labels: {count}. Enter picks the highlighted row"
               }
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "placeholder",
+          "createLabel",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "props": {
+            "defaultQuery": "инфра",
+            "defaultOptions": ["Инфраструктура", "Интерфейс"]
+          }
+        }
       }
     },
     {
@@ -1751,7 +1930,8 @@
             "подстановку с пробелом после логина: следующее слово иначе прилипнет к упоминанию",
             "инициалы вместо фотографий: сорок аватаров ради списка не грузят",
             "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
-            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "подсветку совпадения в строке: человек должен видеть, за что зацепился поиск"
           ],
           "adapt": [
             "массив people: имя, логин и роль",
@@ -1816,7 +1996,8 @@
                 "inserting a trailing space after the handle: the next word would stick to the mention",
                 "initials instead of photos: forty avatars are not loaded for a dropdown",
                 "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
-                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
+                "the match highlight inside the row: people need to see what the search caught on"
               ],
               "adapt": [
                 "the people array: name, handle and role",
@@ -1878,23 +2059,42 @@
                     "name": "Maria Gurova",
                     "handle": "masha",
                     "role": "product"
-                  },
-                  {
-                    "name": "Oleg Drozdov",
-                    "handle": "oleg",
-                    "role": "backend"
-                  },
-                  {
-                    "name": "Irina Kim",
-                    "handle": "irina",
-                    "role": "support"
                   }
                 ]
               }
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "placeholder",
+          "hintText",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "props": {
+            "defaultValue": "Обсудили с @",
+            "people": [
+              {
+                "name": "Анна Реброва",
+                "handle": "anna",
+                "role": "дизайн"
+              },
+              {
+                "name": "Марк Ильин",
+                "handle": "mark",
+                "role": "фронтенд"
+              },
+              {
+                "name": "Мария Гурова",
+                "handle": "maria",
+                "role": "аналитика"
+              }
+            ]
+          },
+          "width": "full"
+        }
       }
     },
     {
@@ -2042,7 +2242,337 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "placeholder",
+          "idleHint",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "props": {
+            "defaultValue": "doc"
+          }
+        }
+      }
+    },
+    {
+      "name": "autocomplete-013",
+      "type": "registry:component",
+      "title": "Отказ и повтор",
+      "description": "Подсказки, которые честно признаются, что не пришли: отказ занимает место списка, называет себя словом и даёт кнопку повтора.",
+      "categories": ["autocomplete"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "autocomplete-013/autocomplete-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/autocomplete-013.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-autocomplete-013-*. Запрос уходит в проп search и возвращает промис; отказ ловится catch и переводит компонент в состояние failed. Ответ на устаревший запрос отбрасывается по счётчику: без него медленный ответ перетирает свежий список. Отказ помечен role=\"alert\", поэтому скринридер читает его сразу, а не на следующем фокусе. Кнопка повтора возвращает фокус в поле: после удачной попытки набор продолжается там. Начальное состояние задаётся пропом defaultState — витрине нужно показать отказ, не делая запроса. Тема берётся из color-scheme через light-dark(), классовую тёмную тему компонент включает себе сам.",
+      "meta": {
+        "tags": ["autocomplete", "async", "error", "retry"],
+        "ai": {
+          "export": "Autocomplete013",
+          "usage": "<Autocomplete013 label=\"Город доставки\" search={fetchCities} />",
+          "summary": "Подсказки с сервера, которые не молчат при сбое: вместо пустого списка — строка отказа и кнопка повтора, а набранный запрос остаётся в поле. Устаревшие ответы отбрасываются. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "отказ на месте списка: пустая выдача читается как «ничего не найдено», и человек начинает переписывать верный запрос",
+            "role=\"alert\" на строке отказа — иначе скринридер узнает о сбое только на следующем фокусе",
+            "возврат фокуса в поле после повтора: продолжать набор надо там, а не на кнопке",
+            "счётчик запросов: ответ на устаревший запрос обязан отбрасываться, иначе он перетирает свежий список",
+            "сохранённый запрос в поле: после сбоя человек не должен набирать заново",
+            "локальную палитру --vibeui-autocomplete-013-* и не подменять её токенами вашей темы"
+          ],
+          "adapt": [
+            "источник подсказок через search — сюда приходит настоящий запрос",
+            "подписи состояний через statusText и кнопку повтора через retryLabel",
+            "начальное состояние через defaultState",
+            "подпись label, плейсхолдер placeholder и цвета accent и background"
+          ],
+          "notes": [
+            "Демонстрационный источник роняет первый запрос и отвечает на повтор: так витрина показывает оба состояния без сервера. В проекте передайте свой search.",
+            "Компонент не повторяет запрос сам: автоповтор при сбое сети легко превращается в шторм запросов, и решение об этом принимает проект.",
+            "Отказ и статус занимают одну строку по очереди — высота карточки не прыгает при переходе между ними."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Город доставки",
+            "maxLength": 30
+          },
+          {
+            "prop": "placeholder",
+            "label": "Плейсхолдер",
+            "type": "text",
+            "default": "Начните вводить",
+            "maxLength": 30
+          },
+          {
+            "prop": "defaultState",
+            "label": "Состояние",
+            "type": "select",
+            "default": "idle",
+            "options": ["idle", "failed"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Failure And Retry",
+            "description": "Suggestions that admit they did not arrive: the failure takes the place of the list, names itself and offers a retry button.",
+            "ai": {
+              "summary": "Server-side suggestions that do not stay silent on a failure: instead of an empty list there is a failure line and a retry button, and the typed query stays in the field. Stale responses are dropped. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the failure in place of the list: an empty result reads as “nothing found”, and people start rewriting a perfectly good query",
+                "role=\"alert\" on the failure line — otherwise a screen reader learns about it only on the next focus",
+                "returning focus to the field after a retry: typing continues there, not on the button",
+                "the request counter: a response to a stale request has to be dropped, or it overwrites the fresh list",
+                "the query kept in the field: after a failure nobody should retype it",
+                "the local --vibeui-autocomplete-013-* palette — do not swap it for your theme tokens"
+              ],
+              "adapt": [
+                "the suggestion source via search — the real request goes here",
+                "the state captions via statusText and the retry button via retryLabel",
+                "the initial state via defaultState",
+                "the label, the placeholder and the accent and background colours"
+              ],
+              "notes": [
+                "The demo source fails the first request and answers the retry, so the showcase shows both states without a server. Pass your own search in a project.",
+                "The component never retries on its own: an automatic retry on a network failure easily turns into a request storm, and that decision belongs to the project.",
+                "The failure and the status share one line in turn, so the card does not jump in height between them."
+              ],
+              "usage": "<Autocomplete013 label=\"Delivery city\" search={fetchCities} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Delivery city"
+              },
+              "placeholder": {
+                "label": "Placeholder",
+                "default": "Start typing"
+              },
+              "defaultState": {
+                "label": "State"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "Delivery city",
+                "placeholder": "Start typing",
+                "defaultState": "failed",
+                "statusText": {
+                  "idle": "Start typing a name",
+                  "loading": "Searching…",
+                  "empty": "Nothing found",
+                  "failed": "Suggestions failed to load"
+                },
+                "retryLabel": "Retry"
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "label",
+          "placeholder",
+          "defaultState",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "props": {
+            "defaultState": "failed"
+          }
+        }
+      }
+    },
+    {
+      "name": "autocomplete-015",
+      "type": "registry:component",
+      "title": "Поиск с превью",
+      "description": "Две панели: список слева, карточка выбранного справа. Превью следует за курсором, поэтому выбирать не приходится вслепую.",
+      "categories": ["autocomplete"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "autocomplete-015/autocomplete-015.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/autocomplete-015.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-autocomplete-015-*. Курсор ведут стрелки, а превью привязано к нему, а не к наведению мыши: на клавиатуре мышь не двигается. Правая панель помечена aria-live=\"polite\" — иначе смена курсора остаётся немой для скринридера. Поле объявлено role=\"combobox\" с aria-activedescendant, фокус при этом остаётся в поле. Заголовок раздела печатается один раз на группу и считается заранее массивом: мутировать переменную во время рендера нельзя. Раскладка считается от ширины самой панели через container-query: до 26rem превью встаёт под список, а не жмёт оба столбца. Тема берётся из color-scheme через light-dark(), классовую тёмную тему компонент включает себе сам.",
+      "meta": {
+        "tags": ["autocomplete", "search", "preview", "command"],
+        "ai": {
+          "export": "Autocomplete015",
+          "usage": "<Autocomplete015 entries={results} onSelect={openEntry} />",
+          "summary": "Поиск с превью: слева список с разделами и подсветкой совпадения, справа карточка того, на чём стоит курсор. Решение принимается до перехода, а не после. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "привязку превью к курсору, а не к наведению: на клавиатуре мыши нет",
+            "aria-live на превью — смена курсора обязана звучать, а не только показываться",
+            "фокус в поле при движении по списку: перенос фокуса на строку ломает набор",
+            "заголовок раздела один раз на группу: повтор перед каждой строкой съедает список",
+            "переход превью под список в узкой колонке — два столбца там режут слова",
+            "локальную палитру --vibeui-autocomplete-015-* и не подменять её токенами вашей темы"
+          ],
+          "adapt": [
+            "массив entries: заголовок, раздел, описание и служебная строка",
+            "плейсхолдер placeholder, начальный запрос defaultQuery, подпись пустой выдачи и подсказку hintText внизу",
+            "обработчик onSelect",
+            "цвета accent и background"
+          ],
+          "notes": [
+            "Превью показывает то, что уже пришло вместе с результатами: подгружать его отдельным запросом на каждое движение курсора — верный способ положить сервер.",
+            "Список и превью делят высоту панели: длинное описание обрезается прокруткой списка, а не растягивает карточку.",
+            "Компонент не открывает найденное сам — переход остаётся за onSelect."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "placeholder",
+            "label": "Плейсхолдер",
+            "type": "text",
+            "default": "Поиск по документам и командам",
+            "maxLength": 40
+          },
+          {
+            "prop": "defaultQuery",
+            "label": "Запрос",
+            "type": "text",
+            "default": "от",
+            "maxLength": 20
+          },
+          {
+            "prop": "hintText",
+            "label": "Подсказка внизу",
+            "type": "text",
+            "default": "↑ ↓ ведут по списку, Enter открывает",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Search With Preview",
+            "description": "Two panes: the list on the left, the card of the highlighted result on the right. The preview follows the cursor, so nobody picks blind.",
+            "ai": {
+              "summary": "Search with a preview: on the left a list with sections and match highlighting, on the right the card of whatever the cursor is on. The decision is made before the jump, not after. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "binding the preview to the cursor rather than to hover: there is no mouse on a keyboard",
+                "aria-live on the preview — a cursor change has to sound, not only show",
+                "focus staying in the field while moving through the list: moving it to the row breaks typing",
+                "the section heading once per group: repeating it before every row eats the list",
+                "the preview moving under the list in a narrow column — two columns there chop words",
+                "the local --vibeui-autocomplete-015-* palette — do not swap it for your theme tokens"
+              ],
+              "adapt": [
+                "the entries array: title, section, summary and the meta line",
+                "the placeholder, the initial defaultQuery, the empty caption and the hintText at the bottom",
+                "the onSelect handler",
+                "the accent and background colours"
+              ],
+              "notes": [
+                "The preview shows what already arrived with the results: fetching it per cursor move is a reliable way to bring the server down.",
+                "The list and the preview share the panel height: a long summary is handled by the list's own scrolling, not by stretching the card.",
+                "The component never opens the result itself — the jump stays in onSelect."
+              ],
+              "usage": "<Autocomplete015 entries={results} onSelect={openEntry} />"
+            },
+            "controls": {
+              "placeholder": {
+                "label": "Placeholder",
+                "default": "Search documents and teams"
+              },
+              "defaultQuery": {
+                "label": "Query",
+                "default": "re"
+              },
+              "hintText": {
+                "label": "Hint",
+                "default": "↑ ↓ move, Enter opens"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "placeholder": "Search documents and teams",
+                "defaultQuery": "re",
+                "emptyLabel": "Nothing found",
+                "hintText": "↑ ↓ move, Enter opens",
+                "entries": [
+                  {
+                    "title": "Revenue report",
+                    "group": "Documents",
+                    "summary": "A quarterly summary: revenue by channel, average order value and the share of repeat purchases.",
+                    "meta": "Updated yesterday · Maria Gurova"
+                  },
+                  {
+                    "title": "Weekly shipments",
+                    "group": "Documents",
+                    "summary": "What left the warehouse: routes, delays and the goods that ran out.",
+                    "meta": "Updated 3 April · Mark Ilyin"
+                  },
+                  {
+                    "title": "Release checklist",
+                    "group": "Teams",
+                    "summary": "Twelve people, weekday duty from nine to nine, an answer within an hour on average.",
+                    "meta": "12 members"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "placeholder",
+          "defaultQuery",
+          "hintText",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     }
   ]

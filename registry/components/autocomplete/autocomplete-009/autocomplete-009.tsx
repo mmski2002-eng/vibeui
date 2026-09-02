@@ -1,7 +1,7 @@
 "use client"
 
 import { useId, useMemo, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Autocomplete009Country = {
   name: string
@@ -11,7 +11,7 @@ export type Autocomplete009Country = {
 }
 
 export type Autocomplete009Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onSelect"
 > & {
   label?: string
@@ -38,7 +38,7 @@ const STYLES = `
 :where([data-vibeui-block="autocomplete-009"]){
 --vibeui-autocomplete-009-bg:transparent;
 --vibeui-autocomplete-009-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-autocomplete-009-muted:light-dark(oklch(0.52 0.014 265),oklch(0.7 0.012 265));
+--vibeui-autocomplete-009-muted:color-mix(in oklab,var(--vibeui-autocomplete-009-fg) 68%,transparent);
 --vibeui-autocomplete-009-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-autocomplete-009-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.011 265));
 --vibeui-autocomplete-009-panel:light-dark(oklch(1 0 0),oklch(0.24 0.011 265));
@@ -91,7 +91,7 @@ border:1px solid var(--vibeui-autocomplete-009-border);
 border-radius:var(--vibeui-autocomplete-009-radius);
 background:var(--vibeui-autocomplete-009-panel);
 }
-[data-vibeui-block="autocomplete-009"] [data-part="list"]{margin:0;padding:0;list-style:none;max-height:9rem;overflow-y:auto}
+[data-vibeui-block="autocomplete-009"] [data-part="list"]{margin:0;padding:0;list-style:none;max-height:9rem;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--vibeui-autocomplete-009-border) transparent}
 [data-vibeui-block="autocomplete-009"] [data-part="option"]{
 display:flex;align-items:center;gap:0.5rem;width:100%;
 min-height:2rem;padding:0 0.375rem;border:0;border-radius:0.375rem;
@@ -103,6 +103,9 @@ text-align:left;cursor:pointer;
 [data-vibeui-block="autocomplete-009"] [data-part="option"][aria-selected="true"]{font-weight:650}
 [data-vibeui-block="autocomplete-009"] [data-part="dial"]{margin-left:auto;color:var(--vibeui-autocomplete-009-muted);font-variant-numeric:tabular-nums}
 [data-vibeui-block="autocomplete-009"] [data-part="empty"]{padding:0.5rem 0.375rem;font-size:0.8125rem;color:var(--vibeui-autocomplete-009-muted)}
+[data-vibeui-block="autocomplete-009"] [data-part="option"] mark{background:transparent;color:var(--vibeui-autocomplete-009-accent);font-weight:650}
+[data-vibeui-block="autocomplete-009"] [data-part="label"]{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="autocomplete-009"]{color-scheme:dark}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="autocomplete-009"] *{animation:none!important;transition:none!important}}
 `
 
@@ -123,6 +126,22 @@ const COUNTRY_TEXT = {
   searchLabel: "Поиск страны",
   listLabel: "Страна",
   empty: "Такой страны в списке нет",
+}
+
+function highlight(option: string, query: string) {
+  if (!query) return option
+
+  const at = option.toLowerCase().indexOf(query.toLowerCase())
+
+  if (at < 0) return option
+
+  return (
+    <>
+      {option.slice(0, at)}
+      <mark>{option.slice(at, at + query.length)}</mark>
+      {option.slice(at + query.length)}
+    </>
+  )
 }
 
 /**
@@ -201,6 +220,7 @@ export function Autocomplete009({
       </style>
       <div
         {...props}
+        data-slot="autocomplete"
         data-vibeui-block="autocomplete-009"
         className={className}
         style={palette}
@@ -267,7 +287,7 @@ export function Autocomplete009({
                     <span data-part="flag" aria-hidden="true">
                       {country.flag}
                     </span>
-                    {country.name}
+                    <span data-part="label">{highlight(country.name, query.trim())}</span>
                     <span data-part="dial">{country.dial}</span>
                   </li>
                 ))}

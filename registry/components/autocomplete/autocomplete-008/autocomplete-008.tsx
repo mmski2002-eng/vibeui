@@ -1,14 +1,10 @@
 "use client"
 
 import { useId, useState } from "react"
-import type {
-  ComponentPropsWithoutRef,
-  CSSProperties,
-  KeyboardEvent,
-} from "react"
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Autocomplete008Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange" | "defaultValue"
 > & {
   label?: string
@@ -33,7 +29,7 @@ const STYLES = `
 :where([data-vibeui-block="autocomplete-008"]){
 --vibeui-autocomplete-008-bg:transparent;
 --vibeui-autocomplete-008-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-autocomplete-008-muted:light-dark(oklch(0.52 0.014 265),oklch(0.7 0.012 265));
+--vibeui-autocomplete-008-muted:color-mix(in oklab,var(--vibeui-autocomplete-008-fg) 68%,transparent);
 --vibeui-autocomplete-008-ghost:light-dark(oklch(0.72 0.012 265),oklch(0.53 0.012 265));
 --vibeui-autocomplete-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-autocomplete-008-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.011 265));
@@ -89,6 +85,7 @@ padding:0.0625rem 0.3125rem;border-radius:0.25rem;
 border:1px solid var(--vibeui-autocomplete-008-border);
 font-family:inherit;font-size:0.6875rem;
 }
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="autocomplete-008"]{color-scheme:dark}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="autocomplete-008"] *{animation:none!important;transition:none!important}}
 `
 
@@ -190,6 +187,7 @@ export function Autocomplete008({
       </style>
       <div
         {...props}
+        data-slot="autocomplete"
         data-vibeui-block="autocomplete-008"
         className={className}
         style={palette}

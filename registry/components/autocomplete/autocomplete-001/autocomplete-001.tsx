@@ -1,8 +1,8 @@
 import { useId } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Autocomplete001Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children"
 > & {
   label?: string
@@ -22,7 +22,7 @@ const STYLES = `
 :where([data-vibeui-block="autocomplete-001"]){
 --vibeui-autocomplete-001-bg:transparent;
 --vibeui-autocomplete-001-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-autocomplete-001-muted:light-dark(oklch(0.52 0.014 265),oklch(0.7 0.012 265));
+--vibeui-autocomplete-001-muted:color-mix(in oklab,var(--vibeui-autocomplete-001-fg) 68%,transparent);
 --vibeui-autocomplete-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-autocomplete-001-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.011 265));
 --vibeui-autocomplete-001-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
@@ -49,6 +49,11 @@ border-radius:var(--vibeui-autocomplete-001-radius);
 background:var(--vibeui-autocomplete-001-field);
 color:inherit;font:inherit;font-size:0.875rem;
 }
+/* Браузер рисует у input[list] свою кнопку списка: в Chrome она вылезает
+   по наведению второй стрелкой поверх нашей. Имя псевдоэлемента у разных
+   версий разное, поэтому гасим оба. */
+[data-vibeui-block="autocomplete-001"] input::-webkit-calendar-picker-indicator,
+[data-vibeui-block="autocomplete-001"] input::-webkit-list-button{display:none;opacity:0}
 [data-vibeui-block="autocomplete-001"] input::placeholder{color:var(--vibeui-autocomplete-001-muted)}
 [data-vibeui-block="autocomplete-001"] input:focus-visible{
 outline:2px solid var(--vibeui-autocomplete-001-accent);outline-offset:1px;border-color:transparent;
@@ -63,6 +68,7 @@ border-bottom:1.5px solid var(--vibeui-autocomplete-001-muted);
 transform:rotate(45deg);
 }
 [data-vibeui-block="autocomplete-001"] [data-part="hint"]{font-size:0.75rem;line-height:1.4;color:var(--vibeui-autocomplete-001-muted)}
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="autocomplete-001"]{color-scheme:dark}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="autocomplete-001"] *{animation:none!important;transition:none!important}}
 `
 
@@ -134,6 +140,7 @@ export function Autocomplete001({
       </style>
       <div
         {...props}
+        data-slot="autocomplete"
         data-vibeui-block="autocomplete-001"
         className={className}
         style={palette}

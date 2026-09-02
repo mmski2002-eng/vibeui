@@ -1,14 +1,10 @@
 "use client"
 
 import { useEffect, useId, useRef, useState } from "react"
-import type {
-  ChangeEvent,
-  ComponentPropsWithoutRef,
-  CSSProperties,
-} from "react"
+import type { ChangeEvent, ComponentProps, CSSProperties } from "react"
 
 export type Autocomplete012Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange" | "defaultValue"
 > & {
   label?: string
@@ -34,7 +30,7 @@ const STYLES = `
 :where([data-vibeui-block="autocomplete-012"]){
 --vibeui-autocomplete-012-bg:transparent;
 --vibeui-autocomplete-012-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-autocomplete-012-muted:light-dark(oklch(0.52 0.014 265),oklch(0.7 0.012 265));
+--vibeui-autocomplete-012-muted:color-mix(in oklab,var(--vibeui-autocomplete-012-fg) 68%,transparent);
 --vibeui-autocomplete-012-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-autocomplete-012-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.011 265));
 --vibeui-autocomplete-012-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
@@ -70,6 +66,7 @@ color:var(--vibeui-autocomplete-012-fg);
 }
 [data-vibeui-block="autocomplete-012"] [data-part="hint"]{font-size:0.75rem;color:var(--vibeui-autocomplete-012-muted)}
 [data-vibeui-block="autocomplete-012"] [data-part="hint"] b{color:var(--vibeui-autocomplete-012-fg);font-weight:600}
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="autocomplete-012"]{color-scheme:dark}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="autocomplete-012"] *{animation:none!important;transition:none!important}}
 `
 
@@ -177,6 +174,7 @@ export function Autocomplete012({
       </style>
       <div
         {...props}
+        data-slot="autocomplete"
         data-vibeui-block="autocomplete-012"
         className={className}
         style={palette}

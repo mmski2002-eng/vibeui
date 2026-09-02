@@ -1,14 +1,10 @@
 "use client"
 
 import { useId, useMemo, useState } from "react"
-import type {
-  ComponentPropsWithoutRef,
-  CSSProperties,
-  KeyboardEvent,
-} from "react"
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Autocomplete010Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   label?: string
@@ -33,7 +29,7 @@ const STYLES = `
 :where([data-vibeui-block="autocomplete-010"]){
 --vibeui-autocomplete-010-bg:transparent;
 --vibeui-autocomplete-010-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-autocomplete-010-muted:light-dark(oklch(0.52 0.014 265),oklch(0.7 0.012 265));
+--vibeui-autocomplete-010-muted:color-mix(in oklab,var(--vibeui-autocomplete-010-fg) 68%,transparent);
 --vibeui-autocomplete-010-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-autocomplete-010-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.011 265));
 --vibeui-autocomplete-010-panel:light-dark(oklch(1 0 0),oklch(0.24 0.011 265));
@@ -64,7 +60,7 @@ color:inherit;font:inherit;font-size:0.875rem;
 outline:2px solid var(--vibeui-autocomplete-010-accent);outline-offset:1px;border-color:transparent;
 }
 [data-vibeui-block="autocomplete-010"] [data-part="list"]{
-margin:0;padding:0.25rem;list-style:none;max-height:10rem;overflow-y:auto;
+margin:0;padding:0.25rem;list-style:none;max-height:10rem;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--vibeui-autocomplete-010-border) transparent;
 border:1px solid var(--vibeui-autocomplete-010-border);
 border-radius:var(--vibeui-autocomplete-010-radius);
 background:var(--vibeui-autocomplete-010-panel);
@@ -73,6 +69,7 @@ background:var(--vibeui-autocomplete-010-panel);
 display:flex;align-items:center;gap:0.5rem;min-height:2rem;padding:0 0.5rem;
 border-radius:0.375rem;font-size:0.875rem;cursor:pointer;
 }
+[data-vibeui-block="autocomplete-010"] [data-part="label"]{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 [data-vibeui-block="autocomplete-010"] [data-part="option"][data-active="true"]{background:var(--vibeui-autocomplete-010-active)}
 /* Строка создания отличается плюсом и цветом: она меняет данные, а не
    выбирает из них. */
@@ -88,10 +85,28 @@ content:"";position:absolute;left:50%;top:50%;background:currentColor;
 [data-vibeui-block="autocomplete-010"] [data-part="plus"]::before{width:0.4375rem;height:1px;margin:-0.5px 0 0 -0.21875rem}
 [data-vibeui-block="autocomplete-010"] [data-part="plus"]::after{width:1px;height:0.4375rem;margin:-0.21875rem 0 0 -0.5px}
 [data-vibeui-block="autocomplete-010"] [data-part="hint"]{font-size:0.75rem;color:var(--vibeui-autocomplete-010-muted)}
+[data-vibeui-block="autocomplete-010"] [data-part="option"] mark{background:transparent;color:var(--vibeui-autocomplete-010-accent);font-weight:650}
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="autocomplete-010"]{color-scheme:dark}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="autocomplete-010"] *{animation:none!important;transition:none!important}}
 `
 
 const DEFAULT_OPTIONS = ["Срочно", "Баг", "Дизайн", "Документация", "Идея"]
+
+function highlight(option: string, query: string) {
+  if (!query) return option
+
+  const at = option.toLowerCase().indexOf(query.toLowerCase())
+
+  if (at < 0) return option
+
+  return (
+    <>
+      {option.slice(0, at)}
+      <mark>{option.slice(at, at + query.length)}</mark>
+      {option.slice(at + query.length)}
+    </>
+  )
+}
 
 /**
  * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
@@ -193,6 +208,7 @@ export function Autocomplete010({
       </style>
       <div
         {...props}
+        data-slot="autocomplete"
         data-vibeui-block="autocomplete-010"
         className={className}
         style={palette}
@@ -233,7 +249,7 @@ export function Autocomplete010({
                 setQuery(option)
               }}
             >
-              {option}
+              <span data-part="label">{highlight(option, trimmed)}</span>
             </li>
           ))}
           {canCreate ? (

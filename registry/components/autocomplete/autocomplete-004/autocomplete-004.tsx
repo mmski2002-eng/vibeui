@@ -1,11 +1,7 @@
 "use client"
 
 import { useId, useMemo, useState } from "react"
-import type {
-  ComponentPropsWithoutRef,
-  CSSProperties,
-  KeyboardEvent,
-} from "react"
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Autocomplete004Command = {
   label: string
@@ -14,7 +10,7 @@ export type Autocomplete004Command = {
 }
 
 export type Autocomplete004Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onSelect"
 > & {
   placeholder?: string
@@ -36,7 +32,7 @@ const STYLES = `
 :where([data-vibeui-block="autocomplete-004"]){
 --vibeui-autocomplete-004-bg:transparent;
 --vibeui-autocomplete-004-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-autocomplete-004-muted:light-dark(oklch(0.52 0.014 265),oklch(0.7 0.012 265));
+--vibeui-autocomplete-004-muted:color-mix(in oklab,var(--vibeui-autocomplete-004-fg) 68%,transparent);
 --vibeui-autocomplete-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-autocomplete-004-active:light-dark(oklch(0.95 0.02 265),oklch(0.33 0.028 265));
 --vibeui-autocomplete-004-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
@@ -45,6 +41,8 @@ const STYLES = `
 --vibeui-autocomplete-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="autocomplete-004"]{
+container-type:inline-size;
+min-width:min(100%,16rem);
 display:flex;flex-direction:column;
 width:100%;max-width:26rem;box-sizing:border-box;overflow:hidden;
 background:var(--vibeui-autocomplete-004-bg);
@@ -80,7 +78,7 @@ border:1px solid var(--vibeui-autocomplete-004-border);
 font-family:inherit;font-size:0.6875rem;color:var(--vibeui-autocomplete-004-muted);
 }
 [data-vibeui-block="autocomplete-004"] [data-part="list"]{
-margin:0;padding:0.375rem;list-style:none;max-height:14rem;overflow-y:auto;
+margin:0;padding:0.375rem;list-style:none;max-height:14rem;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--vibeui-autocomplete-004-border) transparent;
 }
 [data-vibeui-block="autocomplete-004"] [data-part="group"]{
 padding:0.5rem 0.5rem 0.25rem;
@@ -95,19 +93,41 @@ font-size:0.875rem;cursor:pointer;
 [data-vibeui-block="autocomplete-004"] [data-part="option"][data-active="true"]{background:var(--vibeui-autocomplete-004-active)}
 [data-vibeui-block="autocomplete-004"] [data-part="hint"]{font-size:0.75rem;color:var(--vibeui-autocomplete-004-muted)}
 [data-vibeui-block="autocomplete-004"] [data-part="empty"]{padding:1.25rem 0.75rem;text-align:center;font-size:0.875rem;color:var(--vibeui-autocomplete-004-muted)}
+@container (max-width: 20rem){
+[data-vibeui-block="autocomplete-004"] [data-part="hint"]{display:none}
+}
+[data-vibeui-block="autocomplete-004"] [data-part="option"] mark{background:transparent;color:var(--vibeui-autocomplete-004-accent);font-weight:650}
+[data-vibeui-block="autocomplete-004"] [data-part="label"]{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="autocomplete-004"]{color-scheme:dark}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="autocomplete-004"] *{animation:none!important;transition:none!important}}
 `
 
 const DEFAULT_COMMANDS: Autocomplete004Command[] = [
-  { label: "Создать проект", group: "Действия", hint: "N" },
+  { label: "Создать проект", group: "Действия", hint: "⌘ N" },
   { label: "Пригласить в команду", group: "Действия" },
-  { label: "Загрузить файлы", group: "Действия", hint: "U" },
+  { label: "Загрузить файлы", group: "Действия", hint: "⌘ U" },
   { label: "Оплата и счета", group: "Настройки" },
   { label: "Уведомления", group: "Настройки" },
   { label: "Ключи доступа", group: "Настройки" },
-  { label: "Документация", group: "Помощь", hint: "?" },
+  { label: "Документация", group: "Помощь", hint: "⌘ ?" },
   { label: "Написать в поддержку", group: "Помощь" },
 ]
+
+function highlight(option: string, query: string) {
+  if (!query) return option
+
+  const at = option.toLowerCase().indexOf(query.toLowerCase())
+
+  if (at < 0) return option
+
+  return (
+    <>
+      {option.slice(0, at)}
+      <mark>{option.slice(at, at + query.length)}</mark>
+      {option.slice(at + query.length)}
+    </>
+  )
+}
 
 /**
  * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
@@ -199,6 +219,7 @@ export function Autocomplete004({
       </style>
       <div
         {...props}
+        data-slot="autocomplete"
         data-vibeui-block="autocomplete-004"
         className={className}
         style={palette}
@@ -251,9 +272,9 @@ export function Autocomplete004({
                   onSelect?.(command.label)
                 }}
               >
-                {command.label}
+                <span data-part="label">{highlight(command.label, query.trim())}</span>
                 {command.hint ? (
-                  <span data-part="hint">⌘ {command.hint}</span>
+                  <span data-part="hint">{command.hint}</span>
                 ) : null}
               </span>
             </li>

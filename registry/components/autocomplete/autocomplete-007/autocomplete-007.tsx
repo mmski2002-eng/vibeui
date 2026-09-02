@@ -1,10 +1,10 @@
 "use client"
 
 import { useId, useMemo, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Autocomplete007Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onSelect"
 > & {
   label?: string
@@ -28,7 +28,7 @@ const STYLES = `
 :where([data-vibeui-block="autocomplete-007"]){
 --vibeui-autocomplete-007-bg:transparent;
 --vibeui-autocomplete-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-autocomplete-007-muted:light-dark(oklch(0.52 0.014 265),oklch(0.7 0.012 265));
+--vibeui-autocomplete-007-muted:color-mix(in oklab,var(--vibeui-autocomplete-007-fg) 68%,transparent);
 --vibeui-autocomplete-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-autocomplete-007-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.011 265));
 --vibeui-autocomplete-007-panel:light-dark(oklch(1 0 0),oklch(0.24 0.011 265));
@@ -75,7 +75,7 @@ border-radius:0.25rem;color:var(--vibeui-autocomplete-007-accent);
 font:inherit;font-size:0.6875rem;font-weight:650;letter-spacing:0.02em;text-transform:none;
 }
 [data-vibeui-block="autocomplete-007"] [data-part="clear"]:focus-visible{outline:2px solid var(--vibeui-autocomplete-007-accent);outline-offset:1px}
-[data-vibeui-block="autocomplete-007"] [data-part="list"]{margin:0;padding:0.25rem;list-style:none;max-height:10rem;overflow-y:auto}
+[data-vibeui-block="autocomplete-007"] [data-part="list"]{margin:0;padding:0.25rem;list-style:none;max-height:10rem;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--vibeui-autocomplete-007-border) transparent}
 [data-vibeui-block="autocomplete-007"] [data-part="option"]{
 display:flex;align-items:center;gap:0.5rem;min-height:2rem;padding:0 0.5rem;
 border-radius:0.375rem;font-size:0.875rem;cursor:pointer;
@@ -92,6 +92,7 @@ width:1.5px;height:0.25rem;background:var(--vibeui-autocomplete-007-muted);
 margin-left:-0.75px;transform-origin:bottom;
 }
 [data-vibeui-block="autocomplete-007"] [data-part="empty"]{padding:0.75rem 0.625rem;font-size:0.8125rem;color:var(--vibeui-autocomplete-007-muted)}
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="autocomplete-007"]{color-scheme:dark}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="autocomplete-007"] *{animation:none!important;transition:none!important}}
 `
 
@@ -192,6 +193,7 @@ export function Autocomplete007({
       </style>
       <div
         {...props}
+        data-slot="autocomplete"
         data-vibeui-block="autocomplete-007"
         className={className}
         style={palette}

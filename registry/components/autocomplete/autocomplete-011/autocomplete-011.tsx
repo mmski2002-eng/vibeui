@@ -1,11 +1,7 @@
 "use client"
 
 import { useId, useMemo, useState } from "react"
-import type {
-  ChangeEvent,
-  ComponentPropsWithoutRef,
-  CSSProperties,
-} from "react"
+import type { ChangeEvent, ComponentProps, CSSProperties } from "react"
 
 export type Autocomplete011Person = {
   name: string
@@ -14,7 +10,7 @@ export type Autocomplete011Person = {
 }
 
 export type Autocomplete011Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange" | "defaultValue"
 > & {
   label?: string
@@ -39,7 +35,7 @@ const STYLES = `
 :where([data-vibeui-block="autocomplete-011"]){
 --vibeui-autocomplete-011-bg:transparent;
 --vibeui-autocomplete-011-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-autocomplete-011-muted:light-dark(oklch(0.52 0.014 265),oklch(0.7 0.012 265));
+--vibeui-autocomplete-011-muted:color-mix(in oklab,var(--vibeui-autocomplete-011-fg) 68%,transparent);
 --vibeui-autocomplete-011-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-autocomplete-011-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.011 265));
 --vibeui-autocomplete-011-panel:light-dark(oklch(1 0 0),oklch(0.24 0.011 265));
@@ -49,6 +45,8 @@ const STYLES = `
 --vibeui-autocomplete-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="autocomplete-011"]{
+container-type:inline-size;
+min-width:min(100%,16rem);
 display:flex;flex-direction:column;gap:0.375rem;
 width:100%;max-width:24rem;box-sizing:border-box;padding:0.875rem;
 background:var(--vibeui-autocomplete-011-bg);
@@ -71,7 +69,7 @@ color:inherit;font:inherit;font-size:0.875rem;line-height:1.5;
 outline:2px solid var(--vibeui-autocomplete-011-accent);outline-offset:1px;border-color:transparent;
 }
 [data-vibeui-block="autocomplete-011"] [data-part="list"]{
-margin:0;padding:0.25rem;list-style:none;max-height:11rem;overflow-y:auto;
+margin:0;padding:0.25rem;list-style:none;max-height:11rem;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--vibeui-autocomplete-011-border) transparent;
 border:1px solid var(--vibeui-autocomplete-011-border);
 border-radius:var(--vibeui-autocomplete-011-radius);
 background:var(--vibeui-autocomplete-011-panel);
@@ -84,8 +82,8 @@ padding:0.375rem 0.5rem;border-radius:0.4375rem;cursor:pointer;
 [data-vibeui-block="autocomplete-011"] [data-part="avatar"]{
 grid-row:span 2;display:flex;align-items:center;justify-content:center;
 width:1.75rem;height:1.75rem;border-radius:9999px;
-background:oklch(0.9 0.05 var(--vibeui-autocomplete-011-hue,265));
-color:oklch(0.35 0.09 var(--vibeui-autocomplete-011-hue,265));
+background:light-dark(oklch(0.9 0.05 var(--vibeui-autocomplete-011-hue,265)),oklch(0.34 0.06 var(--vibeui-autocomplete-011-hue,265)));
+color:light-dark(oklch(0.35 0.09 var(--vibeui-autocomplete-011-hue,265)),oklch(0.88 0.06 var(--vibeui-autocomplete-011-hue,265)));
 font-size:0.6875rem;font-weight:700;
 }
 [data-vibeui-block="autocomplete-011"] [data-part="name"]{font-size:0.875rem;line-height:1.2}
@@ -95,6 +93,11 @@ grid-column:3;grid-row:span 2;justify-self:end;
 font-size:0.6875rem;color:var(--vibeui-autocomplete-011-muted);
 }
 [data-vibeui-block="autocomplete-011"] [data-part="hint"]{font-size:0.75rem;color:var(--vibeui-autocomplete-011-muted)}
+@container (max-width: 20rem){
+[data-vibeui-block="autocomplete-011"] [data-part="role"]{display:none}
+}
+[data-vibeui-block="autocomplete-011"] [data-part="option"] mark{background:transparent;color:var(--vibeui-autocomplete-011-accent);font-weight:650}
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="autocomplete-011"]{color-scheme:dark}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="autocomplete-011"] *{animation:none!important;transition:none!important}}
 `
 
@@ -126,6 +129,22 @@ function initials(name: string) {
     .slice(0, 2)
     .map((part) => part[0])
     .join("")
+}
+
+function highlight(option: string, query: string) {
+  if (!query) return option
+
+  const at = option.toLowerCase().indexOf(query.toLowerCase())
+
+  if (at < 0) return option
+
+  return (
+    <>
+      {option.slice(0, at)}
+      <mark>{option.slice(at, at + query.length)}</mark>
+      {option.slice(at + query.length)}
+    </>
+  )
 }
 
 /**
@@ -224,6 +243,7 @@ export function Autocomplete011({
       </style>
       <div
         {...props}
+        data-slot="autocomplete"
         data-vibeui-block="autocomplete-011"
         className={className}
         style={palette}
@@ -259,7 +279,7 @@ export function Autocomplete011({
                 <span data-part="avatar" aria-hidden="true">
                   {initials(person.name)}
                 </span>
-                <span data-part="name">{person.name}</span>
+                <span data-part="name">{highlight(person.name, token?.word ?? "")}</span>
                 <span data-part="role">{person.role}</span>
                 <span data-part="handle">@{person.handle}</span>
               </li>

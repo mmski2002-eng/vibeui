@@ -1,10 +1,10 @@
 "use client"
 
 import { useEffect, useId, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Autocomplete005Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onSelect"
 > & {
   label?: string
@@ -30,7 +30,7 @@ const STYLES = `
 :where([data-vibeui-block="autocomplete-005"]){
 --vibeui-autocomplete-005-bg:transparent;
 --vibeui-autocomplete-005-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-autocomplete-005-muted:light-dark(oklch(0.52 0.014 265),oklch(0.7 0.012 265));
+--vibeui-autocomplete-005-muted:color-mix(in oklab,var(--vibeui-autocomplete-005-fg) 68%,transparent);
 --vibeui-autocomplete-005-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-autocomplete-005-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.011 265));
 --vibeui-autocomplete-005-panel:light-dark(oklch(1 0 0),oklch(0.24 0.011 265));
@@ -70,7 +70,7 @@ border-radius:9999px;animation:vibeui-autocomplete-005-spin .7s linear infinite;
 }
 @keyframes vibeui-autocomplete-005-spin{to{transform:rotate(360deg)}}
 [data-vibeui-block="autocomplete-005"] [data-part="list"]{
-margin:0;padding:0.25rem;list-style:none;max-height:10rem;overflow-y:auto;
+margin:0;padding:0.25rem;list-style:none;max-height:10rem;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--vibeui-autocomplete-005-border) transparent;
 border:1px solid var(--vibeui-autocomplete-005-border);
 border-radius:var(--vibeui-autocomplete-005-radius);
 background:var(--vibeui-autocomplete-005-panel);
@@ -81,6 +81,8 @@ border-radius:0.375rem;font-size:0.875rem;cursor:pointer;
 }
 [data-vibeui-block="autocomplete-005"] [data-part="option"]:hover{background:var(--vibeui-autocomplete-005-active)}
 [data-vibeui-block="autocomplete-005"] [data-part="status"]{font-size:0.75rem;color:var(--vibeui-autocomplete-005-muted)}
+[data-vibeui-block="autocomplete-005"] [data-part="option"] mark{background:transparent;color:var(--vibeui-autocomplete-005-accent);font-weight:650}
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="autocomplete-005"]{color-scheme:dark}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="autocomplete-005"] *{animation:none!important;transition:none!important}
 [data-vibeui-block="autocomplete-005"] [data-part="spinner"]{border-top-color:var(--vibeui-autocomplete-005-border)}
@@ -114,6 +116,22 @@ const STATUS_TEXT = {
   loading: "Ищем…",
   empty: "Ничего не нашлось — проверьте написание",
   idle: "Подсказки приходят с сервера",
+}
+
+function highlight(option: string, query: string) {
+  if (!query) return option
+
+  const at = option.toLowerCase().indexOf(query.toLowerCase())
+
+  if (at < 0) return option
+
+  return (
+    <>
+      {option.slice(0, at)}
+      <mark>{option.slice(at, at + query.length)}</mark>
+      {option.slice(at + query.length)}
+    </>
+  )
 }
 
 /**
@@ -200,6 +218,7 @@ export function Autocomplete005({
       </style>
       <div
         {...props}
+        data-slot="autocomplete"
         data-vibeui-block="autocomplete-005"
         className={className}
         style={palette}
@@ -246,7 +265,7 @@ export function Autocomplete005({
                   onSelect?.(item)
                 }}
               >
-                {item}
+                {highlight(item, query.trim())}
               </li>
             ))}
           </ul>

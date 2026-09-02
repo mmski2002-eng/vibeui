@@ -6,6 +6,11 @@ import dynamic from "next/dynamic"
 import type { PreviewMap } from "@/registry/preview-types"
 
 export const PREVIEWS = {
+  "autocomplete-014": dynamic(() =>
+    import("@/registry/components/autocomplete/autocomplete-014/autocomplete-014").then(
+      (module) => module.Autocomplete014,
+    ),
+  ),
   "autocomplete-001": dynamic(() =>
     import("@/registry/components/autocomplete/autocomplete-001/autocomplete-001").then(
       (module) => module.Autocomplete001,
@@ -64,6 +69,16 @@ export const PREVIEWS = {
   "autocomplete-012": dynamic(() =>
     import("@/registry/components/autocomplete/autocomplete-012/autocomplete-012").then(
       (module) => module.Autocomplete012,
+    ),
+  ),
+  "autocomplete-013": dynamic(() =>
+    import("@/registry/components/autocomplete/autocomplete-013/autocomplete-013").then(
+      (module) => module.Autocomplete013,
+    ),
+  ),
+  "autocomplete-015": dynamic(() =>
+    import("@/registry/components/autocomplete/autocomplete-015/autocomplete-015").then(
+      (module) => module.Autocomplete015,
     ),
   ),
 } satisfies PreviewMap

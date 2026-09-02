@@ -5,6 +5,7 @@ import type { ComponentType } from "react"
 
 import type { PreviewProps } from "@/registry/preview-types"
 
+import { Autocomplete014 } from "@/registry/components/autocomplete/autocomplete-014/autocomplete-014"
 import { Autocomplete001 } from "@/registry/components/autocomplete/autocomplete-001/autocomplete-001"
 import { Autocomplete002 } from "@/registry/components/autocomplete/autocomplete-002/autocomplete-002"
 import { Autocomplete003 } from "@/registry/components/autocomplete/autocomplete-003/autocomplete-003"
@@ -17,8 +18,11 @@ import { Autocomplete009 } from "@/registry/components/autocomplete/autocomplete
 import { Autocomplete010 } from "@/registry/components/autocomplete/autocomplete-010/autocomplete-010"
 import { Autocomplete011 } from "@/registry/components/autocomplete/autocomplete-011/autocomplete-011"
 import { Autocomplete012 } from "@/registry/components/autocomplete/autocomplete-012/autocomplete-012"
+import { Autocomplete013 } from "@/registry/components/autocomplete/autocomplete-013/autocomplete-013"
+import { Autocomplete015 } from "@/registry/components/autocomplete/autocomplete-015/autocomplete-015"
 
 export const PREVIEWS = {
+  "autocomplete-014": Autocomplete014,
   "autocomplete-001": Autocomplete001,
   "autocomplete-002": Autocomplete002,
   "autocomplete-003": Autocomplete003,
@@ -31,4 +35,6 @@ export const PREVIEWS = {
   "autocomplete-010": Autocomplete010,
   "autocomplete-011": Autocomplete011,
   "autocomplete-012": Autocomplete012,
+  "autocomplete-013": Autocomplete013,
+  "autocomplete-015": Autocomplete015,
 } satisfies Record<string, ComponentType<PreviewProps>>
