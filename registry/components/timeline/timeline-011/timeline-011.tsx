@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Timeline011Point = {
   date: string
@@ -7,10 +7,7 @@ export type Timeline011Point = {
   text?: string
 }
 
-export type Timeline011Props = Omit<
-  ComponentPropsWithoutRef<"section">,
-  "children"
-> & {
+export type Timeline011Props = Omit<ComponentProps<"section">, "children"> & {
   points?: Timeline011Point[]
   title?: string
   accent?: string
@@ -33,11 +30,14 @@ const STYLES = `
 --vibeui-timeline-011-bg:transparent;
 --vibeui-timeline-011-surface:light-dark(oklch(0.99 0.002 265),oklch(0.19 0.012 265));
 --vibeui-timeline-011-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-timeline-011-muted:light-dark(oklch(0.57 0.014 265),oklch(0.69 0.012 265));
+--vibeui-timeline-011-muted:color-mix(in oklab,var(--vibeui-timeline-011-fg) 68%,transparent);
 --vibeui-timeline-011-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-timeline-011-accent:light-dark(oklch(0.55 0.18 262),oklch(0.74 0.16 262));
 --vibeui-timeline-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="timeline-011"]{color-scheme:dark}
 [data-vibeui-block="timeline-011"]{
 display:flex;flex-direction:column;gap:0.75rem;
 width:100%;max-width:44rem;box-sizing:border-box;padding:0.9375rem;
@@ -176,6 +176,7 @@ export function Timeline011({
       </style>
       <section
         {...props}
+        data-slot="timeline"
         data-vibeui-block="timeline-011"
         className={className}
         style={palette}

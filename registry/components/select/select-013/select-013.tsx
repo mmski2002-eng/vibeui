@@ -1,21 +1,14 @@
 "use client"
 
 import { useEffect, useId, useRef, useState } from "react"
-import type {
-  ComponentPropsWithoutRef,
-  CSSProperties,
-  KeyboardEvent,
-} from "react"
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Select013Option = {
   value: string
   label: string
 }
 
-export type Select013Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Select013Props = Omit<ComponentProps<"div">, "children"> & {
   label?: string
   name?: string
   options?: Select013Option[]
@@ -39,7 +32,7 @@ const STYLES = `
 --vibeui-select-013-surface:transparent;
 --vibeui-select-013-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-select-013-fg:light-dark(oklch(0.23 0.016 265),oklch(0.94 0.005 265));
---vibeui-select-013-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-select-013-muted:color-mix(in oklab,var(--vibeui-select-013-fg) 68%,transparent);
 --vibeui-select-013-border:light-dark(oklch(0.87 0.008 265),oklch(0.4 0.012 265));
 --vibeui-select-013-accent:light-dark(oklch(0.55 0.19 262),oklch(0.73 0.17 262));
 --vibeui-select-013-tint:light-dark(oklch(0.55 0.19 262 / 14%),oklch(0.73 0.17 262 / 22%));
@@ -47,6 +40,9 @@ const STYLES = `
 --vibeui-select-013-check:light-dark(oklch(1 0 0),oklch(0.19 0.014 265));
 --vibeui-select-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="select-013"]{color-scheme:dark}
 [data-vibeui-block="select-013"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:22rem;box-sizing:border-box;padding:0.875rem;
@@ -80,10 +76,10 @@ outline:2px solid var(--vibeui-select-013-accent);outline-offset:1px;
 [data-vibeui-block="select-013"] [data-part="field"]{position:relative;display:block}
 [data-vibeui-block="select-013"] [data-part="trigger"]{
 display:flex;align-items:center;justify-content:space-between;gap:0.5rem;
-box-sizing:border-box;width:100%;height:2.5rem;padding:0 0.875rem;
+box-sizing:border-box;width:100%;height:2.75rem;padding:0 0.875rem;
 border:1px dashed var(--vibeui-select-013-border);border-radius:0.625rem;
 background:transparent;color:var(--vibeui-select-013-muted);
-font:inherit;font-size:0.875rem;text-align:left;cursor:pointer;
+font:inherit;font-size:0.9375rem;text-align:left;cursor:pointer;
 transition:border-color .16s ease,color .16s ease,box-shadow .16s ease;
 }
 [data-vibeui-block="select-013"] [data-part="trigger"]:hover{
@@ -107,7 +103,7 @@ margin:0;padding:0.375rem;list-style:none;
 max-height:12rem;overflow-y:auto;
 background:var(--vibeui-select-013-panel);
 border:1px solid var(--vibeui-select-013-border);border-radius:0.75rem;
-box-shadow:0 0.75rem 1.75rem oklch(0 0 0 / 16%);
+box-shadow:0 0.75rem 1.75rem light-dark(oklch(0 0 0 / 16%),oklch(0 0 0 / 48%));
 }
 [data-vibeui-block="select-013"] [data-part="option"]{
 display:flex;align-items:center;gap:0.5rem;
@@ -280,6 +276,7 @@ export function Select013({
       <div
         {...props}
         ref={rootRef}
+        data-slot="select"
         data-vibeui-block="select-013"
         className={className}
         style={palette}

@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Sheet002Group = {
   title: string
@@ -9,7 +9,7 @@ export type Sheet002Group = {
 }
 
 export type Sheet002Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "title"
 > & {
   triggerLabel?: string
@@ -33,7 +33,7 @@ const STYLES = `
 :where([data-vibeui-block="sheet-002"]){
 --vibeui-sheet-002-bg:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
 --vibeui-sheet-002-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.006 265));
---vibeui-sheet-002-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-sheet-002-muted:color-mix(in oklab,var(--vibeui-sheet-002-fg) 68%,transparent);
 --vibeui-sheet-002-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-sheet-002-hover:light-dark(oklch(0.96 0.004 265),oklch(0.29 0.012 265));
 --vibeui-sheet-002-knob:light-dark(oklch(1 0 0),oklch(0.94 0.006 265));
@@ -42,6 +42,9 @@ const STYLES = `
 --vibeui-sheet-002-scrim:light-dark(oklch(0.19 0.02 265 / 40%),oklch(0.08 0.014 265 / 58%));
 --vibeui-sheet-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="sheet-002"]{color-scheme:dark}
 [data-vibeui-block="sheet-002"]{
 display:inline-block;font-family:var(--vibeui-sheet-002-font);color:var(--vibeui-sheet-002-fg);
 }
@@ -89,10 +92,10 @@ margin-top:-0.75px;background:currentColor;border-radius:9999px;
 }
 [data-vibeui-block="sheet-002"] [data-part="cross"]::before{transform:rotate(45deg)}
 [data-vibeui-block="sheet-002"] [data-part="cross"]::after{transform:rotate(-45deg)}
-[data-vibeui-block="sheet-002"] [data-part="body"]{flex:1;min-height:0;overflow-y:auto;padding:0.25rem 1rem 1rem}
+[data-vibeui-block="sheet-002"] [data-part="body"]{flex:1;min-height:0;overflow-y:auto;padding:0.25rem 1rem 0.9375rem}
 [data-vibeui-block="sheet-002"] [data-part="group"]{
 margin:0.875rem 0 0.375rem;
-font-size:0.6875rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;
+font-size:0.75rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;
 color:var(--vibeui-sheet-002-muted);
 }
 [data-vibeui-block="sheet-002"] [data-part="row"]{
@@ -101,8 +104,8 @@ padding:0.625rem 0;border-bottom:1px solid var(--vibeui-sheet-002-border);
 }
 [data-vibeui-block="sheet-002"] [data-part="row"]:last-child{border-bottom:0}
 [data-vibeui-block="sheet-002"] [data-part="labels"]{display:flex;flex-direction:column;gap:0.125rem;min-width:0}
-[data-vibeui-block="sheet-002"] [data-part="label"]{font-size:0.875rem;font-weight:600}
-[data-vibeui-block="sheet-002"] [data-part="hint"]{font-size:0.75rem;line-height:1.35;color:var(--vibeui-sheet-002-muted)}
+[data-vibeui-block="sheet-002"] [data-part="label"]{font-size:0.9375rem;font-weight:600}
+[data-vibeui-block="sheet-002"] [data-part="hint"]{font-size:0.875rem;line-height:1.35;color:var(--vibeui-sheet-002-muted)}
 /* Тумблер целиком на checkbox: состояние читается скринридером само. */
 [data-vibeui-block="sheet-002"] [data-part="row"] input{
 appearance:none;flex:none;margin:0.125rem 0 0 auto;position:relative;cursor:pointer;
@@ -208,6 +211,7 @@ export function Sheet002({
       </style>
       <div
         {...props}
+        data-slot="sheet"
         data-vibeui-block="sheet-002"
         className={className}
         style={palette}

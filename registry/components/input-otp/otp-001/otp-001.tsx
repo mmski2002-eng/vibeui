@@ -3,13 +3,13 @@
 import { useId, useRef, useState } from "react"
 import type {
   ClipboardEvent,
-  ComponentPropsWithoutRef,
+  ComponentProps,
   CSSProperties,
   KeyboardEvent,
 } from "react"
 
 export type Otp001Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   label?: string
@@ -31,20 +31,24 @@ const STYLES = `
 :where([data-vibeui-block="otp-001"]){
 --vibeui-otp-001-bg:transparent;
 --vibeui-otp-001-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-otp-001-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.014 265));
+--vibeui-otp-001-muted:color-mix(in oklab,var(--vibeui-otp-001-fg) 68%,transparent);
 --vibeui-otp-001-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
 --vibeui-otp-001-field:light-dark(oklch(0.985 0.002 265),oklch(0.27 0.014 265));
 --vibeui-otp-001-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-otp-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="otp-001"]{color-scheme:dark}
 [data-vibeui-block="otp-001"]{
 display:flex;flex-direction:column;gap:0.5rem;
-width:100%;max-width:20rem;box-sizing:border-box;padding:0.875rem;
+width:100%;max-width:20rem;box-sizing:border-box;padding:0.9375rem;
 background:var(--vibeui-otp-001-bg);
 border:1px solid var(--vibeui-otp-001-border);border-radius:0.875rem;
 font-family:var(--vibeui-otp-001-font);color:var(--vibeui-otp-001-fg);
 }
-[data-vibeui-block="otp-001"] [data-part="label"]{font-size:0.8125rem;font-weight:600}
+[data-vibeui-block="otp-001"] [data-part="label"]{font-size:0.9375rem;font-weight:600}
 [data-vibeui-block="otp-001"] [data-part="row"]{display:flex;gap:0.375rem}
 [data-vibeui-block="otp-001"] input{
 flex:1;min-width:0;height:3rem;padding:0;box-sizing:border-box;
@@ -57,7 +61,13 @@ font-variant-numeric:tabular-nums;
 outline:2px solid var(--vibeui-otp-001-accent);outline-offset:1px;border-color:transparent;
 }
 [data-vibeui-block="otp-001"] input:not(:placeholder-shown){border-color:var(--vibeui-otp-001-accent)}
-[data-vibeui-block="otp-001"] [data-part="hint"]{font-size:0.75rem;line-height:1.4;color:var(--vibeui-otp-001-muted)}
+[data-vibeui-block="otp-001"] [data-part="hint"]{font-size:0.875rem;line-height:1.4;color:var(--vibeui-otp-001-muted)}
+/* Шкала категории: в узкой колонке подпись и подсказка мельче. Порог 19rem, а
+   не 32rem, — карточка упёрта в max-width:20rem и шире не бывает. */
+@container (min-width: 19rem){
+[data-vibeui-block="otp-001"] [data-part="label"]{font-size:1rem}
+[data-vibeui-block="otp-001"] [data-part="hint"]{font-size:0.9375rem}
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="otp-001"] *{animation:none!important;transition:none!important}}
 `
 
@@ -165,6 +175,7 @@ export function Otp001({
       </style>
       <div
         {...props}
+        data-slot="input-otp"
         data-vibeui-block="otp-001"
         className={className}
         style={palette}

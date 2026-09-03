@@ -1,10 +1,10 @@
 "use client"
 
 import { useId, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Currency006Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "defaultValue" | "onChange"
 > & {
   label?: string
@@ -12,6 +12,8 @@ export type Currency006Props = Omit<
   minFee?: number
   defaultValue?: number
   currency?: string
+  /** Валюта словом: знак «₽» скринридер не называет. */
+  currencyText?: string
   /** Подписи чека; {percent}, {min} и {currency} подставляются. */
   checkText?: Record<string, string>
   /** Локаль разрядов: компонент несёт русскую, проект подставляет свою. */
@@ -36,11 +38,14 @@ const STYLES = `
 --vibeui-currency-006-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.011 265));
 --vibeui-currency-006-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-currency-006-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-currency-006-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.014 265));
+--vibeui-currency-006-muted:color-mix(in oklab,var(--vibeui-currency-006-fg) 68%,transparent);
 --vibeui-currency-006-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.013 265));
 --vibeui-currency-006-accent:light-dark(oklch(0.5 0.16 200),oklch(0.76 0.13 200));
 --vibeui-currency-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="currency-006"]{color-scheme:dark}
 /* Подложки по умолчанию нет: чек ложится на фон страницы. */
 [data-vibeui-block="currency-006"]{
 display:flex;flex-direction:column;gap:0.5rem;
@@ -96,6 +101,10 @@ font-variant-numeric:tabular-nums;
 [data-vibeui-block="currency-006"] [data-part="rule"]{
 margin:0;font-size:0.6875rem;color:var(--vibeui-currency-006-muted);
 }
+[data-vibeui-block="currency-006"] [data-part="sr"]{
+position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+clip:rect(0,0,0,0);white-space:nowrap;border:0;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="currency-006"] *{animation:none!important;transition:none!important}}
 `
 
@@ -142,6 +151,7 @@ export function Currency006({
   minFee = 50,
   defaultValue = 12000,
   currency = "₽",
+  currencyText = "в рублях",
   checkText = CHECK_TEXT,
   locale = "ru-RU",
   background = "",
@@ -180,11 +190,15 @@ export function Currency006({
       </style>
       <div
         {...props}
+        data-slot="currency-input"
         data-vibeui-block="currency-006"
         className={className}
         style={palette}
       >
-        <label htmlFor={id}>{label}</label>
+        <label htmlFor={id}>
+          {label}
+          <span data-part="sr"> {currencyText}</span>
+        </label>
         <div data-part="row">
           <input
             id={id}

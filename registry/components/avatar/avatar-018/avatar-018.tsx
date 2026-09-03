@@ -63,10 +63,10 @@ overflow:hidden;
 width:100%;height:100%;border-radius:inherit;object-fit:cover;display:block;
 }
 /* Длина дуги различает роли: одного цвета мало. */
-[data-vibeui-block="avatar-018"][data-role="owner"]{--vibeui-avatar-018-arc:100%;--vibeui-avatar-018-color:oklch(0.55 0.2 262)}
-[data-vibeui-block="avatar-018"][data-role="editor"]{--vibeui-avatar-018-arc:75%;--vibeui-avatar-018-color:oklch(0.58 0.14 152)}
+[data-vibeui-block="avatar-018"][data-role="owner"]{--vibeui-avatar-018-arc:100%;--vibeui-avatar-018-color:light-dark(oklch(0.55 0.2 262),oklch(0.69 0.2 262))}
+[data-vibeui-block="avatar-018"][data-role="editor"]{--vibeui-avatar-018-arc:75%;--vibeui-avatar-018-color:light-dark(oklch(0.58 0.14 152),oklch(0.72 0.14 152))}
 [data-vibeui-block="avatar-018"][data-role="reader"]{--vibeui-avatar-018-arc:50%;--vibeui-avatar-018-color:light-dark(oklch(0.7 0.014 265),oklch(0.42 0.014 265))}
-[data-vibeui-block="avatar-018"][data-role="bot"]{--vibeui-avatar-018-arc:25%;--vibeui-avatar-018-color:oklch(0.72 0.15 75)}
+[data-vibeui-block="avatar-018"][data-role="bot"]{--vibeui-avatar-018-arc:25%;--vibeui-avatar-018-color:light-dark(oklch(0.72 0.15 75),oklch(0.82 0.14 75))}
 [data-vibeui-block="avatar-018"][data-size="sm"]{--vibeui-avatar-018-size:2rem;--vibeui-avatar-018-ring:0.125rem}
 [data-vibeui-block="avatar-018"][data-size="lg"]{--vibeui-avatar-018-size:3.5rem;--vibeui-avatar-018-ring:0.25rem}
 [data-vibeui-block="avatar-018"] [data-part="text"]{display:flex;flex-direction:column;gap:0.0625rem;min-width:0}

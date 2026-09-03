@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Separator001Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Separator001Props = Omit<ComponentProps<"div">, "children"> & {
   label?: string
   orientation?: "horizontal" | "vertical"
   /** Цвет линии. Пусто — цвет из палитры компонента. */
@@ -23,6 +20,9 @@ const STYLES = `
 --vibeui-separator-001-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
 --vibeui-separator-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="separator-001"]{color-scheme:dark}
 [data-vibeui-block="separator-001"]{
 display:grid;align-items:center;gap:0.75rem;
 width:100%;box-sizing:border-box;
@@ -68,6 +68,7 @@ export function Separator001({
       </style>
       <div
         {...props}
+        data-slot="separator"
         data-vibeui-block="separator-001"
         data-orientation={orientation}
         data-with-label={Boolean(label) && !vertical}

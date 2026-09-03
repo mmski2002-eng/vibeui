@@ -1,10 +1,10 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Calendar015Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange" | "defaultValue"
 > & {
   defaultDate?: string
@@ -36,15 +36,18 @@ const STYLES = `
 :where([data-vibeui-block="calendar-015"]){
 --vibeui-calendar-015-bg:transparent;
 --vibeui-calendar-015-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
---vibeui-calendar-015-muted:light-dark(oklch(0.62 0.014 265),oklch(0.67 0.013 265));
+--vibeui-calendar-015-muted:color-mix(in oklab,var(--vibeui-calendar-015-fg) 68%,transparent);
 --vibeui-calendar-015-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-calendar-015-hover:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.012 265));
 --vibeui-calendar-015-accent:light-dark(oklch(0.52 0.15 255),oklch(0.72 0.14 255));
 --vibeui-calendar-015-on-accent:light-dark(oklch(0.99 0.01 255),oklch(0.2 0.04 255));
 --vibeui-calendar-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="calendar-015"]{color-scheme:dark}
 [data-vibeui-block="calendar-015"]{
-width:100%;max-width:29rem;box-sizing:border-box;padding:0.875rem;
+width:100%;max-width:29rem;box-sizing:border-box;padding:0.9375rem;
 background:var(--vibeui-calendar-015-bg);
 border:1px solid var(--vibeui-calendar-015-border);border-radius:1rem;
 color:var(--vibeui-calendar-015-fg);font-family:var(--vibeui-calendar-015-font);
@@ -59,12 +62,12 @@ display:flex;flex-direction:column;gap:0.25rem;
 max-height:15.5rem;overflow-y:auto;padding-right:0.125rem;
 }
 [data-vibeui-block="calendar-015"] [data-part="title"]{
-margin:0 0 0.375rem;font-size:0.875rem;font-weight:650;
+margin:0 0 0.375rem;font-size:0.9375rem;font-weight:650;
 }
 /* Заглавная только первая буква: capitalize поднимает и «г.» в «январь 2026 г.». */
 [data-vibeui-block="calendar-015"] [data-part="title"]::first-letter{text-transform:uppercase}
 [data-vibeui-block="calendar-015"] [data-part="legend"]{
-margin:0 0 0.375rem;font-size:0.6875rem;font-weight:600;letter-spacing:0.04em;
+margin:0 0 0.375rem;font-size:0.75rem;font-weight:600;letter-spacing:0.04em;
 text-transform:uppercase;color:var(--vibeui-calendar-015-muted);
 }
 [data-vibeui-block="calendar-015"] table{width:100%;border-collapse:collapse;table-layout:fixed}
@@ -105,7 +108,7 @@ border-color:var(--vibeui-calendar-015-accent);font-weight:650;
 [data-vibeui-block="calendar-015"] [data-part="foot"]{
 display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:0.5rem;
 margin-top:0.875rem;padding-top:0.75rem;border-top:1px solid var(--vibeui-calendar-015-border);
-font-size:0.8125rem;
+font-size:0.875rem;
 }
 [data-vibeui-block="calendar-015"] [data-part="summary"]{color:var(--vibeui-calendar-015-muted)}
 [data-vibeui-block="calendar-015"] [data-part="summary"] strong{color:var(--vibeui-calendar-015-fg)}
@@ -113,7 +116,7 @@ font-size:0.8125rem;
 appearance:none;cursor:pointer;border:0;border-radius:0.5rem;
 height:2.25rem;padding:0 1rem;
 background:var(--vibeui-calendar-015-accent);color:var(--vibeui-calendar-015-on-accent);
-font:inherit;font-size:0.8125rem;font-weight:650;
+font:inherit;font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="calendar-015"] [data-part="submit"]:focus-visible{outline:2px solid var(--vibeui-calendar-015-accent);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="calendar-015"] *{animation:none!important;transition:none!important}}
@@ -135,6 +138,44 @@ function clock(value: number) {
 }
 
 const DEFAULT_BUSY = ["10:00", "10:30", "13:00", "16:30"]
+
+// Стрелки водят фокус по сетке. Без них до нужного дня приходится жать Tab
+// столько раз, сколько до него дней.
+function moveFocus(event: KeyboardEvent<HTMLElement>, columns: number) {
+  const steps: Record<string, number> = {
+    ArrowLeft: -1,
+    ArrowRight: 1,
+    ArrowUp: -columns,
+    ArrowDown: columns,
+  }
+  const step = steps[event.key]
+
+  if (step === undefined) {
+    return
+  }
+
+  const buttons = Array.from(
+    event.currentTarget.querySelectorAll<HTMLButtonElement>("button"),
+  )
+  const from = buttons.indexOf(document.activeElement as HTMLButtonElement)
+
+  if (from < 0) {
+    return
+  }
+
+  let index = from + step
+
+  while (buttons[index]?.disabled) {
+    index += step
+  }
+
+  if (!buttons[index]) {
+    return
+  }
+
+  event.preventDefault()
+  buttons[index].focus()
+}
 
 /**
  * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
@@ -159,11 +200,31 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 }
 
 /**
+ * Дата и локаль из пропов или дефолты компонента. Чужая страница не должна
+ * падать из-за опечатки в значении: Intl бросает RangeError и на Invalid Date,
+ * и на нераспознанной локали, а это белый экран вместо всего сайта.
+ */
+function safeDate(value: string, fallback: string) {
+  return Number.isNaN(new Date(`${value}T00:00:00`).getTime())
+    ? fallback
+    : value
+}
+
+function safeLocale(value: string, fallback: string) {
+  try {
+    Intl.DateTimeFormat.supportedLocalesOf(value)
+    return value
+  } catch {
+    return fallback
+  }
+}
+
+/**
  * Дата и время в одном блоке: месяц слева, сетка времени справа.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Calendar015({
-  defaultDate = "2026-03-18",
+  defaultDate: defaultDateProp = "2026-03-18",
   defaultTime = "15:30",
   step = 30,
   opensAt = "09:00",
@@ -173,7 +234,7 @@ export function Calendar015({
   timesLabel = "Время приёма",
   summaryText = "Запись на {value}",
   submitText = "Подтвердить",
-  locale = "ru-RU",
+  locale: localeProp = "ru-RU",
   onChange,
   accent,
   background = "",
@@ -181,6 +242,8 @@ export function Calendar015({
   style,
   ...props
 }: Calendar015Props) {
+  const defaultDate = safeDate(defaultDateProp, "2026-03-18")
+  const locale = safeLocale(localeProp, "ru-RU")
   const [date, setDate] = useState(defaultDate)
   const [time, setTime] = useState(defaultTime)
 
@@ -191,6 +254,9 @@ export function Calendar015({
     { length: 35 },
     (_, index) => new Date(start.getTime() + index * DAY),
   )
+
+  // Ровно одна кнопка сетки в табуляции: выбранный день, иначе первый показанный.
+  const stop = cells.some((day) => iso(day) === date) ? date : iso(cells[0])
 
   const from = minutes(opensAt)
   const to = minutes(closesAt)
@@ -239,6 +305,7 @@ export function Calendar015({
       </style>
       <div
         {...props}
+        data-slot="calendar"
         data-vibeui-block="calendar-015"
         className={className}
         style={palette}
@@ -256,7 +323,7 @@ export function Calendar015({
                   ))}
                 </tr>
               </thead>
-              <tbody>
+              <tbody onKeyDown={(event) => moveFocus(event, 7)}>
                 {Array.from({ length: 5 }, (_, row) => (
                   <tr key={row}>
                     {cells.slice(row * 7, row * 7 + 7).map((day) => {
@@ -266,6 +333,7 @@ export function Calendar015({
                         <td key={value}>
                           <button
                             type="button"
+                            tabIndex={value === stop ? 0 : -1}
                             aria-pressed={value === date}
                             aria-label={long.format(day)}
                             data-outside={day.getMonth() !== month - 1}
@@ -281,7 +349,12 @@ export function Calendar015({
               </tbody>
             </table>
           </div>
-          <div data-part="times" role="group" aria-label={timesLabel}>
+          <div
+            data-part="times"
+            role="group"
+            aria-label={timesLabel}
+            onKeyDown={(event) => moveFocus(event, 1)}
+          >
             <p data-part="legend">{timesLegend}</p>
             {slots.map((slot) => (
               <button

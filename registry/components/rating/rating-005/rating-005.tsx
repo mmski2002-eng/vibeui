@@ -1,10 +1,10 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Rating005Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "defaultValue" | "onChange"
 > & {
   question?: string
@@ -37,13 +37,16 @@ const STYLES = `
 --vibeui-rating-005-wash:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
 --vibeui-rating-005-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-rating-005-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
---vibeui-rating-005-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-rating-005-muted:color-mix(in oklab,var(--vibeui-rating-005-fg) 68%,transparent);
 --vibeui-rating-005-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.012 265));
 --vibeui-rating-005-up:light-dark(oklch(0.55 0.15 155),oklch(0.76 0.14 158));
 --vibeui-rating-005-down:light-dark(oklch(0.56 0.18 25),oklch(0.74 0.16 25));
 --vibeui-rating-005-accent:var(--vibeui-rating-005-up);
 --vibeui-rating-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="rating-005"]{color-scheme:dark}
 /* Подложки по умолчанию нет: блок ложится на фон страницы. */
 [data-vibeui-block="rating-005"]{
 display:flex;flex-direction:column;gap:0.625rem;
@@ -157,6 +160,7 @@ export function Rating005({
       </style>
       <div
         {...props}
+        data-slot="rating"
         data-vibeui-block="rating-005"
         className={className}
         style={palette}

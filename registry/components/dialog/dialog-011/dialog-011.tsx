@@ -24,13 +24,16 @@ export type Dialog011Props = {
 const STYLES = `
 :where([data-vibeui-block="dialog-011"]){
 --vibeui-dialog-011-fg:light-dark(oklch(0.22 0.016 265),oklch(0.94 0.005 265));
---vibeui-dialog-011-muted:light-dark(oklch(0.5 0.014 265),oklch(0.7 0.012 265));
+--vibeui-dialog-011-muted:color-mix(in oklab,var(--vibeui-dialog-011-fg) 68%,transparent);
 --vibeui-dialog-011-bg:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
 --vibeui-dialog-011-border:light-dark(oklch(0.89 0.006 265),oklch(0.38 0.012 265));
 --vibeui-dialog-011-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
 --vibeui-dialog-011-radius:1rem;
 --vibeui-dialog-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="dialog-011"]{color-scheme:dark}
 [data-vibeui-block="dialog-011"]{display:inline-flex;font-family:var(--vibeui-dialog-011-font)}
 [data-vibeui-block="dialog-011"] [data-part="trigger"]{
 appearance:none;cursor:pointer;font:inherit;font-size:0.875rem;font-weight:500;
@@ -62,6 +65,8 @@ background:
 radial-gradient(110% 90% at 18% 10%,color-mix(in oklab,var(--vibeui-dialog-011-accent,light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262))) 55%,transparent),transparent 62%),
 linear-gradient(155deg,light-dark(oklch(0.93 0.03 265),oklch(0.38 0.04 265)),light-dark(oklch(0.84 0.05 250),oklch(0.3 0.05 250)));
 }
+/* Затемнение низа обложки: полупрозрачное, поэтому работает поверх обеих
+   веток обложки и своей ветки не требует. */
 [data-vibeui-dialog-011-window] [data-part="cover"]::after{
 content:"";position:absolute;inset:auto 0 0;height:35%;
 background:linear-gradient(to top,oklch(0.2 0.02 265 / 22%),transparent);
@@ -84,6 +89,8 @@ border-radius:0.5rem;border:1px solid transparent;text-decoration:none;
 [data-vibeui-dialog-011-window] [data-part="primary"]{background:var(--vibeui-dialog-011-accent,light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262)));color:light-dark(oklch(1 0 0),oklch(0.17 0.02 265))}
 [data-vibeui-dialog-011-window] [data-part="primary"]:hover{filter:brightness(0.94)}
 [data-vibeui-dialog-011-window] :focus-visible{outline:2px solid var(--vibeui-dialog-011-accent,light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262)));outline-offset:2px}
+/* Popover страницу не блокирует: фон под окном иначе продолжает прокручиваться. */
+html:has([data-vibeui-dialog-011-window]:popover-open){overflow:hidden}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="dialog-011"] *{animation:none!important;transition:none!important}
 [data-vibeui-dialog-011-window]{transition:none!important;opacity:1;transform:none}
@@ -147,7 +154,12 @@ export function Dialog011({
       <style href="vibeui-dialog-011" precedence="medium">
         {STYLES}
       </style>
-      <div data-vibeui-block="dialog-011" className={className} style={palette}>
+      <div
+        data-slot="dialog"
+        data-vibeui-block="dialog-011"
+        className={className}
+        style={palette}
+      >
         <button data-part="trigger" type="button" popoverTarget={id}>
           {trigger}
         </button>
@@ -157,6 +169,7 @@ export function Dialog011({
           data-vibeui-dialog-011-window=""
           role="dialog"
           aria-labelledby={`${id}-title`}
+          aria-describedby={description ? `${id}-description` : undefined}
           style={palette}
         >
           <div data-part="cover" aria-hidden="true" />
@@ -164,10 +177,19 @@ export function Dialog011({
             <h2 data-part="title" id={`${id}-title`}>
               {title}
             </h2>
-            {description ? <p data-part="description">{description}</p> : null}
+            {description ? (
+              <p data-part="description" id={`${id}-description`}>
+                {description}
+              </p>
+            ) : null}
             {meta ? <span data-part="meta">{meta}</span> : null}
             <div data-part="actions">
-              <button data-part="close" type="button" popoverTarget={id}>
+              <button
+                data-part="close"
+                type="button"
+                popoverTarget={id}
+                autoFocus
+              >
                 {closeLabel}
               </button>
               {primaryLabel ? (

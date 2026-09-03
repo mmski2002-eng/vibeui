@@ -1,7 +1,7 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Card014Props = Omit<
-  ComponentPropsWithoutRef<"article">,
+  ComponentProps<"article">,
   "children" | "title"
 > & {
   label?: string
@@ -35,7 +35,7 @@ const STYLES = `
 --vibeui-card-014-surface:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
 --vibeui-card-014-ink:light-dark(oklch(0.2 0.02 265),oklch(0.97 0.005 265));
 --vibeui-card-014-fg:light-dark(oklch(0.21 0.015 265),oklch(0.94 0.006 265));
---vibeui-card-014-muted:light-dark(oklch(0.55 0.013 265),oklch(0.71 0.012 265));
+--vibeui-card-014-muted:color-mix(in oklab,var(--vibeui-card-014-fg) 68%,transparent);
 --vibeui-card-014-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-card-014-good:light-dark(oklch(0.55 0.14 152),oklch(0.74 0.13 152));
 --vibeui-card-014-bad:light-dark(oklch(0.56 0.19 27),oklch(0.72 0.16 27));
@@ -43,9 +43,12 @@ const STYLES = `
 --vibeui-card-014-tone:var(--vibeui-card-014-flat);
 --vibeui-card-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="card-014"]{color-scheme:dark}
 [data-vibeui-block="card-014"]{
 display:flex;flex-direction:column;gap:0.4375rem;
-width:100%;max-width:17rem;box-sizing:border-box;padding:1rem 1.0625rem 1.0625rem;
+width:100%;max-width:17rem;box-sizing:border-box;padding:0.875rem;
 background:var(--vibeui-card-014-bg);color:var(--vibeui-card-014-fg);
 border:1px solid var(--vibeui-card-014-border);border-radius:0.875rem;
 font-family:var(--vibeui-card-014-font);
@@ -53,7 +56,7 @@ font-family:var(--vibeui-card-014-font);
 [data-vibeui-block="card-014"][data-tone="good"]{--vibeui-card-014-tone:var(--vibeui-card-014-good)}
 [data-vibeui-block="card-014"][data-tone="bad"]{--vibeui-card-014-tone:var(--vibeui-card-014-bad)}
 [data-vibeui-block="card-014"] [data-part="label"]{
-margin:0;font-size:0.75rem;font-weight:600;letter-spacing:0.02em;
+margin:0;font-size:0.8125rem;font-weight:600;letter-spacing:0.02em;
 color:var(--vibeui-card-014-muted);
 }
 [data-vibeui-block="card-014"] [data-part="row"]{
@@ -70,7 +73,7 @@ position:relative;display:inline-flex;align-items:center;gap:0.25rem;
 height:1.375rem;padding:0 0.4375rem;border-radius:0.4375rem;
 background:color-mix(in oklab,var(--vibeui-card-014-tone) 12%,var(--vibeui-card-014-surface));
 color:color-mix(in oklab,var(--vibeui-card-014-tone) 82%,var(--vibeui-card-014-ink));
-font-size:0.75rem;font-weight:680;font-variant-numeric:tabular-nums;
+font-size:0.8125rem;font-weight:680;font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="card-014"] [data-part="arrow"]{width:0.625rem;height:0.625rem;flex:none}
 [data-vibeui-block="card-014"][data-direction="down"] [data-part="arrow"]{transform:rotate(180deg)}
@@ -169,6 +172,7 @@ export function Card014({
       </style>
       <article
         {...props}
+        data-slot="card"
         data-vibeui-block="card-014"
         data-tone={tone}
         data-direction={direction}

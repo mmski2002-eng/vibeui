@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Toast011Tone = "neutral" | "success" | "danger"
 
@@ -11,10 +11,7 @@ export type Toast011Item = {
   tone?: Toast011Tone
 }
 
-export type Toast011Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Toast011Props = Omit<ComponentProps<"div">, "children"> & {
   items?: Toast011Item[]
   closeLabel?: string
   emptyLabel?: string
@@ -35,7 +32,7 @@ const STYLES = `
 :where([data-vibeui-block="toast-011"]){
 --vibeui-toast-011-bg:light-dark(oklch(0.99 0.002 265),oklch(0.26 0.014 265));
 --vibeui-toast-011-fg:light-dark(oklch(0.22 0.014 265),oklch(0.95 0.004 265));
---vibeui-toast-011-muted:light-dark(oklch(0.56 0.014 265),oklch(0.72 0.012 265));
+--vibeui-toast-011-muted:color-mix(in oklab,var(--vibeui-toast-011-fg) 68%,transparent);
 --vibeui-toast-011-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.014 265));
 --vibeui-toast-011-hover:light-dark(oklch(0 0 0 / 6%),oklch(1 0 0 / 10%));
 --vibeui-toast-011-shadow:light-dark(oklch(0.18 0.02 265 / 55%),oklch(0.08 0.02 265 / 70%));
@@ -45,6 +42,9 @@ const STYLES = `
 --vibeui-toast-011-radius:0.875rem;
 --vibeui-toast-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="toast-011"]{color-scheme:dark}
 [data-vibeui-block="toast-011"]{
 width:100%;max-width:22rem;box-sizing:border-box;
 font-family:var(--vibeui-toast-011-font);color:var(--vibeui-toast-011-fg);
@@ -82,7 +82,7 @@ background:var(--vibeui-toast-011-neutral);
 [data-vibeui-block="toast-011"] [data-part="card"][data-tone="success"] [data-part="dot"]{background:var(--vibeui-toast-011-success)}
 [data-vibeui-block="toast-011"] [data-part="card"][data-tone="danger"] [data-part="dot"]{background:var(--vibeui-toast-011-danger)}
 [data-vibeui-block="toast-011"] [data-part="text"]{flex:1;min-width:0;display:flex;flex-direction:column;gap:0.25rem}
-[data-vibeui-block="toast-011"] [data-part="title"]{font-size:0.8438rem;line-height:1.4}
+[data-vibeui-block="toast-011"] [data-part="title"]{font-size:0.875rem;line-height:1.4}
 [data-vibeui-block="toast-011"] [data-part="count"]{font-size:0.75rem;color:var(--vibeui-toast-011-muted)}
 [data-vibeui-block="toast-011"] [data-part="close"]{
 appearance:none;border:0;cursor:pointer;background:transparent;flex:none;
@@ -162,6 +162,7 @@ export function Toast011({
       </style>
       <div
         {...props}
+        data-slot="toast"
         data-vibeui-block="toast-011"
         className={className}
         style={deckPalette}

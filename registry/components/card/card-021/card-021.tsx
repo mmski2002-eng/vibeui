@@ -1,6 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Card021Props = Omit<ComponentPropsWithoutRef<"div">, "children"> & {
+export type Card021Props = Omit<ComponentProps<"div">, "children"> & {
   /** Что именно грузится. Читается вслух, на экране не показывается. */
   label?: string
   /** Сколько строк ленты изобразить. Столько же, сколько придёт данных. */
@@ -25,6 +25,9 @@ const STYLES = `
 --vibeui-card-021-shine:light-dark(oklch(0.97 0.003 265),oklch(0.41 0.011 265));
 --vibeui-card-021-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="card-021"]{color-scheme:dark}
 [data-vibeui-block="card-021"]{
 position:relative;display:flex;flex-direction:column;gap:1rem;
 width:100%;max-width:24rem;box-sizing:border-box;padding:1rem;
@@ -132,6 +135,7 @@ export function Card021({
       </style>
       <div
         {...props}
+        data-slot="card"
         data-vibeui-block="card-021"
         role="status"
         aria-busy="true"

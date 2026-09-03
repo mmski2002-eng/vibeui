@@ -1,8 +1,8 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Skeleton001Shape = "text" | "avatar" | "block"
 
-export type Skeleton001Props = ComponentPropsWithoutRef<"div"> & {
+export type Skeleton001Props = ComponentProps<"div"> & {
   shape?: Skeleton001Shape
   /** Сколько строк рисовать в форме text. Последняя всегда короче. */
   lines?: number
@@ -24,6 +24,9 @@ const STYLES = `
 --vibeui-skeleton-001-line:1rem;
 --vibeui-skeleton-001-gap:0.625rem;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="skeleton-001"]{color-scheme:dark}
 [data-vibeui-block="skeleton-001"]{
 display:flex;flex-direction:column;gap:var(--vibeui-skeleton-001-gap);
 width:100%;
@@ -86,6 +89,7 @@ export function Skeleton001({
       </style>
       <div
         {...props}
+        data-slot="skeleton"
         data-vibeui-block="skeleton-001"
         data-shape={shape}
         role="status"

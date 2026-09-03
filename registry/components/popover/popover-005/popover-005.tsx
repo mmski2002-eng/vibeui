@@ -1,10 +1,7 @@
 import { useId } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Popover005Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Popover005Props = Omit<ComponentProps<"div">, "children"> & {
   label?: string
   /** Палитра меток: каждый цвет — отдельная радиокнопка с подписью. */
   swatches?: { name: string; value: string }[]
@@ -24,7 +21,7 @@ const STYLES = `
 :where([data-vibeui-block="popover-005"]){
 --vibeui-popover-005-bg:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
 --vibeui-popover-005-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.006 265));
---vibeui-popover-005-muted:light-dark(oklch(0.54 0.014 265),oklch(0.71 0.012 265));
+--vibeui-popover-005-muted:color-mix(in oklab,var(--vibeui-popover-005-fg) 68%,transparent);
 --vibeui-popover-005-border:light-dark(oklch(0.89 0.006 265),oklch(0.36 0.012 265));
 --vibeui-popover-005-accent:light-dark(oklch(0.55 0.17 265),oklch(0.73 0.15 265));
 --vibeui-popover-005-swatch:oklch(0.6 0.17 255);
@@ -32,6 +29,9 @@ const STYLES = `
 --vibeui-popover-005-shadow:light-dark(oklch(0.2 0.02 265 / 60%),oklch(0.02 0.01 265 / 72%));
 --vibeui-popover-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="popover-005"]{color-scheme:dark}
 [data-vibeui-block="popover-005"]{
 position:relative;display:inline-block;
 font-family:var(--vibeui-popover-005-font);color:var(--vibeui-popover-005-fg);
@@ -173,6 +173,7 @@ export function Popover005({
       </style>
       <div
         {...props}
+        data-slot="popover"
         data-vibeui-block="popover-005"
         className={className}
         style={palette}

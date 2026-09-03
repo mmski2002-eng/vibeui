@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Toast003Item = {
   id: string
@@ -9,10 +9,7 @@ export type Toast003Item = {
   tone?: "info" | "success" | "danger"
 }
 
-export type Toast003Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Toast003Props = Omit<ComponentProps<"div">, "children"> & {
   items?: Toast003Item[]
   max?: number
   accent?: string
@@ -20,6 +17,8 @@ export type Toast003Props = Omit<
   background?: string
   /** Имя потока сообщений для скринридера. */
   listLabel?: string
+  /** Что скринридер читает вместо цветной полоски тона. */
+  toneLabels?: Record<"info" | "success" | "danger", string>
   /** Подпись кнопки скрытия; {title} заменяется текстом сообщения. */
   dismissText?: string
   /** Строка свёрнутого хвоста; {count} заменяется числом. */
@@ -42,21 +41,25 @@ const STYLES = `
 :where([data-vibeui-block="toast-003"]){
 --vibeui-toast-003-bg:light-dark(oklch(1 0 0),oklch(0.26 0.014 265));
 --vibeui-toast-003-fg:light-dark(oklch(0.22 0.014 265),oklch(0.95 0.004 265));
---vibeui-toast-003-muted:light-dark(oklch(0.56 0.014 265),oklch(0.72 0.012 265));
+--vibeui-toast-003-muted:color-mix(in oklab,var(--vibeui-toast-003-fg) 68%,transparent);
 --vibeui-toast-003-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.014 265));
 --vibeui-toast-003-hover:light-dark(oklch(0.95 0.004 265),oklch(0.34 0.014 265));
 --vibeui-toast-003-shadow:light-dark(oklch(0.2 0.02 265 / 55%),oklch(0.1 0.02 265 / 70%));
---vibeui-toast-003-info:light-dark(oklch(0.58 0.16 265),oklch(0.74 0.14 265));
+--vibeui-toast-003-info:light-dark(oklch(0.54 0.16 265),oklch(0.74 0.14 265));
 --vibeui-toast-003-success:light-dark(oklch(0.58 0.15 152),oklch(0.75 0.15 152));
 --vibeui-toast-003-danger:light-dark(oklch(0.58 0.19 25),oklch(0.7 0.18 25));
 --vibeui-toast-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="toast-003"]{color-scheme:dark}
 [data-vibeui-block="toast-003"]{
 display:flex;flex-direction:column;gap:0.375rem;
 width:100%;max-width:21rem;box-sizing:border-box;
 font-family:var(--vibeui-toast-003-font);color:var(--vibeui-toast-003-fg);
 }
 [data-vibeui-block="toast-003"] [data-part="item"]{
+position:relative;
 display:flex;align-items:center;gap:0.625rem;
 padding:0.625rem 0.75rem;box-sizing:border-box;
 border:1px solid var(--vibeui-toast-003-border);border-radius:0.75rem;
@@ -70,6 +73,12 @@ background:var(--vibeui-toast-003-info);
 }
 [data-vibeui-block="toast-003"] [data-part="item"][data-tone="success"] [data-part="bar"]{background:var(--vibeui-toast-003-success)}
 [data-vibeui-block="toast-003"] [data-part="item"][data-tone="danger"] [data-part="bar"]{background:var(--vibeui-toast-003-danger)}
+/* Полоска тона aria-hidden, и в общем потоке успех с ошибкой звучали бы
+   одинаково. Подпись озвучивает тон, не занимая места в карточке. */
+[data-vibeui-block="toast-003"] [data-part="sr"]{
+position:absolute;width:1px;height:1px;overflow:hidden;
+clip-path:inset(50%);white-space:nowrap;
+}
 [data-vibeui-block="toast-003"] [data-part="title"]{flex:1;min-width:0;font-size:0.8125rem;line-height:1.35}
 [data-vibeui-block="toast-003"] [data-part="close"]{
 appearance:none;border:0;cursor:pointer;background:transparent;flex:none;
@@ -100,6 +109,12 @@ color:var(--vibeui-toast-003-info);font:inherit;font-size:0.75rem;font-weight:65
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="toast-003"] *{animation:none!important;transition:none!important}}
 `
+
+const TONE_LABELS: Record<"info" | "success" | "danger", string> = {
+  info: "Сообщение",
+  success: "Успешно",
+  danger: "Ошибка",
+}
 
 const DEFAULT_ITEMS: Toast003Item[] = [
   { id: "1", title: "Компонент button-020 опубликован", tone: "success" },
@@ -141,6 +156,7 @@ export function Toast003({
   accent,
   background = "",
   listLabel = "Сообщения",
+  toneLabels = TONE_LABELS,
   dismissText = "Скрыть сообщение: {title}",
   moreText = "и ещё {count}",
   expandLabel = "Показать все",
@@ -174,6 +190,7 @@ export function Toast003({
       </style>
       <div
         {...props}
+        data-slot="toast"
         data-vibeui-block="toast-003"
         role="log"
         aria-live="polite"
@@ -184,6 +201,7 @@ export function Toast003({
         {shown.map((item) => (
           <div key={item.id} data-part="item" data-tone={item.tone ?? "info"}>
             <span data-part="bar" aria-hidden="true" />
+            <span data-part="sr">{toneLabels[item.tone ?? "info"]}</span>
             <span data-part="title">{item.title}</span>
             <button
               type="button"

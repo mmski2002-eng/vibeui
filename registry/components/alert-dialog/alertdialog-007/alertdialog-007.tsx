@@ -1,10 +1,10 @@
 "use client"
 
-import { useRef, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import { useId, useRef, useState } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Alertdialog007Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "title"
 > & {
   triggerLabel?: string
@@ -32,13 +32,16 @@ const STYLES = `
 --vibeui-alertdialog-007-bg:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
 --vibeui-alertdialog-007-panel:light-dark(oklch(0.97 0.003 265),oklch(0.27 0.01 265));
 --vibeui-alertdialog-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-alertdialog-007-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-alertdialog-007-muted:color-mix(in oklab,var(--vibeui-alertdialog-007-fg) 68%,transparent);
 --vibeui-alertdialog-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
 --vibeui-alertdialog-007-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
 --vibeui-alertdialog-007-on-accent:light-dark(oklch(1 0 0),oklch(0.17 0.03 262));
 --vibeui-alertdialog-007-shadow:light-dark(oklch(0.2 0.03 265 / 55%),oklch(0.02 0.01 265 / 70%));
 --vibeui-alertdialog-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="alertdialog-007"]{color-scheme:dark}
 [data-vibeui-block="alertdialog-007"]{
 font-family:var(--vibeui-alertdialog-007-font);color:var(--vibeui-alertdialog-007-fg);
 }
@@ -94,6 +97,8 @@ font:inherit;font-size:0.8125rem;font-weight:650;
 border:1px solid var(--vibeui-alertdialog-007-border);background:var(--vibeui-alertdialog-007-bg);color:inherit;
 }
 [data-vibeui-block="alertdialog-007"] dialog button:focus-visible{outline:2px solid var(--vibeui-alertdialog-007-accent);outline-offset:2px}
+/* showModal() делает фон inert, но не запрещает прокрутку страницы. */
+html:has([data-vibeui-block="alertdialog-007"] dialog[open]){overflow:hidden}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="alertdialog-007"] *{animation:none!important;transition:none!important}}
 `
 
@@ -139,6 +144,7 @@ export function Alertdialog007({
   ...props
 }: Alertdialog007Props) {
   const box = useRef<HTMLDialogElement>(null)
+  const uid = useId()
   // Согласие выключено по умолчанию: включённая галочка = рассылка втихую.
   const [notify, setNotify] = useState(false)
 
@@ -160,6 +166,7 @@ export function Alertdialog007({
       </style>
       <div
         {...props}
+        data-slot="alert-dialog"
         data-vibeui-block="alertdialog-007"
         className={className}
         style={palette}
@@ -172,9 +179,17 @@ export function Alertdialog007({
           {triggerLabel}
         </button>
 
-        <dialog ref={box} aria-labelledby="vibeui-alertdialog-007-title">
-          <h2 id="vibeui-alertdialog-007-title">{title}</h2>
-          <p data-part="text">{text}</p>
+        <dialog
+          ref={box}
+          role="alertdialog"
+          aria-modal="true"
+          aria-labelledby={`${uid}-title`}
+          aria-describedby={`${uid}-text`}
+        >
+          <h2 id={`${uid}-title`}>{title}</h2>
+          <p id={`${uid}-text`} data-part="text">
+            {text}
+          </p>
 
           <label data-part="option">
             <input

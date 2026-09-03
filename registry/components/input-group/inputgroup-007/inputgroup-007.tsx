@@ -1,10 +1,10 @@
 "use client"
 
 import { useId, useRef, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Inputgroup007Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   label?: string
@@ -34,7 +34,7 @@ const STYLES = `
 --vibeui-inputgroup-007-surface:transparent;
 --vibeui-inputgroup-007-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.011 265));
 --vibeui-inputgroup-007-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
---vibeui-inputgroup-007-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-inputgroup-007-muted:color-mix(in oklab,var(--vibeui-inputgroup-007-fg) 68%,transparent);
 --vibeui-inputgroup-007-field:light-dark(oklch(0.99 0.002 265),oklch(0.27 0.013 265));
 --vibeui-inputgroup-007-fixed:light-dark(oklch(0.96 0.004 265),oklch(0.32 0.012 265));
 --vibeui-inputgroup-007-border:light-dark(oklch(0.86 0.008 265),oklch(0.44 0.013 265));
@@ -42,6 +42,9 @@ const STYLES = `
 --vibeui-inputgroup-007-radius:0.75rem;
 --vibeui-inputgroup-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="inputgroup-007"]{color-scheme:dark}
 [data-vibeui-block="inputgroup-007"]{
 display:flex;flex-direction:column;gap:0.4375rem;
 width:100%;max-width:22rem;box-sizing:border-box;padding:0.875rem;
@@ -53,7 +56,7 @@ font-family:var(--vibeui-inputgroup-007-font);color:var(--vibeui-inputgroup-007-
 [data-vibeui-block="inputgroup-007"] label{font-size:0.8125rem;font-weight:600}
 [data-vibeui-block="inputgroup-007"] [data-part="group"]{display:flex;align-items:stretch}
 [data-vibeui-block="inputgroup-007"] [data-part="group"] > *{
-position:relative;height:2.625rem;
+position:relative;height:2.75rem;
 border:1px solid var(--vibeui-inputgroup-007-border);
 border-radius:0;margin-left:-1px;font:inherit;color:inherit;
 }
@@ -164,6 +167,7 @@ export function Inputgroup007({
       </style>
       <div
         {...props}
+        data-slot="input-group"
         data-vibeui-block="inputgroup-007"
         className={className}
         style={palette}

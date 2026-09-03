@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Gantt002Task = {
   id: string
@@ -13,7 +13,7 @@ export type Gantt002Task = {
 }
 
 export type Gantt002Props = Omit<
-  ComponentPropsWithoutRef<"section">,
+  ComponentProps<"section">,
   "children" | "title"
 > & {
   heading?: string
@@ -51,7 +51,7 @@ const STYLES = `
 --vibeui-gantt-002-bg:transparent;
 --vibeui-gantt-002-sticky:light-dark(oklch(0.995 0.001 265),oklch(0.19 0.008 265));
 --vibeui-gantt-002-fg:light-dark(oklch(0.23 0.014 265),oklch(0.93 0.006 265));
---vibeui-gantt-002-muted:light-dark(oklch(0.6 0.014 265),oklch(0.7 0.012 265));
+--vibeui-gantt-002-muted:color-mix(in oklab,var(--vibeui-gantt-002-fg) 68%,transparent);
 --vibeui-gantt-002-border:light-dark(oklch(0.91 0.006 265),oklch(0.37 0.012 265));
 --vibeui-gantt-002-line:light-dark(oklch(0.95 0.004 265),oklch(0.3 0.01 265));
 --vibeui-gantt-002-accent:light-dark(oklch(0.55 0.16 262),oklch(0.74 0.14 262));
@@ -60,11 +60,16 @@ const STYLES = `
 --vibeui-gantt-002-link:light-dark(oklch(0.55 0.03 265),oklch(0.66 0.02 265));
 --vibeui-gantt-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="gantt-002"]{color-scheme:dark}
 [data-vibeui-block="gantt-002"]{
 width:100%;box-sizing:border-box;padding:1rem;
 background:var(--vibeui-gantt-002-bg);
 border:1px solid var(--vibeui-gantt-002-border);border-radius:1rem;
 color:var(--vibeui-gantt-002-fg);font-family:var(--vibeui-gantt-002-font);
+/* Шкала кегля растёт от собственной ширины блока, а не от окна. */
+container-type:inline-size;
 }
 [data-vibeui-block="gantt-002"] *{box-sizing:border-box}
 [data-vibeui-block="gantt-002"] [data-part="head"]{
@@ -73,6 +78,10 @@ gap:0.5rem;margin:0 0 0.75rem;
 }
 [data-vibeui-block="gantt-002"] [data-part="heading"]{
 margin:0;font-size:0.9375rem;font-weight:700;letter-spacing:-0.01em;
+}
+@container (min-width:32rem){
+[data-vibeui-block="gantt-002"] [data-part="heading"]{font-size:1rem}
+[data-vibeui-block="gantt-002"] [data-part="head"]{margin-bottom:1.0625rem}
 }
 [data-vibeui-block="gantt-002"] [data-part="hint"]{
 margin:0;font-size:0.75rem;color:var(--vibeui-gantt-002-muted);
@@ -205,6 +214,16 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 }
 
 /**
+ * Неверный проп не должен ронять страницу-хост: на Invalid Date toISOString
+ * бросает RangeError, поэтому дату начала откатываем на дефолтную.
+ */
+function safeStart(value: string, fallback: string) {
+  const time = new Date(`${value}T00:00:00Z`).getTime()
+
+  return Number.isNaN(time) ? new Date(`${fallback}T00:00:00Z`).getTime() : time
+}
+
+/**
  * План со связями «после чего»: стрелки рисуются SVG-слоем по тем же
  * координатам, что и полосы. Один файл, ноль зависимостей.
  */
@@ -228,7 +247,7 @@ export function Gantt002({
   const total = Math.max(...tasks.map((task) => task.start + task.days))
   const width = total * DAY_WIDTH
   const height = tasks.length * ROW_HEIGHT
-  const origin = new Date(`${startDate}T00:00:00Z`).getTime()
+  const origin = safeStart(startDate, "2026-03-02")
 
   const dayLabel = (offset: number) =>
     new Date(origin + offset * DAY).getUTCDate()
@@ -277,6 +296,7 @@ export function Gantt002({
       </style>
       <section
         {...props}
+        data-slot="gantt"
         data-vibeui-block="gantt-002"
         aria-label={heading}
         className={className}

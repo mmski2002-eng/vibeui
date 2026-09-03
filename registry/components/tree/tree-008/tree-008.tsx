@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Tree008Node = {
   name: string
@@ -6,7 +6,7 @@ export type Tree008Node = {
   children?: Tree008Node[]
 }
 
-export type Tree008Props = Omit<ComponentPropsWithoutRef<"div">, "children"> & {
+export type Tree008Props = Omit<ComponentProps<"div">, "children"> & {
   nodes?: Tree008Node[]
   label?: string
   /** Цвет направляющих линий уровней. */
@@ -28,13 +28,16 @@ const STYLES = `
 :where([data-vibeui-block="tree-008"]){
 --vibeui-tree-008-bg:transparent;
 --vibeui-tree-008-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
---vibeui-tree-008-muted:light-dark(oklch(0.56 0.014 265),oklch(0.67 0.012 265));
+--vibeui-tree-008-muted:color-mix(in oklab,var(--vibeui-tree-008-fg) 68%,transparent);
 --vibeui-tree-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-tree-008-line:light-dark(oklch(0.85 0.008 265),oklch(0.42 0.014 265));
 --vibeui-tree-008-row:1.75rem;
 --vibeui-tree-008-indent:0.875rem;
 --vibeui-tree-008-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="tree-008"]{color-scheme:dark}
 [data-vibeui-block="tree-008"]{
 width:100%;max-width:22rem;box-sizing:border-box;padding:0.75rem 0.875rem;
 background:var(--vibeui-tree-008-bg);
@@ -190,6 +193,7 @@ export function Tree008({
       </style>
       <div
         {...props}
+        data-slot="tree"
         data-vibeui-block="tree-008"
         className={className}
         style={palette}

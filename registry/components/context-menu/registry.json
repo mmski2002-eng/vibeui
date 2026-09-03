@@ -16,7 +16,7 @@
           "target": "@components/vibeui/menu-002.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menu-002-*. Клиентский: \"use client\". Координаты берутся из события contextmenu, стандартное меню браузера отменяется preventDefault. Меню позиционируется fixed по точке нажатия. Область, на которой работает правая кнопка, обозначена пунктиром и подписью. Тема берётся из color-scheme окружения через light-dark(): подложки у области по умолчанию нет, а поверхность самого меню остаётся непрозрачной, иначе сквозь него читался бы контент.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menu-002-*. Клиентский: \"use client\". Координаты берутся из события contextmenu, стандартное меню браузера отменяется preventDefault. Меню позиционируется fixed по точке нажатия. Область, на которой работает правая кнопка, — это <button>: она обозначена пунктиром и открывает то же меню по Enter, а Escape закрывает меню и возвращает на неё фокус. Тема берётся из color-scheme окружения через light-dark(): подложки у области по умолчанию нет, а поверхность самого меню остаётся непрозрачной, иначе сквозь него читался бы контент.",
       "meta": {
         "tags": ["menu", "context", "right-click", "desktop"],
         "preview": {
@@ -30,9 +30,9 @@
             "локальную палитру --vibeui-menu-002-* и не подменять её токенами вашей темы",
             "координаты из события: у позиции курсора нет якоря, который дал бы CSS",
             "видимую область, на которой работает правая кнопка — иначе меню находят случайно",
-            "закрытие по Escape и уходу курсора, а не только по выбору",
+            "закрытие по Escape с возвратом фокуса на область и по щелчку мимо",
             "цвет только на тексте опасного пункта",
-            "дубль тех же действий в обычном меню: на телефоне правой кнопки нет",
+            "саму область кнопкой: правой кнопки нет ни у клавиатуры, ни на телефоне",
             "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
             "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
@@ -64,7 +64,7 @@
             "prop": "hint",
             "label": "Подпись области",
             "type": "text",
-            "default": "Нажмите правой кнопкой по области",
+            "default": "Правая кнопка или Enter с клавиатуры",
             "maxLength": 40
           },
           {
@@ -83,15 +83,16 @@
         "i18n": {
           "en": {
             "description": "A right-click menu: it appears where you clicked and closes on selection, Escape or when the pointer leaves.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-menu-002-* variables. Client component: \"use client\". The coordinates are taken from the contextmenu event, and the browser's own menu is cancelled with preventDefault. The menu is positioned fixed at the point of the press. The zone where the right button works is a <button>: it is marked with a dashed outline and opens the same menu on Enter, while Escape closes the menu and returns focus to it. The theme comes from the surrounding color-scheme through light-dark(): the zone has no background of its own by default, while the menu surface itself stays opaque, otherwise the content would read through it.",
             "ai": {
               "summary": "A context menu on right click: it opens at the cursor, closes on selection, Escape and mouse-out, and reports the chosen action. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-menu-002-* palette — do not swap it for your theme tokens",
                 "coordinates from the event: a cursor position has no anchor CSS could use",
                 "a visible zone where right-click works — otherwise the menu is found by accident",
-                "closing on Escape and mouse-out, not only on selection",
+                "closing on Escape with focus returned to the zone, and on an outside click",
                 "colour on the destructive item's text only",
-                "the same actions duplicated in a normal menu: phones have no right click",
+                "the zone itself as a button: neither the keyboard nor a phone has a right click",
                 "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
                 "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
@@ -119,7 +120,7 @@
               },
               "hint": {
                 "label": "Zone caption",
-                "default": "Right-click inside the area"
+                "default": "Right-click or press Enter"
               },
               "background": {
                 "label": "Background"
@@ -150,7 +151,7 @@
                   }
                 ],
                 "zoneTitle": "File “Catalogue.fig”",
-                "hint": "Right-click inside the area",
+                "hint": "Right-click or press Enter",
                 "menuLabel": "File actions",
                 "pickedText": "Chosen: {action}",
                 "emptyText": "No action chosen"
@@ -243,6 +244,7 @@
         "i18n": {
           "en": {
             "description": "A right-click menu on the HTML popover, with a duplicate button: without it the menu is out of reach for keyboard users.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-contextmenu-001-* variables. Client component: \"use client\" for the sake of the cursor coordinates. The menu is a popover, so closing on Escape and on an outside click comes from the browser, and the position is fed in through the --vibeui-contextmenu-001-x/y variables. The \"Actions\" button opens the same menu without a mouse. The theme comes from the surrounding color-scheme through light-dark(): the zone has no background of its own by default, while the menu surface itself stays opaque.",
             "ai": {
               "summary": "A right-click menu: opens at the cursor, closes on Escape and outside clicks, the destructive item is coloured. Zero dependencies, one file.",
               "preserve": [
@@ -400,6 +402,7 @@
         "i18n": {
           "en": {
             "description": "A file context menu in a tile list: a right click at the cursor, a \"•••\" button on the tile and a long press for phones — three ways into one menu.",
+            "docs": "One file, zero dependencies, the --vibeui-contextmenu-002-* palette. Client component: the cursor coordinates and the current tile live in useState. The menu is an HTML popover, so Escape and outside clicks come from the browser; the coordinates are fed in through the --vibeui-contextmenu-002-x/y variables, because they are known only at event time. The long press is built on onPointerDown with a pointerType check and a 500 ms timer, and is cancelled on onPointerUp and onPointerLeave. The tile the menu belongs to is highlighted through data-active and cleared on the popover's toggle event. The theme comes from the surrounding color-scheme through light-dark(), and the card has no background of its own by default. The menu header carries the file name, with the actions below it and the deletion set off by a line.",
             "ai": {
               "summary": "A file context menu with three ways to open it: right click, a button on the tile and a long press. It highlights the target and names it in the header. One file, zero dependencies.",
               "preserve": [
@@ -561,6 +564,7 @@
         "i18n": {
           "en": {
             "description": "A file context menu with an \"Open with\" submenu: the list of applications is tucked into a second level reached by hover and the right arrow.",
+            "docs": "One file, zero dependencies, the --vibeui-contextmenu-003-* palette. Client component: useState holds the submenu expansion and the cursor coordinates. The first level is an HTML popover at the cursor through the x/y variables, the second a plain absolute layer inside it: a nested popover=auto would close its parent. The parent item is marked with aria-haspopup=menu and aria-expanded, the submenu is a role=menu with an aria-label. The right arrow opens the submenu and moves focus into it, the left one closes it and returns focus to the parent. The \"Actions\" button duplicates the right click, otherwise the menu is unreachable without a mouse. The theme comes from the surrounding color-scheme through light-dark(), and the card has no background of its own by default.",
             "ai": {
               "summary": "A context menu with an application submenu: the second level opens on hover and the right arrow, the left arrow walks back. One file, zero dependencies.",
               "preserve": [
@@ -703,6 +707,7 @@
         "i18n": {
           "en": {
             "description": "A clipboard context menu with real state: paste is disabled while the buffer is empty, a cut card disappears and comes back on paste.",
+            "docs": "One file, zero dependencies, the --vibeui-contextmenu-004-* palette. Client component: the list of cards, the buffer contents and the current target live in useState. The menu is an HTML popover at the cursor through the x/y variables, called by a right click and by the button on the card. The \"paste\" entry is marked aria-disabled on an empty buffer and stays visible: a hidden entry does not explain why the action is unavailable. Pasting puts the copy right after the card the menu was called on — a buffer without a destination is meaningless. The buffer contents are shown in a line with role=status under the list. The theme comes from the surrounding color-scheme through light-dark(), and the card has no background of its own by default.",
             "ai": {
               "summary": "A cut-copy-paste context menu whose buffer state is real: an empty buffer greys out paste, cutting removes the card. One file, zero dependencies.",
               "preserve": [
@@ -848,6 +853,7 @@
         "i18n": {
           "en": {
             "description": "A context menu for selected text: it reads the selection at the moment of the call and shows it in the header, so \"translate\" always has a subject.",
+            "docs": "One file, zero dependencies, the --vibeui-contextmenu-005-* palette. Client component: useState holds the selection and the cursor coordinates. The selection text is taken from window.getSelection() inside the call handler — during render it does not exist yet, and once the menu closes it has already been cleared. The menu is an HTML popover at the cursor through the x/y variables, with a duplicate button for the keyboard and the phone. While nothing is selected the entries are marked aria-disabled and the header states the reason. The selection colour is set by a ::selection rule on the paragraph itself, so that it matches the component's accent. The theme comes from the surrounding color-scheme through light-dark(), and the card has no background of its own by default.",
             "ai": {
               "summary": "A menu for a text selection: it reads the selection when called, shows it in the header and greys out entries when there is nothing to act on. One file, zero dependencies.",
               "preserve": [
@@ -982,6 +988,7 @@
         "i18n": {
           "en": {
             "description": "A context menu for a table row: the row takes focus and a highlight, and the call works both with the mouse and with the menu key, which carries no cursor coordinates.",
+            "docs": "One file, zero dependencies, the --vibeui-contextmenu-006-* palette. Client component: useState holds the current row and the coordinates. The rows get a tabIndex and aria-selected, and the highlight lives while the popover is open and goes out on the toggle event. The menu key and Shift+F10 arrive through the same contextmenu event but with zero coordinates — in that case the menu lands at the bottom left edge of the row itself rather than in the corner of the screen. The menu is an HTML popover, so Escape and outside clicks come from the browser; the header carries the row name, and the deletion is set off by a line and coloured on its text. The theme comes from the surrounding color-scheme through light-dark(), and the table has no background of its own by default.",
             "ai": {
               "summary": "A table row context menu that highlights its target and opens from the keyboard: with zero coordinates it lands at the row's edge. One file, zero dependencies.",
               "preserve": [
@@ -1146,6 +1153,7 @@
         "i18n": {
           "en": {
             "description": "A table-header context menu with column visibility checkboxes: columns really do disappear, and the last remaining one cannot be switched off.",
+            "docs": "One file, zero dependencies, the --vibeui-contextmenu-007-* palette. Client component: useState holds the set of visible columns and the table is drawn from it, so the toggle really works. The menu is called by a right click on the thead and by the \"Columns\" button with a counter — a phone has no right click. The entries are marked role=menuitemcheckbox with aria-checked, and the menu does not close on a press: columns are hidden in batches. The last visible column is marked aria-disabled and cannot be switched off: a table without columns is an empty rectangle with nothing to come back from. When a column returns, its order is taken from the original list rather than from the order of presses. The theme comes from the surrounding color-scheme through light-dark(), and the table has no background of its own by default.",
             "ai": {
               "summary": "A column visibility menu opened by right-clicking the table header: the checkboxes truly hide columns, the last one is protected. One file, zero dependencies.",
               "preserve": [
@@ -1287,6 +1295,7 @@
         "i18n": {
           "en": {
             "description": "A context menu with keyboard shortcuts and a pulsing right-click hint that fades away after the first successful call.",
+            "docs": "One file, zero dependencies, the --vibeui-contextmenu-008-* palette. Client component: the \"the menu has already been opened\" flag, the cursor coordinates and the long-press timer live in useState and useRef. A right click is not visible on screen, so the zone carries an animated hint; after the first call data-used on the root switches the animation off and dims it. The shortcuts are laid out in separate kbd elements with a bottom border — the menu doubles as a cheat sheet. The long press is built on onPointerDown with a pointerType check and a 500 ms timer. The animation is switched off by a prefers-reduced-motion rule. The theme comes from the surrounding color-scheme through light-dark(), and the card has no background of its own by default.",
             "ai": {
               "summary": "A context menu that explains itself: a pulsing hint until the first call, shortcuts on every entry, a long press for phones. One file, zero dependencies.",
               "preserve": [
@@ -1436,6 +1445,7 @@
         "i18n": {
           "en": {
             "description": "A menu on a file card with a destructive entry at the bottom: its own layer instead of an HTML popover, clamped inside the demo area so it cannot escape the catalogue card.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-contextmenu-009-* variables. Client component: \"use client\" for the sake of the cursor coordinates and its own open state. The menu is not an HTML popover but a plain absolutely positioned layer inside the demo area, which has position:relative and overflow:hidden: the click coordinates are converted into that area's frame of reference and clamped by its bounds using the known menu size, so it physically cannot leave the catalogue card. The component drives opening and closing itself through useEffect: an outside click and Escape close the menu, and focus returns to the button or the card that opened it. The theme comes from the surrounding color-scheme through light-dark(), and the card has no background of its own by default.",
             "ai": {
               "summary": "A menu on a file card with a destructive entry at the bottom: its own layer clamped inside the demo area, unable to escape the catalogue card. One file, zero dependencies.",
               "preserve": [
@@ -1586,6 +1596,7 @@
         "i18n": {
           "en": {
             "description": "A formatting menu for selected text with bold, italic, underline and link: applied marks collect in a list under the paragraph, and the menu never leaves the catalogue card.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-contextmenu-010-* variables. Client component: \"use client\" for the sake of window.getSelection() and its own open state. The selection is read in the call handler rather than during render: before the event the browser does not know what the user picked, and once the menu closes it has already been cleared. The menu is not an HTML popover but a layer inside the demo area, which has position:relative and overflow:hidden; the click coordinates are converted into that area's frame of reference and clamped by the known menu size. The applied formats do not change the paragraph's layout but are added as marks in a list below it — this shows the result of the action without actually formatting the text. The theme comes from the surrounding color-scheme through light-dark(), and the card has no background of its own by default.",
             "ai": {
               "summary": "A formatting menu on selected text: reads the selection when called, keeps the menu inside the demo area and lists applied formats as marks. One file, zero dependencies.",
               "preserve": [

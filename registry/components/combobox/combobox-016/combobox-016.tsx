@@ -1,10 +1,10 @@
 "use client"
 
-import { useId, useMemo, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import { useId, useMemo, useRef, useState } from "react"
+import type { CSSProperties, ComponentProps, KeyboardEvent } from "react"
 
 export type Combobox016Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange" | "defaultValue"
 > & {
   label?: string
@@ -36,7 +36,7 @@ const STYLES = `
 :where([data-vibeui-block="combobox-016"]){
 --vibeui-combobox-016-bg:transparent;
 --vibeui-combobox-016-fg:light-dark(oklch(0.22 0.014 145),oklch(0.94 0.006 145));
---vibeui-combobox-016-muted:light-dark(oklch(0.55 0.014 145),oklch(0.7 0.012 145));
+--vibeui-combobox-016-muted:color-mix(in oklab,var(--vibeui-combobox-016-fg) 68%,transparent);
 --vibeui-combobox-016-border:light-dark(oklch(0.9 0.008 145),oklch(0.35 0.012 145));
 --vibeui-combobox-016-field:light-dark(oklch(0.985 0.004 145),oklch(0.27 0.012 145));
 --vibeui-combobox-016-soft:light-dark(oklch(0.96 0.008 145),oklch(0.31 0.014 145));
@@ -47,6 +47,9 @@ const STYLES = `
 --vibeui-combobox-016-radius:0.625rem;
 --vibeui-combobox-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="combobox-016"]{color-scheme:dark}
 [data-vibeui-block="combobox-016"]{
 display:flex;flex-direction:column;gap:0.4rem;
 width:100%;max-width:22rem;box-sizing:border-box;padding:0.875rem;
@@ -84,7 +87,7 @@ width:1.1rem;height:1.1rem;border-radius:999px;font-size:0.85rem;line-height:1;
 outline:2px solid var(--vibeui-combobox-016-accent);outline-offset:1px;
 }
 [data-vibeui-block="combobox-016"] input{
-box-sizing:border-box;width:100%;height:2.4rem;padding:0 0.6rem;
+box-sizing:border-box;width:100%;height:2.5rem;padding:0 0.75rem;
 border:1px solid var(--vibeui-combobox-016-border);
 border-radius:var(--vibeui-combobox-016-radius);
 background:var(--vibeui-combobox-016-field);
@@ -105,7 +108,7 @@ appearance:none;cursor:pointer;font:inherit;width:100%;
 display:flex;align-items:center;gap:0.5rem;
 box-sizing:border-box;padding:0.4rem 0.5rem;
 border:0;border-radius:0.45rem;background:transparent;color:inherit;text-align:left;
-font-size:0.8125rem;
+font-size:0.875rem;
 transition:background-color .16s ease;
 }
 [data-vibeui-block="combobox-016"] [data-part="option"]:hover:not(:disabled){background:var(--vibeui-combobox-016-soft)}
@@ -227,6 +230,44 @@ export function Combobox016({
 
   const left = maxItems - values.length
 
+  const rootRef = useRef<HTMLDivElement | null>(null)
+
+  // Список открыт всегда, поэтому стрелки водят по нему настоящим фокусом:
+  // варианты — обычные кнопки, и без клавиатуры роль listbox обещает
+  // скринридеру навигацию, которой нет.
+  function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
+    const options = Array.from(
+      rootRef.current?.querySelectorAll<HTMLButtonElement>('[role="option"]') ??
+        [],
+    )
+
+    if (options.length === 0) {
+      return
+    }
+
+    const current = options.indexOf(document.activeElement as HTMLButtonElement)
+
+    if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+      event.preventDefault()
+      const step = event.key === "ArrowDown" ? 1 : -1
+      const next =
+        current === -1 ? 0 : (current + step + options.length) % options.length
+      options[next].focus()
+    } else if (
+      current !== -1 &&
+      (event.key === "Home" || event.key === "End")
+    ) {
+      event.preventDefault()
+      options[event.key === "Home" ? 0 : options.length - 1].focus()
+    } else if (event.key === "Escape") {
+      event.preventDefault()
+      setQuery("")
+      rootRef.current
+        ?.querySelector<HTMLInputElement>('[role="combobox"]')
+        ?.focus()
+    }
+  }
+
   const palette = {
     ...(accent ? { "--vibeui-combobox-016-accent": accent } : null),
     ...(background
@@ -245,6 +286,9 @@ export function Combobox016({
       </style>
       <div
         {...props}
+        ref={rootRef}
+        onKeyDown={handleKeyDown}
+        data-slot="combobox"
         data-vibeui-block="combobox-016"
         data-full={full}
         className={className}

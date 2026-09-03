@@ -1,7 +1,8 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import { useId } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Select009Props = Omit<
-  ComponentPropsWithoutRef<"select">,
+  ComponentProps<"select">,
   "size" | "children" | "required"
 > & {
   label?: string
@@ -28,7 +29,7 @@ const STYLES = `
 --vibeui-select-009-surface-pad:0;
 --vibeui-select-009-surface-radius:0;
 --vibeui-select-009-fg:light-dark(oklch(0.23 0.016 265),oklch(0.94 0.005 265));
---vibeui-select-009-muted:light-dark(oklch(0.58 0.014 265),oklch(0.71 0.012 265));
+--vibeui-select-009-muted:color-mix(in oklab,var(--vibeui-select-009-fg) 68%,transparent);
 --vibeui-select-009-field:light-dark(oklch(0.985 0.002 265),oklch(0.25 0.012 265));
 --vibeui-select-009-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.014 265));
 --vibeui-select-009-accent:light-dark(oklch(0.55 0.19 262),oklch(0.75 0.15 262));
@@ -36,6 +37,9 @@ const STYLES = `
 --vibeui-select-009-pending:light-dark(oklch(0.68 0.15 75),oklch(0.78 0.13 75));
 --vibeui-select-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="select-009"]{color-scheme:dark}
 /* Подложка появляется только вместе с пропом background: по умолчанию поле
    лежит прямо на фоне страницы. */
 [data-vibeui-block="select-009"]{
@@ -135,6 +139,9 @@ export function Select009({
   style,
   ...props
 }: Select009Props) {
+  const generatedId = useId()
+  const fieldId = id ?? generatedId
+  const hintId = `${fieldId}-hint`
   // Подложка приходит вместе с полями и скруглением: без неё поле лежит
   // прямо на странице, и лишние поля по бокам ему только мешают.
   const palette = {
@@ -157,15 +164,26 @@ export function Select009({
       <style href="vibeui-select-009" precedence="medium">
         {STYLES}
       </style>
-      <div data-vibeui-block="select-009" className={className} style={palette}>
-        <label data-part="label" htmlFor={id}>
+      <div
+        data-slot="select"
+        data-vibeui-block="select-009"
+        className={className}
+        style={palette}
+      >
+        <label data-part="label" htmlFor={fieldId}>
           {label}
           <span data-part="star" aria-hidden="true">
             *
           </span>
         </label>
         <span data-part="field">
-          <select {...props} id={id} required defaultValue="">
+          <select
+            {...props}
+            id={fieldId}
+            required
+            aria-describedby={hint ? hintId : undefined}
+            defaultValue=""
+          >
             <option value="" disabled>
               {placeholder}
             </option>
@@ -177,7 +195,11 @@ export function Select009({
           </select>
           <span data-part="arrow" aria-hidden="true" />
         </span>
-        {hint ? <p data-part="hint">{hint}</p> : null}
+        {hint ? (
+          <p data-part="hint" id={hintId}>
+            {hint}
+          </p>
+        ) : null}
       </div>
     </>
   )

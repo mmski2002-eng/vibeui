@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Breadcrumb015Props = Omit<
-  ComponentPropsWithoutRef<"nav">,
-  "children"
-> & {
+export type Breadcrumb015Props = Omit<ComponentProps<"nav">, "children"> & {
   trail?: string[]
   currentLabel?: string
   loading?: boolean
@@ -28,7 +25,7 @@ export type Breadcrumb015Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="breadcrumb-015"]){
 --vibeui-breadcrumb-015-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.008 265));
---vibeui-breadcrumb-015-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-breadcrumb-015-muted:color-mix(in oklab,var(--vibeui-breadcrumb-015-fg) 68%,transparent);
 --vibeui-breadcrumb-015-faint:light-dark(oklch(0.78 0.01 265),oklch(0.5 0.012 265));
 --vibeui-breadcrumb-015-bone:light-dark(oklch(0.93 0.005 265),oklch(0.34 0.012 265));
 --vibeui-breadcrumb-015-sheen:light-dark(oklch(0.975 0.003 265),oklch(0.44 0.014 265));
@@ -39,6 +36,9 @@ const STYLES = `
 --vibeui-breadcrumb-015-width:10ch;
 --vibeui-breadcrumb-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="breadcrumb-015"]{color-scheme:dark}
 [data-vibeui-block="breadcrumb-015"]{
 box-sizing:border-box;width:100%;max-width:34rem;
 padding:var(--vibeui-breadcrumb-015-pad);
@@ -156,6 +156,7 @@ export function Breadcrumb015({
       </style>
       <nav
         {...props}
+        data-slot="breadcrumb"
         data-vibeui-block="breadcrumb-015"
         aria-label={navLabel}
         className={className}

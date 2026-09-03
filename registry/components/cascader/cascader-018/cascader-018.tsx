@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Cascader018Status = "ok" | "repair" | "off"
 
@@ -12,7 +12,7 @@ export type Cascader018Node = {
 }
 
 export type Cascader018Props = Omit<
-  ComponentPropsWithoutRef<"section">,
+  ComponentProps<"section">,
   "children" | "onSelect"
 > & {
   label?: string
@@ -44,7 +44,7 @@ const STYLES = `
    проступают сквозь неё. Canvas берёт фон окружения по color-scheme. */
 --vibeui-cascader-018-head:Canvas;
 --vibeui-cascader-018-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-cascader-018-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-cascader-018-muted:color-mix(in oklab,var(--vibeui-cascader-018-fg) 68%,transparent);
 --vibeui-cascader-018-border:light-dark(oklch(0.9 0.008 265),oklch(0.35 0.012 265));
 --vibeui-cascader-018-soft:light-dark(oklch(0.965 0.006 265),oklch(0.28 0.012 265));
 --vibeui-cascader-018-ok:light-dark(oklch(0.6 0.13 150),oklch(0.72 0.15 150));
@@ -55,6 +55,9 @@ const STYLES = `
 --vibeui-cascader-018-radius:0.625rem;
 --vibeui-cascader-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="cascader-018"]{color-scheme:dark}
 [data-vibeui-block="cascader-018"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:22rem;box-sizing:border-box;padding:0.875rem;
@@ -68,32 +71,32 @@ font-family:var(--vibeui-cascader-018-font);
 margin:0;font-size:0.875rem;font-weight:700;letter-spacing:-0.01em;
 }
 [data-vibeui-block="cascader-018"] [data-part="strip"]{
-display:flex;gap:0.4rem;overflow-x:auto;
-scroll-snap-type:x mandatory;scroll-padding-left:0.3rem;
-padding:0.3rem;
+display:flex;gap:0.375rem;overflow-x:auto;
+scroll-snap-type:x mandatory;scroll-padding-left:0.3125rem;
+padding:0.3125rem;
 border:1px solid var(--vibeui-cascader-018-border);
 border-radius:var(--vibeui-cascader-018-radius);
 }
 [data-vibeui-block="cascader-018"] [data-part="col"]{
 flex:0 0 9.5rem;min-width:0;scroll-snap-align:start;
-display:flex;flex-direction:column;gap:0.2rem;
+display:flex;flex-direction:column;gap:0.1875rem;
 }
 [data-vibeui-block="cascader-018"] [data-part="colhead"]{
 position:sticky;top:0;
-font-size:0.62rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;
+font-size:0.625rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;
 color:var(--vibeui-cascader-018-muted);
-background:var(--vibeui-cascader-018-head);padding:0.1rem 0.3rem;
+background:var(--vibeui-cascader-018-head);padding:0.125rem 0.3125rem;
 }
 [data-vibeui-block="cascader-018"] [data-part="col"] ul{
-margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:0.1rem;
+margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:0.125rem;
 max-height:11rem;overflow-y:auto;
 }
 [data-vibeui-block="cascader-018"] [data-part="node"]{
 appearance:none;cursor:pointer;font:inherit;width:100%;
-display:flex;align-items:center;gap:0.35rem;
-box-sizing:border-box;padding:0.35rem 0.4rem;
-border:0;border-radius:0.4rem;background:transparent;color:inherit;text-align:left;
-font-size:0.78rem;
+display:flex;align-items:center;gap:0.375rem;
+box-sizing:border-box;padding:0.375rem 0.375rem;
+border:0;border-radius:0.375rem;background:transparent;color:inherit;text-align:left;
+font-size:0.8125rem;
 transition:background-color .16s ease;
 }
 [data-vibeui-block="cascader-018"] [data-part="node"]:hover{background:var(--vibeui-cascader-018-soft)}
@@ -262,6 +265,7 @@ export function Cascader018({
       </style>
       <section
         {...props}
+        data-slot="cascader"
         data-vibeui-block="cascader-018"
         className={className}
         style={palette}

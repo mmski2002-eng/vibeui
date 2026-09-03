@@ -203,7 +203,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-cascader-001-* variables. Client-side: \"use client\" for the sake of the chosen path. Every level is a native select, so a phone opens the system picker and the keyboard works without any code of our own. The levels are computed from the tree along the current path, and the extra ones are dropped when an upper level changes. The theme comes from the surrounding color-scheme through light-dark(): the component has no surface of its own by default, it sits directly on the page background and darkens with it."
           }
         },
         "cardControls": ["accent", "background"]
@@ -427,7 +428,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-cascader-002-* variables. Client-side: the chosen path lives in useState. The columns are computed from the tree along the current path, but the grid always keeps three slots — on a short path a slot is taken by a hint, so the panel does not change width on every click. A pick in a column trims the path to that column's level, so stale columns on the right disappear by themselves. The grid height is fixed and every column scrolls on its own: otherwise a long level stretches the whole panel. The theme comes from the surrounding color-scheme through light-dark(): the panel has no surface of its own by default, it sits directly on the page background and darkens with it."
           }
         },
         "cardControls": ["accent", "background"]
@@ -635,7 +637,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-cascader-003-* variables. Server-side: no hooks, the opening is driven by the browser through popover and popovertarget. The third-level button lies inside the second-level panel, so the browser treats the popovers as nested and does not dismiss the parent when a descendant opens. The panel position is held by CSS anchor positioning: an anchor name cannot be assembled on the fly, so the rules for 24 slots are generated in advance and a branch is given its slot number at render time. Without anchor support the panel opens in the centre of the screen — ugly, but clickable. The theme comes from the surrounding color-scheme through light-dark(): the menu has no surface of its own by default, the panels carry their own surface and darken together with the page."
           }
         },
         "cardControls": ["accent", "background"]
@@ -832,7 +835,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-cascader-004-* variables. Client-side: the path, the step direction and the chosen leaf live in useState. The list is remounted by a key built from the path, so the CSS animation replays on every step, and the keyframes name is switched by the data-direction attribute — going forward the list arrives from the right, going back from the left. The «back» button is disabled on the top level: a disabled target is more honest than a vanished one, because the header does not change height. The theme comes from the surrounding color-scheme through light-dark(): the card has no surface of its own by default, it sits directly on the page background and darkens with it."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1054,7 +1058,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-cascader-005-* variables. Client-side: the path and the chosen leaf live in useState. The breadcrumbs are assembled from the root caption and the path, and clicking a crumb trims the path to its index — going back two steps takes one press instead of a series of «back». Tiles in two columns leave room for a second line with the number of subcategories, so it is visible whether a node opens or is final. The confirm button prints the whole path: a leaf without the branch above it is ambiguous. The theme comes from the surrounding color-scheme through light-dark(): the panel has no surface of its own by default, it sits directly on the page background and darkens with it."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1276,7 +1281,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-cascader-006-* variables. Client-side: the query and the chosen result live in useState, and the flat list of leaves is computed once through useMemo. The search looks at both the path and the leaf name, so «infra» finds nodes inside the «Infrastructure» branch. A match is highlighted through <mark>, and the path runs under the name: without it two identical «General settings» from different branches are indistinguishable. An empty query shows every leaf rather than emptiness. The theme comes from the surrounding color-scheme through light-dark(): the panel has no surface of its own by default, it sits directly on the page background and darkens with it."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1414,7 +1420,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-cascader-007-* variables. Client-side: the list of selected «parent → child» keys lives in useState. A parent checkbox holds no state of its own — checked and indeterminate are computed from the children, so they cannot fall out of sync. The third state is set by a ref callback: input.indeterminate has no HTML attribute. Rows are highlighted through :has(input:focus-visible), so focus is visible on the whole row rather than on the checkbox itself. The theme comes from the surrounding color-scheme through light-dark(): the panel has no surface of its own by default, it sits directly on the page background and darkens with it."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1607,7 +1614,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-cascader-008-* variables. Server-side: no hooks, the levels are opened by a native details and the choice is made by radios sharing one name, so the tree submits as an ordinary form even without JavaScript. The rule details:has(input:checked) > summary highlights the whole chain of parents: with collapsed levels there is otherwise no way to see where the tick is. The heading is a paragraph rather than a legend: a floated legend breaks the flow of neighbouring flex children. The theme comes from the surrounding color-scheme through light-dark(): the panel has no surface of its own by default, it sits directly on the page background and darkens with it."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1800,7 +1808,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-cascader-009-* variables. Client-side: the current path lives in useState. Unlike an ordinary cascader, the target here can be an intermediate node, so the action button is enabled at every step and always names the current folder. Going back is a separate list row rather than a crumb: in file dialogs that is the familiar gesture. A locked folder stays visible with the «source» caption — a vanished row reads as lost data. The theme comes from the surrounding color-scheme through light-dark(): the panel has no surface of its own by default, it sits directly on the page background and darkens with it."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2006,7 +2015,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-cascader-010-* variables. Client-side: the indices of the chosen department, team and person live in useState. The levels are laid out as horizontal rails with scrolling, so the cascader needs no height for three lists and reads from left to right. Changing a rail above resets the selection below — otherwise a person from another team stays on screen. The chosen person is shown as a card: a pill has no room for the role and the path down to it. The theme comes from the surrounding color-scheme through light-dark(): the panel has no surface of its own by default, it sits directly on the page background and darkens with it."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2204,7 +2214,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-cascader-011-* variables. Client-side: the current path lives in useState. The share is measured against the total of the current level rather than a global maximum: deeper down every bar would otherwise collapse to a thread. The bar width is passed through the local --vibeui-cascader-011-share variable in an inline style — it is a dynamic value and cannot be expressed with a class. A row is selectable only when it has children, and a leaf is marked with the «final level» caption. The theme comes from the surrounding color-scheme through light-dark(): the panel has no surface of its own by default, it sits directly on the page background and darkens with it."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2379,7 +2390,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-cascader-012-* variables. Client-side: the chosen branch and leaf live in useState, while the loading flag is derived by comparing «what is shown» with «what is chosen» — setState is never called in the body of the effect and there is no extra render. The delay emulates a request through setTimeout inside useEffect, and the timer is cleared in the cleanup: without that, fast switching overwrites itself and the list ends up holding a branch nobody is on any more. The skeleton repeats the height of the future row, so the panel does not jump when the data arrives, and the list itself is marked aria-busy — a screen reader announces the loading instead of staying silent. The theme comes from the surrounding color-scheme through light-dark(): the panel has no surface of its own by default, it sits directly on the page background and darkens with it, the skeleton fill included."
           }
         },
         "cardControls": ["delay", "accent", "background"]
@@ -2587,7 +2599,8 @@
                 "daysText": "Lead time: {days}",
                 "emptyText": "Pick a delivery zone"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-cascader-013-* variables. Client-side: the region and the zone live in useState. The layout is a 9rem + 1fr grid and both columns scroll independently. A leaf row is a nested grid of three cells: the name and the price on one line, the lead time on the second through grid-column: 1 / -1 — that way the price is always pushed to the right and lines up in a column. Changing the region resets the zone, so no zone from another region survives in the result. The left column is marked aria-expanded (it expands the right one), and the right one is role=\"listbox\" with role=\"option\" on the buttons. The summary at the bottom is announced through aria-live and repeats both the path and the price."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2810,7 +2823,8 @@
                 "chosenText": "Selected account {code}",
                 "hintText": "Only a leaf sub-account can be selected"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-cascader-014-* variables. Client-side: the path through the tree and the chosen code live in useState. The tree is described by a recursive type with the fields code, name, children and archived; the current level is computed by walking path on every render, so there is no separate «current nodes» state and nothing can fall out of sync. At the top sits the assembled code in a monospace font: unfilled segments are shown as dots through <i>, so the shape of the code is visible in advance. The breadcrumbs are buttons that return the path to the required depth. Nodes with children open the next level, leaves are selectable and marked with aria-current, and archived accounts get a native disabled."
           }
         },
         "cardControls": ["accent", "background"]
@@ -3016,7 +3030,8 @@
                 "readyText": "The ad will be filed under {path}",
                 "hintText": "Pick the rubric all the way down — the ad fields depend on it"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-cascader-015-* variables. Client-side: the path through the tree lives as a single array in useState. Every level is a native <select> with its own <label>, and the root is a <fieldset> with a <legend>, so the whole group is announced as a form. Changing a level trims the path by depth (path.slice(0, depth)) and appends the new value, so the lower levels reset automatically, without manual synchronisation. A level with no options is not hidden but gets disabled and the caption «level not needed»: a disappearing field shifts the form. The readiness flag accounts for the fact that some categories have no third level — otherwise the publish button would never unlock. There are deliberately no animations: a native select is drawn by the system."
           }
         },
         "cardControls": ["accent", "background"]
@@ -3234,7 +3249,8 @@
                 "busyText": "taken",
                 "emptyText": "No room selected"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-cascader-016-* variables. Client-side: the building, the floor and the room live in three useState hooks, and changing an upper level clears the lower ones. The levels are deliberately built from different elements: buildings are a role=\"tablist\" with aria-selected, floors are chip buttons with aria-pressed, and rooms are a grid with auto-fill minmax(6.5rem, 1fr) that decides the column count from the card's own width rather than from the window width. A busy room gets a native disabled and a surface of its own, and the capacity is captioned and duplicated in the aria-label together with the status. The summary at the bottom assembles the full path and the capacity and is announced through aria-live."
           }
         },
         "cardControls": ["accent", "background"]
@@ -3436,7 +3452,8 @@
                 "footText": "Booking: {path}",
                 "footEmptyText": "No speciality selected"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-cascader-017-* variables. Client-side: the branch, the speciality and the search string live in useState. The upper level is rendered as chips because there are always three or four branches, while the lower one stayed a list with a filter: specialities run into dozens and a column without search is useless. Filtering is moved into useMemo and works inside the selected branch, so results from different sections do not mix. A speciality with no doctors gets a native disabled and the explanation «not seeing patients» instead of disappearing from the list. The search field is a type=\"search\" with an aria-label of its own that names the current branch."
           }
         },
         "cardControls": ["accent", "background"]
@@ -3653,7 +3670,8 @@
                 },
                 "emptyText": "No node selected"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-cascader-018-* variables. Client-side: the path through the tree lives as a single array in useState. The columns are not kept in state but assembled by walking path on every render, so a choice at an upper level cuts off the extra columns automatically. The column strip is a flex with overflow-x and scroll-snap-type: x mandatory, every column a fixed 9.5rem wide with scroll-snap-align: start, so on a phone the columns page like slides rather than squeezing into unreadable strips. The level heading sticks through position: sticky. A node's status is shown by a dot and duplicated in words in the aria-label."
           }
         },
         "cardControls": ["accent", "background"]
@@ -3855,7 +3873,8 @@
                 "pickedText": "Selected code {code} — {name}",
                 "pickedEmptyText": "No code selected"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-cascader-019-* variables. Client-side: the query and the chosen code live in useState. The key decision sits in useMemo: if the query consists only of digits and dots, the search matches the beginning of the code (startsWith) rather than any occurrence — otherwise the query «62» would drag in an unrelated code such as 47.62; a textual query is matched against both the name and the path. Every result row is a grid of three cells: the code in a monospace font, the name, and the path through grid-column, so the hierarchy is visible right in the results and needs no separate tree. The hint under the field is tied through aria-describedby, the list is marked role=\"listbox\" and the rows role=\"option\"."
           }
         },
         "cardControls": ["accent", "background"]
@@ -4061,7 +4080,8 @@
                 "levelLabel": "Level {n}",
                 "hintText": "The field keeps the whole path: a long one is truncated on the left, the beginning hides, the last level always shows"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-cascader-020-* variables. Client-side: the chosen path, the panel's open state and the tree-browsing cursor live in separate useState hooks — the cursor is deliberately kept apart from the result, so walking the levels does not spoil the already chosen value until it reaches a leaf. Truncating the path on the left is done in CSS: direction: rtl on the line together with text-overflow: ellipsis moves the ellipsis to the beginning, while unicode-bidi: plaintext leaves the text itself in its natural order. That adapts to the real width of the field, unlike truncation by character count. The field is a button with aria-expanded, aria-controls and a title holding the full path; the caption is tied through aria-labelledby."
           }
         },
         "cardControls": ["accent", "background"]

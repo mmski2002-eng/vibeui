@@ -1,10 +1,10 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties, DragEvent } from "react"
+import type { ComponentProps, CSSProperties, DragEvent } from "react"
 
 export type Sortable004Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   sourceTitle?: string
@@ -39,11 +39,14 @@ const STYLES = `
 --vibeui-sortable-004-panel:light-dark(oklch(0.985 0.002 265),oklch(0.245 0.01 265));
 --vibeui-sortable-004-row:light-dark(oklch(1 0 0),oklch(0.3 0.012 265));
 --vibeui-sortable-004-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
---vibeui-sortable-004-muted:light-dark(oklch(0.56 0.014 265),oklch(0.68 0.012 265));
+--vibeui-sortable-004-muted:color-mix(in oklab,var(--vibeui-sortable-004-fg) 68%,transparent);
 --vibeui-sortable-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
 --vibeui-sortable-004-accent:light-dark(oklch(0.55 0.2 262),oklch(0.73 0.16 262));
 --vibeui-sortable-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="sortable-004"]{color-scheme:dark}
 [data-vibeui-block="sortable-004"]{
 position:relative;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0.625rem;
 width:100%;max-width:30rem;box-sizing:border-box;padding:0.875rem;
@@ -219,6 +222,7 @@ export function Sortable004({
       </style>
       <div
         {...props}
+        data-slot="sortable"
         data-vibeui-block="sortable-004"
         className={className}
         style={palette}

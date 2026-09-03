@@ -3,14 +3,14 @@
 import { useRef, useState } from "react"
 import type {
   ClipboardEvent,
-  ComponentPropsWithoutRef,
+  ComponentProps,
   CSSProperties,
   DragEvent,
   KeyboardEvent,
 } from "react"
 
 export type File002Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   label?: string
@@ -42,13 +42,16 @@ const STYLES = `
 --vibeui-file-002-bg:transparent;
 --vibeui-file-002-surface:transparent;
 --vibeui-file-002-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
---vibeui-file-002-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-file-002-muted:color-mix(in oklab,var(--vibeui-file-002-fg) 68%,transparent);
 --vibeui-file-002-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.014 265));
 --vibeui-file-002-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-file-002-key:light-dark(oklch(0.965 0.004 265),oklch(0.3 0.012 265));
 --vibeui-file-002-accent:light-dark(oklch(0.53 0.18 290),oklch(0.74 0.16 290));
 --vibeui-file-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="file-002"]{color-scheme:dark}
 /* Панель без собственной заливки: рамка очерчивает её на любом фоне. */
 [data-vibeui-block="file-002"]{
 display:flex;flex-direction:column;gap:0.5rem;
@@ -79,7 +82,7 @@ background:color-mix(in oklab,var(--vibeui-file-002-accent) 10%,transparent);
 position:absolute;width:1px;height:1px;padding:0;margin:-1px;
 overflow:hidden;clip-path:inset(50%);border:0;
 }
-[data-vibeui-block="file-002"] [data-part="title"]{font-size:0.875rem;font-weight:650}
+[data-vibeui-block="file-002"] [data-part="title"]{font-size:0.8125rem;font-weight:650}
 /* Три способа перечислены в зоне: невидимая возможность не существует. */
 [data-vibeui-block="file-002"] [data-part="ways"]{
 display:flex;flex-wrap:wrap;justify-content:center;gap:0.375rem;
@@ -226,6 +229,7 @@ export function File002({
       </style>
       <div
         {...props}
+        data-slot="file-upload"
         data-vibeui-block="file-002"
         data-over={over}
         className={className}

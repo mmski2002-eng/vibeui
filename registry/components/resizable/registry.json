@@ -84,6 +84,7 @@
         "i18n": {
           "en": {
             "description": "Two panes with a draggable separator where the mouse is not the only way in: the separator takes focus, arrows resize it, Home and End jump to the limits.",
+            "docs": "One file, zero dependencies, the --vibeui-resizable-001-* palette. Client component: useState, a useRef on the frame and useId. The separator is a role=\"separator\" with tabIndex 0, aria-orientation=\"vertical\", aria-valuenow/min/max and aria-controls on the left pane — the window splitter pattern in full. Dragging rests on setPointerCapture: the events keep arriving even when the cursor has left the bar, and touch-action:none keeps the page from scrolling under the finger. The size is stored in percent and applied to the left pane, the right one takes the remainder — the sum cannot drift apart.",
             "ai": {
               "summary": "Two panes with a separator that works by mouse, by touch and from the keyboard: arrows step, Home and End hit the limits. One file, zero dependencies.",
               "preserve": [
@@ -237,6 +238,7 @@
         "i18n": {
           "en": {
             "description": "Three panes and two separators: the state holds boundary positions, so each boundary is simply clamped between its neighbours and the panes never drift apart.",
+            "docs": "One file, zero dependencies, the --vibeui-resizable-002-* palette. Client component: a useState holding an array of two boundaries, a useRef on the frame, useId for the pane identifiers. The data model is a deliberate choice: it stores two boundaries rather than three widths — the constraint then reduces to clamping between the neighbouring boundary and the minimum, and the sum always adds up, because the third pane takes the remainder. Both separators are full role=\"separator\" elements with tabIndex 0, aria-valuenow/min/max, aria-controls and handling for the arrows, Home and End; the drag rests on setPointerCapture.",
             "ai": {
               "summary": "Three panes with two separators: boundaries clamped between neighbours, both bars work by mouse and from the keyboard. One file, zero dependencies.",
               "preserve": [
@@ -388,6 +390,7 @@
         "i18n": {
           "en": {
             "description": "A vertical split: editor on top, result below. The separator is horizontal, so the size changes with Up and Down arrows rather than Left and Right.",
+            "docs": "One file, zero dependencies, the --vibeui-resizable-003-* palette. Client component: useState, useRef and useId. The axis is declared honestly: the separator is given aria-orientation=\"horizontal\", the keys are ArrowUp and ArrowDown, the cursor is row-resize, and the size is computed from clientY and the frame height. Matching the key direction to the axis of movement is mandatory: otherwise the pane behaves at random from the keyboard. The top pane stores its height in percent, the bottom one takes the remainder. The bar captures the pointer through setPointerCapture and blocks scrolling under the finger through touch-action.",
             "ai": {
               "summary": "A vertical split of editor and result: a horizontal separator, up and down arrows, Home and End. One file, zero dependencies.",
               "preserve": [
@@ -531,6 +534,7 @@
         "i18n": {
           "en": {
             "description": "A pane with real pixel limits: the size is clamped between a minimum and a maximum, and hitting a limit is shown by the bar's colour and a caption rather than silence.",
+            "docs": "One file, zero dependencies, the --vibeui-resizable-004-* palette. Client component: useState, useRef, useId. The size is stored in pixels rather than in percent: a menu that is \"twenty percent\" wide turns into a stub on a narrow screen, while a minimum in pixels keeps the captions readable. aria-valuenow reports the same number as the style, and aria-valuetext speaks the units. Hitting a limit is not swallowed: the root gets a data-limit, the bar is recoloured and a badge with the number appears beside it — otherwise dragging looks like a frozen interface.",
             "ai": {
               "summary": "A sidebar with pixel limits: the size is clamped between min and max, and reaching a limit is announced by colour and a caption. One file, zero dependencies.",
               "preserve": [
@@ -682,6 +686,7 @@
         "i18n": {
           "en": {
             "description": "A separator that collapses the pane to zero: a double click and Enter do the same thing, and the previous size is remembered and restored on expand.",
+            "docs": "One file, zero dependencies, the --vibeui-resizable-005-* palette. Client component: a useState for the size, useRefs for the remembered size and for the frame, useId. Collapsing is available three ways: a double click, Enter on the separator, and dragging below half the minimum. Zero stays an honest aria-valuenow value, and aria-valuetext says \"collapsed\" — the pane does not disappear from the markup, it simply has zero width. The previous size is kept in a ref, so expanding returns the pane exactly where it was taken from. The arrow on the bar shows the direction of the next move.",
             "ai": {
               "summary": "A separator that collapses a pane to zero by double click or Enter and restores its previous size. One file, zero dependencies.",
               "preserve": [
@@ -829,6 +834,7 @@
         "i18n": {
           "en": {
             "description": "A nested split: a horizontal separator inside a vertical one. Each has its own frame of reference, so panes do not move along with somebody else's drag.",
+            "docs": "One file, zero dependencies, the --vibeui-resizable-006-* palette. Client component: two useStates for the shares, two useRefs pointing at different containers, useId for the aria-controls links. The key point: the outer separator measures the height of the whole work area, the inner one the width of the top part only, so they have different frames for getBoundingClientRect. A container shared between the two gives a pane that moves somewhere other than where it is dragged. Both separators are declared role=\"separator\" with their own aria-orientation and their own key set: up-down for the outer one, left-right for the inner one.",
             "ai": {
               "summary": "A nested split: a horizontal bar inside a vertical one, each with its own reference frame and its own keys. One file, zero dependencies.",
               "preserve": [
@@ -978,6 +984,7 @@
         "i18n": {
           "en": {
             "description": "Two panes that hold their proportion: the shares are set in fr right in the layout, so the ratio survives any change of the container's width.",
+            "docs": "One file, zero dependencies, the --vibeui-resizable-007-* palette. Client component: useState, useRef, useId. The proportion lives in grid-template-columns: two shares in calc(var(--vibeui-resizable-007-left) * 1fr) with the bar between them. The main property follows from that: when the container width changes the panes divide the space in the same ratio — with no resize handler, no pixel recalculation and no jump after hydration. The separator is a full one: role=\"separator\", tabIndex 0, aria-valuenow and aria-valuetext with the ratio, the arrows, Home and End; the \"Equal\" button sets fifty-fifty.",
             "ai": {
               "summary": "Two panes with the proportion in fr: the ratio lives in the layout and survives container resizing. One file, zero dependencies.",
               "preserve": [
@@ -1123,6 +1130,7 @@
         "i18n": {
           "en": {
             "description": "A code panel on the left and a live preview on the right with a draggable vertical border: the dark editor surface and the light preview surface are distinguishable even without reading the text.",
+            "docs": "One file, zero dependencies, the --vibeui-resizable-008-* palette. Client component: useState, useRef, useId. The left pane is code in a monospace font on a dark surface, the right one a preview on a light surface: the contrast of the surfaces reads in peripheral vision, without reading the text. The width is stored in percent and applied to the left pane with an inline style, the right one takes the remainder. The separator is a role=\"separator\" with tabIndex 0, aria-orientation=\"vertical\", aria-valuenow/min/max, left-right arrows and Home/End; the drag rests on setPointerCapture.",
             "ai": {
               "summary": "A code panel and a live preview with a draggable vertical border: a dark editor surface and a light preview surface, left-right arrows, Home and End. One file, zero dependencies.",
               "preserve": [
@@ -1275,6 +1283,7 @@
         "i18n": {
           "en": {
             "description": "Three mail client columns with two independent pixel-based separators: the folder list and the message list have their own limits, and the reading column takes the remaining width.",
+            "docs": "One file, zero dependencies, the --vibeui-resizable-009-* palette. Client component: a useState for the folder width and for the message width separately, a useRef on the frame, useId for the aria-controls links. Unlike the linked boundary model, here each separator has its own size and its own limits — the folder width does not drag the message list width along with it. Both separators are role=\"separator\" with tabIndex 0, aria-orientation=\"vertical\", aria-valuenow in pixels, left-right arrows and Home/End. The reading column stores no size and takes the remaining width of the frame.",
             "ai": {
               "summary": "Three mail client columns with two independent pixel separators: each bar has its own limits, and the third column takes the remainder. One file, zero dependencies.",
               "preserve": [
@@ -1434,6 +1443,7 @@
         "i18n": {
           "en": {
             "description": "A vertical split of a task list and its details, where the share lives in fr right inside grid-template-rows and survives a change of the frame's height without a resize handler.",
+            "docs": "One file, zero dependencies, the --vibeui-resizable-010-* palette. Client component: useState, useRef, useId. The proportion lives in grid-template-rows: the list share in calc(var(--vibeui-resizable-010-top) * 1fr), then the bar, then the details share by the same trick. When the frame height changes, the list and the details divide the space in the same proportion, with no resize handler and no jump after hydration. The separator is horizontal: role=\"separator\", aria-orientation=\"horizontal\", tabIndex 0, aria-valuenow/min/max, up-down arrows, Home and End; the \"Equal\" button sets fifty-fifty.",
             "ai": {
               "summary": "A vertical split of a task list and details with the share in fr: the proportion lives in the layout and survives a height change. One file, zero dependencies.",
               "preserve": [

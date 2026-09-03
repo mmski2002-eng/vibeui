@@ -1,7 +1,7 @@
 "use client"
 
 import { useId, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Checkbox022Option = {
   id: string
@@ -11,7 +11,7 @@ export type Checkbox022Option = {
 }
 
 export type Checkbox022Props = Omit<
-  ComponentPropsWithoutRef<"fieldset">,
+  ComponentProps<"fieldset">,
   "children" | "onChange"
 > & {
   legend?: string
@@ -35,13 +35,16 @@ const STYLES = `
 :where([data-vibeui-block="checkbox-022"]){
 --vibeui-checkbox-022-bg:transparent;
 --vibeui-checkbox-022-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-checkbox-022-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-checkbox-022-muted:color-mix(in oklab,var(--vibeui-checkbox-022-fg) 68%,transparent);
 --vibeui-checkbox-022-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
 --vibeui-checkbox-022-locked:light-dark(oklch(0.955 0.004 265),oklch(0.28 0.009 265));
 --vibeui-checkbox-022-accent:light-dark(oklch(0.5 0.14 265),oklch(0.65 0.15 265));
 --vibeui-checkbox-022-on-accent:oklch(0.99 0.01 265);
 --vibeui-checkbox-022-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="checkbox-022"]{color-scheme:dark}
 [data-vibeui-block="checkbox-022"]{
 display:flex;flex-direction:column;gap:0.25rem;
 width:100%;max-width:23rem;box-sizing:border-box;
@@ -60,7 +63,7 @@ background:var(--vibeui-checkbox-022-locked);cursor:default;
 }
 [data-vibeui-block="checkbox-022"] input{
 appearance:none;position:relative;flex:none;cursor:pointer;margin:0.09375rem 0 0;
-width:1.0625rem;height:1.0625rem;box-sizing:border-box;
+width:1.125rem;height:1.125rem;box-sizing:border-box;
 border:1.5px solid var(--vibeui-checkbox-022-border);border-radius:0.3125rem;
 background:var(--vibeui-checkbox-022-bg);
 transition:background-color .15s ease,border-color .15s ease;
@@ -193,6 +196,7 @@ export function Checkbox022({
       </style>
       <fieldset
         {...props}
+        data-slot="checkbox"
         data-vibeui-block="checkbox-022"
         className={className}
         style={palette}

@@ -1,10 +1,10 @@
 "use client"
 
 import { useId, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Date007Props = Omit<
-  ComponentPropsWithoutRef<"fieldset">,
+  ComponentProps<"fieldset">,
   "children" | "defaultValue"
 > & {
   legend?: string
@@ -39,11 +39,14 @@ const STYLES = `
 --vibeui-date-007-field:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
 --vibeui-date-007-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-date-007-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
---vibeui-date-007-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-date-007-muted:color-mix(in oklab,var(--vibeui-date-007-fg) 68%,transparent);
 --vibeui-date-007-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
 --vibeui-date-007-accent:light-dark(oklch(0.53 0.16 25),oklch(0.76 0.15 25));
 --vibeui-date-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="date-007"]{color-scheme:dark}
 /* Подложки по умолчанию нет: рамка держит форму, фон приходит со страницы. */
 [data-vibeui-block="date-007"]{
 display:flex;flex-direction:column;gap:0.5rem;
@@ -107,6 +110,17 @@ function daysInMonth(year: number, month: number) {
 }
 
 /**
+ * Дата из пропа режется по позициям, поэтому неразобранное значение даёт NaN:
+ * список дней пустеет, а итог показывает «NaN NaN». Проверяем разбор и
+ * откатываемся на дефолт пропа, чтобы компонент выглядел как в каталоге.
+ */
+function safeDate(value: string, fallback: string) {
+  return Number.isNaN(new Date(`${value}T00:00:00Z`).getTime())
+    ? fallback
+    : value
+}
+
+/**
  * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
  * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
  * Считается один раз при рендере, клиентского кода не добавляет.
@@ -150,9 +164,10 @@ export function Date007({
   ...props
 }: Date007Props) {
   const id = useId()
-  const [year, setYear] = useState(Number(defaultValue.slice(0, 4)))
-  const [month, setMonth] = useState(Number(defaultValue.slice(5, 7)))
-  const [day, setDay] = useState(Number(defaultValue.slice(8, 10)))
+  const initial = safeDate(defaultValue, "1987-04-12")
+  const [year, setYear] = useState(Number(initial.slice(0, 4)))
+  const [month, setMonth] = useState(Number(initial.slice(5, 7)))
+  const [day, setDay] = useState(Number(initial.slice(8, 10)))
 
   const total = daysInMonth(year, month)
   // День подтягивается к последнему существующему: 31 февраля не бывает.
@@ -183,6 +198,7 @@ export function Date007({
       </style>
       <fieldset
         {...props}
+        data-slot="date-selector"
         data-vibeui-block="date-007"
         className={className}
         style={palette}

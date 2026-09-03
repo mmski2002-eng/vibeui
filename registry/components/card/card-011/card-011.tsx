@@ -1,7 +1,7 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Card011Props = Omit<
-  ComponentPropsWithoutRef<"article">,
+  ComponentProps<"article">,
   "children" | "title"
 > & {
   title?: string
@@ -29,13 +29,16 @@ const STYLES = `
 :where([data-vibeui-block="card-011"]){
 --vibeui-card-011-bg:transparent;
 --vibeui-card-011-fg:light-dark(oklch(0.23 0.015 265),oklch(0.94 0.006 265));
---vibeui-card-011-muted:light-dark(oklch(0.55 0.013 265),oklch(0.72 0.012 265));
+--vibeui-card-011-muted:color-mix(in oklab,var(--vibeui-card-011-fg) 68%,transparent);
 --vibeui-card-011-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-card-011-accent:light-dark(oklch(0.55 0.18 262),oklch(0.74 0.16 262));
 --vibeui-card-011-shadow:light-dark(oklch(0.2 0.03 265 / 55%),oklch(0 0 0 / 70%));
 --vibeui-card-011-hue:250;
 --vibeui-card-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="card-011"]{color-scheme:dark}
 [data-vibeui-block="card-011"]{
 position:relative;display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:24rem;box-sizing:border-box;padding:0.9375rem 1rem;
@@ -59,8 +62,8 @@ font-size:0.75rem;color:var(--vibeui-card-011-muted);
 [data-vibeui-block="card-011"] [data-part="mark"]{
 display:flex;align-items:center;justify-content:center;flex:none;
 width:1.375rem;height:1.375rem;border-radius:0.4375rem;
-background:oklch(0.93 0.05 var(--vibeui-card-011-hue));
-color:oklch(0.4 0.1 var(--vibeui-card-011-hue));
+background:light-dark(oklch(0.93 0.05 var(--vibeui-card-011-hue)),oklch(0.33 0.07 var(--vibeui-card-011-hue)));
+color:light-dark(oklch(0.4 0.1 var(--vibeui-card-011-hue)),oklch(0.92 0.05 var(--vibeui-card-011-hue)));
 font-size:0.6875rem;font-weight:700;
 }
 [data-vibeui-block="card-011"] [data-part="host"]{
@@ -167,6 +170,7 @@ export function Card011({
       </style>
       <article
         {...props}
+        data-slot="card"
         data-vibeui-block="card-011"
         className={className}
         style={palette}

@@ -95,6 +95,7 @@
         "i18n": {
           "en": {
             "description": "A checkbox whose target is the whole row — label and description included — not a 16px square in the corner. The tick is drawn in CSS; a native input holds the state.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-checkbox-001-* variables. The root is a <label>, so the whole row is clickable, description included. Inside sits a native input[type=checkbox] with appearance:none: state, the keyboard and participation in a form all stay native. The tick is two edges of a square rotated 45°, and it grows from nothing when checked; no icon library is needed. Negative margins offset the inner padding of the row so that the component is not shifted relative to its neighbours.",
             "ai": {
               "summary": "A checkbox as a row: a label, a description under it and a square with a tick. The whole row is the target because the component's root is a <label>. The tick is drawn from two borders and grows from nothing, and a wash appears on hover. A native input inside keeps keyboard and form behaviour free. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -159,7 +160,17 @@
           }
         },
         "preview": {
-          "width": "full"
+          "width": "full",
+          "states": [
+            {
+              "description": "",
+              "defaultChecked": false
+            },
+            {
+              "description": "",
+              "defaultChecked": true
+            }
+          ]
         },
         "cardControls": ["defaultChecked", "disabled", "accent", "background"]
       }
@@ -239,6 +250,7 @@
         "i18n": {
           "en": {
             "description": "Multi-select as cards: the whole card is the tap target, not a 16-pixel box.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-checkbox-002-* variables. A client component: \"use client\". Inside sit real input type=\"checkbox\" elements, stretched across the card and transparent; the checked state is styled through :has(input:checked). The group is wrapped in a fieldset with a legend, and the counter of what is selected sits under the list.",
             "ai": {
               "summary": "Multi-select cards: a title, description and price in each, a tick on the selected ones and a counter below. Zero dependencies, one file.",
               "preserve": [
@@ -385,6 +397,7 @@
         "i18n": {
           "en": {
             "description": "A parent checkbox with an indeterminate state: with only some children checked it shows a dash, not emptiness.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-checkbox-003-* variables. A client component: \"use client\". The indeterminate property lives only in the DOM and cannot be set by an attribute, so an effect sets it through a reference to the node. The tick and the dash are drawn with pseudo-elements and differ in shape, not only in colour.",
             "ai": {
               "summary": "A checkbox group with a parent: \"select all\", an indeterminate state on partial selection and a counter. Zero dependencies, one file.",
               "preserve": [
@@ -520,6 +533,7 @@
         "i18n": {
           "en": {
             "description": "A filter list with result counts: a zero is disabled rather than hidden — a vanished filter reads as one that never existed.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-checkbox-004-* variables. A client component: \"use client\". A row is a grid of the checkbox, the label and the number; the numbers are aligned to the right edge in tabular figures. Empty filters stay in the list with the disabled attribute. At the bottom it counts how many will be found for the current selection, and a reset sits there.",
             "ai": {
               "summary": "A filter panel: checkboxes with result counts, disabled empty categories, a result total and a reset. Zero dependencies, one file.",
               "preserve": [
@@ -684,6 +698,7 @@
         "i18n": {
           "en": {
             "description": "A consent checkbox: never pre-ticked, with the document link staying its own target.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-checkbox-005-* variables. A client component: \"use client\". The error state appears only after the first interaction, the field is marked aria-invalid and tied to the error text through aria-describedby, and the message is declared role=\"alert\". A click on the link stops propagation so that the tick is not toggled.",
             "ai": {
               "summary": "A consent checkbox: unchecked by default, the document link inside the label, and an error after the first interaction with role=alert. Zero dependencies, one file.",
               "preserve": [
@@ -815,6 +830,7 @@
         "i18n": {
           "en": {
             "description": "Table row selection: the action bar appears only with a selection and always names how many rows are picked.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-checkbox-006-* variables. A client component: \"use client\". The header checkbox gets indeterminate through an effect and is labelled \"select all rows on this page\". Selected rows are highlighted through :has(input:checked). The action bar is declared role=\"status\", so the number of selected rows is announced.",
             "ai": {
               "summary": "Row selection with bulk actions: a header checkbox with an indeterminate state, highlighted rows and a bar with the count. Zero dependencies, one file.",
               "preserve": [
@@ -967,6 +983,7 @@
         "i18n": {
           "en": {
             "description": "A checklist with strike-through: done items stay put — a list that reorders under the cursor cannot be filled in.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-checkbox-007-* variables. A client component: \"use client\". The mark is round rather than square: this is a task, not a form field. The strike-through is switched on through :has(input:checked) on the row, and the order of the rows does not change. A counter of what is done sits in the header.",
             "ai": {
               "summary": "A task checklist: round marks, strike-through on done items, a due date on the right and a counter in the header. Zero dependencies, one file.",
               "preserve": [
@@ -1062,7 +1079,15 @@
       "meta": {
         "tags": ["checkbox", "mobile", "touch", "form"],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "states": [
+            {
+              "defaultChecked": false
+            },
+            {
+              "defaultChecked": true
+            }
+          ]
         },
         "ai": {
           "export": "Checkbox008",
@@ -1136,6 +1161,7 @@
         "i18n": {
           "en": {
             "description": "A large checkbox for phones: a 1.5rem box in a 2.75rem row — a target you hit with a thumb without aiming.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-checkbox-008-* variables. A client component: \"use client\". The mark is drawn through appearance: none and a pseudo-element, and its size is set in rem and scales with the system settings. The hint is tied to the field through aria-describedby, and the disabled state dims the whole row.",
             "ai": {
               "summary": "A large checkbox with a label and a hint: a thumb-sized target, a linked description and a disabled state. Zero dependencies, one file.",
               "preserve": [
@@ -1271,6 +1297,7 @@
         "i18n": {
           "en": {
             "description": "Settings with a description under every label: changed rows get a dot, and the draft is applied with a Save button.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-checkbox-009-* variables. A client component: \"use client\". It holds two sets of values — the saved one and the draft; their difference produces the dot on a changed row and the number of unsaved changes in the footer. A row is a grid of the square, the label with its badge and the description; the square spans both grid rows through grid-row: 1 / span 2. The counter of unsaved changes is declared role=\"status\".",
             "ai": {
               "summary": "A settings panel: every checkbox carries a label, a description and an optional badge. Changes are not applied silently — they collect as a draft, get marked with a dot and go through the Save button. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -1429,6 +1456,7 @@
         "i18n": {
           "en": {
             "description": "Checkbox cards with prices: selection is drawn as an inset ring so the card never shifts, and the prices add up to a total below.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-checkbox-010-* variables. A client component: \"use client\". A real input is hidden visually (clip-path: inset(50%)), and the state of the card is taken through :has(input:checked). The selection is shown with a two-pixel inset box-shadow instead of a change of border — the geometry of the card does not change and the neighbours do not shift. The group is wrapped in a fieldset with a legend, the legend is floated and the cards get clear:both.",
             "ai": {
               "summary": "Checkbox cards for order add-ons: a title, a note, a price and a \"recommended\" flag. A selected card gets an inset ring and a round tick, and the total is summed underneath. Zero dependencies, one file.",
               "preserve": [
@@ -1587,6 +1615,7 @@
         "i18n": {
           "en": {
             "description": "A select-all bar above the list: an indeterminate state, the selected count and one-click inversion.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-checkbox-011-* variables. A client component: \"use client\". The header checkbox gets indeterminate through an effect using a reference to the node — this property is not set by an attribute. The mixed state is drawn as a dash through ::after, the checked one as a tick made of two edges. The bar is separated from the list by a background and a border, and the counter is declared role=\"status\".",
             "ai": {
               "summary": "A list with a selection toolbar: \"select all on this page\" with an indeterminate state, inversion and a counter. The bar is visually separated from the rows, so it cannot be mistaken for one of them. Zero dependencies, one file.",
               "preserve": [
@@ -1735,6 +1764,7 @@
         "i18n": {
           "en": {
             "description": "A group with a cap: at the limit the remaining options switch off, while a bar and a counter show in advance how many picks are left.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-checkbox-012-* variables. A client component: \"use client\". Once the limit is reached, disabled is set only on the unchecked options, so a tick can always be cleared. The fill bar is a span with a width in percent (a dynamic value, there is no class for it). The text under the list explains the restriction in words, and the counter is declared role=\"status\".",
             "ai": {
               "summary": "A checkbox group with a cap: a \"2 of 3\" counter, a fill bar and unchecked options disabled at the limit. The rule is explained before the tap, not as an error after it. Zero dependencies, one file.",
               "preserve": [
@@ -1886,6 +1916,7 @@
         "i18n": {
           "en": {
             "description": "A required tick as the gate of a form: the submit button stays off until the terms are accepted, with the reason written right beside it.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-checkbox-013-* variables. A client component: \"use client\". The root is a form with onSubmit and preventDefault: submitting sends nothing and instead moves the block into the \"done\" state. The mandatory field carries a native required and an asterisk on the row itself, and the optional one carries an \"optional\" caption. The reason the button is disabled is shown as text beneath it. The theme comes from the surrounding color-scheme through light-dark(): by default the component lays no panel under itself, sits directly on the page background and darkens along with it; the background prop brings the panel back.",
             "ai": {
               "summary": "A form with one required checkbox and one optional beside it: until the terms are accepted the button is disabled and the reason is written under it. After submission the block confirms success. Zero dependencies, one file.",
               "preserve": [
@@ -2027,6 +2058,7 @@
         "i18n": {
           "en": {
             "description": "A task list where finished items move into a collapsed \"Done\" drawer: the active list stays short and nothing disappears.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-checkbox-014-* variables. A client component: \"use client\". The tasks are split into two lists by state, and the finished ones sit in a native <details> — the collapsing works without JS and is reachable from the keyboard. Above them is the progress bar: a span with a width in percent and role=\"progressbar\" with aria-valuenow. The <summary> marker is removed and the arrow is drawn with a pseudo-element. The theme comes from the surrounding color-scheme through light-dark(): by default the component lays no panel under itself, sits directly on the page background and darkens along with it; the background prop brings the panel back.",
             "ai": {
               "summary": "A checklist with a progress bar where completed tasks collect in a collapsed \"Done\" drawer. The active list never grows, and finished work can be reopened and unticked. Zero dependencies, one file.",
               "preserve": [
@@ -2194,6 +2226,7 @@
         "i18n": {
           "en": {
             "description": "The error belongs to the group, not to a row: \"pick at least one\" is shown by a border, a sign and a line saying what to do.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-checkbox-015-* variables. A client component: \"use client\". The error lives on the fieldset: it gets data-invalid, aria-invalid and aria-describedby with an identifier from useId. The message is declared role=\"alert\" and consists of a \"!\" sign in a circle and two lines — what is wrong and what to do. The error state is recomputed on submission and is cleared as soon as the first tick is made. The theme comes from the surrounding color-scheme through light-dark(): by default the component lays no panel under itself, sits directly on the page background and darkens along with it; the background prop brings the panel back.",
             "ai": {
               "summary": "A checkbox group validated as a whole: the \"at least one\" error applies to the set, shown by the group's border, an exclamation sign and a hint about what to do next. Zero dependencies, one file.",
               "preserve": [
@@ -2346,6 +2379,7 @@
         "i18n": {
           "en": {
             "description": "A long checkbox list with a search field: the checked options stay pinned at the top and never vanish while filtering.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-checkbox-016-* variables. A client component: \"use client\". The search filters only the unchecked options; the selected ones always come as the first group, so the filter does not look like a cleared selection. The list scrolls inside itself (max-height + overscroll-behavior: contain), and the search field and the counter stay in place. The group headings are hidden from the screen reader as decorative. The theme comes from the surrounding color-scheme through light-dark(): by default the component lays no panel under itself, sits directly on the page background and darkens along with it; the background prop brings the panel back.",
             "ai": {
               "summary": "A checkbox list with a search field: checked options are pinned at the top as their own group, the rest are filtered by substring. The list scrolls inside itself with a counter below. Zero dependencies, one file.",
               "preserve": [
@@ -2502,6 +2536,7 @@
         "i18n": {
           "en": {
             "description": "A table where selection comes in ranges: Shift-click marks everything from the previous tick to the current row, and the gesture is spelled out.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-checkbox-017-* variables. A client component: \"use client\". The range logic hangs on onClick (shiftKey is available there), and onChange is left empty so that React does not complain about a controlled input. The anchor is the index of the last single tick. The header checkbox gets indeterminate through an effect, the selected rows are highlighted through tr:has(input:checked), and the table is wrapped in a container with overflow-x. The theme comes from the surrounding color-scheme through light-dark(): by default the component lays no panel under itself, sits directly on the page background and darkens along with it; the background prop brings the panel back.",
             "ai": {
               "summary": "Range selection for table rows: a plain click toggles a row and sets the anchor, a Shift-click adds everything from the anchor to the current row. The header checkbox carries an indeterminate state; the footer shows the count and the gesture hint. Zero dependencies, one file.",
               "preserve": [
@@ -2674,6 +2709,7 @@
         "i18n": {
           "en": {
             "description": "Checkboxes whose tick is a shape that matches the mark: a star, a flag and a bolt cut out with clip-path.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-checkbox-018-* variables. A client component: \"use client\". A real input is hidden visually (clip-path: inset(50%)), and the card reacts through :has(input:checked). The icons are squares with a background, cut with clip-path: polygon off the data-shape attribute, so no icon library is needed and the colour is inherited from the palette. An unselected shape is shown muted rather than as an empty box. The theme comes from the surrounding color-scheme through light-dark(): by default the component lays no panel under itself, sits directly on the page background and darkens along with it; the background prop brings the panel back.",
             "ai": {
               "summary": "A row of checkboxes with shapes instead of ticks: a star, a flag and a bolt cut from a filled square with clip-path. A checked shape fills with the accent and grows slightly; an unchecked one stays visible in grey. Zero dependencies, one file.",
               "preserve": [
@@ -2823,6 +2859,7 @@
         "i18n": {
           "en": {
             "description": "A compact wrapping row of filter chips: real checkboxes with a hidden input, a tick on the selected ones and a reset.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-checkbox-019-* variables. A client component: \"use client\". A chip is a label with a hidden input (clip-path: inset(50%)), and the state is taken through :has(input:checked). The tick appears through a width animation rather than opacity, so an unselected chip does not reserve blank space. The group is wrapped in a fieldset with a legend, and the reset button is disabled on an empty selection. The theme comes from the surrounding color-scheme through light-dark(): by default the component lays no panel under itself, sits directly on the page background and darkens along with it; the background prop brings the panel back.",
             "ai": {
               "summary": "A row of filter chips that wraps: every chip is a real checkbox, a selected one fills in and gains a tick. A reset button and a counter sit alongside. Zero dependencies, one file.",
               "preserve": [
@@ -2971,6 +3008,7 @@
         "i18n": {
           "en": {
             "description": "Consent to a long document: the text lives in a scrollable frame and the checkbox unlocks only once it has been scrolled to the end.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-checkbox-020-* variables. A client component: \"use client\". The onScroll handler compares scrollTop + clientHeight against scrollHeight with a slack of eight pixels and unlocks the checkbox. The text frame gets tabIndex and role=\"region\" with a name so that it can be scrolled from the keyboard. The gradient shadow at the bottom edge shows that the text continues and fades out on data-read on the root. The theme comes from the surrounding color-scheme through light-dark(): by default the component lays no panel under itself, sits directly on the page background and darkens along with it; the background prop brings the panel back.",
             "ai": {
               "summary": "A legal text in a scrollable frame with a consent checkbox below it. Until the document is scrolled to the end the box stays disabled and the reason is written beside it; the line changes once it is read. Zero dependencies, one file.",
               "preserve": [
@@ -3114,6 +3152,7 @@
         "i18n": {
           "en": {
             "description": "A checkbox tree with inheritance: a branch toggles all of its leaves at once, and its own state is computed back from them.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-checkbox-021-* variables. A client component: \"use client\". State is kept for the leaves only; a branch computes its own from the list of its descendants, so the tree works at any depth. indeterminate is set through an effect in every row. The branches sit in <details> with a hidden marker, and a click on the tick inside <summary> stops propagation, otherwise it would collapse the branch. The theme comes from the surrounding color-scheme through light-dark(): by default the component lays no panel under itself, sits directly on the page background and darkens along with it; the background prop brings the panel back.",
             "ai": {
               "summary": "A permission tree with inheritance: ticking a branch turns on every leaf under it, unticking clears them, and a partial selection shows as a dash. Branches collapse with a native <details>, and a counter sits below. Zero dependencies, one file.",
               "preserve": [
@@ -3304,6 +3343,7 @@
         "i18n": {
           "en": {
             "description": "Settings where some rows are read-only: a lock, a muted background and the reason written right under the label.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-checkbox-022-* variables. A client component: \"use client\". A locked row is marked readOnly and aria-disabled rather than disabled: it stays in the tab order and remains available to a screen reader. The reason is tied to the field through aria-describedby with an identifier from useId. The padlock is drawn with a body and a shackle from ::before, so no icon library is needed. The theme comes from the surrounding color-scheme through light-dark(): by default the component lays no panel under itself, sits directly on the page background and darkens along with it; the background prop brings the panel back.",
             "ai": {
               "summary": "A settings list where some rows are read-only: a lock on the right, a muted background, an explanation under the label and a shared footnote about the org policy below. Zero dependencies, one file.",
               "preserve": [

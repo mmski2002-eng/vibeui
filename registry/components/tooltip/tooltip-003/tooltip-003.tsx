@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties, ReactNode } from "react"
+import type { ComponentProps, CSSProperties, ReactNode } from "react"
 
-export type Tooltip003Props = Omit<
-  ComponentPropsWithoutRef<"span">,
-  "children"
-> & {
+export type Tooltip003Props = Omit<ComponentProps<"span">, "children"> & {
   tip?: string
   /** Клавиши сочетания: каждая рисуется отдельной клавишей. */
   keys?: string[]
@@ -30,6 +27,9 @@ const STYLES = `
 --vibeui-tooltip-003-facefg:light-dark(oklch(0.26 0.014 265),oklch(0.92 0.006 265));
 --vibeui-tooltip-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="tooltip-003"]{color-scheme:dark}
 [data-vibeui-block="tooltip-003"]{
 position:relative;display:inline-flex;font-family:var(--vibeui-tooltip-003-font);
 }
@@ -126,6 +126,7 @@ export function Tooltip003({
       </style>
       <span
         {...props}
+        data-slot="tooltip"
         data-vibeui-block="tooltip-003"
         className={className}
         style={palette}

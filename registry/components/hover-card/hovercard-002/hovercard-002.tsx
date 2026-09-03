@@ -1,9 +1,8 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+"use client"
 
-export type Hovercard002Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
+
+export type Hovercard002Props = Omit<ComponentProps<"div">, "children"> & {
   /** Текст ссылки в строке. */
   anchorText?: string
   title?: string
@@ -30,12 +29,15 @@ const STYLES = `
 --vibeui-hovercard-002-bg:transparent;
 --vibeui-hovercard-002-card:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
 --vibeui-hovercard-002-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-hovercard-002-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-hovercard-002-muted:color-mix(in oklab,var(--vibeui-hovercard-002-fg) 68%,transparent);
 --vibeui-hovercard-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
 --vibeui-hovercard-002-hue:250;
 --vibeui-hovercard-002-accent:light-dark(oklch(0.53 0.16 255),oklch(0.75 0.14 255));
 --vibeui-hovercard-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="hovercard-002"]{color-scheme:dark}
 [data-vibeui-block="hovercard-002"]{
 width:100%;max-width:28rem;box-sizing:border-box;
 padding:1rem 1.125rem;
@@ -81,7 +83,7 @@ font-size:0.6875rem;letter-spacing:0.02em;color:var(--vibeui-hovercard-002-muted
 }
 [data-vibeui-block="hovercard-002"] [data-part="favicon"]{
 width:0.75rem;height:0.75rem;border-radius:0.1875rem;flex:none;
-background:oklch(0.62 0.15 var(--vibeui-hovercard-002-hue));
+background:light-dark(oklch(0.62 0.15 var(--vibeui-hovercard-002-hue)),oklch(0.74 0.14 var(--vibeui-hovercard-002-hue)));
 }
 [data-vibeui-block="hovercard-002"] [data-part="title"]{
 font-size:0.875rem;font-weight:650;line-height:1.3;
@@ -128,6 +130,16 @@ function hue(name: string) {
 }
 
 /**
+ * Escape убирает фокус с триггера. Карточка держится на :focus-within,
+ * поэтому снятого фокуса достаточно, чтобы закрыть её с клавиатуры.
+ */
+function closeOnEscape(event: KeyboardEvent<HTMLElement>) {
+  if (event.key === "Escape") {
+    ;(event.target as HTMLElement).blur()
+  }
+}
+
+/**
  * Карточка превью страницы у ссылки: обложка, домен, заголовок и отрывок.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -164,6 +176,8 @@ export function Hovercard002({
       </style>
       <div
         {...props}
+        data-slot="hover-card"
+        onKeyDown={closeOnEscape}
         data-vibeui-block="hovercard-002"
         className={className}
         style={palette}

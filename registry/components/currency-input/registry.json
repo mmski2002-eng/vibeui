@@ -39,7 +39,8 @@
             "label и hint",
             "акцент через проп accent",
             "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
-            "locale — локаль разрядов; ru-RU по умолчанию"
+            "locale — локаль разрядов; ru-RU по умолчанию",
+            "currencyText — валюта словом для скринридера"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
@@ -105,7 +106,8 @@
                 "label and hint",
                 "the accent through the accent prop",
                 "background — the component background; empty means no background, taking the page colour",
-                "locale — the grouping locale; ru-RU by default"
+                "locale — the grouping locale; ru-RU by default",
+                "currencyText — the currency spelled out for screen readers"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
@@ -143,9 +145,11 @@
                 "currency": "$",
                 "hint": "Minimum $5, credited within a minute",
                 "presets": [10, 25, 50, 100],
-                "locale": "en-US"
+                "locale": "en-US",
+                "currencyText": "in dollars"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-currency-001-* variables. Client component: \"use client\". While typing, only digits stay in the field; formatting through toLocaleString happens on blur. The quick-amount buttons are declared with aria-pressed. The value is right-aligned in tabular figures."
           }
         },
         "cardControls": ["accent", "background"]
@@ -316,7 +320,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, zero dependencies, palette in the local --vibeui-currency-002-* variables. Client component: the amount and the currency code are in state. The currency list is placed not above the field but inside the shared frame: an amount in a currency is one value, while a separate control reads as a second question. The list is native, so it gives first-letter search on the desktop and the system wheel on a phone without a single line of code. The currency sign stands to the left of the number and changes together with the selection."
           }
         },
         "cardControls": ["defaultCurrency", "accent", "background"]
@@ -362,7 +367,8 @@
             "акцент через проп accent",
             "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "centsText — подпись копеек; {cents} подставляется остатком",
-            "locale — локаль разрядов; ru-RU по умолчанию"
+            "locale — локаль разрядов; ru-RU по умолчанию",
+            "currencyText — валюта словом для скринридера"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
@@ -430,7 +436,8 @@
                 "the accent through the accent prop",
                 "background — the component background; empty means no background, taking the page colour",
                 "centsText — the cents caption; {cents} is replaced with the remainder",
-                "locale — the grouping locale; ru-RU by default"
+                "locale — the grouping locale; ru-RU by default",
+                "currencyText — the currency spelled out for screen readers"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
@@ -468,9 +475,11 @@
                 "currency": "$",
                 "hint": "No decimal point needed — the cents fall into place",
                 "centsText": "{cents} cents",
-                "locale": "en-US"
+                "locale": "en-US",
+                "currencyText": "in dollars"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, zero dependencies, palette in the local --vibeui-currency-003-* variables. Client component: the amount is in state, as a whole number of cents. Entry runs right to left, as on a cash terminal: only digits are taken from the string, so the separators are not editable and it is impossible to mis-aim past the decimal comma. Whole cents also remove the main trouble with money in JS — fractional arithmetic: cents are added up, not 0.1 and 0.2. Thousand separators are placed on every keystroke, but the caret is always at the end of the string, so nothing jumps."
           }
         },
         "cardControls": ["accent", "background"]
@@ -626,7 +635,8 @@
                 "updatedAt": "rate as of 12:40, updated every 15 minutes",
                 "locale": "en-US"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, zero dependencies, palette in the local --vibeui-currency-004-* variables. Client component: only the source amount is held in state. The second field is computed but editable: an edit of the lower one divides the entered value by the rate and puts the result into the same base, so rounding happens once rather than on every hop. The rate is captioned together with its update time — without the time it looks like a promise rather than a reference."
           }
         },
         "cardControls": ["accent", "background"]
@@ -673,7 +683,8 @@
             "акцент через проп accent",
             "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "limitText и noteText — подпись потолка и пояснения по состояниям ok, near и over",
-            "locale — локаль разрядов; ru-RU по умолчанию"
+            "locale — локаль разрядов; ru-RU по умолчанию",
+            "currencyText — валюта словом для скринридера"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
@@ -744,7 +755,8 @@
                 "the accent through the accent prop",
                 "background — the component background; empty means no background, taking the page colour",
                 "limitText and noteText — the ceiling caption and the explanations for the ok, near and over states",
-                "locale — the grouping locale; ru-RU by default"
+                "locale — the grouping locale; ru-RU by default",
+                "currencyText — the currency spelled out for screen readers"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
@@ -784,9 +796,11 @@
                   "near": "{amount} {currency} left of the monthly limit.",
                   "over": "Over by {amount} {currency} — lower the amount or raise the limit."
                 },
-                "locale": "en-US"
+                "locale": "en-US",
+                "currencyText": "in dollars"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, zero dependencies, palette in the local --vibeui-currency-005-* variables. Client component: the amount is in state, and the state of the block is derived from the share of the limit. Three positions — within, approaching, exceeded — are marked with data-state on the root and override a single accent variable, so the bar, the border and the text change at once. Input above the limit is not forbidden: it is flagged with aria-invalid, because a person often types the amount they need first and then goes to raise the limit."
           }
         },
         "cardControls": ["accent", "background"]
@@ -833,7 +847,8 @@
             "акцент через проп accent",
             "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "checkText — подписи строк чека receiver, fee, total и rule",
-            "locale — локаль разрядов; ru-RU по умолчанию"
+            "locale — локаль разрядов; ru-RU по умолчанию",
+            "currencyText — валюта словом для скринридера"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
@@ -904,7 +919,8 @@
                 "the accent through the accent prop",
                 "background — the component background; empty means no background, taking the page colour",
                 "checkText — the receipt line captions receiver, fee, total and rule",
-                "locale — the grouping locale; ru-RU by default"
+                "locale — the grouping locale; ru-RU by default",
+                "currencyText — the currency spelled out for screen readers"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
@@ -944,9 +960,11 @@
                   "total": "Debited from the card",
                   "rule": "Fee {percent}%, but no less than {min} {currency}"
                 },
-                "locale": "en-US"
+                "locale": "en-US",
+                "currencyText": "in dollars"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, zero dependencies, palette in the local --vibeui-currency-006-* variables. Client component: the amount is in state, while the fee and the total are computed on the fly. The fee follows the \"percent, but no less than a minimum\" rule, the way it is charged in real life: on small transfers the minimum applies, on large ones the percent. The three-line receipt sits in an aria-live region, so changes are announced; the total is set larger than the rest, because that is the number checked against the card balance."
           }
         },
         "cardControls": ["percent", "accent", "background"]
@@ -1107,7 +1125,8 @@
                 },
                 "locale": "en-US"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, zero dependencies, palette in the local --vibeui-currency-007-* variables. Client component: both bounds are stored as strings, so an empty field stays empty and does not turn into a zero. The order is fixed by swapping the values on blur rather than by an error message: complaining about \"from 12000 to 3000\" is pointless — the person has already said what they want and simply typed into the wrong field. The final wording is assembled from words and changes depending on which bounds are filled. The legend is floated, so the pair of fields carries clear:both."
           }
         },
         "cardControls": ["accent", "background"]

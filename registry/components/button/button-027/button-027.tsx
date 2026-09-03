@@ -1,10 +1,10 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Button027Props = Omit<
-  ComponentPropsWithoutRef<"button">,
+  ComponentProps<"button">,
   "children" | "onClick"
 > & {
   label?: string
@@ -27,12 +27,15 @@ const STYLES = `
 :where([data-vibeui-block="button-027"]){
 --vibeui-button-027-bg:transparent;
 --vibeui-button-027-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.006 265));
---vibeui-button-027-muted:light-dark(oklch(0.56 0.014 265),oklch(0.68 0.012 265));
+--vibeui-button-027-muted:color-mix(in oklab,var(--vibeui-button-027-fg) 68%,transparent);
 --vibeui-button-027-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
 --vibeui-button-027-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
 --vibeui-button-027-left:1;
 --vibeui-button-027-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="button-027"]{color-scheme:dark}
 [data-vibeui-block="button-027"]{
 appearance:none;cursor:pointer;
 display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;
@@ -42,9 +45,9 @@ background:var(--vibeui-button-027-bg);color:var(--vibeui-button-027-accent);
 font-family:var(--vibeui-button-027-font);font-size:0.875rem;font-weight:650;line-height:1;
 transition:border-color .16s ease,color .16s ease;
 }
-[data-vibeui-block="button-027"]:hover:not(:disabled){border-color:var(--vibeui-button-027-accent)}
+[data-vibeui-block="button-027"]:hover:not([aria-disabled="true"]){border-color:var(--vibeui-button-027-accent)}
 [data-vibeui-block="button-027"]:focus-visible{outline:2px solid var(--vibeui-button-027-accent);outline-offset:2px}
-[data-vibeui-block="button-027"]:disabled{cursor:not-allowed;color:var(--vibeui-button-027-muted)}
+[data-vibeui-block="button-027"][aria-disabled="true"]{cursor:not-allowed;color:var(--vibeui-button-027-muted)}
 /* Кольцо остатка: доля времени видна раньше, чем прочитаны цифры. */
 [data-vibeui-block="button-027"] [data-part="ring"]{
 flex:none;width:1rem;height:1rem;border-radius:9999px;
@@ -133,11 +136,16 @@ export function Button027({
       <button
         {...props}
         type={type}
+        data-slot="button"
         data-vibeui-block="button-027"
         className={className}
         style={palette}
-        disabled={locked}
+        // Пока идёт отсчёт, кнопка помечена aria-disabled, а не disabled:
+        // иначе она молча выпадает из обхода на все тридцать секунд и
+        // причина ожидания остаётся только на экране.
+        aria-disabled={locked || undefined}
         onClick={() => {
+          if (locked) return
           onResend?.()
           setLeft(seconds)
         }}

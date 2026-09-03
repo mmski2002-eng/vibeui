@@ -1,7 +1,7 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Buttongroup029Props = Omit<
-  ComponentPropsWithoutRef<"fieldset">,
+  ComponentProps<"fieldset">,
   "children"
 > & {
   lightLabel?: string
@@ -25,7 +25,7 @@ const STYLES = `
 :where([data-vibeui-block="buttongroup-029"]){
 --vibeui-buttongroup-029-surface:transparent;
 --vibeui-buttongroup-029-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.005 265));
---vibeui-buttongroup-029-muted:light-dark(oklch(0.57 0.014 265),oklch(0.72 0.012 265));
+--vibeui-buttongroup-029-muted:color-mix(in oklab,var(--vibeui-buttongroup-029-fg) 68%,transparent);
 --vibeui-buttongroup-029-border:light-dark(oklch(0.89 0.008 265),oklch(0.4 0.012 265));
 --vibeui-buttongroup-029-accent:light-dark(oklch(0.52 0.16 285),oklch(0.78 0.13 285));
 --vibeui-buttongroup-029-light:oklch(0.98 0.003 265);
@@ -60,7 +60,8 @@ transition:border-color .16s ease,color .16s ease,box-shadow .16s ease;
 [data-vibeui-block="buttongroup-029"] input{
 position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer;
 }
-/* Миниатюра интерфейса вместо значка. */
+/* Миниатюра интерфейса вместо значка. Её цвета намеренно фиксированные:
+   вариант «светлая» обязан остаться светлым в любой теме страницы. */
 [data-vibeui-block="buttongroup-029"] [data-part="swatch"]{
 position:relative;display:block;width:100%;height:3rem;
 border:1px solid oklch(0.86 0.008 265);border-radius:0.5rem;overflow:hidden;
@@ -156,6 +157,7 @@ export function Buttongroup029({
       </style>
       <fieldset
         {...props}
+        data-slot="button-group"
         data-vibeui-block="buttongroup-029"
         className={className}
         style={palette}

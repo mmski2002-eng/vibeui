@@ -272,7 +272,9 @@ export function Autocomplete004({
                   onSelect?.(command.label)
                 }}
               >
-                <span data-part="label">{highlight(command.label, query.trim())}</span>
+                <span data-part="label">
+                  {highlight(command.label, query.trim())}
+                </span>
                 {command.hint ? (
                   <span data-part="hint">{command.hint}</span>
                 ) : null}

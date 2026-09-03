@@ -1,8 +1,8 @@
 import { useId } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Calendar005Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "defaultValue"
 > & {
   label?: string
@@ -24,25 +24,28 @@ const STYLES = `
 :where([data-vibeui-block="calendar-005"]){
 --vibeui-calendar-005-bg:transparent;
 --vibeui-calendar-005-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
---vibeui-calendar-005-muted:light-dark(oklch(0.58 0.014 265),oklch(0.68 0.012 265));
+--vibeui-calendar-005-muted:color-mix(in oklab,var(--vibeui-calendar-005-fg) 68%,transparent);
 --vibeui-calendar-005-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-calendar-005-field:light-dark(oklch(0.985 0.002 265),oklch(0.27 0.012 265));
 --vibeui-calendar-005-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
 --vibeui-calendar-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="calendar-005"]{color-scheme:dark}
 [data-vibeui-block="calendar-005"]{
 display:flex;flex-direction:column;gap:0.375rem;
-width:100%;max-width:18rem;box-sizing:border-box;padding:0.875rem;
+width:100%;max-width:18rem;box-sizing:border-box;padding:0.9375rem;
 background:var(--vibeui-calendar-005-bg);
 border:1px solid var(--vibeui-calendar-005-border);border-radius:0.875rem;
 color:var(--vibeui-calendar-005-fg);font-family:var(--vibeui-calendar-005-font);
 }
-[data-vibeui-block="calendar-005"] label{font-size:0.8125rem;font-weight:600}
+[data-vibeui-block="calendar-005"] label{font-size:0.9375rem;font-weight:600}
 [data-vibeui-block="calendar-005"] input{
 box-sizing:border-box;width:100%;height:2.5rem;padding:0 0.75rem;
 border:1px solid var(--vibeui-calendar-005-border);border-radius:0.625rem;
 background:var(--vibeui-calendar-005-field);color:inherit;
-font:inherit;font-size:0.875rem;font-variant-numeric:tabular-nums;
+font:inherit;font-size:0.9375rem;font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="calendar-005"] input:focus-visible{
 outline:2px solid var(--vibeui-calendar-005-accent);outline-offset:1px;border-color:transparent;
@@ -53,7 +56,7 @@ outline:2px solid var(--vibeui-calendar-005-accent);outline-offset:1px;border-co
 cursor:pointer;opacity:.55;
 }
 [data-vibeui-block="calendar-005"] input::-webkit-calendar-picker-indicator:hover{opacity:.85}
-[data-vibeui-block="calendar-005"] [data-part="hint"]{font-size:0.75rem;line-height:1.4;color:var(--vibeui-calendar-005-muted)}
+[data-vibeui-block="calendar-005"] [data-part="hint"]{font-size:0.875rem;line-height:1.4;color:var(--vibeui-calendar-005-muted)}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="calendar-005"] *{animation:none!important;transition:none!important}}
 `
 
@@ -114,6 +117,7 @@ export function Calendar005({
       </style>
       <div
         {...props}
+        data-slot="calendar"
         data-vibeui-block="calendar-005"
         className={className}
         style={palette}

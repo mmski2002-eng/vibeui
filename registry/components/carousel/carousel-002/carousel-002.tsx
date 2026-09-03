@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Carousel002Item = {
   title: string
@@ -9,10 +9,7 @@ export type Carousel002Item = {
   hue?: number
 }
 
-export type Carousel002Props = Omit<
-  ComponentPropsWithoutRef<"section">,
-  "children"
-> & {
+export type Carousel002Props = Omit<ComponentProps<"section">, "children"> & {
   items?: Carousel002Item[]
   label?: string
   /** Роль секции для скринридера. */
@@ -37,11 +34,14 @@ const STYLES = `
 --vibeui-carousel-002-bg:light-dark(oklch(1 0 0),oklch(0.26 0.013 265));
 --vibeui-carousel-002-hover:light-dark(oklch(0.96 0.004 265),oklch(0.32 0.014 265));
 --vibeui-carousel-002-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-carousel-002-muted:light-dark(oklch(0.58 0.014 265),oklch(0.7 0.012 265));
+--vibeui-carousel-002-muted:color-mix(in oklab,var(--vibeui-carousel-002-fg) 68%,transparent);
 --vibeui-carousel-002-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-carousel-002-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-carousel-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="carousel-002"]{color-scheme:dark}
 /* Собственная подложка: заголовок и счётчик — это текст, и на тёмной
    странице он обязан читаться без правки палитры проекта. */
 [data-vibeui-block="carousel-002"]{
@@ -185,6 +185,7 @@ export function Carousel002({
       </style>
       <section
         {...props}
+        data-slot="carousel"
         data-vibeui-block="carousel-002"
         aria-roledescription={roleText}
         aria-label={label}

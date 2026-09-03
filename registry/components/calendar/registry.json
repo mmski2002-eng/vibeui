@@ -80,6 +80,7 @@
         "i18n": {
           "en": {
             "description": "A month on a fixed 7×6 grid: the week starts on Monday and adjacent-month days stay visible and clickable.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-calendar-001-*. Client-side: \"use client\". The date arrives and leaves as an ISO string — it is simpler to pass from the server than a Date object. The grid is always 42 cells, and the week starts on Monday through the shift (getDay() + 6) % 7. The month and day names come from Intl.DateTimeFormat, so the language changes with a single prop.",
             "ai": {
               "summary": "A month calendar: a 7×6 grid of constant height, day selection, month navigation, a \"Today\" button and Intl-driven locale. Zero dependencies, one file.",
               "preserve": [
@@ -224,6 +225,7 @@
         "i18n": {
           "en": {
             "description": "A range in two clicks: if the second date lands before the first, the ends swap instead of raising an error.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-calendar-002-*. Client-side: \"use client\". The range highlight lives on the table cell rather than on the day button: only that way does the band between the ends come out solid. The order of the dates is normalised by comparing ISO strings — they compare lexicographically. The number of nights is counted at the bottom.",
             "ai": {
               "summary": "A range calendar: the first click sets the start, the second the end, the ends normalise, the band between them is solid and nights are counted. Zero dependencies, one file.",
               "preserve": [
@@ -370,6 +372,7 @@
         "i18n": {
           "en": {
             "description": "A week as a scrolling strip: a month eats half a phone screen, yet people almost always pick a day close to today.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-calendar-003-*. Client-side: \"use client\". The strip scrolls horizontally with centre scroll-snap, so a day never stops half-shown. Today's date is marked with a dot, and weekends are coloured separately. The full dates go into the aria-label of every day.",
             "ai": {
               "summary": "A horizontal day strip: snap scrolling, a dot on today and a separate colour for weekends. Zero dependencies, one file.",
               "preserve": [
@@ -417,7 +420,8 @@
             "preview": {
               "props": {
                 "locale": "en-US",
-                "pickedText": "Selected: {date}"
+                "pickedText": "Selected: {date}",
+                "todayLabel": "Today"
               }
             }
           }
@@ -504,6 +508,7 @@
         "i18n": {
           "en": {
             "description": "A grid of booking slots: taken ones stay in place under hatching, and the time zone is spelled out below.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-calendar-004-*. Client-side: \"use client\". The slots are real radios in a fieldset with a legend, so the group is announced to a screen reader as a whole, and taken slots are switched off with the disabled attribute. The root is declared a container and the grid lives on an inner element: a container query only applies to descendants.",
             "ai": {
               "summary": "A booking-slot grid on real radios: taken slots stay visible but disabled, free ones are counted in the legend, and the time zone is stated. Zero dependencies, one file.",
               "preserve": [
@@ -644,6 +649,7 @@
         "i18n": {
           "en": {
             "description": "A date field on the native input: the calendar, format and mobile wheel come from the system, and the limits are spelled out.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-calendar-005-*. A server component: useId is needed only to tie the label to the field. Inside is an input type=\"date\" with min and max; the limits are duplicated as text through aria-describedby. Only the built-in calendar glyph is styled — nothing else in an input date is available.",
             "ai": {
               "summary": "A date field on a native input type=\"date\": the system calendar, the local format, min and max limits and a worded explanation. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -784,6 +790,7 @@
         "i18n": {
           "en": {
             "description": "A day as a list: timed events with worded gaps like \"40 minutes free\" instead of empty hours.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-calendar-006-*. Server-side: no hooks. The gaps are computed in minutes from the times of neighbouring events and printed in words. The event row is a two-column grid: the time on the left in a column of its own, so the eye travels one line. The event's tone is set by the bar on the left rather than by filling the row.",
             "ai": {
               "summary": "A day agenda: time in the left column, title and place on the right, and free gaps spelled out between events. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -959,6 +966,7 @@
         "i18n": {
           "en": {
             "description": "A month as a load map: five saturation steps with the number inside each cell — colour alone never names a percentage.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-calendar-007-*. Server-side: no hooks. The load arrives as an array of numbers from 0 to 1 over the days of the month and is rounded to five steps; the colour is computed through color-mix from the accent. Every cell has an aria-label with the percentage, and the legend is captioned with the words \"free\" and \"busy\".",
             "ai": {
               "summary": "A month heatmap: five saturation steps, numbers inside the cells, percentages in aria-label and a worded legend. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1107,6 +1115,7 @@
         "i18n": {
           "en": {
             "description": "Picking a month without days: reports and plans live in months, and paging through a grid of dates is a wasted step.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-calendar-008-*. Client-side: \"use client\". The twelve months are laid out in three columns — that way they read as quarters. The year is switched by the arrows beside it, the current month is outlined and the selected one is filled with the accent. The month names are taken from Intl.DateTimeFormat.",
             "ai": {
               "summary": "A month picker: a 3×4 grid, arrow year navigation, an outlined current month and a filled selected one. Zero dependencies, one file.",
               "preserve": [
@@ -1158,7 +1167,8 @@
               "props": {
                 "locale": "en-US",
                 "yearLabel": "Year {year}",
-                "pickedText": "Selected: {month}"
+                "pickedText": "Selected: {month}",
+                "currentLabel": "Current month"
               }
             }
           }
@@ -1261,6 +1271,7 @@
         "i18n": {
           "en": {
             "description": "Two months side by side for bookings: a range nearly always crosses the month boundary, and one pane loses the night count.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-calendar-009-*. Server-side: no hooks, the range arrives in props. The root is declared a container and the layout lives on the inner card: a container query applies to descendants but not to the container itself. From 30rem of its own width the months stack one under the other.",
             "ai": {
               "summary": "Two months side by side with a highlighted range and a night count; in a narrow column they stack. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1418,6 +1429,7 @@
         "i18n": {
           "en": {
             "description": "A meeting card with a tear-off date sheet: in a feed of events the eye hunts for the number, not for \"17 March 2026\".",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-calendar-010-*. Server-side: no hooks. The date is parsed from an ISO string and printed as the three parts of the sheet through Intl. The attendees are initials on a hue derived from the name (FNV-1a across twelve steps of the circle), and the full names go into the stack's aria-label. The clock and the pin are drawn with borders.",
             "ai": {
               "summary": "An event card: a tear-off sheet with the date, the title, time, place and a stack of attendee initials. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1570,6 +1582,7 @@
         "i18n": {
           "en": {
             "description": "A whole year as twelve month thumbnails: marked days are filled with the accent colour and each month name carries the count of its marks.",
+            "docs": "A server component: there is no state, everything is computed at render from the year prop and the marks list of ISO dates. The twelve grids are laid out by a grid with auto-fill and minmax(8.5rem,1fr) — the columns are packed from the block's own width, and container queries are not needed. Every month is built from three numbers: the shift of the first day to Monday, the length of the month and the set of marked dates. The mark is a fill of the whole cell rather than a dot: on a ten-pixel cell a dot is invisible and the density of the year stops reading. The weekday names are taken from Intl using the reference week of 5–11 January 2026, so the week always starts on Monday whatever the locale. The palette is built on light-dark(): the colours take their branch from the surrounding color-scheme, there is no surface by default, and the border holds the block's edge.",
             "ai": {
               "summary": "A year overview: twelve month thumbnails in one grid, marked dates filled with the accent, each month showing how many marks it holds. Server-side, one file, zero dependencies.",
               "preserve": [
@@ -1618,7 +1631,8 @@
               "props": {
                 "locale": "en-US",
                 "totalText": "{count} {word} marked",
-                "countWords": ["date", "dates", "dates"]
+                "countWords": ["date", "dates", "dates"],
+                "markLabelText": "{date} — marked"
               }
             }
           }
@@ -1707,6 +1721,7 @@
         "i18n": {
           "en": {
             "description": "A year picker by decades: a 4×3 grid shows ten years plus one neighbour on each edge, and the arrows page ten years at a time.",
+            "docs": "A client component: useState holds the selected year and the current decade, which is why \"use client\" is needed. The grid of twelve buttons is the decade's ten years plus one year on each side: crossing the boundary (1999 from the 2000s grid) takes a single press, without paging back with an arrow. The neighbouring years are marked data-outside and dimmed, but stay pressable. Going outside min/max switches the button off through disabled and strikes the label through, and the arrows are locked when the next decade lies entirely outside the range. The selected year is marked aria-pressed, so a screen reader reports the state without an extra caption.",
             "ai": {
               "summary": "A decade-based year picker: a 4×3 grid, arrows stepping by ten years, out-of-range years switched off. Client-side, one file, zero dependencies.",
               "preserve": [
@@ -1850,6 +1865,7 @@
         "i18n": {
           "en": {
             "description": "A month with a locked past: an unavailable day does not stay silent on click, it shows a written reason for the refusal under the grid.",
+            "docs": "A client component: useState holds the selected date and the text of the last refusal. Past days are marked aria-disabled rather than with the disabled attribute — such a button stays in the tab order and accepts a press, so instead of a dead click the reason is shown. The \"has it passed\" comparison is done with ISO strings rather than Date objects: a YYYY-MM-DD string comparison is correct and does not depend on the time zone. The reference day arrives as the today prop as a string rather than from new Date() — otherwise the server and the client render would drift apart. A closed day is struck through, not merely dimmed: dimness alone does not tell it apart from a day of a neighbouring month. The status line lives with role=status and aria-live, so the reason is read out right after the press.",
             "ai": {
               "summary": "A calendar with a locked past: closed days still take focus and clicks and explain the refusal in a live status line. Client-side, one file, zero dependencies.",
               "preserve": [
@@ -1905,7 +1921,8 @@
                 "reason": "Booking closes a day ahead: past dates cannot be picked",
                 "unavailableText": "{date} — unavailable. {reason}",
                 "deniedText": "{date} — {reason}",
-                "selectedText": "Selected: {date}"
+                "selectedText": "Selected: {date}",
+                "todayLabel": "Today"
               }
             }
           }
@@ -2011,6 +2028,7 @@
         "i18n": {
           "en": {
             "description": "A fifteen-rem mini calendar for a sidebar: event dots sit under the numbers, and the fourth one and beyond collapse into a plus sign.",
+            "docs": "A server component: there is no state, everything is computed from the year and month props and the events dictionary. The dots stand under the number rather than over it: a backing behind the digit in a thirty-pixel cell would swallow the digit itself. There are at most three dots, beyond that a plus is placed — four dots in a row twenty pixels wide merge into a bar. The weekday names are taken from Intl in the narrow variant using the reference week of 5–11 January 2026, so the week starts on Monday. Every cell with events carries an aria-label with the count and its grammatical form, so the dots do not remain purely visual information. Its own light background is mandatory: someone else's site sidebar can be any colour.",
             "ai": {
               "summary": "A sidebar mini calendar: event dots under the day numbers, a month total and a link to the full list. Server-side, one file, zero dependencies.",
               "preserve": [
@@ -2073,7 +2091,8 @@
                   "other": "{count} events"
                 },
                 "dayLabelText": "{month} {day}: {events}",
-                "calendarLabelText": "Calendar: {month} {year}"
+                "calendarLabelText": "Calendar: {month} {year}",
+                "todayLabel": "Today"
               }
             }
           }
@@ -2179,6 +2198,7 @@
         "i18n": {
           "en": {
             "description": "Date and time in a single block: the month on the left, the column of free slots on the right, busy hours struck through and not clickable.",
+            "docs": "A client component: useState holds the selected date and time. The two columns sit in a flex with wrap, so at a narrow width the time moves under the calendar instead of being squeezed into an unreadable column; the widths are set through flex-basis, not by viewport media queries. The time grid is built from opensAt, closesAt and the step rather than given as a list: working hours have to be changed more often than the component itself. Busy slots arrive in the busy array and are switched off with the disabled attribute and a strike-through. The time column scrolls inside itself with max-height, so the card does not grow across the whole screen at a fifteen-minute step. The chosen date-plus-time pair is always spelled out in the footer — otherwise, after scrolling, it is not visible what exactly is selected.",
             "ai": {
               "summary": "Date and time picked in one block: a month and a slot column side by side, busy hours disabled, the chosen pair spelled out. Client-side, one file, zero dependencies.",
               "preserve": [
@@ -2336,6 +2356,7 @@
         "i18n": {
           "en": {
             "description": "A weekly team availability grid: people as rows, days as columns, each cell carrying a load bar and the number of hours.",
+            "docs": "A server component: the data arrives in the members array, there is no state. The layout is an ordinary table with header areas: the names in th with scope=row, the dates in th with scope=col, so a screen reader names a cell by person and by day. A cell carries both a bar and a number: the bar lets the team's free window be seen at a glance, the number answers \"how busy\", which colour does not. The bar width is set by its own variable in an inline style — that is the only dynamic value which cannot be expressed by a static class. Overload is coloured in a separate tone: \"booked a hundred percent\" and \"booked beyond the norm\" are different news. The table sits in a container with overflow-x, so on a phone the block scrolls inside itself instead of stretching the page.",
             "ai": {
               "summary": "A team's week of availability: a people-by-days table with a bar and hours per cell and overload marked in its own tone. Server-side, one file, zero dependencies.",
               "preserve": [
@@ -2513,6 +2534,7 @@
         "i18n": {
           "en": {
             "description": "A month where a weekend, a public holiday and a moved working day differ in shape: a fill, a diamond around the number and a dashed border.",
+            "docs": "A server component: the holidays arrive in the holidays dictionary, the moved working days in the workdays array, there is no state. The main technique is encoding by the type of shape rather than by colour alone: a weekend gets the cell filled, a holiday a diamond drawn with a pseudo-element rotated by forty-five degrees, a moved day a dashed border. The number inside the diamond stays upright, because it is the pseudo-element that is rotated, not the cell: rotating the cell would lay the digit on its side. Such a month reads the same under colour blindness and in black-and-white print. Below the grid stand a legend using the same shapes and a list of holidays with their names — a shape without a caption still does not explain what kind of day it is.",
             "ai": {
               "summary": "A month with holidays and weekends encoded by shape — fill, diamond and dashes — plus a legend and a list of names. Server-side, one file, zero dependencies.",
               "preserve": [
@@ -2669,6 +2691,7 @@
         "i18n": {
           "en": {
             "description": "Multi-select for non-adjacent dates: cells toggle on click, and every chosen date is mirrored by a removable chip next to a limit counter.",
+            "docs": "A client component: useState holds the array of selected ISO dates. A range does not fit here by meaning — shifts fall on Tuesday, Thursday and Saturday, so the toggling is per day. Every selected date is duplicated by a chip: removing a date from a grid of thirty cells is harder than from the short list beneath it. Once the limit is reached, unselected cells get aria-disabled and are dimmed, but do not disappear: vanishing buttons read as a layout bug. The \"how many out of how many\" counter stands in the header and changes colour at the limit. The chip's cross is drawn with two pseudo-elements, so as not to pull in an icon package for two lines.",
             "ai": {
               "summary": "Multi-select of non-adjacent dates: per-cell toggling, removable chips and a limit counter. Client-side, one file, zero dependencies.",
               "preserve": [
@@ -2830,6 +2853,7 @@
         "i18n": {
           "en": {
             "description": "A booking calendar with the nightly price inside every cell: the cheapest days are outlined, sold-out ones struck through, and the total sits at the bottom.",
+            "docs": "A client component: useState holds the selected check-in day. The price is computed by a deterministic function of the day of the month and the weekday rather than at random — randomness would split the server and the client render. The price stands in the cell rather than opening after a selection: a booking calendar answers the question \"when is it cheaper\", and the cell is made taller than usual for that. The month's minimum price is computed over the available days and marked with an outline and the label colour, not by colour alone. Sold-out days are switched off with the disabled attribute and struck through, but stay in the grid: a missing day reads as a loading failure. The footer shows the total for the chosen number of nights — multiplying in one's head is unnecessary here.",
             "ai": {
               "summary": "A booking calendar: a nightly price in every cell, the month's minimum outlined, sold-out days disabled and a stay total in the footer. Client-side, one file, zero dependencies.",
               "preserve": [
@@ -2991,6 +3015,7 @@
         "i18n": {
           "en": {
             "description": "A deadline card: the remainder spelled out instead of a ticking timer, a ring of elapsed time and the due date in a human-readable line.",
+            "docs": "A server component: both the deadline and the reference \"now\" arrive as strings, so the render is deterministic and hydration does not drift — new Date() in the markup would be a mistake. The remainder is turned into words with Russian declension: for a term of weeks the seconds are useless, and a ticking timer requires a client. The ring shows the share of the term burned from startedAt to deadline: a percentage frightens more precisely than the remaining days on their own. The hole in the ring is made by a mask on a separate layer rather than a plug circle: a plug has to match the card background, while a mask works on any surface and does not eat the caption above it. The tone is switched by the data-tone attribute: three days before the due date the card turns yellow, after the due date it turns red and changes the wording to \"overdue\".",
             "ai": {
               "summary": "A deadline card: the remainder in declined words, a ring of elapsed time and three state tones. Server-side, one file, zero dependencies.",
               "preserve": [
@@ -3153,6 +3178,7 @@
         "i18n": {
           "en": {
             "description": "A month grid with an ISO 8601 week-number column: you pick the whole row rather than a day, and the caption below turns “week 16” into real dates.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in local variables --vibeui-calendar-021-*. Client-side: the number of the selected week lives in useState. The markup is an ordinary <table>, where the row header <th scope=\"row\"> holds a button with the week number, so the \"week → days\" link is read by a screen reader without ARIA crutches. The number is computed by isoWeek: the date is shifted to the Thursday of its own week and compared with the start of the year in UTC, so the daylight-saving switch and January's runaway weeks do not break the count. The grid is built from Monday ((getDay()+6)%7), and empty leading weeks are dropped by a filter. The selected row's highlight hangs on tr[data-picked=\"true\"], the rounded edges on td:first-of-type and td:last-child.",
             "ai": {
               "summary": "A month calendar where the unit of choice is a week, not a day. The left column holds ISO 8601 week numbers, each one a button that selects the entire row, and the caption below spells the selected week out in dates. Built for planning production, shipments and sprints, where people say “in week 16”, not “13–19 April”. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -3213,7 +3239,8 @@
                 "weekColumnLabel": "wk",
                 "weekLabelText": "Week {week}, from {from} to {to}",
                 "summaryText": "Week {week}: {from} — {to}",
-                "emptyText": "No week selected"
+                "emptyText": "No week selected",
+                "todayLabel": "Today"
               }
             }
           }
@@ -3312,6 +3339,7 @@
         "i18n": {
           "en": {
             "description": "Working days of the week as seven toggles: two presets for the usual schedules and a live total in hours instead of abstract checkboxes.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in local variables --vibeui-calendar-022-*. Client-side: the set of selected days lives in useState as an array of indices where 0 is Monday. The root is a <fieldset> with a <legend>, so the group of toggles is declared by form semantics; every day is a <button> with aria-pressed and an aria-label from the full day name, while the short caption is marked aria-hidden. The day names are taken from Intl.DateTimeFormat, so changing the locale changes the captions without a dictionary in the code. Weekends differ by a dashed border through [data-weekend], and the total is computed by multiplying the number of days by hoursPerDay and declined by the pluralize function.",
             "ai": {
               "summary": "Weekday toggles for configuring a schedule: opening hours, delivery days, a mailing timetable. Seven buttons with aria-pressed, three presets (five-day, six-day, clear all) and a total line that turns the selection into hours per week. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -3486,6 +3514,7 @@
         "i18n": {
           "en": {
             "description": "Picking a call slot in two time zones at once: every row shows your time and theirs, and hours outside the partner's working day are flagged.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in local variables --vibeui-calendar-023-*. Client-side: the selected hour lives in useState. The zone difference is not hard-coded: zoneOffset reads the zone's offset through Intl.DateTimeFormat with timeZone and formatToParts, and instantOf finds in two passes the UTC instant that corresponds to the given local time in the home zone (the second pass is needed on a daylight-saving day). The same instant is then formatted by two Intl formatters, so the string \"17:00 → 10:00\" is always consistent. The offhours flag is computed from the hour in the other zone and hung on data-offhours, and the \"out of hours\" label is drawn by a CSS pseudo-element. The city names are derived from the zone name by default, so changing awayZone changes the column caption as well.",
             "ai": {
               "summary": "A list of call slots where each row is labelled with two times at once — yours and your partner's. The offset is computed through Intl rather than stored as a constant, so daylight saving does not break it, and rows falling outside the partner's working day are flagged by colour and by words. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -3643,6 +3672,7 @@
         "i18n": {
           "en": {
             "description": "A date of birth as three fields instead of a month grid: day, month and year typed from the keyboard, with validation that separates an impossible day, a future date and an age limit.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in local variables --vibeui-calendar-024-*. Client-side: the three parts of the date live in separate useStates, and onChange hands out the assembled YYYY-MM-DD string, or an empty string if the date is incomplete. The root is a <fieldset> with a <legend>, every field has its own <label>, and autofill is enabled by the attributes autoComplete=\"bday-day|bday-month|bday-year\". The month is a <select> with names from Intl, so the digit 07 does not argue with the date format of the user's country. The validation is assembled in a single useMemo and returns not a boolean but an idle/ok/bad state with text: the number of days in a month is computed through new Date(year, month, 0).getDate(), and the age by comparing month and day. The state is lifted to the root as data-state, so the field borders and the label colour are painted by a single rule.",
             "ai": {
               "summary": "Date-of-birth entry as three fields: day, a month dropdown and year. A month grid needs twenty “back” taps to reach 1985, while this takes a second to type. Validation splits into readable cases: 31 February, a date in the future, an age below the limit, an implausible year. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -3809,6 +3839,7 @@
         "i18n": {
           "en": {
             "description": "A shift roster as a staff-by-day table: a shift code in every cell, a colour per shift type and a weekly total on the right, so a coverage gap shows up as an empty column.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in local variables --vibeui-calendar-025-*. Server-side: there is no state, everything is computed from the people prop at render. The markup is a real <table> with <th scope=\"col\"> on the days and <th scope=\"row\"> on the staff, so a screen reader reads a cell as \"Irina Sokolova, Tuesday\". A cell holds a short code under aria-hidden and the full shift name in a visually hidden [data-part=\"sr\"], so colour is not the only carrier of meaning. The shift type is expressed by the data-shift attribute, and every type has a palette of its own. The row density is switched by the variable --vibeui-calendar-025-cell through data-density, and the horizontal scroll lives in a separate [data-part=\"scroll\"] wrapper, so the table does not stretch the card. The theme comes from the surrounding color-scheme through light-dark(): the component has no surface of its own by default, it sits directly on the page background and darkens along with it, while the background prop brings the panel back. All the captions — the staff column heading, the shift names and codes — arrive in props, the Russian values sit in the defaults.",
             "ai": {
               "summary": "A weekly shift roster: rows are people, columns are days, each cell holds a shift code (day, night, off, leave). A weekly total sits on the right and a legend below. It reads down a column (“who is on nights on Tuesday”) and across a row (“is this person overloaded”). A server component, zero dependencies, one file, its own palette.",
               "preserve": [
@@ -4031,6 +4062,7 @@
         "i18n": {
           "en": {
             "description": "A recurrence rule that is immediately translated into a sentence and into a list of upcoming dates, with the assembled RRULE string shown underneath.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in local variables --vibeui-calendar-026-*. Client-side: the frequency, the interval and the weekdays live in useState. The rule string is assembled by the pure function ruleOf, so onChange always receives the current value rather than the previous render's state. The upcoming dates are computed in a useMemo along three branches: for daily and monthly by shifting the date, for weekly by walking the days with a check of the week index from the start, so \"every 2 weeks\" really does skip a week. The worded phrase is built separately and declined through pluralize. The day names are taken from Intl.DateTimeFormat, and the day buttons are shown only for weekly. The theme comes from the surrounding color-scheme through light-dark(): the component has no surface of its own by default, it sits directly on the page background and darkens along with it, while the background prop brings the panel back. The field captions, the unit list items and the phrase templates arrive in props — the Russian values sit in the defaults, and {count}, {unit}, {head}, {days} and {day} are substituted when the phrase is assembled.",
             "ai": {
               "summary": "Recurrence setup for an event: interval, unit (days, weeks, months) and weekdays. The form does not leave a person alone with the abstraction — below it sits a sentence (“every 2 weeks on: Tuesday, Thursday”) and the next three dates, which is where an interval mistake shows. At the bottom, the assembled RRULE string ready to travel to a calendar. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -4208,6 +4240,7 @@
         "i18n": {
           "en": {
             "description": "A reporting period chosen by preset — “last 7 days”, “previous month” and four more — with two date fields below showing what the preset expanded into.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in local variables --vibeui-calendar-027-*. Client-side: the selected preset and both bounds live in useState. The presets are expanded by the pure function resolve from the today reference date, which arrives as a prop — Date.now() inside the component would split the server and the client render. The date fields are native input type=\"date\" with mutual min and max, so the browser itself does not let the period be reversed; editing by hand moves the choice into the custom state. The total counts the number of days inclusive and declines it through pluralize, while an invalid period (the end earlier than the start) is shown as separate text on a muted backing. The theme comes from the surrounding color-scheme through light-dark(): the component has no surface of its own by default, it sits directly on the page background and darkens along with it, while the background prop brings the panel back. The preset, field and total captions arrive in props, the Russian values sit in the defaults.",
             "ai": {
               "summary": "A period picker for reports and analytics: six one-tap presets, two native date fields underneath and a total in days. Presets are computed from a reference date rather than Date.now(), so the component renders safely on the server. Editing the fields by hand does not break the choice, it just turns it into a custom period. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -4376,6 +4409,7 @@
         "i18n": {
           "en": {
             "description": "Hour-by-hour room availability: an interval is assembled in two taps — start and end — while busy hours carry their owner's name and cannot be selected.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in local variables --vibeui-calendar-028-*. Client-side: the start, the end and the error text live in useState. Every hour is a <button> inside a list: a busy hour gets disabled and an aria-label with the owner's name, so unavailability is announced rather than merely coloured. The interval logic is linear: the first press sets the start, the second the end, and a press earlier than the start restarts the selection. Before the end is committed, the interval is checked for overlap with someone else's booking by a loop over the hours, and on an overlap a separate message is shown instead of silent ignoring. The total and the error live in one paragraph with aria-live and are switched by the data-bad attribute. The theme comes from the surrounding color-scheme through light-dark(): the component has no surface of its own by default, it sits directly on the page background and darkens along with it, while the background prop brings the panel back. All the captions and messages arrive in the text dictionary with the substitutions {time}, {who}, {count} and {unit}; the Russian values sit in the defaults.",
             "ai": {
               "summary": "Hourly availability for a resource — a meeting room, a court, a machine. An hour here is not a slot but an edge of an interval: the first tap sets the start, the second the end, and the booking comes out as “from ten to twelve”, exactly how people phrase it. Busy hours are labelled with whoever took them, and trying to jump over someone else's booking is caught by a message. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -4555,6 +4589,7 @@
         "i18n": {
           "en": {
             "description": "A date in a filter bar as one chip among the rest: the value is spelled out on the chip, the month grid opens as an overlay panel and closes right after a pick.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in local variables --vibeui-calendar-029-*. Client-side: the value, the panel's openness and the month on show live in useState. The panel is positioned absolutely against the [data-part=\"anchor\"] wrapper with position:relative, so it needs neither a portal nor coordinate maths. The chip button carries aria-expanded and aria-controls, Escape is caught by a handler on the root and closes the panel, and picking a day closes it as well. The clear button is placed beside the chip rather than nested inside it: an interactive element inside a button is invalid markup, broken for both the keyboard and a screen reader. The grid is built on 42 cells from Monday, and days of neighbouring months are marked data-outside. The theme comes from the surrounding color-scheme through light-dark(): the filter row has no surface of its own by default, it sits directly on the page background and darkens along with it, while the background prop brings the panel back. The panel itself has a surface of its own — --vibeui-calendar-029-panel: a popover has to be opaque, otherwise the month grid lands on the text beneath it. The captions of the clear and paging buttons arrive in props, the Russian values sit in the defaults.",
             "ai": {
               "summary": "A compact date picker for a filter bar: the chip spells out the current value, the month panel opens on click and closes after a pick, and the cross clears the filter without opening the calendar at all. Neighbouring filter chips stand next to it to show how the component lives in a row. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -4707,6 +4742,7 @@
         "i18n": {
           "en": {
             "description": "A range with a hard cap of N days: once the first date is picked the unreachable days go dim, and the counter below shows how much of the limit is left.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in local variables --vibeui-calendar-030-*. Client-side: both bounds of the range live in useState. The limit is expressed not by an error message but by the state of the grid: while only the first date is selected, the blocked function dims the days earlier than the start and further than maxDays-1 through the native disabled, so the ban is announced to a screen reader too. The number of grid rows is computed as Math.ceil((offset+days)/7)*7, so the month does not leave an empty sixth week. The progress bar under the grid is filled by the variable --vibeui-calendar-030-fill from the ratio of the range length to the limit. The total is declined through pluralize and announced through aria-live. The theme comes from the surrounding color-scheme through light-dark(): the component has no surface of its own by default, it sits directly on the page background and darkens along with it, while the background prop brings the panel back. The captions arrive in the text dictionary with the substitutions {max}, {count} and {unit}; the substitution returns nodes, so the numbers stay inside <b> and the word order is set by the translation.",
             "ai": {
               "summary": "A date-range picker with a hard length limit: a rental of no more than two weeks, leave of no more than 28 days, a report no deeper than a month. The rule is enforced by the shape of the grid rather than by an error after submit — after the first date the extra days physically go dim, while the bar and counter show the remaining allowance. Zero dependencies, one file, its own palette.",
               "preserve": [

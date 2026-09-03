@@ -170,6 +170,13 @@ function validateI18n(where, item) {
       continue
     }
 
+    // `docs` рендерится на странице item'а: без перевода англоязычный
+    // человек видит там русский абзац. У блоков перевод пока не заведён —
+    // правило включится, когда он появится.
+    if (item.docs && !translated.docs) {
+      errors.push(`${at}: не переведён docs`)
+    }
+
     if (!translated.description) {
       errors.push(`${at}: нет description`)
     }
@@ -258,6 +265,37 @@ function validateSource(where, directory, item) {
         `${where}: импорт "${match[1]}" — item должен быть самодостаточным файлом`,
       )
     }
+  }
+
+  // Правила ниже — про компоненты. Блоки живут по своим: это целые секции,
+  // их не встраивают в чужую разметку и не цепляют за data-slot.
+  const isComponent = directory.split(path.sep).includes("components")
+
+  // Точка стилизации в проекте пользователя. Без неё чужой проект не может
+  // дотянуться до компонента иначе как по нашему внутреннему атрибуту.
+  if (isComponent && !/data-slot="/.test(source)) {
+    errors.push(`${where}: нет data-slot — не за что зацепиться в чужом проекте`)
+  }
+
+  // ComponentProps вместо ComponentPropsWithoutRef: иначе ref не
+  // пробрасывается и компонент нельзя сделать триггером чужого popover.
+  if (isComponent && source.includes("ComponentPropsWithoutRef")) {
+    errors.push(
+      `${where}: ComponentPropsWithoutRef — ref не пробрасывается, нужен ComponentProps`,
+    )
+  }
+
+  // light-dark() смотрит только на color-scheme, а next-themes и shadcn
+  // ставят класс .dark и его не объявляют: без этого правила компонент
+  // остаётся светлым на тёмной странице чужого проекта.
+  if (
+    isComponent &&
+    source.includes("light-dark(") &&
+    !source.includes('data-theme="dark"')
+  ) {
+    errors.push(
+      `${where}: есть light-dark(), но нет правила :where(.dark,[data-theme="dark"]) … {color-scheme:dark}`,
+    )
   }
 
   const themeToken = source.match(THEME_TOKENS)

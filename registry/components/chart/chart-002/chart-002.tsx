@@ -30,7 +30,7 @@ export type Chart002Props = {
 const STYLES = `
 :where([data-vibeui-block="chart-002"]){
 --vibeui-chart-002-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
---vibeui-chart-002-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-chart-002-muted:color-mix(in oklab,var(--vibeui-chart-002-fg) 68%,transparent);
 --vibeui-chart-002-bg:transparent;
 --vibeui-chart-002-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-chart-002-grid:light-dark(oklch(0.94 0.005 265),oklch(0.3 0.01 265));
@@ -40,6 +40,9 @@ const STYLES = `
 --vibeui-chart-002-height:9rem;
 --vibeui-chart-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="chart-002"]{color-scheme:dark}
 [data-vibeui-block="chart-002"]{
 display:flex;flex-direction:column;gap:1rem;
 width:100%;box-sizing:border-box;padding:1.125rem 1.25rem 1rem;
@@ -48,7 +51,7 @@ border-radius:var(--vibeui-chart-002-radius);
 background:var(--vibeui-chart-002-bg);color:var(--vibeui-chart-002-fg);
 font-family:var(--vibeui-chart-002-font);
 }
-[data-vibeui-block="chart-002"] [data-part="title"]{margin:0;font-size:0.9375rem;font-weight:600}
+[data-vibeui-block="chart-002"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:600}
 /* Сетка — фон области, а не элементы: три линии повторяющимся градиентом. */
 [data-vibeui-block="chart-002"] [data-part="plot"]{
 position:relative;
@@ -145,6 +148,7 @@ export function Chart002({
         {STYLES}
       </style>
       <figure
+        data-slot="chart"
         data-vibeui-block="chart-002"
         className={className}
         style={palette}

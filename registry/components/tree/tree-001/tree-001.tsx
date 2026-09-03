@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Tree001Node = {
   name: string
@@ -6,7 +6,7 @@ export type Tree001Node = {
   open?: boolean
 }
 
-export type Tree001Props = Omit<ComponentPropsWithoutRef<"div">, "children"> & {
+export type Tree001Props = Omit<ComponentProps<"div">, "children"> & {
   nodes?: Tree001Node[]
   /** Подпись дерева для скринридера. */
   label?: string
@@ -26,12 +26,15 @@ const STYLES = `
 :where([data-vibeui-block="tree-001"]){
 --vibeui-tree-001-bg:transparent;
 --vibeui-tree-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
---vibeui-tree-001-muted:light-dark(oklch(0.56 0.014 265),oklch(0.67 0.012 265));
+--vibeui-tree-001-muted:color-mix(in oklab,var(--vibeui-tree-001-fg) 68%,transparent);
 --vibeui-tree-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-tree-001-hover:light-dark(oklch(0.97 0.003 265),oklch(0.29 0.01 265));
 --vibeui-tree-001-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-tree-001-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="tree-001"]{color-scheme:dark}
 [data-vibeui-block="tree-001"]{
 width:100%;max-width:20rem;box-sizing:border-box;padding:0.625rem;
 background:var(--vibeui-tree-001-bg);
@@ -89,18 +92,27 @@ const DEFAULT_NODES: Tree001Node[] = [
   { name: "package.json" },
 ]
 
-function renderNodes(nodes: Tree001Node[]) {
+function renderNodes(nodes: Tree001Node[], level: number) {
   return nodes.map((node) =>
     node.children?.length ? (
       <details key={node.name} open={node.open}>
-        <summary>
+        <summary role="treeitem" aria-level={level} aria-selected={false}>
           <span data-part="caret" aria-hidden="true" />
           {node.name}
         </summary>
-        <div data-part="children">{renderNodes(node.children)}</div>
+        <div data-part="children" role="group">
+          {renderNodes(node.children, level + 1)}
+        </div>
       </details>
     ) : (
-      <a key={node.name} data-part="leaf" href="#">
+      <a
+        key={node.name}
+        data-part="leaf"
+        role="treeitem"
+        aria-level={level}
+        aria-selected={false}
+        href="#"
+      >
         <span data-part="dot" aria-hidden="true" />
         {node.name}
       </a>
@@ -161,13 +173,14 @@ export function Tree001({
       </style>
       <div
         {...props}
+        data-slot="tree"
         data-vibeui-block="tree-001"
         role="tree"
         aria-label={label}
         className={className}
         style={palette}
       >
-        {renderNodes(nodes)}
+        {renderNodes(nodes, 1)}
       </div>
     </>
   )

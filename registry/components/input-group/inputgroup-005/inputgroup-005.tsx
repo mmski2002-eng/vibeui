@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Inputgroup005Props = Omit<
-  ComponentPropsWithoutRef<"form">,
-  "children"
-> & {
+export type Inputgroup005Props = Omit<ComponentProps<"form">, "children"> & {
   name?: string
   label?: string
   scopes?: string[]
@@ -31,7 +28,7 @@ const STYLES = `
 --vibeui-inputgroup-005-surface:transparent;
 --vibeui-inputgroup-005-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.011 265));
 --vibeui-inputgroup-005-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
---vibeui-inputgroup-005-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-inputgroup-005-muted:color-mix(in oklab,var(--vibeui-inputgroup-005-fg) 68%,transparent);
 --vibeui-inputgroup-005-field:light-dark(oklch(0.99 0.002 265),oklch(0.27 0.013 265));
 --vibeui-inputgroup-005-fixed:light-dark(oklch(0.955 0.004 265),oklch(0.32 0.012 265));
 --vibeui-inputgroup-005-border:light-dark(oklch(0.86 0.008 265),oklch(0.44 0.013 265));
@@ -40,6 +37,9 @@ const STYLES = `
 --vibeui-inputgroup-005-radius:999px;
 --vibeui-inputgroup-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="inputgroup-005"]{color-scheme:dark}
 [data-vibeui-block="inputgroup-005"]{
 display:flex;flex-direction:column;gap:0.5rem;margin:0;
 width:100%;max-width:26rem;box-sizing:border-box;padding:0.875rem;
@@ -83,6 +83,9 @@ background-repeat:no-repeat;
 flex:1;min-width:0;padding:0 0.875rem;
 background:var(--vibeui-inputgroup-005-field);
 }
+/* У type="search" WebKit рисует свой крестик — он встал бы вплотную к нашей
+   кнопке «Найти» и читался как вторая кнопка сцепки. */
+[data-vibeui-block="inputgroup-005"] input::-webkit-search-cancel-button{display:none}
 [data-vibeui-block="inputgroup-005"] button{
 appearance:none;flex:none;cursor:pointer;
 display:inline-flex;align-items:center;gap:0.375rem;padding:0 1.125rem;
@@ -158,6 +161,7 @@ export function Inputgroup005({
       <form
         {...props}
         role="search"
+        data-slot="input-group"
         data-vibeui-block="inputgroup-005"
         className={className}
         style={palette}

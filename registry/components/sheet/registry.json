@@ -160,7 +160,8 @@
                 "primaryLabel": "Checkout",
                 "closeLabel": "Close"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-sheet-001-*. A client component: \"use client\" — a ref is needed for showModal and close. The height is capped at min(28rem, 85dvh), and the bottom padding accounts for env(safe-area-inset-bottom). The slide up from the bottom is a translate transition with @starting-style. The summary is laid out as a dl. The theme comes from the surrounding color-scheme through light-dark(): the sheet darkens along with the page and does not ship a dark theme of its own. The background prop overrides the surface of the sheet and the opener; with a background set, the root gets a color-scheme computed from its lightness."
           }
         },
         "cardControls": ["background"]
@@ -334,7 +335,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-sheet-002-*. A client component: \"use client\" — a ref for showModal and close. The sheet stands 0.625rem away from the window edge, which is why inset is set explicitly and margin:0 keeps the dialog from sticking to the corner. The switch is built on an input[type=checkbox] with appearance:none and role=\"switch\": the state is read out by a screen reader on its own. Only the middle area scrolls. The theme comes from the surrounding color-scheme through light-dark(): the sheet darkens along with the page and does not ship a dark theme of its own. The background prop overrides the surface of the sheet and the opener; with a background set, the root gets a color-scheme computed from its lightness."
           }
         },
         "cardControls": ["background"]
@@ -539,7 +541,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-sheet-003-*. A client component: \"use client\", useState holds the active section, useId the name of the radio group, useRef showModal and close. The segmented switcher is a fieldset with radio buttons hidden by clip-path; the active tab is highlighted through :has(input:checked). The sheet height is fixed, so switching sections does not jolt the page. The theme comes from the surrounding color-scheme through light-dark(): the sheet darkens along with the page and does not ship a dark theme of its own. The background prop overrides the surface of the sheet and the opener; with a background set, the root gets a color-scheme computed from its lightness."
           }
         },
         "cardControls": ["background"]
@@ -699,7 +702,8 @@
                 "closeLabel": "Close",
                 "extensionFallback": "file"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-sheet-004-*. A client component: \"use client\" — a ref for showModal and close. The preview area is drawn with two gradients and the extension is derived from the file name, so the component carries neither images nor an icon font. The facts are laid out in an auto-fit grid, and the file name wraps through overflow-wrap:anywhere. The theme comes from the surrounding color-scheme through light-dark(): the sheet darkens along with the page and does not ship a dark theme of its own. The background prop overrides the surface of the sheet and the opener; with a background set, the root gets a color-scheme computed from its lightness."
           }
         },
         "cardControls": ["background"]
@@ -857,7 +861,8 @@
                   "West Midlands"
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-sheet-005-*. A client component: \"use client\", useState holds the search string and the selected value, useId the name of the radio group, useRef showModal and close. Filtering is a lowercase substring match. Search and confirm are lifted out of the scrolling area, and the list is a fieldset with radio buttons. The theme comes from the surrounding color-scheme through light-dark(): the sheet darkens along with the page and does not ship a dark theme of its own. The background prop overrides the surface of the sheet and the opener; with a background set, the root gets a color-scheme computed from its lightness."
           }
         },
         "cardControls": ["background"]
@@ -1001,9 +1006,11 @@
                   "Team members lose access to the sources"
                 ],
                 "confirmLabel": "Delete forever",
-                "cancelLabel": "Keep it"
+                "cancelLabel": "Keep it",
+                "warningLabel": "Warning"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-sheet-006-*. A client component: \"use client\" — a ref for showModal, after which the method=\"dialog\" form does the work: both buttons close the sheet themselves and return their value. The heading is tied to the dialog through aria-labelledby and useId. The danger mark is drawn with pseudo-elements, and the buttons are stacked in a column at a height of 3rem. The theme comes from the surrounding color-scheme through light-dark(): the sheet darkens along with the page and does not ship a dark theme of its own. The background prop overrides the surface of the sheet and the opener; with a background set, the root gets a color-scheme computed from its lightness."
           }
         },
         "cardControls": ["danger", "background"]
@@ -1164,7 +1171,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-sheet-007-*. A client component: \"use client\", useState holds the open section, useRef showModal and close. Both levels sit in a track 200% wide and are shifted with translate by data-level; the inactive level is marked inert, so its buttons drop out of the Tab order. The arrow and the chevron are drawn with the borders of a rotated square. The theme comes from the surrounding color-scheme through light-dark(): the sheet darkens along with the page and does not ship a dark theme of its own. The background prop overrides the surface of the sheet and the opener; with a background set, the root gets a color-scheme computed from its lightness."
           }
         },
         "cardControls": ["background"]
@@ -1318,9 +1326,11 @@
                     "hint": "This cannot be undone",
                     "danger": true
                   }
-                ]
+                ],
+                "dangerLabel": "destructive action"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-menu-007-*. A client component: \"use client\". The bottom padding accounts for env(safe-area-inset-bottom), and the item height of 2.75rem is a target for a thumb. The items carry explanations on a second line, the destructive action is coloured in the text, and cancel is a separate full-width button. The theme comes from the surrounding color-scheme through light-dark(): the sheet darkens along with the page and does not ship a dark theme of its own. The background prop overrides the surface of the sheet and the opener; with a background set, the root gets a color-scheme computed from its lightness."
           }
         },
         "cardControls": ["background"]

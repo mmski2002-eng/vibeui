@@ -1,9 +1,8 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+"use client"
 
-export type Hovercard008Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
+
+export type Hovercard008Props = Omit<ComponentProps<"div">, "children"> & {
   owner?: string
   repo?: string
   about?: string
@@ -40,7 +39,7 @@ const STYLES = `
 :where([data-vibeui-block="hovercard-008"]){
 --vibeui-hovercard-008-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
 --vibeui-hovercard-008-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-hovercard-008-muted:light-dark(oklch(0.53 0.014 265),oklch(0.71 0.012 265));
+--vibeui-hovercard-008-muted:color-mix(in oklab,var(--vibeui-hovercard-008-fg) 68%,transparent);
 --vibeui-hovercard-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
 --vibeui-hovercard-008-fill:light-dark(oklch(0.975 0.004 265),oklch(0.31 0.012 265));
 --vibeui-hovercard-008-accent:light-dark(oklch(0.5 0.16 260),oklch(0.76 0.13 260));
@@ -50,6 +49,9 @@ const STYLES = `
 --vibeui-hovercard-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-hovercard-008-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="hovercard-008"]{color-scheme:dark}
 [data-vibeui-block="hovercard-008"]{
 position:relative;width:100%;max-width:24rem;box-sizing:border-box;
 font-family:var(--vibeui-hovercard-008-font);color:var(--vibeui-hovercard-008-fg);
@@ -141,6 +143,16 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 }
 
 /**
+ * Escape убирает фокус с триггера. Карточка держится на :focus-within,
+ * поэтому снятого фокуса достаточно, чтобы закрыть её с клавиатуры.
+ */
+function closeOnEscape(event: KeyboardEvent<HTMLElement>) {
+  if (event.key === "Escape") {
+    ;(event.target as HTMLElement).blur()
+  }
+}
+
+/**
  * Снимок репозитория по наведению на пилюлю-ссылку: описание, язык, звёзды,
  * открытые issue и время последнего коммита. Раскрывается по hover и фокусу.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -185,6 +197,8 @@ export function Hovercard008({
       </style>
       <div
         {...props}
+        data-slot="hover-card"
+        onKeyDown={closeOnEscape}
         data-vibeui-block="hovercard-008"
         className={className}
         style={palette}

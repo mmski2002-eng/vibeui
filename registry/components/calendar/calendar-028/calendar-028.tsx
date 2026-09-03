@@ -1,14 +1,11 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Calendar028Busy = { from: number; to: number; who: string }
 
-export type Calendar028Props = Omit<
-  ComponentPropsWithoutRef<"section">,
-  "children"
-> & {
+export type Calendar028Props = Omit<ComponentProps<"section">, "children"> & {
   heading?: string
   date?: string
   openFrom?: number
@@ -36,7 +33,7 @@ const STYLES = `
 :where([data-vibeui-block="calendar-028"]){
 --vibeui-calendar-028-bg:transparent;
 --vibeui-calendar-028-fg:light-dark(oklch(0.23 0.014 200),oklch(0.94 0.005 200));
---vibeui-calendar-028-muted:light-dark(oklch(0.57 0.014 200),oklch(0.68 0.012 200));
+--vibeui-calendar-028-muted:color-mix(in oklab,var(--vibeui-calendar-028-fg) 68%,transparent);
 --vibeui-calendar-028-border:light-dark(oklch(0.91 0.008 200),oklch(0.34 0.014 200));
 --vibeui-calendar-028-soft:light-dark(oklch(0.97 0.006 200),oklch(0.27 0.01 200));
 --vibeui-calendar-028-busy:light-dark(oklch(0.94 0.02 25),oklch(0.36 0.05 25));
@@ -44,12 +41,15 @@ const STYLES = `
 --vibeui-calendar-028-accent:light-dark(oklch(0.5 0.11 200),oklch(0.73 0.11 200));
 --vibeui-calendar-028-accentsoft:light-dark(oklch(0.93 0.05 200),oklch(0.32 0.05 200));
 --vibeui-calendar-028-onaccent:light-dark(oklch(0.99 0 0),oklch(0.17 0.02 200));
---vibeui-calendar-028-radius:0.7rem;
+--vibeui-calendar-028-radius:0.6875rem;
 --vibeui-calendar-028-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="calendar-028"]{color-scheme:dark}
 [data-vibeui-block="calendar-028"]{
-display:flex;flex-direction:column;gap:0.7rem;
-width:100%;max-width:23rem;box-sizing:border-box;padding:1rem;
+display:flex;flex-direction:column;gap:0.6875rem;
+width:100%;max-width:23rem;box-sizing:border-box;padding:0.9375rem;
 background:var(--vibeui-calendar-028-bg);
 border:1px solid var(--vibeui-calendar-028-border);
 border-radius:calc(var(--vibeui-calendar-028-radius) + 0.25rem);
@@ -57,20 +57,20 @@ color:var(--vibeui-calendar-028-fg);
 font-family:var(--vibeui-calendar-028-font);
 }
 [data-vibeui-block="calendar-028"] [data-part="title"]{
-margin:0;font-size:0.95rem;font-weight:700;letter-spacing:-0.01em;
+margin:0;font-size:0.9375rem;font-weight:700;letter-spacing:-0.01em;
 }
 [data-vibeui-block="calendar-028"] [data-part="when"]{
-margin:0.15rem 0 0;font-size:0.75rem;color:var(--vibeui-calendar-028-muted);
+margin:0.125rem 0 0;font-size:0.875rem;color:var(--vibeui-calendar-028-muted);
 }
 [data-vibeui-block="calendar-028"] [data-part="hours"]{
-display:flex;flex-direction:column;gap:0.2rem;margin:0;padding:0;list-style:none;
+display:flex;flex-direction:column;gap:0.1875rem;margin:0;padding:0;list-style:none;
 max-height:16rem;overflow:auto;
 }
 [data-vibeui-block="calendar-028"] [data-part="hour"]{
 appearance:none;font:inherit;width:100%;cursor:pointer;
-display:grid;grid-template-columns:3.4rem 1fr;align-items:center;gap:0.5rem;
-box-sizing:border-box;padding:0.45rem 0.6rem;
-border:1px solid transparent;border-radius:0.55rem;
+display:grid;grid-template-columns:3.375rem 1fr;align-items:center;gap:0.5rem;
+box-sizing:border-box;padding:0.4375rem 0.625rem;
+border:1px solid transparent;border-radius:0.5625rem;
 background:var(--vibeui-calendar-028-soft);
 color:inherit;text-align:left;font-size:0.8125rem;
 font-variant-numeric:tabular-nums;
@@ -98,18 +98,18 @@ color:var(--vibeui-calendar-028-muted);
 [data-vibeui-block="calendar-028"] [data-part="hour"]:disabled [data-part="who"]{color:inherit}
 [data-vibeui-block="calendar-028"] [data-part="foot"]{
 display:flex;align-items:center;justify-content:space-between;gap:0.5rem;
-padding-top:0.6rem;border-top:1px solid var(--vibeui-calendar-028-border);
+padding-top:0.625rem;border-top:1px solid var(--vibeui-calendar-028-border);
 }
 [data-vibeui-block="calendar-028"] [data-part="note"]{
-margin:0;font-size:0.8125rem;color:var(--vibeui-calendar-028-muted);
+margin:0;font-size:0.875rem;color:var(--vibeui-calendar-028-muted);
 }
 [data-vibeui-block="calendar-028"] [data-part="note"] b{color:var(--vibeui-calendar-028-fg)}
 [data-vibeui-block="calendar-028"] [data-part="note"][data-bad="true"]{color:var(--vibeui-calendar-028-busyfg)}
 [data-vibeui-block="calendar-028"] [data-part="book"]{
 appearance:none;cursor:pointer;font:inherit;flex:none;
-padding:0.45rem 0.85rem;border:0;border-radius:0.55rem;
+padding:0.4375rem 0.875rem;border:0;border-radius:0.5625rem;
 background:var(--vibeui-calendar-028-accent);color:var(--vibeui-calendar-028-onaccent);
-font-size:0.8125rem;font-weight:600;
+font-size:0.875rem;font-weight:600;
 transition:opacity .16s ease;
 }
 [data-vibeui-block="calendar-028"] [data-part="book"]:disabled{cursor:not-allowed;opacity:.45}
@@ -181,16 +181,36 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 }
 
 /**
+ * Дата и локаль из пропов или дефолты компонента. Чужая страница не должна
+ * падать из-за опечатки в значении: Intl бросает RangeError и на Invalid Date,
+ * и на нераспознанной локали, а это белый экран вместо всего сайта.
+ */
+function safeDate(value: string, fallback: string) {
+  return Number.isNaN(new Date(`${value}T12:00:00`).getTime())
+    ? fallback
+    : value
+}
+
+function safeLocale(value: string, fallback: string) {
+  try {
+    Intl.DateTimeFormat.supportedLocalesOf(value)
+    return value
+  } catch {
+    return fallback
+  }
+}
+
+/**
  * Доступность переговорки по часам: интервал набирается двумя нажатиями.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Calendar028({
   heading = "Переговорная «Север»",
-  date = "2026-04-15",
+  date: dateProp = "2026-04-15",
   openFrom = 8,
   openTo = 20,
   busy = BUSY,
-  locale = "ru-RU",
+  locale: localeProp = "ru-RU",
   text = TEXT,
   hourForms = ["час", "часа", "часов"],
   background = "",
@@ -200,6 +220,8 @@ export function Calendar028({
   style,
   ...props
 }: Calendar028Props) {
+  const date = safeDate(dateProp, "2026-04-15")
+  const locale = safeLocale(localeProp, "ru-RU")
   const [start, setStart] = useState<number | null>(10)
   const [end, setEnd] = useState<number | null>(12)
   const [error, setError] = useState("")
@@ -264,6 +286,7 @@ export function Calendar028({
       </style>
       <section
         {...props}
+        data-slot="calendar"
         data-vibeui-block="calendar-028"
         className={className}
         style={palette}

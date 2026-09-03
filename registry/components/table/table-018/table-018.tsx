@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Table018Status = "ok" | "warn" | "error" | "off"
 
@@ -10,10 +10,7 @@ export type Table018Row = {
   status: Table018Status
 }
 
-export type Table018Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Table018Props = Omit<ComponentProps<"div">, "children"> & {
   rows?: Table018Row[]
   caption?: string
   /** Плотность строк: "comfortable" — обычная, "compact" — для длинных списков. */
@@ -38,7 +35,7 @@ const STYLES = `
 :where([data-vibeui-block="table-018"]){
 --vibeui-table-018-bg:transparent;
 --vibeui-table-018-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
---vibeui-table-018-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-table-018-muted:color-mix(in oklab,var(--vibeui-table-018-fg) 68%,transparent);
 --vibeui-table-018-border:light-dark(oklch(0.92 0.006 265),oklch(0.36 0.011 265));
 --vibeui-table-018-head:light-dark(oklch(0.5 0.02 265 / 5%),oklch(0.85 0.02 265 / 7%));
 --vibeui-table-018-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.16 262));
@@ -49,6 +46,9 @@ const STYLES = `
 --vibeui-table-018-pad:0.5625rem;
 --vibeui-table-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="table-018"]{color-scheme:dark}
 [data-vibeui-block="table-018"]{
 width:100%;box-sizing:border-box;
 font-family:var(--vibeui-table-018-font);color:var(--vibeui-table-018-fg);
@@ -212,6 +212,7 @@ export function Table018({
       </style>
       <div
         {...props}
+        data-slot="table"
         data-vibeui-block="table-018"
         data-density={density}
         className={className}

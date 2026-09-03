@@ -1,12 +1,9 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Button055Props = Omit<
-  ComponentPropsWithoutRef<"button">,
-  "children"
-> & {
+export type Button055Props = Omit<ComponentProps<"button">, "children"> & {
   children?: string
   /** Клавиша-предохранитель: без неё кнопка заблокирована. */
   modifier?: "Alt" | "Shift" | "Control"
@@ -34,6 +31,9 @@ const STYLES = `
 --vibeui-button-055-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-button-055-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="button-055"]{color-scheme:dark}
 [data-vibeui-block="button-055"]{
 appearance:none;cursor:not-allowed;box-sizing:border-box;
 display:inline-flex;align-items:center;gap:0.625rem;
@@ -154,6 +154,7 @@ export function Button055({
       <button
         {...props}
         type={type}
+        data-slot="button"
         data-vibeui-block="button-055"
         data-armed={String(armed)}
         className={className}

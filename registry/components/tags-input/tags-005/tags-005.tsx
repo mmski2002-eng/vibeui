@@ -3,13 +3,13 @@
 import { useId, useState } from "react"
 import type {
   ClipboardEvent,
-  ComponentPropsWithoutRef,
+  ComponentProps,
   CSSProperties,
   KeyboardEvent,
 } from "react"
 
 export type Tags005Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "defaultValue"
 > & {
   label?: string
@@ -42,7 +42,7 @@ const STYLES = `
 --vibeui-tags-005-field:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
 --vibeui-tags-005-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.01 265));
 --vibeui-tags-005-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
---vibeui-tags-005-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-tags-005-muted:color-mix(in oklab,var(--vibeui-tags-005-fg) 68%,transparent);
 --vibeui-tags-005-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.012 265));
 --vibeui-tags-005-chip:light-dark(oklch(0.55 0.15 145 / 14%),oklch(0.75 0.15 145 / 22%));
 --vibeui-tags-005-accent:light-dark(oklch(0.48 0.15 145),oklch(0.78 0.14 145));
@@ -51,6 +51,9 @@ const STYLES = `
 --vibeui-tags-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-tags-005-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="tags-005"]{color-scheme:dark}
 /* Подложка по умолчанию прозрачная: поле ложится на фон страницы. */
 [data-vibeui-block="tags-005"]{
 display:flex;flex-direction:column;gap:0.5rem;
@@ -202,6 +205,7 @@ export function Tags005({
       </style>
       <div
         {...props}
+        data-slot="tags-input"
         data-vibeui-block="tags-005"
         className={className}
         style={palette}

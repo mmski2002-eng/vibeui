@@ -1,11 +1,9 @@
 "use client"
 
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import { useId } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Textarea001Props = Omit<
-  ComponentPropsWithoutRef<"textarea">,
-  "rows"
-> & {
+export type Textarea001Props = Omit<ComponentProps<"textarea">, "rows"> & {
   label?: string
   /** Строка под полем: подсказка про формат или горячую клавишу. */
   hint?: string
@@ -27,7 +25,7 @@ const STYLES = `
 --vibeui-textarea-001-surface:transparent;
 --vibeui-textarea-001-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.33 0.012 265));
 --vibeui-textarea-001-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
---vibeui-textarea-001-muted:light-dark(oklch(0.54 0.014 265),oklch(0.7 0.012 265));
+--vibeui-textarea-001-muted:color-mix(in oklab,var(--vibeui-textarea-001-fg) 68%,transparent);
 --vibeui-textarea-001-bg:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
 --vibeui-textarea-001-border:light-dark(oklch(0.87 0.008 265),oklch(0.38 0.014 265));
 --vibeui-textarea-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
@@ -35,6 +33,9 @@ const STYLES = `
 --vibeui-textarea-001-line:1.55;
 --vibeui-textarea-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="textarea-001"]{color-scheme:dark}
 /* Подложки по умолчанию нет: компонент ложится на фон страницы, а подпись
    поля читается в обеих темах через light-dark(). */
 [data-vibeui-block="textarea-001"]{
@@ -65,13 +66,13 @@ visibility:hidden;white-space:pre-wrap;word-break:break-word;
 [data-vibeui-block="textarea-001"] [data-part="grow"]::after{
 grid-area:1 / 1 / 2 / 2;
 padding:0.75rem 0.875rem;
-font:inherit;font-size:0.9375rem;line-height:var(--vibeui-textarea-001-line);
+font:inherit;font-size:0.875rem;line-height:var(--vibeui-textarea-001-line);
 }
 [data-vibeui-block="textarea-001"] textarea{
 margin:0;border:0;outline:none;resize:none;overflow:auto;
 background:transparent;color:inherit;
-min-height:calc(3 * var(--vibeui-textarea-001-line) * 0.9375rem + 1.5rem);
-max-height:calc(var(--vibeui-textarea-001-max-rows,10) * var(--vibeui-textarea-001-line) * 0.9375rem + 1.5rem);
+min-height:calc(3 * var(--vibeui-textarea-001-line) * 0.875rem + 1.5rem);
+max-height:calc(var(--vibeui-textarea-001-max-rows,10) * var(--vibeui-textarea-001-line) * 0.875rem + 1.5rem);
 }
 [data-vibeui-block="textarea-001"] textarea::placeholder{color:color-mix(in oklab,var(--vibeui-textarea-001-muted) 70%,transparent)}
 [data-vibeui-block="textarea-001"] textarea:disabled{cursor:not-allowed}
@@ -120,6 +121,9 @@ export function Textarea001({
   placeholder = "Опишите задачу своими словами",
   ...props
 }: Textarea001Props) {
+  const generatedId = useId()
+  const fieldId = id ?? generatedId
+  const hintId = `${fieldId}-hint`
   const palette = {
     "--vibeui-textarea-001-max-rows": maxRows,
     ...(accent ? { "--vibeui-textarea-001-accent": accent } : null),
@@ -138,22 +142,24 @@ export function Textarea001({
         {STYLES}
       </style>
       <div
+        data-slot="textarea"
         data-vibeui-block="textarea-001"
         className={className}
         style={palette}
       >
         {label ? (
-          <label data-part="label" htmlFor={id}>
+          <label data-part="label" htmlFor={fieldId}>
             {label}
           </label>
         ) : null}
         <div data-part="grow" data-value={String(defaultValue ?? "")}>
           <textarea
             {...props}
-            id={id}
+            id={fieldId}
             rows={3}
             placeholder={placeholder}
             defaultValue={defaultValue}
+            aria-describedby={hint ? hintId : undefined}
             onInput={(event) => {
               const grow = event.currentTarget.parentElement
 
@@ -165,7 +171,11 @@ export function Textarea001({
             }}
           />
         </div>
-        {hint ? <span data-part="hint">{hint}</span> : null}
+        {hint ? (
+          <span data-part="hint" id={hintId}>
+            {hint}
+          </span>
+        ) : null}
       </div>
     </>
   )

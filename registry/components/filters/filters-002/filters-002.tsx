@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Filters002Chip = {
   id: string
@@ -10,7 +10,7 @@ export type Filters002Chip = {
 }
 
 export type Filters002Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   chips?: Filters002Chip[]
@@ -35,13 +35,16 @@ const STYLES = `
 --vibeui-filters-002-chip:light-dark(oklch(0.97 0.004 265),oklch(0.28 0.012 265));
 --vibeui-filters-002-cross:light-dark(oklch(1 0 0),oklch(0.36 0.014 265));
 --vibeui-filters-002-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
---vibeui-filters-002-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-filters-002-muted:color-mix(in oklab,var(--vibeui-filters-002-fg) 68%,transparent);
 --vibeui-filters-002-border:light-dark(oklch(0.89 0.008 265),oklch(0.4 0.014 265));
 --vibeui-filters-002-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-filters-002-accent:light-dark(oklch(0.53 0.18 268),oklch(0.74 0.15 268));
 --vibeui-filters-002-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.03 268));
 --vibeui-filters-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="filters-002"]{color-scheme:dark}
 /* Подложки по умолчанию нет: строка ложится на фон страницы. */
 [data-vibeui-block="filters-002"]{
 display:flex;flex-direction:column;gap:0.5rem;
@@ -196,6 +199,7 @@ export function Filters002({
       </style>
       <div
         {...props}
+        data-slot="filters"
         data-vibeui-block="filters-002"
         className={className}
         style={palette}

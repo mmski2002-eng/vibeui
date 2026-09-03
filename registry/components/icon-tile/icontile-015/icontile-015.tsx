@@ -3,7 +3,7 @@
 import {
   useId,
   useState,
-  type ComponentPropsWithoutRef,
+  type ComponentProps,
   type CSSProperties,
   type KeyboardEvent,
   type ReactElement,
@@ -12,7 +12,7 @@ import {
 export type PaymentMethodValue = "card" | "wallet" | "invoice"
 
 export type Icontile015Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   label?: string
@@ -126,10 +126,9 @@ const ICONS: Record<PaymentMethodValue, () => ReactElement> = {
 // граница плитки светлее её фона, а не темнее.
 const STYLES = `
 :where([data-vibeui-block="icontile-015"]){
-container-type:inline-size;
 --vibeui-icontile-015-hue:262;
 --vibeui-icontile-015-fg:light-dark(oklch(0.26 0.014 265),oklch(0.94 0.006 265));
---vibeui-icontile-015-muted:light-dark(oklch(0.52 0.014 265),oklch(0.71 0.012 265));
+--vibeui-icontile-015-muted:color-mix(in oklab,var(--vibeui-icontile-015-fg) 68%,transparent);
 --vibeui-icontile-015-border:light-dark(oklch(0.88 0.006 265),oklch(0.35 0.011 265));
 --vibeui-icontile-015-surface:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
 --vibeui-icontile-015-chip:light-dark(oklch(0.94 0.01 265),oklch(0.32 0.012 265));
@@ -143,6 +142,9 @@ container-type:inline-size;
 --vibeui-icontile-015-radius:0;
 --vibeui-icontile-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="icontile-015"]{color-scheme:dark}
 [data-vibeui-block="icontile-015"]{
 display:flex;flex-direction:column;gap:0.625rem;min-width:0;
 box-sizing:border-box;font-family:var(--vibeui-icontile-015-font);
@@ -154,6 +156,10 @@ border-radius:var(--vibeui-icontile-015-radius);
 display:block;margin:0;font-size:0.8125rem;font-weight:650;
 color:var(--vibeui-icontile-015-muted);
 }
+/* Три колонки 1fr, без container-type на корне: контейнер отвязал бы ширину
+   группы от содержимого, и в кадре, который меряет компонент по содержимому,
+   она схлопнулась бы в ноль. Названия и пояснения сжимаются многоточием, так
+   что узкая подложка ничего не ломает. */
 [data-vibeui-block="icontile-015"] [data-part="group"]{
 display:grid;grid-template-columns:repeat(3, minmax(0, 1fr));gap:0.625rem;min-width:0;
 }
@@ -199,10 +205,6 @@ color:var(--vibeui-icontile-015-selected-ink);
 }
 [data-vibeui-block="icontile-015"] [data-part="option"][aria-checked="true"] [data-part="check"]{
 display:grid;
-}
-@container (max-width: 300px){
-[data-vibeui-block="icontile-015"] [data-part="group"]{grid-template-columns:1fr}
-[data-vibeui-block="icontile-015"] [data-part="option"]{flex-direction:row;align-items:center}
 }
 @media (prefers-reduced-motion: reduce){
 [data-vibeui-block="icontile-015"] [data-part="option"]{transition:none}
@@ -294,6 +296,7 @@ export function Icontile015({
       </style>
       <div
         {...props}
+        data-slot="icon-tile"
         data-vibeui-block="icontile-015"
         className={className}
         style={palette}

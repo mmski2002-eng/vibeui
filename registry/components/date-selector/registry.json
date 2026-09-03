@@ -129,7 +129,8 @@
                 "label": "Travel date",
                 "hint": "Dates through the end of September."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-date-001-* variables. Server component: no hooks. The value is stored in YYYY-MM-DD format and displayed according to the system settings. The bounds are set with min and max, so the browser itself rejects unavailable dates, and the note is linked to the field through aria-describedby."
           }
         },
         "cardControls": ["background"]
@@ -281,7 +282,8 @@
                 "hint": "The button opens the system calendar; the field takes keyboard input.",
                 "openLabel": "Open calendar"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, zero dependencies, palette in the local --vibeui-date-002-* variables. Client component: it needs a ref on the field and a click handler. The button calls input.showPicker() — the same system calendar the native icon opens, but with a 2.75rem hit area instead of a few pixels. Not every browser knows the method, so there is a fallback path: focus the field and type on the keyboard. The native indicator is hidden so that two buttons with the same meaning do not end up side by side."
           }
         },
         "cardControls": ["accent", "background"]
@@ -437,7 +439,8 @@
                   "many": "{count} nights"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, zero dependencies, palette in the local --vibeui-date-003-* variables. Client component: both dates are in state and they are linked. The second field gets its min from the first, so the system calendar simply does not allow picking a date earlier than the start. If the start is moved past the already chosen end, the end shifts to the next day instead of raising an error. The dates are compared as ISO strings — with an identical format that is correct and needs no parsing. The legend is floated, so the field row carries clear:both."
           }
         },
         "cardControls": ["accent", "background"]
@@ -577,7 +580,8 @@
                 "timeLabel": "Time",
                 "timezone": "Moscow time, UTC+3"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, zero dependencies, palette in the local --vibeui-date-004-* variables. Server component: no state is needed, the form collects both values by the names name-date and name-time. Instead of datetime-local there are two native fields in a shared frame: on a phone datetime-local opens two screens in a row, and on the desktop it gives a long mask where it is easy to mis-aim past a segment. The frame is single, focus-within highlights it as a whole, so the pair reads as one value."
           }
         },
         "cardControls": ["accent", "background"]
@@ -741,7 +745,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, zero dependencies, palette in the local --vibeui-date-005-* variables. Client component: the date and the selected preset are in state. The system clock is read inside the click handler rather than during render: computing \"today\" on the server and on the client is a sure way to get different dates across a timezone boundary and a mismatch at hydration. The weekday is derived from the selected value by parsing it in parts, because Date.parse treats \"2026-09-16\" as UTC and returns the previous day in negative offsets."
           }
         },
         "cardControls": ["locale", "background"]
@@ -888,7 +893,8 @@
                   "many": "{count} days"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, zero dependencies, palette in the local --vibeui-date-006-* variables. Client component: the date is in state, while today is read through useSyncExternalStore — the server snapshot is empty, so there is nothing to compare and hydration does not disagree; computing \"today\" during render means getting different dates on the server and on the client. There are three states: overdue, due soon, time left; they are marked with data-state on the root and override a single accent variable, so the colour of the border, the stripe and the text changes at once. Before the first client snapshot the state is neutral."
           }
         },
         "cardControls": ["soonInDays", "background"]
@@ -1054,7 +1060,8 @@
                   "December"
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, zero dependencies, palette in the local --vibeui-date-007-* variables. Client component: the number of days depends on the selected month and year. The day count is taken from new Date(year, month, 0).getDate() — day zero of the next month is the last day of the current one, so a leap February is handled on its own. If the selected day falls outside the month, it is clamped to the last existing one rather than zeroed. The legend is floated, so the row carries clear:both."
           }
         },
         "cardControls": ["background"]
@@ -1195,7 +1202,8 @@
                 "stepText": "Step {minutes} min",
                 "hoursText": "open from {open} to {close}"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, zero dependencies, palette in the local --vibeui-date-008-* variables. Client component: the time is in state, and the buttons and the snapping change it. The time is converted into minutes past midnight — that turns shifting and snapping to the grid into ordinary arithmetic, without parsing strings at every step. Snapping to the nearest quarter happens on blur rather than on every keystroke, otherwise the field starts jumping while you type. The opening bounds are set through min and max and are respected both by the buttons and by the keyboard."
           }
         },
         "cardControls": ["stepMinutes", "background"]

@@ -55,6 +55,7 @@ background:var(--vibeui-avatar-022-accent);
 box-shadow:0 0 0 0.125rem var(--vibeui-avatar-022-bg);
 }
 [data-vibeui-block="avatar-022"] [data-part="dot"]{
+/* Точки белые в обеих темах: они лежат на акцентном пузырьке, а не на странице. */
 width:0.1875rem;height:0.1875rem;border-radius:9999px;background:oklch(1 0 0);
 animation:vibeui-avatar-022-blink 1.2s infinite ease-in-out;
 }

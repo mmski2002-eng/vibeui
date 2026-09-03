@@ -1,10 +1,10 @@
 "use client"
 
 import { useId, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Date003Props = Omit<
-  ComponentPropsWithoutRef<"fieldset">,
+  ComponentProps<"fieldset">,
   "children" | "defaultValue"
 > & {
   legend?: string
@@ -37,12 +37,15 @@ const STYLES = `
 --vibeui-date-003-field:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
 --vibeui-date-003-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-date-003-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
---vibeui-date-003-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-date-003-muted:color-mix(in oklab,var(--vibeui-date-003-fg) 68%,transparent);
 --vibeui-date-003-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
---vibeui-date-003-accent:light-dark(oklch(0.52 0.16 210),oklch(0.78 0.13 210));
+--vibeui-date-003-accent:light-dark(oklch(0.5 0.16 210),oklch(0.78 0.13 210));
 --vibeui-date-003-soft:color-mix(in oklch,var(--vibeui-date-003-accent) 12%,transparent);
 --vibeui-date-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="date-003"]{color-scheme:dark}
 /* Подложки по умолчанию нет: рамка держит форму, фон приходит со страницы. */
 [data-vibeui-block="date-003"]{
 display:flex;flex-direction:column;gap:0.5rem;
@@ -183,6 +186,7 @@ export function Date003({
       </style>
       <fieldset
         {...props}
+        data-slot="date-selector"
         data-vibeui-block="date-003"
         className={className}
         style={palette}

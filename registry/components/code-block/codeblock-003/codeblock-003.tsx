@@ -23,7 +23,7 @@ const STYLES = `
 --vibeui-codeblock-003-head:light-dark(oklch(0 0 0 / 4%),oklch(1 0 0 / 5%));
 --vibeui-codeblock-003-pill:light-dark(oklch(0 0 0 / 9%),oklch(1 0 0 / 12%));
 --vibeui-codeblock-003-fg:light-dark(oklch(0.27 0.018 210),oklch(0.94 0.006 210));
---vibeui-codeblock-003-muted:light-dark(oklch(0.52 0.02 210),oklch(0.68 0.016 210));
+--vibeui-codeblock-003-muted:color-mix(in oklab,var(--vibeui-codeblock-003-fg) 68%,transparent);
 --vibeui-codeblock-003-border:light-dark(oklch(0 0 0 / 13%),oklch(1 0 0 / 13%));
 --vibeui-codeblock-003-active:light-dark(oklch(0.22 0.02 210),oklch(0.98 0.01 210));
 --vibeui-codeblock-003-accent:light-dark(oklch(0.5 0.11 195),oklch(0.78 0.13 195));
@@ -31,6 +31,9 @@ const STYLES = `
 --vibeui-codeblock-003-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-codeblock-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="codeblock-003"]{color-scheme:dark}
 [data-vibeui-block="codeblock-003"]{
 display:block;width:100%;max-width:30rem;box-sizing:border-box;
 font-family:var(--vibeui-codeblock-003-font);
@@ -130,6 +133,7 @@ export function Codeblock003({
         {STYLES}
       </style>
       <div
+        data-slot="code-block"
         data-vibeui-block="codeblock-003"
         className={className}
         style={palette}

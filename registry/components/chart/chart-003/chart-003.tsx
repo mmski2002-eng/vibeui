@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Chart003Slice = {
   label: string
@@ -7,7 +7,7 @@ export type Chart003Slice = {
 }
 
 export type Chart003Props = Omit<
-  ComponentPropsWithoutRef<"figure">,
+  ComponentProps<"figure">,
   "children" | "title"
 > & {
   title?: string
@@ -31,13 +31,16 @@ const STYLES = `
 :where([data-vibeui-block="chart-003"]){
 --vibeui-chart-003-bg:transparent;
 --vibeui-chart-003-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-chart-003-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-chart-003-muted:color-mix(in oklab,var(--vibeui-chart-003-fg) 68%,transparent);
 --vibeui-chart-003-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-chart-003-accent:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
 --vibeui-chart-003-size:7.5rem;
 --vibeui-chart-003-thickness:1.375rem;
 --vibeui-chart-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="chart-003"]{color-scheme:dark}
 [data-vibeui-block="chart-003"]{
 display:flex;align-items:center;gap:1rem;
 width:100%;max-width:22rem;box-sizing:border-box;margin:0;padding:0.875rem;
@@ -61,7 +64,7 @@ align-items:center;justify-content:center;
 font-size:1.125rem;font-weight:680;font-variant-numeric:tabular-nums;line-height:1.1;
 color:var(--vibeui-chart-003-accent);
 }
-[data-vibeui-block="chart-003"] [data-part="unit"]{font-size:0.6875rem;color:var(--vibeui-chart-003-muted)}
+[data-vibeui-block="chart-003"] [data-part="unit"]{font-size:0.75rem;color:var(--vibeui-chart-003-muted)}
 [data-vibeui-block="chart-003"] [data-part="body"]{display:flex;flex-direction:column;gap:0.5rem;min-width:0;flex:1}
 [data-vibeui-block="chart-003"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650}
 [data-vibeui-block="chart-003"] [data-part="legend"]{display:flex;flex-direction:column;gap:0.3125rem;margin:0;padding:0;list-style:none}
@@ -70,6 +73,8 @@ color:var(--vibeui-chart-003-accent);
 display:grid;grid-template-columns:0.5rem 1fr auto;align-items:center;gap:0.5rem;
 font-size:0.8125rem;
 }
+/* Цвет точки один на обе темы: он обязан совпадать с сектором кольца,
+   а тот считается тем же oklch(0.62 0.15 hue) в разметке. */
 [data-vibeui-block="chart-003"] [data-part="dot"]{
 width:0.5rem;height:0.5rem;border-radius:9999px;
 background:oklch(0.62 0.15 var(--vibeui-chart-003-hue,250));
@@ -168,6 +173,7 @@ export function Chart003({
       </style>
       <figure
         {...props}
+        data-slot="chart"
         data-vibeui-block="chart-003"
         className={className}
         style={palette}

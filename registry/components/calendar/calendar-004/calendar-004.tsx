@@ -1,7 +1,7 @@
 "use client"
 
 import { useId, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Calendar004Slot = {
   time: string
@@ -9,7 +9,7 @@ export type Calendar004Slot = {
 }
 
 export type Calendar004Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   date?: string
@@ -32,7 +32,7 @@ const STYLES = `
 :where([data-vibeui-block="calendar-004"]){
 --vibeui-calendar-004-bg:transparent;
 --vibeui-calendar-004-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
---vibeui-calendar-004-muted:light-dark(oklch(0.6 0.014 265),oklch(0.68 0.012 265));
+--vibeui-calendar-004-muted:color-mix(in oklab,var(--vibeui-calendar-004-fg) 68%,transparent);
 --vibeui-calendar-004-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-calendar-004-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
 --vibeui-calendar-004-on-accent:light-dark(oklch(0.99 0.01 265),oklch(0.19 0.03 265));
@@ -41,17 +41,20 @@ const STYLES = `
 --vibeui-calendar-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="calendar-004"]{color-scheme:dark}
 [data-vibeui-block="calendar-004"]{
 display:block;width:100%;max-width:20rem;box-sizing:border-box;
 font-family:var(--vibeui-calendar-004-font);color:var(--vibeui-calendar-004-fg);
 }
 [data-vibeui-block="calendar-004"] [data-part="card"]{
 display:flex;flex-direction:column;gap:0.625rem;
-box-sizing:border-box;padding:0.875rem;
+box-sizing:border-box;padding:0.9375rem;
 background:var(--vibeui-calendar-004-bg);
 border:1px solid var(--vibeui-calendar-004-border);border-radius:0.875rem;
 }
-[data-vibeui-block="calendar-004"] [data-part="date"]{font-size:0.875rem;font-weight:650}
+[data-vibeui-block="calendar-004"] [data-part="date"]{font-size:0.9375rem;font-weight:650}
 [data-vibeui-block="calendar-004"] [data-part="grid"]{
 display:grid;grid-template-columns:repeat(3,1fr);gap:0.375rem;
 margin:0;padding:0;border:0;
@@ -77,7 +80,7 @@ border-color:transparent;background:var(--vibeui-calendar-004-accent);color:var(
 cursor:not-allowed;color:var(--vibeui-calendar-004-muted);
 background:repeating-linear-gradient(135deg,var(--vibeui-calendar-004-hatch-a) 0 0.25rem,var(--vibeui-calendar-004-hatch-b) 0.25rem 0.5rem);
 }
-[data-vibeui-block="calendar-004"] [data-part="zone"]{font-size:0.75rem;color:var(--vibeui-calendar-004-muted)}
+[data-vibeui-block="calendar-004"] [data-part="zone"]{font-size:0.875rem;color:var(--vibeui-calendar-004-muted)}
 @container (max-width: 17rem){
 [data-vibeui-block="calendar-004"] [data-part="grid"]{grid-template-columns:repeat(2,1fr)}
 }
@@ -158,6 +161,7 @@ export function Calendar004({
       </style>
       <div
         {...props}
+        data-slot="calendar"
         data-vibeui-block="calendar-004"
         className={className}
         style={palette}

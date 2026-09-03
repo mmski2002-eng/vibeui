@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Rating009Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Rating009Props = Omit<ComponentProps<"div">, "children"> & {
   votes?: number[]
   /** Слово «голос» по числам: ключи one, few, many. */
   voteWords?: Record<string, string>
@@ -31,13 +28,16 @@ const STYLES = `
 --vibeui-rating-009-surface:transparent;
 --vibeui-rating-009-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-rating-009-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
---vibeui-rating-009-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-rating-009-muted:color-mix(in oklab,var(--vibeui-rating-009-fg) 68%,transparent);
 --vibeui-rating-009-track:light-dark(oklch(0.94 0.005 265),oklch(0.31 0.012 265));
 --vibeui-rating-009-accent:light-dark(oklch(0.58 0.19 262),oklch(0.72 0.16 262));
 --vibeui-rating-009-on:light-dark(oklch(1 0 0),oklch(0.18 0.02 265));
 --vibeui-rating-009-shadow:light-dark(oklch(0.2 0.02 265 / 22%),oklch(0 0 0 / 45%));
 --vibeui-rating-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="rating-009"]{color-scheme:dark}
 /* Подложки по умолчанию нет: сводка ложится на фон страницы. */
 [data-vibeui-block="rating-009"]{
 display:flex;flex-direction:column;gap:0.875rem;
@@ -166,6 +166,7 @@ export function Rating009({
       </style>
       <div
         {...props}
+        data-slot="rating"
         data-vibeui-block="rating-009"
         className={className}
         style={palette}

@@ -1,12 +1,12 @@
 import type {
-  ComponentPropsWithoutRef,
+  ComponentProps,
   CSSProperties,
   MouseEventHandler,
   ReactNode,
 } from "react"
 
 export type Button033Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onClick"
 > & {
   children?: ReactNode
@@ -33,6 +33,9 @@ const STYLES = `
 --vibeui-button-033-radius:0.5rem;
 --vibeui-button-033-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="button-033"]{color-scheme:dark}
 [data-vibeui-block="button-033"]{
 display:inline-flex;box-sizing:border-box;padding:0.375rem;
 background:var(--vibeui-button-033-surface);
@@ -125,6 +128,7 @@ export function Button033({
       </style>
       <div
         {...props}
+        data-slot="button"
         data-vibeui-block="button-033"
         className={className}
         style={palette}

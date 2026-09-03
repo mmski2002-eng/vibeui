@@ -1,16 +1,9 @@
 "use client"
 
 import { useState } from "react"
-import type {
-  ComponentPropsWithoutRef,
-  CSSProperties,
-  KeyboardEvent,
-} from "react"
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
-export type Item008Props = Omit<
-  ComponentPropsWithoutRef<"li">,
-  "children" | "title"
-> & {
+export type Item008Props = Omit<ComponentProps<"li">, "children" | "title"> & {
   title?: string
   meta?: string
   position?: number
@@ -44,12 +37,15 @@ const STYLES = `
 :where([data-vibeui-block="item-008"]){
 --vibeui-item-008-bg:transparent;
 --vibeui-item-008-fg:light-dark(oklch(0.23 0.014 265),oklch(0.93 0.006 265));
---vibeui-item-008-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-item-008-muted:color-mix(in oklab,var(--vibeui-item-008-fg) 68%,transparent);
 --vibeui-item-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
 --vibeui-item-008-accent:light-dark(oklch(0.55 0.19 262),oklch(0.75 0.16 262));
 --vibeui-item-008-shadow:light-dark(oklch(0.2 0.02 265 / 14%),oklch(0 0 0 / 46%));
 --vibeui-item-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="item-008"]{color-scheme:dark}
 [data-vibeui-block="item-008"]{
 position:relative;display:flex;align-items:center;gap:0.625rem;
 width:100%;max-width:22rem;box-sizing:border-box;padding:0.5rem 0.75rem 0.5rem 0.375rem;
@@ -213,6 +209,7 @@ export function Item008({
       <li
         {...props}
         draggable
+        data-slot="item"
         data-vibeui-block="item-008"
         data-grabbed={grabbed}
         data-dragging={dragging}

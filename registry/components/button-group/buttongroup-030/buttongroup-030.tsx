@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Buttongroup030Step = {
   label: string
@@ -6,10 +6,7 @@ export type Buttongroup030Step = {
   points: string
 }
 
-export type Buttongroup030Props = Omit<
-  ComponentPropsWithoutRef<"nav">,
-  "children"
-> & {
+export type Buttongroup030Props = Omit<ComponentProps<"nav">, "children"> & {
   steps?: Buttongroup030Step[]
   current?: string
   label?: string
@@ -29,7 +26,7 @@ const STYLES = `
 :where([data-vibeui-block="buttongroup-030"]){
 --vibeui-buttongroup-030-surface:transparent;
 --vibeui-buttongroup-030-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.005 265));
---vibeui-buttongroup-030-muted:light-dark(oklch(0.57 0.014 265),oklch(0.72 0.012 265));
+--vibeui-buttongroup-030-muted:color-mix(in oklab,var(--vibeui-buttongroup-030-fg) 68%,transparent);
 --vibeui-buttongroup-030-border:light-dark(oklch(0.89 0.008 265),oklch(0.39 0.012 265));
 --vibeui-buttongroup-030-hover:light-dark(oklch(0.97 0.004 265),oklch(0.33 0.012 265));
 --vibeui-buttongroup-030-on:light-dark(oklch(0.24 0.02 265),oklch(0.92 0.012 265));
@@ -38,6 +35,9 @@ const STYLES = `
 --vibeui-buttongroup-030-radius:0.625rem;
 --vibeui-buttongroup-030-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="buttongroup-030"]{color-scheme:dark}
 [data-vibeui-block="buttongroup-030"]{
 box-sizing:border-box;display:inline-block;
 font-family:var(--vibeui-buttongroup-030-font);
@@ -142,6 +142,7 @@ export function Buttongroup030({
       </style>
       <nav
         {...props}
+        data-slot="button-group"
         data-vibeui-block="buttongroup-030"
         className={className}
         style={palette}

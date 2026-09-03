@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Carousel016Slide = {
   title: string
@@ -9,14 +9,11 @@ export type Carousel016Slide = {
   hue?: number
 }
 
-export type Carousel016Props = Omit<
-  ComponentPropsWithoutRef<"section">,
-  "children"
-> & {
+export type Carousel016Props = Omit<ComponentProps<"section">, "children"> & {
   slides?: Carousel016Slide[]
   label?: string
-  /** Подпись счётчика: «3 из 8» собирается из неё. */
-  ofWord?: string
+  /** Счётчик целой строкой: {index} — текущий кадр, {total} — всего. */
+  counterText?: string
   /** Роль блока для скринридера: компонент несёт русскую, проект подставит свою. */
   roleDescription?: string
   /** Подпись левой кнопки. */
@@ -40,13 +37,16 @@ const STYLES = `
 :where([data-vibeui-block="carousel-016"]){
 --vibeui-carousel-016-bg:transparent;
 --vibeui-carousel-016-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-carousel-016-muted:light-dark(oklch(0.57 0.014 265),oklch(0.7 0.012 265));
+--vibeui-carousel-016-muted:color-mix(in oklab,var(--vibeui-carousel-016-fg) 68%,transparent);
 --vibeui-carousel-016-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-carousel-016-hover:light-dark(oklch(0.96 0.004 265),oklch(0.32 0.012 265));
 --vibeui-carousel-016-accent:light-dark(oklch(0.55 0.19 262),oklch(0.74 0.16 262));
 --vibeui-carousel-016-progress:0%;
 --vibeui-carousel-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="carousel-016"]{color-scheme:dark}
 [data-vibeui-block="carousel-016"]{
 display:flex;flex-direction:column;gap:0.625rem;
 width:100%;max-width:26rem;box-sizing:border-box;padding:0.875rem;
@@ -59,6 +59,8 @@ font-family:var(--vibeui-carousel-016-font);color:var(--vibeui-carousel-016-fg);
 [data-vibeui-block="carousel-016"] [data-part="stack"]{
 position:relative;aspect-ratio:16 / 9;border-radius:0.875rem;overflow:hidden;
 }
+/* Кадр стоит вместо фотографии: градиент и светлый текст на нём одинаковы
+   в любой теме страницы, поэтому второй ветки у них нет. */
 [data-vibeui-block="carousel-016"] [data-part="slide"]{
 position:absolute;inset:0;
 display:flex;flex-direction:column;justify-content:flex-end;gap:0.125rem;
@@ -139,7 +141,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 export function Carousel016({
   slides = DEFAULT_SLIDES,
   label = "Квартира",
-  ofWord = "из",
+  counterText = "{index} из {total}",
   roleDescription = "карусель",
   prevLabel = "Предыдущий кадр",
   nextLabel = "Следующий кадр",
@@ -170,6 +172,7 @@ export function Carousel016({
       </style>
       <section
         {...props}
+        data-slot="carousel"
         data-vibeui-block="carousel-016"
         aria-roledescription={roleDescription}
         aria-label={label}
@@ -212,7 +215,9 @@ export function Carousel016({
             </svg>
           </button>
           <span data-part="count" role="status">
-            {index + 1} {ofWord} {slides.length}
+            {counterText
+              .replace("{index}", String(index + 1))
+              .replace("{total}", String(slides.length))}
           </span>
           <span data-part="track">
             <span data-part="fill" />

@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Sparkline002Row = {
   label: string
@@ -8,7 +8,7 @@ export type Sparkline002Row = {
 }
 
 export type Sparkline002Props = Omit<
-  ComponentPropsWithoutRef<"table">,
+  ComponentProps<"table">,
   "children" | "title"
 > & {
   caption?: string
@@ -34,13 +34,16 @@ const STYLES = `
 :where([data-vibeui-block="sparkline-002"]){
 --vibeui-sparkline-002-bg:transparent;
 --vibeui-sparkline-002-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-sparkline-002-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-sparkline-002-muted:color-mix(in oklab,var(--vibeui-sparkline-002-fg) 68%,transparent);
 --vibeui-sparkline-002-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-sparkline-002-up:light-dark(oklch(0.58 0.14 155),oklch(0.76 0.13 155));
 --vibeui-sparkline-002-down:light-dark(oklch(0.6 0.16 25),oklch(0.73 0.16 25));
 --vibeui-sparkline-002-flat:light-dark(oklch(0.62 0.01 265),oklch(0.66 0.01 265));
 --vibeui-sparkline-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="sparkline-002"]{color-scheme:dark}
 [data-vibeui-block="sparkline-002"]{
 width:100%;max-width:32rem;box-sizing:border-box;border-collapse:collapse;
 background:var(--vibeui-sparkline-002-bg);
@@ -209,6 +212,7 @@ export function Sparkline002({
       </style>
       <table
         {...props}
+        data-slot="sparkline"
         data-vibeui-block="sparkline-002"
         className={className}
         style={palette}

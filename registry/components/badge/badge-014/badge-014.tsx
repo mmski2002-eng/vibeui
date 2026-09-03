@@ -1,6 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Badge014Props = ComponentPropsWithoutRef<"span"> & {
+export type Badge014Props = ComponentProps<"span"> & {
   hue?: number
   dashed?: boolean
   /** Пусто — плашка держит собственную подложку того же оттенка. */
@@ -22,6 +22,9 @@ const STYLES = `
 --vibeui-badge-014-bg:light-dark(oklch(0.98 0.012 var(--vibeui-badge-014-hue)),oklch(0.26 0.03 var(--vibeui-badge-014-hue)));
 --vibeui-badge-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="badge-014"]{color-scheme:dark}
 [data-vibeui-block="badge-014"]{
 display:inline-flex;align-items:center;gap:0.375rem;
 box-sizing:border-box;height:1.75rem;padding:0 0.6875rem;
@@ -99,6 +102,7 @@ export function Badge014({
       </style>
       <span
         {...props}
+        data-slot="badge"
         data-vibeui-block="badge-014"
         data-dashed={dashed}
         className={className}

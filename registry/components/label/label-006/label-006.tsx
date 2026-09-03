@@ -1,10 +1,10 @@
 "use client"
 
 import { useId, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Label006Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "defaultValue"
 > & {
   label?: string
@@ -29,7 +29,7 @@ const STYLES = `
 --vibeui-label-006-surface:transparent;
 --vibeui-label-006-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.33 0.012 265));
 --vibeui-label-006-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.005 265));
---vibeui-label-006-muted:light-dark(oklch(0.54 0.014 265),oklch(0.7 0.012 265));
+--vibeui-label-006-muted:color-mix(in oklab,var(--vibeui-label-006-fg) 68%,transparent);
 --vibeui-label-006-field-border:light-dark(oklch(0.85 0.01 265),oklch(0.4 0.014 265));
 --vibeui-label-006-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.16 262));
 --vibeui-label-006-warn:light-dark(oklch(0.62 0.15 65),oklch(0.79 0.13 65));
@@ -37,6 +37,9 @@ const STYLES = `
 --vibeui-label-006-radius:0.625rem;
 --vibeui-label-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="label-006"]{color-scheme:dark}
 [data-vibeui-block="label-006"]{
 box-sizing:border-box;width:100%;max-width:26rem;
 padding:1rem;border-radius:0.875rem;
@@ -145,6 +148,7 @@ export function Label006({
       </style>
       <div
         {...props}
+        data-slot="label"
         data-vibeui-block="label-006"
         className={className}
         style={palette}

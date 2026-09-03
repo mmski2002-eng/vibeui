@@ -84,6 +84,7 @@
         "i18n": {
           "en": {
             "description": "A product grid: the card opens the product and the button adds to cart — two actions that must not share one target.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-001-* variables. A server component: no hooks. The number of columns is computed by a container query against the block's width. The cover is drawn with a gradient from the product's hue, so the block does not pull in outside files. The cart button is raised above the stretched link through z-index. The theme comes from the surrounding color-scheme through light-dark(): there is no surface by default, the background prop turns it on.",
             "ai": {
               "summary": "A product grid: cards with a cover, a discount badge, rating, price and an add-to-cart button. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -263,6 +264,7 @@
         "i18n": {
           "en": {
             "description": "A product page: sizes as radios, the unavailable one still visible, and the delivery promise right beside the button.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-002-* variables. A server component: no hooks, the size choice is held by radio buttons. The two-column layout is switched on by a container query. The gallery is drawn with a gradient, the specs are output as a definition list. The theme comes from the surrounding color-scheme through light-dark(): there is no surface by default, the background prop turns it on.",
             "ai": {
               "summary": "A product page: gallery, price with the old one, rating, size choice, buy actions and specs. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -454,6 +456,7 @@
         "i18n": {
           "en": {
             "description": "A cart: the total is computed from the lines, and the free-shipping bar sits above the button — it is a reason to add more.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-003-* variables. A client component: \"use client\" for the quantity and the removal. The item total, the delivery and the grand total are derived from the array of lines, so the figures do not diverge after an edit. The free-shipping progress bar disappears once the threshold is crossed. The theme comes from the surrounding color-scheme through light-dark(): there is no surface by default, the background prop turns it on.",
             "ai": {
               "summary": "A cart: lines with quantity and removal, totals derived from the lines, a free-shipping bar and a checkout button. Zero dependencies, one file.",
               "preserve": [
@@ -627,6 +630,7 @@
         "i18n": {
           "en": {
             "description": "A checkout step: delivery as a radio group, the summary beside the form and the pay button labelled with the amount.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-004-* variables. A server component: no hooks. The steps are marked by the shape of the badge, the delivery method is assembled from radio buttons in a fieldset, the address fields are laid out on a grid with a container query, the summary is moved into a separate column beside the form. The theme comes from the surrounding color-scheme through light-dark(): there is no surface by default, the background prop turns it on.",
             "ai": {
               "summary": "A checkout step: a step bar, delivery choice, address fields and a summary whose pay button carries the amount. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -843,6 +847,7 @@
         "i18n": {
           "en": {
             "description": "A category mosaic: the wide tile is a flag in the data, and the item count is visible before the click.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-005-* variables. A server component: no hooks. The grid rearranges through container queries, the large tile gets two columns from the wide flag in the data. The link is stretched by a pseudo-element, and the focus ring is put on the tile through :has(). The theme comes from the surrounding color-scheme through light-dark(): there is no surface by default, the background prop turns it on.",
             "ai": {
               "summary": "A category mosaic: tiles with a name, an item count and a hint, one tile spanning two columns. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1018,6 +1023,7 @@
         "i18n": {
           "en": {
             "description": "Reviews with a score breakdown: the shares are computed from the array, and the verified-purchase mark sits by the author.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-006-* variables. A server component: no hooks. The number of ratings and the shares of the bars are computed from the spread array, so the breakdown always agrees with the average. The score of every review is duplicated as a number, and the bars are drawn as backgrounds without a charting library. The theme comes from the surrounding color-scheme through light-dark(): there is no surface by default, the background prop turns it on.",
             "ai": {
               "summary": "Reviews: an average score, a star breakdown as bars and review cards with a verified-purchase mark. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1187,6 +1193,7 @@
         "i18n": {
           "en": {
             "description": "A category storefront: sorting and the result count share the heading line, and the applied filters stay visible as chips.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-007-* variables. A server component: no hooks, the sorting is a native select with defaultValue. The number of columns is computed by container queries against the block's width, the cover is drawn with a gradient from the product's hue. The link is stretched by a pseudo-element, and the focus ring is put on the card through :has(). The theme comes from the surrounding color-scheme through light-dark(): there is no surface by default, the background prop turns it on.",
             "ai": {
               "summary": "A category storefront: breadcrumbs, a heading with the result count, sorting, filter chips and a card grid with rating and price. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1389,6 +1396,7 @@
         "i18n": {
           "en": {
             "description": "A product page with a radio-driven gallery: the frame switches without JS, and a variant is chosen by a swatch that carries a written label.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-008-* variables. A server component: no hooks — the gallery frame is held by radio buttons, and the display is done by the ~ sibling selector. Two columns are switched on by a container query, the colour choice is assembled from radio buttons in a fieldset, the state of a swatch is set through :has(). The frame identifiers are fixed, so two instances on one page conflict. The theme comes from the surrounding color-scheme through light-dark(): there is no surface by default, the background prop turns it on.",
             "ai": {
               "summary": "A product page: a radio-driven gallery with thumbnails, colour swatches, quantity and a buy button, plus a stock line. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1558,6 +1566,7 @@
         "i18n": {
           "en": {
             "description": "A cart with a saved-for-later shelf: an item you are not ready to buy stays put instead of vanishing, and it never joins the total.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-009-* variables. A server component: the quantity is held by a native select, there is no state. Two columns are switched on by a container query, the summary sticks through position:sticky, the summary rows are output as a definition list with a display:contents wrapper. Saved-for-later items are set apart by a dashed border and a muted background. The theme comes from the surrounding color-scheme through light-dark(): there is no surface by default, the background prop turns it on.",
             "ai": {
               "summary": "A cart: line items with quantity and actions, a saved-for-later shelf, a totals column with guarantees and a checkout button. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1758,6 +1767,7 @@
         "i18n": {
           "en": {
             "description": "A one-screen checkout: contacts, delivery and payment without steps, and the card fields appear only under the card option.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-010-* variables. A server component: revealing the card fields is done through :has() on the selected radio button, there is no state. The sections are gathered into fieldsets with a legend, the field grid and the summary column are switched on by container queries, the summary sticks through position:sticky. The pay button lies outside the form and is tied to it by the form attribute. The theme comes from the surrounding color-scheme through light-dark(): there is no surface by default, the background prop turns it on.",
             "ai": {
               "summary": "A single-screen checkout: contacts, delivery choice, address, payment with revealed card fields and a sticky summary with the pay button. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1953,6 +1963,7 @@
         "i18n": {
           "en": {
             "description": "An order confirmation: the number and the delivery date are set large above the contents, and what happens next is spelled out below.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-011-* variables. A server component: no hooks. Two key facts are moved into cards that stand in two columns through a container query; the number is selected whole through user-select:all. The order contents are output as a list, the delivery details as a definition list with a display:contents wrapper. The theme comes from the surrounding color-scheme through light-dark(): there is no surface by default, the background prop turns it on.",
             "ai": {
               "summary": "A post-payment screen: a tick, the order number and date in large type, the next steps, the order contents, delivery details and two buttons. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -2136,6 +2147,7 @@
         "i18n": {
           "en": {
             "description": "Delivery tracking: stages differ by badge shape rather than colour, the rail turns horizontal with the block's width, and the log hides in a details element.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-012-* variables. A server component: no hooks, the detailed history is folded into a native details. The stage rail is vertical by default and becomes horizontal on a container query — the connectors are redrawn by a pseudo-element. The current stage is marked with a ring whose animation is switched off under prefers-reduced-motion. The theme comes from the surrounding color-scheme through light-dark(): there is no surface by default, the background prop turns it on.",
             "ai": {
               "summary": "Order tracking: status, arrival time, a stage rail with states, a courier card and a full log inside details. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -2328,6 +2340,7 @@
         "i18n": {
           "en": {
             "description": "A customer's order list: every row carries one action that matches its state, and the contents collapse into a thumbnail stack with a counter.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-013-* variables. A server component: the filter is assembled from radio buttons in a fieldset with a hidden legend, there is no state. The order row rearranges into two columns through a container query; the status is marked by a coloured dot and a word, the thumbnails are overlapped with a negative margin and the remainder is shown in a separate circle.",
             "ai": {
               "summary": "An order list: a state filter, cards with number, date, a spelled-out status, a thumbnail stack, the total and a single action. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -2511,6 +2524,7 @@
         "i18n": {
           "en": {
             "description": "A return request: the reason is a closed list, the free-text field appears only under \"other\", and the return window sits at the top.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-014-* variables. A server component: revealing the details field is done with :has() on the last radio button, there is no state. The items are chosen with checkboxes, the reason and the refund destination with radio buttons in a fieldset; the selected row is highlighted through :has(input:checked). The deadline is moved into a warning panel above the form.",
             "ai": {
               "summary": "A return request: items as checkboxes, a reason list, a details field under \"other\", a refund destination choice and a submit button. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -2704,6 +2718,7 @@
         "i18n": {
           "en": {
             "description": "Reviews with a filter that shows the match count before the click: an empty filter is disabled, and \"showing N of M\" sits under the buttons.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-015-* variables. A client component: \"use client\" for the selected filter. The counts on the buttons and the average score are computed from the reviews array, so they do not diverge from the selection. The pressed state is conveyed by aria-pressed, a change of selection is announced through aria-live, the two-column grid is switched on by a container query.",
             "ai": {
               "summary": "Filtered reviews: buttons carrying match counts, an average computed from the data, a \"showing N of M\" line and review cards. Zero dependencies, one file.",
               "preserve": [
@@ -2926,6 +2941,7 @@
         "i18n": {
           "en": {
             "description": "A frequently-bought-together bundle: the total recomputes from the checkboxes, and the main item cannot be unchecked.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-016-* variables. A client component: \"use client\" for the selected items. The total and the bundle discount are computed from the chosen elements, so the figures do not diverge. The chain of cards becomes horizontal on a container query, the selected card is highlighted through :has(input:checked).",
             "ai": {
               "summary": "A multi-item bundle: cards with checkboxes, a recomputed total and bundle discount, and an add button carrying the chosen count. Zero dependencies, one file.",
               "preserve": [
@@ -3107,6 +3123,7 @@
         "i18n": {
           "en": {
             "description": "A comparison table: identical rows hide behind one checkbox, the first column sticks while scrolling, and the best value is labelled in words.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-017-* variables. A server component: the “differences only” toggle works through :has() on the checkbox, rows with identical values are marked in the markup with a data-same flag. The table scrolls horizontally inside a focusable container, the row headers stick through position:sticky.",
             "ai": {
               "summary": "A comparison table: product columns with price and a pick badge, spec rows, a \"differences only\" toggle and a buy button per column. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -3323,6 +3340,7 @@
         "i18n": {
           "en": {
             "description": "Stock by store: the quantity is a number, and a row with none left shows the restock date and offers an alert instead of a dead end.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-018-* variables. A server component: the city is chosen with a native select, there is no state. The stock level is derived from the number and colours the dot, the caption is recomputed by the same rule. The store row rearranges into two columns through a container query.",
             "ai": {
               "summary": "Per-store availability: a city select, rows with address, distance, hours, a numeric stock level and a reserve or notify button. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -3518,6 +3536,7 @@
         "i18n": {
           "en": {
             "description": "A subscribe-and-save block: the one-off and subscription prices sit side by side, and the cadence appears under the subscription with the first delivery date.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-019-* variables. A server component: the cadence block is revealed through :has() on the subscription radio button, there is no state. The purchase methods and the periods are gathered into fieldsets with hidden legends, the choice is highlighted through :has(input:checked). Two columns of methods are switched on by a container query.",
             "ai": {
               "summary": "A choice between a one-off purchase and a subscription: both prices side by side, the saving as a percentage, a cadence picker, the first delivery date and the cancellation terms. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -3702,6 +3721,7 @@
         "i18n": {
           "en": {
             "description": "A cart promo code: the discount becomes its own totals row, the error is announced through aria-live, and an applied code can be removed.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-020-* variables. A client component: \"use client\" for the entered code, the applied discount and the message. The discount is computed from the item total, so the grand total agrees after any edit. The message lives in an aria-live region, the applied code is shown as a chip with a remove button, the field accepts Enter.",
             "ai": {
               "summary": "A promo field checked against a list: the discount as a totals row, a success or error message, and a chip for the applied code with a remove button. Zero dependencies, one file.",
               "preserve": [
@@ -3872,6 +3892,7 @@
         "i18n": {
           "en": {
             "description": "A shipping picker: every option names both prices — money and time — and the day and time slot appear only under the courier.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-021-* variables. A server component: the day and slot choice is revealed through :has() on the courier radio button, there is no state. The methods are gathered into a fieldset with a hidden legend, the selected one is highlighted through :has(input:checked), the day strip scrolls horizontally.",
             "ai": {
               "summary": "A delivery method picker: cards with timing, price and \"fastest\" and \"cheapest\" badges, a day strip and a time slot select under the courier. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -4061,6 +4082,7 @@
         "i18n": {
           "en": {
             "description": "Payment with saved cards: a card is recognised by its bank and last four digits, an expiring one is flagged early, and a new card is just another option.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-022-* variables. A server component: the fields of the new card are revealed through :has() on its radio button, there is no state. The card row is a container with the label in display:contents, so that the CVC field stays a separate element inside the same grid. The layout of the new-card fields is switched on by a container query.",
             "ai": {
               "summary": "Payment: a list of saved cards with a CVC field, a QR option, a new-card option that reveals its fields, a remember checkbox and a pay button carrying the amount. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -4248,6 +4270,7 @@
         "i18n": {
           "en": {
             "description": "A receipt with line items and tax: VAT is computed per rate and labelled \"included\", the sums derive from the items, and the bottom edge is cut with a mask.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-023-* variables. A server component: no hooks. The total, the discount and the tax at each rate are computed from the array of items, so the receipt adds up after any edit. The toothed bottom edge is made by a mask of two gradients, the QR is drawn with a conic-gradient, the figures are set in a monospace font with tabular numerals.",
             "ai": {
               "summary": "A cash receipt: shop details, items with quantity and price, totals with discount and shipping, VAT per rate, fiscal data and a QR block. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -4436,6 +4459,7 @@
         "i18n": {
           "en": {
             "description": "A wishlist as a waiting list: a price drop and a return to stock are spelled out, and a removal can be undone from an inline row.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-024-* variables. A client component: \"use client\" for the removal and the undo. The removed product is held in state until the next removal, the undo line is announced through aria-live. The grid rearranges through container queries, the heart button lies over the cover and carries the product name in its label.",
             "ai": {
               "summary": "A wishlist: a card grid with price, a price-drop note, stock state, an add-to-cart button and removal with undo. Zero dependencies, one file.",
               "preserve": [
@@ -4616,6 +4640,7 @@
         "i18n": {
           "en": {
             "description": "A catalog filter sidebar: every value carries an item count, groups collapse into details, and the applied filters gather as chips on top.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-025-* variables. A server component: the groups are opened by a native details, there is no state. The theme comes from the surrounding color-scheme through light-dark(): the block has no surface by default, it is turned on by the background prop. The root element is an aside with a maximum column width; colour values are marked with a swatch and a caption, the apply button sticks to the bottom through position:sticky and carries the item count.",
             "ai": {
               "summary": "A filter sidebar: applied chips, a price range, groups inside details with checkboxes, colour swatches and rating radios, plus a sticky apply button with the item count. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -4857,6 +4882,7 @@
         "i18n": {
           "en": {
             "description": "An empty cart that keeps the conversation going: a recently-viewed selection sits under the explanation, and the illustration is drawn in CSS.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-026-* variables. A server component: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block has no surface by default, it is turned on by the background prop. The bag illustration is assembled from pseudo-elements with clip-path, so the block does not pull in assets. The grid of the selection rearranges through a container query, the card link is stretched by a pseudo-element, the focus is put on the card through :has().",
             "ai": {
               "summary": "An empty cart: a CSS illustration, a note on how long items are kept, two buttons and a recently-viewed selection with prices. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -5036,6 +5062,7 @@
         "i18n": {
           "en": {
             "description": "A storefront home page: a promo banner whose deadline is spelled out in words, a row of curated collections and a grid of popular items.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-027-* variables. A server component: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block has no surface by default, it is turned on by the background prop, while the banner deliberately stays dark in both themes. The banner unfolds into two columns through a container query, the collection tiles and the product grid compute the number of columns from the block's width. The covers are drawn with a gradient from the hue in the data, the links are stretched by a pseudo-element, the focus is put on the card through :has(). The end of the sale is given as text rather than as a countdown.",
             "ai": {
               "summary": "A storefront home: a promo banner with sale facts, a row of editors' collections and a product grid with discounts. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -5266,6 +5293,7 @@
         "i18n": {
           "en": {
             "description": "A brand page: a monogram instead of a logo file, maker facts as a row of figures and the brand's product grid under a section nav.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-028-* variables. A server component: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block has no surface by default, it is turned on by the background prop. The monogram is assembled from the first letter of the name, so no logo image is needed. The facts are output as a definition list with a display:contents wrapper and are rearranged by a container query, the brand sections are real navigation with links and horizontal scrolling, the product grid computes its columns from the block's width.",
             "ai": {
               "summary": "A brand page: a cover, a monogram, maker facts, section navigation and a product grid. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -5473,6 +5501,7 @@
         "i18n": {
           "en": {
             "description": "A search screen: the spelling fix is announced in words with a link back to the raw query, and refinements sit as chips above the results.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-029-* variables. A server component: no hooks; the theme comes from the surrounding color-scheme through light-dark(), the block has no surface by default and it is turned on by the background prop; the search field is an ordinary form with role=\"search\" and defaultValue. The number of results is announced in aria-live, the result rows rearrange through a container query from three columns to two, the thumbnails are drawn with a gradient. The spelling fix is shown as a separate panel with a link to the search without the fix.",
             "ai": {
               "summary": "Search results: the query field, a spelling fix, the result count, refinement chips, related queries and a list of hits. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -5682,6 +5711,7 @@
         "i18n": {
           "en": {
             "description": "A size picker with the measurement table beside it: the table opens in a details element, and a sold-out size stays visible and struck through.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-030-* variables. A server component: the theme comes from the surrounding color-scheme through light-dark(), the block has no surface by default and it is turned on by the background prop; the choice is held by radio buttons in a fieldset, the table is folded into a native details. An unavailable size is marked disabled and struck through, the stock left is given as a second line inside the button. The table scrolls horizontally in its own wrapper, the first column sticks through position:sticky. The legend gets clear:both, otherwise the following flex children wrap around it.",
             "ai": {
               "summary": "A size picker: radios carrying stock left, a fit hint and a measurement table in a details element with a sticky first column. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -5874,6 +5904,7 @@
         "i18n": {
           "en": {
             "description": "Delivery and pickup on one screen: the point list with its placeholder map appears only under the selected pickup option.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-031-* variables. A server component: the theme comes from the surrounding color-scheme through light-dark(), the block has no surface by default and it is turned on by the background prop; revealing the panels is done through :has() on the checked radio button, there is no state. The map is drawn in layers of linear gradients — the grid of blocks, the river and the markers: a real map requires a key, a script and a third-party domain. The markers are positioned by percentages from the data, the panel is laid out in two columns through a container query.",
             "ai": {
               "summary": "A delivery choice: a courier with address fields, or pickup with a point list and a placeholder map. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -6070,6 +6101,7 @@
         "i18n": {
           "en": {
             "description": "A three-step checkout: a finished step folds into one line carrying its answer and an Edit button, and exactly one step stays open.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-032-* variables. A server component: the theme comes from the surrounding color-scheme through light-dark(), the block has no surface by default and it is turned on by the background prop; the open step is set by the current number, the state lives in the route rather than in the component. The state of a step differs by the shape of the badge — a tick, a ring, a number — and not by colour alone. The summary column sticks through position:sticky and stands beside the steps through a container query.",
             "ai": {
               "summary": "A three-step checkout: collapsed finished steps with their answers, the current step open with fields, and a sticky summary column. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -6263,6 +6295,7 @@
         "i18n": {
           "en": {
             "description": "Checkout without an account: the guest path comes first and is selected by default, with what an account gives listed right beside it.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-033-* variables. A server component: the theme comes from the surrounding color-scheme through light-dark(), the block has no surface by default and it is turned on by the background prop; the guest form and the sign-in form are revealed through :has() on the checked radio button, there is no state. The choice cards are assembled from radio buttons in a fieldset, the fields are laid out on a grid by a container query, the offer to create an account is moved into a separate checkbox after the payment.",
             "ai": {
               "summary": "Guest checkout: a choice between guest and sign-in, a short guest form, an after-payment account offer and a list of its benefits. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -6444,6 +6477,7 @@
         "i18n": {
           "en": {
             "description": "Payment with installments: the instalment and the extra cost are computed from the order total, and the schedule shows real dates rather than a number of parts.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-034-* variables. A server component: the theme comes from the surrounding color-scheme through light-dark(), the block has no surface by default and it is turned on by the background prop; the plans are assembled from radio buttons in a fieldset, there is no state. The payment and the overpayment are derived from the amount number and the overpay share, so the figures do not diverge after a price change. The plans stand in three columns through a container query, the sums are set in tabular numerals. The legend gets clear:both, otherwise the following flex children wrap around it.",
             "ai": {
               "summary": "Installment payment: plans computed from the order total, the extra cost spelled out, a dated schedule and a bank warning. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -6634,6 +6668,7 @@
         "i18n": {
           "en": {
             "description": "Gift wrapping and a card: the box swatches are drawn in CSS, and the card text is shown the way the recipient will see it.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-035-* variables. A server component: the theme comes from the surrounding color-scheme through light-dark(), the block has no surface by default and it is turned on by the background prop; the wrapping is chosen with radio buttons in a fieldset, there is no character counter — the limit is held by maxLength on the textarea and by the caption under it. The box swatches are assembled from a gradient and two pseudo-elements, so no pictures are needed. The card preview is set in a different font stack and is laid out beside the field through a container query.",
             "ai": {
               "summary": "Gift wrapping: box swatches as radios, a card field with a limit, a preview of the text and a hide-prices checkbox. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -6818,6 +6853,7 @@
         "i18n": {
           "en": {
             "description": "A recurring delivery subscription: the chosen cadence is immediately marked as dates on a month calendar, with the first delivery ringed.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-036-* variables. A server component: the theme comes from the surrounding color-scheme through light-dark(), the block has no surface by default and it is turned on by the background prop; the cadence is held by radio buttons, the calendar is built from firstDay, startDay and the step of the period. The calendar markup is a real table with column headers, so a screen reader reads the days as dates. The first delivery differs not only by colour but by a ring as well; the terms column sticks through position:sticky.",
             "ai": {
               "summary": "A delivery subscription: cadence choice, a month calendar with the delivery dates marked, the next delivery and the cancellation rules. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -6998,6 +7034,7 @@
         "i18n": {
           "en": {
             "description": "A return with item selection: every order line carries its own reason and quantity, and a non-returnable item stays with an explanation.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-037-* variables. A server component: marking an item is a checkbox, the quantity and the reason are native selects, there is no state. A non-returnable row is marked with a data-blocked attribute, its checkbox is disabled, and an explanation is shown instead of the fields. The amount column sticks through position:sticky and stands beside the list through a container query.",
             "ai": {
               "summary": "A return request: the deadline on top, order lines with a checkbox, quantity and reason, non-returnable items explained, and the refund amount. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -7188,6 +7225,7 @@
         "i18n": {
           "en": {
             "description": "Warranty and service: covered and uncovered cases share one table, and coverage is marked by an icon shape and a word rather than by row colour.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-038-* variables. A server component: no hooks. The warranty term is moved into a badge beside the heading, the service figures are gathered as cards, the table of cases scrolls horizontally in its own wrapper. Coverage is conveyed by the shape of the mark — a circle with a tick against a square with a cross — and by a word, so it reads without telling colours apart.",
             "ai": {
               "summary": "Warranty and service: the term, service figures as cards, a table of covered and uncovered cases and three repair steps. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -7411,6 +7449,7 @@
         "i18n": {
           "en": {
             "description": "An outlet grid where every card states the reason for the discount: \"floor model\" sells better and comes back less often than a bare 40% off.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-039-* variables. A server component: no hooks. The card carries a discount label, the outlet grade and the defect description as a separate block with a coloured rule. The stock left is named as a number and duplicated by a bar whose width is computed from the number of units. The link is stretched by a pseudo-element, the button is raised above it through z-index, the grid rearranges through container queries.",
             "ai": {
               "summary": "An outlet grid: a discount badge, the outlet grade, the defect description, both prices and the stock left on every card. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -7596,6 +7635,7 @@
         "i18n": {
           "en": {
             "description": "A preorder where the release date is set larger than the price: it answers when before how much, with the charge terms beside the button.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-040-* variables. A server component: no hooks. The bar to release is static, its width arrives as the progress number — a live countdown requires the client clock and lies on a cached page. The preorder bonuses are marked with a different badge shape, two columns are switched on by a container query, the old price is output with an s tag and a hidden label.",
             "ai": {
               "summary": "A preorder: the release date in large type, a progress bar to launch, a locked price, what the preorder includes and the charge terms. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -7779,6 +7819,7 @@
         "i18n": {
           "en": {
             "description": "A product kit sold whole: a chain of cards joined by plus signs, with the saving proved by comparing the separate total against the kit price.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-041-* variables. A server component: no hooks and no checkboxes — the kit is sold whole. The chain rearranges from a column into a row through a container query, the plus separators are drawn by a pseudo-element and hidden from a screen reader, so the list is read as a list. The sum of the items bought separately is struck through beside the kit price.",
             "ai": {
               "summary": "A ready-made kit: a chain of products joined by plus signs, the separate versus kit price, and the saving as its own chip. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -7958,6 +7999,7 @@
         "i18n": {
           "en": {
             "description": "Loyalty points: the balance sits next to the conversion rate, the expiry date and the spending cap — without them a point count says nothing.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-042-* variables. A server component: no hooks. The balance and the points earned are formatted through toLocaleString, so the digit groups match the locale. The bar to the next tier is static and arrives as the progress number, the earning rate and the spending cap are output as a definition list with a display:contents wrapper, the rules of the programme are gathered as cards in two columns by a container query.",
             "ai": {
               "summary": "A loyalty programme: the balance with its rate, an expiry line, points earned on this order, the spending cap, a tier bar and the rules. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -8148,6 +8190,7 @@
         "i18n": {
           "en": {
             "description": "Sellers compared on the delivered price: the block adds item and shipping together, and the best-offer badge says what makes it best.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-043-* variables. A server component: the sorting is a native select with defaultValue, there is no state. The final price is computed by adding price and shipping, so a cheap item with expensive delivery does not look like a bargain. The offer row rearranges into three columns through a container query, the best offer is marked with a border and a label that spells out the reason.",
             "ai": {
               "summary": "Seller offers: sorting, a rating with its vote count, delivery timing and the delivered price per seller. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -8342,6 +8385,7 @@
         "i18n": {
           "en": {
             "description": "Product questions: a seller's answer and a buyer's answer are marked differently, because the same sentence carries different weight from each.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-044-* variables. A server component: the threads are folded into a native details, the first question is left open by default through the open flag in the data. A seller's answer is set apart by a coloured rule and a label, a buyer's answer by a “bought the product” label. The number of answers is moved into the question heading, the form for a new question stands at the bottom as a dashed card.",
             "ai": {
               "summary": "Product questions: threads in details elements, seller and buyer answers marked apart, a helpfulness counter and a form for a new question. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -8554,6 +8598,7 @@
         "i18n": {
           "en": {
             "description": "A buyer profile built around addresses: the main one is labelled in words and comes first, and every address carries its own recipient and courier note.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-045-* variables. A server component: no hooks. The initials are assembled from the name, so no avatar file is needed. The profile counters are output as a definition list with a display:contents wrapper, the address cards stand in two columns through a container query, the actions are marked with an aria-label naming the address, and the “make primary” button is not drawn for the primary address.",
             "ai": {
               "summary": "A buyer profile: a header with initials and contacts, order and point counters, and address cards with recipient, courier note and actions. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -8760,6 +8805,7 @@
         "i18n": {
           "en": {
             "description": "A cart for a narrow screen: the total and the button stick to the bottom edge, with a spacer under the panel so the last line never hides.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-046-* variables. A server component: the quantity is shown as buttons without state, the handlers are left to the calling code. The header and the totals panel are held by position:sticky at the top and at the bottom, a spacer stands between the list and the panel, otherwise the last row slips under the button. The width is limited to 26rem, and in a wide container the block is given a border through a container query.",
             "ai": {
               "summary": "A phone cart: a sticky header with the item count, compact lines with quantity, a promo strip and a sticky total with the checkout button. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -8949,6 +8995,7 @@
         "i18n": {
           "en": {
             "description": "A storefront home built around a season: every edit carries a deadline and a count, and the wide tile is a flag in the data.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-047-* variables. A server component: no hooks. The grid of edits and the strip of benefits rearrange through container queries, the large tile gets two columns from the data-wide attribute, which is set from the wide flag in the data. The covers are drawn with a gradient from the hue, the link is stretched by a pseudo-element, the focus is caught on the tile through :has().",
             "ai": {
               "summary": "A storefront home: a seasonal hero with a deadline, a mosaic of edits with item counts and a strip of reasons to buy here. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -9140,6 +9187,7 @@
         "i18n": {
           "en": {
             "description": "A sale landing with a countdown: the digits arrive as props and are backed by a real date, with the discount tiers beside them.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-048-* variables. A server component: no hooks — the countdown values arrive as props, and it is the calling code that makes them tick. The date is duplicated by the dateTime attribute on time. The bar of the stock sold is computed from a percentage through a local variable, the dark surface is the block's own, the pulse of the dot is switched off under prefers-reduced-motion.",
             "ai": {
               "summary": "A sale landing: a block countdown, the end date in a time element, discount tiers, a sold-out bar and a call to action. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -9324,6 +9372,7 @@
         "i18n": {
           "en": {
             "description": "A collection page with a banner: the cover carries context — who curated it, when, and how many pieces it holds.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-049-* variables. A server component: no hooks. The banner is assembled from two stacked gradients — the lower one draws the background, the upper one darkens the area under the text, so the caption reads over a photograph as well. The breadcrumbs are output as a list inside a nav, the grid of pieces and the story column are switched on by container queries.",
             "ai": {
               "summary": "A collection page: breadcrumbs, a banner with the curator and release date, a story block and a grid of pieces. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -9523,6 +9572,7 @@
         "i18n": {
           "en": {
             "description": "An infinite-scroll catalog that still has an exit: skeletons, a live counter and a load-more button.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-050-* variables. A server component: no hooks, the loading is performed by the calling code. The skeletons are drawn with a moving gradient and hidden from a screen reader through aria-hidden, the counter is announced in aria-live, and the loading line is marked role=status. The number of columns is computed by container queries, the animation is switched off under prefers-reduced-motion.",
             "ai": {
               "summary": "An infinite-scroll catalog: a card grid, a skeleton row, a \"showing N of M\" counter and a load-more button. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -9730,6 +9780,7 @@
         "i18n": {
           "en": {
             "description": "A catalog with a grid/list switch: :has() changes both the layout and the visible fields, with no JS at all.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-051-* variables. A server component: the view is held by two radio buttons in a fieldset with a hidden legend, and the layout is switched by :has() on the shell. The list additionally shows the description and the stock — the display rules on those nodes are the whole point of the switch. The radio button identifiers are fixed, so two instances on a page share one switch.",
             "ai": {
               "summary": "A catalog in two views: a radio-driven switch, a tile grid and a row list with descriptions and stock. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -9914,6 +9965,7 @@
         "i18n": {
           "en": {
             "description": "A product page with a video review: playback starts by hand, chapters sit beside it, and a transcript hides in details.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-052-* variables. A server component: no hooks, the player is a placeholder with a start button that the calling code wires up. The triangle of the button is drawn with the borders of a pseudo-element, the chapters are output as a numbered list of buttons, the transcript is folded into a native details. Two columns are switched on by a container query.",
             "ai": {
               "summary": "A product page built around a video review: a manual-start player, duration, timecoded chapters, price, actions and a text transcript. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -10095,6 +10147,7 @@
         "i18n": {
           "en": {
             "description": "A product configurator: price and lead time are computed from the chosen options, and the configuration code is built from their values.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-053-* variables. A client component: \"use client\" for the state of the choice — radio groups hold the options, checkboxes the extras. The total, the lead time and the configuration code are derived from the choice on every render rather than stored separately. The summary is marked aria-live, the two-column layout is switched on by a container query.",
             "ai": {
               "summary": "A product configurator: option groups with surcharges and lead times, extras, a choice summary, the total, the production time and a configuration code. Zero dependencies, one file.",
               "preserve": [
@@ -10335,6 +10388,7 @@
         "i18n": {
           "en": {
             "description": "A parameter-based service calculator: it shows not just the number but how it was reached, and when the minimum order kicks in.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-054-* variables. A client component: \"use client\" for the state of the parameters. The area is set by a slider, the number of windows by a number field, the urgency by a radio group with a multiplier. The breakdown shows every line with its multiplier, the total is marked aria-live, and the minimum-order floor is given as a separate warning.",
             "ai": {
               "summary": "A service calculator: an area slider, a window count, an urgency multiplier, a line-by-line breakdown, the total and a minimum-order floor. Zero dependencies, one file.",
               "preserve": [
@@ -10517,6 +10571,7 @@
         "i18n": {
           "en": {
             "description": "A product compatibility table: each state is named in words and marked by shape, and the first column sticks while scrolling.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-055-* variables. A server component: no hooks. The data is output as a real table with a caption and row headers, so a screen reader reads the tie between a cell and a model. The state mark differs by shape: a circle, a triangle through clip-path and a square. The scrolling wrapper is given a tabIndex so that the table can be scrolled from the keyboard.",
             "ai": {
               "summary": "A compatibility table: a state legend, model rows with years, fit and a comment, plus a VIN check form. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -10715,6 +10770,7 @@
         "i18n": {
           "en": {
             "description": "A digital product page: three licences as radios, the rights panel switching on :has(), with allowed and forbidden kept apart.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-056-* variables. A server component: no hooks — the rights panel is shown by a :has() selector on the shell according to the chosen radio button. The rights lists are marked with pseudo-elements of different shapes, the specs are output as a definition list with a display:contents wrapper. The licence identifiers are fixed, so two instances on a page conflict.",
             "ai": {
               "summary": "A digital product page: a licence choice with prices, an allowed/forbidden panel, file specs and the delivery and refund terms. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -10938,6 +10994,7 @@
         "i18n": {
           "en": {
             "description": "Service booking: taken slots stay visible but disabled, and the right day's grid appears through :has() without JS.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-057-* variables. A server component: the day and the time are held by two radio groups, the grid of the chosen day is shown by :has() on the shell. Taken slots stay in the markup with a disabled attribute and a strike-through, while the word “taken” is hidden and left for the screen reader. The two-column layout is switched on by a container query.",
             "ai": {
               "summary": "A service page with booking: description, duration and price, day chips, a slot grid with taken hours, the specialist card and the cancellation policy. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -11209,6 +11266,7 @@
         "i18n": {
           "en": {
             "description": "A course page whose syllabus lives in details: every lesson carries its runtime and the free ones are marked.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-058-* variables. A server component: the modules are folded into native details, the first one is open by the openFirst flag. The summary marker is hidden, the module number is drawn as a square, the lessons are output as a numbered list with their runtimes. The column with the price and the author stands beside it by a container query.",
             "ai": {
               "summary": "A course page: the promise and level, a syllabus of details modules with lesson runtimes, price with the old one, the author and a refund guarantee. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -11463,6 +11521,7 @@
         "i18n": {
           "en": {
             "description": "A marketplace cart: items grouped by seller, each group carrying its own shipping terms, date and subtotal.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-059-* variables. A server component: no hooks. Every seller group is a separate card with a header of terms, a list of lines and a footer with the subtotal. The grand total is moved into a sticky column that stands beside it by a container query; the totals rows are output as a definition list with a display:contents wrapper.",
             "ai": {
               "summary": "A multi-seller cart: groups with their own terms and subtotals, a grand total naming the number of parcels and a note on separate returns. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -11680,6 +11739,7 @@
         "i18n": {
           "en": {
             "description": "A cart split into shipments: two parcels, each with the reason for its delay, and a choice between waiting and shipping in parts.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-060-* variables. A server component: the delivery method is held by a radio group, there is no state. Both prices — the delivery and the total — are written directly inside the options, because without JS there is nothing to recompute the total with, and the difference must not be hidden. The parcel cards and the options stand in two columns by a container query.",
             "ai": {
               "summary": "A cart laid out by parcels: each with its date and delay reason, plus a choice between one delivery and shipping as ready, both priced. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -11880,6 +11940,7 @@
         "i18n": {
           "en": {
             "description": "A checkout step with an address book: saved addresses as radios, and the new-address form opening on :has() only under its own option.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-061-* variables. A server component: the addresses are held by a radio group, the new-address form is shown by a :has() selector on the shell of the address book. The edit button is taken out of the label and positioned absolutely so as not to end up inside the label. The address fields stand in two columns by a container query.",
             "ai": {
               "summary": "A checkout step: saved addresses with recipient and phone, a default mark, per-address editing and a revealed new-address form. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -12060,6 +12121,7 @@
         "i18n": {
           "en": {
             "description": "Pickup points listed by distance: opening hours, storage window and size limits are visible before the choice.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-062-* variables. A server component: the points are a radio group in a fieldset, there is no state. Every card carries the distance, the hours, the price, the date and a set of perks as chips, while the size limit is given as a separate line. The nearby search is an ordinary field with a hidden label; the query is executed by the calling code.",
             "ai": {
               "summary": "Pickup point selection: a nearby search, a list of points with distance, hours, price, date, perks and size limits. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -12245,6 +12307,7 @@
         "i18n": {
           "en": {
             "description": "Paying with two cards: the second amount is the remainder, so underpayment is impossible and an overshoot raises an error.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-063-* variables. A client component: \"use client\" for the amount on the first card. The slider and the number field are tied to one piece of state, the remainder is computed from the total, and when the bounds are exceeded the button is blocked and a message with role=alert appears. The remainder line is marked aria-live.",
             "ai": {
               "summary": "A split payment across two cards: a slider and an exact field for the first amount, an automatic remainder on the second, quick presets and a guard against overshoot. Zero dependencies, one file.",
               "preserve": [
@@ -12409,6 +12472,7 @@
         "i18n": {
           "en": {
             "description": "A crypto payment screen: the network is chosen explicitly, the address selects in one click, and the wrong-network warning sits above the button.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-064-* variables. A server component: the network is held by a radio group, there is no state. The QR is drawn as a grid of cells from an array rather than as a picture: the block stays one file. The address and the memo are selected whole through user-select:all, the dark surface is the block's own, the blinking of the dot is switched off under prefers-reduced-motion.",
             "ai": {
               "summary": "A crypto payment screen: the amount in tokens and fiat, the rate hold, a network choice with fees, a QR placeholder, a copyable address and a transfer memo. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -12581,6 +12645,7 @@
         "i18n": {
           "en": {
             "description": "A successful payment screen with a receipt: the amount set large, a one-click-copy operation number and a masked torn edge.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-065-* variables. A server component: no hooks. The receipt rows are output as a definition list with a display:contents wrapper, the operation number is selected whole through user-select:all, and the toothed edge is drawn with a repeating mask from a radial gradient — with no picture. The time of the payment is duplicated by the dateTime attribute.",
             "ai": {
               "summary": "A post-payment screen: a tick, the amount and time, a receipt with lines and tax, the operation number and download or e-mail actions. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -12757,6 +12822,7 @@
         "i18n": {
           "en": {
             "description": "A declined payment screen: the reason is set larger than the status, the bank code gets its own line and the order hold is named.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-066-* variables. A server component: no hooks. The details of the attempt are output as a definition list with a display:contents wrapper, the steps as a numbered list on a CSS counter, and the bank response code is selected whole through user-select:all. The holding of funds on a declined operation is explained in a separate block.",
             "ai": {
               "summary": "A declined payment screen: the status, the reason in plain words, the attempt details with the bank code, recovery steps, two actions and an explanation of held funds. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -12931,6 +12997,7 @@
         "i18n": {
           "en": {
             "description": "An account with a balance: available money is kept apart from money in transit, and bonuses sit in pockets with expiry dates.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-067-* variables. A server component: no hooks. The balance is moved into a gradient hero, the pockets are a grid of cards with an optional expiry line, the recent movements are output as a list with the sign of the amount and a separate attribute for the positive ones. The grid of pockets rearranges through container queries.",
             "ai": {
               "summary": "A customer account: the available balance, money in transit, bonus and cashback pockets with expiry, recent movements with signs and a link to the full history. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -13128,6 +13195,7 @@
         "i18n": {
           "en": {
             "description": "A payment history: period totals sit above the table, each status is named and shape-coded, and refunds share the same list.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-068-* variables. A server component: the period is chosen with a native select with defaultValue, the query is made by the calling code. The data is output as a real table with a caption, the state marks differ by shape through clip-path, the scrolling wrapper is given a tabIndex. There is a separate empty state.",
             "ai": {
               "summary": "A payment history: a period select, spent and refunded totals, a table of operations with statuses and receipts, an empty state and a load-more action. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -13343,6 +13411,7 @@
         "i18n": {
           "en": {
             "description": "Subscription management: monthly and yearly totals up top, and every row showing the next charge, the card and a pause beside the cancel.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-069-* variables. A server component: no hooks. The state of a subscription is marked by a word and by a mark of a different shape, the date of the next charge is moved into a separate badge, and the actions are gathered into a row where the cancel is pushed to the right through margin-left:auto. The name of the subscription is duplicated in the hidden label of every button.",
             "ai": {
               "summary": "A customer's subscriptions: monthly and yearly totals, cards with status, price, period, next charge and card, plus pause, change-card and cancel actions. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -13534,6 +13603,7 @@
         "i18n": {
           "en": {
             "description": "Parcel tracking on a placeholder map: the map is drawn in CSS and every pin is duplicated in a timestamped list.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-070-* variables. A server component: no hooks. The map is assembled from layers of gradients — the water, the grid of blocks and the roads — and the pins are placed by percentages through local variables. The map is marked role=img with a label, and the route is duplicated as a numbered list; the pulse of the current pin is switched off under prefers-reduced-motion.",
             "ai": {
               "summary": "Parcel tracking: status and arrival time, a route sketch with pins, a timestamped list of checkpoints, the courier card and the reschedule rules. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -13718,6 +13788,7 @@
         "i18n": {
           "en": {
             "description": "A buy-again rail built from history: purchase frequency and the last date are visible upfront, and a price rise is spelled out.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-071-* variables. A server component: no hooks. The rail is built on a grid with auto columns and scroll-snap scrolling, the cards stay ordinary list items with a link stretched by a pseudo-element. The add button is raised above the link with z-index, the product name is duplicated in a hidden label.",
             "ai": {
               "summary": "A buy-again rail: past purchases with how often they were bought, the last date, a price-change flag and an add button. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -13897,6 +13968,7 @@
         "i18n": {
           "en": {
             "description": "Personal recommendations with a reason on every card and a not-interested button that actually reshapes the feed.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-072-* variables. A server component: no hooks. The reason for the recommendation is given as a separate badge inside the card, the hide button is raised above the stretched link with z-index and lies over the cover, and the explanation of the mechanics is folded into a native details. The grid rearranges through container queries.",
             "ai": {
               "summary": "Personal recommendations: cards with a cover, the reason, the price, an add button and a not-interested action, plus a collapsible explanation of how the feed works. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -14073,6 +14145,7 @@
         "i18n": {
           "en": {
             "description": "Recently viewed items grouped by day: every row carries its time and its own remove action, with a clear-history button above.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-073-* variables. A server component: no hooks. The views are grouped by day into separate lists with a heading; a row is an ordinary list item with a link stretched by a pseudo-element and a remove button over it. There is an empty state and a note on how the history is used.",
             "ai": {
               "summary": "Recently viewed: day groups, rows with the view time, price and a sold-out flag, per-row removal and a full history wipe. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -14277,6 +14350,7 @@
         "i18n": {
           "en": {
             "description": "Buying a gift card: value and design as radios, the card preview switching on :has(), and the rules right beside the button.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-074-* variables. A server component: the value and the design are held by two radio groups, and the background of the preview is changed by a :has() selector on the shell according to the chosen design. The send fields are laid out on a grid, the message on the card is a textarea with a length limit. The design identifiers are hard-wired into the CSS.",
             "ai": {
               "summary": "A gift card page: value and card design choice, recipient and send-date fields, a message, a live preview and the usage rules. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -14478,6 +14552,7 @@
         "i18n": {
           "en": {
             "description": "A charity round-up: the top-up is computed from the actual order total, and the checkbox starts unchecked.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-075-* variables. A client component: \"use client\" for the checkbox and the fund choice. The top-up is computed by rounding the order total up to the given step, the total is marked aria-live, and the group of funds is switched off by the disabled attribute on the fieldset while the rounding is not enabled. The explanation of how the payment moves is folded into details.",
             "ai": {
               "summary": "Rounding an order up for charity: a checkbox with the computed top-up, a fund choice, order and donation rows, the total and an explanation of how the money moves. Zero dependencies, one file.",
               "preserve": [
@@ -14645,6 +14720,7 @@
         "i18n": {
           "en": {
             "description": "A wholesale price ladder: tiers in a table, the current level named in words, and the exact step to the next one.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-076-* variables. A server component: no hooks. The tiers are output as a real table with a caption and row headers, the current tier is marked with a data-current attribute and a caption in words. The trading terms are gathered as a definition list with a display:contents wrapper, the scrolling wrapper is given a tabIndex.",
             "ai": {
               "summary": "A wholesale price list: a tier table with unit price, savings and batch cost, a hint on the step to the next tier, the trading terms and a quote request. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -14856,6 +14932,7 @@
         "i18n": {
           "en": {
             "description": "Nearby store stock: distance is paired with travel time, the last unit is flagged, and there is an exit for anyone with nothing close by.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-077-* variables. A server component: no hooks. The store row carries the distance, the travel time, the opening hours, the unit count and the hold period; the last unit is marked with a data-last attribute, which changes both the colour and the shape of the mark. At the bottom there is a separate restock subscription section.",
             "ai": {
               "summary": "Nearby availability: a locate button, a store list with distance, travel time, hours, unit count and hold period, plus a restock subscription. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -15037,6 +15114,7 @@
         "i18n": {
           "en": {
             "description": "A customer loyalty page: the tier with its retention date, a progress bar to the next one and a column-by-column tier comparison.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-078-* variables. A server component: no hooks. The progress is drawn as a bar with the progressbar role and a width from a local variable, the tiers are output as cards with the same set of rows, the current one is marked with a data-current attribute. The earning rules are folded into a native details, the dark surface is the block's own.",
             "ai": {
               "summary": "A loyalty program: points and yearly spend, progress to the next tier with a retention date, a three-tier comparison and the earning rules. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -15234,6 +15312,7 @@
         "i18n": {
           "en": {
             "description": "Price compared against its own history: the period minimum and its date beside the discount, with a bar chart drawn in CSS.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-commerce-079-* variables. A server component: no hooks. The bars are drawn as elements with a height from a local variable, normalised against the minimum and the maximum of the series; the chart is marked aria-hidden, and all the values are duplicated as a definition list beneath it. The minimum point is picked out in a separate colour by the low flag.",
             "ai": {
               "summary": "A price history: the current price with the old one and the discount, the period minimum and average, a bar chart, the values as a list and a price-watch action. Zero dependencies, one file, no client JS.",
               "preserve": [

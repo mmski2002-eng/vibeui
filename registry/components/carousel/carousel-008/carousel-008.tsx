@@ -1,17 +1,14 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Carousel008Step = {
   title: string
   text: string
 }
 
-export type Carousel008Props = Omit<
-  ComponentPropsWithoutRef<"section">,
-  "children"
-> & {
+export type Carousel008Props = Omit<ComponentProps<"section">, "children"> & {
   steps?: Carousel008Step[]
   label?: string
   nextLabel?: string
@@ -37,11 +34,14 @@ const STYLES = `
 :where([data-vibeui-block="carousel-008"]){
 --vibeui-carousel-008-bg:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
 --vibeui-carousel-008-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-carousel-008-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-carousel-008-muted:color-mix(in oklab,var(--vibeui-carousel-008-fg) 68%,transparent);
 --vibeui-carousel-008-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-carousel-008-accent:light-dark(oklch(0.55 0.17 265),oklch(0.7 0.16 265));
 --vibeui-carousel-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="carousel-008"]{color-scheme:dark}
 [data-vibeui-block="carousel-008"]{
 display:flex;flex-direction:column;gap:0.75rem;
 width:100%;max-width:20rem;box-sizing:border-box;padding:1rem;
@@ -49,6 +49,8 @@ background:var(--vibeui-carousel-008-bg);
 border:1px solid var(--vibeui-carousel-008-border);border-radius:0.875rem;
 font-family:var(--vibeui-carousel-008-font);color:var(--vibeui-carousel-008-fg);
 }
+/* Картинка шага стоит вместо иллюстрации: градиент и светлый номер на нём
+   одинаковы в любой теме страницы, поэтому второй ветки у них нет. */
 [data-vibeui-block="carousel-008"] [data-part="art"]{
 display:flex;align-items:center;justify-content:center;
 aspect-ratio:16 / 9;border-radius:0.75rem;
@@ -169,6 +171,7 @@ export function Carousel008({
       </style>
       <section
         {...props}
+        data-slot="carousel"
         data-vibeui-block="carousel-008"
         aria-roledescription={roleText}
         aria-label={label}
@@ -192,8 +195,10 @@ export function Carousel008({
           ))}
         </div>
         <div data-part="foot">
+          {/* role нужен ради подписи: на голом div aria-label не читается. */}
           <div
             data-part="dots"
+            role="group"
             aria-label={fill(dotsText, {
               index: index + 1,
               total: steps.length,

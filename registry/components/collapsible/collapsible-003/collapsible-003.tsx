@@ -1,10 +1,10 @@
 "use client"
 
 import { useId, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Collapsible003Props = Omit<
-  ComponentPropsWithoutRef<"section">,
+  ComponentProps<"section">,
   "children" | "title"
 > & {
   title?: string
@@ -33,12 +33,15 @@ const STYLES = `
 --vibeui-collapsible-003-bg:transparent;
 --vibeui-collapsible-003-fade:light-dark(oklch(1 0 0),oklch(0.19 0.013 265));
 --vibeui-collapsible-003-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
---vibeui-collapsible-003-muted:light-dark(oklch(0.5 0.014 265),oklch(0.72 0.012 265));
+--vibeui-collapsible-003-muted:color-mix(in oklab,var(--vibeui-collapsible-003-fg) 68%,transparent);
 --vibeui-collapsible-003-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-collapsible-003-accent:light-dark(oklch(0.55 0.19 28),oklch(0.76 0.15 28));
 --vibeui-collapsible-003-lines:4;
 --vibeui-collapsible-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="collapsible-003"]{color-scheme:dark}
 [data-vibeui-block="collapsible-003"]{
 display:block;box-sizing:border-box;width:100%;max-width:26rem;padding:1rem;
 background:var(--vibeui-collapsible-003-bg);color:var(--vibeui-collapsible-003-fg);
@@ -142,6 +145,7 @@ export function Collapsible003({
       </style>
       <section
         {...props}
+        data-slot="collapsible"
         data-vibeui-block="collapsible-003"
         className={className}
         style={palette}

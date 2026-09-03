@@ -1,10 +1,10 @@
 "use client"
 
-import { useRef, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import { useId, useRef, useState } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Field007Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "defaultValue"
 > & {
   label?: string
@@ -30,7 +30,7 @@ const STYLES = `
 --vibeui-field-007-surface:transparent;
 --vibeui-field-007-button:light-dark(oklch(1 0 0),oklch(0.31 0.012 265));
 --vibeui-field-007-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
---vibeui-field-007-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-field-007-muted:color-mix(in oklab,var(--vibeui-field-007-fg) 68%,transparent);
 --vibeui-field-007-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.012 265));
 --vibeui-field-007-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.011 265));
 --vibeui-field-007-accent:light-dark(oklch(0.5 0.16 250),oklch(0.75 0.13 250));
@@ -38,6 +38,9 @@ const STYLES = `
 --vibeui-field-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-field-007-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="field-007"]{color-scheme:dark}
 /* Подложки по умолчанию нет: поле ложится на фон страницы. */
 [data-vibeui-block="field-007"]{
 display:flex;flex-direction:column;gap:0.4375rem;
@@ -135,6 +138,7 @@ export function Field007({
   style,
   ...props
 }: Field007Props) {
+  const id = useId()
   const input = useRef<HTMLInputElement>(null)
   const [copied, setCopied] = useState(false)
 
@@ -169,20 +173,22 @@ export function Field007({
       </style>
       <div
         {...props}
+        data-slot="field"
         data-vibeui-block="field-007"
         data-copied={copied ? "true" : undefined}
         className={className}
         style={palette}
       >
-        <label htmlFor="field-007-input">{label}</label>
+        <label htmlFor={id}>{label}</label>
         <div data-part="frame">
           <input
-            id="field-007-input"
+            id={id}
             ref={input}
             type="text"
             readOnly
             value={value}
             spellCheck={false}
+            aria-describedby={`${id}-hint`}
             onFocus={(event) => event.target.select()}
           />
           <button type="button" onClick={copy}>
@@ -190,7 +196,7 @@ export function Field007({
             {copied ? copiedText : copyText}
           </button>
         </div>
-        <p data-part="hint" role="status">
+        <p id={`${id}-hint`} data-part="hint" role="status">
           {copied ? copiedHint : hint}
         </p>
       </div>

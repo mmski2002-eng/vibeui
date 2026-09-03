@@ -169,7 +169,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-sidebar-001-* variables. The markup is semantic: a <nav> with a label, holding sections with headings and <ul> lists. The active item is determined by comparing its label with activeLabel and gets aria-current=\"page\", a solid background and a bar through ::before. The count is an optional number on the right with tabular-nums. The theme comes from the surrounding color-scheme through light-dark(): there is no background by default, the component sits on the page background and darkens with it, while the background prop switches on a background of its own and picks the theme branch from its lightness."
           }
         },
         "cardControls": ["activeLabel", "accent", "background"]
@@ -330,7 +331,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-sidebar-002-* variables. Server-side: there are no hooks, the state is held by a checkbox. The collapsed view comes from changing a single width variable through :has(), while the labels shrink to zero with overflow:hidden and stay in the accessibility tree. The theme comes from the surrounding color-scheme through light-dark(): there is no background by default, the component sits on the page background and darkens with it, while the background prop switches on a background of its own and picks the theme branch from its lightness."
           }
         },
         "cardControls": ["activeLabel", "accent", "background"]
@@ -488,7 +490,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, the palette in the local --vibeui-sidebar-003-* variables. Client-side (\"use client\") — the collapsed state is held by useState. The column width is set by a single variable, --vibeui-sidebar-003-width, which a rule on [data-collapsed=\"true\"] overrides: everything else adjusts on its own. The labels are not removed from the DOM, they are shrunk with max-width and opacity, so the accessible name of a link is not lost. The icons are inline SVG paths from props, no icon library is needed. While collapsed, the links get a title and the button gets aria-expanded. The theme comes from the surrounding color-scheme through light-dark(): there is no background by default, the component sits on the page background and darkens with it, while the background prop switches on a background of its own and picks the theme branch from its lightness."
           }
         },
         "cardControls": ["activeLabel", "accent", "background"]
@@ -671,9 +674,11 @@
                       }
                     ]
                   }
-                ]
+                ],
+                "holdsActiveText": "Holds the current page"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, the palette in the local --vibeui-sidebar-004-* variables. Server-side: there are no hooks, the browser holds the disclosure state through <details>. The open attribute is computed at render time from whether the active item lies inside the group: the menu must not need a click to show where the user is. A collapsed group with an active child is marked with a dot in its summary — otherwise the current place disappears from view once the section is closed. The chevron is drawn with the borders of a pseudo-element, the details marker is hidden. The theme comes from the surrounding color-scheme through light-dark(): there is no background by default, the component sits on the page background and darkens with it, while the background prop switches on a background of its own and picks the theme branch from its lightness."
           }
         },
         "cardControls": ["activeLabel", "accent", "background"]
@@ -879,7 +884,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, the palette in the local --vibeui-sidebar-005-* variables. Client-side (\"use client\") — the query is held by useState, the grouping of the results is computed in useMemo. The filter is plain: a case-insensitive substring; the match is wrapped in <mark>, because otherwise there is no telling why an item stayed in the list. An empty result gives a text explanation rather than emptiness. The number of matches sits in a visually hidden paragraph with role=\"status\": \"the list got shorter\" is an event invisible to a screen reader. The theme comes from the surrounding color-scheme through light-dark(): there is no background by default, the component sits on the page background and darkens with it, while the background prop switches on a background of its own and picks the theme branch from its lightness."
           }
         },
         "cardControls": ["activeLabel", "accent", "background"]
@@ -1056,7 +1062,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, the palette in the local --vibeui-sidebar-006-* variables. Server-side: there are no hooks, the profile menu is built on <details> and the browser holds the state. The profile is pushed to the bottom by a flex:1 spacer rather than a margin: the column height varies. The menu list is positioned absolutely and opens upwards — there is no room at the bottom of the column, and a clipped menu is useless. The initials are computed from the name at render time. Sign-out and settings live next to the name, so they cannot be pressed by mistake while choosing a section. The theme comes from the surrounding color-scheme through light-dark(): there is no background by default, the component sits on the page background and darkens with it, while the background prop switches on a background of its own and picks the theme branch from its lightness."
           }
         },
         "cardControls": ["activeLabel", "accent", "background"]
@@ -1231,9 +1238,11 @@
                     "label": "Archive",
                     "href": "#"
                   }
-                ]
+                ],
+                "alertText": "needs attention"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, the palette in the local --vibeui-sidebar-007-* variables. Server-side: there are no hooks. The badge weight is set by the data-tone attribute on the list row: one and the same badge for everything turns the menu into a ripple of digits, and the urgent gets lost in it. Large numbers are capped at \"99+\" through the cap prop — the exact value is not read anyway, while the column width drifts with it. The meaning of the number is duplicated by a visually hidden word: \"7\" without an explanation tells a screen reader nothing. The theme comes from the surrounding color-scheme through light-dark(): there is no background by default, the component sits on the page background and darkens with it, while the background prop switches on a background of its own and picks the theme branch from its lightness."
           }
         },
         "cardControls": ["activeLabel", "cap", "accent", "background"]
@@ -1413,7 +1422,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, the palette in the local --vibeui-sidebar-008-* variables. Server-side: there are no hooks, <details> holds the disclosure. The workspace list is positioned absolutely and lies over the menu: opening must not move the sections. The current workspace is marked with a check mark made of borders rather than by the row fill alone — a fill is mistaken for hover. The switcher stands above the sections, because identical sections in two workspaces look identical, and without a label on top an edit easily lands in the wrong place. The theme comes from the surrounding color-scheme through light-dark(): there is no background by default, the component sits on the page background and darkens with it, while the background prop switches on a background of its own and picks the theme branch from its lightness."
           }
         },
         "cardControls": ["current", "accent", "background"]
@@ -1587,7 +1597,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, the palette in the local --vibeui-sidebar-009-* variables. Client-side (\"use client\") — the drawer state is held by useState. The scrim is a button with aria-hidden and tabIndex −1: it catches a press outside the panel but stays out of the tab order. The closed drawer is marked inert, so Tab does not fall into invisible links; on opening, focus moves to the close button, and on closing it returns to the burger. Escape is caught on the root of the block. The drawer is positioned inside the block rather than relative to the window: the demo does not take over the page. The theme comes from the surrounding color-scheme through light-dark(): there is no background by default, the component sits on the page background and darkens with it, while the background prop switches on a background of its own and picks the theme branch from its lightness."
           }
         },
         "cardControls": ["activeLabel", "accent", "background"]

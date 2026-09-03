@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Collapsible004Line = {
   text: string
@@ -6,7 +6,7 @@ export type Collapsible004Line = {
 }
 
 export type Collapsible004Props = Omit<
-  ComponentPropsWithoutRef<"details">,
+  ComponentProps<"details">,
   "children" | "title"
 > & {
   title?: string
@@ -27,7 +27,7 @@ const STYLES = `
 :where([data-vibeui-block="collapsible-004"]){
 --vibeui-collapsible-004-bg:oklch(0.21 0.02 265);
 --vibeui-collapsible-004-fg:oklch(0.93 0.006 265);
---vibeui-collapsible-004-muted:oklch(0.68 0.014 265);
+--vibeui-collapsible-004-muted:color-mix(in oklab,var(--vibeui-collapsible-004-fg) 68%,transparent);
 --vibeui-collapsible-004-border:oklch(1 0 0 / 14%);
 --vibeui-collapsible-004-warn:oklch(0.82 0.14 85);
 --vibeui-collapsible-004-error:oklch(0.7 0.18 22);
@@ -120,6 +120,7 @@ export function Collapsible004({
       </style>
       <details
         {...props}
+        data-slot="collapsible"
         data-vibeui-block="collapsible-004"
         className={className}
         style={palette}

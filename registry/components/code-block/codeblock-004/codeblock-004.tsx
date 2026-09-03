@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Codeblock004Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Codeblock004Props = Omit<ComponentProps<"div">, "children"> & {
   command?: string
   prompt?: string
   cwd?: string
@@ -22,12 +19,15 @@ const STYLES = `
 :where([data-vibeui-block="codeblock-004"]){
 --vibeui-codeblock-004-bg:transparent;
 --vibeui-codeblock-004-fg:light-dark(oklch(0.29 0.025 160),oklch(0.93 0.02 160));
---vibeui-codeblock-004-muted:light-dark(oklch(0.5 0.03 160),oklch(0.64 0.03 160));
+--vibeui-codeblock-004-muted:color-mix(in oklab,var(--vibeui-codeblock-004-fg) 68%,transparent);
 --vibeui-codeblock-004-prompt:light-dark(oklch(0.5 0.14 148),oklch(0.82 0.16 148));
 --vibeui-codeblock-004-branch:light-dark(oklch(0.55 0.11 85),oklch(0.82 0.12 85));
 --vibeui-codeblock-004-border:light-dark(oklch(0.5 0.14 148 / 34%),oklch(0.82 0.16 148 / 26%));
 --vibeui-codeblock-004-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="codeblock-004"]{color-scheme:dark}
 [data-vibeui-block="codeblock-004"]{
 display:block;width:100%;max-width:30rem;box-sizing:border-box;
 padding:0.75rem 0.9375rem;
@@ -113,6 +113,7 @@ export function Codeblock004({
       </style>
       <div
         {...props}
+        data-slot="code-block"
         data-vibeui-block="codeblock-004"
         className={className}
         style={palette}

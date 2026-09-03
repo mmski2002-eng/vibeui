@@ -1,9 +1,9 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Badge018Position =
   "top-right" | "top-left" | "bottom-right" | "bottom-left"
 
-export type Badge018Props = ComponentPropsWithoutRef<"span"> & {
+export type Badge018Props = ComponentProps<"span"> & {
   content?: string
   position?: Badge018Position
   label?: string
@@ -33,6 +33,9 @@ const STYLES = `
 --vibeui-badge-018-host-fg:light-dark(oklch(0.34 0.016 265),oklch(0.92 0.008 265));
 --vibeui-badge-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="badge-018"]{color-scheme:dark}
 [data-vibeui-block="badge-018"]{
 position:relative;display:inline-flex;
 font-family:var(--vibeui-badge-018-font);vertical-align:middle;
@@ -126,6 +129,7 @@ export function Badge018({
       </style>
       <span
         {...props}
+        data-slot="badge"
         data-vibeui-block="badge-018"
         data-position={position}
         className={className}

@@ -1,7 +1,7 @@
 "use client"
 
 import { useId, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Select030Field = {
   key: string
@@ -10,7 +10,7 @@ export type Select030Field = {
 }
 
 export type Select030Props = Omit<
-  ComponentPropsWithoutRef<"fieldset">,
+  ComponentProps<"fieldset">,
   "children" | "onChange"
 > & {
   legend?: string
@@ -30,12 +30,15 @@ const STYLES = `
 --vibeui-select-030-surface:transparent;
 --vibeui-select-030-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-select-030-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-select-030-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-select-030-muted:color-mix(in oklab,var(--vibeui-select-030-fg) 68%,transparent);
 --vibeui-select-030-field:light-dark(oklch(0.985 0.002 265),oklch(0.27 0.012 265));
 --vibeui-select-030-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.012 265));
 --vibeui-select-030-accent:light-dark(oklch(0.55 0.19 262),oklch(0.73 0.17 262));
 --vibeui-select-030-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="select-030"]{color-scheme:dark}
 [data-vibeui-block="select-030"]{
 display:flex;flex-wrap:wrap;align-items:flex-end;gap:0.625rem;
 width:100%;box-sizing:border-box;padding:0.75rem;margin:0;
@@ -178,6 +181,7 @@ export function Select030({
       </style>
       <fieldset
         {...props}
+        data-slot="select"
         data-vibeui-block="select-030"
         className={className}
         style={palette}

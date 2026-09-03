@@ -1,10 +1,10 @@
 "use client"
 
 import { useId, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Slider006Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "defaultValue" | "onChange"
 > & {
   label?: string
@@ -36,13 +36,16 @@ const STYLES = `
 --vibeui-slider-006-bg:transparent;
 --vibeui-slider-006-surface:light-dark(oklch(1 0 0),oklch(0.28 0.012 265));
 --vibeui-slider-006-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-slider-006-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-slider-006-muted:color-mix(in oklab,var(--vibeui-slider-006-fg) 68%,transparent);
 --vibeui-slider-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265));
 --vibeui-slider-006-track:light-dark(oklch(0.92 0.006 265),oklch(0.42 0.012 265));
 --vibeui-slider-006-accent:light-dark(oklch(0.6 0.16 45),oklch(0.74 0.15 45));
 --vibeui-slider-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-slider-006-fill:50%;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="slider-006"]{color-scheme:dark}
 [data-vibeui-block="slider-006"]{
 display:flex;flex-direction:column;gap:0.625rem;
 width:100%;max-width:20rem;box-sizing:border-box;padding:0.875rem;
@@ -185,6 +188,7 @@ export function Slider006({
       </style>
       <div
         {...props}
+        data-slot="slider"
         data-vibeui-block="slider-006"
         className={className}
         style={palette}

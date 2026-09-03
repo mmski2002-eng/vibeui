@@ -1,5 +1,5 @@
 import { useId } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Nativeselect002Group = {
   label: string
@@ -7,7 +7,7 @@ export type Nativeselect002Group = {
 }
 
 export type Nativeselect002Props = Omit<
-  ComponentPropsWithoutRef<"select">,
+  ComponentProps<"select">,
   "children" | "size"
 > & {
   label?: string
@@ -32,12 +32,15 @@ const STYLES = `
 --vibeui-nativeselect-002-line:light-dark(oklch(0.91 0.006 265),oklch(0.33 0.012 265));
 --vibeui-nativeselect-002-field:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
 --vibeui-nativeselect-002-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.004 265));
---vibeui-nativeselect-002-muted:light-dark(oklch(0.54 0.014 265),oklch(0.68 0.012 265));
+--vibeui-nativeselect-002-muted:color-mix(in oklab,var(--vibeui-nativeselect-002-fg) 68%,transparent);
 --vibeui-nativeselect-002-field-border:light-dark(oklch(0.85 0.01 265),oklch(0.42 0.014 265));
 --vibeui-nativeselect-002-accent:light-dark(oklch(0.5 0.16 165),oklch(0.74 0.14 165));
 --vibeui-nativeselect-002-radius:0.625rem;
 --vibeui-nativeselect-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="nativeselect-002"]{color-scheme:dark}
 [data-vibeui-block="nativeselect-002"]{
 box-sizing:border-box;width:100%;max-width:22rem;
 padding:1rem;border-radius:0.875rem;
@@ -47,14 +50,14 @@ font-family:var(--vibeui-nativeselect-002-font);color:var(--vibeui-nativeselect-
 display:flex;flex-direction:column;gap:0.375rem;
 }
 [data-vibeui-block="nativeselect-002"] label{
-font-size:0.875rem;font-weight:600;line-height:1.3;cursor:pointer;
+font-size:0.8125rem;font-weight:600;line-height:1.3;cursor:pointer;
 }
 [data-vibeui-block="nativeselect-002"] [data-part="field"]{position:relative;display:flex}
 [data-vibeui-block="nativeselect-002"] select{
 appearance:none;-webkit-appearance:none;
-box-sizing:border-box;width:100%;height:2.5rem;
+box-sizing:border-box;width:100%;height:2.25rem;
 padding:0 2.25rem 0 0.75rem;
-font:inherit;font-size:0.9375rem;line-height:1.2;
+font:inherit;font-size:0.875rem;line-height:1.2;
 color:var(--vibeui-nativeselect-002-fg);
 background:var(--vibeui-nativeselect-002-field);
 border:1px solid var(--vibeui-nativeselect-002-field-border);
@@ -74,6 +77,8 @@ font-weight:600;font-style:normal;color:var(--vibeui-nativeselect-002-muted);
 [data-vibeui-block="nativeselect-002"] option{
 font-weight:400;color:var(--vibeui-nativeselect-002-fg);
 }
+/* Chrome рисует свой индикатор поверх appearance:none — гасим, стрелка своя. */
+[data-vibeui-block="nativeselect-002"] select::-webkit-calendar-picker-indicator{display:none}
 [data-vibeui-block="nativeselect-002"] [data-part="arrow"]{
 position:absolute;right:0.875rem;top:50%;pointer-events:none;
 width:0.4375rem;height:0.4375rem;
@@ -148,6 +153,7 @@ export function Nativeselect002({
         {STYLES}
       </style>
       <div
+        data-slot="native-select"
         data-vibeui-block="nativeselect-002"
         className={className}
         style={palette}

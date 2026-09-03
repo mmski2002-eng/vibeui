@@ -1,8 +1,10 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Kbd001Props = Omit<ComponentPropsWithoutRef<"div">, "children"> & {
+export type Kbd001Props = Omit<ComponentProps<"div">, "children"> & {
   rows?: { action: string; keys: string[] }[]
   title?: string
+  /** Чем рисовать клавишу "Mod": на macOS это ⌘, на Windows и Linux — Ctrl. */
+  mod?: string
   /** Пусто — подложки нет, список лежит прямо на фоне страницы. */
   background?: string
 }
@@ -18,14 +20,17 @@ const STYLES = `
 :where([data-vibeui-block="kbd-001"]){
 --vibeui-kbd-001-bg:transparent;
 --vibeui-kbd-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
---vibeui-kbd-001-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-kbd-001-muted:color-mix(in oklab,var(--vibeui-kbd-001-fg) 68%,transparent);
 --vibeui-kbd-001-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.012 265));
 --vibeui-kbd-001-key:light-dark(oklch(0.985 0.002 265),oklch(0.3 0.012 265));
 --vibeui-kbd-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="kbd-001"]{color-scheme:dark}
 [data-vibeui-block="kbd-001"]{
 display:flex;flex-direction:column;gap:0.375rem;
-width:100%;max-width:20rem;box-sizing:border-box;padding:0.875rem;
+width:100%;max-width:20rem;box-sizing:border-box;padding:0.875rem 1rem;
 background:var(--vibeui-kbd-001-bg);
 border:1px solid var(--vibeui-kbd-001-border);border-radius:0.875rem;
 font-family:var(--vibeui-kbd-001-font);color:var(--vibeui-kbd-001-fg);
@@ -48,9 +53,11 @@ font-family:inherit;font-size:0.75rem;font-weight:650;line-height:1;
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="kbd-001"] *{animation:none!important;transition:none!important}}
 `
 
+// "Mod" — не клавиша, а место для модификатора: подставляется проп `mod`,
+// иначе список с ⌘ на Windows врёт про сочетание.
 const DEFAULT_ROWS = [
-  { action: "Открыть поиск", keys: ["⌘", "K"] },
-  { action: "Скопировать для ИИ", keys: ["⌘", "⇧", "C"] },
+  { action: "Открыть поиск", keys: ["Mod", "K"] },
+  { action: "Скопировать для ИИ", keys: ["Mod", "⇧", "C"] },
   { action: "Следующий компонент", keys: ["J"] },
   { action: "Закрыть окно", keys: ["Esc"] },
 ]
@@ -84,6 +91,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 export function Kbd001({
   rows = DEFAULT_ROWS,
   title = "Горячие клавиши",
+  mod = "⌘",
   background = "",
   className,
   style,
@@ -106,6 +114,7 @@ export function Kbd001({
       </style>
       <div
         {...props}
+        data-slot="kbd"
         data-vibeui-block="kbd-001"
         className={className}
         style={palette}
@@ -118,7 +127,7 @@ export function Kbd001({
               {row.keys.map((key, index) => (
                 <span key={key} data-part="key">
                   {index > 0 ? <span data-part="plus"> + </span> : null}
-                  <kbd>{key}</kbd>
+                  <kbd>{key === "Mod" ? mod : key}</kbd>
                 </span>
               ))}
             </span>

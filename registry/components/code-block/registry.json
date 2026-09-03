@@ -83,7 +83,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Numbered Lines",
             "description": "A code block with line numbers drawn by a CSS counter in a pseudo-element, so selecting and copying takes the code only, without the digits.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-codeblock-001-* variables. Server component: no hooks. Every line is a span with display: block inside pre > code; the number is printed by ::before through counter-increment, so it is not part of the selection and does not end up in the clipboard. The start of the numbering is passed into counter-reset through a variable computed from the start prop. The theme comes from the surrounding color-scheme through light-dark(): the block has no surface by default, and the border and the header rest on translucent overlays, so the block reads on a light page as well as on a dark one. The highlighting is done with markup rather than a parser: the lines arrive as an array of tokens with a kind field, and the colours are attached by [data-token] selectors.",
             "ai": {
               "summary": "A code block with line numbers that are not copied: they are CSS counter pseudo-elements. Highlighting comes from tokens in the data, the theme comes from the surrounding color-scheme, zero dependencies, no client JS.",
               "preserve": [
@@ -129,7 +131,6 @@
                 "label": "Background"
               }
             },
-            "title": "Numbered Lines",
             "preview": {
               "props": {
                 "title": "lib/format.ts",
@@ -289,7 +290,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Copy With Timer",
             "description": "A code block with copy where the \"Copied\" label rolls back on its own: a bar under the button shows how long is left before it returns.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-codeblock-002-* variables. Client component: the \"use client\" directive is needed for navigator.clipboard and the rollback timer. The rollback duration from the resetDelay prop goes at once into setTimeout and into the CSS variable that drives the bar animation duration, so the indicator and the state are always in agreement. The timer is cleared in useEffect on unmount, otherwise a setState would land in a dead component. The theme comes from the surrounding color-scheme through light-dark(): the block has no surface by default, and the border and the button chip rest on translucent overlays and read on any page.",
             "ai": {
               "summary": "A code block with a copy button in the corner: after a click the label changes and a thin bar underneath shows the rollback to the original state. One file, zero dependencies.",
               "preserve": [
@@ -335,7 +338,6 @@
                 "label": "Background"
               }
             },
-            "title": "Copy With Timer",
             "preview": {
               "props": {
                 "title": "app/page.tsx",
@@ -431,7 +433,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Manager Tabs",
             "description": "The install command for npm, pnpm, yarn and bun at once: the tabs are radio buttons, so switching works without a single line of JavaScript.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-codeblock-003-* variables. Server component: the state is held by a native radio group and the right panel is selected by the :has(input[value=...]:checked) selector, so the tabs switch before hydration and without any JS at all. The radio buttons are hidden with clip-path rather than display: none so that they stay in the keyboard tab order; focus and the selected tab are highlighted through label:has(). The radio group name is exposed in the group prop: two blocks on one page sharing a name would switch each other. The theme comes from the surrounding color-scheme through light-dark(): the block has no surface by default, and the tab strip and the active tab are drawn with translucent overlays.",
             "ai": {
               "summary": "An install command across four package managers, with tabs built on radio buttons and :has(). Zero dependencies, zero client JS, works before hydration.",
               "preserve": [
@@ -478,7 +482,6 @@
                 "label": "Background"
               }
             },
-            "title": "Manager Tabs",
             "preview": {
               "props": {
                 "packageName": "@vibeui/button",
@@ -578,7 +581,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Prompt Line",
             "description": "A single terminal line instead of a code block: the prompt and the blinking caret are drawn in CSS, so only the command itself gets copied.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-codeblock-004-* variables. Server component: no hooks. The prompt is printed by ::before through content: attr(data-prompt) and marked user-select: none, so selecting the line hands the clipboard the command without the $ character. Above the command sits a service line with the current directory and branch — it explains where the command is run. The caret blinks with a keyframes animation using steps(1), and the block has a prefers-reduced-motion rule. The theme comes from the surrounding color-scheme through light-dark(): the line has no surface by default, and the terminal is recognised by its green border and the prompt.",
             "ai": {
               "summary": "A terminal line with a prompt, working directory, branch and a blinking caret. The prompt is not copied, zero dependencies, no client JS.",
               "preserve": [
@@ -628,7 +633,6 @@
                 "label": "Background"
               }
             },
-            "title": "Prompt Line",
             "preview": {
               "props": {
                 "command": "npx shadcn@latest add codeblock-004",
@@ -715,7 +719,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Diff Lines",
             "description": "A file diff: added and removed lines are marked by a sign in a pseudo-element as well as a tint, so the meaning survives without colour.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-codeblock-005-* variables. Server component: no hooks. A line arrives as an object with a kind field (add, del or nothing); the sign is printed by ::before, so it does not get into the copied fragment, and the row tint is set with a translucent colour over the block background. The counters of added and removed lines are computed from the same data as the markup, so they cannot diverge from the content. The theme comes from the surrounding color-scheme through light-dark(): the block has no surface by default, and the row tints stay translucent and work in both themes.",
             "ai": {
               "summary": "A diff with added and removed lines: a plus or minus sign in a pseudo-element, a tinted row and counters in the header. Zero dependencies, no client JS.",
               "preserve": [
@@ -758,7 +764,6 @@
                 "label": "Background"
               }
             },
-            "title": "Diff Lines",
             "preview": {
               "props": {
                 "path": "components/price.tsx",
@@ -886,7 +891,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Collapsed File",
             "description": "A long listing collapsed to its first lines: the tail lives inside details, and the cut is shown by a mask that fades away on expand.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-codeblock-006-* variables. Server component: the expansion is done by native details, no state is kept in JS. The visible part of the listing lies outside details and only the tail goes inside, so the first lines are always visible. The fade at the bottom edge is switched on by the :has(details:not([open])) selector on the root and lifts by itself once the block is expanded. The summary caption is swapped by a pair of spans, one of which is hidden by details[open]. The theme comes from the surrounding color-scheme through light-dark(): the block has no surface by default, and the header and the summary hover rest on translucent overlays.",
             "ai": {
               "summary": "Long code collapsed to its first lines, expanded by a native details element with a fading cut. Zero dependencies, zero client JS.",
               "preserve": [
@@ -937,7 +944,6 @@
                 "label": "Background"
               }
             },
-            "title": "Collapsed File",
             "preview": {
               "props": {
                 "path": "lib/load-user.ts",
@@ -1060,7 +1066,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Error Range",
             "description": "A code block with a highlighted range of lines: a bar on the left, a wavy underline and a callout that says plainly what is wrong.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-codeblock-007-* variables. Server component: no hooks. The range is set by the errorFrom and errorTo numbers, the line number is printed by ::before through content: attr(data-line), and the error itself is marked by three independent signals: a bar on the left, a tint and text-decoration: underline wavy. Under the listing sits a paragraph with role=note and an upward arrow in a pseudo-element — it ties the highlight to the explanation text. The theme comes from the surrounding color-scheme through light-dark(): the block has no surface by default, and in the light branch the error hue is taken dark so that it does not read as a link.",
             "ai": {
               "summary": "A listing with a highlighted line range and an error note underneath: a bar, a tint and a wavy underline plus a callout. Zero dependencies, no client JS.",
               "preserve": [
@@ -1115,7 +1123,6 @@
                 "label": "Background"
               }
             },
-            "title": "Error Range",
             "preview": {
               "props": {
                 "path": "hooks/use-total.ts",
@@ -1208,7 +1215,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Wrap Switch",
             "description": "A code block with a switch for wrapping long lines: a hidden checkbox holds the state, :has() changes the layout, no JavaScript needed.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-codeblock-008-* variables. Server component: the toggle state is held by a native checkbox, and the root :has(input:checked) selector switches the code from white-space: pre to pre-wrap and removes the horizontal scrolling along with it. The checkbox is hidden with clip-path, so it stays reachable from the keyboard; the switch is drawn from a span with ::after, and the focus ring is attached to the label through :has(input:focus-visible). The theme comes from the surrounding color-scheme through light-dark(): the block has no surface by default, and the header and the switch track are drawn with translucent overlays.",
             "ai": {
               "summary": "A code block whose long-line wrapping is toggled from the header. State lives on a checkbox and :has(), zero dependencies, no client JS.",
               "preserve": [
@@ -1254,7 +1263,6 @@
                 "label": "Background"
               }
             },
-            "title": "Wrap Switch",
             "preview": {
               "props": {
                 "title": "lib/registry.ts",
@@ -1348,7 +1356,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "File Path Header",
             "description": "A code block whose header is the file path: folders are muted, the file name stands out, the extension becomes a badge and the status sits on the right.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-codeblock-009-* variables. Server component: no hooks. The path is split on the slash into an ol list, the separators are printed by ::after, and the last segment is coloured and thickened — that way the file name is visible inside a long path. The extension is computed from the same path, so the badge cannot diverge from the name. The theme comes from the surrounding color-scheme through light-dark(): the block has no surface by default, and the code area is separated from the header by a translucent overlay, so the split is visible on a light page as well as on a dark one.",
             "ai": {
               "summary": "A code block with a header: the path in segments, an extension badge and a file status. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1395,7 +1405,6 @@
                 "label": "Background"
               }
             },
-            "title": "File Path Header",
             "preview": {
               "props": {
                 "path": "app/(site)/layout.tsx",
@@ -1499,7 +1508,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Inline Code",
             "description": "Inline code inside a paragraph: the command, the path and the key each get their own chip, and the chip background survives a line break.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-codeblock-010-* variables. Server component: no hooks. The main technique is box-decoration-break: clone on the inline code: without it a wrapped piece loses its rounding and its right padding. The chip dimensions are set in em, so it scales together with the paragraph text; the key is a separate kbd element with a thickened bottom border so that it is not confused with a command. The paragraph text lives in the commandText and shortcutText props as templates with {command}, {file}, {shortcut} and {configFile}: the substitution returns ready-made chips, so a translation changes the word order without touching the markup. The theme comes from the surrounding color-scheme through light-dark(): the paragraph has no surface by default.",
             "ai": {
               "summary": "A paragraph with inline code: command and path chips plus a key in kbd. The chip background survives wrapping. Zero dependencies, no client JS.",
               "preserve": [
@@ -1551,7 +1562,6 @@
                 "label": "Background"
               }
             },
-            "title": "Inline Code",
             "preview": {
               "props": {
                 "heading": "How to install the component",
@@ -1650,7 +1660,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Scroll Hint",
             "description": "A code block with horizontal scrolling and an honest hint about it: the edge shade and the caption fade out as the reader scrolls.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-codeblock-011-* variables. Server component: no hooks. The scroll area declares a named scroll-timeline, the root exposes it through timeline-scope, and the shading and the hint are faded out by an animation bound to that timeline — there are no scroll handlers in JS. Everything is wrapped in @supports (animation-timeline: scroll()): without support the hint simply stays visible. The scroll area gets a tabIndex and role=region, otherwise it cannot be reached from the keyboard. The theme comes from the surrounding color-scheme through light-dark(): the block has no surface by default, and the edge shading is drawn with a translucent gradient, so it works over any page background.",
             "ai": {
               "summary": "A code block with horizontal scrolling: the right edge is shaded and the hint fades away through a scroll-driven animation. Zero dependencies, no client JS.",
               "preserve": [
@@ -1697,7 +1709,6 @@
                 "label": "Background"
               }
             },
-            "title": "Scroll Hint",
             "preview": {
               "props": {
                 "title": "table/columns.ts",
@@ -1795,7 +1806,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Command Output",
             "description": "A command and its output in one block: separate surfaces keep what you type apart from what the system answers, and the exit code sits in the footer.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-codeblock-012-* variables. Server component: no hooks. The command and the output live in two separate pre elements with different surfaces, so a mouse selection does not mix the input with the response. The prompt is printed by the command's ::before and marked user-select: none. The exit code decides the colour of the badge in the footer: zero is coloured as success and any other number as an error, so the status cannot be set by hand in contradiction to the number. The theme comes from the surrounding color-scheme through light-dark(): the block has no surface by default, the output is separated from the command by a translucent overlay, and the difference is visible in both themes.",
             "ai": {
               "summary": "The command on one surface, its output on another, exit code and duration in the footer. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1843,7 +1856,6 @@
                 "label": "Background"
               }
             },
-            "title": "Command Output",
             "preview": {
               "props": {
                 "command": "npm run registry:build",
@@ -1939,7 +1951,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Per Line Copy",
             "description": "A list of commands where a single line gets copied instead of the whole block: every row has its own button, reachable by mouse and by keyboard.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-codeblock-013-* variables. Client component: the \"use client\" directive is needed for navigator.clipboard and for marking the copied line. The copied index is held as a single number, so exactly one line is highlighted at a time. The buttons are hidden through opacity rather than display: none — they stay in the keyboard tab order and appear on :focus-visible. The line numbers are printed by a CSS counter, so only the command text goes into the clipboard.",
             "ai": {
               "summary": "A list of commands where each line is copied by its own button: the button appears on hover and on focus, and the copied row lights up. Zero dependencies.",
               "preserve": [
@@ -1982,7 +1996,6 @@
                 "label": "Background"
               }
             },
-            "title": "Per Line Copy",
             "preview": {
               "props": {
                 "title": "Updating a fork",
@@ -2070,7 +2083,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Code Skeleton",
             "description": "A loading skeleton for code: the bars repeat the shape of a listing — nesting indents, an empty line and a short closing brace.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-codeblock-014-* variables. Server component: no hooks. The row widths and indents are taken from a constant shape table and repeated in a cycle — random values would diverge between server and client and break hydration. The shine runs along background-position rather than transform, so no extra layer is needed; the row height is set by a variable and matches the line spacing of a real listing. The root has role=status and aria-busy, and the caption is visually hidden but available to a screen reader.",
             "ai": {
               "summary": "A code block skeleton: a header and rows that repeat the shape of a listing, with a sweeping shine. Zero dependencies, deterministic layout, no client JS.",
               "preserve": [
@@ -2112,7 +2127,6 @@
                 "label": "Background"
               }
             },
-            "title": "Code Skeleton",
             "preview": {
               "props": {
                 "label": "Loading code"
@@ -2198,7 +2212,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "File Tree Tabs",
             "description": "Several example files in one block: the tabs stand in a column on the left, like in an editor, and a radio group switches them without a single line of JavaScript.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-codeblock-015-* variables. Server component: the state is held by a native radio group, and the right panel is selected by the :has(input[value=...]:checked) selector keyed to the file index, so the selectors do not depend on names and survive any list. The layout is computed from the block's own width: below 30rem the tabs sit in a row on top, beyond that they move into a column on the left — the rules sit on the inner [data-part=\"shell\"], because a container query does not apply to the container itself. The radio buttons are hidden with clip-path rather than display: none so that they stay in the keyboard tab order.",
             "ai": {
               "summary": "Four example files with tabs in a left column: state on a radio group and :has(), layout driven by the block's own width. Zero dependencies, no client JS.",
               "preserve": [
@@ -2240,7 +2256,6 @@
                 "label": "Background"
               }
             },
-            "title": "File Tree Tabs",
             "preview": {
               "props": {
                 "root": "src/app",
@@ -2482,7 +2497,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Language Segments",
             "description": "The same example in TypeScript, JavaScript and Python: a segmented switch whose thumb slides over to the selected button.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-codeblock-016-* variables. Server component: the state is held by a radio group, and the panel and the thumb position are selected through :has() by the value of the checked button, so switching works before hydration. The thumb is a separate layer under the labels: it is not redrawn but travels with a transform, so a language change reads as a single movement. The thumb width is computed from three segments, and the labels are shortened to TS, JS and PY so that the switch does not sprawl across the header.",
             "ai": {
               "summary": "One example in three languages with a segmented switch: the thumb travels to the checked radio button. Zero dependencies, no client JS.",
               "preserve": [
@@ -2524,7 +2541,6 @@
                 "label": "Background"
               }
             },
-            "title": "Language Segments",
             "preview": {
               "props": {
                 "title": "Request to the API",
@@ -2789,7 +2805,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Changed Line",
             "description": "A listing that marks the line edited a moment ago: a bar, a tint and a short flash that fades on its own instead of blinking forever.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-codeblock-017-* variables. Server component: no hooks. The line number is printed by a CSS counter in ::before and the change mark by ::after, so neither the digit nor the sign ends up in the clipboard. The change is marked by three independent signals: a bar on the left through an inset box-shadow, a translucent tint and a one-shot flash animation. The animation's last frame equals the tint colour, so once it finishes the mark stays in place instead of disappearing.",
             "ai": {
               "summary": "A listing with the last changed line marked: a bar, a tint and a one-shot flash. Zero dependencies, no client JS.",
               "preserve": [
@@ -2831,7 +2849,6 @@
                 "label": "Background"
               }
             },
-            "title": "Changed Line",
             "preview": {
               "props": {
                 "path": "components/cart.tsx",
@@ -2916,7 +2933,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Line Callouts",
             "description": "A code walkthrough with callouts: marked lines get a numbered circle, and a legend under the listing explains every number in words.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-codeblock-018-* variables. Server component: no hooks. The numbered circle is printed by ::after through content: attr(data-note), so the explanations do not go into the clipboard along with the code. The numbers in the legend are counted by a CSS counter from the list item order, and the numbers in the code come from the same map — they cannot diverge. An empty line is given a min-height: a block span with no content would collapse to zero and the spacing between the pieces of code would be lost. The block is light and carries its own surface.",
             "ai": {
               "summary": "A light listing with callouts: a numbered circle on the line and a legend with explanations below the code. Zero dependencies, no client JS.",
               "preserve": [
@@ -2958,7 +2977,6 @@
                 "label": "Background"
               }
             },
-            "title": "Line Callouts",
             "preview": {
               "props": {
                 "path": "middleware.ts",
@@ -3060,7 +3078,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Listing Outline",
             "description": "A long listing you can walk through: the outline of declarations on the left, scrollable code on the right, and the target row highlighted through :target.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-codeblock-019-* variables. Server component: the transitions are ordinary anchors and the state lives in the page address, so a link to a line can be shared. The lines have ids prefixed from the idPrefix prop: two blocks on a page with the same prefix would tangle each other's anchors. The code area scrolls on its own and gets a tabIndex with role=region, otherwise it cannot be reached from the keyboard; scroll-margin pushes the target line away from the edge. The layout is computed from the block's own width and sits on the inner [data-part=\"shell\"].",
             "ai": {
               "summary": "A listing with an outline of declarations and anchor navigation: the target row lights up through :target. Zero dependencies, no client JS.",
               "preserve": [
@@ -3103,7 +3123,6 @@
                 "label": "Background"
               }
             },
-            "title": "Listing Outline",
             "preview": {
               "props": {
                 "path": "app/actions.ts",
@@ -3190,7 +3209,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Version Stamp",
             "description": "A code sample with a shelf life: the version and the check date sit in the header, and a stale flag repaints the stamp and rewrites the footer note.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-codeblock-020-* variables. Server component: no hooks. The stale flag lives on the root as a data attribute, and the stamp colour, the footer badge and the caption text all depend on it — they cannot be knocked out of sync. The date is rendered with a time tag carrying a machine-readable dateTime, so both parsers and screen readers understand it. The version stamp is a badge with a dot in a pseudo-element, and the environment is moved to the right as a monospace caption.",
             "ai": {
               "summary": "A code block with a version stamp, a check date and a freshness note: going stale repaints the stamp and changes the text. Zero dependencies, no client JS.",
               "preserve": [
@@ -3232,7 +3253,6 @@
                 "label": "Background"
               }
             },
-            "title": "Version Stamp",
             "preview": {
               "props": {
                 "dateLabel": "14 August 2026",
@@ -3319,7 +3339,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "JSON Tree",
             "description": "JSON with expandable nested nodes: every object and array is a native details element, and a collapsed branch shows how many fields it holds.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-codeblock-021-* variables. Server component: the expansion is done by native details, the tree state is not kept in JS. The nodes are drawn by a recursive internal function: a primitive becomes a line with a token chosen by value type, while an object or an array becomes a details with a summary, a field count and a trailing bracket that is visible only when collapsed. The commas are derived from the element's position, so the tree always looks like valid JSON. The initial expansion depth is set by the openDepth prop and compared with the node level.",
             "ai": {
               "summary": "A light JSON tree expanded through native details: a collapsed branch shows its field count. Zero dependencies, no client JS.",
               "preserve": [
@@ -3360,7 +3382,6 @@
                 "label": "Background"
               }
             },
-            "title": "JSON Tree",
             "preview": {
               "props": {
                 "rootLabel": "response",
@@ -3461,7 +3482,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Masked Env",
             "description": "A list of environment variables with hidden values: a row opens by its own toggle or by the master one in the header, and all of it without client JS.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-codeblock-022-* variables. Server component: the state is held by native checkboxes, and revealing a value is switched on by two independent :has() selectors — on the row and on the whole block from the shared toggle in the header. A variable's scope is derived from its name: keys with the NEXT_PUBLIC_ prefix get a different badge, so the caption cannot diverge from reality. The checkboxes are hidden with clip-path, and each has a visually hidden caption with the key name for a screen reader.",
             "ai": {
               "summary": "Environment variables with masked values: reveal them row by row or all at once, state on checkboxes and :has(). Zero dependencies, no client JS.",
               "preserve": [
@@ -3505,7 +3528,6 @@
                 "label": "Background"
               }
             },
-            "title": "Masked Env",
             "preview": {
               "props": {
                 "file": ".env.local",
@@ -3600,7 +3622,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Prompt Free Copy",
             "description": "A sequence of commands with copying that skips the prompt: the dollar sign is drawn by styles, so only the commands themselves reach the clipboard.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-codeblock-023-* variables. Client component: the \"use client\" directive is needed for navigator.clipboard and the copied mark. The prompt is printed by each line's ::before and marked user-select: none, so it is neither in the text nor in the clipboard: the button joins the commands with a line break and hands over a fragment ready to paste. The rollback timer is cleared in useEffect on unmount, and if the clipboard fails the state does not change — a false \"Copied\" is worse than silence.",
             "ai": {
               "summary": "A list of terminal commands with one copy button: the prompt lives in CSS and never reaches the clipboard. Zero dependencies, one file.",
               "preserve": [
@@ -3643,7 +3667,6 @@
                 "label": "Background"
               }
             },
-            "title": "Prompt Free Copy",
             "preview": {
               "props": {
                 "title": "Install",
@@ -3738,7 +3761,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Split Compare",
             "description": "Two versions of a file side by side: before on the left, after on the right, line facing line, and an empty slot is an explicit placeholder, not a lost piece of code.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-codeblock-024-* variables. Server component: no hooks. The panes get the same rows array, so the lines always stand opposite each other; a missing line is drawn as a placeholder with a different surface, and the number counter skips it — the numbering stays correct for each version separately. The layout is computed from the block's own width: below 34rem the panes stack one under the other, beyond that they split the width in half, and the rules sit on the inner [data-part=\"shell\"].",
             "ai": {
               "summary": "A two-pane comparison of file versions: rows aligned horizontally, gaps shown as placeholders. Zero dependencies, no client JS.",
               "preserve": [
@@ -3783,7 +3808,6 @@
                 "label": "Background"
               }
             },
-            "title": "Split Compare",
             "preview": {
               "props": {
                 "path": "lib/total.ts",
@@ -3893,7 +3917,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Height Cap",
             "description": "A code block capped by height rather than by line count: the expansion animates, the cut is shown by a mask, and a hidden checkbox holds the state.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-codeblock-025-* variables. Server component: the state is held by a native checkbox, and the root :has(input:checked) selector moves the code area from the collapsed block height to the expansion limit. Both heights arrive as props and go into CSS variables, so the max-height animation runs between two known values rather than up to auto. The bottom edge mask is on only in the collapsed state, and the toggle caption is swapped by a pair of spans hidden through :has().",
             "ai": {
               "summary": "A code block with a height cap and an expand button: an animated max-height, a fade mask, state on a checkbox. Zero dependencies, no client JS.",
               "preserve": [
@@ -3947,7 +3973,6 @@
                 "label": "Background"
               }
             },
-            "title": "Height Cap",
             "preview": {
               "props": {
                 "expandText": "Expand",
@@ -4047,7 +4072,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Read Only File",
             "description": "A listing of a generated file: a lock in the header, a diagonal hatch over the code and a note pointing at where the edits actually belong.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-codeblock-026-* variables. Server component: no hooks. The hatching is a separate layer in ::after with pointer-events: none — the text itself must not be dimmed, it is meant to be read and has to stay selectable with a mouse. The ban on editing is declared three times: by the lock badge in the header, by the hatching and by the caption under the code that names the real place to edit. The palette is built on light-dark(): the block has no surface, and the code plate and the hatching are translucent layers, so the listing reads on a light page as well as on a dark one.",
             "ai": {
               "summary": "A light listing of a generated file marked read-only: a lock, a hatch and a pointer to the real place to edit. Zero dependencies, no client JS.",
               "preserve": [
@@ -4097,7 +4124,6 @@
                 "label": "Background"
               }
             },
-            "title": "Read Only File",
             "preview": {
               "props": {
                 "reason": "The file is built by npm run indexes",
@@ -4198,7 +4224,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Runtime Trace",
             "description": "A runtime error with its stack: your own code is shown in full with an excerpt of the failing line, while node_modules frames are folded into details.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-codeblock-027-* variables. Server component: folding the vendor frames is done by native details, there is no state in JS. The frames are split by the vendor flag in the data rather than by parsing the path: a directory name is an unreliable signal, and the decision stays with the calling code. A source excerpt is shown only for the first frame, because there is nothing to fix in the other lines; the header is set off by a red bar on the left, and the error type and its text are put on separate lines.",
             "ai": {
               "summary": "A runtime error with its stack: own frames expanded with a source excerpt, vendor frames folded into details. Zero dependencies, no client JS.",
               "preserve": [
@@ -4247,7 +4275,6 @@
                 "label": "Background"
               }
             },
-            "title": "Runtime Trace",
             "preview": {
               "props": {
                 "errorLabel": "Runtime error: {name}",
@@ -4348,7 +4375,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Code Block",
             "description": "A code block with copy: a long command wraps with a hanging indent instead of demanding horizontal scrolling.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-code-001-* variables. Client component: \"use client\" for the sake of copying. Line wrapping is done by the pair white-space: pre-wrap and overflow-wrap: anywhere, and the continuation is shifted with a negative text-indent. There is deliberately no syntax highlighting: it costs a library.",
             "ai": {
               "summary": "A code block: a heading with the language, a copy button that reports back and wrapping instead of scrolling. Zero dependencies, one file.",
               "preserve": [
@@ -4399,7 +4428,6 @@
                 "label": "Background"
               }
             },
-            "title": "Code Block",
             "preview": {
               "props": {
                 "title": "Install",

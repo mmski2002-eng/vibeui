@@ -204,7 +204,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-eventcalendar-001-* variables. Server-side: no hooks. The 7×6 grid is built from the first Monday, and the day and month names come from Intl. A cell has a min-height, so a busy day does not stretch the month row; events beyond visible go into <details>/<summary>, and the popup list is positioned absolutely and flips upwards in the bottom rows through the :nth-child(n+29) rule. The event type is distinguished by the colour of the left border and by its style."
           }
         },
         "cardControls": ["visible", "accent", "background"]
@@ -429,7 +430,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own --vibeui-eventcalendar-002-* palette. Server-side: no hooks. A day column is its own coordinate system: its height equals the working interval, and an event's top and height are computed as percentages of it. The hour lines are drawn by repeating-linear-gradient rather than by empty cells. All-day events are moved into a separate row above the scale, because they have no position in time. Horizontal scrolling lives in a container with tabindex=0 and a visible focus ring."
           }
         },
         "cardControls": ["dayFrom", "dayTo", "accent", "background"]
@@ -620,7 +622,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own --vibeui-eventcalendar-003-* palette. Server-side: no hooks — the whole layout is computed at render time by the pure layout() function. Events are sorted by start, split into connected overlap groups, and inside a group each one takes the first free lane; the width comes from the number of lanes in that particular group, so one overlap in the morning does not narrow a quiet evening. The hour lines are drawn by repeating-linear-gradient, and the event type is distinguished by colour and border style."
           }
         },
         "cardControls": ["dayFrom", "dayTo", "accent", "background"]
@@ -819,7 +822,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own --vibeui-eventcalendar-004-* palette. Server-side: no hooks. Events are filtered by the days window from today, sorted by their ISO string and grouped in a single pass. The day header is sticky inside a scrollable feed of limited height, so a card in a sidebar does not grow with the number of meetings. The time sits in its own column with tabular figures, the event type is distinguished by the style of the left border, and a deadline is additionally marked with a word."
           }
         },
         "cardControls": ["days", "accent", "background"]
@@ -1052,7 +1056,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own --vibeui-eventcalendar-005-* palette. Server-side: no hooks, the filtering is entirely CSS. The legend is a fieldset with checkboxes; an unchecked box hides both the markers in the grid and the list rows through the rule [data-vibeui-block]:has([data-index=N]:not(:checked)) [data-source=N]{display:none}. A source is encoded twice: by the colour from the data and by the marker shape (circle, square, diamond, triangle) through border-radius, rotate and clip-path. Below the grid there is a scrollable list of the same events."
           }
         },
         "cardControls": ["weeks", "background"]

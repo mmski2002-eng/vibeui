@@ -131,7 +131,8 @@
                 "navLabel": "Main navigation",
                 "menuLabel": "Open menu"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-navbar-001-*. The layout is computed from the block's own width through container queries rather than from the window width: below 52rem the menu button is shown, beyond it the full header with links and a button. The mobile panel is opened by the popover and popovertarget attributes, lives in the top layer and is therefore styled by the [data-vibeui-navbar-001-menu] attribute with its own palette. The backdrop is translucent with backdrop-filter, so the header can be placed sticky over the content."
           }
         },
         "controls": [
@@ -328,7 +329,8 @@
                 "loginLabel": "Sign in",
                 "actionLabel": "Demo"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-navbar-002-*. A server component, no client JS. The layout is computed by a container query from the block's own width: below 54rem the pill moves to a second row and scrolls horizontally, beyond it it stands in a single row in the centre of the header. The current section is marked with the aria-current=\"page\" attribute and highlighted by a selector on that attribute rather than by a separate class, so the highlight and the accessibility never drift apart."
           }
         },
         "cardControls": ["accent"]
@@ -530,7 +532,8 @@
                 "plainLabel": "Pricing",
                 "actionLabel": "Try it"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-navbar-003-*. A server component. Opening the panel rests on :hover and :focus-within on the list item, so the menu works the same with a mouse and from the keyboard: the panel stays open while the focus is inside it. The panel is positioned relative to the <li> with position:relative, and its width is capped through min() with a cqi unit — in a narrow container it does not run past the edge. The trigger's arrow is a rotated pseudo-element, there is no separate icon."
           }
         },
         "cardControls": ["accent", "background"]
@@ -693,7 +696,8 @@
                 "actionLabel": "Book a seat",
                 "hint": "The header sits over the cover and shrinks by itself as soon as the page scrolls up."
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-navbar-004-*. A server component. The condensing is described with keyframes and tied to the page scroll through animation-timeline:scroll(root block) under @supports: where the property is missing, the header simply stays expanded, and that is deliberate degradation. The animation sits on the inner [data-part=\"shell\"] rather than on the root, so the prefers-reduced-motion rule honestly turns it off. The block's own dark gradient is there to keep the transparent header visible off a cover page as well."
           }
         },
         "cardControls": ["accent"]
@@ -869,7 +873,8 @@
                 ],
                 "actionLabel": "Sign in"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-navbar-005-*. A server component: the field is uncontrolled and the form submits to the search page with a plain GET. The layout is a CSS grid: in a narrow container the field and the sections take separate rows, and from 56rem everything stands in a single row where the field gets minmax(12rem,26rem). The magnifier is assembled from two pseudo-elements, and the shortcut hint is a <kbd> with pointer-events:none so that it does not get in the way of clicking the field."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1076,7 +1081,8 @@
                 "currentLocale": "EN",
                 "actionLabel": "Contact us"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-navbar-006-*. A server component. The list of languages is an HTML popover: the browser itself provides closing on Esc and on a click outside. The panel lives in the top layer and is therefore styled by the [data-vibeui-navbar-006-locales] attribute and receives its palette through a separate style. Where anchor positioning is supported, the panel sits right under the button (position-anchor + position-area under @supports), otherwise in the top right corner. The languages stay links with the lang attribute: switching language means going to a different address."
           }
         },
         "cardControls": ["currentLocale", "accent", "background"]
@@ -1255,7 +1261,8 @@
                 "trialLabel": "14 days free",
                 "trialNote": "No card needed"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-navbar-007-*. A server component. The button and the line under it are collected into a single column, so the line aligns with the right edge of the button and does not stretch the header. On a narrow layout the line is hidden — in a mobile header it eats the very height the whole thing was for. The logo mark is cut out with mask-image and a radial gradient: there is no separate icon file."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1453,7 +1460,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-navbar-008-*. A server component: the account menu is an HTML popover, there is no React state. The current tab is marked aria-current=\"page\", and the underline is drawn by a pseudo-element on that same attribute. The notification counter is drawn as a circle but duplicated in words in the button's aria-label: a digit in a circle tells a screen reader nothing on its own. The bell and the basket-like icons are assembled from borders and box-shadow, there are no icon files."
           }
         },
         "cardControls": ["notifications", "accent", "background"]
@@ -1634,7 +1642,8 @@
                 ],
                 "actionLabel": "Buy a ticket"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-navbar-009-*. A server component. Closing the announcement is done with a hidden checkbox and a :has(:checked) selector on the block root: the state lives in the DOM and React knows nothing about it. The checkbox is visually hidden but stays in the focus order, so the cross is reachable from the keyboard, and the focus ring is drawn on the label through :has(:focus-visible). The cross itself is assembled from two pseudo-elements."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1829,7 +1838,8 @@
                 "accountLabel": "Account",
                 "deliveryNote": "Delivered across the city tomorrow if you order by 8 pm"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-navbar-010-*. A server component: the search is a plain form with the search role, there is no React state. The layout is a CSS grid driven by the block's own width: below 56rem the search and the categories take separate rows, beyond it everything stands in a single row. The cart glyph and its lid are drawn with borders and a pseudo-element. The cart link carries an aria-label with the number of items and the total spelled out, while the circle and the total themselves are marked aria-hidden so that they are not read twice."
           }
         },
         "cardControls": ["cartCount", "accent", "background"]
@@ -2017,7 +2027,8 @@
                 "repoLabel": "GitHub",
                 "stars": "4.1k"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-navbar-011-*. A server component: the <select> is uncontrolled, with defaultValue, so there is no React state and the block stays a server one. The select's arrow is drawn with two linear gradients in background-image — there is no icon of its own. The section and the version are set in a monospace font: this is a caption for a technical object, not a heading. From 54rem the sections stand in a single row with the logo, below that they move to a second row with horizontal scrolling."
           }
         },
         "cardControls": ["currentVersion", "accent", "background"]
@@ -2235,7 +2246,8 @@
                 "callLabel": "+44 20 7000 1122",
                 "actionLabel": "Book a visit"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-navbar-012-*. A server component. The drawer is an HTML popover, so closing on Esc and on a click outside comes for free without JS, and ::backdrop dims the page. The panel lives in the top layer and is styled by the [data-vibeui-navbar-012-drawer] attribute, with the palette passed to it through a separate style. The slide-in is done with the translate property together with transition-behavior for discrete properties and @starting-style, so the animation works both on opening and on closing. The sections are grouped under headings: a flat list of fifteen links is unreadable."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2445,7 +2457,8 @@
                 "sectionsLabel": "Main sections",
                 "subsectionsLabel": "Subsections of the current section"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-navbar-013-*. A server component. The three rows are three separate navigation groups, each with its own aria-label, so a screen reader lists them separately rather than as one mush of twenty links. The row of subsections is rendered only when the array is non-empty: an empty strip reads as a layout bug. The underline of the active section is a pseudo-element with transform:scaleX, and the same one works on hover. The utility strip and the row of subsections scroll horizontally in a narrow container."
           }
         },
         "cardControls": ["accent", "background"]

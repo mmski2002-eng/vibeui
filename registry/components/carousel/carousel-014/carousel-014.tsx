@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Carousel014Card = {
   title: string
@@ -6,10 +6,7 @@ export type Carousel014Card = {
   hue?: number
 }
 
-export type Carousel014Props = Omit<
-  ComponentPropsWithoutRef<"section">,
-  "children"
-> & {
+export type Carousel014Props = Omit<ComponentProps<"section">, "children"> & {
   cards?: Carousel014Card[]
   label?: string
   /** Основа идентификаторов слайдов: два блока на одной странице не должны совпасть. */
@@ -24,6 +21,7 @@ export type Carousel014Props = Omit<
   hint?: string
   /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
   background?: string
+  accent?: string
 }
 
 // Идея компонента: карусель без единой строки JS, но со стрелками. Пара
@@ -38,11 +36,14 @@ const STYLES = `
 :where([data-vibeui-block="carousel-014"]){
 --vibeui-carousel-014-bg:transparent;
 --vibeui-carousel-014-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-carousel-014-muted:light-dark(oklch(0.58 0.014 265),oklch(0.7 0.012 265));
+--vibeui-carousel-014-muted:color-mix(in oklab,var(--vibeui-carousel-014-fg) 68%,transparent);
 --vibeui-carousel-014-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-carousel-014-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-carousel-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="carousel-014"]{color-scheme:dark}
 [data-vibeui-block="carousel-014"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:26rem;box-sizing:border-box;padding:0.875rem;
@@ -57,6 +58,8 @@ scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;
 border-radius:0.875rem;
 }
 [data-vibeui-block="carousel-014"] [data-part="track"]::-webkit-scrollbar{display:none}
+/* Кадр стоит вместо фотографии: градиент и светлый текст на нём одинаковы
+   в любой теме страницы, поэтому второй ветки у них нет. */
 [data-vibeui-block="carousel-014"] [data-part="slide"]{
 position:relative;flex:0 0 100%;min-width:0;
 scroll-snap-align:center;scroll-snap-stop:always;
@@ -70,7 +73,8 @@ color:oklch(0.99 0.003 265);
 [data-vibeui-block="carousel-014"] [data-part="title"]{margin:0;font-size:1.0625rem;font-weight:680;line-height:1.2}
 [data-vibeui-block="carousel-014"] [data-part="text"]{margin:0;font-size:0.8125rem;line-height:1.45;color:oklch(0.94 0.01 265)}
 /* Стрелки лежат в самом слайде и ведут на соседний якорь: текущая позиция
-   компоненту не нужна, а значит не нужен и JS. */
+   компоненту не нужна, а значит не нужен и JS. Лежат они на кадре, а не на
+   странице, поэтому белый кружок остаётся белым в обеих темах. */
 [data-vibeui-block="carousel-014"] [data-part="arrow"]{
 position:absolute;top:50%;transform:translateY(-50%);
 display:inline-flex;align-items:center;justify-content:center;
@@ -147,11 +151,13 @@ export function Carousel014({
   nextLabel = "Следующий слайд: {title}",
   hint = "Листается пальцем, колесом и стрелками внутри кадра — без JavaScript.",
   background = "",
+  accent,
   className,
   style,
   ...props
 }: Carousel014Props) {
   const palette = {
+    ...(accent ? { "--vibeui-carousel-014-accent": accent } : null),
     ...(background
       ? {
           "--vibeui-carousel-014-bg": background,
@@ -168,6 +174,7 @@ export function Carousel014({
       </style>
       <section
         {...props}
+        data-slot="carousel"
         data-vibeui-block="carousel-014"
         aria-roledescription={roleDescription}
         aria-label={label}

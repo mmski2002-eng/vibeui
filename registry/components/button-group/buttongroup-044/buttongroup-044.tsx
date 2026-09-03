@@ -1,10 +1,10 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Buttongroup044Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   defaultValue?: number
@@ -32,13 +32,16 @@ const STYLES = `
 :where([data-vibeui-block="buttongroup-044"]){
 --vibeui-buttongroup-044-surface:transparent;
 --vibeui-buttongroup-044-fg:light-dark(oklch(0.24 0.016 265),oklch(0.95 0.005 265));
---vibeui-buttongroup-044-muted:light-dark(oklch(0.56 0.014 265),oklch(0.72 0.012 265));
+--vibeui-buttongroup-044-muted:color-mix(in oklab,var(--vibeui-buttongroup-044-fg) 68%,transparent);
 --vibeui-buttongroup-044-border:light-dark(oklch(0.88 0.008 265),oklch(0.41 0.012 265));
 --vibeui-buttongroup-044-hover:light-dark(oklch(0.965 0.005 265),oklch(0.33 0.012 265));
 --vibeui-buttongroup-044-accent:light-dark(oklch(0.5 0.16 265),oklch(0.77 0.13 265));
 --vibeui-buttongroup-044-radius:0.625rem;
 --vibeui-buttongroup-044-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="buttongroup-044"]{color-scheme:dark}
 [data-vibeui-block="buttongroup-044"]{
 box-sizing:border-box;display:inline-flex;align-items:stretch;isolation:isolate;
 border:1px solid var(--vibeui-buttongroup-044-border);
@@ -51,7 +54,7 @@ font-family:var(--vibeui-buttongroup-044-font);
 appearance:none;cursor:pointer;font:inherit;
 position:relative;z-index:0;
 display:inline-flex;align-items:center;justify-content:center;
-width:2.375rem;height:2.375rem;
+width:2.25rem;height:2.25rem;
 border:0;background:transparent;
 color:var(--vibeui-buttongroup-044-muted);
 transition:background-color .16s ease,color .16s ease;
@@ -70,7 +73,7 @@ border-inline:1px solid var(--vibeui-buttongroup-044-border);
 }
 /* Родные стрелки убраны: они дублируют кнопки и слишком мелкие. */
 [data-vibeui-block="buttongroup-044"] input{
-width:2.5rem;height:2.375rem;padding:0;
+width:2.5rem;height:2.25rem;padding:0;
 border:0;background:transparent;
 color:var(--vibeui-buttongroup-044-fg);
 font:inherit;font-size:0.875rem;font-weight:700;text-align:center;
@@ -164,6 +167,7 @@ export function Buttongroup044({
       </style>
       <div
         {...props}
+        data-slot="button-group"
         data-vibeui-block="buttongroup-044"
         className={className}
         style={palette}

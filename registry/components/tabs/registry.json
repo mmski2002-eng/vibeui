@@ -70,6 +70,7 @@
         "i18n": {
           "en": {
             "description": "Tabs that answer the keyboard the way system tabs do: arrows move the selection, Home and End jump to the ends. The underline travels with the active tab.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-tabs-001-* variables. The markup follows the WAI-ARIA tabs pattern: role=\"tablist\", role=\"tab\" with aria-selected and aria-controls, role=\"tabpanel\" with aria-labelledby. Only the active tab lives in the Tab order (a roving tabindex), and the rest are switched with the arrow keys. The bar under a tab is that tab's own ::after and takes its width from the text, so nothing is measured in JS.",
             "ai": {
               "summary": "Tabs with full keyboard support: left and right arrows move the selection in a loop, Home and End jump to the ends, and only the active tab stays in the Tab order. The underline animates with transform. The list scrolls horizontally when there are many tabs. One client component, zero dependencies, its own palette.",
               "preserve": [
@@ -206,6 +207,7 @@
         "i18n": {
           "en": {
             "description": "A mobile bottom tab bar: the height accounts for the safe area, and the active item is marked by a dot, not colour alone.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-tabbar-001-* variables. Server rendered: no hooks. The bottom padding comes from env(safe-area-inset-bottom), otherwise on an iPhone the item goes under the system bar. The badge with the counter is hidden from the screen reader, and the number goes into the link's aria-label.",
             "ai": {
               "summary": "A bottom navigation bar: four labelled items, a counter badge and a dot on the active one. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -351,6 +353,7 @@
         "i18n": {
           "en": {
             "description": "Tabs on radio buttons: switching, single selection within the group and arrow keys all come from the browser, no JS needed.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-tabs-002-* variables. Server rendered: no hooks, the radio buttons hold the state. The panel is revealed by a :has() selector on the checked button, so the rules are written out for six tabs. The tab strip scrolls horizontally: on a narrow screen the labels do not wrap.",
             "ai": {
               "summary": "Tabs without JS: a scrollable strip, the selected tab on a light pad, the panel revealed by a :has() selector. Zero dependencies, one file.",
               "preserve": [
@@ -492,6 +495,7 @@
         "i18n": {
           "en": {
             "description": "Tabs with one travelling indicator: its position is arithmetic in CSS from the index and the count, with nothing measured in JS.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-tabs-003-* variables. A client component: \"use client\" for the selected tab and for the keyboard. The tabs sit in a grid of equal columns, and the indicator is positioned absolutely and therefore does not take a column. Its width is 100%/count and its offset is translateX(index * 100%); both numbers arrive through the --vibeui-tabs-003-count and --vibeui-tabs-003-index variables. The markup follows the WAI-ARIA tabs pattern, and only the active tab lives in the Tab order.",
             "ai": {
               "summary": "Tabs with a shared indicator that slides under the active one. The position comes from the index and the tab count as CSS arithmetic, so nothing is measured and the indicator never falls apart on a font or width change. Arrows, Home and End all work. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -632,6 +636,7 @@
         "i18n": {
           "en": {
             "description": "Pill tabs in the manner of a system segmented control: the active pill is filled with the accent, thin dividers separate the rest.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-tabs-004-* variables. A client component: \"use client\" for the selected tab and for the keyboard. The divider is a ::before on every tab except the first; next to the active pill it is suppressed by rules on aria-selected, otherwise a line at the edge of the fill looks like dirt. The markup follows the WAI-ARIA tabs pattern, and only the active tab lives in the Tab order.",
             "ai": {
               "summary": "A segmented control built on tabs: pills in a shared track, the active one filled with the accent, neighbours separated by thin lines. Arrows, Home and End move the selection. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -775,6 +780,7 @@
         "i18n": {
           "en": {
             "description": "Vertical settings tabs: the list on the left reads top to bottom, so labels with their hints fit in full.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-tabs-005-* variables. A client component: \"use client\" for the selected tab and for the keyboard. The list is marked aria-orientation=\"vertical\", and the arrows are vertical accordingly: up and down, plus Home and End. The two columns appear through a container query on the inner [data-part=\"shell\"], because a rule inside @container does not apply to the container itself; in a narrow block the list lies above the content.",
             "ai": {
               "summary": "Vertical tabs: a list of sections on the left with a label and a hint, the content on the right. Up and down arrows move the selection, Home and End jump to the ends. In a narrow block the columns fold into one. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -927,6 +933,7 @@
         "i18n": {
           "en": {
             "description": "Mail folder tabs: a glyph, a label and a counter in one row, with the number folded into the tab's name rather than read as a bare digit.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-tabs-006-* variables. A client component: \"use client\" for the selected tab and for the keyboard. The glyphs are drawn with borders and clip-path off the data-glyph attribute, so no icon font is needed. The counter is marked aria-hidden, and the number goes into the tab's aria-label. The markup follows the WAI-ARIA tabs pattern, and the row scrolls horizontally with a hidden scrollbar.",
             "ai": {
               "summary": "Tabs with glyphs and counters: the label beside the glyph, the unread count on the right, and the active tab's counter filled with the accent. The glyphs are drawn with borders, so the file stays self-contained. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -1080,6 +1087,7 @@
         "i18n": {
           "en": {
             "description": "A scrolling row of tabs with edge shadows: a shadow appears only on the side that still has content, and all of it without JS.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-tabs-007-* variables. A client component: \"use client\" for the selected tab and for the keyboard, but the edge shadows are made with pure CSS: four gradients with different background attachments — the \"mask\" in the background colour travels with the content (background-attachment:local) while the shadow itself stays in place (scroll), so at a fully scrolled edge the shadow is covered by the mask. The arrow keys additionally bring the selected tab into view through scrollIntoView.",
             "ai": {
               "summary": "A row of tabs that does not fit and scrolls horizontally. Shadows at the edges hint that the list continues; they are made of gradients with different background attachments, with no observers and no scroll handler. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -1251,6 +1259,7 @@
         "i18n": {
           "en": {
             "description": "Tabs that fold the extras into a \"more\" list: a tab picked from the list takes the last visible slot, so the active tab is always on screen.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-tabs-008-* variables. A client component: \"use client\" for the selection, for opening the list and for swapping the visible tab. The visible row is the first visible tabs, where the last slot is given to the tab chosen from \"more\"; the displaced one goes into the list. There is a single panel for all the tabs, and its aria-labelledby points at the active one. The markup follows the WAI-ARIA tabs pattern, and the arrow keys walk the visible row.",
             "ai": {
               "summary": "More tabs than fit: some stay in the row, the rest move into a \"more\" list with a counter. Picking from the list promotes that tab into the visible row and demotes the one it replaces, so the active tab never disappears. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -1381,7 +1390,7 @@
             "моноширинный шрифт и высоту ряда",
             "акцент через проп accent — цвет верхней полоски активной вкладки",
             "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
-            "подписи: listLabel — имя ряда, closeLabel — шаблон кнопки закрытия из {label}, emptyText — текст, когда закрыты все вкладки"
+            "подписи: listLabel — имя ряда, closeLabel — шаблон кнопки закрытия из {label}, dirtyLabel — что читает скринридер вместо точки правок, emptyText — текст, когда закрыты все вкладки"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
@@ -1415,6 +1424,7 @@
         "i18n": {
           "en": {
             "description": "Editor tabs you can close: on an unsaved file the close cross is replaced by a dot, so edits are not lost to one stray click.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-tabs-009-* variables. A client component: \"use client\" for the list of open files and for the selection. A tab is an element with role=\"tab\", and the cross inside it is a separate button with tabIndex -1 and stopped propagation, so closing does not fire when switching. The dot of an unsaved file is replaced by the cross on :hover and :focus-within. A closed tab hands the selection to its left neighbour.",
             "ai": {
               "summary": "A row of tabs as in a code editor: monospaced file names, a close cross, a dot on an unsaved file and an explicit state when everything is closed. Closing hands the selection to the left neighbour. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -1433,7 +1443,7 @@
                 "the monospaced font and the row height",
                 "the accent through the accent prop — it colours the active tab's top bar",
                 "background — the component background; empty means no background, taking the page colour",
-                "the captions: listLabel names the row, closeLabel is the close-button template built from {label}, emptyText is shown when every tab is closed"
+                "the captions: listLabel names the row, closeLabel is the close-button template built from {label}, dirtyLabel is what a screen reader reads instead of the edit dot, emptyText is shown when every tab is closed"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
@@ -1478,7 +1488,8 @@
                 ],
                 "listLabel": "Open files",
                 "closeLabel": "Close {label}",
-                "emptyText": "All tabs are closed"
+                "emptyText": "All tabs are closed",
+                "dirtyLabel": "unsaved"
               }
             }
           }
@@ -1554,6 +1565,7 @@
         "i18n": {
           "en": {
             "description": "Tabs without JS but with a travelling indicator: radio buttons hold the choice, and a :has() rule plus CSS arithmetic places the bar.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-tabs-010-* variables. Server rendered: no hooks, the radio buttons hold the choice, and the browser itself gives arrow-key movement across them. Through :has(), the checked button sets the --vibeui-tabs-010-index variable, from which the indicator's offset is computed; the panels are revealed by the same kind of rules on data-index. The rules are written out for six tabs — more requires two further lines of CSS.",
             "ai": {
               "summary": "Radio-driven tabs: switching, arrow keys across the group and moving between tabs all come from the browser, while the bar under the active tab travels on CSS arithmetic. No state, no hydration, no measuring. Zero dependencies, one file, its own palette.",
               "preserve": [

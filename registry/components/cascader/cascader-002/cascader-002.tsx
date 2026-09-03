@@ -38,11 +38,14 @@ const STYLES = `
 --vibeui-cascader-002-bg:transparent;
 --vibeui-cascader-002-panel:light-dark(oklch(0.98 0.003 265),oklch(0.27 0.012 265));
 --vibeui-cascader-002-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
---vibeui-cascader-002-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-cascader-002-muted:color-mix(in oklab,var(--vibeui-cascader-002-fg) 68%,transparent);
 --vibeui-cascader-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.011 265));
 --vibeui-cascader-002-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.15 262));
 --vibeui-cascader-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="cascader-002"]{color-scheme:dark}
 [data-vibeui-block="cascader-002"]{
 display:flex;flex-direction:column;gap:0.625rem;
 width:100%;max-width:29rem;box-sizing:border-box;padding:0.875rem;
@@ -262,6 +265,7 @@ export function Cascader002({
         {STYLES}
       </style>
       <div
+        data-slot="cascader"
         data-vibeui-block="cascader-002"
         className={className}
         style={palette}

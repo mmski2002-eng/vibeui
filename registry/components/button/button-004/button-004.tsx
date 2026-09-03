@@ -1,6 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Button004Props = ComponentPropsWithoutRef<"button"> & {
+export type Button004Props = ComponentProps<"button"> & {
   /** Точка-маркер слева. Отключается, если кнопка стоит в плотном ряду. */
   marker?: boolean
   tint?: string
@@ -23,6 +23,9 @@ const STYLES = `
 --vibeui-button-004-radius:0.5rem;
 --vibeui-button-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="button-004"]{color-scheme:dark}
 [data-vibeui-block="button-004"]{
 appearance:none;border:0;background:transparent;cursor:pointer;
 display:inline-flex;align-items:center;gap:0.5rem;
@@ -69,6 +72,7 @@ export function Button004({
       <button
         {...props}
         type={type}
+        data-slot="button"
         data-vibeui-block="button-004"
         className={className}
         style={palette}

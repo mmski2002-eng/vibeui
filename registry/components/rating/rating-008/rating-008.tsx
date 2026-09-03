@@ -1,7 +1,7 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Rating008Props = Omit<
-  ComponentPropsWithoutRef<"fieldset">,
+  ComponentProps<"fieldset">,
   "children" | "defaultValue"
 > & {
   legend?: string
@@ -29,7 +29,7 @@ const STYLES = `
 --vibeui-rating-008-surface:transparent;
 --vibeui-rating-008-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-rating-008-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
---vibeui-rating-008-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-rating-008-muted:color-mix(in oklab,var(--vibeui-rating-008-fg) 68%,transparent);
 --vibeui-rating-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
 --vibeui-rating-008-low:light-dark(oklch(0.58 0.18 25),oklch(0.74 0.16 25));
 --vibeui-rating-008-mid:light-dark(oklch(0.7 0.14 75),oklch(0.82 0.14 78));
@@ -38,6 +38,9 @@ const STYLES = `
 --vibeui-rating-008-on:light-dark(oklch(1 0 0),oklch(0.18 0.02 265));
 --vibeui-rating-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="rating-008"]{color-scheme:dark}
 /* Подложки по умолчанию нет: опрос ложится на фон страницы. */
 [data-vibeui-block="rating-008"]{
 display:flex;flex-direction:column;gap:0.5rem;
@@ -166,6 +169,7 @@ export function Rating008({
       </style>
       <fieldset
         {...props}
+        data-slot="rating"
         data-vibeui-block="rating-008"
         className={className}
         style={palette}

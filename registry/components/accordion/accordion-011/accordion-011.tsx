@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Accordion011Item = {
   question: string
@@ -12,14 +12,16 @@ export type Accordion011Marker =
 /** Чем подсвечен открытый раздел. Тени на тёмном не работают. */
 export type Accordion011Glow = "edge" | "ring" | "none"
 
-export type Accordion011Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Accordion011Props = Omit<ComponentProps<"div">, "children"> & {
   items?: Accordion011Item[]
   defaultOpen?: number
   /** Открытым остаётся только один раздел. */
   exclusive?: boolean
+  /**
+   * Имя группы взаимного исключения. Двум аккордеонам на одной странице
+   * нужны разные имена, иначе они делят одну радиогруппу.
+   */
+  group?: string
   marker?: Accordion011Marker
   glow?: Accordion011Glow
   accent?: string
@@ -32,7 +34,7 @@ export type Accordion011Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="accordion-011"]){
 --vibeui-accordion-011-fg:oklch(0.97 0.003 265);
---vibeui-accordion-011-muted:oklch(0.75 0.012 265);
+--vibeui-accordion-011-muted:color-mix(in oklab,var(--vibeui-accordion-011-fg) 68%,transparent);
 --vibeui-accordion-011-bg:oklch(0.21 0.018 265);
 --vibeui-accordion-011-raised:oklch(0.25 0.02 265);
 --vibeui-accordion-011-border:oklch(1 0 0 / 12%);
@@ -164,6 +166,7 @@ export function Accordion011({
   marker = "chevron",
   glow = "edge",
   exclusive = true,
+  group = "vibeui-accordion-011",
   accent,
   className,
   style,
@@ -181,6 +184,7 @@ export function Accordion011({
       </style>
       <div
         {...props}
+        data-slot="accordion"
         data-vibeui-block="accordion-011"
         data-marker={marker}
         data-glow={glow}
@@ -190,7 +194,7 @@ export function Accordion011({
         {items.map((item, index) => (
           <details
             key={item.question}
-            name={exclusive ? "vibeui-accordion-011" : undefined}
+            name={exclusive ? group : undefined}
             open={index === defaultOpen}
           >
             <summary>

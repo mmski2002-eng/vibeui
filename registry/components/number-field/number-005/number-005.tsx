@@ -1,15 +1,15 @@
 "use client"
 
 import { useId, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Number005Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "defaultValue" | "onChange"
 > & {
   label?: string
   defaultValue?: number
-  defaultUnit?: "кг" | "фунты"
+  defaultUnit?: "kg" | "lb"
   /** Подписи кнопок переключателя: компонент несёт русские. */
   unitText?: Record<string, string>
   /** Названия единиц в строке эквивалента. */
@@ -38,13 +38,16 @@ const STYLES = `
 --vibeui-number-005-field:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
 --vibeui-number-005-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-number-005-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
---vibeui-number-005-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-number-005-muted:color-mix(in oklab,var(--vibeui-number-005-fg) 68%,transparent);
 --vibeui-number-005-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
 --vibeui-number-005-switch:light-dark(oklch(0.96 0.004 265),oklch(0.22 0.01 265));
 --vibeui-number-005-accent:light-dark(oklch(0.5 0.14 195),oklch(0.72 0.12 195));
 --vibeui-number-005-ring:light-dark(oklch(0.5 0.14 195 / 20%),oklch(0.72 0.12 195 / 30%));
 --vibeui-number-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="number-005"]{color-scheme:dark}
 /* Подложки по умолчанию нет: поле ложится на фон страницы. */
 [data-vibeui-block="number-005"]{
 display:flex;flex-direction:column;gap:0.5rem;
@@ -101,8 +104,8 @@ font-variant-numeric:tabular-nums;
 
 const POUNDS_IN_KILOGRAM = 2.2046226218
 
-const UNIT_TEXT: Record<string, string> = { кг: "кг", фунты: "lb" }
-const MIRROR_UNIT_TEXT: Record<string, string> = { кг: "кг", фунты: "фунта" }
+const UNIT_TEXT: Record<string, string> = { kg: "кг", lb: "lb" }
+const MIRROR_UNIT_TEXT: Record<string, string> = { kg: "кг", lb: "фунта" }
 
 function round(value: number) {
   return Math.round(value * 10) / 10
@@ -137,7 +140,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 export function Number005({
   label = "Вес посылки",
   defaultValue = 12.5,
-  defaultUnit = "кг",
+  defaultUnit = "kg",
   unitText = UNIT_TEXT,
   mirrorUnitText = MIRROR_UNIT_TEXT,
   mirrorText = "Это же значение: {value}",
@@ -152,14 +155,14 @@ export function Number005({
   const [unit, setUnit] = useState(defaultUnit)
   // База всегда в килограммах: одно место округления, никакого дрейфа.
   const [kilograms, setKilograms] = useState(
-    defaultUnit === "кг" ? defaultValue : defaultValue / POUNDS_IN_KILOGRAM,
+    defaultUnit === "kg" ? defaultValue : defaultValue / POUNDS_IN_KILOGRAM,
   )
 
-  const shown = unit === "кг" ? kilograms : kilograms * POUNDS_IN_KILOGRAM
+  const shown = unit === "kg" ? kilograms : kilograms * POUNDS_IN_KILOGRAM
   const mirror =
-    unit === "кг"
-      ? `${round(kilograms * POUNDS_IN_KILOGRAM)} ${mirrorUnitText["фунты"] ?? MIRROR_UNIT_TEXT["фунты"]}`
-      : `${round(kilograms)} ${mirrorUnitText["кг"] ?? MIRROR_UNIT_TEXT["кг"]}`
+    unit === "kg"
+      ? `${round(kilograms * POUNDS_IN_KILOGRAM)} ${mirrorUnitText["lb"] ?? MIRROR_UNIT_TEXT["lb"]}`
+      : `${round(kilograms)} ${mirrorUnitText["kg"] ?? MIRROR_UNIT_TEXT["kg"]}`
   const [mirrorBefore, mirrorAfter] = mirrorText.split("{value}")
 
   const palette = {
@@ -180,6 +183,7 @@ export function Number005({
       </style>
       <div
         {...props}
+        data-slot="number-field"
         data-vibeui-block="number-005"
         className={className}
         style={palette}
@@ -197,11 +201,11 @@ export function Number005({
             onChange={(event) => {
               const next = Number(event.target.value)
               if (!Number.isFinite(next)) return
-              setKilograms(unit === "кг" ? next : next / POUNDS_IN_KILOGRAM)
+              setKilograms(unit === "kg" ? next : next / POUNDS_IN_KILOGRAM)
             }}
           />
           <div data-part="units" role="group" aria-label={unitsLabel}>
-            {(["кг", "фунты"] as const).map((option) => (
+            {(["kg", "lb"] as const).map((option) => (
               <button
                 key={option}
                 type="button"

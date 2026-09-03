@@ -1,6 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Badge017Props = ComponentPropsWithoutRef<"span"> & {
+export type Badge017Props = ComponentProps<"span"> & {
   tone?: "accent" | "positive" | "danger"
   waves?: number
   /** Пусто — плашка держит собственную заливку тона. */
@@ -22,6 +22,9 @@ const STYLES = `
 --vibeui-badge-017-border:light-dark(oklch(0.9 calc(var(--vibeui-badge-017-chroma) * 0.2) var(--vibeui-badge-017-hue)),oklch(0.42 calc(var(--vibeui-badge-017-chroma) * 0.3) var(--vibeui-badge-017-hue)));
 --vibeui-badge-017-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="badge-017"]{color-scheme:dark}
 [data-vibeui-block="badge-017"]{
 display:inline-flex;align-items:center;gap:0.4375rem;
 box-sizing:border-box;height:1.75rem;padding:0 0.6875rem;
@@ -112,6 +115,7 @@ export function Badge017({
       </style>
       <span
         {...props}
+        data-slot="badge"
         data-vibeui-block="badge-017"
         data-tone={tone}
         className={className}

@@ -1,11 +1,8 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Button012Shape = "circle" | "square"
 
-export type Button012Props = Omit<
-  ComponentPropsWithoutRef<"button">,
-  "children"
-> & {
+export type Button012Props = Omit<ComponentProps<"button">, "children"> & {
   /** Что делает кнопка. Обязателен: у иконки нет текста. */
   label?: string
   icon?: "plus" | "close" | "more" | "search"
@@ -35,6 +32,9 @@ const STYLES = `
 --vibeui-button-012-accent-fg:light-dark(oklch(0.99 0.01 265),oklch(0.2 0.04 265));
 --vibeui-button-012-radius:0.625rem;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="button-012"]{color-scheme:dark}
 [data-vibeui-block="button-012"]{
 appearance:none;cursor:pointer;
 display:inline-flex;align-items:center;justify-content:center;flex:none;
@@ -113,6 +113,7 @@ export function Button012({
       <button
         {...props}
         type={type}
+        data-slot="button"
         data-vibeui-block="button-012"
         data-shape={shape}
         data-size={size}

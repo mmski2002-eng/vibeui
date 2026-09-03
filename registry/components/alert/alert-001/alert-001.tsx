@@ -1,9 +1,9 @@
-import type { ComponentPropsWithoutRef, CSSProperties, ReactNode } from "react"
+import type { ComponentProps, CSSProperties, ReactNode } from "react"
 
 export type Alert001Tone = "info" | "success" | "warning" | "danger"
 
 export type Alert001Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "title" | "children"
 > & {
   tone?: Alert001Tone
@@ -11,6 +11,8 @@ export type Alert001Props = Omit<
   description?: string
   /** Действие справа: ссылка «Подробнее», кнопка «Повторить». */
   action?: ReactNode
+  /** Название тона словом: значок и цвет тон не называют. */
+  toneText?: Record<string, string>
   /** Пусто — подложки нет, уведомление лежит прямо на фоне страницы. */
   background?: string
 }
@@ -24,14 +26,21 @@ export type Alert001Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="alert-001"]){
 --vibeui-alert-001-fg:light-dark(oklch(0.26 0.016 265),oklch(0.93 0.006 265));
---vibeui-alert-001-muted:light-dark(oklch(0.48 0.014 265),oklch(0.72 0.012 265));
+--vibeui-alert-001-muted:color-mix(in oklab,var(--vibeui-alert-001-fg) 68%,transparent);
 --vibeui-alert-001-bg:transparent;
 --vibeui-alert-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-alert-001-tone:light-dark(oklch(0.58 0.18 262),oklch(0.74 0.16 262));
+/* Текст действия берёт отдельный оттенок: полосе и значку хватает 3:1 как
+   графике, а подписи на светлой подложке нужно 4.5:1. Тёмная ветка совпадает
+   с тоном — там его светлоты хватает. */
+--vibeui-alert-001-ink:light-dark(oklch(0.55 0.18 262),oklch(0.74 0.16 262));
 --vibeui-alert-001-radius:0.75rem;
 --vibeui-alert-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="alert-001"]{color-scheme:dark}
 [data-vibeui-block="alert-001"]{
 /* flex-wrap живёт здесь, а не в @container: контейнерный запрос применяется
    к потомкам контейнера, но не к нему самому. На широкой раскладке перенос
@@ -57,16 +66,31 @@ background:color-mix(in oklab,var(--vibeui-alert-001-tone) 18%,transparent);
 color:var(--vibeui-alert-001-tone);
 font-size:0.75rem;font-weight:700;line-height:1;
 }
+/* Тон назван словом: «!» стоит и у предупреждения, и у ошибки, а цвет
+   читают не все. Слово видно только скринридеру. */
+[data-vibeui-block="alert-001"] [data-part="sr"]{
+position:absolute;width:1px;height:1px;overflow:hidden;
+clip-path:inset(50%);white-space:nowrap;
+}
 [data-vibeui-block="alert-001"] [data-part="text"]{display:flex;flex-direction:column;gap:0.1875rem;flex:1 1 auto;min-width:0}
 [data-vibeui-block="alert-001"] [data-part="title"]{font-size:0.875rem;font-weight:600;line-height:1.4}
 [data-vibeui-block="alert-001"] [data-part="description"]{font-size:0.8125rem;line-height:1.5;color:var(--vibeui-alert-001-muted)}
 [data-vibeui-block="alert-001"] [data-part="action"]{
 display:flex;align-items:center;flex:none;gap:0.5rem;
-font-size:0.8125rem;font-weight:500;color:var(--vibeui-alert-001-tone);
+font-size:0.8125rem;font-weight:500;color:var(--vibeui-alert-001-ink);
 }
-[data-vibeui-block="alert-001"][data-tone="success"]{--vibeui-alert-001-tone:light-dark(oklch(0.58 0.15 152),oklch(0.75 0.14 152))}
-[data-vibeui-block="alert-001"][data-tone="warning"]{--vibeui-alert-001-tone:light-dark(oklch(0.68 0.15 70),oklch(0.81 0.14 75))}
-[data-vibeui-block="alert-001"][data-tone="danger"]{--vibeui-alert-001-tone:light-dark(oklch(0.56 0.19 25),oklch(0.72 0.17 25))}
+[data-vibeui-block="alert-001"][data-tone="success"]{
+--vibeui-alert-001-tone:light-dark(oklch(0.58 0.15 152),oklch(0.75 0.14 152));
+--vibeui-alert-001-ink:light-dark(oklch(0.525 0.15 152),oklch(0.75 0.14 152));
+}
+[data-vibeui-block="alert-001"][data-tone="warning"]{
+--vibeui-alert-001-tone:light-dark(oklch(0.68 0.15 70),oklch(0.81 0.14 75));
+--vibeui-alert-001-ink:light-dark(oklch(0.55 0.15 70),oklch(0.81 0.14 75));
+}
+[data-vibeui-block="alert-001"][data-tone="danger"]{
+--vibeui-alert-001-tone:light-dark(oklch(0.56 0.19 25),oklch(0.72 0.17 25));
+--vibeui-alert-001-ink:light-dark(oklch(0.56 0.19 25),oklch(0.72 0.17 25));
+}
 /* В узкой колонке действие уходит под текст, а не сжимает его. */
 @container (max-width: 26rem){
 /* Текст занимает строку целиком, иначе действие сжимает его до нуля. */
@@ -81,6 +105,13 @@ const GLYPHS: Record<Alert001Tone, string> = {
   success: "✓",
   warning: "!",
   danger: "!",
+}
+
+const TONE_TEXT: Record<string, string> = {
+  info: "Информация",
+  success: "Готово",
+  warning: "Предупреждение",
+  danger: "Ошибка",
 }
 
 /**
@@ -114,6 +145,7 @@ export function Alert001({
   title = "Домен ещё не подключён",
   description = "Сайт открывается по временному адресу. Подключите домен, чтобы им можно было делиться.",
   action = "Подключить",
+  toneText = TONE_TEXT,
   background = "",
   className,
   style,
@@ -136,6 +168,7 @@ export function Alert001({
       </style>
       <div
         {...props}
+        data-slot="alert"
         data-vibeui-block="alert-001"
         data-tone={tone}
         role={tone === "danger" ? "alert" : "status"}
@@ -146,6 +179,7 @@ export function Alert001({
           {GLYPHS[tone]}
         </span>
         <span data-part="text">
+          <span data-part="sr">{toneText[tone] ?? TONE_TEXT[tone]}</span>
           {title ? <span data-part="title">{title}</span> : null}
           {description ? (
             <span data-part="description">{description}</span>

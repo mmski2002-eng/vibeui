@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Tabbar001Item = {
   label: string
@@ -7,10 +7,7 @@ export type Tabbar001Item = {
   count?: number
 }
 
-export type Tabbar001Props = Omit<
-  ComponentPropsWithoutRef<"nav">,
-  "children"
-> & {
+export type Tabbar001Props = Omit<ComponentProps<"nav">, "children"> & {
   items?: Tabbar001Item[]
   activeLabel?: string
   /** Пусто — подложки нет, панель лежит прямо на фоне страницы. */
@@ -33,13 +30,16 @@ const STYLES = `
 :where([data-vibeui-block="tabbar-001"]){
 --vibeui-tabbar-001-bg:transparent;
 --vibeui-tabbar-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
---vibeui-tabbar-001-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-tabbar-001-muted:color-mix(in oklab,var(--vibeui-tabbar-001-fg) 68%,transparent);
 --vibeui-tabbar-001-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
 --vibeui-tabbar-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.17 262));
 --vibeui-tabbar-001-badge:light-dark(oklch(0.56 0.19 25),oklch(0.62 0.19 25));
 --vibeui-tabbar-001-badge-fg:oklch(1 0 0);
 --vibeui-tabbar-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="tabbar-001"]{color-scheme:dark}
 [data-vibeui-block="tabbar-001"]{
 display:flex;align-items:stretch;
 width:100%;max-width:24rem;box-sizing:border-box;
@@ -143,6 +143,7 @@ export function Tabbar001({
       </style>
       <nav
         {...props}
+        data-slot="tabs"
         data-vibeui-block="tabbar-001"
         aria-label={navLabel}
         className={className}

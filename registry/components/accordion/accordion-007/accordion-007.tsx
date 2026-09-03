@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Accordion007Item = {
   title: string
@@ -13,10 +13,7 @@ export type Accordion007Item = {
 export type Accordion007Marker =
   "chevron" | "triangle" | "square" | "plus" | "none"
 
-export type Accordion007Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Accordion007Props = Omit<ComponentProps<"div">, "children"> & {
   items?: Accordion007Item[]
   defaultOpen?: number
   marker?: Accordion007Marker
@@ -34,7 +31,7 @@ export type Accordion007Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="accordion-007"]){
 --vibeui-accordion-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-accordion-007-muted:light-dark(oklch(0.52 0.014 265),oklch(0.68 0.01 265));
+--vibeui-accordion-007-muted:color-mix(in oklab,var(--vibeui-accordion-007-fg) 68%,transparent);
 --vibeui-accordion-007-bg:transparent;
 --vibeui-accordion-007-border:light-dark(oklch(0.91 0.006 265),oklch(0.31 0.01 265));
 --vibeui-accordion-007-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.16 262));
@@ -53,7 +50,7 @@ color:var(--vibeui-accordion-007-fg);font-family:var(--vibeui-accordion-007-font
 [data-vibeui-block="accordion-007"] details + details{border-top:1px solid var(--vibeui-accordion-007-border)}
 [data-vibeui-block="accordion-007"] summary{
 display:flex;align-items:center;gap:0.75rem;
-padding:0.875rem 1rem;cursor:pointer;list-style:none;
+padding:0.9375rem 1.0625rem;cursor:pointer;list-style:none;
 font-size:0.9375rem;font-weight:550;line-height:1.35;
 }
 [data-vibeui-block="accordion-007"] summary::-webkit-details-marker{display:none}
@@ -131,13 +128,22 @@ transition:transform .18s ease,background-color .16s ease;
 [data-vibeui-block="accordion-007"][data-marker="plus"] details[open] [data-part="marker"]::after{background:var(--vibeui-accordion-007-accent)}
 [data-vibeui-block="accordion-007"][data-badge="off"] [data-part="badge"]{display:none}
 [data-vibeui-block="accordion-007"] [data-part="body"]{
-margin:0;padding:0 1rem 1rem 3.75rem;
+margin:0;padding:0 1.0625rem 1.0625rem 3.8125rem;
 font-size:0.875rem;line-height:1.6;color:var(--vibeui-accordion-007-muted);max-width:60ch;
+}
+/* Общая шкала категории: на широкой раскладке строка и текст подрастают
+   на один шаг, тот же, что у соседних аккордеонов. */
+@container (min-width: 32rem){
+[data-vibeui-block="accordion-007"] summary{padding:1.0625rem 1.375rem;font-size:1rem}
+[data-vibeui-block="accordion-007"] [data-part="body"]{padding:0 1.375rem 1.125rem 4.125rem;font-size:0.9375rem}
 }
 @container (max-width: 24rem){
 [data-vibeui-block="accordion-007"] [data-part="badge"]{display:none}
-[data-vibeui-block="accordion-007"] [data-part="body"]{padding-left:1rem}
+[data-vibeui-block="accordion-007"] [data-part="body"]{padding-left:1.0625rem}
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="accordion-007"]{color-scheme:dark}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="accordion-007"] *{animation:none!important;transition:none!important}}
 `
 
@@ -222,6 +228,7 @@ export function Accordion007({
       </style>
       <div
         {...props}
+        data-slot="accordion"
         data-vibeui-block="accordion-007"
         data-marker={marker}
         data-badge={badge ? "on" : "off"}

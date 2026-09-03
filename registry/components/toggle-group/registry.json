@@ -82,6 +82,7 @@
         "i18n": {
           "en": {
             "description": "A single-select group of toggle buttons: the alignment applies to the sample at once and focus moves inside the group with a roving tabindex.",
+            "docs": "One file, zero dependencies, the --vibeui-togglegroup-001-* palette. Client component: useState and a useRef on the list of buttons. The difference from the buttongroup category is fundamental: there the buttons are chained as actions (\"Save\", \"Cancel\"), here every button declares a state through aria-pressed and exactly one of them is pressed. The container is marked role=\"group\" with an aria-label. Focus moves by a roving tabindex: the pressed button has tabIndex=0 and the rest −1, the arrows move focus with wrap-around, Home and End go to the edges; selection is made by Enter and Space, so walking with the arrows changes nothing by accident.",
             "ai": {
               "summary": "A single-select toggle group with a roving tabindex: state lives in aria-pressed and the sample realigns instantly. One file, zero dependencies.",
               "preserve": [
@@ -225,6 +226,7 @@
         "i18n": {
           "en": {
             "description": "A multi-select toggle group: type styles stack, so any number of buttons can be pressed at once and the sample updates immediately.",
+            "docs": "One file, zero dependencies, the --vibeui-togglegroup-002-* palette. Client component: useState holds an array of the selected identifiers. Multiplicity is precisely the reason for aria-pressed here rather than radio: three states switch on independently. The highlight does not pick \"the one active button\" but follows each button's own aria-pressed; the sample receives its type styles through data-bold, data-italic and data-underline on the root. The difference from buttongroup: there the buttons perform actions and remember nothing after a press, here a press is a state that is switched on.",
             "ai": {
               "summary": "A multi-select toggle group: three type styles switch on independently and apply to the sample at once. One file, zero dependencies.",
               "preserve": [
@@ -376,6 +378,7 @@
         "i18n": {
           "en": {
             "description": "A view switcher together with the list it controls: the link is declared through aria-controls, and the three views are three rule sets over one piece of markup.",
+            "docs": "One file, zero dependencies, the --vibeui-togglegroup-003-* palette. Client component: useState and useId. The group is not abstract: it points aria-controls at a specific list and changes the list's appearance with a data-view attribute on the root. The list is not rebuilt in the process — only the layout rules change, so switching loses neither the scroll position nor the focus inside. This is a togglegroup, not a buttongroup: a button does not trigger an action but declares the view state through aria-pressed, and exactly one of the three states is on.",
             "ai": {
               "summary": "A list-view switcher together with the list itself: aria-controls ties them, and the view changes through rules over one markup. One file, zero dependencies.",
               "preserve": [
@@ -536,6 +539,7 @@
         "i18n": {
           "en": {
             "description": "A multi-select weekday filter: seven round toggles, a live summary line and a separate \"Weekdays only\" action button.",
+            "docs": "One file, zero dependencies, the --vibeui-togglegroup-004-* palette. Client component: useState with an array of identifiers. The circle is a toggle: pressed or not, there is no third option, hence aria-pressed on each one and the full day name in aria-label (the two letters \"Mo\" sound bad without being spelled out). Beside it stands \"Weekdays only\" — not a toggle but an action over the selection, and it looks like a text button: the difference between a state and an action has to read by eye. The weekend days take their own colour only in the pressed form, so that a calm row does not shimmer.",
             "ai": {
               "summary": "Multi-select weekday picking with round toggles, a live summary and a quick weekdays preset. One file, zero dependencies, client component.",
               "preserve": [
@@ -706,6 +710,7 @@
         "i18n": {
           "en": {
             "description": "A single-select size picker: sold-out sizes stay in the row struck through and explain the refusal instead of vanishing from the list.",
+            "docs": "One file, zero dependencies, the --vibeui-togglegroup-005-* palette. Client component: useState for the chosen size and for the last refusal. Unavailable sizes are marked aria-disabled rather than with the disabled attribute: such an option stays in the traversal order, can be read and is able to answer why it does not work. Unavailability is shown by two cues — dimming and a strike-through through ::after — because colour alone is not distinguished. This is a togglegroup: aria-pressed declares the selection state, exactly one of the six, and the value is not sent anywhere by itself.",
             "ai": {
               "summary": "Single-select size picking with toggles: unavailable sizes stay in the row, are marked aria-disabled and explain the refusal. One file, zero dependencies.",
               "preserve": [
@@ -847,6 +852,7 @@
         "i18n": {
           "en": {
             "description": "Multi-select notification channels as wide toggle cards: the note under each name is attached with aria-describedby instead of being folded into the button name.",
+            "docs": "One file, zero dependencies, the --vibeui-togglegroup-006-* palette. Client component: useState for the array and useId for the description identifiers. Every card is a button with a short aria-label and an aria-describedby pointing at its own note: the name stays short while the detail arrives as a separate utterance. Selection is drawn with an inset box-shadow ring rather than a thicker border: changing the border width would change the inner size and the grid would twitch on every click. The layout is auto-fit minmax, so the cards rearrange themselves according to the panel width.",
             "ai": {
               "summary": "Multi-select channels as toggle cards: a short name plus a description via aria-describedby, selection drawn as an inset ring. One file, zero dependencies.",
               "preserve": [
@@ -997,6 +1003,7 @@
         "i18n": {
           "en": {
             "description": "A formatting toolbar built from two toggle groups with real separators: multi-select type styles on the left, single-select alignment on the right.",
+            "docs": "One file, zero dependencies, the --vibeui-togglegroup-007-* palette. Client component: useState for the alignment, for the set of type styles and for the active index, a useRef on the list of buttons. The root is a role=\"toolbar\" with aria-orientation, inside it three role=\"group\" elements with names of their own and a role=\"separator\" between them: a panel of eight icons in a row is indistinguishable by ear, and a separator cuts it into meaningful chunks. Focus moves across the whole panel by a roving tabindex — the arrows, Home and End — while the behaviour inside the groups differs: on the left the states stack, on the right they exclude each other.",
             "ai": {
               "summary": "A formatting toolbar with separators: multi-select and single-select in one panel, focus moving by arrow keys. One file, zero dependencies.",
               "preserve": [
@@ -1150,6 +1157,7 @@
         "i18n": {
           "en": {
             "description": "A group with a required minimum: the last pressed button carries a lock and aria-disabled, and answers a press with an explanation rather than silence.",
+            "docs": "One file, zero dependencies, the --vibeui-togglegroup-008-* palette. Client component: useState for the selection and for the last blocked button. The \"at least one\" rule is not hidden: the button stays pressed, gets aria-disabled and a lock, and on an attempt to switch it off gives a short nudge and an explanation in the status line. Dimming the rest in advance would be a lie, they work. Below it stands a mini table drawn from the selected columns, so the meaning of the choice is visible at once. This is a togglegroup, not a buttongroup: the buttons declare the column visibility state.",
             "ai": {
               "summary": "A toggle group with a required minimum: the last pressed button does not switch off and explains the refusal, and the table below is built from the selection. One file, zero dependencies.",
               "preserve": [
@@ -1309,6 +1317,7 @@
         "i18n": {
           "en": {
             "description": "A single-select data view switcher: grid, list and table are three different HTML layouts of the same data, not a repaint of one markup.",
+            "docs": "One file, zero dependencies, the --vibeui-togglegroup-009-* palette. Client component: useState for the view and useId for the region id. The three views — grid, list and table — are rendered by different JSX branches rather than by one markup with CSS rules over it: a table stays a table with a thead and th, a ul stays a list. The switching buttons are marked with aria-controls pointing at the shared output container. The card layout in the grid answers the panel's own width through @container rather than the window's.",
             "ai": {
               "summary": "A single-select data view switcher: grid, list and table render as different HTML layouts instead of CSS rules over one markup. One file, zero dependencies.",
               "preserve": [
@@ -1486,6 +1495,7 @@
         "i18n": {
           "en": {
             "description": "A multi-select formatting group with real tag nesting: bold, italic, strikethrough and monospace wrap the sample inside one another instead of painting it with CSS attributes.",
+            "docs": "One file, zero dependencies, the --vibeui-togglegroup-010-* palette. Client component: useState holds an array of the selected marks. The preview is built with a reduce over a fixed mark order: every pressed mark wraps the previous result in its own tag — strong, em, s or code — so the sample's markup tree matches what real text would get after formatting. That is what distinguishes the component from Format Group: there the type styles are painted by the data-bold/data-italic CSS attributes on a single paragraph.",
             "ai": {
               "summary": "A multi-select formatting group where marks genuinely nest in the preview — strong, em, s and code — instead of CSS attributes. One file, zero dependencies.",
               "preserve": [
@@ -1635,6 +1645,7 @@
         "i18n": {
           "en": {
             "description": "A single-select vertical alignment group: the stage's align-items changes at once, and stretch is its own state rather than a mere edge snap.",
+            "docs": "One file, zero dependencies, the --vibeui-togglegroup-011-* palette. Client component: useState and a useRef on the list of buttons; the roving tabindex is the same mechanism as in Align Group, only here the arrows move focus horizontally while changing align-items rather than text-align. The card inside the stage has no fixed height, so \"stretch\" really changes its shape rather than merely moving it.",
             "ai": {
               "summary": "A single-select vertical alignment group with a roving tabindex: the stage's align-items changes instantly, and stretch is a state of its own. One file, zero dependencies.",
               "preserve": [
@@ -1778,6 +1789,7 @@
         "i18n": {
           "en": {
             "description": "A single-select chart period switcher: day, week, month and year each carry their own points and axis labels, and the chart rebuilds entirely rather than stretching old data.",
+            "docs": "One file, zero dependencies, the --vibeui-togglegroup-012-* palette. Client component: useState for the period. The bars read their height from a percentage value through an inline style — the only legitimate case for inline styles, because a data height cannot be expressed by a class defined in advance. Changing the period does not animate the old bars into the new proportions: the number of points differs, so the chart is drawn anew.",
             "ai": {
               "summary": "A single-select chart period switcher: day, week, month and year each have their own data points, and the chart rebuilds entirely. One file, zero dependencies.",
               "preserve": [
@@ -1933,6 +1945,7 @@
         "i18n": {
           "en": {
             "description": "A vertical single-select toggle group with captions: every button carries a title and a note, and the roving tabindex moves with the up/down arrows.",
+            "docs": "One file, zero dependencies, the --vibeui-togglegroup-013-* palette. Client component: useState and a useRef on the list of buttons. The vertical layout is not merely a rotated horizontal one: the buttons run in a column across the full panel width, and each has a dot indicator, a title and a short note, so the list stays readable without icons. The up and down arrows move the roving tabindex, Home and End go to the ends of the list.",
             "ai": {
               "summary": "A vertical single-select toggle group with a title and note on every button; the roving tabindex moves with up/down arrows. One file, zero dependencies.",
               "preserve": [
@@ -2084,6 +2097,7 @@
         "i18n": {
           "en": {
             "description": "A single-select icon priority group where every icon carries its own tooltip: the tooltip appears on hover and on focus alike, not only for the mouse.",
+            "docs": "One file, zero dependencies, the --vibeui-togglegroup-014-* palette. Client component: useState for the priority, useState for the id of the open tooltip, useId for the identifier prefix and a useRef on the list of buttons for the roving tabindex. The tooltip is a span with role=\"tooltip\", linked through aria-describedby only while it is shown: not a permanent reference to a hidden node but an honest absence of a description when the tooltip is not on screen. Escape closes an open tooltip without moving focus.",
             "ai": {
               "summary": "A single-select icon priority group with hover-and-focus tooltips wired through aria-describedby. One file, zero dependencies.",
               "preserve": [
@@ -2227,6 +2241,7 @@
         "i18n": {
           "en": {
             "description": "A single-select filter segment group with a count badge on every button: the number is always computed from the same task list the region below displays.",
+            "docs": "One file, zero dependencies, the --vibeui-togglegroup-015-* palette. Client component: useState for the filter and useId for the id of the linked list. The count is not a separate magic number but a .filter().length over the shared task array: the figure on a segment and the contents of the list after a click always agree. The button's visible text and its aria-label diverge on purpose: on screen \"Active\" and a \"12\" badge, and for a screen reader one phrase, \"Active, 12\".",
             "ai": {
               "summary": "A single-select filter group with a count on every segment: the number is computed from the shared task list and linked to it through aria-controls. One file, zero dependencies.",
               "preserve": [
@@ -2405,6 +2420,7 @@
         "i18n": {
           "en": {
             "description": "A single-select group with deselect: clicking the pressed button again returns the group to a \"nothing selected\" state, and a Reset button does the same in one action.",
+            "docs": "One file, zero dependencies, the --vibeui-togglegroup-016-* palette. Client component: useState for the selected value of type string | null. Unlike Align Group and Size Picker, single selection here does not keep exactly one button pressed at all times: a click on an already pressed button releases it. The \"Reset\" button is an ordinary action button rather than a toggle, and it gets a real disabled attribute when there is nothing to reset: unlike Required Group, where aria-disabled explains the refusal in text, here a refusal is simply not applicable and there is nothing to explain.",
             "ai": {
               "summary": "A single-select group that can be deselected by a second click, plus a separate reset button; an empty selection is stated in a status line. One file, zero dependencies.",
               "preserve": [

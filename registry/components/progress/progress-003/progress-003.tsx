@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Progress003Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Progress003Props = Omit<ComponentProps<"div">, "children"> & {
   value?: number
   /** Отметка цели на шкале: до неё план, после — перевыполнение. */
   target?: number
@@ -31,15 +28,18 @@ const STYLES = `
 --vibeui-progress-003-bg:transparent;
 --vibeui-progress-003-surface:light-dark(oklch(0.99 0.002 265),oklch(0.2 0.012 265));
 --vibeui-progress-003-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
---vibeui-progress-003-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-progress-003-muted:color-mix(in oklab,var(--vibeui-progress-003-fg) 68%,transparent);
 --vibeui-progress-003-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-progress-003-track:light-dark(oklch(0.93 0.006 265),oklch(0.31 0.012 265));
 --vibeui-progress-003-accent:light-dark(oklch(0.58 0.16 155),oklch(0.74 0.15 155));
 --vibeui-progress-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="progress-003"]{color-scheme:dark}
 [data-vibeui-block="progress-003"]{
 display:inline-flex;flex-direction:column;align-items:center;gap:0.625rem;
-box-sizing:border-box;padding:1.125rem 1.25rem;
+box-sizing:border-box;padding:0.9375rem 1.0625rem;
 background:var(--vibeui-progress-003-bg);
 border:1px solid var(--vibeui-progress-003-border);border-radius:1.125rem;
 font-family:var(--vibeui-progress-003-font);color:var(--vibeui-progress-003-fg);
@@ -81,14 +81,14 @@ position:relative;font-size:calc(var(--vibeui-progress-003-size) * 0.22);
 font-weight:700;line-height:1;font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="progress-003"] [data-part="unit"]{
-font-size:0.6875rem;font-weight:600;color:var(--vibeui-progress-003-muted);
+font-size:0.75rem;font-weight:600;color:var(--vibeui-progress-003-muted);
 letter-spacing:0.04em;text-transform:uppercase;
 }
 [data-vibeui-block="progress-003"] [data-part="label"]{
-font-size:0.8125rem;font-weight:650;
+font-size:0.9375rem;font-weight:650;
 }
 [data-vibeui-block="progress-003"] [data-part="goalnote"]{
-font-size:0.6875rem;color:var(--vibeui-progress-003-muted);
+font-size:0.875rem;color:var(--vibeui-progress-003-muted);
 font-variant-numeric:tabular-nums;
 }
 @media (prefers-reduced-motion:reduce){
@@ -163,6 +163,7 @@ export function Progress003({
       </style>
       <div
         {...props}
+        data-slot="progress"
         data-vibeui-block="progress-003"
         className={className}
         style={palette}

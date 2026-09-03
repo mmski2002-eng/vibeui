@@ -1,12 +1,12 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import { useEffect, useId, useState } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Field008State = "idle" | "short" | "checking" | "taken" | "free"
 
 export type Field008Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "defaultValue"
 > & {
   label?: string
@@ -32,7 +32,7 @@ const STYLES = `
 --vibeui-field-008-surface:transparent;
 --vibeui-field-008-fill:light-dark(oklch(0.975 0.004 265),oklch(0.29 0.011 265));
 --vibeui-field-008-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
---vibeui-field-008-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-field-008-muted:color-mix(in oklab,var(--vibeui-field-008-fg) 68%,transparent);
 --vibeui-field-008-border:light-dark(oklch(0.88 0.008 265),oklch(0.4 0.012 265));
 --vibeui-field-008-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.011 265));
 --vibeui-field-008-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
@@ -41,6 +41,9 @@ const STYLES = `
 --vibeui-field-008-state:var(--vibeui-field-008-muted);
 --vibeui-field-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="field-008"]{color-scheme:dark}
 /* Подложки по умолчанию нет: поле ложится на фон страницы. */
 [data-vibeui-block="field-008"]{
 display:flex;flex-direction:column;gap:0.4375rem;
@@ -159,6 +162,7 @@ export function Field008({
   style,
   ...props
 }: Field008Props) {
+  const id = useId()
   const [value, setValue] = useState("")
   const [answer, setAnswer] = useState<{
     query: string
@@ -215,32 +219,33 @@ export function Field008({
       </style>
       <div
         {...props}
+        data-slot="field"
         data-vibeui-block="field-008"
         data-state={state}
         className={className}
         style={palette}
       >
-        <label htmlFor="field-008-input">{label}</label>
+        <label htmlFor={id}>{label}</label>
         <div data-part="frame">
           <span data-part="prefix" aria-hidden="true">
             {prefix}
           </span>
           <input
-            id="field-008-input"
+            id={id}
             name="workspace"
             type="text"
             autoComplete="off"
             spellCheck={false}
             placeholder={placeholder}
             value={value}
-            aria-describedby="field-008-note"
+            aria-describedby={`${id}-note`}
             aria-invalid={state === "taken" ? true : undefined}
             onChange={(event) => setValue(event.target.value)}
           />
           <span data-part="mark" aria-hidden="true" />
         </div>
         {/* Состояние словом: значок сам по себе не читается вслух. */}
-        <p id="field-008-note" data-part="note" role="status">
+        <p id={`${id}-note`} data-part="note" role="status">
           {noteText[state] ?? NOTES[state]}
         </p>
       </div>

@@ -1,12 +1,9 @@
 import { Fragment } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Separator003Item = { value: string; caption: string }
 
-export type Separator003Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Separator003Props = Omit<ComponentProps<"div">, "children"> & {
   items?: Separator003Item[]
   gap?: number
   dividerHeight?: "text" | "full"
@@ -30,9 +27,12 @@ const STYLES = `
 --vibeui-separator-003-surface:transparent;
 --vibeui-separator-003-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-separator-003-fg:light-dark(oklch(0.24 0.014 265),oklch(0.95 0.006 265));
---vibeui-separator-003-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-separator-003-muted:color-mix(in oklab,var(--vibeui-separator-003-fg) 68%,transparent);
 --vibeui-separator-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="separator-003"]{color-scheme:dark}
 [data-vibeui-block="separator-003"]{
 display:inline-flex;align-items:stretch;
 gap:var(--vibeui-separator-003-gap);
@@ -120,6 +120,7 @@ export function Separator003({
       </style>
       <div
         {...props}
+        data-slot="separator"
         data-vibeui-block="separator-003"
         data-height={dividerHeight}
         className={className}

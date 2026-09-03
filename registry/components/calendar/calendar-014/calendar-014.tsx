@@ -1,7 +1,7 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Calendar014Props = Omit<
-  ComponentPropsWithoutRef<"aside">,
+  ComponentProps<"aside">,
   "children" | "title"
 > & {
   year?: number
@@ -16,6 +16,8 @@ export type Calendar014Props = Omit<
   dayLabelText?: string
   /** Подпись всего календаря. {month} и {year} подставляются. */
   calendarLabelText?: string
+  /** Слово к сегодняшней дате: заливка видна глазом, но не слышна скринридеру. */
+  todayLabel?: string
   locale?: string
   accent?: string
   /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
@@ -30,15 +32,18 @@ const STYLES = `
 :where([data-vibeui-block="calendar-014"]){
 --vibeui-calendar-014-bg:transparent;
 --vibeui-calendar-014-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
---vibeui-calendar-014-muted:light-dark(oklch(0.63 0.014 265),oklch(0.67 0.013 265));
+--vibeui-calendar-014-muted:color-mix(in oklab,var(--vibeui-calendar-014-fg) 68%,transparent);
 --vibeui-calendar-014-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-calendar-014-accent:light-dark(oklch(0.56 0.16 25),oklch(0.74 0.14 25));
 --vibeui-calendar-014-on-accent:light-dark(oklch(0.99 0.01 25),oklch(0.2 0.04 25));
 --vibeui-calendar-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="calendar-014"]{color-scheme:dark}
 [data-vibeui-block="calendar-014"]{
 display:flex;flex-direction:column;gap:0.5rem;
-width:100%;max-width:15rem;box-sizing:border-box;padding:0.75rem;
+width:100%;max-width:15rem;box-sizing:border-box;padding:0.9375rem;
 background:var(--vibeui-calendar-014-bg);
 border:1px solid var(--vibeui-calendar-014-border);border-radius:0.75rem;
 color:var(--vibeui-calendar-014-fg);font-family:var(--vibeui-calendar-014-font);
@@ -47,32 +52,37 @@ color:var(--vibeui-calendar-014-fg);font-family:var(--vibeui-calendar-014-font);
 display:flex;align-items:baseline;justify-content:space-between;gap:0.5rem;
 }
 [data-vibeui-block="calendar-014"] [data-part="month"]{
-margin:0;font-size:0.8125rem;font-weight:650;
+margin:0;font-size:0.9375rem;font-weight:650;
 }
 /* Заглавная только первая буква: capitalize поднимает и «г.» в «январь 2026 г.». */
 [data-vibeui-block="calendar-014"] [data-part="month"]::first-letter{text-transform:uppercase}
 [data-vibeui-block="calendar-014"] [data-part="year"]{
-font-size:0.6875rem;color:var(--vibeui-calendar-014-muted);font-variant-numeric:tabular-nums;
+font-size:0.75rem;color:var(--vibeui-calendar-014-muted);font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="calendar-014"] [data-part="grid"]{
 display:grid;grid-template-columns:repeat(7,1fr);gap:0.0625rem;
 }
 [data-vibeui-block="calendar-014"] [data-part="wd"]{
 padding-bottom:0.1875rem;text-align:center;
-font-size:0.625rem;font-weight:600;text-transform:lowercase;
+font-size:0.6875rem;font-weight:600;text-transform:lowercase;
 color:var(--vibeui-calendar-014-muted);
 }
 [data-vibeui-block="calendar-014"] [data-part="cell"]{
 display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.125rem;
 height:1.875rem;border-radius:0.375rem;
-font-size:0.6875rem;line-height:1;font-variant-numeric:tabular-nums;
+font-size:0.8125rem;line-height:1;font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="calendar-014"] [data-part="cell"][data-weekend="true"]{color:var(--vibeui-calendar-014-muted)}
 [data-vibeui-block="calendar-014"] [data-part="cell"][data-today="true"]{
 background:var(--vibeui-calendar-014-accent);color:var(--vibeui-calendar-014-on-accent);font-weight:700;
 }
+/* Заливка «сегодня» — только цвет; слово рядом произносит скринридер. */
+[data-vibeui-block="calendar-014"] [data-part="sr"]{
+position:absolute;width:1px;height:1px;margin:-1px;padding:0;
+overflow:hidden;clip-path:inset(50%);white-space:nowrap;
+}
 [data-vibeui-block="calendar-014"] [data-part="dots"]{
-display:flex;align-items:center;gap:0.09375rem;height:0.25rem;
+display:flex;align-items:center;gap:0.125rem;height:0.25rem;
 }
 [data-vibeui-block="calendar-014"] [data-part="dots"] i{
 width:0.1875rem;height:0.1875rem;border-radius:50%;
@@ -87,7 +97,7 @@ color:var(--vibeui-calendar-014-accent);
 [data-vibeui-block="calendar-014"] [data-part="foot"]{
 display:flex;align-items:center;justify-content:space-between;gap:0.5rem;
 padding-top:0.375rem;border-top:1px solid var(--vibeui-calendar-014-border);
-font-size:0.6875rem;color:var(--vibeui-calendar-014-muted);
+font-size:0.875rem;color:var(--vibeui-calendar-014-muted);
 }
 [data-vibeui-block="calendar-014"] [data-part="foot"] a{
 color:var(--vibeui-calendar-014-accent);font-weight:600;text-decoration:none;border-radius:0.25rem;
@@ -147,25 +157,48 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 }
 
 /**
+ * Месяц и локаль из пропов или дефолты компонента. Чужая страница не должна
+ * падать из-за неверного значения: NaN даёт Invalid Date, а Intl бросает
+ * RangeError и на нём, и на нераспознанной локали — белый экран вместо сайта.
+ */
+function safeMonth(year: number, month: number, fallback: number[]) {
+  return Number.isNaN(new Date(year, month - 1, 1).getTime())
+    ? fallback
+    : [year, month]
+}
+
+function safeLocale(value: string, fallback: string) {
+  try {
+    Intl.DateTimeFormat.supportedLocalesOf(value)
+    return value
+  } catch {
+    return fallback
+  }
+}
+
+/**
  * Мини-календарь боковой колонки: точки событий под числами и итог месяца.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Calendar014({
-  year = 2026,
-  month = 3,
+  year: yearProp = 2026,
+  month: monthProp = 3,
   events = DEFAULT_EVENTS,
   today = 14,
   caption = "Все события",
   eventsText = DEFAULT_EVENTS_TEXT,
   dayLabelText = "{day} {month}: {events}",
   calendarLabelText = "Календарь: {month} {year}",
-  locale = "ru-RU",
+  todayLabel = "Сегодня",
+  locale: localeProp = "ru-RU",
   accent,
   background = "",
   className,
   style,
   ...props
 }: Calendar014Props) {
+  const [year, month] = safeMonth(yearProp, monthProp, [2026, 3])
+  const locale = safeLocale(localeProp, "ru-RU")
   const first = new Date(year, month - 1, 1)
   const lead = (first.getDay() + 6) % 7
   const length = new Date(year, month, 0).getDate()
@@ -209,6 +242,7 @@ export function Calendar014({
       </style>
       <aside
         {...props}
+        data-slot="calendar"
         data-vibeui-block="calendar-014"
         className={className}
         style={palette}
@@ -250,6 +284,9 @@ export function Calendar014({
                 }
               >
                 <span>{day}</span>
+                {day === today ? (
+                  <span data-part="sr">{todayLabel}</span>
+                ) : null}
                 <span data-part="dots" aria-hidden="true">
                   {Array.from({ length: Math.min(count, 3) }, (_, dot) => (
                     <i key={dot} />

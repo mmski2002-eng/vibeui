@@ -3,13 +3,13 @@
 import { useEffect, useId, useRef, useState } from "react"
 import type {
   ClipboardEvent,
-  ComponentPropsWithoutRef,
+  ComponentProps,
   CSSProperties,
   KeyboardEvent,
 } from "react"
 
 export type Otp003Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   label?: string
@@ -39,21 +39,30 @@ const STYLES = `
 --vibeui-otp-003-bg:transparent;
 --vibeui-otp-003-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-otp-003-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
---vibeui-otp-003-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.014 265));
+--vibeui-otp-003-muted:color-mix(in oklab,var(--vibeui-otp-003-fg) 68%,transparent);
 --vibeui-otp-003-field:light-dark(oklch(0.98 0.002 265),oklch(0.26 0.014 265));
 --vibeui-otp-003-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.014 265));
 --vibeui-otp-003-accent:light-dark(oklch(0.5 0.16 240),oklch(0.74 0.14 240));
 --vibeui-otp-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="otp-003"]{color-scheme:dark}
 [data-vibeui-block="otp-003"]{
-display:flex;flex-direction:column;gap:0.625rem;
-width:100%;max-width:21rem;box-sizing:border-box;padding:0.875rem;
+display:flex;flex-direction:column;gap:0.5rem;
+width:100%;max-width:21rem;box-sizing:border-box;padding:0.9375rem;
 background:var(--vibeui-otp-003-bg);
 border:1px solid var(--vibeui-otp-003-shell);border-radius:0.875rem;
 font-family:var(--vibeui-otp-003-font);color:var(--vibeui-otp-003-fg);
 }
 [data-vibeui-block="otp-003"] *{box-sizing:border-box}
-[data-vibeui-block="otp-003"] [data-part="label"]{font-size:0.8125rem;font-weight:600}
+[data-vibeui-block="otp-003"] [data-part="label"]{font-size:0.9375rem;font-weight:600}
+/* Визуально скрытая строка: см. живую область под отсчётом. */
+[data-vibeui-block="otp-003"] [data-part="sr"]{
+position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+clip-path:inset(50%);white-space:nowrap;border:0;
+}
 [data-vibeui-block="otp-003"] [data-part="row"]{display:flex;gap:0.375rem}
 [data-vibeui-block="otp-003"] input{
 flex:1;min-width:0;height:2.875rem;padding:0;
@@ -78,9 +87,11 @@ transition:width 1s linear;
 }
 [data-vibeui-block="otp-003"] [data-part="foot"]{
 display:flex;align-items:center;justify-content:space-between;gap:0.5rem;
+flex-wrap:wrap;
 }
 [data-vibeui-block="otp-003"] [data-part="left"]{
-font-size:0.75rem;line-height:1.4;color:var(--vibeui-otp-003-muted);
+flex:1 1 9rem;
+font-size:0.875rem;line-height:1.4;color:var(--vibeui-otp-003-muted);
 font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="otp-003"] [data-part="resend"]{
@@ -88,7 +99,7 @@ appearance:none;cursor:pointer;flex:none;
 height:2rem;padding:0 0.75rem;border-radius:0.5rem;
 border:1px solid var(--vibeui-otp-003-accent);
 background:transparent;color:var(--vibeui-otp-003-accent);
-font:inherit;font-size:0.75rem;font-weight:650;
+font:inherit;font-size:0.875rem;font-weight:650;
 transition:background-color .16s ease;
 }
 [data-vibeui-block="otp-003"] [data-part="resend"]:hover:not(:disabled){
@@ -99,6 +110,12 @@ cursor:not-allowed;opacity:.45;border-color:var(--vibeui-otp-003-muted);color:va
 }
 [data-vibeui-block="otp-003"] [data-part="resend"]:focus-visible{
 outline:2px solid var(--vibeui-otp-003-accent);outline-offset:2px;
+}
+/* Шкала категории. Порог 19rem, а не 32rem: карточка упёрта в max-width:21rem. */
+@container (min-width: 19rem){
+[data-vibeui-block="otp-003"] [data-part="label"]{font-size:1rem}
+[data-vibeui-block="otp-003"] [data-part="left"]{font-size:0.9375rem}
+[data-vibeui-block="otp-003"] [data-part="resend"]{font-size:0.9375rem}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="otp-003"] *{animation:none!important;transition:none!important}}
 `
@@ -224,6 +241,7 @@ export function Otp003({
       </style>
       <div
         {...props}
+        data-slot="input-otp"
         data-vibeui-block="otp-003"
         className={className}
         style={palette}
@@ -260,8 +278,14 @@ export function Otp003({
           />
         </div>
         <div data-part="foot">
-          <span data-part="left" aria-live="polite">
+          <span data-part="left">
             {left > 0 ? waitText.replace("{time}", clock(left)) : readyText}
+          </span>
+          {/* Отсчёт меняется раз в секунду: живая область на самой строке
+              заставила бы screen reader читать её сорок пять раз подряд.
+              Вслух объявляем только момент, когда повтор стал доступен. */}
+          <span data-part="sr" aria-live="polite">
+            {left > 0 ? "" : readyText}
           </span>
           <button
             type="button"

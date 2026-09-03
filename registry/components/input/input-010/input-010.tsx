@@ -1,11 +1,7 @@
 "use client"
 
 import { useId, useRef, useState } from "react"
-import type {
-  ComponentPropsWithoutRef,
-  CSSProperties,
-  KeyboardEvent,
-} from "react"
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Input010Unit = {
   code: string
@@ -15,7 +11,7 @@ export type Input010Unit = {
 }
 
 export type Input010Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "defaultValue" | "onChange"
 > & {
   label?: string
@@ -45,12 +41,15 @@ const STYLES = `
 --vibeui-input-010-panel:light-dark(oklch(1 0 0),oklch(0.28 0.012 265));
 --vibeui-input-010-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-input-010-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
---vibeui-input-010-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-input-010-muted:color-mix(in oklab,var(--vibeui-input-010-fg) 68%,transparent);
 --vibeui-input-010-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.012 265));
 --vibeui-input-010-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
 --vibeui-input-010-accent:light-dark(oklch(0.53 0.15 165),oklch(0.76 0.13 165));
 --vibeui-input-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="input-010"]{color-scheme:dark}
 [data-vibeui-block="input-010"]{
 display:flex;flex-direction:column;gap:0.4375rem;
 width:100%;max-width:21rem;box-sizing:border-box;
@@ -231,6 +230,7 @@ export function Input010({
       </style>
       <div
         {...props}
+        data-slot="input"
         data-vibeui-block="input-010"
         data-surface={background ? "on" : undefined}
         className={className}

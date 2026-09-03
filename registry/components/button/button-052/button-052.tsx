@@ -1,6 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Button052Props = Omit<ComponentPropsWithoutRef<"a">, "href"> & {
+export type Button052Props = Omit<ComponentProps<"a">, "href"> & {
   /** Номер в человекочитаемом виде: он же попадает в tel: после чистки. */
   phone?: string
   /** Строка доступности под номером: часы работы или статус линии. */
@@ -19,6 +19,9 @@ const STYLES = `
 --vibeui-button-052-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-button-052-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="button-052"]{color-scheme:dark}
 [data-vibeui-block="button-052"]{
 display:inline-flex;align-items:center;gap:0.75rem;box-sizing:border-box;
 padding:0.625rem 1.125rem 0.625rem 0.875rem;border-radius:9999px;
@@ -87,6 +90,7 @@ export function Button052({
       <a
         {...props}
         href={`tel:${phone.replace(/[^\d+]/g, "")}`}
+        data-slot="button"
         data-vibeui-block="button-052"
         className={className}
         style={palette}

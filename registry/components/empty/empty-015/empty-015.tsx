@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Empty015Item = {
   id: string
@@ -7,7 +7,7 @@ export type Empty015Item = {
 }
 
 export type Empty015Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "title"
 > & {
   title?: string
@@ -28,7 +28,7 @@ const STYLES = `
 :where([data-vibeui-block="empty-015"]){
 --vibeui-empty-015-bg:transparent;
 --vibeui-empty-015-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.006 265));
---vibeui-empty-015-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-empty-015-muted:color-mix(in oklab,var(--vibeui-empty-015-fg) 68%,transparent);
 --vibeui-empty-015-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-empty-015-banner:light-dark(oklch(0.97 0.02 65),oklch(0.3 0.04 65));
 --vibeui-empty-015-wait:light-dark(oklch(0.6 0.16 65),oklch(0.8 0.13 65));
@@ -37,6 +37,9 @@ const STYLES = `
 --vibeui-empty-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="empty-015"]{color-scheme:dark}
 [data-vibeui-block="empty-015"]{
 display:flex;flex-direction:column;
 width:100%;max-width:26rem;box-sizing:border-box;
@@ -159,6 +162,7 @@ export function Empty015({
       </style>
       <div
         {...props}
+        data-slot="empty"
         data-vibeui-block="empty-015"
         role="status"
         aria-live="polite"

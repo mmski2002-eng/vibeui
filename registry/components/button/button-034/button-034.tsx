@@ -1,6 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Button034Props = ComponentPropsWithoutRef<"button"> & {
+export type Button034Props = ComponentProps<"button"> & {
   /** Толщина обводки: волосяная, обычная или тяжёлая. */
   emphasis?: "hairline" | "regular" | "heavy"
   /** Бумага внутри обводки. Пусто — своя, из палитры. */
@@ -20,6 +20,9 @@ const STYLES = `
 --vibeui-button-034-radius:0.5rem;
 --vibeui-button-034-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="button-034"]{color-scheme:dark}
 [data-vibeui-block="button-034"]{
 appearance:none;cursor:pointer;box-sizing:border-box;
 display:inline-flex;align-items:center;gap:0.5rem;
@@ -105,6 +108,7 @@ export function Button034({
       <button
         {...props}
         type={type}
+        data-slot="button"
         data-vibeui-block="button-034"
         data-emphasis={emphasis}
         className={className}

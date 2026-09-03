@@ -1,14 +1,10 @@
 "use client"
 
 import { useId, useRef, useState } from "react"
-import type {
-  ComponentPropsWithoutRef,
-  CSSProperties,
-  KeyboardEvent,
-} from "react"
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Dropdown009Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   label?: string
@@ -40,12 +36,15 @@ const STYLES = `
 :where([data-vibeui-block="dropdown-009"]){
 --vibeui-dropdown-009-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
 --vibeui-dropdown-009-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
---vibeui-dropdown-009-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-dropdown-009-muted:color-mix(in oklab,var(--vibeui-dropdown-009-fg) 68%,transparent);
 --vibeui-dropdown-009-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
 --vibeui-dropdown-009-hover:light-dark(oklch(0.96 0.004 265),oklch(0.32 0.014 265));
 --vibeui-dropdown-009-accent:light-dark(oklch(0.58 0.17 40),oklch(0.76 0.14 40));
 --vibeui-dropdown-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="dropdown-009"]{color-scheme:dark}
 [data-vibeui-block="dropdown-009"]{
 display:inline-flex;box-sizing:border-box;padding:0.375rem;
 background:var(--vibeui-dropdown-009-bg);color:var(--vibeui-dropdown-009-fg);
@@ -211,6 +210,7 @@ export function Dropdown009({
       </style>
       <div
         {...props}
+        data-slot="dropdown-menu"
         data-vibeui-block="dropdown-009"
         data-desc={desc}
         className={className}

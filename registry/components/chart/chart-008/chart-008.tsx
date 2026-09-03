@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Chart008Step = {
   label: string
@@ -6,7 +6,7 @@ export type Chart008Step = {
 }
 
 export type Chart008Props = Omit<
-  ComponentPropsWithoutRef<"figure">,
+  ComponentProps<"figure">,
   "children" | "title"
 > & {
   title?: string
@@ -32,13 +32,16 @@ const STYLES = `
 :where([data-vibeui-block="chart-008"]){
 --vibeui-chart-008-bg:transparent;
 --vibeui-chart-008-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-chart-008-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-chart-008-muted:color-mix(in oklab,var(--vibeui-chart-008-fg) 68%,transparent);
 --vibeui-chart-008-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-chart-008-track:light-dark(oklch(0.94 0.005 265),oklch(0.3 0.01 265));
 --vibeui-chart-008-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-chart-008-drop:light-dark(oklch(0.58 0.16 25),oklch(0.75 0.14 25));
 --vibeui-chart-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="chart-008"]{color-scheme:dark}
 [data-vibeui-block="chart-008"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:22rem;box-sizing:border-box;margin:0;padding:0.875rem;
@@ -150,6 +153,7 @@ export function Chart008({
       </style>
       <figure
         {...props}
+        data-slot="chart"
         data-vibeui-block="chart-008"
         className={className}
         style={palette}

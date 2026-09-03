@@ -29,13 +29,16 @@ const STYLES = `
 :where([data-vibeui-block="tabs-010"]){
 --vibeui-tabs-010-bg:transparent;
 --vibeui-tabs-010-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-tabs-010-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-tabs-010-muted:color-mix(in oklab,var(--vibeui-tabs-010-fg) 68%,transparent);
 --vibeui-tabs-010-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-tabs-010-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
 --vibeui-tabs-010-index:0;
 --vibeui-tabs-010-count:4;
 --vibeui-tabs-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="tabs-010"]{color-scheme:dark}
 [data-vibeui-block="tabs-010"]{
 box-sizing:border-box;width:100%;max-width:30rem;padding:0.375rem 0.875rem 1rem;
 background:var(--vibeui-tabs-010-bg);color:var(--vibeui-tabs-010-fg);
@@ -158,7 +161,12 @@ export function Tabs010({
       <style href="vibeui-tabs-010" precedence="medium">
         {STYLES}
       </style>
-      <div data-vibeui-block="tabs-010" className={className} style={palette}>
+      <div
+        data-slot="tabs"
+        data-vibeui-block="tabs-010"
+        className={className}
+        style={palette}
+      >
         <div data-part="strip" role="radiogroup" aria-label={groupLabel}>
           {tabs.map((tab, index) => (
             <label key={tab.label}>

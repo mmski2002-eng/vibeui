@@ -1,17 +1,14 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Carousel006Story = {
   title: string
   hue?: number
 }
 
-export type Carousel006Props = Omit<
-  ComponentPropsWithoutRef<"section">,
-  "children"
-> & {
+export type Carousel006Props = Omit<ComponentProps<"section">, "children"> & {
   stories?: Carousel006Story[]
   /** Секунд на один кадр. */
   seconds?: number
@@ -35,7 +32,7 @@ export type Carousel006Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="carousel-006"]){
 --vibeui-carousel-006-fg:oklch(0.99 0.003 265);
---vibeui-carousel-006-muted:oklch(0.9 0.01 265);
+--vibeui-carousel-006-muted:color-mix(in oklab,var(--vibeui-carousel-006-fg) 68%,transparent);
 --vibeui-carousel-006-track:oklch(1 0 0 / 35%);
 --vibeui-carousel-006-seconds:6s;
 --vibeui-carousel-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -110,11 +107,33 @@ export function Carousel006({
   const [index, setIndex] = useState(0)
   const [progress, setProgress] = useState(0)
   const paused = useRef(false)
+  const calm = useRef(false)
+
+  // Автопереход — это движение, и prefers-reduced-motion его отменяет: одного
+  // CSS-правила мало, кадры меняет таймер, а не анимация.
+  useEffect(() => {
+    const query = window.matchMedia("(prefers-reduced-motion: reduce)")
+
+    calm.current = query.matches
+    const listen = () => {
+      calm.current = query.matches
+    }
+    query.addEventListener("change", listen)
+
+    return () => query.removeEventListener("change", listen)
+  }, [])
 
   useEffect(() => {
     // Шаг в 100 мс: полоска движется плавно, а таймеров остаётся немного.
     const step = 100 / ((seconds * 1000) / 100)
     const timer = setInterval(() => {
+      // Без автоперехода полоска текущего кадра залита целиком: пустая
+      // читалась бы как «загрузка не началась».
+      if (calm.current) {
+        setProgress(100)
+        return
+      }
+
       if (paused.current) return
       setProgress((value) => {
         if (value + step < 100) return value + step
@@ -134,7 +153,7 @@ export function Carousel006({
 
   const go = (delta: number) => {
     setIndex((index + delta + stories.length) % stories.length)
-    setProgress(0)
+    setProgress(calm.current ? 100 : 0)
   }
 
   return (
@@ -144,6 +163,7 @@ export function Carousel006({
       </style>
       <section
         {...props}
+        data-slot="carousel"
         data-vibeui-block="carousel-006"
         aria-roledescription={roleText}
         aria-label={label}

@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Icontile011Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Icontile011Props = Omit<ComponentProps<"div">, "children"> & {
   name?: string
   status?: "connected" | "pending" | "disconnected"
   /** Подписи статусов: компонент несёт русские, проект подставляет свои. */
@@ -38,7 +35,7 @@ container-type:inline-size;
 --vibeui-icontile-011-chroma:0.05;
 --vibeui-icontile-011-size:2.75rem;
 --vibeui-icontile-011-fg:light-dark(oklch(0.26 0.014 265),oklch(0.93 0.006 265));
---vibeui-icontile-011-muted:light-dark(oklch(0.52 0.014 265),oklch(0.71 0.012 265));
+--vibeui-icontile-011-muted:color-mix(in oklab,var(--vibeui-icontile-011-fg) 68%,transparent);
 --vibeui-icontile-011-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.008 265));
 --vibeui-icontile-011-surface:transparent;
 --vibeui-icontile-011-dot:light-dark(oklch(0.6 0.16 152),oklch(0.74 0.16 152));
@@ -46,6 +43,9 @@ container-type:inline-size;
 --vibeui-icontile-011-mark:light-dark(oklch(0.4 calc(var(--vibeui-icontile-011-chroma) * 4) var(--vibeui-icontile-011-hue)),oklch(0.88 calc(var(--vibeui-icontile-011-chroma) * 2.2) var(--vibeui-icontile-011-hue)));
 --vibeui-icontile-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="icontile-011"]{color-scheme:dark}
 [data-vibeui-block="icontile-011"]{
 display:flex;align-items:center;gap:0.875rem;min-width:0;
 box-sizing:border-box;padding:0.75rem 1rem;
@@ -144,6 +144,7 @@ export function Icontile011({
       </style>
       <div
         {...props}
+        data-slot="icon-tile"
         data-vibeui-block="icontile-011"
         data-tone={tone}
         data-status={status}

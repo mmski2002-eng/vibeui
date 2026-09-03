@@ -181,7 +181,8 @@
                 },
                 "shareText": "{share}%"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-001-* variables. Server-side: there are no hooks. The grid is rebuilt by container queries on the block's width, so the panel stays correct in a narrow column too. The chart is an SVG polyline with preserveAspectRatio=\"none\": it stretches to any width without JS math. The shares in the table are drawn by the cell background."
           }
         },
         "cardControls": ["accent", "background"]
@@ -366,7 +367,8 @@
                 "hint": "The shell only sets the layout: the section content goes in here.",
                 "slotText": "Room for a table, cards or a form"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-002-* variables. Server-side: there are no hooks. The sidebar and the content sit in one grid, so the column does not drift and needs no compensating offset. At a narrow width the navigation folds into a details: the browser holds the state, whereas a slide-out menu of our own would have required state and a focus trap."
           }
         },
         "cardControls": ["accent", "background"]
@@ -543,7 +545,8 @@
                   "save": "Save"
                 }
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-003-* variables. Server-side: there are no hooks. Every settings group is a fieldset with a legend, so the section is announced before the fields; the legend is pulled out with float, otherwise it sits on the border and gets clipped. The switches are built on native checkboxes, and the danger zone is moved out into a card of its own."
           }
         },
         "cardControls": ["accent", "background"]
@@ -711,7 +714,8 @@
                 },
                 "roleText": "Role: {name}"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-004-* variables. Server-side: there are no hooks. The avatar hue is computed as an FNV-1a hash over the character codes and spread across twelve sectors: summing the codes would collapse the whole alphabet into one colour. Seat usage is shown by a bar and a figure at once, and the invitation is marked by the shape of the badge."
           }
         },
         "cardControls": ["seatsUsed", "seatsTotal", "accent", "background"]
@@ -910,7 +914,8 @@
                 ],
                 "chipRemoveText": "Remove the {chip} filter"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-005-* variables. Server-side: there are no hooks — the group state is held by details, and the selection by native checkboxes and radio buttons. The result counter is declared aria-live: the result changes in response to user actions and has to be heard."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1091,7 +1096,8 @@
                 "hourText": "{hour}:00",
                 "rangeText": "{start}:00 — {end}:00"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-006-* variables. Server-side: there are no hooks. An event is placed through grid-row from its start to its end, so converting time into pixels is not needed. The hours column is sticky, the event tone is duplicated by a stripe on the left, and the whole grid scrolls horizontally on a narrow screen."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1262,7 +1268,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-007-* variables. Server-side: there are no hooks. The curve is an SVG polyline with preserveAspectRatio=\"none\", so it stretches to the tile width without JS math and is hidden from the screen reader as a repeat of the figure already named. The number of columns is set by container queries."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1435,7 +1442,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-008-* variables. Server-side: there are no hooks. The link is stretched across the row by a pseudo-element, and the focus outline is placed on the row through :has(). The tab strip scrolls horizontally and does not wrap."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1593,7 +1601,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-009-* variables. Server-side: there are no hooks. Progress is computed from the steps array, the illustration is drawn with three stripes and hidden from the screen reader, and the step grid is rebuilt by a container query."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1772,7 +1781,8 @@
                 "profileText": "Profile: {name}",
                 "tabsText": "Profile sections"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-010-* variables. Server-side: there are no hooks. The cover and avatar hue is computed as an FNV-1a hash over the name and spread across twelve sectors. The avatar is lifted by a negative margin, so the header height is predictable at any type size."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1939,7 +1949,8 @@
                 "countText": "Step {current} of {total}",
                 "progressText": "Progress through the steps"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-011-* variables. Client-side: \"use client\" for the current step. The progress bar is declared role=\"progressbar\" with a current and a maximum value, and on the last step the primary button's caption changes to the finishing action."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2109,7 +2120,8 @@
                   "about": "A product design studio: lighting, furniture and small runs."
                 }
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-012-* variables. Server-side: there are no hooks — the errors arrive in a prop. The summary is declared role=\"alert\" and links to the field anchors, every broken field is marked aria-invalid and tied to its error text through aria-describedby."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2283,7 +2295,8 @@
                 "closeLabel": "Close",
                 "historyLabel": "History"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-013-* variables. Client-side: \"use client\" for opening the panel. The panel is pinned to the right edge through margin rather than transform, so scrolling inside it does not break. The appearance is animated with @starting-style and transition-behavior allow-discrete. The palette is built on light-dark(): the block follows the surrounding color-scheme, and the panel surface can be set by the background prop."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2466,7 +2479,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-014-* variables. Server-side: there are no hooks. The feed line is the event's left border, transparent on the last one. The feed area gets a tabIndex and role=\"group\": otherwise it cannot be scrolled from the keyboard. The palette is built on light-dark(): the block follows the surrounding color-scheme, and the card surface is set by the background prop."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2679,7 +2693,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-015-* variables. Server-side: there are no hooks. The chart is assembled on a CSS grid: a column per day, a pair of bars inside, and the height arrives in the --vibeui-dashboard-015-h variable, so converting into pixels is not needed. The grid lines are drawn by a repeating-linear-gradient background on the chart area, and the number of metric columns is set by container queries. The palette is built on light-dark(): the block follows the surrounding color-scheme, and the card surface is set by the background prop."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2887,7 +2902,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-016-* variables. Server-side: there are no hooks. The columns sit in a grid with a fixed grid-auto-columns width and horizontal scrolling with scroll-snap: squeezing a card below a readable width is worse than scrolling. The select arrow is drawn with a data URI, so there are no external files. The palette is built on light-dark(): the block follows the surrounding color-scheme, and the board surface is set by the background prop."
           }
         },
         "cardControls": ["activeFilter", "accent", "background"]
@@ -3066,7 +3082,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-017-* variables. Server-side: there are no hooks. The avatar hue is computed as an FNV-1a hash over the name and arrives in the --vibeui-dashboard-017-hue CSS variable. A member row is a grid: at a narrow width the role select moves under the name, at a wide one it becomes the third column, and that is switched by a container query on the inner shell. The palette is built on light-dark(): the block follows the surrounding color-scheme, and the card surface is set by the background prop."
           }
         },
         "cardControls": ["inviteRole", "accent", "background"]
@@ -3253,7 +3270,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-018-* variables. Server-side: there are no hooks. The day heading is sticky inside the scroll area, and the unread counter is computed from the array so that the figure does not drift from the content. The list area gets a tabIndex and role=\"group\": otherwise it cannot be scrolled from the keyboard. The palette is built on light-dark(): the block follows the surrounding color-scheme, and the card surface is set by the background prop."
           }
         },
         "cardControls": ["activeTab", "accent", "background"]
@@ -3412,7 +3430,8 @@
                 "emptyName": "No name",
                 "emptyRole": "No role given"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-019-* variables. Client-side: \"use client\" for the live preview — the name, the role, the text and the visibility live in useState. The cover and avatar hue is computed as an FNV-1a hash over the name and goes into the --vibeui-dashboard-019-hue variable. The preview is declared aria-live=\"polite\" so that a change is heard. The palette is built on light-dark(): the block follows the surrounding color-scheme, and the card surface is set by the background prop."
           }
         },
         "cardControls": ["visibility", "accent", "background"]
@@ -3603,7 +3622,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-020-* variables. Server-side: there are no hooks. The two-factor state lives in data-on on the card and switches the shape of the badge, not the colour alone. The current session deliberately has no end button, and \"end all others\" is pulled out separately and styled as a dangerous action. The palette is built on light-dark(): the block follows the surrounding color-scheme, and the card surface is set by the background prop."
           }
         },
         "cardControls": ["twoFactorOn", "recoveryLeft", "accent", "background"]
@@ -3815,7 +3835,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-021-* variables. Server-side: there are no hooks. The usage level is computed in the component and goes into data-level, so an over-limit row changes its colour and caption at once. The bar width arrives in the --vibeui-dashboard-021-w variable, and the bar is declared role=\"progressbar\". The history is a table, because the columns here are compared. The palette is built on light-dark(): the block follows the surrounding color-scheme, and the card surface is set by the background prop."
           }
         },
         "cardControls": ["accent", "background"]
@@ -4018,7 +4039,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-022-* variables. Server-side: there are no hooks. The card state is computed in the component and goes into data-state: on, off and stale. The service badge is drawn as a letter on a field whose hue is computed as an FNV-1a hash over the name, so the block pulls in no foreign files. The number of columns is set by container queries. The palette is built on light-dark(): the block follows the surrounding color-scheme, and the catalogue surface is set by the background prop."
           }
         },
         "cardControls": ["activeGroup", "accent", "background"]
@@ -4256,7 +4278,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-023-* variables. Server-side: there are no hooks — the state of the expanded entries is held by details. A row is a summary on a grid: at a wide width the source moves into the fourth column by a container query. The result counter is declared aria-live, because it changes in response to user actions. The palette is built on light-dark(): the block follows the surrounding color-scheme, and the card surface is set by the background prop."
           }
         },
         "cardControls": ["activeLevel", "accent", "background"]
@@ -4447,7 +4470,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-024-* variables. Server-side: there are no hooks. A fresh key sits in a block with role=\"status\", and the table shows prefixes only: after creation the full key exists nowhere. A revoked row is marked data-revoked and struck through rather than deleted — a row that disappears breaks the analysis of an incident. The palette is built on light-dark(): the block follows the surrounding color-scheme, and the card surface is set by the background prop."
           }
         },
         "cardControls": ["newScope", "accent", "background"]
@@ -4631,7 +4655,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-025-* variables. Server-side: there are no hooks. The stage width arrives in the --vibeui-dashboard-025-w variable and is bounded from below so that a short stage stays visible. The two bases of the calculation — from the entry and from the previous step — are computed in the component and both are labelled. The narrowest step is derived from the array."
           }
         },
         "cardControls": ["accent", "background"]
@@ -4831,7 +4856,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-026-* variables. Server-side: there are no hooks. The ring is drawn with a conic-gradient cut out through mask, the sectors are assembled into a string in the component and go into the --vibeui-dashboard-026-ring variable. The share in the table is a linear gradient on the cell background with the width from --vibeui-dashboard-026-w. Neither SVG nor a charting library."
           }
         },
         "cardControls": ["accent", "background"]
@@ -5029,7 +5055,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-027-* variables. Server-side: there are no hooks. The avatar stack is assembled with a negative margin and ends with a counter for the remainder; the hue is computed as an FNV-1a hash over the name. The tabs are links with aria-current, the readiness bar is declared role=\"progressbar\", and the body layout is switched by a container query."
           }
         },
         "cardControls": ["progress", "accent", "background"]
@@ -5230,7 +5257,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-028-* variables. Server-side: there are no hooks. The header counters are computed from the array, so the figures do not drift from the content. Being late lives in data-late and changes the stripe and the colour of the deadline, and the priority lives in data-priority. The \"claim\" button appears only on a row with no assignee."
           }
         },
         "cardControls": ["accent", "background"]
@@ -5453,7 +5481,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-029-* variables. Server-side: there are no hooks — folder expansion is held by details. The tree is drawn by the recursive renderNode function, nesting is underlined by a line on the left, and the node type by the shape of the icon: at the third level indentation stops being readable. The layout is switched by a container query on the inner shell."
           }
         },
         "cardControls": ["accent", "background"]
@@ -5688,7 +5717,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-030-* variables. Server-side: there are no hooks. Unlike an hour grid, a day here is a card with a list: an hour grid lies when meetings are spread across the day. The number of columns is switched by three container queries, from one to seven. The kind of item is marked by a stripe on the left, and today's day by aria-current=\"date\"."
           }
         },
         "cardControls": ["accent", "background"]
@@ -5913,7 +5943,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-031-* variables. Server-side: there are no hooks. The ring is a conic-gradient cut out through mask, and the share arrives in the --vibeui-dashboard-031-p variable. The goal state lives in data-state and substitutes --vibeui-dashboard-031-tone, so the ring, the badge and the result bars are coloured from a single source. The average progress is computed from the array."
           }
         },
         "cardControls": ["timeGone", "background"]
@@ -6126,7 +6157,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-032-* variables. Server-side: there are no hooks. The verdict for a row is computed from delta and goodWhen and goes into data-verdict, so a rise in refusals and a rise in revenue are coloured differently. The deviation bar is assembled on a grid from two halves with the zero line as a background: it does not drift at any block width."
           }
         },
         "cardControls": ["activePreset", "accent", "background"]
@@ -6305,7 +6337,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-033-* variables. Server-side: there are no hooks — a step's expansion is held by details. The progress ring is a conic-gradient cut out through mask, and the share arrives in the --vibeui-dashboard-033-p variable. A completed step is marked with a check and a struck-through heading, and the remaining time is summed over the unfinished steps."
           }
         },
         "cardControls": ["accent", "background"]
@@ -6468,7 +6501,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-034-* variables. Server-side: there are no hooks — the choice is held by native radio buttons, and the card highlight comes from :has(input:checked). The illustration is drawn with a border and pseudo-elements and is hidden from the screen reader. The number of columns is switched by a container query on the inner shell."
           }
         },
         "cardControls": ["picked", "accent", "background"]
@@ -6647,7 +6681,8 @@
                 ],
                 "menu": ["Profile", "Notifications", "Shortcuts", "Sign out"]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-035-* variables. Server-side: there are no hooks. The profile menu is a native details: opening, closing on Escape and the keyboard come from the browser. The search field grows through flex and at a narrow width moves onto a line of its own through order rather than a window media query. The unread counter is declared aria-live, and the section tabs are links with aria-current=\"page\"."
           }
         },
         "cardControls": ["activeTab", "unread", "accent", "background"]
@@ -6850,7 +6885,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-036-* variables. Server-side: there are no hooks. The collapse is built on a hidden checkbox and :has(): the captions and the footer hide and the panel narrows to a rail — no state or handlers of our own are required. The nested sections sit in details, so an open branch survives following a link. Every item has a letter badge so that the items stay distinguishable when collapsed."
           }
         },
         "cardControls": ["activeLabel", "accent", "background"]
@@ -7086,7 +7122,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-037-* variables. Server-side: there are no hooks. Picking a request and an assignee is built on native radio buttons and the highlight goes through :has() — the state and keyboard navigation come from the browser. Being late is marked by a stripe on the left, a sign and a word at once, and the assignee's load is drawn as a bar. Two columns are turned on by a container query on the inner shell."
           }
         },
         "cardControls": ["picked", "overdue", "accent", "background"]
@@ -7320,7 +7357,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-038-* variables. Server-side: there are no hooks. The feed is built on a list with a vertical line from a pseudo-element, and the event type carries a letter inside the dot rather than colour alone. The days are rendered as subheadings: the events array is grouped by the day field without external utilities. The details are pulled out into a dl as a separate column, which appears through a container query."
           }
         },
         "cardControls": ["accent", "background"]
@@ -7521,7 +7559,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-039-* variables. Server-side: there are no hooks. The reorder point is drawn as a notch inside the stock bar, so the threshold and the remainder are not split across different columns. Rows below the threshold are marked with a fill, a stripe on the left and a word. The table scrolls horizontally at a narrow width, and the order bar is sticky at the bottom."
           }
         },
         "cardControls": ["accent", "background"]
@@ -7735,7 +7774,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-040-* variables. Server-side: there are no hooks. The term bar is declared role=\"progressbar\" with a current and a maximum value, and the share of elapsed time arrives as a ready number. The contract state carries the border, the chip colour and the badge shape at once. The filtering is built from chip links, and the card grid is rebuilt by a container query."
           }
         },
         "cardControls": ["activeFilter", "accent", "background"]
@@ -7960,7 +8000,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-041-* variables. Server-side: there are no hooks. The route is assembled as a list of steps, and the connecting line is drawn by a pseudo-element of the neighbouring step, so there are no extra nodes. The current step is ringed, a completed one is filled, a future one is dashed, and the state is duplicated by a word. At a wide width the card is rebuilt through grid-template-areas."
           }
         },
         "cardControls": ["accent", "background"]
@@ -8144,7 +8185,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-042-* variables. Server-side: there are no hooks. The progress ring is built on a conic-gradient with a cut-out circle on top: neither SVG nor a charting library is needed, and the share is passed in a local variable through style. The overall progress is computed from the courses array rather than arriving as a separate number. Mandatory courses are marked by a word and by the card border."
           }
         },
         "cardControls": ["accent", "background"]
@@ -8346,7 +8388,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-043-* variables. Server-side: there are no hooks. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default. The 30-day strip is thirty bars with a title and a fill height from the day's value: no charting library is needed, and \"when exactly it went bad\" is visible without hovering. The service status carries the shape of the dot and a word. The overall status banner is declared aria-live, and the strip is marked role=\"img\" with a summarising caption."
           }
         },
         "cardControls": ["accent", "background"]
@@ -8526,7 +8569,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-044-* variables. Server-side: there are no hooks. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default. The priority is pulled out into a coloured column on the left with the code and the duration: the code is read aloud and survives printing. The card is assembled on a grid, and at a wide width the actions move into the third column. The on-call engineer and the shift end time stand in the header, and the latest update is text with a time."
           }
         },
         "cardControls": ["accent", "background"]
@@ -8757,7 +8801,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-045-* variables. Server-side: there are no hooks. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default. The schedule switches are built on native checkboxes: the checkbox itself is transparent and stretched over the switch, and the state is read through :has(). The used space is shown as a bar with role=\"progressbar\" and a \"used out of\" fraction. At a wide width the layout is set by grid-template-areas, so the columns do not drift."
           }
         },
         "cardControls": ["accent", "background"]
@@ -8966,7 +9011,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-046-* variables. Server-side: there are no hooks. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default. The table keeps table-layout:fixed and its column widths, and the values are set in a monospace font with overflow-wrap:anywhere: a long TXT record would otherwise stretch the table. The record type is pulled out into a chip with the code, and the propagation state carries the badge shape and a word. The nameserver names are pulled out into a separate list."
           }
         },
         "cardControls": ["accent", "background"]
@@ -9181,7 +9227,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-047-* variables. Server-side: there are no hooks. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default. The queue depth is declared role=\"progressbar\" with a maximum, so the number gets a scale. The retries are drawn as a row of dots: the spent ones filled, the remaining ones empty — there is no counter to read. The queue grid is rebuilt by container queries into two and four columns."
           }
         },
         "cardControls": ["accent", "background"]
@@ -9380,7 +9427,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-048-* variables. Server-side: there are no hooks. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default. Every delivery attempt is a details: the response body is needed rarely, and the browser holds the expansion state. The response code is set in a monospace font in a coloured chip and labelled with a word. The response body sits in a pre with a dark surface and character wrapping so that a long line does not stretch the block."
           }
         },
         "cardControls": ["accent", "background"]
@@ -9582,7 +9630,8 @@
                   "Last quarter"
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-049-* variables. Server-side: there are no hooks. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default. Every entry is a details: the \"before / after\" detail is needed rarely, and the browser holds the expansion state. The action verb is pulled out into a chip with a tone of its own for creation and deletion. The source — the address and the device — stands in every row and at a wide width moves into the right column through a container query."
           }
         },
         "cardControls": ["period", "accent", "background"]
@@ -9786,7 +9835,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-050-* variables. Server-side: there are no hooks. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default. The first column and the header are sticky through position:sticky, so neither the permission name nor the role name is lost while scrolling. The permissions are grouped by section into separate tbody elements with a heading row. The cell state carries a symbol, a shape and a caption in title rather than colour alone."
           }
         },
         "cardControls": ["accent", "background"]
@@ -9993,7 +10043,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-051-* variables. Server-side: there are no hooks. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default. The warning threshold is drawn as a notch inside the bar, and the usage zone is computed from used, limit and warnAt and lands in data-zone, from which the styles take it. The bar is declared role=\"progressbar\" with the maximum in aria-valuemax. The hard limits are pulled out into a separate dl: they are not consumed."
           }
         },
         "cardControls": ["accent", "background"]
@@ -10194,7 +10245,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-052-* variables. Server-side: there are no hooks. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default. The format is chosen with radio buttons, and the highlight of the selected chip goes through :has() — the browser holds the state. The job progress is declared role=\"progressbar\", and the download button is unavailable until the file is ready. Two columns are turned on by a container query on the inner shell."
           }
         },
         "cardControls": ["format", "accent", "background"]
@@ -10435,7 +10487,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-053-* variables. Server-side: there are no hooks. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default. Every channel is a details: a closed card shows the \"N of M enabled\" summary, an open one the event checkboxes. The connection state carries the chip colour, a word and, on an error, the card border. The quiet-hours switch is built on a native checkbox with the state read through :has()."
           }
         },
         "cardControls": ["quietOn", "accent", "background"]
@@ -10651,7 +10704,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-054-* variables. Server-side: there are no hooks. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default. The match is highlighted with a mark tag — semantics, not colour alone. The result link is stretched across the row by a pseudo-element, and the focus outline is placed on the row through :has(). The result counter is declared aria-live, and the block root is a search element with a label of its own."
           }
         },
         "cardControls": ["activeKind", "accent", "background"]
@@ -10911,7 +10965,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-055-* variables. Server-side: there are no hooks. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default. The layout goes two-column from its own width through a container query at 52rem; below that the views stand above the table. The table sits in a container with overflow-x, so a narrow width does not break it. The due-date state is marked by the badge shape (circle, square, diamond) rather than tone alone."
           }
         },
         "cardControls": ["activeView", "accent", "background"]
@@ -11124,7 +11179,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-056-* variables. Server-side: the selects are uncontrolled, through defaultValue. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default. The table sits in a container with overflow-x. The row state is marked by the shape of the dot (circle, square, ring, diamond) and by a word. On errors the import button gets aria-disabled rather than disabled: that way it stays in the tab order and explains the reason through aria-describedby."
           }
         },
         "cardControls": ["accent", "background"]
@@ -11318,7 +11374,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-057-* variables. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default. Server-side: the checkboxes are uncontrolled, and dimming a disabled field is done with the :has(input:not(:checked)) selector without JS. The field cards are laid out in two columns through a container query at 44rem. The irreversibility warning is pulled out into a block of its own before the buttons rather than a caption beneath them."
           }
         },
         "cardControls": ["selectedCount", "accent", "background"]
@@ -11522,7 +11579,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-058-* variables. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default. Server-side: the radio buttons are uncontrolled, and the highlight of the master column is done with the th:has(input:checked) selector without JS. The table sits in a container with overflow-x. Rows with a discrepancy are marked not only by a surface but by a separate word in the row header."
           }
         },
         "cardControls": ["pending", "accent", "background"]
@@ -11732,7 +11790,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-059-* variables. Server-side: there are no hooks. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default. The three-column \"value — verdict — value\" layout is turned on by a container query at 46rem; below that the row folds vertically. The verdict is written as a word and duplicated by the badge shape. The values are set in monospace with tabular figures so that the sums line up by digit."
           }
         },
         "cardControls": ["accent", "background"]
@@ -11964,7 +12023,8 @@
                   "VAT"
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-060-* variables. Server-side: the switches are uncontrolled. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default. The toggle is built from an input[type=checkbox] with appearance:none and a pseudo-element knob, so there is a transition — the block carries a prefers-reduced-motion rule. The new rule form sits in a fieldset, and the legend gets clear:both, otherwise the following flex children wrap around it."
           }
         },
         "cardControls": ["draftField", "accent", "background"]
@@ -12193,7 +12253,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-061-* variables. Server-side: the expansion of versions is held by a native details, no state is needed. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default. The \"expand\" and \"collapse\" captions live in the markup rather than in content and are switched by the details[open] selector. The timeline is assembled from a pseudo-element line on the ol and dots on each li; the dot of the current version is filled with the accent. The diff is laid out in a dl, and from 34rem wide in two columns through a container query."
           }
         },
         "cardControls": ["accent", "background"]
@@ -12383,7 +12444,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-062-* variables. Server-side: there are no hooks. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default. The cards are laid out in two columns through a container query at 44rem. The remainder bar is a progressbar with aria-valuenow in days. Records with fewer than three days left get data-soon and change the tone of the bar and the border."
           }
         },
         "cardControls": ["activeKind", "accent", "background"]
@@ -12593,7 +12655,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-063-* variables. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default. Server-side: the checkboxes and radio buttons are uncontrolled, and the highlight of the selected row is done with the :has(input:checked) selector. Two columns are turned on by a container query at 46rem. The load bar changes tone across three zones: free, busy, over the norm."
           }
         },
         "cardControls": ["accent", "background"]
@@ -12790,7 +12853,8 @@
                   "at-risk"
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-064-* variables. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default. Server-side: the input field is uncontrolled and the chips are static. The \"on some\" state is drawn with a dashed border, removal with a strike-through, addition with a fill: three different devices, not three colours alone. The preview is laid out in three columns through a container query at 40rem."
           }
         },
         "cardControls": ["selectedCount", "accent", "background"]
@@ -13003,7 +13067,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-065-* variables. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default. Server-side: there are no hooks. The action grid changes its number of columns at 34rem and 52rem through container queries, and below that comes the two-column \"recent / summary\" layout. The buttons have a transition, so the block carries a prefers-reduced-motion rule. The hotkeys are set with the kbd tag."
           }
         },
         "cardControls": ["accent", "background"]
@@ -13197,7 +13262,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-066-* variables. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default. Server-side: there are no hooks. The bar is assembled on flex: each segment gets a flex-basis as a percentage of the peak volume, and an empty tail closes the remainder, so the rows are comparable with one another. The \"name on the left, bar on the right\" layout is turned on by a container query at 44rem. The bar is marked role=\"img\" with a text transcript."
           }
         },
         "cardControls": ["accent", "background"]
@@ -13403,7 +13469,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-067-* variables. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default. Server-side: there are no hooks. The chart is an ordinary CSS grid: the columns are set through grid-template-columns inline, and a phase bar occupies a grid-column from its start across the required number of columns. The \"today\" line is positioned with a calc from the width of the names column. Risk is marked with repeating-linear-gradient hatching so that it reads without colour."
           }
         },
         "cardControls": ["todayColumn", "accent", "background"]
@@ -13623,7 +13690,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-068-* variables. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default. Server-side: there are no hooks. The plan bar is built from the maximum of the plan and the capacity, so an overload runs past the notch of available hours. The inner project shares are nested spans on flex. The cards are laid out in two columns through a container query at 46rem."
           }
         },
         "cardControls": ["accent", "background"]
@@ -13829,7 +13897,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-069-* variables. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default. Server-side: there are no hooks. The running total is computed at render time, and the index of the first task that does not fit gives the place for the cut-off line drawn with pseudo-elements. The row layout expands to four columns through a container query at 42rem."
           }
         },
         "cardControls": ["capacity", "accent", "background"]
@@ -14057,7 +14126,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-070-* variables. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default. Server-side: the expansion of a version is held by a native details, no state is needed. The rollout bar is a progressbar with aria-valuenow. The release channel (stable, beta, rollback) is set by a data attribute on the details and changes the tone of the chip and the bar. The caption on the summary is switched through ::after on details[open]."
           }
         },
         "cardControls": ["accent", "background"]
@@ -14251,7 +14321,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-071-* variables. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default. Server-side: the toggles are uncontrolled. The toggle is built from a checkbox with appearance:none and a pseudo-element knob, so there is a transition and the block carries a prefers-reduced-motion rule. The flag key is set in monospace and wraps by character so that a long key does not stretch the row."
           }
         },
         "cardControls": ["activeEnv", "accent", "background"]
@@ -14449,7 +14520,8 @@
                   ]
                 }
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-072-* variables. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default. Server-side: there are no hooks. The scale is computed at render time from the minimum and maximum of the intervals with some margin, and the segment and the dot are positioned in percentages — no charting library. The row layout expands to three columns through a container query at 44rem. Every segment is marked role=\"img\" with a transcript of the numbers."
           }
         },
         "cardControls": ["accent", "background"]
@@ -14649,7 +14721,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-073-* variables. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default. Server-side: there are no hooks, and Fragment is used only to insert the \"and\" separator between the condition chips. The direction of the trend is drawn as a triangle from a border rather than a font symbol. The cards are laid out in two columns through a container query at 44rem."
           }
         },
         "cardControls": ["baseSize", "accent", "background"]
@@ -14850,7 +14923,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-074-* variables. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default. Server-side: the toggles are uncontrolled and have a transition, so the block carries a prefers-reduced-motion rule. The three steps fold into a row with arrows only from 46rem wide through a container query; below that comes a vertical column without arrows. A recipe with zero runs is marked with a state of its own."
           }
         },
         "cardControls": ["accent", "background"]
@@ -15055,7 +15129,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-075-* variables. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default. Server-side: there are no hooks. The preview line is clamped to two lines through line-clamp, as in a mail client. The card grid changes its number of columns at 40rem and 62rem through container queries. Language and status are kept apart: the same template name in different locales is normal, and the list key is the \"name + locale\" pair."
           }
         },
         "cardControls": ["accent", "background"]
@@ -15251,7 +15326,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-076-* variables. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default. Server-side: there are no hooks. The bar is assembled from two segments on flex — delivered and errors — so failures are seen as part of what has already been processed rather than as a separate row. The sending state is marked by the badge shape (circle, rectangle, ring) rather than tone alone. The bar is marked role=\"progressbar\" with absolute values."
           }
         },
         "cardControls": ["accent", "background"]
@@ -15516,7 +15592,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-077-* variables. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default. Server-side: the checkboxes and the fields are uncontrolled, and the expansion of the groups is held by a native details. The highlight of a selected event is done with the :has(input:checked) selector. Frequent events are marked data-loud and change the tone of the caption. The event list is laid out in two columns through a container query at 40rem."
           }
         },
         "cardControls": ["format", "accent", "background"]
@@ -15715,7 +15792,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-078-* variables. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default. Server-side: there are no hooks. The sparkline is assembled from span bars on flex with a height as a percentage of the peak — no charting library is needed. The stack line is truncated with an ellipsis so that a long path does not stretch the row. A new error gets a thick stripe on the left, and a muted one is dimmed as a whole. From 48rem wide the row is laid out in four columns."
           }
         },
         "cardControls": ["accent", "background"]
@@ -15891,7 +15969,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-079-* variables. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default. Server-side: there are no hooks. The shared scale is computed at render time from the maximum p99, and the dots and the notch are positioned in percentages — without a charting library. A route whose p95 is to the right of the budget gets data-over and changes the tone of the segment. The histogram is assembled from bars on flex. From 46rem wide the row is laid out in three columns."
           }
         },
         "cardControls": ["accent", "background"]
@@ -16102,7 +16181,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-080-* variables. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default. Server-side: there are no hooks. The waterfall is built by positioning the bars in percentages of the total duration: the offset is the start of the span, the width is its duration. Nesting is shown by padding-left on the name rather than by lines, so as not to take width away from the bars. The span kind sets the tone of the bar, and an error sets repeating-linear-gradient hatching. The container scrolls horizontally."
           }
         },
         "cardControls": ["total", "accent", "background"]
@@ -16320,7 +16400,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-081-* variables. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default. Server-side: the search form is an ordinary one, with no state. The sections are laid out in two columns at 36rem, and the whole page into the two \"sections / popular\" columns at 54rem through container queries. An article with a low rating is marked by a separate caption tone rather than removed from the list."
           }
         },
         "cardControls": ["accent", "background"]
@@ -16540,7 +16621,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-082-* variables. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default. Server-side: there are no hooks. The main note flow is built on CSS columns with break-inside:avoid — a card takes its own height without a grid. The pinned ones are pulled out into a separate row, because in a column layout the reading order is not strictly top to bottom. The checklist tick is drawn with a pseudo-element rather than a checkbox: a note is not a form."
           }
         },
         "cardControls": ["accent", "background"]
@@ -16787,7 +16869,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-083-* variables. Server-side: the checkboxes are uncontrolled, and the expansion is held by a native details. The strike-through of a completed step is done with the :has(input:checked) selector without JS. A blocked step gets a border and a surface of its own rather than text alone. From 42rem wide the steps are laid out in two columns. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default."
           }
         },
         "cardControls": ["accent", "background"]
@@ -17060,7 +17143,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-084-* variables. Server-side: there are no hooks. The hue of the on-call person is computed by the hue() function from the name through FNV-1a — the list of people changes while the colouring stays stable; the result is substituted through the inline --vibeui-dashboard-084-hue variable. The night shift is marked by a hatched stripe at the bottom edge of the cell, and today by a thickened border. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default."
           }
         },
         "cardControls": ["onCallNow", "accent", "background"]
@@ -17285,7 +17369,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-085-* variables. Server-side: there are no hooks. The notch for the share of elapsed time is placed on the same bar as the progress, so a lag reads as a gap instead of being worked out in the head. The department total is computed at render time as a weighted sum rather than an average. From 46rem wide a goal row is laid out in two columns. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default."
           }
         },
         "cardControls": ["timeShare", "accent", "background"]
@@ -17495,7 +17580,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-086-* variables. Server-side: there are no hooks. The mean and the spread are computed at render time from the selected metric, and the deviation bar grows from the central axis to the left or to the right. The best and the worst are marked by a word rather than tone alone. From 46rem wide the row is laid out in three columns through a container query. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default."
           }
         },
         "cardControls": ["metric", "accent", "background"]
@@ -17701,7 +17787,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-087-* variables. Server-side: there are no hooks. The cron string is deliberately not rendered: the schedule is passed as human text. The report state is set by a data attribute on the row and changes the border or the opacity. The recipients are pulled out into a separate list of chips, with the first marked as the primary one. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default."
           }
         },
         "cardControls": ["accent", "background"]
@@ -17911,7 +17998,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-088-* variables. Server-side: the fields are uncontrolled, through defaultValue. The groups are built as real fieldsets with a legend, and the legend has clear:both, otherwise the following flex children wrap around the heading. The danger zone is separated not only by tone but by a thickened left border and an offset. The region field is locked by the disabled attribute and carries a \"cannot be changed\" label. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default."
           }
         },
         "cardControls": ["region", "accent", "background"]
@@ -18119,7 +18207,8 @@
                   "postponeLabel": "Postpone"
                 }
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-089-* variables. Server-side: the radio buttons and the selects are uncontrolled, and the selected colour is substituted into the --vibeui-dashboard-089-brand variable on the block root at render time. The preview uses the same variable and radius that will go into the theme, so it does not lie. The selected colour chip is highlighted with the :has(input:checked) selector. From 46rem wide the panel and the preview stand side by side. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default; the brand colour stays the selected value in both themes, and the caption on it is white."
           }
         },
         "cardControls": ["activeColor", "radius", "accent", "background"]
@@ -18321,7 +18410,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-090-* variables. Server-side: there are no hooks. The bar is assembled from two segments on flex, and the stale part is drawn with repeating-linear-gradient hatching so that it reads without colour too. The base language gets no bar at all: there is nothing to translate it from. A hidden language is dimmed but stays in the list. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default."
           }
         },
         "cardControls": ["accent", "background"]
@@ -18552,7 +18642,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-091-* variables. Server-side: the expansion of the history is held by a native details. The headings are set in a system serif from the local --vibeui-dashboard-091-serif variable: a legal document has to read differently from the interface. The acceptance bar is marked role=\"progressbar\". A draft is shown in the same list but without a bar and an effective date. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default."
           }
         },
         "cardControls": ["accent", "background"]
@@ -18766,7 +18857,8 @@
                   "Other"
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-092-* variables. Server-side: the reason radio buttons are uncontrolled and optional. The step timeline is assembled from pseudo-elements on the ol, and an irreversible step gets a filled dot. The fate of the data is split into two lists with different marker shapes — a circle and a rotated square. The reason for leaving sits in a fieldset, and the legend has clear:both. The theme comes from the surrounding color-scheme through light-dark(), and the block has no surface by default."
           }
         },
         "cardControls": ["accent", "background"]

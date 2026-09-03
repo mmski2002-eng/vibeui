@@ -26,13 +26,16 @@ export type Dialog005Props = {
 const STYLES = `
 :where([data-vibeui-block="dialog-005"]){
 --vibeui-dialog-005-fg:light-dark(oklch(0.22 0.016 265),oklch(0.94 0.005 265));
---vibeui-dialog-005-muted:light-dark(oklch(0.5 0.014 265),oklch(0.7 0.012 265));
+--vibeui-dialog-005-muted:color-mix(in oklab,var(--vibeui-dialog-005-fg) 68%,transparent);
 --vibeui-dialog-005-bg:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
 --vibeui-dialog-005-border:light-dark(oklch(0.89 0.006 265),oklch(0.38 0.012 265));
 --vibeui-dialog-005-tone:light-dark(oklch(0.58 0.15 152),oklch(0.72 0.14 152));
 --vibeui-dialog-005-radius:1rem;
 --vibeui-dialog-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="dialog-005"]{color-scheme:dark}
 [data-vibeui-block="dialog-005"]{display:inline-flex;font-family:var(--vibeui-dialog-005-font)}
 [data-vibeui-block="dialog-005"][data-tone="danger"]{--vibeui-dialog-005-tone:light-dark(oklch(0.56 0.19 25),oklch(0.7 0.17 25))}
 [data-vibeui-block="dialog-005"] [data-part="trigger"]{
@@ -89,6 +92,8 @@ color:var(--vibeui-dialog-005-muted,light-dark(oklch(0.5 0.014 265),oklch(0.7 0.
 [data-vibeui-dialog-005-window] [data-part="close"]:hover{color:var(--vibeui-dialog-005-fg,light-dark(oklch(0.22 0.016 265),oklch(0.94 0.005 265)))}
 [data-vibeui-dialog-005-window] a:focus-visible,
 [data-vibeui-dialog-005-window] button:focus-visible{outline:2px solid var(--vibeui-dialog-005-tone,light-dark(oklch(0.58 0.15 152),oklch(0.72 0.14 152)));outline-offset:2px;border-radius:0.375rem}
+/* Popover страницу не блокирует: фон под окном иначе продолжает прокручиваться. */
+html:has([data-vibeui-dialog-005-window]:popover-open){overflow:hidden}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="dialog-005"] *{animation:none!important;transition:none!important}
 [data-vibeui-dialog-005-window]{transition:none!important;opacity:1;transform:none}
@@ -152,6 +157,7 @@ export function Dialog005({
         {STYLES}
       </style>
       <div
+        data-slot="dialog"
         data-vibeui-block="dialog-005"
         data-tone={tone}
         className={className}
@@ -166,6 +172,7 @@ export function Dialog005({
           data-vibeui-dialog-005-window=""
           role="dialog"
           aria-labelledby={`${id}-title`}
+          aria-describedby={description ? `${id}-description` : undefined}
           style={palette}
         >
           <span data-part="mark" aria-hidden="true">
@@ -174,7 +181,11 @@ export function Dialog005({
           <h2 data-part="title" id={`${id}-title`}>
             {title}
           </h2>
-          {description ? <p data-part="description">{description}</p> : null}
+          {description ? (
+            <p data-part="description" id={`${id}-description`}>
+              {description}
+            </p>
+          ) : null}
           {detail ? <span data-part="detail">{detail}</span> : null}
           <div data-part="actions">
             {primaryLabel ? (
@@ -182,7 +193,12 @@ export function Dialog005({
                 {primaryLabel}
               </a>
             ) : null}
-            <button data-part="close" type="button" popoverTarget={id}>
+            <button
+              data-part="close"
+              type="button"
+              popoverTarget={id}
+              autoFocus
+            >
               {closeLabel}
             </button>
           </div>

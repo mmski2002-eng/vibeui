@@ -1,10 +1,10 @@
 "use client"
 
 import { useEffect, useId, useRef, useState, useSyncExternalStore } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Input009Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   placeholder?: string
@@ -30,12 +30,15 @@ const STYLES = `
 --vibeui-input-009-panel:light-dark(oklch(1 0 0),oklch(0.31 0.012 265));
 --vibeui-input-009-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-input-009-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
---vibeui-input-009-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-input-009-muted:color-mix(in oklab,var(--vibeui-input-009-fg) 68%,transparent);
 --vibeui-input-009-field:light-dark(oklch(0.98 0.002 265),oklch(0.26 0.012 265));
 --vibeui-input-009-border:light-dark(oklch(0.89 0.008 265),oklch(0.42 0.014 265));
 --vibeui-input-009-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-input-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="input-009"]{color-scheme:dark}
 [data-vibeui-block="input-009"]{
 display:flex;flex-direction:column;gap:0.4375rem;
 width:100%;max-width:23rem;box-sizing:border-box;
@@ -68,6 +71,8 @@ flex:1;min-width:0;height:100%;border:0;background:none;color:inherit;
 font:inherit;font-size:0.875rem;
 }
 [data-vibeui-block="input-009"] input:focus{outline:none}
+/* У поля своя кнопка очистки — вебкитовская встала бы второй рядом с ней. */
+[data-vibeui-block="input-009"] input::-webkit-search-cancel-button{display:none}
 /* Клавиша нарисована <kbd>: это ровно тот тег, который значит «нажми». */
 [data-vibeui-block="input-009"] kbd{
 flex:none;display:inline-flex;align-items:center;gap:0.0625rem;
@@ -199,6 +204,7 @@ export function Input009({
       </style>
       <div
         {...props}
+        data-slot="input"
         data-vibeui-block="input-009"
         data-surface={background ? "on" : undefined}
         className={className}

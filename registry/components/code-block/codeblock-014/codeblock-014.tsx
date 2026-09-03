@@ -24,6 +24,9 @@ const STYLES = `
 --vibeui-codeblock-014-shine:light-dark(oklch(1 0 0 / 62%),oklch(1 0 0 / 22%));
 --vibeui-codeblock-014-row:1.375rem;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="codeblock-014"]{color-scheme:dark}
 [data-vibeui-block="codeblock-014"]{
 display:block;width:100%;max-width:30rem;box-sizing:border-box;overflow:hidden;
 border:1px solid var(--vibeui-codeblock-014-border);border-radius:0.75rem;
@@ -121,6 +124,7 @@ export function Codeblock014({
         {STYLES}
       </style>
       <div
+        data-slot="code-block"
         data-vibeui-block="codeblock-014"
         className={className}
         style={palette}

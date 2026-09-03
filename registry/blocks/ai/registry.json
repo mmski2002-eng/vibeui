@@ -180,7 +180,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-ai-001-*. A client component: \"use client\" is there for the input field. The feed is declared role=\"log\" with aria-live=\"polite\": the reply will be heard but will not interrupt typing. The field grows with the text through field-sizing and stops at a ceiling, scrolling beyond it."
           }
         },
         "cardControls": ["accent", "background"]
@@ -354,7 +355,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-ai-002-*. A client component: \"use client\" is there for the field and the counter. The settings sit inside the same frame as the field and fall into the focus ring through :focus-within. The counter appears only on the approach to the limit and is announced through aria-live."
           }
         },
         "cardControls": ["limit", "accent", "background"]
@@ -537,7 +539,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-ai-003-*. A server component: there are no hooks. The feed line is the step's left border, transparent on the last one. The states differ by the shape of the badge: a tick, a ring, an empty circle and a square. The step log sits in details, so the feed does not turn into a wall of text."
           }
         },
         "cardControls": ["accent", "background"]
@@ -732,7 +735,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-ai-004-*. A client component: \"use client\" is there for the input field. Two columns are turned on by a container query against the block's own width. A day separator is drawn when an entry's day differs from the previous one — there is no separate array of groups. The action bar over a reply is shown on :hover and on :focus-within, so it is reachable by keyboard."
           }
         },
         "cardControls": ["accent", "background"]
@@ -900,7 +904,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-ai-005-*. A server component: there are no hooks. The footnotes are cut out of the text by a regular expression matching the [1] pattern and turned into <sup><a> with an aria-label of the \"Источник N\" form; the anchor leads to a card with the id ai-005-source-N, and the cards carry scroll-margin-top and a :target highlight. The sources are laid out in two columns by a container query."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1062,7 +1067,8 @@
                 "hint": "The caret and the word cascade switch off under prefers-reduced-motion: the text appears at once.",
                 "text": "Here is the structure: a hero with one promise, three benefit blocks, pricing with an annual discount and a contact form at the bottom. Every block is dependency-free, so the project builds without installing packages."
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-ai-006-*. A server component: the animation is driven entirely by CSS, there is no client JS. The text is cut into words and every word is given animation-delay = position × speed. The caret is drawn with a pseudo-element and marked aria-hidden. In the prefers-reduced-motion media query the words are forced visible: animation:none alone is not enough, because a word's starting state is opacity 0."
           }
         },
         "cardControls": ["speed", "accent", "background"]
@@ -1247,7 +1253,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-ai-007-*. A client component: \"use client\" is there for switching topics through useState. The switch is built as a tablist: the buttons carry role=\"tab\" and aria-selected, and the list is a role=\"tabpanel\" with aria-live. A prompt card is a single button as a whole, with no nested interactivity. The two- and three-column grid is turned on by a container query."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1423,7 +1430,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-ai-008-*. A server component: the choice is held by radio buttons inside a <label> wrapped around the whole column, and the state is read through :has(input:checked). The radio is made smaller but not hidden with display:none, otherwise the group falls out of the focus order. Two columns are turned on by a container query: on a narrow block, columns 30 characters wide cannot be compared."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1599,7 +1607,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-ai-009-*. A server component: there are no hooks, and a native <details> holds the disclosure. The arguments are marked up as a <dl> of name–value pairs, and the result sits in a <pre> that wraps long lines. The call state is carried by colour, caption and badge shape at once. The arguments and the result go into two columns through a container query."
           }
         },
         "cardControls": ["state", "accent", "background"]
@@ -1791,7 +1800,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-ai-010-*. A server component: there are no hooks. The completed share is computed from the columns themselves — there is no separate number in the props, so the progress cannot drift from the tasks. The bar is declared role=\"progressbar\" with aria-valuenow and is duplicated by a caption. Three columns are turned on by a container query; on a narrow block they stack one under another."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1959,7 +1969,8 @@
                   "high": "A long answer: a full breakdown. Slower to wait for and pricier to run."
                 }
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-ai-011-*. A client component: \"use client\" is there for the slider values in useState. The value is printed into an <output> with a for pointing at the slider — the browser announces the change itself and no separate aria-live is needed. The mode is chosen by a radio group, and the chip state is read through :has(input:checked). The block next to the <legend> is given clear:both, otherwise the flex children wrap around it."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2149,7 +2160,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-ai-012-*. A server component: the drop zone is a plain <label> around an <input type=\"file\">, so the dialog opens by click and from the keyboard with no JS. The progress bars are declared role=\"progressbar\" with aria-valuenow; a file's state is duplicated as text. The file list goes into two columns through a container query."
           }
         },
         "cardControls": ["budgetUsed", "accent", "background"]
@@ -2303,7 +2315,8 @@
                 "submitLabel": "Send rating",
                 "privacyNote": "The rating travels with this answer. The prompt text and files are not sent."
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-ai-013-*. A server component: the details are shown by the selector form:has([data-vote=\"down\"]:checked). The hidden part is removed with display:none rather than by transparency, so that its fields do not catch Tab into nowhere. The reasons are checkboxes: a bad answer usually has several faults at once. The reasons go into two columns through a container query."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2474,7 +2487,8 @@
                 "trimLabel": "Collapse old messages",
                 "newChatLabel": "Start a new conversation"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-ai-014-*. A server component: the shares are drawn by grid-template-columns from percentages rather than as absolute pieces, so they do not drift on rounding. The used amount is counted as the sum of all shares except the \"free\" tone. The bar is marked role=\"img\" with an aria-label, and the numbers are set in tabular-nums. The legend goes into two columns through a container query."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2658,7 +2672,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-ai-015-*. A client component: \"use client\" is there for the search in useState. The filter looks at both title and preview — a thread name is usually generated by the model, and that is not what a person remembers. The groups are assembled from the group field and rendered as separate <section> elements with headings. The active row is marked with aria-current, not by colour alone."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2835,7 +2850,8 @@
                 "rejectLabel": "Reject",
                 "rememberLabel": "Stop asking about copy edits"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-ai-016-*. A server component: there are no hooks. The diff lines are marked both by colour and by a sign in a separate column — colour does not survive printing and is not read aloud. The reject button stands in the same row as the approve one. The \"do not ask again\" checkbox is deliberately last. The consequences and the diff go into two columns through a container query."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2985,7 +3001,8 @@
                 "draftLabel": "Your prompt is saved",
                 "draft": "Build a pricing page: three plans, an annual discount switch and a questions block at the bottom."
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-ai-017-*. A server component: there are no hooks, and the technical details are hidden inside a native <details>. The root is declared role=\"alert\": an error has to be heard at once. The error code is marked user-select:all so that it is selected in one click. The draft of the request is shown next to the retry button."
           }
         },
         "cardControls": ["accent", "background"]
@@ -3132,7 +3149,8 @@
                 "openLabel": "Open the document at p. 7",
                 "copyLabel": "Copy the quote"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-ai-018-*. A server component: there are no hooks. The highlight is made with the <mark> tag and box-decoration-break:clone, so the background does not break at a line wrap. The quote sits in a <figure> with a <blockquote> and a <cite> in the caption. The neighbouring sentences are muted in colour but left in place. Two columns are turned on by a container query."
           }
         },
         "cardControls": ["accent", "background"]
@@ -3296,7 +3314,8 @@
                   "Keeps no conversation between sessions, save what matters yourself"
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-ai-019-*. A server component: there are no hooks, and the input field is a plain form. The examples stand before the field in the markup, so they come first in keyboard order. The field frame is highlighted as a whole through :focus-within. The examples and the list of limits go into two columns through a container query."
           }
         },
         "cardControls": ["accent", "background"]

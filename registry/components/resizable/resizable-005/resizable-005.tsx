@@ -2,14 +2,14 @@
 
 import { useId, useRef, useState } from "react"
 import type {
-  ComponentPropsWithoutRef,
+  ComponentProps,
   CSSProperties,
   KeyboardEvent,
   PointerEvent,
 } from "react"
 
 export type Resizable005Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   label?: string
@@ -44,12 +44,15 @@ const STYLES = `
 --vibeui-resizable-005-bg:transparent;
 --vibeui-resizable-005-pane:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
 --vibeui-resizable-005-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-resizable-005-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-resizable-005-muted:color-mix(in oklab,var(--vibeui-resizable-005-fg) 68%,transparent);
 --vibeui-resizable-005-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
 --vibeui-resizable-005-surface:light-dark(oklch(0.975 0.004 265),oklch(0.31 0.011 265));
 --vibeui-resizable-005-accent:light-dark(oklch(0.55 0.16 25),oklch(0.75 0.15 25));
 --vibeui-resizable-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="resizable-005"]{color-scheme:dark}
 [data-vibeui-block="resizable-005"]{
 box-sizing:border-box;display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:34rem;padding:0.875rem;
@@ -207,6 +210,7 @@ export function Resizable005({
       </style>
       <div
         {...props}
+        data-slot="resizable"
         data-vibeui-block="resizable-005"
         data-collapsed={collapsed}
         className={className}

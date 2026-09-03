@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Calendar007Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Calendar007Props = Omit<ComponentProps<"div">, "children"> & {
   year?: number
   month?: number
   /** Загрузка по дням месяца: 0 — свободно, 1 — занято целиком. */
@@ -27,28 +24,31 @@ const STYLES = `
 :where([data-vibeui-block="calendar-007"]){
 --vibeui-calendar-007-bg:transparent;
 --vibeui-calendar-007-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
---vibeui-calendar-007-muted:light-dark(oklch(0.6 0.014 265),oklch(0.68 0.012 265));
+--vibeui-calendar-007-muted:color-mix(in oklab,var(--vibeui-calendar-007-fg) 68%,transparent);
 --vibeui-calendar-007-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-calendar-007-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
 --vibeui-calendar-007-on-accent:light-dark(oklch(0.99 0.01 265),oklch(0.19 0.03 265));
 --vibeui-calendar-007-empty:light-dark(oklch(0.97 0.003 265),oklch(0.28 0.012 265));
 --vibeui-calendar-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="calendar-007"]{color-scheme:dark}
 [data-vibeui-block="calendar-007"]{
 display:flex;flex-direction:column;gap:0.625rem;
-width:100%;max-width:19rem;box-sizing:border-box;padding:0.875rem;
+width:100%;max-width:19rem;box-sizing:border-box;padding:0.9375rem;
 background:var(--vibeui-calendar-007-bg);
 border:1px solid var(--vibeui-calendar-007-border);border-radius:0.875rem;
 color:var(--vibeui-calendar-007-fg);font-family:var(--vibeui-calendar-007-font);
 }
-[data-vibeui-block="calendar-007"] [data-part="title"]{font-size:0.875rem;font-weight:650}
+[data-vibeui-block="calendar-007"] [data-part="title"]{font-size:0.9375rem;font-weight:650}
 /* Заглавная только первая буква: capitalize поднимает и «г.» в «январь 2026 г.». */
 [data-vibeui-block="calendar-007"] [data-part="title"]::first-letter{text-transform:uppercase}
 [data-vibeui-block="calendar-007"] table{width:100%;border-collapse:separate;border-spacing:0.1875rem;table-layout:fixed}
 [data-vibeui-block="calendar-007"] th{padding:0;font-size:0.6875rem;font-weight:600;color:var(--vibeui-calendar-007-muted);text-transform:capitalize}
 [data-vibeui-block="calendar-007"] td{
 height:2rem;padding:0;border-radius:0.375rem;text-align:center;
-font-size:0.75rem;font-variant-numeric:tabular-nums;
+font-size:0.8125rem;font-variant-numeric:tabular-nums;
 /* Пять ступеней вместо непрерывной шкалы: больше глаз не различает. */
 background:color-mix(in oklab,var(--vibeui-calendar-007-accent) calc(var(--vibeui-calendar-007-step,0) * 22%),var(--vibeui-calendar-007-empty));
 }
@@ -100,14 +100,34 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 }
 
 /**
+ * Месяц и локаль из пропов или дефолты компонента. Чужая страница не должна
+ * падать из-за неверного значения: NaN даёт Invalid Date, а Intl бросает
+ * RangeError и на нём, и на нераспознанной локали — белый экран вместо сайта.
+ */
+function safeMonth(year: number, month: number, fallback: number[]) {
+  return Number.isNaN(new Date(year, month - 1, 1).getTime())
+    ? fallback
+    : [year, month]
+}
+
+function safeLocale(value: string, fallback: string) {
+  try {
+    Intl.DateTimeFormat.supportedLocalesOf(value)
+    return value
+  } catch {
+    return fallback
+  }
+}
+
+/**
  * Месяц как карта загрузки: ступени насыщенности и числа внутри клеток.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Calendar007({
-  year = 2026,
-  month = 3,
+  year: yearProp = 2026,
+  month: monthProp = 3,
   load = DEFAULT_LOAD,
-  locale = "ru-RU",
+  locale: localeProp = "ru-RU",
   accent,
   background = "",
   lowLabel = "Свободно",
@@ -117,6 +137,8 @@ export function Calendar007({
   style,
   ...props
 }: Calendar007Props) {
+  const [year, month] = safeMonth(yearProp, monthProp, [2026, 3])
+  const locale = safeLocale(localeProp, "ru-RU")
   const first = new Date(year, month - 1, 1)
   const start = new Date(first.getTime() - mondayIndex(first) * DAY)
   const cells = Array.from(
@@ -148,6 +170,7 @@ export function Calendar007({
       </style>
       <div
         {...props}
+        data-slot="calendar"
         data-vibeui-block="calendar-007"
         className={className}
         style={palette}

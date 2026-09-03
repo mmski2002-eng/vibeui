@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Spinner012Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Spinner012Props = Omit<ComponentProps<"div">, "children"> & {
   label?: string
   stages?: [string, string, string]
   speed?: number
@@ -30,10 +27,13 @@ const STYLES = `
 --vibeui-spinner-012-accent:light-dark(oklch(0.55 0.17 262),oklch(0.72 0.16 262));
 --vibeui-spinner-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="spinner-012"]{color-scheme:dark}
 /* Подложки нет по умолчанию: плашка появляется только пропом background. */
 [data-vibeui-block="spinner-012"]{
 display:inline-flex;align-items:center;gap:0.75rem;
-box-sizing:border-box;padding:0.75rem 1rem;
+box-sizing:border-box;padding:0.9375rem 1.0625rem;
 background:var(--vibeui-spinner-012-surface);
 border:1px solid var(--vibeui-spinner-012-border);border-radius:0.875rem;
 font-family:var(--vibeui-spinner-012-font);color:var(--vibeui-spinner-012-fg);
@@ -50,7 +50,7 @@ animation:vibeui-spinner-012-spin .8s linear infinite;
 /* Три стадии стоят друг на друге и перетекают по кругу через animation-delay. */
 [data-vibeui-block="spinner-012"] [data-part="stages"]{
 position:relative;display:inline-block;
-min-width:12rem;height:1.2em;font-size:0.875rem;font-weight:650;
+min-width:12rem;height:1.2em;font-size:0.9375rem;font-weight:650;
 }
 [data-vibeui-block="spinner-012"] [data-part="stage"]{
 position:absolute;inset:0;
@@ -140,6 +140,7 @@ export function Spinner012({
       </style>
       <div
         {...props}
+        data-slot="spinner"
         data-vibeui-block="spinner-012"
         role="status"
         aria-live="polite"

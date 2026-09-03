@@ -248,7 +248,9 @@ export function Autocomplete006({
                 onSelect?.(item.title)
               }}
             >
-              <span data-part="title">{highlight(item.title, query.trim())}</span>
+              <span data-part="title">
+                {highlight(item.title, query.trim())}
+              </span>
               <span data-part="price">{item.price}</span>
               <span data-part="meta">{item.meta}</span>
               <span data-part="stock" data-empty={item.stock === 0}>

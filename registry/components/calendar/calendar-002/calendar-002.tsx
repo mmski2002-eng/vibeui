@@ -1,10 +1,10 @@
 "use client"
 
 import { useMemo, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Calendar002Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   defaultFrom?: string
@@ -30,22 +30,25 @@ const STYLES = `
 :where([data-vibeui-block="calendar-002"]){
 --vibeui-calendar-002-bg:transparent;
 --vibeui-calendar-002-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
---vibeui-calendar-002-muted:light-dark(oklch(0.6 0.014 265),oklch(0.68 0.012 265));
+--vibeui-calendar-002-muted:color-mix(in oklab,var(--vibeui-calendar-002-fg) 68%,transparent);
 --vibeui-calendar-002-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-calendar-002-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
 --vibeui-calendar-002-on-accent:light-dark(oklch(0.99 0.01 265),oklch(0.19 0.03 265));
 --vibeui-calendar-002-range:light-dark(color-mix(in oklab,var(--vibeui-calendar-002-accent) 12%,oklch(1 0 0)),color-mix(in oklab,var(--vibeui-calendar-002-accent) 26%,oklch(0.24 0.014 265)));
 --vibeui-calendar-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="calendar-002"]{color-scheme:dark}
 [data-vibeui-block="calendar-002"]{
 display:flex;flex-direction:column;gap:0.625rem;
-width:100%;max-width:19rem;box-sizing:border-box;padding:0.875rem;
+width:100%;max-width:19rem;box-sizing:border-box;padding:0.9375rem;
 background:var(--vibeui-calendar-002-bg);
 border:1px solid var(--vibeui-calendar-002-border);border-radius:0.875rem;
 color:var(--vibeui-calendar-002-fg);font-family:var(--vibeui-calendar-002-font);
 }
 [data-vibeui-block="calendar-002"] [data-part="head"]{display:flex;align-items:center;justify-content:space-between;gap:0.5rem}
-[data-vibeui-block="calendar-002"] [data-part="title"]{font-size:0.875rem;font-weight:650}
+[data-vibeui-block="calendar-002"] [data-part="title"]{font-size:0.9375rem;font-weight:650}
 /* Заглавная только первая буква: capitalize поднимает и «г.» в «январь 2026 г.». */
 [data-vibeui-block="calendar-002"] [data-part="title"]::first-letter{text-transform:uppercase}
 [data-vibeui-block="calendar-002"] [data-part="nav"]{display:flex;gap:0.25rem}
@@ -87,7 +90,7 @@ background:var(--vibeui-calendar-002-accent);color:var(--vibeui-calendar-002-on-
 }
 [data-vibeui-block="calendar-002"] [data-part="summary"]{
 display:flex;align-items:center;justify-content:space-between;gap:0.5rem;
-font-size:0.75rem;color:var(--vibeui-calendar-002-muted);
+font-size:0.875rem;color:var(--vibeui-calendar-002-muted);
 }
 [data-vibeui-block="calendar-002"] [data-part="nights"]{color:var(--vibeui-calendar-002-fg);font-weight:600}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="calendar-002"] *{animation:none!important;transition:none!important}}
@@ -110,6 +113,44 @@ function buildGrid(year: number, month: number) {
     { length: 42 },
     (_, index) => new Date(start.getTime() + index * DAY),
   )
+}
+
+// Стрелки водят фокус по сетке. Без них до нужного дня приходится жать Tab
+// столько раз, сколько до него дней.
+function moveFocus(event: KeyboardEvent<HTMLElement>, columns: number) {
+  const steps: Record<string, number> = {
+    ArrowLeft: -1,
+    ArrowRight: 1,
+    ArrowUp: -columns,
+    ArrowDown: columns,
+  }
+  const step = steps[event.key]
+
+  if (step === undefined) {
+    return
+  }
+
+  const buttons = Array.from(
+    event.currentTarget.querySelectorAll<HTMLButtonElement>("button"),
+  )
+  const from = buttons.indexOf(document.activeElement as HTMLButtonElement)
+
+  if (from < 0) {
+    return
+  }
+
+  let index = from + step
+
+  while (buttons[index]?.disabled) {
+    index += step
+  }
+
+  if (!buttons[index]) {
+    return
+  }
+
+  event.preventDefault()
+  buttons[index].focus()
 }
 
 /**
@@ -135,13 +176,33 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 }
 
 /**
+ * Дата и локаль из пропов или дефолты компонента. Чужая страница не должна
+ * падать из-за опечатки в значении: Intl бросает RangeError и на Invalid Date,
+ * и на нераспознанной локали, а это белый экран вместо всего сайта.
+ */
+function safeDate(value: string, fallback: string) {
+  return Number.isNaN(new Date(`${value}T00:00:00`).getTime())
+    ? fallback
+    : value
+}
+
+function safeLocale(value: string, fallback: string) {
+  try {
+    Intl.DateTimeFormat.supportedLocalesOf(value)
+    return value
+  } catch {
+    return fallback
+  }
+}
+
+/**
  * Выбор диапазона: два клика, автоперестановка границ и счёт ночей.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Calendar002({
-  defaultFrom = "2026-03-10",
-  defaultTo = "2026-03-17",
-  locale = "ru-RU",
+  defaultFrom: defaultFromProp = "2026-03-10",
+  defaultTo: defaultToProp = "2026-03-17",
+  locale: localeProp = "ru-RU",
   onChange,
   accent,
   background = "",
@@ -153,6 +214,9 @@ export function Calendar002({
   style,
   ...props
 }: Calendar002Props) {
+  const defaultFrom = safeDate(defaultFromProp, "2026-03-10")
+  const defaultTo = safeDate(defaultToProp, "2026-03-17")
+  const locale = safeLocale(localeProp, "ru-RU")
   const [range, setRange] = useState({ from: defaultFrom, to: defaultTo })
   const [pending, setPending] = useState<string | null>(null)
   const [cursor, setCursor] = useState(() => {
@@ -207,6 +271,11 @@ export function Calendar002({
 
   const from = pending ?? range.from
   const to = pending ? pending : range.to
+  // Ровно одна кнопка сетки участвует в табуляции: начало диапазона, а если оно
+  // в другом месяце — первое число показанного.
+  const stop = days.some((date) => iso(date) === from)
+    ? from
+    : iso(new Date(cursor.year, cursor.month, 1))
   const nights = Math.round(
     (new Date(`${range.to}T00:00:00`).getTime() -
       new Date(`${range.from}T00:00:00`).getTime()) /
@@ -220,6 +289,7 @@ export function Calendar002({
       </style>
       <div
         {...props}
+        data-slot="calendar"
         data-vibeui-block="calendar-002"
         className={className}
         style={palette}
@@ -259,7 +329,7 @@ export function Calendar002({
               ))}
             </tr>
           </thead>
-          <tbody>
+          <tbody onKeyDown={(event) => moveFocus(event, 7)}>
             {Array.from({ length: 6 }, (_, row) => (
               <tr key={row}>
                 {days.slice(row * 7, row * 7 + 7).map((date) => {
@@ -278,6 +348,7 @@ export function Calendar002({
                     <td key={value} data-in={inRange} data-edge={edge}>
                       <button
                         type="button"
+                        tabIndex={value === stop ? 0 : -1}
                         aria-label={titles.full.format(date)}
                         aria-pressed={value === from || value === to}
                         data-edge={value === from || value === to}

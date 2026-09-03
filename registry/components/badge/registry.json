@@ -19,6 +19,19 @@
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-badge-001-*. Пять тонов переключаются data-атрибутом и меняют только переменную точки — фон и рамка остаются нейтральными во всех состояниях. Это inline-элемент: он встаёт в строку рядом с текстом и в ячейку таблицы.",
       "meta": {
         "tags": ["badge", "status", "label", "table"],
+        "preview": {
+          "states": [
+            {
+              "tone": "neutral"
+            },
+            {
+              "tone": "success"
+            },
+            {
+              "tone": "danger"
+            }
+          ]
+        },
         "ai": {
           "export": "Badge001",
           "usage": "<Badge001 tone=\"success\">Опубликовано</Badge001>",
@@ -86,6 +99,7 @@
         "i18n": {
           "en": {
             "description": "A status badge where only the dot carries colour. Across twenty table rows the statuses stay findable without turning the table into a set of traffic lights.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-badge-001-* variables. Five tones are switched by a data attribute and change only the dot variable — the background and the border stay neutral in every state. This is an inline element: it sits in a line beside text and inside a table cell.",
             "ai": {
               "summary": "A status badge: neutral background, a coloured dot, a label. Five tones (neutral, success, warning, danger, info) change the dot alone, so a long list stays calm. Two sizes. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -161,6 +175,19 @@
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-badge-002-*. Серверный: хуков нет. Тон — это две переменные, оттенок и насыщенность; светлота фона и текста выводится из них в oklch, поэтому новый тон добавляется одной строкой и контраст не приходится подбирать вручную. Тон переключается атрибутом data-tone.",
       "meta": {
         "tags": ["badge", "tone", "status", "color"],
+        "preview": {
+          "states": [
+            {
+              "tone": "neutral"
+            },
+            {
+              "tone": "success"
+            },
+            {
+              "tone": "danger"
+            }
+          ]
+        },
         "ai": {
           "export": "Badge002",
           "usage": "<Badge002 tone=\"success\">Оплачено</Badge002>",
@@ -215,6 +242,7 @@
         "i18n": {
           "en": {
             "description": "A solid badge for the one accent on screen: background and text derive from a single hue, so contrast holds in every tone.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-badge-002-* variables. Server rendered: no hooks. A tone is two variables, the hue and the chroma; the lightness of the background and of the text is derived from them in oklch, so a new tone is added in one line and the contrast does not have to be picked by hand. The tone is switched by the data-tone attribute.",
             "ai": {
               "summary": "A solid tone badge: five ready tones, with background and text derived from one hue in oklch. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -283,6 +311,19 @@
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-badge-003-*. Серверный: хуков нет. Ширина задана min-width в высоту плашки, поэтому однозначное число даёт круг, а не узкую полоску. Цифры табличные. Настоящее значение уходит в aria-label, видимый текст помечен aria-hidden: «99+» вслух бесполезно. Нулевое значение приглушается атрибутом data-zero.",
       "meta": {
         "tags": ["badge", "counter", "notification", "numbers"],
+        "preview": {
+          "states": [
+            {
+              "value": 3
+            },
+            {
+              "value": 24
+            },
+            {
+              "value": 128
+            }
+          ]
+        },
         "ai": {
           "export": "Badge003",
           "usage": "<Badge003 value={128} max={99} label=\"непрочитанных\" />",
@@ -345,6 +386,7 @@
         "i18n": {
           "en": {
             "description": "A counter that never stretches its neighbours: min-width equal to its height, tabular figures and a \"99+\" cap.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-badge-003-* variables. Server rendered: no hooks. The width is set by a min-width equal to the badge height, so a single-digit number gives a circle rather than a narrow sliver. The figures are tabular. The real value goes into aria-label and the visible text is marked aria-hidden: \"99+\" is useless aloud. A zero value is dimmed by the data-zero attribute.",
             "ai": {
               "summary": "A notification counter: a circle at one digit, a \"99+\" cap, tabular figures and the real number in aria-label. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -415,6 +457,19 @@
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-badge-004-*. Серверный: хуков нет. Это обёртка: внутрь кладут кнопку или иконку, точка позиционируется абсолютно в угол и вырезает под собой кружок через box-shadow цветом подложки. Смысл маркера уходит скрытой строкой с role=\"status\". Без детей рисуется демонстрационная кнопка с колокольчиком.",
       "meta": {
         "tags": ["badge", "dot", "notification", "wrapper"],
+        "preview": {
+          "states": [
+            {
+              "tone": "accent"
+            },
+            {
+              "tone": "success"
+            },
+            {
+              "tone": "danger"
+            }
+          ]
+        },
         "ai": {
           "export": "Badge004",
           "usage": "<Badge004 label=\"есть непрочитанные\">\n  <button type=\"button\">Уведомления</button>\n</Badge004>",
@@ -482,6 +537,7 @@
         "i18n": {
           "en": {
             "description": "A marker dot over someone else's element: the wrapper places it in the corner, its ring cuts it out of the background, and the meaning goes in text.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-badge-004-* variables. Server rendered: no hooks. This is a wrapper: a button or an icon is placed inside it, and the dot is positioned absolutely in the corner and cuts a circle under itself with a box-shadow in the surface colour. The meaning of the marker goes out as a hidden line with role=\"status\". With no children a demonstration button with a bell is drawn.",
             "ai": {
               "summary": "A wrapper that puts a marker dot in the corner of another element: a ring in the surface colour separates it from the icon and the meaning goes to screen readers as text. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -557,6 +613,16 @@
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-badge-005-*. Клиентский: \"use client\", состояние снятия на useState. Крестик — <button> с aria-label, включающим название фильтра. Сам крестик нарисован двумя полосками: типографский символ × в шрифтах сидит неровно. После снятия на месте плашки остаётся пунктирная кнопка возврата.",
       "meta": {
         "tags": ["badge", "chip", "filter", "removable"],
+        "preview": {
+          "states": [
+            {
+              "size": "sm"
+            },
+            {
+              "size": "md"
+            }
+          ]
+        },
         "ai": {
           "export": "Badge005",
           "usage": "<Badge005 label=\"Москва\" onRemove={() => dropFilter(\"Москва\")} />",
@@ -611,6 +677,7 @@
         "i18n": {
           "en": {
             "description": "A removable filter chip: the cross is a real button with a name, and a \"Restore\" button takes the chip's place.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-badge-005-* variables. Client component: \"use client\", the removed state on useState. The cross is a <button> with an aria-label that includes the filter name. The cross itself is drawn from two bars: the typographic × sits off-centre in fonts. After removal a dashed restore button stays in the badge's place.",
             "ai": {
               "summary": "An active-filter chip with removal: the cross is a button carrying the full action name, and removal is reversible through a \"Restore\" button. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -682,6 +749,22 @@
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-badge-006-*. Серверный: хуков нет. Стадия переключается атрибутом data-stage: у каждой свой знак — пустой круг, наполовину залитый градиентом, залитый и перечёркнутый псевдоэлементом. Цвет только усиливает форму. Подпись берётся из таблицы стадий и переопределяется пропом label.",
       "meta": {
         "tags": ["badge", "stage", "workflow", "a11y"],
+        "preview": {
+          "states": [
+            {
+              "stage": "draft"
+            },
+            {
+              "stage": "review"
+            },
+            {
+              "stage": "live"
+            },
+            {
+              "stage": "archived"
+            }
+          ]
+        },
         "ai": {
           "export": "Badge006",
           "usage": "<Badge006 stage=\"review\" />",
@@ -736,6 +819,7 @@
         "i18n": {
           "en": {
             "description": "A document stage with a shape mark: ring, half-fill, solid and struck through — readable without colour.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-badge-006-* variables. Server rendered: no hooks. The stage is switched by the data-stage attribute: each has its own mark — an empty circle, one half-filled with a gradient, a filled one, and one struck through by a pseudo-element. Colour only reinforces the shape. The caption is taken from the stage table and overridden by the label prop.",
             "ai": {
               "summary": "A document-stage badge: draft, review, live and archived differ by the shape of the mark, not only by colour. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -811,6 +895,19 @@
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-badge-007-*. Серверный: хуков нет. Направление считается из знака значения, а окраска — из совпадения направления с пропом goodDirection. Стрелка нарисована двумя бордюрами и поворачивается трансформацией; при нулевом изменении превращается в горизонтальную черту. Цифры табличные, знак минус — типографский.",
       "meta": {
         "tags": ["badge", "trend", "metrics", "dashboard"],
+        "preview": {
+          "states": [
+            {
+              "value": 12.4
+            },
+            {
+              "value": -4.2
+            },
+            {
+              "value": 0
+            }
+          ]
+        },
         "ai": {
           "export": "Badge007",
           "usage": "<Badge007 value={-3.2} goodDirection=\"down\" period=\"за месяц\" />",
@@ -819,6 +916,7 @@
             "локальную палитру --vibeui-badge-007-* и не подменять её токенами вашей темы",
             "проп goodDirection: рост выручки и рост оттока — разные новости, компонент не решает это сам",
             "знак и стрелку рядом с цветом — в чёрно-белом виде цвет исчезает",
+            "скрытую подпись направления: минус «−» скринридеры проговаривают не всегда, и падение читается как рост",
             "табличные цифры: в столбце показателей значения обязаны стоять ровно",
             "отдельное состояние для нуля: стрелка вверх при нулевом изменении врёт",
             "период мелким шрифтом рядом — «+12%» без периода бессмысленно",
@@ -828,6 +926,7 @@
             "value и unit",
             "goodDirection — up или down",
             "period — за какой срок",
+            "directionText — слова направления в скрытой подписи: рост, снижение, без изменений",
             "цвета хорошего и плохого под свою палитру",
             "background — фон плашки; пусто оставляет фон, выведенный из направления"
           ],
@@ -872,12 +971,14 @@
         "i18n": {
           "en": {
             "description": "A metric change with an arrow: what counts as good is set by the caller — for churn, growth is bad news.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-badge-007-* variables. Server rendered: no hooks. The direction is computed from the sign of the value, and the colouring from whether the direction matches the goodDirection prop. The arrow is drawn with two borders and rotated by a transform; on a zero change it turns into a horizontal bar. The figures are tabular and the minus sign is the typographic one.",
             "ai": {
               "summary": "A metric-change badge: arrow, sign, percentage and period. The good direction comes from outside, so falling churn turns green. Zero dependencies, one file, no client JS.",
               "preserve": [
                 "the local --vibeui-badge-007-* palette — do not swap it for your theme tokens",
                 "the goodDirection prop: revenue growth and churn growth are different news, and the component must not decide",
                 "the sign and arrow alongside colour — colour vanishes in black and white",
+                "the visually hidden direction caption: screen readers often skip the \"−\" sign, and a fall then reads as a rise",
                 "tabular figures: in a column of metrics the values must line up",
                 "a distinct zero state: an up arrow on no change is a lie",
                 "the period in small type — \"+12%\" without a period says nothing",
@@ -887,6 +988,7 @@
                 "value and unit",
                 "goodDirection — up or down",
                 "period — over what span",
+                "directionText — the direction words in the visually hidden caption: up, down, flat",
                 "the good and bad colours for your palette",
                 "background — the badge fill; empty keeps the fill derived from the direction"
               ],
@@ -917,7 +1019,12 @@
             "title": "Trend Badge",
             "preview": {
               "props": {
-                "period": "this week"
+                "period": "this week",
+                "directionText": {
+                  "up": "up",
+                  "down": "down",
+                  "flat": "flat"
+                }
               }
             }
           }
@@ -943,6 +1050,19 @@
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-badge-008-*. Серверный: хуков нет. Плашка состоит из двух частей: версия моноширинным шрифтом и канал заглавными, отделённый бордюром. Цвет канала выводится через color-mix из одной переменной. У стабильного канала вторая часть не рисуется вовсе — подписывать «stable» нечего.",
       "meta": {
         "tags": ["badge", "version", "release", "mono"],
+        "preview": {
+          "states": [
+            {
+              "channel": "stable"
+            },
+            {
+              "channel": "beta"
+            },
+            {
+              "channel": "alpha"
+            }
+          ]
+        },
         "ai": {
           "export": "Badge008",
           "usage": "<Badge008 version=\"v2.4.0\" channel=\"beta\" />",
@@ -996,6 +1116,7 @@
         "i18n": {
           "en": {
             "description": "A version number with its channel: monospaced figures and the channel spelled out — beta and alpha must not blur together.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-badge-008-* variables. Server rendered: no hooks. The badge consists of two parts: the version in a monospaced face and the channel in capitals, set off by a border. The channel colour is derived through color-mix from a single variable. On the stable channel the second part is not drawn at all — there is nothing to label \"stable\".",
             "ai": {
               "summary": "A version badge: the number in a monospaced face and the release channel as a separate segment. Stable prints no channel at all. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1113,6 +1234,7 @@
         "i18n": {
           "en": {
             "description": "A row of tags on one line: the tail folds into a counter while the full list goes to screen readers and a tooltip.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-badge-009-* variables. Server rendered: no hooks. The row does not wrap: the chips are cut with an ellipsis and the hidden ones collapse into a \"+N\" with the full list in title. The group is declared role=\"group\" with an aria-label made of all the labels, and the chips themselves are marked aria-hidden — otherwise a screen reader would read them twice.",
             "ai": {
               "summary": "A tag row for a table cell: visible chips, a counter for the hidden ones and the complete list for screen readers. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1189,6 +1311,19 @@
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-badge-010-*. Серверный: хуков нет. Полоски растут по высоте, число залитых считается как total − level + 1, поэтому первый уровень самый заметный. Уровень окрашивается через data-level, но цвет только усиливает форму. Полное значение уходит в aria-label, полоски и подпись помечены aria-hidden.",
       "meta": {
         "tags": ["badge", "priority", "a11y", "issue"],
+        "preview": {
+          "states": [
+            {
+              "level": 1
+            },
+            {
+              "level": 2
+            },
+            {
+              "level": 4
+            }
+          ]
+        },
         "ai": {
           "export": "Badge010",
           "usage": "<Badge010 level={2} />",
@@ -1253,6 +1388,7 @@
         "i18n": {
           "en": {
             "description": "Priority as strokes: the level reads from the bars' shape in black-and-white print and for colour-blind readers.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-badge-010-* variables. Server rendered: no hooks. The bars grow in height, and the number of filled ones is computed as total − level + 1, so the first level is the most prominent. The level is coloured through data-level, but the colour only reinforces the shape. The full value goes into aria-label, while the bars and the caption are marked aria-hidden.",
             "ai": {
               "summary": "A priority badge: a column of four bars plus a word. The level reads from shape rather than colour. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1382,6 +1518,7 @@
         "i18n": {
           "en": {
             "description": "Filter chips as buttons: state lives in aria-pressed, and the selected one also carries a tick — not colour alone.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-badge-011-* variables. Client component: \"use client\". Every chip is a <button> with aria-pressed rather than a link: the address does not change, the state is toggled in place. The selected state is styled by a selector on aria-pressed, so the markup and the accessibility cannot drift apart. The colours of a selected chip are computed from the accent through color-mix.",
             "ai": {
               "summary": "A row of toggleable filter chips: buttons with aria-pressed, a tick on the selected one and colours derived from a single accent. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -1507,6 +1644,7 @@
         "i18n": {
           "en": {
             "description": "A working badge: the ring spins, but the text is mandatory — a spinner alone never says what is happening or whether to wait.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-badge-012-* variables. Server rendered: no hooks. The ring is assembled from a border with a coloured top edge and rotated by keyframes. The badge is declared role=\"status\" with aria-live=\"polite\": the appearance of a process has to be heard. Under prefers-reduced-motion the ring turns into a filled dot — the state stays visible and the motion goes away.",
             "ai": {
               "summary": "A badge for work in progress: a ring, the name of the action and an estimate of the time left. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1581,6 +1719,19 @@
       "docs": "Один файл, ноль зависимостей, палитра в локальных переменных --vibeui-badge-013-*. Серверный: хуков нет. Знаки — inline SVG из карты ICONS, размер width/height в 1em и flex:none, оптический сдвиг margin-top:-0.0625em ставит знак на середину строчной высоты. Тон переключается атрибутом data-tone, который меняет только --hue и --chroma: фон, текст, рамка и цвет знака считаются из них в oklch, поэтому новый тон добавляется одной строкой. Иконка помечена aria-hidden — смысл несёт подпись, дублировать его нечем.",
       "meta": {
         "tags": ["badge", "icon", "status", "label"],
+        "preview": {
+          "states": [
+            {
+              "tone": "neutral"
+            },
+            {
+              "tone": "positive"
+            },
+            {
+              "tone": "accent"
+            }
+          ]
+        },
         "ai": {
           "export": "Badge013",
           "usage": "<Badge013 icon=\"check\" tone=\"positive\">\n  Оплачено\n</Badge013>",
@@ -1640,6 +1791,7 @@
         "i18n": {
           "en": {
             "description": "A badge with a mark on the left: the icon is sized in em, so it scales with the caption and never gets squashed by a long text.",
+            "docs": "One file, zero dependencies, the palette in the local --vibeui-badge-013-* variables. Server rendered: no hooks. The marks are inline SVG from the ICONS map, sized width/height at 1em with flex:none, and an optical margin-top:-0.0625em shift puts the mark at the middle of the lowercase height. The tone is switched by the data-tone attribute, which changes only --hue and --chroma: the background, the text, the border and the mark colour are derived from them in oklch, so a new tone is added in one line. The icon is marked aria-hidden — the caption carries the meaning and there is nothing to duplicate it with.",
             "ai": {
               "summary": "A badge with a leading icon: the mark scales with the text and the whole tone is derived from a single hue. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1710,6 +1862,19 @@
       "docs": "Один файл, ноль зависимостей, палитра в локальных переменных --vibeui-badge-014-*. Серверный: хуков нет. Всё оформление выводится из одного числа: проп hue кладётся в --vibeui-badge-014-hue инлайновым стилем, а рамка, текст и подложка собираются функцией oklch с этим оттенком — палитру не нужно вести таблицей. Подложка намеренно не прозрачная, но своя в каждой ветке light-dark(): контур обязан лежать на тоне, а не на случайном фоне страницы, и в тёмной теме она темнее рамки. Флаг dashed переводит рамку в пунктир и приглушает тон, поэтому черновик отличается от финального формой линии, а не только цветом.",
       "meta": {
         "tags": ["badge", "outline", "hue", "draft"],
+        "preview": {
+          "states": [
+            {
+              "hue": 265
+            },
+            {
+              "hue": 150
+            },
+            {
+              "hue": 25
+            }
+          ]
+        },
         "ai": {
           "export": "Badge014",
           "usage": "<Badge014 hue={150} dashed={false}>\n  Опубликовано\n</Badge014>",
@@ -1769,6 +1934,7 @@
         "i18n": {
           "en": {
             "description": "An outline badge: border, text and surface are all derived from one hue, and a dashed line separates a draft from a published item.",
+            "docs": "One file, zero dependencies, the palette in the local --vibeui-badge-014-* variables. Server rendered: no hooks. The whole look is derived from a single number: the hue prop is put into --vibeui-badge-014-hue with an inline style, and the border, the text and the surface are assembled by the oklch function with that hue — the palette does not have to be kept as a table. The surface is deliberately not transparent but its own in each light-dark() branch: the outline has to lie on the tone rather than on a random page background, and in the dark theme it is darker than the border. The dashed flag turns the border into a dashed one and mutes the tone, so a draft differs from a final one by the shape of the line, not only by colour.",
             "ai": {
               "summary": "An outline badge whose whole palette is derived from a single hue, with a dashed border marking a provisional state. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1839,6 +2005,19 @@
       "docs": "Один файл, ноль зависимостей, палитра в локальных переменных --vibeui-badge-015-*. Серверный: хуков нет. Атрибут data-size задаёт единственное число --vibeui-badge-015-unit, остальное собрано через calc от него: высота — шесть шагов, кегль — три, горизонтальный отступ — 2.4, радиус — три, точка и зазор — 1.6. Поэтому маленькая плашка не выглядит уменьшенной копией: пропорции остаются теми же, а не подбираются на глаз для каждого размера. Хвостовой счётчик отделён вертикальной линией на всю высоту (align-self:stretch), чтобы разделитель не приходилось подгонять под кегль.",
       "meta": {
         "tags": ["badge", "size", "scale", "tokens"],
+        "preview": {
+          "states": [
+            {
+              "size": "sm"
+            },
+            {
+              "size": "md"
+            },
+            {
+              "size": "lg"
+            }
+          ]
+        },
         "ai": {
           "export": "Badge015",
           "usage": "<Badge015 size=\"lg\" count={8}>\n  В работе\n</Badge015>",
@@ -1906,6 +2085,7 @@
         "i18n": {
           "en": {
             "description": "A badge with a size scale: sm, md and lg change one grid step, and height, type size, padding, radius and dot are all computed from it.",
+            "docs": "One file, zero dependencies, the palette in the local --vibeui-badge-015-* variables. Server rendered: no hooks. The data-size attribute sets a single number, --vibeui-badge-015-unit, and everything else is assembled with calc from it: the height is six steps, the type size three, the horizontal padding 2.4, the radius three, the dot and the gap 1.6. That is why the small badge does not look like a shrunken copy: the proportions stay the same rather than being eyeballed for each size. The trailing counter is set off by a vertical line running the full height (align-self:stretch), so the divider does not have to be fitted to the type size.",
             "ai": {
               "summary": "A badge in three sizes whose every metric is derived from a single grid step through calc. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -2047,6 +2227,7 @@
         "i18n": {
           "en": {
             "description": "A link badge: it detects an external address itself, sets target and rel, and adds to the accessible name that a new tab will open.",
+            "docs": "One file, zero dependencies, the palette in the local --vibeui-badge-016-* variables. Server rendered: no hooks. The root is a real a tag, so a middle-click, \"open in a new tab\" and the address preview in the status bar work by themselves. An external link is detected by an http(s) scheme in href: its mark changes (an outward arrow instead of a right arrow), target=_blank and rel=noreferrer noopener are added, and the hidden hint caption goes into the accessible name — a screen reader does not read the icon. The arrow shifts by one pixel on hover: the motion is switched off by a prefers-reduced-motion rule.",
             "ai": {
               "summary": "A link badge that detects an external address by itself and announces the new tab to screen readers. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -2125,6 +2306,19 @@
       "docs": "Один файл, ноль зависимостей, палитра в локальных переменных --vibeui-badge-017-*. Серверный: хуков нет. Маяк собран из двух слоёв — неподвижного ядра и колец, которые расходятся анимацией vibeui-badge-017-ripple; каждое кольцо получает свою задержку через инлайновую переменную --vibeui-badge-017-delay, поэтому волны идут одна за другой, а не мигают вместе. Правило prefers-reduced-motion не просто гасит анимацию, а убирает кольца совсем: застывшее раскрытое кольцо вокруг точки читалось бы как сломанная вёрстка. Тон переключается data-tone и меняет только --hue и --chroma.",
       "meta": {
         "tags": ["badge", "new", "pulse", "attention"],
+        "preview": {
+          "states": [
+            {
+              "tone": "accent"
+            },
+            {
+              "tone": "positive"
+            },
+            {
+              "tone": "danger"
+            }
+          ]
+        },
         "ai": {
           "export": "Badge017",
           "usage": "<Badge017 tone=\"accent\" waves={2}>\n  Новое\n</Badge017>",
@@ -2185,6 +2379,7 @@
         "i18n": {
           "en": {
             "description": "A \"new\" badge with an expanding ripple: only a separate layer animates, so with animation off the dot stays in place.",
+            "docs": "One file, zero dependencies, the palette in the local --vibeui-badge-017-* variables. Server rendered: no hooks. The beacon is assembled from two layers — a static core and rings that spread out with the vibeui-badge-017-ripple animation; each ring gets its own delay through the inline --vibeui-badge-017-delay variable, so the waves follow one another instead of blinking together. The prefers-reduced-motion rule does not merely stop the animation but removes the rings altogether: a frozen expanded ring around the dot would read as broken layout. The tone is switched by data-tone and changes only --hue and --chroma.",
             "ai": {
               "summary": "A \"new\" badge where the ripple is a separate layer above a static dot, and with animation off the dot itself remains. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -2255,6 +2450,22 @@
       "docs": "Один файл, ноль зависимостей, палитра в локальных переменных --vibeui-badge-018-*. Серверный: хуков нет. Обёртка — inline-flex без отступов, поэтому она сжимается по хосту и не меняет раскладку строки. Плашка абсолютная, угол выбирается атрибутом data-position: он задаёт пару top/right и transform со сдвигом на --vibeui-badge-018-offset, так что вылет считается от собственных габаритов плашки, а не подбирается пикселями под каждый размер хоста. Кольцо box-shadow цвета подложки отделяет плашку от хоста без выреза в нём. pointer-events:none снимает с плашки перехват нажатия: под слотом обычно кнопка, и клик обязан доходить до неё. Значение продублировано скрытой подписью, а сама плашка помечена aria-hidden.",
       "meta": {
         "tags": ["badge", "slot", "overlay", "counter"],
+        "preview": {
+          "states": [
+            {
+              "position": "top-right"
+            },
+            {
+              "position": "bottom-left"
+            },
+            {
+              "position": "top-left"
+            },
+            {
+              "position": "bottom-right"
+            }
+          ]
+        },
         "ai": {
           "export": "Badge018",
           "usage": "<Badge018 content=\"3\" position=\"top-right\" label=\"новых уведомления\">\n  <button type=\"button\">Входящие</button>\n</Badge018>",
@@ -2323,6 +2534,7 @@
         "i18n": {
           "en": {
             "description": "A slot that pins a badge to the corner of another element: the wrapper adds no padding and the badge never steals the click.",
+            "docs": "One file, zero dependencies, the palette in the local --vibeui-badge-018-* variables. Server rendered: no hooks. The wrapper is a padding-free inline-flex, so it shrinks to the host and does not change the line layout. The badge is absolute and the corner is chosen by the data-position attribute: it sets a top/right pair and a transform shifted by --vibeui-badge-018-offset, so the overhang is measured from the badge's own dimensions rather than fitted in pixels for each host size. A box-shadow ring in the surface colour separates the badge from the host without cutting into it. pointer-events:none takes the press interception off the badge: there is usually a button under the slot and the click has to reach it. The value is duplicated by a hidden caption, and the badge itself is marked aria-hidden.",
             "ai": {
               "summary": "A wrapper slot that places a badge in any of the four corners of a host element without taking its click. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -2401,6 +2613,22 @@
       "docs": "Один файл, ноль зависимостей, палитра в локальных переменных --vibeui-badge-019-*. Серверный: хуков нет. Карта LEVELS переводит план в число знаков, и ромбы рисуются массивом: free — ноль, pro — один, business — два. Ромб сделан clip-path из квадрата, поэтому не требует ни SVG, ни шрифта. Атрибут data-plan меняет палитру и заливку: у pro — светлый золотой градиент, у business — тёмный. Форма знака отличает уровни там, где цвет теряется: на распечатке счёта или на скриншоте в поддержке.",
       "meta": {
         "tags": ["badge", "plan", "pricing", "tier"],
+        "preview": {
+          "states": [
+            {
+              "plan": "free",
+              "label": "Free"
+            },
+            {
+              "plan": "pro",
+              "label": "Pro"
+            },
+            {
+              "plan": "business",
+              "label": "Business"
+            }
+          ]
+        },
         "ai": {
           "export": "Badge019",
           "usage": "<Badge019 plan=\"business\" label=\"Business\" />",
@@ -2448,6 +2676,7 @@
         "i18n": {
           "en": {
             "description": "A plan badge where the tier is read from the number of diamonds rather than colour saturation — including on a black-and-white invoice.",
+            "docs": "One file, zero dependencies, the palette in the local --vibeui-badge-019-* variables. Server rendered: no hooks. The LEVELS map converts a plan into a number of marks, and the diamonds are drawn from an array: free gets none, pro one, business two. The diamond is made with a clip-path from a square, so it needs neither SVG nor a font. The data-plan attribute changes the palette and the fill: pro gets a light gold gradient, business a dark one. The shape of the mark distinguishes the tiers where colour is lost: on a printed invoice or in a screenshot sent to support.",
             "ai": {
               "summary": "A plan badge that conveys the tier through a count of diamonds, not just a fill colour. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -2513,6 +2742,19 @@
       "docs": "Один файл, ноль зависимостей, палитра в локальных переменных --vibeui-badge-020-*. Серверный: хуков нет. Состояние выводится из числа дней и порога warnAt и попадает в data-state, который меняет только --hue и --chroma — четыре тона держатся на двух переменных. Главное здесь не цвет: для каждого состояния своя фраза, поэтому срок понятен в чёрно-белом списке и вслух в скринридере. Число склоняется через Intl.PluralRules: правила языка берутся из locale, а формы слова — из пропа dayForms, поэтому «11 дней» верно и без зашитых в код исключений. Часы — inline SVG под aria-hidden.",
       "meta": {
         "tags": ["badge", "expiry", "deadline", "threshold"],
+        "preview": {
+          "states": [
+            {
+              "days": 14
+            },
+            {
+              "days": 3
+            },
+            {
+              "days": 0
+            }
+          ]
+        },
         "ai": {
           "export": "Badge020",
           "usage": "<Badge020 days={3} warnAt={7} />",
@@ -2575,6 +2817,7 @@
         "i18n": {
           "en": {
             "description": "An expiry badge whose wording changes along with the tone: \"21 days left\", \"expires in 3 days\", \"expires today\", \"overdue\".",
+            "docs": "One file, zero dependencies, the palette in the local --vibeui-badge-020-* variables. Server rendered: no hooks. The state is derived from the number of days and the warnAt threshold and goes into data-state, which changes only --hue and --chroma — four tones rest on two variables. The colour is not the main thing here: each state has wording of its own, so the term is clear in a black-and-white list and aloud in a screen reader. The number is declined through Intl.PluralRules: the language rules come from locale and the word forms from the dayForms prop, so \"11 дней\" is correct without exceptions hard-coded into the component. The clock is inline SVG under aria-hidden.",
             "ai": {
               "summary": "An expiry badge: thresholds switch both the tone and the wording itself, and the day count is declined in Russian. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -2656,6 +2899,22 @@
       "docs": "Один файл, ноль зависимостей, палитра в локальных переменных --vibeui-badge-021-*. Серверный: хуков нет. Атрибут data-env меняет не только цвета, но и форму: у prod clip-path срезает углы и рамка убирается (обводку всё равно срезало бы вместе с углом), у stage радиус уходит в пилюлю, у dev рамка становится пунктирной. Шрифт моноширинный и в верхнем регистре с разрядкой: метка окружения читается как техническая, а не как статус записи. На скриншоте в баг-репорте цвет теряется первым, а силуэт остаётся — перепутанное окружение стоит дороже любой другой ошибки метки.",
       "meta": {
         "tags": ["badge", "environment", "shape", "devops"],
+        "preview": {
+          "states": [
+            {
+              "env": "prod",
+              "label": "prod"
+            },
+            {
+              "env": "stage",
+              "label": "stage"
+            },
+            {
+              "env": "dev",
+              "label": "dev"
+            }
+          ]
+        },
         "ai": {
           "export": "Badge021",
           "usage": "<Badge021 env=\"stage\" label=\"stage\" />",
@@ -2701,6 +2960,7 @@
         "i18n": {
           "en": {
             "description": "An environment badge where the silhouette carries the meaning: production is a bevelled tag, staging a pill, development a dashed rectangle.",
+            "docs": "One file, zero dependencies, the palette in the local --vibeui-badge-021-* variables. Server rendered: no hooks. The data-env attribute changes not only the colours but the shape: on prod a clip-path cuts the corners off and the border is removed (the outline would be cut along with the corner anyway), on stage the radius goes to a pill, and on dev the border becomes dashed. The font is monospaced and set in upper case with letter-spacing: the environment label reads as technical rather than as a record status. In a screenshot in a bug report the colour is the first thing lost while the silhouette remains — mistaking the environment costs more than any other labelling error.",
             "ai": {
               "summary": "An environment badge in which prod, stage and dev differ by shape, not only by colour. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -2840,6 +3100,7 @@
         "i18n": {
           "en": {
             "description": "A counter split in two: unread with a \"9+\" threshold on the left, the total on the right — the pair answers \"twelve out of how many\".",
+            "docs": "One file, zero dependencies, the palette in the local --vibeui-badge-022-* variables. Server rendered: no hooks. The pill is split into two zones under a shared overflow:hidden, and the boundary between them is the left border of the right half, so the divider needs no separate node. Both halves are set in tabular figures and have the same minimum width: on a recount the badge does not change its dimensions and does not jog its neighbours. The threshold applies to the left number only — \"9+ of 48\" is meaningful, \"9+ of 9+\" is not. When there are no new items the left half dims but stays: dropping the zone would change the width. The numbers are marked aria-hidden, and the whole badge is announced as one phrase built from the labelText template through aria-label.",
             "ai": {
               "summary": "A split counter: unread with a threshold and the total inside one pill of constant width. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -2917,6 +3178,16 @@
       "docs": "Один файл, ноль зависимостей, палитра в локальных переменных --vibeui-badge-023-*. Серверный: хуков нет. Ширина задаётся в ch и кладётся в --vibeui-badge-023-width инлайновым стилем. Режим end работает штатным text-overflow:ellipsis, причём многоточие живёт на внутреннем узле: у flex-контейнера text-overflow не срабатывает и строка просто отрезалась бы без знака. Режим middle CSS не умеет вовсе, поэтому строку режет функция shorten — голова и хвост считаются от лимита, между ними многоточие; у имени ветки и у пути к файлу значимы оба края. Полный текст уходит в title и в скрытую подпись, а обрезанный вариант помечается aria-hidden.",
       "meta": {
         "tags": ["badge", "truncate", "overflow", "monospace"],
+        "preview": {
+          "states": [
+            {
+              "truncate": "end"
+            },
+            {
+              "truncate": "middle"
+            }
+          ]
+        },
         "ai": {
           "export": "Badge023",
           "usage": "<Badge023 width={16} truncate=\"middle\">\n  feature/registry-badge-overflow\n</Badge023>",
@@ -2977,6 +3248,7 @@
         "i18n": {
           "en": {
             "description": "A badge for text of unpredictable length: end truncation is left to CSS, middle truncation to code, and the full text stays available.",
+            "docs": "One file, zero dependencies, the palette in the local --vibeui-badge-023-* variables. Server rendered: no hooks. The width is set in ch and put into --vibeui-badge-023-width with an inline style. The end mode works with the standard text-overflow:ellipsis, with the ellipsis living on an inner node: text-overflow does not apply to a flex container and the string would simply be cut with no mark. CSS cannot do the middle mode at all, so the string is cut by the shorten function — the head and the tail are computed from the limit with the ellipsis between them; in a branch name and in a file path both ends matter. The full text goes into title and into the hidden caption, and the truncated version is marked aria-hidden.",
             "ai": {
               "summary": "A badge that truncates long text in two modes: from the end via CSS and in the middle via code. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -3125,6 +3397,7 @@
         "i18n": {
           "en": {
             "description": "A badge group whose tail collapses into \"+4\" and expands on click — on native details, without a single line of client code.",
+            "docs": "One file, zero dependencies, the palette in the local --vibeui-badge-024-* variables. Server rendered: the expansion is held by the native details/summary pair, so there is no useState here, no handler and no use client directive. The details element itself is declared a flex container: the summary and the expanded tail become its items and line up in the same row rather than as a block below it. The triangle marker is removed (list-style:none plus a rule for WebKit), and the \"+4\" caption is replaced with \"Collapse\" by the [open] selector. Keyboard support, focus and the announcement of the expanded/collapsed state come from the browser for free.",
             "ai": {
               "summary": "A badge group with a collapsible \"+N\" tail that expands through native details with no client JS. Zero dependencies, one file.",
               "preserve": [
@@ -3267,6 +3540,7 @@
         "i18n": {
           "en": {
             "description": "A key-value badge for technical data: the key cannot be selected with the mouse, the value is selected whole in a single click.",
+            "docs": "One file, zero dependencies, the palette in the local --vibeui-badge-025-* variables. Server rendered: no hooks. Two zones in one border under a shared overflow:hidden: a dark key and a light value, with the boundary between them being a change of background rather than a line. The key is marked user-select:none and the value user-select:all, so a click on the hash selects exactly the hash and the word \"commit\" does not travel to the clipboard with it. The value is set in a monospaced face and truncated with an ellipsis, with the full one in title. Both zones are under aria-hidden, and the whole badge is announced as one phrase through aria-label. The palette rests on light-dark(): in a dark context the zones change their lightness and the border becomes lighter than the background. The key tone is overridden by the accent prop and the value fill by background.",
             "ai": {
               "summary": "A key-value badge where only the value is selectable and copyable, while the key stays unselectable. Zero dependencies, one file, no client JS.",
               "preserve": [

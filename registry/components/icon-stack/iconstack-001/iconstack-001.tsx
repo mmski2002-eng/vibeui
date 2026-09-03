@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Iconstack001Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Iconstack001Props = Omit<ComponentProps<"div">, "children"> & {
   names?: string[]
   max?: number
   label?: string
@@ -28,6 +25,9 @@ const STYLES = `
 --vibeui-iconstack-001-shell:light-dark(oklch(0.91 0.006 265),oklch(0.4 0.012 265));
 --vibeui-iconstack-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="iconstack-001"]{color-scheme:dark}
 /* Подложки по умолчанию нет: пилюля лежит на фоне страницы, а обводка кружка
    повторяет тот же фон. */
 [data-vibeui-block="iconstack-001"]{
@@ -56,8 +56,8 @@ font-weight:650;line-height:1;
 }
 /* Оттенок из имени: хеш, а не сумма кодов — иначе алфавит красится одинаково. */
 [data-vibeui-block="iconstack-001"] [data-part="face"]{
-background:oklch(0.9 0.06 var(--vibeui-iconstack-001-hue,265));
-color:oklch(0.38 0.12 var(--vibeui-iconstack-001-hue,265));
+background:light-dark(oklch(0.9 0.06 var(--vibeui-iconstack-001-hue,265)),oklch(0.36 0.07 var(--vibeui-iconstack-001-hue,265)));
+color:light-dark(oklch(0.38 0.12 var(--vibeui-iconstack-001-hue,265)),oklch(0.88 0.08 var(--vibeui-iconstack-001-hue,265)));
 }
 [data-vibeui-block="iconstack-001"] [data-part="more"]{
 background:var(--vibeui-iconstack-001-more-bg);color:var(--vibeui-iconstack-001-more-fg);
@@ -155,6 +155,7 @@ export function Iconstack001({
       </style>
       <div
         {...props}
+        data-slot="icon-stack"
         data-vibeui-block="iconstack-001"
         data-size={size}
         className={className}

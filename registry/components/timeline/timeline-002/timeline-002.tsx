@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Timeline002Entry = {
   /** Имя автора: из него берутся инициалы и оттенок кружка. */
@@ -6,12 +6,11 @@ export type Timeline002Entry = {
   action: string
   target?: string
   time: string
+  /** Машиночитаемый момент для <time datetime>: «2 мин» роботу ничего не говорит. */
+  dateTime: string
 }
 
-export type Timeline002Props = Omit<
-  ComponentPropsWithoutRef<"section">,
-  "children"
-> & {
+export type Timeline002Props = Omit<ComponentProps<"section">, "children"> & {
   entries?: Timeline002Entry[]
   title?: string
   accent?: string
@@ -31,15 +30,18 @@ const STYLES = `
 :where([data-vibeui-block="timeline-002"]){
 --vibeui-timeline-002-bg:transparent;
 --vibeui-timeline-002-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-timeline-002-muted:light-dark(oklch(0.56 0.014 265),oklch(0.69 0.012 265));
+--vibeui-timeline-002-muted:color-mix(in oklab,var(--vibeui-timeline-002-fg) 68%,transparent);
 --vibeui-timeline-002-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-timeline-002-line:light-dark(oklch(0.93 0.005 265),oklch(0.33 0.01 265));
 --vibeui-timeline-002-accent:light-dark(oklch(0.55 0.17 265),oklch(0.75 0.15 265));
 --vibeui-timeline-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="timeline-002"]{color-scheme:dark}
 [data-vibeui-block="timeline-002"]{
 display:flex;flex-direction:column;gap:0.75rem;
-width:100%;max-width:26rem;box-sizing:border-box;padding:0.875rem;
+width:100%;max-width:26rem;box-sizing:border-box;padding:0.9375rem;
 background:var(--vibeui-timeline-002-bg);
 border:1px solid var(--vibeui-timeline-002-border);border-radius:0.875rem;
 font-family:var(--vibeui-timeline-002-font);color:var(--vibeui-timeline-002-fg);
@@ -83,19 +85,27 @@ const DEFAULT_ENTRIES: Timeline002Entry[] = [
     action: "оставила комментарий в",
     target: "Главная страница",
     time: "2 мин",
+    dateTime: "2026-03-14T14:20",
   },
   {
     author: "Марк Иванов",
     action: "закрыл задачу",
     target: "Экспорт в CSV",
     time: "18 мин",
+    dateTime: "2026-03-14T14:04",
   },
-  { author: "Аня Петрова", action: "загрузила 6 файлов", time: "1 ч" },
+  {
+    author: "Аня Петрова",
+    action: "загрузила 6 файлов",
+    time: "1 ч",
+    dateTime: "2026-03-14T13:22",
+  },
   {
     author: "Лиза Ким",
     action: "пригласила в проект",
     target: "Олег С.",
     time: "3 ч",
+    dateTime: "2026-03-14T11:15",
   },
 ]
 
@@ -170,6 +180,7 @@ export function Timeline002({
       </style>
       <section
         {...props}
+        data-slot="timeline"
         data-vibeui-block="timeline-002"
         className={className}
         style={palette}
@@ -198,7 +209,9 @@ export function Timeline002({
                   </>
                 ) : null}
               </p>
-              <span data-part="time">{entry.time}</span>
+              <time data-part="time" dateTime={entry.dateTime}>
+                {entry.time}
+              </time>
             </li>
           ))}
         </ol>

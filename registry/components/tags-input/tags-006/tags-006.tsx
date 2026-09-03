@@ -1,14 +1,10 @@
 "use client"
 
 import { useId, useState } from "react"
-import type {
-  ComponentPropsWithoutRef,
-  CSSProperties,
-  KeyboardEvent,
-} from "react"
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Tags006Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "defaultValue"
 > & {
   label?: string
@@ -34,21 +30,25 @@ export type Tags006Props = Omit<
 // а считается из названия категории хеш-функцией: новая категория сразу
 // получает свой стабильный цвет, и палитру не нужно вести отдельным списком.
 //
-// Тема берётся из color-scheme окружения через light-dark(). Цвета чипа
-// считаются из оттенка и читаются в обеих темах, поэтому парой их не задают.
+// Тема берётся из color-scheme окружения через light-dark(). Оттенок чипа
+// считается из категории, а светлота приходит из темы: пастельная плашка
+// светилась бы на тёмной странице.
 const STYLES = `
 :where([data-vibeui-block="tags-006"]){
 --vibeui-tags-006-surface:transparent;
 --vibeui-tags-006-field:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
 --vibeui-tags-006-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.01 265));
 --vibeui-tags-006-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
---vibeui-tags-006-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-tags-006-muted:color-mix(in oklab,var(--vibeui-tags-006-fg) 68%,transparent);
 --vibeui-tags-006-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.012 265));
 --vibeui-tags-006-accent:light-dark(oklch(0.5 0.15 265),oklch(0.76 0.14 265));
 --vibeui-tags-006-ring:light-dark(oklch(0.5 0.15 265 / 18%),oklch(0.76 0.14 265 / 28%));
 --vibeui-tags-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-tags-006-hue:265;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="tags-006"]{color-scheme:dark}
 /* Подложка по умолчанию прозрачная: поле ложится на фон страницы. */
 [data-vibeui-block="tags-006"]{
 display:flex;flex-direction:column;gap:0.5rem;
@@ -72,10 +72,11 @@ box-shadow:0 0 0 2px var(--vibeui-tags-006-ring);
 [data-vibeui-block="tags-006"] [data-part="chip"]{
 display:inline-flex;align-items:center;gap:0.375rem;
 height:1.75rem;padding:0 0.25rem 0 0.5rem;border-radius:0.4375rem;
-background:oklch(0.94 0.05 var(--vibeui-tags-006-hue));
-color:oklch(0.38 0.12 var(--vibeui-tags-006-hue));
+background:light-dark(oklch(0.94 0.05 var(--vibeui-tags-006-hue)),oklch(0.38 0.06 var(--vibeui-tags-006-hue)));
+color:light-dark(oklch(0.38 0.12 var(--vibeui-tags-006-hue)),oklch(0.9 0.08 var(--vibeui-tags-006-hue)));
 font-size:0.8125rem;font-weight:650;
 }
+/* Точка одна на обе темы: насыщенный цвет виден и на светлом чипе, и на тёмном. */
 [data-vibeui-block="tags-006"] [data-part="dot"]{
 width:0.4375rem;height:0.4375rem;border-radius:9999px;flex:none;
 background:oklch(0.6 0.16 var(--vibeui-tags-006-hue));
@@ -92,8 +93,8 @@ color:inherit;font:inherit;font-size:0.875rem;line-height:1;opacity:.7;
 flex:none;appearance:none;cursor:pointer;
 padding:0 0.5rem;box-sizing:border-box;height:2.25rem;
 border:1px solid var(--vibeui-tags-006-border);border-radius:0.5rem;
-background:oklch(0.96 0.03 var(--vibeui-tags-006-hue));
-color:oklch(0.38 0.12 var(--vibeui-tags-006-hue));
+background:light-dark(oklch(0.96 0.03 var(--vibeui-tags-006-hue)),oklch(0.34 0.04 var(--vibeui-tags-006-hue)));
+color:light-dark(oklch(0.38 0.12 var(--vibeui-tags-006-hue)),oklch(0.9 0.07 var(--vibeui-tags-006-hue)));
 font:inherit;font-size:0.75rem;font-weight:650;
 }
 [data-vibeui-block="tags-006"] select:focus-visible{outline:2px solid var(--vibeui-tags-006-accent);outline-offset:1px}
@@ -202,6 +203,7 @@ export function Tags006({
       </style>
       <div
         {...props}
+        data-slot="tags-input"
         data-vibeui-block="tags-006"
         className={className}
         style={palette}

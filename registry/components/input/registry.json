@@ -163,7 +163,8 @@
                 "label": "Work email",
                 "hint": "We never publish it or pass it on."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-001-*. The floating label rides on the :placeholder-shown CSS selector, so no JS is needed and the component stays a server component. Inside there is a native <input> that accepts any of its props. The error is set by a string in error: it turns on data-invalid, aria-invalid and role=\"alert\" on the note."
           }
         },
         "preview": {
@@ -336,7 +337,8 @@
                 "prefix": "vibeui.ru/",
                 "placeholder": "portfolio"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-002-*. The prefix and the suffix are ordinary spans inside the border, and the field stretches between them on flex. The group highlight rides on :focus-within and the disabled state on :has(input:disabled), so no JS is needed and the component stays a server component. Inside there is a native <input> that accepts any of its props."
           }
         },
         "preview": {
@@ -487,7 +489,8 @@
                   "hideLabel": "Hide password"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-003-*. A client component: \"use client\". The score is computed from the length and the variety of characters and yields three steps; the level is lifted into data-score, and the bars are coloured from it. The reveal button is declared aria-pressed and changes the field type, and the caption is tied through aria-describedby."
           }
         },
         "cardControls": ["accent", "background"]
@@ -632,7 +635,8 @@
                   "searching": "Searching: {query}"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-004-*. A client component: \"use client\". The built-in cross of input type=\"search\" is hidden and replaced by a button of its own with a name; after clearing, the focus is returned to the field programmatically. The magnifier and the cross are drawn with borders, and the shortcut hint sits on the right."
           }
         },
         "cardControls": ["accent", "background"]
@@ -781,7 +785,8 @@
                 "hint": "We will text you a confirmation code",
                 "placeholder": "(999) 000-00-00"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-005-*. A client component: \"use client\". Only the digits live in state, and the brackets and hyphens are drawn in by a formatting function — which is why a paste in any format gives one result. The country code is lifted out of the field into a separate element so it does not get erased."
           }
         },
         "cardControls": ["accent", "background"]
@@ -925,7 +930,8 @@
                   "suggest": "Did you mean {address}"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-006-*. A client component: \"use client\". The shape is checked with a regular expression on leaving the field (the checked state), and the domain is compared against the common ones by Damerau–Levenshtein distance: swapping two neighbouring letters counts as one edit, so \"gmial\" is found as a typo for \"gmail\". The fix is offered as a real button that substitutes the whole address. The state lives on the inner [data-part=\"body\"], and the border and the glyph are coloured from it."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1067,7 +1073,8 @@
                   "calm": "We add the {scheme}:// scheme ourselves, you do not have to type it."
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-007-*. A client component: \"use client\". The scheme is appended in onBlur rather than while typing — otherwise it gets in the way of entry. The parsing is done with a regular expression rather than the URL constructor: URL throws on half the intermediate states of typing, and the field has to show something meaningful on every character. A domain without a dot is treated as an error."
           }
         },
         "cardControls": ["scheme", "accent", "background"]
@@ -1217,7 +1224,8 @@
                   "amex": "Amex"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-008-*. A client component: \"use client\". Only the digits live in state, and the spaces are drawn in by a grouping function — a paste in any format gives one result. The payment scheme is detected by prefix and named in words rather than a logo: logos cannot be distributed in a registry. Luhn is computed only on a full sixteen digits. The expiry and the code stand beside it: a card is not accepted without them."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1358,7 +1366,8 @@
                   "hint": "Press {key} from anywhere, {esc} to clear."
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-009-*. A client component: \"use client\". The shortcut is attached to document in a useEffect and removed on unmount. The modifier (⌘ or Ctrl) is read through useSyncExternalStore: the server snapshot returns Ctrl, so the server markup and the first client render agree, and after hydration ⌘ appears on a Mac. The key glyph is a <kbd>, and it gives way to the clear button when the field holds text."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1516,7 +1525,8 @@
                   "note": "That is {seconds} seconds — how long the link stays alive."
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-010-*. A client component: \"use client\". The list is a button of its own with role=\"listbox\" and buttons with role=\"option\": an explanation cannot be put inside a native <option>. The list is positioned from the border (position:relative on it), closes on Escape and when the focus leaves the frame, and the focus returns to the button. The number is not recomputed when the unit changes; the conversion is shown on a separate line."
           }
         },
         "cardControls": ["defaultValue", "accent", "background"]
@@ -1674,7 +1684,8 @@
                   "empty": "empty"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-011-*. A client component: \"use client\". The score is computed from the number of satisfied rules, so the meter and the list never disagree. There are exactly as many segments as there are rules. The tone (weak/fair/good) is set on the root by a data attribute, and the segments, the verdict and the satisfied rows of the list are all coloured from it."
           }
         },
         "cardControls": ["minLength", "accent", "background"]
@@ -1813,7 +1824,8 @@
                   "note": "Arrows move through the suggestions, Enter fills in, the cross forgets a value."
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-012-*. A client component: \"use client\". The field is declared role=\"combobox\" with aria-expanded and aria-controls, and the list is a role=\"listbox\" with buttons role=\"option\". The arrows walk the suggestions, Enter substitutes the active one, and Escape closes the list without erasing what has been typed. The list closes when the focus leaves the wrapper (onBlur with a relatedTarget check). The match is highlighted with the <mark> tag."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1958,7 +1970,8 @@
                   "done": "You can remove this code and enter another — they do not stack."
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-013-*. A client component: \"use client\". The three states have different markup: a form with a field and a button, the same form with the button disabled while the check runs, and a chip with the applied code and a \"Remove\" button. The wrapper is a real <form>, so Enter submits without any key handlers. The input is uppercased in state, not only in CSS."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2100,7 +2113,8 @@
                   "free": "@{handle} is free."
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-014-*. A client component: \"use client\". The input is normalised as you type: lowercase, spaces into underscores, extra characters dropped. The availability answer is stored together with the name it describes, and the visible state is derived from it: while the answer is not about the name in the field, \"checking\" is shown — a mismatch is impossible by construction. The request goes after a 600 ms pause with the timer cleared. The @ prefix is lifted out of the field as a separate span."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2257,7 +2271,8 @@
                 },
                 "decimalMark": "."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-015-*. A client component: \"use client\". Only the digits live in state. The main mechanism is restoring the caret position: the number of digits to its left is counted, and after formatting the caret is placed after that same number of digits rather than at the previous index. The space between digit groups is non-breaking, otherwise the line wraps in the middle of the number. Going over the limit colours the border and changes the caption."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2418,7 +2433,8 @@
                   "strong": "Strong password"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-016-*. A client component: \"use client\". The generation takes one character from each class (lowercase, uppercase, digits, symbols), fills the remainder from the shared pool through crypto.getRandomValues (with Math.random as the fallback) and shuffles the result with Fisher–Yates. Instead of a bar, the score is given in bits of entropy: length multiplied by log2 of the size of the alphabet used."
           }
         },
         "cardControls": ["length", "accent", "background"]
@@ -2559,7 +2575,8 @@
                   "empty": "Nothing found"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-017-*. A client component: \"use client\". A change of value switches the status to \"loading\" at once, and to \"done\" only after a setTimeout of 450 ms, imitating network latency; the effect cancels the timer on the next change. The magnifier glyph and the loading ring occupy the same spot in the markup, so the eye does not hunt for a new place. The results counter is a deterministic demonstration hash function, not a real search."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2711,7 +2728,8 @@
                   "bad": "The number does not add up — check the characters."
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-018-*. A client component: \"use client\". The state holds the value without spaces in uppercase, and the grouping by four characters is drawn in by a formatting function. The country is read from the first two letters out of a small dictionary and named in words. The checksum is the remainder modulo 97 (ISO 7064): the first four characters are moved to the end, the letters are turned into numbers (A=10…Z=35), and the remainder is computed in chunks of seven digits so as not to hit the Number limit."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2881,7 +2899,8 @@
                   "max": "Character limit reached."
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-019-*. A client component: \"use client\". The counter, the fill bar and the colour are all derived from the same value length through data-tone on the root, so a disagreement between them is impossible by construction. The hard hardLimit is set through maxLength on the input itself and physically prevents typing more; the soft softLimit only changes the tone and the text of the note."
           }
         },
         "cardControls": ["softLimit", "hardLimit", "accent", "background"]
@@ -3036,7 +3055,8 @@
                   "free": "The address is free, you can save it."
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-020-*. A client component: \"use client\". The availability answer is stored together with the slug it describes, and the visible state is derived from it — a mismatch is impossible by construction. The request goes after a 550 ms pause with the timer cleared. The prefix is lifted out of the field as a separate span with aria-hidden, and the full address is mirrored in the note under the field through aria-describedby."
           }
         },
         "cardControls": ["accent", "background"]
@@ -3178,7 +3198,8 @@
                   "done": "You can remove this code and enter another — they do not stack."
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-021-*. A client component: \"use client\". The state holds only the canonical text without hyphens, and the hyphens are drawn in by the group() function every four characters — a paste in any format gives one result. The three states have different markup: a form with a field and a button, the same form with the button disabled while the check runs, and a chip with the applied code and a \"Remove\" button. The wrapper is a real <form>, so Enter submits without any key handlers."
           }
         },
         "cardControls": ["accent", "background"]
@@ -3339,7 +3360,8 @@
                 "unitsLabel": "Unit of measure",
                 "convertText": "That is ≈ {amount}."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-022-*. A client component: \"use client\". The unit is switched by two buttons with aria-pressed inside a role=\"group\" rather than by a list: for two options a list is one extra level of interaction. On switching, the number is converted by the factor multiplier and rounded to one decimal, and the line under the field shows the equivalent in the other unit."
           }
         },
         "cardControls": ["defaultValue", "accent", "background"]
@@ -3478,7 +3500,8 @@
                 "clearText": "Clear history",
                 "noteText": "Down arrow shows recent values; Enter saves and fills in the selected one."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-023-*. A client component: \"use client\". The history is read from localStorage in a useState lazy initializer rather than in an effect: there is no window on the server, so the read goes behind a typeof window branch, and this does not affect the visible part of the first render — the list only opens on a user action. An entry is added on Enter and stored with deduplication — a repeated value moves to the top. The list opens only on ArrowDown and is not filtered by the typed text, and the field is declared role=\"combobox\" with aria-expanded and aria-controls."
           }
         },
         "cardControls": ["accent", "background"]
@@ -3608,7 +3631,8 @@
                 "idleText": "Start typing the domain after @ — we will finish it for you.",
                 "hintText": "{key} — complete to {value}"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-024-*. A client component: \"use client\". The hint is not separate text but a literal continuation of the typed word: under the real input lies an invisible twin in the same font where the typed part is hidden (visibility:hidden) and the suffix is shown in a muted colour — that is how the letters match in width without measuring. Tab is intercepted with preventDefault only when a hint exists, otherwise it behaves as usual."
           }
         },
         "cardControls": ["accent", "background"]
@@ -3746,7 +3770,8 @@
                   "invalid": "The checksum does not match — check the digits."
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-025-*. A client component: \"use client\". The checksum is computed by the official formula of the Russian tax service separately for 10 and 12 digits — each length has its own set of weight coefficients, and the computation runs over an array of digits rather than string arithmetic. The badge next to the label shows the type (company or individual) from the input length, and a check or a cross inside the frame doubles the state visually."
           }
         },
         "cardControls": ["accent", "background"]
@@ -3875,7 +3900,8 @@
                 "quickLabel": "Common times",
                 "noteText": "The step is 15 minutes; typed values round to the nearest one."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-026-*. A client component: \"use client\". The native <input type=\"time\"> gets step={900} (15 minutes in seconds) for the browser's arrows, but manual keyboard entry does not honour that attribute — which is why on onChange the value is always brought to the nearest 15 minutes by the snap() function through integer division, wrapping around midnight. The chips under the field are the same common values in one click, and aria-pressed marks the one matching value."
           }
         },
         "cardControls": ["accent", "background"]
@@ -4007,7 +4033,8 @@
                   "ready": "Resulting colour — {color}."
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-027-*. A client component: \"use client\". The field accepts three or six hexadecimal characters without the hash — it is lifted into a separate span before the input. A three-digit hex is expanded by the expand() function into a six-digit one for the preview (the standard CSS shorthand rule). While the length is neither three nor six, the preview stays a checkered CSS gradient (a visual \"no colour\") rather than going dark in silence."
           }
         },
         "cardControls": ["accent", "background"]
@@ -4146,7 +4173,8 @@
                 "reason": "Confirmed at sign-up — only support can change it.",
                 "actionLabel": "Contact support"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-028-*. A client component: \"use client\" (needed for the onRequestChange handler). The field is readOnly with aria-readonly=\"true\", and a dashed border in place of the usual accent is a visual signal of \"not editable\" that is separate from the text colour. The reason for the lock is not a placeholder and not a title but visible text under the field, tied to the input through aria-describedby. The action button is rendered only if onRequestChange is passed — otherwise it is unclear where the click should lead."
           }
         },
         "cardControls": ["accent", "background"]
@@ -4289,7 +4317,8 @@
                   "idle": "Tap the microphone and dictate."
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-029-*. A client component: \"use client\". Voice input uses the browser's built-in Web Speech API (window.SpeechRecognition / webkitSpeechRecognition) rather than an npm package: the constructor is looked up through a local SpeechRecognitionLike type without any. Support is checked in a useEffect after mounting (there is no window on the server), so the first render agrees on server and client alike, and the button only becomes active after the check. The recognised text is appended to the current value with a space rather than replacing it."
           }
         },
         "cardControls": ["accent", "background"]
@@ -4429,7 +4458,8 @@
                   "22 Broad Street, Birmingham"
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-030-*. A client component: \"use client\". The list is filtered through useMemo by substring (case-insensitively), is shown from two typed characters on and is capped at five options. The matched fragment is highlighted by the highlight() function, which cuts the string into three parts and wraps the middle in a <b>. Keyboard: the up and down arrows move the active item, Enter applies it, Escape closes — as in input-023, but the list stays open for the whole of typing rather than only on ArrowDown."
           }
         },
         "cardControls": ["accent", "background"]
@@ -4570,7 +4600,8 @@
                 "errorText": "This field is required.",
                 "requiredText": ", required field"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-031-*. A client component: \"use client\" (the touched state). The asterisk is marked aria-hidden, and beside it lies a visually hidden (clip-path, not display:none) span reading \", required field\" for a screen reader — so the whole label reads as \"Recipient name, required field\". The error is conditional on touched && empty: until the first loss of focus the field is not highlighted, aria-describedby points at the error text only while it is shown, and role=\"alert\" on the p with the error ensures it is announced when it appears."
           }
         },
         "cardControls": ["accent", "background"]

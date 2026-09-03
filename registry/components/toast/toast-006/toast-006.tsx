@@ -1,7 +1,7 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Toast006Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "title"
 > & {
   title?: string
@@ -27,7 +27,7 @@ const STYLES = `
 :where([data-vibeui-block="toast-006"]){
 --vibeui-toast-006-bg:light-dark(oklch(0.99 0.002 265),oklch(0.22 0.014 265));
 --vibeui-toast-006-fg:light-dark(oklch(0.22 0.014 265),oklch(0.97 0.002 265));
---vibeui-toast-006-muted:light-dark(oklch(0.52 0.012 265),oklch(0.76 0.008 265));
+--vibeui-toast-006-muted:color-mix(in oklab,var(--vibeui-toast-006-fg) 68%,transparent);
 --vibeui-toast-006-line:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.014 265));
 --vibeui-toast-006-track:light-dark(oklch(0.2 0.02 265 / 10%),oklch(1 0 0 / 14%));
 --vibeui-toast-006-hover:light-dark(oklch(0.2 0.02 265 / 8%),oklch(1 0 0 / 10%));
@@ -38,6 +38,9 @@ const STYLES = `
 --vibeui-toast-006-radius:0.875rem;
 --vibeui-toast-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="toast-006"]{color-scheme:dark}
 [data-vibeui-block="toast-006"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:23rem;box-sizing:border-box;
@@ -140,6 +143,7 @@ export function Toast006({
       </style>
       <div
         {...props}
+        data-slot="toast"
         data-vibeui-block="toast-006"
         role="status"
         aria-live="polite"

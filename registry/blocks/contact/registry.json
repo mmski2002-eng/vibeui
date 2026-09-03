@@ -175,7 +175,8 @@
                   "messageError": "A couple of sentences is enough: this text is still too short."
                 }
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-contact-001-*. Server-side: the validation is native — required, type=\"email\", minLength on the message. The error is shown through :user-invalid rather than :invalid: an empty field must not turn red before the first input. The error text is always present in the markup, hidden visually with clip-path and tied to the field through aria-describedby. The two columns are turned on by a container query. Submission is implemented by the calling code."
           }
         },
         "cardControls": ["accent", "background"]
@@ -346,7 +347,8 @@
                   "hours": "Opening hours"
                 }
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-contact-002-*. Server-side: no hooks. The map is drawn with repeating gradients and pulls in no external iframe — the block loads no third-party scripts and sets no cookies. The placeholder is marked aria-hidden, the meaning is carried by the address as text. The opening hours are marked up as a table with row headers, the phone and the email as real tel: and mailto: links."
           }
         },
         "cardControls": ["accent", "background"]
@@ -518,7 +520,8 @@
                   "goalsLegend": "What would you like to see"
                 }
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-contact-003-*. Server-side: the validation is native, the error is shown through :user-invalid and tied to the field through aria-describedby. The goal of the meeting is picked by a radio group in chips, the state is read through :has(input:checked), and the radio button is shrunk rather than hidden. The steps are numbered with a CSS counter. The fields pair up through a container query."
           }
         },
         "cardControls": ["accent", "background"]
@@ -692,7 +695,8 @@
                   "questionError": "One word is not enough — write the whole question."
                 }
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-contact-004-*. Server-side: native details/summary hold the disclosure, so the browser opens a section found by the page search on its own. The plus sign is assembled from two bars with pseudo-elements. The form has three fields with native validation and errors through :user-invalid. On a wide block a container query makes the form sticky at the side."
           }
         },
         "cardControls": ["accent", "background"]
@@ -865,7 +869,8 @@
                 "fallbackText": "Send it to the shared address: it will be read and passed to the right department the same day. There is no need to copy the other inboxes.",
                 "fallbackEmail": "hello@studio.ru"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-contact-005-*. Server-side: no hooks. The addresses and phone numbers are rendered as real mailto: and tel: links, and the number for the link is stripped down to digits and a plus. The reply time is set in tabular-nums so that the column does not jump. The list goes into two columns through a container query, and the catch-all address always comes last as a separate card."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1066,7 +1071,8 @@
                   "phoneError": "The number looks short. Check the area code."
                 }
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-contact-006-*. Server-side: the day and the slot are picked by radio groups, the state is read through :has(input:checked) and the focus through :has(input:focus-visible). The radio buttons are removed visually but stay in the focus order. The phone is an input type=\"tel\" with inputMode and pattern, and the error is shown through :user-invalid. The grid of slots is built with auto-fill, and the fields pair up through a container query."
           }
         },
         "cardControls": ["accent", "background"]

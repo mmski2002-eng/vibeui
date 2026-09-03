@@ -1,10 +1,10 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Buttongroup042Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   score?: number
@@ -28,7 +28,7 @@ const STYLES = `
 :where([data-vibeui-block="buttongroup-042"]){
 --vibeui-buttongroup-042-surface:transparent;
 --vibeui-buttongroup-042-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.005 265));
---vibeui-buttongroup-042-muted:light-dark(oklch(0.56 0.014 265),oklch(0.72 0.012 265));
+--vibeui-buttongroup-042-muted:color-mix(in oklab,var(--vibeui-buttongroup-042-fg) 68%,transparent);
 --vibeui-buttongroup-042-border:light-dark(oklch(0.88 0.008 265),oklch(0.41 0.012 265));
 --vibeui-buttongroup-042-hover:light-dark(oklch(0.965 0.005 265),oklch(0.33 0.012 265));
 --vibeui-buttongroup-042-up:light-dark(oklch(0.52 0.15 150),oklch(0.75 0.15 150));
@@ -37,6 +37,9 @@ const STYLES = `
 --vibeui-buttongroup-042-radius:9999px;
 --vibeui-buttongroup-042-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="buttongroup-042"]{color-scheme:dark}
 [data-vibeui-block="buttongroup-042"]{
 box-sizing:border-box;display:inline-flex;align-items:center;
 border:1px solid var(--vibeui-buttongroup-042-border);
@@ -48,7 +51,7 @@ font-family:var(--vibeui-buttongroup-042-font);
 [data-vibeui-block="buttongroup-042"] button{
 appearance:none;cursor:pointer;font:inherit;
 display:inline-flex;align-items:center;justify-content:center;
-width:2.125rem;height:2.125rem;
+width:2.25rem;height:2.25rem;
 border:0;border-radius:var(--vibeui-buttongroup-042-radius);
 background:transparent;
 color:var(--vibeui-buttongroup-042-muted);
@@ -73,7 +76,7 @@ outline:2px solid var(--vibeui-buttongroup-042-accent);outline-offset:-2px;
 min-width:2.25rem;padding:0 0.25rem;text-align:center;
 border-inline:1px solid var(--vibeui-buttongroup-042-border);
 color:var(--vibeui-buttongroup-042-fg);
-font-size:0.8125rem;font-weight:700;line-height:2.125rem;
+font-size:0.8125rem;font-weight:700;line-height:2.25rem;
 font-variant-numeric:tabular-nums;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="buttongroup-042"] *{animation:none!important;transition:none!important}}
@@ -147,6 +150,7 @@ export function Buttongroup042({
       </style>
       <div
         {...props}
+        data-slot="button-group"
         data-vibeui-block="buttongroup-042"
         className={className}
         style={palette}

@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Breadcrumb008Props = Omit<
-  ComponentPropsWithoutRef<"nav">,
-  "children"
-> & {
+export type Breadcrumb008Props = Omit<ComponentProps<"nav">, "children"> & {
   path?: string
   separator?: string
   /** Подпись навигации: компонент несёт русскую, проект подставляет свою. */
@@ -24,7 +21,7 @@ export type Breadcrumb008Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="breadcrumb-008"]){
 --vibeui-breadcrumb-008-fg:light-dark(oklch(0.28 0.014 265),oklch(0.94 0.008 265));
---vibeui-breadcrumb-008-muted:light-dark(oklch(0.55 0.012 265),oklch(0.72 0.012 265));
+--vibeui-breadcrumb-008-muted:color-mix(in oklab,var(--vibeui-breadcrumb-008-fg) 68%,transparent);
 --vibeui-breadcrumb-008-sep:light-dark(oklch(0.75 0.01 265),oklch(0.52 0.012 265));
 --vibeui-breadcrumb-008-bg:light-dark(oklch(0.97 0.003 265),oklch(0.26 0.01 265));
 --vibeui-breadcrumb-008-hover:light-dark(oklch(0.93 0.006 265),oklch(0.33 0.012 265));
@@ -32,6 +29,9 @@ const STYLES = `
 --vibeui-breadcrumb-008-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-breadcrumb-008-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="breadcrumb-008"]{color-scheme:dark}
 [data-vibeui-block="breadcrumb-008"]{
 display:inline-block;max-width:100%;box-sizing:border-box;
 padding:0.3125rem 0.5rem;
@@ -116,6 +116,7 @@ export function Breadcrumb008({
       </style>
       <nav
         {...props}
+        data-slot="breadcrumb"
         data-vibeui-block="breadcrumb-008"
         aria-label={navLabel}
         className={className}

@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Sidebar008Space = {
   name: string
@@ -11,10 +11,7 @@ export type Sidebar008Item = {
   href?: string
 }
 
-export type Sidebar008Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Sidebar008Props = Omit<ComponentProps<"div">, "children"> & {
   spaces?: Sidebar008Space[]
   current?: string
   items?: Sidebar008Item[]
@@ -47,13 +44,16 @@ const STYLES = `
 --vibeui-sidebar-008-field:light-dark(oklch(0.985 0.002 265),oklch(0.29 0.012 265));
 --vibeui-sidebar-008-field-hover:light-dark(oklch(0.96 0.004 265),oklch(0.33 0.012 265));
 --vibeui-sidebar-008-fg:light-dark(oklch(0.25 0.016 265),oklch(0.93 0.006 265));
---vibeui-sidebar-008-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-sidebar-008-muted:color-mix(in oklab,var(--vibeui-sidebar-008-fg) 68%,transparent);
 --vibeui-sidebar-008-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
 --vibeui-sidebar-008-hover:light-dark(oklch(0.55 0.02 265 / 7%),oklch(0.85 0.02 265 / 10%));
 --vibeui-sidebar-008-shadow:light-dark(oklch(0.2 0.02 265 / 14%),oklch(0 0 0 / 55%));
 --vibeui-sidebar-008-accent:light-dark(oklch(0.55 0.17 155),oklch(0.74 0.15 155));
 --vibeui-sidebar-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="sidebar-008"]{color-scheme:dark}
 [data-vibeui-block="sidebar-008"]{
 display:flex;flex-direction:column;gap:0.625rem;
 width:100%;max-width:15rem;box-sizing:border-box;padding:0.625rem;
@@ -78,8 +78,8 @@ background:color-mix(in oklab,var(--vibeui-sidebar-008-accent) 20%,transparent);
 color:var(--vibeui-sidebar-008-fg);font-size:0.75rem;font-weight:700;
 }
 [data-vibeui-block="sidebar-008"] [data-part="who"]{display:flex;flex-direction:column;min-width:0}
-[data-vibeui-block="sidebar-008"] [data-part="name"]{font-size:0.8125rem;font-weight:650;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-[data-vibeui-block="sidebar-008"] [data-part="plan"]{font-size:0.6875rem;color:var(--vibeui-sidebar-008-muted)}
+[data-vibeui-block="sidebar-008"] [data-part="name"]{font-size:0.875rem;font-weight:650;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+[data-vibeui-block="sidebar-008"] [data-part="plan"]{font-size:0.8125rem;color:var(--vibeui-sidebar-008-muted)}
 [data-vibeui-block="sidebar-008"] [data-part="chevron"]{
 margin-left:auto;flex:none;width:0.375rem;height:0.375rem;
 border-right:1.5px solid var(--vibeui-sidebar-008-muted);
@@ -98,7 +98,7 @@ box-shadow:0 10px 26px var(--vibeui-sidebar-008-shadow);
 [data-vibeui-block="sidebar-008"] [data-part="spaces"] a{
 display:flex;align-items:center;gap:0.5rem;
 padding:0.375rem 0.5rem;border-radius:0.375rem;
-color:var(--vibeui-sidebar-008-fg);text-decoration:none;font-size:0.8125rem;
+color:var(--vibeui-sidebar-008-fg);text-decoration:none;font-size:0.875rem;
 }
 [data-vibeui-block="sidebar-008"] [data-part="spaces"] a:hover{background:var(--vibeui-sidebar-008-hover)}
 [data-vibeui-block="sidebar-008"] [data-part="spaces"] a:focus-visible{outline:2px solid var(--vibeui-sidebar-008-accent);outline-offset:-2px}
@@ -111,12 +111,12 @@ transform:rotate(45deg) translate(-0.0625rem,-0.125rem);
 [data-vibeui-block="sidebar-008"] [data-part="add"]{
 display:block;margin-top:0.125rem;padding:0.375rem 0.5rem;border-radius:0.375rem;
 border-top:1px solid var(--vibeui-sidebar-008-border);
-color:var(--vibeui-sidebar-008-muted);text-decoration:none;font-size:0.8125rem;
+color:var(--vibeui-sidebar-008-muted);text-decoration:none;font-size:0.875rem;
 }
 [data-vibeui-block="sidebar-008"] [data-part="nav"] ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:0.125rem}
 [data-vibeui-block="sidebar-008"] [data-part="nav"] a{
 display:block;padding:0.4375rem 0.5rem;border-radius:0.5rem;
-color:var(--vibeui-sidebar-008-muted);text-decoration:none;font-size:0.875rem;line-height:1.3;
+color:var(--vibeui-sidebar-008-muted);text-decoration:none;font-size:0.9375rem;line-height:1.3;
 }
 [data-vibeui-block="sidebar-008"] [data-part="nav"] a:hover{background:var(--vibeui-sidebar-008-hover);color:var(--vibeui-sidebar-008-fg)}
 [data-vibeui-block="sidebar-008"] [data-part="nav"] a:focus-visible{outline:2px solid var(--vibeui-sidebar-008-accent);outline-offset:-2px}
@@ -201,6 +201,7 @@ export function Sidebar008({
       </style>
       <div
         {...props}
+        data-slot="sidebar"
         data-vibeui-block="sidebar-008"
         className={className}
         style={palette}

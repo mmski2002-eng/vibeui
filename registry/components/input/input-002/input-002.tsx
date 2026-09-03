@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties, ReactNode } from "react"
+import type { ComponentProps, CSSProperties, ReactNode } from "react"
 
-export type Input002Props = Omit<
-  ComponentPropsWithoutRef<"input">,
-  "size" | "prefix"
-> & {
+export type Input002Props = Omit<ComponentProps<"input">, "size" | "prefix"> & {
   /** Неизменяемая часть слева: протокол, домен, символ валюты. */
   prefix?: ReactNode
   /** Неизменяемая часть справа: домен почты, единица измерения, расширение. */
@@ -22,7 +19,7 @@ const STYLES = `
 --vibeui-input-002-surface:transparent;
 --vibeui-input-002-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-input-002-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.005 265));
---vibeui-input-002-muted:light-dark(oklch(0.54 0.014 265),oklch(0.71 0.012 265));
+--vibeui-input-002-muted:color-mix(in oklab,var(--vibeui-input-002-fg) 68%,transparent);
 --vibeui-input-002-bg:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
 --vibeui-input-002-fixed:light-dark(oklch(0.97 0.003 265),oklch(0.32 0.012 265));
 --vibeui-input-002-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.014 265));
@@ -31,6 +28,9 @@ const STYLES = `
 --vibeui-input-002-height:2.75rem;
 --vibeui-input-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="input-002"]{color-scheme:dark}
 [data-vibeui-block="input-002"]{
 box-sizing:border-box;
 display:flex;flex-direction:column;gap:0.375rem;
@@ -132,6 +132,7 @@ export function Input002({
         {STYLES}
       </style>
       <div
+        data-slot="input"
         data-vibeui-block="input-002"
         data-surface={background ? "on" : undefined}
         className={className}

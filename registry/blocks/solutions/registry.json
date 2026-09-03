@@ -188,7 +188,8 @@
                 },
                 "chartLabelText": "Visits by day: from {from} to {to}"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-001-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background and darkens along with it. The chart is built from a polyline and a polygon in SVG with preserveAspectRatio=\"none\", the axis is labelled at the edges only, and the shares in the table are drawn with a linear gradient in the cell background."
           }
         },
         "cardControls": ["accent", "background"]
@@ -365,7 +366,8 @@
                 },
                 "numberLocale": "en-US"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-002-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background. The overage is derived by comparing the usage against the limit: the bar changes colour and a row with the excess is added. The bar is declared role=\"progressbar\" with its current and maximum value."
           }
         },
         "cardControls": ["used", "limit", "accent", "background"]
@@ -559,7 +561,8 @@
                   "amount": "Amount"
                 }
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-003-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background. The width of a funnel step is computed from the count at the first step, so what shows is pass-through rather than slices of a pie. The list of deals runs under the funnel, and the age is marked by the shape of the dot."
           }
         },
         "cardControls": ["accent", "background"]
@@ -743,7 +746,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-004-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background. The file type sets the tile's tint through a variable and is labelled with three letters, the used-space bar is declared role=\"progressbar\", and the sizes are set in tabular figures."
           }
         },
         "cardControls": ["usedShare", "accent", "background"]
@@ -931,7 +935,8 @@
                 "minText": "min {min}",
                 "incomingText": " · {count} incoming"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-005-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background. The state of a line is computed by a function from the stock left and the threshold, the shape of the dot distinguishes normal, low and out of stock, and the SKU is set in a monospace font."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1133,7 +1138,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-006-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background. A free slot is rendered as a button and a taken one as a paragraph, so a taken time cannot be pressed either with a mouse or from the keyboard. The number of columns is set by container queries."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1343,7 +1349,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-007-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background. The columns are laid out with grid-auto-flow:column with horizontal scrolling and switch to equal fractions through a container query. The weighted forecast is computed in the component as the sum of amount×probability/100, and the probability bar is declared role=\"progressbar\"."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1546,7 +1553,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-008-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background. The layout splits into two columns through a container query on the inner shell. The history is an ol with a vertical line on a pseudo-element, the event type is labelled by a letter on a circle, and an overdue next step is driven by the data-overdue attribute."
           }
         },
         "cardControls": ["overdue", "accent", "background"]
@@ -1737,7 +1745,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-009-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background. The row lays out in three columns through a container query. The bar draws the share of the attention window elapsed and is declared role=\"progressbar\"; the plural form of the day noun is chosen by an agreement function against the dayText dictionary."
           }
         },
         "cardControls": ["window", "accent", "background"]
@@ -1935,7 +1944,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-010-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background. The chart is built on a grid: the height of a bar is computed from the largest month and the shares of the segments from the month's total. The segments are told apart by tint and repeating-linear-gradient, and the chart has role=\"img\" with an aria-label."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2121,7 +2131,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-011-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background. The common scale is computed as the maximum of the spending and the sum of the limits, so the categories stay comparable. The limit tick is an absolutely positioned element and the overspend a second hatched segment after the tick; the bar is declared role=\"progressbar\"."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2335,7 +2346,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-012-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background. The table scrolls horizontally inside its own container, the status carries a letter on a circle and a border, and being overdue is drawn with an inset box-shadow on the row's first cell."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2539,7 +2551,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-013-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background and darkens along with it. The two flows lay out in two columns through a container query on the inner shell, the direction is marked by an arrow and the colour of the card's left border, and the readiness bar is declared role=\"progressbar\" with aria-valuemax set to the number of lines."
           }
         },
         "cardControls": ["background"]
@@ -2738,7 +2751,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-014-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background and darkens along with it. The rating segments distinguish a full, a half and an empty state, and the half is drawn with a linear-gradient. The cards lay out in two columns through a container query, the paused state changes the background and the border style, and weak metrics are highlighted by thresholds."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2986,7 +3000,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-015-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background and darkens along with it. The strip of stops is an ol on a grid with horizontal scrolling, the line between the points is drawn by a ::before pseudo-element and filled in for the stops already passed, and the current point is enlarged and ringed with a box-shadow."
           }
         },
         "cardControls": ["accent", "background"]
@@ -3228,7 +3243,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-016-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background and darkens along with it. The table scrolls horizontally, and the first column is held by position:sticky. A shift is labelled by a letter and a time, sick leave is hatched on top of that; the per-day coverage is computed in the component and lives in the tfoot."
           }
         },
         "cardControls": ["normHours", "background"]
@@ -3420,7 +3436,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-017-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background and darkens along with it. The bar of every entry is computed against the longest one that day, and unpaid time is coloured neutrally. The running entry is marked with an animation of its own with a mandatory prefers-reduced-motion rule; the weekly summary is bars on a grid with role=\"img\"."
           }
         },
         "cardControls": ["dayNorm", "accent", "background"]
@@ -3644,7 +3661,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-018-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background and darkens along with it. The number of grid columns is set by the --vibeui-solutions-018-days variable, and an absence range takes its cells through grid-column from from to to. The type of absence carries a letter and hatching, and today is underlined in the ruler."
           }
         },
         "cardControls": ["today", "accent", "background"]
@@ -3855,7 +3873,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-019-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background and darkens along with it. The stages run as a flex strip with horizontal scrolling, with the computed step conversions inserted between them. The list of candidates lays out in three columns through a container query, and exceeding slaDays marks the row with the data-stuck attribute."
           }
         },
         "cardControls": ["slaDays", "accent", "background"]
@@ -4073,7 +4092,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-020-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background and darkens along with it. The filter is a group of radio buttons inside a fieldset, the highlight of the selected chip is done with :has(input:checked), and the focus is caught through :has(input:focus-visible). The floated legend has clear through ::after, otherwise the chips wrap around the caption. The grid of cards is switched by container queries."
           }
         },
         "cardControls": ["accent", "background"]
@@ -4292,7 +4312,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-021-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background and darkens along with it. The number of columns is set by the --vibeui-solutions-021-hours variable, and a booking takes its cells through grid-column from from to to. The busy hours are collected into a Set, so no button is drawn under a booking: someone else's meeting cannot be pressed either with a mouse or from the keyboard."
           }
         },
         "cardControls": ["accent", "background"]
@@ -4502,7 +4523,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-022-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background and darkens along with it. The list is an ol with a fixed time column in a monospace font; in a wide container a third, status column is added. The current appointment is highlighted with a background and a ringed dot, and the window is drawn with a dashed line on a pseudo-element."
           }
         },
         "cardControls": ["accent", "background"]
@@ -4697,7 +4719,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-023-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background and darkens along with it. The cards lay out in two columns through a container query. The days are seven cells with data-on, the set has a bar with role=\"progressbar\" and a fraction; a completed group is marked with the data-full attribute, which changes the background and the border."
           }
         },
         "cardControls": ["accent", "background"]
@@ -4916,7 +4939,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-024-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background and darkens along with it. The segment cards lay out in two columns through a container query, and the share of the base is computed in the component and declared role=\"progressbar\". The selection rule is set in a monospace font, and an unconfirmed email is marked with a badge of its own."
           }
         },
         "cardControls": ["baseSize", "accent", "background"]
@@ -5124,7 +5148,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-025-*. Server-side: no hooks. The cards lay out in two columns through a container query, and severe cases are marked with the data-severity attribute, which changes the border and the colour of the quote bar. The block button is pushed away with margin-left:auto and carries no fill."
           }
         },
         "cardControls": ["background"]
@@ -5397,7 +5422,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-026-*. Server-side: no hooks. The threshold bar is declared role=\"progressbar\" and changes colour once the threshold is reached, through data-ready. Both tables scroll horizontally inside their own containers, the payout status carries the shape of the dot, and a hold carries its reason on a separate line."
           }
         },
         "cardControls": ["accent", "background"]
@@ -5614,7 +5640,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-027-*. Server-side: no hooks. The residual value and the depreciation percentage are not props but computed per row from balanceValue and accumulatedDepreciation, and the three condition levels are told apart by the shape of the marker and by a word rather than by the colour of the bar alone."
           }
         },
         "cardControls": ["background"]
@@ -5845,7 +5872,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-028-*. Server-side: no hooks. The discrepancy, the variance amount and the status are computed per row from countedQty/actualQty, and the chart is a bidirectional bar from a central axis: the direction is visible from the geometry before it is visible from the sign of the number."
           }
         },
         "cardControls": ["background"]
@@ -6068,7 +6096,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-029-*. Server-side: no hooks. The plan completion percentage and the quantity left to produce are recomputed from planQty/producedQty, and the processing stage is drawn as a stepper of dots over the stages array rather than as a text label."
           }
         },
         "cardControls": ["accent", "background"]
@@ -6278,7 +6307,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-030-*. Server-side: no hooks. The operations are drawn as a vertical timeline with a connecting line, and the accumulated standard time after each step is a running total computed while walking the operations array."
           }
         },
         "cardControls": ["accent", "background"]
@@ -6514,7 +6544,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-031-*. Server-side: no hooks. The defect rate is computed from checkedQty/defectQty per batch, and the causes are sorted by frequency and given a computed running percentage — that is the Pareto chart, without an external library."
           }
         },
         "cardControls": ["accent", "background"]
@@ -6727,7 +6758,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-032-*. Server-side: no hooks. The approval stage is drawn as a stepper of 4 nodes from the STAGES list, and being past the required-by date is derived from the sign of the neededInDays number right in the component."
           }
         },
         "cardControls": ["accent", "background"]
@@ -6935,7 +6967,8 @@
                 ],
                 "startPrice": 48000
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-033-*. Server-side: no hooks. The deviation from startPrice and the marker for the lowest bid are computed in the component from the bids array, and the countdown to the deadline is formatted from deadlineHours."
           }
         },
         "cardControls": ["deadlineHours", "background"]
@@ -7135,7 +7168,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-034-*. Server-side: no hooks. The term bar is built from elapsedMonths/totalMonths through role=\"progressbar\", and the renewal window and the contract status are derived from the months remaining and renewalWindowMonths."
           }
         },
         "cardControls": ["renewalWindowMonths", "accent", "background"]
@@ -7363,7 +7397,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-035-*. Server-side: no hooks. The consumption, the amount due and the deviation from average are computed in the component from previous/current, tariffValue and average, and the anomaly threshold is set with the anomalyThreshold prop."
           }
         },
         "cardControls": ["anomalyThreshold", "accent", "background"]
@@ -7570,7 +7605,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-036-*. Server-side: no hooks. The SLA bar is built from elapsedHours/slaHours through role=\"progressbar\", and being overdue and the time remaining are computed in the component rather than arriving as a ready label."
           }
         },
         "cardControls": ["accent", "background"]
@@ -7778,7 +7814,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-037-*. Server-side: no hooks. The due service mileage and the distance left to it are computed from lastServiceMileage and intervalKm right in the render, and the bar is filled by the same value that is spelled out as a number beside it."
           }
         },
         "cardControls": ["accent", "background"]
@@ -7990,7 +8027,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-038-*. Server-side: no hooks. The departure/return bar rests on the fraction of the day an hour makes up (timeToHours) and the mileage on the difference between odometerEnd and odometerStart; neither value is stored apart from the source fields."
           }
         },
         "cardControls": ["accent", "background"]
@@ -8228,7 +8266,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-039-*. Server-side: no hooks. The consumption scale is shared by all the vehicles (computed from the maximum of consumption), and the overage is a separate segment from normPct to actualPct rather than a second number beside it."
           }
         },
         "cardControls": ["accent", "background"]
@@ -8437,7 +8476,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-040-*. Server-side: no hooks. The urgency function compares daysLeft against expiryWarnDays and against zero — both the colour of the bar and the colour of the countdown rest on it, and the status does not arrive as a separate prop."
           }
         },
         "cardControls": ["accent", "background"]
@@ -8649,7 +8689,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-041-*. Server-side: no hooks. The columns are built by filtering claims by stage, and the response-deadline badge by the deadlineUrgency function of deadlineDays minus daysElapsed, shown for the sent stage only."
           }
         },
         "cardControls": ["accent", "background"]
@@ -8920,7 +8961,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-042-*. Server-side: no hooks. The case cards are native <details>/<summary> and the event feed is an <ol> inside the card; the urgency of the nearest hearing is computed in the component from hearingInDays rather than passed as a ready label."
           }
         },
         "cardControls": ["soonInDays", "accent", "background"]
@@ -9147,7 +9189,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-043-*. Server-side: no hooks. Money in and money out are two separate table columns, the closing balance and the turnover are computed in the component from openingBalance and the operations list, and unposted operations are excluded from the balance and marked with a dashed line."
           }
         },
         "cardControls": ["accent", "background"]
@@ -9366,7 +9409,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-044-*. Server-side: no hooks. The signature status is derived from the length of signedBy against requiredSignatures and drawn as progress dots, and the total due is the sum of the fully signed orders only."
           }
         },
         "cardControls": ["requiredSignatures", "accent", "background"]
@@ -9591,7 +9635,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-045-*. Server-side: no hooks. The deviation from the central bank rate and the ruble amount are computed in the component from dealRate, cbRate and amount, and the currency positions are bars against limit with role=\"progressbar\"."
           }
         },
         "cardControls": ["accent", "background"]
@@ -9824,7 +9869,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-046-*. Server-side: no hooks. The status of a form (due / submitted / accepted / amended / overdue) is computed in the component from submitted, accepted, amended and dueInDays; an amendment overrides the other statuses."
           }
         },
         "cardControls": ["soonInDays", "accent", "background"]
@@ -10065,7 +10111,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-047-*. Server-side: no hooks. The discrepancy on every document and the final balance, including who it favors, are computed in the component from the numeric amounts — there is no need to pass them as text."
           }
         },
         "cardControls": ["accent", "background"]
@@ -10319,7 +10366,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-048-*. Server-side: no hooks. The bucket totals, their shares and the risk of every customer are folded out of the invoice list in the component; the portfolio composition bar and the row's mini-bar are drawn with the same segment technique."
           }
         },
         "cardControls": ["accent", "background"]
@@ -10567,7 +10615,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-049-*. Server-side: no hooks. The register discrepancy and the average check are computed in the component from the revenue, the float and the refunds; an open shift gets a status of its own rather than a stand-in zero discrepancy."
           }
         },
         "cardControls": ["accent", "background"]
@@ -10801,7 +10850,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-050-*. Server-side: no hooks. The current tier, the gap to the next one and the position on the scale are computed in the component from the accumulated amount and the tiers thresholds; the point batches are sorted by expiry date."
           }
         },
         "cardControls": ["soonInDays", "accent", "background"]
@@ -11062,7 +11112,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-051-*. Server-side: no hooks. The activation-limit burn bar is filled through the CSS variable --vibeui-solutions-051-fill tied to an inline style; the promo mechanic rests on a pair of a letter marker plus a caption in words rather than on colour alone."
           }
         },
         "cardControls": ["lowAt", "accent", "background"]
@@ -11291,7 +11342,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-052-*. Server-side: no hooks. The revenue-against-plan scale is drawn with a single div and two CSS variables — --vibeui-solutions-052-fill for the actual and --vibeui-solutions-052-plan for the plan tick; the behind-plan status is derived by the component by comparing the revenue and plan numbers rather than taken as a ready label."
           }
         },
         "cardControls": ["accent", "background"]
@@ -11537,7 +11589,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-053-*. Server-side: no hooks. Lateness to the next address is computed by the component from the etaOffset number (minutes against the end of the delivery window) rather than taken as a ready label; the queue of unassigned orders is laid out as a separate column with no courier attached."
           }
         },
         "cardControls": ["capacity", "longWaitMinutes", "accent", "background"]
@@ -11756,7 +11809,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-054-*. Server-side: no hooks. The histogram of five bars is drawn through the height in the CSS variable --vibeui-solutions-054-h; the share of answered reviews and the average first-response time are computed by the component from the reviews array rather than taken as ready props."
           }
         },
         "cardControls": ["accent", "background"]
@@ -11968,7 +12022,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-055-*. Server-side: no hooks. The L1→L2→L3 escalation track is drawn as three dots with the data-reached state; the SLA status (ok/warn/overdue) is derived by the component from the slaMinutesRemaining number rather than taken as a ready label."
           }
         },
         "cardControls": ["warnAt", "accent", "background"]

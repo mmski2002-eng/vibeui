@@ -142,7 +142,8 @@
                 ],
                 "navLabel": "Breadcrumbs"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-breadcrumb-001-* variables. The markup is semantic: a <nav> with a label, and an <ol> inside — the order of the levels carries meaning. The current level is not a link and is marked with aria-current=\"page\". The separator is the border of a square rotated by 45°, so no font characters and no icons are needed. The collapse is computed from maxVisible: the first level, an ellipsis, then the last ones."
           }
         },
         "cardControls": ["maxVisible", "background"]
@@ -286,7 +287,8 @@
                 ],
                 "navLabel": "Breadcrumbs"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-breadcrumb-002-* variables. Server component: no hooks. The markup is a nav with an aria-label and an ordered list: the order of the levels carries meaning. The separator arrives through a variable and is printed by the li + li::before pseudo-element. The last level is rendered as a span with aria-current=\"page\" rather than a link."
           }
         },
         "cardControls": ["background"]
@@ -427,7 +429,8 @@
                 "homeLabel": "Home",
                 "navLabel": "Breadcrumbs"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-breadcrumb-003-* variables. Server component: no hooks. The house is assembled from a rotated square (the roof) and a rectangle with its top border cut off (the wall); the chevron is two borders rotated by 45°. The house link has an aria-label: an unnamed icon in navigation is useless."
           }
         },
         "cardControls": ["background"]
@@ -582,7 +585,8 @@
                 "navLabel": "Breadcrumbs",
                 "moreLabel": "Show {n} more levels"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-breadcrumb-004-* variables. Server component: the disclosure is held by a native <details>, and useId is needed only for the group name. The ellipsis is a <summary> with an aria-label naming the number of hidden levels. The list of hidden crumbs is positioned absolutely under the ellipsis."
           }
         },
         "cardControls": ["visible", "background"]
@@ -727,7 +731,8 @@
                 ],
                 "navLabel": "Breadcrumbs"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-breadcrumb-005-* variables. Server component: no hooks. The list scrolls horizontally, the right edge is wiped with a mask gradient, and the current level is declared position: sticky at the right edge, so it stays visible at any scroll position. overscroll-behavior-x: contain keeps the scroll from escaping to the page."
           }
         },
         "cardControls": ["background"]
@@ -881,7 +886,8 @@
                 "title": "Breadcrumbs",
                 "meta": "12 components · updated today"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-breadcrumb-006-* variables. Server component: no hooks. The crumbs lie in a nav with an aria-label, and the heading is a real h1, so the page structure is not faked with styles. The heading's type size is set with clamp: on a phone it does not eat the first screen."
           }
         },
         "cardControls": ["background"]
@@ -1034,7 +1040,8 @@
                 "actionLabel": "Publish",
                 "secondaryLabel": "Settings"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-breadcrumb-007-* variables. Server component: no hooks. The root is declared a container, while the layout lives on an inner panel: a container query applies to descendants but not to the container itself. From 26rem of its own width the buttons stretch across the whole line under the path. The current level is truncated with an ellipsis."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1107,6 +1114,12 @@
             "maxLength": 2
           },
           {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
             "prop": "background",
             "label": "Подложка",
             "type": "color",
@@ -1154,6 +1167,9 @@
                 "label": "Separator",
                 "default": "/"
               },
+              "accent": {
+                "label": "Accent"
+              },
               "background": {
                 "label": "Background"
               }
@@ -1163,7 +1179,8 @@
               "props": {
                 "navLabel": "File path"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-breadcrumb-008-* variables. Server component: no hooks. The input is a path string rather than an array: that is how a path is stored anyway. The separator goes into a variable and is printed by a pseudo-element, so a Windows path with a backslash is set with a single prop. The filename is the last level, with aria-current."
           }
         },
         "cardControls": ["background"]
@@ -1306,7 +1323,8 @@
                 ],
                 "navLabel": "Step {step} of {total}"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-breadcrumb-009-* variables. Server component: no hooks. The state of a step is computed from its index and the current prop and exposed as data-state; only completed steps become links. The current step is marked with aria-current=\"step\", and the navigation as a whole with an aria-label carrying the step number and their total."
           }
         },
         "cardControls": ["current", "accent", "background"]
@@ -1441,7 +1459,8 @@
                 "navLabel": "Breadcrumbs",
                 "countLabel": "{count} entries in this section"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-breadcrumb-010-* variables. Server component: no hooks. The counter lies inside the level link rather than beside it, so it does not detach on a line break. The figures are tabular, and the counter has its own worded aria-label: a bare number does not read in a stream of speech."
           }
         },
         "cardControls": ["background"]
@@ -1588,7 +1607,8 @@
                 "label": "Section",
                 "navLabel": "Breadcrumbs"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-breadcrumb-011-* variables. Server component: useId is needed only to link the hidden label to the select. The list of siblings is a native <select>: the keyboard, first-letter search and the mobile wheel come from the browser. The arrow is drawn with borders, because the select's own one cannot be styled."
           }
         },
         "cardControls": ["background"]
@@ -1728,7 +1748,8 @@
                 "currentLabel": "Breadcrumbs on a phone",
                 "navLabel": "Breadcrumbs"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-breadcrumb-012-* variables. Server component: no hooks. The link to the parent is named with a word and is 2rem tall — on a phone that is the most tappable target on the page. The current level is truncated with an ellipsis and marked with aria-current. The arrow is drawn with borders."
           }
         },
         "cardControls": ["background"]
@@ -1894,7 +1915,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-breadcrumb-013-* variables. Server component: useId is needed only for a unique popover id and a unique anchor-name, there is no client state. The menu is a native popover=\"auto\": the top layer, closing on Esc and on an outside click, and returning focus to the button come from the browser. The position is taken from CSS anchor positioning under @supports (anchor-name), with position-try-fallbacks for the flip; where anchor positioning is unsupported the popover stays a card centred on the screen — that is a working view, not a breakage. The current row of the menu is marked both with a background and with a marker stripe on the left, so that \"where am I\" reads by more than colour."
           }
         },
         "cardControls": ["background"]
@@ -2066,7 +2088,8 @@
                 },
                 "navLabel": "Breadcrumbs"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-breadcrumb-014-* variables. Server component: no hooks and no state. The marks are inline SVG with a single outline per type, so no icon package is needed; the silhouettes are chosen to differ without colour (a circle, a folder tab, a cylinder, a grid, a sheet with a cut corner). The type colour is set by separate variables and works as a second hint. The type name lies next to the mark as hidden text, so a screen reader speaks \"Table: Deals\" rather than the name alone. The separator is a chevron on the borders of a pseudo-element, so as not to pull in a font with symbols."
           }
         },
         "cardControls": ["currentKind", "background"]
@@ -2214,7 +2237,8 @@
                 "loadingText": "Loading the name",
                 "navLabel": "Breadcrumbs"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-breadcrumb-015-* variables. Server component: the state arrives through the loading prop, there are no hooks. The width of the stand-in is set in ch through the --vibeui-breadcrumb-015-width variable, which the placeholderWidth prop sets inline: ch units are tied to the font of the line itself, so the space reserved for the name is the same at any text size. The sheen is a shift of background-position on a background gradient, with no extra nodes; the pulsing dot duplicates the state by shape. Loading is declared through aria-busy on the list element and a hidden role=\"status\" live region rather than by colour alone."
           }
         },
         "cardControls": ["loading", "placeholderWidth", "background"]

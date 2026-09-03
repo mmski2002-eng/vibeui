@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Button059Props = Omit<
-  ComponentPropsWithoutRef<"form">,
-  "children"
-> & {
+export type Button059Props = Omit<ComponentProps<"form">, "children"> & {
   label?: string
   placeholder?: string
   /** Подсказка под кнопкой, пока форма не готова к отправке. */
@@ -23,11 +20,14 @@ const STYLES = `
 --vibeui-button-059-surface:light-dark(oklch(1 0 0),oklch(0.24 0.014 265));
 --vibeui-button-059-border:light-dark(oklch(0.88 0.006 265),oklch(0.42 0.014 265));
 --vibeui-button-059-fg:light-dark(oklch(0.24 0.02 265),oklch(0.94 0.008 265));
---vibeui-button-059-muted:light-dark(oklch(0.57 0.014 265),oklch(0.68 0.012 265));
+--vibeui-button-059-muted:color-mix(in oklab,var(--vibeui-button-059-fg) 68%,transparent);
 --vibeui-button-059-accent:light-dark(oklch(0.5 0.16 150),oklch(0.62 0.15 150));
 --vibeui-button-059-accent-fg:light-dark(oklch(0.99 0.01 150),oklch(0.17 0.03 150));
 --vibeui-button-059-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="button-059"]{color-scheme:dark}
 [data-vibeui-block="button-059"]{
 display:flex;flex-direction:column;gap:0.5rem;box-sizing:border-box;
 width:100%;max-width:21rem;padding:0.875rem;
@@ -51,7 +51,7 @@ border-color:var(--vibeui-button-059-accent);
 [data-vibeui-block="button-059"] [data-part="submit"]{
 appearance:none;border:0;cursor:pointer;box-sizing:border-box;
 display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;
-width:100%;height:2.625rem;border-radius:0.625rem;
+width:100%;height:2.5rem;border-radius:0.625rem;
 background:var(--vibeui-button-059-accent);color:var(--vibeui-button-059-accent-fg);
 font:inherit;font-size:0.875rem;font-weight:650;line-height:1;
 transition:background-color .16s ease,opacity .16s ease;
@@ -131,6 +131,7 @@ export function Button059({
       </style>
       <form
         {...props}
+        data-slot="button"
         data-vibeui-block="button-059"
         className={className}
         style={palette}

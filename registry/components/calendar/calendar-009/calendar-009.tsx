@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Calendar009Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Calendar009Props = Omit<ComponentProps<"div">, "children"> & {
   from?: string
   to?: string
   locale?: string
@@ -22,7 +19,7 @@ const STYLES = `
 :where([data-vibeui-block="calendar-009"]){
 --vibeui-calendar-009-bg:transparent;
 --vibeui-calendar-009-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
---vibeui-calendar-009-muted:light-dark(oklch(0.6 0.014 265),oklch(0.68 0.012 265));
+--vibeui-calendar-009-muted:color-mix(in oklab,var(--vibeui-calendar-009-fg) 68%,transparent);
 --vibeui-calendar-009-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-calendar-009-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
 --vibeui-calendar-009-on-accent:light-dark(oklch(0.99 0.01 265),oklch(0.19 0.03 265));
@@ -30,27 +27,30 @@ const STYLES = `
 --vibeui-calendar-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="calendar-009"]{color-scheme:dark}
 [data-vibeui-block="calendar-009"]{
 display:block;width:100%;max-width:34rem;box-sizing:border-box;
 font-family:var(--vibeui-calendar-009-font);color:var(--vibeui-calendar-009-fg);
 }
 [data-vibeui-block="calendar-009"] [data-part="card"]{
-box-sizing:border-box;padding:0.875rem;
+box-sizing:border-box;padding:0.9375rem;
 background:var(--vibeui-calendar-009-bg);
 border:1px solid var(--vibeui-calendar-009-border);border-radius:0.875rem;
 }
 [data-vibeui-block="calendar-009"] [data-part="months"]{display:flex;gap:1.25rem}
 [data-vibeui-block="calendar-009"] [data-part="month"]{flex:1;min-width:0}
 [data-vibeui-block="calendar-009"] [data-part="title"]{
-margin:0 0 0.375rem;font-size:0.8125rem;font-weight:650;
+margin:0 0 0.375rem;font-size:0.9375rem;font-weight:650;
 }
 /* Заглавная только первая буква: capitalize поднимает и «г.» в «январь 2026 г.». */
 [data-vibeui-block="calendar-009"] [data-part="title"]::first-letter{text-transform:uppercase}
 [data-vibeui-block="calendar-009"] table{width:100%;border-collapse:collapse;table-layout:fixed}
-[data-vibeui-block="calendar-009"] th{padding:0.1875rem 0;font-size:0.625rem;font-weight:600;color:var(--vibeui-calendar-009-muted);text-transform:capitalize}
+[data-vibeui-block="calendar-009"] th{padding:0.1875rem 0;font-size:0.6875rem;font-weight:600;color:var(--vibeui-calendar-009-muted);text-transform:capitalize}
 [data-vibeui-block="calendar-009"] td{
 height:1.875rem;padding:0;text-align:center;
-font-size:0.75rem;font-variant-numeric:tabular-nums;
+font-size:0.8125rem;font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="calendar-009"] td[data-in="true"]{background:var(--vibeui-calendar-009-range)}
 [data-vibeui-block="calendar-009"] td[data-edge="from"]{border-radius:0.4375rem 0 0 0.4375rem}
@@ -63,7 +63,7 @@ background:var(--vibeui-calendar-009-accent);color:var(--vibeui-calendar-009-on-
 [data-vibeui-block="calendar-009"] td[data-outside="true"]{color:var(--vibeui-calendar-009-muted);opacity:.45}
 [data-vibeui-block="calendar-009"] [data-part="summary"]{
 display:flex;flex-wrap:wrap;align-items:baseline;gap:0.5rem;
-margin:0.75rem 0 0;font-size:0.8125rem;color:var(--vibeui-calendar-009-muted);
+margin:0.75rem 0 0;font-size:0.875rem;color:var(--vibeui-calendar-009-muted);
 }
 [data-vibeui-block="calendar-009"] [data-part="nights"]{color:var(--vibeui-calendar-009-fg);font-weight:650}
 /* В узкой колонке второй месяц уходит вниз: календарь в 140 пикселей
@@ -116,13 +116,33 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 }
 
 /**
+ * Дата и локаль из пропов или дефолты компонента. Чужая страница не должна
+ * падать из-за опечатки в значении: Intl бросает RangeError и на Invalid Date,
+ * и на нераспознанной локали, а это белый экран вместо всего сайта.
+ */
+function safeDate(value: string, fallback: string) {
+  return Number.isNaN(new Date(`${value}T00:00:00`).getTime())
+    ? fallback
+    : value
+}
+
+function safeLocale(value: string, fallback: string) {
+  try {
+    Intl.DateTimeFormat.supportedLocalesOf(value)
+    return value
+  } catch {
+    return fallback
+  }
+}
+
+/**
  * Два месяца рядом с подсвеченным диапазоном и счётом ночей.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Calendar009({
-  from = "2026-03-28",
-  to = "2026-04-05",
-  locale = "ru-RU",
+  from: fromProp = "2026-03-28",
+  to: toProp = "2026-04-05",
+  locale: localeProp = "ru-RU",
   accent,
   background = "",
   nightsText = "{count} ночей",
@@ -130,6 +150,9 @@ export function Calendar009({
   style,
   ...props
 }: Calendar009Props) {
+  const from = safeDate(fromProp, "2026-03-28")
+  const to = safeDate(toProp, "2026-04-05")
+  const locale = safeLocale(localeProp, "ru-RU")
   const [year, month] = from.split("-").map(Number)
   const months = [{ year, month: month - 1 }, new Date(year, month, 1)].map(
     (value, index) =>
@@ -172,6 +195,7 @@ export function Calendar009({
       </style>
       <div
         {...props}
+        data-slot="calendar"
         data-vibeui-block="calendar-009"
         className={className}
         style={palette}

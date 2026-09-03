@@ -1,6 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Skeleton009Props = ComponentPropsWithoutRef<"div"> & {
+export type Skeleton009Props = ComponentProps<"div"> & {
   ratio?: "1 / 1" | "4 / 3" | "16 / 9"
   label?: string
   /** Пусто — подложки нет, карточка лежит прямо на фоне страницы. */
@@ -24,6 +24,9 @@ const STYLES = `
 --vibeui-skeleton-009-shine:light-dark(oklch(0.97 0.003 265),oklch(0.39 0.016 265));
 --vibeui-skeleton-009-ratio:1 / 1;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="skeleton-009"]{color-scheme:dark}
 [data-vibeui-block="skeleton-009"]{
 display:flex;flex-direction:column;
 width:100%;max-width:14rem;box-sizing:border-box;overflow:hidden;
@@ -117,6 +120,7 @@ export function Skeleton009({
       </style>
       <div
         {...props}
+        data-slot="skeleton"
         data-vibeui-block="skeleton-009"
         role="status"
         aria-busy="true"

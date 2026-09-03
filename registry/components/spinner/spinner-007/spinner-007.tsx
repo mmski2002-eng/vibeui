@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Spinner007Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Spinner007Props = Omit<ComponentProps<"div">, "children"> & {
   label?: string
   speed?: number
   /** Пусто — подложки нет, компонент лежит на фоне страницы. */
@@ -26,10 +23,13 @@ const STYLES = `
 --vibeui-spinner-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.32 0.012 265));
 --vibeui-spinner-007-track:light-dark(oklch(0.95 0.006 265),oklch(0.3 0.012 265));
 --vibeui-spinner-007-fg:light-dark(oklch(0.26 0.014 265),oklch(0.94 0.005 265));
---vibeui-spinner-007-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-spinner-007-muted:color-mix(in oklab,var(--vibeui-spinner-007-fg) 68%,transparent);
 --vibeui-spinner-007-accent:light-dark(oklch(0.55 0.17 262),oklch(0.74 0.15 262));
 --vibeui-spinner-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="spinner-007"]{color-scheme:dark}
 /* Подложки нет по умолчанию: плашка появляется только пропом background. */
 [data-vibeui-block="spinner-007"]{
 display:inline-flex;align-items:center;gap:0.625rem;
@@ -37,7 +37,7 @@ box-sizing:border-box;padding:0.75rem 1rem;
 background:var(--vibeui-spinner-007-surface);
 border:1px solid var(--vibeui-spinner-007-border);border-radius:0.875rem;
 font-family:var(--vibeui-spinner-007-font);color:var(--vibeui-spinner-007-fg);
-font-size:0.8125rem;
+font-size:0.9375rem;
 }
 /* Форма чат-пузыря с хвостиком: точки читаются как «печатает», а не «грузится». */
 [data-vibeui-block="spinner-007"] [data-part="bubble"]{
@@ -130,6 +130,7 @@ export function Spinner007({
       </style>
       <div
         {...props}
+        data-slot="spinner"
         data-vibeui-block="spinner-007"
         role="status"
         aria-live="polite"

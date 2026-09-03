@@ -1,11 +1,7 @@
 "use client"
 
 import { useId, useMemo, useRef, useState } from "react"
-import type {
-  ComponentPropsWithoutRef,
-  CSSProperties,
-  KeyboardEvent,
-} from "react"
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Combobox027Status = "online" | "away" | "offline"
 
@@ -16,7 +12,7 @@ export type Combobox027Person = {
 }
 
 export type Combobox027Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onSelect"
 > & {
   label?: string
@@ -45,7 +41,7 @@ const STYLES = `
 --vibeui-combobox-027-bg:transparent;
 --vibeui-combobox-027-ring:light-dark(oklch(1 0 0),oklch(0.24 0.012 160));
 --vibeui-combobox-027-fg:light-dark(oklch(0.22 0.014 160),oklch(0.94 0.008 160));
---vibeui-combobox-027-muted:light-dark(oklch(0.55 0.014 160),oklch(0.72 0.012 160));
+--vibeui-combobox-027-muted:color-mix(in oklab,var(--vibeui-combobox-027-fg) 68%,transparent);
 --vibeui-combobox-027-border:light-dark(oklch(0.9 0.006 160),oklch(0.36 0.012 160));
 --vibeui-combobox-027-field:light-dark(oklch(0.985 0.002 160),oklch(0.27 0.01 160));
 --vibeui-combobox-027-active:light-dark(oklch(0.955 0.02 160),oklch(0.34 0.03 160));
@@ -57,6 +53,9 @@ const STYLES = `
 --vibeui-combobox-027-hue:265;
 --vibeui-combobox-027-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="combobox-027"]{color-scheme:dark}
 [data-vibeui-block="combobox-027"]{
 display:flex;flex-direction:column;gap:0.375rem;
 width:100%;max-width:23rem;box-sizing:border-box;padding:0.875rem;
@@ -91,8 +90,8 @@ padding:0.4rem 0.5rem;border-radius:0.5rem;cursor:pointer;
 display:flex;align-items:center;justify-content:center;
 width:2rem;height:2rem;border-radius:999px;
 font-size:0.75rem;font-weight:700;letter-spacing:0.02em;
-background:oklch(0.92 0.06 var(--vibeui-combobox-027-hue));
-color:oklch(0.38 0.11 var(--vibeui-combobox-027-hue));
+background:light-dark(oklch(0.92 0.06 var(--vibeui-combobox-027-hue)),oklch(0.37 0.06 var(--vibeui-combobox-027-hue)));
+color:light-dark(oklch(0.38 0.11 var(--vibeui-combobox-027-hue)),oklch(0.9 0.07 var(--vibeui-combobox-027-hue)));
 }
 [data-vibeui-block="combobox-027"] [data-part="dot"]{
 position:absolute;right:-0.05rem;bottom:-0.05rem;
@@ -263,6 +262,7 @@ export function Combobox027({
       </style>
       <div
         {...props}
+        data-slot="combobox"
         data-vibeui-block="combobox-027"
         className={className}
         style={palette}

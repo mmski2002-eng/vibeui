@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Calendar011Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Calendar011Props = Omit<ComponentProps<"div">, "children"> & {
   year?: number
   /** Отмеченные даты в ISO: 2026-03-14. Строки, а не Date — их проще отдать с сервера. */
   marks?: string[]
@@ -15,6 +12,8 @@ export type Calendar011Props = Omit<
   totalText?: string
   /** Три формы слова: одна дата, две даты, пять дат. */
   countWords?: [string, string, string]
+  /** Подпись отмеченного дня. {date} подставляется полной датой. */
+  markLabelText?: string
 }
 
 // Идея компонента: год целиком — двенадцать миниатюр месяцев на одной
@@ -24,14 +23,17 @@ const STYLES = `
 :where([data-vibeui-block="calendar-011"]){
 --vibeui-calendar-011-bg:transparent;
 --vibeui-calendar-011-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
---vibeui-calendar-011-muted:light-dark(oklch(0.62 0.014 265),oklch(0.68 0.012 265));
+--vibeui-calendar-011-muted:color-mix(in oklab,var(--vibeui-calendar-011-fg) 68%,transparent);
 --vibeui-calendar-011-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-calendar-011-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
 --vibeui-calendar-011-on-accent:light-dark(oklch(0.99 0.01 265),oklch(0.19 0.03 265));
 --vibeui-calendar-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="calendar-011"]{color-scheme:dark}
 [data-vibeui-block="calendar-011"]{
-width:100%;max-width:46rem;box-sizing:border-box;padding:1rem;
+width:100%;max-width:46rem;box-sizing:border-box;padding:0.9375rem;
 background:var(--vibeui-calendar-011-bg);
 border:1px solid var(--vibeui-calendar-011-border);border-radius:1rem;
 color:var(--vibeui-calendar-011-fg);font-family:var(--vibeui-calendar-011-font);
@@ -41,11 +43,11 @@ display:flex;align-items:baseline;justify-content:space-between;gap:0.75rem;
 margin:0 0 0.875rem;
 }
 [data-vibeui-block="calendar-011"] [data-part="year"]{
-margin:0;font-size:1.25rem;font-weight:700;letter-spacing:-0.01em;
+margin:0;font-size:0.9375rem;font-weight:700;letter-spacing:-0.01em;
 font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="calendar-011"] [data-part="total"]{
-font-size:0.75rem;color:var(--vibeui-calendar-011-muted);
+font-size:0.875rem;color:var(--vibeui-calendar-011-muted);
 }
 [data-vibeui-block="calendar-011"] [data-part="shell"]{
 display:grid;gap:0.75rem;
@@ -148,21 +150,42 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 }
 
 /**
+ * Год и локаль из пропов или дефолты компонента. Чужая страница не должна
+ * падать из-за неверного значения: NaN даёт Invalid Date, а Intl бросает
+ * RangeError и на нём, и на нераспознанной локали — белый экран вместо сайта.
+ */
+function safeYear(year: number, fallback: number) {
+  return Number.isNaN(new Date(year, 0, 1).getTime()) ? fallback : year
+}
+
+function safeLocale(value: string, fallback: string) {
+  try {
+    Intl.DateTimeFormat.supportedLocalesOf(value)
+    return value
+  } catch {
+    return fallback
+  }
+}
+
+/**
  * Год двенадцатью миниатюрами месяцев с заливкой отмеченных дней.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Calendar011({
-  year = 2026,
+  year: yearProp = 2026,
   marks = DEFAULT_MARKS,
-  locale = "ru-RU",
+  locale: localeProp = "ru-RU",
   accent,
   background = "",
   totalText = "{count} {word} отмечено",
   countWords = ["дата", "даты", "дат"],
+  markLabelText = "{date} — отмечено",
   className,
   style,
   ...props
 }: Calendar011Props) {
+  const year = safeYear(yearProp, 2026)
+  const locale = safeLocale(localeProp, "ru-RU")
   const monthName = new Intl.DateTimeFormat(locale, { month: "long" })
   const weekdayName = new Intl.DateTimeFormat(locale, { weekday: "narrow" })
   const fullDate = new Intl.DateTimeFormat(locale, { dateStyle: "long" })
@@ -195,6 +218,7 @@ export function Calendar011({
       </style>
       <div
         {...props}
+        data-slot="calendar"
         data-vibeui-block="calendar-011"
         className={className}
         style={palette}
@@ -247,6 +271,14 @@ export function Calendar011({
                         data-weekend={weekend}
                         data-mark={hit}
                         title={hit ? fullDate.format(date) : undefined}
+                        aria-label={
+                          hit
+                            ? markLabelText.replace(
+                                "{date}",
+                                fullDate.format(date),
+                              )
+                            : undefined
+                        }
                       >
                         {day}
                       </span>

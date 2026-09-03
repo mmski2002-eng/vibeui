@@ -47,6 +47,12 @@ export type LocalizedControl = {
 export type LocalizedMeta = {
   title?: string
   description?: string
+  /**
+   * Техническая справка item'а. Живёт рядом с остальным переводом, а не в
+   * `item.docs`, потому что `docs` — поле схемы shadcn и уезжает в реестр:
+   * агент читает его на языке оригинала, человек на витрине — на своём.
+   */
+  docs?: string
   ai?: {
     summary?: string
     preserve?: string[]

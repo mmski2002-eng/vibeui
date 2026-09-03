@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Sidebar003Item = {
   label: string
@@ -10,10 +10,7 @@ export type Sidebar003Item = {
   icon: string
 }
 
-export type Sidebar003Props = Omit<
-  ComponentPropsWithoutRef<"nav">,
-  "children"
-> & {
+export type Sidebar003Props = Omit<ComponentProps<"nav">, "children"> & {
   items?: Sidebar003Item[]
   activeLabel?: string
   collapsedLabel?: string
@@ -35,7 +32,7 @@ const STYLES = `
 :where([data-vibeui-block="sidebar-003"]){
 --vibeui-sidebar-003-bg:transparent;
 --vibeui-sidebar-003-fg:light-dark(oklch(0.25 0.016 265),oklch(0.93 0.006 265));
---vibeui-sidebar-003-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-sidebar-003-muted:color-mix(in oklab,var(--vibeui-sidebar-003-fg) 68%,transparent);
 --vibeui-sidebar-003-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
 --vibeui-sidebar-003-button:light-dark(oklch(1 0 0),oklch(0.28 0.012 265));
 --vibeui-sidebar-003-hover:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.85 0.02 265 / 11%));
@@ -43,6 +40,9 @@ const STYLES = `
 --vibeui-sidebar-003-width:13rem;
 --vibeui-sidebar-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="sidebar-003"]{color-scheme:dark}
 [data-vibeui-block="sidebar-003"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:var(--vibeui-sidebar-003-width);box-sizing:border-box;
@@ -71,7 +71,7 @@ background:var(--vibeui-sidebar-003-button);color:var(--vibeui-sidebar-003-muted
 display:flex;align-items:center;gap:0.625rem;
 padding:0.4375rem 0.5rem;border-radius:0.5rem;
 color:var(--vibeui-sidebar-003-muted);text-decoration:none;
-font-size:0.875rem;line-height:1.3;white-space:nowrap;
+font-size:0.9375rem;line-height:1.3;white-space:nowrap;
 transition:background-color .16s ease,color .16s ease;
 }
 [data-vibeui-block="sidebar-003"] a:hover{background:var(--vibeui-sidebar-003-hover);color:var(--vibeui-sidebar-003-fg)}
@@ -166,6 +166,7 @@ export function Sidebar003({
       </style>
       <nav
         {...props}
+        data-slot="sidebar"
         data-vibeui-block="sidebar-003"
         data-collapsed={collapsed}
         aria-label={navLabel}

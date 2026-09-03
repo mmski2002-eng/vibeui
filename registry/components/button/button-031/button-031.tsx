@@ -3,13 +3,13 @@
 import { useRef, useState } from "react"
 import type {
   ChangeEvent,
-  ComponentPropsWithoutRef,
+  ComponentProps,
   CSSProperties,
   DragEvent,
 } from "react"
 
 export type Button031Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   label?: string
@@ -35,11 +35,14 @@ const STYLES = `
 :where([data-vibeui-block="button-031"]){
 --vibeui-button-031-bg:transparent;
 --vibeui-button-031-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.006 265));
---vibeui-button-031-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-button-031-muted:color-mix(in oklab,var(--vibeui-button-031-fg) 68%,transparent);
 --vibeui-button-031-border:light-dark(oklch(0.86 0.008 265),oklch(0.42 0.014 265));
 --vibeui-button-031-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
 --vibeui-button-031-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="button-031"]{color-scheme:dark}
 [data-vibeui-block="button-031"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:22rem;box-sizing:border-box;
@@ -201,6 +204,7 @@ export function Button031({
       </style>
       <div
         {...props}
+        data-slot="button"
         data-vibeui-block="button-031"
         className={className}
         style={palette}

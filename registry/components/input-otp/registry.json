@@ -88,6 +88,7 @@
         "i18n": {
           "en": {
             "description": "A one-time code in boxes: a pasted code spreads itself, and Backspace on an empty box steps back.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-otp-001-*. Client component: \"use client\". The boxes are an array of refs; typing a digit moves focus forward, Backspace on an empty box moves it back, and the arrows walk between boxes. A paste is intercepted on any box and spread across all of them. The first box carries autocomplete=\"one-time-code\".",
             "ai": {
               "summary": "A confirmation code field: one digit per box, whole-code paste, focus moving forward and back, arrow keys. Zero dependencies, one file.",
               "preserve": [
@@ -228,6 +229,7 @@
         "i18n": {
           "en": {
             "description": "Six boxes, one field: a transparent input sits on top of them, so pasting, auto-advance and OS code autofill all work by themselves.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-otp-002-*. Client component: \"use client\". The real input is stretched across the whole row (position:absolute; inset:0), fully transparent and takes the clicks, while the boxes only draw its value and carry pointer-events:none. That approach hands paste, auto-advance, Backspace, the arrows and undo back to the browser. The caret is drawn as a separate element, because a transparent field shows none.",
             "ai": {
               "summary": "A code field with one real input beneath six boxes. Paste, auto-advance, Backspace and undo come from the browser; the boxes only draw the value. Zero dependencies, one file.",
               "preserve": [
@@ -371,6 +373,7 @@
         "i18n": {
           "en": {
             "description": "A code with resend: while the countdown runs the button stays disabled, and the remaining time is both a bar and a spoken sentence.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-otp-003-*. Client component: \"use client\". The countdown runs from a timestamp (Date.now() + seconds*1000) rather than by adding seconds on every tick: timers throttle in a backgrounded tab and tick counting drifts. A resend increments the round counter, and the effect restarts from it. The bar width is the only inline value, because it is computed. The boxes are an array of refs with auto-advance and paste.",
             "ai": {
               "summary": "A confirmation code with a countdown and a resend button: timing from a timestamp, a progress bar and text for screen readers. Zero dependencies, one file.",
               "preserve": [
@@ -520,6 +523,7 @@
         "i18n": {
           "en": {
             "description": "A wrong code treated seriously: a short shake, a red border, a counter of remaining attempts and focus returning to the first box.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-otp-004-*. Client component: \"use client\". The shake is restarted by swapping the animation name: two identical sets of keyframes alternate by the failure counter, so a second failure in a row shakes the field too, while the boxes are not unmounted and focus is not lost. The prefers-reduced-motion rule turns the animation off entirely — the meaning is carried by colour and text. The message is announced through aria-live=\"assertive\".",
             "ai": {
               "summary": "A confirmation code with an honest failure state: shake, red border, attempt counter, boxes cleared and focus back at the start. Zero dependencies, one file.",
               "preserve": [
@@ -663,6 +667,7 @@
         "i18n": {
           "en": {
             "description": "A code split into groups by a dash: boxes inside a group share one border, and the dash is drawn — nobody types it.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-otp-005-*. Client component: \"use client\". The groups are given as an array of lengths, so \"3-3\", \"2-2-2\" and \"4-4\" are one and the same component. Inside a group the boxes are attached by collapsed borders, the corners are rounded only at the ends of the group, and the focused box is lifted with z-index. The dash is its own element with aria-hidden. A paste is intercepted on any box and spread across every group at once.",
             "ai": {
               "summary": "A grouped confirmation code: attached boxes inside each group, a drawn dash between them, whole-code paste and keyboard navigation. Zero dependencies, one file.",
               "preserve": [
@@ -801,6 +806,7 @@
         "i18n": {
           "en": {
             "description": "A code on one line without boxes: monospaced letter spacing, a dotted underlay for the full length, and a reveal button.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-otp-006-*. Client component: \"use client\". This is an ordinary input with a monospaced font and letter-spacing, and the room for the digits not yet typed is held by an absolutely positioned dotted underlay with pointer-events:none — so the line does not grow as you type and does not push the reveal button. The field type switches between password and text, and the button state is announced through aria-pressed.",
             "ai": {
               "summary": "A single-line confirmation code: monospaced spacing instead of boxes, a dotted underlay holding the width, a reveal button and a counter. Zero dependencies, one file.",
               "preserve": [
@@ -941,6 +947,7 @@
         "i18n": {
           "en": {
             "description": "There is no confirm button: the last digit starts the check itself, the boxes lock and a progress bar appears.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-otp-007-*. Client component: \"use client\". Typing and pasting both go through a single push step, and the submit starts exactly there: the code can be completed by typing, by pasting or by editing a middle box, and every path has to lead to the same action. While the check runs the boxes are disabled — which is also the double-submit protection — a bar runs on top, and the state is announced through aria-live. After a success an \"enter again\" button becomes available: without it the field would stay locked forever.",
             "ai": {
               "summary": "A self-submitting code: verification starts on the last digit, the boxes lock, a progress bar runs, and the code can be re-entered afterwards. Zero dependencies, one file.",
               "preserve": [

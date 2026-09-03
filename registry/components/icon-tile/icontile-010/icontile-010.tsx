@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Icontile010Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Icontile010Props = Omit<ComponentProps<"div">, "children"> & {
   value?: number
   label?: string
   tone?: "neutral" | "accent" | "success" | "warning" | "danger"
@@ -20,17 +17,21 @@ const CIRCUMFERENCE = 2 * Math.PI * RADIUS
 // окружности. Значение объявлено через role="progressbar": заполнение кольца
 // цветом — это иллюстрация, а не замена доступного состояния прогресса.
 const STYLES = `
+/* Без container-type: плитка размером с содержимое, а контейнер отвязал бы
+   её ширину от кольца и подписи — во флексовом кадре осталось бы ноль. */
 :where([data-vibeui-block="icontile-010"]){
-container-type:inline-size;
 --vibeui-icontile-010-size:3.75rem;
 --vibeui-icontile-010-hue:262;
 --vibeui-icontile-010-chroma:0.05;
 --vibeui-icontile-010-fg:light-dark(oklch(0.26 0.014 265),oklch(0.93 0.006 265));
---vibeui-icontile-010-muted:light-dark(oklch(0.52 0.014 265),oklch(0.71 0.012 265));
+--vibeui-icontile-010-muted:color-mix(in oklab,var(--vibeui-icontile-010-fg) 68%,transparent);
 --vibeui-icontile-010-track:light-dark(oklch(0.9 0.012 var(--vibeui-icontile-010-hue)),oklch(0.36 0.016 var(--vibeui-icontile-010-hue)));
 --vibeui-icontile-010-arc:light-dark(oklch(0.5 calc(var(--vibeui-icontile-010-chroma) * 4) var(--vibeui-icontile-010-hue)),oklch(0.75 calc(var(--vibeui-icontile-010-chroma) * 3.4) var(--vibeui-icontile-010-hue)));
 --vibeui-icontile-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="icontile-010"]{color-scheme:dark}
 [data-vibeui-block="icontile-010"]{
 display:inline-flex;flex-direction:column;align-items:center;gap:0.5rem;
 font-family:var(--vibeui-icontile-010-font);
@@ -65,9 +66,6 @@ margin:0;font-size:0.75rem;color:var(--vibeui-icontile-010-muted);text-align:cen
 [data-vibeui-block="icontile-010"][data-tone="success"]{--vibeui-icontile-010-hue:152}
 [data-vibeui-block="icontile-010"][data-tone="warning"]{--vibeui-icontile-010-hue:75}
 [data-vibeui-block="icontile-010"][data-tone="danger"]{--vibeui-icontile-010-hue:25}
-@container (max-width: 72px){
-[data-vibeui-block="icontile-010"] [data-part="label"]{display:none}
-}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="icontile-010"] [data-part="value"]{transition:none!important}
 }
@@ -98,6 +96,7 @@ export function Icontile010({
       </style>
       <div
         {...props}
+        data-slot="icon-tile"
         data-vibeui-block="icontile-010"
         data-tone={tone}
         data-size={size}

@@ -1,14 +1,10 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import type {
-  ComponentPropsWithoutRef,
-  CSSProperties,
-  KeyboardEvent,
-} from "react"
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Button022Props = Omit<
-  ComponentPropsWithoutRef<"button">,
+  ComponentProps<"button">,
   "children" | "onClick"
 > & {
   label?: string
@@ -149,6 +145,7 @@ export function Button022({
       <button
         {...props}
         type={type}
+        data-slot="button"
         data-vibeui-block="button-022"
         data-state={state}
         className={className}

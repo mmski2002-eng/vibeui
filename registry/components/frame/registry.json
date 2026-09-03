@@ -83,6 +83,7 @@
         "i18n": {
           "en": {
             "description": "A demo frame: a suggested browser or phone shell around a slot, without faking the interface down to tabs and buttons.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-frame-001-* variables. Server rendered: no hooks. The content arrives through children, so an image, an iframe or another block goes inside. The phone variant caps the width and increases the rounding, and the plain variant leaves a bare border.",
             "ai": {
               "summary": "A frame around a demo: a browser with an address strip, a phone with heavy rounding, or a plain border. Caption below. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -215,6 +216,7 @@
         "i18n": {
           "en": {
             "description": "An embed frame with a fixed aspect ratio: the space for the video is reserved before the iframe loads, so the page never jumps.",
+            "docs": "A server component, no hooks. The aspect ratio is declared by the --vibeui-frame-002-ratio variable on the frame itself, and the 4:3, 1:1 and 21:9 variants override it through the data-ratio attribute — so the proportion is set by one line rather than by a set of classes. A nested iframe, img or video is stretched by the rule for :where(iframe,img,video) to inset:0: without it an iframe keeps its own 150px of height and the frame's proportion stops meaning anything. The stub with the triangle is drawn with borders through ::before, to avoid pulling in an svg. The frame lays no panel under itself: it sits on the page background, while the dark screen inside stays dark in both themes — it is a screen, not the surface of a card.",
             "ai": {
               "summary": "A video embed frame: the aspect ratio reserves space before loading and the nested iframe stretches to fill the frame. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -343,6 +345,7 @@
         "i18n": {
           "en": {
             "description": "A browser window with a tab and an address bar around the slot, so the reader instantly reads the content as a page rather than a picture.",
+            "docs": "A server component, no hooks. The window chrome is assembled from three strips: the tab, rounded only at the top, the address bar, and the body with the slot. The lock in the address bar is drawn with a block and ::before rather than an emoji: an emoji changes shape from system to system and disturbs the vertical rhythm of the line. The address is truncated with an ellipsis (overflow + text-overflow), otherwise a long URL stretches the window and breaks the layout on a phone. The chrome is marked aria-hidden: for a screen reader it is decoration, not navigation. The window lays no panel under itself: the body is transparent and sits on the page background, while the chrome strips are set as lightness pairs through light-dark() and follow the surrounding color-scheme.",
             "ai": {
               "summary": "A browser window frame: a tab, an address bar with a lock and a slot for the screenshot. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -479,6 +482,7 @@
         "i18n": {
           "en": {
             "description": "A phone frame for a screenshot: the screen is set by a 9 / 19.5 ratio, so an image of any size fits without cropping or black bars.",
+            "docs": "A server component, no hooks. The screen holds aspect-ratio 9 / 19.5 instead of a fixed height, and the body is capped at width:min(100%, 15rem) — the frame shrinks on a phone but does not spread out on a desktop. The island is taken out of the flow into absolute: in the flow it would push the status bar down and eat the top of the screenshot. The signal and the battery are drawn with blocks and a gradient, with no icon font. The body and the outline are set as lightness pairs through light-dark() and follow the surrounding color-scheme, while the screen is transparent by default: under the screenshot the page background shows through rather than a panel of the component's own. The status bar is marked aria-hidden — it is mockup decoration.",
             "ai": {
               "summary": "A phone frame: a 9 / 19.5 screen ratio, a status bar with an island and a slot for the screenshot. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -613,6 +617,7 @@
         "i18n": {
           "en": {
             "description": "A laptop frame with a 16 / 10 screen and a clip-path trapezoid base: the body tapers downwards without a single image and scales with the screen.",
+            "docs": "A server component, no hooks. The lid is an ordinary block rounded at the top, and the screen holds aspect-ratio 16 / 10 (the standard of a laptop matrix; 16 / 9 reads as a television). The base is drawn with clip-path:polygon and therefore tapers downwards without a second rectangle and without images; it is slightly wider than the lid, which is what gives the silhouette of a device. The body finish is switched by the data-tone attribute: silver and graphite change three palette variables at once. The screen is transparent by default: the page background shows through it, while the body, the outline and the typography are set as lightness pairs through light-dark() and follow the surrounding color-scheme. The graphite finish stays fixed — it is a body finish, not a theme.",
             "ai": {
               "summary": "A laptop frame: a lid with a 16 / 10 screen and a clip-path trapezoid base. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -765,6 +770,7 @@
         "i18n": {
           "en": {
             "description": "A frame with a numbered caption below the content: the figure number, the text and the source line sit on three levels, so the caption reads instead of blurring together.",
+            "docs": "A server component, no hooks. The markup is a figure with a figcaption inside rather than an image and a paragraph next to each other: only that way is the link between the image and the caption visible to a screen reader. The figure number is moved into a separate element with white-space:nowrap, so \"Fig. 12\" is not broken across lines; the caption text and the source line differ in type size and colour, otherwise everything runs together into a single sentence. The media slot holds a 16 / 10 ratio so that the caption does not travel with images of different heights. The alignment is switched by the data-align attribute. The frame lays no panel under itself: it sits on the page background, and the palette is set as lightness pairs through light-dark() and follows the surrounding color-scheme.",
             "ai": {
               "summary": "A captioned frame: figure number, caption text and source line as three rows inside figcaption. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -913,6 +919,7 @@
         "i18n": {
           "en": {
             "description": "A terminal frame with a title bar, dots and monospaced command output: a CLI scenario shown without a real console screenshot.",
+            "docs": "A server component, no hooks. The window chrome is the dots and the title — the title carries meaningful text and is not hidden from the screen reader, while the dots are marked aria-hidden. lines takes an array of { text, type }: the command type adds the prompt, output prints the text without it. The cursor is a block with the vibeui-frame-007-blink CSS blink animation, which is switched off through prefers-reduced-motion. The children slot replaces the whole output block, cursor included.",
             "ai": {
               "summary": "A terminal frame: a title bar with dots, monospaced command output and a blinking cursor. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1056,6 +1063,7 @@
         "i18n": {
           "en": {
             "description": "A tablet in landscape orientation for a UI screenshot: the screen holds a 4 / 3 ratio, so an image of any width fits without cropping.",
+            "docs": "A server component, no hooks. The body is a block with an outline and inner padding, and the screen holds aspect-ratio 4 / 3 with overflow:hidden so that a screenshot with corners of its own does not spill past the rounding. The camera is a dot in absolute on the side edge of the body: in landscape orientation it moves away from the top edge, as on a real tablet. The home bar is a thin line at the bottom of the screen, a mockup detail without a physical button. The caption is an ordinary figcaption under the figure. The body and the outline are set as lightness pairs through light-dark() and follow the surrounding color-scheme, while the screen is transparent by default: the page background shows through under the screenshot.",
             "ai": {
               "summary": "A landscape tablet frame: a 4 / 3 screen, a camera on the side edge, a slot for the screenshot. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1196,6 +1204,7 @@
         "i18n": {
           "en": {
             "description": "A map frame with a pin and a scale bar over a placeholder street grid: a ready template for an address or geolocation preview.",
+            "docs": "A server component, no hooks. The map is a placeholder grid made of two repeating-linear-gradient layers over the land colour, entirely decorative and replaced by the content of the children slot. The pin is drawn as a teardrop: a circle with one corner cut off (border-radius) is turned through transform:rotate(-45deg), with a small circle of the background colour inside, over the original rotation. The scale bar is three alternating segments and a caption in the corner of the map. Both the pin and the bar are wrapped in a container with aria-label, and the visual details inside are hidden with aria-hidden so that the text is not announced twice. The palette is set as lightness pairs through light-dark() and follows the surrounding color-scheme; the land tint stays the component's own — it is part of the map drawing, not a panel under the component.",
             "ai": {
               "summary": "A map frame: a labeled pin, a scale bar and a placeholder street grid instead of a real map. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1332,6 +1341,7 @@
         "i18n": {
           "en": {
             "description": "A collage of three overlapping frames with percentage-based offset and rotation: a technique for covers and hero sections when one image is not enough.",
+            "docs": "A server component, no hooks. The three cards — data-part=\"card\" with data-role back, middle and front — are placed absolute inside a stage with aspect-ratio 6 / 5. The offsets (top, left), the width and the rotation are set in percent and degrees on each card separately, and the z-index grows from the back frame to the front one. At a narrow container width @container reduces the offsets and the rotations so that the collage does not run past the stage. An empty slot shows the \"Frame N\" stub caption. The palette is set as lightness pairs through light-dark() and follows the surrounding color-scheme; the paper of the frames stays a surface of its own — it is the face of a collage card, not a panel under the component.",
             "ai": {
               "summary": "A collage of three overlapping frames: offsets, rotation and stacking order are set in percent and z-index. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1464,6 +1474,7 @@
         "i18n": {
           "en": {
             "description": "A frame with a 3D screenshot tilt: perspective and rotateX/rotateY simulate a side view of the screen — a technique for product hero sections.",
+            "docs": "A server component, no hooks. The card inside a stage with perspective is turned through rotateX/rotateY; the direction of the turn is set by data-tilt with the values left or right. On hover over the stage the turn levels out through the CSS :hover pseudo-class — the effect is achieved without JS. At a narrow width @container reduces the angle of the turn so that the card does not run past the stage. The palette is set as lightness pairs through light-dark() and follows the surrounding color-scheme; the surface of the frame stays its own — the depth of the turn rests on it.",
             "ai": {
               "summary": "A frame with a 3D screenshot tilt: perspective and rotateX/rotateY simulate a side view, the tilt eases on hover. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1614,6 +1625,7 @@
         "i18n": {
           "en": {
             "description": "A before/after comparison as two frames with a vertical divider and labels — a technique for showing the result of a change.",
+            "docs": "A server component, no hooks. The two slots before and after each take 50% of the stage width in a flex layout, separated by a line and a decorative handle at the centre. The beforeLabel and afterLabel captions are real text in the corners, not an overlay on the picture. At a narrow width @container switches the panes into a column and the divider becomes horizontal. The frame lays no panel under itself: it sits on the page background, and the palette is set as lightness pairs through light-dark() and follows the surrounding color-scheme.",
             "ai": {
               "summary": "A before/after comparison as two frames with a divider and labels at the center. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1772,6 +1784,7 @@
         "i18n": {
           "en": {
             "description": "An app frame with a sidebar navigation panel and a header above the work area — a layout for dashboard and SaaS interface screenshots.",
+            "docs": "A server component, no hooks. The shell is a flex of an aside panel with a nav/ul list of items and a main area with a header and a work body. The active menu item is marked aria-current=\"page\" and highlighted with a background. The children slot replaces only the work body under the header; the panel and the header remain an unchanged part of the shell. At a narrow width @container narrows the panel and the grid of stubs becomes single-column.",
             "ai": {
               "summary": "An app frame: a sidebar navigation panel with an active item and a header above the work area. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1923,6 +1936,7 @@
         "i18n": {
           "en": {
             "description": "An email message frame: a sender line with an initial avatar, subject and message body — a layout for email newsletter previews.",
+            "docs": "A server component, no hooks. The meta line carries the initial avatar (the first letter of sender, computed on the server), the sender's name and address, and the date. The subject is a separate h2, larger than the body of the message. The children slot replaces the body of the message entirely, instead of the default lines. At a narrow width @container wraps the meta line and the subject shrinks slightly.",
             "ai": {
               "summary": "An email frame: a sender line with an initial avatar, the subject as a separate line and the message body. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -2095,6 +2109,7 @@
         "i18n": {
           "en": {
             "description": "A video player frame: a dark poster, a centered play button and a timeline track with the watched portion filled in.",
+            "docs": "A server component, no hooks. The poster of the clip sits in aspect-ratio 16 / 9 and holds its space before the media loads. The play button and the title sit over the scrim at the bottom, which guarantees the contrast of the text on any poster. The timeline is a track with a filled share: the percentage is passed through the progress prop and expressed by the only inline style in the file, while the rest of the markup rests on CSS variables.",
             "ai": {
               "summary": "A video player frame: a poster, a centered play button and a timeline track with the watched share filled in. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -2247,6 +2262,7 @@
         "i18n": {
           "en": {
             "description": "A smart watch frame with a round screen: the strap and crown are drawn with CSS clip-path rather than an image, the dial content passes through children.",
+            "docs": "A server component, no hooks. The case is a circle with inner padding and a screen slot, also a circle, so that the content of the dial does not spill past the rounding. The strap above and below the case is drawn with clip-path:polygon — the same technique as the base of the laptop in frame-005, without a second image. The crown on the side is a small rectangle in absolute beyond the circle. The case is light metal: a dark silhouette would dissolve into the dark catalogue background, while the dark screen holds the contrast of the text on it.",
             "ai": {
               "summary": "A smart watch frame: a round screen in a metal case, a clip-path strap and a side crown. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -2401,6 +2417,7 @@
         "i18n": {
           "en": {
             "description": "A presentation slide frame with a 16 / 9 field and a caption: the row below counts the slide number and draws dots for the position in the deck.",
+            "docs": "A server component, no hooks. The field holds aspect-ratio 16 / 9 regardless of the slot content, so the frame does not change proportion from slide to slide. The row under the field shows the textual \"index / total\" counter — ordinary text for a screen reader — and a row of indicator dots, marked aria-hidden as a decorative duplicate of the same counter. The number of dots is capped at eight: a large deck is drawn by the same counter without a ribbon of fifty dots.",
             "ai": {
               "summary": "A presentation slide frame: a 16 / 9 field, a slide counter row and dots for the position in the deck. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -2555,6 +2572,7 @@
         "i18n": {
           "en": {
             "description": "A chat frame: a header with the contact, a feed of message bubbles and an input field at the bottom — a layout for messenger conversation previews.",
+            "docs": "A server component, no hooks. Your own message is aligned to the right and coloured with the accent, someone else's to the left on a neutral background; the tail of the bubble is cut off by the rounding on the same side as the alignment, so the direction reads without a sender caption on every line. The feed is wrapped in role=\"log\" with an aria-label carrying the name of the contact. The input field and the send button are real disabled input and button elements: they honestly tell assistive technology that this is a mockup rather than a working form, and they require no client JS.",
             "ai": {
               "summary": "A chat frame: a contact header, message bubbles aligned left and right and an input field at the bottom. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -2687,6 +2705,7 @@
         "i18n": {
           "en": {
             "description": "A frame with a gradient border and a soft glow beneath it: a solid fill holds the middle of the border, a blurred layer behind creates the backlight.",
+            "docs": "A server component, no hooks. The gradient border is drawn without border: the outer block is filled with a linear gradient and holds a padding of 2px, while the inner block covers the middle with a solid fill, leaving the gradient only along the edge. The glow is a separate layer behind the frame with two radial gradients and a large blur, shifted down and enlarged beyond the bounds of the frame, so that it reads as a backlight from under the frame. The barely noticeable pulse of the glow is CSS keyframes, switched off through prefers-reduced-motion.",
             "ai": {
               "summary": "A frame with a gradient border and a soft glow underneath: a fill holds the border's middle, a blurred layer behind reads as a backlight. Zero dependencies, one file, no client JS.",
               "preserve": [

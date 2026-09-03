@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties, DragEvent } from "react"
+import type { ComponentProps, CSSProperties, DragEvent } from "react"
 
 export type Kanban001Card = {
   id: string
@@ -11,7 +11,7 @@ export type Kanban001Card = {
 }
 
 export type Kanban001Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   columns?: string[]
@@ -37,12 +37,15 @@ const STYLES = `
 --vibeui-kanban-001-bg:transparent;
 --vibeui-kanban-001-card:light-dark(oklch(1 0 0),oklch(0.27 0.012 265));
 --vibeui-kanban-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
---vibeui-kanban-001-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-kanban-001-muted:color-mix(in oklab,var(--vibeui-kanban-001-fg) 68%,transparent);
 --vibeui-kanban-001-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-kanban-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.15 262));
 --vibeui-kanban-001-shadow:light-dark(oklch(0.2 0.02 265 / 6%),oklch(0 0 0 / 32%));
 --vibeui-kanban-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="kanban-001"]{color-scheme:dark}
 [data-vibeui-block="kanban-001"]{
 display:grid;grid-auto-flow:column;grid-auto-columns:minmax(11rem,1fr);gap:0.625rem;
 width:100%;box-sizing:border-box;padding:0.75rem;overflow-x:auto;
@@ -181,6 +184,7 @@ export function Kanban001({
       </style>
       <div
         {...props}
+        data-slot="kanban"
         data-vibeui-block="kanban-001"
         className={className}
         style={palette}

@@ -1,8 +1,8 @@
 import { Fragment } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Chart021Props = Omit<
-  ComponentPropsWithoutRef<"figure">,
+  ComponentProps<"figure">,
   "children" | "title"
 > & {
   title?: string
@@ -34,12 +34,15 @@ const STYLES = `
 :where([data-vibeui-block="chart-021"]){
 --vibeui-chart-021-bg:transparent;
 --vibeui-chart-021-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-chart-021-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-chart-021-muted:color-mix(in oklab,var(--vibeui-chart-021-fg) 68%,transparent);
 --vibeui-chart-021-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-chart-021-empty:light-dark(oklch(0.96 0.003 265),oklch(0.27 0.008 265));
 --vibeui-chart-021-accent:light-dark(oklch(0.52 0.16 245),oklch(0.68 0.15 245));
 --vibeui-chart-021-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="chart-021"]{color-scheme:dark}
 [data-vibeui-block="chart-021"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:30rem;box-sizing:border-box;margin:0;padding:0.875rem;
@@ -170,6 +173,7 @@ export function Chart021({
       </style>
       <figure
         {...props}
+        data-slot="chart"
         data-vibeui-block="chart-021"
         className={className}
         style={palette}

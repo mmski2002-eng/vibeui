@@ -1,10 +1,10 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Toggle011Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   label?: string
@@ -117,6 +117,7 @@ export function Toggle011({
       </style>
       <div
         {...props}
+        data-slot="toggle"
         data-vibeui-block="toggle-011"
         data-theme={pressed ? "dark" : "light"}
         className={className}

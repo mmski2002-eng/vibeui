@@ -53,6 +53,7 @@
         "i18n": {
           "en": {
             "description": "A light footer: brand line, three link columns and a legal row. A dark slab here would fight the closing call-to-action.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-footer-001-* variables. The layout is computed from the block's own width: two columns of links, then three, then the brand moves into a separate column on the left. Each link group is a <nav> with its own label, so a screen reader lists them separately rather than as one undifferentiated run of twenty links.",
             "ai": {
               "summary": "A site footer: the mark, name and a single line about the product on the left, link columns on the right, copyright and legal links along the bottom. Light on purpose — a dark footer right after a dark CTA gives two heavy blocks in a row. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
@@ -274,6 +275,7 @@
         "i18n": {
           "en": {
             "description": "A dark four-column footer: every link group is its own navigation with a label, and the bottom row carries a live service-status line.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-footer-002-* variables. A server component. Each link group is a separate <nav> with an aria-label, otherwise a screen reader reads twenty links in a row as one undifferentiated run. The layout is computed from the block's own width: two columns, then four, then the brand moves into a separate column on the left. The dot on the status line pulses through box-shadow in keyframes and is switched off under prefers-reduced-motion.",
             "ai": {
               "summary": "A dark footer: the mark, the name and a sentence about the product on the left, four columns of links on the right, and a bottom row with the copyright and a status link with a pulsing dot. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
@@ -514,6 +516,7 @@
         "i18n": {
           "en": {
             "description": "A footer with a signup: the form takes the whole top row, the field has a visible label, honest consent sits next to it, and the link columns run below.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-footer-003-* variables. A server component: the field is uncontrolled, the form is submitted by a plain POST and works before hydration. The form is placed in the top row and set off by a rule: if the business needs the subscription, it must not be squeezed in beside the links. The field label is visible and tied through htmlFor rather than hidden in the placeholder. From 46rem the form splits into two columns and the field and the button stand in one row.",
             "ai": {
               "summary": "A newsletter footer: a heading, an explanation and a form with a visible field label and a consent line on top, then four columns of links and a copyright row. The form is real and works without client code. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -747,6 +750,7 @@
         "i18n": {
           "en": {
             "description": "A minimal single-line footer: brand, copyright, three utility links and a back-to-top link. For short pages where four columns look like a borrowed part.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-footer-004-* variables. A server component. All the content sits in a single flex row: at a narrow width it wraps, from 40rem of the block's own width it runs strictly in one line. The back-to-top link is pushed over with margin-left:auto and is not hidden on a phone: on a long page it is the only quick way back. The arrow is drawn with two borders; there is no separate icon.",
             "ai": {
               "summary": "A single-line footer: a dot mark with the name, the copyright, three utility links and a back-to-top link on the right. For pages short enough that a large footer looks out of place. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
@@ -913,6 +917,7 @@
         "i18n": {
           "en": {
             "description": "A sitemap footer: six link groups and a language row. On a phone the groups collapse; on the wide layout the headings become inert.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-footer-005-* variables. A server component. Each group is an open <details>: on a phone the sitemap can be collapsed instead of scrolling through a screen as long as the page, while from 46rem the heading gets pointer-events:none, the arrow is hidden and the groups simply stand as columns. The markup stays the same throughout, with no duplicated nodes for different widths. The languages are links with a lang attribute and aria-current on the current one.",
             "ai": {
               "summary": "A footer with a full sitemap: six link groups, a row of language versions and a bottom row with registration details. On a phone the groups collapse through native details; on the wide layout they stand as columns. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
@@ -1165,6 +1170,7 @@
         "i18n": {
           "en": {
             "description": "A footer with contacts and social links: the phone and email are real tel: and mailto: links with visible values, and the address sits in an address tag.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-footer-006-* variables. A server component. The contacts are marked up as a definition list, <dl>: the label and the value are a pair, not two independent paragraphs. The phone and the email stay real tel: and mailto: links with a visible value, because that is exactly what the footer is opened for. The address is wrapped in <address>. The social marks are lettered tiles with an aria-label: the block has no right to pull in an icon set.",
             "ai": {
               "summary": "A contacts footer: the name, address and opening hours on the left, a list of contact links in the middle, social tiles on the right and a legal line at the bottom. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
@@ -1361,6 +1367,7 @@
         "i18n": {
           "en": {
             "description": "A storefront footer: link columns, a delivery strip and a row of payment methods above the copyright — where people look for it before committing to an order.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-footer-007-* variables. A server component. The payment methods are text tiles in a <ul> list, each with an aria-label, rather than logos of the payment systems: logos require a licence, change without warning and make the page heavier. The payment row stands as a separate section with a label and is set off by a rule, because people scroll down to it before checking out. The column layout is computed from the block's own width.",
             "ai": {
               "summary": "An online store footer: four columns of links, a strip with delivery terms, a separate payment-methods section with a note about the bank's secure page, and registration details at the bottom. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
@@ -1620,6 +1627,7 @@
         "i18n": {
           "en": {
             "description": "A legal footer: registration details as a definition list, required documents in their own navigation, a disclaimer and a separate cookie-settings link.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-footer-008-* variables. A server component. The registration details are marked up as a definition list, <dl>: they are “what it is — value” pairs, and a screen reader has to read them as pairs rather than as a continuous string of digits. Numeric values are set in tabular-nums, so the column of figures does not dance. The cookie settings are pulled out as a separate link in the bottom row: the regulations require consent to be as simple to withdraw as it was to give, and this link must not be buried in the text.",
             "ai": {
               "summary": "A legal footer: the company name and registration details as pairs on the left, the list of required documents on the right, a disclaimer below and a bottom row with the copyright and a cookie-settings link. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [

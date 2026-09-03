@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Iconstack006Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Iconstack006Props = Omit<ComponentProps<"div">, "children"> & {
   title?: string
   services?: string[]
   max?: number
@@ -30,10 +27,13 @@ const STYLES = `
 --vibeui-iconstack-006-ring:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
 --vibeui-iconstack-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.01 265));
 --vibeui-iconstack-006-fg:light-dark(oklch(0.26 0.014 265),oklch(0.94 0.005 265));
---vibeui-iconstack-006-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-iconstack-006-muted:color-mix(in oklab,var(--vibeui-iconstack-006-fg) 68%,transparent);
 --vibeui-iconstack-006-shadow:light-dark(oklch(0.2 0.02 265 / 16%),oklch(0 0 0 / 34%));
 --vibeui-iconstack-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="iconstack-006"]{color-scheme:dark}
 [data-vibeui-block="iconstack-006"]{
 display:flex;flex-direction:column;gap:0.625rem;
 width:100%;max-width:22rem;box-sizing:border-box;padding:0.875rem;
@@ -57,8 +57,8 @@ width:var(--vibeui-iconstack-006-size);height:var(--vibeui-iconstack-006-size);
 border-radius:0.625rem;
 border:2px solid var(--vibeui-iconstack-006-ring);
 box-shadow:0 1px 2px var(--vibeui-iconstack-006-shadow);
-background:oklch(0.9 0.07 var(--vibeui-iconstack-006-hue,265));
-color:oklch(0.32 0.13 var(--vibeui-iconstack-006-hue,265));
+background:light-dark(oklch(0.9 0.07 var(--vibeui-iconstack-006-hue,265)),oklch(0.36 0.08 var(--vibeui-iconstack-006-hue,265)));
+color:light-dark(oklch(0.32 0.13 var(--vibeui-iconstack-006-hue,265)),oklch(0.89 0.09 var(--vibeui-iconstack-006-hue,265)));
 font-size:0.75rem;font-weight:750;line-height:1;
 }
 [data-vibeui-block="iconstack-006"] [data-part="caption"]{
@@ -170,6 +170,7 @@ export function Iconstack006({
       </style>
       <div
         {...props}
+        data-slot="icon-stack"
         data-vibeui-block="iconstack-006"
         className={className}
         style={palette}

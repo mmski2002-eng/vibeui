@@ -19,6 +19,11 @@ export type Menubar008Props = {
   notifications?: string[]
   /** Пункты меню профиля. */
   profileItems?: string[]
+  /**
+   * Приставка к id меню и имени якоря. Двум строкам меню на одной странице
+   * нужны разные приставки, иначе кнопка одной откроет меню другой.
+   */
+  group?: string
   /** Пусто — подложки нет, строка лежит прямо на фоне страницы. */
   background?: string
   accent?: string
@@ -35,7 +40,7 @@ const STYLES = `
 --vibeui-menubar-008-bg:transparent;
 --vibeui-menubar-008-panel:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
 --vibeui-menubar-008-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
---vibeui-menubar-008-muted:light-dark(oklch(0.58 0.014 265),oklch(0.68 0.012 265));
+--vibeui-menubar-008-muted:color-mix(in oklab,var(--vibeui-menubar-008-fg) 68%,transparent);
 --vibeui-menubar-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-menubar-008-hover:light-dark(oklch(0.55 0.02 265 / 10%),oklch(0.88 0.02 265 / 14%));
 --vibeui-menubar-008-badge:light-dark(oklch(0.58 0.2 26),oklch(0.66 0.18 26));
@@ -45,6 +50,9 @@ const STYLES = `
 --vibeui-menubar-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="menubar-008"]{color-scheme:dark}
 [data-vibeui-block="menubar-008"]{
 box-sizing:border-box;width:100%;max-width:38rem;
 font-family:var(--vibeui-menubar-008-font);color:var(--vibeui-menubar-008-fg);
@@ -165,6 +173,7 @@ export function Menubar008({
   notificationsTitle = "Непрочитанные",
   notifications = NOTIFICATIONS,
   profileItems = PROFILE_ITEMS,
+  group = "vibeui-menubar-008",
   background = "",
   accent,
   className,
@@ -194,13 +203,14 @@ export function Menubar008({
         {STYLES}
       </style>
       <div
+        data-slot="menubar"
         data-vibeui-block="menubar-008"
         className={className}
         style={palette}
       >
         <div data-part="shell" role="menubar" aria-label={menubarLabel}>
           {menus.map((menu, index) => {
-            const id = `vibeui-menubar-008-${index}`
+            const id = `${group}-${index}`
             const anchor = {
               "--vibeui-menubar-008-anchor": `--${id}`,
             } as CSSProperties
@@ -236,7 +246,7 @@ export function Menubar008({
               data-part="slot"
               style={
                 {
-                  "--vibeui-menubar-008-anchor": "--vibeui-menubar-008-bell",
+                  "--vibeui-menubar-008-anchor": `--${group}-bell`,
                 } as CSSProperties
               }
             >
@@ -249,7 +259,7 @@ export function Menubar008({
                   "{count}",
                   String(unread),
                 )}
-                popoverTarget="vibeui-menubar-008-bell-menu"
+                popoverTarget={`${group}-bell-menu`}
               >
                 <span data-part="bell-glyph" aria-hidden="true">
                   ✉
@@ -259,7 +269,7 @@ export function Menubar008({
                 </span>
               </button>
               <div
-                id="vibeui-menubar-008-bell-menu"
+                id={`${group}-bell-menu`}
                 data-part="menu"
                 data-align="end"
                 popover="auto"
@@ -282,7 +292,7 @@ export function Menubar008({
               data-part="slot"
               style={
                 {
-                  "--vibeui-menubar-008-anchor": "--vibeui-menubar-008-user",
+                  "--vibeui-menubar-008-anchor": `--${group}-user`,
                 } as CSSProperties
               }
             >
@@ -291,7 +301,7 @@ export function Menubar008({
                 data-part="trigger"
                 role="menuitem"
                 aria-haspopup="menu"
-                popoverTarget="vibeui-menubar-008-user-menu"
+                popoverTarget={`${group}-user-menu`}
               >
                 <span data-part="face" aria-hidden="true">
                   {initials}
@@ -299,7 +309,7 @@ export function Menubar008({
                 <span data-part="who">{userName}</span>
               </button>
               <div
-                id="vibeui-menubar-008-user-menu"
+                id={`${group}-user-menu`}
                 data-part="menu"
                 data-align="end"
                 popover="auto"

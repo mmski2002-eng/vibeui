@@ -68,6 +68,7 @@ display:grid;place-items:center;width:1.125rem;height:1.125rem;
 border-radius:9999px;background:var(--vibeui-avatar-033-live);
 box-shadow:0 0 0 0.125rem var(--vibeui-avatar-033-bg);
 }
+/* Знак микрофона белый в обеих темах: он лежит на насыщенном значке, а не на карточке. */
 [data-vibeui-block="avatar-033"] [data-part="mic"]::before{
 content:"";width:0.25rem;height:0.4375rem;border-radius:9999px;background:oklch(1 0 0);
 }

@@ -1,10 +1,10 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Button050Props = Omit<
-  ComponentPropsWithoutRef<"button">,
+  ComponentProps<"button">,
   "children" | "onChange"
 > & {
   label?: string
@@ -30,6 +30,9 @@ const STYLES = `
 --vibeui-button-050-size:2.75rem;
 --vibeui-button-050-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="button-050"]{color-scheme:dark}
 [data-vibeui-block="button-050"]{
 position:relative;appearance:none;cursor:pointer;box-sizing:border-box;
 display:inline-flex;align-items:center;justify-content:center;
@@ -134,6 +137,7 @@ export function Button050({
       <button
         {...props}
         type={type}
+        data-slot="button"
         data-vibeui-block="button-050"
         className={className}
         style={palette}

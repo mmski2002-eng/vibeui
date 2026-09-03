@@ -1,21 +1,14 @@
 "use client"
 
 import { useId, useState } from "react"
-import type {
-  ComponentPropsWithoutRef,
-  CSSProperties,
-  KeyboardEvent,
-} from "react"
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Command004Command = {
   label: string
   children?: string[]
 }
 
-export type Command004Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Command004Props = Omit<ComponentProps<"div">, "children"> & {
   commands?: Command004Command[]
   placeholder?: string
   /** Подсказка поля на втором уровне. */
@@ -52,12 +45,15 @@ const STYLES = `
 :where([data-vibeui-block="command-004"]){
 --vibeui-command-004-bg:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
 --vibeui-command-004-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.006 265));
---vibeui-command-004-muted:light-dark(oklch(0.57 0.014 265),oklch(0.68 0.012 265));
+--vibeui-command-004-muted:color-mix(in oklab,var(--vibeui-command-004-fg) 68%,transparent);
 --vibeui-command-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
 --vibeui-command-004-accent:light-dark(oklch(0.55 0.2 300),oklch(0.76 0.14 300));
 --vibeui-command-004-shadow:light-dark(oklch(0.2 0.03 265 / 60%),oklch(0.04 0.015 265 / 70%));
 --vibeui-command-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="command-004"]{color-scheme:dark}
 [data-vibeui-block="command-004"]{
 display:block;box-sizing:border-box;width:100%;max-width:24rem;overflow:hidden;
 background:var(--vibeui-command-004-bg);color:var(--vibeui-command-004-fg);
@@ -259,6 +255,7 @@ export function Command004({
       </style>
       <div
         {...props}
+        data-slot="command"
         data-vibeui-block="command-004"
         className={className}
         style={paletteStyle}

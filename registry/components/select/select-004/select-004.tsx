@@ -1,4 +1,5 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import { useId } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Select004Option = {
   value: string
@@ -6,7 +7,7 @@ export type Select004Option = {
 }
 
 export type Select004Props = Omit<
-  ComponentPropsWithoutRef<"select">,
+  ComponentProps<"select">,
   "size" | "children" | "multiple"
 > & {
   label?: string
@@ -33,13 +34,16 @@ const STYLES = `
 --vibeui-select-004-surface-pad:0;
 --vibeui-select-004-surface-radius:0;
 --vibeui-select-004-fg:light-dark(oklch(0.23 0.016 265),oklch(0.94 0.005 265));
---vibeui-select-004-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-select-004-muted:color-mix(in oklab,var(--vibeui-select-004-fg) 68%,transparent);
 --vibeui-select-004-field:light-dark(oklch(0.985 0.002 265),oklch(0.25 0.012 265));
 --vibeui-select-004-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.014 265));
 --vibeui-select-004-accent:light-dark(oklch(0.55 0.19 285),oklch(0.78 0.14 285));
 --vibeui-select-004-tint:light-dark(oklch(0.55 0.19 285 / 14%),oklch(0.78 0.14 285 / 22%));
 --vibeui-select-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="select-004"]{color-scheme:dark}
 /* Подложка появляется только вместе с пропом background: по умолчанию список
    лежит прямо на фоне страницы. */
 [data-vibeui-block="select-004"]{
@@ -129,6 +133,9 @@ export function Select004({
   defaultValue = ["frontend", "analytics"],
   ...props
 }: Select004Props) {
+  const generatedId = useId()
+  const fieldId = id ?? generatedId
+  const hintId = `${fieldId}-hint`
   // Подложка приходит вместе с полями и скруглением: без неё список лежит
   // прямо на странице, и лишние поля по бокам ему только мешают.
   const palette = {
@@ -151,13 +158,19 @@ export function Select004({
       <style href="vibeui-select-004" precedence="medium">
         {STYLES}
       </style>
-      <div data-vibeui-block="select-004" className={className} style={palette}>
-        <label data-part="label" htmlFor={id}>
+      <div
+        data-slot="select"
+        data-vibeui-block="select-004"
+        className={className}
+        style={palette}
+      >
+        <label data-part="label" htmlFor={fieldId}>
           {label}
         </label>
         <select
           {...props}
-          id={id}
+          id={fieldId}
+          aria-describedby={hint ? hintId : undefined}
           multiple
           size={rows}
           defaultValue={defaultValue}
@@ -169,7 +182,7 @@ export function Select004({
           ))}
         </select>
         {hint ? (
-          <p data-part="hint">
+          <p data-part="hint" id={hintId}>
             {hint} <kbd>Ctrl</kbd> / <kbd>⌘</kbd>
           </p>
         ) : null}

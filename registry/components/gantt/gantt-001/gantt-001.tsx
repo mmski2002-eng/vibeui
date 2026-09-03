@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Gantt001Task = {
   title: string
@@ -8,10 +8,7 @@ export type Gantt001Task = {
   owner?: string
 }
 
-export type Gantt001Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Gantt001Props = Omit<ComponentProps<"div">, "children"> & {
   title?: string
   weeks?: string[]
   tasks?: Gantt001Task[]
@@ -36,21 +33,29 @@ const STYLES = `
 --vibeui-gantt-001-bg:transparent;
 --vibeui-gantt-001-sticky:light-dark(oklch(0.995 0.001 265),oklch(0.19 0.008 265));
 --vibeui-gantt-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
---vibeui-gantt-001-muted:light-dark(oklch(0.56 0.014 265),oklch(0.68 0.012 265));
+--vibeui-gantt-001-muted:color-mix(in oklab,var(--vibeui-gantt-001-fg) 68%,transparent);
 --vibeui-gantt-001-border:light-dark(oklch(0.92 0.006 265),oklch(0.36 0.012 265));
 --vibeui-gantt-001-line:light-dark(oklch(0.96 0.004 265),oklch(0.29 0.01 265));
 --vibeui-gantt-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.73 0.16 262));
 --vibeui-gantt-001-done:light-dark(oklch(0.58 0.14 152),oklch(0.76 0.13 152));
 --vibeui-gantt-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="gantt-001"]{color-scheme:dark}
 [data-vibeui-block="gantt-001"]{
 width:100%;box-sizing:border-box;overflow-x:auto;
 background:var(--vibeui-gantt-001-bg);
-border:1px solid var(--vibeui-gantt-001-border);border-radius:0.875rem;
+border:1px solid var(--vibeui-gantt-001-border);border-radius:1rem;
 font-family:var(--vibeui-gantt-001-font);color:var(--vibeui-gantt-001-fg);
+/* Шкала кегля растёт от собственной ширины блока, а не от окна. */
+container-type:inline-size;
 }
 [data-vibeui-block="gantt-001"] *{box-sizing:border-box}
-[data-vibeui-block="gantt-001"] h3{margin:0;padding:0.75rem 0.875rem;font-size:0.875rem;font-weight:650}
+[data-vibeui-block="gantt-001"] h3{margin:0;padding:0.75rem 0.875rem;font-size:0.9375rem;font-weight:700;letter-spacing:-0.01em}
+@container (min-width:32rem){
+[data-vibeui-block="gantt-001"] h3{font-size:1rem;padding:0.875rem 1rem}
+}
 [data-vibeui-block="gantt-001"] [data-part="grid"]{
 display:grid;
 grid-template-columns:10rem repeat(var(--vibeui-gantt-001-weeks,6),minmax(3.5rem,1fr));
@@ -179,6 +184,7 @@ export function Gantt001({
       </style>
       <div
         {...props}
+        data-slot="gantt"
         data-vibeui-block="gantt-001"
         role="group"
         aria-label={title}

@@ -1,13 +1,6 @@
-import type {
-  ComponentPropsWithoutRef,
-  CSSProperties,
-  ReactElement,
-} from "react"
+import type { ComponentProps, CSSProperties, ReactElement } from "react"
 
-export type Icontile016Props = Omit<
-  ComponentPropsWithoutRef<"button">,
-  "children"
-> & {
+export type Icontile016Props = Omit<ComponentProps<"button">, "children"> & {
   label?: string
   description?: string
   hotkey?: string[]
@@ -95,7 +88,7 @@ container-type:inline-size;
 --vibeui-icontile-016-hue:262;
 --vibeui-icontile-016-chroma:0.05;
 --vibeui-icontile-016-fg:light-dark(oklch(0.26 0.014 265),oklch(0.94 0.006 265));
---vibeui-icontile-016-muted:light-dark(oklch(0.52 0.014 265),oklch(0.71 0.012 265));
+--vibeui-icontile-016-muted:color-mix(in oklab,var(--vibeui-icontile-016-fg) 68%,transparent);
 --vibeui-icontile-016-border:light-dark(oklch(0.88 0.006 265),oklch(0.35 0.011 265));
 --vibeui-icontile-016-key:light-dark(oklch(0.97 0.006 265),oklch(0.29 0.011 265));
 --vibeui-icontile-016-accent:light-dark(oklch(0.55 0.18 var(--vibeui-icontile-016-hue)),oklch(0.74 0.15 var(--vibeui-icontile-016-hue)));
@@ -103,6 +96,9 @@ container-type:inline-size;
 --vibeui-icontile-016-surface:transparent;
 --vibeui-icontile-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="icontile-016"]{color-scheme:dark}
 [data-vibeui-block="icontile-016"]{
 position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:0.625rem;
 box-sizing:border-box;width:100%;padding:0.875rem 1rem;
@@ -120,8 +116,8 @@ outline:2px solid var(--vibeui-icontile-016-accent);outline-offset:2px;
 [data-vibeui-block="icontile-016"] [data-part="icon"]{
 display:grid;place-items:center;flex:none;width:2.25rem;height:2.25rem;
 border-radius:0.625rem;
-background:oklch(0.93 var(--vibeui-icontile-016-chroma) var(--vibeui-icontile-016-hue));
-color:oklch(0.42 calc(var(--vibeui-icontile-016-chroma) * 4) var(--vibeui-icontile-016-hue));
+background:light-dark(oklch(0.93 var(--vibeui-icontile-016-chroma) var(--vibeui-icontile-016-hue)),oklch(0.34 var(--vibeui-icontile-016-chroma) var(--vibeui-icontile-016-hue)));
+color:light-dark(oklch(0.42 calc(var(--vibeui-icontile-016-chroma) * 4) var(--vibeui-icontile-016-hue)),oklch(0.87 calc(var(--vibeui-icontile-016-chroma) * 2) var(--vibeui-icontile-016-hue)));
 }
 [data-vibeui-block="icontile-016"] [data-part="icon"] > svg{width:55%;height:55%}
 [data-vibeui-block="icontile-016"] [data-part="hotkey"]{
@@ -214,6 +210,7 @@ export function Icontile016({
       <button
         {...props}
         type={type ?? "button"}
+        data-slot="icon-tile"
         data-vibeui-block="icontile-016"
         data-tone={tone}
         aria-keyshortcuts={hotkeyAriaLabel}

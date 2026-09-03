@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Tooltip013Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Tooltip013Props = Omit<ComponentProps<"div">, "children"> & {
   tip?: string
   /** Подписи двух пунктов: верхнего и нижнего в списке. */
   labels?: [string, string]
@@ -25,7 +22,7 @@ const STYLES = `
 :where([data-vibeui-block="tooltip-013"]){
 --vibeui-tooltip-013-bg:transparent;
 --vibeui-tooltip-013-fg:light-dark(oklch(0.25 0.014 265),oklch(0.93 0.006 265));
---vibeui-tooltip-013-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-tooltip-013-muted:color-mix(in oklab,var(--vibeui-tooltip-013-fg) 68%,transparent);
 --vibeui-tooltip-013-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
 --vibeui-tooltip-013-face:light-dark(oklch(0.98 0.003 265),oklch(0.3 0.012 265));
 --vibeui-tooltip-013-tip:light-dark(oklch(0.24 0.014 265),oklch(0.9 0.008 265));
@@ -33,6 +30,9 @@ const STYLES = `
 --vibeui-tooltip-013-accent:light-dark(oklch(0.57 0.17 265),oklch(0.75 0.15 265));
 --vibeui-tooltip-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="tooltip-013"]{color-scheme:dark}
 [data-vibeui-block="tooltip-013"]{
 display:flex;flex-direction:column;justify-content:space-between;gap:1.5rem;
 width:100%;max-width:20rem;height:9rem;box-sizing:border-box;
@@ -141,6 +141,7 @@ export function Tooltip013({
       </style>
       <div
         {...props}
+        data-slot="tooltip"
         data-vibeui-block="tooltip-013"
         className={className}
         style={palette}

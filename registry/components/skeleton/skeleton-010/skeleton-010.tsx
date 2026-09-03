@@ -1,6 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Skeleton010Props = ComponentPropsWithoutRef<"div"> & {
+export type Skeleton010Props = ComponentProps<"div"> & {
   rows?: number
   label?: string
   /** Пусто — подложки нет, таблица лежит прямо на фоне страницы. */
@@ -24,6 +24,9 @@ const STYLES = `
 --vibeui-skeleton-010-base:light-dark(oklch(0.93 0.005 265),oklch(0.3 0.012 265));
 --vibeui-skeleton-010-shine:light-dark(oklch(0.97 0.003 265),oklch(0.39 0.016 265));
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="skeleton-010"]{color-scheme:dark}
 [data-vibeui-block="skeleton-010"]{
 width:100%;max-width:30rem;box-sizing:border-box;overflow:hidden;
 background:var(--vibeui-skeleton-010-bg);
@@ -117,6 +120,7 @@ export function Skeleton010({
       </style>
       <div
         {...props}
+        data-slot="skeleton"
         data-vibeui-block="skeleton-010"
         role="status"
         aria-busy="true"

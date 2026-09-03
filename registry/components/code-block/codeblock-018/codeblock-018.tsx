@@ -29,7 +29,7 @@ const STYLES = `
 --vibeui-codeblock-018-bg:transparent;
 --vibeui-codeblock-018-code:light-dark(oklch(0 0 0 / 3%),oklch(1 0 0 / 5%));
 --vibeui-codeblock-018-fg:light-dark(oklch(0.26 0.014 95),oklch(0.93 0.006 95));
---vibeui-codeblock-018-muted:light-dark(oklch(0.52 0.012 95),oklch(0.68 0.012 95));
+--vibeui-codeblock-018-muted:color-mix(in oklab,var(--vibeui-codeblock-018-fg) 68%,transparent);
 --vibeui-codeblock-018-border:light-dark(oklch(0.9 0.008 95),oklch(1 0 0 / 13%));
 --vibeui-codeblock-018-mark:light-dark(oklch(0.55 0.16 45),oklch(0.84 0.12 60));
 --vibeui-codeblock-018-mark-bg:light-dark(oklch(0.94 0.05 60),oklch(0.42 0.08 55));
@@ -37,6 +37,9 @@ const STYLES = `
 --vibeui-codeblock-018-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-codeblock-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="codeblock-018"]{color-scheme:dark}
 [data-vibeui-block="codeblock-018"]{
 display:flex;flex-direction:column;
 width:100%;max-width:34rem;box-sizing:border-box;margin:0;overflow:hidden;
@@ -57,12 +60,12 @@ background:var(--vibeui-codeblock-018-code);
 [data-vibeui-block="codeblock-018"] code{
 display:block;min-width:max-content;
 font-family:var(--vibeui-codeblock-018-mono);
-font-size:0.8125rem;line-height:1.85;white-space:pre;
+font-size:0.8125rem;line-height:1.7;white-space:pre;
 }
 /* min-height держит пустую строку: блочный span без содержимого схлопнулся
    бы в ноль и в листинге пропал бы отбивка между смысловыми кусками. */
 [data-vibeui-block="codeblock-018"] [data-part="row"]{
-display:block;padding:0 0.875rem;min-height:1.85em;
+display:block;padding:0 0.875rem;min-height:1.7em;
 }
 /* Кружок с номером — псевдоэлемент: в разметке он бы уехал в буфер обмена
    и сломал вставленный код. content берётся из data-note. */
@@ -171,6 +174,7 @@ export function Codeblock018({
         {STYLES}
       </style>
       <figure
+        data-slot="code-block"
         data-vibeui-block="codeblock-018"
         className={className}
         style={palette}

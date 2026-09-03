@@ -1,7 +1,7 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Alert004Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "title" | "children"
 > & {
   title?: string
@@ -27,7 +27,7 @@ export type Alert004Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="alert-004"]){
 --vibeui-alert-004-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
---vibeui-alert-004-muted:light-dark(oklch(0.5 0.014 265),oklch(0.72 0.012 265));
+--vibeui-alert-004-muted:color-mix(in oklab,var(--vibeui-alert-004-fg) 68%,transparent);
 --vibeui-alert-004-bg:transparent;
 --vibeui-alert-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-alert-004-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
@@ -37,6 +37,9 @@ const STYLES = `
 --vibeui-alert-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="alert-004"]{color-scheme:dark}
 [data-vibeui-block="alert-004"]{
 display:flex;align-items:flex-start;gap:0.875rem;
 width:100%;box-sizing:border-box;
@@ -63,7 +66,7 @@ color:var(--vibeui-alert-004-danger);
 }
 [data-vibeui-block="alert-004"] [data-part="text"]{display:flex;flex-direction:column;gap:0.25rem;flex:1 1 auto;min-width:0}
 [data-vibeui-block="alert-004"] [data-part="title"]{font-size:0.9375rem;font-weight:600;line-height:1.35}
-[data-vibeui-block="alert-004"] [data-part="description"]{font-size:0.875rem;line-height:1.55;color:var(--vibeui-alert-004-muted);max-width:60ch}
+[data-vibeui-block="alert-004"] [data-part="description"]{font-size:0.8125rem;line-height:1.55;color:var(--vibeui-alert-004-muted);max-width:60ch}
 /* Кнопки под текстом: решение принимают, дочитав, а не в строке заголовка. */
 [data-vibeui-block="alert-004"] [data-part="actions"]{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:0.625rem}
 [data-vibeui-block="alert-004"] button{
@@ -148,6 +151,7 @@ export function Alert004({
       </style>
       <div
         {...props}
+        data-slot="alert"
         data-vibeui-block="alert-004"
         data-destructive={destructive || undefined}
         role={destructive ? "alertdialog" : "region"}

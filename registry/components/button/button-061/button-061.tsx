@@ -1,14 +1,10 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import type {
-  ComponentPropsWithoutRef,
-  CSSProperties,
-  MouseEventHandler,
-} from "react"
+import type { ComponentProps, CSSProperties, MouseEventHandler } from "react"
 
 export type Button061Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onClick"
 > & {
   children?: string
@@ -35,12 +31,15 @@ const STYLES = `
 --vibeui-button-061-surface:light-dark(oklch(1 0 0),oklch(0.25 0.014 265));
 --vibeui-button-061-border:light-dark(oklch(0.89 0.006 265),oklch(0.42 0.014 265));
 --vibeui-button-061-fg:light-dark(oklch(0.26 0.02 265),oklch(0.94 0.008 265));
---vibeui-button-061-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-button-061-muted:color-mix(in oklab,var(--vibeui-button-061-fg) 68%,transparent);
 --vibeui-button-061-accent:light-dark(oklch(0.55 0.16 250),oklch(0.74 0.13 250));
 --vibeui-button-061-warn:light-dark(oklch(0.62 0.15 70),oklch(0.78 0.14 70));
 --vibeui-button-061-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-button-061-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="button-061"]{color-scheme:dark}
 [data-vibeui-block="button-061"]{
 display:flex;align-items:center;gap:0.75rem;box-sizing:border-box;
 width:100%;max-width:23rem;padding:0.625rem 0.625rem 0.625rem 0.875rem;
@@ -189,9 +188,14 @@ export function Button061({
       </style>
       <div
         {...props}
+        data-slot="button"
         data-vibeui-block="button-061"
         data-running={String(running)}
         data-slow={String(slow)}
+        // Операция идёт: строка задачи уже говорит об этом словом, aria-busy
+        // добавляет то же для скринридера. Секунды не в живой области —
+        // зачитывать их раз в секунду нечитаемо.
+        aria-busy={running || undefined}
         className={className}
         style={palette}
       >

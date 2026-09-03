@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Tooltip006Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Tooltip006Props = Omit<ComponentProps<"div">, "children"> & {
   tip?: string
   /** Подписи трёх кнопок: у края, по центру и снова у края. */
   labels?: string[]
@@ -20,13 +17,16 @@ const STYLES = `
 :where([data-vibeui-block="tooltip-006"]){
 --vibeui-tooltip-006-bg:transparent;
 --vibeui-tooltip-006-fg:light-dark(oklch(0.25 0.014 265),oklch(0.93 0.005 265));
---vibeui-tooltip-006-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-tooltip-006-muted:color-mix(in oklab,var(--vibeui-tooltip-006-fg) 68%,transparent);
 --vibeui-tooltip-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
 --vibeui-tooltip-006-face:light-dark(oklch(0.98 0.003 265),oklch(0.29 0.012 265));
 --vibeui-tooltip-006-tip:light-dark(oklch(0.24 0.014 265),oklch(0.36 0.014 265));
 --vibeui-tooltip-006-accent:light-dark(oklch(0.57 0.17 265),oklch(0.72 0.16 265));
 --vibeui-tooltip-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="tooltip-006"]{color-scheme:dark}
 [data-vibeui-block="tooltip-006"]{
 display:flex;flex-direction:column;gap:0.75rem;
 width:100%;max-width:26rem;box-sizing:border-box;
@@ -49,6 +49,7 @@ font:inherit;font-size:0.8125rem;font-weight:620;white-space:nowrap;
 position:absolute;bottom:calc(100% + 0.5rem);z-index:20;
 width:max-content;max-width:12rem;
 padding:0.375rem 0.5625rem;border-radius:0.5rem;
+/* Обе ветки --tip тёмные — плашка подсказки тёмная всегда, поэтому подпись светлая без light-dark(). */
 background:var(--vibeui-tooltip-006-tip);color:oklch(0.98 0.002 265);
 font-size:0.75rem;line-height:1.4;
 pointer-events:none;opacity:0;translate:0 0.25rem;
@@ -128,6 +129,7 @@ export function Tooltip006({
       </style>
       <div
         {...props}
+        data-slot="tooltip"
         data-vibeui-block="tooltip-006"
         className={className}
         style={palette}

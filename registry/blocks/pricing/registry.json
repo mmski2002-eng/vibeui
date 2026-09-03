@@ -119,7 +119,8 @@
                 "label": "Badge",
                 "default": "Recommended"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies. The colours live in the local variables --vibeui-pricing-001-* and are declared through light-dark(), so the section follows the surrounding color-scheme; the accent is changed with the accent prop and the background with the background prop, and by default there is none. The layout is switched by container queries against the block's own width. This is a landing section, not a checkout: the prices are static content, the CTAs are ordinary links, and the block holds no billing logic."
           }
         },
         "controls": [
@@ -336,7 +337,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "A server component, one file, zero dependencies. The --vibeui-pricing-002-* palette is declared through light-dark(), so the block follows the surrounding color-scheme; it has no background of its own and one is turned on by the background prop. The recommended plan is marked with the data-featured attribute: it gets a thick accent border, a shadow and a badge, and at a wide width increased vertical padding as well. The cards are flex columns and the button is pinned to the bottom with margin-top:auto, so the bottom edge of the row stays level across different numbers of points. The layout: a column up to 58rem, three columns from 58rem through a container query."
           }
         },
         "cardControls": ["accent", "background"]
@@ -540,7 +542,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "A server component, one file, zero dependencies. The --vibeui-pricing-003-* palette is declared through light-dark(), so the block follows the surrounding color-scheme; it has no background of its own and one is turned on by the background prop. Both prices sit in the markup and the extra one is hidden with display:none; the choice is made by a rule of the form [data-vibeui-block=\"pricing-003\"]:has([data-part=\"periodyear\"]:checked). The radio buttons are moved off screen but stay in the focus order, and the ring is drawn on the label. The discount is captioned with a badge right inside the switch. The layout: a column up to 56rem, three columns from 56rem through a container query."
           }
         },
         "cardControls": ["accent", "background"]
@@ -770,7 +773,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "A server component, one file, zero dependencies. The --vibeui-pricing-004-* palette is declared through light-dark(), so the block follows the surrounding color-scheme; the section has no background by default and one is turned on by the background prop, while the table sits on its own surface --vibeui-pricing-004-card. The markup is a real table with several <tbody> elements: the section heading is put into a <th scope=\"colgroup\"> with colspan, so a screen reader announces both the section and the column. The header with the prices rests on position:sticky, otherwise on a long table it is lost which column is which. The wrapper carries overflow-x:auto and the table a min-width:40rem. A true value is drawn with the word from valueText.yes, false with the one from valueText.no."
           }
         },
         "cardControls": ["accent", "background"]
@@ -918,7 +922,8 @@
                 },
                 "guarantee": "A refund within 30 days, no reasons asked."
               }
-            }
+            },
+            "docs": "A server component, one file, zero dependencies. The --vibeui-pricing-005-* palette, a dark violet base with a warm accent. The old price is marked up as <s>: this is not styling but semantics — a screen reader will announce it as deleted. The list is long on purpose: with a single plan the list of what is included replaces a comparison with neighbours, so it takes up a large share of the card and is laid out in two columns from 34rem. The card layout: one column up to 56rem, two columns from 56rem through a container query."
           }
         },
         "cardControls": ["accent"]
@@ -1087,7 +1092,8 @@
                 },
                 "note": "Billed monthly, the volume is trued up as it comes. Tiers apply one after another."
               }
-            }
+            },
+            "docs": "A client component (\"use client\"): without state the slider stays decoration. One file, zero dependencies, and the --vibeui-pricing-006-* palette is declared through light-dark(), so the block follows the surrounding color-scheme; the section has no background by default and one is turned on by the background prop. The tiers are given as an array of \"up to how much — at what rate\", and the total is computed through the tiers in sequence rather than at one rate across the whole volume: that is how real volume pricing works and it avoids a price jump at a tier boundary. The value is announced through aria-live and the active tier is highlighted. The slider is a native input type=range with the track and thumb styled for WebKit and Gecko."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1278,7 +1284,8 @@
                   "href": "mailto:sales@vibeui.dev"
                 }
               }
-            }
+            },
+            "docs": "A server component, one file, zero dependencies. The --vibeui-pricing-007-* palette is declared through light-dark(), so the block follows the surrounding color-scheme; the section has no background by default and one is turned on by the background prop. There are exactly as many fields as a manager needs for a first reply: name, work email, team size and task. Team size is a <select> rather than free text: it is the one field the request gets sorted by. Every field has a <label> and an id, with a :focus-visible highlight. There is no submit handler: the block is a server one, so plug in an action or a server action. From 34rem name and email line up as a pair, and from 56rem the form moves into the right column."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1462,7 +1469,8 @@
                   }
                 }
               }
-            }
+            },
+            "docs": "A server component, one file, zero dependencies. The --vibeui-pricing-008-* palette is declared through light-dark(), so the block follows the surrounding color-scheme: the paid card is always inverted relative to the free one — dark in the light theme and light in the dark one. The section has no background by default and one is turned on by the background prop. The paid card is marked with the data-paid attribute and overrides the background, the caption colours and the button style. The paid list is split into two parts by a divider heading: repeating the shared items in the second column means forcing a line-by-line comparison by eye. The buttons are pinned to the bottom with margin-top:auto. The layout: a column up to 48rem, two columns from 48rem through a container query."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1672,7 +1680,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "A server component, one file, zero dependencies. The --vibeui-pricing-009-* palette is declared through light-dark(), so the block follows the surrounding color-scheme; the section has no background by default and one is turned on by the background prop. Three radio buttons set the currency, and the right sum is shown by a rule of the form [data-vibeui-block=\"pricing-009\"]:has([data-cur=\"usd\"]:checked) [data-amount=\"usd\"]. The inputs are moved off screen but stay in the focus order, and the ring is drawn on the label. All three sums are written into the data by hand: a local price is always rounded to its market rather than obtained by multiplication. The layout: a column, three columns from 56rem through a container query."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1857,7 +1866,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "A server component, one file, zero dependencies. The --vibeui-pricing-010-* palette is declared through light-dark(), so the block follows the surrounding color-scheme; the section has no background by default and one is turned on by the background prop. The timeline is marked up as an <ol>: the order of the days matters and has to be read out loud, not only shown by coloured dots. The connecting line is a ::before on the event, hidden on the last one. The main fear about a trial is \"I will forget to cancel and get charged\", so the answer to it stands right in the timeline and is echoed by three short reassurances under the button. The layout: a column up to 56rem, two columns from 56rem through a container query."
           }
         },
         "cardControls": ["trialDays", "accent", "background"]
@@ -2023,7 +2033,8 @@
                   "href": "mailto:billing@vibeui.dev"
                 }
               }
-            }
+            },
+            "docs": "A server component, one file, zero dependencies. The --vibeui-pricing-011-* palette is declared through light-dark(), so the block follows the surrounding color-scheme; the section has no background by default and one is turned on by the background prop. The disclosure is built on <details>/<summary>: no script, with support for in-page browser search and correct printing. The native marker is removed through list-style:none and ::-webkit-details-marker, and in its place is a plus built from two pseudo-elements that turns into a minus on [open]. The first question is open: an empty accordion looks like a list of links. The layout: a column up to 54rem, two columns from 54rem through a container query."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2196,7 +2207,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "A server component, one file, zero dependencies. The --vibeui-pricing-012-* palette is declared through light-dark(), so the block follows the surrounding color-scheme; the section has no background by default and one is turned on by the background prop. The seal is drawn with a conic gradient and a dashed inner ring on ::before — no image and no icon font. The steps are marked up as an <ol> with numbered circles. The terms are put in a separate paragraph at normal size rather than in a sixth-size footnote: hidden terms read as a catch. The layout: a column up to 54rem, the seal and the text in two columns from 54rem through a container query."
           }
         },
         "cardControls": ["days", "accent", "background"]
@@ -2370,7 +2382,8 @@
                 "seatsHint": "The first {included} seats come with the plan. Maximum — {max}.",
                 "includedText": "{count} seats"
               }
-            }
+            },
+            "docs": "A client component (\"use client\"): without state the seat counter is pointless. One file, zero dependencies, the --vibeui-pricing-013-* palette, a light base. The number of seats is changed with a pair of buttons rather than a text field with arrows: the value cannot be spoiled by a paste from the clipboard, and an <output> with aria-live announces the recalculation out loud. The buttons are disabled at the range bounds rather than silently ignoring the click. The bill on the right shows the included seats, the additional ones and the total. The layout: a column up to 52rem, two columns from 52rem through a container query."
           }
         },
         "cardControls": [
@@ -2553,7 +2566,8 @@
                   "total": "Total per month"
                 }
               }
-            }
+            },
+            "docs": "A client component (\"use client\"): the sum is computed in place. One file, zero dependencies, the --vibeui-pricing-014-* palette, a light base. The checkboxes are real ones rather than squares on a div: the spacebar, the state and the grouping come from the browser, and a checkmark of its own is drawn over them with a pseudo-element through :has(input:checked). The add-on rows are <label> elements, so they are clickable as a whole. The right panel echoes the selection line by line and totals it with aria-live. The layout: a column up to 52rem, two columns from 52rem through a container query."
           }
         },
         "cardControls": ["basePrice", "accent", "background"]
@@ -2721,7 +2735,8 @@
                 },
                 "footer": "Closing documents arrive by email within a day of payment."
               }
-            }
+            },
+            "docs": "A server component, one file, zero dependencies. The --vibeui-pricing-015-* palette, a paper base. The monospaced type and tabular-nums line the sums up in a column by digit place — on a receipt that is not styling but the way the addition is checked by eye. The line items are marked up as a <dl> of pairs. The top and bottom edges are cut out with repeating radial gradients through mask-image with mask-composite: intersect; in browsers without composite support the mask simply produces no cut-outs and the receipt stays whole. The block width is deliberately narrow: a receipt must not stretch across the whole page."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2888,7 +2903,8 @@
                 "notFoundText": "Code «{code}» was not found or has already been used",
                 "appliedText": "{caption} applied"
               }
-            }
+            },
+            "docs": "A client component (\"use client\"): without state the field does not check the code. One file, zero dependencies, the --vibeui-pricing-016-* palette, a light base. The check result is announced through role=\"status\" rather than only tinted green and red: colour alone reaches neither a screen reader nor a colour-blind reader. A wrong code is not cleared — it is left in place so that the person sees the typo. The entered code is uppercased only for the comparison, while the field displays it through text-transform. The old price is marked up as <s>."
           }
         },
         "cardControls": ["price", "accent", "background"]
@@ -3077,7 +3093,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "A server component, one file, zero dependencies. The --vibeui-pricing-017-* palette, a light base. At a narrow width the cards lie in a track with scroll-snap-type: x mandatory and scroll-padding-left: a card takes min(85%, 19rem) and snaps to the edge, so a swipe lands exactly on a card. The scrollbar is hidden, but under the track there is a hint about swiping. The track gets tabIndex=0 and role=\"group\": a scrollable region has to be reachable from the keyboard. From 52rem the track turns into a grid, the snap is switched off and the hint is hidden."
           }
         },
         "cardControls": ["accent", "background"]
@@ -3289,7 +3306,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "A server component, one file, zero dependencies. The --vibeui-pricing-018-* palette, a light cool base. The items are not dumped into a single list but laid out in sections captioned with what the section is for: thirty lines in a row do not get read. An item carries a note in grey — it removes the question \"in what volume?\". At a wide width the left column with the price and the button becomes position:sticky, so a long list does not lead the reader away from the action. The layout: a column, the items in two columns from 34rem, two section columns from 58rem."
           }
         },
         "cardControls": ["accent", "background"]
@@ -3470,7 +3488,8 @@
                 },
                 "usageText": "{used} of {limit}"
               }
-            }
+            },
+            "docs": "A server component, one file, zero dependencies. The --vibeui-pricing-019-* palette, a light base with a gradient upgrade panel. The usage bars are a native <progress> with an aria-label rather than a div with a width in per cent: the browser announces the value and the maximum itself, and the figure beside it duplicates that as text. A bar that has passed 80% is marked with the data-high attribute and painted in the warning colour — it is precisely the argument for upgrading, which is why the upgrade stands next to it and not in an email. The layout: a column up to 52rem, two columns from 52rem."
           }
         },
         "cardControls": ["accent", "background"]

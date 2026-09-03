@@ -1,12 +1,9 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Button054Props = Omit<
-  ComponentPropsWithoutRef<"button">,
-  "children"
-> & {
+export type Button054Props = Omit<ComponentProps<"button">, "children"> & {
   children?: string
   /** Ссылка, которой делятся. Пустая строка — текущий адрес страницы. */
   url?: string
@@ -27,10 +24,13 @@ const STYLES = `
 --vibeui-button-054-fg:light-dark(oklch(0.99 0.01 235),oklch(0.17 0.02 250));
 --vibeui-button-054-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="button-054"]{color-scheme:dark}
 [data-vibeui-block="button-054"]{
 position:relative;appearance:none;border:0;cursor:pointer;box-sizing:border-box;
 display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;
-min-width:9.5rem;height:2.625rem;padding:0 1.125rem;border-radius:0.75rem;
+min-width:9.5rem;height:2.5rem;padding:0 1.125rem;border-radius:0.75rem;
 background:var(--vibeui-button-054-accent);color:var(--vibeui-button-054-fg);
 font-family:var(--vibeui-button-054-font);font-size:0.875rem;font-weight:650;line-height:1;
 transition:background-color .2s ease,filter .16s ease;
@@ -126,6 +126,7 @@ export function Button054({
       <button
         {...props}
         type={type}
+        data-slot="button"
         data-vibeui-block="button-054"
         data-copied={String(copied)}
         className={className}

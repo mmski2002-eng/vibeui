@@ -111,7 +111,8 @@
                   "SOC 2 compliant"
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-hero-*. The theme comes from the surrounding color-scheme through light-dark(): the block has no backdrop by default, it sits on the page background and darkens along with it. The accent is changed with the accent prop, the backdrop with the background prop. The keyframes and prefers-reduced-motion live inside the component, globals.css needs no edits."
           }
         },
         "controls": [
@@ -273,7 +274,8 @@
                 ],
                 "chipLabel": "+18.2% MRR"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies. The colours live in local variables --vibeui-hero-002-*; the theme comes from the surrounding color-scheme through light-dark(), and there is no backdrop by default — the block sits on the page background. The accent is changed with the accent prop, the backdrop with the background prop. The layout is switched by container queries against the block's own width, so it looks the same on the page and in a catalogue thumbnail. The visualisation on the right is assembled from HTML/CSS/inline SVG — there are no external images."
           }
         },
         "controls": [
@@ -436,7 +438,8 @@
                 ],
                 "accentNote": "Built to be copied, not configured"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies. The colours live in local variables --vibeui-hero-003-*; the theme comes from the surrounding color-scheme through light-dark(), and there is no backdrop by default — the block sits on the page background. The accent is changed with the accent prop, the backdrop with the background prop. The layout is switched by container queries against the block's own width, so the mosaic reads both on the page and in a catalogue thumbnail. The headline uses the system serif and the interface text the system sans; no web fonts are loaded."
           }
         },
         "controls": [
@@ -603,7 +606,8 @@
                 },
                 "note": "No card required. The first ten sections are free forever."
               }
-            }
+            },
+            "docs": "A server component, one file, zero dependencies. The palette is in the --vibeui-hero-004-* variables, and the theme comes from the surrounding color-scheme through light-dark(); there is no backdrop by default — the block sits on the page background, and the backdrop is set with the background prop. The layout is computed by container queries against the block width: below 34rem the buttons run in a full-width column, beyond it they become a centred row. The inner [data-part=\"shell\"] layer holds the max-width and the padding — @container rules do not apply to the container itself. There are no animations, only a transition on the buttons, and prefers-reduced-motion is declared for it."
           }
         },
         "cardControls": ["accent", "background"]
@@ -769,7 +773,8 @@
                   "Ready to deploy"
                 ]
               }
-            }
+            },
+            "docs": "A server component, one file, zero dependencies. The --vibeui-hero-005-* palette, and the theme comes from the surrounding color-scheme through light-dark(); there is no backdrop by default — the block sits on the page background, and the backdrop is set with the background prop. The product shot is assembled from HTML and CSS: a title bar with dots, a side rail, three metric tiles and a feed of rows; the whole construction is marked aria-hidden as decorative. The bottom edge of the window dissolves through mask-image with a linear gradient rather than through an overlaid panel, so it works on any background. The layout follows the block width: the rail appears from 52rem, the buttons become a row from 34rem."
           }
         },
         "cardControls": ["accent", "background"]
@@ -920,7 +925,8 @@
                 "formLabel": "Newsletter subscription",
                 "emailLabel": "Email address"
               }
-            }
+            },
+            "docs": "A server component, one file, zero dependencies. The --vibeui-hero-006-* palette, and the theme comes from the surrounding color-scheme through light-dark(); there is no backdrop by default — the block sits on the page background, and the backdrop is set with the background prop. A soft radial glow in the accent stays at the top. The form is real: a <form> with a <label> (visually hidden through hidden), an input type=\"email\" and required — the browser provides the address validation and the autofill. The field and the button lie in a single frame, and the highlight on :focus-within covers both. From 34rem the frame becomes horizontal. There is no submit handler: the block is a server one, so plug in your own action or intercept it at the page level."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1080,7 +1086,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "A server component, one file, zero dependencies. The --vibeui-hero-007-* palette, and the theme comes from the surrounding color-scheme through light-dark(); there is no backdrop by default — the block sits on the page background, and the backdrop is set with the background prop. The poster is not an <img> but a background of conic and radial gradients on the link itself; it is always dark, so the text on it keeps a separate token --vibeui-hero-007-on-poster. The play button is drawn in inline SVG. The player is deliberately not embedded: the block hands over a link to the page with the film, so it loads no iframe and does not spoil the LCP. The chapter list is a <ul> and lays out in two columns from 40rem through a container query. There is a transition on hover, and prefers-reduced-motion is declared for it."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1234,7 +1241,8 @@
                   "Versta"
                 ]
               }
-            }
+            },
+            "docs": "A server component, one file, zero dependencies. The --vibeui-hero-008-* palette, and the theme comes from the surrounding color-scheme through light-dark(); there is no backdrop by default — the block sits on the page background, and the backdrop is set with the background prop. A fill of its own is left only to the logo strip, and it is what sets the proof apart from the promise. The logos are text wordmarks plus a monogram cut out with a conic gradient through mask-image: no third-party files and no licences get into the block. The strip is not an endless marquee but a grid: two columns at a narrow width, three from 34rem and six from 56rem — all through container queries against the block width. The lowered opacity of the logos returns to one on hover."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1393,7 +1401,8 @@
                 ],
                 "footnote": "Data from January to December, across projects with telemetry enabled."
               }
-            }
+            },
+            "docs": "A server component, one file, zero dependencies. The --vibeui-hero-009-* palette, and the theme comes from the surrounding color-scheme through light-dark(); there is no backdrop by default — the block sits on the page background, and the backdrop is set with the background prop. The counters are marked up as a <dl> of pairs: the value in a <dd>, the label in a <dt>, with the order swapped through order, so the number visually comes first while the pair stays correct in the markup. The numbers are set in font-variant-numeric: tabular-nums. From 56rem the text and figure columns stand side by side through a container query, below that they run one under the other. There are no animations, only a transition on the button."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1547,7 +1556,8 @@
                 ],
                 "imageCaption": "Your photo goes here"
               }
-            }
+            },
+            "docs": "A server component, one file, zero dependencies. The --vibeui-hero-010-* palette, and the theme comes from the surrounding color-scheme through light-dark(); there is no backdrop by default — the text half sits on the page background, and the backdrop is set with the background prop. The right half is a <figure> with a background of two radial gradients and one linear one, a slanted cut on clip-path and two circles; it is the image, it stays coloured in both themes, and the slot for a real photograph is laid out — it is enough to put an <img> into that same slot. The layout: one column below 56rem, two equal ones from 56rem, with the figure stretching to the full height of the section. The image caption is a <figcaption> over the bottom left corner."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1700,7 +1710,8 @@
                   "Reduced motion"
                 ]
               }
-            }
+            },
+            "docs": "A server component, one file, zero dependencies. The --vibeui-hero-011-* palette, and the theme comes from the surrounding color-scheme through light-dark(); there is no backdrop by default — the block sits on the page background, and the backdrop is set with the background prop. The grid and the glow live in the ::before and ::after of the section itself with a negative z-index and pointer-events: none — there is not a single decorative div in the markup. The grid lines are drawn with two repeating-linear-gradient and dissolved towards the edges through mask-image. The accent part of the headline is filled with a gradient through background-clip: text. The buttons become a row from 34rem through a container query."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1856,7 +1867,8 @@
                   ]
                 }
               }
-            }
+            },
+            "docs": "A server component, one file, zero dependencies. The --vibeui-hero-012-* palette, and the theme comes from the surrounding color-scheme through light-dark(); there is no backdrop by default — the block sits on the page background, and the backdrop is set with the background prop. A fill of its own is left to the announcement pill and the release card, and the monospace font lives there too. The announcement line is an <a> in its entirety rather than a pill with an arrow link: the whole strip is clickable. Long announcement text is trimmed through text-overflow: ellipsis, so the line does not wrap and does not break the pill. The release card shows up to four items. The buttons become a row from 34rem through a container query. There is a transition on hover, and prefers-reduced-motion is declared for it."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2019,7 +2031,8 @@
                 ],
                 "counter": "1,080 sections · updated today"
               }
-            }
+            },
+            "docs": "A server component, one file, zero dependencies. The --vibeui-hero-013-* palette is built on light-dark(): a cool light base and a separate dark pair where the rules are lighter than the background. There is no backdrop by default — the section lies on the page background, and the background prop turns it on and sets color-scheme according to the lightness of the given colour. The form is marked role=\"search\", the method is GET, and the field is a type=\"search\" named q — without JavaScript it works as an ordinary search, and with JavaScript it is easy to intercept. The field and the button lie in a single pill frame, and the highlight on :focus-within covers both. The popular queries are a <nav> with a list of links carrying a ready query parameter: they are both hints and internal linking."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2177,7 +2190,8 @@
                 },
                 "seats": "128 seats left out of 500"
               }
-            }
+            },
+            "docs": "A server component, one file, zero dependencies. The --vibeui-hero-014-* palette, a dark base with a warm accent and a radial glow in the corner. The date is marked up as a <time datetime>, so it is understood by more than a human. The countdown tiles are a <ul> with an aria-label, and the numbers are set in tabular-nums so that they do not jump as the value changes. The countdown is static: a live timer is a client layer, while the section has to stay cacheable with the page. From 56rem the text and the tiles stand in two columns through a container query."
           }
         },
         "cardControls": ["accent"]
@@ -2347,7 +2361,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "A server component, one file, zero dependencies. The --vibeui-hero-015-* palette is built on light-dark(): a warm paper base in the light theme and a separate dark pair where the rules are lighter than the background. There is no backdrop by default — the section lies on the page background, and the background prop turns it on and sets color-scheme according to the lightness of the given colour. The font pair is a system one: serif for the headline, sans for the rest — no web fonts are loaded. The link underline grows from zero through the background-size of a linear gradient rather than through a border: the line stays in place and does not shift the text. The colophon is a <dl> of pairs and lays out in three columns from 34rem through a container query. The only movement is the underline transition, and prefers-reduced-motion is declared for it."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2510,7 +2525,8 @@
                 ],
                 "footnote": "You can change your mind at any point: the sections stay yours either way."
               }
-            }
+            },
+            "docs": "A server component, one file, zero dependencies. The --vibeui-hero-016-* palette is built on light-dark(): a neutral light base and a separate dark pair where the card is lighter than the background and the border lighter than the card. There is no backdrop by default — the section lies on the page background, and the background prop turns it on and sets color-scheme according to the lightness of the given colour. The card is clickable in its entirety thanks to the stretched ::after pseudo-link on the <a>, yet the accessibility tree gets one link per path rather than three. The focus ring is drawn on the card through :focus-within, so keyboard navigation is visible even though the link itself looks like ordinary text. The icons are inline SVG, different for the two paths. From 40rem the cards stand in two columns through a container query."
           }
         },
         "cardControls": ["accent", "background"]

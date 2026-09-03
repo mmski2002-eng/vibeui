@@ -287,7 +287,9 @@ export function Autocomplete009({
                     <span data-part="flag" aria-hidden="true">
                       {country.flag}
                     </span>
-                    <span data-part="label">{highlight(country.name, query.trim())}</span>
+                    <span data-part="label">
+                      {highlight(country.name, query.trim())}
+                    </span>
                     <span data-part="dial">{country.dial}</span>
                   </li>
                 ))}

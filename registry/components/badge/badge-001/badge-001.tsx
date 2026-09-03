@@ -1,8 +1,8 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Badge001Tone = "neutral" | "success" | "warning" | "danger" | "info"
 
-export type Badge001Props = ComponentPropsWithoutRef<"span"> & {
+export type Badge001Props = ComponentProps<"span"> & {
   tone?: Badge001Tone
   /** Точка-индикатор слева. Без неё остаётся просто плашка с текстом. */
   dot?: boolean
@@ -23,6 +23,9 @@ const STYLES = `
 --vibeui-badge-001-radius:9999px;
 --vibeui-badge-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="badge-001"]{color-scheme:dark}
 [data-vibeui-block="badge-001"]{
 display:inline-flex;align-items:center;gap:0.4375rem;
 height:1.5rem;padding:0 0.625rem;
@@ -98,6 +101,7 @@ export function Badge001({
       </style>
       <span
         {...props}
+        data-slot="badge"
         data-vibeui-block="badge-001"
         data-tone={tone}
         data-size={size}

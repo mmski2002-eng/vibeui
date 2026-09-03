@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Filters001Rule = {
   id: string
@@ -11,7 +11,7 @@ export type Filters001Rule = {
 }
 
 export type Filters001Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   fields?: string[]
@@ -37,13 +37,16 @@ const STYLES = `
 --vibeui-filters-001-bg:transparent;
 --vibeui-filters-001-field:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
 --vibeui-filters-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
---vibeui-filters-001-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-filters-001-muted:color-mix(in oklab,var(--vibeui-filters-001-fg) 68%,transparent);
 --vibeui-filters-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
 --vibeui-filters-001-hover:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.85 0.02 265 / 14%));
 --vibeui-filters-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
 --vibeui-filters-001-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.03 262));
 --vibeui-filters-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="filters-001"]{color-scheme:dark}
 [data-vibeui-block="filters-001"]{
 width:100%;max-width:34rem;box-sizing:border-box;padding:0.875rem;
 background:var(--vibeui-filters-001-bg);
@@ -204,6 +207,7 @@ export function Filters001({
       </style>
       <div
         {...props}
+        data-slot="filters"
         data-vibeui-block="filters-001"
         className={className}
         style={palette}

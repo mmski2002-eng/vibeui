@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Checkbox004Filter = {
   label: string
@@ -10,7 +10,7 @@ export type Checkbox004Filter = {
 }
 
 export type Checkbox004Props = Omit<
-  ComponentPropsWithoutRef<"fieldset">,
+  ComponentProps<"fieldset">,
   "children" | "onChange"
 > & {
   legend?: string
@@ -38,13 +38,16 @@ const STYLES = `
 --vibeui-checkbox-004-surface:transparent;
 --vibeui-checkbox-004-bg:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
 --vibeui-checkbox-004-fg:light-dark(oklch(0.22 0.014 265),oklch(0.95 0.005 265));
---vibeui-checkbox-004-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-checkbox-004-muted:color-mix(in oklab,var(--vibeui-checkbox-004-fg) 68%,transparent);
 --vibeui-checkbox-004-border:light-dark(oklch(0.88 0.008 265),oklch(0.4 0.012 265));
 --vibeui-checkbox-004-hover:light-dark(oklch(0.97 0.003 265),oklch(0.32 0.012 265));
 --vibeui-checkbox-004-accent:light-dark(oklch(0.55 0.17 265),oklch(0.73 0.15 265));
 --vibeui-checkbox-004-mark:light-dark(oklch(0.99 0.01 265),oklch(0.2 0.014 265));
 --vibeui-checkbox-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="checkbox-004"]{color-scheme:dark}
 [data-vibeui-block="checkbox-004"]{
 display:flex;flex-direction:column;gap:0.125rem;
 width:100%;max-width:17rem;box-sizing:border-box;
@@ -58,7 +61,7 @@ font-family:var(--vibeui-checkbox-004-font);color:var(--vibeui-checkbox-004-fg);
 [data-vibeui-block="checkbox-004"] legend{float:left;width:100%;padding:0 0 0.375rem;font-size:0.8125rem;font-weight:650}
 /* Строка целиком кликабельна и подсвечивается: попадать в квадратик не надо. */
 [data-vibeui-block="checkbox-004"] label{
-display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:0.5rem;
+display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:0.625rem;
 min-height:2rem;padding:0 0.375rem;border-radius:0.5rem;
 font-size:0.875rem;cursor:pointer;
 }
@@ -67,7 +70,7 @@ font-size:0.875rem;cursor:pointer;
 [data-vibeui-block="checkbox-004"] label:has(input:disabled):hover{background:transparent}
 [data-vibeui-block="checkbox-004"] input{
 appearance:none;flex:none;cursor:inherit;position:relative;
-width:1.0625rem;height:1.0625rem;margin:0;box-sizing:border-box;
+width:1.125rem;height:1.125rem;margin:0;box-sizing:border-box;
 border:1.5px solid var(--vibeui-checkbox-004-border);border-radius:0.3125rem;
 background:var(--vibeui-checkbox-004-bg);
 }
@@ -177,6 +180,7 @@ export function Checkbox004({
       </style>
       <fieldset
         {...props}
+        data-slot="checkbox"
         data-vibeui-block="checkbox-004"
         className={className}
         style={palette}

@@ -44,7 +44,7 @@
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Полная клавиатурная модель дерева (стрелки по узлам) требует JS: здесь работает Tab и Enter.",
-            "Роль tree проставлена контейнеру, но узлы не размечены treeitem: для строгого соответствия нужна своя реализация.",
+            "Узлы размечены role=treeitem и aria-level, группы детей — role=group. Признака aria-expanded нет намеренно: состояние ветки держит браузер, обновить атрибут без JS нечем, а застывшее значение врало бы скринридеру.",
             "Очень глубокая вложенность съедает ширину: от пятого уровня лучше показывать путь строкой.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
           ]
@@ -73,6 +73,7 @@
         "i18n": {
           "en": {
             "description": "A file tree on nested details: expansion, keyboard support and remembered branches come from the browser.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-tree-001-* variables. Server rendered: no hooks, the branches are drawn by a recursive function. Every folder is a <details> with a <summary>, a leaf is a link. The nesting indent is marked by a left-hand line on the children container. The face is monospaced: file names get compared character by character.",
             "ai": {
               "summary": "A file tree: folders as details with a rotating chevron, leaves as links and an indent line on nested branches. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -96,7 +97,7 @@
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A full tree keyboard model (arrow keys between nodes) needs JS: Tab and Enter work here.",
-                "The container carries role=tree but nodes are not marked treeitem: strict conformance needs a custom build.",
+                "Nodes carry role=treeitem and aria-level, child groups carry role=group. There is deliberately no aria-expanded: the browser owns the branch state, nothing can update the attribute without JS, and a frozen value would lie to screen readers.",
                 "Deep nesting eats width: past the fifth level show a path string instead.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
@@ -234,6 +235,7 @@
         "i18n": {
           "en": {
             "description": "A file tree where the type is visible before you read the name: the badge hue is hashed from the extension, so a new file type gets its own colour without a lookup table.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-tree-002-* variables. Client component: expansion lives in useState rather than in details, because role=\"treeitem\" and aria-expanded are needed and details has neither. The visible nodes are flattened into a plain list, the indent is drawn with padding-left from the level, and the structure is declared by aria-level, aria-posinset and aria-setsize — without them flat markup tells a screen reader nothing. Focus moves between nodes with the arrow keys while the whole tree keeps one tab stop: tabIndex=0 sits on the current node only, the rest get −1. The file status mark is shown by a letter, not by colour alone.",
             "ai": {
               "summary": "A file tree with type badges and arrow-key focus movement: one tab stop, levels declared by attributes. Zero dependencies, one file, client component.",
               "preserve": [
@@ -403,6 +405,7 @@
         "i18n": {
           "en": {
             "description": "A section tree with no client code at all: native details holds the expansion, so it works before hydration and is found by the browser's own in-page search.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-tree-003-* variables. Server rendered: no hooks, the branch state is held by the browser itself. Nested details give expansion, keyboard support and open-branch memory for free; aria-level is set explicitly during traversal, because a screen reader does not infer depth from details nesting. The badge carries the number of leaves across the whole branch rather than in its first level: countLeaves descends all the way down. The summary marker is removed and replaced by a triangle made of borders, so it rotates through transform and does not depend on how the browser draws the marker.",
             "ai": {
               "summary": "A section tree on native details: server rendered, with keyboard support and open-branch memory provided by the browser. Zero dependencies, one file.",
               "preserve": [
@@ -582,6 +585,7 @@
         "i18n": {
           "en": {
             "description": "A tree with a selected node and a full keyboard: arrows only move focus, Enter or Space selects, so the tree does not \"select\" everything you pass over.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-tree-004-* variables. Client component: the expansion, focus and selection state lives in useState, and the nodes are kept in a ref map for a programmatic focus(). The markup is nested — a treeitem owns its group — while the traversal order is assembled as a separate flat list of the visible nodes: Up and Down, Home and End are computed over it. Right expands a branch or descends into it, Left collapses it or moves up to the parent. Focus and selection are kept separate on purpose: only Enter and Space change aria-selected. The selected row is marked not only by the fill but also by a bar on the left.",
             "ai": {
               "summary": "A tree with node selection and APG-style keyboard support: arrows, Home and End over a flat traversal order, selection on Enter and Space. Zero dependencies, one file, client component.",
               "preserve": [
@@ -774,6 +778,7 @@
         "i18n": {
           "en": {
             "description": "A checkbox tree with an honest third state: the selection is stored on leaves only and a branch's tick is derived from them, so the counter and the parent can never disagree.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-tree-005-* variables. Client component: the set of selected leaves and the set of expanded branches live in useState, and the checkbox nodes are kept in a ref map. A branch state is derived on the fly: fully selected when all of its leaves are selected, partially when at least one is. There is nothing in the markup to declare the third state with — indeterminate is a node property — so it is set in an effect after render, once the branch contents are known. The checkboxes are native: keyboard support, state announcement and the link to the label come from the browser. The tree, treeitem and group roles with aria-level and aria-expanded describe the structure.",
             "ai": {
               "summary": "A checkbox tree: state lives on the leaves, branches derive a tick or indeterminate, and the counter comes from the same set. Zero dependencies, one file, client component.",
               "preserve": [
@@ -977,6 +982,7 @@
         "i18n": {
           "en": {
             "description": "A tree search that keeps the path to the hit: a branch stays in the results if its own name or any descendant's name matches, otherwise the found file would hang without its folder.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-tree-006-* variables. Client component: the query lives in useState and the match count is memoised. The filter is recursive: a node passes when its own name matches or any descendant matches, so the whole branch above a hit stays visible with it. A match is highlighted with the mark tag rather than a span with a background: mark carries highlight semantics, which a screen reader announces too. While the field is empty the tree is shown in full and nothing collapses. The match count is announced in a role=\"status\", so that a search result is audible and not merely visible. The field is linked to its label through useId.",
             "ai": {
               "summary": "A tree with search: the path to the hit is preserved, matches are highlighted with mark, and the match count is announced by a live region. Zero dependencies, one file, client component.",
               "preserve": [
@@ -1177,6 +1183,7 @@
         "i18n": {
           "en": {
             "description": "A tree whose branch loads on first expansion rather than on render: while the request runs the branch is marked aria-busy and holds its space with three placeholder rows.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-tree-007-* variables. Client component: the sets of expanded and loading branches plus the cache of the children that arrived live in useState, and the timers that fake the request are collected in a ref and cleared on unmount. A branch with a lazy field loads once: the result goes into the cache, and expanding it again requests nothing. For the duration of the request the branch gets aria-busy and a group of three placeholders — without them the tree jumps to the height of the list that arrives. The branch row is a real button, so expansion works from the keyboard without a key handler of its own.",
             "ai": {
               "summary": "A tree with lazy branch loading: the request fires on first expansion, the result is cached, and the wait is marked with aria-busy and placeholders. Zero dependencies, one file, client component.",
               "preserve": [
@@ -1330,6 +1337,7 @@
         "i18n": {
           "en": {
             "description": "An expanded structure with real guide lines: on the last node of a branch the vertical is cut to the elbow's height, so the line ends there instead of trailing into empty space.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-tree-008-* variables. Server rendered: no hooks, the tree is always expanded. The elbow is drawn by two pseudo-elements of the node: ::before is the branch vertical, ::after the crossbar at the middle of the row; on :last-child the vertical is cut to half a row, which produces exactly what the tree command prints in a terminal. The box drawing does not go into the text: the ├ and └ characters would end up in the clipboard when names are copied. The row height is lifted into a variable, because the crossbar position is measured from it. The tree, treeitem and group roles with aria-level describe the structure, and aria-expanded on branches is declared permanently true.",
             "ai": {
               "summary": "An expanded structure with level guides: the elbows are drawn by pseudo-elements, with no box-drawing characters in the text. Zero dependencies, one file, server rendered.",
               "preserve": [

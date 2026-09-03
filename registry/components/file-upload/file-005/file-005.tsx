@@ -1,10 +1,10 @@
 "use client"
 
 import { useEffect, useId, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type File005Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   label?: string
@@ -37,13 +37,16 @@ const STYLES = `
 --vibeui-file-005-surface:transparent;
 --vibeui-file-005-tile:light-dark(oklch(0.96 0.006 265),oklch(0.29 0.012 265));
 --vibeui-file-005-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
---vibeui-file-005-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-file-005-muted:color-mix(in oklab,var(--vibeui-file-005-fg) 68%,transparent);
 --vibeui-file-005-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
 --vibeui-file-005-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-file-005-accent:light-dark(oklch(0.55 0.19 20),oklch(0.72 0.17 20));
 --vibeui-file-005-zoom:1;
 --vibeui-file-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="file-005"]{color-scheme:dark}
 /* Карточка без собственной заливки: рамка очерчивает её на любом фоне. */
 [data-vibeui-block="file-005"]{
 display:flex;align-items:center;gap:0.875rem;
@@ -189,6 +192,7 @@ export function File005({
       </style>
       <div
         {...props}
+        data-slot="file-upload"
         data-vibeui-block="file-005"
         className={className}
         style={palette}

@@ -1,13 +1,15 @@
 import { useId } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Menu006Section = {
   title: string
   items: { label: string; hint: string }[]
 }
 
-export type Menu006Props = Omit<ComponentPropsWithoutRef<"nav">, "children"> & {
+export type Menu006Props = Omit<ComponentProps<"nav">, "children"> & {
   label?: string
+  /** Подпись текущего раздела: он помечается aria-current. */
+  current?: string
   sections?: Menu006Section[]
   /** Подложка кнопки и панели. Пусто — своя палитра компонента. */
   background?: string
@@ -22,7 +24,7 @@ const STYLES = `
 :where([data-vibeui-block="menu-006"]){
 --vibeui-menu-006-bg:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
 --vibeui-menu-006-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
---vibeui-menu-006-muted:light-dark(oklch(0.56 0.014 265),oklch(0.68 0.012 265));
+--vibeui-menu-006-muted:color-mix(in oklab,var(--vibeui-menu-006-fg) 68%,transparent);
 --vibeui-menu-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
 --vibeui-menu-006-hover:light-dark(oklch(0.97 0.003 265),oklch(0.3 0.015 265));
 --vibeui-menu-006-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
@@ -30,6 +32,9 @@ const STYLES = `
 --vibeui-menu-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="menu-006"]{color-scheme:dark}
 [data-vibeui-block="menu-006"]{
 display:block;width:100%;max-width:30rem;box-sizing:border-box;
 font-family:var(--vibeui-menu-006-font);color:var(--vibeui-menu-006-fg);
@@ -41,7 +46,7 @@ display:inline-flex;align-items:center;gap:0.4375rem;
 height:2.25rem;padding:0 0.875rem;
 border:1px solid var(--vibeui-menu-006-border);border-radius:0.625rem;
 background:var(--vibeui-menu-006-bg);
-font-size:0.8125rem;font-weight:600;
+font-size:0.875rem;font-weight:600;
 }
 [data-vibeui-block="menu-006"] summary::-webkit-details-marker{display:none}
 [data-vibeui-block="menu-006"] summary:focus-visible{outline:2px solid var(--vibeui-menu-006-accent);outline-offset:2px}
@@ -73,10 +78,16 @@ color:inherit;text-decoration:none;
 }
 [data-vibeui-block="menu-006"] a:hover{background:var(--vibeui-menu-006-hover)}
 [data-vibeui-block="menu-006"] a:focus-visible{outline:2px solid var(--vibeui-menu-006-accent);outline-offset:-2px}
-[data-vibeui-block="menu-006"] [data-part="name"]{font-size:0.8125rem;font-weight:600}
+[data-vibeui-block="menu-006"] [data-part="name"]{font-size:0.875rem;font-weight:600}
 [data-vibeui-block="menu-006"] [data-part="hint"]{font-size:0.75rem;line-height:1.35;color:var(--vibeui-menu-006-muted)}
 @container (max-width: 26rem){
 [data-vibeui-block="menu-006"] [data-part="panel"]{grid-template-columns:minmax(0,1fr)}
+}
+/* Текущий раздел: подчёркивание и вес, а не один только цвет. */
+[data-vibeui-block="menu-006"] [aria-current="page"]{
+font-weight:700;
+text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:0.3125rem;
+text-decoration-color:var(--vibeui-menu-006-accent);
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="menu-006"] *{animation:none!important;transition:none!important}}
 `
@@ -129,6 +140,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Menu006({
   label = "Продукт",
+  current = "Каталог",
   sections = DEFAULT_SECTIONS,
   background = "",
   accent,
@@ -155,6 +167,7 @@ export function Menu006({
       </style>
       <nav
         {...props}
+        data-slot="navigation-menu"
         data-vibeui-block="menu-006"
         aria-label={label}
         className={className}
@@ -172,7 +185,12 @@ export function Menu006({
                 <ul>
                   {section.items.map((item) => (
                     <li key={item.label}>
-                      <a href="#">
+                      <a
+                        href="#"
+                        aria-current={
+                          item.label === current ? "page" : undefined
+                        }
+                      >
                         <span data-part="name">{item.label}</span>
                         <span data-part="hint">{item.hint}</span>
                       </a>

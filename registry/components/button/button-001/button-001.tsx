@@ -1,12 +1,14 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Button001Size = "sm" | "md" | "lg"
 export type Button001Tone = "solid" | "soft" | "outline"
 
-export type Button001Props = ComponentPropsWithoutRef<"button"> & {
+export type Button001Props = ComponentProps<"button"> & {
   size?: Button001Size
   tone?: Button001Tone
   loading?: boolean
+  /** Слово для скринридера, пока идёт загрузка: спиннер ему не виден. */
+  loadingLabel?: string
   accent?: string
   accentForeground?: string
 }
@@ -35,6 +37,9 @@ const STYLES = `
 --vibeui-button-001-radius:0.625rem;
 --vibeui-button-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="button-001"]{color-scheme:dark}
 [data-vibeui-block="button-001"]{
 display:inline-flex;align-items:center;justify-content:center;gap:0.5em;
 border:1px solid transparent;border-radius:var(--vibeui-button-001-radius);
@@ -62,6 +67,9 @@ border:2px solid currentColor;border-top-color:transparent;
 animation:vibeui-button-001-spin .6s linear infinite;
 }
 @keyframes vibeui-button-001-spin{to{transform:rotate(360deg)}}
+[data-vibeui-block="button-001"] [data-part="sr"]{
+position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="button-001"] *{animation:none!important;transition:none!important}}
 `
 
@@ -73,6 +81,7 @@ export function Button001({
   size = "md",
   tone = "solid",
   loading = false,
+  loadingLabel = "Загружаем…",
   accent,
   accentForeground,
   type = "button",
@@ -98,6 +107,7 @@ export function Button001({
       <button
         {...props}
         type={type}
+        data-slot="button"
         data-vibeui-block="button-001"
         data-tone={tone}
         data-size={size}
@@ -109,6 +119,11 @@ export function Button001({
         style={palette}
       >
         {loading ? <span data-part="spinner" aria-hidden="true" /> : null}
+        {/* Спиннер скринридеру не виден, поэтому состояние проговаривается
+            словом: одного aria-busy на кнопке для этого мало. */}
+        <span data-part="sr" aria-live="polite">
+          {loading ? loadingLabel : null}
+        </span>
         {children}
       </button>
     </>

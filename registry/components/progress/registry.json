@@ -20,7 +20,18 @@
       "meta": {
         "tags": ["progress", "loading", "indicator", "status"],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "states": [
+            {
+              "value": 24
+            },
+            {
+              "value": 100
+            },
+            {
+              "value": null
+            }
+          ]
         },
         "ai": {
           "export": "Progress001",
@@ -152,7 +163,8 @@
                 "label": "Building the project",
                 "runningText": "running"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-progress-001-*. The fill is computed from the --vibeui-progress-001-value variable, so the width of the bar is set by a number and not by a string with a percent sign. value={null} turns on the unknown-duration state: a segment travels along the track by animation and aria-valuenow is not set. The value is clamped to the 0–100 range."
           }
         },
         "cardControls": ["size", "accent", "background"]
@@ -287,7 +299,8 @@
                 "steps": ["Queued", "Build", "Tests", "Review", "Deploy"],
                 "stageText": "{step}: stage {current} of {total}"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-progress-002-*. A server component: no hooks, the state arrives through props. The track is a flex of equal segments with a 0.25rem gap: a stage boundary is drawn by the gap rather than by another colour, so it stays visible in monochrome. The current segment is filled with an animated two-colour gradient through background-position — the motion does not touch layout. The stage captions sit in a second flex row with the same shares, so the caption columns line up with the segments. role=\"progressbar\" is declared on the track with a scale in stages rather than percent, and aria-valuetext names the current stage in words."
           }
         },
         "cardControls": ["current", "accent", "background"]
@@ -445,10 +458,21 @@
                 "goalText": "Goal {target}%",
                 "valueText": "{value} percent against a {target} percent goal"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-progress-003-*. A server component: no hooks. The arc is a conic-gradient cut out by a radial mask, so the ring stays a single element with no svg and no filler circle in the middle. The ticks are a second layer, a repeating-conic-gradient in the surface colour laid over the arc under the same mask: the marks are \"cut into\" the ring rather than drawn as separate elements. The goal notch is an absolute layer rotated by target × 3.6deg, so its position is computed straight from the percentage. The number sits above the ring rather than inside the masked element: the mask would cut the digits too. role=\"progressbar\" with an aria-valuetext that names both the fact and the goal."
           }
         },
-        "cardControls": ["value", "target", "accent", "background"]
+        "cardControls": ["value", "target", "accent", "background"],
+        "preview": {
+          "states": [
+            {
+              "value": 30
+            },
+            {
+              "value": 100
+            }
+          ]
+        }
       }
     },
     {
@@ -587,7 +611,8 @@
                   "value": "{percent} percent, {left}"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-progress-004-*. A server component: no hooks, and the byte and remainder formatting are pure functions. The percentage, \"7 MB of 12 MB\" and \"5 s left\" are derived from loaded, total and speed, so the captions agree by construction. The file mark is a tile with a cut corner on clip-path and the extension as text, so no separate icon is needed. The track grows in width from the value variable with a transition rather than rebuilding the layout. The figures are tabular: with proportional ones the numbers jitter on every update."
           }
         },
         "cardControls": ["accent", "background"]
@@ -734,7 +759,8 @@
                   "value": "{name}: {value} {unit} of {total} {unit}"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-progress-005-*. A server component: no hooks. Each row is a grid of two columns (the name and the number) plus a track across the full width: the numbers line up in a column without table markup. The share is computed against capacity rather than against the sum of the rows, so free space stays visible. The row hue is taken from a hash of its name — a new category gets its own colour by itself and there is no lookup table; the hue is passed to the row through the inline --vibeui-progress-005-hue variable and substituted into oklch. Every track has its own role=\"progressbar\" with a scale in capacity units and an aria-valuetext in words."
           }
         },
         "cardControls": ["background"]
@@ -884,7 +910,8 @@
                   "alert": "The threshold is exceeded by {excess}k requests. Further calls are billed above the plan."
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-progress-006-*. A server component: no hooks, and the exceeded state is derived by comparing value and threshold. The threshold notch is an absolute element inside the track positioned by left from a variable, so it stands exactly where the plan ends rather than in a caption beside it. The overflow is marked with the data-over attribute on the root: it switches the fill colour, the repeating-linear-gradient hatching and the display of the warning block. The hatching is needed because \"it turned red\" does not read without colour. The warning is declared role=\"status\" and hidden with the hidden attribute rather than removed from the markup: a live region has to exist before text appears in it."
           }
         },
         "cardControls": ["value", "accent", "background"]
@@ -1046,7 +1073,8 @@
                   "unknown": "Duration unknown"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-progress-007-*. A server component: no hooks. The motion is a background-position animation over a repeating-linear-gradient, so the track stays a single element with no runner inside and no layout recalculation on every frame. role=\"progressbar\" deliberately has no aria-valuenow: the moment the attribute appears, a screen reader announces a percentage nobody computed; in its place there is an aria-valuetext about the unknown duration. The beacon dot in the heading pulses in opacity and remains a sign of work when the track is out of view. When motion is disallowed, the hatching is removed and the track becomes a flat fill."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1192,7 +1220,8 @@
                   "last": "This is the last step"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-progress-008-*. A server component: no hooks. The track is drawn with two pseudo-elements of the container: ::before is a grey line across the full width, ::after is the fill up to the current milestone from the value variable; the milestones sit above it as ordinary spans in a flex with space between. The surface-coloured ring around a milestone is set with border, so the line underneath does not show through. The share is computed as index / (total − 1): the fill arrives exactly at the centre of the current milestone rather than \"somewhere near it\". role=\"progressbar\" is declared in steps, and aria-valuetext repeats the line \"Step 3 of 5: Checking the data\"."
           }
         },
         "cardControls": ["current", "accent", "background"]
@@ -1335,7 +1364,8 @@
                 "label": "Profile completeness",
                 "caption": "Add a phone number and a photo"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-progress-009-*. A server component: no hooks. The bubble is positioned absolutely by left from the value variable and centred with translateX(−50%); at the edges a clamp with 1.5rem bounds removes the crop, so at zero and at a hundred percent it stays inside the card. The bubble's tail is a pseudo-element with a triangle made of borders, so no separate image is needed. The number in the bubble is marked aria-hidden: it is already announced by the track's aria-valuenow, and without this a screen reader would read the value twice."
           }
         },
         "cardControls": ["value", "accent", "background"]

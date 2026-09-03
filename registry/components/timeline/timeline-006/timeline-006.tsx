@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Timeline006Kind = "comment" | "upload" | "alert" | "release"
 
@@ -7,12 +7,11 @@ export type Timeline006Event = {
   title: string
   text?: string
   time: string
+  /** Машиночитаемый момент для <time datetime>: «вчера» роботу не дата. */
+  dateTime: string
 }
 
-export type Timeline006Props = Omit<
-  ComponentPropsWithoutRef<"section">,
-  "children"
-> & {
+export type Timeline006Props = Omit<ComponentProps<"section">, "children"> & {
   events?: Timeline006Event[]
   title?: string
   /** Подписи типов для скринридера: компонент несёт русские, проект — свои. */
@@ -32,11 +31,14 @@ const STYLES = `
 :where([data-vibeui-block="timeline-006"]){
 --vibeui-timeline-006-bg:transparent;
 --vibeui-timeline-006-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-timeline-006-muted:light-dark(oklch(0.57 0.014 265),oklch(0.69 0.012 265));
+--vibeui-timeline-006-muted:color-mix(in oklab,var(--vibeui-timeline-006-fg) 68%,transparent);
 --vibeui-timeline-006-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-timeline-006-hue:262;
 --vibeui-timeline-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="timeline-006"]{color-scheme:dark}
 [data-vibeui-block="timeline-006"]{
 display:flex;flex-direction:column;gap:0.75rem;
 width:100%;max-width:26rem;box-sizing:border-box;padding:0.9375rem;
@@ -104,23 +106,27 @@ const DEFAULT_EVENTS: Timeline006Event[] = [
     title: "Выпущена версия 2.4",
     text: "Каталог, поиск и экспорт в один файл",
     time: "10:40",
+    dateTime: "2026-03-14T10:40",
   },
   {
     kind: "alert",
     title: "Ответ сервера замедлился",
     text: "Средний отклик вырос до 780 мс",
     time: "09:12",
+    dateTime: "2026-03-14T09:12",
   },
   {
     kind: "upload",
     title: "Загружено 12 макетов",
     time: "вчера",
+    dateTime: "2026-03-13T16:30",
   },
   {
     kind: "comment",
     title: "Аня оставила комментарий",
     text: "«Кнопку на втором экране надо назвать иначе»",
     time: "вчера",
+    dateTime: "2026-03-13T11:05",
   },
 ]
 
@@ -176,6 +182,7 @@ export function Timeline006({
       </style>
       <section
         {...props}
+        data-slot="timeline"
         data-vibeui-block="timeline-006"
         className={className}
         style={palette}
@@ -203,7 +210,9 @@ export function Timeline006({
                 </span>
                 {event.text ? <p data-part="text">{event.text}</p> : null}
               </div>
-              <span data-part="time">{event.time}</span>
+              <time data-part="time" dateTime={event.dateTime}>
+                {event.time}
+              </time>
             </li>
           ))}
         </ol>

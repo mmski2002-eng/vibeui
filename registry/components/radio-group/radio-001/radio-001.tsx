@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Radio001Option = {
   value: string
@@ -8,7 +8,7 @@ export type Radio001Option = {
 }
 
 export type Radio001Props = Omit<
-  ComponentPropsWithoutRef<"fieldset">,
+  ComponentProps<"fieldset">,
   "children" | "defaultValue"
 > & {
   options?: Radio001Option[]
@@ -28,12 +28,15 @@ const STYLES = `
 :where([data-vibeui-block="radio-001"]){
 --vibeui-radio-001-bg:transparent;
 --vibeui-radio-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
---vibeui-radio-001-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-radio-001-muted:color-mix(in oklab,var(--vibeui-radio-001-fg) 68%,transparent);
 --vibeui-radio-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
 --vibeui-radio-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
 --vibeui-radio-001-tint:light-dark(oklch(0.55 0.2 262 / 7%),oklch(0.74 0.16 262 / 15%));
 --vibeui-radio-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="radio-001"]{color-scheme:dark}
 [data-vibeui-block="radio-001"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:22rem;box-sizing:border-box;
@@ -54,7 +57,7 @@ border:1px solid var(--vibeui-radio-001-border);
 }
 [data-vibeui-block="radio-001"] input{
 appearance:none;flex:none;margin:0.125rem 0 0;cursor:pointer;
-width:1.0625rem;height:1.0625rem;border-radius:9999px;
+width:1.125rem;height:1.125rem;border-radius:9999px;
 border:1.5px solid var(--vibeui-radio-001-muted);background:transparent;
 }
 [data-vibeui-block="radio-001"] input:checked{
@@ -148,6 +151,7 @@ export function Radio001({
       </style>
       <fieldset
         {...props}
+        data-slot="radio-group"
         data-vibeui-block="radio-001"
         className={className}
         style={palette}

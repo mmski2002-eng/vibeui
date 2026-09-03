@@ -1,8 +1,10 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Kbd003Props = Omit<ComponentPropsWithoutRef<"p">, "children"> & {
+export type Kbd003Props = Omit<ComponentProps<"p">, "children"> & {
   before?: string
   keys?: string[]
+  /** Чем рисовать клавишу "Mod": на macOS это ⌘, на Windows и Linux — Ctrl. */
+  mod?: string
   after?: string
   /** Пусто — подложки нет, абзац лежит прямо на фоне страницы. */
   background?: string
@@ -24,6 +26,9 @@ const STYLES = `
 --vibeui-kbd-003-key:light-dark(oklch(0.97 0.003 265),oklch(0.3 0.012 265));
 --vibeui-kbd-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="kbd-003"]{color-scheme:dark}
 [data-vibeui-block="kbd-003"]{
 display:block;box-sizing:border-box;margin:0;
 width:100%;max-width:24rem;padding:0.875rem 1rem;
@@ -76,7 +81,8 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Kbd003({
   before = "Нажмите",
-  keys = ["⌘", "K"],
+  keys = ["Mod", "K"],
+  mod = "⌘",
   after = "чтобы открыть поиск по каталогу — строка ввода появится поверх страницы.",
   background = "",
   className,
@@ -100,6 +106,7 @@ export function Kbd003({
       </style>
       <p
         {...props}
+        data-slot="kbd"
         data-vibeui-block="kbd-003"
         className={className}
         style={palette}
@@ -109,7 +116,7 @@ export function Kbd003({
           {keys.map((key, index) => (
             <span key={key}>
               {index > 0 ? <span data-part="plus">+</span> : null}
-              <kbd>{key}</kbd>
+              <kbd>{key === "Mod" ? mod : key}</kbd>
             </span>
           ))}
         </span>{" "}

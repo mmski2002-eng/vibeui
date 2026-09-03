@@ -145,7 +145,8 @@
                 "clearLabel": "Reset",
                 "countText": "{count} of {total} selected"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-autocomplete-014-* variables. The selection is kept as an array of strings and the list order never changes — picks do not float to the top, so the eye does not lose its place. A row is a real label with an input[type=checkbox]: keyboard, state and the screen-reader announcement come from the browser rather than being imitated with roles. The whole row is the target rather than the tick itself: a 15px box is next to impossible to hit with a finger. The cursor is driven by the arrows and toggled by Enter — space is taken by typing in the search field. The selection counter is marked role=\"status\", so the change is read aloud. The footer layout is computed from the panel's own width through a container query. The theme comes from color-scheme through light-dark(), and the component switches on a class-based dark theme for itself."
           }
         },
         "cardControls": [
@@ -310,7 +311,8 @@
                   "Dublin"
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-autocomplete-001-* variables. The field is linked to the <datalist> through list and a shared useId, the label through htmlFor, and the hint under the field through aria-describedby. The arrow is drawn with two borders, so no icon package is needed. A server component: there are no state hooks."
           }
         },
         "cardControls": ["label", "placeholder", "hint", "accent", "background"]
@@ -466,7 +468,8 @@
                 "defaultOpen": true,
                 "options": ["Kazan", "Kaluga", "Krasnodar"]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-autocomplete-002-* variables. Client-side: \"use client\", state on useState. The field is declared role=\"combobox\" with aria-expanded, aria-controls and aria-activedescendant; the list is role=\"listbox\" and the rows are role=\"option\". Picking runs on onMouseDown with preventDefault, otherwise blur would close the list before the click. The list is rendered in flow, without a positioned layer."
           }
         },
         "cardControls": [
@@ -621,7 +624,8 @@
                 "removeLabel": "Remove {chip}",
                 "hintText": "{count} of {max} · Backspace removes the last"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-autocomplete-003-* variables. Client-side: \"use client\". The chips and the field lie in one flex container with flex-wrap, so the field grows with the number of chips instead of hiding them in a scroll. The focus ring is drawn on the container through :focus-within. Every cross has its own aria-label with the chip name. Once max is reached the field is disabled."
           }
         },
         "cardControls": ["label", "placeholder", "max", "accent", "background"],
@@ -794,7 +798,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-autocomplete-004-* variables. Client-side: \"use client\". The group headers are computed before render from neighbouring list items, so nothing is mutated while drawing. The arrows walk the command indices and never touch the headers. The magnifier is drawn with a circle and a pseudo-element, there is no icon package."
           }
         },
         "cardControls": [
@@ -980,7 +985,8 @@
                   "idle": "Suggestions come from the server"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-autocomplete-005-* variables. Client-side: \"use client\". The request is deferred by delay milliseconds, the timer is cleared in the effect cleanup, and an alive flag discards the answer of a cancelled request. The waiting state is declared through aria-busy on the field and role=\"status\" on the line below. The spinner is a border with keyframes, stopped under prefers-reduced-motion."
           }
         },
         "cardControls": [
@@ -1159,7 +1165,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-autocomplete-006-* variables. Client-side: \"use client\". A list row is a grid of two columns and two rows: the title and the SKU on the left, the price and the stock on the right. Zero stock is coloured by a separate variable, --vibeui-autocomplete-006-warn. The search matches both the name and the SKU."
           }
         },
         "cardControls": [
@@ -1353,7 +1360,8 @@
                   "history": "History is empty: your searches will show up here"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-autocomplete-007-* variables. Client-side: \"use client\". The panel under the field shows one of two lists: recent searches while the query is empty, suggestions once it is not. The panel heading changes together with the list, and so does the list's aria-label. A pick is lifted to the top of the recents and the history is trimmed to five. The clock beside a row is drawn with a circle and a pseudo-element."
           }
         },
         "cardControls": [
@@ -1514,7 +1522,8 @@
                 "acceptHint": "completes the domain {domain}",
                 "idleHint": "After @ the field completes the domain"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-autocomplete-008-* variables. Client-side: \"use client\". The tail is drawn by a layer beneath the field: what has been typed is transparent inside it (an i tag), only the suggestion shows. The layer and the field are declared by a single rule so that the font, the padding and the line height match to the pixel. Tab and the right arrow at the end of the line accept the completion; the layer is marked aria-hidden."
           }
         },
         "cardControls": [
@@ -1723,7 +1732,8 @@
                   "empty": "No such country in the list"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-autocomplete-009-* variables. Client-side: \"use client\". The country button is declared with aria-expanded and aria-controls, and its aria-label carries the country name and the dial code — a screen reader says nothing about a flag. The list is role=\"listbox\" with role=\"option\" rows and aria-selected. The flags are emoji, there are no sprites and no images."
           }
         },
         "cardControls": [
@@ -1882,7 +1892,8 @@
                 "createLabel": "Create “{value}”",
                 "hintText": "Labels: {count}. Enter picks the highlighted row"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-autocomplete-010-* variables. Client-side: \"use client\". The create row is part of the list, so the index of the active row is counted as matches.length + 1 and the arrows reach it. An exact match with an existing label removes the create offer. The plus is drawn as a square with two pseudo-elements."
           }
         },
         "cardControls": [
@@ -2062,7 +2073,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-autocomplete-011-* variables. Client-side: \"use client\". The mention token is computed from the last @ up to the caret and ends at a space, so the list goes out by itself. The caret position is tracked on onChange, onKeyUp and onClick. The avatar is initials on a hue computed from the name: the sum of the character codes modulo 360 is handed to a local hue variable."
           }
         },
         "cardControls": [
@@ -2239,7 +2251,8 @@
                 "matchHint": "Match {match} — it fills in with the tail selected",
                 "idleHint": "The field completes the match and selects what it added"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-autocomplete-012-* variables. Client-side: \"use client\". The selection range is put into a ref and applied in an effect after render: before that the field still holds the old value. Deleting characters does not turn the suggestion on, otherwise a stray character could never be erased. The field is declared aria-autocomplete=\"inline\" and the selection colour is set through ::selection."
           }
         },
         "cardControls": [
@@ -2392,7 +2405,8 @@
                 },
                 "retryLabel": "Retry"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-autocomplete-013-* variables. The request goes into the search prop and returns a promise; a rejection is caught by catch and moves the component into the failed state. A response to a stale request is dropped by a counter: without it a slow answer overwrites the fresh list. The failure is marked role=\"alert\", so a screen reader reads it at once rather than on the next focus. The retry button returns focus to the field: after a successful attempt typing continues there. The initial state is set by the defaultState prop — the showcase has to show a failure without making a request. The theme comes from color-scheme through light-dark(), and the component switches on a class-based dark theme for itself."
           }
         },
         "cardControls": [
@@ -2560,7 +2574,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-autocomplete-015-* variables. The cursor is driven by the arrows, and the preview is bound to it rather than to hover: on a keyboard the mouse does not move. The right-hand panel is marked aria-live=\"polite\" — otherwise a cursor change stays mute for a screen reader. The field is declared role=\"combobox\" with aria-activedescendant, and focus stays in the field. The section heading is printed once per group and computed in advance as an array: a variable must not be mutated during render. The layout is computed from the panel's own width through a container query: below 26rem the preview moves under the list instead of squeezing both columns. The theme comes from color-scheme through light-dark(), and the component switches on a class-based dark theme for itself."
           }
         },
         "cardControls": [

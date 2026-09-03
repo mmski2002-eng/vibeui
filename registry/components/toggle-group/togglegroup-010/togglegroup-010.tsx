@@ -1,10 +1,15 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties, ReactNode } from "react"
+import type {
+  ComponentProps,
+  CSSProperties,
+  KeyboardEvent,
+  ReactNode,
+} from "react"
 
 export type Togglegroup010Props = Omit<
-  ComponentPropsWithoutRef<"section">,
+  ComponentProps<"section">,
   "children" | "onChange"
 > & {
   label?: string
@@ -31,7 +36,7 @@ const STYLES = `
 :where([data-vibeui-block="togglegroup-010"]){
 --vibeui-togglegroup-010-bg:transparent;
 --vibeui-togglegroup-010-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-togglegroup-010-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-togglegroup-010-muted:color-mix(in oklab,var(--vibeui-togglegroup-010-fg) 68%,transparent);
 --vibeui-togglegroup-010-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
 --vibeui-togglegroup-010-surface:light-dark(oklch(0.97 0.004 265),oklch(0.26 0.01 265));
 --vibeui-togglegroup-010-accent:light-dark(oklch(0.56 0.19 320),oklch(0.74 0.16 320));
@@ -39,6 +44,9 @@ const STYLES = `
 --vibeui-togglegroup-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-togglegroup-010-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="togglegroup-010"]{color-scheme:dark}
 [data-vibeui-block="togglegroup-010"]{
 box-sizing:border-box;display:flex;flex-direction:column;gap:0.75rem;
 width:100%;max-width:24rem;padding:0.875rem;
@@ -143,6 +151,39 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 }
 
 /**
+ * Стрелки водят фокус внутри группы: до дальней кнопки не нужно дожимать
+ * Tab через все предыдущие, а Home и End бросают на края.
+ */
+function moveFocus(event: KeyboardEvent<HTMLDivElement>) {
+  const step =
+    event.key === "ArrowRight" || event.key === "ArrowDown"
+      ? 1
+      : event.key === "ArrowLeft" || event.key === "ArrowUp"
+        ? -1
+        : 0
+
+  if (step === 0 && event.key !== "Home" && event.key !== "End") {
+    return
+  }
+
+  const buttons = Array.from(
+    event.currentTarget.querySelectorAll<HTMLButtonElement>("button"),
+  )
+  const from = buttons.indexOf(document.activeElement as HTMLButtonElement)
+
+  if (from === -1) {
+    return
+  }
+
+  const last = buttons.length - 1
+  const next =
+    event.key === "Home" ? 0 : event.key === "End" ? last : from + step
+
+  event.preventDefault()
+  buttons[next < 0 ? last : next > last ? 0 : next].focus()
+}
+
+/**
  * Панель форматирования множественным выбором: отметки вкладываются друг
  * в друга и рисуют настоящее дерево тегов в превью. Один файл, ноль
  * зависимостей.
@@ -194,12 +235,18 @@ export function Togglegroup010({
       </style>
       <section
         {...props}
+        data-slot="toggle-group"
         data-vibeui-block="togglegroup-010"
         className={className}
         style={palette}
       >
         <div data-part="head">
-          <div data-part="group" role="group" aria-label={label}>
+          <div
+            data-part="group"
+            role="group"
+            aria-label={label}
+            onKeyDown={moveFocus}
+          >
             {MARKS.map((mark) => (
               <button
                 key={mark.id}

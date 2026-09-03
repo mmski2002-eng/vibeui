@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Switch010Props = Omit<
-  ComponentPropsWithoutRef<"input">,
-  "type" | "size"
-> & {
+export type Switch010Props = Omit<ComponentProps<"input">, "type" | "size"> & {
   label?: string
   /** Пояснение под подписью: без него строка становится однострочной. */
   description?: string
@@ -21,7 +18,7 @@ const STYLES = `
 --vibeui-switch-010-bg:transparent;
 --vibeui-switch-010-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-switch-010-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.005 265));
---vibeui-switch-010-muted:light-dark(oklch(0.54 0.014 265),oklch(0.7 0.012 265));
+--vibeui-switch-010-muted:color-mix(in oklab,var(--vibeui-switch-010-fg) 68%,transparent);
 --vibeui-switch-010-track:light-dark(oklch(0.88 0.008 265),oklch(0.43 0.014 265));
 --vibeui-switch-010-thumb:light-dark(oklch(1 0 0),oklch(0.93 0.004 265));
 --vibeui-switch-010-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
@@ -30,6 +27,9 @@ const STYLES = `
 --vibeui-switch-010-radius:0.625rem;
 --vibeui-switch-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="switch-010"]{color-scheme:dark}
 [data-vibeui-block="switch-010"]{
 box-sizing:border-box;display:flex;align-items:center;gap:0.875rem;
 width:100%;max-width:23rem;box-sizing:border-box;
@@ -54,7 +54,7 @@ background:var(--vibeui-switch-010-accent);
 box-shadow:0 0 0 0.1875rem color-mix(in oklab,var(--vibeui-switch-010-accent) 25%,transparent);
 }
 [data-vibeui-block="switch-010"] [data-part="text"]{display:flex;flex-direction:column;gap:0.125rem;flex:1 1 auto;min-width:0}
-[data-vibeui-block="switch-010"] [data-part="title"]{font-size:0.9375rem;line-height:1.35}
+[data-vibeui-block="switch-010"] [data-part="title"]{font-size:0.875rem;line-height:1.35}
 [data-vibeui-block="switch-010"] [data-part="description"]{font-size:0.8125rem;line-height:1.4;color:var(--vibeui-switch-010-muted)}
 [data-vibeui-block="switch-010"] [data-part="track"]{position:relative;display:flex;flex:none}
 [data-vibeui-block="switch-010"] input{
@@ -128,6 +128,7 @@ export function Switch010({
         {STYLES}
       </style>
       <label
+        data-slot="switch"
         data-vibeui-block="switch-010"
         className={className}
         style={palette}

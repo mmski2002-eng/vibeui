@@ -28,13 +28,16 @@ export type Dialog004Props = {
 const STYLES = `
 :where([data-vibeui-block="dialog-004"]){
 --vibeui-dialog-004-fg:light-dark(oklch(0.22 0.016 265),oklch(0.94 0.005 265));
---vibeui-dialog-004-muted:light-dark(oklch(0.5 0.014 265),oklch(0.7 0.012 265));
+--vibeui-dialog-004-muted:color-mix(in oklab,var(--vibeui-dialog-004-fg) 68%,transparent);
 --vibeui-dialog-004-bg:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
 --vibeui-dialog-004-border:light-dark(oklch(0.89 0.006 265),oklch(0.38 0.012 265));
 --vibeui-dialog-004-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
 --vibeui-dialog-004-radius:1rem;
 --vibeui-dialog-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="dialog-004"]{color-scheme:dark}
 [data-vibeui-block="dialog-004"]{display:inline-flex;font-family:var(--vibeui-dialog-004-font)}
 [data-vibeui-block="dialog-004"] [data-part="trigger"]{
 appearance:none;cursor:pointer;font:inherit;font-size:0.875rem;font-weight:500;
@@ -59,7 +62,7 @@ transition:opacity .18s ease,transform .18s ease,display .18s allow-discrete,ove
 [data-vibeui-dialog-004-window]:popover-open{opacity:1;transform:none}
 @starting-style{[data-vibeui-dialog-004-window]:popover-open{opacity:0;transform:scale(0.97)}}
 [data-vibeui-dialog-004-window]::backdrop{background:oklch(0.18 0.02 265 / 45%)}
-[data-vibeui-dialog-004-window] [data-part="title"]{margin:0 0 0.875rem;font-size:1rem;font-weight:620;line-height:1.35}
+[data-vibeui-dialog-004-window] [data-part="title"]{margin:0 0 0.875rem;font-size:1.0625rem;font-weight:620;line-height:1.35}
 [data-vibeui-dialog-004-window] [data-part="list"]{display:flex;flex-direction:column;gap:0.5rem}
 [data-vibeui-dialog-004-window] [data-part="option"]{
 display:flex;align-items:flex-start;gap:0.625rem;
@@ -98,6 +101,8 @@ border-radius:0.5rem;border:1px solid transparent;
 [data-vibeui-dialog-004-window] [data-part="cancel"]{background:transparent;color:inherit;border-color:var(--vibeui-dialog-004-border,light-dark(oklch(0.89 0.006 265),oklch(0.38 0.012 265)))}
 [data-vibeui-dialog-004-window] [data-part="submit"]{background:var(--vibeui-dialog-004-accent,light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262)));color:light-dark(oklch(1 0 0),oklch(0.17 0.02 265))}
 [data-vibeui-dialog-004-window] button:focus-visible{outline:2px solid var(--vibeui-dialog-004-accent,light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262)));outline-offset:2px}
+/* Popover страницу не блокирует: фон под окном иначе продолжает прокручиваться. */
+html:has([data-vibeui-dialog-004-window]:popover-open){overflow:hidden}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="dialog-004"] *{animation:none!important;transition:none!important}
 [data-vibeui-dialog-004-window]{transition:none!important;opacity:1;transform:none}
@@ -178,7 +183,12 @@ export function Dialog004({
       <style href="vibeui-dialog-004" precedence="medium">
         {STYLES}
       </style>
-      <div data-vibeui-block="dialog-004" className={className} style={palette}>
+      <div
+        data-slot="dialog"
+        data-vibeui-block="dialog-004"
+        className={className}
+        style={palette}
+      >
         <button data-part="trigger" type="button" popoverTarget={id}>
           {trigger}
         </button>
@@ -213,7 +223,12 @@ export function Dialog004({
               ))}
             </div>
             <div data-part="actions">
-              <button data-part="cancel" type="button" popoverTarget={id}>
+              <button
+                data-part="cancel"
+                type="button"
+                popoverTarget={id}
+                autoFocus
+              >
                 {cancelLabel}
               </button>
               <button data-part="submit" type="submit" popoverTarget={id}>

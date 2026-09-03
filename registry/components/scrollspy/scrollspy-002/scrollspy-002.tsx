@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Scrollspy002Section = {
   id: string
@@ -9,10 +9,7 @@ export type Scrollspy002Section = {
   text?: string
 }
 
-export type Scrollspy002Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Scrollspy002Props = Omit<ComponentProps<"div">, "children"> & {
   sections?: Scrollspy002Section[]
   title?: string
   /** Подпись области чтения для скринридера. */
@@ -35,12 +32,15 @@ const STYLES = `
 :where([data-vibeui-block="scrollspy-002"]){
 --vibeui-scrollspy-002-bg:transparent;
 --vibeui-scrollspy-002-fg:light-dark(oklch(0.23 0.014 265),oklch(0.93 0.006 265));
---vibeui-scrollspy-002-muted:light-dark(oklch(0.56 0.014 265),oklch(0.69 0.012 265));
+--vibeui-scrollspy-002-muted:color-mix(in oklab,var(--vibeui-scrollspy-002-fg) 68%,transparent);
 --vibeui-scrollspy-002-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-scrollspy-002-accent:light-dark(oklch(0.55 0.19 262),oklch(0.74 0.16 262));
 --vibeui-scrollspy-002-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.02 265));
 --vibeui-scrollspy-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="scrollspy-002"]{color-scheme:dark}
 [data-vibeui-block="scrollspy-002"]{
 display:flex;flex-direction:column;gap:0.625rem;
 width:100%;max-width:28rem;box-sizing:border-box;padding:0.9375rem;
@@ -199,6 +199,7 @@ export function Scrollspy002({
       </style>
       <div
         {...props}
+        data-slot="scrollspy"
         data-vibeui-block="scrollspy-002"
         className={className}
         style={palette}

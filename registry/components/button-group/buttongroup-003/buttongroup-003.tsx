@@ -1,14 +1,11 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Buttongroup003Option = {
   label: string
   hint?: string
 }
 
-export type Buttongroup003Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Buttongroup003Props = Omit<ComponentProps<"div">, "children"> & {
   action?: string
   options?: Buttongroup003Option[]
   menuLabel?: string
@@ -25,15 +22,20 @@ const STYLES = `
 :where([data-vibeui-block="buttongroup-003"]){
 --vibeui-buttongroup-003-surface:light-dark(oklch(1 0 0),oklch(0.23 0.014 265));
 --vibeui-buttongroup-003-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.006 265));
---vibeui-buttongroup-003-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-buttongroup-003-muted:color-mix(in oklab,var(--vibeui-buttongroup-003-fg) 68%,transparent);
 --vibeui-buttongroup-003-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
 --vibeui-buttongroup-003-hover:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.012 265));
---vibeui-buttongroup-003-accent:light-dark(oklch(0.52 0.17 265),oklch(0.62 0.17 265));
---vibeui-buttongroup-003-accent-dark:light-dark(oklch(0.45 0.16 265),oklch(0.55 0.17 265));
+/* Подпись на заливке почти белая, поэтому в тёмной ветке акцент не светлее
+   светлой: выше L≈0.57 контраст текста падает ниже 4.5:1. */
+--vibeui-buttongroup-003-accent:light-dark(oklch(0.52 0.17 265),oklch(0.56 0.17 265));
+--vibeui-buttongroup-003-accent-dark:light-dark(oklch(0.45 0.16 265),oklch(0.5 0.17 265));
 --vibeui-buttongroup-003-on-accent:oklch(0.99 0.005 265);
 --vibeui-buttongroup-003-radius:0.625rem;
 --vibeui-buttongroup-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="buttongroup-003"]{color-scheme:dark}
 [data-vibeui-block="buttongroup-003"]{
 box-sizing:border-box;display:inline-flex;isolation:isolate;
 border-radius:var(--vibeui-buttongroup-003-radius);
@@ -44,7 +46,7 @@ font-family:var(--vibeui-buttongroup-003-font);
 [data-vibeui-block="buttongroup-003"] [data-part="more"]{
 appearance:none;cursor:pointer;font:inherit;position:relative;z-index:0;
 display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;
-height:2.375rem;border:0;
+height:2.25rem;border:0;
 background:var(--vibeui-buttongroup-003-accent);
 color:var(--vibeui-buttongroup-003-on-accent);
 font-size:0.8125rem;font-weight:650;line-height:1;
@@ -142,6 +144,7 @@ export function Buttongroup003({
       </style>
       <div
         {...props}
+        data-slot="button-group"
         data-vibeui-block="buttongroup-003"
         role="group"
         aria-label={action}

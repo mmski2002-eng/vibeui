@@ -1,10 +1,9 @@
-import { useId } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+"use client"
 
-export type Hovercard001Props = Omit<
-  ComponentPropsWithoutRef<"span">,
-  "children"
-> & {
+import { useId } from "react"
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
+
+export type Hovercard001Props = Omit<ComponentProps<"span">, "children"> & {
   name?: string
   handle?: string
   about?: string
@@ -25,12 +24,15 @@ const STYLES = `
 :where([data-vibeui-block="hovercard-001"]){
 --vibeui-hovercard-001-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
 --vibeui-hovercard-001-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-hovercard-001-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-hovercard-001-muted:color-mix(in oklab,var(--vibeui-hovercard-001-fg) 68%,transparent);
 --vibeui-hovercard-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
 --vibeui-hovercard-001-hue:250;
 --vibeui-hovercard-001-accent:light-dark(oklch(0.55 0.17 265),oklch(0.76 0.14 265));
 --vibeui-hovercard-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="hovercard-001"]{color-scheme:dark}
 [data-vibeui-block="hovercard-001"]{
 position:relative;display:inline-block;
 font-family:var(--vibeui-hovercard-001-font);color:var(--vibeui-hovercard-001-fg);
@@ -59,8 +61,8 @@ opacity:1;visibility:visible;translate:0 0;
 [data-vibeui-block="hovercard-001"] [data-part="face"]{
 display:flex;align-items:center;justify-content:center;flex:none;
 width:2.25rem;height:2.25rem;border-radius:9999px;
-background:oklch(0.92 0.05 var(--vibeui-hovercard-001-hue));
-color:oklch(0.38 0.09 var(--vibeui-hovercard-001-hue));
+background:light-dark(oklch(0.92 0.05 var(--vibeui-hovercard-001-hue)),oklch(0.33 0.07 var(--vibeui-hovercard-001-hue)));
+color:light-dark(oklch(0.38 0.09 var(--vibeui-hovercard-001-hue)),oklch(0.92 0.05 var(--vibeui-hovercard-001-hue)));
 font-size:0.75rem;font-weight:700;
 }
 [data-vibeui-block="hovercard-001"] [data-part="name"]{font-size:0.875rem;font-weight:650;line-height:1.2}
@@ -118,6 +120,16 @@ function initials(name: string) {
 }
 
 /**
+ * Escape убирает фокус с триггера. Карточка держится на :focus-within,
+ * поэтому снятого фокуса достаточно, чтобы закрыть её с клавиатуры.
+ */
+function closeOnEscape(event: KeyboardEvent<HTMLElement>) {
+  if (event.key === "Escape") {
+    ;(event.target as HTMLElement).blur()
+  }
+}
+
+/**
  * Карточка человека у упоминания: раскрывается по наведению и по фокусу.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -152,6 +164,8 @@ export function Hovercard001({
       </style>
       <span
         {...props}
+        data-slot="hover-card"
+        onKeyDown={closeOnEscape}
         data-vibeui-block="hovercard-001"
         className={className}
         style={palette}

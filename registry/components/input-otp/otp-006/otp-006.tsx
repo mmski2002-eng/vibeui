@@ -1,10 +1,10 @@
 "use client"
 
 import { useId, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Otp006Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   label?: string
@@ -35,22 +35,26 @@ const STYLES = `
 --vibeui-otp-006-bg:transparent;
 --vibeui-otp-006-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-otp-006-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
---vibeui-otp-006-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.014 265));
+--vibeui-otp-006-muted:color-mix(in oklab,var(--vibeui-otp-006-fg) 68%,transparent);
 --vibeui-otp-006-field:light-dark(oklch(0.98 0.002 265),oklch(0.26 0.014 265));
 --vibeui-otp-006-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.014 265));
 --vibeui-otp-006-accent:light-dark(oklch(0.5 0.17 300),oklch(0.75 0.15 300));
 --vibeui-otp-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-otp-006-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="otp-006"]{color-scheme:dark}
 [data-vibeui-block="otp-006"]{
 display:flex;flex-direction:column;gap:0.5rem;
-width:100%;max-width:20rem;box-sizing:border-box;padding:0.875rem;
+width:100%;max-width:20rem;box-sizing:border-box;padding:0.9375rem;
 background:var(--vibeui-otp-006-bg);
 border:1px solid var(--vibeui-otp-006-shell);border-radius:0.875rem;
 font-family:var(--vibeui-otp-006-font);color:var(--vibeui-otp-006-fg);
 }
 [data-vibeui-block="otp-006"] *{box-sizing:border-box}
-[data-vibeui-block="otp-006"] label{font-size:0.8125rem;font-weight:600}
+[data-vibeui-block="otp-006"] label{font-size:0.9375rem;font-weight:600}
 [data-vibeui-block="otp-006"] [data-part="frame"]{
 position:relative;display:flex;align-items:center;gap:0.5rem;
 height:3.25rem;padding:0 0.5rem 0 1rem;
@@ -84,7 +88,7 @@ caret-color:var(--vibeui-otp-006-accent);
 appearance:none;flex:none;cursor:pointer;
 height:2.25rem;padding:0 0.625rem;border:0;border-radius:0.5rem;
 background:transparent;color:var(--vibeui-otp-006-muted);
-font:inherit;font-size:0.75rem;font-weight:600;
+font:inherit;font-size:0.875rem;font-weight:600;
 transition:background-color .16s ease,color .16s ease;
 }
 [data-vibeui-block="otp-006"] [data-part="peek"]:hover{
@@ -96,10 +100,17 @@ outline:2px solid var(--vibeui-otp-006-accent);outline-offset:1px;
 }
 [data-vibeui-block="otp-006"] [data-part="foot"]{
 display:flex;align-items:baseline;justify-content:space-between;gap:0.5rem;
-margin:0;font-size:0.75rem;line-height:1.4;color:var(--vibeui-otp-006-muted);
+flex-wrap:wrap;
+margin:0;font-size:0.875rem;line-height:1.4;color:var(--vibeui-otp-006-muted);
 }
 [data-vibeui-block="otp-006"] [data-part="foot"] b{
 font-variant-numeric:tabular-nums;font-weight:650;color:var(--vibeui-otp-006-fg);
+}
+/* Шкала категории. Порог 19rem, а не 32rem: карточка упёрта в max-width:20rem. */
+@container (min-width: 19rem){
+[data-vibeui-block="otp-006"] label{font-size:1rem}
+[data-vibeui-block="otp-006"] [data-part="foot"]{font-size:0.9375rem}
+[data-vibeui-block="otp-006"] [data-part="peek"]{font-size:0.9375rem}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="otp-006"] *{animation:none!important;transition:none!important}}
 `
@@ -167,6 +178,7 @@ export function Otp006({
       </style>
       <div
         {...props}
+        data-slot="input-otp"
         data-vibeui-block="otp-006"
         className={className}
         style={palette}

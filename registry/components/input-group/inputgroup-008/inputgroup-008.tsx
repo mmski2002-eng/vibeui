@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Inputgroup008Props = Omit<
-  ComponentPropsWithoutRef<"form">,
-  "children"
-> & {
+export type Inputgroup008Props = Omit<ComponentProps<"form">, "children"> & {
   name?: string
   label?: string
   action?: string
@@ -31,7 +28,7 @@ const STYLES = `
 --vibeui-inputgroup-008-surface:transparent;
 --vibeui-inputgroup-008-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.011 265));
 --vibeui-inputgroup-008-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
---vibeui-inputgroup-008-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-inputgroup-008-muted:color-mix(in oklab,var(--vibeui-inputgroup-008-fg) 68%,transparent);
 --vibeui-inputgroup-008-field:light-dark(oklch(0.99 0.002 265),oklch(0.27 0.013 265));
 --vibeui-inputgroup-008-border:light-dark(oklch(0.86 0.008 265),oklch(0.44 0.013 265));
 --vibeui-inputgroup-008-accent:light-dark(oklch(0.5 0.16 25),oklch(0.72 0.15 25));
@@ -40,6 +37,9 @@ const STYLES = `
 --vibeui-inputgroup-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="inputgroup-008"]{color-scheme:dark}
 [data-vibeui-block="inputgroup-008"]{
 display:block;margin:0;
 width:100%;box-sizing:border-box;padding:0.875rem;
@@ -58,10 +58,10 @@ display:flex;flex-direction:column;gap:0.5rem;
 display:flex;flex-direction:column;
 }
 [data-vibeui-block="inputgroup-008"] [data-part="group"] > *{
-position:relative;height:2.875rem;width:100%;
+position:relative;height:2.75rem;width:100%;
 border:1px solid var(--vibeui-inputgroup-008-border);
 border-radius:0;margin-top:-1px;margin-left:0;
-font:inherit;font-size:0.9375rem;color:inherit;
+font:inherit;font-size:0.875rem;color:inherit;
 }
 [data-vibeui-block="inputgroup-008"] [data-part="group"] > *:first-child{
 margin-top:0;
@@ -168,6 +168,7 @@ export function Inputgroup008({
       </style>
       <form
         {...props}
+        data-slot="input-group"
         data-vibeui-block="inputgroup-008"
         className={className}
         style={palette}

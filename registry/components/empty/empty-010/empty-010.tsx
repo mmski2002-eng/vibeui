@@ -30,7 +30,7 @@ const STYLES = `
 :where([data-vibeui-block="empty-010"]){
 --vibeui-empty-010-bg:transparent;
 --vibeui-empty-010-fg:light-dark(oklch(0.21 0.014 265),oklch(0.95 0.005 265));
---vibeui-empty-010-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-empty-010-muted:color-mix(in oklab,var(--vibeui-empty-010-fg) 68%,transparent);
 --vibeui-empty-010-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
 --vibeui-empty-010-hover:light-dark(oklch(0.97 0.003 265),oklch(0.31 0.011 265));
 --vibeui-empty-010-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
@@ -38,6 +38,9 @@ const STYLES = `
 --vibeui-empty-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="empty-010"]{color-scheme:dark}
 [data-vibeui-block="empty-010"]{
 display:flex;flex-direction:column;align-items:center;gap:0.625rem;
 width:100%;max-width:26rem;box-sizing:border-box;padding:1.5rem 1.25rem;
@@ -170,6 +173,7 @@ export function Empty010({
         {STYLES}
       </style>
       <div
+        data-slot="empty"
         data-vibeui-block="empty-010"
         role="status"
         className={className}

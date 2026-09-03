@@ -1,10 +1,10 @@
 "use client"
 
 import { useId, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Toggle004Props = Omit<
-  ComponentPropsWithoutRef<"section">,
+  ComponentProps<"section">,
   "children" | "onChange"
 > & {
   label?: string
@@ -27,7 +27,7 @@ const STYLES = `
 :where([data-vibeui-block="toggle-004"]){
 --vibeui-toggle-004-bg:transparent;
 --vibeui-toggle-004-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
---vibeui-toggle-004-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-toggle-004-muted:color-mix(in oklab,var(--vibeui-toggle-004-fg) 68%,transparent);
 --vibeui-toggle-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
 --vibeui-toggle-004-canvas:light-dark(oklch(0.975 0.004 265),oklch(0.26 0.01 265));
 --vibeui-toggle-004-art:light-dark(oklch(0.86 0.02 265),oklch(0.38 0.016 265));
@@ -36,6 +36,9 @@ const STYLES = `
 --vibeui-toggle-004-step:1.25rem;
 --vibeui-toggle-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="toggle-004"]{color-scheme:dark}
 [data-vibeui-block="toggle-004"]{
 box-sizing:border-box;display:flex;flex-direction:column;gap:0.625rem;
 width:100%;max-width:24rem;padding:0.875rem;
@@ -48,7 +51,7 @@ font-family:var(--vibeui-toggle-004-font);
 display:flex;align-items:center;justify-content:space-between;gap:0.75rem;
 }
 [data-vibeui-block="toggle-004"] [data-part="caption"]{
-margin:0;font-size:0.8125rem;font-weight:600;
+margin:0;font-size:0.875rem;font-weight:600;
 }
 [data-vibeui-block="toggle-004"] button{
 appearance:none;cursor:pointer;font:inherit;
@@ -56,7 +59,7 @@ display:inline-flex;align-items:center;gap:0.4375rem;
 height:2rem;padding:0 0.75rem;
 border:1px solid var(--vibeui-toggle-004-border);border-radius:0.5rem;
 background:var(--vibeui-toggle-004-bg);color:var(--vibeui-toggle-004-muted);
-font-size:0.8125rem;font-weight:600;line-height:1;
+font-size:0.875rem;font-weight:600;line-height:1;
 transition:background-color .16s ease,color .16s ease,border-color .16s ease;
 }
 [data-vibeui-block="toggle-004"] button svg{width:0.9375rem;height:0.9375rem}
@@ -158,6 +161,7 @@ export function Toggle004({
       </style>
       <section
         {...props}
+        data-slot="toggle"
         data-vibeui-block="toggle-004"
         data-grid={pressed}
         className={className}

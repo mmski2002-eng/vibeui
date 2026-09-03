@@ -1,7 +1,9 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Kbd002Props = Omit<ComponentPropsWithoutRef<"div">, "children"> & {
+export type Kbd002Props = Omit<ComponentProps<"div">, "children"> & {
   keys?: string[]
+  /** Чем рисовать клавишу "Mod": на macOS это ⌘, на Windows и Linux — Ctrl. */
+  mod?: string
   separator?: "plus" | "then" | "arrow"
   caption?: string
   /** Подписи разделителей: компонент несёт русские, проект подставляет свои. */
@@ -21,11 +23,14 @@ const STYLES = `
 :where([data-vibeui-block="kbd-002"]){
 --vibeui-kbd-002-surface:transparent;
 --vibeui-kbd-002-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
---vibeui-kbd-002-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-kbd-002-muted:color-mix(in oklab,var(--vibeui-kbd-002-fg) 68%,transparent);
 --vibeui-kbd-002-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.012 265));
 --vibeui-kbd-002-key:light-dark(oklch(0.985 0.002 265),oklch(0.3 0.012 265));
 --vibeui-kbd-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="kbd-002"]{color-scheme:dark}
 [data-vibeui-block="kbd-002"]{
 display:inline-flex;flex-direction:column;gap:0.5rem;
 box-sizing:border-box;padding:0.875rem 1rem;
@@ -90,7 +95,8 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Kbd002({
-  keys = ["⌘", "⇧", "P"],
+  keys = ["Mod", "⇧", "P"],
+  mod = "⌘",
   separator = "plus",
   caption = "Палитра команд",
   separatorText = SEPARATOR_TEXT,
@@ -117,6 +123,7 @@ export function Kbd002({
       </style>
       <div
         {...props}
+        data-slot="kbd"
         data-vibeui-block="kbd-002"
         data-separator={separator}
         className={className}
@@ -126,7 +133,7 @@ export function Kbd002({
           {keys.map((key, index) => (
             <span key={key} data-part="unit">
               {index > 0 ? <span data-part="sep"> {glue} </span> : null}
-              <kbd>{key}</kbd>
+              <kbd>{key === "Mod" ? mod : key}</kbd>
             </span>
           ))}
         </span>

@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties, ReactNode } from "react"
+import type { ComponentProps, CSSProperties, ReactNode } from "react"
 
-export type Frame014Props = Omit<
-  ComponentPropsWithoutRef<"figure">,
-  "title"
-> & {
+export type Frame014Props = Omit<ComponentProps<"figure">, "title"> & {
   sender?: string
   senderEmail?: string
   date?: string
@@ -24,7 +21,7 @@ const STYLES = `
 :where([data-vibeui-block="frame-014"]){
 --vibeui-frame-014-bg:transparent;
 --vibeui-frame-014-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
---vibeui-frame-014-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-frame-014-muted:color-mix(in oklab,var(--vibeui-frame-014-fg) 68%,transparent);
 --vibeui-frame-014-border:light-dark(oklch(0.89 0.006 265),oklch(0.4 0.011 265));
 --vibeui-frame-014-avatar:light-dark(oklch(0.55 0.14 260),oklch(0.7 0.14 260));
 --vibeui-frame-014-avatar-fg:light-dark(oklch(0.99 0.004 260),oklch(0.2 0.03 260));
@@ -32,6 +29,9 @@ const STYLES = `
 --vibeui-frame-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="frame-014"]{color-scheme:dark}
 [data-vibeui-block="frame-014"]{
 display:block;margin:0;width:100%;max-width:34rem;box-sizing:border-box;
 font-family:var(--vibeui-frame-014-font);color:var(--vibeui-frame-014-fg);
@@ -152,6 +152,7 @@ export function Frame014({
       </style>
       <figure
         {...props}
+        data-slot="frame"
         data-vibeui-block="frame-014"
         className={className}
         style={palette}

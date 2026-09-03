@@ -131,7 +131,8 @@
                 "placeholder": "name@company.com",
                 "hint": "Once a fortnight. Unsubscribe from any email."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-001-* variables. Server-side: there is no state, and the wrapper is a real <form>, so Enter in the field presses the button. The shared frame is built by collapsing the borders (margin-left:-1px on the neighbours), the rounding is left only at the ends of the group, and the focused element is raised with z-index. The field and hint ids are assembled from the name prop so as to do without a client hook."
           }
         },
         "cardControls": ["accent", "background"]
@@ -285,7 +286,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-002-* variables. Server-side: there is no state. On the left there is a native <select> with appearance:none and an arrow made of two gradients, on the right the phone field. The select width is set in ch so that changing the code does not shift the number. The frame is built by collapsing the borders, and the focused element is raised with z-index. The code and the number are submitted as two form fields: `${name}-code` and name."
           }
         },
         "cardControls": ["accent", "background"]
@@ -423,7 +425,8 @@
                 "copiedText": "Copied",
                 "hint": "Refreshing the link disables the previous one — the old address stops working."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-003-* variables. Client-side: \"use client\". The field is readonly, but it is a real input — a link has to be selectable. Copying goes through navigator.clipboard, and on a refusal (no https, no permission) the value is simply selected. The buttons share the frame with the field through collapsed borders, and the focused element is raised with z-index. A new code is generated only on a press, never at render — otherwise the server and client markup would diverge."
           }
         },
         "cardControls": ["accent", "background"]
@@ -559,7 +562,8 @@
                 "currencyLabel": "Currency",
                 "hint": "The currency is submitted as its own form field; conversion is the server's job."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-004-* variables. Server-side: there is no state. The joining works differently here: the border lives on the group, the input and the select have none, and the inner line is drawn with an inset box-shadow — that way the thickness does not double on collapsing. overflow:hidden clips the surfaces to the border radius. The number is right-aligned and the number field's spinners are hidden. The value and the currency are submitted as two form fields."
           }
         },
         "cardControls": ["accent", "background"]
@@ -713,7 +717,8 @@
                 "scopeLabel": "Where to search",
                 "hint": "The scope travels with the query — the result link can be saved."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-005-* variables. Server-side: there is no state, and the wrapper is a <form role=\"search\">, so Enter submits the query. The three elements are joined by collapsed borders, and the rounding is set by a 999px radius that stands only at the ends — the middle stays square. The search scope is submitted as its own `${name}-scope` field, so a link to the result can be saved."
           }
         },
         "cardControls": ["accent", "background"]
@@ -863,7 +868,8 @@
                 },
                 "hint": "An empty half means \"no limit\" — the filter never forces you to invent a bound."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-006-* variables. Server-side: there is no state. The wrapper is a fieldset with a legend, because this is one value made of two parts. A legend inside a flex container behaves as a separate flow, so it carries float:left;width:100% and the next child is given clear:both. The dash is its own element of the group with aria-hidden rather than text inside a field. Both halves are submitted as the `${name}-from` and `${name}-to` fields."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1000,7 +1006,8 @@
                 "clearLabel": "Clear the field",
                 "hint": "The clear button appears with the text and leaves with it."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-007-* variables. Client-side: \"use client\" for the sake of the value state. The icon is a non-interactive span with aria-hidden: there is nothing to press on it. The clear button is mounted only for a non-empty value and returns focus to the field after a press. All three parts share the frame through collapsed borders, and the focused element is raised with z-index."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1143,7 +1150,8 @@
                 "zipLabel": "Postal code",
                 "hint": "The layout follows the block's own width: in a narrow column the group stacks exactly as it does on a phone."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-008-* variables. Server-side: there is no state. The layout is computed from the block's own width through container-type:inline-size and @container (min-width: 30rem) rather than from the viewport — the same component in a narrow column folds exactly as it does on a phone. The layout rules sit on the inner [data-part=\"shell\"] and on the group: a container query does not apply to the container itself. In the stacked layout margin-left:-1px becomes margin-top:-1px, and the side rounding becomes top and bottom rounding."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1281,7 +1289,8 @@
                 "user": "anna.orlova",
                 "hint": "The name and the domain are submitted as two form fields."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-009-* variables. Server-side: the error state arrives through the error prop. The red border is set on every child of the group while the ring goes on the group itself, so it is not clipped by a neighbour's border. aria-invalid stands on both controls, and aria-describedby on both points at a single message with role=\"alert\". Between the halves sits a non-interactive @ with aria-hidden."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1429,7 +1438,8 @@
                 "defaultValue": "my-team",
                 "counterText": "{count}/{limit}"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-010-* variables. Client-side: \"use client\" for the sake of normalisation. The prefix is a non-interactive span with user-select:none and aria-hidden; it truncates with an ellipsis and is not submitted with the form. The value is cleaned on every keystroke: lower case, spaces and underscores turned into hyphens, stray characters dropped, repeated hyphens collapsed and the length capped. Under the group the resulting address and a length counter are shown."
           }
         },
         "cardControls": ["limit", "accent", "background"]
@@ -1541,7 +1551,8 @@
                 "currencyLabel": "Currency",
                 "hint": "The symbol on the left follows the currency you pick — there is nothing to cross-check."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-011-* variables. Client-side: \"use client\" for the sake of keeping the symbol in sync with the chosen currency. The symbol is a non-interactive span with aria-hidden and user-select:none; it takes no part in the form and always reflects currencies.find(code). All three parts share the frame through collapsed borders, and the focused element is raised with z-index."
           }
         },
         "controls": [
@@ -1672,7 +1683,8 @@
                 "clearLabel": "Clear the field",
                 "hint": "The filter on the left narrows the list independently of the query text."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-012-* variables. Client-side: \"use client\" for the sake of the text state and the filter toggle. The filter button on the left is a toggle with aria-pressed and an accent colour of its own when on, and the clear button on the right is mounted only for a non-empty value and returns focus to the field after a press. The parts share the frame through collapsed borders, and the focused element is raised with z-index."
           }
         },
         "controls": [
@@ -1794,7 +1806,8 @@
                 "copiedLabel": "Done",
                 "hint": "The field is read-only: the link can be copied or selected by hand."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-013-* variables. Client-side: \"use client\" for the sake of the copy state. The caption on the left is a non-interactive span with user-select:none and aria-hidden, and the field is readonly but stays a real input — the value can be selected by hand. The copy button tries navigator.clipboard.writeText, on a refusal selects the field text instead of copying, and on success changes the icon and the caption to «Done» for 1.6 seconds."
           }
         },
         "controls": [
@@ -1909,7 +1922,8 @@
                 "increaseLabel": "Increase",
                 "hint": "Use the buttons at the edges or the keyboard arrows inside the field."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-014-* variables. Client-side: \"use client\" for the sake of the shared number state. The unit is a non-interactive span with aria-hidden inside the same frame as the number. The step buttons and the keyboard arrows in the field change one and the same state, and the value is always clamped between min and max through clamp(). At the edge of the range the button does not disappear but gets disabled — the limit stays visible instead of vanishing together with the element."
           }
         },
         "controls": [
@@ -2035,7 +2049,8 @@
                 "previewLabel": "Full address:",
                 "hint": "The protocol on the left and the zone on the right come from a list; the domain name between them is plain text."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-015-* variables. Client-side: \"use client\" for the sake of the protocol, domain and zone state. Both selects are native — keyboard support and the system list come free. The resulting address is assembled from the three parts and printed under the frame in a block with aria-live, so a change to either select is announced at once."
           }
         },
         "controls": [
@@ -2149,7 +2164,8 @@
                 "meterLabel": "Password length",
                 "hint": "The “Generate” button fills the field with a random 16-character password — you can still edit it by hand."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-016-* variables. Client-side: \"use client\" for the sake of the value and indicator state. The field is a text input (not password): a generated password does not need hiding right after the press, and the value stays editable by hand. The indicator is length only: under 8 characters is a warning, from 12 it is sufficient, and the bar and the caption are read through role=\"progressbar\" and aria-live."
           }
         },
         "controls": [
@@ -2260,7 +2276,8 @@
                 },
                 "hint": "The button opens the system file dialog — the name and size appear in the field on the right."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-017-* variables. Client-side: \"use client\" for the sake of the chosen file state. A real <input type=\"file\"> is hidden visually (clipped, not display:none) inside its own <label>, so it stays in the tab order and opens from the keyboard. The neighbouring field only displays the file name and size and takes no part in form submission."
           }
         },
         "controls": [
@@ -2373,7 +2390,8 @@
                 },
                 "hint": "The second date cannot be earlier than the first — the limit comes from the field's min attribute."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-018-* variables. Client-side: \"use client\" for the sake of both date states and counting the nights. The wrapper is a fieldset with a legend, because this is one value made of two dates. The second field takes its min from the first natively, without hand-rolled validation. The layout is computed from the block's own width through @container: a column in a narrow place, a collapsed row with a dash in a wide one."
           }
         },
         "controls": [
@@ -2493,7 +2511,8 @@
                 "statusTemplate": "Searching for “{query}”: {scope}",
                 "hint": "The scope on the left and the text on the right narrow the same list without a separate button — the result changes as you type."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-019-* variables. Client-side: \"use client\" for the sake of the scope, the query and the clearing state. On the left there is a native select with the search scope, on the right a field with live search and no submit button — both change the same result at once. The clear button on the right appears only for a non-empty value and returns focus to the field, as in «Icon And Clear». The resulting state is announced by a line with aria-live."
           }
         },
         "controls": [
@@ -2625,7 +2644,8 @@
                 "countTemplate": "{count} of {max} {unit}",
                 "hint": "The “Add” button moves the text from the field into the list — Enter in the field does the same."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-020-* variables. Client-side: \"use client\" for the sake of the draft and the tag list state. The «Add» button and Enter in the field do the same thing — they move the draft into the list if it is not empty, does not duplicate an existing tag and the limit is not exhausted. Every tag is a separate chip with a remove button and an aria-label of its own, the values go to the server as hidden `${name}[]` fields, and the number of tags is announced by a line with aria-live."
           }
         },
         "controls": [
@@ -2775,7 +2795,8 @@
                 "listLabel": "Countries",
                 "hint": "The country code opens as a panel rather than a system list — it shows not just the code but the country name too."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-021-* variables. Client-side: \"use client\" for the sake of the chosen country and the open panel state. Unlike «Country Prefix» with its native select, here the code is picked by a panel built on <details>/<summary>: the trigger shows the flag and the code, while the list shows the full country name as well. Escape and picking an item close the panel and return focus to the trigger by hand. The code and the number are submitted as two form fields: `${name}-code` and name."
           }
         },
         "controls": [
@@ -2893,7 +2914,8 @@
                 },
                 "hint": "The button on the right opens the explanation without covering the field or overlapping neighbouring elements."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-022-* variables. Client-side: \"use client\" for the sake of the value and the open panel state. The button on the right toggles aria-expanded and expands the explanation panel through grid-template-rows (0fr → 1fr) — the technique animates the height without measuring pixels in JS and without position:absolute over the neighbouring elements. aria-controls ties the button to the panel, and aria-describedby on the field covers both the panel and the ordinary hint."
           }
         },
         "controls": [
@@ -3010,7 +3032,8 @@
                 "presetsLabel": "Quick amount",
                 "hint": "The buttons below replace the amount outright — the number can always be corrected by hand."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-023-* variables. Client-side: \"use client\" for the sake of the shared amount state. The preset buttons replace the field value entirely rather than adding to it, and they are highlighted through aria-pressed only on an exact match with the current amount — typing by hand dims the highlight without any special code. The number is right-aligned and the number field's native spinners are turned off."
           }
         },
         "controls": [
@@ -3134,7 +3157,8 @@
                 },
                 "hint": "A demo check: VIBEUI10 and SALE2026 pass, everything else is rejected."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-024-* variables. Client-side: \"use client\" for the sake of the code and the check status state. The check is simulated by a timer (setTimeout, cleared on unmount and on a re-run), the field is locked while the check runs and stays locked after acceptance, and editing after a rejection resets the status to its initial value. The status is read through role=\"status\" and is distinguished not only by text but also by the border colour and the icon."
           }
         },
         "controls": [
@@ -3264,7 +3288,8 @@
                   "denied": "No clipboard access — paste the value with a keyboard shortcut"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-025-* variables. Client-side: \"use client\" for the sake of the value and the paste status state. The button on the right reads the clipboard through navigator.clipboard.readText() and puts the text into the field, returning focus and placing the caret at the end. A denied access (no permission, no HTTPS, an old browser) moves the status to denied instead of staying silent. The resulting state is announced by a line with aria-live."
           }
         },
         "controls": [
@@ -3406,7 +3431,8 @@
                 "panelLabel": "Query history",
                 "emptyText": "The query history is empty"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-026-* variables. Client-side: \"use client\" for the sake of the query, the history and the panel's open state. The history panel opens on field focus as a role=\"listbox\" beneath it, and an item is picked through onMouseDown with preventDefault — that way the click is not lost to an earlier blur. Enter moves the current query to the top of the history without duplicates, and Escape closes the panel."
           }
         },
         "controls": [
@@ -3552,7 +3578,8 @@
                   "percent": "The discount is set as a percentage of the order total."
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-027-* variables. Client-side: \"use client\" for the sake of the number and the unit state. The «₽ / %» switch is a segmented group of two buttons with aria-pressed inside the field's shared frame. Changing the unit does not recompute the number, it only changes its meaning and the hint caption; the field's max attribute is adjusted for percent alone, so a discount above 100% cannot be entered."
           }
         },
         "controls": [
@@ -3710,7 +3737,8 @@
                 "hint": "The city decides the delivery terms and timing, the address only pins the drop-off point inside it.",
                 "cityLabel": "City"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-028-* variables. Client-side: \"use client\" for the sake of the city and the address state. On the left there is a native select with the city, on the right a text field for the address — the same assembly of a fixed and a free part as in «Scoped Search», but here both halves are equal: onChange always receives the current address and city together, not only the part that changed."
           }
         },
         "controls": [
@@ -3846,7 +3874,8 @@
                   "saved": "Saved"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-029-* variables. Client-side: \"use client\" for the sake of the value, the status and the debounce timer state. Every change to the field immediately moves the status to editing and recreates the setTimeout; the status moves to saved and calls onSave only after a pause of delay with no new keystrokes. The timer is cleared on unmount and on every new change, otherwise a stale onSave call fires after the field is no longer current."
           }
         },
         "controls": [
@@ -3988,7 +4017,8 @@
                 "appliedText": "Applied: {value}",
                 "emptyText": "No filter applied"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-030-* variables. Client-side: \"use client\" for the sake of the draft and the applied value state. «Clear» zeroes the draft and the applied value at once; «Apply» moves the draft into applied and switches off while the two match — that way it is visible whether what is typed differs from what has actually been accepted."
           }
         },
         "controls": [
@@ -4131,7 +4161,8 @@
                 "hint": "The title is required for publishing, and the counter on the left shows the characters left.",
                 "requiredText": "required"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-031-* variables. Client-side: \"use client\" for the sake of the value and the character count state. The asterisk and the «required» text stand next to the label rather than replacing each other — the requirement is marked both by a sign and by a word. The counter is a fixed segment to the left of the input inside the shared frame rather than a caption under the field, and it changes colour once the remaining characters are used up."
           }
         },
         "controls": [
@@ -4288,7 +4319,8 @@
                   "done": "Code scanned: {value}"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-032-* variables. Client-side: \"use client\" for the sake of the value and the scan status state. The connection indicator is a dot and a text next to the label, independent of the scanning itself. The «Scan» button is unavailable without a connected device; on a click it simulates the capture with a timer (setTimeout, cleared on unmount and on a re-run), locks the field while the scan runs and fills it with a generated code."
           }
         },
         "controls": [
@@ -4450,7 +4482,8 @@
                 "unitsLabel": "Time unit",
                 "previewText": "Remind me in {value}"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-033-* variables. Client-side: \"use client\" for the sake of the shared number and unit state. The unit is a native select to the right of the numeric field, and changing it does not recompute the number: 30 minutes do not become 30 hours when «hour» is chosen — the conversion stays with the calling code through onChange, which always has both parts at once. The result is assembled as a phrase under the frame."
           }
         },
         "controls": [
@@ -4598,7 +4631,8 @@
                 },
                 "visibleHint": "The key is on screen — do not leave it that way for long."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-034-* variables. Client-side: \"use client\" for the sake of the value and the visibility state. The masking is the system one — the field type is switched between password and text rather than dots being drawn over the text, so password managers and autofill keep working. The button on the right declares its state through aria-pressed rather than only swapping the icon. The reveal is not remembered between visits."
           }
         },
         "controls": [
@@ -4745,7 +4779,8 @@
                   "checking": "Checking…"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-035-* variables. Client-side: \"use client\" for the sake of the value, the status and the check timer state. The check is simulated by a timer (cleared on unmount and on a re-run), the field is locked only while the check itself runs and stays editable after any result — unlike the promo-code group, here it can be re-checked any number of times. Any edit to the value resets the status to idle at once: the old result belongs to a different string."
           }
         },
         "controls": [
@@ -4893,7 +4928,8 @@
                 },
                 "errorText": "The “to” value cannot be smaller than the “from” value."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-036-* variables. Client-side: \"use client\" for the sake of the state of both halves and the order check. Plain numbers have no native min/max that would by itself refuse a «to» smaller than a «from», so the check runs in JS after every change to either half. The error colours the whole group through a box-shadow on the shared frame rather than one half through a border — a «from» without a «to» and a «to» without a «from» are equally incomplete."
           }
         },
         "controls": [
@@ -5060,7 +5096,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-037-* variables. Client-side: \"use client\" for the sake of the value and the open popover state. The template list is not a select but a popover of its own with role=\"listbox\": an item is not chosen as the field's value but inserted into the field as ready text, leaving room to add words of your own. Closing happens on Escape, on an outside click (through pointerdown on document) and on picking an item; after any close focus returns to the text field."
           }
         },
         "controls": [
@@ -5210,7 +5247,8 @@
                   "locating": "Searching…"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-038-* variables. Client-side: \"use client\" for the sake of the value and the locating status state. The browser hands back coordinates rather than a ready address — there is no reverse geocoding without a third-party service, so the button inserts the coordinates as text and warns explicitly that they have to be turned into an address by you. A denied permission and a missing Geolocation API are two different statuses with different text."
           }
         },
         "controls": [
@@ -5350,7 +5388,8 @@
                   "megabyte": "MB"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-039-* variables. Client-side: \"use client\" for the sake of the chosen file state. A real <input type=\"file\"> is visually hidden (clipped, not display:none) and tied to the button label through htmlFor, so it stays in the tab order. The chosen file is shown on a plate of its own with an icon, the name, the size (formatSize) and a remove button; removal clears both the React state and inputRef.current.value — without that, picking the same file again would not fire onChange a second time."
           }
         },
         "controls": [
@@ -5493,7 +5532,8 @@
                   "copied": "Done"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-040-* variables. Client-side: \"use client\" for the sake of the copy confirmation state. The «$» prefix is a non-interactive span with aria-hidden and user-select:none, a terminal sign rather than part of the value. The field is readonly but stays a real input and is selected whole on focus. The button tries navigator.clipboard.writeText with the sign and the command together, and on a refusal selects the field text instead of failing silently."
           }
         },
         "controls": [

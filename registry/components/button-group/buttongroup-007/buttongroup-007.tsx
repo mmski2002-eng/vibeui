@@ -1,14 +1,11 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Buttongroup007Action = {
   label: string
   hint?: string
 }
 
-export type Buttongroup007Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Buttongroup007Props = Omit<ComponentProps<"div">, "children"> & {
   actions?: Buttongroup007Action[]
   label?: string
   width?: number
@@ -26,7 +23,7 @@ const STYLES = `
 :where([data-vibeui-block="buttongroup-007"]){
 --vibeui-buttongroup-007-surface:transparent;
 --vibeui-buttongroup-007-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.006 265));
---vibeui-buttongroup-007-muted:light-dark(oklch(0.58 0.014 265),oklch(0.68 0.012 265));
+--vibeui-buttongroup-007-muted:color-mix(in oklab,var(--vibeui-buttongroup-007-fg) 68%,transparent);
 --vibeui-buttongroup-007-border:light-dark(oklch(0.89 0.008 265),oklch(0.37 0.012 265));
 --vibeui-buttongroup-007-hover:light-dark(oklch(0.965 0.004 265),oklch(0.3 0.012 265));
 --vibeui-buttongroup-007-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
@@ -34,6 +31,9 @@ const STYLES = `
 --vibeui-buttongroup-007-width:16rem;
 --vibeui-buttongroup-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="buttongroup-007"]{color-scheme:dark}
 [data-vibeui-block="buttongroup-007"]{
 box-sizing:border-box;display:flex;flex-direction:column;isolation:isolate;
 width:100%;max-width:var(--vibeui-buttongroup-007-width);
@@ -44,7 +44,7 @@ font-family:var(--vibeui-buttongroup-007-font);
 appearance:none;cursor:pointer;font:inherit;
 position:relative;z-index:0;
 display:flex;align-items:center;gap:0.625rem;
-width:100%;min-height:2.375rem;padding:0 0.75rem;margin-block-start:-1px;
+width:100%;min-height:2.25rem;padding:0 0.75rem;margin-block-start:-1px;
 border:1px solid var(--vibeui-buttongroup-007-border);
 background:var(--vibeui-buttongroup-007-surface);
 color:var(--vibeui-buttongroup-007-fg);
@@ -143,6 +143,7 @@ export function Buttongroup007({
       </style>
       <div
         {...props}
+        data-slot="button-group"
         data-vibeui-block="buttongroup-007"
         role="group"
         aria-label={label}

@@ -1,17 +1,14 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Sidebar009Item = {
   label: string
   href?: string
 }
 
-export type Sidebar009Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Sidebar009Props = Omit<ComponentProps<"div">, "children"> & {
   items?: Sidebar009Item[]
   activeLabel?: string
   title?: string
@@ -42,7 +39,7 @@ const STYLES = `
 --vibeui-sidebar-009-bg:transparent;
 --vibeui-sidebar-009-panel:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
 --vibeui-sidebar-009-fg:light-dark(oklch(0.25 0.016 265),oklch(0.93 0.006 265));
---vibeui-sidebar-009-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-sidebar-009-muted:color-mix(in oklab,var(--vibeui-sidebar-009-fg) 68%,transparent);
 --vibeui-sidebar-009-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
 --vibeui-sidebar-009-hover:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.85 0.02 265 / 11%));
 --vibeui-sidebar-009-shadow:light-dark(oklch(0.2 0.02 265 / 18%),oklch(0 0 0 / 55%));
@@ -50,6 +47,9 @@ const STYLES = `
 --vibeui-sidebar-009-scrim:light-dark(oklch(0.2 0.02 265 / 45%),oklch(0.08 0.01 265 / 62%));
 --vibeui-sidebar-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="sidebar-009"]{color-scheme:dark}
 [data-vibeui-block="sidebar-009"]{
 position:relative;overflow:hidden;
 display:flex;flex-direction:column;
@@ -75,7 +75,7 @@ background:var(--vibeui-sidebar-009-panel);color:var(--vibeui-sidebar-009-fg);
 [data-vibeui-block="sidebar-009"] svg{width:0.875rem;height:0.875rem;display:block}
 [data-vibeui-block="sidebar-009"] [data-part="brand"]{font-size:0.875rem;font-weight:650}
 [data-vibeui-block="sidebar-009"] [data-part="page"]{
-flex:1;padding:0.75rem;font-size:0.8125rem;line-height:1.5;color:var(--vibeui-sidebar-009-muted);
+flex:1;padding:0.75rem;font-size:0.875rem;line-height:1.5;color:var(--vibeui-sidebar-009-muted);
 }
 /* Затемнение ловит нажатие мимо панели: на телефоне это главный выход. */
 [data-vibeui-block="sidebar-009"] [data-part="scrim"]{
@@ -96,11 +96,11 @@ transform:translateX(-100%);transition:transform .22s ease;
 }
 [data-vibeui-block="sidebar-009"][data-open="true"] [data-part="drawer"]{transform:translateX(0)}
 [data-vibeui-block="sidebar-009"] [data-part="head"]{display:flex;align-items:center;justify-content:space-between;gap:0.5rem}
-[data-vibeui-block="sidebar-009"] [data-part="title"]{margin:0;font-size:0.8125rem;font-weight:700;letter-spacing:0.02em}
+[data-vibeui-block="sidebar-009"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:700;letter-spacing:0.02em}
 [data-vibeui-block="sidebar-009"] ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:0.125rem}
 [data-vibeui-block="sidebar-009"] [data-part="drawer"] a{
 display:block;padding:0.4375rem 0.5rem;border-radius:0.5rem;
-color:var(--vibeui-sidebar-009-muted);text-decoration:none;font-size:0.875rem;line-height:1.3;
+color:var(--vibeui-sidebar-009-muted);text-decoration:none;font-size:0.9375rem;line-height:1.3;
 }
 [data-vibeui-block="sidebar-009"] [data-part="drawer"] a:hover{background:var(--vibeui-sidebar-009-hover);color:var(--vibeui-sidebar-009-fg)}
 [data-vibeui-block="sidebar-009"] [data-part="drawer"] a:focus-visible{outline:2px solid var(--vibeui-sidebar-009-accent);outline-offset:-2px}
@@ -191,6 +191,7 @@ export function Sidebar009({
       </style>
       <div
         {...props}
+        data-slot="sidebar"
         data-vibeui-block="sidebar-009"
         data-open={open}
         className={className}

@@ -127,9 +127,11 @@
             "preview": {
               "props": {
                 "options": ["All", "Active", "Archived"],
+                "defaultValue": "Active",
                 "label": "Show"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-001-* variables. It is a server component: there are no hooks and no handlers at all. The choice is held by radios inside a fieldset, so the arrows, Home/End and the \"2 of 3 selected\" announcement come from the browser. The input is stretched over the whole segment and is transparent, while the look is drawn by the label. The borders are collapsed through margin-inline-start:-1px, and the rounded corners are set with logical properties on the first and last segment only. The selected segment is raised to z-index:1 and the focused one to z-index:2, otherwise a neighbour clips the accent border and the focus ring. The legend is hidden with clip-path rather than display:none: otherwise the fieldset loses its accessible name."
           }
         },
         "cardControls": ["accent", "background"]
@@ -262,7 +264,8 @@
                 "actions": ["Copy", "Duplicate", "Export"],
                 "label": "Document actions"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-002-* variables. It is a server component: there are no hooks. The technique is a single border on the role=\"group\" container and separators through button + button {border-inline-start}: two adjacent borders would give a two-pixel line. The children's radii are computed as calc(radius - 1px) so that the inner corner matches the outer one. The focused button is raised to z-index:1 and the ring is placed inside through outline-offset:-2px, otherwise the container border clips it. The height is moved into --vibeui-buttongroup-002-height and is switched by the data-size attribute."
           }
         },
         "cardControls": ["size", "background"]
@@ -399,7 +402,8 @@
                 ],
                 "menuLabel": "Other ways to save"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-003-* variables. It is a server component: the menu state is held by the browser through popover and popovertarget, there is no client JS. The positioning comes from CSS anchor positioning inside @supports (anchor-name), with position-try-fallbacks:flip-block; where anchor positioning is unsupported, the popover stays a card in the middle of the screen — that is a working view, not a breakage. The border between two fills of the same colour is drawn with an inset box-shadow, because a border at the joint would leave a dark line. The [data-part=\"menu\"]:not(:popover-open){display:none} rule hides the menu until it opens."
           }
         },
         "cardControls": ["accent"]
@@ -556,7 +560,8 @@
                 ],
                 "label": "Formatting"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-004-* variables. It is a client component: useState holds the index of the active button, useRef holds the panel, and the onKeyDown handler parses ArrowLeft/ArrowRight with wrap-around and Home/End. The active button gets tabIndex=0 and the rest -1 — that is the roving tabindex from the WAI-ARIA toolbar pattern. onFocus syncs the index when focus arrived by mouse. The icons are inline SVGs with stroke=\"currentColor\", and the separator between the third and the fourth button is drawn by a node of its own. The captions are turned on by the showLabels prop: aria-label is then removed so that the name is not doubled."
           }
         },
         "cardControls": ["showLabels", "background"]
@@ -577,7 +582,7 @@
           "target": "@components/vibeui/buttongroup-005.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-005-*. Клиентский: useState хранит текущий вид, onChange отдаёт его наружу. Здесь сознательно не radio: значение не отправляется формой, оно меняет представление на месте — это набор кнопок-тумблеров с aria-pressed. Стиль нажатой кнопки выбирается селектором button[aria-pressed=\"true\"], поэтому доступное состояние и внешний вид не могут разойтись. Значки — инлайновые SVG на currentColor, у активной кнопки они перекрашиваются в акцент; активность несут ещё и подложка с тенью, а не только цвет.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-005-*. Клиентский: useState хранит текущий вид, onChange отдаёт его наружу. Здесь сознательно не radio: значение не отправляется формой, оно меняет представление на месте — это набор кнопок-тумблеров с aria-pressed. Стиль нажатой кнопки выбирается селектором button[aria-pressed=\"true\"], поэтому доступное состояние и внешний вид не могут разойтись. Значки — инлайновые SVG на currentColor, у активной кнопки они перекрашиваются в акцент; активность несут ещё и подложка с тенью, а не только цвет. Группа — role=\"toolbar\" с roving tabindex: Tab останавливается на ней один раз, внутри вид переключают стрелками.",
       "meta": {
         "tags": ["buttongroup", "toggle", "view", "aria-pressed"],
         "ai": {
@@ -702,7 +707,8 @@
                 ],
                 "label": "List view"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-005-* variables. It is a client component: useState holds the current view and onChange hands it outwards. Radios are deliberately not used here: the value is not submitted by a form, it changes the presentation in place — this is a set of toggle buttons with aria-pressed. The style of a pressed button is picked by the button[aria-pressed=\"true\"] selector, so the accessible state and the look cannot drift apart. The icons are inline SVGs on currentColor, and on the active button they are repainted into the accent; the active state is carried by a surface and a shadow as well, not by colour alone. The group is a role=\"toolbar\" with a roving tabindex: Tab stops on it once, and the view is switched inside with the arrows."
           }
         },
         "cardControls": ["defaultView", "accent", "background"]
@@ -852,7 +858,8 @@
                 ],
                 "label": "Quick actions"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-006-* variables. It is a server component: there are no hooks. The button name is real text inside it hidden with clip-path:inset(50%): a screen reader reads it and find-in-page reaches it, unlike aria-label. The visible tooltip is a separate aria-hidden node, otherwise the name would be read twice; it is shown both on :hover and on :focus-visible. The borders are collapsed through margin-inline-start:-1px, the rounded corners are set with logical properties on the edge buttons, and the shape is switched by the data-shape attribute. On focus a button is raised to z-index:2, otherwise a neighbour clips the ring."
           }
         },
         "cardControls": ["shape", "background"]
@@ -1004,7 +1011,8 @@
                 ],
                 "label": "File operations"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-007-* variables. It is a server component: there are no hooks. The width is derived from the component's own: width:100% with a max-width from --vibeui-buttongroup-007-width, and the value arrives through the width prop in rem. The borders are collapsed vertically through margin-block-start:-1px, and the rounded corners go through logical properties to the first and last button only. The focused button is raised to z-index:2, because the neighbouring one overlaps its bottom border. The caption takes all the free space (flex:1 1 auto; min-width:0), while the hint is pushed to the right edge and set in tabular figures."
           }
         },
         "cardControls": ["width", "accent", "background"]
@@ -1146,7 +1154,8 @@
                 "nextLabel": "Next page",
                 "positionText": "Page {page} of {total}"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-008-* variables. It is a server component: there are no hooks, and the page number arrives as a prop and is clamped to the range 1..total. The root is a nav with an aria-label, and inside it there are two buttons and a non-interactive counter cell within the same border. The borders are collapsed through margin-inline-start:-1px, the rounded corners go through logical properties to the first and last cell, and on focus a button is raised to z-index:2. The counter width is pinned by min-width and font-variant-numeric:tabular-nums, so \"9 / 12\" and \"10 / 12\" take the same space. The fraction is marked aria-hidden, and next to it lies the text \"Page 3 of 12\" under clip-path."
           }
         },
         "cardControls": ["page", "total", "background"]
@@ -1288,7 +1297,8 @@
                 "primary": "Publish",
                 "moreLabel": "More"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-009-* variables. It is a server component: the disclosure is held by details/summary, there is no client JS. The root is declared container-type:inline-size, while the whole layout lives on the inner [data-part=\"shell\"] — a rule inside @container applies to the container's descendants but not to the container itself. By default the layout is the narrow one: [data-part=\"extra\"] are hidden and \"More\" is shown; @container (min-width: 32rem) reverses that. There is no duplication in the accessibility tree: at the wide width the details is hidden entirely, at the narrow one every extra is hidden. The menu sheet is positioned absolutely relative to the details."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1309,7 +1319,7 @@
           "target": "@components/vibeui/buttongroup-010.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-010-*. Клиентский: useState хранит выбранный период, onChange отдаёт его наружу. Трек — grid из равных колонок (repeat(var(--vibeui-buttongroup-010-count),1fr)), подложка одна на всю группу: её ширина равна доле колонки, а смещение считается как translateX(index * 100%). Равные колонки здесь обязательны — на разной ширине сегментов смещение перестало бы попадать в кнопку. Состояние объявлено через aria-pressed, строка диапазона помечена aria-live=\"polite\": смена вида без слов не сообщает незрячему, что данные уже другие.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-010-*. Клиентский: useState хранит выбранный период, onChange отдаёт его наружу. Трек — grid из равных колонок (repeat(var(--vibeui-buttongroup-010-count),1fr)), подложка одна на всю группу: её ширина равна доле колонки, а смещение считается как translateX(index * 100%). Равные колонки здесь обязательны — на разной ширине сегментов смещение перестало бы попадать в кнопку. Состояние объявлено через aria-pressed, строка диапазона помечена aria-live=\"polite\": смена вида без слов не сообщает незрячему, что данные уже другие. Трек — role=\"toolbar\" с roving tabindex: Tab заходит в группу один раз, период выбирают стрелками.",
       "meta": {
         "tags": ["buttongroup", "period", "indicator", "analytics"],
         "preview": {
@@ -1442,10 +1452,12 @@
                     "caption": "the last 12 months"
                   }
                 ],
+                "defaultPeriod": "Week",
                 "label": "Report period",
                 "captionText": "Showing data for {period} — {range}"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-010-* variables. It is a client component: useState holds the selected period and onChange hands it outwards. The track is a grid of equal columns (repeat(var(--vibeui-buttongroup-010-count),1fr)), and there is a single surface for the whole group: its width equals one column's share and its offset is computed as translateX(index * 100%). Equal columns are mandatory here — with segments of different widths the offset would stop landing on the button. The state is declared through aria-pressed, and the range line is marked aria-live=\"polite\": a view change without words does not tell a blind user that the data is already different. The track is a role=\"toolbar\" with a roving tabindex: Tab enters the group once, and the period is chosen with the arrows."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1581,7 +1593,8 @@
                 "label": "Record actions",
                 "danger": "Delete"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-011-* variables. It is a server component: there are no hooks. There are two zones inside: a cluster of safe actions with collapsed borders (margin-inline-start:-1px, rounded corners on the edge ones only) and a separate dangerous button set apart by gap:1.25rem. The gap is part of the protection against a missed tap, not decoration. The warning about irreversibility lies as text under clip-path and is tied to the button through aria-describedby, so it is read aloud together with the name; colour is only an additional channel. The bin glyph is an inline SVG on currentColor."
           }
         },
         "cardControls": ["background"]
@@ -1720,7 +1733,8 @@
                 "primary": "Save",
                 "secondary": "Cancel"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-012-* variables. It is a server component: there are no hooks. The equal shares are held by flex:1 1 0 — precisely the zero basis, otherwise a long caption inflates its own share; min-width:0 lets a button shrink below its content, and the excess text is cut with an ellipsis. The bottom padding is computed as calc(0.75rem + env(safe-area-inset-bottom,0px)) so that the primary button does not end up under the system gesture. The priority is carried by colour and order rather than by width: the primary button is no wider than the secondary one. The layout is derived from the component's own width: width:100% with max-width:26rem."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1871,7 +1885,8 @@
                 ],
                 "label": "Data view"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-013-* variables. It is a server component: the state is held by radios inside a fieldset, there are no handlers. The track is a grid with grid-auto-columns:1fr, so \"Chart\" and \"Sheet\" get the same column; a segment is laid out as a column (flex-direction:column), with the icon on top and the caption below. The borders are collapsed through margin-inline-start:-1px, and the rounded corners go through logical properties to the edge segments only. The selected segment is raised to z-index:1 and the focused one to z-index:2, otherwise a neighbour clips the accent border and the ring. The icons are inline SVGs with stroke=\"currentColor\", their paths live in the ICONS object and are picked by id. The legend is hidden with clip-path rather than display:none: otherwise the fieldset loses its accessible name."
           }
         },
         "cardControls": ["defaultValue", "accent", "background"]
@@ -2019,7 +2034,8 @@
                 ],
                 "label": "Scale"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-014-* variables. It is a server component: there are no hooks, and the choice is held by radios in a fieldset. A segment name is real text under clip-path:inset(50%): a screen reader reads it and find-in-page reaches it, unlike aria-label. The visible tooltip is a separate aria-hidden node, shown both on :hover and on :focus-visible, and it drops downwards (top:calc(100% + 0.5rem)) because the group usually stands in a header where there is no room above. The track is a flex with inner padding and a shared border, and the segments are not chained by borders but separated by gap:0.1875rem. The selected segment is filled with the accent, and the focused one is raised to z-index:2."
           }
         },
         "cardControls": ["defaultValue", "accent", "background"]
@@ -2174,7 +2190,8 @@
                 "label": "Request filter",
                 "unit": "requests"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-015-* variables. It is a server component: there are no hooks, and the choice is held by radios inside a fieldset. The counter is a separate [data-part=\"count\"] node with min-width:1.5rem and font-variant-numeric:tabular-nums, so an update from 9 to 128 does not shift the layout. Next to the number lies a unit word hidden with clip-path, otherwise the segment sounds like \"New 12\" with nothing to explain it. The borders are collapsed through margin-inline-start:-1px, the rounded corners go to the edge ones only, the selected segment is raised to z-index:1 and the focused one to z-index:2. On the selected segment the counter pill is inverted: an accent fill and light text."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2323,7 +2340,8 @@
                 "label": "Material status",
                 "reason": "Only an editor can publish: your role lacks the right."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-016-* variables. It is a server component: there are no hooks, and the choice is held by radios inside a fieldset. The locked option gets a real disabled — visual \"greying\" without it would leave the segment clickable from the keyboard. The reason lies as a paragraph under the group and is tied to the unavailable input through aria-describedby, so it is spoken right after the option name. The unavailability is marked through three channels: pale text, a padlock glyph and a striped fill on a repeating-linear-gradient — opacity alone is not enough for low vision. The borders are collapsed, the rounded corners go to the edge ones only, and hover does not fire on a locked segment thanks to :not(:has(input:disabled))."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2462,7 +2480,8 @@
                 "yesHint": "The email arrives at 9:00 your time.",
                 "noHint": "The report stays available in the app only."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-017-* variables. It is a server component: the surface moves without JS — the [data-part=\"track\"]:has([data-part=\"option\"]:nth-of-type(2) input:checked) rule shifts the single thumb by 100% and changes its colour to the \"no\" one. The explanation under the group is switched by CSS as well: both texts lie in the markup, and the one whose radio is checked is shown. Radios are deliberately used here instead of a switch: a switch is honest when \"off\" means the absence of an action, whereas in a survey both answers are equal and must be visible in full. The legend is styled as a visible heading with float:left;width:100%;clear:both — without the clear the following flex children would wrap around it."
           }
         },
         "cardControls": ["defaultValue", "accent", "background"]
@@ -2614,7 +2633,8 @@
                 "label": "Build notifications",
                 "stateText": "Now: {value}"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-018-* variables. It is a client component: useState holds the selected value and useRef holds the track so that focus can be moved to the new button after an arrow key. The WAI-ARIA radiogroup pattern is implemented: buttons with role=\"radio\" and aria-checked, tabIndex=0 only on the selected one, and arrows in both directions with wrap-around — in a radiogroup an arrow changes the selection, not just the focus, and that is what tells it apart from a toolbar. There is a single surface for the whole group: its width equals a third of the track and its offset is computed as translateX(index * 100%), which is why the columns have to be equal (grid-template-columns:repeat(3,1fr))."
           }
         },
         "cardControls": ["defaultValue", "accent", "background"]
@@ -2757,7 +2777,8 @@
                 "allLabel": "All",
                 "resetLabel": "Reset"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-019-* variables. It is a client component: useState holds the array of selected values and onChange hands it outwards. The \"All\" button has no flag of its own — it is highlighted exactly when selected.length === 0, and pressing it clears the set: that way \"all\" cannot be selected together with something else. The reset is placed outside the cluster and gets disabled while the selection is empty, so that the \"changed / unchanged\" state reads without reading the filters. The summary is announced through aria-live=\"polite\". The cluster borders are collapsed with margin-inline-start:-1px, the state rests on aria-pressed, and the style is picked by the same attribute."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2914,7 +2935,8 @@
                 ],
                 "label": "Report currency"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-020-* variables. It is a server component: the choice is held by radios inside a fieldset. The technique is a track with a background in the border colour and gap:1px: the track shows through the gaps, and the line between segments comes out as exactly one, with no margin:-1px and no radius subtraction. The technique survives wrapping: repeat(auto-fit,minmax(6rem,1fr)) lays the currencies out over several rows, and the grid draws the cross by itself. overflow:hidden on the track clips the segment corners to the outer radius. The selected segment is marked with an inset box-shadow rather than a border: a border inside a grid would shift the content by a pixel. The currency name lies as text under clip-path — the code \"RUB\" read aloud is just three letters."
           }
         },
         "cardControls": ["defaultValue", "accent", "background"]
@@ -3072,7 +3094,8 @@
                 ],
                 "label": "Interface language"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-021-* variables. It is a server component: the choice is held by radios inside a fieldset. Every row carries a lang attribute, and for right-to-left writing a dir=\"rtl\": without them the browser substitutes the font and the direction of the current page. The list is vertical because autonyms differ in length and do not fit into equal columns; the borders are collapsed vertically through margin-block-start:-1px, and the rounded corners go through logical properties to the first and last row. The selection mark is a tick on opacity rather than a fill alone: a language is also chosen by people who cannot read the current interface language. The focused row is raised to z-index:2."
           }
         },
         "cardControls": ["defaultValue", "accent", "background"]
@@ -3210,7 +3233,8 @@
                 "increaseLabel": "Zoom in",
                 "valueLabel": "Zoom {value} per cent, back to {default}"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-022-* variables. It is a client component: useState holds the current value and a step moves the index along the steps array. The scale runs not by an arithmetic step but along a list of familiar values — an even step of five percent would take a dozen clicks. The middle cell is a reset button back to defaultValue; it has min-width:4rem and font-variant-numeric:tabular-nums, so \"75 %\" and \"100 %\" take the same space. There is a single border, on the container, and the separators are drawn by button + button {border-inline-start}. The ends of the range grey a button out through disabled, and the focus ring is pulled inside with outline-offset:-2px, otherwise the container border would clip it."
           }
         },
         "cardControls": ["accent", "background"]
@@ -3350,7 +3374,8 @@
                   "justify": "Justify"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-023-* variables. It is a server component: the choice is held by radios inside a fieldset. The selected segment is marked with an ::after pseudo-element — a bar on the bottom border of the panel that appears through transform:scaleX(0) → scaleX(1) with transform-origin:center, so the switch reads as movement rather than as a flash. The active segment deliberately has no fill: the panel stands above the text, and a coloured rectangle would compete with it for attention. The icons are drawn as \"lines of text\": a short and a long line pushed to the required edge. The option names lie as real text under clip-path rather than in an aria-label — find-in-page reaches them."
           }
         },
         "cardControls": ["defaultValue", "accent", "background"]
@@ -3505,7 +3530,8 @@
                 ],
                 "label": "Text style"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-024-* variables. It is a server component: there are checkboxes inside rather than radios — the styles combine, the browser itself announces \"checkbox, checked\", and a repeated press clears the selection. Every letter gets a data-glyph and is drawn in its own style: B is bold, I italic, U underlined, S struck through — the sample is the caption. The real name lies next to it under clip-path, because a single letter tells a screen reader nothing. The borders are collapsed through margin-inline-start:-1px, the rounded corners go to the edge ones only, an enabled toggle is filled dark, and the focused one is raised to z-index:2."
           }
         },
         "cardControls": ["accent", "background"]
@@ -3638,7 +3664,8 @@
                 "locateLabel": "Show my location",
                 "levelTemplate": "Zoom level {level} of {max}"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-025-* variables. It is a server component: there are no hooks, and the level arrives as a prop and is clamped to the range minLevel..maxLevel. The group lies over a backdrop, so it carries a light fill and a double shadow of its own: without them the glyphs dissolve into any map image. There are two clusters inside — the zoom and \"my location\" — separated by gap:0.5rem: different meanings must not be pressed together. The level is shown by a vertical scale of ticks between the \"plus\" and the \"minus\"; it is laid out with flex-direction:column-reverse so that the first tick is drawn at the bottom. The text \"Zoom level N of M\" lies under clip-path — a scale does not exist for a screen reader."
           }
         },
         "cardControls": ["level", "accent"]
@@ -3792,7 +3819,8 @@
                 ],
                 "defaultValue": "1×"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-026-* variables. It is a server component: the choice is held by radios inside a fieldset. The technique is animating flex-grow rather than width: the selected segment's share grows to 2.4, and the shares always add up to the track, so the group does not jitter and does not run outside its border. The caption is hidden by a zero max-width with overflow:hidden rather than display:none — that is what allows it to be revealed smoothly. The values are set in tabular figures, every segment has flex:1 1 0 and min-width:0, otherwise \"1.5×\" would claim more than \"1×\". The prefers-reduced-motion rule kills both the slide and the reveal."
           }
         },
         "cardControls": ["defaultValue", "accent", "background"]
@@ -3946,7 +3974,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-027-* variables. It is a server component: the choice is held by radios inside a fieldset. The technique is that the --vibeui-buttongroup-027-row variable is declared inside :where() at zero specificity, while rules of the form [data-vibeui-block]:has([data-part=\"segment\"]:nth-of-type(2) input:checked) override it on the root; the row sample reads the variable and rebuilds itself. The segment glyph is the same three bars with the same spacing as in the sample: the caption, the glyph and the result all speak about one thing. The sample is marked aria-hidden, because for a screen reader it adds nothing to the density name."
           }
         },
         "cardControls": ["defaultValue", "accent", "background"]
@@ -4085,7 +4114,8 @@
                 "descHint": "Newest first: 30.04 → 01.04",
                 "legendTemplate": "Sort: {field}"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-028-* variables. It is a server component: the choice is held by radios inside a fieldset, and the rotation is described in CSS. The arrow is wrapped in [data-part=\"arrow\"] and gets rotate:180deg on the segment with data-dir=\"desc\" — the animation touches the wrapper, not the layout. The field name stands as the first non-interactive cell of the same border: without it \"ascending\" hangs in the air. The inner separators are drawn by [data-part=\"segment\"] + [data-part=\"segment\"] {border-inline-start}, there is a single border on the track, and the corners are clipped by overflow:hidden. The hint line shows an example of the order and is switched by :has rules, with both texts lying in the markup."
           }
         },
         "cardControls": ["defaultValue", "accent", "background"]
@@ -4223,7 +4253,8 @@
                 "systemLabel": "System",
                 "label": "Appearance"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-029-* variables. It is a server component: the choice is held by radios inside a fieldset. Every segment carries an interface thumbnail: a frame, three bars of \"text\" at absolute positions and a fill. The dark swatch changes both the background and the bar colour; the \"system\" one gets an ::after with clip-path:polygon(100% 0,100% 100%,0 100%) — the diagonal explains \"same as the system\" without words. The swatches keep their own colours independent of the page theme: otherwise the light thumbnail would disappear on a light background. The segments are not chained together, they stand as cards in a grid with a gap; the selected one gets a border and a box-shadow in the same colour so that the line does not look thinner than its neighbours."
           }
         },
         "cardControls": ["defaultValue", "accent", "background"]
@@ -4371,9 +4402,11 @@
                     "points": "30 points"
                   }
                 ],
-                "current": "Week"
+                "current": "Week",
+                "label": "Chart step"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-030-* variables. It is a server component: the state lives in the page address rather than in React. The group is assembled from li elements with links inside a nav with an aria-label; the current step is marked aria-current=\"page\", and the style is picked by the same attribute, so the highlight cannot drift from the declared state. The current link stays a link instead of turning into a span: otherwise focus on it is lost when coming back from history. There is a single border, on the list, the separators are drawn by li + li {border-inline-start}, and the corners are clipped by overflow:hidden. Under the step name stands the number of points, set in tabular figures."
           }
         },
         "cardControls": ["current", "background"]
@@ -4526,7 +4559,8 @@
                 ],
                 "label": "Task statuses"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-031-* variables. It is a server component: the choice is multiple and there are checkboxes inside — the statuses add up rather than replace one another. The marker shape is set by the data-shape attribute: dot is a filled circle, ring is a circle on an inset box-shadow, square is a rounded square. The colour arrives in the data and is passed in through the inline --vibeui-buttongroup-031-mark variable: this is the case where a value cannot be expressed by a class. The cluster borders are collapsed through margin-inline-start:-1px, the rounded corners go to the edge ones only, the selected segment is raised to z-index:1 and the focused one to z-index:2."
           }
         },
         "cardControls": ["accent", "background"]
@@ -4662,7 +4696,8 @@
                 "label": "Document actions",
                 "busyLabel": "Validation in progress, this takes a few seconds"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-032-* variables. It is a server component: the busy state arrives through the busy prop, there are no hooks. The button is laid out with display:grid, and the caption and the ring occupy the same cell (grid-area:1 / 1), so swapping the text for \"Saving…\" does not stretch the group — only the opacity changes. The busy button gets aria-busy and disabled: disabled removes the repeated press, aria-busy explains that the button is not broken. A role=\"status\" live region reports the work in words — a spinning ring is invisible to a blind user. The rotation animation is described by @keyframes and is killed by the prefers-reduced-motion rule."
           }
         },
         "cardControls": ["busy", "accent", "background"]
@@ -4800,7 +4835,8 @@
                 "question": "Payment method",
                 "error": "Choose a payment method — the order cannot be placed without one"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-033-* variables. It is a server component: no radio is checked in advance — otherwise the form would submit a value the user never chose. The error state is described by a single [data-vibeui-block]:not(:has(input:checked)) selector: it reddens the segment borders and reveals the error line, all without handlers. The error is tied to the fieldset through aria-describedby and duplicated by an icon: colour alone does not communicate it. The legend is visible, with float:left;width:100%;clear:both — without the clear the following flex children would wrap around it; the asterisk is marked aria-hidden, and the requirement is carried by the required attributes on the inputs."
           }
         },
         "cardControls": ["accent", "background"]
@@ -4941,7 +4977,8 @@
                 "title": "Sales report",
                 "primary": "Refresh"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-034-* variables. It is a server component: there are no hooks. The root is declared container-type:inline-size, while the layout lives on the inner [data-part=\"shell\"] — a rule inside @container applies to the container's descendants but not to the container itself, and that is a trap rather than a detail. By default the layout is the narrow one: the header in a column, the buttons at full width; @container (min-width: 30rem) turns it into a row. The buttons are chained with margin-inline-start:-1px, the rounded corners go to the edge ones only, and the primary one is set apart by a fill and stands last. The card carries a light surface of its own, so it reads on a dark showcase background too."
           }
         },
         "cardControls": ["accent", "background"]
@@ -5077,7 +5114,8 @@
                 "moreLabel": "More",
                 "label": "Message actions"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-035-* variables. It is a server component: the disclosure is held by details/summary, there is no client JS — the state, the keyboard and the \"collapsed/expanded\" announcement come from the browser. The technique is display:flex on the details itself: the summary then becomes a cell of the cluster, and the revealed buttons line up to the right of it in a shared row rather than as a block beneath it. The list marker is removed through list-style:none, ::marker and ::-webkit-details-marker. While the details is closed, the rounding of the right edge belongs to the summary; when open, it goes to the last extra button. The arrow rotates by [open]."
           }
         },
         "cardControls": ["accent", "background"]
@@ -5234,7 +5272,8 @@
                 ],
                 "label": "Payment method"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-036-* variables. It is a server component: the choice is held by radios inside a fieldset. Unlike segmented groups, the selection dot is not hidden here but drawn: the input itself lies over the card as a transparent layer, while the visible dot is a span with an inset box-shadow in place of an inner dot. The cards are laid out in a grid with repeat(auto-fit,minmax(11rem,1fr)): at narrow widths they wrap instead of shrinking to illegibility. The selected card gets both a border and a box-shadow in the same colour so that the line does not look thinner than its neighbours. Every method carries a short explanation on the second line."
           }
         },
         "cardControls": ["defaultValue", "accent", "background"]
@@ -5398,7 +5437,8 @@
                 "linkPrompt": "A link to the file in your storage",
                 "linkPlaceholder": "https://disk.example.com/invoice.pdf"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-037-* variables. It is a server component: the switching is held by radios, and the panels are shown by rules of the form [data-vibeui-block]:has([data-mode=\"file\"] input:checked) [data-panel=\"file\"]{display:block}. display:none is chosen deliberately: a hidden panel, together with its fields, honestly leaves the accessibility tree and the Tab order, which neither visibility nor opacity would give. The cluster and the panel are glued into one card by a shared border: the track has only its top corners rounded, the card has its outer ones, and everything excess is clipped by overflow:hidden. The selected tab is marked with an inset box-shadow at the bottom rather than a border, so that the content is not shifted."
           }
         },
         "cardControls": ["defaultValue", "accent", "background"]
@@ -5543,7 +5583,8 @@
                 "note": "in a field submits “Save”",
                 "label": "Finish editing"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-038-* variables. It is a server component: both buttons are real type=\"submit\" ones with the same name and different values, so the browser submits the pair of only the button that was pressed. This is the only way built into HTML to tell \"save\" from \"save and close\" apart. The primary button comes first in the DOM: on Enter in a form field the first submit button is submitted, and that has to be the safe action. Both buttons are the same colour, and the seam between the fills is drawn with an inset box-shadow — a border at the joint would give a dark line. The root is not a form: the component has to be inserted inside somebody else's form."
           }
         },
         "cardControls": ["accent"]
@@ -5708,7 +5749,8 @@
                 "waitingText": "Deletion unlocks in {seconds} s",
                 "readyText": "Deletion is available"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-039-* variables. It is a client component: useState holds the number of elapsed seconds, and the remainder is computed as delay minus the elapsed time — a change of delay then takes effect at once and the state does not have to be reset by an effect; useEffect starts a setTimeout for one second and clears it on unmount. The ring is drawn with a conic-gradient plus a radial-gradient mask — the cut-out in the middle turns the circle into a ring without SVG; the filled share arrives through the --vibeui-buttongroup-039-progress variable. The disabled attribute is real: the button cannot be pressed and does not catch Enter, rather than merely looking pale. The number of seconds is duplicated as text and announced through role=\"status\", because the ring does not exist for a screen reader. The protection is designed against the momentum of a press, not against ill intent."
           }
         },
         "cardControls": ["delay", "danger", "background"]
@@ -5864,7 +5906,8 @@
                   "qr": "Show the QR code"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-040-* variables. It is a server component: there are no hooks. The link cell gets flex:1 1 auto with min-width:0 and text-overflow:ellipsis, while the buttons get flex:none: at a narrow width the text shrinks, not the tap targets. Copy is set apart by a soft fill and a caption, and the remaining targets are square cells with glyphs and an aria-label. There is a single border, on the container, the separators are drawn by border-inline-start on the buttons, and the corners are clipped by overflow:hidden. The focus ring is pulled inside through outline-offset:-2px, otherwise the container border would clip it."
           }
         },
         "cardControls": ["accent", "background"]
@@ -6026,7 +6069,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-041-* variables. It is a client component: useState holds the list of your own reactions, and the counter shows the base number plus one when a reaction has been given. Every pill is a separate toggle with aria-pressed, because reactions do not exclude each other. The emoji is marked aria-hidden and the reaction name lies next to it under clip-path: a screen reader has to say \"like, 12, pressed\" rather than read out the description of the symbol. The counter is set in tabular figures and has a minimum width, otherwise the row twitches on every press. The pills wrap: over time there are more reactions."
           }
         },
         "cardControls": ["accent", "background"]
@@ -6183,7 +6227,8 @@
                 "downLabel": "Unhelpful answer",
                 "label": "Answer rating"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-042-* variables. It is a client component: useState holds \"up\", \"down\" or null; the mutual exclusion is done in the handler, because a radio cannot be unchecked without a third button. The state is declared through aria-pressed on each button. A cast vote is marked by more than colour: the glyph gains a fill (fill:currentColor), and that works for colour blindness. The score stands between the buttons, is set in tabular figures and has a min-width, so crossing zero and the appearance of a minus sign do not move the buttons. The score is announced with aria-live=\"polite\": a changing number would otherwise go unnoticed."
           }
         },
         "cardControls": ["score", "accent", "background"]
@@ -6350,7 +6395,8 @@
                   "last": "To the last record"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-043-* variables. It is a server component: the index arrives as a prop and is clamped to the range 1..total. An arrow with a bar means \"all the way\", an arrow without one means \"one step\": the difference reads from the shape rather than from a caption. The edge buttons are greyed out in pairs — on the first record both left ones are meaningless. The position bar under the cluster is built on a percentage width derived from the index and is marked aria-hidden, because the same thing is said by the text \"Record 12 of 340\". The counter is set in tabular figures and has a min-width, otherwise crossing a hundred jolts the buttons. There is a single border on the track, and the separators are drawn by the general > * + * selector."
           }
         },
         "cardControls": ["index", "total", "accent", "background"]
@@ -6499,7 +6545,8 @@
                 "decreaseLabel": "Decrease the quantity",
                 "increaseLabel": "Increase the quantity"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-044-* variables. It is a client component: useState holds the input string rather than a number — otherwise typing \"12\" into a field with a maximum of 20 would be impossible, as \"1\" would already hit the minimum. The clamping to the range happens on onBlur and on a button press. The browser's native spinners are removed through appearance:textfield and ::-webkit-inner-spin-button: they duplicate the buttons and at sixteen pixels cannot be hit. The unit of measure stands inside the field as a separate node, so it does not interfere with typing. The focus ring is drawn on the field cell through :has(input:focus-visible), because the input's own outline is removed."
           }
         },
         "cardControls": ["defaultValue", "accent", "background"]
@@ -6658,7 +6705,8 @@
                 "caption": "weekly average",
                 "label": "Units of measure"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-045-* variables. It is a server component: the conversion is done by the side that serves the page rather than in the browser — that is why the rounding and the locales do not drift apart. Both values lie in the markup, and the rule [data-vibeui-block]:has([data-unit=\"metric\"] input:checked) [data-value=\"metric\"]{display:inline} shows the right one. The value is set in tabular figures and has min-width:4.25rem, so \"18 °C\" and \"64 °F\" take the same space. The cluster is compact and stands next to the value rather than as a separate block: a unit without a number is meaningless."
           }
         },
         "cardControls": ["defaultValue", "accent", "background"]
@@ -6824,7 +6872,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-046-* variables. It is a server component: the choice is held by radios inside a fieldset. The track is a grid with grid-auto-columns:1fr, so the range lines form one common baseline and the segments stay targets of the same size. The dates are set in tabular figures and do not wrap. The last segment is \"Custom range\": it has no range, and in its place stands a calendar glyph rather than an empty line, otherwise the height of that segment would differ from its neighbours. The borders are collapsed through margin-inline-start:-1px, the rounded corners go to the edge ones only, the selected segment is raised to z-index:1 and the focused one to z-index:2."
           }
         },
         "cardControls": ["defaultValue", "accent", "background"]
@@ -6994,7 +7043,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-047-* variables. It is a server component: the choice is multiple, with checkboxes inside. The plate colour arrives as a hue number and is passed in through the inline --vibeui-buttongroup-047-hue variable, while the colours themselves are assembled by the formulas oklch(0.94 0.06 hue) and oklch(0.42 0.15 hue): the palette stays a single formula rather than a set of hardcoded values, and the contrast of the text against the background holds at every hue. The chips are not chained together, they wrap across rows with a gap — the list of extensions grows, and a rigid cluster would run off the screen. The selected chip is marked with a border and an inset box-shadow in the same colour so that the line looks equally thick."
           }
         },
         "cardControls": ["accent", "background"]
@@ -7143,7 +7193,8 @@
                 "lineLabel": "Line",
                 "pieLabel": "Share"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-048-* variables. It is a server component: the choice is held by radios inside a fieldset. The three samples are drawn by three different techniques: the bars are a flex with align-items:flex-end and percentage heights, the line is a polyline in SVG, and the share is a conic-gradient. They could be reduced to a single set of paths, but it is more honest to draw each shape with what it is naturally drawn by. The sample colour is moved into the --vibeui-buttongroup-048-glyph variable, and the selected segment overrides it to the accent — one rule recolours all three samples at once. The borders are collapsed, the rounded corners go to the edge ones only, and focus raises z-index:2."
           }
         },
         "cardControls": ["defaultValue", "accent", "background"]
@@ -7316,7 +7367,8 @@
                 "countText": "{visible} of {total}",
                 "lastColumnHint": "At least one column has to stay"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-049-* variables. It is a client component: useState holds the list of visible columns, and the \"4 of 6\" counter in the header is recomputed from that state. The disclosure is held by details/summary: the state, the keyboard and the \"collapsed/expanded\" announcement come from the browser, and a hand-rolled menu is not needed. The last remaining checkbox gets disabled and an explanation through title: a silent control reads as a breakage, and a table with no columns is a dead end there is no way out of with a mouse. The panel is positioned absolutely relative to the root and lies above the content through z-index:5. The checkboxes are real, and their colour is set with accent-color."
           }
         },
         "cardControls": ["accent", "background"]
@@ -7485,7 +7537,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-050-* variables. It is a server component: the choice is held by radios inside a fieldset. The nesting of rights is shown with a sibling combinator: [data-part=\"step\"]:has(input:checked) ~ [data-part=\"step\"] fills all the lesser roles more weakly than the selected one. That is why the order of the segments is not decorative but meaningful — reordering them breaks the logic. The borders are collapsed through margin-inline-start:-1px, the rounded corners go to the edge ones only, the selected role is raised to z-index:1 and the focused one to z-index:2. The legend is visible, with float:left;width:100%;clear:both, otherwise the following grid children would wrap around it."
           }
         },
         "cardControls": ["defaultValue", "accent", "background"]
@@ -7648,7 +7701,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-051-* variables. It is a server component: the choice is held by radios inside a fieldset. The glyph is four bars of rising height with the first N filled in: an ordinal value calls for an ordinal cue, and colour stays the second channel. The hue arrives as a number and is passed in through the inline --vibeui-buttongroup-051-hue variable, and all the segment colours are assembled from it by oklch formulas — the fill, the border and the text of the selected level stay in agreement at any hue. The borders are collapsed through margin-inline-start:-1px, the segments are of equal width (flex:1 1 0), and focus raises z-index:2."
           }
         },
         "cardControls": ["defaultValue", "accent", "background"]
@@ -7794,7 +7848,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-052-* variables. It is a server component: the choice is held by radios inside a fieldset. Both glyphs — the original one and the tick — lie in [data-part=\"icons\"] in the same grid cell (grid-area:1 / 1), so the replacement does not move the caption; the transition is made on opacity and scale so that the tick arrives in the icon's place rather than flashing beside it. The technique applies only where the choice really is single: a tick is the universal sign for \"done\", and in a multi-select it tells a lie. The borders are collapsed, the rounded corners go to the edge ones only, and focus raises z-index:2."
           }
         },
         "cardControls": ["defaultValue", "accent", "background"]
@@ -7939,7 +7994,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-053-* variables. It is a server component: there are no hooks. The buttons share the width equally through flex:1 1 0 — precisely the zero basis, otherwise \"Share\" would claim more than \"Chat\"; min-width:0 lets a button shrink below its content. The glyph stands above the caption, because at ninety pixels the two do not fit on one line; the caption is cut with an ellipsis rather than wrapped, so that the bar height is the same for every button. The bottom padding equals env(safe-area-inset-bottom): the bar usually sticks to the bottom edge, where the system gesture runs. The separators are drawn by button + button."
           }
         },
         "cardControls": ["accent", "background"]
@@ -8079,7 +8135,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-054-* variables. It is a server component: there are no hooks. The technique is a ::before lying over the button and extending beyond it: a press is caught outside the drawing, while the layout is not inflated. That resolves the conflict of \"a dense bar versus forty-four pixels of touch\": it is the drawing that has to shrink, not the tap area. The buttons overlap by their targets, so the gap between them is no less than 0.125rem, otherwise the targets would eat one another. The last button is set apart by a vertical line: \"more actions\" is not on a par with editing and copying. The buttons have no captions, so each carries an aria-label."
           }
         },
         "cardControls": ["accent", "background"]
@@ -8246,7 +8303,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-055-* variables. It is a server component: there are no hooks. Proximity itself reports kinship: inside [data-part=\"cluster\"] the gap is 0, and between blocks there is gap:0.5rem plus a divider. The division exists not only for the eye: every block is declared as its own role=\"group\" with an aria-label, so a screen reader says \"History, group\" before the first button. The divider is a separate span with aria-hidden rather than a border on the neighbouring button: the line belongs to the gap, not to the neighbour, and nothing breaks when the blocks are reordered. The buttons have no captions, so each carries an aria-label."
           }
         },
         "cardControls": ["accent", "background"]
@@ -8402,7 +8460,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-056-* variables. It is a server component: the choice is held by radios inside a fieldset. A hint is usually positioned absolutely inside the segment — and is then clipped by the very first ancestor with overflow. CSS anchor positioning is used here instead: anchor-name is declared in the :hover / :has(:focus-visible) rule, so at any moment there is exactly one anchor and the shared technique works without unique names per segment. Everything is wrapped in @supports (anchor-name: …): without support the hint stays absolutely positioned under the segment rather than running off into a corner of the screen. The hint is marked aria-hidden — the same thing is already said by the segment caption."
           }
         },
         "cardControls": ["accent", "background"]
@@ -8423,7 +8482,7 @@
           "target": "@components/vibeui/buttongroup-057.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-057-*. Клиентский: useState хранит выбранное значение. Кнопки с aria-pressed сами по себе ничего не отправляют, поэтому внутри группы лежит input[type=hidden] с тем же значением — форма собирает его через FormData так же, как обычное поле, и серверу не нужно ничего знать про кнопки. Значение продублировано на корне атрибутом data-value: его видно в инспекторе, по нему можно писать тесты и стили, не заглядывая в состояние React. Строка под группой показывает пару, которая уедет на сервер, — это способ поймать расхождение между видом и данными.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-057-*. Клиентский: useState хранит выбранное значение. Кнопки с aria-pressed сами по себе ничего не отправляют, поэтому внутри группы лежит input[type=hidden] с тем же значением — форма собирает его через FormData так же, как обычное поле, и серверу не нужно ничего знать про кнопки. Значение продублировано на корне атрибутом data-value: его видно в инспекторе, по нему можно писать тесты и стили, не заглядывая в состояние React. Строка под группой показывает пару, которая уедет на сервер, — это способ поймать расхождение между видом и данными. Трек — role=\"toolbar\" с roving tabindex: Tab останавливается на группе один раз, значение переключают стрелками.",
       "meta": {
         "tags": ["buttongroup", "form", "hidden-input", "state"],
         "ai": {
@@ -8553,7 +8612,8 @@
                 "defaultValue": "In review",
                 "wireText": "The form will send {field}"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-057-* variables. It is a client component: useState holds the selected value. Buttons with aria-pressed submit nothing on their own, so an input[type=hidden] with the same value lies inside the group — a form collects it through FormData exactly like an ordinary field, and the server does not have to know anything about the buttons. The value is duplicated on the root by the data-value attribute: it is visible in the inspector and tests and styles can be written against it without looking into React state. The line under the group shows the pair that will travel to the server — that is a way to catch a drift between the look and the data. The track is a role=\"toolbar\" with a roving tabindex: Tab stops on the group once, and the value is switched with the arrows."
           }
         },
         "cardControls": ["accent", "background"]

@@ -160,7 +160,8 @@
                 "eyebrow": "Journal",
                 "title": "How we build interfaces"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-001-*. A server component: there are no hooks. The cover is drawn with a linear gradient from a hue obtained by hashing the topic name — there are no assets or images at all. The heading link is stretched over the whole card with an ::after pseudo-element, so any spot is clickable while the link text stays the heading. The two- and three-column grid is turned on by a container query."
           }
         },
         "cardControls": ["accent", "background"]
@@ -330,7 +331,8 @@
                 "title": "Container queries over breakpoints",
                 "tocTitle": "In this article"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-002-*. A server component: the contents are built from the same sections as the text, and a native <details open> holds the disclosure. On a wide block a container query makes the column sticky and hides the arrow, and removes pointer-events from summary so that the contents cannot be collapsed. The headings carry an id and scroll-margin-top, and the text width is limited in ch."
           }
         },
         "cardControls": ["accent", "background"]
@@ -476,7 +478,8 @@
                 "coverLabel": "Issue №14",
                 "badge": "New"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-003-*. A server component: there are no hooks. The cover is assembled from layers of radial gradients over a linear one, and the hue is set by the hue number. The heading link is stretched over the whole card with ::after, and :focus-within holds the ring state. The two-column layout is turned on by a container query; on a narrow block the cover becomes horizontal."
           }
         },
         "cardControls": ["accent", "background"]
@@ -612,7 +615,8 @@
                 "title": "A letter every two weeks",
                 "submitLabel": "Subscribe"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-004-*. A server component: the validation is native — type=\"email\" and required, and the error is shown by :user-invalid rather than :invalid. The error text is always present in the markup but visually hidden with clip-path, and is tied to the field through aria-describedby. The dark ground is the block's own, so the block reads both on a light page and on a dark catalogue card. Submission is implemented by the calling code."
           }
         },
         "cardControls": ["accent"]
@@ -797,7 +801,8 @@
                 "title": "All articles by topic",
                 "allLabel": "All"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-005-*. A client component: \"use client\" is there for the filter in useState. The list of topics is derived from the entries array through a Set, and the counter counts the same entries the filter will show. The list wrapper is declared aria-live=\"polite\". On a wide block a container query moves the date and the topic into a separate column on the left."
           }
         },
         "cardControls": ["accent", "background"]
@@ -957,7 +962,8 @@
                 "title": "What to read next",
                 "afterTitle": "Container queries over breakpoints"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-006-*. A server component: there are no hooks. The root is an <aside> with aria-label: this supplements the article, it is not a section in its own right. The heading link is stretched over the card with ::after, and the ring rests on :focus-within. The sequence caption takes the place of the topic. Three columns are turned on by a container query."
           }
         },
         "cardControls": ["accent", "background"]

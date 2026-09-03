@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import type {
-  ComponentPropsWithoutRef,
+  ComponentProps,
   CSSProperties,
   DragEvent,
   KeyboardEvent,
@@ -12,7 +12,7 @@ export type Sortable002Announcement =
   "picked" | "dropped" | "moved" | "edge" | "cancelled" | "dragged"
 
 export type Sortable002Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   title?: string
@@ -40,12 +40,15 @@ const STYLES = `
 --vibeui-sortable-002-bg:transparent;
 --vibeui-sortable-002-row:light-dark(oklch(0.99 0.002 265),oklch(0.27 0.011 265));
 --vibeui-sortable-002-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
---vibeui-sortable-002-muted:light-dark(oklch(0.56 0.014 265),oklch(0.68 0.012 265));
+--vibeui-sortable-002-muted:color-mix(in oklab,var(--vibeui-sortable-002-fg) 68%,transparent);
 --vibeui-sortable-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
 --vibeui-sortable-002-shadow:light-dark(oklch(0.2 0.02 265 / 16%),oklch(0 0 0 / 46%));
 --vibeui-sortable-002-accent:light-dark(oklch(0.55 0.2 262),oklch(0.73 0.16 262));
 --vibeui-sortable-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="sortable-002"]{color-scheme:dark}
 [data-vibeui-block="sortable-002"]{
 position:relative;
 width:100%;max-width:22rem;box-sizing:border-box;padding:0.875rem;
@@ -257,6 +260,7 @@ export function Sortable002({
       </style>
       <div
         {...props}
+        data-slot="sortable"
         data-vibeui-block="sortable-002"
         className={className}
         style={palette}

@@ -18,6 +18,8 @@ export type Tabs009Props = {
   accent?: string
   /** Подпись ряда вкладок для скринридера. */
   listLabel?: string
+  /** Что скринридер читает вместо точки несохранённого файла. */
+  dirtyLabel?: string
   /** Шаблон подписи кнопки закрытия: {label}. */
   closeLabel?: string
   /** Что показать, когда закрыты все вкладки. */
@@ -38,7 +40,7 @@ const STYLES = `
 --vibeui-tabs-009-bg:transparent;
 --vibeui-tabs-009-strip:light-dark(oklch(0.96 0.003 265),oklch(0.27 0.01 265));
 --vibeui-tabs-009-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-tabs-009-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-tabs-009-muted:color-mix(in oklab,var(--vibeui-tabs-009-fg) 68%,transparent);
 --vibeui-tabs-009-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-tabs-009-hover:light-dark(oklch(0.55 0.02 265 / 9%),oklch(0.85 0.02 265 / 14%));
 --vibeui-tabs-009-dirty:light-dark(oklch(0.72 0.15 75),oklch(0.79 0.15 75));
@@ -46,6 +48,9 @@ const STYLES = `
 --vibeui-tabs-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-tabs-009-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="tabs-009"]{color-scheme:dark}
 [data-vibeui-block="tabs-009"]{
 box-sizing:border-box;width:100%;max-width:30rem;overflow:hidden;
 background:var(--vibeui-tabs-009-bg);color:var(--vibeui-tabs-009-fg);
@@ -59,6 +64,7 @@ border-bottom:1px solid var(--vibeui-tabs-009-border);
 }
 [data-vibeui-block="tabs-009"] [data-part="list"]::-webkit-scrollbar{display:none}
 [data-vibeui-block="tabs-009"] [data-part="tab"]{
+position:relative;
 display:flex;align-items:center;gap:0.5rem;cursor:pointer;
 padding:0.5rem 0.5rem 0.5rem 0.75rem;white-space:nowrap;
 background:var(--vibeui-tabs-009-strip);color:var(--vibeui-tabs-009-muted);
@@ -82,6 +88,12 @@ font:inherit;font-size:0.75rem;line-height:1;color:var(--vibeui-tabs-009-muted);
 /* Несохранённый файл: точка вместо крестика, пока на вкладку не навели. */
 [data-vibeui-block="tabs-009"] [data-part="dot"]{
 width:0.5rem;height:0.5rem;border-radius:999px;background:var(--vibeui-tabs-009-dirty);
+}
+/* Точка — единственный признак несохранённого файла, а она aria-hidden.
+   Подпись рядом с ней озвучивает то же состояние, не занимая места. */
+[data-vibeui-block="tabs-009"] [data-part="sr"]{
+position:absolute;width:1px;height:1px;overflow:hidden;
+clip-path:inset(50%);white-space:nowrap;
 }
 [data-vibeui-block="tabs-009"] [data-part="tab"]:hover [data-part="dot"],
 [data-vibeui-block="tabs-009"] [data-part="tab"]:focus-within [data-part="dot"]{display:none}
@@ -150,6 +162,7 @@ export function Tabs009({
   background = "",
   accent,
   listLabel = "Открытые файлы",
+  dirtyLabel = "не сохранён",
   closeLabel = "Закрыть {label}",
   emptyText = "Все вкладки закрыты",
   className,
@@ -220,7 +233,12 @@ export function Tabs009({
       <style href="vibeui-tabs-009" precedence="medium">
         {STYLES}
       </style>
-      <div data-vibeui-block="tabs-009" className={className} style={palette}>
+      <div
+        data-slot="tabs"
+        data-vibeui-block="tabs-009"
+        className={className}
+        style={palette}
+      >
         <div
           data-part="list"
           role="tablist"
@@ -240,7 +258,12 @@ export function Tabs009({
               onClick={() => setActive(file.id)}
             >
               {file.label}
-              {file.dirty ? <span data-part="dot" aria-hidden="true" /> : null}
+              {file.dirty ? (
+                <>
+                  <span data-part="dot" aria-hidden="true" />
+                  <span data-part="sr">{dirtyLabel}</span>
+                </>
+              ) : null}
               <button
                 type="button"
                 data-part="close"

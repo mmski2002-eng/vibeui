@@ -1,10 +1,10 @@
 "use client"
 
 import { useId, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Calendar029Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange" | "defaultValue"
 > & {
   label?: string
@@ -35,39 +35,42 @@ const STYLES = `
 --vibeui-calendar-029-panel:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
 --vibeui-calendar-029-shadow:light-dark(oklch(0.2 0.02 265 / 14%),oklch(0 0 0 / 50%));
 --vibeui-calendar-029-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
---vibeui-calendar-029-muted:light-dark(oklch(0.57 0.014 265),oklch(0.68 0.012 265));
+--vibeui-calendar-029-muted:color-mix(in oklab,var(--vibeui-calendar-029-fg) 68%,transparent);
 --vibeui-calendar-029-border:light-dark(oklch(0.9 0.008 265),oklch(0.35 0.014 265));
 --vibeui-calendar-029-soft:light-dark(oklch(0.97 0.006 265),oklch(0.28 0.01 265));
 --vibeui-calendar-029-accent:light-dark(oklch(0.5 0.14 265),oklch(0.74 0.13 265));
 --vibeui-calendar-029-accentsoft:light-dark(oklch(0.94 0.04 265),oklch(0.31 0.05 265));
 --vibeui-calendar-029-onaccent:light-dark(oklch(0.99 0 0),oklch(0.18 0.02 265));
---vibeui-calendar-029-radius:0.6rem;
+--vibeui-calendar-029-radius:0.625rem;
 --vibeui-calendar-029-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="calendar-029"]{color-scheme:dark}
 [data-vibeui-block="calendar-029"]{
-display:flex;flex-wrap:wrap;align-items:center;gap:0.4rem;
-width:100%;max-width:26rem;box-sizing:border-box;padding:0.75rem;
+display:flex;flex-wrap:wrap;align-items:center;gap:0.375rem;
+width:100%;max-width:26rem;box-sizing:border-box;padding:0.9375rem;
 background:var(--vibeui-calendar-029-bg);
 border:1px solid var(--vibeui-calendar-029-border);
-border-radius:calc(var(--vibeui-calendar-029-radius) + 0.35rem);
+border-radius:calc(var(--vibeui-calendar-029-radius) + 0.375rem);
 color:var(--vibeui-calendar-029-fg);
 font-family:var(--vibeui-calendar-029-font);
 }
 [data-vibeui-block="calendar-029"] [data-part="chip"]{
 appearance:none;cursor:pointer;font:inherit;
-display:inline-flex;align-items:center;gap:0.3rem;
-height:2rem;padding:0 0.65rem;border-radius:999px;
+display:inline-flex;align-items:center;gap:0.3125rem;
+height:2rem;padding:0 0.625rem;border-radius:999px;
 border:1px solid var(--vibeui-calendar-029-border);
 background:var(--vibeui-calendar-029-soft);
 color:var(--vibeui-calendar-029-muted);
-font-size:0.78rem;font-weight:600;white-space:nowrap;
+font-size:0.8125rem;font-weight:600;white-space:nowrap;
 transition:background-color .16s ease,color .16s ease,border-color .16s ease;
 }
 [data-vibeui-block="calendar-029"] [data-part="chip"]:hover{border-color:var(--vibeui-calendar-029-accent)}
 [data-vibeui-block="calendar-029"] [data-part="chip"]:focus-visible{
 outline:2px solid var(--vibeui-calendar-029-accent);outline-offset:2px;
 }
-[data-vibeui-block="calendar-029"] [data-part="anchor"]{position:relative;display:inline-flex;align-items:center;gap:0.15rem}
+[data-vibeui-block="calendar-029"] [data-part="anchor"]{position:relative;display:inline-flex;align-items:center;gap:0.125rem}
 [data-vibeui-block="calendar-029"] [data-part="date"][data-set="true"]{
 background:var(--vibeui-calendar-029-accentsoft);
 border-color:var(--vibeui-calendar-029-accent);
@@ -76,7 +79,7 @@ color:var(--vibeui-calendar-029-fg);
 [data-vibeui-block="calendar-029"] [data-part="clear"]{
 appearance:none;cursor:pointer;font:inherit;border:0;background:transparent;color:inherit;
 display:inline-flex;align-items:center;justify-content:center;
-width:1.5rem;height:1.5rem;border-radius:999px;font-size:0.9rem;line-height:1;
+width:1.5rem;height:1.5rem;border-radius:999px;font-size:0.875rem;line-height:1;
 color:var(--vibeui-calendar-029-muted);
 }
 [data-vibeui-block="calendar-029"] [data-part="clear"]:hover{background:var(--vibeui-calendar-029-soft)}
@@ -84,22 +87,22 @@ color:var(--vibeui-calendar-029-muted);
 outline:2px solid var(--vibeui-calendar-029-accent);outline-offset:1px;
 }
 [data-vibeui-block="calendar-029"] [data-part="panel"]{
-position:absolute;top:calc(100% + 0.35rem);left:0;z-index:20;
-width:15.5rem;box-sizing:border-box;padding:0.6rem;
+position:absolute;top:calc(100% + 0.375rem);left:0;z-index:20;
+width:15.5rem;box-sizing:border-box;padding:0.625rem;
 background:var(--vibeui-calendar-029-panel);
 border:1px solid var(--vibeui-calendar-029-border);
 border-radius:0.75rem;
 box-shadow:0 12px 28px var(--vibeui-calendar-029-shadow);
 }
 [data-vibeui-block="calendar-029"] [data-part="nav"]{
-display:flex;align-items:center;justify-content:space-between;gap:0.3rem;margin-bottom:0.4rem;
+display:flex;align-items:center;justify-content:space-between;gap:0.3125rem;margin-bottom:0.375rem;
 }
 [data-vibeui-block="calendar-029"] [data-part="nav"] strong{
-font-size:0.8rem;font-weight:700;text-transform:capitalize;
+font-size:0.9375rem;font-weight:700;text-transform:capitalize;
 }
 [data-vibeui-block="calendar-029"] [data-part="step"]{
 appearance:none;cursor:pointer;font:inherit;
-width:1.6rem;height:1.6rem;border-radius:0.4rem;
+width:1.625rem;height:1.625rem;border-radius:0.375rem;
 border:1px solid var(--vibeui-calendar-029-border);
 background:var(--vibeui-calendar-029-soft);color:inherit;line-height:1;
 }
@@ -107,17 +110,17 @@ background:var(--vibeui-calendar-029-soft);color:inherit;line-height:1;
 outline:2px solid var(--vibeui-calendar-029-accent);outline-offset:2px;
 }
 [data-vibeui-block="calendar-029"] [data-part="grid"]{
-display:grid;grid-template-columns:repeat(7,1fr);gap:0.1rem;
+display:grid;grid-template-columns:repeat(7,1fr);gap:0.125rem;
 }
 [data-vibeui-block="calendar-029"] [data-part="dow"]{
-text-align:center;font-size:0.62rem;font-weight:700;text-transform:uppercase;
-color:var(--vibeui-calendar-029-muted);padding-bottom:0.15rem;
+text-align:center;font-size:0.6875rem;font-weight:700;text-transform:uppercase;
+color:var(--vibeui-calendar-029-muted);padding-bottom:0.125rem;
 }
 [data-vibeui-block="calendar-029"] [data-part="day"]{
 appearance:none;cursor:pointer;font:inherit;
-height:1.85rem;border:0;border-radius:0.4rem;
+height:1.875rem;border:0;border-radius:0.375rem;
 background:transparent;color:inherit;
-font-size:0.75rem;font-variant-numeric:tabular-nums;
+font-size:0.8125rem;font-variant-numeric:tabular-nums;
 transition:background-color .16s ease;
 }
 [data-vibeui-block="calendar-029"] [data-part="day"]:hover{background:var(--vibeui-calendar-029-soft)}
@@ -137,6 +140,46 @@ function stamp(date: Date) {
   const day = String(date.getDate()).padStart(2, "0")
 
   return `${year}-${month}-${day}`
+}
+
+/**
+ * Стрелки водят фокус по сетке. Без них до нужного дня приходится жать Tab
+ * столько раз, сколько до него дней.
+ */
+function moveFocus(event: KeyboardEvent<HTMLElement>, columns: number) {
+  const steps: Record<string, number> = {
+    ArrowLeft: -1,
+    ArrowRight: 1,
+    ArrowUp: -columns,
+    ArrowDown: columns,
+  }
+  const step = steps[event.key]
+
+  if (step === undefined) {
+    return
+  }
+
+  const buttons = Array.from(
+    event.currentTarget.querySelectorAll<HTMLButtonElement>("button"),
+  )
+  const from = buttons.indexOf(document.activeElement as HTMLButtonElement)
+
+  if (from < 0) {
+    return
+  }
+
+  let index = from + step
+
+  while (buttons[index]?.disabled) {
+    index += step
+  }
+
+  if (!buttons[index]) {
+    return
+  }
+
+  event.preventDefault()
+  buttons[index].focus()
 }
 
 /**
@@ -162,14 +205,39 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 }
 
 /**
+ * Дата и локаль из пропов или дефолты компонента. Чужая страница не должна
+ * падать из-за опечатки в значении: Intl бросает RangeError и на Invalid Date,
+ * и на нераспознанной локали, а это белый экран вместо всего сайта. Пустая
+ * строка — законное «фильтр снят», её не трогаем.
+ */
+function safeDate(value: string, fallback: string) {
+  if (!value) {
+    return value
+  }
+
+  return Number.isNaN(new Date(`${value}T00:00:00`).getTime())
+    ? fallback
+    : value
+}
+
+function safeLocale(value: string, fallback: string) {
+  try {
+    Intl.DateTimeFormat.supportedLocalesOf(value)
+    return value
+  } catch {
+    return fallback
+  }
+}
+
+/**
  * Компактный выбор даты фишкой в строке фильтров.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Calendar029({
   label = "Дата",
-  defaultValue = "2026-04-15",
+  defaultValue: defaultValueProp = "2026-04-15",
   neighbours = ["Статус: в работе", "Автор: любой"],
-  locale = "ru-RU",
+  locale: localeProp = "ru-RU",
   anyText = "любая",
   clearLabel = "Снять фильтр по дате",
   prevLabel = "Предыдущий месяц",
@@ -181,6 +249,8 @@ export function Calendar029({
   style,
   ...props
 }: Calendar029Props) {
+  const defaultValue = safeDate(defaultValueProp, "2026-04-15")
+  const locale = safeLocale(localeProp, "ru-RU")
   const id = useId()
   const [value, setValue] = useState(defaultValue)
   const [open, setOpen] = useState(false)
@@ -208,6 +278,13 @@ export function Calendar029({
     day: "numeric",
     month: "short",
   })
+  // В сетке нет <th scope="col">, поэтому день недели звучит в подписи дня.
+  const long = new Intl.DateTimeFormat(locale, { dateStyle: "full" })
+  // Ровно одна кнопка сетки в табуляции: выбранный день, иначе первое число
+  // показанного месяца.
+  const stop = cells.some((date) => stamp(date) === value)
+    ? value
+    : stamp(first)
 
   const commit = (date: Date) => {
     const next = stamp(date)
@@ -235,6 +312,7 @@ export function Calendar029({
       </style>
       <div
         {...props}
+        data-slot="calendar"
         data-vibeui-block="calendar-029"
         className={className}
         style={palette}
@@ -310,7 +388,7 @@ export function Calendar029({
                   ›
                 </button>
               </div>
-              <div data-part="grid">
+              <div data-part="grid" onKeyDown={(event) => moveFocus(event, 7)}>
                 {weekdays.map((name) => (
                   <span key={name} data-part="dow">
                     {name}
@@ -322,6 +400,8 @@ export function Calendar029({
                     type="button"
                     data-part="day"
                     data-outside={date.getMonth() !== view.getMonth()}
+                    tabIndex={stamp(date) === stop ? 0 : -1}
+                    aria-label={long.format(date)}
                     aria-pressed={stamp(date) === value}
                     onClick={() => commit(date)}
                   >

@@ -1,6 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Button042Props = ComponentPropsWithoutRef<"button"> & {
+export type Button042Props = ComponentProps<"button"> & {
   /** Величина среза угла в пикселях. */
   cut?: number
   accent?: string
@@ -18,10 +18,13 @@ const STYLES = `
 --vibeui-button-042-notch:light-dark(oklch(0.82 0.17 95),oklch(0.87 0.17 95));
 --vibeui-button-042-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="button-042"]{color-scheme:dark}
 [data-vibeui-block="button-042"]{
 position:relative;appearance:none;border:0;cursor:pointer;box-sizing:border-box;
 display:inline-flex;align-items:center;gap:0.5rem;
-height:2.75rem;padding:0 1.25rem;
+height:2.5rem;padding:0 1.25rem;
 background:var(--vibeui-button-042-accent);color:var(--vibeui-button-042-fg);
 font-family:var(--vibeui-button-042-font);font-size:0.875rem;font-weight:700;line-height:1;
 letter-spacing:0.04em;text-transform:uppercase;
@@ -78,6 +81,7 @@ export function Button042({
       <button
         {...props}
         type={type}
+        data-slot="button"
         data-vibeui-block="button-042"
         className={className}
         style={palette}

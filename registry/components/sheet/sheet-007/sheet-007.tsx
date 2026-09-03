@@ -1,7 +1,7 @@
 "use client"
 
-import { useRef, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import { useId, useRef, useState } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Sheet007Section = {
   label: string
@@ -10,7 +10,7 @@ export type Sheet007Section = {
 }
 
 export type Sheet007Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "title"
 > & {
   triggerLabel?: string
@@ -36,7 +36,7 @@ const STYLES = `
 :where([data-vibeui-block="sheet-007"]){
 --vibeui-sheet-007-bg:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
 --vibeui-sheet-007-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.006 265));
---vibeui-sheet-007-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-sheet-007-muted:color-mix(in oklab,var(--vibeui-sheet-007-fg) 68%,transparent);
 --vibeui-sheet-007-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-sheet-007-hover:light-dark(oklch(0.96 0.004 265),oklch(0.29 0.012 265));
 --vibeui-sheet-007-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.16 265));
@@ -44,6 +44,9 @@ const STYLES = `
 --vibeui-sheet-007-scrim:light-dark(oklch(0.19 0.02 265 / 45%),oklch(0.08 0.014 265 / 60%));
 --vibeui-sheet-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="sheet-007"]{color-scheme:dark}
 [data-vibeui-block="sheet-007"]{
 display:inline-block;font-family:var(--vibeui-sheet-007-font);color:var(--vibeui-sheet-007-fg);
 }
@@ -55,7 +58,7 @@ font:inherit;font-size:0.8125rem;font-weight:600;
 }
 [data-vibeui-block="sheet-007"] [data-part="trigger"]:focus-visible{outline:2px solid var(--vibeui-sheet-007-accent);outline-offset:2px}
 [data-vibeui-block="sheet-007"] dialog{
-position:fixed;inset:auto 0 0 0;margin:0;
+position:fixed;inset:auto 0 0 0;margin:0;container-type:inline-size;
 width:100%;max-width:100vw;height:min(26rem,82dvh);
 padding:0;border:0;border-radius:1.25rem 1.25rem 0 0;overflow:hidden;
 background:var(--vibeui-sheet-007-bg);color:var(--vibeui-sheet-007-fg);
@@ -118,7 +121,7 @@ background:transparent;color:inherit;font:inherit;text-align:left;
 [data-vibeui-block="sheet-007"] [data-part="row"]:focus-visible{outline:2px solid var(--vibeui-sheet-007-accent);outline-offset:-2px}
 [data-vibeui-block="sheet-007"] [data-part="labels"]{display:flex;flex-direction:column;gap:0.125rem;min-width:0}
 [data-vibeui-block="sheet-007"] [data-part="label"]{font-size:0.9375rem;font-weight:600}
-[data-vibeui-block="sheet-007"] [data-part="hint"]{font-size:0.75rem;color:var(--vibeui-sheet-007-muted)}
+[data-vibeui-block="sheet-007"] [data-part="hint"]{font-size:0.875rem;color:var(--vibeui-sheet-007-muted)}
 [data-vibeui-block="sheet-007"] [data-part="chevron"]{
 margin-left:auto;flex:none;width:0.5rem;height:0.5rem;
 border:solid var(--vibeui-sheet-007-muted);border-width:1.75px 1.75px 0 0;transform:rotate(45deg);
@@ -136,6 +139,13 @@ border:1.5px solid var(--vibeui-sheet-007-border);border-radius:9999px;cursor:po
 content:"";position:absolute;inset:0.1875rem;border-radius:9999px;background:var(--vibeui-sheet-007-accent);
 }
 [data-vibeui-block="sheet-007"] [data-part="option"] input:focus-visible{outline:2px solid var(--vibeui-sheet-007-accent);outline-offset:2px}
+/* Шкала категории: на планшете и шире лист получает крупный кегль и воздух. */
+@container (min-width: 32rem){
+[data-vibeui-block="sheet-007"] [data-part="label"]{font-size:1rem}
+[data-vibeui-block="sheet-007"] [data-part="hint"]{font-size:0.9375rem}
+[data-vibeui-block="sheet-007"] [data-part="option"]{font-size:1rem;padding:0.875rem 0}
+[data-vibeui-block="sheet-007"] [data-part="row"]{padding:0.875rem 0}
+}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="sheet-007"] *{animation:none!important;transition:none!important}
 [data-vibeui-block="sheet-007"] dialog{translate:0 0}
@@ -200,6 +210,9 @@ export function Sheet007({
 }: Sheet007Props) {
   const sheet = useRef<HTMLDialogElement>(null)
   const [openedSection, setOpenedSection] = useState<number | null>(null)
+  // Имя радиогруппы уникально на экземпляр: с постоянным именем два листа на
+  // странице делили бы одну группу и гасили выбор друг друга.
+  const group = useId()
 
   const palette = {
     ...(accent ? { "--vibeui-sheet-007-accent": accent } : null),
@@ -226,6 +239,7 @@ export function Sheet007({
       </style>
       <div
         {...props}
+        data-slot="sheet"
         data-vibeui-block="sheet-007"
         className={className}
         style={palette}
@@ -291,7 +305,7 @@ export function Sheet007({
                         <label key={option} data-part="option">
                           <input
                             type="radio"
-                            name={`vibeui-sheet-007-${openedSection}`}
+                            name={`${group}-${openedSection}`}
                             defaultChecked={index === 0}
                           />
                           <span>{option}</span>

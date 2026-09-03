@@ -1,11 +1,8 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Badge006Stage = "draft" | "review" | "live" | "archived"
 
-export type Badge006Props = Omit<
-  ComponentPropsWithoutRef<"span">,
-  "children"
-> & {
+export type Badge006Props = Omit<ComponentProps<"span">, "children"> & {
   stage?: Badge006Stage
   label?: string
   /** Подписи стадий: компонент несёт русские, проект подставляет свои. */
@@ -26,6 +23,9 @@ const STYLES = `
 --vibeui-badge-006-mark:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
 --vibeui-badge-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="badge-006"]{color-scheme:dark}
 [data-vibeui-block="badge-006"]{
 display:inline-flex;align-items:center;gap:0.4375rem;
 height:1.5rem;padding:0 0.625rem;
@@ -113,6 +113,7 @@ export function Badge006({
       </style>
       <span
         {...props}
+        data-slot="badge"
         data-vibeui-block="badge-006"
         data-stage={stage}
         className={className}

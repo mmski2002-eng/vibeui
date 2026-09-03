@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Accordion004Item = {
   title: string
@@ -11,10 +11,7 @@ export type Accordion004Item = {
 export type Accordion004Marker =
   "chevron" | "triangle" | "square" | "plus" | "none"
 
-export type Accordion004Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Accordion004Props = Omit<ComponentProps<"div">, "children"> & {
   items?: Accordion004Item[]
   defaultOpen?: number
   marker?: Accordion004Marker
@@ -36,7 +33,7 @@ export type Accordion004Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="accordion-004"]){
 --vibeui-accordion-004-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-accordion-004-muted:light-dark(oklch(0.52 0.014 265),oklch(0.68 0.01 265));
+--vibeui-accordion-004-muted:color-mix(in oklab,var(--vibeui-accordion-004-fg) 68%,transparent);
 --vibeui-accordion-004-bg:transparent;
 --vibeui-accordion-004-alt:light-dark(oklch(0 0 0 / 3.5%),oklch(1 0 0 / 5%));
 --vibeui-accordion-004-border:light-dark(oklch(0.91 0.006 265),oklch(0.31 0.01 265));
@@ -125,10 +122,13 @@ font-variant-numeric:tabular-nums;white-space:nowrap;
 margin:0;padding:0 0.9375rem 0.875rem 2.125rem;
 font-size:0.8125rem;line-height:1.6;color:var(--vibeui-accordion-004-muted);max-width:60ch;
 }
-@container (min-width: 30rem){
+@container (min-width: 32rem){
 [data-vibeui-block="accordion-004"] summary{padding:0.875rem 1.125rem;font-size:0.9375rem}
 [data-vibeui-block="accordion-004"] [data-part="body"]{padding:0 1.125rem 1rem 2.375rem;font-size:0.875rem}
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="accordion-004"]{color-scheme:dark}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="accordion-004"] *{animation:none!important;transition:none!important}}
 `
 
@@ -210,6 +210,7 @@ export function Accordion004({
       </style>
       <div
         {...props}
+        data-slot="accordion"
         data-vibeui-block="accordion-004"
         data-marker={marker}
         data-zebra={zebra ? "on" : "off"}

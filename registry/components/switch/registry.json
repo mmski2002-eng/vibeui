@@ -101,6 +101,7 @@
         "i18n": {
           "en": {
             "description": "A setting toggle as a row: label and description on the left, the switch pinned to the edge. A native checkbox inside keeps keyboard and form behaviour free.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-switch-001-* variables. The root is a <label>, so the target is the whole row. Inside sits a native input[type=checkbox] with role=\"switch\" and appearance:none: the track is the input itself and the thumb is the neighbouring span, which is moved on :checked. Through the align prop the switch is moved to the start of the row, for settings in a narrow column.",
             "ai": {
               "summary": "A setting toggle rather than a form field: a full-width row with the label and description on the left and the switch at the edge. The track is a native checkbox with appearance:none and the thumb rides on transform. The whole row is the target, state and keyboard stay native, and the role is declared with role=\"switch\". Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -167,7 +168,15 @@
           }
         },
         "preview": {
-          "width": "full"
+          "width": "full",
+          "states": [
+            {
+              "defaultChecked": false
+            },
+            {
+              "defaultChecked": true
+            }
+          ]
         },
         "cardControls": [
           "align",
@@ -197,7 +206,15 @@
       "meta": {
         "tags": ["switch", "card", "settings", "toggle"],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "states": [
+            {
+              "defaultChecked": false
+            },
+            {
+              "defaultChecked": true
+            }
+          ]
         },
         "ai": {
           "export": "Switch002",
@@ -272,6 +289,7 @@
         "i18n": {
           "en": {
             "description": "A switch tile: heading, explanation and a toggle in the corner, with the whole card recoloured when the option is on.",
+            "docs": "A server component: the state is held by a native checkbox with role=\"switch\", no JS needed. The root is a <label>, so a press anywhere on the tile toggles the option. The border, the background and the \"On\" badge are switched by :has(input:checked) rules on the root; focus is caught through :has(input:focus-visible), because the input itself is visually tiny. The thumb is a pseudo-node next to the input, and its travel is set with transform. The palette lives in --vibeui-switch-002-*.",
             "ai": {
               "summary": "A tile switch with heading, description and a full-card tint when enabled. One file, zero dependencies, a server component.",
               "preserve": [
@@ -424,6 +442,7 @@
         "i18n": {
           "en": {
             "description": "A settings section: rows with switches, hairline dividers and a textual On/Off status to the right of every caption.",
+            "docs": "A server component built on a fieldset with a legend: a screen reader announces the name of the section before the rows. The legend is pushed with float:left and the list gets clear:both — otherwise the following blocks wrap around it. The status is supplied by an ::after pseudo-element and is switched by a :has(input:checked) rule within the bounds of the row, so no JS is needed. The dividers are an inset box-shadow on the neighbouring rows, to avoid introducing extra nodes. The palette lives in --vibeui-switch-003-*.",
             "ai": {
               "summary": "A settings section listing switch rows with a textual status on each row. One file, zero dependencies, a server component.",
               "preserve": [
@@ -528,7 +547,15 @@
       "meta": {
         "tags": ["switch", "icon", "state", "toggle"],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "states": [
+            {
+              "defaultChecked": false
+            },
+            {
+              "defaultChecked": true
+            }
+          ]
         },
         "ai": {
           "export": "Switch004",
@@ -603,6 +630,7 @@
         "i18n": {
           "en": {
             "description": "A switch with state marks: a tick or a cross rides inside the thumb, and the word \"on\" or \"off\" sits under the caption.",
+            "docs": "A server component. The marks are drawn with borders and pseudo-elements: the cross is two rotated bars, the check mark is the corner of a square at 45°. The visible mark is chosen by the input:checked + [data-part=thumb] rule, and the state caption by the :has(input:checked) rule on the root, so the text and the thumb cannot drift apart. The hidden caption is switched off with display:none, which means it does not enter the accessible name either. The palette lives in --vibeui-switch-004-*.",
             "ai": {
               "summary": "A switch whose state is visible from the mark in the thumb and the word under the caption. One file, zero dependencies, a server component.",
               "preserve": [
@@ -768,6 +796,7 @@
         "i18n": {
           "en": {
             "description": "A switch for a dangerous action: turning it off unfolds a panel with the consequence and two buttons, while turning it back on applies instantly.",
+            "docs": "A client component: a useState on the state itself and on showing the panel. The onChange handler is asymmetric — turning on is applied instantly, while turning off only opens the question, so the switch physically does not move until confirmation. The panel is built into the flow rather than into a dialog: a modal window would cover the very setting being asked about. The appearance is animated and is suppressed by prefers-reduced-motion. The palette lives in --vibeui-switch-005-*.",
             "ai": {
               "summary": "A switch that asks for confirmation only in the dangerous direction. One file, zero dependencies, a client component.",
               "preserve": [
@@ -940,6 +969,7 @@
         "i18n": {
           "en": {
             "description": "A switch with deferred saving: the thumb moves at once, while the line beneath honestly goes through \"saving\" and \"saved\".",
+            "docs": "A client component: a useState on the state and on the writing phase, a useRef holding the timers, and a useEffect clearing them on unmount. The status line is declared role=\"status\" and has a fixed minimum height so that the card does not jump. The indicator is a ring with a coloured top edge, and the check mark is the corner of a square at 45°; both animations are suppressed by prefers-reduced-motion. The palette lives in --vibeui-switch-006-*.",
             "ai": {
               "summary": "A switch that shows the phases of writing a setting to the server. One file, zero dependencies, a client component.",
               "preserve": [
@@ -1090,6 +1120,7 @@
         "i18n": {
           "en": {
             "description": "A size scale for a switch: sm, md and lg all derive from a single CSS variable that drives track, thumb and travel.",
+            "docs": "A server component built on a fieldset with a legend. All three sizes are derived from --vibeui-switch-007-unit: the track width is 1.85 units, the thumb is a quarter of a rem smaller, the travel is 0.85 units, all through calc. A new size is therefore one line with a different value of the variable rather than a copy of the whole rule block. The legend is pushed with float:left and the list gets clear:both. The palette lives in --vibeui-switch-007-*.",
             "ai": {
               "summary": "Three switch sizes derived from one variable with calc. One file, zero dependencies, a server component.",
               "preserve": [
@@ -1243,6 +1274,7 @@
         "i18n": {
           "en": {
             "description": "A locked switch that explains itself: a padlock beside the caption, the reason in words and a live link to lifting the limit.",
+            "docs": "A server component. The switch is turned off through disabled and the track is drawn as a dashed line — the state reads without colour too. The padlock is assembled from a rectangular body and a shackle on a pseudo-element, with no icon package. The link is deliberately not blocked and gets a focus ring of its own: it is the only way out of the dead end. The reason sits in a separate paragraph with a muted background. The palette lives in --vibeui-switch-008-*.",
             "ai": {
               "summary": "A disabled setting with the reason spelled out and a link that lifts it. One file, zero dependencies, a server component.",
               "preserve": [
@@ -1326,7 +1358,15 @@
       "meta": {
         "tags": ["switch", "theme", "dark-mode", "animation"],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "states": [
+            {
+              "defaultChecked": false
+            },
+            {
+              "defaultChecked": true
+            }
+          ]
         },
         "ai": {
           "export": "Switch009",
@@ -1403,6 +1443,7 @@
         "i18n": {
           "en": {
             "description": "A day/night theme switch: the track repaints from daylight sky to night, the sun turns into a crescent, and stars rise beside it.",
+            "docs": "A server component: all the state is held by a native checkbox with role=\"switch\". The crescent is made by a cut-out — a circle in the night-sky colour on a pseudo-element rides over the sun, and by day it is moved beyond the thumb. The stars are drawn as a single dot with three shadows in box-shadow and are revealed by the input:checked ~ [data-part=stars] rule. The mode caption is switched through :has(input:checked). All the transitions are suppressed by prefers-reduced-motion. The palette lives in --vibeui-switch-009-*.",
             "ai": {
               "summary": "A theme switch turning a sun into a crescent with rising stars, entirely in CSS. One file, zero dependencies, a server component.",
               "preserve": [
@@ -1559,6 +1600,7 @@
         "i18n": {
           "en": {
             "description": "A setting row with a square section mark before the caption: a signal icon that helps you spot the switch at a glance in a long settings list.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-switch-010-* variables. The root is a <label>, so the target is the whole row. The section mark is a square with a muted fill and a signal dot on a pseudo-element, purely decorative and hidden from the screen reader through aria-hidden. The track is a native checkbox with role=\"switch\" and appearance:none, and the thumb is moved on :checked through transform.",
             "ai": {
               "summary": "A setting row with a square section mark to the left of the text: a signal icon that helps you spot the switch in a long settings list faster than reading the caption. The track is a native checkbox with role=\"switch\" and appearance:none. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -1619,7 +1661,15 @@
           }
         },
         "preview": {
-          "width": "full"
+          "width": "full",
+          "states": [
+            {
+              "defaultChecked": false
+            },
+            {
+              "defaultChecked": true
+            }
+          ]
         },
         "cardControls": ["defaultChecked", "disabled", "accent", "background"]
       }
@@ -1724,6 +1774,7 @@
         "i18n": {
           "en": {
             "description": "A switch for a dangerous enable: turning it on opens a native <dialog> with a question and two buttons, while turning it off applies instantly.",
+            "docs": "A client component: a useState on the state, a useRef on the <dialog> reference. The onChange handler is asymmetric — turning off is applied instantly, while turning on only opens the dialog through showModal(), so the switch physically does not move until confirmation. The dialog provides a ready focus trap and Escape-to-close with no manual markup; the confirm and cancel buttons carry equal weight. The palette lives in --vibeui-switch-011-*.",
             "ai": {
               "summary": "A switch that asks for confirmation only in the dangerous direction — turning on, not off. The question opens in a native <dialog> with a built-in focus trap and Escape-to-close. One file, zero dependencies, a client component.",
               "preserve": [
@@ -1885,6 +1936,7 @@
         "i18n": {
           "en": {
             "description": "A group of switches with a shared \"turn on all\" master toggle: it sits in an indeterminate position when only part of the rows are on and reports the count in words.",
+            "docs": "A client component: useState holds the set of enabled ids, and a useRef with a useEffect sets the indeterminate DOM property on the master switch — React does not pass it through props. allOn and someOn are recomputed from items on every render, so the master switch cannot drift from the rows. The textual \"N of M on\" status duplicates the state in words, because a tri-state is not described by ARIA for the switch role. The palette lives in --vibeui-switch-012-*.",
             "ai": {
               "summary": "A master toggle above a list of switches: an indeterminate state when only part is on, plus a textual \"N of M on\" counter instead of guessing from thumb colour. One file, zero dependencies, a client component.",
               "preserve": [
@@ -2057,6 +2109,7 @@
         "i18n": {
           "en": {
             "description": "A switch with a pop-up save badge: the thumb moves at once, while a capsule beneath it briefly reads \"Saving…\" with a spinner, then \"Saved\" with a checkmark.",
+            "docs": "A client component: a useState on the state and on the writing phase, a useRef holding the timers, and a useEffect clearing them on unmount. The status is moved into a pop-up badge with role=\"status\" under the row rather than into a line with reserved height — the card grows for the duration of the write. The indicator is a ring with a coloured top edge, and the check mark is the corner of a square at 45°; both animations are suppressed by prefers-reduced-motion. The palette lives in --vibeui-switch-013-*.",
             "ai": {
               "summary": "A switch that shows the phases of writing a setting in a pop-up badge below the row rather than a reserved status line. One file, zero dependencies, a client component.",
               "preserve": [
@@ -2206,6 +2259,7 @@
         "i18n": {
           "en": {
             "description": "A switch with icons fixed at the ends of the track: an off tick on the left, an on check on the right, both anchored in place while the thumb simply points at the active side.",
+            "docs": "A server component. The marks are fixed at the ends of the input through absolute positioning and take no part in the travel; the active side is highlighted by the input:checked ~ [data-part=\"on-mark\"] and input:not(:checked) ~ [data-part=\"off-mark\"] rules. The thumb travel is set by the chain of adjacent-sibling selectors input:checked + [off-mark] + [on-mark] + [thumb], so the order of the nodes in the markup must not be changed. The tick and the check mark are drawn with borders, with no icon package. The palette lives in --vibeui-switch-014-*.",
             "ai": {
               "summary": "A switch with icons anchored at the ends of the track rather than inside the thumb: the active side lights up in colour, and the thumb only shows which way it switched. One file, zero dependencies, a server component.",
               "preserve": [
@@ -2262,7 +2316,15 @@
           }
         },
         "preview": {
-          "width": "full"
+          "width": "full",
+          "states": [
+            {
+              "defaultChecked": false
+            },
+            {
+              "defaultChecked": true
+            }
+          ]
         },
         "cardControls": ["defaultChecked", "accent", "background"]
       }

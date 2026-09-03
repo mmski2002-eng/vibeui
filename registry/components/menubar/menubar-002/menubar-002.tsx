@@ -36,13 +36,16 @@ const STYLES = `
 --vibeui-menubar-002-bg:transparent;
 --vibeui-menubar-002-panel:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
 --vibeui-menubar-002-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
---vibeui-menubar-002-muted:light-dark(oklch(0.58 0.014 265),oklch(0.68 0.012 265));
+--vibeui-menubar-002-muted:color-mix(in oklab,var(--vibeui-menubar-002-fg) 68%,transparent);
 --vibeui-menubar-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-menubar-002-hover:light-dark(oklch(0.55 0.02 265 / 10%),oklch(0.88 0.02 265 / 14%));
 --vibeui-menubar-002-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
 --vibeui-menubar-002-shadow:light-dark(oklch(0.2 0.03 265 / 45%),oklch(0 0 0 / 62%));
 --vibeui-menubar-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="menubar-002"]{color-scheme:dark}
 [data-vibeui-block="menubar-002"]{
 box-sizing:border-box;width:100%;max-width:34rem;padding:0.25rem;
 display:flex;align-items:center;gap:0.125rem;
@@ -288,6 +291,7 @@ export function Menubar002({
       </style>
       <div
         ref={rootRef}
+        data-slot="menubar"
         data-vibeui-block="menubar-002"
         role="menubar"
         aria-label={menubarLabel}

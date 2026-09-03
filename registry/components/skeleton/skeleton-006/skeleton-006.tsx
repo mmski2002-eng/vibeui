@@ -1,6 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Skeleton006Props = ComponentPropsWithoutRef<"div"> & {
+export type Skeleton006Props = ComponentProps<"div"> & {
   /** Число строк в каждом абзаце: длина списка задаёт число абзацев. */
   paragraphs?: number[]
   label?: string
@@ -26,6 +26,9 @@ const STYLES = `
 --vibeui-skeleton-006-lines:3;
 --vibeui-skeleton-006-tail:32%;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="skeleton-006"]{color-scheme:dark}
 [data-vibeui-block="skeleton-006"]{
 display:flex;flex-direction:column;gap:1.125rem;
 width:100%;max-width:26rem;box-sizing:border-box;padding:1.125rem 1.25rem;
@@ -116,6 +119,7 @@ export function Skeleton006({
       </style>
       <div
         {...props}
+        data-slot="skeleton"
         data-vibeui-block="skeleton-006"
         role="status"
         aria-busy="true"

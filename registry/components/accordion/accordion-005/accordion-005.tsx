@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Accordion005Item = {
   title: string
@@ -18,10 +18,7 @@ export type Accordion005Marker =
 /** Чем отмечен раздел, требующий внимания. */
 export type Accordion005Stripe = "bar" | "ring" | "none"
 
-export type Accordion005Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Accordion005Props = Omit<ComponentProps<"div">, "children"> & {
   items?: Accordion005Item[]
   defaultOpen?: number
   marker?: Accordion005Marker
@@ -45,7 +42,7 @@ export type Accordion005Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="accordion-005"]){
 --vibeui-accordion-005-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-accordion-005-muted:light-dark(oklch(0.52 0.014 265),oklch(0.68 0.01 265));
+--vibeui-accordion-005-muted:color-mix(in oklab,var(--vibeui-accordion-005-fg) 68%,transparent);
 --vibeui-accordion-005-bg:transparent;
 --vibeui-accordion-005-border:light-dark(oklch(0.91 0.006 265),oklch(0.31 0.01 265));
 --vibeui-accordion-005-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.16 262));
@@ -73,7 +70,7 @@ background:var(--vibeui-accordion-005-bg);
 }
 [data-vibeui-block="accordion-005"] summary{
 display:flex;align-items:center;gap:0.75rem;
-padding:0.875rem 1.0625rem;cursor:pointer;list-style:none;
+padding:0.9375rem 1.0625rem;cursor:pointer;list-style:none;
 font-size:0.9375rem;font-weight:550;line-height:1.4;
 }
 [data-vibeui-block="accordion-005"] summary::-webkit-details-marker{display:none}
@@ -134,7 +131,7 @@ transition:transform .18s ease,background-color .16s ease;
 [data-vibeui-block="accordion-005"][data-marker="plus"] details[open] [data-part="marker"]::before,
 [data-vibeui-block="accordion-005"][data-marker="plus"] details[open] [data-part="marker"]::after{background:var(--vibeui-accordion-005-accent)}
 [data-vibeui-block="accordion-005"] [data-part="body"]{
-margin:0;padding:0 1.0625rem 1rem;
+margin:0;padding:0 1.0625rem 1.0625rem;
 font-size:0.875rem;line-height:1.6;color:var(--vibeui-accordion-005-muted);max-width:62ch;
 }
 /* Требует внимания: полоса у края плюс тёплая подпись состояния. */
@@ -159,7 +156,7 @@ opacity:.65;background:color-mix(in oklab,var(--vibeui-accordion-005-border) 22%
 }
 [data-vibeui-block="accordion-005"] [data-part="locked"] [data-part="head"]{
 display:flex;align-items:center;gap:0.75rem;
-padding:0.875rem 1.0625rem;cursor:not-allowed;
+padding:0.9375rem 1.0625rem;cursor:not-allowed;
 font-size:0.9375rem;font-weight:550;line-height:1.4;
 }
 [data-vibeui-block="accordion-005"] [data-part="reason"]{
@@ -168,9 +165,12 @@ font-size:0.8125rem;line-height:1.5;color:var(--vibeui-accordion-005-muted);
 }
 @container (min-width: 32rem){
 [data-vibeui-block="accordion-005"] summary,
-[data-vibeui-block="accordion-005"] [data-part="locked"] [data-part="head"]{padding:1rem 1.25rem;font-size:1rem}
-[data-vibeui-block="accordion-005"] [data-part="body"]{padding:0 1.25rem 1.125rem;font-size:0.9375rem}
+[data-vibeui-block="accordion-005"] [data-part="locked"] [data-part="head"]{padding:1.0625rem 1.375rem;font-size:1rem}
+[data-vibeui-block="accordion-005"] [data-part="body"]{padding:0 1.375rem 1.25rem;font-size:0.9375rem}
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="accordion-005"]{color-scheme:dark}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="accordion-005"] *{animation:none!important;transition:none!important}}
 `
 
@@ -256,6 +256,7 @@ export function Accordion005({
       </style>
       <div
         {...props}
+        data-slot="accordion"
         data-vibeui-block="accordion-005"
         data-marker={marker}
         data-stripe={stripe}

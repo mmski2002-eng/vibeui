@@ -279,7 +279,9 @@ export function Autocomplete011({
                 <span data-part="avatar" aria-hidden="true">
                   {initials(person.name)}
                 </span>
-                <span data-part="name">{highlight(person.name, token?.word ?? "")}</span>
+                <span data-part="name">
+                  {highlight(person.name, token?.word ?? "")}
+                </span>
                 <span data-part="role">{person.role}</span>
                 <span data-part="handle">@{person.handle}</span>
               </li>

@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Radio009Bundle = {
   value: string
@@ -9,7 +9,7 @@ export type Radio009Bundle = {
 }
 
 export type Radio009Props = Omit<
-  ComponentPropsWithoutRef<"fieldset">,
+  ComponentProps<"fieldset">,
   "children" | "defaultValue"
 > & {
   legend?: string
@@ -32,7 +32,7 @@ const STYLES = `
 --vibeui-radio-009-bg:transparent;
 --vibeui-radio-009-card:light-dark(oklch(0.99 0.002 265),oklch(0.27 0.008 265));
 --vibeui-radio-009-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-radio-009-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-radio-009-muted:color-mix(in oklab,var(--vibeui-radio-009-fg) 68%,transparent);
 --vibeui-radio-009-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
 --vibeui-radio-009-ring:light-dark(oklch(0.74 0.012 265),oklch(0.54 0.014 265));
 --vibeui-radio-009-accent:light-dark(oklch(0.58 0.15 165),oklch(0.76 0.14 165));
@@ -41,6 +41,9 @@ const STYLES = `
 --vibeui-radio-009-on-save:light-dark(oklch(1 0 0),oklch(0.18 0.03 165));
 --vibeui-radio-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="radio-009"]{color-scheme:dark}
 [data-vibeui-block="radio-009"]{
 display:flex;flex-direction:column;
 width:100%;max-width:24rem;box-sizing:border-box;
@@ -172,6 +175,7 @@ export function Radio009({
       </style>
       <fieldset
         {...props}
+        data-slot="radio-group"
         data-vibeui-block="radio-009"
         className={className}
         style={palette}

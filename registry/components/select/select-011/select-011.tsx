@@ -1,7 +1,7 @@
 "use client"
 
 import { useId, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Select011Tone = "open" | "progress" | "review" | "done"
 
@@ -12,7 +12,7 @@ export type Select011Option = {
 }
 
 export type Select011Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   label?: string
@@ -37,7 +37,7 @@ const STYLES = `
 --vibeui-select-011-surface-pad:0;
 --vibeui-select-011-surface-radius:0;
 --vibeui-select-011-fg:light-dark(oklch(0.23 0.016 265),oklch(0.94 0.005 265));
---vibeui-select-011-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-select-011-muted:color-mix(in oklab,var(--vibeui-select-011-fg) 68%,transparent);
 --vibeui-select-011-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.014 265));
 --vibeui-select-011-accent:light-dark(oklch(0.55 0.19 262),oklch(0.75 0.15 262));
 --vibeui-select-011-tone-open:light-dark(oklch(0.62 0.19 255),oklch(0.72 0.16 255));
@@ -46,6 +46,9 @@ const STYLES = `
 --vibeui-select-011-tone-done:light-dark(oklch(0.62 0.17 155),oklch(0.74 0.15 155));
 --vibeui-select-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="select-011"]{color-scheme:dark}
 /* Подложка появляется только вместе с пропом background: по умолчанию поле
    лежит прямо на фоне страницы. */
 [data-vibeui-block="select-011"]{
@@ -178,6 +181,7 @@ export function Select011({
       </style>
       <div
         {...props}
+        data-slot="select"
         data-vibeui-block="select-011"
         className={className}
         style={palette}

@@ -1,7 +1,7 @@
 "use client"
 
 import { useId, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Phoneinput008Country = {
   flag: string
@@ -10,10 +10,7 @@ export type Phoneinput008Country = {
   mask: string
 }
 
-export type Phoneinput008Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Phoneinput008Props = Omit<ComponentProps<"div">, "children"> & {
   label?: string
   countries?: Phoneinput008Country[]
   /** Подпись списка кодов для озвучки: компонент несёт русскую. */
@@ -44,7 +41,7 @@ const STYLES = `
 --vibeui-phoneinput-008-surface:transparent;
 --vibeui-phoneinput-008-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.33 0.012 265));
 --vibeui-phoneinput-008-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.005 265));
---vibeui-phoneinput-008-muted:light-dark(oklch(0.54 0.014 265),oklch(0.7 0.012 265));
+--vibeui-phoneinput-008-muted:color-mix(in oklab,var(--vibeui-phoneinput-008-fg) 68%,transparent);
 --vibeui-phoneinput-008-field-border:light-dark(oklch(0.85 0.01 265),oklch(0.4 0.014 265));
 --vibeui-phoneinput-008-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
 --vibeui-phoneinput-008-warn:light-dark(oklch(0.62 0.14 75),oklch(0.82 0.14 75));
@@ -53,6 +50,9 @@ const STYLES = `
 --vibeui-phoneinput-008-radius:0.625rem;
 --vibeui-phoneinput-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="phoneinput-008"]{color-scheme:dark}
 [data-vibeui-block="phoneinput-008"]{
 box-sizing:border-box;width:100%;max-width:24rem;
 padding:1rem;border-radius:0.875rem;
@@ -251,6 +251,7 @@ export function Phoneinput008({
       </style>
       <div
         {...props}
+        data-slot="phone-input"
         data-vibeui-block="phoneinput-008"
         data-state={state}
         className={className}

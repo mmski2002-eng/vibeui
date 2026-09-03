@@ -1,7 +1,7 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Buttongroup034Props = Omit<
-  ComponentPropsWithoutRef<"section">,
+  ComponentProps<"section">,
   "children"
 > & {
   title?: string
@@ -27,7 +27,7 @@ const STYLES = `
 :where([data-vibeui-block="buttongroup-034"]){
 --vibeui-buttongroup-034-surface:light-dark(oklch(1 0 0),oklch(0.27 0.012 265));
 --vibeui-buttongroup-034-fg:light-dark(oklch(0.24 0.016 265),oklch(0.95 0.005 265));
---vibeui-buttongroup-034-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-buttongroup-034-muted:color-mix(in oklab,var(--vibeui-buttongroup-034-fg) 68%,transparent);
 --vibeui-buttongroup-034-border:light-dark(oklch(0.9 0.006 265),oklch(0.4 0.012 265));
 --vibeui-buttongroup-034-hover:light-dark(oklch(0.97 0.004 265),oklch(0.33 0.014 265));
 --vibeui-buttongroup-034-accent:light-dark(oklch(0.5 0.16 265),oklch(0.62 0.17 265));
@@ -37,6 +37,9 @@ const STYLES = `
 --vibeui-buttongroup-034-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="buttongroup-034"]{color-scheme:dark}
 [data-vibeui-block="buttongroup-034"]{
 box-sizing:border-box;display:block;width:100%;max-width:34rem;
 border:1px solid var(--vibeui-buttongroup-034-border);border-radius:0.875rem;
@@ -66,7 +69,7 @@ display:flex;isolation:isolate;
 appearance:none;cursor:pointer;font:inherit;
 position:relative;z-index:0;flex:1 1 auto;
 display:inline-flex;align-items:center;justify-content:center;
-height:2.125rem;padding:0 0.75rem;margin-inline-start:-1px;
+height:2.25rem;padding:0 0.75rem;margin-inline-start:-1px;
 border:1px solid var(--vibeui-buttongroup-034-border);
 background:var(--vibeui-buttongroup-034-surface);
 color:var(--vibeui-buttongroup-034-fg);
@@ -171,6 +174,7 @@ export function Buttongroup034({
       </style>
       <section
         {...props}
+        data-slot="button-group"
         data-vibeui-block="buttongroup-034"
         className={className}
         style={palette}

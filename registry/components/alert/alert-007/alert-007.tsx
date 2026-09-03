@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Alert007Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Alert007Props = Omit<ComponentProps<"div">, "children"> & {
   name?: string
   role?: string
   message?: string
@@ -28,7 +25,7 @@ export type Alert007Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="alert-007"]){
 --vibeui-alert-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.95 0.006 265));
---vibeui-alert-007-muted:light-dark(oklch(0.5 0.014 265),oklch(0.72 0.012 265));
+--vibeui-alert-007-muted:color-mix(in oklab,var(--vibeui-alert-007-fg) 68%,transparent);
 --vibeui-alert-007-bg:transparent;
 --vibeui-alert-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-alert-007-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
@@ -37,6 +34,9 @@ const STYLES = `
 --vibeui-alert-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="alert-007"]{color-scheme:dark}
 [data-vibeui-block="alert-007"]{
 display:flex;align-items:flex-start;gap:0.75rem;
 width:100%;box-sizing:border-box;
@@ -50,8 +50,8 @@ font-family:var(--vibeui-alert-007-font);
 [data-vibeui-block="alert-007"] [data-part="avatar"]{
 display:flex;align-items:center;justify-content:center;flex:none;
 width:2.25rem;height:2.25rem;border-radius:9999px;
-background:oklch(0.92 0.05 var(--vibeui-alert-007-hue));
-color:oklch(0.38 0.09 var(--vibeui-alert-007-hue));
+background:light-dark(oklch(0.92 0.05 var(--vibeui-alert-007-hue)),oklch(0.37 0.05 var(--vibeui-alert-007-hue)));
+color:light-dark(oklch(0.38 0.09 var(--vibeui-alert-007-hue)),oklch(0.9 0.06 var(--vibeui-alert-007-hue)));
 font-size:0.75rem;font-weight:650;
 }
 [data-vibeui-block="alert-007"] [data-part="text"]{display:flex;flex-direction:column;gap:0.1875rem;flex:1 1 auto;min-width:0}
@@ -159,6 +159,7 @@ export function Alert007({
       </style>
       <div
         {...props}
+        data-slot="alert"
         data-vibeui-block="alert-007"
         role="status"
         className={className}

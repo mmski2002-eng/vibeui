@@ -87,6 +87,7 @@
         "i18n": {
           "en": {
             "description": "A bold toggle above a text sample: pressing it restyles the sample at once, so it reads as an action on an object rather than a form setting.",
+            "docs": "One file, zero dependencies, its own --vibeui-toggle-001-* palette. Client-side: the state is held by useState. The button declares its state through aria-pressed rather than checked: a toggle is an immediate action on a view or an object (make the selection bold), a switch is a setting that turns a mode on, and a checkbox is a form field that travels to the server on submit. The pressed look is picked by the selector button[aria-pressed=\"true\"], so the markup and the style cannot drift apart. The sample text sits beside it and receives font-weight through data-bold on the root — the effect is visible the same instant.",
             "ai": {
               "summary": "A bold toggle button with the sample text next to it: aria-pressed drives both the state and the look, and the sample changes instantly. One file, zero dependencies, client component.",
               "preserve": [
@@ -236,6 +237,7 @@
         "i18n": {
           "en": {
             "description": "A toggle with an icon and a stable caption: the caption stays the name of the action, and the result is announced by a live line under the button.",
+            "docs": "One file, zero dependencies, the --vibeui-toggle-002-* palette. Client-side: useState. The button caption does not change when pressed — only aria-pressed and the live role=\"status\" line under it change. That is a deliberate decision: the caption is the button's name, and if it were rewritten to \"Unpin\", a screen reader would read the new name together with the state and produce \"Unpin, pressed\". The pressed state is shown by three cues at once — the filled icon (fill:currentColor on the path), the background and the word in the line — because one colour is not read by everyone. Unlike a switch, the action applies instantly and to a specific object.",
             "ai": {
               "summary": "A toggle with an icon and an unchanging caption: aria-pressed declares the state, a role=\"status\" line reports the result. One file, zero dependencies, client component.",
               "preserve": [
@@ -296,6 +298,9 @@
               }
             }
           }
+        },
+        "preview": {
+          "states": [{ "defaultPressed": false }, { "defaultPressed": true }]
         },
         "cardControls": ["defaultPressed", "accent", "background"]
       }
@@ -403,6 +408,7 @@
         "i18n": {
           "en": {
             "description": "A favourite button with a counter: the star fills in, the number next to it updates instantly, and the counter itself stays out of the button's name.",
+            "docs": "One file, zero dependencies, the --vibeui-toggle-003-* palette. Client-side: useState. The counter sits outside the button in a span with role=\"status\": inside it would stick to the name and a screen reader would read \"Add to favourites 128, pressed\". The mark is shown by two cues — the star's fill through fill:currentColor and the border colour — and the short appearance animation is bound to [aria-pressed=\"true\"] and switched off by prefers-reduced-motion. This is a toggle, not a checkbox: the favourite changes at once and belongs to the object, not to a form field.",
             "ai": {
               "summary": "An object row with a favourite button: the star fills in, the counter updates beside it and never becomes part of the button name. One file, zero dependencies, client component.",
               "preserve": [
@@ -573,6 +579,7 @@
         "i18n": {
           "en": {
             "description": "A \"show grid\" toggle: the button is tied to the canvas through aria-controls, and the grid switches on as a separate layer above the layout without moving anything.",
+            "docs": "One file, zero dependencies, the --vibeui-toggle-004-* palette. Client-side: useState and useId. The button declares aria-controls on the canvas — that way the button-to-region link exists somewhere other than the author's head. The grid is drawn with two linear-gradients on a separate layer with pointer-events:none and is switched on by opacity, so the layout beneath it is not repainted and does not jump. The cell step arrives in the step prop and goes out into the CSS variable --vibeui-toggle-004-step inline — it is a dynamic value and cannot be expressed by a class. A toggle, not a switch: the view changes here and now.",
             "ai": {
               "summary": "A toggle button that turns on a grid over the layout: the link to the region is declared with aria-controls and the cell step comes from a prop. One file, zero dependencies.",
               "preserve": [
@@ -728,6 +735,7 @@
         "i18n": {
           "en": {
             "description": "A mute button with two state icons: both live in the markup and the one matching aria-pressed is shown.",
+            "docs": "One file, zero dependencies, the --vibeui-toggle-005-* palette. Client-side: useState. The technique: two <svg>s are always in the markup, and visibility is picked by the selectors button[aria-pressed=\"false\"] [data-part=\"sound\"] and button[aria-pressed=\"true\"] [data-part=\"silent\"] — the icon cannot drift from the state, because both come from a single attribute. The button's name stays constant, the state is spoken by the role=\"status\" line. The volume bar dims through data-muted on the root: the state has to read from more than the icon. This is a toggle: the sound goes off at once, not after a confirmation.",
             "ai": {
               "summary": "A mute button with two state icons and a dimmed volume bar; the icon is selected by the same aria-pressed. One file, zero dependencies.",
               "preserve": [
@@ -882,6 +890,7 @@
         "i18n": {
           "en": {
             "description": "A toggle backed by a request: while saving, the button is marked aria-busy and keeps its old state, so it never promises what has not happened yet.",
+            "docs": "One file, zero dependencies, the --vibeui-toggle-006-* palette. Client-side: useState, useRef and useEffect to clear the timer on unmount (setTimeout stands in for a request here). The state flips only after the response: until then aria-busy=\"true\" is set, the icon changes to a spinner and aria-pressed stays as it was. The button width is fixed with min-width, otherwise it jumps every time the icon changes. The role=\"status\" line names the outcome in words. Unlike a checkbox in a form, there is no Save button here — the toggling is the saving.",
             "ai": {
               "summary": "A toggle backed by a request: during saving the button is marked aria-busy and the state flips only after the response. One file, zero dependencies.",
               "preserve": [
@@ -1056,6 +1065,7 @@
         "i18n": {
           "en": {
             "description": "A text scale toggle: one press changes the multiplier every sample size is derived from, so the large mode does not break proportions.",
+            "docs": "One file, zero dependencies, the --vibeui-toggle-007-* palette. Client-side: useState. The sample's whole typography is computed with calc() from a single variable --vibeui-toggle-007-scale, which arrives inline as a multiplier (1 or scale/100): the heading, the paragraph and the spacing grow together instead of turning into a staircase. A scale is drawn on the button itself — two \"A\"s at different sizes — so the meaning reads without a caption; the accessible name comes from aria-label. A toggle, not a switch: the scale applies to the visible sample instantly.",
             "ai": {
               "summary": "A size-scale button: a single multiplier enlarges the whole sample — type and spacing together. One file, zero dependencies, client component.",
               "preserve": [
@@ -1231,6 +1241,7 @@
         "i18n": {
           "en": {
             "description": "A toggle with a hint about the current state: it is tied in with aria-describedby, appears on hover and on focus, and the button caption never changes.",
+            "docs": "One file, zero dependencies, the --vibeui-toggle-008-* palette. Client-side: useState and useId for the aria-describedby link. The hint is an ordinary markup element with role=\"tooltip\", hidden by visibility and opacity; it is shown by the rules button:hover + [data-part=\"tip\"] and button:focus-visible + [data-part=\"tip\"], so it is available to the mouse and to the keyboard alike. The title attribute would not do here: the browser does not show it on focus. The button caption is constant, the state is carried by aria-pressed and the hint text; the panel has spare room at the top for the floating layer.",
             "ai": {
               "summary": "A toggle with a hint about its current state: the hint lives in the markup, is tied in with aria-describedby and appears on hover and on focus. One file, zero dependencies.",
               "preserve": [
@@ -1320,7 +1331,8 @@
       "meta": {
         "tags": ["toggle", "aria-pressed", "favorite", "badge"],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "states": [{ "defaultPressed": false }, { "defaultPressed": true }]
         },
         "ai": {
           "export": "Toggle009",
@@ -1388,6 +1400,7 @@
         "i18n": {
           "en": {
             "description": "A round heart button with a numeric badge over its corner: the badge sits outside the button through absolute positioning and announces the count as its own live number.",
+            "docs": "One file, zero dependencies, the --vibeui-toggle-009-* palette. Client-side: useState. The heart button carries aria-pressed, and the numeric badge lies beside it, absolutely positioned over its corner like a counter on a cart icon: it is not part of the button's text, so a screen reader does not glue the number to the name and the state into a single announcement. The change of the number is announced through role=\"status\" on the badge itself. The heart's fill is picked by the selector button[aria-pressed=\"true\"] svg path — the look and the state cannot drift apart.",
             "ai": {
               "summary": "A favorite button with a heart and a numeric badge over its corner: the badge sits outside the button and announces the count on its own. One file, zero dependencies, client component.",
               "preserve": [
@@ -1523,6 +1536,7 @@
         "i18n": {
           "en": {
             "description": "A sound button with three equalizer bars instead of a wave icon: they animate out of sync only while sound is on, and a state caption stays visible next to it.",
+            "docs": "One file, zero dependencies, the --vibeui-toggle-010-* palette. Client-side: useState. Inside the button are three span bars: while the sound is on (aria-pressed=\"false\") they animate as an uneven wave through animation-delay, and when it is turned off they freeze at one low height — the silence is visible without reading any text. Beside it a permanent, not floating, state caption is marked with role=\"status\", and the second line is the player's static caption. The button's aria-label describes the next action, because there is no visible text inside it.",
             "ai": {
               "summary": "A sound button with equalizer bars instead of a wave icon and a permanent state caption next to it. One file, zero dependencies, client component.",
               "preserve": [
@@ -1671,6 +1685,7 @@
         "i18n": {
           "en": {
             "description": "A theme button with a sun and a moon: both icons live in the markup at once and swap through opacity and rotation instead of display, so the theme change reads as smooth.",
+            "docs": "One file, zero dependencies, the --vibeui-toggle-011-* palette. Client-side: useState. The sun and the moon are two always-mounted svgs with absolute positioning: the active one has opacity:1 and transform:rotate(0), the inactive one a muted opacity and a rotation. Both properties are animated with transition, so the theme change looks like a smooth cross-fade rather than an instant display:none snap. The panel and the sample card change their background and colour through the same data-theme attribute on the root, so the effect is visible beyond the button.",
             "ai": {
               "summary": "A theme button with a sun and a moon that cross-fade and rotate instead of snapping between icons; a sample card recolours smoothly alongside it. One file, zero dependencies.",
               "preserve": [
@@ -1823,6 +1838,7 @@
         "i18n": {
           "en": {
             "description": "A notification subscription switch: it uses role=\"switch\" rather than aria-pressed, because subscribing is a setting for later, and the request keeps the old state until it answers.",
+            "docs": "One file, zero dependencies, the --vibeui-toggle-012-* palette. Client-side: useState, useRef and useEffect to clear the timer on unmount (setTimeout stands in for a server request). The switch is declared role=\"switch\" with aria-checked rather than aria-pressed: subscribing to notifications is a mode set for later, not an immediate action on an object. Until the server answers the state does not change, the button is marked aria-busy, and the thumb shows a spinner instead of sliding. The role=\"status\" line beside it names the outcome in words.",
             "ai": {
               "summary": "A notification subscription switch (role=\"switch\"): a request keeps the old state and aria-busy until it answers, and the thumb shows a spinner while waiting. One file, zero dependencies.",
               "preserve": [
@@ -1976,6 +1992,7 @@
         "i18n": {
           "en": {
             "description": "A password field with a visibility button inside the field frame: aria-controls ties the button to the input, and a live line outside states the outcome for those who cannot see the text.",
+            "docs": "One file, zero dependencies, the --vibeui-toggle-013-* palette. Client-side: useState and useId for the link between label, input and aria-controls. The eye button stands inside the same frame as the field rather than apart from it, and switches the input's type between password and text. aria-pressed reflects the visibility, while the aria-label and the button's visible text name the next action (\"Show\" → \"Hide\"), because this is an immediate action on the field, not a permanent name for the element. The role=\"status\" line outside repeats the outcome in words for a screen reader. The palette is on light-dark(): the component follows the surrounding color-scheme. The field background is transparent by default, and the background prop sets it explicitly.",
             "ai": {
               "summary": "A password field with a visibility button inside its frame: aria-controls ties the button to the input, and its type switches between password and text. One file, zero dependencies.",
               "preserve": [
@@ -2144,6 +2161,7 @@
         "i18n": {
           "en": {
             "description": "A list row with a pin button: the icon rotates 45° instead of changing colour, and the whole row's background lights up through data-pinned on the root.",
+            "docs": "One file, zero dependencies, the --vibeui-toggle-014-* palette. Client-side: useState. The pin icon rotates 45deg through transform in the rule button[aria-pressed=\"true\"] svg — a rotation reads without perceiving colour, unlike a fill alone. The background and the border of the whole row change through data-pinned on the root, so a pinned item is noticeable even in peripheral vision, not only by the button. The second line of text is replaced by the status \"Pinned to the top of the list\" through role=\"status\". The palette is on light-dark(): the component follows the surrounding color-scheme. The row background is transparent by default, and the background prop sets it explicitly.",
             "ai": {
               "summary": "A list row with a pin button: the icon rotates 45°, and the row background lights up through data-pinned. One file, zero dependencies, client component.",
               "preserve": [

@@ -1,12 +1,9 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Icontile003Status =
   "success" | "warning" | "danger" | "info" | "pending"
 
-export type Icontile003Props = Omit<
-  ComponentPropsWithoutRef<"span">,
-  "children"
-> & {
+export type Icontile003Props = Omit<ComponentProps<"span">, "children"> & {
   status?: Icontile003Status
   label?: string
   /** Пусто — подложки нет, плашка лежит прямо на фоне страницы. */
@@ -27,6 +24,9 @@ const STYLES = `
 --vibeui-icontile-003-fg:light-dark(oklch(0.26 0.014 265),oklch(0.93 0.006 265));
 --vibeui-icontile-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="icontile-003"]{color-scheme:dark}
 /* Подложки по умолчанию нет: плашку держит рамка, а цвет берётся у страницы. */
 [data-vibeui-block="icontile-003"]{
 display:inline-flex;align-items:center;gap:0.5rem;
@@ -39,6 +39,8 @@ font-size:0.8125rem;
 [data-vibeui-block="icontile-003"] [data-part="tile"]{
 display:grid;place-items:center;flex:none;
 width:var(--vibeui-icontile-003-size);height:var(--vibeui-icontile-003-size);
+/* Плитка красится смыслом, а не темой: насыщенный цвет статуса и белый знак
+   читаются на обеих подложках. Приглушённый pending — исключение, у него ветки есть. */
 background:oklch(0.62 0.15 var(--vibeui-icontile-003-hue));
 color:oklch(1 0 0);
 font-size:calc(var(--vibeui-icontile-003-size) * 0.5);font-weight:700;line-height:1;
@@ -125,6 +127,7 @@ export function Icontile003({
       </style>
       <span
         {...props}
+        data-slot="icon-tile"
         data-vibeui-block="icontile-003"
         data-status={status}
         className={className}

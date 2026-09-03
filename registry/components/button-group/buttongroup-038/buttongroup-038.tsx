@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Buttongroup038Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Buttongroup038Props = Omit<ComponentProps<"div">, "children"> & {
   saveLabel?: string
   closeLabel?: string
   intentName?: string
@@ -22,7 +19,7 @@ export type Buttongroup038Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="buttongroup-038"]){
 --vibeui-buttongroup-038-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.005 265));
---vibeui-buttongroup-038-muted:light-dark(oklch(0.56 0.014 265),oklch(0.72 0.012 265));
+--vibeui-buttongroup-038-muted:color-mix(in oklab,var(--vibeui-buttongroup-038-fg) 68%,transparent);
 --vibeui-buttongroup-038-border:light-dark(oklch(0.88 0.008 265),oklch(0.41 0.012 265));
 --vibeui-buttongroup-038-kbd:light-dark(oklch(0.98 0.003 265),oklch(0.31 0.01 265));
 --vibeui-buttongroup-038-accent:light-dark(oklch(0.48 0.15 265),oklch(0.62 0.16 265));
@@ -31,6 +28,9 @@ const STYLES = `
 --vibeui-buttongroup-038-radius:0.625rem;
 --vibeui-buttongroup-038-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="buttongroup-038"]{color-scheme:dark}
 [data-vibeui-block="buttongroup-038"]{
 box-sizing:border-box;display:inline-flex;flex-direction:column;gap:0.5rem;
 font-family:var(--vibeui-buttongroup-038-font);
@@ -45,7 +45,7 @@ box-shadow:0 1px 2px var(--vibeui-buttongroup-038-shadow);
 appearance:none;cursor:pointer;font:inherit;
 position:relative;z-index:0;
 display:inline-flex;align-items:center;gap:0.4375rem;
-height:2.375rem;padding:0 0.9375rem;
+height:2.25rem;padding:0 0.875rem;
 border:1px solid var(--vibeui-buttongroup-038-accent);
 background:var(--vibeui-buttongroup-038-accent);
 color:var(--vibeui-buttongroup-038-on-accent);
@@ -117,6 +117,7 @@ export function Buttongroup038({
       </style>
       <div
         {...props}
+        data-slot="button-group"
         data-vibeui-block="buttongroup-038"
         className={className}
         style={palette}

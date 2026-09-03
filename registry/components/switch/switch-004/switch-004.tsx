@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Switch004Props = Omit<
-  ComponentPropsWithoutRef<"input">,
-  "type" | "size"
-> & {
+export type Switch004Props = Omit<ComponentProps<"input">, "type" | "size"> & {
   label?: string
   /** Подписи состояний под названием: видима всегда ровно одна. */
   onText?: string
@@ -21,20 +18,23 @@ const STYLES = `
 :where([data-vibeui-block="switch-004"]){
 --vibeui-switch-004-bg:transparent;
 --vibeui-switch-004-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-switch-004-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-switch-004-muted:color-mix(in oklab,var(--vibeui-switch-004-fg) 68%,transparent);
 --vibeui-switch-004-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-switch-004-track:light-dark(oklch(0.72 0.02 265),oklch(0.46 0.016 265));
 --vibeui-switch-004-thumb:light-dark(oklch(1 0 0),oklch(0.94 0.004 265));
 --vibeui-switch-004-accent:light-dark(oklch(0.55 0.16 155),oklch(0.68 0.15 155));
 --vibeui-switch-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="switch-004"]{color-scheme:dark}
 [data-vibeui-block="switch-004"]{
 display:flex;align-items:center;justify-content:space-between;gap:1rem;
 width:100%;max-width:19rem;box-sizing:border-box;padding:0.875rem;
 background:var(--vibeui-switch-004-bg);
 border:1px solid var(--vibeui-switch-004-border);border-radius:0.875rem;
 font-family:var(--vibeui-switch-004-font);color:var(--vibeui-switch-004-fg);
-font-size:0.9375rem;cursor:pointer;
+font-size:0.875rem;cursor:pointer;
 }
 [data-vibeui-block="switch-004"] [data-part="text"]{display:flex;flex-direction:column;gap:0.125rem;min-width:0}
 [data-vibeui-block="switch-004"] [data-part="state"]{font-size:0.75rem;color:var(--vibeui-switch-004-muted)}
@@ -138,6 +138,7 @@ export function Switch004({
         {STYLES}
       </style>
       <label
+        data-slot="switch"
         data-vibeui-block="switch-004"
         className={className}
         style={palette}

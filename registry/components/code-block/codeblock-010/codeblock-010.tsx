@@ -27,7 +27,7 @@ const STYLES = `
 :where([data-vibeui-block="codeblock-010"]){
 --vibeui-codeblock-010-bg:transparent;
 --vibeui-codeblock-010-fg:light-dark(oklch(0.27 0.016 265),oklch(0.92 0.008 265));
---vibeui-codeblock-010-muted:light-dark(oklch(0.5 0.014 265),oklch(0.68 0.014 265));
+--vibeui-codeblock-010-muted:color-mix(in oklab,var(--vibeui-codeblock-010-fg) 68%,transparent);
 --vibeui-codeblock-010-border:light-dark(oklch(0.9 0.006 265),oklch(1 0 0 / 16%));
 --vibeui-codeblock-010-chip-bg:light-dark(oklch(0.94 0.012 265),oklch(1 0 0 / 10%));
 --vibeui-codeblock-010-chip-fg:light-dark(oklch(0.32 0.09 300),oklch(0.85 0.11 305));
@@ -36,6 +36,9 @@ const STYLES = `
 --vibeui-codeblock-010-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-codeblock-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="codeblock-010"]{color-scheme:dark}
 [data-vibeui-block="codeblock-010"]{
 display:block;width:100%;max-width:30rem;box-sizing:border-box;
 padding:1.125rem 1.25rem 1.25rem;
@@ -51,7 +54,9 @@ margin:0 0 0.5rem;font-size:1rem;line-height:1.3;letter-spacing:-0.01em;
 /* clone сохраняет фон и скругление у обеих половин перенесённого чипа. */
 [data-vibeui-block="codeblock-010"] code{
 font-family:var(--vibeui-codeblock-010-mono);
-font-size:0.8125em;line-height:inherit;
+/* Кегль чипа в rem, а не в em: кегль абзаца задан тут же константой, и em
+   уводил код на 0.71rem — мельче, чем моноширинный текст у соседей. */
+font-size:0.8125rem;line-height:inherit;
 padding:0.125em 0.375em;border-radius:0.3125em;
 background:var(--vibeui-codeblock-010-chip-bg);color:var(--vibeui-codeblock-010-chip-fg);
 overflow-wrap:break-word;
@@ -59,7 +64,7 @@ overflow-wrap:break-word;
 }
 [data-vibeui-block="codeblock-010"] code[data-kind="path"]{color:var(--vibeui-codeblock-010-path-fg)}
 [data-vibeui-block="codeblock-010"] kbd{
-font-family:var(--vibeui-codeblock-010-font);font-size:0.75em;font-weight:650;
+font-family:var(--vibeui-codeblock-010-font);font-size:0.6875rem;font-weight:650;
 padding:0.1875em 0.4375em;border-radius:0.3125em;
 border:1px solid var(--vibeui-codeblock-010-border);
 border-bottom-width:2px;
@@ -141,6 +146,7 @@ export function Codeblock010({
         {STYLES}
       </style>
       <div
+        data-slot="code-block"
         data-vibeui-block="codeblock-010"
         className={className}
         style={palette}

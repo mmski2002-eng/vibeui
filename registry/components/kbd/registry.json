@@ -21,7 +21,7 @@
         "tags": ["kbd", "shortcuts", "help", "keyboard"],
         "ai": {
           "export": "Kbd001",
-          "usage": "<Kbd001 rows={[{ action: \"Поиск\", keys: [\"⌘\", \"K\"] }]} />",
+          "usage": "<Kbd001 rows={[{ action: \"Поиск\", keys: [\"Mod\", \"K\"] }]} />",
           "summary": "Список сочетаний клавиш: действие слева, клавиши справа тегом kbd, плюс между ними в разметке. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
             "локальную палитру --vibeui-kbd-001-* и не подменять её токенами вашей темы",
@@ -38,6 +38,7 @@
             "title — заголовок списка",
             "цвет и радиус клавиш",
             "ширину блока",
+            "mod — знак модификатора вместо клавиши «Mod»: ⌘ на macOS, Ctrl на Windows и Linux",
             "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
@@ -55,6 +56,13 @@
             "type": "text",
             "default": "Горячие клавиши",
             "maxLength": 30
+          },
+          {
+            "prop": "mod",
+            "label": "Модификатор",
+            "type": "select",
+            "default": "⌘",
+            "options": ["⌘", "Ctrl"]
           },
           {
             "prop": "background",
@@ -83,6 +91,7 @@
                 "title — the list heading",
                 "the key colour and radius",
                 "the block width",
+                "mod — the modifier glyph substituted for the \"Mod\" key: ⌘ on macOS, Ctrl on Windows and Linux",
                 "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
@@ -92,7 +101,7 @@
                 "This is not a place for every key: show the ones that save time.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
-              "usage": "<Kbd001 rows={[{ action: \"Search\", keys: [\"⌘\", \"K\"] }]} />"
+              "usage": "<Kbd001 rows={[{ action: \"Search\", keys: [\"Mod\", \"K\"] }]} />"
             },
             "controls": {
               "title": {
@@ -101,6 +110,9 @@
               },
               "background": {
                 "label": "Background"
+              },
+              "mod": {
+                "label": "Modifier"
               }
             },
             "title": "Shortcut List",
@@ -110,11 +122,11 @@
                 "rows": [
                   {
                     "action": "Open search",
-                    "keys": ["⌘", "K"]
+                    "keys": ["Mod", "K"]
                   },
                   {
                     "action": "Copy for AI",
-                    "keys": ["⌘", "⇧", "C"]
+                    "keys": ["Mod", "⇧", "C"]
                   },
                   {
                     "action": "Next component",
@@ -126,10 +138,11 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-kbd-001-* variables. Server-side: there are no hooks. The keys are rendered with the kbd tag with a thickened bottom edge — that is what makes them read as physical. The separator between keys sits in the markup, so a screen reader says \"command plus K\" rather than two separate keys. The theme comes from the surrounding color-scheme through light-dark(): the component has no background by default, it sits directly on the page background and darkens with it, and a panel is switched on by the background prop."
           }
         },
-        "cardControls": ["background"]
+        "cardControls": ["mod", "background"]
       }
     },
     {
@@ -150,9 +163,19 @@
       "docs": "Серверный компонент, хуков нет. Клавиши набраны тегом kbd — это его прямое назначение, скринридер объявит их как ввод. Разделитель лежит в разметке отдельным узлом, а не рисуется псевдоэлементом: содержимое ::before не попадает в поток чтения, и вслух сочетание превратилось бы в две несвязанные клавиши. Вариант разделителя переключается атрибутом data-separator, набор вариантов вынесен в объект: plus для одновременного нажатия, then для последовательного, arrow для перехода. Тема приходит из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней, а плашка включается пропом background.",
       "meta": {
         "tags": ["kbd", "shortcut", "chord", "keyboard"],
+        "preview": {
+          "states": [
+            {
+              "separator": "plus"
+            },
+            {
+              "separator": "then"
+            }
+          ]
+        },
         "ai": {
           "export": "Kbd002",
-          "usage": "<Kbd002 keys={[\"⌘\", \"⇧\", \"P\"]} separator=\"plus\" caption=\"Палитра команд\" />",
+          "usage": "<Kbd002 keys={[\"Mod\", \"⇧\", \"P\"]} separator=\"plus\" caption=\"Палитра команд\" />",
           "summary": "Сочетание клавиш с разделителем в разметке: plus, затем или стрелка. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
             "локальную палитру --vibeui-kbd-002-* и не подменять её токенами вашей темы",
@@ -169,6 +192,7 @@
             "подпись действия через caption",
             "состав сочетания через keys",
             "радиус клавиш через переменные --vibeui-kbd-002-*",
+            "mod — знак модификатора вместо клавиши «Mod»: ⌘ на macOS, Ctrl на Windows и Linux",
             "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
@@ -193,6 +217,13 @@
             "type": "text",
             "default": "Палитра команд",
             "maxLength": 30
+          },
+          {
+            "prop": "mod",
+            "label": "Модификатор",
+            "type": "select",
+            "default": "⌘",
+            "options": ["⌘", "Ctrl"]
           },
           {
             "prop": "background",
@@ -221,6 +252,7 @@
                 "the action caption through caption",
                 "the chord contents through keys",
                 "the key radius through the --vibeui-kbd-002-* variables",
+                "mod — the modifier glyph substituted for the \"Mod\" key: ⌘ on macOS, Ctrl on Windows and Linux",
                 "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
@@ -230,7 +262,7 @@
                 "The \"then\" wording is Russian by default: pass separatorText for another locale.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
-              "usage": "<Kbd002 keys={[\"⌘\", \"⇧\", \"P\"]} separator=\"plus\" caption=\"Command palette\" />"
+              "usage": "<Kbd002 keys={[\"Mod\", \"⇧\", \"P\"]} separator=\"plus\" caption=\"Command palette\" />"
             },
             "controls": {
               "separator": {
@@ -243,6 +275,9 @@
               },
               "background": {
                 "label": "Background"
+              },
+              "mod": {
+                "label": "Modifier"
               }
             },
             "title": "Key Chord Separator",
@@ -255,10 +290,11 @@
                   "arrow": "→"
                 }
               }
-            }
+            },
+            "docs": "A server component, there are no hooks. The keys are set with the kbd tag — that is its purpose, and a screen reader announces them as input. The separator sits in the markup as a node of its own rather than being drawn with a pseudo-element: the content of ::before does not enter the reading flow, and aloud the chord would turn into two unrelated keys. The separator variant is switched by the data-separator attribute, and the set of variants is kept in an object: plus for a simultaneous press, then for a sequential one, arrow for a transition. The theme comes from the surrounding color-scheme through light-dark(): the component has no background by default, it sits directly on the page background and darkens with it, and a panel is switched on by the background prop."
           }
         },
-        "cardControls": ["separator", "background"]
+        "cardControls": ["mod", "separator", "background"]
       }
     },
     {
@@ -284,7 +320,7 @@
         },
         "ai": {
           "export": "Kbd003",
-          "usage": "<Kbd003\n  before=\"Нажмите\"\n  keys={[\"⌘\", \"K\"]}\n  after=\"чтобы открыть поиск.\"\n/>",
+          "usage": "<Kbd003\n  before=\"Нажмите\"\n  keys={[\"Mod\", \"K\"]}\n  after=\"чтобы открыть поиск.\"\n/>",
           "summary": "Клавиша внутри абзаца: высота в em, нулевые вертикальные отступы, сдвиг на базовую линию. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
             "локальную палитру --vibeui-kbd-003-* и не подменять её токенами вашей темы",
@@ -300,6 +336,7 @@
             "текст после клавиши через after",
             "состав сочетания через keys",
             "ширину абзаца через max-width",
+            "mod — знак модификатора вместо клавиши «Mod»: ⌘ на macOS, Ctrl на Windows и Linux",
             "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
@@ -324,6 +361,13 @@
             "type": "text",
             "default": "чтобы открыть поиск по каталогу — строка ввода появится поверх страницы.",
             "maxLength": 90
+          },
+          {
+            "prop": "mod",
+            "label": "Модификатор",
+            "type": "select",
+            "default": "⌘",
+            "options": ["⌘", "Ctrl"]
           },
           {
             "prop": "background",
@@ -351,6 +395,7 @@
                 "the text after the key through after",
                 "the chord contents through keys",
                 "the paragraph width through max-width",
+                "mod — the modifier glyph substituted for the \"Mod\" key: ⌘ on macOS, Ctrl on Windows and Linux",
                 "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
@@ -360,7 +405,7 @@
                 "The baseline nudge is tuned for the system font; verify it with your own typeface.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
-              "usage": "<Kbd003\n  before=\"Press\"\n  keys={[\"⌘\", \"K\"]}\n  after=\"to open the catalog search.\"\n/>"
+              "usage": "<Kbd003\n  before=\"Press\"\n  keys={[\"Mod\", \"K\"]}\n  after=\"to open the catalog search.\"\n/>"
             },
             "controls": {
               "before": {
@@ -373,19 +418,23 @@
               },
               "background": {
                 "label": "Background"
+              },
+              "mod": {
+                "label": "Modifier"
               }
             },
             "title": "Inline Text Key",
             "preview": {
               "props": {
                 "before": "Press",
-                "keys": ["⌘", "K"],
+                "keys": ["Mod", "K"],
                 "after": "to open the catalog search — the input appears above the page."
               }
-            }
+            },
+            "docs": "A server component, there are no hooks. An ordinary kbd with vertical padding makes its line taller than its neighbours, and the paragraph comes apart. Here the key height is expressed in em and fitted into the line, the vertical padding is zero, and the exact seating on the baseline is done with a 0.05em nudge — not by changing the paragraph's line-height, which would shift the whole text. The key's type size is set as a fraction of the text (0.85em), so it scales together with the paragraph. The chord is wrapped in nowrap so that \"⌘ + K\" is not split across lines. The theme comes from the surrounding color-scheme through light-dark(): the component has no background by default, it sits directly on the page background and darkens with it, and a panel is switched on by the background prop."
           }
         },
-        "cardControls": ["background"]
+        "cardControls": ["mod", "background"]
       }
     },
     {
@@ -427,6 +476,7 @@
             "плотность через size: sm или md",
             "состав подсказок через hints",
             "ширину полосы через max-width",
+            "mod — знак модификатора вместо клавиши «Mod»: ⌘ на macOS, Ctrl на Windows и Linux",
             "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
@@ -451,6 +501,13 @@
             "type": "select",
             "default": "sm",
             "options": ["sm", "md"]
+          },
+          {
+            "prop": "mod",
+            "label": "Модификатор",
+            "type": "select",
+            "default": "⌘",
+            "options": ["⌘", "Ctrl"]
           },
           {
             "prop": "background",
@@ -478,6 +535,7 @@
                 "the density through size: sm or md",
                 "the hint set through hints",
                 "the bar width through max-width",
+                "mod — the modifier glyph substituted for the \"Mod\" key: ⌘ on macOS, Ctrl on Windows and Linux",
                 "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
@@ -500,6 +558,9 @@
               },
               "background": {
                 "label": "Background"
+              },
+              "mod": {
+                "label": "Modifier"
               }
             },
             "title": "Shortcut Hint Bar",
@@ -515,7 +576,7 @@
                     "action": "select"
                   },
                   {
-                    "keys": ["⌘", "K"],
+                    "keys": ["Mod", "K"],
                     "action": "search"
                   },
                   {
@@ -524,10 +585,11 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "A server component, there are no hooks. The bar is read peripherally, so the hints are separated by a gap alone: a border around each pair turns a utility line into a button panel. Every pair is marked white-space:nowrap, so when width runs short the bar wraps whole hints rather than tearing \"↵ select\" in half. The alignment is switched by the data-align attribute (start, center, between), the density by data-size. The keys are set with the kbd tag. The theme comes from the surrounding color-scheme through light-dark(): the component has no background by default, it sits directly on the page background and darkens with it, and a panel is switched on by the background prop."
           }
         },
-        "cardControls": ["align", "size", "background"]
+        "cardControls": ["mod", "align", "size", "background"]
       }
     },
     {
@@ -548,6 +610,16 @@
       "docs": "Клиентский компонент: систему он узнаёт только после гидрации, поэтому в файле есть «use client». Сервер не знает системы клиента, и попытка угадать её при рендере даёт рассинхрон разметки — до определения показывается вариант с Ctrl, понятный на любой системе, в отличие от ⌘. Проп platform позволяет отключить автоопределение и зафиксировать вариант для документации. Ширина клавиши модификатора увеличена для ⌘ атрибутом data-system: знак шире буквы, и без правки ряд клавиш выглядит неровным. Тема приходит из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней, а плашка включается пропом background.",
       "meta": {
         "tags": ["kbd", "platform", "shortcut", "macos"],
+        "preview": {
+          "states": [
+            {
+              "platform": "mac"
+            },
+            {
+              "platform": "windows"
+            }
+          ]
+        },
         "ai": {
           "export": "Kbd005",
           "usage": "<Kbd005 platform=\"auto\" action=\"Открыть поиск\" letter=\"K\" />",
@@ -652,7 +724,8 @@
                   "windows": "Windows and Linux"
                 }
               }
-            }
+            },
+            "docs": "A client component: it learns the system only after hydration, so the file carries \"use client\". The server does not know the client's system, and guessing it at render time desynchronises the markup — until detection finishes, the Ctrl variant is shown, which is understood on any system, unlike ⌘. The platform prop turns automatic detection off and pins a variant for documentation. The width of the modifier key is increased for ⌘ by the data-system attribute: the glyph is wider than a letter, and without the correction the row of keys looks uneven. The theme comes from the surrounding color-scheme through light-dark(): the component has no background by default, it sits directly on the page background and darkens with it, and a panel is switched on by the background prop."
           }
         },
         "cardControls": ["platform", "background"]
@@ -778,7 +851,8 @@
                 "keys": ["Shift", "Backspace", "Page Down", "Space", "↵"],
                 "caption": "Text editor keys"
               }
-            }
+            },
+            "docs": "A server component, there are no hooks. The auto mode gives a key its width by content with a shared minimum — the row looks like a real keyboard with keys of different sizes. The even mode puts the row on a grid with repeat(auto-fit, minmax(4.5rem, 1fr)), and all keys get equal columns: that is needed when the row has to read as a formation, in a legend for instance. The height and the type size are shared in both modes, so switching does not change the rhythm of the line. The labels are marked nowrap so that \"Page Down\" is not split. The theme comes from the surrounding color-scheme through light-dark(): the component has no background by default, it sits directly on the page background and darkens with it, and a panel is switched on by the background prop."
           }
         },
         "cardControls": ["width", "background"]

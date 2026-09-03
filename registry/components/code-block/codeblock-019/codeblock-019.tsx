@@ -36,7 +36,7 @@ const STYLES = `
 --vibeui-codeblock-019-side:light-dark(oklch(0 0 0 / 4%),oklch(1 0 0 / 5%));
 --vibeui-codeblock-019-hover:light-dark(oklch(0 0 0 / 6%),oklch(1 0 0 / 8%));
 --vibeui-codeblock-019-fg:light-dark(oklch(0.26 0.018 240),oklch(0.93 0.008 240));
---vibeui-codeblock-019-muted:light-dark(oklch(0.5 0.018 240),oklch(0.66 0.016 240));
+--vibeui-codeblock-019-muted:color-mix(in oklab,var(--vibeui-codeblock-019-fg) 68%,transparent);
 --vibeui-codeblock-019-gutter:light-dark(oklch(0.63 0.02 240),oklch(0.5 0.02 240));
 --vibeui-codeblock-019-border:light-dark(oklch(0 0 0 / 12%),oklch(1 0 0 / 12%));
 --vibeui-codeblock-019-accent:light-dark(oklch(0.5 0.13 200),oklch(0.82 0.13 200));
@@ -46,6 +46,9 @@ const STYLES = `
 --vibeui-codeblock-019-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="codeblock-019"]{color-scheme:dark}
 [data-vibeui-block="codeblock-019"]{
 display:block;width:100%;max-width:38rem;box-sizing:border-box;margin:0;
 overflow:hidden;border:1px solid var(--vibeui-codeblock-019-border);
@@ -86,7 +89,7 @@ background:var(--vibeui-codeblock-019-hover);color:var(--vibeui-codeblock-019-fg
 outline:2px solid var(--vibeui-codeblock-019-accent);outline-offset:2px;
 }
 [data-vibeui-block="codeblock-019"] [data-part="kind"]{
-color:var(--vibeui-codeblock-019-accent);font-size:0.625rem;
+color:var(--vibeui-codeblock-019-accent);font-size:0.6875rem;
 text-transform:uppercase;letter-spacing:0.06em;
 }
 [data-vibeui-block="codeblock-019"] [data-part="at"]{
@@ -214,6 +217,7 @@ export function Codeblock019({
         {STYLES}
       </style>
       <figure
+        data-slot="code-block"
         data-vibeui-block="codeblock-019"
         className={className}
         style={palette}

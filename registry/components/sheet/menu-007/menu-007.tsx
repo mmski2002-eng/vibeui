@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Menu007Action = {
   label: string
@@ -9,10 +9,12 @@ export type Menu007Action = {
   danger?: boolean
 }
 
-export type Menu007Props = Omit<ComponentPropsWithoutRef<"div">, "children"> & {
+export type Menu007Props = Omit<ComponentProps<"div">, "children"> & {
   title?: string
   actions?: Menu007Action[]
   cancelLabel?: string
+  /** Что озвучить у опасного пункта: цвет скринридеру не слышен. */
+  dangerLabel?: string
   /** Подпись кнопки, снова открывающей лист: русская по умолчанию. */
   triggerLabel?: string
   accent?: string
@@ -31,7 +33,7 @@ const STYLES = `
 :where([data-vibeui-block="menu-007"]){
 --vibeui-menu-007-bg:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
 --vibeui-menu-007-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
---vibeui-menu-007-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-menu-007-muted:color-mix(in oklab,var(--vibeui-menu-007-fg) 68%,transparent);
 --vibeui-menu-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
 --vibeui-menu-007-hover:light-dark(oklch(0.96 0.004 265),oklch(0.29 0.012 265));
 --vibeui-menu-007-danger:light-dark(oklch(0.56 0.19 25),oklch(0.74 0.16 25));
@@ -39,6 +41,9 @@ const STYLES = `
 --vibeui-menu-007-shadow:light-dark(oklch(0.2 0.02 265 / 55%),oklch(0.02 0.01 265 / 72%));
 --vibeui-menu-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="menu-007"]{color-scheme:dark}
 [data-vibeui-block="menu-007"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:17rem;box-sizing:border-box;
@@ -77,7 +82,12 @@ font:inherit;font-size:0.9375rem;font-weight:600;text-align:left;cursor:pointer;
 [data-vibeui-block="menu-007"] [data-part="item"]:hover{background:var(--vibeui-menu-007-hover)}
 [data-vibeui-block="menu-007"] [data-part="item"]:focus-visible{outline:2px solid var(--vibeui-menu-007-accent);outline-offset:-2px}
 [data-vibeui-block="menu-007"] [data-part="item"][data-danger="true"]{color:var(--vibeui-menu-007-danger)}
-[data-vibeui-block="menu-007"] [data-part="hint"]{font-size:0.75rem;font-weight:500;color:var(--vibeui-menu-007-muted)}
+[data-vibeui-block="menu-007"] [data-part="hint"]{font-size:0.875rem;font-weight:500;color:var(--vibeui-menu-007-muted)}
+/* Опасное действие отличает только цвет — скринридеру его отдаёт эта подпись. */
+[data-vibeui-block="menu-007"] [data-part="sr"]{
+position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+clip-path:inset(50%);white-space:nowrap;border:0;
+}
 /* Отмена крупная и отдельная: закрыть должно быть так же легко, как открыть. */
 [data-vibeui-block="menu-007"] [data-part="cancel"]{
 width:100%;min-height:2.75rem;
@@ -126,6 +136,7 @@ export function Menu007({
   title = "Проект «Каталог»",
   actions = DEFAULT_ACTIONS,
   cancelLabel = "Отмена",
+  dangerLabel = "опасное действие",
   triggerLabel = "Действия",
   accent,
   background = "",
@@ -153,6 +164,7 @@ export function Menu007({
       </style>
       <div
         {...props}
+        data-slot="sheet"
         data-vibeui-block="menu-007"
         className={className}
         style={palette}
@@ -180,6 +192,9 @@ export function Menu007({
                 onClick={() => setOpen(false)}
               >
                 {action.label}
+                {action.danger ? (
+                  <span data-part="sr">{dangerLabel}</span>
+                ) : null}
                 {action.hint ? (
                   <span data-part="hint">{action.hint}</span>
                 ) : null}

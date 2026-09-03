@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties, ReactNode } from "react"
+import type { ComponentProps, CSSProperties, ReactNode } from "react"
 
-export type Frame019Props = Omit<
-  ComponentPropsWithoutRef<"figure">,
-  "title"
-> & {
+export type Frame019Props = Omit<ComponentProps<"figure">, "title"> & {
   caption?: string
   /** Надпись пустого кадра: компонент несёт русскую. */
   stub?: string
@@ -25,7 +22,7 @@ const STYLES = `
 :where([data-vibeui-block="frame-019"]){
 --vibeui-frame-019-bg:light-dark(oklch(1 0 0),oklch(0.23 0.012 265));
 --vibeui-frame-019-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
---vibeui-frame-019-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-frame-019-muted:color-mix(in oklab,var(--vibeui-frame-019-fg) 68%,transparent);
 --vibeui-frame-019-border-a:light-dark(oklch(0.72 0.19 320),oklch(0.78 0.17 320));
 --vibeui-frame-019-border-b:light-dark(oklch(0.75 0.17 230),oklch(0.8 0.15 230));
 --vibeui-frame-019-glow-a:color-mix(in oklab,var(--vibeui-frame-019-border-a) 55%,transparent);
@@ -34,6 +31,9 @@ const STYLES = `
 --vibeui-frame-019-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="frame-019"]{color-scheme:dark}
 [data-vibeui-block="frame-019"]{
 display:block;margin:0;width:100%;max-width:28rem;box-sizing:border-box;
 font-family:var(--vibeui-frame-019-font);color:var(--vibeui-frame-019-fg);
@@ -144,6 +144,7 @@ export function Frame019({
       </style>
       <figure
         {...props}
+        data-slot="frame"
         data-vibeui-block="frame-019"
         className={className}
         style={palette}

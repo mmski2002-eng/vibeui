@@ -1,14 +1,12 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import { useId } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Select033Option = {
   value: string
   label: string
 }
 
-export type Select033Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Select033Props = Omit<ComponentProps<"div">, "children"> & {
   label?: string
   name?: string
   options?: Select033Option[]
@@ -28,12 +26,15 @@ const STYLES = `
 --vibeui-select-033-surface:transparent;
 --vibeui-select-033-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-select-033-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-select-033-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-select-033-muted:color-mix(in oklab,var(--vibeui-select-033-fg) 68%,transparent);
 --vibeui-select-033-field:light-dark(oklch(0.985 0.002 265),oklch(0.27 0.012 265));
 --vibeui-select-033-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.012 265));
 --vibeui-select-033-accent:light-dark(oklch(0.55 0.19 262),oklch(0.73 0.17 262));
 --vibeui-select-033-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="select-033"]{color-scheme:dark}
 [data-vibeui-block="select-033"]{
 display:inline-flex;flex-direction:column;gap:0.375rem;
 box-sizing:border-box;padding:0.875rem;
@@ -116,6 +117,8 @@ export function Select033({
   style,
   ...props
 }: Select033Props) {
+  const generatedId = useId()
+  const fieldId = id ?? generatedId
   const longest = options.reduce(
     (max, option) => Math.max(max, option.label.length),
     0,
@@ -141,15 +144,16 @@ export function Select033({
       </style>
       <div
         {...props}
+        data-slot="select"
         data-vibeui-block="select-033"
         className={className}
         style={palette}
       >
-        <label data-part="label" htmlFor={id}>
+        <label data-part="label" htmlFor={fieldId}>
           {label}
         </label>
         <span data-part="field">
-          <select id={id} name={name} defaultValue={defaultValue}>
+          <select id={fieldId} name={name} defaultValue={defaultValue}>
             {options.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.label}

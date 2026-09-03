@@ -86,6 +86,7 @@
         "i18n": {
           "en": {
             "description": "A popover card on the HTML popover: you can reach it with the mouse and Tab, so it never closes on mouse-out.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-popover-001-*. A server component: opening and closing are held by the HTML popover, the position by anchor positioning with a fallback rule in @supports. A heading, text and a button live inside the card, which is why a popover is needed here rather than a tooltip.",
             "ai": {
               "summary": "A click-opened explanation card: heading, text and an action inside, closing on Escape and outside click. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -239,6 +240,7 @@
         "i18n": {
           "en": {
             "description": "A quick action without leaving the page: the popover holds a real two-field form, and submitting closes the panel through the native popovertargetaction.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-popover-002-*. Server-side: the layer, Escape and the outside click come from the HTML popover, useId separates the identifiers. The panel layout is declared only inside :popover-open, otherwise display would override the built-in display:none. Positioning is done with CSS anchor positioning, falling back to absolute under @supports not. The submit button closes the panel through popovertargetaction=\"hide\", so no close handler is needed.",
             "ai": {
               "summary": "A popover with a quick-action form: a field, a list and a submit. Zero dependencies, one file, the browser owns the state.",
               "preserve": [
@@ -391,6 +393,7 @@
         "i18n": {
           "en": {
             "description": "Confirmation right at the button instead of a full-screen modal: the question names the consequence and cancel comes first.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-popover-003-*. Server-side: the panel runs on the HTML popover, useId separates the identifiers. The layout is declared only inside :popover-open — display in a plain rule would break the closing. The panel is centred against the button through left:anchor(center) and translate, with a fallback under @supports not. Both buttons close the panel with the standard popovertargetaction, and the confirmation additionally calls onConfirm.",
             "ai": {
               "summary": "A confirmation popover next to the button: the consequence is a number, cancel comes first. Zero dependencies, one file, the browser owns the state.",
               "preserve": [
@@ -537,6 +540,7 @@
         "i18n": {
           "en": {
             "description": "List settings where the list is: sorting as radio buttons and column visibility as checkboxes, both marked up as a fieldset with a legend.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-popover-004-*. Server-side: the panel runs on the HTML popover, useId separates the group names. The layout is declared only inside :popover-open. The group headings are real legend elements rather than divs — otherwise the group's purpose is never announced. A legend with float:left makes the following children wrap around it, so the options container carries clear:both. The panel is pinned to the button's right edge through right:anchor(right) with a fallback under @supports not.",
             "ai": {
               "summary": "A list-settings popover: sorting by radios, columns by checkboxes. Zero dependencies, one file, the browser owns the state.",
               "preserve": [
@@ -696,6 +700,7 @@
         "i18n": {
           "en": {
             "description": "A label colour picker where a colour is a radio button, not a div with a handler: arrow keys work, the value reaches the form, and no JS is needed.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-popover-005-*. Server-side: the panel runs on the HTML popover, useId separates the group name. The layout is declared only inside :popover-open. The swatches are labels with a visually hidden radio inside; the selected one is ringed through :has(input:checked), and focus is caught through :has(input:focus-visible). Each swatch's colour arrives in its own variable --vibeui-popover-005-swatch. A legend with float:left requires clear:both on the grid.",
             "ai": {
               "summary": "A colour popover: a grid of swatches built on hidden radio buttons. Zero dependencies, one file, the browser owns the state.",
               "preserve": [
@@ -884,6 +889,7 @@
         "i18n": {
           "en": {
             "description": "Help inside a line of text: unlike a tooltip you can enter it with the mouse and with Tab — there is a link to the documentation in there.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-popover-006-*. Server-side: the card runs on the HTML popover, useId separates the identifier. The layout is declared only inside :popover-open. The card is an inline element carrying the popover attribute, so it remains valid paragraph content; the heading and the text inside are inline as well, with display:block. Positioning goes through anchor positioning with a fallback under @supports not. The trigger is a button styled to look like a word in the text.",
             "ai": {
               "summary": "An inline help popover: an explanation and a documentation link inside. Zero dependencies, one file, the browser owns the state.",
               "preserve": [
@@ -1035,6 +1041,7 @@
         "i18n": {
           "en": {
             "description": "A bell with a counter and a list inside: unread rows are marked by a dot and by weight, and the rows are real links you can walk with the keyboard.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-popover-007-*. Server-side: the panel runs on the HTML popover, useId separates the identifier. The layout is declared only inside :popover-open. The counter badge is outlined with a border in the surface colour, so it reads on any button. Read rows differ by weight and colour, not only by a dot. The list is capped in height and scrolls, and the panel is pinned to the button's right edge through right:anchor(right) with a fallback under @supports not.",
             "ai": {
               "summary": "A notifications popover: a badge with a counter and a list of links inside. Zero dependencies, one file, the browser owns the state.",
               "preserve": [
@@ -1201,6 +1208,7 @@
         "i18n": {
           "en": {
             "description": "A popover inside a popover: the second-level button lives inside the first panel, so the browser treats them as nested and keeps the parent open.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-popover-008-*. Server-side: both panels run on the HTML popover, useId separates the identifiers. The layout of both is declared only inside :popover-open. The nesting arises from the second panel's button sitting inside the first one: the browser builds the stack, and Escape closes the panels one at a time from the inside out. The second panel is latched to the parent row through its own anchor-name, and both have a fallback under @supports not.",
             "ai": {
               "summary": "A popover with a nested second popover: the parent stays open. Zero dependencies, one file, the browser owns the stack.",
               "preserve": [
@@ -1364,6 +1372,7 @@
         "i18n": {
           "en": {
             "description": "A popover for quickly editing one field, with \"Save\" and \"Cancel\" buttons: the draft lives in state, and closing via Escape or an outside click rolls it back without saving.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-popover-009-*. Client-side: \"use client\" for the sake of the draft and focus management. The button carries aria-haspopup=\"dialog\" and aria-expanded, the panel role=\"dialog\". Escape and an outside click roll the draft back to value and close the panel; only the explicit button saves. The panel sits in a container with position:relative and does not spill past the catalog card.",
             "ai": {
               "summary": "A quick-edit popover: a field pre-filled with the current value and \"Save\" / \"Cancel\" buttons. aria-haspopup=\"dialog\", aria-expanded on the button, closing via Escape or an outside click rolls the draft back, focus returns to the button. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -1522,6 +1531,7 @@
         "i18n": {
           "en": {
             "description": "A user card opens on hovering the name and on keyboard focus, with a closing pause so the pointer can reach the card; Escape and an outside click close it right away.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-popover-010-*. Client-side: \"use client\" for the sake of hover, focus and the closing pause. The name is a button with aria-haspopup=\"dialog\" and aria-expanded, opening on mouseenter and focus, and on click as well for touch screens. Closing when the pointer leaves is delayed by 160 ms and cancelled by entering the card; Escape closes at once and returns focus to the name.",
             "ai": {
               "summary": "A user card on hover or focus over a name: avatar, role, email and an action. Closing is delayed by a pause so the pointer can reach the card; entering the card itself cancels the pause. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -1665,6 +1675,7 @@
         "i18n": {
           "en": {
             "description": "A calendar opens from a field-shaped button rather than a separate icon: the button names the chosen date, arrows page through the month, and picking a day closes the panel and returns focus to the field.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-popover-011-*. Client-side: \"use client\" for the sake of the month, the selection and focus management. The field-shaped button carries aria-haspopup=\"dialog\" and aria-expanded, the panel is role=\"dialog\" with a grid of day buttons. The date is computed with a plain Date, without libraries. Escape and an outside click close the panel without a pick and return focus to the field.",
             "ai": {
               "summary": "A date picker opening from a field: the button shows the chosen date or a hint, the panel is a month calendar with arrows and day buttons. aria-haspopup=\"dialog\", closing on Escape and an outside click. Zero dependencies, one file, its own palette.",
               "preserve": [

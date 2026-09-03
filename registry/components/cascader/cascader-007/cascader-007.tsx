@@ -31,11 +31,14 @@ const STYLES = `
 :where([data-vibeui-block="cascader-007"]){
 --vibeui-cascader-007-bg:transparent;
 --vibeui-cascader-007-fg:light-dark(oklch(0.23 0.014 275),oklch(0.94 0.006 275));
---vibeui-cascader-007-muted:light-dark(oklch(0.55 0.012 275),oklch(0.71 0.011 275));
+--vibeui-cascader-007-muted:color-mix(in oklab,var(--vibeui-cascader-007-fg) 68%,transparent);
 --vibeui-cascader-007-border:light-dark(oklch(0.9 0.006 275),oklch(0.38 0.011 275));
 --vibeui-cascader-007-accent:light-dark(oklch(0.53 0.2 275),oklch(0.74 0.16 275));
 --vibeui-cascader-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="cascader-007"]{color-scheme:dark}
 [data-vibeui-block="cascader-007"]{
 display:flex;flex-direction:column;gap:0.625rem;
 width:100%;max-width:23rem;box-sizing:border-box;padding:0.875rem;
@@ -78,7 +81,7 @@ outline:2px solid var(--vibeui-cascader-007-accent);outline-offset:-2px;
 font-weight:600;font-size:0.8125rem;
 }
 [data-vibeui-block="cascader-007"] [data-part="row"][data-level="child"]{
-font-size:0.78125rem;
+font-size:0.8125rem;
 }
 [data-vibeui-block="cascader-007"] input[type="checkbox"]{
 flex:0 0 auto;width:0.9375rem;height:0.9375rem;margin:0;
@@ -213,6 +216,7 @@ export function Cascader007({
         {STYLES}
       </style>
       <div
+        data-slot="cascader"
         data-vibeui-block="cascader-007"
         className={className}
         style={palette}

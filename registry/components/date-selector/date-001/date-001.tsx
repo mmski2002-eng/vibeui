@@ -1,7 +1,7 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Date001Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "defaultValue"
 > & {
   label?: string
@@ -29,11 +29,14 @@ const STYLES = `
 --vibeui-date-001-field:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
 --vibeui-date-001-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-date-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
---vibeui-date-001-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-date-001-muted:color-mix(in oklab,var(--vibeui-date-001-fg) 68%,transparent);
 --vibeui-date-001-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
 --vibeui-date-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.76 0.16 262));
 --vibeui-date-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="date-001"]{color-scheme:dark}
 /* Подложки по умолчанию нет: рамка держит форму, фон приходит со страницы. */
 [data-vibeui-block="date-001"]{
 display:flex;flex-direction:column;gap:0.375rem;
@@ -116,6 +119,7 @@ export function Date001({
       </style>
       <div
         {...props}
+        data-slot="date-selector"
         data-vibeui-block="date-001"
         className={className}
         style={palette}

@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Switch003Item = {
   id: string
@@ -7,10 +7,7 @@ export type Switch003Item = {
   defaultChecked?: boolean
 }
 
-export type Switch003Props = Omit<
-  ComponentPropsWithoutRef<"fieldset">,
-  "children"
-> & {
+export type Switch003Props = Omit<ComponentProps<"fieldset">, "children"> & {
   legend?: string
   items?: Switch003Item[]
   /** Статус включённой строки. Рисуется через CSS content, поэтому едет переменной. */
@@ -29,7 +26,7 @@ const STYLES = `
 :where([data-vibeui-block="switch-003"]){
 --vibeui-switch-003-bg:transparent;
 --vibeui-switch-003-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-switch-003-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-switch-003-muted:color-mix(in oklab,var(--vibeui-switch-003-fg) 68%,transparent);
 --vibeui-switch-003-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-switch-003-track:light-dark(oklch(0.88 0.008 265),oklch(0.43 0.014 265));
 --vibeui-switch-003-thumb:light-dark(oklch(1 0 0),oklch(0.93 0.004 265));
@@ -39,6 +36,9 @@ const STYLES = `
 --vibeui-switch-003-off-text:"Выкл";
 --vibeui-switch-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="switch-003"]{color-scheme:dark}
 [data-vibeui-block="switch-003"]{
 width:100%;max-width:23rem;box-sizing:border-box;
 margin:0;padding:0.5rem 0.875rem 0.875rem;
@@ -79,7 +79,7 @@ font-size:0.6875rem;font-weight:600;color:var(--vibeui-switch-003-muted);
 [data-vibeui-block="switch-003"] [data-part="track"]{position:relative;display:flex;flex:none}
 [data-vibeui-block="switch-003"] input{
 appearance:none;-webkit-appearance:none;margin:0;
-width:2.375rem;height:1.375rem;border-radius:9999px;
+width:2.75rem;height:1.5rem;border-radius:9999px;
 background:var(--vibeui-switch-003-track);cursor:inherit;
 transition:background-color .18s ease;
 }
@@ -87,12 +87,12 @@ transition:background-color .18s ease;
 [data-vibeui-block="switch-003"] input:focus-visible{outline:2px solid var(--vibeui-switch-003-accent);outline-offset:2px}
 [data-vibeui-block="switch-003"] [data-part="thumb"]{
 position:absolute;left:0.1875rem;top:0.1875rem;
-width:1rem;height:1rem;border-radius:9999px;pointer-events:none;
+width:1.125rem;height:1.125rem;border-radius:9999px;pointer-events:none;
 background:var(--vibeui-switch-003-thumb);
 box-shadow:0 1px 2px oklch(0.2 0.02 265 / 28%);
 transition:transform .18s cubic-bezier(.32,.72,0,1);
 }
-[data-vibeui-block="switch-003"] input:checked + [data-part="thumb"]{transform:translateX(1rem)}
+[data-vibeui-block="switch-003"] input:checked + [data-part="thumb"]{transform:translateX(1.25rem)}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="switch-003"] *{animation:none!important;transition:none!important}}
 `
 
@@ -180,6 +180,7 @@ export function Switch003({
       </style>
       <fieldset
         {...props}
+        data-slot="switch"
         data-vibeui-block="switch-003"
         className={className}
         style={palette}

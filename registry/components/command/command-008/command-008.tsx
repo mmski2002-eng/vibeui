@@ -2,16 +2,13 @@
 
 import { useId, useState } from "react"
 import type {
-  ComponentPropsWithoutRef,
+  ComponentProps,
   CSSProperties,
   KeyboardEvent,
   ReactNode,
 } from "react"
 
-export type Command008Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Command008Props = Omit<ComponentProps<"div">, "children"> & {
   paths?: string[]
   placeholder?: string
   /** Подпись чипа режима у поля. */
@@ -39,7 +36,7 @@ const STYLES = `
 :where([data-vibeui-block="command-008"]){
 --vibeui-command-008-bg:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
 --vibeui-command-008-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.006 265));
---vibeui-command-008-muted:light-dark(oklch(0.57 0.014 265),oklch(0.68 0.012 265));
+--vibeui-command-008-muted:color-mix(in oklab,var(--vibeui-command-008-fg) 68%,transparent);
 --vibeui-command-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
 --vibeui-command-008-accent:light-dark(oklch(0.55 0.19 262),oklch(0.75 0.15 262));
 --vibeui-command-008-mark:light-dark(oklch(0.85 0.16 95 / 60%),oklch(0.55 0.13 95 / 60%));
@@ -47,6 +44,9 @@ const STYLES = `
 --vibeui-command-008-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-command-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="command-008"]{color-scheme:dark}
 [data-vibeui-block="command-008"]{
 display:block;box-sizing:border-box;width:100%;max-width:25rem;overflow:hidden;
 background:var(--vibeui-command-008-bg);color:var(--vibeui-command-008-fg);
@@ -209,6 +209,7 @@ export function Command008({
       </style>
       <div
         {...props}
+        data-slot="command"
         data-vibeui-block="command-008"
         className={className}
         style={paletteStyle}

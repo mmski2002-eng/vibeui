@@ -83,7 +83,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Snap Carousel",
             "description": "A carousel with no JavaScript at all: scroll-snap does the paging and the dots below are plain anchor links.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-carousel-001-* variables. Server component: useId is needed only for the anchors. The rail scrolls natively with scroll-snap and scroll-behavior: smooth, and the dots are links to the slide ids. The section is declared aria-roledescription=\"carousel\", the slides aria-roledescription=\"slide\" with a number in the label.",
             "ai": {
               "summary": "A carousel on native scrolling: scroll-snap, anchor dots and zero client code. Works with a finger, a wheel and a keyboard. Zero dependencies, one file.",
               "preserve": [
@@ -130,7 +132,6 @@
                 "label": "Background"
               }
             },
-            "title": "Snap Carousel",
             "preview": {
               "props": {
                 "label": "Highlights",
@@ -238,7 +239,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Peek Cards",
             "description": "A card rail where the next card peeks past the edge: a cropped card is the only honest signal that the list continues.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-carousel-002-* variables. Client component: \"use client\", the rail is referenced through useRef. The arrows call scrollBy by 80% of the frame width rather than by \"one card\": the number of cards in the frame changes with the width. The card width is set in percentages, so the next one always peeks out.",
             "ai": {
               "summary": "A horizontal card rail: the next card peeks out, the arrows scroll by a viewport width, and the scrolling stays native. Zero dependencies, one file.",
               "preserve": [
@@ -280,7 +283,6 @@
                 "label": "Background"
               }
             },
-            "title": "Peek Cards",
             "preview": {
               "props": {
                 "label": "Read next",
@@ -399,7 +401,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Thumbnail Slider",
             "description": "A slider with a thumbnail strip: it answers \"how many more and what is there\", which dots never do.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-carousel-003-* variables. Client component: \"use client\". The slides are not removed from the markup but hidden with the hidden attribute, so the reading order is not broken. The active thumbnail is marked aria-current and differs in opacity and outline. The stage hue is derived from the current slide.",
             "ai": {
               "summary": "A slider with thumbnails: a large stage, a preview strip below, a counter and an aria-current thumbnail. Zero dependencies, one file.",
               "preserve": [
@@ -445,7 +449,6 @@
                 "label": "Background"
               }
             },
-            "title": "Thumbnail Slider",
             "preview": {
               "props": {
                 "label": "How it works",
@@ -553,7 +556,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Logo Marquee",
             "description": "A logo marquee: the list is duplicated and shifts by exactly half, so the seam between repeats never shows.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-carousel-004-* variables. Server component: no hooks. The list is rendered twice, the second copy is marked aria-hidden, and the animation shifts the rail by half its width — that is what makes the repeat seamless. The edges are wiped out with a mask gradient. Under prefers-reduced-motion the animation is switched off and the rail turns into ordinary scrolling.",
             "ai": {
               "summary": "A seamless marquee: a duplicated list, a half-width shift, pause on hover and masked edges. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -594,7 +599,6 @@
                 "label": "Background"
               }
             },
-            "title": "Logo Marquee",
             "preview": {
               "props": {
                 "label": "Trusted by",
@@ -687,7 +691,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Review Slider",
             "description": "Reviews one at a time with arrow-key paging: the height holds to the longest one so the page never jumps.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-carousel-005-* variables. Client component: \"use client\". All the reviews sit in one grid cell, and the hidden ones get visibility: hidden — that way the height is measured by the longest one and does not jump. The left and right arrow keys page through while focus is inside the section; the region is declared aria-live=\"polite\".",
             "ai": {
               "summary": "A review slider: one quote in view, dots and arrows, arrow-key paging and a constant block height. Zero dependencies, one file.",
               "preserve": [
@@ -729,7 +735,6 @@
                 "label": "Background"
               }
             },
-            "title": "Review Slider",
             "preview": {
               "props": {
                 "label": "Reviews",
@@ -835,7 +840,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Story Player",
             "description": "Stories with progress bars and a pause on hover and focus: without the pause their text cannot be read.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-carousel-006-* variables. Client component: \"use client\". The progress is counted by a 100 ms interval and kept as a number from 0 to 100; the pause lives in a ref, so hovering does not cause a re-render. The halves of the frame are \"back\" and \"forward\" buttons with names. The background hue is taken from the current story.",
             "ai": {
               "summary": "Auto-advancing stories: progress bars on top, pause on hover and focus, and tap zones on each half. Zero dependencies, one file.",
               "preserve": [
@@ -876,7 +883,6 @@
                 "default": "{index} of {total} · hover to pause"
               }
             },
-            "title": "Story Player",
             "preview": {
               "props": {
                 "label": "Stories",
@@ -981,7 +987,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Film Strip",
             "description": "A film strip: several shots in view with captions beneath — the rail reads as an overview rather than a page-through.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-carousel-007-* variables. Server component: no hooks. The root is declared a container and the layout lives on the inner card: a container query applies only to descendants. A frame takes a third of the width, and half of it in a narrow column. The scroll snapping is soft (proximity) so that browsing does not jerk.",
             "ai": {
               "summary": "A film strip: several frames in view, captions beneath, and gentle scroll snapping. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1023,7 +1031,6 @@
                 "label": "Background"
               }
             },
-            "title": "Film Strip",
             "preview": {
               "props": {
                 "label": "Screenshots",
@@ -1145,7 +1152,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Onboarding Steps",
             "description": "An onboarding carousel that has an end: on the last step the button changes its label, and skipping is available from the first.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-carousel-008-* variables. Client component: \"use client\". The steps sit in one grid cell, and the hidden ones get visibility: hidden — the height holds to the longest one. The text region is declared aria-live=\"polite\", and the dots are described by the label \"step N of M\". The artwork hue changes with the step.",
             "ai": {
               "summary": "A three-step onboarding: artwork, heading, text, progress dots, a next button and a skip. Zero dependencies, one file.",
               "preserve": [
@@ -1195,7 +1204,6 @@
                 "label": "Background"
               }
             },
-            "title": "Onboarding Steps",
             "preview": {
               "props": {
                 "label": "Getting started",
@@ -1299,7 +1307,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Dot Pager",
             "description": "A carousel whose dots are real buttons labelled \"Slide N of M\": arrow keys walk the row and the track moves by transform rather than scrolling.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-carousel-009-* variables. A client component (\"use client\") — the position is held by useState. The rail is shifted with translateX from the --vibeui-carousel-009-index variable: the position is set by a number and does not depend on where a finger scrolled to, so the dot and the frame cannot diverge. The arrow keys, Home and End are handled on the dot container and move focus to the chosen dot. The invisible slides are marked inert and aria-hidden — otherwise Tab goes past the frame edge to unreachable content.",
             "ai": {
               "summary": "A carousel with real dot buttons, arrow-key navigation and a transform-driven track. Zero dependencies, one file.",
               "preserve": [
@@ -1343,7 +1353,6 @@
                 "default": ""
               }
             },
-            "title": "Dot Pager",
             "preview": {
               "props": {
                 "label": "Routes",
@@ -1459,7 +1468,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Shop Rail",
             "description": "A product rail where the next card peeks past the edge and the arrows go dim at the ends: a disabled arrow answers \"nothing further\" before the click.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-carousel-010-* variables. A client component (\"use client\") — the edge state is computed on scroll. The rail stays native scrolling with scroll-snap: finger and wheel work on their own. The arrow step equals the card width plus the gap, so the rail stops exactly on a card rather than halfway. The edge position is recomputed in the onScroll handler and once after mounting: the buttons are switched off with the disabled attribute rather than a style, so that they drop out of the tab order.",
             "ai": {
               "summary": "A product rail with a peeking card, a step of exactly one card and arrows that dim at the ends. Zero dependencies, one file.",
               "preserve": [
@@ -1506,7 +1517,6 @@
                 "default": ""
               }
             },
-            "title": "Shop Rail",
             "preview": {
               "props": {
                 "title": "Frequently bought",
@@ -1639,7 +1649,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Auto Reviews",
             "description": "Reviews advance on their own but freeze at any sign of interest: hover, focus inside the block, or the pause button — and with prefers-reduced-motion they never start.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-carousel-011-* variables. A client component (\"use client\") — the timer lives in useEffect and is recreated on every review change. The pause is made up of three sources: hover and focus set held, and the button toggles playing. prefers-reduced-motion is checked through matchMedia on mount and simply switches the show off: motion here is an action rather than decoration, so it has to be cancelled entirely. The quote height is fixed with min-height so that the page does not jump on a change.",
             "ai": {
               "summary": "Auto-advancing reviews with pause on hover, focus and a button, progress bars, and a full stop under prefers-reduced-motion. Zero dependencies, one file.",
               "preserve": [
@@ -1687,7 +1699,6 @@
                 "default": ""
               }
             },
-            "title": "Auto Reviews",
             "preview": {
               "props": {
                 "label": "Reviews",
@@ -1796,7 +1807,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Counter Belts",
             "description": "Two logo belts running in opposite directions with dissolved edges: counter-motion reads as \"the list is long\" rather than \"a carousel is moving\".",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-carousel-012-* variables. Server component: no hooks, the motion is entirely a CSS animation. Each belt is duplicated in the markup and shifted by exactly half its width including the gap, so no seam between the repeats is visible; the copy is marked aria-hidden so that the list is not read twice. The edges are dissolved with mask-image. The animation freezes both on hover and on focus inside the block, and under prefers-reduced-motion the belts stop and turn into ordinary horizontal scrolling.",
             "ai": {
               "summary": "Two counter-running logo belts in pure CSS, pausing on hover and on focus. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1839,7 +1852,6 @@
                 "default": ""
               }
             },
-            "title": "Counter Belts",
             "preview": {
               "props": {
                 "title": "Trusted by",
@@ -1947,7 +1959,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Centering Thumbs",
             "description": "A gallery with a thumbnail strip where the chosen thumb scrolls itself to the centre and arrow keys walk the frames.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-carousel-013-* variables. A client component (\"use client\") — the position is held by useState. There are usually more thumbnails than fit the width, so the selected one is brought to the centre by a scrollIntoView({block: \"nearest\", inline: \"center\"}) call: block: \"nearest\" keeps the browser from pulling the whole page. The thumbnails are real buttons labelled \"Frame N\", and the selected one is marked with aria-current and a border rather than brightness alone: dimming the neighbours is barely noticeable on a small screen.",
             "ai": {
               "summary": "A gallery with thumbnails: the selected one centres itself and arrow keys switch frames. Zero dependencies, one file.",
               "preserve": [
@@ -1995,7 +2009,6 @@
                 "default": ""
               }
             },
-            "title": "Centering Thumbs",
             "preview": {
               "props": {
                 "label": "Gallery",
@@ -2081,6 +2094,7 @@
             "слайды через cards: заголовок, текст и оттенок",
             "подпись карусели через label и роль блока через roleDescription",
             "основу идентификаторов через idPrefix",
+            "цвет фокусной рамки стрелок через accent",
             "пропорции кадра в правиле aspect-ratio у [data-part=\"slide\"]",
             "подписи стрелок через prevLabel и nextLabel, подсказку под лентой через hint",
             "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
@@ -2116,6 +2130,12 @@
             "maxLength": 90
           },
           {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
             "prop": "background",
             "label": "Фон",
             "type": "color",
@@ -2124,7 +2144,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Anchor Deck",
             "description": "A carousel with arrows and no JS at all: each slide carries its own pair of arrows pointing at the neighbouring anchors, so the component never needs to know the current position.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-carousel-014-* variables. Server component: no hooks at all. Scrolling and stopping are held by scroll-snap-type: x mandatory with scroll-snap-stop: always, so the rail does not skip past a slide. The arrows are ordinary links to the ids of the neighbouring slides: the browser reaches the right one itself, and \"previous\" and \"next\" are known at render. The ids are built from the idPrefix prop so that two blocks on one page do not break each other's anchors.",
             "ai": {
               "summary": "A scroll-snap carousel with no JS: the in-slide arrows are anchor links to the neighbours. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -2141,6 +2163,7 @@
                 "the slides through cards: title, text and hue",
                 "the carousel label through label and the block role through roleDescription",
                 "the id base through idPrefix",
+                "the arrow focus ring colour through accent",
                 "the frame proportions in the aspect-ratio rule of [data-part=\"slide\"]",
                 "the arrow labels through prevLabel and nextLabel, the hint under the rail through hint",
                 "background — the component background; empty means no background, taking the page colour"
@@ -2167,12 +2190,15 @@
                 "label": "Hint",
                 "default": "Swipe, scroll or use the in-frame arrows — no JavaScript."
               },
+              "accent": {
+                "label": "Accent",
+                "default": ""
+              },
               "background": {
                 "label": "Background",
                 "default": ""
               }
             },
-            "title": "Anchor Deck",
             "preview": {
               "props": {
                 "label": "Principles",
@@ -2206,7 +2232,7 @@
             }
           }
         },
-        "cardControls": ["background"]
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -2283,7 +2309,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Captioned Frames",
             "description": "A carousel where the caption is equal to the frame: a figure with a figcaption below the shot and reserved space so the block never jumps.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-carousel-015-* variables. A client component (\"use client\") — the position is held by useState. The markup is built on figure/figcaption, so the caption stays a caption both for a screen reader and for a search engine. The text sits under the frame on a light surface: over a shot it is readable only on a dark image. The caption height is fixed with min-height to the longest one — otherwise the buttons below it jump on every switch. The frame is marked role=\"img\" with a label.",
             "ai": {
               "summary": "A carousel with captions under the frame using figure/figcaption and reserved text height. Zero dependencies, one file.",
               "preserve": [
@@ -2327,7 +2355,6 @@
                 "default": ""
               }
             },
-            "title": "Captioned Frames",
             "preview": {
               "props": {
                 "label": "Photo story",
@@ -2390,7 +2417,7 @@
         },
         "ai": {
           "export": "Carousel016",
-          "usage": "<Carousel016\n  label=\"Квартира\"\n  ofWord=\"из\"\n  slides={[\n    { title: \"Гостиная\", meta: \"22 м², окна на юг\", hue: 200 },\n    { title: \"Кухня\", meta: \"11 м², техника остаётся\", hue: 150 },\n  ]}\n/>",
+          "usage": "<Carousel016\n  label=\"Квартира\"\n  counterText=\"{index} из {total}\"\n  slides={[\n    { title: \"Гостиная\", meta: \"22 м², окна на юг\", hue: 200 },\n    { title: \"Кухня\", meta: \"11 м², техника остаётся\", hue: 150 },\n  ]}\n/>",
           "summary": "Карусель со счётчиком «N из M», полосой заполнения и стрелками, гаснущими на краях. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-carousel-016-* и не подменять её токенами вашей темы",
@@ -2404,7 +2431,7 @@
           ],
           "adapt": [
             "кадры через slides: заголовок, пояснение и оттенок",
-            "подпись карусели через label и слово-разделитель счётчика через ofWord",
+            "подпись карусели через label и шаблон счётчика через counterText",
             "цвет акцента через accent",
             "длительность проявления в правиле transition у [data-part=\"slide\"]",
             "подписи кнопок через prevLabel и nextLabel, роль блока через roleDescription",
@@ -2427,11 +2454,11 @@
             "maxLength": 20
           },
           {
-            "prop": "ofWord",
-            "label": "Слово счётчика",
+            "prop": "counterText",
+            "label": "Счётчик",
             "type": "text",
-            "default": "из",
-            "maxLength": 8
+            "default": "{index} из {total}",
+            "maxLength": 32
           },
           {
             "prop": "accent",
@@ -2448,7 +2475,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Slide Counter",
             "description": "A carousel with a counter instead of dots: \"3 of 8\" plus a progress bar answers more precisely than a row of circles, and the arrows dim at the ends of a non-looping deck.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-carousel-016-* variables. A client component (\"use client\") — the position is held by useState. The frames sit in a stack and change by fading: the rail has nowhere to travel, because the position is conveyed by a counter. The invisible frames are marked inert and aria-hidden, and their visibility is killed not only with opacity but with visibility — otherwise they stay click targets. The counter is announced through role=\"status\", and the share covered goes into CSS in the --vibeui-carousel-016-progress variable.",
             "ai": {
               "summary": "A carousel with an \"N of M\" counter, a progress bar and arrows that dim at the ends. Zero dependencies, one file.",
               "preserve": [
@@ -2463,7 +2492,7 @@
               ],
               "adapt": [
                 "the frames through slides: title, note and hue",
-                "the carousel label through label and the counter's joining word through ofWord",
+                "the carousel label through label and the counter template through counterText",
                 "the accent colour through accent",
                 "the cross-fade duration in the transition rule of [data-part=\"slide\"]",
                 "the button labels through prevLabel and nextLabel, the block role through roleDescription",
@@ -2476,16 +2505,16 @@
                 "role=\"status\" announces the counter, not the frame content — the title is read separately.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
-              "usage": "<Carousel016\n  label=\"Apartment\"\n  ofWord=\"of\"\n  slides={[\n    { title: \"Living room\", meta: \"22 m², south-facing\", hue: 200 },\n    { title: \"Kitchen\", meta: \"11 m², appliances included\", hue: 150 },\n  ]}\n/>"
+              "usage": "<Carousel016\n  label=\"Apartment\"\n  counterText=\"{index} of {total}\"\n  slides={[\n    { title: \"Living room\", meta: \"22 m², south-facing\", hue: 200 },\n    { title: \"Kitchen\", meta: \"11 m², appliances included\", hue: 150 },\n  ]}\n/>"
             },
             "controls": {
               "label": {
                 "label": "Label",
                 "default": "Apartment"
               },
-              "ofWord": {
-                "label": "Counter word",
-                "default": "of"
+              "counterText": {
+                "label": "Counter",
+                "default": "{index} of {total}"
               },
               "accent": {
                 "label": "Accent",
@@ -2496,11 +2525,9 @@
                 "default": ""
               }
             },
-            "title": "Slide Counter",
             "preview": {
               "props": {
                 "label": "Apartment",
-                "ofWord": "of",
                 "roleDescription": "carousel",
                 "prevLabel": "Previous frame",
                 "nextLabel": "Next frame",
@@ -2545,7 +2572,8 @@
                     "meta": "gated, parking",
                     "hue": 220
                   }
-                ]
+                ],
+                "counterText": "{index} of {total}"
               }
             }
           }

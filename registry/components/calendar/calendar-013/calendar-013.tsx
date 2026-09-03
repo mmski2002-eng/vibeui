@@ -1,10 +1,10 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Calendar013Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange" | "defaultValue"
 > & {
   /** Опорный «сегодня» в ISO: строкой, чтобы серверный и клиентский рендер совпали. */
@@ -17,6 +17,8 @@ export type Calendar013Props = Omit<
   deniedText?: string
   /** Строка выбранной даты под сеткой. {date} подставляется. */
   selectedText?: string
+  /** Слово к сегодняшней дате: рамка видна глазом, но не слышна скринридеру. */
+  todayLabel?: string
   locale?: string
   onChange?: (iso: string) => void
   accent?: string
@@ -31,7 +33,7 @@ const STYLES = `
 :where([data-vibeui-block="calendar-013"]){
 --vibeui-calendar-013-bg:transparent;
 --vibeui-calendar-013-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
---vibeui-calendar-013-muted:light-dark(oklch(0.62 0.014 265),oklch(0.67 0.013 265));
+--vibeui-calendar-013-muted:color-mix(in oklab,var(--vibeui-calendar-013-fg) 68%,transparent);
 --vibeui-calendar-013-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-calendar-013-hover:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.012 265));
 --vibeui-calendar-013-note:light-dark(oklch(0.97 0.005 265),oklch(0.28 0.011 265));
@@ -40,15 +42,18 @@ const STYLES = `
 --vibeui-calendar-013-locked:light-dark(oklch(0.55 0.16 25),oklch(0.74 0.14 25));
 --vibeui-calendar-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="calendar-013"]{color-scheme:dark}
 [data-vibeui-block="calendar-013"]{
 display:flex;flex-direction:column;gap:0.625rem;
-width:100%;max-width:19rem;box-sizing:border-box;padding:0.875rem;
+width:100%;max-width:19rem;box-sizing:border-box;padding:0.9375rem;
 background:var(--vibeui-calendar-013-bg);
 border:1px solid var(--vibeui-calendar-013-border);border-radius:0.875rem;
 color:var(--vibeui-calendar-013-fg);font-family:var(--vibeui-calendar-013-font);
 }
 [data-vibeui-block="calendar-013"] [data-part="title"]{
-margin:0;font-size:0.875rem;font-weight:650;
+margin:0;font-size:0.9375rem;font-weight:650;
 }
 /* Заглавная только первая буква: capitalize поднимает и «г.» в «январь 2026 г.». */
 [data-vibeui-block="calendar-013"] [data-part="title"]::first-letter{text-transform:uppercase}
@@ -82,7 +87,7 @@ background:var(--vibeui-calendar-013-accent);color:var(--vibeui-calendar-013-on-
 [data-vibeui-block="calendar-013"] [data-part="status"]{
 display:flex;align-items:flex-start;gap:0.4375rem;min-height:2.25rem;
 padding:0.4375rem 0.5rem;border-radius:0.5rem;
-font-size:0.75rem;line-height:1.35;
+font-size:0.875rem;line-height:1.35;
 background:var(--vibeui-calendar-013-note);color:var(--vibeui-calendar-013-muted);
 }
 [data-vibeui-block="calendar-013"] [data-part="status"][data-tone="locked"]{
@@ -114,6 +119,44 @@ function parse(value: string) {
   return new Date(year, month - 1, day)
 }
 
+// Стрелки водят фокус по сетке. Без них до нужного дня приходится жать Tab
+// столько раз, сколько до него дней.
+function moveFocus(event: KeyboardEvent<HTMLElement>, columns: number) {
+  const steps: Record<string, number> = {
+    ArrowLeft: -1,
+    ArrowRight: 1,
+    ArrowUp: -columns,
+    ArrowDown: columns,
+  }
+  const step = steps[event.key]
+
+  if (step === undefined) {
+    return
+  }
+
+  const buttons = Array.from(
+    event.currentTarget.querySelectorAll<HTMLButtonElement>("button"),
+  )
+  const from = buttons.indexOf(document.activeElement as HTMLButtonElement)
+
+  if (from < 0) {
+    return
+  }
+
+  let index = from + step
+
+  while (buttons[index]?.disabled) {
+    index += step
+  }
+
+  if (!buttons[index]) {
+    return
+  }
+
+  event.preventDefault()
+  buttons[index].focus()
+}
+
 /**
  * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
  * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
@@ -141,17 +184,36 @@ function fill(template: string, values: Record<string, string>) {
 }
 
 /**
+ * Дата и локаль из пропов или дефолты компонента. Чужая страница не должна
+ * падать из-за опечатки в значении: Intl бросает RangeError и на Invalid Date,
+ * и на нераспознанной локали, а это белый экран вместо всего сайта.
+ */
+function safeDate(value: string, fallback: string) {
+  return Number.isNaN(parse(value).getTime()) ? fallback : value
+}
+
+function safeLocale(value: string, fallback: string) {
+  try {
+    Intl.DateTimeFormat.supportedLocalesOf(value)
+    return value
+  } catch {
+    return fallback
+  }
+}
+
+/**
  * Месяц с закрытым прошлым: недоступный день объясняет отказ подписью.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Calendar013({
-  today = "2026-03-14",
-  defaultValue = "2026-03-18",
+  today: todayProp = "2026-03-14",
+  defaultValue: defaultValueProp = "2026-03-18",
   reason = "Запись закрывается за сутки: прошедшие дни выбрать нельзя",
   unavailableText = "{date} — недоступно. {reason}",
   deniedText = "{date} — {reason}",
   selectedText = "Выбрано: {date}",
-  locale = "ru-RU",
+  todayLabel = "Сегодня",
+  locale: localeProp = "ru-RU",
   onChange,
   accent,
   background = "",
@@ -159,6 +221,9 @@ export function Calendar013({
   style,
   ...props
 }: Calendar013Props) {
+  const today = safeDate(todayProp, "2026-03-14")
+  const defaultValue = safeDate(defaultValueProp, "2026-03-18")
+  const locale = safeLocale(localeProp, "ru-RU")
   const [selected, setSelected] = useState(defaultValue)
   const [denied, setDenied] = useState<string | null>(null)
 
@@ -188,6 +253,9 @@ export function Calendar013({
     ...style,
   } as CSSProperties
 
+  // Ровно одна кнопка сетки в табуляции: выбранный день, иначе сегодняшний.
+  const stop = cells.some((date) => iso(date) === selected) ? selected : today
+
   const press = (date: Date, locked: boolean) => {
     if (locked) {
       setDenied(long.format(date))
@@ -206,6 +274,7 @@ export function Calendar013({
       </style>
       <div
         {...props}
+        data-slot="calendar"
         data-vibeui-block="calendar-013"
         className={className}
         style={palette}
@@ -221,26 +290,31 @@ export function Calendar013({
               ))}
             </tr>
           </thead>
-          <tbody>
+          <tbody onKeyDown={(event) => moveFocus(event, 7)}>
             {Array.from({ length: 6 }, (_, row) => (
               <tr key={row}>
                 {cells.slice(row * 7, row * 7 + 7).map((date) => {
                   const value = iso(date)
                   const locked = value < today
+                  const named =
+                    value === today
+                      ? `${long.format(date)}, ${todayLabel}`
+                      : long.format(date)
 
                   return (
                     <td key={value}>
                       <button
                         type="button"
+                        tabIndex={value === stop ? 0 : -1}
                         aria-disabled={locked}
                         aria-pressed={!locked && value === selected}
                         aria-label={
                           locked
                             ? fill(unavailableText, {
-                                date: long.format(date),
+                                date: named,
                                 reason,
                               })
-                            : long.format(date)
+                            : named
                         }
                         data-outside={date.getMonth() !== first.getMonth()}
                         data-today={value === today}

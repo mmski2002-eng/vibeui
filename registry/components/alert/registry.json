@@ -20,7 +20,15 @@
       "meta": {
         "tags": ["alert", "notification", "inline", "status"],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "states": [
+            {
+              "tone": "info"
+            },
+            {
+              "tone": "danger"
+            }
+          ]
         },
         "ai": {
           "export": "Alert001",
@@ -146,9 +154,16 @@
                 "tone": "warning",
                 "title": "No domain connected yet",
                 "description": "The site is served from a temporary address. Connect a domain so you can share it.",
-                "action": "Connect"
+                "action": "Connect",
+                "toneText": {
+                  "info": "Information",
+                  "success": "Done",
+                  "warning": "Warning",
+                  "danger": "Error"
+                }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-alert-001-*. Four tones are switched by a data attribute and change a single variable: the colour of the bar on the left and of the glyph. The role is picked from the tone: danger is declared as alert (a screen reader interrupts its reading), the rest as status. In a narrow column the action moves below the text through @container instead of squeezing it."
           }
         },
         "cardControls": ["tone", "background"]
@@ -173,7 +188,15 @@
       "meta": {
         "tags": ["alert", "solid", "critical", "notification"],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "states": [
+            {
+              "tone": "warning"
+            },
+            {
+              "tone": "danger"
+            }
+          ]
         },
         "ai": {
           "export": "Alert002",
@@ -288,9 +311,16 @@
                 "tone": "danger",
                 "title": "Payment failed",
                 "description": "The bank declined the charge. The project stays published for 5 more days, then goes read-only.",
-                "action": "Update card"
+                "action": "Update card",
+                "toneText": {
+                  "info": "Information",
+                  "success": "Done",
+                  "warning": "Warning",
+                  "danger": "Error"
+                }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-alert-002-*. Four tones are switched by a data attribute and change the background, the text colour and the muted shade of the description all at once. The glyph is outlined in currentColor, so it stays legible on any fill without a second colour. The role is picked from the tone: danger is declared as alert, the rest as status. In a narrow column the action wraps below the text through @container."
           }
         },
         "cardControls": ["tone"]
@@ -315,7 +345,18 @@
       "meta": {
         "tags": ["alert", "form", "inline", "validation"],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "states": [
+            {
+              "tone": "info"
+            },
+            {
+              "tone": "warning"
+            },
+            {
+              "tone": "danger"
+            }
+          ]
         },
         "ai": {
           "export": "Alert003",
@@ -402,9 +443,16 @@
             "preview": {
               "props": {
                 "tone": "danger",
-                "message": "That address belongs to another project — try a different one."
+                "message": "That address belongs to another project — try a different one.",
+                "toneText": {
+                  "info": "Information",
+                  "success": "Done",
+                  "warning": "Warning",
+                  "danger": "Error"
+                }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-alert-003-*. This is a <p> with a tone dot: its line height matches the field label, so the appearance of the message does not shift the form layout. The dot is aligned to the first line of the text rather than to the centre of the block — on a two-line message centring would drag it downward. In the danger tone the whole text is coloured: a field error has to read without comparing it to its neighbours."
           }
         },
         "cardControls": ["tone"]
@@ -565,7 +613,8 @@
                 "confirmLabel": "Publish",
                 "cancelLabel": "Not now"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-alert-004-*. The buttons stand under the text rather than in the heading row: the decision is taken once the reading is done. The destructive prop recolours the glyph, the border and the confirm button in the danger tone and switches the role to alertdialog. In a narrow column the buttons stretch to the full width through @container."
           }
         },
         "cardControls": ["destructive", "accent", "background"]
@@ -720,9 +769,16 @@
                 "title": "Drafts save themselves",
                 "description": "Changes are written every few seconds. Publishing them is a separate step — the button in the project header.",
                 "footnote": "Don't show again",
-                "closeLabel": "Dismiss message"
+                "closeLabel": "Dismiss message",
+                "toneText": {
+                  "info": "Information",
+                  "success": "Done",
+                  "warning": "Warning",
+                  "danger": "Error"
+                }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-alert-005-*. The tone lives in a vertical bar on the left that runs the height of the block. The cross is positioned in the top right corner rather than standing in the flow: in the flow it would pull the first line of the text toward itself. The footnote line under the description is meant for \"don't show again\" — a separate decision that must not be hidden in the same cross."
           }
         },
         "cardControls": ["tone", "background"]
@@ -886,7 +942,8 @@
                 "actionLabel": "Take a look",
                 "dismissLabel": "Hide"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-alert-006-*. On the left there is no status glyph but a small scene of three tiles — a hint of the interface in question; it is assembled from positioned spans and needs no image. The corner glow is a radial gradient in the background. At a narrow width the actions wrap below the text, and at a very narrow one the scene is hidden through @container."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1057,7 +1114,8 @@
                 "replyLabel": "Reply",
                 "dismissLabel": "Hide"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-alert-007-*. The avatar hue is computed from the name by a deterministic function and substituted into --vibeui-alert-007-hue: the same technique as in avatar-001, so one person is always one colour. The message text is clamped to three lines through -webkit-line-clamp. The time is pushed right through margin-left:auto and wraps in a narrow column."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1082,7 +1140,15 @@
       "meta": {
         "tags": ["alert", "progress", "loading", "operation"],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "states": [
+            {
+              "value": 64
+            },
+            {
+              "value": null
+            }
+          ]
         },
         "ai": {
           "export": "Alert008",
@@ -1212,7 +1278,8 @@
                 "step": "Building pages — 12 of 18",
                 "cancelLabel": "Cancel"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-alert-008-*. The progress bar is an absolutely positioned edge of the block rather than a row in the flow: the message stays compact. The fill width arrives through the --vibeui-alert-008-value variable. value={null} turns on the unknown-duration state: a segment travels along the edge and aria-valuenow is not set. The spinner is drawn with a border that has one coloured edge."
           }
         },
         "cardControls": ["value", "accent", "background"]
@@ -1377,7 +1444,8 @@
                 "remaining": "3 days",
                 "actionLabel": "Extend"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-alert-009-*. The countdown is not computed inside: the remainder string and the share of the period already gone arrive as props, because a timer inside the component would mean a ticking render on every page. The bar shows the remainder rather than what has passed — its width is computed as 100 minus elapsed. The left border is coloured in the tone rather than the whole frame."
           }
         },
         "cardControls": ["elapsed", "accent", "background"]
@@ -1510,7 +1578,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-alert-010-*. The heading builds itself from the error count unless it is passed explicitly. Each row is the field label in bold and the error text in the regular weight: first \"where\", then \"what\". When href is given the row becomes a link to the field's anchor. The alert role is always set: the summary appears in response to a submit and has to be announced at once."
           }
         },
         "cardControls": ["background"]
@@ -1658,7 +1727,8 @@
                 "copyLabel": "Copy the details",
                 "detailsLabel": "Details"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-alert-011-*. The detail is collapsed into a native <details>, so disclosure needs no state and works before hydration. The text itself sits in a dark monospaced <pre> with horizontal scrolling: it is copied whole rather than read. The reference id is set monospaced — support searches by it."
           }
         },
         "cardControls": ["background"]
@@ -1816,7 +1886,8 @@
                 "updateLabel": "Update",
                 "laterLabel": "Later"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-alert-012-*. The version number is set monospaced in a pill: it is compared character by character. The change list is an ordinary ul with bullets on pseudo-elements. The full list goes behind a link pushed right through margin-left:auto; in a narrow column it returns into the flow."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1970,7 +2041,8 @@
                 "rejectLabel": "Essential only",
                 "settingsLabel": "Settings"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-alert-013-*. The accept and reject buttons are the same size and the same height: a difference in weight here is a dark pattern, not styling. Settings is moved out as a third, quiet link so that the two-way choice stays obvious. In a narrow column the block folds into a stack and the buttons stretch to equal widths through @container."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1995,7 +2067,15 @@
       "meta": {
         "tags": ["alert", "status", "uptime", "incident"],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "states": [
+            {
+              "state": "degraded"
+            },
+            {
+              "state": "down"
+            }
+          ]
         },
         "ai": {
           "export": "Alert014",
@@ -2113,9 +2193,16 @@
                 "title": "Publishing is slower than usual",
                 "description": "The build queue is overloaded. Sites keep serving, new publishes take up to 10 minutes.",
                 "updated": "updated 2 minutes ago",
-                "statusLabel": "Service status"
+                "statusLabel": "Service status",
+                "stateText": {
+                  "operational": "Operational",
+                  "degraded": "Degraded",
+                  "down": "Outage",
+                  "maintenance": "Maintenance"
+                }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-alert-014-*. Four states are switched by a data attribute and change a single colour variable. The pulse is a pseudo-element of the dot with a scale animation, and it is enabled only for abnormal states: a steady one must not blink for hours. The alert role is set only on a full outage."
           }
         },
         "cardControls": ["state", "background"]
@@ -2140,7 +2227,15 @@
       "meta": {
         "tags": ["alert", "quota", "limit", "billing"],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "states": [
+            {
+              "used": 4
+            },
+            {
+              "used": 10
+            }
+          ]
         },
         "ai": {
           "export": "Alert015",
@@ -2296,7 +2391,8 @@
                 "description": "The Start plan includes 10 projects. After that, archive the old ones or move to Team.",
                 "actionLabel": "Change plan"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-alert-015-*. The ratio is computed from used and total, goes into the --vibeui-alert-015-ratio variable and at the same time determines the level: up to 80 per cent the ordinary tone, beyond that the warning one, at 100 the danger one. The tone is deliberately absent from the props: it is derived from the data rather than decided by the calling code."
           }
         },
         "cardControls": ["used", "total", "accent", "background"]
@@ -2479,7 +2575,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-alert-016-*. The entries are separated by rules rather than gaps: a shared frame holds them as one object. The tone of each entry is set by a data attribute and changes only the colour of the dot. A tail longer than visible is folded into a row with a counter, so the block does not grow without end."
           }
         },
         "cardControls": ["visible", "background"]
@@ -2636,7 +2733,8 @@
                 "affected": ["Publishing", "Media upload", "Export"],
                 "detailsLabel": "What exactly changes"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-alert-017-*. The calendar mark is drawn with a border and two strokes on pseudo-elements: no icon library is needed. The maintenance window is moved out into a monospaced pill — people copy it into a calendar, so it must not get lost in a paragraph. The affected services are listed as pills rather than as a comma-separated line."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2761,7 +2859,8 @@
                 "description": "Your changes will be saved once the network is back.",
                 "retryLabel": "Retry"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-alert-018-*. The state is read through useSyncExternalStore with a subscription to the online and offline events: this is the sanctioned way to read an external source, it causes no extra renders and behaves correctly under server rendering, where the snapshot is always \"online\". While the connection is up the component returns null. The force prop shows the bar unconditionally — for the showcase and for debugging."
           }
         },
         "cardControls": ["force"]
@@ -2929,7 +3028,8 @@
                 ],
                 "actionLabel": "Check the record"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-alert-019-*. The step numbers are drawn by a CSS counter rather than written as text in the markup: the list cannot fall out of sync when an item is inserted in the middle. The caption on the right of the header (a deadline, an owner) is hidden in a narrow column through @container so that the heading is not squeezed."
           }
         },
         "cardControls": ["accent", "background"]
@@ -3081,7 +3181,8 @@
                 "confirmLabel": "Delete forever",
                 "cancelLabel": "Cancel"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-alert-020-*. While the field is empty the confirm button is unavailable — this is done by the `:has(input:placeholder-shown)` rule, that is, without a single line of JS. The exact match is checked by the pattern attribute (the value is escaped) and, finally, by the calling code on form submit: CSS cannot compare strings. The list of losses stands above the field deliberately — it has to be read before the typing starts."
           }
         },
         "cardControls": ["background"]

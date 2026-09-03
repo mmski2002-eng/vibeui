@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Card017Props = Omit<
-  ComponentPropsWithoutRef<"figure">,
-  "children"
-> & {
+export type Card017Props = Omit<ComponentProps<"figure">, "children"> & {
   /** Сама цитата, без кавычек: их рисует CSS. */
   quote?: string
   author?: string
@@ -29,7 +26,7 @@ const STYLES = `
 :where([data-vibeui-block="card-017"]){
 --vibeui-card-017-bg:transparent;
 --vibeui-card-017-fg:light-dark(oklch(0.23 0.016 265),oklch(0.94 0.006 265));
---vibeui-card-017-muted:light-dark(oklch(0.55 0.013 265),oklch(0.71 0.012 265));
+--vibeui-card-017-muted:color-mix(in oklab,var(--vibeui-card-017-fg) 68%,transparent);
 --vibeui-card-017-border:light-dark(oklch(0.91 0.007 90),oklch(0.37 0.011 90));
 --vibeui-card-017-accent:light-dark(oklch(0.62 0.14 55),oklch(0.78 0.12 55));
 --vibeui-card-017-star:light-dark(oklch(0.74 0.15 78),oklch(0.82 0.14 78));
@@ -37,6 +34,9 @@ const STYLES = `
 --vibeui-card-017-hue:60;
 --vibeui-card-017-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="card-017"]{color-scheme:dark}
 [data-vibeui-block="card-017"]{
 position:relative;display:flex;flex-direction:column;gap:0.875rem;
 width:100%;max-width:25rem;box-sizing:border-box;margin:0;padding:1.25rem 1.25rem 1.125rem;
@@ -76,8 +76,8 @@ padding-top:0.875rem;border-top:1px solid var(--vibeui-card-017-border);
 [data-vibeui-block="card-017"] [data-part="face"]{
 display:flex;align-items:center;justify-content:center;flex:none;
 width:2.125rem;height:2.125rem;border-radius:9999px;
-background:oklch(0.92 0.05 var(--vibeui-card-017-hue));
-color:oklch(0.38 0.09 var(--vibeui-card-017-hue));
+background:light-dark(oklch(0.92 0.05 var(--vibeui-card-017-hue)),oklch(0.33 0.07 var(--vibeui-card-017-hue)));
+color:light-dark(oklch(0.38 0.09 var(--vibeui-card-017-hue)),oklch(0.92 0.05 var(--vibeui-card-017-hue)));
 font-size:0.75rem;font-weight:700;
 }
 [data-vibeui-block="card-017"] [data-part="who"]{display:flex;flex-direction:column;min-width:0}
@@ -171,6 +171,7 @@ export function Card017({
       </style>
       <figure
         {...props}
+        data-slot="card"
         data-vibeui-block="card-017"
         className={className}
         style={palette}

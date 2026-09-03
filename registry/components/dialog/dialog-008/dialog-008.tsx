@@ -33,7 +33,7 @@ export type Dialog008Props = {
 const STYLES = `
 :where([data-vibeui-block="dialog-008"]){
 --vibeui-dialog-008-fg:light-dark(oklch(0.22 0.016 265),oklch(0.94 0.005 265));
---vibeui-dialog-008-muted:light-dark(oklch(0.5 0.014 265),oklch(0.7 0.012 265));
+--vibeui-dialog-008-muted:color-mix(in oklab,var(--vibeui-dialog-008-fg) 68%,transparent);
 --vibeui-dialog-008-bg:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
 --vibeui-dialog-008-panel:light-dark(oklch(0.975 0.003 265),oklch(0.3 0.008 265));
 --vibeui-dialog-008-border:light-dark(oklch(0.89 0.006 265),oklch(0.38 0.012 265));
@@ -42,6 +42,9 @@ const STYLES = `
 --vibeui-dialog-008-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-dialog-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="dialog-008"]{color-scheme:dark}
 [data-vibeui-block="dialog-008"]{display:inline-flex;font-family:var(--vibeui-dialog-008-font)}
 [data-vibeui-block="dialog-008"] [data-part="trigger"]{
 appearance:none;cursor:pointer;font:inherit;font-size:0.875rem;font-weight:500;
@@ -66,7 +69,7 @@ transition:opacity .18s ease,transform .18s ease,display .18s allow-discrete,ove
 [data-vibeui-dialog-008-window]:popover-open{opacity:1;transform:none}
 @starting-style{[data-vibeui-dialog-008-window]:popover-open{opacity:0;transform:scale(0.97)}}
 [data-vibeui-dialog-008-window]::backdrop{background:oklch(0.18 0.02 265 / 45%)}
-[data-vibeui-dialog-008-window] [data-part="title"]{margin:0 0 0.875rem;font-size:1rem;font-weight:620;line-height:1.35}
+[data-vibeui-dialog-008-window] [data-part="title"]{margin:0 0 0.875rem;font-size:1.0625rem;font-weight:620;line-height:1.35}
 [data-vibeui-dialog-008-window] [data-part="row"]{display:flex;gap:0.5rem}
 [data-vibeui-dialog-008-window] input{
 flex:1 1 auto;min-width:0;box-sizing:border-box;margin:0;height:2.375rem;padding:0 0.75rem;
@@ -94,8 +97,8 @@ color:var(--vibeui-dialog-008-muted,light-dark(oklch(0.5 0.014 265),oklch(0.7 0.
 [data-vibeui-dialog-008-window] [data-part="avatar"]{
 display:flex;align-items:center;justify-content:center;flex:none;
 width:1.75rem;height:1.75rem;border-radius:9999px;
-background:oklch(0.92 0.05 var(--vibeui-dialog-008-hue,250));
-color:oklch(0.38 0.09 var(--vibeui-dialog-008-hue,250));
+background:light-dark(oklch(0.92 0.05 var(--vibeui-dialog-008-hue,250)),oklch(0.34 0.065 var(--vibeui-dialog-008-hue,250)));
+color:light-dark(oklch(0.38 0.09 var(--vibeui-dialog-008-hue,250)),oklch(0.88 0.063 var(--vibeui-dialog-008-hue,250)));
 font-size:0.6875rem;font-weight:650;
 }
 [data-vibeui-dialog-008-window] [data-part="role"]{margin-left:auto;font-size:0.75rem;color:var(--vibeui-dialog-008-muted,light-dark(oklch(0.5 0.014 265),oklch(0.7 0.012 265)))}
@@ -107,6 +110,8 @@ border-radius:0.5rem;background:transparent;color:inherit;
 border:1px solid var(--vibeui-dialog-008-border,light-dark(oklch(0.89 0.006 265),oklch(0.38 0.012 265)));
 }
 [data-vibeui-dialog-008-window] :focus-visible{outline:2px solid var(--vibeui-dialog-008-accent,light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262)));outline-offset:2px}
+/* Popover страницу не блокирует: фон под окном иначе продолжает прокручиваться. */
+html:has([data-vibeui-dialog-008-window]:popover-open){overflow:hidden}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="dialog-008"] *{animation:none!important;transition:none!important}
 [data-vibeui-dialog-008-window]{transition:none!important;opacity:1;transform:none}
@@ -196,7 +201,12 @@ export function Dialog008({
       <style href="vibeui-dialog-008" precedence="medium">
         {STYLES}
       </style>
-      <div data-vibeui-block="dialog-008" className={className} style={palette}>
+      <div
+        data-slot="dialog"
+        data-vibeui-block="dialog-008"
+        className={className}
+        style={palette}
+      >
         <button data-part="trigger" type="button" popoverTarget={id}>
           {trigger}
         </button>
@@ -238,7 +248,7 @@ export function Dialog008({
             ))}
           </ul>
           <div data-part="actions">
-            <button data-part="done" type="button" popoverTarget={id}>
+            <button data-part="done" type="button" popoverTarget={id} autoFocus>
               {doneLabel}
             </button>
           </div>

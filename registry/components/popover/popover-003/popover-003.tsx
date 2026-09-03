@@ -1,8 +1,8 @@
 import { useId } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Popover003Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "title"
 > & {
   label?: string
@@ -25,7 +25,7 @@ const STYLES = `
 :where([data-vibeui-block="popover-003"]){
 --vibeui-popover-003-bg:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
 --vibeui-popover-003-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.006 265));
---vibeui-popover-003-muted:light-dark(oklch(0.53 0.014 265),oklch(0.71 0.012 265));
+--vibeui-popover-003-muted:color-mix(in oklab,var(--vibeui-popover-003-fg) 68%,transparent);
 --vibeui-popover-003-border:light-dark(oklch(0.89 0.006 265),oklch(0.36 0.012 265));
 --vibeui-popover-003-hover:light-dark(oklch(0.96 0.004 265),oklch(0.27 0.014 265));
 --vibeui-popover-003-danger:light-dark(oklch(0.55 0.2 25),oklch(0.72 0.17 25));
@@ -33,6 +33,9 @@ const STYLES = `
 --vibeui-popover-003-shadow:light-dark(oklch(0.2 0.02 265 / 60%),oklch(0.02 0.01 265 / 72%));
 --vibeui-popover-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="popover-003"]{color-scheme:dark}
 [data-vibeui-block="popover-003"]{
 position:relative;display:inline-block;
 font-family:var(--vibeui-popover-003-font);color:var(--vibeui-popover-003-fg);
@@ -142,6 +145,7 @@ export function Popover003({
       </style>
       <div
         {...props}
+        data-slot="popover"
         data-vibeui-block="popover-003"
         className={className}
         style={palette}

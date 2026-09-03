@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties, MouseEvent } from "react"
+import type { ComponentProps, CSSProperties, MouseEvent } from "react"
 
 export type Contextmenu010Action = {
   label: string
@@ -9,7 +9,7 @@ export type Contextmenu010Action = {
 }
 
 export type Contextmenu010Props = Omit<
-  ComponentPropsWithoutRef<"section">,
+  ComponentProps<"section">,
   "children"
 > & {
   text?: string
@@ -45,16 +45,19 @@ const STYLES = `
 --vibeui-contextmenu-010-bg:transparent;
 --vibeui-contextmenu-010-surface:light-dark(oklch(1 0 0),oklch(0.24 0.013 265));
 --vibeui-contextmenu-010-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
---vibeui-contextmenu-010-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-contextmenu-010-muted:color-mix(in oklab,var(--vibeui-contextmenu-010-fg) 68%,transparent);
 --vibeui-contextmenu-010-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
 --vibeui-contextmenu-010-hover:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.014 265));
 --vibeui-contextmenu-010-accent:light-dark(oklch(0.58 0.17 300),oklch(0.76 0.14 300));
 --vibeui-contextmenu-010-shadow:light-dark(oklch(0.2 0.03 265 / 50%),oklch(0 0 0 / 72%));
 --vibeui-contextmenu-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="contextmenu-010"]{color-scheme:dark}
 [data-vibeui-block="contextmenu-010"]{
 display:flex;flex-direction:column;gap:0.625rem;
-width:100%;max-width:23rem;box-sizing:border-box;padding:1rem;
+width:100%;max-width:23rem;box-sizing:border-box;padding:0.875rem;
 background:var(--vibeui-contextmenu-010-bg);color:var(--vibeui-contextmenu-010-fg);
 border:1px solid var(--vibeui-contextmenu-010-border);border-radius:1rem;
 font-family:var(--vibeui-contextmenu-010-font);
@@ -272,6 +275,7 @@ export function Contextmenu010({
       </style>
       <section
         {...props}
+        data-slot="context-menu"
         data-vibeui-block="contextmenu-010"
         aria-label={sectionLabel}
         className={className}

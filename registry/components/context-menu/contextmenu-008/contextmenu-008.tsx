@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react"
 import type {
-  ComponentPropsWithoutRef,
+  ComponentProps,
   CSSProperties,
   MouseEvent,
   PointerEvent,
@@ -14,7 +14,7 @@ export type Contextmenu008Item = {
 }
 
 export type Contextmenu008Props = Omit<
-  ComponentPropsWithoutRef<"section">,
+  ComponentProps<"section">,
   "children"
 > & {
   hint?: string
@@ -42,7 +42,7 @@ const STYLES = `
 --vibeui-contextmenu-008-bg:transparent;
 --vibeui-contextmenu-008-surface:light-dark(oklch(1 0 0),oklch(0.24 0.013 265));
 --vibeui-contextmenu-008-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
---vibeui-contextmenu-008-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-contextmenu-008-muted:color-mix(in oklab,var(--vibeui-contextmenu-008-fg) 68%,transparent);
 --vibeui-contextmenu-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
 --vibeui-contextmenu-008-hover:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.014 265));
 --vibeui-contextmenu-008-accent:light-dark(oklch(0.55 0.19 320),oklch(0.76 0.15 320));
@@ -54,6 +54,9 @@ const STYLES = `
 --vibeui-contextmenu-008-x:50%;
 --vibeui-contextmenu-008-y:50%;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="contextmenu-008"]{color-scheme:dark}
 [data-vibeui-block="contextmenu-008"]{
 display:flex;flex-direction:column;gap:0.625rem;
 width:100%;max-width:21rem;box-sizing:border-box;padding:0.875rem;
@@ -233,6 +236,7 @@ export function Contextmenu008({
       </style>
       <section
         {...props}
+        data-slot="context-menu"
         data-vibeui-block="contextmenu-008"
         data-used={used || undefined}
         aria-label={sectionLabel}

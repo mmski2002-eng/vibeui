@@ -1,10 +1,10 @@
 "use client"
 
 import { useRef } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Drawer004Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "title"
 > & {
   triggerLabel?: string
@@ -31,13 +31,16 @@ const STYLES = `
 --vibeui-drawer-004-bg:transparent;
 --vibeui-drawer-004-surface:light-dark(oklch(1 0 0),oklch(0.22 0.013 265));
 --vibeui-drawer-004-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
---vibeui-drawer-004-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-drawer-004-muted:color-mix(in oklab,var(--vibeui-drawer-004-fg) 68%,transparent);
 --vibeui-drawer-004-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-drawer-004-accent:light-dark(oklch(0.55 0.17 265),oklch(0.73 0.15 265));
 --vibeui-drawer-004-on-accent:light-dark(oklch(0.99 0.01 265),oklch(0.17 0.02 265));
 --vibeui-drawer-004-hover:light-dark(oklch(0.96 0.004 265),oklch(0.29 0.013 265));
 --vibeui-drawer-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="drawer-004"]{color-scheme:dark}
 [data-vibeui-block="drawer-004"]{
 display:inline-block;font-family:var(--vibeui-drawer-004-font);color:var(--vibeui-drawer-004-fg);
 }
@@ -60,6 +63,7 @@ translate:100% 0;transition:translate .22s ease,overlay .22s allow-discrete,disp
 @starting-style{
 [data-vibeui-block="drawer-004"] dialog[open]{translate:100% 0}
 }
+/* Затемнение позади ящика одно на обе темы: подложка гасит страницу, а не красится вместе с ней. */
 [data-vibeui-block="drawer-004"] dialog::backdrop{background:oklch(0.19 0.02 265 / 45%)}
 [data-vibeui-block="drawer-004"] [data-part="panel"]{display:flex;flex-direction:column;height:100%;box-sizing:border-box}
 [data-vibeui-block="drawer-004"] [data-part="head"]{
@@ -120,7 +124,7 @@ width:0.5rem;height:0.5rem;border-radius:9999px;
 background:var(--vibeui-drawer-004-surface);border:1.5px solid var(--vibeui-drawer-004-accent);
 }
 [data-vibeui-block="drawer-004"] [data-part="time"]{display:block;font-size:0.6875rem;color:var(--vibeui-drawer-004-muted)}
-[data-vibeui-block="drawer-004"] [data-part="text"]{font-size:0.8125rem}
+[data-vibeui-block="drawer-004"] [data-part="text"]{font-size:0.875rem}
 [data-vibeui-block="drawer-004"] [data-part="foot"]{
 display:flex;gap:0.5rem;padding:0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom,0px));
 border-top:1px solid var(--vibeui-drawer-004-border);
@@ -225,6 +229,7 @@ export function Drawer004({
       </style>
       <div
         {...props}
+        data-slot="drawer"
         data-vibeui-block="drawer-004"
         className={className}
         style={palette}

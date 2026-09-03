@@ -1,10 +1,10 @@
 "use client"
 
 import { useId, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Number004Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "defaultValue" | "onChange"
 > & {
   label?: string
@@ -31,7 +31,7 @@ const STYLES = `
 --vibeui-number-004-field:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
 --vibeui-number-004-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-number-004-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
---vibeui-number-004-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-number-004-muted:color-mix(in oklab,var(--vibeui-number-004-fg) 68%,transparent);
 --vibeui-number-004-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
 --vibeui-number-004-track:light-dark(oklch(0.93 0.006 265),oklch(0.33 0.011 265));
 --vibeui-number-004-accent:light-dark(oklch(0.58 0.17 285),oklch(0.76 0.15 285));
@@ -41,6 +41,9 @@ const STYLES = `
 --vibeui-number-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-number-004-fill:0%;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="number-004"]{color-scheme:dark}
 /* Подложки по умолчанию нет: поле ложится на фон страницы. */
 [data-vibeui-block="number-004"]{
 display:flex;flex-direction:column;gap:0.5rem;
@@ -159,6 +162,7 @@ export function Number004({
       </style>
       <div
         {...props}
+        data-slot="number-field"
         data-vibeui-block="number-004"
         data-invalid={invalid ? "true" : "false"}
         className={className}

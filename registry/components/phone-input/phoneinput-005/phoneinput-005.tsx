@@ -1,8 +1,8 @@
 import { useId } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Phoneinput005Props = Omit<
-  ComponentPropsWithoutRef<"input">,
+  ComponentProps<"input">,
   "children" | "type" | "size"
 > & {
   label?: string
@@ -28,7 +28,7 @@ const STYLES = `
 --vibeui-phoneinput-005-surface:transparent;
 --vibeui-phoneinput-005-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.33 0.012 265));
 --vibeui-phoneinput-005-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.005 265));
---vibeui-phoneinput-005-muted:light-dark(oklch(0.54 0.014 265),oklch(0.7 0.012 265));
+--vibeui-phoneinput-005-muted:color-mix(in oklab,var(--vibeui-phoneinput-005-fg) 68%,transparent);
 --vibeui-phoneinput-005-sample-bg:light-dark(oklch(0.96 0.004 265),oklch(0.3 0.01 265));
 --vibeui-phoneinput-005-field-border:light-dark(oklch(0.85 0.01 265),oklch(0.4 0.014 265));
 --vibeui-phoneinput-005-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
@@ -36,6 +36,9 @@ const STYLES = `
 --vibeui-phoneinput-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-phoneinput-005-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="phoneinput-005"]{color-scheme:dark}
 [data-vibeui-block="phoneinput-005"]{
 box-sizing:border-box;width:100%;max-width:22rem;
 padding:1rem;border-radius:0.875rem;
@@ -138,6 +141,7 @@ export function Phoneinput005({
         {STYLES}
       </style>
       <div
+        data-slot="phone-input"
         data-vibeui-block="phoneinput-005"
         className={className}
         style={palette}

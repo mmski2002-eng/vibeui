@@ -147,7 +147,8 @@
                 "incrementLabel": "More",
                 "rangeText": "{unit} · from {min} to {max}"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-number-001-* variables. Client-side: \"use client\" for the sake of the buttons. The value is stored as a string, so an in-progress empty field does not turn into zero; it is brought to the bounds on blur. At the edges of the range the buttons are disabled rather than staying silent."
           }
         },
         "cardControls": ["defaultValue", "background"]
@@ -318,7 +319,8 @@
                 "incrementLabel": "One pack more",
                 "emptyText": "Not in the order"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-number-002-* variables. Client-side: \"use client\" is needed for the buttons and the recalculation. The base is stored in packs, the pieces are counted by multiplication on the fly — two independent states would drift apart after the first manual edit. At the minimum the \"minus\" button changes its role to removing the row (data-role=\"remove\"), and the zero state is captioned in words rather than with the digit 0."
           }
         },
         "cardControls": ["pack", "defaultPacks", "background"]
@@ -468,7 +470,8 @@
                 "unit": "m²",
                 "hint": "Measured by the inner walls, balcony excluded."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-number-003-* variables. Server-side: no state is needed, the form collects the value by name. The unit is made a separate block with a background of its own rather than a placeholder or text alongside — a placeholder disappears on input, and text alongside drifts away from the number. The number is right-aligned, tight against the unit, so \"54 m²\" reads as a single quantity."
           }
         },
         "cardControls": ["defaultValue", "background"]
@@ -616,7 +619,8 @@
                 "error": "A percent only goes from 0 to 100.",
                 "hintText": "{rest}% of the price remains"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-number-004-* variables. Client-side: the value and the error flag live in state. The input is stored as a string, so an in-progress empty field does not turn into zero. Going outside 0–100 is not corrected automatically: it is marked with data-invalid on the root, aria-invalid on the field and text in an aria-live region. The bar under the field shows the share as an area — a percent reads faster that way than as a digit."
           }
         },
         "cardControls": ["defaultValue", "accent", "background"]
@@ -642,7 +646,7 @@
         "tags": ["number", "units", "converter", "weight"],
         "ai": {
           "export": "Number005",
-          "usage": "<Number005 label=\"Вес посылки\" defaultValue={12.5} defaultUnit=\"кг\" />",
+          "usage": "<Number005 label=\"Вес посылки\" defaultValue={12.5} defaultUnit=\"kg\" />",
           "summary": "Числовое поле с переключением единиц: смена единицы пересчитывает значение, а эквивалент во второй единице подписан всегда. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-number-005-* и не подменять её токенами вашей темы",
@@ -686,8 +690,8 @@
             "prop": "defaultUnit",
             "label": "Единица",
             "type": "select",
-            "default": "кг",
-            "options": ["кг", "фунты"]
+            "default": "kg",
+            "options": ["kg", "lb"]
           },
           {
             "prop": "defaultValue",
@@ -744,7 +748,7 @@
                 "Rounding to a tenth is a compromise: raise the multiplier in round for pharmacy scales.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
-              "usage": "<Number005 label=\"Parcel weight\" defaultValue={12.5} defaultUnit=\"кг\" />"
+              "usage": "<Number005 label=\"Parcel weight\" defaultValue={12.5} defaultUnit=\"kg\" />"
             },
             "controls": {
               "label": {
@@ -769,17 +773,18 @@
               "props": {
                 "label": "Parcel weight",
                 "unitText": {
-                  "кг": "kg",
-                  "фунты": "lb"
+                  "kg": "kg",
+                  "lb": "lb"
                 },
                 "mirrorUnitText": {
-                  "кг": "kg",
-                  "фунты": "lb"
+                  "kg": "kg",
+                  "lb": "lb"
                 },
                 "mirrorText": "Same value: {value}",
                 "unitsLabel": "Unit of measure"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-number-005-* variables. Client-side: the unit and the value live in state. Kilograms are always what is stored inside, the displayed number is obtained by multiplication — that way toggling back and forth does not accumulate a rounding error. The switch is made of two buttons with aria-pressed rather than a select: there are two options and both have to be visible. The equivalent in the other unit is always captioned under the field."
           }
         },
         "cardControls": ["defaultUnit", "defaultValue", "background"]
@@ -951,7 +956,8 @@
                 "hintText": "Up to {max} {unit} per top-up",
                 "locale": "en-US"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-number-006-* variables. Client-side: the value is in state. The buttons add a dose to the current number — that is a fundamentally different scenario from ready-made sums, which replace the value: three doses build any number without the keyboard. Since the addition accumulates, there is a \"reset\" to the starting value next to it; on the approach to max the buttons are disabled rather than silently bumping into it."
           }
         },
         "cardControls": ["defaultValue", "max", "background"]
@@ -1107,7 +1113,8 @@
                 },
                 "hint": "Step 0.1 — the up and down arrows move the score by a tenth."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-number-007-* variables. Client-side: the score is in state. The 0.1 step and the rounding to tenths are done on input, so the keyboard arrows give exactly one tenth. The tone is taken from the value through data-tone on the root and an override of --vibeui-number-007-accent, so the colour of the number, the outline, the verdict and the meter changes through a single variable. The ten-notch meter is filled by a \"half a notch\" rule."
           }
         },
         "cardControls": ["defaultValue", "accent", "background"]
@@ -1266,7 +1273,8 @@
                 "boundsText": "from {min} to {max}",
                 "locale": "en-US"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-number-008-* variables. Client-side: the value and the held-Shift flag are in state. The arrow handler cancels the event through preventDefault — otherwise the browser adds its own step on top of ours and the number jumps twice. The Shift state is tracked through keydown and keyup and cleared on blur, because a key released outside the field never reaches the component. The step amounts are captioned with keys in <kbd>."
           }
         },
         "cardControls": ["step", "bigStep", "accent", "background"]

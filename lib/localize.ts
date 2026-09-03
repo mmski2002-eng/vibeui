@@ -39,6 +39,7 @@ export function localizeItem(item: CatalogItem, locale: Locale): CatalogItem {
     ...item,
     title: translation.title ?? item.title,
     description: translation.description ?? item.description,
+    docs: translation.docs ?? item.docs,
     meta: {
       ...item.meta,
       ai: { ...item.meta.ai, ...translation.ai },

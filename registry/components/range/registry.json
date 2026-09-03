@@ -89,6 +89,7 @@
         "i18n": {
           "en": {
             "description": "A range on two native sliders: the bounds stop against each other, so \"from\" never exceeds \"to\".",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-range-001-* variables. Client-side: \"use client\" for the sake of the two bounds. The sliders lie on top of each other: the track does not catch events while the thumbs do, so both stay reachable with the mouse. The filled segment is drawn as a gradient over two percentage variables.",
             "ai": {
               "summary": "A price range: two bounds on native sliders, a filled segment between them and the edge labels. Zero dependencies, one file.",
               "preserve": [
@@ -234,6 +235,7 @@
         "i18n": {
           "en": {
             "description": "A price range with a histogram of listings: a bare scale never says that \"under 5,000\" leaves three options out of a thousand.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-range-002-* variables. Client-side: both bounds live in state. The range is built from two native sliders lying on top of each other: the track is disabled for events and the thumbs are not, so both stay reachable with the mouse. A histogram sits above the track: the bars outside the selected span are dimmed, and the number of matching options is recomputed over the same buckets that are drawn. The histogram data arrives as a prop — it must not be drawn from random numbers, it has to match the result set.",
             "ai": {
               "summary": "A dual price slider with a distribution histogram and a count of matching options. Zero dependencies, one file.",
               "preserve": [
@@ -378,6 +380,7 @@
         "i18n": {
           "en": {
             "description": "A date range on a slider: when the dates are still fuzzy — \"late September, about a week\" — a calendar demands precision nobody has yet.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-range-003-* variables. Client-side: state holds day numbers counted from a base date rather than the dates themselves — integers compare and step without date arithmetic. The captions are assembled through Date.UTC and printed with timeZone UTC, otherwise negative offsets shift the date a day back. There are two sliders and they lie on top of each other: the track is disabled for events, the thumbs are not. Each slider is given an aria-valuetext, so a screen reader announces the date rather than the day number.",
             "ai": {
               "summary": "A date range on a dual slider: day numbers inside, date captions and a night count outside. Zero dependencies, one file.",
               "preserve": [
@@ -526,6 +529,7 @@
         "i18n": {
           "en": {
             "description": "A range with number inputs at both ends: a slider is fine for guessing, but it cannot land exactly on 120,000 while a field takes it instantly.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-range-004-* variables. Client-side: the bounds are kept as numbers and the field texts as separate strings, so a field can be cleared while typing without turning into zero. Clamping to the scale bounds and to the neighbouring thumb happens on blur rather than on every keystroke: otherwise \"12\" on the way to \"120000\" instantly collapses to the minimum. The slider and the fields edit the same values, so the two never diverge.",
             "ai": {
               "summary": "A dual slider with number fields at both ends: exact values by keyboard, approximate ones by mouse. Zero dependencies, one file.",
               "preserve": [
@@ -671,6 +675,7 @@
         "i18n": {
           "en": {
             "description": "A range over labelled stops: \"studio\" and \"5 or more\" are not numbers, yet they sit on one scale that has no in-between values.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-range-005-* variables. Client-side: state holds stop numbers, and the captions are taken from an array by index. The step equals one, so landing between the stops is impossible with either the mouse or the arrow keys. The captions are aligned to the stop centres: the slider area gets half-stop gutters through the --vibeui-range-005-gutter variable, otherwise the outer captions run off the track edges. Each slider is given an aria-valuetext, so a screen reader announces the word rather than the number.",
             "ai": {
               "summary": "A range over discrete labelled stops: the slider walks stop indexes, the captions sit under the track. Zero dependencies, one file.",
               "preserve": [
@@ -812,6 +817,7 @@
         "i18n": {
           "en": {
             "description": "An area range with units and an open top: at the last notch the filter stops lying — \"200 m² and up\" instead of a silent cut-off.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-range-006-* variables. Client-side: both bounds live in state. The upper thumb at the maximum means \"and up\": the caption switches to words and the same text goes into aria-valuetext, so both by eye and by ear it is clear that the upper bound has been lifted. The unit is labelled at each edge rather than once in the heading: the numbers on the track are read separately from the heading. There are two sliders and they lie on top of each other: the track is disabled for events, the thumbs are not.",
             "ai": {
               "summary": "A dual area slider: the unit is captioned at both bounds and the top edge means \"and up\". Zero dependencies, one file.",
               "preserve": [
@@ -960,6 +966,7 @@
         "i18n": {
           "en": {
             "description": "A range with presets: people think \"budget\" or \"premium\" while the system does the conversion to numbers — and the slider still works.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-range-007-* variables. Client-side: both bounds live in state, there is no separate \"selected preset\" state. A button's mark is computed by comparing the current bounds with its values, so after a manual slider edit the mark goes out on its own and never lies about the current filter. There are two sliders and they lie on top of each other: the track is disabled for events, the thumbs are not.",
             "ai": {
               "summary": "A dual slider with preset buttons: a button sets both bounds and its mark clears itself after a manual edit. Zero dependencies, one file.",
               "preserve": [

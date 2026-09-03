@@ -1,12 +1,12 @@
 "use client"
 
 import { useId, useMemo, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Calendar026Frequency = "daily" | "weekly" | "monthly"
 
 export type Calendar026Props = Omit<
-  ComponentPropsWithoutRef<"section">,
+  ComponentProps<"section">,
   "children" | "onChange"
 > & {
   label?: string
@@ -48,7 +48,7 @@ const STYLES = `
 :where([data-vibeui-block="calendar-026"]){
 --vibeui-calendar-026-bg:transparent;
 --vibeui-calendar-026-fg:light-dark(oklch(0.23 0.014 300),oklch(0.94 0.005 300));
---vibeui-calendar-026-muted:light-dark(oklch(0.56 0.014 300),oklch(0.68 0.012 300));
+--vibeui-calendar-026-muted:color-mix(in oklab,var(--vibeui-calendar-026-fg) 68%,transparent);
 --vibeui-calendar-026-border:light-dark(oklch(0.91 0.008 300),oklch(0.35 0.014 300));
 --vibeui-calendar-026-field:light-dark(oklch(0.985 0.004 300),oklch(0.26 0.012 300));
 --vibeui-calendar-026-soft:light-dark(oklch(0.96 0.02 300),oklch(0.3 0.03 300));
@@ -58,33 +58,36 @@ const STYLES = `
 --vibeui-calendar-026-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-calendar-026-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="calendar-026"]{color-scheme:dark}
 [data-vibeui-block="calendar-026"]{
-display:flex;flex-direction:column;gap:0.7rem;
-width:100%;max-width:24rem;box-sizing:border-box;padding:1rem;
+display:flex;flex-direction:column;gap:0.6875rem;
+width:100%;max-width:24rem;box-sizing:border-box;padding:0.9375rem;
 background:var(--vibeui-calendar-026-bg);
 border:1px solid var(--vibeui-calendar-026-border);
-border-radius:calc(var(--vibeui-calendar-026-radius) + 0.3rem);
+border-radius:calc(var(--vibeui-calendar-026-radius) + 0.3125rem);
 color:var(--vibeui-calendar-026-fg);
 font-family:var(--vibeui-calendar-026-font);
 }
 [data-vibeui-block="calendar-026"] [data-part="title"]{
-margin:0;font-size:0.95rem;font-weight:700;letter-spacing:-0.01em;
+margin:0;font-size:0.9375rem;font-weight:700;letter-spacing:-0.01em;
 }
 [data-vibeui-block="calendar-026"] [data-part="row"]{
-display:grid;grid-template-columns:4.5rem 1fr;gap:0.4rem;
+display:grid;grid-template-columns:4.5rem 1fr;gap:0.375rem;
 }
-[data-vibeui-block="calendar-026"] [data-part="cell"]{display:flex;flex-direction:column;gap:0.2rem;min-width:0}
+[data-vibeui-block="calendar-026"] [data-part="cell"]{display:flex;flex-direction:column;gap:0.1875rem;min-width:0}
 [data-vibeui-block="calendar-026"] [data-part="cell"] label{
-font-size:0.7rem;font-weight:600;letter-spacing:0.03em;text-transform:uppercase;
+font-size:0.6875rem;font-weight:600;letter-spacing:0.03em;text-transform:uppercase;
 color:var(--vibeui-calendar-026-muted);
 }
 [data-vibeui-block="calendar-026"] input,
 [data-vibeui-block="calendar-026"] select{
-box-sizing:border-box;width:100%;height:2.35rem;padding:0 0.5rem;
+box-sizing:border-box;width:100%;height:2.375rem;padding:0 0.5rem;
 border:1px solid var(--vibeui-calendar-026-border);
 border-radius:var(--vibeui-calendar-026-radius);
 background:var(--vibeui-calendar-026-field);
-color:inherit;font:inherit;font-size:0.875rem;font-variant-numeric:tabular-nums;
+color:inherit;font:inherit;font-size:0.9375rem;font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="calendar-026"] input:focus-visible,
 [data-vibeui-block="calendar-026"] select:focus-visible{
@@ -97,7 +100,7 @@ width:2rem;height:2rem;border-radius:50%;
 border:1px solid var(--vibeui-calendar-026-border);
 background:var(--vibeui-calendar-026-field);
 color:var(--vibeui-calendar-026-muted);
-font-size:0.72rem;font-weight:700;text-transform:capitalize;
+font-size:0.6875rem;font-weight:700;text-transform:capitalize;
 transition:background-color .16s ease,color .16s ease;
 }
 [data-vibeui-block="calendar-026"] [data-part="day"][aria-pressed="true"]{
@@ -108,22 +111,22 @@ color:var(--vibeui-calendar-026-onaccent);
 outline:2px solid var(--vibeui-calendar-026-accent);outline-offset:2px;
 }
 [data-vibeui-block="calendar-026"] [data-part="phrase"]{
-margin:0;padding:0.55rem 0.7rem;border-radius:var(--vibeui-calendar-026-radius);
+margin:0;padding:0.5625rem 0.6875rem;border-radius:var(--vibeui-calendar-026-radius);
 background:var(--vibeui-calendar-026-soft);
 font-size:0.875rem;font-weight:600;line-height:1.35;
 }
 [data-vibeui-block="calendar-026"] [data-part="next"]{
-margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:0.3rem;
+margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:0.3125rem;
 }
 [data-vibeui-block="calendar-026"] [data-part="next"] li{
-padding:0.2rem 0.5rem;border-radius:999px;
+padding:0.1875rem 0.5rem;border-radius:999px;
 border:1px dashed var(--vibeui-calendar-026-border);
 font-size:0.75rem;color:var(--vibeui-calendar-026-muted);
 font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="calendar-026"] [data-part="rrule"]{
-margin:0;padding-top:0.6rem;border-top:1px solid var(--vibeui-calendar-026-border);
-font-family:var(--vibeui-calendar-026-mono);font-size:0.72rem;
+margin:0;padding-top:0.625rem;border-top:1px solid var(--vibeui-calendar-026-border);
+font-family:var(--vibeui-calendar-026-mono);font-size:0.75rem;
 color:var(--vibeui-calendar-026-muted);word-break:break-all;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="calendar-026"] *{animation:none!important;transition:none!important}}
@@ -214,17 +217,37 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 }
 
 /**
+ * Дата и локаль из пропов или дефолты компонента. Чужая страница не должна
+ * падать из-за опечатки в значении: Intl бросает RangeError и на Invalid Date,
+ * и на нераспознанной локали, а это белый экран вместо всего сайта.
+ */
+function safeDate(value: string, fallback: string) {
+  return Number.isNaN(new Date(`${value}T00:00:00`).getTime())
+    ? fallback
+    : value
+}
+
+function safeLocale(value: string, fallback: string) {
+  try {
+    Intl.DateTimeFormat.supportedLocalesOf(value)
+    return value
+  } catch {
+    return fallback
+  }
+}
+
+/**
  * Правило повтора: форма, фраза словами, ближайшие даты и строка RRULE.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Calendar026({
   label = "Повтор события",
-  startDate = "2026-04-14",
+  startDate: startDateProp = "2026-04-14",
   defaultFrequency = "weekly",
   defaultInterval = 2,
   defaultWeekdays = [1, 3],
   occurrences = 3,
-  locale = "ru-RU",
+  locale: localeProp = "ru-RU",
   intervalLabel = "Каждые",
   unitLabel = "Единица",
   unitText = UNIT_TEXT,
@@ -239,6 +262,8 @@ export function Calendar026({
   style,
   ...props
 }: Calendar026Props) {
+  const startDate = safeDate(startDateProp, "2026-04-14")
+  const locale = safeLocale(localeProp, "ru-RU")
   const id = useId()
   const [frequency, setFrequency] =
     useState<Calendar026Frequency>(defaultFrequency)
@@ -372,6 +397,7 @@ export function Calendar026({
       </style>
       <section
         {...props}
+        data-slot="calendar"
         data-vibeui-block="calendar-026"
         className={className}
         style={palette}

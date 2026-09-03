@@ -1,10 +1,10 @@
 "use client"
 
-import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import { useRef, useState } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Buttongroup057Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   options?: string[]
@@ -27,11 +27,13 @@ export type Buttongroup057Props = Omit<
 // в инспекторе и по нему можно писать тесты и стили, не заглядывая в состояние
 // React. Строка под группой показывает, что именно уедет на сервер, — это не
 // украшение, а способ поймать расхождение между видом и данными.
+// Трек — toolbar с roving tabindex: Tab останавливается на группе один раз,
+// значение переключают стрелками, как в настоящем поле выбора.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-057"]){
 --vibeui-buttongroup-057-surface:transparent;
 --vibeui-buttongroup-057-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.005 265));
---vibeui-buttongroup-057-muted:light-dark(oklch(0.56 0.014 265),oklch(0.72 0.012 265));
+--vibeui-buttongroup-057-muted:color-mix(in oklab,var(--vibeui-buttongroup-057-fg) 68%,transparent);
 --vibeui-buttongroup-057-border:light-dark(oklch(0.89 0.008 265),oklch(0.41 0.012 265));
 /* Нажатая кнопка — самый контрастный элемент группы: в светлой теме тёмная
    плашка, в тёмной светлая, иначе выбор перестаёт читаться. */
@@ -42,6 +44,9 @@ const STYLES = `
 --vibeui-buttongroup-057-radius:0.625rem;
 --vibeui-buttongroup-057-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="buttongroup-057"]{color-scheme:dark}
 [data-vibeui-block="buttongroup-057"]{
 box-sizing:border-box;display:inline-flex;flex-direction:column;gap:0.5rem;
 font-family:var(--vibeui-buttongroup-057-font);
@@ -135,6 +140,14 @@ export function Buttongroup057({
 }: Buttongroup057Props) {
   const [value, setValue] = useState(defaultValue)
   const [wireBefore, wireAfter = ""] = wireText.split("{field}")
+  const track = useRef<HTMLDivElement>(null)
+  const index = Math.max(0, options.indexOf(value))
+
+  const select = (option: string, position: number) => {
+    setValue(option)
+    onChange?.(option)
+    track.current?.querySelectorAll("button")[position]?.focus()
+  }
 
   const palette = {
     ...(accent ? { "--vibeui-buttongroup-057-accent": accent } : null),
@@ -154,21 +167,41 @@ export function Buttongroup057({
       </style>
       <div
         {...props}
+        data-slot="button-group"
         data-vibeui-block="buttongroup-057"
         data-value={value}
         className={className}
         style={palette}
       >
-        <div data-part="track" role="group" aria-label={label}>
-          {options.map((option) => (
+        <div
+          data-part="track"
+          ref={track}
+          role="toolbar"
+          aria-label={label}
+          onKeyDown={(event) => {
+            const step =
+              event.key === "ArrowRight" || event.key === "ArrowDown"
+                ? 1
+                : event.key === "ArrowLeft" || event.key === "ArrowUp"
+                  ? -1
+                  : 0
+
+            if (step === 0) {
+              return
+            }
+
+            event.preventDefault()
+            const next = (index + step + options.length) % options.length
+            select(options[next], next)
+          }}
+        >
+          {options.map((option, position) => (
             <button
               key={option}
               type="button"
               aria-pressed={option === value}
-              onClick={() => {
-                setValue(option)
-                onChange?.(option)
-              }}
+              tabIndex={position === index ? 0 : -1}
+              onClick={() => select(option, position)}
             >
               {option}
             </button>

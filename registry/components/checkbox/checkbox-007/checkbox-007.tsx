@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Checkbox007Task = {
   id: string
@@ -10,7 +10,7 @@ export type Checkbox007Task = {
 }
 
 export type Checkbox007Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   title?: string
@@ -36,12 +36,15 @@ const STYLES = `
 --vibeui-checkbox-007-surface:transparent;
 --vibeui-checkbox-007-bg:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
 --vibeui-checkbox-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.95 0.005 265));
---vibeui-checkbox-007-muted:light-dark(oklch(0.58 0.014 265),oklch(0.7 0.012 265));
+--vibeui-checkbox-007-muted:color-mix(in oklab,var(--vibeui-checkbox-007-fg) 68%,transparent);
 --vibeui-checkbox-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265));
 --vibeui-checkbox-007-accent:light-dark(oklch(0.55 0.15 152),oklch(0.74 0.15 152));
 --vibeui-checkbox-007-mark:light-dark(oklch(0.99 0.01 152),oklch(0.2 0.03 152));
 --vibeui-checkbox-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="checkbox-007"]{color-scheme:dark}
 [data-vibeui-block="checkbox-007"]{
 display:flex;flex-direction:column;gap:0.375rem;
 width:100%;max-width:20rem;box-sizing:border-box;padding:0.875rem;
@@ -56,7 +59,7 @@ margin-bottom:0.125rem;
 [data-vibeui-block="checkbox-007"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650}
 [data-vibeui-block="checkbox-007"] [data-part="progress"]{font-size:0.75rem;color:var(--vibeui-checkbox-007-muted);font-variant-numeric:tabular-nums}
 [data-vibeui-block="checkbox-007"] label{
-display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:0.5rem;
+display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:0.625rem;
 min-height:2rem;font-size:0.875rem;cursor:pointer;
 }
 [data-vibeui-block="checkbox-007"] input{
@@ -159,13 +162,18 @@ export function Checkbox007({
       </style>
       <div
         {...props}
+        data-slot="checkbox"
         data-vibeui-block="checkbox-007"
         className={className}
         style={palette}
+        role="group"
+        aria-label={title}
       >
         <div data-part="head">
           <h3 data-part="title">{title}</h3>
-          <span data-part="progress">{progress}</span>
+          <span data-part="progress" role="status">
+            {progress}
+          </span>
         </div>
         {tasks.map((task) => (
           <label key={task.id}>

@@ -1,14 +1,10 @@
 "use client"
 
 import { useId, useState } from "react"
-import type {
-  ComponentPropsWithoutRef,
-  CSSProperties,
-  KeyboardEvent,
-} from "react"
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Tags001Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "defaultValue"
 > & {
   label?: string
@@ -39,13 +35,16 @@ const STYLES = `
 --vibeui-tags-001-surface:transparent;
 --vibeui-tags-001-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.01 265));
 --vibeui-tags-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
---vibeui-tags-001-muted:light-dark(oklch(0.56 0.014 265),oklch(0.68 0.012 265));
+--vibeui-tags-001-muted:color-mix(in oklab,var(--vibeui-tags-001-fg) 68%,transparent);
 --vibeui-tags-001-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.012 265));
 --vibeui-tags-001-chip:light-dark(oklch(0.96 0.004 265),oklch(0.3 0.012 265));
 --vibeui-tags-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
 --vibeui-tags-001-ring:light-dark(oklch(0.55 0.2 262 / 22%),oklch(0.72 0.18 262 / 30%));
 --vibeui-tags-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="tags-001"]{color-scheme:dark}
 /* Подложка по умолчанию прозрачная: поле ложится на фон страницы. */
 [data-vibeui-block="tags-001"]{
 display:flex;flex-direction:column;gap:0.375rem;
@@ -172,6 +171,7 @@ export function Tags001({
       </style>
       <div
         {...props}
+        data-slot="tags-input"
         data-vibeui-block="tags-001"
         className={className}
         style={palette}

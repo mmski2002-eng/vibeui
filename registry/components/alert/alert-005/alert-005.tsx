@@ -1,9 +1,9 @@
-import type { ComponentPropsWithoutRef, CSSProperties, ReactNode } from "react"
+import type { ComponentProps, CSSProperties, ReactNode } from "react"
 
 export type Alert005Tone = "info" | "success" | "warning" | "danger"
 
 export type Alert005Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "title" | "children"
 > & {
   tone?: Alert005Tone
@@ -15,6 +15,8 @@ export type Alert005Props = Omit<
   onDismiss?: () => void
   /** Подпись крестика для скринридера: компонент несёт русскую. */
   closeLabel?: string
+  /** Название тона словом: полоса называет тон только цветом. */
+  toneText?: Record<string, string>
   /** Пусто — подложки нет, сообщение лежит прямо на фоне страницы. */
   background?: string
 }
@@ -29,13 +31,16 @@ export type Alert005Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="alert-005"]){
 --vibeui-alert-005-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
---vibeui-alert-005-muted:light-dark(oklch(0.5 0.014 265),oklch(0.72 0.012 265));
+--vibeui-alert-005-muted:color-mix(in oklab,var(--vibeui-alert-005-fg) 68%,transparent);
 --vibeui-alert-005-bg:transparent;
 --vibeui-alert-005-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-alert-005-tone:light-dark(oklch(0.58 0.18 262),oklch(0.74 0.16 262));
 --vibeui-alert-005-radius:0.75rem;
 --vibeui-alert-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="alert-005"]{color-scheme:dark}
 [data-vibeui-block="alert-005"]{
 position:relative;display:flex;align-items:flex-start;gap:0.75rem;
 width:100%;box-sizing:border-box;
@@ -51,6 +56,12 @@ font-family:var(--vibeui-alert-005-font);
 [data-vibeui-block="alert-005"] [data-part="rail"]{
 flex:none;width:0.25rem;align-self:stretch;border-radius:9999px;
 background:var(--vibeui-alert-005-tone);
+}
+/* Тон назван словом: полоса отличает предупреждение от ошибки только цветом,
+   а цвет читают не все. Слово видно только скринридеру. */
+[data-vibeui-block="alert-005"] [data-part="sr"]{
+position:absolute;width:1px;height:1px;overflow:hidden;
+clip-path:inset(50%);white-space:nowrap;
 }
 [data-vibeui-block="alert-005"] [data-part="text"]{display:flex;flex-direction:column;gap:0.1875rem;flex:1 1 auto;min-width:0}
 [data-vibeui-block="alert-005"] [data-part="title"]{font-size:0.875rem;font-weight:600;line-height:1.4}
@@ -107,6 +118,13 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
   return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
+const TONE_TEXT: Record<string, string> = {
+  info: "Информация",
+  success: "Готово",
+  warning: "Предупреждение",
+  danger: "Ошибка",
+}
+
 /**
  * Закрываемое сообщение: крестик и строка «больше не показывать».
  * Один файл, ноль зависимостей, собственная палитра.
@@ -118,6 +136,7 @@ export function Alert005({
   footnote = "Больше не показывать",
   onDismiss,
   closeLabel = "Закрыть сообщение",
+  toneText = TONE_TEXT,
   background = "",
   className,
   style,
@@ -140,6 +159,7 @@ export function Alert005({
       </style>
       <div
         {...props}
+        data-slot="alert"
         data-vibeui-block="alert-005"
         data-tone={tone}
         role={tone === "danger" ? "alert" : "status"}
@@ -148,6 +168,7 @@ export function Alert005({
       >
         <span data-part="rail" aria-hidden="true" />
         <span data-part="text">
+          <span data-part="sr">{toneText[tone] ?? TONE_TEXT[tone]}</span>
           {title ? <span data-part="title">{title}</span> : null}
           {description ? (
             <span data-part="description">{description}</span>

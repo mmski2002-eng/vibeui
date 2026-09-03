@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Button029Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Button029Props = Omit<ComponentProps<"div">, "children"> & {
   label?: string
   secondaryLabel?: string
   /** Мелкая строка под кнопками: согласие, условия, срок ответа. */
@@ -23,13 +20,16 @@ const STYLES = `
 :where([data-vibeui-block="button-029"]){
 --vibeui-button-029-bg:transparent;
 --vibeui-button-029-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.006 265));
---vibeui-button-029-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-button-029-muted:color-mix(in oklab,var(--vibeui-button-029-fg) 68%,transparent);
 --vibeui-button-029-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
 --vibeui-button-029-accent:light-dark(oklch(0.55 0.17 265),oklch(0.6 0.18 265));
 --vibeui-button-029-accent-fg:light-dark(oklch(0.99 0.01 265),oklch(0.98 0.012 265));
 --vibeui-button-029-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="button-029"]{color-scheme:dark}
 [data-vibeui-block="button-029"]{
 width:100%;max-width:32rem;box-sizing:border-box;
 padding:1rem;border:1px solid var(--vibeui-button-029-border);border-radius:0.875rem;
@@ -42,9 +42,9 @@ display:flex;flex-direction:column;gap:0.5rem;
 [data-vibeui-block="button-029"] button{
 appearance:none;cursor:pointer;
 display:inline-flex;align-items:center;justify-content:center;
-width:100%;height:2.75rem;padding:0 1.25rem;box-sizing:border-box;
+width:100%;height:2.5rem;padding:0 1.25rem;box-sizing:border-box;
 border:1px solid transparent;border-radius:0.625rem;
-font:inherit;font-size:0.9375rem;font-weight:650;line-height:1;
+font:inherit;font-size:0.875rem;font-weight:650;line-height:1;
 transition:filter .16s ease,border-color .16s ease,background-color .16s ease;
 }
 [data-vibeui-block="button-029"] [data-part="primary"]{
@@ -126,6 +126,7 @@ export function Button029({
       </style>
       <div
         {...props}
+        data-slot="button"
         data-vibeui-block="button-029"
         className={className}
         style={palette}

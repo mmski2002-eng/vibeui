@@ -156,7 +156,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-dropdown-001-*. Opening comes from the popover and popovertarget attributes, and the placement from anchor-name on the button and position-anchor with position-area on the menu, inside @supports. The menu lives in the top layer, so it is styled by the [data-vibeui-dropdown-001-menu] attribute and gets its palette through its own style. The open prop moves the menu into the page flow for the showcase and for screenshots: popover is not used in that mode."
           }
         },
         "cardControls": ["open", "background"]
@@ -177,20 +178,20 @@
           "target": "@components/vibeui/menu-001.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menu-001-*. Серверный компонент: useId нужен только для связи кнопки и слоя. Открытие держит атрибут popover и popovertarget, позиция — CSS anchor positioning с запасным правилом в @supports для браузеров без него. Разделы разделены чертой, опасное действие красится текстом.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menu-001-*. Клиентский: \"use client\" — useId связывает кнопку со слоем, а стрелки вверх и вниз водят фокус по пунктам. Открытие держит атрибут popover и popovertarget, позиция — CSS anchor positioning с запасным правилом в @supports для браузеров без него. Разделы разделены чертой, опасное действие красится текстом.",
       "meta": {
         "tags": ["menu", "popover", "dropdown", "no-js"],
         "ai": {
           "export": "Menu001",
           "usage": "<Menu001 label=\"Действия\" groups={[[{ label: \"Переименовать\", hint: \"F2\" }]]} />",
-          "summary": "Выпадающее меню на HTML popover: разделы, подсказки клавиш и опасное действие в отдельной группе. Открытие и закрытие — браузерные, клиентского кода нет. Ноль зависимостей, один файл.",
+          "summary": "Выпадающее меню на HTML popover: разделы, подсказки клавиш и опасное действие в отдельной группе. Открытие и закрытие держит браузер, по пунктам водят стрелки. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-menu-001-* и не подменять её токенами вашей темы",
             "popover вместо своего состояния: Escape, клик вне и верхний слой достаются даром",
             "запасное правило в @supports: без anchor positioning меню должно остаться под кнопкой",
             "разделение групп чертой — опасное действие не соседствует с обычными",
             "цвет только на тексте опасного пункта, без заливки строки",
-            "role=\"menu\" с именем и role=\"menuitem\" на пунктах",
+            "role=\"menu\" с именем, role=\"menuitem\" на пунктах и стрелки вверх и вниз по ним",
             "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
           ],
           "adapt": [
@@ -203,7 +204,7 @@
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Пункты ничего не делают: обработчики навешивает вызывающий код.",
-            "Стрелки по пунктам браузер не даёт: для полной клавиатурной модели меню нужен JS, и это осознанный размен.",
+            "Стрелки по пунктам браузер не даёт — их водит обработчик на слое; Escape и возврат фокуса на кнопку остаются за popover.",
             "Подсказка клавиши должна совпадать с реальной: несуществующее сочетание хуже его отсутствия.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
           ]
@@ -233,14 +234,14 @@
           "en": {
             "description": "A menu with sections and shortcut hints on the HTML popover: the layer, Escape and outside click come from the browser, not our code.",
             "ai": {
-              "summary": "A dropdown menu on the HTML popover: sections, shortcut hints and the destructive action in its own group. Opening and closing are native, with no client code. Zero dependencies, one file.",
+              "summary": "A dropdown menu on the HTML popover: sections, shortcut hints and the destructive action in its own group. Opening and closing are native, and arrow keys walk the items. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-menu-001-* palette — do not swap it for your theme tokens",
                 "popover instead of custom state: Escape, outside click and the top layer come free",
                 "the @supports fallback: without anchor positioning the menu must still sit under the button",
                 "the divider between groups — the destructive action never neighbours ordinary ones",
                 "colour on the destructive item's text only, without filling the row",
-                "role=\"menu\" with a name and role=\"menuitem\" on the items",
+                "role=\"menu\" with a name, role=\"menuitem\" on the items and arrow up/down roving between them",
                 "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
               ],
               "adapt": [
@@ -253,7 +254,7 @@
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The items do nothing: handlers belong to the caller.",
-                "The browser gives no arrow-key roving: a full menu keyboard model needs JS, and skipping it is a deliberate trade.",
+                "The browser gives no arrow-key roving, so a handler on the layer does it; Escape and returning focus to the button stay with popover.",
                 "A shortcut hint must match reality: a fake combination is worse than none.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
@@ -306,7 +307,8 @@
                   ]
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-menu-001-*. A client component: \"use client\" — useId ties the button to the layer, and the up and down arrows walk the focus across the items. Opening is held by the popover and popovertarget attributes, and the position by CSS anchor positioning with a fallback rule in @supports for browsers without it. The sections are separated by a rule, and the destructive action is coloured in the text."
           }
         },
         "cardControls": ["background"]
@@ -327,13 +329,13 @@
           "target": "@components/vibeui/menu-004.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menu-004-*. Серверный компонент: открытие держит popover, позиция — anchor positioning с правым выравниванием и запасным правилом в @supports. Оттенок аватара считается из имени FNV-1a по двенадцати ступеням круга.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menu-004-*. Клиентский: \"use client\" — стрелки водят фокус по пунктам; открытие держит popover, позиция — anchor positioning с правым выравниванием и запасным правилом в @supports. Оттенок аватара считается из имени FNV-1a по двенадцати ступеням круга.",
       "meta": {
         "tags": ["menu", "profile", "account", "popover"],
         "ai": {
           "export": "Menu004",
           "usage": "<Menu004 name=\"Анна Петрова\" email=\"anna@example.com\" plan=\"Команда\" />",
-          "summary": "Меню профиля: кнопка с инициалами, шапка с именем, почтой и тарифом, пункты настроек и отделённый выход. Ноль зависимостей, один файл, клиентского JS нет.",
+          "summary": "Меню профиля: кнопка с инициалами, шапка с именем, почтой и тарифом, пункты настроек и отделённый выход. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-menu-004-* и не подменять её токенами вашей темы",
             "шапку с именем и почтой внутри меню: под кем вошёл, надо знать до выхода",
@@ -355,7 +357,7 @@
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Почта в шапке — персональные данные: на общем экране её лучше сокращать.",
-            "Пункты ничего не делают: обработчики навешивает вызывающий код.",
+            "Пункты ничего не делают: обработчики навешивает вызывающий код. Стрелки вверх и вниз водят по ним фокус.",
             "Выход стоит подтверждать, если в приложении есть несохранённые черновики.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
           ]
@@ -399,7 +401,7 @@
           "en": {
             "description": "A profile menu with a header: name and email inside the menu, sign-out separated by a rule as the one irreversible action.",
             "ai": {
-              "summary": "A profile menu: an initials button, a header with name, email and plan, settings items and a separated sign-out. Zero dependencies, one file, no client JS.",
+              "summary": "A profile menu: an initials button, a header with name, email and plan, settings items and a separated sign-out. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-menu-004-* palette — do not swap it for your theme tokens",
                 "the header with name and email inside the menu: you must know who you are before signing out",
@@ -421,7 +423,7 @@
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The email is personal data: shorten it on shared screens.",
-                "The items do nothing: handlers belong to the caller.",
+                "The items do nothing: handlers belong to the caller. Arrow up and down rove focus between them.",
                 "Sign-out deserves a confirmation when unsaved drafts exist.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
@@ -462,7 +464,8 @@
                 "menuLabel": "Profile",
                 "triggerLabel": "Profile menu: {name}"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-menu-004-*. A client component: \"use client\" — the arrows walk the focus across the items; opening is held by popover, and the position by anchor positioning aligned to the right edge with a fallback rule in @supports. The avatar hue is computed from the name with FNV-1a across twelve steps of the circle."
           }
         },
         "cardControls": ["accent", "background"]
@@ -584,7 +587,8 @@
                 "views": ["Grid", "List", "Table"],
                 "toggles": ["Show descriptions", "Mine only", "Hide archive"]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-menu-005-*. A client component: \"use client\". Inside there are real radios and checkboxes with a hidden field and the menuitemradio and menuitemcheckbox roles. The slot for the mark is always occupied, so the rows do not jump on toggle. The separator is declared role=\"separator\"."
           }
         },
         "cardControls": ["accent", "background"]
@@ -746,7 +750,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "One file, zero dependencies, the palette in the --vibeui-dropdown-002-* variables. A client component: an arrow handler walks the focus across the items. Opening, the top layer, Escape and the outside click are held by the HTML popover; the placement beside the button is CSS anchor positioning (anchor-name on the trigger, position-area on the menu) inside @supports, so without anchors the menu simply opens in the middle of the screen. The sections are marked up as role=group with aria-labelledby pointing at the visible heading, with a role=separator between them. The align prop changes the side it opens to with a single position-area rule. The root carries its own surface and border, and their lightness comes from the surrounding color-scheme through light-dark()."
           }
         },
         "cardControls": ["background"]
@@ -906,7 +911,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "One file, zero dependencies, the --vibeui-dropdown-003-* palette. A client component because of the arrow-key navigation. The icons are drawn as inline SVG from a table of paths — an icon package would make the component dependent. An item is a grid of three columns (icon, label, shortcut), so the labels and the keys stand in even columns whatever the length of the text. The shortcuts are marked up with the kbd tag in a monospaced font. Opening and the layer come from the HTML popover, and the placement from anchor-name plus position-area inside @supports. The destructive item is separated by a rule and coloured in the text only."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1059,7 +1065,8 @@
                 "countText": "Showing {shown} of {total}",
                 "resetLabel": "Reset"
               }
-            }
+            },
+            "docs": "One file, zero dependencies, the --vibeui-dropdown-004-* palette. A client component: useState holds the set of enabled items. The items are marked up role=menuitemcheckbox with aria-checked, the mark is drawn with a border and inline SVG, and the space for it is always reserved — otherwise the rows jump on toggle. The mark prop switches the look of the mark (a check or a dot) through a data attribute on the root. hidePopover is deliberately not called on a pick: settings are changed in batches. The menu footer carries the count of what is enabled and a button to reset to the starting set. The palette is moved to light-dark(): in a dark environment the panel is lighter than the page background and its border lighter than the panel."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1211,7 +1218,8 @@
                 "themes": ["Light", "Dark", "System"],
                 "value": "System"
               }
-            }
+            },
+            "docs": "One file, zero dependencies, the --vibeui-dropdown-005-* palette. A client component: useState holds the selected option. The items are marked up role=menuitemradio with aria-checked inside a role=group wrapper with aria-labelledby pointing at the \"Theme\" heading. The theme swatch is assembled from two blocks with different fills and is switched by a data attribute holding the index, so the options need no icons drawn for them. The menu closes right after a pick — there is no second option left to choose. The down arrow on the button opens the menu and puts the focus on the selected item rather than the first. The palette is moved to light-dark(); the swatch stripes stay constant — they depict the themes themselves."
           }
         },
         "cardControls": ["background"]
@@ -1362,7 +1370,8 @@
                 "items": ["Reply", "Forward"],
                 "archiveLabel": "Archive"
               }
-            }
+            },
+            "docs": "One file, zero dependencies, the --vibeui-dropdown-006-* palette. A client component: useState holds the submenu disclosure. The first level is an HTML popover with anchor positioning, and the second is an ordinary absolutely positioned layer inside it: a nested popover=auto would close the parent, because opening a second auto popup dismisses the first. The parent item is marked aria-haspopup=menu and aria-expanded, and the submenu is a role=menu with an aria-label. The right arrow opens the submenu and puts the focus on the first item, the left one closes it and returns the focus; without that there is no keyboard way out of the submenu. The side prop changes which way it opens. The palette is moved to light-dark(): in a dark environment the panel is lighter than the page background and its border lighter than the panel."
           }
         },
         "cardControls": ["background"]
@@ -1517,7 +1526,8 @@
                 "confirmLabel": "Yes, delete",
                 "cancelLabel": "Cancel"
               }
-            }
+            },
+            "docs": "One file, zero dependencies, the --vibeui-dropdown-007-* palette. A client component: useState holds the confirmation step, and the reset happens on the popup's toggle event — a closed menu always reopens in its original state. The danger zone is drawn as a separate block with its own surface, negative margins out to the edges of the menu and a top border, so a mouse slip past the last item of the list does not land in it. The confirmation lives in the same menu: a dialog above an open popover is a second top layer, and there is no way to dismiss them with Escape one at a time. The confirm button is tied to the question through aria-describedby. The palette is moved to light-dark(): in a dark environment the panel is lighter than the page background and its border lighter than the panel."
           }
         },
         "cardControls": ["background"]
@@ -1657,7 +1667,8 @@
                 "items": ["Account settings", "Billing and invoices"],
                 "exitLabel": "Sign out"
               }
-            }
+            },
+            "docs": "One file, zero dependencies, the --vibeui-dropdown-008-* palette. A client component: useState holds the selected workspace. The menu header is not an item but information: it does not take focus and cannot be pressed, so it does not get in the way of the arrow-key walk. The initials are computed from the name by a function, and the avatar is a coloured circle built on color-mix from the accent. The workspaces are marked up role=menuitemradio with aria-checked inside a role=group: they are chosen, not executed. Sign-out is separated by a rule and coloured in the text only. Opening and the layer come from the HTML popover, and the placement from anchor-name and position-area inside @supports. The palette is moved to light-dark(): in a dark environment the panel is lighter than the page background and its border lighter than the panel."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1804,7 +1815,8 @@
                   "desc": "Descending"
                 }
               }
-            }
+            },
+            "docs": "One file, zero dependencies, the --vibeui-dropdown-009-* palette. A client component: useState holds the field and the direction, and they leave as a single object through onChange. The menu holds two radio groups — the field and the order — each with role=group and aria-labelledby pointing at its own heading; the items are marked role=menuitemradio with aria-checked. The direction arrow is inline SVG, and the 180° turn is done by data-desc on the root rather than by a second glyph. The down arrow on the button opens the menu and puts the focus on the selected field. The menu placement is anchor-name with position-area inside @supports. The palette is moved to light-dark(): in a dark environment the panel is lighter than the page background and its border lighter than the panel."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1958,7 +1970,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "One file, zero dependencies, the --vibeui-dropdown-010-* palette. A client component only for the sake of the arrow-key navigation. An item is assembled as a grid: the glyph spans both rows, with the name and the description to the right, so the text does not run over the icon when it wraps. The description is tied to the item through aria-describedby rather than merely sitting beside it. The menu width is set by the --vibeui-dropdown-010-width variable from the menuWidth prop: a two-line description inside a narrow menu turns to mush. Opening comes from the HTML popover, and the placement from anchor-name and position-area inside @supports."
           }
         },
         "cardControls": ["menuWidth", "accent", "background"]
@@ -2104,7 +2117,8 @@
                   "API documentation"
                 ]
               }
-            }
+            },
+            "docs": "One file, zero dependencies, the --vibeui-dropdown-011-* palette. A client component: useState holds the query and the selected value. The menu width equals the button width through anchor-size(width) inside @supports (anchor-name) — without anchors a min-width remains. After opening, the focus goes into the search field: this is done on the popup's toggle event with a :popover-open check, because React's autoFocus would fire on mount. The items are role=menuitemradio with aria-checked, and on an empty result the \"nothing found\" line is shown. The button's accessible name is assembled from the caption and the value through aria-labelledby."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2266,7 +2280,8 @@
                   "count": "{count} items"
                 }
               }
-            }
+            },
+            "docs": "One file, zero dependencies, the --vibeui-dropdown-012-* palette. A client component: useState holds the row selection. The selection header shows the counter through role=status, and the menu button is marked disabled on an empty selection — a vanishing button would shift the header. The \"rename\" item is marked aria-disabled when exactly one row is not selected: it stays visible and explains the reason with a caption. The rows are ordinary labels with a checkbox, and the highlight on a selected row is done through :has(input:checked). The menu is an HTML popover with anchor positioning inside @supports, and the destructive item is separated by a rule and carries the row count."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2424,7 +2439,8 @@
                   "signOut": "Sign out"
                 }
               }
-            }
+            },
+            "docs": "One file, zero dependencies, the palette in the --vibeui-dropdown-013-* variables. A client component: useState holds the menu's open state and the copy confirmation. Opening, the top layer, Escape and the outside click come from the HTML popover, the placement from anchor-name and position-area inside @supports, and for browsers without anchors there is a fallback rule of position:absolute with position:relative on the root. A click on the email row calls navigator.clipboard.writeText and for 1.6 seconds changes the caption to \"Copied\" with aria-live=\"polite\", so that someone who cannot see the screen hears it too. Sign-out is separated by a rule and coloured in the text only. After any item is picked, the focus is explicitly returned to the trigger button."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2566,7 +2582,8 @@
                   "remove": "Delete row"
                 }
               }
-            }
+            },
+            "docs": "One file, zero dependencies, the --vibeui-dropdown-014-* palette. A client component: useState holds the open state for aria-expanded. The trigger button gets its accessible name from the row's content through aria-label rather than a generic \"Actions\" — otherwise in a table of thirty rows the buttons are indistinguishable to a screen reader. The destructive item is separated by a rule and coloured in the text at the bottom of the list: there is no second zone with a confirmation here, this is a scenario for an action less risky than deleting an account outright. Opening comes from the HTML popover with anchor positioning inside @supports and a fallback position:absolute on a position:relative root. After any item is picked, the focus is explicitly returned to the button."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2713,7 +2730,8 @@
                   "invite": "Invite a collaborator"
                 }
               }
-            }
+            },
+            "docs": "One file, zero dependencies, the --vibeui-dropdown-015-* palette. A client component: useState holds the disclosure of the menu and the submenu for aria-expanded on both levels. The first level is an HTML popover with anchor positioning inside @supports and a fallback position:absolute on a position:relative root; the second level is an ordinary absolutely positioned layer inside the first, because a nested popover=auto would close the parent. The parent item is marked aria-haspopup=menu and aria-expanded, and the submenu is a role=menu with an aria-label. The right arrow opens the submenu and puts the focus on the first format, the left one closes it and returns the focus to the parent item. Every format carries a short file extension in a separate node rather than built into the name."
           }
         },
         "cardControls": ["side", "accent", "background"]
@@ -2873,7 +2891,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "One file, zero dependencies, the --vibeui-dropdown-016-* palette. A client component: useState holds the set of enabled labels, and aria-expanded is kept in sync with the toggle event. The items are marked up role=menuitemcheckbox with aria-checked, and the space for the mark is always reserved so the rows do not jump on toggle. The label colour is the --vibeui-dropdown-016-dot variable, set by an inline style on each item from the numeric hue in the data rather than by a class: the component does not know the label values in advance. Opening comes from the HTML popover with anchor positioning inside @supports and a fallback position:absolute on a position:relative root."
           }
         },
         "cardControls": ["accent", "background"]
@@ -3000,7 +3019,8 @@
                 "triggerLabelTemplate": "Sort order: {value}",
                 "recommendedText": "Recommended"
               }
-            }
+            },
+            "docs": "One file, zero dependencies, the --vibeui-dropdown-017-* palette. A client component: useState holds the selected field, and aria-expanded is kept in sync with the toggle event. The trigger button is a text-less icon with an aria-label assembled from the current value; the field caption stands beside it as a separate node, so the component suits a tight toolbar. The items are marked up role=menuitemradio with aria-checked inside a role=group with aria-labelledby pointing at the \"Sort by\" heading. The recommended field carries a badge instead of the check mark until it is chosen; after the pick the badge gives way to the check mark. The down arrow on the button opens the menu and puts the focus on the selected item."
           }
         },
         "cardControls": ["value", "accent", "background"]
@@ -3136,7 +3156,8 @@
                 "assignLabel": "Assign someone",
                 "emptyText": "Nobody found"
               }
-            }
+            },
+            "docs": "One file, zero dependencies, the --vibeui-dropdown-018-* palette. A client component: useState holds the query, the pick and the menu's open state for aria-expanded and for the filtering. The trigger is a small round button: a dashed border while no assignee is set, solid and carrying initials after the pick. After opening, the focus goes into the search field on the toggle event rather than through autoFocus, otherwise it would move away when the page mounts. The list is marked up role=menuitemradio with aria-checked, and on an empty result there is a \"Nobody found\" line. Opening comes from the HTML popover with anchor positioning inside @supports and a fallback position:absolute on a position:relative root."
           }
         },
         "cardControls": ["accent", "background"]

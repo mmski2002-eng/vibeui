@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Carousel011Review = {
   text: string
@@ -9,10 +9,7 @@ export type Carousel011Review = {
   role?: string
 }
 
-export type Carousel011Props = Omit<
-  ComponentPropsWithoutRef<"section">,
-  "children"
-> & {
+export type Carousel011Props = Omit<ComponentProps<"section">, "children"> & {
   reviews?: Carousel011Review[]
   /** Секунд на один отзыв. Меньше четырёх — прочитать не успевают. */
   interval?: number
@@ -41,12 +38,15 @@ const STYLES = `
 :where([data-vibeui-block="carousel-011"]){
 --vibeui-carousel-011-bg:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
 --vibeui-carousel-011-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-carousel-011-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-carousel-011-muted:color-mix(in oklab,var(--vibeui-carousel-011-fg) 68%,transparent);
 --vibeui-carousel-011-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-carousel-011-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-carousel-011-step:6s;
 --vibeui-carousel-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="carousel-011"]{color-scheme:dark}
 [data-vibeui-block="carousel-011"]{
 display:flex;flex-direction:column;gap:0.75rem;
 width:100%;max-width:28rem;box-sizing:border-box;padding:1rem;
@@ -215,6 +215,7 @@ export function Carousel011({
       </style>
       <section
         {...props}
+        data-slot="carousel"
         data-vibeui-block="carousel-011"
         data-paused={paused}
         aria-roledescription={roleText}

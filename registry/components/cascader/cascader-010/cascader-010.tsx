@@ -41,12 +41,15 @@ const STYLES = `
 :where([data-vibeui-block="cascader-010"]){
 --vibeui-cascader-010-bg:transparent;
 --vibeui-cascader-010-fg:light-dark(oklch(0.23 0.014 300),oklch(0.94 0.006 300));
---vibeui-cascader-010-muted:light-dark(oklch(0.55 0.012 300),oklch(0.71 0.011 300));
+--vibeui-cascader-010-muted:color-mix(in oklab,var(--vibeui-cascader-010-fg) 68%,transparent);
 --vibeui-cascader-010-border:light-dark(oklch(0.9 0.006 300),oklch(0.38 0.011 300));
 --vibeui-cascader-010-accent:light-dark(oklch(0.54 0.18 320),oklch(0.75 0.15 320));
 --vibeui-cascader-010-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 320));
 --vibeui-cascader-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="cascader-010"]{color-scheme:dark}
 [data-vibeui-block="cascader-010"]{
 display:flex;flex-direction:column;gap:0.625rem;
 width:100%;max-width:25rem;box-sizing:border-box;padding:0.875rem;
@@ -244,6 +247,7 @@ export function Cascader010({
         {STYLES}
       </style>
       <div
+        data-slot="cascader"
         data-vibeui-block="cascader-010"
         className={className}
         style={palette}
@@ -251,7 +255,8 @@ export function Cascader010({
         <p data-part="heading">{heading}</p>
         <div data-part="rail">
           <span data-part="rail-name">{railText.unit ?? RAIL_LABEL.unit}</span>
-          <ul data-part="chips">
+          {/* Подпись ряда — только для глаза, скринридеру нужна своя. */}
+          <ul data-part="chips" aria-label={railText.unit ?? RAIL_LABEL.unit}>
             {units.map((item, index) => (
               <li key={item.label}>
                 <button
@@ -272,7 +277,7 @@ export function Cascader010({
         </div>
         <div data-part="rail">
           <span data-part="rail-name">{railText.team ?? RAIL_LABEL.team}</span>
-          <ul data-part="chips">
+          <ul data-part="chips" aria-label={railText.team ?? RAIL_LABEL.team}>
             {teams.map((item, index) => (
               <li key={item.label}>
                 <button
@@ -294,7 +299,10 @@ export function Cascader010({
           <span data-part="rail-name">
             {railText.person ?? RAIL_LABEL.person}
           </span>
-          <ul data-part="chips">
+          <ul
+            data-part="chips"
+            aria-label={railText.person ?? RAIL_LABEL.person}
+          >
             {people.map((item, index) => (
               <li key={item.label}>
                 <button

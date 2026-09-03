@@ -1,10 +1,10 @@
 "use client"
 
 import { useId, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Date005Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "defaultValue"
 > & {
   label?: string
@@ -36,12 +36,15 @@ const STYLES = `
 --vibeui-date-005-field:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
 --vibeui-date-005-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-date-005-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
---vibeui-date-005-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-date-005-muted:color-mix(in oklab,var(--vibeui-date-005-fg) 68%,transparent);
 --vibeui-date-005-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
 --vibeui-date-005-accent:light-dark(oklch(0.54 0.15 165),oklch(0.78 0.13 165));
 --vibeui-date-005-soft:color-mix(in oklch,var(--vibeui-date-005-accent) 14%,transparent);
 --vibeui-date-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="date-005"]{color-scheme:dark}
 /* Подложки по умолчанию нет: рамка держит форму, фон приходит со страницы. */
 [data-vibeui-block="date-005"]{
 display:flex;flex-direction:column;gap:0.5rem;
@@ -107,9 +110,23 @@ function shiftedToday(days: number) {
 function weekdayOf(value: string, locale: string) {
   const [year, month, day] = value.split("-").map(Number)
   if (!year || !month || !day) return ""
-  return new Date(year, month - 1, day).toLocaleDateString(locale, {
-    weekday: "long",
-  })
+  return new Date(year, month - 1, day).toLocaleDateString(
+    safeLocale(locale, "ru-RU"),
+    { weekday: "long" },
+  )
+}
+
+/**
+ * Неверная локаль из пропа не должна ронять страницу-хост: toLocaleDateString
+ * бросает на ней RangeError, поэтому непригодное значение откатываем на дефолт.
+ */
+function safeLocale(value: string, fallback: string) {
+  try {
+    Intl.DateTimeFormat.supportedLocalesOf(value)
+    return value
+  } catch {
+    return fallback
+  }
 }
 
 /**
@@ -176,6 +193,7 @@ export function Date005({
       </style>
       <div
         {...props}
+        data-slot="date-selector"
         data-vibeui-block="date-005"
         className={className}
         style={palette}

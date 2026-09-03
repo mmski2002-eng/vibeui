@@ -50,6 +50,7 @@ font-size:calc(var(--vibeui-avatar-006-size) * 0.32);font-weight:650;line-height
    непонятно, где находишься. */
 [data-vibeui-block="avatar-006"] [data-part="veil"]{
 position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+/* Плёнка тёмная в обеих темах: она лежит на фотографии, поэтому подпись светлая без второй ветки. */
 background:var(--vibeui-avatar-006-veil);color:oklch(0.99 0.003 265);
 font-size:0.6875rem;font-weight:600;text-align:center;line-height:1.2;
 opacity:0;transition:opacity .16s ease;

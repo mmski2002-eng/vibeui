@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Calendar017Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Calendar017Props = Omit<ComponentProps<"div">, "children"> & {
   year?: number
   month?: number
   /** Праздники месяца: ключ — число, значение — название. */
@@ -27,12 +24,15 @@ const STYLES = `
 :where([data-vibeui-block="calendar-017"]){
 --vibeui-calendar-017-bg:transparent;
 --vibeui-calendar-017-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
---vibeui-calendar-017-muted:light-dark(oklch(0.62 0.014 265),oklch(0.67 0.013 265));
+--vibeui-calendar-017-muted:color-mix(in oklab,var(--vibeui-calendar-017-fg) 68%,transparent);
 --vibeui-calendar-017-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
 --vibeui-calendar-017-weekend:light-dark(oklch(0.95 0.012 265),oklch(0.3 0.015 265));
 --vibeui-calendar-017-accent:light-dark(oklch(0.55 0.16 25),oklch(0.75 0.14 25));
 --vibeui-calendar-017-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="calendar-017"]{color-scheme:dark}
 [data-vibeui-block="calendar-017"]{
 display:flex;flex-direction:column;gap:0.75rem;
 width:100%;max-width:21rem;box-sizing:border-box;padding:0.9375rem;
@@ -77,7 +77,7 @@ border:1.5px dashed var(--vibeui-calendar-017-border);
 [data-vibeui-block="calendar-017"] [data-part="cell"] span{position:relative}
 [data-vibeui-block="calendar-017"] [data-part="legend"]{
 display:flex;flex-wrap:wrap;gap:0.75rem;margin:0;
-font-size:0.6875rem;color:var(--vibeui-calendar-017-muted);
+font-size:0.75rem;color:var(--vibeui-calendar-017-muted);
 }
 [data-vibeui-block="calendar-017"] [data-part="legend"] span{display:inline-flex;align-items:center;gap:0.375rem}
 [data-vibeui-block="calendar-017"] [data-part="chip"]{
@@ -93,7 +93,7 @@ background:transparent;border:1.5px dashed var(--vibeui-calendar-017-border);
 [data-vibeui-block="calendar-017"] [data-part="list"]{
 margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:0.25rem;
 padding-top:0.625rem;border-top:1px solid var(--vibeui-calendar-017-border);
-font-size:0.75rem;
+font-size:0.875rem;
 }
 [data-vibeui-block="calendar-017"] [data-part="list"] li{display:flex;gap:0.5rem}
 [data-vibeui-block="calendar-017"] [data-part="list"] b{
@@ -148,23 +148,45 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 }
 
 /**
+ * Месяц и локаль из пропов или дефолты компонента. Чужая страница не должна
+ * падать из-за неверного значения: NaN даёт Invalid Date, а Intl бросает
+ * RangeError и на нём, и на нераспознанной локали — белый экран вместо сайта.
+ */
+function safeMonth(year: number, month: number, fallback: number[]) {
+  return Number.isNaN(new Date(year, month - 1, 1).getTime())
+    ? fallback
+    : [year, month]
+}
+
+function safeLocale(value: string, fallback: string) {
+  try {
+    Intl.DateTimeFormat.supportedLocalesOf(value)
+    return value
+  } catch {
+    return fallback
+  }
+}
+
+/**
  * Месяц, где выходной, праздник и перенесённый рабочий день различаются формой.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Calendar017({
-  year = 2026,
-  month = 1,
+  year: yearProp = 2026,
+  month: monthProp = 1,
   holidays = DEFAULT_HOLIDAYS,
   workdays = [17],
   legendText = DEFAULT_LEGEND,
   holidayLabelText = "{day} — {name}",
-  locale = "ru-RU",
+  locale: localeProp = "ru-RU",
   accent,
   background = "",
   className,
   style,
   ...props
 }: Calendar017Props) {
+  const [year, month] = safeMonth(yearProp, monthProp, [2026, 1])
+  const locale = safeLocale(localeProp, "ru-RU")
   const first = new Date(year, month - 1, 1)
   const start = new Date(first.getTime() - ((first.getDay() + 6) % 7) * DAY)
   const cells = Array.from(
@@ -217,6 +239,7 @@ export function Calendar017({
       </style>
       <div
         {...props}
+        data-slot="calendar"
         data-vibeui-block="calendar-017"
         className={className}
         style={palette}

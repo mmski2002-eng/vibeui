@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Calendar006Event = {
   from: string
@@ -8,10 +8,7 @@ export type Calendar006Event = {
   tone?: "default" | "accent" | "muted"
 }
 
-export type Calendar006Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Calendar006Props = Omit<ComponentProps<"div">, "children"> & {
   date?: string
   events?: Calendar006Event[]
   /** Подписи: компонент несёт русские, проект подставляет свои. */
@@ -31,19 +28,22 @@ const STYLES = `
 :where([data-vibeui-block="calendar-006"]){
 --vibeui-calendar-006-bg:transparent;
 --vibeui-calendar-006-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
---vibeui-calendar-006-muted:light-dark(oklch(0.58 0.014 265),oklch(0.68 0.012 265));
+--vibeui-calendar-006-muted:color-mix(in oklab,var(--vibeui-calendar-006-fg) 68%,transparent);
 --vibeui-calendar-006-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-calendar-006-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
 --vibeui-calendar-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="calendar-006"]{color-scheme:dark}
 [data-vibeui-block="calendar-006"]{
 display:flex;flex-direction:column;gap:0.625rem;
-width:100%;max-width:22rem;box-sizing:border-box;padding:0.875rem;
+width:100%;max-width:22rem;box-sizing:border-box;padding:0.9375rem;
 background:var(--vibeui-calendar-006-bg);
 border:1px solid var(--vibeui-calendar-006-border);border-radius:0.875rem;
 color:var(--vibeui-calendar-006-fg);font-family:var(--vibeui-calendar-006-font);
 }
-[data-vibeui-block="calendar-006"] [data-part="date"]{font-size:0.875rem;font-weight:650}
+[data-vibeui-block="calendar-006"] [data-part="date"]{font-size:0.9375rem;font-weight:650}
 [data-vibeui-block="calendar-006"] ol{margin:0;padding:0;list-style:none;display:flex;flex-direction:column}
 /* Строка события: время слева колонкой, чтобы взгляд шёл по одной линии. */
 [data-vibeui-block="calendar-006"] [data-part="event"]{
@@ -52,7 +52,7 @@ padding:0.5rem 0;border-top:1px solid var(--vibeui-calendar-006-border);
 }
 [data-vibeui-block="calendar-006"] li:first-child [data-part="event"]{border-top:0}
 [data-vibeui-block="calendar-006"] [data-part="time"]{
-grid-row:span 2;font-size:0.75rem;font-weight:650;font-variant-numeric:tabular-nums;
+grid-row:span 2;font-size:0.8125rem;font-weight:650;font-variant-numeric:tabular-nums;
 color:var(--vibeui-calendar-006-muted);
 }
 [data-vibeui-block="calendar-006"] [data-part="title"]{font-size:0.875rem;line-height:1.3}
@@ -168,6 +168,7 @@ export function Calendar006({
       </style>
       <div
         {...props}
+        data-slot="calendar"
         data-vibeui-block="calendar-006"
         className={className}
         style={palette}

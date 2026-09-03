@@ -1,15 +1,14 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Timeline003Step = {
   title: string
   note?: string
+  /** Если подпись шага — дата, её машиночитаемая форма для <time datetime>. */
+  dateTime?: string
   state?: "done" | "current" | "todo"
 }
 
-export type Timeline003Props = Omit<
-  ComponentPropsWithoutRef<"section">,
-  "children"
-> & {
+export type Timeline003Props = Omit<ComponentProps<"section">, "children"> & {
   steps?: Timeline003Step[]
   orderLabel?: string
   eta?: string
@@ -32,7 +31,7 @@ const STYLES = `
 :where([data-vibeui-block="timeline-003"]){
 --vibeui-timeline-003-bg:transparent;
 --vibeui-timeline-003-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-timeline-003-muted:light-dark(oklch(0.57 0.014 265),oklch(0.69 0.012 265));
+--vibeui-timeline-003-muted:color-mix(in oklab,var(--vibeui-timeline-003-fg) 68%,transparent);
 --vibeui-timeline-003-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-timeline-003-done:light-dark(oklch(0.58 0.14 152),oklch(0.72 0.14 152));
 --vibeui-timeline-003-on-done:light-dark(oklch(1 0 0),oklch(0.19 0.04 152));
@@ -40,6 +39,9 @@ const STYLES = `
 --vibeui-timeline-003-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.04 262));
 --vibeui-timeline-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="timeline-003"]{color-scheme:dark}
 [data-vibeui-block="timeline-003"]{
 display:flex;flex-direction:column;gap:0.75rem;
 width:100%;max-width:24rem;box-sizing:border-box;padding:0.9375rem;
@@ -102,8 +104,18 @@ font-size:0.625rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercas
 `
 
 const DEFAULT_STEPS: Timeline003Step[] = [
-  { title: "Оплачен", note: "12 марта, 10:02", state: "done" },
-  { title: "Собран на складе", note: "12 марта, 18:40", state: "done" },
+  {
+    title: "Оплачен",
+    note: "12 марта, 10:02",
+    dateTime: "2026-03-12T10:02",
+    state: "done",
+  },
+  {
+    title: "Собран на складе",
+    note: "12 марта, 18:40",
+    dateTime: "2026-03-12T18:40",
+    state: "done",
+  },
   { title: "Едет в ваш город", note: "Прибудет 14 марта", state: "current" },
   { title: "В пункте выдачи", state: "todo" },
   { title: "Получен", state: "todo" },
@@ -164,6 +176,7 @@ export function Timeline003({
       </style>
       <section
         {...props}
+        data-slot="timeline"
         data-vibeui-block="timeline-003"
         className={className}
         style={palette}
@@ -181,7 +194,15 @@ export function Timeline003({
                 <span data-part="mark" aria-hidden="true" />
                 <div data-part="body">
                   <span data-part="step">{step.title}</span>
-                  {step.note ? <p data-part="note">{step.note}</p> : null}
+                  {step.note ? (
+                    <p data-part="note">
+                      {step.dateTime ? (
+                        <time dateTime={step.dateTime}>{step.note}</time>
+                      ) : (
+                        step.note
+                      )}
+                    </p>
+                  ) : null}
                   {state === "current" ? (
                     <span data-part="now">{nowLabel}</span>
                   ) : null}

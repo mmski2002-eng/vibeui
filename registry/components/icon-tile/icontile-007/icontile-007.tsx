@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Icontile007Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Icontile007Props = Omit<ComponentProps<"div">, "children"> & {
   icon?: "spark" | "bolt" | "shield"
   title?: string
   description?: string
@@ -24,13 +21,16 @@ container-type:inline-size;
 --vibeui-icontile-007-chroma:0.05;
 --vibeui-icontile-007-size:2.75rem;
 --vibeui-icontile-007-fg:light-dark(oklch(0.26 0.014 265),oklch(0.93 0.006 265));
---vibeui-icontile-007-muted:light-dark(oklch(0.52 0.014 265),oklch(0.71 0.012 265));
+--vibeui-icontile-007-muted:color-mix(in oklab,var(--vibeui-icontile-007-fg) 68%,transparent);
 --vibeui-icontile-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.008 265));
 --vibeui-icontile-007-surface:transparent;
 --vibeui-icontile-007-fill:light-dark(oklch(0.93 var(--vibeui-icontile-007-chroma) var(--vibeui-icontile-007-hue)),oklch(0.34 calc(var(--vibeui-icontile-007-chroma) * 1.2) var(--vibeui-icontile-007-hue)));
 --vibeui-icontile-007-mark:light-dark(oklch(0.44 calc(var(--vibeui-icontile-007-chroma) * 4) var(--vibeui-icontile-007-hue)),oklch(0.87 calc(var(--vibeui-icontile-007-chroma) * 2.2) var(--vibeui-icontile-007-hue)));
 --vibeui-icontile-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="icontile-007"]{color-scheme:dark}
 [data-vibeui-block="icontile-007"]{
 display:flex;align-items:center;gap:0.875rem;min-width:0;
 box-sizing:border-box;padding:0.75rem 1rem;
@@ -159,6 +159,7 @@ export function Icontile007({
       </style>
       <div
         {...props}
+        data-slot="icon-tile"
         data-vibeui-block="icontile-007"
         data-tone={tone}
         className={className}

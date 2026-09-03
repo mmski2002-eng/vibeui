@@ -1,7 +1,7 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Icontile002Props = Omit<
-  ComponentPropsWithoutRef<"span">,
+  ComponentProps<"span">,
   "children" | "color"
 > & {
   glyph?: string
@@ -23,6 +23,9 @@ const STYLES = `
 --vibeui-icontile-002-edge:light-dark(oklch(1 0 0 / 24%),oklch(1 0 0 / 38%));
 --vibeui-icontile-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="icontile-002"]{color-scheme:dark}
 /* Оба края градиента считаются от одного угла: пару нельзя рассогласовать. */
 [data-vibeui-block="icontile-002"]{
 display:inline-flex;align-items:center;justify-content:center;flex:none;
@@ -33,6 +36,7 @@ background:linear-gradient(145deg,
 oklch(0.72 0.17 var(--vibeui-icontile-002-hue)) 0%,
 oklch(0.5 0.19 calc(var(--vibeui-icontile-002-hue) + 32)) 100%);
 box-shadow:inset 0 0 0 1px var(--vibeui-icontile-002-edge);
+/* Глиф светлый в обеих темах: под ним насыщенный градиент, а не подложка страницы. */
 color:oklch(0.99 0.01 var(--vibeui-icontile-002-hue));
 font-family:var(--vibeui-icontile-002-font);
 font-size:calc(var(--vibeui-icontile-002-size) * 0.42);
@@ -68,6 +72,7 @@ export function Icontile002({
       </style>
       <span
         {...props}
+        data-slot="icon-tile"
         data-vibeui-block="icontile-002"
         data-size={size}
         role={label ? "img" : undefined}

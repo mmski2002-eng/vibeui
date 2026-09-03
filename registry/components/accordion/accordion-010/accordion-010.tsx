@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Accordion010Item = {
   question: string
@@ -9,10 +9,7 @@ export type Accordion010Item = {
 export type Accordion010Marker =
   "chevron" | "triangle" | "square" | "plus" | "none"
 
-export type Accordion010Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Accordion010Props = Omit<ComponentProps<"div">, "children"> & {
   items?: Accordion010Item[]
   defaultOpen?: number
   /** Нумеровать вопросы. Номер помогает ссылаться на пункт в переписке. */
@@ -30,7 +27,7 @@ export type Accordion010Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="accordion-010"]){
 --vibeui-accordion-010-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-accordion-010-muted:light-dark(oklch(0.5 0.014 265),oklch(0.68 0.01 265));
+--vibeui-accordion-010-muted:color-mix(in oklab,var(--vibeui-accordion-010-fg) 68%,transparent);
 --vibeui-accordion-010-line:light-dark(oklch(0.91 0.006 265),oklch(0.31 0.01 265));
 --vibeui-accordion-010-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.16 262));
 --vibeui-accordion-010-bg:transparent;
@@ -51,7 +48,7 @@ border-top:1px solid var(--vibeui-accordion-010-line);
 [data-vibeui-block="accordion-010"] details{border-bottom:1px solid var(--vibeui-accordion-010-line)}
 [data-vibeui-block="accordion-010"] summary{
 display:flex;align-items:flex-start;gap:0.75rem;
-padding:1rem 0.25rem;cursor:pointer;list-style:none;
+padding:0.9375rem 0.25rem;cursor:pointer;list-style:none;
 font-size:0.9375rem;font-weight:550;line-height:1.45;
 transition:color .16s ease;
 }
@@ -111,20 +108,35 @@ transition:transform .18s ease,background-color .16s ease;
 [data-vibeui-block="accordion-010"][data-marker="plus"] details[open] [data-part="marker"]::before,
 [data-vibeui-block="accordion-010"][data-marker="plus"] details[open] [data-part="marker"]::after{background:var(--vibeui-accordion-010-accent)}
 [data-vibeui-block="accordion-010"] [data-part="answer"]{
-margin:0;padding:0 0.25rem 1.125rem 2.25rem;
+margin:0;padding:0 0.25rem 1.0625rem 2.25rem;
 font-size:0.875rem;line-height:1.7;color:var(--vibeui-accordion-010-muted);max-width:64ch;
 }
-/* Широкая раскладка: вопрос слева, ответ в правой колонке той же строки. */
-@container (min-width: 44rem){
+/* Две колонки включаются рано, с 28rem: до этого порога компонент неотличим
+   от обычного списка, а именно колонки — весь его смысл. Пока места мало,
+   колонки делят ширину долями; фиксированные 20rem задаются только там, где
+   они действительно помещаются. */
+@container (min-width: 28rem){
 [data-vibeui-block="accordion-010"] details{
-display:grid;grid-template-columns:20rem 1fr;column-gap:2.5rem;align-items:start;
+display:grid;grid-template-columns:minmax(0,2fr) minmax(0,3fr);
+column-gap:1.75rem;align-items:start;
 }
-[data-vibeui-block="accordion-010"] summary{padding:1.25rem 0.25rem;font-size:1rem}
 [data-vibeui-block="accordion-010"] [data-part="answer"]{
-padding:1.25rem 0.25rem 1.25rem 0;font-size:0.9375rem;
+padding:0.9375rem 0.25rem 1.0625rem 0;
 }
 [data-vibeui-block="accordion-010"] details:not([open]) [data-part="answer"]{display:none}
 }
+@container (min-width: 44rem){
+[data-vibeui-block="accordion-010"] details{
+grid-template-columns:20rem 1fr;column-gap:2.5rem;
+}
+[data-vibeui-block="accordion-010"] summary{padding:1.0625rem 0.25rem;font-size:1rem}
+[data-vibeui-block="accordion-010"] [data-part="answer"]{
+padding:1.0625rem 0.25rem 1.0625rem 0;font-size:0.9375rem;
+}
+}
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="accordion-010"]{color-scheme:dark}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="accordion-010"] *{animation:none!important;transition:none!important}}
 `
 
@@ -203,6 +215,7 @@ export function Accordion010({
       </style>
       <div
         {...props}
+        data-slot="accordion"
         data-vibeui-block="accordion-010"
         data-marker={marker}
         className={className}

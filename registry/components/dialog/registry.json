@@ -160,7 +160,8 @@
                 "confirmLabel": "Delete",
                 "cancelLabel": "Cancel"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-dialog-001-*. Opening is held by the HTML popover: the button declares its target with the popovertarget attribute, and the window carries popover=\"auto\". From there closing on Esc and on an outside click, the ::backdrop and the top layer — in which the window does not depend on the overflow and z-index of its parents — all come free. The entrance animation is built on @starting-style and transition-behavior for display and overlay. The window is styled through the [data-vibeui-dialog-001-window] attribute rather than by nesting: in the top layer it stops being a descendant of the component root."
           }
         },
         "cardControls": ["accent", "background"]
@@ -317,7 +318,8 @@
                 "confirmLabel": "Delete for good",
                 "cancelLabel": "Cancel"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-dialog-002-*. Opening is held by the HTML popover: Esc, the outside click, ::backdrop and the top layer come from the browser, and there is no client code. The window lives in the top layer and is therefore styled through the [data-vibeui-dialog-002-window] attribute and receives the palette through its own style — inheritance by nesting does not work there. The role is alertdialog."
           }
         },
         "cardControls": ["danger", "background"]
@@ -467,7 +469,8 @@
                 "submitLabel": "Save",
                 "cancelLabel": "Cancel"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-dialog-003-*. Opening is held by the HTML popover, and submission by <form method=\"dialog\">: Enter in the field acts as a submit, and no separate handler is needed. autoFocus on the field moves focus into it on open, so typing can start right away."
           }
         },
         "cardControls": ["accent", "background"]
@@ -619,7 +622,8 @@
                 "submitLabel": "Continue",
                 "cancelLabel": "Cancel"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-dialog-004-*. The options are native radios inside label cards: the selected one is highlighted by the :has(input:checked) rule, so the highlight needs no state, and the arrow keys work as in a native list. The dot inside the radio is drawn with an inset shadow rather than a separate element."
           }
         },
         "cardControls": ["defaultValue", "accent", "background"]
@@ -758,7 +762,8 @@
                 "primaryLabel": "Open the site",
                 "closeLabel": "Close"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-dialog-005-*. The two tones (success and failure) are switched by a data attribute on the root and change a single variable — the colour of the mark and of the main button. The content is centred: a result window has one focal point, and a column reads faster than a row."
           }
         },
         "cardControls": ["tone", "background"]
@@ -906,7 +911,8 @@
                 "note": "Do not close the tab: the move goes on, but you will not see the notifications.",
                 "cancelLabel": "Stop"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-dialog-006-*. Here the popover is \"manual\" rather than \"auto\": Esc and a click on the backdrop do not close the window, and the only way out is the cancel button. The progress bar takes its width from the --vibeui-dialog-006-value variable; value={null} turns on a running segment and removes aria-valuenow. The spinner is drawn with a border that has one coloured edge."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1074,7 +1080,8 @@
                 ],
                 "cancelLabel": "Cancel"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-dialog-007-*. By default the sheet is pinned to the bottom edge of the screen and slides in through translate; from 40rem of viewport width a media query turns it into an ordinary centred window. The media query here is on the viewport width rather than the block's, because the sheet is positioned against the screen rather than its parent, so a container query would be wrong."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1231,7 +1238,8 @@
                 "copyLabel": "Copy",
                 "doneLabel": "Done"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-dialog-008-*. The link sits in a readOnly field in a monospaced face: it is visible in full and can be selected. The colour of the initials in the access list is derived from the name by a deterministic function — the same technique as in avatar-001, so one member is always one colour. The component is a server component: copying is wired by the calling code."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1394,7 +1402,8 @@
                 "backLabel": "Back",
                 "submitLabel": "Create"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-dialog-009-*. The step is held by two hidden radios, and screen visibility is switched by :has([data-part=\"state\"][value=…]:checked) on the window. The Next and Back buttons are <label for> elements, so moving between steps requires neither state nor handlers. The progress dots are highlighted by the same rule."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1586,7 +1595,8 @@
                 ],
                 "closeLabel": "Close"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-dialog-010-*. The keys are semantic <kbd> elements with a thickened bottom edge: a symbol becomes an object the eye can hunt for. The list of shortcuts is marked up as a <dl> with dt/dd pairs. The window scrolls inside itself: a reference is usually longer than the screen."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1724,7 +1734,8 @@
                 "primaryLabel": "Publish",
                 "closeLabel": "Close"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-dialog-011-*. The window has zero padding and overflow:hidden, so the cover meets the rounded edges; the padding lives in the inner [data-part=\"body\"]. The cover holds a 16/9 ratio and is built from two gradients with darkening at the bottom — it can be replaced with an <img> without touching the layout."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1876,7 +1887,8 @@
                 "copyLabel": "Copy the key",
                 "doneLabel": "I have saved it"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-dialog-012-*. The key sits in a dark <code> with word-break:break-all: a secret truncated with an ellipsis is useless, so it wraps by character. The warning is set as a panel with an exclamation mark on a pseudo-element and stands after the key. The \"I saved it\" button is quiet, and copying is the accented one."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2030,7 +2042,8 @@
                 "submitLabel": "Send",
                 "skipLabel": "Not now"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-dialog-013-*. The rating is a row of native radios inside labels, and the selected one is highlighted through :has(input:checked); the radios themselves are visually hidden but stay in the flow and remain reachable from the keyboard. The comment field is optional and stands after the rating: one tap first, words second. The palette has been moved to light-dark(): the window follows the surrounding color-scheme, and the background prop changes the surface of the window and the buttons."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2180,7 +2193,8 @@
                 "stayLabel": "Stay signed in",
                 "leaveLabel": "Sign out"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-dialog-014-*. The time bar is a CSS scaleX animation, and its duration arrives through the --vibeui-dialog-014-seconds variable from the seconds prop: the countdown is not computed in JS and does not repaint the page every second. The \"stay\" button is accented and stands on the right: logging out through inaction should require inaction rather than a click. The palette has been moved to light-dark(): the window follows the surrounding color-scheme, and the background prop changes the surface of the window and the buttons."
           }
         },
         "cardControls": ["seconds", "accent", "background"]

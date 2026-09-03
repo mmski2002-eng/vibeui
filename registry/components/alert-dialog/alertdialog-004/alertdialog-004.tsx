@@ -1,10 +1,10 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import { useEffect, useId, useRef, useState } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Alertdialog004Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "title"
 > & {
   triggerLabel?: string
@@ -30,7 +30,7 @@ const STYLES = `
 :where([data-vibeui-block="alertdialog-004"]){
 --vibeui-alertdialog-004-bg:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
 --vibeui-alertdialog-004-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-alertdialog-004-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-alertdialog-004-muted:color-mix(in oklab,var(--vibeui-alertdialog-004-fg) 68%,transparent);
 --vibeui-alertdialog-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
 --vibeui-alertdialog-004-danger:light-dark(oklch(0.55 0.19 25),oklch(0.72 0.17 25));
 --vibeui-alertdialog-004-on-danger:light-dark(oklch(1 0 0),oklch(0.17 0.03 25));
@@ -38,6 +38,9 @@ const STYLES = `
 --vibeui-alertdialog-004-shadow:light-dark(oklch(0.2 0.03 265 / 55%),oklch(0.02 0.01 265 / 70%));
 --vibeui-alertdialog-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="alertdialog-004"]{color-scheme:dark}
 [data-vibeui-block="alertdialog-004"]{
 font-family:var(--vibeui-alertdialog-004-font);color:var(--vibeui-alertdialog-004-fg);
 }
@@ -82,6 +85,8 @@ font:inherit;font-size:0.8125rem;font-weight:650;font-variant-numeric:tabular-nu
 border:1px solid var(--vibeui-alertdialog-004-border);background:var(--vibeui-alertdialog-004-bg);color:inherit;
 }
 [data-vibeui-block="alertdialog-004"] dialog button:focus-visible{outline:2px solid var(--vibeui-alertdialog-004-danger);outline-offset:2px}
+/* showModal() делает фон inert, но не запрещает прокрутку страницы. */
+html:has([data-vibeui-block="alertdialog-004"] dialog[open]){overflow:hidden}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="alertdialog-004"] [data-part="fill"]{transition:none}
 [data-vibeui-block="alertdialog-004"] *{animation:none!important}
@@ -129,6 +134,7 @@ export function Alertdialog004({
   ...props
 }: Alertdialog004Props) {
   const box = useRef<HTMLDialogElement>(null)
+  const uid = useId()
   const [open, setOpen] = useState(false)
   const [left, setLeft] = useState(seconds)
 
@@ -169,6 +175,7 @@ export function Alertdialog004({
       </style>
       <div
         {...props}
+        data-slot="alert-dialog"
         data-vibeui-block="alertdialog-004"
         className={className}
         style={palette}
@@ -179,11 +186,16 @@ export function Alertdialog004({
 
         <dialog
           ref={box}
-          aria-labelledby="vibeui-alertdialog-004-title"
+          role="alertdialog"
+          aria-modal="true"
+          aria-labelledby={`${uid}-title`}
+          aria-describedby={`${uid}-text`}
           onClose={() => setOpen(false)}
         >
-          <h2 id="vibeui-alertdialog-004-title">{title}</h2>
-          <p data-part="text">{text}</p>
+          <h2 id={`${uid}-title`}>{title}</h2>
+          <p id={`${uid}-text`} data-part="text">
+            {text}
+          </p>
           <div data-part="track" aria-hidden="true">
             <span data-part="fill" />
           </div>

@@ -1,12 +1,12 @@
 "use client"
 
 import { useId, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Cascader020Node = { name: string; children?: Cascader020Node[] }
 
 export type Cascader020Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onSelect"
 > & {
   label?: string
@@ -35,7 +35,7 @@ const STYLES = `
 :where([data-vibeui-block="cascader-020"]){
 --vibeui-cascader-020-bg:transparent;
 --vibeui-cascader-020-fg:light-dark(oklch(0.22 0.014 20),oklch(0.94 0.006 20));
---vibeui-cascader-020-muted:light-dark(oklch(0.55 0.014 20),oklch(0.71 0.012 20));
+--vibeui-cascader-020-muted:color-mix(in oklab,var(--vibeui-cascader-020-fg) 68%,transparent);
 --vibeui-cascader-020-border:light-dark(oklch(0.9 0.008 20),oklch(0.35 0.012 20));
 --vibeui-cascader-020-field:light-dark(oklch(0.985 0.004 20),oklch(0.27 0.012 20));
 --vibeui-cascader-020-soft:light-dark(oklch(0.965 0.008 20),oklch(0.29 0.012 20));
@@ -44,8 +44,11 @@ const STYLES = `
 --vibeui-cascader-020-radius:0.625rem;
 --vibeui-cascader-020-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="cascader-020"]{color-scheme:dark}
 [data-vibeui-block="cascader-020"]{
-display:flex;flex-direction:column;gap:0.4rem;
+display:flex;flex-direction:column;gap:0.375rem;
 width:100%;max-width:21rem;box-sizing:border-box;padding:0.875rem;
 background:var(--vibeui-cascader-020-bg);
 border:1px solid var(--vibeui-cascader-020-border);
@@ -56,8 +59,8 @@ font-family:var(--vibeui-cascader-020-font);
 [data-vibeui-block="cascader-020"] [data-part="label"]{font-size:0.8125rem;font-weight:600}
 [data-vibeui-block="cascader-020"] [data-part="field"]{
 appearance:none;cursor:pointer;font:inherit;width:100%;
-display:flex;align-items:center;gap:0.4rem;
-box-sizing:border-box;min-height:2.5rem;padding:0.35rem 0.6rem;
+display:flex;align-items:center;gap:0.375rem;
+box-sizing:border-box;min-height:2.5rem;padding:0.375rem 0.625rem;
 border:1px solid var(--vibeui-cascader-020-border);
 border-radius:var(--vibeui-cascader-020-radius);
 background:var(--vibeui-cascader-020-field);color:inherit;text-align:left;
@@ -73,39 +76,39 @@ outline:2px solid var(--vibeui-cascader-020-accent);outline-offset:1px;border-co
 flex:1 1 auto;min-width:0;
 direction:rtl;unicode-bidi:plaintext;text-align:left;
 white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-font-size:0.85rem;font-weight:600;
+font-size:0.875rem;font-weight:600;
 }
 [data-vibeui-block="cascader-020"] [data-part="pathtext"][data-empty="true"]{
 font-weight:500;color:var(--vibeui-cascader-020-muted);
 }
 [data-vibeui-block="cascader-020"] [data-part="chevron"]{
-flex:none;color:var(--vibeui-cascader-020-muted);font-size:0.8rem;
+flex:none;color:var(--vibeui-cascader-020-muted);font-size:0.8125rem;
 }
 [data-vibeui-block="cascader-020"] [data-part="panel"]{
-display:flex;flex-direction:column;gap:0.3rem;
-padding:0.35rem;
+display:flex;flex-direction:column;gap:0.3125rem;
+padding:0.375rem;
 border:1px solid var(--vibeui-cascader-020-border);
 border-radius:var(--vibeui-cascader-020-radius);
 }
 [data-vibeui-block="cascader-020"] [data-part="back"]{
 appearance:none;cursor:pointer;font:inherit;align-self:flex-start;
-padding:0.2rem 0.5rem;border:0;border-radius:0.4rem;
+padding:0.1875rem 0.5rem;border:0;border-radius:0.375rem;
 background:var(--vibeui-cascader-020-soft);color:var(--vibeui-cascader-020-muted);
-font-size:0.72rem;font-weight:600;
+font-size:0.75rem;font-weight:600;
 }
 [data-vibeui-block="cascader-020"] [data-part="back"]:focus-visible,
 [data-vibeui-block="cascader-020"] [data-part="node"]:focus-visible{
 outline:2px solid var(--vibeui-cascader-020-accent);outline-offset:-2px;
 }
 [data-vibeui-block="cascader-020"] ul{
-margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:0.1rem;
+margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:0.125rem;
 max-height:11rem;overflow:auto;
 }
 [data-vibeui-block="cascader-020"] [data-part="node"]{
 appearance:none;cursor:pointer;font:inherit;width:100%;
-display:flex;align-items:center;justify-content:space-between;gap:0.4rem;
-box-sizing:border-box;padding:0.4rem 0.5rem;
-border:0;border-radius:0.4rem;background:transparent;color:inherit;text-align:left;
+display:flex;align-items:center;justify-content:space-between;gap:0.375rem;
+box-sizing:border-box;padding:0.375rem 0.5rem;
+border:0;border-radius:0.375rem;background:transparent;color:inherit;text-align:left;
 font-size:0.8125rem;
 transition:background-color .16s ease;
 }
@@ -114,7 +117,7 @@ transition:background-color .16s ease;
 background:var(--vibeui-cascader-020-accentsoft);font-weight:600;
 }
 [data-vibeui-block="cascader-020"] [data-part="hint"]{
-margin:0;font-size:0.72rem;color:var(--vibeui-cascader-020-muted);
+margin:0;font-size:0.75rem;color:var(--vibeui-cascader-020-muted);
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="cascader-020"] *{animation:none!important;transition:none!important}}
 `
@@ -221,6 +224,7 @@ export function Cascader020({
       </style>
       <div
         {...props}
+        data-slot="cascader"
         data-vibeui-block="cascader-020"
         className={className}
         style={palette}

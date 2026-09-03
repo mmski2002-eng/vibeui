@@ -2,14 +2,14 @@
 
 import { useId, useMemo, useRef, useState } from "react"
 import type {
-  ComponentPropsWithoutRef,
+  ComponentProps,
   CSSProperties,
   KeyboardEvent,
   ReactNode,
 } from "react"
 
 export type Combobox023Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onSelect"
 > & {
   label?: string
@@ -36,7 +36,7 @@ const STYLES = `
 :where([data-vibeui-block="combobox-023"]){
 --vibeui-combobox-023-bg:transparent;
 --vibeui-combobox-023-fg:light-dark(oklch(0.22 0.02 340),oklch(0.94 0.008 340));
---vibeui-combobox-023-muted:light-dark(oklch(0.53 0.02 340),oklch(0.7 0.014 340));
+--vibeui-combobox-023-muted:color-mix(in oklab,var(--vibeui-combobox-023-fg) 68%,transparent);
 --vibeui-combobox-023-border:light-dark(oklch(0.9 0.01 340),oklch(0.35 0.014 340));
 --vibeui-combobox-023-field:light-dark(oklch(0.985 0.004 340),oklch(0.27 0.012 340));
 --vibeui-combobox-023-active:light-dark(oklch(0.95 0.035 340),oklch(0.33 0.04 340));
@@ -45,6 +45,9 @@ const STYLES = `
 --vibeui-combobox-023-radius:0.625rem;
 --vibeui-combobox-023-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="combobox-023"]{color-scheme:dark}
 [data-vibeui-block="combobox-023"]{
 display:flex;flex-direction:column;gap:0.4rem;
 width:100%;max-width:22rem;box-sizing:border-box;padding:0.875rem;
@@ -72,8 +75,10 @@ border-radius:var(--vibeui-combobox-023-radius);
 }
 [data-vibeui-block="combobox-023"] [data-part="option"]{
 display:flex;align-items:center;min-height:2rem;padding:0 0.5rem;
-border-radius:0.375rem;font-size:0.875rem;cursor:pointer;
-overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+border-radius:0.375rem;font-size:0.875rem;cursor:pointer;overflow:hidden;
+}
+[data-vibeui-block="combobox-023"] [data-part="option"] [data-part="text"]{
+min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 }
 [data-vibeui-block="combobox-023"] [data-part="option"][data-active="true"]{background:var(--vibeui-combobox-023-active)}
 [data-vibeui-block="combobox-023"] mark{
@@ -222,6 +227,7 @@ export function Combobox023({
       </style>
       <div
         {...props}
+        data-slot="combobox"
         data-vibeui-block="combobox-023"
         className={className}
         style={palette}
@@ -273,7 +279,10 @@ export function Combobox023({
                 commit(option)
               }}
             >
-              {highlight(option, needle)}
+              {/* Подсветка режет строку на несколько узлов: во flex-пункте
+                  каждый стал бы отдельным элементом и обрезка многоточием
+                  перестала бы работать — держим их одним span. */}
+              <span data-part="text">{highlight(option, needle)}</span>
             </li>
           ))}
           {matches.length === 0 ? (

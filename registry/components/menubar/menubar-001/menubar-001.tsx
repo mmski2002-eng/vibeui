@@ -1,17 +1,19 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Menubar001Menu = {
   label: string
   items: { label: string; keys?: string; disabled?: boolean }[]
 }
 
-export type Menubar001Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Menubar001Props = Omit<ComponentProps<"div">, "children"> & {
   menus?: Menubar001Menu[]
   /** Имя строки меню для скринридера. */
   menubarLabel?: string
+  /**
+   * Приставка к id меню и имени якоря. Двум строкам меню на одной странице
+   * нужны разные приставки, иначе кнопка одной откроет меню другой.
+   */
+  group?: string
   /** Пусто — подложки нет, строка лежит прямо на фоне страницы. */
   background?: string
   accent?: string
@@ -27,13 +29,16 @@ const STYLES = `
 --vibeui-menubar-001-bg:transparent;
 --vibeui-menubar-001-panel:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
 --vibeui-menubar-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
---vibeui-menubar-001-muted:light-dark(oklch(0.58 0.014 265),oklch(0.68 0.012 265));
+--vibeui-menubar-001-muted:color-mix(in oklab,var(--vibeui-menubar-001-fg) 68%,transparent);
 --vibeui-menubar-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-menubar-001-hover:light-dark(oklch(0.55 0.02 265 / 9%),oklch(0.88 0.02 265 / 14%));
 --vibeui-menubar-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
 --vibeui-menubar-001-shadow:light-dark(oklch(0.2 0.03 265 / 45%),oklch(0 0 0 / 62%));
 --vibeui-menubar-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="menubar-001"]{color-scheme:dark}
 [data-vibeui-block="menubar-001"]{
 display:flex;align-items:center;gap:0.125rem;
 box-sizing:border-box;padding:0.25rem;
@@ -137,6 +142,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 export function Menubar001({
   menus = DEFAULT_MENUS,
   menubarLabel = "Меню приложения",
+  group = "vibeui-menubar-001",
   background = "",
   accent,
   className,
@@ -162,6 +168,7 @@ export function Menubar001({
       </style>
       <div
         {...props}
+        data-slot="menubar"
         data-vibeui-block="menubar-001"
         role="menubar"
         aria-label={menubarLabel}
@@ -169,7 +176,7 @@ export function Menubar001({
         style={palette}
       >
         {menus.map((menu, index) => {
-          const id = `vibeui-menubar-001-${index}`
+          const id = `${group}-${index}`
           const anchor = {
             "--vibeui-menubar-001-anchor": `--${id}`,
           } as CSSProperties

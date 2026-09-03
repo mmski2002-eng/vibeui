@@ -1,7 +1,7 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Checkbox001Props = Omit<
-  ComponentPropsWithoutRef<"input">,
+  ComponentProps<"input">,
   "type" | "size"
 > & {
   label?: string
@@ -23,7 +23,7 @@ const STYLES = `
 --vibeui-checkbox-001-surface:transparent;
 --vibeui-checkbox-001-pull:-0.625rem -0.75rem;
 --vibeui-checkbox-001-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.005 265));
---vibeui-checkbox-001-muted:light-dark(oklch(0.54 0.014 265),oklch(0.72 0.012 265));
+--vibeui-checkbox-001-muted:color-mix(in oklab,var(--vibeui-checkbox-001-fg) 68%,transparent);
 --vibeui-checkbox-001-bg:light-dark(oklch(1 0 0),oklch(0.27 0.012 265));
 --vibeui-checkbox-001-border:light-dark(oklch(0.82 0.01 265),oklch(0.5 0.014 265));
 --vibeui-checkbox-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.71 0.16 262));
@@ -32,12 +32,15 @@ const STYLES = `
 --vibeui-checkbox-001-radius:0.625rem;
 --vibeui-checkbox-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="checkbox-001"]{color-scheme:dark}
 /* Подложки по умолчанию нет: строка ложится на фон страницы, а отрицательные
    поля возвращают её к общей сетке формы. */
 [data-vibeui-block="checkbox-001"]{
 box-sizing:border-box;
 background:var(--vibeui-checkbox-001-surface);
-display:flex;align-items:flex-start;gap:0.6875rem;
+display:flex;align-items:flex-start;gap:0.625rem;
 padding:0.625rem 0.75rem;margin:var(--vibeui-checkbox-001-pull);
 border-radius:var(--vibeui-checkbox-001-radius);cursor:pointer;
 font-family:var(--vibeui-checkbox-001-font);color:var(--vibeui-checkbox-001-fg);
@@ -71,7 +74,7 @@ opacity:0;transition:opacity .14s ease,transform .14s ease;
 }
 [data-vibeui-block="checkbox-001"] input:checked + [data-part="mark"]{opacity:1;transform:rotate(45deg) scale(1)}
 [data-vibeui-block="checkbox-001"] [data-part="text"]{display:flex;flex-direction:column;gap:0.125rem}
-[data-vibeui-block="checkbox-001"] [data-part="title"]{font-size:0.9375rem;line-height:1.35}
+[data-vibeui-block="checkbox-001"] [data-part="title"]{font-size:0.875rem;line-height:1.35}
 [data-vibeui-block="checkbox-001"] [data-part="description"]{font-size:0.8125rem;line-height:1.4;color:var(--vibeui-checkbox-001-muted)}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="checkbox-001"] *{animation:none!important;transition:none!important}}
 `
@@ -131,6 +134,7 @@ export function Checkbox001({
         {STYLES}
       </style>
       <label
+        data-slot="checkbox"
         data-vibeui-block="checkbox-001"
         className={className}
         style={palette}

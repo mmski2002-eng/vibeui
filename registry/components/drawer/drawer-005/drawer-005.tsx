@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Drawer005Line = {
   title: string
@@ -11,7 +11,7 @@ export type Drawer005Line = {
 }
 
 export type Drawer005Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "title"
 > & {
   triggerLabel?: string
@@ -45,7 +45,7 @@ const STYLES = `
 --vibeui-drawer-005-bg:transparent;
 --vibeui-drawer-005-surface:light-dark(oklch(1 0 0),oklch(0.22 0.013 265));
 --vibeui-drawer-005-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
---vibeui-drawer-005-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-drawer-005-muted:color-mix(in oklab,var(--vibeui-drawer-005-fg) 68%,transparent);
 --vibeui-drawer-005-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-drawer-005-accent:light-dark(oklch(0.55 0.17 265),oklch(0.73 0.15 265));
 --vibeui-drawer-005-on-accent:light-dark(oklch(0.99 0.01 265),oklch(0.17 0.02 265));
@@ -53,6 +53,9 @@ const STYLES = `
 --vibeui-drawer-005-tint:light-dark(oklch(0.96 0.004 265),oklch(0.3 0.014 265));
 --vibeui-drawer-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="drawer-005"]{color-scheme:dark}
 [data-vibeui-block="drawer-005"]{
 display:inline-block;font-family:var(--vibeui-drawer-005-font);color:var(--vibeui-drawer-005-fg);
 }
@@ -81,6 +84,7 @@ translate:100% 0;transition:translate .22s ease,overlay .22s allow-discrete,disp
 @starting-style{
 [data-vibeui-block="drawer-005"] dialog[open]{translate:100% 0}
 }
+/* Затемнение позади ящика одно на обе темы: подложка гасит страницу, а не красится вместе с ней. */
 [data-vibeui-block="drawer-005"] dialog::backdrop{background:oklch(0.19 0.02 265 / 45%)}
 [data-vibeui-block="drawer-005"] [data-part="panel"]{display:flex;flex-direction:column;height:100%;box-sizing:border-box}
 [data-vibeui-block="drawer-005"] [data-part="head"]{
@@ -271,6 +275,7 @@ export function Drawer005({
       </style>
       <div
         {...props}
+        data-slot="drawer"
         data-vibeui-block="drawer-005"
         className={className}
         style={palette}

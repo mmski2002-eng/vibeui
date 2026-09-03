@@ -33,7 +33,7 @@ export type Chart001Props = {
 const STYLES = `
 :where([data-vibeui-block="chart-001"]){
 --vibeui-chart-001-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
---vibeui-chart-001-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-chart-001-muted:color-mix(in oklab,var(--vibeui-chart-001-fg) 68%,transparent);
 --vibeui-chart-001-bg:transparent;
 --vibeui-chart-001-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-chart-001-grid:light-dark(oklch(0.93 0.005 265),oklch(0.31 0.01 265));
@@ -42,6 +42,9 @@ const STYLES = `
 --vibeui-chart-001-radius:0.875rem;
 --vibeui-chart-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="chart-001"]{color-scheme:dark}
 [data-vibeui-block="chart-001"]{
 display:flex;flex-direction:column;gap:0.875rem;
 width:100%;box-sizing:border-box;padding:1.125rem 1.25rem 1rem;
@@ -51,7 +54,7 @@ background:var(--vibeui-chart-001-bg);color:var(--vibeui-chart-001-fg);
 font-family:var(--vibeui-chart-001-font);
 }
 [data-vibeui-block="chart-001"] [data-part="head"]{display:flex;align-items:baseline;justify-content:space-between;gap:1rem}
-[data-vibeui-block="chart-001"] [data-part="title"]{margin:0;font-size:0.9375rem;font-weight:600}
+[data-vibeui-block="chart-001"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:600}
 [data-vibeui-block="chart-001"] [data-part="last"]{
 font-size:1.125rem;font-weight:650;font-variant-numeric:tabular-nums;
 color:var(--vibeui-chart-001-accent);
@@ -175,6 +178,7 @@ export function Chart001({
         {STYLES}
       </style>
       <figure
+        data-slot="chart"
         data-vibeui-block="chart-001"
         className={className}
         style={palette}

@@ -1,7 +1,7 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Scrollarea005Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "title"
 > & {
   title?: string
@@ -28,7 +28,7 @@ const STYLES = `
 :where([data-vibeui-block="scrollarea-005"]){
 --vibeui-scrollarea-005-bg:transparent;
 --vibeui-scrollarea-005-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
---vibeui-scrollarea-005-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-scrollarea-005-muted:color-mix(in oklab,var(--vibeui-scrollarea-005-fg) 68%,transparent);
 --vibeui-scrollarea-005-border:light-dark(oklch(0.9 0.006 265),oklch(0.33 0.012 265));
 --vibeui-scrollarea-005-rule:light-dark(oklch(0.955 0.004 265),oklch(0.28 0.01 265));
 --vibeui-scrollarea-005-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
@@ -36,6 +36,9 @@ const STYLES = `
 --vibeui-scrollarea-005-rows:6;
 --vibeui-scrollarea-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="scrollarea-005"]{color-scheme:dark}
 [data-vibeui-block="scrollarea-005"]{
 display:flex;flex-direction:column;
 width:100%;max-width:21rem;box-sizing:border-box;overflow:hidden;
@@ -160,6 +163,7 @@ export function Scrollarea005({
       </style>
       <div
         {...props}
+        data-slot="scroll-area"
         data-vibeui-block="scrollarea-005"
         className={className}
         style={palette}

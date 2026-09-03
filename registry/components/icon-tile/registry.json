@@ -19,6 +19,22 @@
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-icontile-001-*. Серверный: хуков нет. Тон задаётся парой переменных оттенка и насыщенности, а цвета фона и знака выводятся из них функцией oklch — поэтому новый тон добавляется одной строкой. Без подписи плитка скрыта от скринридера как декоративная.",
       "meta": {
         "tags": ["icon", "tile", "tone", "list"],
+        "preview": {
+          "states": [
+            {
+              "tone": "neutral"
+            },
+            {
+              "tone": "accent"
+            },
+            {
+              "tone": "success"
+            },
+            {
+              "tone": "danger"
+            }
+          ]
+        },
         "ai": {
           "export": "Icontile001",
           "usage": "<Icontile001 glyph=\"◆\" tone=\"success\" size=\"md\" label=\"Готово\" />",
@@ -122,7 +138,8 @@
                 "default": "◆"
               }
             },
-            "title": "Icon Tile"
+            "title": "Icon Tile",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-icontile-001-*. Server component: no hooks. The tone is set by a pair of hue and chroma variables, and the background and glyph colours are derived from them by the oklch function — so a new tone is added in one line. Without a label the tile is hidden from screen readers as decorative."
           }
         },
         "cardControls": ["tone", "size", "shape"]
@@ -146,6 +163,19 @@
       "docs": "Серверный компонент, хуков нет. Оба края градиента выведены из переменной --vibeui-icontile-002-hue: второй берётся сдвигом на 32° по тому же кругу oklch, поэтому пара всегда согласована, а перекрасить плитку можно одним числом. Внутренняя светлая рамка сделана inset-тенью, а не border: border съедал бы размер плитки и сбивал сетку иконок. Размер задаётся data-size и одной переменной, от которой считаются радиус и кегль знака. Плитка декоративна: без label она получает aria-hidden, с label — role=img и доступное имя.",
       "meta": {
         "tags": ["icontile", "gradient", "icon", "hue"],
+        "preview": {
+          "states": [
+            {
+              "hue": 262
+            },
+            {
+              "hue": 150
+            },
+            {
+              "hue": 25
+            }
+          ]
+        },
         "ai": {
           "export": "Icontile002",
           "usage": "<Icontile002 glyph=\"◆\" hue={262} size=\"md\" label=\"Проекты\" />",
@@ -242,7 +272,8 @@
                 "default": "◆"
               }
             },
-            "title": "Gradient Icon Tile"
+            "title": "Gradient Icon Tile",
+            "docs": "Server component, no hooks. Both ends of the gradient are derived from the --vibeui-icontile-002-hue variable: the second is taken by shifting 32° around the same oklch wheel, so the pair is always in tune and the tile can be recoloured with a single number. The inner light border is made with an inset shadow rather than a border: a border would eat into the tile size and knock the icon grid out of alignment. The size is set by data-size and one variable, from which the radius and the glyph size are computed. The tile is decorative: without a label it gets aria-hidden, with a label it gets role=img and an accessible name."
           }
         },
         "cardControls": ["size", "hue"]
@@ -365,7 +396,8 @@
               "props": {
                 "label": "Check passed"
               }
-            }
+            },
+            "docs": "Server component, no hooks. The status shape is cut with clip-path out of a single square tile, so the size and the position in the row are the same for every status and the list does not wobble in height. The colour is computed from the --vibeui-icontile-003-hue variable, which the data-status attribute switches: colour reinforces the shape but does not remain the only carrier of meaning — that is an accessibility requirement, not decoration. The glyph inside the tile is marked aria-hidden, and the value is spoken by the text caption. The component carries its own white surface in a pill shape: the caption is dark."
           }
         },
         "cardControls": ["status", "background"]
@@ -389,6 +421,16 @@
       "docs": "Серверный компонент, хуков нет. Ступени sm, md и lg объявлены как кратные переменной --vibeui-icontile-004-step, поэтому шкала правится одним числом, а не тремя. Радиус и кегль знака вычисляются от размера ступени в calc, из-за чего пропорции плитки на всех ступенях одинаковые — это и есть смысл шкалы. Форма переключается на корне через data-shape и действует сразу на весь ряд. Каждая ступень подписана именем и значением в пикселях, поэтому размер выбирают глазами и не изобретают четвёртый. Подложка светлая: подписи ступеней тёмные.",
       "meta": {
         "tags": ["icontile", "scale", "sizes", "design-system"],
+        "preview": {
+          "states": [
+            {
+              "shape": "square"
+            },
+            {
+              "shape": "circle"
+            }
+          ]
+        },
         "ai": {
           "export": "Icontile004",
           "usage": "<Icontile004 glyph=\"◆\" shape=\"squircle\" />",
@@ -483,7 +525,8 @@
                 "default": "◆"
               }
             },
-            "title": "Tile Size Scale"
+            "title": "Tile Size Scale",
+            "docs": "Server component, no hooks. The sm, md and lg steps are declared as multiples of the --vibeui-icontile-004-step variable, so the scale is edited with one number instead of three. The radius and the glyph size are computed from the step size in calc, which is why the tile keeps the same proportions at every step — that is the whole point of a scale. The shape is switched on the root through data-shape and applies to the entire row at once. Every step is captioned with its name and its value in pixels, so the size is chosen by eye and nobody invents a fourth. The surface is light: the step captions are dark."
           }
         },
         "cardControls": ["shape", "background"]
@@ -507,6 +550,19 @@
       "docs": "Серверный компонент, хуков нет. Бейдж позиционирован absolute относительно плитки и вырезан из неё кольцом box-shadow цвета подложки — отступом такого разделения не добиться, бейдж отъезжает от угла. Порог задаётся пропом max: всё, что больше, показывается как «99+», иначе трёхзначное число растягивает бейдж. Нулевой счётчик прячет бейдж целиком: пустой кружок сообщает «непрочитанных нет» хуже, чем его отсутствие. У бейджа есть aria-label, поэтому «12» читается как «12 непрочитанных». Подложка светлая, подпись тёмная.",
       "meta": {
         "tags": ["icontile", "badge", "counter", "notification"],
+        "preview": {
+          "states": [
+            {
+              "count": 0
+            },
+            {
+              "count": 12
+            },
+            {
+              "count": 120
+            }
+          ]
+        },
         "ai": {
           "export": "Icontile005",
           "usage": "<Icontile005 glyph=\"✉\" count={12} label=\"Входящие\" max={99} />",
@@ -634,7 +690,8 @@
                 "label": "Inbox",
                 "countText": "{count} unread"
               }
-            }
+            },
+            "docs": "Server component, no hooks. The badge is positioned absolute against the tile and cut out of it by a box-shadow ring in the surface colour — such separation cannot be achieved with a gap, the badge drifts away from the corner. The threshold is set by the max prop: anything larger is shown as \"99+\", otherwise a three-digit number stretches the badge. A zero count hides the badge entirely: an empty circle says \"nothing unread\" worse than its absence does. The badge has an aria-label, so \"12\" reads as \"12 unread\". The surface is light and the caption dark."
           }
         },
         "cardControls": ["count", "background"]
@@ -658,6 +715,16 @@
       "docs": "Клиентский компонент: держит состояние в useState, поэтому в файле есть «use client». Состояние объявлено атрибутом aria-pressed, а не классом — без него скринридер сообщит просто «кнопка» и не скажет, включено ли. Визуально нажатие показано двумя признаками сразу: заливка меняется и плитка утоплена inset-тенью со сдвигом на пиксель, поэтому включённость видна и в чёрно-белом режиме. Доступное имя берётся из label, знак помечен aria-hidden. Заливка в покое светлая, так что кнопка читается на тёмной подложке каталога.",
       "meta": {
         "tags": ["icontile", "toggle", "button", "pressed"],
+        "preview": {
+          "states": [
+            {
+              "defaultPressed": false
+            },
+            {
+              "defaultPressed": true
+            }
+          ]
+        },
         "ai": {
           "export": "Icontile006",
           "usage": "<Icontile006 glyph=\"★\" label=\"В избранное\" defaultPressed />",
@@ -771,7 +838,8 @@
               "props": {
                 "label": "Add to favourites"
               }
-            }
+            },
+            "docs": "Client component: it holds state in useState, so the file carries \"use client\". The state is declared through the aria-pressed attribute rather than a class — without it a screen reader announces merely \"button\" and does not say whether it is on. Visually the press is shown by two cues at once: the fill changes and the tile is sunken with an inset shadow offset by a pixel, so the on state is visible in monochrome too. The accessible name comes from label, and the glyph is marked aria-hidden. The idle fill is light, so the button reads on the dark catalog surface."
           }
         },
         "cardControls": ["hue"]
@@ -906,7 +974,8 @@
                 "title": "Quick start",
                 "description": "Install the package and wire up the theme provider in one command"
               }
-            }
+            },
+            "docs": "Server component, no hooks. The title and the description are block lines with white-space:nowrap and text-overflow:ellipsis, so long text is truncated with an ellipsis rather than wrapping and stretching the row height. The container is declared through container-type:inline-size, and below a container width of 220px the description is hidden entirely through @container — only the title beside the tile remains. The icon inside the tile is an inline svg with aria-hidden, with three variants to choose from through icon."
           }
         },
         "cardControls": ["icon", "tone", "background"]
@@ -1028,7 +1097,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "Server component, no hooks. Every tile is a type=\"button\" button, so the row takes focus and is traversed from the keyboard without extra JS. The root block only declares container-type:inline-size, while the grid itself lives on a nested data-part=\"grid\": the column count is switched through an @container aimed at that nested node (2 → 3 → 4) rather than through a window media query and not on the container itself — otherwise the query would silently fail. Hover is shown by two cues at once — a shadow and an upward shift, not by colour alone — and both are turned off under prefers-reduced-motion. The icon tile's hue comes from the inline custom property --vibeui-icontile-008-item-hue, set on the button for the particular category from items."
           }
         },
         "controls": [
@@ -1067,6 +1137,22 @@
       "docs": "Серверный компонент, хуков нет. Радиус скругления считается как 0.44 от размера плитки — круче обычного квадрата (0.28 в соседних item'ах), из-за чего форма читается как сквиркл, а не просто скруглённый квадрат. Тень двухслойная: дальний мягкий слой и ближний плотный, оба окрашены в тот же оттенок --vibeui-icontile-009-hue, что и фон плитки, поэтому смена tone красит плитку и тень согласованно одной переменной. Плитка декоративна: без label она скрыта от скринридера, с label — получает role=img и доступное имя.",
       "meta": {
         "tags": ["icontile", "squircle", "shadow", "icon"],
+        "preview": {
+          "states": [
+            {
+              "tone": "neutral"
+            },
+            {
+              "tone": "accent"
+            },
+            {
+              "tone": "success"
+            },
+            {
+              "tone": "danger"
+            }
+          ]
+        },
         "ai": {
           "export": "Icontile009",
           "usage": "<Icontile009 icon=\"shield\" tone=\"success\" size=\"lg\" label=\"Защита данных\" />",
@@ -1149,7 +1235,8 @@
                 "label": "Size"
               }
             },
-            "title": "Squircle Shadow Tile"
+            "title": "Squircle Shadow Tile",
+            "docs": "Server component, no hooks. The corner radius is computed as 0.44 of the tile size — steeper than an ordinary square (0.28 in the neighbouring items), which is why the shape reads as a squircle rather than merely a rounded square. The shadow has two layers: a soft far one and a tighter near one, both tinted to the same --vibeui-icontile-009-hue as the tile background, so changing tone recolours the tile and the shadow consistently through one variable. The tile is decorative: without a label it is hidden from screen readers, with a label it gets role=img and an accessible name."
           }
         },
         "cardControls": ["icon", "tone", "size"]
@@ -1272,7 +1359,8 @@
               "props": {
                 "label": "Profile completeness"
               }
-            }
+            },
+            "docs": "Server component, no hooks. The ring circumference is computed once from the fixed radius (2πr) rather than guessed by eye, so the number in the centre and the ring fill never disagree. The ring is rotated with a CSS transform on the whole svg by -90deg so that the fill starts from the top — the coordinates of the circles themselves are not recomputed. The value is declared accessibly: role=\"progressbar\" with aria-valuenow/aria-valuemin/aria-valuemax and an aria-label from label, so the ring colour is an illustration rather than the only carrier of state. Value is clamped to the 0-100 range inside the component."
           }
         },
         "cardControls": ["value", "tone", "size"]
@@ -1401,7 +1489,8 @@
                   "disconnected": "Disconnected"
                 }
               }
-            }
+            },
+            "docs": "Server component, no hooks. The service logo is not a library of other people's svg brands but a monogram from the first letters of name, computed by the getInitials function at runtime, so the tile works with any name without an icon set. The connection status is declared twice: by the colour of the data-part=\"dot\" dot and by the text beside it from the STATUS_LABEL table — colour alone does not read under a colour vision deficiency. On a narrow container the status is hidden through @container, while the monogram and the name always remain."
           }
         },
         "cardControls": ["status", "tone", "background"]
@@ -1526,7 +1615,8 @@
                 "name": "Report-Q3.pdf",
                 "fileSize": "2.4 MB"
               }
-            }
+            },
+            "docs": "Server component, no hooks. The file shape with a folded corner is a single inline svg path, FileIcon, marked aria-hidden; the extension abbreviation is printed over it as text in data-part=\"ext\". The tile colour is switched by the data-extension attribute across five CSS rules (pdf, doc, xls, img, zip), so adding a sixth type does not require a new component. The file name and its size run as a separate column of text, and the size is hidden on a narrow container through @container."
           }
         },
         "cardControls": ["extension", "background"]
@@ -1561,12 +1651,14 @@
             "z-index круга поверх ленты: иначе хвосты перекрывают нижнюю часть иконки",
             "aria-hidden на ленте и иконке: значение достижения несёт текстовая подпись",
             "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
-            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
+            "скрытую подпись ступени: металл различается только оттенком, и без слова ступень не прочитают ни дальтоник, ни скринридер"
           ],
           "adapt": [
             "icon — trophy, star или medal",
             "label — подпись достижения",
             "tier — bronze, silver или gold",
+            "tierText — названия ступеней в скрытой подписи: bronze, silver, gold",
             "размер круга через переменную --vibeui-icontile-013-size",
             "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
@@ -1609,12 +1701,14 @@
                 "the circle's z-index above the ribbon: otherwise the tails overlap the icon's lower half",
                 "aria-hidden on the ribbon and icon: the text caption carries the achievement's meaning",
                 "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
-                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
+                "the visually hidden tier caption: the metal differs by hue alone, and without the word neither a colour-blind reader nor a screen reader gets the tier"
               ],
               "adapt": [
                 "icon — trophy, star or medal",
                 "label — the achievement caption",
                 "tier — bronze, silver or gold",
+                "tierText — the tier names in the visually hidden caption: bronze, silver, gold",
                 "the circle size through the --vibeui-icontile-013-size variable",
                 "background — the component's surface; empty means no surface, taking the page colour"
               ],
@@ -1638,9 +1732,15 @@
             "title": "Achievement Ribbon Tile",
             "preview": {
               "props": {
-                "label": "First integration"
+                "label": "First integration",
+                "tierText": {
+                  "bronze": "bronze",
+                  "silver": "silver",
+                  "gold": "gold"
+                }
               }
-            }
+            },
+            "docs": "Server component, no hooks. The ribbon under the circle is two identical data-part=\"tail\" elements with a shared clip-path tail, the right one mirrored with transform:scaleX(-1), so both tails are guaranteed symmetric at any width and tier rather than being fitted separately by numbers. The circle and the ribbon are coloured from a single --vibeui-icontile-013-hue variable, which tier switches (bronze, silver, gold) — the metal of the achievement is nowhere picked by hand as a separate colour. The circle sits above the ribbon through z-index, and the caption is text below it, hidden on a narrow container through @container. The palette has been moved to light-dark(): the caption follows the page color-scheme, and the tile has no surface of its own — one appears only together with the background prop, and then the theme branch is computed from the lightness of the given colour."
           }
         },
         "cardControls": ["icon", "tier", "background"]
@@ -1773,7 +1873,8 @@
                 },
                 "countLabel": "{count} new notifications"
               }
-            }
+            },
+            "docs": "Server component, no hooks. The counter badge is shown only when count is greater than zero and disabled is false — a switched-off source cannot send notifications, so the two states are mutually exclusive rather than two independent switches. When disabled, the bell gets the OffIcon slash line over it and the tile loses its colour, while a text state line from data-part=\"state\" appears under the caption — desaturation alone is not enough for monochrome. The number in the badge is capped by the max threshold in the same way as in icontile-005. The palette has been moved to light-dark(): in the dark branch the border is lighter than the background rather than darker. The tile has no surface by default — it is set by the background prop, and then the theme branch is computed from the lightness of the given colour. The state texts and the badge label are exposed through the stateText and countLabel props, with the Russian values remaining the defaults."
           }
         },
         "cardControls": ["tone", "count", "disabled", "background"]
@@ -1898,7 +1999,8 @@
                   "invoice": "For companies"
                 }
               }
-            }
+            },
+            "docs": "Client component: it holds the selected method in useState and tells the controlled mode from the uncontrolled one by comparing method with undefined, so the file carries \"use client\". The group is built as a real role=\"radiogroup\" with role=\"radio\" on every tile: Tab enters the group once, and from there the arrows walk the options through a roving tabindex (tabIndex 0 on the selected one, -1 on the rest) — this is the native behaviour of <input type=\"radio\">, implemented by hand. The selected option is marked by two cues at once — a border and a checkmark in the corner — because the fill colour alone does not read under a colour vision deficiency. On a narrow container the tiles fold into a single column and unfold back into a row. The palette has been moved to light-dark(): in the dark branch the tile border is lighter than its background. The method names and hints are exposed through the methodTitle and methodHint props with Russian defaults, and the group's surface is set by the background prop and is absent by default."
           }
         },
         "cardControls": ["defaultMethod", "background"]
@@ -2039,7 +2141,8 @@
                 "hotkey": ["⌘", "K"],
                 "hotkeyAriaLabel": "Meta+K"
               }
-            }
+            },
+            "docs": "Server component, no hooks: the tile is an ordinary semantic <button type=\"button\">, so focus and keyboard activation work without a single line of JS. The keyboard shortcut is duplicated twice — as a visual pill of separate <kbd> elements in the corner and as the aria-keyshortcuts attribute on the button itself; the pill as a whole is marked aria-hidden, because a screen reader already announces the combination from the attribute, and reading characters such as \"⌘\" out letter by letter again would be noise on top of the action name. The icon is switched through icon (search, add, command), and the icon tile's colour through tone by the category-wide \"background and glyph from one hue\" formula. The description is hidden on a narrow container through @container, while the title always remains. The palette has been moved to light-dark(): in the dark branch the border and the keys are lighter than the background rather than darker. The button has no surface by default — it is set by the background prop, and then the theme branch is computed from the lightness of the given colour."
           }
         },
         "cardControls": ["icon", "tone", "background"]
@@ -2184,7 +2287,8 @@
                   "many": "{count} files"
                 }
               }
-            }
+            },
+            "docs": "Server component, no hooks. The attachment count is inflected by the standard rules of Russian: the pluralForm function picks the form (1 файл, 3 файла, 12 файлов), and the text itself comes from the countText templates with {count} substituted rather than being printed as a static word — otherwise a tile with any count other than one would sound ungrammatical on \"1\". The metadata line is assembled from three parts — the counter, a decorative dot separator and the date: on a narrow container the date and the dot are the first to be hidden through @container, while the attachment count always remains, because for skimming a list it matters more than the exact date. itemCount is clamped from below at zero inside the component. The icon tile's colour follows the category-wide \"background and glyph from one hue\" formula, switched by tone. The palette has been moved to light-dark(): in the dark branch the border is lighter than the background rather than darker. The tile has no surface by default — it is set by the background prop, and then the theme branch is computed from the lightness of the given colour."
           }
         },
         "cardControls": ["tone", "itemCount", "background"]

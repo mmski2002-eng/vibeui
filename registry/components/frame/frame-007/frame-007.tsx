@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties, ReactNode } from "react"
+import type { ComponentProps, CSSProperties, ReactNode } from "react"
 
 export type Frame007Line = {
   text: string
@@ -6,10 +6,7 @@ export type Frame007Line = {
   type?: "command" | "output"
 }
 
-export type Frame007Props = Omit<
-  ComponentPropsWithoutRef<"figure">,
-  "title"
-> & {
+export type Frame007Props = Omit<ComponentProps<"figure">, "title"> & {
   title?: string
   prompt?: string
   lines?: Frame007Line[]
@@ -29,7 +26,7 @@ const STYLES = `
 --vibeui-frame-007-bg:oklch(0.2 0.014 260);
 --vibeui-frame-007-bar:oklch(0.26 0.014 260);
 --vibeui-frame-007-fg:oklch(0.92 0.006 260);
---vibeui-frame-007-muted:oklch(0.68 0.01 260);
+--vibeui-frame-007-muted:color-mix(in oklab,var(--vibeui-frame-007-fg) 68%,transparent);
 --vibeui-frame-007-accent:oklch(0.78 0.16 150);
 --vibeui-frame-007-border:oklch(0.32 0.014 260);
 --vibeui-frame-007-radius:0.875rem;
@@ -122,6 +119,7 @@ export function Frame007({
       </style>
       <figure
         {...props}
+        data-slot="frame"
         data-vibeui-block="frame-007"
         className={className}
         style={palette}

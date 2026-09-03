@@ -1,12 +1,9 @@
 "use client"
 
 import { useEffect, useRef, useState, useSyncExternalStore } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Button025Props = Omit<
-  ComponentPropsWithoutRef<"button">,
-  "children"
-> & {
+export type Button025Props = Omit<ComponentProps<"button">, "children"> & {
   label?: string
   /** Сочетание: «mod» — Cmd на macOS и Ctrl на остальных. Например «mod+s». */
   combo?: string
@@ -27,6 +24,9 @@ const STYLES = `
 --vibeui-button-025-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-button-025-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="button-025"]{color-scheme:dark}
 [data-vibeui-block="button-025"]{
 appearance:none;border:0;cursor:pointer;
 display:inline-flex;align-items:center;gap:0.75rem;
@@ -160,6 +160,7 @@ export function Button025({
       <button
         {...props}
         type={type}
+        data-slot="button"
         data-vibeui-block="button-025"
         data-flash={String(flash)}
         className={className}

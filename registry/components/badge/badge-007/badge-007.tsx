@@ -1,14 +1,13 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Badge007Props = Omit<
-  ComponentPropsWithoutRef<"span">,
-  "children"
-> & {
+export type Badge007Props = Omit<ComponentProps<"span">, "children"> & {
   value?: number
   /** Что считаем ростом: у расходов и оттока рост — это плохо. */
   goodDirection?: "up" | "down"
   unit?: string
   period?: string
+  /** Названия направлений: знак «−» скринридеры проговаривают не всегда. */
+  directionText?: Record<"up" | "down" | "flat", string>
   /** Пусто — плашка держит фон, выведенный из направления. */
   background?: string
 }
@@ -22,11 +21,14 @@ const STYLES = `
 --vibeui-badge-007-surface:light-dark(oklch(1 0 0),oklch(0.22 0.01 265));
 --vibeui-badge-007-bg:light-dark(oklch(0.96 0.004 265),oklch(0.27 0.009 265));
 --vibeui-badge-007-fg:light-dark(oklch(0.32 0.014 265),oklch(0.93 0.006 265));
---vibeui-badge-007-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-badge-007-muted:color-mix(in oklab,var(--vibeui-badge-007-fg) 68%,transparent);
 --vibeui-badge-007-good:light-dark(oklch(0.55 0.15 152),oklch(0.77 0.15 152));
 --vibeui-badge-007-bad:light-dark(oklch(0.55 0.18 25),oklch(0.73 0.17 25));
 --vibeui-badge-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="badge-007"]{color-scheme:dark}
 [data-vibeui-block="badge-007"]{
 display:inline-flex;align-items:center;gap:0.3125rem;
 height:1.5rem;padding:0 0.5625rem;
@@ -50,6 +52,10 @@ border-top:0;border-right:0;height:0;width:0.5rem;
 border-bottom:1.5px solid currentColor;
 }
 [data-vibeui-block="badge-007"] [data-part="period"]{font-weight:500;color:var(--vibeui-badge-007-muted)}
+[data-vibeui-block="badge-007"] [data-part="sr"]{
+position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="badge-007"] *{animation:none!important;transition:none!important}}
 `
 
@@ -79,11 +85,18 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Изменение показателя: стрелка, знак и цвет по заданному направлению.
  * Один файл, ноль зависимостей, собственная палитра.
  */
+const DIRECTION_TEXT: Record<"up" | "down" | "flat", string> = {
+  up: "рост",
+  down: "снижение",
+  flat: "без изменений",
+}
+
 export function Badge007({
   value = 12.4,
   goodDirection = "up",
   unit = "%",
   period = "за неделю",
+  directionText = DIRECTION_TEXT,
   background = "",
   className,
   style,
@@ -111,6 +124,7 @@ export function Badge007({
       </style>
       <span
         {...props}
+        data-slot="badge"
         data-vibeui-block="badge-007"
         data-direction={direction}
         data-mood={mood}
@@ -118,6 +132,7 @@ export function Badge007({
         style={palette}
       >
         <span data-part="arrow" aria-hidden="true" />
+        <span data-part="sr">{directionText[direction]} </span>
         {text}
         {period ? <span data-part="period">{period}</span> : null}
       </span>

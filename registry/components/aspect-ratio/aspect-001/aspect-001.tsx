@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties, ReactNode } from "react"
+import type { ComponentProps, CSSProperties, ReactNode } from "react"
 
-export type Aspect001Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Aspect001Props = Omit<ComponentProps<"div">, "children"> & {
   /** Соотношение сторон: «16 / 9», «4 / 3», «1 / 1». */
   ratio?: string
   /** Подпись поверх подложки, пока содержимого нет. */
@@ -29,6 +26,9 @@ const STYLES = `
 --vibeui-aspect-001-radius:0.75rem;
 --vibeui-aspect-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="aspect-001"]{color-scheme:dark}
 [data-vibeui-block="aspect-001"]{
 position:relative;display:block;width:100%;box-sizing:border-box;overflow:hidden;
 aspect-ratio:var(--vibeui-aspect-001-ratio);
@@ -110,6 +110,7 @@ export function Aspect001({
       </style>
       <div
         {...props}
+        data-slot="aspect-ratio"
         data-vibeui-block="aspect-001"
         className={className}
         style={palette}

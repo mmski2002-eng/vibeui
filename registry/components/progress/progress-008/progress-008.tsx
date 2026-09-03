@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Progress008Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Progress008Props = Omit<ComponentProps<"div">, "children"> & {
   steps?: string[]
   current?: number
   title?: string
@@ -23,22 +20,25 @@ const STYLES = `
 --vibeui-progress-008-bg:transparent;
 --vibeui-progress-008-surface:light-dark(oklch(0.99 0.002 265),oklch(0.2 0.012 265));
 --vibeui-progress-008-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
---vibeui-progress-008-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-progress-008-muted:color-mix(in oklab,var(--vibeui-progress-008-fg) 68%,transparent);
 --vibeui-progress-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-progress-008-track:light-dark(oklch(0.92 0.006 265),oklch(0.3 0.011 265));
 --vibeui-progress-008-accent:light-dark(oklch(0.55 0.19 262),oklch(0.71 0.16 262));
 --vibeui-progress-008-value:0;
 --vibeui-progress-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="progress-008"]{color-scheme:dark}
 [data-vibeui-block="progress-008"]{
 display:flex;flex-direction:column;gap:0.875rem;
-width:100%;max-width:26rem;box-sizing:border-box;padding:1.125rem 1.25rem;
+width:100%;max-width:26rem;box-sizing:border-box;padding:0.9375rem 1.0625rem;
 background:var(--vibeui-progress-008-bg);
 border:1px solid var(--vibeui-progress-008-border);border-radius:1rem;
 font-family:var(--vibeui-progress-008-font);color:var(--vibeui-progress-008-fg);
 }
 [data-vibeui-block="progress-008"] [data-part="eyebrow"]{
-font-size:0.6875rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;
+font-size:0.75rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;
 color:var(--vibeui-progress-008-muted);font-variant-numeric:tabular-nums;
 }
 /* Текущий шаг словами: это главный ответ, поэтому он крупнее всего блока. */
@@ -46,7 +46,7 @@ color:var(--vibeui-progress-008-muted);font-variant-numeric:tabular-nums;
 margin:0;font-size:1.0625rem;font-weight:700;line-height:1.2;letter-spacing:-0.01em;
 }
 [data-vibeui-block="progress-008"] [data-part="next"]{
-margin:0;font-size:0.75rem;color:var(--vibeui-progress-008-muted);
+margin:0;font-size:0.875rem;color:var(--vibeui-progress-008-muted);
 }
 /* Одна дорожка с вехами: расстояние между точками показывает остаток пути. */
 [data-vibeui-block="progress-008"] [data-part="track"]{
@@ -166,6 +166,7 @@ export function Progress008({
       </style>
       <div
         {...props}
+        data-slot="progress"
         data-vibeui-block="progress-008"
         className={className}
         style={palette}

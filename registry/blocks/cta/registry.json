@@ -50,6 +50,7 @@
         "i18n": {
           "en": {
             "description": "A closing call to action: a dark block at the end of a light page, one primary action and a line beneath it that answers the last objection.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-cta-001-* variables. The heading size is computed in cqi against the block's own width, so the section is equally correct in a catalogue thumbnail and on a live page. The glow is a single radial gradient in a separate layer with pointer-events:none, not a background fill. The second action is deliberately made a link rather than a second button.",
             "ai": {
               "summary": "A closing call-to-action section: a dark ground, light rising from behind the horizon, an eyebrow pill, a large heading, an explanation, one button and a text link beside it. A small line under the buttons removes the last objection before the click. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
@@ -219,6 +220,7 @@
         "i18n": {
           "en": {
             "description": "A light centred call to action on a card: two equally weighted buttons for two honest entry points, and a line of short proofs instead of another paragraph.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-cta-002-* variables. A server component. The heading size is computed in cqi against the block's own width, so the card is equally correct in a catalogue thumbnail and on a live page. The glow above the card is a radial gradient in the card's own background-image; there is no separate layer. Below 40rem the buttons become a column and stretch to the full width: on a phone two buttons in a row turn into two narrow strips.",
             "ai": {
               "summary": "A centred call-to-action section on a light card: an eyebrow pill, a large heading, a short explanation, two buttons and a proof line under them. The second button is outlined, so the pair does not read as indecision. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
@@ -380,6 +382,7 @@
         "i18n": {
           "en": {
             "description": "An email capture CTA: a real form with a visible field label, honest consent text and a line about how often letters arrive — instead of a bare input with a button.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-cta-003-* variables. A server component: the field is uncontrolled, the form is submitted by a plain POST and works before hydration. The field label is visible and tied through htmlFor rather than hidden in the placeholder: a label inside the field disappears once the field is filled in, exactly when it is needed most. From 38rem the field and the button stand in one row through grid-template-columns:1fr auto; below that they run as a column. The heading is set in a serif face — a newsletter about interfaces has to look like text, not like a form.",
             "ai": {
               "summary": "A newsletter section: a serif heading, an explanation of what the letters contain, a form with a visible field label, consent in small type and a line about frequency and readership. The form is real and works without client code. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -528,6 +531,7 @@
         "i18n": {
           "en": {
             "description": "A call to action on a solid colour slab: a repeating-gradient pattern faded out by a mask, one large proof number and a single white button.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-cta-004-* variables. A server component. The pattern is two repeating-linear-gradients in a separate layer with pointer-events:none, faded by a mask-image towards the lower left corner, so the text always sits on a calm area. The slab is a gradient rather than a single colour: a solid fill across the whole width reads as a mistake of style. The layout is driven by the block's own width: below 46rem one column, beyond that the text and the block with the number stand side by side, with the right column aligned to the right edge.",
             "ai": {
               "summary": "A CTA section on a colour slab: a kicker, a large heading, an explanation, a glass panel with a proof number, a white button and a text link beside it. The pattern is drawn with repeating gradients and faded by a mask so it never fights the text. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
@@ -673,6 +677,7 @@
         "i18n": {
           "en": {
             "description": "A CTA with a picture beside it: the media slot holds its aspect ratio, and without an image it draws a CSS placeholder — the block looks finished with no external files.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-cta-005-* variables. A server component. The space for the picture is set through aspect-ratio, so the layout does not jump while the image loads. The imageSrc prop is optional: without it, a composition of two pseudo-elements with shadows is drawn in the same place — the block has to be complete without a single external file. The layout is driven by the block's own width: below 46rem one column, beyond that the text and the picture stand side by side in equal shares.",
             "ai": {
               "summary": "A two-column CTA section: on the left an eyebrow, a heading, an explanation, three benefit bullets and a button with a side note; on the right a picture. With no image passed, a CSS composition is drawn instead, so the block never looks unfinished. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -827,6 +832,7 @@
         "i18n": {
           "en": {
             "description": "A CTA with a guarantee: a round seal, the terms as a definition list and honest small print set at a readable size, right where people look for it.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-cta-006-* variables. A server component. The terms are marked up as a definition list, <dl>/<dt>/<dd>: they are “term — explanation” pairs, not paragraphs, and a screen reader reads them as pairs. The seal is a circle with a conic gradient and a nested white circle; there is no separate image. On the wide layout the terms are set off by a vertical rule on the left, on the narrow one by a horizontal rule on top: the same border changes side along with the layout.",
             "ai": {
               "summary": "A guarantee CTA section: a round seal with the period, a heading and an explanation, three terms as a definition list, a button with a link to the full terms and a small-print paragraph. The small print is set at a readable size and stands where people look for it. Zero dependencies, one file, its own palette.",
               "preserve": [

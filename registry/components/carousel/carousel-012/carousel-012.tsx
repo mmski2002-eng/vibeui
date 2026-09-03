@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Carousel012Props = Omit<
-  ComponentPropsWithoutRef<"section">,
-  "children"
-> & {
+export type Carousel012Props = Omit<ComponentProps<"section">, "children"> & {
   /** Верхняя лента едет влево, нижняя — вправо. */
   topRow?: string[]
   bottomRow?: string[]
@@ -28,12 +25,15 @@ const STYLES = `
 :where([data-vibeui-block="carousel-012"]){
 --vibeui-carousel-012-bg:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
 --vibeui-carousel-012-fg:light-dark(oklch(0.34 0.014 265),oklch(0.92 0.007 265));
---vibeui-carousel-012-muted:light-dark(oklch(0.58 0.014 265),oklch(0.7 0.012 265));
+--vibeui-carousel-012-muted:color-mix(in oklab,var(--vibeui-carousel-012-fg) 68%,transparent);
 --vibeui-carousel-012-border:light-dark(oklch(0.91 0.006 265),oklch(0.37 0.012 265));
 --vibeui-carousel-012-chip:light-dark(oklch(0.97 0.003 265),oklch(0.27 0.013 265));
 --vibeui-carousel-012-duration:34s;
 --vibeui-carousel-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="carousel-012"]{color-scheme:dark}
 [data-vibeui-block="carousel-012"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:30rem;box-sizing:border-box;padding:0.875rem;
@@ -166,6 +166,7 @@ export function Carousel012({
       </style>
       <section
         {...props}
+        data-slot="carousel"
         data-vibeui-block="carousel-012"
         aria-label={title}
         className={className}

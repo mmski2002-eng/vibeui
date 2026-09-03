@@ -1,7 +1,7 @@
 "use client"
 
 import { useId, useRef, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Drawer008Step = {
   title: string
@@ -10,7 +10,7 @@ export type Drawer008Step = {
 }
 
 export type Drawer008Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "title"
 > & {
   triggerLabel?: string
@@ -36,12 +36,15 @@ const STYLES = `
 --vibeui-drawer-008-bg:transparent;
 --vibeui-drawer-008-surface:light-dark(oklch(1 0 0),oklch(0.22 0.013 265));
 --vibeui-drawer-008-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
---vibeui-drawer-008-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-drawer-008-muted:color-mix(in oklab,var(--vibeui-drawer-008-fg) 68%,transparent);
 --vibeui-drawer-008-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-drawer-008-accent:light-dark(oklch(0.55 0.17 265),oklch(0.73 0.15 265));
 --vibeui-drawer-008-on-accent:light-dark(oklch(0.99 0.01 265),oklch(0.17 0.02 265));
 --vibeui-drawer-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="drawer-008"]{color-scheme:dark}
 [data-vibeui-block="drawer-008"]{
 display:inline-block;font-family:var(--vibeui-drawer-008-font);color:var(--vibeui-drawer-008-fg);
 }
@@ -63,6 +66,7 @@ translate:100% 0;transition:translate .22s ease,overlay .22s allow-discrete,disp
 @starting-style{
 [data-vibeui-block="drawer-008"] dialog[open]{translate:100% 0}
 }
+/* Затемнение позади ящика одно на обе темы: подложка гасит страницу, а не красится вместе с ней. */
 [data-vibeui-block="drawer-008"] dialog::backdrop{background:oklch(0.19 0.02 265 / 45%)}
 [data-vibeui-block="drawer-008"] [data-part="panel"]{display:flex;flex-direction:column;height:100%;box-sizing:border-box}
 /* Полоса шагов: сегменты, а не проценты — шагов заведомо немного. */
@@ -78,7 +82,7 @@ display:block;margin-bottom:0.25rem;
 font-size:0.6875rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;
 color:var(--vibeui-drawer-008-muted);
 }
-[data-vibeui-block="drawer-008"] [data-part="title"]{margin:0;font-size:1.0625rem;font-weight:680;line-height:1.25}
+[data-vibeui-block="drawer-008"] [data-part="title"]{margin:0;font-size:1rem;font-weight:680;line-height:1.25}
 [data-vibeui-block="drawer-008"] [data-part="body"]{flex:1;min-height:0;overflow-y:auto;padding:0.5rem 1rem 1rem}
 [data-vibeui-block="drawer-008"] [data-part="text"]{margin:0 0 0.875rem;font-size:0.875rem;line-height:1.5;color:var(--vibeui-drawer-008-muted)}
 [data-vibeui-block="drawer-008"] [data-part="options"]{display:flex;flex-direction:column;gap:0.5rem}
@@ -213,6 +217,7 @@ export function Drawer008({
       </style>
       <div
         {...props}
+        data-slot="drawer"
         data-vibeui-block="drawer-008"
         className={className}
         style={palette}

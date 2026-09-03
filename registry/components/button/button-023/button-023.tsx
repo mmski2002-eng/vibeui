@@ -1,10 +1,10 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Button023Props = Omit<
-  ComponentPropsWithoutRef<"button">,
+  ComponentProps<"button">,
   "children" | "onClick" | "value"
 > & {
   /** Что копируем. Он же виден в поле. */
@@ -27,13 +27,16 @@ const STYLES = `
 :where([data-vibeui-block="button-023"]){
 --vibeui-button-023-bg:transparent;
 --vibeui-button-023-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.006 265));
---vibeui-button-023-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-button-023-muted:color-mix(in oklab,var(--vibeui-button-023-fg) 68%,transparent);
 --vibeui-button-023-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
 --vibeui-button-023-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-button-023-done:light-dark(oklch(0.5 0.14 152),oklch(0.76 0.14 152));
 --vibeui-button-023-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-button-023-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="button-023"]{color-scheme:dark}
 [data-vibeui-block="button-023"]{
 appearance:none;cursor:pointer;text-align:left;
 display:flex;align-items:center;gap:0.75rem;
@@ -160,6 +163,7 @@ export function Button023({
       <button
         {...props}
         type={type}
+        data-slot="button"
         data-vibeui-block="button-023"
         data-state={copied ? "done" : "idle"}
         className={className}

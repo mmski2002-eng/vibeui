@@ -1,7 +1,7 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Calendar020Props = Omit<
-  ComponentPropsWithoutRef<"article">,
+  ComponentProps<"article">,
   "children" | "title"
 > & {
   /** Дедлайн строкой без часового пояса: 2026-04-01T18:00. */
@@ -32,7 +32,7 @@ const STYLES = `
 :where([data-vibeui-block="calendar-020"]){
 --vibeui-calendar-020-bg:transparent;
 --vibeui-calendar-020-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
---vibeui-calendar-020-muted:light-dark(oklch(0.62 0.014 265),oklch(0.67 0.013 265));
+--vibeui-calendar-020-muted:color-mix(in oklab,var(--vibeui-calendar-020-fg) 68%,transparent);
 --vibeui-calendar-020-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
 --vibeui-calendar-020-track:light-dark(oklch(0.94 0.005 265),oklch(0.3 0.011 265));
 --vibeui-calendar-020-accent:light-dark(oklch(0.55 0.16 265),oklch(0.73 0.14 265));
@@ -40,9 +40,12 @@ const STYLES = `
 --vibeui-calendar-020-late:light-dark(oklch(0.55 0.18 25),oklch(0.74 0.15 25));
 --vibeui-calendar-020-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="calendar-020"]{color-scheme:dark}
 [data-vibeui-block="calendar-020"]{
 display:flex;align-items:center;gap:1rem;
-width:100%;max-width:24rem;box-sizing:border-box;padding:1rem;
+width:100%;max-width:24rem;box-sizing:border-box;padding:0.9375rem;
 background:var(--vibeui-calendar-020-bg);
 border:1px solid var(--vibeui-calendar-020-border);border-radius:1rem;
 color:var(--vibeui-calendar-020-fg);font-family:var(--vibeui-calendar-020-font);
@@ -75,7 +78,7 @@ margin:0;font-size:1.375rem;font-weight:700;line-height:1.15;letter-spacing:-0.0
 color:var(--vibeui-calendar-020-accent);
 }
 [data-vibeui-block="calendar-020"] [data-part="when"]{
-margin:0;font-size:0.8125rem;color:var(--vibeui-calendar-020-muted);
+margin:0;font-size:0.875rem;color:var(--vibeui-calendar-020-muted);
 }
 [data-vibeui-block="calendar-020"] [data-part="when"] time{color:var(--vibeui-calendar-020-fg);font-weight:600}
 [data-vibeui-block="calendar-020"] [data-part="bar"]{
@@ -140,28 +143,48 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 }
 
 /**
+ * Момент и локаль из пропов или дефолты компонента. Чужая страница не должна
+ * падать из-за опечатки в значении: Intl бросает RangeError и на Invalid Date,
+ * и на нераспознанной локали, а это белый экран вместо всего сайта.
+ */
+function safeMoment(value: string, fallback: string) {
+  return Number.isNaN(new Date(value).getTime()) ? fallback : value
+}
+
+function safeLocale(value: string, fallback: string) {
+  try {
+    Intl.DateTimeFormat.supportedLocalesOf(value)
+    return value
+  } catch {
+    return fallback
+  }
+}
+
+/**
  * Дедлайн-карточка: остаток словами, кольцо прогресса и дата сдачи.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Calendar020({
-  deadline = "2026-04-01T18:00",
-  now = "2026-03-14T09:30",
-  startedAt = "2026-02-20T10:00",
+  deadline: deadlineProp = "2026-04-01T18:00",
+  now: nowProp = "2026-03-14T09:30",
+  startedAt: startedAtProp = "2026-02-20T10:00",
   heading = "Сдача макетов",
   unitsText = DEFAULT_UNITS_TEXT,
   remainingText = "Осталось {span}",
   overdueText = "Просрочено на {span}",
   dueText = "Срок: {value}",
-  locale = "ru-RU",
+  locale: localeProp = "ru-RU",
   accent,
   background = "",
   className,
   style,
   ...props
 }: Calendar020Props) {
+  const locale = safeLocale(localeProp, "ru-RU")
+  const deadline = safeMoment(deadlineProp, "2026-04-01T18:00")
   const target = new Date(deadline)
-  const current = new Date(now)
-  const started = new Date(startedAt)
+  const current = new Date(safeMoment(nowProp, "2026-03-14T09:30"))
+  const started = new Date(safeMoment(startedAtProp, "2026-02-20T10:00"))
 
   const span = target.getTime() - current.getTime()
   const whole = Math.max(1, target.getTime() - started.getTime())
@@ -228,6 +251,7 @@ export function Calendar020({
       </style>
       <article
         {...props}
+        data-slot="calendar"
         data-vibeui-block="calendar-020"
         data-tone={tone}
         className={className}

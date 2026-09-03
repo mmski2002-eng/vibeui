@@ -163,7 +163,8 @@
                 ],
                 "title": "Work plan"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-gantt-001-*. It is a server component: there are no hooks. A task bar occupies grid columns from its start to its end, so no duration-to-percentage math is needed. The theme comes from the surrounding color-scheme through light-dark(): the component has no surface by default, it sits directly on the page background, and the background prop turns one on together with the sticky column fill. The name column is sticky, state is distinguished by fill and border style, and the dates are duplicated as text."
           }
         },
         "cardControls": ["accent", "background"]
@@ -347,7 +348,8 @@
                 ],
                 "heading": "Plan with dependencies"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own --vibeui-gantt-002-* palette. It is a server component: there are no hooks. The theme comes from the surrounding color-scheme through light-dark(): there is no surface by default, and the background prop turns one on together with the sticky column fill. Every label is a prop: hintText, afterText, startText, daysText, tableText and columnText. The day width and the row height are set as numbers in the code (DAY_WIDTH, ROW_HEIGHT), the bars are positioned absolutely, and the links are drawn by a single inline SVG over the canvas from the same numbers — an arrow and a rectangle cannot fall out of sync. The name column is sticky and carries the «after: X» line, sideways scrolling is moved into a container with tabindex=0, and the exact dates are duplicated by a table in <details>."
           }
         },
         "cardControls": ["accent", "background"]
@@ -534,7 +536,8 @@
                 ],
                 "heading": "Stages and milestones"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own --vibeui-gantt-003-* palette. It is a server component: there are no hooks. The theme comes from the surrounding color-scheme through light-dark(): there is no surface by default, and the background prop turns one on together with the sticky column fill. Every label is a prop: hintText, taskText, daysText, tableText, columnText and kindText. The rows are a tagged union: a task is drawn as a bar across grid columns, a milestone as a diamond (rotate 45deg) in its own column with a date label. Weekends are highlighted in the header and in the cells, the name column is sticky, and sideways scrolling is moved into a container with tabindex=0. The exact dates are duplicated by a table in <details>, and state is distinguished by colour and border style at the same time."
           }
         },
         "cardControls": ["accent", "background"]
@@ -722,7 +725,8 @@
                 ],
                 "heading": "Delivery progress"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own --vibeui-gantt-004-* palette. It is a server component: there are no hooks. The theme comes from the surrounding color-scheme through light-dark(): there is no surface by default, and the background prop turns one on together with the sticky column fill. Every label is a prop: hintText, barText, rangeText, tableText and columnText. The bar sits on grid columns (weeks); inside it there is an absolutely positioned fill of width calc(var(--vibeui-gantt-004-progress) * 1%) and a notch for the expected share computed from currentWeek. A lag of more than ten points switches the fill to hatching — the colour is duplicated by a pattern. The current week is highlighted in the header and in the cells, and the table in <details> repeats the plan, the fact and the expectation as numbers."
           }
         },
         "cardControls": ["currentWeek", "accent", "background"]
@@ -915,7 +919,8 @@
                 ],
                 "heading": "Plan by owner"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own --vibeui-gantt-005-* palette. It is a server component: there are no hooks. The theme comes from the surrounding color-scheme through light-dark(): there is no surface by default, and the background prop turns one on together with the sticky column fill. Every label is a prop: hintText, loadText, rangeText, tableText and columnText. The list of owners is derived from the data, and the rows are interleaved with group headers: a header occupies grid-column 1 / -1 and stays sticky at the left edge together with the name column. The header carries the initials, the number of tasks and the total weeks; an overload is marked by a separate weight. Sideways scrolling is moved into a container with tabindex=0, and the exact dates are duplicated by a table in <details>."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1125,7 +1130,8 @@
                 ],
                 "heading": "Quarter by week"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own --vibeui-gantt-006-* palette. It is a server component: there are no hooks. The theme comes from the surrounding color-scheme through light-dark(): there is no surface by default, and the background prop turns one on together with the sticky column fill. Every label is a prop: hintText, weekText, barText, daysText, toneText, tableText and columnText. Tasks are given in days, while the column size is set by the unit prop: at week a column equals seven days, the start is taken through Math.floor and the end through Math.ceil, so a bar is rounded outwards. A row is one line of text tall, so a quarter fits vertically. Sideways scrolling is moved into a container with tabindex=0, the exact dates are duplicated by a table in <details>, and state is distinguished by both colour and hatching."
           }
         },
         "cardControls": ["unit", "accent", "background"]
@@ -1315,7 +1321,8 @@
                 ],
                 "heading": "Critical path"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own --vibeui-gantt-007-* palette. It is a server component: there are no hooks. The theme comes from the surrounding color-scheme through light-dark(): there is no surface by default, and the background prop turns one on. Every label is a prop: hintText, tagText, daysText, criticalText, tableText and columnText. The schedule() function makes a forward pass over the after links (early dates) and a backward one (late dates), slack is computed as their difference, and zero slack means a critical task. The layout runs not on grid columns but in percentages of the project length on flex tracks, so the scale does not depend on the number of days. Sideways scrolling sits in a container with tabindex=0, and the dates and slack are duplicated by a table in <details>."
           }
         },
         "cardControls": ["accent", "background"]

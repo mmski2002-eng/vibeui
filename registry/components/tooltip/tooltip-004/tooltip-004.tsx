@@ -1,11 +1,8 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Tooltip004Action = { glyph: string; label: string }
 
-export type Tooltip004Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Tooltip004Props = Omit<ComponentProps<"div">, "children"> & {
   actions?: Tooltip004Action[]
   /** С какой стороны панели всплывают подсказки. */
   side?: "top" | "bottom"
@@ -28,6 +25,9 @@ const STYLES = `
 --vibeui-tooltip-004-accent:light-dark(oklch(0.57 0.17 265),oklch(0.72 0.16 265));
 --vibeui-tooltip-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="tooltip-004"]{color-scheme:dark}
 [data-vibeui-block="tooltip-004"]{
 display:inline-flex;align-items:center;gap:0.125rem;
 padding:0.3125rem;box-sizing:border-box;
@@ -54,6 +54,7 @@ width:1px;height:1.25rem;margin:0 0.25rem;background:var(--vibeui-tooltip-004-bo
 position:absolute;left:50%;z-index:30;
 width:max-content;max-width:12rem;
 padding:0.3125rem 0.5rem;border-radius:0.4375rem;
+/* Обе ветки --tip тёмные — плашка подсказки тёмная всегда, поэтому подпись светлая без light-dark(). */
 background:var(--vibeui-tooltip-004-tip);color:oklch(0.98 0.002 265);
 font-size:0.6875rem;font-weight:560;line-height:1.35;text-align:center;
 pointer-events:none;opacity:0;
@@ -126,6 +127,7 @@ export function Tooltip004({
       </style>
       <div
         {...props}
+        data-slot="tooltip"
         data-vibeui-block="tooltip-004"
         data-side={side}
         role="toolbar"

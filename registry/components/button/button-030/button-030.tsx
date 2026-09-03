@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Button030Props = Omit<
-  ComponentPropsWithoutRef<"button">,
-  "children"
-> & {
+export type Button030Props = Omit<ComponentProps<"button">, "children"> & {
   label?: string
   /** Сколько непрочитанного. Ноль прячет бейдж целиком. */
   count?: number
@@ -31,6 +28,9 @@ const STYLES = `
 --vibeui-button-030-badge-fg:light-dark(oklch(0.99 0.01 25),oklch(0.19 0.03 25));
 --vibeui-button-030-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="button-030"]{color-scheme:dark}
 [data-vibeui-block="button-030"]{
 appearance:none;cursor:pointer;position:relative;
 display:inline-flex;align-items:center;justify-content:center;
@@ -140,6 +140,7 @@ export function Button030({
       <button
         {...props}
         type={type}
+        data-slot="button"
         data-vibeui-block="button-030"
         className={className}
         style={palette}

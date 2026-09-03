@@ -1,7 +1,7 @@
 "use client"
 
 import { useId, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Filters012Preset = {
   id: string
@@ -10,7 +10,7 @@ export type Filters012Preset = {
 }
 
 export type Filters012Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   title?: string
@@ -36,13 +36,16 @@ const STYLES = `
 --vibeui-filters-012-card:light-dark(oklch(1 0 0),oklch(0.27 0.012 265));
 --vibeui-filters-012-fill:light-dark(oklch(0.975 0.004 265),oklch(0.31 0.012 265));
 --vibeui-filters-012-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
---vibeui-filters-012-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-filters-012-muted:color-mix(in oklab,var(--vibeui-filters-012-fg) 68%,transparent);
 --vibeui-filters-012-border:light-dark(oklch(0.89 0.008 265),oklch(0.4 0.014 265));
 --vibeui-filters-012-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-filters-012-accent:light-dark(oklch(0.52 0.17 145),oklch(0.76 0.14 145));
 --vibeui-filters-012-on-accent:light-dark(oklch(1 0 0),oklch(0.2 0.03 145));
 --vibeui-filters-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="filters-012"]{color-scheme:dark}
 /* Подложки по умолчанию нет: список ложится на фон страницы. */
 [data-vibeui-block="filters-012"]{
 display:flex;flex-direction:column;gap:0.625rem;
@@ -76,7 +79,15 @@ width:1rem;height:1rem;
 outline:2px solid var(--vibeui-filters-012-accent);outline-offset:2px;
 }
 [data-vibeui-block="filters-012"] [data-part="body"]{flex:1;min-width:0;display:flex;flex-direction:column;gap:0.125rem}
-[data-vibeui-block="filters-012"] [data-part="body"] b{font-size:0.8125rem;font-weight:650}
+[data-vibeui-block="filters-012"] [data-part="body"] b{display:flex;align-items:center;gap:0.375rem;font-size:0.8125rem;font-weight:650}
+/* Применённый набор назван словом: выключенная кнопка и рамка выбора говорят
+   про выбор, а не про то, что уже стоит в списке. */
+[data-vibeui-block="filters-012"] [data-part="applied"]{
+flex:none;padding:0.0625rem 0.375rem;border-radius:9999px;
+background:color-mix(in oklab,var(--vibeui-filters-012-accent) 16%,transparent);
+color:var(--vibeui-filters-012-accent);
+font-size:0.6875rem;font-weight:600;
+}
 [data-vibeui-block="filters-012"] [data-part="body"] span{font-size:0.75rem;color:var(--vibeui-filters-012-muted)}
 [data-vibeui-block="filters-012"] [data-part="delete"]{
 appearance:none;cursor:pointer;flex:none;
@@ -121,6 +132,7 @@ const DEFAULT_PRESETS: Filters012Preset[] = [
 const DEFAULT_LABELS: Record<string, string> = {
   empty: "Сохранённых наборов пока нет.",
   remove: "Удалить набор «{name}»",
+  applied: "Применён",
 }
 
 function label(
@@ -215,6 +227,7 @@ export function Filters012({
       </style>
       <div
         {...props}
+        data-slot="filters"
         data-vibeui-block="filters-012"
         className={className}
         style={palette}
@@ -236,7 +249,14 @@ export function Filters012({
                     onChange={() => setDraftId(preset.id)}
                   />
                   <label data-part="body" htmlFor={`${name}-${preset.id}`}>
-                    <b>{preset.name}</b>
+                    <b>
+                      {preset.name}
+                      {preset.id === appliedId ? (
+                        <span data-part="applied">
+                          {label(labels, "applied")}
+                        </span>
+                      ) : null}
+                    </b>
                     <span>{preset.summary}</span>
                   </label>
                   <button

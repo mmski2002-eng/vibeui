@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Buttongroup015Option = {
   label: string
@@ -6,7 +6,7 @@ export type Buttongroup015Option = {
 }
 
 export type Buttongroup015Props = Omit<
-  ComponentPropsWithoutRef<"fieldset">,
+  ComponentProps<"fieldset">,
   "children"
 > & {
   options?: Buttongroup015Option[]
@@ -28,7 +28,7 @@ const STYLES = `
 :where([data-vibeui-block="buttongroup-015"]){
 --vibeui-buttongroup-015-surface:transparent;
 --vibeui-buttongroup-015-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.006 265));
---vibeui-buttongroup-015-muted:light-dark(oklch(0.56 0.014 265),oklch(0.69 0.012 265));
+--vibeui-buttongroup-015-muted:color-mix(in oklab,var(--vibeui-buttongroup-015-fg) 68%,transparent);
 --vibeui-buttongroup-015-border:light-dark(oklch(0.89 0.008 265),oklch(0.37 0.012 265));
 --vibeui-buttongroup-015-badge:light-dark(oklch(0.95 0.006 265),oklch(0.33 0.012 265));
 --vibeui-buttongroup-015-accent:light-dark(oklch(0.5 0.15 165),oklch(0.74 0.13 165));
@@ -37,6 +37,9 @@ const STYLES = `
 --vibeui-buttongroup-015-radius:0.625rem;
 --vibeui-buttongroup-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="buttongroup-015"]{color-scheme:dark}
 [data-vibeui-block="buttongroup-015"]{
 box-sizing:border-box;display:inline-block;
 margin:0;padding:0;border:0;
@@ -51,7 +54,7 @@ overflow:hidden;clip-path:inset(50%);white-space:nowrap;
 [data-vibeui-block="buttongroup-015"] [data-part="segment"]{
 position:relative;z-index:0;
 display:inline-flex;align-items:center;gap:0.5rem;
-height:2.375rem;padding:0 0.75rem;margin-inline-start:-1px;
+height:2.25rem;padding:0 0.75rem;margin-inline-start:-1px;
 border:1px solid var(--vibeui-buttongroup-015-border);
 background:var(--vibeui-buttongroup-015-surface);
 color:var(--vibeui-buttongroup-015-muted);
@@ -165,6 +168,7 @@ export function Buttongroup015({
       </style>
       <fieldset
         {...props}
+        data-slot="button-group"
         data-vibeui-block="buttongroup-015"
         className={className}
         style={palette}

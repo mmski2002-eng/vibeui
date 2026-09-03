@@ -1,7 +1,7 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Buttongroup045Props = Omit<
-  ComponentPropsWithoutRef<"fieldset">,
+  ComponentProps<"fieldset">,
   "children"
 > & {
   metricLabel?: string
@@ -31,13 +31,16 @@ const STYLES = `
 --vibeui-buttongroup-045-track:light-dark(oklch(0.955 0.004 265),oklch(0.3 0.01 265));
 --vibeui-buttongroup-045-knob:light-dark(oklch(1 0 0),oklch(0.42 0.013 265));
 --vibeui-buttongroup-045-fg:light-dark(oklch(0.24 0.016 265),oklch(0.95 0.005 265));
---vibeui-buttongroup-045-muted:light-dark(oklch(0.56 0.014 265),oklch(0.73 0.012 265));
+--vibeui-buttongroup-045-muted:color-mix(in oklab,var(--vibeui-buttongroup-045-fg) 68%,transparent);
 --vibeui-buttongroup-045-border:light-dark(oklch(0.9 0.006 265),oklch(0.4 0.012 265));
 --vibeui-buttongroup-045-shadow:light-dark(oklch(0.2 0.02 265 / 16%),oklch(0 0 0 / 38%));
 --vibeui-buttongroup-045-accent:light-dark(oklch(0.5 0.15 230),oklch(0.79 0.13 230));
 --vibeui-buttongroup-045-radius:0.4375rem;
 --vibeui-buttongroup-045-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="buttongroup-045"]{color-scheme:dark}
 [data-vibeui-block="buttongroup-045"]{
 box-sizing:border-box;display:inline-flex;align-items:center;gap:0.75rem;
 margin:0;padding:0.625rem 0.875rem;
@@ -154,6 +157,7 @@ export function Buttongroup045({
       </style>
       <fieldset
         {...props}
+        data-slot="button-group"
         data-vibeui-block="buttongroup-045"
         className={className}
         style={palette}

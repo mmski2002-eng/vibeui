@@ -1,14 +1,11 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Breadcrumb001Item = {
   label: string
   href?: string
 }
 
-export type Breadcrumb001Props = Omit<
-  ComponentPropsWithoutRef<"nav">,
-  "children"
-> & {
+export type Breadcrumb001Props = Omit<ComponentProps<"nav">, "children"> & {
   items?: Breadcrumb001Item[]
   /** Сколько уровней показывать целиком. Середина сворачивается в многоточие. */
   maxVisible?: number
@@ -28,13 +25,16 @@ export type Breadcrumb001Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="breadcrumb-001"]){
 --vibeui-breadcrumb-001-fg:light-dark(oklch(0.28 0.016 265),oklch(0.93 0.008 265));
---vibeui-breadcrumb-001-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-breadcrumb-001-muted:color-mix(in oklab,var(--vibeui-breadcrumb-001-fg) 68%,transparent);
 --vibeui-breadcrumb-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
 --vibeui-breadcrumb-001-bg:transparent;
 --vibeui-breadcrumb-001-pad:0;
 --vibeui-breadcrumb-001-radius:0;
 --vibeui-breadcrumb-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="breadcrumb-001"]{color-scheme:dark}
 [data-vibeui-block="breadcrumb-001"]{
 box-sizing:border-box;padding:var(--vibeui-breadcrumb-001-pad);
 background:var(--vibeui-breadcrumb-001-bg);
@@ -142,6 +142,7 @@ export function Breadcrumb001({
       </style>
       <nav
         {...props}
+        data-slot="breadcrumb"
         data-vibeui-block="breadcrumb-001"
         aria-label={navLabel}
         className={className}

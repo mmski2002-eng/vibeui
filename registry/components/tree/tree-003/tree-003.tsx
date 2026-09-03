@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Tree003Node = {
   name: string
@@ -6,7 +6,7 @@ export type Tree003Node = {
   open?: boolean
 }
 
-export type Tree003Props = Omit<ComponentPropsWithoutRef<"div">, "children"> & {
+export type Tree003Props = Omit<ComponentProps<"div">, "children"> & {
   nodes?: Tree003Node[]
   label?: string
   /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
@@ -26,13 +26,16 @@ const STYLES = `
 :where([data-vibeui-block="tree-003"]){
 --vibeui-tree-003-bg:transparent;
 --vibeui-tree-003-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
---vibeui-tree-003-muted:light-dark(oklch(0.56 0.014 265),oklch(0.67 0.012 265));
+--vibeui-tree-003-muted:color-mix(in oklab,var(--vibeui-tree-003-fg) 68%,transparent);
 --vibeui-tree-003-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-tree-003-hover:light-dark(oklch(0.97 0.004 265),oklch(0.29 0.01 265));
 --vibeui-tree-003-chip:light-dark(oklch(0.955 0.004 265),oklch(0.32 0.012 265));
 --vibeui-tree-003-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-tree-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="tree-003"]{color-scheme:dark}
 [data-vibeui-block="tree-003"]{
 width:100%;max-width:20rem;box-sizing:border-box;padding:0.5rem;
 background:var(--vibeui-tree-003-bg);
@@ -209,6 +212,7 @@ export function Tree003({
       </style>
       <div
         {...props}
+        data-slot="tree"
         data-vibeui-block="tree-003"
         className={className}
         style={palette}

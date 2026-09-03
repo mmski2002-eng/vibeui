@@ -1,9 +1,9 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Alert014State = "operational" | "degraded" | "down" | "maintenance"
 
 export type Alert014Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "title" | "children"
 > & {
   state?: Alert014State
@@ -13,6 +13,8 @@ export type Alert014Props = Omit<
   updated?: string
   statusLabel?: string
   statusHref?: string
+  /** Название состояния словом: точка называет его только цветом. */
+  stateText?: Record<string, string>
   /** Пусто — подложки нет, сводка лежит прямо на фоне страницы. */
   background?: string
 }
@@ -27,7 +29,7 @@ export type Alert014Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="alert-014"]){
 --vibeui-alert-014-fg:light-dark(oklch(0.24 0.016 265),oklch(0.95 0.006 265));
---vibeui-alert-014-muted:light-dark(oklch(0.5 0.014 265),oklch(0.72 0.012 265));
+--vibeui-alert-014-muted:color-mix(in oklab,var(--vibeui-alert-014-fg) 68%,transparent);
 --vibeui-alert-014-bg:transparent;
 --vibeui-alert-014-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-alert-014-state:light-dark(oklch(0.58 0.15 152),oklch(0.74 0.16 152));
@@ -35,6 +37,9 @@ const STYLES = `
 --vibeui-alert-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="alert-014"]{color-scheme:dark}
 [data-vibeui-block="alert-014"]{
 /* flex-wrap живёт здесь, а не в @container: контейнерный запрос применяется
    к потомкам контейнера, но не к нему самому. На широкой раскладке перенос
@@ -64,7 +69,13 @@ animation:vibeui-alert-014-pulse 1.8s ease-out infinite;
 0%{transform:scale(1);opacity:.6}
 100%{transform:scale(2.6);opacity:0}
 }
-[data-vibeui-block="alert-014"] [data-part="text"]{display:flex;flex-direction:column;gap:0.125rem;flex:1 1 auto;min-width:0}
+/* Состояние названо словом: точка отличает сбой от деградации только цветом,
+   а цвет читают не все. Слово видно только скринридеру. */
+[data-vibeui-block="alert-014"] [data-part="sr"]{
+position:absolute;width:1px;height:1px;overflow:hidden;
+clip-path:inset(50%);white-space:nowrap;
+}
+[data-vibeui-block="alert-014"] [data-part="text"]{position:relative;display:flex;flex-direction:column;gap:0.125rem;flex:1 1 auto;min-width:0}
 [data-vibeui-block="alert-014"] [data-part="title"]{font-size:0.875rem;font-weight:600;line-height:1.35}
 [data-vibeui-block="alert-014"] [data-part="description"]{font-size:0.8125rem;line-height:1.5;color:var(--vibeui-alert-014-muted)}
 [data-vibeui-block="alert-014"] [data-part="updated"]{
@@ -84,6 +95,13 @@ border-bottom:1px solid transparent;transition:border-color .16s ease;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="alert-014"] *{animation:none!important;transition:none!important}}
 `
+
+const STATE_TEXT: Record<string, string> = {
+  operational: "Работает",
+  degraded: "Работает с перебоями",
+  down: "Сбой",
+  maintenance: "Обслуживание",
+}
 
 /**
  * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
@@ -118,6 +136,7 @@ export function Alert014({
   updated = "обновлено 2 минуты назад",
   statusLabel = "Статус сервисов",
   statusHref = "#status",
+  stateText = STATE_TEXT,
   background = "",
   className,
   style,
@@ -140,6 +159,7 @@ export function Alert014({
       </style>
       <div
         {...props}
+        data-slot="alert"
         data-vibeui-block="alert-014"
         data-state={state}
         role={state === "down" ? "alert" : "status"}
@@ -148,6 +168,7 @@ export function Alert014({
       >
         <span data-part="dot" aria-hidden="true" />
         <span data-part="text">
+          <span data-part="sr">{stateText[state] ?? STATE_TEXT[state]}</span>
           <span data-part="title">{title}</span>
           {description ? (
             <span data-part="description">{description}</span>

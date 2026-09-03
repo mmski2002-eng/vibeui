@@ -1,10 +1,10 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Spinner009Props = Omit<
-  ComponentPropsWithoutRef<"button">,
+  ComponentProps<"button">,
   "children" | "onClick"
 > & {
   label?: string
@@ -27,13 +27,16 @@ const STYLES = `
 --vibeui-spinner-009-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-spinner-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="spinner-009"]{color-scheme:dark}
 [data-vibeui-block="spinner-009"]{
 appearance:none;cursor:pointer;
 display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;
 height:2.5rem;padding:0 1.125rem;box-sizing:border-box;
 border-radius:0.625rem;border:1.5px solid var(--vibeui-spinner-009-accent);
 background:transparent;color:var(--vibeui-spinner-009-accent);
-font-family:var(--vibeui-spinner-009-font);font-size:0.875rem;font-weight:650;line-height:1;
+font-family:var(--vibeui-spinner-009-font);font-size:0.9375rem;font-weight:650;line-height:1;
 }
 [data-vibeui-block="spinner-009"]:hover:not(:disabled){background:color-mix(in oklab,var(--vibeui-spinner-009-accent) 10%,transparent)}
 [data-vibeui-block="spinner-009"]:focus-visible{outline:2px solid var(--vibeui-spinner-009-accent);outline-offset:2px}
@@ -105,6 +108,7 @@ export function Spinner009({
       <button
         {...props}
         type={type}
+        data-slot="spinner"
         data-vibeui-block="spinner-009"
         data-state={pending ? "pending" : "idle"}
         className={className}

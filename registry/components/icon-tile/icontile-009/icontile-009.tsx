@@ -1,7 +1,7 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Icontile009Props = Omit<
-  ComponentPropsWithoutRef<"span">,
+  ComponentProps<"span">,
   "children" | "color"
 > & {
   icon?: "spark" | "bolt" | "shield"
@@ -25,6 +25,9 @@ const STYLES = `
 --vibeui-icontile-009-fill:light-dark(oklch(0.94 var(--vibeui-icontile-009-chroma) var(--vibeui-icontile-009-hue)),oklch(0.33 calc(var(--vibeui-icontile-009-chroma) * 1.6) var(--vibeui-icontile-009-hue)));
 --vibeui-icontile-009-mark:light-dark(oklch(0.44 calc(var(--vibeui-icontile-009-chroma) * 4) var(--vibeui-icontile-009-hue)),oklch(0.88 calc(var(--vibeui-icontile-009-chroma) * 2.2) var(--vibeui-icontile-009-hue)));
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="icontile-009"]{color-scheme:dark}
 [data-vibeui-block="icontile-009"]{
 display:inline-flex;align-items:center;justify-content:center;flex:none;
 box-sizing:border-box;
@@ -103,6 +106,7 @@ export function Icontile009({
       </style>
       <span
         {...props}
+        data-slot="icon-tile"
         data-vibeui-block="icontile-009"
         data-tone={tone}
         data-size={size}

@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Tooltip015Props = Omit<
-  ComponentPropsWithoutRef<"span">,
-  "children"
-> & {
+export type Tooltip015Props = Omit<ComponentProps<"span">, "children"> & {
   label?: string
   caption?: string
   /** data: или обычный URL картинки-превью. */
@@ -37,13 +34,16 @@ const STYLES = `
 :where([data-vibeui-block="tooltip-015"]){
 --vibeui-tooltip-015-bg:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
 --vibeui-tooltip-015-fg:light-dark(oklch(0.25 0.014 265),oklch(0.93 0.006 265));
---vibeui-tooltip-015-muted:light-dark(oklch(0.55 0.014 265),oklch(0.73 0.012 265));
+--vibeui-tooltip-015-muted:color-mix(in oklab,var(--vibeui-tooltip-015-fg) 68%,transparent);
 --vibeui-tooltip-015-border:light-dark(oklch(0.9 0.006 265),oklch(0.4 0.012 265));
 --vibeui-tooltip-015-thumb:light-dark(oklch(0.94 0.006 265),oklch(0.33 0.012 265));
 --vibeui-tooltip-015-link:light-dark(oklch(0.5 0.16 265),oklch(0.78 0.13 265));
 --vibeui-tooltip-015-accent:light-dark(oklch(0.57 0.17 265),oklch(0.76 0.15 265));
 --vibeui-tooltip-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="tooltip-015"]{color-scheme:dark}
 [data-vibeui-block="tooltip-015"]{
 position:relative;display:inline-flex;font-family:var(--vibeui-tooltip-015-font);
 }
@@ -109,6 +109,7 @@ export function Tooltip015({
       </style>
       <span
         {...props}
+        data-slot="tooltip"
         data-vibeui-block="tooltip-015"
         className={className}
         style={palette}

@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Icontile014Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Icontile014Props = Omit<ComponentProps<"div">, "children"> & {
   label?: string
   count?: number
   max?: number
@@ -33,7 +30,7 @@ container-type:inline-size;
 --vibeui-icontile-014-chroma:0.05;
 --vibeui-icontile-014-size:2.75rem;
 --vibeui-icontile-014-fg:light-dark(oklch(0.26 0.014 265),oklch(0.94 0.006 265));
---vibeui-icontile-014-muted:light-dark(oklch(0.52 0.014 265),oklch(0.71 0.012 265));
+--vibeui-icontile-014-muted:color-mix(in oklab,var(--vibeui-icontile-014-fg) 68%,transparent);
 --vibeui-icontile-014-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.011 265));
 --vibeui-icontile-014-badge:light-dark(oklch(0.58 0.21 25),oklch(0.66 0.19 25));
 --vibeui-icontile-014-ring:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
@@ -41,6 +38,9 @@ container-type:inline-size;
 --vibeui-icontile-014-surface:transparent;
 --vibeui-icontile-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="icontile-014"]{color-scheme:dark}
 [data-vibeui-block="icontile-014"]{
 display:flex;align-items:center;gap:0.875rem;min-width:0;
 box-sizing:border-box;padding:0.75rem 1rem;
@@ -52,8 +52,8 @@ font-family:var(--vibeui-icontile-014-font);
 position:relative;display:grid;place-items:center;flex:none;
 width:var(--vibeui-icontile-014-size);height:var(--vibeui-icontile-014-size);
 border-radius:0.75rem;
-background:oklch(0.93 var(--vibeui-icontile-014-chroma) var(--vibeui-icontile-014-hue));
-color:oklch(0.44 calc(var(--vibeui-icontile-014-chroma) * 4) var(--vibeui-icontile-014-hue));
+background:light-dark(oklch(0.93 var(--vibeui-icontile-014-chroma) var(--vibeui-icontile-014-hue)),oklch(0.34 var(--vibeui-icontile-014-chroma) var(--vibeui-icontile-014-hue)));
+color:light-dark(oklch(0.44 calc(var(--vibeui-icontile-014-chroma) * 4) var(--vibeui-icontile-014-hue)),oklch(0.87 calc(var(--vibeui-icontile-014-chroma) * 2) var(--vibeui-icontile-014-hue)));
 }
 [data-vibeui-block="icontile-014"] [data-part="tile"] > svg{width:52%;height:52%}
 [data-vibeui-block="icontile-014"] [data-part="badge"]{
@@ -194,6 +194,7 @@ export function Icontile014({
       </style>
       <div
         {...props}
+        data-slot="icon-tile"
         data-vibeui-block="icontile-014"
         data-tone={tone}
         data-disabled={disabled ? "true" : undefined}

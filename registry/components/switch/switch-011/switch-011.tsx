@@ -1,10 +1,10 @@
 "use client"
 
 import { useId, useRef, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Switch011Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   label?: string
@@ -30,7 +30,7 @@ const STYLES = `
    не связанная с подложкой самой строки. */
 --vibeui-switch-011-panel:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
 --vibeui-switch-011-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-switch-011-muted:light-dark(oklch(0.54 0.014 265),oklch(0.7 0.012 265));
+--vibeui-switch-011-muted:color-mix(in oklab,var(--vibeui-switch-011-fg) 68%,transparent);
 --vibeui-switch-011-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-switch-011-track:light-dark(oklch(0.88 0.008 265),oklch(0.43 0.014 265));
 --vibeui-switch-011-thumb:light-dark(oklch(1 0 0),oklch(0.93 0.004 265));
@@ -38,6 +38,9 @@ const STYLES = `
 --vibeui-switch-011-accent-ink:light-dark(oklch(1 0 0),oklch(0.18 0.04 25));
 --vibeui-switch-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="switch-011"]{color-scheme:dark}
 [data-vibeui-block="switch-011"]{
 display:flex;align-items:center;gap:1rem;
 width:100%;max-width:21rem;box-sizing:border-box;padding:0.875rem;
@@ -47,7 +50,7 @@ font-family:var(--vibeui-switch-011-font);color:var(--vibeui-switch-011-fg);
 }
 [data-vibeui-block="switch-011"] [data-part="row"]{display:flex;align-items:center;gap:1rem;flex:1 1 auto;cursor:pointer;min-width:0}
 [data-vibeui-block="switch-011"] [data-part="text"]{display:flex;flex-direction:column;gap:0.125rem;flex:1 1 auto;min-width:0}
-[data-vibeui-block="switch-011"] [data-part="label"]{font-size:0.9375rem;font-weight:600;line-height:1.3}
+[data-vibeui-block="switch-011"] [data-part="label"]{font-size:0.875rem;font-weight:600;line-height:1.3}
 [data-vibeui-block="switch-011"] [data-part="description"]{font-size:0.8125rem;line-height:1.4;color:var(--vibeui-switch-011-muted)}
 [data-vibeui-block="switch-011"] [data-part="track"]{position:relative;display:flex;flex:none}
 [data-vibeui-block="switch-011"] input{
@@ -75,6 +78,8 @@ background:var(--vibeui-switch-011-panel);color:var(--vibeui-switch-011-fg);
 font-family:var(--vibeui-switch-011-font);
 box-shadow:0 20px 44px oklch(0.2 0.02 265 / 22%);
 }
+/* Затемнение живёт в top layer и до переменных корня не всегда дотягивается,
+   поэтому цвет записан прямо: полупрозрачный скрим уместен в обеих темах. */
 [data-vibeui-block="switch-011"] [data-part="dialog"]::backdrop{
 background:oklch(0.15 0.01 265 / 45%);
 }
@@ -163,6 +168,7 @@ export function Switch011({
       </style>
       <div
         {...props}
+        data-slot="switch"
         data-vibeui-block="switch-011"
         className={className}
         style={palette}

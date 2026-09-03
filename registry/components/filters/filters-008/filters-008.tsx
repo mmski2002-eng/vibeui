@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Filters008Group = {
   key: string
@@ -7,10 +7,7 @@ export type Filters008Group = {
   defaultValue?: string
 }
 
-export type Filters008Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Filters008Props = Omit<ComponentProps<"div">, "children"> & {
   title?: string
   active?: number
   found?: string
@@ -33,7 +30,7 @@ const STYLES = `
 --vibeui-filters-008-surface:transparent;
 --vibeui-filters-008-fill:light-dark(oklch(0.975 0.004 265),oklch(0.29 0.012 265));
 --vibeui-filters-008-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
---vibeui-filters-008-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-filters-008-muted:color-mix(in oklab,var(--vibeui-filters-008-fg) 68%,transparent);
 --vibeui-filters-008-border:light-dark(oklch(0.89 0.008 265),oklch(0.4 0.014 265));
 --vibeui-filters-008-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-filters-008-accent:light-dark(oklch(0.52 0.19 305),oklch(0.76 0.15 305));
@@ -41,6 +38,9 @@ const STYLES = `
 --vibeui-filters-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="filters-008"]{color-scheme:dark}
 /* Подложки по умолчанию нет: свёртка ложится на фон страницы. */
 [data-vibeui-block="filters-008"]{
 display:block;width:100%;max-width:30rem;box-sizing:border-box;padding:0.75rem;
@@ -230,6 +230,7 @@ export function Filters008({
       </style>
       <div
         {...props}
+        data-slot="filters"
         data-vibeui-block="filters-008"
         className={className}
         style={palette}

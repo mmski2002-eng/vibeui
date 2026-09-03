@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import type { CSSProperties, KeyboardEvent, ReactNode } from "react"
 
 export type Tabs008Item = {
@@ -38,12 +38,15 @@ const STYLES = `
 --vibeui-tabs-008-bg:transparent;
 --vibeui-tabs-008-menu:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
 --vibeui-tabs-008-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-tabs-008-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-tabs-008-muted:color-mix(in oklab,var(--vibeui-tabs-008-fg) 68%,transparent);
 --vibeui-tabs-008-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-tabs-008-hover:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.85 0.02 265 / 13%));
 --vibeui-tabs-008-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
 --vibeui-tabs-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="tabs-008"]{color-scheme:dark}
 [data-vibeui-block="tabs-008"]{
 box-sizing:border-box;width:100%;max-width:28rem;padding:0.5rem 0.75rem 0.875rem;
 background:var(--vibeui-tabs-008-bg);color:var(--vibeui-tabs-008-fg);
@@ -158,6 +161,37 @@ export function Tabs008({
   const [promoted, setPromoted] = useState<string | null>(null)
   const [open, setOpen] = useState(false)
   const listRef = useRef<HTMLDivElement>(null)
+  const moreRef = useRef<HTMLButtonElement>(null)
+  const slotRef = useRef<HTMLSpanElement>(null)
+
+  // Список «ещё» перекрывает содержимое, поэтому обязан уходить по Escape и по
+  // клику мимо. Фокус возвращается на кнопку: иначе после закрытия он остаётся
+  // на исчезнувшем пункте и следующий Tab начинает обход с начала страницы.
+  useEffect(() => {
+    if (!open) {
+      return
+    }
+
+    const onKeyDown = (event: globalThis.KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false)
+        moreRef.current?.focus()
+      }
+    }
+    const onPointerDown = (event: PointerEvent) => {
+      if (!slotRef.current?.contains(event.target as Node)) {
+        setOpen(false)
+      }
+    }
+
+    document.addEventListener("keydown", onKeyDown)
+    document.addEventListener("pointerdown", onPointerDown)
+
+    return () => {
+      document.removeEventListener("keydown", onKeyDown)
+      document.removeEventListener("pointerdown", onPointerDown)
+    }
+  }, [open])
 
   const palette = {
     ...(accent ? { "--vibeui-tabs-008-accent": accent } : null),
@@ -219,7 +253,12 @@ export function Tabs008({
       <style href="vibeui-tabs-008" precedence="medium">
         {STYLES}
       </style>
-      <div data-vibeui-block="tabs-008" className={className} style={palette}>
+      <div
+        data-slot="tabs"
+        data-vibeui-block="tabs-008"
+        className={className}
+        style={palette}
+      >
         <div data-part="row">
           <div
             data-part="list"
@@ -245,10 +284,11 @@ export function Tabs008({
             ))}
           </div>
           {rest.length > 0 ? (
-            <span data-part="slot">
+            <span data-part="slot" ref={slotRef}>
               <button
                 type="button"
                 data-part="more"
+                ref={moreRef}
                 aria-haspopup="true"
                 aria-expanded={open}
                 onClick={() => setOpen(!open)}
@@ -269,6 +309,7 @@ export function Tabs008({
                           setPromoted(item.id)
                           setActive(item.id)
                           setOpen(false)
+                          moreRef.current?.focus()
                         }}
                       >
                         {item.label}

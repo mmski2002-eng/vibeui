@@ -1,12 +1,9 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Button005Props = Omit<
-  ComponentPropsWithoutRef<"button">,
-  "onClick"
-> & {
+export type Button005Props = Omit<ComponentProps<"button">, "onClick"> & {
   confirmLabel?: string
   /** Сколько окно подтверждения остаётся открытым, мс. */
   timeout?: number
@@ -34,6 +31,9 @@ const STYLES = `
 --vibeui-button-005-radius:0.625rem;
 --vibeui-button-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="button-005"]{color-scheme:dark}
 [data-vibeui-block="button-005"]{
 position:relative;overflow:hidden;appearance:none;cursor:pointer;
 display:inline-flex;align-items:center;justify-content:center;
@@ -101,6 +101,7 @@ export function Button005({
       <button
         {...props}
         type={type}
+        data-slot="button"
         data-vibeui-block="button-005"
         data-armed={armed}
         disabled={disabled}

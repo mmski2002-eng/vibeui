@@ -1,14 +1,10 @@
 "use client"
 
 import { useId, useRef, useState } from "react"
-import type {
-  ComponentPropsWithoutRef,
-  CSSProperties,
-  KeyboardEvent,
-} from "react"
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Dropdown012Props = Omit<
-  ComponentPropsWithoutRef<"section">,
+  ComponentProps<"section">,
   "children" | "title"
 > & {
   title?: string
@@ -41,13 +37,16 @@ const STYLES = `
 :where([data-vibeui-block="dropdown-012"]){
 --vibeui-dropdown-012-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
 --vibeui-dropdown-012-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
---vibeui-dropdown-012-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-dropdown-012-muted:color-mix(in oklab,var(--vibeui-dropdown-012-fg) 68%,transparent);
 --vibeui-dropdown-012-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
 --vibeui-dropdown-012-hover:light-dark(oklch(0.96 0.004 265),oklch(0.32 0.014 265));
 --vibeui-dropdown-012-accent:light-dark(oklch(0.55 0.18 265),oklch(0.74 0.15 265));
 --vibeui-dropdown-012-danger:light-dark(oklch(0.56 0.19 25),oklch(0.72 0.16 25));
 --vibeui-dropdown-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="dropdown-012"]{color-scheme:dark}
 [data-vibeui-block="dropdown-012"]{
 display:block;width:100%;max-width:24rem;box-sizing:border-box;
 background:var(--vibeui-dropdown-012-bg);color:var(--vibeui-dropdown-012-fg);
@@ -250,6 +249,7 @@ export function Dropdown012({
       </style>
       <section
         {...props}
+        data-slot="dropdown-menu"
         data-vibeui-block="dropdown-012"
         aria-label={title}
         className={className}

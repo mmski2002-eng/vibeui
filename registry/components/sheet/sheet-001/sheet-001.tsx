@@ -1,10 +1,10 @@
 "use client"
 
 import { useRef } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Sheet001Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "title"
 > & {
   triggerLabel?: string
@@ -29,7 +29,7 @@ const STYLES = `
 :where([data-vibeui-block="sheet-001"]){
 --vibeui-sheet-001-bg:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
 --vibeui-sheet-001-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-sheet-001-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-sheet-001-muted:color-mix(in oklab,var(--vibeui-sheet-001-fg) 68%,transparent);
 --vibeui-sheet-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
 --vibeui-sheet-001-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.16 265));
 --vibeui-sheet-001-on-accent:light-dark(oklch(0.99 0.01 265),oklch(0.17 0.03 265));
@@ -37,6 +37,9 @@ const STYLES = `
 --vibeui-sheet-001-scrim:light-dark(oklch(0.2 0.02 265 / 45%),oklch(0.08 0.014 265 / 62%));
 --vibeui-sheet-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="sheet-001"]{color-scheme:dark}
 [data-vibeui-block="sheet-001"]{
 display:inline-block;font-family:var(--vibeui-sheet-001-font);color:var(--vibeui-sheet-001-fg);
 }
@@ -50,7 +53,7 @@ font:inherit;font-size:0.8125rem;font-weight:600;
 [data-vibeui-block="sheet-001"] [data-part="trigger"]:focus-visible{outline:2px solid var(--vibeui-sheet-001-accent);outline-offset:2px}
 /* Лист не во весь экран: за верхним краем видно страницу. */
 [data-vibeui-block="sheet-001"] dialog{
-position:fixed;inset:auto 0 0 0;
+position:fixed;inset:auto 0 0 0;container-type:inline-size;
 width:100%;max-width:100vw;max-height:min(28rem,85dvh);
 margin:0;padding:0;border:0;
 border-radius:1.125rem 1.125rem 0 0;
@@ -65,7 +68,7 @@ translate:0 100%;transition:translate .22s ease,overlay .22s allow-discrete,disp
 [data-vibeui-block="sheet-001"] dialog::backdrop{background:var(--vibeui-sheet-001-scrim)}
 [data-vibeui-block="sheet-001"] [data-part="panel"]{
 display:flex;flex-direction:column;gap:0.625rem;box-sizing:border-box;
-padding:0.5rem 1rem calc(1rem + env(safe-area-inset-bottom,0px));
+padding:0.5rem 1rem calc(0.9375rem + env(safe-area-inset-bottom,0px));
 }
 /* Ручка обещает жест: без неё лист выглядит окном, приклеенным к низу. */
 [data-vibeui-block="sheet-001"] [data-part="grabber"]{
@@ -74,7 +77,7 @@ border-radius:9999px;background:var(--vibeui-sheet-001-border);
 }
 [data-vibeui-block="sheet-001"] [data-part="title"]{margin:0;font-size:1rem;font-weight:680}
 [data-vibeui-block="sheet-001"] dl{
-display:grid;grid-template-columns:auto 1fr;gap:0.375rem 0.75rem;margin:0;font-size:0.875rem;
+display:grid;grid-template-columns:auto 1fr;gap:0.375rem 0.75rem;margin:0;font-size:0.9375rem;
 }
 [data-vibeui-block="sheet-001"] [data-part="row"]{display:contents}
 [data-vibeui-block="sheet-001"] dt{color:var(--vibeui-sheet-001-muted)}
@@ -90,6 +93,11 @@ background:transparent;color:inherit;font:inherit;font-size:0.9375rem;font-weigh
 border-color:transparent;background:var(--vibeui-sheet-001-accent);color:var(--vibeui-sheet-001-on-accent);
 }
 [data-vibeui-block="sheet-001"] [data-part="foot"] button:focus-visible{outline:2px solid var(--vibeui-sheet-001-accent);outline-offset:2px}
+/* Шкала категории: на планшете и шире лист получает крупный кегль и воздух. */
+@container (min-width: 32rem){
+[data-vibeui-block="sheet-001"] dl{font-size:1rem;gap:0.5rem 0.75rem}
+[data-vibeui-block="sheet-001"] [data-part="panel"]{padding-bottom:calc(1.0625rem + env(safe-area-inset-bottom,0px))}
+}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="sheet-001"] dialog{transition:none!important;translate:0 0}
 }
@@ -160,6 +168,7 @@ export function Sheet001({
       </style>
       <div
         {...props}
+        data-slot="sheet"
         data-vibeui-block="sheet-001"
         className={className}
         style={palette}

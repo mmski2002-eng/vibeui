@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Checkbox021Node = {
   id: string
@@ -10,7 +10,7 @@ export type Checkbox021Node = {
 }
 
 export type Checkbox021Props = Omit<
-  ComponentPropsWithoutRef<"section">,
+  ComponentProps<"section">,
   "children" | "onChange" | "title"
 > & {
   title?: string
@@ -35,7 +35,7 @@ const STYLES = `
 :where([data-vibeui-block="checkbox-021"]){
 --vibeui-checkbox-021-bg:transparent;
 --vibeui-checkbox-021-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-checkbox-021-muted:light-dark(oklch(0.57 0.014 265),oklch(0.71 0.012 265));
+--vibeui-checkbox-021-muted:color-mix(in oklab,var(--vibeui-checkbox-021-fg) 68%,transparent);
 --vibeui-checkbox-021-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
 --vibeui-checkbox-021-line:light-dark(oklch(0.93 0.005 265),oklch(0.33 0.01 265));
 --vibeui-checkbox-021-hover:light-dark(oklch(0.975 0.003 265),oklch(0.27 0.009 265));
@@ -43,6 +43,9 @@ const STYLES = `
 --vibeui-checkbox-021-on-accent:light-dark(var(--vibeui-checkbox-021-on-accent),oklch(0.19 0.03 195));
 --vibeui-checkbox-021-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="checkbox-021"]{color-scheme:dark}
 [data-vibeui-block="checkbox-021"]{
 display:block;width:100%;max-width:22rem;box-sizing:border-box;
 padding:0.875rem;border:1px solid var(--vibeui-checkbox-021-border);border-radius:0.875rem;
@@ -281,6 +284,7 @@ export function Checkbox021({
       </style>
       <section
         {...props}
+        data-slot="checkbox"
         data-vibeui-block="checkbox-021"
         className={className}
         style={palette}

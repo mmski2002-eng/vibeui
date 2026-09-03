@@ -1,10 +1,10 @@
 "use client"
 
 import { useId, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Range004Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "defaultValue" | "onChange"
 > & {
   label?: string
@@ -39,7 +39,7 @@ const STYLES = `
 --vibeui-range-004-field:light-dark(oklch(0.985 0.002 265),oklch(0.28 0.012 265));
 --vibeui-range-004-shell:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.011 265));
 --vibeui-range-004-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
---vibeui-range-004-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-range-004-muted:color-mix(in oklab,var(--vibeui-range-004-fg) 68%,transparent);
 --vibeui-range-004-border:light-dark(oklch(0.88 0.008 265),oklch(0.39 0.012 265));
 --vibeui-range-004-track:light-dark(oklch(0.93 0.006 265),oklch(0.33 0.012 265));
 --vibeui-range-004-accent:light-dark(oklch(0.55 0.16 145),oklch(0.76 0.14 145));
@@ -49,6 +49,9 @@ const STYLES = `
 --vibeui-range-004-from:0%;
 --vibeui-range-004-to:100%;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="range-004"]{color-scheme:dark}
 /* Подложки по умолчанию нет: фильтр ложится на фон страницы, плашку включает проп background. */
 [data-vibeui-block="range-004"]{
 display:flex;flex-direction:column;gap:0.625rem;
@@ -147,6 +150,19 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 }
 
 /**
+ * Неверная локаль из пропа не должна ронять страницу-хост: toLocaleString
+ * бросает на ней RangeError, поэтому непригодное значение откатываем на дефолт.
+ */
+function safeLocale(value: string, fallback: string) {
+  try {
+    Intl.NumberFormat.supportedLocalesOf(value)
+    return value
+  } catch {
+    return fallback
+  }
+}
+
+/**
  * Диапазон с полями ввода по краям: ползунок и числа правят одно значение.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -172,6 +188,7 @@ export function Range004({
   // Строки на время набора: числовое состояние превращает пустое поле в ноль.
   const [fromText, setFromText] = useState(String(defaultFrom))
   const [toText, setToText] = useState(String(defaultTo))
+  const tag = safeLocale(locale, "ru-RU")
 
   const percent = (value: number) => `${((value - min) / (max - min)) * 100}%`
 
@@ -207,6 +224,7 @@ export function Range004({
       </style>
       <div
         {...props}
+        data-slot="range"
         data-vibeui-block="range-004"
         className={className}
         style={palette}
@@ -277,10 +295,10 @@ export function Range004({
         </div>
         <p data-part="scale">
           <span>
-            {min.toLocaleString(locale)} {unit}
+            {min.toLocaleString(tag)} {unit}
           </span>
           <span>
-            {max.toLocaleString(locale)} {unit}
+            {max.toLocaleString(tag)} {unit}
           </span>
         </p>
       </div>

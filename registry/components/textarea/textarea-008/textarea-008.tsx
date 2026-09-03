@@ -1,10 +1,10 @@
 "use client"
 
 import { useId, useRef, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Textarea008Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "content"
 > & {
   label?: string
@@ -30,7 +30,7 @@ const STYLES = `
 :where([data-vibeui-block="textarea-008"]){
 --vibeui-textarea-008-bg:transparent;
 --vibeui-textarea-008-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-textarea-008-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-textarea-008-muted:color-mix(in oklab,var(--vibeui-textarea-008-fg) 68%,transparent);
 --vibeui-textarea-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-textarea-008-field:light-dark(oklch(0.97 0.004 265),oklch(0.25 0.012 265));
 --vibeui-textarea-008-accent:light-dark(oklch(0.5 0.16 250),oklch(0.73 0.14 250));
@@ -38,6 +38,9 @@ const STYLES = `
 --vibeui-textarea-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-textarea-008-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="textarea-008"]{color-scheme:dark}
 [data-vibeui-block="textarea-008"]{
 display:flex;flex-direction:column;gap:0.375rem;
 width:100%;max-width:23rem;box-sizing:border-box;padding:0.875rem;
@@ -181,6 +184,7 @@ export function Textarea008({
       </style>
       <div
         {...props}
+        data-slot="textarea"
         data-vibeui-block="textarea-008"
         data-copied={copied}
         className={className}
@@ -199,9 +203,10 @@ export function Textarea008({
           readOnly
           spellCheck={false}
           value={content}
+          aria-describedby={`${id}-hint`}
           onFocus={(event) => event.currentTarget.select()}
         />
-        <p data-part="hint" role="status">
+        <p data-part="hint" id={`${id}-hint`} role="status">
           {copied ? copiedText : hint}
         </p>
       </div>

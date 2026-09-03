@@ -84,6 +84,7 @@
         "i18n": {
           "en": {
             "description": "Pagination made of ordinary links: a page can be opened in a new tab, copied and found in history. A window of numbers around the current page.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-pagination-001-* variables. The numbers are ordinary <a> elements, and the address is assembled by the hrefOf function, `?page=N` by default. The window around the current page is computed by windowOf: the first page, the last one, the neighbours and the gaps between them. The current page is marked with aria-current=\"page\". The edges do not disappear on the first and the last page but dim through aria-disabled, so the row does not jump.",
             "ai": {
               "summary": "Link-based pagination: edge arrows, a window of numbers around the current page and gaps instead of a long list. The row does not jump between pages because the edges stay in place. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
@@ -234,6 +235,7 @@
         "i18n": {
           "en": {
             "description": "Cursor pagination: a row range instead of page numbers — it stays true while the data keeps changing.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-pagination-002-* variables. Server rendered: no hooks, the bounds are computed from the props. The edge of the list is marked with aria-disabled on the link: the button stays in place but does not work, so the navigation row does not jump. The numbers are set in tabular figures.",
             "ai": {
               "summary": "Cursor pagination: the row range on the left, Previous and Next on the right, muted at the edge of the list. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -388,6 +390,7 @@
         "i18n": {
           "en": {
             "description": "Pagination with a collapsed middle where the ellipsis is not a label but a button: it jumps five pages across the gap at once.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-pagination-003-* variables. Client component: \"use client\" for the sake of the current page state. The window of numbers is computed by the windowOf function: the first page, the last one, the neighbours and the gaps between them; a gap is marked with a zero, and a jump button is drawn in its place. The ellipsis turns into an arrow on :hover and :focus-visible. The current page is marked with aria-current=\"page\", and the numbers are set in tabular figures.",
             "ai": {
               "summary": "Pagination with a window of numbers around the current page and a collapsed middle. The ellipsis is a live button: hover or focus turns it into an arrow, and pressing it moves five pages at a time. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -542,6 +545,7 @@
         "i18n": {
           "en": {
             "description": "The most modest pagination: two links and a counter between them. The numbers are deliberately gone — a feed read in order does not need them.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-pagination-004-* variables. Server rendered: no hooks, the bounds are computed from the page and total props. The address of the neighbouring page is assembled by the hrefOf function, `?page=N` by default. The edge of the list is marked with aria-disabled and dims rather than disappears, so the row does not jump. The counter takes all the free space and is set in tabular figures, while the arrows are drawn with borders and rotate according to data-dir.",
             "ai": {
               "summary": "Pagination made of two links and a counter in the middle: \"Page 4 of 12\". The edges dim instead of disappearing, so the row keeps its width between pages. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -623,7 +627,7 @@
         "tags": ["pagination", "load more", "progress", "list"],
         "ai": {
           "export": "Pagination005",
-          "usage": "<Pagination005 total={84} perPage={12} label=\"Показать ещё\" />",
+          "usage": "<Pagination005 total={84} perPage={12} label=\"Показать ещё {count}\" />",
           "summary": "Кнопка «Показать ещё» с честной шкалой: полоса прогресса, счётчик показанного и подпись, сколько добавит следующее нажатие. Дойдя до конца, кнопка уступает место строке о том, что это всё. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
             "локальную палитру --vibeui-pagination-005-* и не подменять её токенами вашей темы (bg-primary, bg-muted и подобными)",
@@ -638,7 +642,7 @@
           "adapt": [
             "total и perPage — общее количество и размер порции",
             "defaultShown — сколько показано изначально",
-            "label — подпись кнопки",
+            "label — подпись кнопки с подстановкой {count}",
             "акцент через проп accent — цвет полосы прогресса",
             "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "countText — строка счётчика с подстановками {shown} и {total}",
@@ -693,6 +697,7 @@
         "i18n": {
           "en": {
             "description": "\"Load more\" instead of pages: a progress bar and a \"12 of 84\" counter answer the one question a long list raises — how much is left.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-pagination-005-* variables. Client component: \"use client\" for the sake of the counter of what is shown. The fill width arrives in the --vibeui-pagination-005-progress variable, computed from the ratio of what is shown to the total. The bar is marked role=\"progressbar\" with aria-valuenow, aria-valuemin and aria-valuemax, and the message about the load lives in an aria-live=\"polite\" region. Once everything is shown, the button is replaced by a line about the end of the list.",
             "ai": {
               "summary": "A \"Load more\" button with an honest scale: a progress bar, a counter of what is shown and a label saying how much the next press adds. At the end the button gives way to a line saying that is all. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -708,7 +713,7 @@
               "adapt": [
                 "total and perPage — the overall count and the batch size",
                 "defaultShown — how much is shown at the start",
-                "label — the button caption",
+                "label — the button caption with the {count} placeholder",
                 "the accent through the accent prop — it colours the progress bar",
                 "background — the component background; empty means no background, taking the page colour",
                 "countText — the counter string with the {shown} and {total} placeholders",
@@ -721,7 +726,7 @@
                 "Such a list returns badly from a link: a place in it cannot be carried in a URL. If you need URLs, use pages.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
-              "usage": "<Pagination005 total={84} perPage={12} label=\"Load more\" />"
+              "usage": "<Pagination005 total={84} perPage={12} label=\"Load more {count}\" />"
             },
             "controls": {
               "total": {
@@ -743,7 +748,7 @@
             "title": "Load More Progress",
             "preview": {
               "props": {
-                "label": "Load more",
+                "label": "Load more {count}",
                 "countText": "Showing {shown} of {total}",
                 "labelText": {
                   "progress": "Shown out of the total",
@@ -843,6 +848,7 @@
         "i18n": {
           "en": {
             "description": "An infinite feed that still has a button: the loading beacon is a real button, reachable with Tab and pressable from the keyboard.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-pagination-006-* variables. Client component: \"use client\" for the sake of the IntersectionObserver and the feed state. The observer is confined to its own scroll area through root, and the \"Load more\" button itself serves as the beacon, so loading works both by scrolling and from the keyboard. The result is announced in an aria-live=\"polite\" region. The \"Back to top\" button returns the scroll area to the start.",
             "ai": {
               "summary": "An infinite feed that loads on scroll: an IntersectionObserver watches a beacon at the end of the list, and the beacon is an ordinary button, so the feed stays usable without a mouse. A status line with the loaded count and a back-to-top control sit below. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -989,6 +995,7 @@
         "i18n": {
           "en": {
             "description": "Table pagination with a page-size picker: changing the size keeps the first visible row in place instead of throwing you back to the start.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-pagination-007-* variables. Client component: \"use client\" for the sake of the page and the size. When the size changes, the page number is recomputed from the number of the first visible row, so the place in the list is preserved. The arrow on the <select> is drawn with two linear gradients so as not to pull in an icon. In a narrow block a container query moves the size picker onto a line of its own through order.",
             "ai": {
               "summary": "A table navigation bar: the row range on the left, arrows with the page number in the middle, the page-size picker on the right. Changing the size preserves your place: the page number is recomputed from the first visible row. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -1136,6 +1143,7 @@
         "i18n": {
           "en": {
             "description": "Pagination with a jump field: the number is typed and submitted by a form, and a wrong value explains the allowed range instead of staying silent.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-pagination-008-* variables. Client component: \"use client\" for the sake of the page and the input draft. The jump field sits in a real <form>, so Enter submits it without a separate key handler. A wrong number marks the field through aria-invalid and shows a message with role=\"alert\" linked to the field through aria-describedby; in the calm state the same slot is taken by the hint about the total number of pages.",
             "ai": {
               "summary": "Pagination for a long list: arrows with a page indicator on top and a jump-to-page field below. Input is validated, the error is spelled out in words and tied to the field. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -1282,6 +1290,7 @@
         "i18n": {
           "en": {
             "description": "Pagination for a phone: three large targets instead of a row of numbers, with the full page list opening as a grid in a popover.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-pagination-009-* variables. Server rendered: no hooks, every number is an ordinary link. The targets are 2.75rem — the lower bound for a finger tap. The grid of pages sits in a popover=\"auto\" anchored to the bar itself, so closing on Escape and on a tap outside comes from the browser. The current page is marked with aria-current=\"page\", and the edges dim through aria-disabled.",
             "ai": {
               "summary": "Compact phone pagination: large arrows at the edges and a current-page button in the middle that opens a grid of every number. Every step is a link, so a page opens in a new tab and stays in history. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1428,6 +1437,7 @@
         "i18n": {
           "en": {
             "description": "Ellipsis pagination for hundreds of pages: clicking \"…\" opens a scrubber over the hidden range, and the number below it updates live while a cursor or finger drags the handle.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-pagination-010-* variables. Client component: \"use client\" for the sake of the page and the opened gap. The window of numbers around the current page is computed by windowOf, and every gap carries the bounds of the hidden range. Clicking the \"…\" replaces it with an <input type=\"range\"> holding those bounds and a \"Go\" button: the value changes live in an <output>, and the jump is confirmed explicitly so that it works the same with a mouse and from the keyboard (Enter confirms, Escape closes).",
             "ai": {
               "summary": "Middle-collapsing pagination for hundreds of pages: instead of a static \"…\" or a fixed-step jump, a scrubber gives exact access to any number in the hidden range. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -1577,6 +1587,7 @@
         "i18n": {
           "en": {
             "description": "A \"load more\" pattern without a progress bar: the shown share fills the button's own ring, the number inside names the next chunk, and the counter below reads \"60 of 240\".",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-pagination-011-* variables. Client component: \"use client\" for the sake of the counter of what is shown. The ring is a conic-gradient on the button itself, and the share is computed as a percentage and passed through the --vibeui-pagination-011-percent CSS variable, like the bar width in the other \"load more\" variants. The inner circle, in the same colour as the card background, cuts the ring out visually. A list read to the end disables the button and changes its contents to a checkmark, while the counter below remains the text source for aria-live.",
             "ai": {
               "summary": "A ring-shaped \"load more\": the shown share fills the button itself with a conic gradient, the number inside names the next chunk, and the caption below reads \"60 of 240\". Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -1719,6 +1730,7 @@
         "i18n": {
           "en": {
             "description": "An infinite feed with no visible button: loading starts when the scroll reaches the bottom, pulsing dots show at the bottom while the request is in flight, and a hidden but focusable button stays as a keyboard fallback.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-pagination-012-* variables. Client component: \"use client\" for the sake of the loading state. An onScroll on the feed area measures the distance to the bottom and starts a setTimeout that simulates a network request — while the wait lasts, three dots pulse at the bottom and the text beside them goes into aria-live. There is no button in sight, but it has not gone away: visually hidden (clip), it becomes visible and working on focus — the keyboard and the screen reader get the same result as scrolling.",
             "ai": {
               "summary": "An infinite feed that loads automatically on scroll: there is no visible button, pulsing dots appear at the bottom while a request is pending instead. A visually hidden but focusable button stays a working keyboard fallback. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -1860,6 +1872,7 @@
         "i18n": {
           "en": {
             "description": "Table pagination where the page size is a button group beside the page numbers, not a hidden dropdown: the current choice is visible without a click, and the spot in the list survives a size change.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-pagination-013-* variables. Client component: \"use client\" for the sake of the page and the page size. The numbers are computed by windowOf — the same technique as in the other variants with a window around the current page. The size is switched by a role=\"group\" of buttons with aria-pressed rather than by a <select>: the choice is visible at once, without opening a list. changeSize recomputes the page number from the current first visible row, so that a size change does not throw the reader back to the first page.",
             "ai": {
               "summary": "Page numbers and a page-size button group in one row: the size switches via buttons with a visible pressed state instead of a dropdown, and the first visible row stays put when the size changes. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -2006,6 +2019,7 @@
         "i18n": {
           "en": {
             "description": "One pagination for a wide and a narrow container: the row of numbers steps aside for a pair of arrows and a \"page of pages\" counter once the component gets little room — by the block's width, not the window's.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-pagination-014-* variables. Client component: \"use client\" for the sake of the current page. The root declares container-type: inline-size outside @container — a rule inside a container query cannot target the block itself, so the property is set on the top-level selector. Below the @container threshold the row of numbers (data-part=\"numbers\") is hidden through display:none and the counter (data-part=\"compact\") takes its place; both elements use the same back and forward buttons.",
             "ai": {
               "summary": "Pagination that collapses itself down to arrows and a counter in a narrow container — by the block's own width via @container, not the browser window's. Inside a card or a sidebar it becomes the compact view without a separate mobile component. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -2136,6 +2150,7 @@
         "i18n": {
           "en": {
             "description": "Pagination with no separate jump field: the page number itself turns into an input on click or Enter, Enter confirms and checks the range, and Escape cancels the edit without leaving a trace in the layout.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-pagination-015-* variables. Client component: \"use client\" for the sake of the page, the edit mode and the input draft. The page number is normally a <button>; a click or Enter on it calls startEdit and substitutes an <input>, which gets focus and its text selected through useEffect. Enter calls finishEdit(true) with a range check and a message through role=\"alert\", while Escape and losing focus call finishEdit(false), reverting the edit without changing the page.",
             "ai": {
               "summary": "Pagination where the page number itself becomes an input field on click: no separate jump-form row is needed. Enter confirms and validates the range with a clear error, Escape cancels the edit without a trace. Zero dependencies, one file, its own palette.",
               "preserve": [

@@ -1,4 +1,5 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import { useId } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Select001Option = {
   value: string
@@ -6,7 +7,7 @@ export type Select001Option = {
 }
 
 export type Select001Props = Omit<
-  ComponentPropsWithoutRef<"select">,
+  ComponentProps<"select">,
   "size" | "children"
 > & {
   label?: string
@@ -32,7 +33,7 @@ const STYLES = `
 --vibeui-select-001-surface-pad:0;
 --vibeui-select-001-surface-radius:0;
 --vibeui-select-001-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.005 265));
---vibeui-select-001-muted:light-dark(oklch(0.54 0.014 265),oklch(0.7 0.012 265));
+--vibeui-select-001-muted:color-mix(in oklab,var(--vibeui-select-001-fg) 68%,transparent);
 --vibeui-select-001-bg:light-dark(oklch(1 0 0),oklch(0.23 0.012 265));
 --vibeui-select-001-border:light-dark(oklch(0.87 0.008 265),oklch(0.41 0.014 265));
 --vibeui-select-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
@@ -40,6 +41,9 @@ const STYLES = `
 --vibeui-select-001-height:2.75rem;
 --vibeui-select-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="select-001"]{color-scheme:dark}
 /* Подложка появляется только вместе с пропом background: по умолчанию поле
    лежит прямо на фоне страницы. */
 [data-vibeui-block="select-001"]{
@@ -138,6 +142,8 @@ export function Select001({
   defaultValue,
   ...props
 }: Select001Props) {
+  const generatedId = useId()
+  const fieldId = id ?? generatedId
   // Подложка приходит вместе с полями и скруглением: без неё поле лежит
   // прямо на странице, и лишние поля по бокам ему только мешают.
   const palette = {
@@ -161,20 +167,21 @@ export function Select001({
         {STYLES}
       </style>
       <div
+        data-slot="select"
         data-vibeui-block="select-001"
         data-size={size}
         className={className}
         style={palette}
       >
         {label ? (
-          <label data-part="label" htmlFor={id}>
+          <label data-part="label" htmlFor={fieldId}>
             {label}
           </label>
         ) : null}
         <span data-part="field">
           <select
             {...props}
-            id={id}
+            id={fieldId}
             defaultValue={defaultValue ?? (placeholder ? "" : undefined)}
           >
             {placeholder ? (

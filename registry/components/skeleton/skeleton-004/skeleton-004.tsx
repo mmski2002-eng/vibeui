@@ -1,6 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Skeleton004Props = ComponentPropsWithoutRef<"div"> & {
+export type Skeleton004Props = ComponentProps<"div"> & {
   rows?: number
   /** Раскладка колонок в терминах grid-template-columns. */
   columns?: string
@@ -25,6 +25,9 @@ const STYLES = `
 --vibeui-skeleton-004-shine:light-dark(oklch(0.97 0.003 265),oklch(0.39 0.016 265));
 --vibeui-skeleton-004-columns:1.5rem 2fr 1fr 1fr 4rem;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="skeleton-004"]{color-scheme:dark}
 [data-vibeui-block="skeleton-004"]{
 width:100%;max-width:32rem;box-sizing:border-box;overflow:hidden;
 background:var(--vibeui-skeleton-004-bg);
@@ -128,6 +131,7 @@ export function Skeleton004({
       </style>
       <div
         {...props}
+        data-slot="skeleton"
         data-vibeui-block="skeleton-004"
         role="status"
         aria-busy="true"

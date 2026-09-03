@@ -30,11 +30,14 @@ const STYLES = `
 :where([data-vibeui-block="cascader-008"]){
 --vibeui-cascader-008-bg:transparent;
 --vibeui-cascader-008-fg:light-dark(oklch(0.23 0.014 160),oklch(0.94 0.006 160));
---vibeui-cascader-008-muted:light-dark(oklch(0.54 0.012 160),oklch(0.71 0.011 160));
+--vibeui-cascader-008-muted:color-mix(in oklab,var(--vibeui-cascader-008-fg) 68%,transparent);
 --vibeui-cascader-008-border:light-dark(oklch(0.9 0.006 160),oklch(0.38 0.011 160));
 --vibeui-cascader-008-accent:light-dark(oklch(0.5 0.13 165),oklch(0.76 0.13 165));
 --vibeui-cascader-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="cascader-008"]{color-scheme:dark}
 [data-vibeui-block="cascader-008"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:22rem;box-sizing:border-box;padding:0.875rem;
@@ -89,7 +92,7 @@ border-left:1px solid var(--vibeui-cascader-008-border);
 [data-vibeui-block="cascader-008"] [data-part="leaf"]{
 display:flex;align-items:center;gap:0.5rem;
 padding:0.3125rem 0.4375rem;border-radius:0.5rem;cursor:pointer;
-font-size:0.78125rem;
+font-size:0.8125rem;
 transition:background-color .14s ease;
 }
 [data-vibeui-block="cascader-008"] [data-part="leaf"]:hover{
@@ -229,6 +232,7 @@ export function Cascader008({
         {STYLES}
       </style>
       <div
+        data-slot="cascader"
         data-vibeui-block="cascader-008"
         className={className}
         style={palette}

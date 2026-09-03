@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Gantt006Task = {
   title: string
@@ -9,7 +9,7 @@ export type Gantt006Task = {
 }
 
 export type Gantt006Props = Omit<
-  ComponentPropsWithoutRef<"section">,
+  ComponentProps<"section">,
   "children" | "title"
 > & {
   heading?: string
@@ -50,7 +50,7 @@ const STYLES = `
 --vibeui-gantt-006-bg:transparent;
 --vibeui-gantt-006-sticky:light-dark(oklch(0.995 0.001 265),oklch(0.19 0.008 265));
 --vibeui-gantt-006-fg:light-dark(oklch(0.23 0.014 265),oklch(0.93 0.006 265));
---vibeui-gantt-006-muted:light-dark(oklch(0.6 0.014 265),oklch(0.7 0.012 265));
+--vibeui-gantt-006-muted:color-mix(in oklab,var(--vibeui-gantt-006-fg) 68%,transparent);
 --vibeui-gantt-006-border:light-dark(oklch(0.91 0.006 265),oklch(0.37 0.012 265));
 --vibeui-gantt-006-line:light-dark(oklch(0.955 0.004 265),oklch(0.3 0.01 265));
 --vibeui-gantt-006-accent:light-dark(oklch(0.55 0.14 200),oklch(0.72 0.13 200));
@@ -59,19 +59,28 @@ const STYLES = `
 --vibeui-gantt-006-onaccent:light-dark(oklch(0.99 0 0),oklch(0.17 0.01 265));
 --vibeui-gantt-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="gantt-006"]{color-scheme:dark}
 [data-vibeui-block="gantt-006"]{
 width:100%;box-sizing:border-box;padding:1rem;
 background:var(--vibeui-gantt-006-bg);
 border:1px solid var(--vibeui-gantt-006-border);border-radius:1rem;
 color:var(--vibeui-gantt-006-fg);font-family:var(--vibeui-gantt-006-font);
+/* Шкала кегля растёт от собственной ширины блока, а не от окна. */
+container-type:inline-size;
 }
 [data-vibeui-block="gantt-006"] *{box-sizing:border-box}
 [data-vibeui-block="gantt-006"] [data-part="head"]{
 display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;
-gap:0.5rem;margin:0 0 0.625rem;
+gap:0.5rem;margin:0 0 0.75rem;
 }
 [data-vibeui-block="gantt-006"] [data-part="heading"]{
 margin:0;font-size:0.9375rem;font-weight:700;letter-spacing:-0.01em;
+}
+@container (min-width:32rem){
+[data-vibeui-block="gantt-006"] [data-part="heading"]{font-size:1rem}
+[data-vibeui-block="gantt-006"] [data-part="head"]{margin-bottom:1.0625rem}
 }
 [data-vibeui-block="gantt-006"] [data-part="hint"]{
 margin:0;font-size:0.75rem;color:var(--vibeui-gantt-006-muted);
@@ -226,6 +235,16 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 }
 
 /**
+ * Неверный проп не должен ронять страницу-хост: на Invalid Date toISOString
+ * бросает RangeError, поэтому дату начала откатываем на дефолтную.
+ */
+function safeStart(value: string, fallback: string) {
+  const time = new Date(`${value}T00:00:00Z`).getTime()
+
+  return Number.isNaN(time) ? new Date(`${fallback}T00:00:00Z`).getTime() : time
+}
+
+/**
  * Сжатый план: данные дневные, сетка недельная. Полоса округляется наружу
  * до целых недель, точные даты остаются в таблице. Ноль зависимостей.
  */
@@ -248,7 +267,7 @@ export function Gantt006({
   style,
   ...props
 }: Gantt006Props) {
-  const origin = new Date(`${startDate}T00:00:00Z`).getTime()
+  const origin = safeStart(startDate, "2026-01-05")
   const size = unit === "week" ? 7 : 1
   const span = Math.max(...tasks.map((task) => task.start + task.days))
   const columns = Math.ceil(span / size)
@@ -290,6 +309,7 @@ export function Gantt006({
       </style>
       <section
         {...props}
+        data-slot="gantt"
         data-vibeui-block="gantt-006"
         aria-label={heading}
         className={className}

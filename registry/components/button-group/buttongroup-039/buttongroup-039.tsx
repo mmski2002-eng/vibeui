@@ -1,12 +1,9 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Buttongroup039Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Buttongroup039Props = Omit<ComponentProps<"div">, "children"> & {
   cancelLabel?: string
   dangerLabel?: string
   delay?: number
@@ -33,7 +30,7 @@ const STYLES = `
 :where([data-vibeui-block="buttongroup-039"]){
 --vibeui-buttongroup-039-surface:transparent;
 --vibeui-buttongroup-039-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.005 265));
---vibeui-buttongroup-039-muted:light-dark(oklch(0.56 0.014 265),oklch(0.72 0.012 265));
+--vibeui-buttongroup-039-muted:color-mix(in oklab,var(--vibeui-buttongroup-039-fg) 68%,transparent);
 --vibeui-buttongroup-039-border:light-dark(oklch(0.88 0.008 265),oklch(0.41 0.012 265));
 --vibeui-buttongroup-039-hover:light-dark(oklch(0.97 0.004 265),oklch(0.33 0.012 265));
 --vibeui-buttongroup-039-danger:light-dark(oklch(0.53 0.19 27),oklch(0.62 0.18 27));
@@ -46,6 +43,9 @@ const STYLES = `
 --vibeui-buttongroup-039-progress:0;
 --vibeui-buttongroup-039-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="buttongroup-039"]{color-scheme:dark}
 [data-vibeui-block="buttongroup-039"]{
 box-sizing:border-box;display:flex;flex-direction:column;gap:0.625rem;
 width:100%;max-width:23rem;padding:0.875rem;
@@ -62,7 +62,7 @@ font-size:0.8125rem;font-weight:600;line-height:1.4;
 [data-vibeui-block="buttongroup-039"] button{
 appearance:none;cursor:pointer;font:inherit;
 display:inline-flex;align-items:center;justify-content:center;gap:0.4375rem;
-flex:1 1 0;min-width:0;height:2.375rem;padding:0 0.75rem;
+flex:1 1 0;min-width:0;height:2.25rem;padding:0 0.75rem;
 border:1px solid var(--vibeui-buttongroup-039-border);
 border-radius:var(--vibeui-buttongroup-039-radius);
 background:var(--vibeui-buttongroup-039-surface);
@@ -181,6 +181,7 @@ export function Buttongroup039({
       </style>
       <div
         {...props}
+        data-slot="button-group"
         data-vibeui-block="buttongroup-039"
         className={className}
         style={palette}

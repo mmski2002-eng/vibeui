@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Accordion001Item = {
   question: string
@@ -11,13 +11,15 @@ export type Accordion001Marker =
 
 export type Accordion001Divider = "line" | "dashed" | "none"
 
-export type Accordion001Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Accordion001Props = Omit<ComponentProps<"div">, "children"> & {
   items?: Accordion001Item[]
   /** Открытым остаётся только один раздел: группировка через атрибут name. */
   exclusive?: boolean
+  /**
+   * Имя группы взаимного исключения. Двум аккордеонам на одной странице
+   * нужны разные имена, иначе они делят одну радиогруппу.
+   */
+  group?: string
   /** Номер раздела, открытого сразу. -1 — все закрыты. */
   defaultOpen?: number
   marker?: Accordion001Marker
@@ -36,7 +38,7 @@ export type Accordion001Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="accordion-001"]){
 --vibeui-accordion-001-fg:light-dark(oklch(0.2 0.016 255),oklch(0.94 0.005 255));
---vibeui-accordion-001-muted:light-dark(oklch(0.47 0.013 255),oklch(0.66 0.01 255));
+--vibeui-accordion-001-muted:color-mix(in oklab,var(--vibeui-accordion-001-fg) 68%,transparent);
 --vibeui-accordion-001-rule:light-dark(oklch(0.9 0.009 250),oklch(0.31 0.01 250));
 --vibeui-accordion-001-accent:light-dark(oklch(0.5 0.095 195),oklch(0.75 0.11 195));
 --vibeui-accordion-001-bg:transparent;
@@ -56,8 +58,8 @@ font-family:var(--vibeui-accordion-001-font);
 /* Граница строки всегда занимает свой пиксель: переключение разделителей
    не должно двигать раскладку. */
 [data-vibeui-block="accordion-001"] summary{
-padding:1.0625rem 0 1.0625rem 0.375rem;cursor:pointer;
-font-size:1rem;font-weight:500;letter-spacing:-0.01em;line-height:1.45;
+padding:0.9375rem 0 0.9375rem 0.25rem;cursor:pointer;
+font-size:0.9375rem;font-weight:500;letter-spacing:-0.01em;line-height:1.45;
 border-bottom:1px solid transparent;
 transition:padding-left .14s ease;
 }
@@ -67,7 +69,7 @@ border-bottom-color:var(--vibeui-accordion-001-rule);
 [data-vibeui-block="accordion-001"][data-divider="dashed"] summary{
 border-bottom-style:dashed;border-bottom-color:var(--vibeui-accordion-001-rule);
 }
-[data-vibeui-block="accordion-001"] summary:hover{padding-left:0.75rem}
+[data-vibeui-block="accordion-001"] summary:hover{padding-left:0.625rem}
 /* Открытый раздел подчёркнут, а не подсвечен фоном: тенью, чтобы линия
    не прибавляла высоту строке. */
 [data-vibeui-block="accordion-001"] details[open] summary{
@@ -131,16 +133,21 @@ transform:rotate(90deg);
 transform:rotate(0deg);
 }
 [data-vibeui-block="accordion-001"] [data-part="answer"]{
-margin:0;padding:0.875rem 0 1.125rem 1.75rem;max-width:66ch;
+margin:0;padding:0.75rem 0 1.0625rem 1.625rem;max-width:66ch;
 font-size:0.875rem;line-height:1.75;color:var(--vibeui-accordion-001-muted);
 }
 [data-vibeui-block="accordion-001"][data-marker="none"] [data-part="answer"]{
-padding-left:0.375rem;
+padding-left:0.25rem;
 }
+/* Общая шкала категории: на широкой раскладке строка и ответ подрастают
+   на один шаг, тот же, что у соседних аккордеонов. */
 @container (min-width: 32rem){
-[data-vibeui-block="accordion-001"] summary{font-size:1.0625rem}
+[data-vibeui-block="accordion-001"] summary{padding:1.0625rem 0 1.0625rem 0.25rem;font-size:1rem}
 [data-vibeui-block="accordion-001"] [data-part="answer"]{font-size:0.9375rem}
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="accordion-001"]{color-scheme:dark}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="accordion-001"] *{animation:none!important;transition:none!important}}
 `
 
@@ -192,6 +199,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 export function Accordion001({
   items = DEFAULT_ITEMS,
   exclusive = true,
+  group = "vibeui-accordion-001",
   defaultOpen = -1,
   marker = "chevron",
   divider = "line",
@@ -223,6 +231,7 @@ export function Accordion001({
       </style>
       <div
         {...props}
+        data-slot="accordion"
         data-vibeui-block="accordion-001"
         data-marker={marker}
         data-divider={divider}
@@ -232,7 +241,7 @@ export function Accordion001({
         {items.map((item, index) => (
           <details
             key={item.question}
-            name={exclusive ? "vibeui-accordion-001" : undefined}
+            name={exclusive ? group : undefined}
             open={index === defaultOpen}
           >
             <summary>

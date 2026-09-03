@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useId, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Select031Option = {
   value: string
@@ -9,7 +9,7 @@ export type Select031Option = {
 }
 
 export type Select031Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   label?: string
@@ -34,7 +34,7 @@ const STYLES = `
 --vibeui-select-031-surface:transparent;
 --vibeui-select-031-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-select-031-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-select-031-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-select-031-muted:color-mix(in oklab,var(--vibeui-select-031-fg) 68%,transparent);
 --vibeui-select-031-field:light-dark(oklch(0.985 0.002 265),oklch(0.27 0.012 265));
 --vibeui-select-031-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.012 265));
 --vibeui-select-031-accent:light-dark(oklch(0.55 0.19 262),oklch(0.73 0.17 262));
@@ -42,6 +42,9 @@ const STYLES = `
 --vibeui-select-031-tint:color-mix(in oklab,var(--vibeui-select-031-accent) 12%,transparent);
 --vibeui-select-031-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="select-031"]{color-scheme:dark}
 [data-vibeui-block="select-031"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:20rem;box-sizing:border-box;padding:0.875rem;
@@ -84,9 +87,19 @@ outline:none;border-color:var(--vibeui-select-031-accent);
 box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-select-031-accent) 22%,transparent);
 }
 [data-vibeui-block="select-031"] [data-part="recent-tag"]{
-padding:0.0625rem 0.375rem;border-radius:9999px;
+flex:none;padding:0.0625rem 0.375rem;border-radius:9999px;
 background:var(--vibeui-select-031-accent);color:var(--vibeui-select-031-on-accent);
 font-size:0.625rem;font-weight:700;letter-spacing:0.03em;text-transform:uppercase;
+}
+[data-vibeui-block="select-031"] [data-part="recent-label"]{
+min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+/* Узкая колонка: чип занимает всю ширину, иначе длинное название варианта
+   вылезает за подложку — обрезать его есть куда только на всю строку. */
+@container (max-width: 15rem){
+[data-vibeui-block="select-031"] select{padding:0 2rem 0 0.625rem}
+[data-vibeui-block="select-031"] [data-part="arrow"]{right:0.75rem}
+[data-vibeui-block="select-031"] [data-part="recent"]{align-self:stretch}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="select-031"] *{animation:none!important;transition:none!important}}
 `
@@ -189,6 +202,7 @@ export function Select031({
       </style>
       <div
         {...props}
+        data-slot="select"
         data-vibeui-block="select-031"
         className={className}
         style={palette}
@@ -218,7 +232,7 @@ export function Select031({
             onClick={() => commitValue(recentOption.value)}
           >
             <span data-part="recent-tag">{recentText}</span>
-            {recentOption.label}
+            <span data-part="recent-label">{recentOption.label}</span>
           </button>
         ) : null}
       </div>

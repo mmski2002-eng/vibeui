@@ -1,7 +1,7 @@
 "use client"
 
 import { useId, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Select006Size = {
   value: string
@@ -11,7 +11,7 @@ export type Select006Size = {
 }
 
 export type Select006Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   title?: string
@@ -44,12 +44,15 @@ const STYLES = `
 --vibeui-select-006-surface-pad:0;
 --vibeui-select-006-surface-radius:0;
 --vibeui-select-006-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-select-006-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-select-006-muted:color-mix(in oklab,var(--vibeui-select-006-fg) 68%,transparent);
 --vibeui-select-006-field:light-dark(oklch(0.985 0.002 265),oklch(0.25 0.012 265));
 --vibeui-select-006-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.014 265));
 --vibeui-select-006-accent:light-dark(oklch(0.52 0.16 32),oklch(0.74 0.14 32));
 --vibeui-select-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="select-006"]{color-scheme:dark}
 /* Подложка появляется только вместе с пропом background: по умолчанию строка
    лежит прямо на фоне страницы. */
 [data-vibeui-block="select-006"]{
@@ -189,6 +192,7 @@ export function Select006({
       </style>
       <div
         {...props}
+        data-slot="select"
         data-vibeui-block="select-006"
         className={className}
         style={palette}

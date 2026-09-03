@@ -23,7 +23,7 @@ export type Dialog006Props = {
 const STYLES = `
 :where([data-vibeui-block="dialog-006"]){
 --vibeui-dialog-006-fg:light-dark(oklch(0.22 0.016 265),oklch(0.94 0.005 265));
---vibeui-dialog-006-muted:light-dark(oklch(0.5 0.014 265),oklch(0.7 0.012 265));
+--vibeui-dialog-006-muted:color-mix(in oklab,var(--vibeui-dialog-006-fg) 68%,transparent);
 --vibeui-dialog-006-bg:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
 --vibeui-dialog-006-border:light-dark(oklch(0.89 0.006 265),oklch(0.38 0.012 265));
 --vibeui-dialog-006-track:light-dark(oklch(0.93 0.006 265),oklch(0.33 0.01 265));
@@ -31,6 +31,9 @@ const STYLES = `
 --vibeui-dialog-006-radius:1rem;
 --vibeui-dialog-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="dialog-006"]{color-scheme:dark}
 [data-vibeui-block="dialog-006"]{display:inline-flex;font-family:var(--vibeui-dialog-006-font)}
 [data-vibeui-block="dialog-006"] [data-part="trigger"]{
 appearance:none;cursor:pointer;font:inherit;font-size:0.875rem;font-weight:500;
@@ -63,7 +66,7 @@ border-top-color:var(--vibeui-dialog-006-accent,light-dark(oklch(0.55 0.2 262),o
 animation:vibeui-dialog-006-spin .9s linear infinite;
 }
 @keyframes vibeui-dialog-006-spin{to{transform:rotate(360deg)}}
-[data-vibeui-dialog-006-window] [data-part="title"]{margin:0;font-size:1rem;font-weight:620;line-height:1.35}
+[data-vibeui-dialog-006-window] [data-part="title"]{margin:0;font-size:1.0625rem;font-weight:620;line-height:1.35}
 [data-vibeui-dialog-006-window] [data-part="step"]{
 margin:0.5rem 0 0;font-size:0.8125rem;line-height:1.5;
 color:var(--vibeui-dialog-006-muted,light-dark(oklch(0.5 0.014 265),oklch(0.7 0.012 265)));
@@ -95,6 +98,8 @@ border:1px solid var(--vibeui-dialog-006-border,light-dark(oklch(0.89 0.006 265)
 }
 [data-vibeui-dialog-006-window] button:hover{background:color-mix(in oklab,var(--vibeui-dialog-006-border,light-dark(oklch(0.89 0.006 265),oklch(0.38 0.012 265))) 40%,transparent)}
 [data-vibeui-dialog-006-window] button:focus-visible{outline:2px solid var(--vibeui-dialog-006-accent,light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262)));outline-offset:2px}
+/* Popover страницу не блокирует: фон под окном иначе продолжает прокручиваться. */
+html:has([data-vibeui-dialog-006-window]:popover-open){overflow:hidden}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="dialog-006"] *{animation:none!important;transition:none!important}
 [data-vibeui-dialog-006-window]{transition:none!important;opacity:1;transform:none}
@@ -161,7 +166,12 @@ export function Dialog006({
       <style href="vibeui-dialog-006" precedence="medium">
         {STYLES}
       </style>
-      <div data-vibeui-block="dialog-006" className={className} style={palette}>
+      <div
+        data-slot="dialog"
+        data-vibeui-block="dialog-006"
+        className={className}
+        style={palette}
+      >
         <button data-part="trigger" type="button" popoverTarget={id}>
           {trigger}
         </button>
@@ -195,7 +205,7 @@ export function Dialog006({
           </div>
           {note ? <p data-part="note">{note}</p> : null}
           <div data-part="actions">
-            <button type="button" popoverTarget={id}>
+            <button type="button" popoverTarget={id} autoFocus>
               {cancelLabel}
             </button>
           </div>

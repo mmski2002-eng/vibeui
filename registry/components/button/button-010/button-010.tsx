@@ -1,8 +1,8 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Button010Status = "idle" | "loading" | "done"
 
-export type Button010Props = ComponentPropsWithoutRef<"button"> & {
+export type Button010Props = ComponentProps<"button"> & {
   status?: Button010Status
   /** 0–100. Управляется снаружи: компонент ничего не качает сам. */
   progress?: number
@@ -30,6 +30,9 @@ const STYLES = `
 --vibeui-button-010-radius:0.625rem;
 --vibeui-button-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="button-010"]{color-scheme:dark}
 [data-vibeui-block="button-010"]{
 position:relative;overflow:hidden;isolation:isolate;appearance:none;border:0;cursor:pointer;
 display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;
@@ -45,12 +48,17 @@ background:var(--vibeui-button-010-fill);
 transition:transform .3s cubic-bezier(0.16,1,0.3,1),background-color .25s ease;
 }
 [data-vibeui-block="button-010"][data-status="done"] [data-part="fill"]{background:var(--vibeui-button-010-done)}
-[data-vibeui-block="button-010"][data-status="idle"]:hover:not(:disabled){background:color-mix(in oklab, var(--vibeui-button-010-bg) 82%, white)}
+[data-vibeui-block="button-010"][data-status="idle"]:hover:not([aria-disabled="true"]):not(:disabled){background:color-mix(in oklab, var(--vibeui-button-010-bg) 82%, white)}
 [data-vibeui-block="button-010"] svg{width:0.875rem;height:0.875rem;flex:none}
 [data-vibeui-block="button-010"] [data-part="arrow"]{transition:transform .22s cubic-bezier(0.16,1,0.3,1)}
-[data-vibeui-block="button-010"][data-status="idle"]:hover:not(:disabled) [data-part="arrow"]{transform:translateY(2px)}
+[data-vibeui-block="button-010"][data-status="idle"]:hover:not([aria-disabled="true"]):not(:disabled) [data-part="arrow"]{transform:translateY(2px)}
 [data-vibeui-block="button-010"]:focus-visible{outline:2px solid var(--vibeui-button-010-ring);outline-offset:2px}
-[data-vibeui-block="button-010"]:disabled{cursor:not-allowed;opacity:.7}
+[data-vibeui-block="button-010"]:disabled,
+[data-vibeui-block="button-010"][aria-disabled="true"]{cursor:not-allowed;opacity:.7}
+/* Во время загрузки клик не проходит, но кнопка остаётся в обходе с
+   клавиатуры и продолжает читаться: этим она и отличается от disabled.
+   Блокировка сделана стилем, а не обработчиком, — компонент серверный. */
+[data-vibeui-block="button-010"][data-status="loading"]{pointer-events:none}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="button-010"] *{transition:none!important}}
 `
 
@@ -91,9 +99,14 @@ export function Button010({
       <button
         {...props}
         type={type}
+        data-slot="button"
         data-vibeui-block="button-010"
         data-status={status}
-        disabled={disabled || status === "loading"}
+        disabled={disabled}
+        // Во время загрузки кнопка помечена aria-disabled, а не disabled:
+        // иначе она выпадает из обхода вместе с подписью «Загружаем… 40%»,
+        // и человек с клавиатуры теряет и кнопку, и причину блокировки.
+        aria-disabled={status === "loading" || undefined}
         aria-busy={status === "loading" || undefined}
         className={className}
         style={palette}
@@ -130,11 +143,13 @@ export function Button010({
             />
           </svg>
         ) : null}
-        {status === "loading"
-          ? loadingLabel.replace("{percent}", String(clampPercent(progress)))
-          : status === "done"
-            ? doneLabel
-            : children}
+        <span aria-live="polite">
+          {status === "loading"
+            ? loadingLabel.replace("{percent}", String(clampPercent(progress)))
+            : status === "done"
+              ? doneLabel
+              : children}
+        </span>
       </button>
     </>
   )

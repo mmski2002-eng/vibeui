@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Switch002Props = Omit<
-  ComponentPropsWithoutRef<"input">,
-  "type" | "size"
-> & {
+export type Switch002Props = Omit<ComponentProps<"input">, "type" | "size"> & {
   title?: string
   description?: string
   /** Текст в углу, когда опция включена. */
@@ -21,7 +18,7 @@ const STYLES = `
 :where([data-vibeui-block="switch-002"]){
 --vibeui-switch-002-bg:transparent;
 --vibeui-switch-002-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-switch-002-muted:light-dark(oklch(0.54 0.014 265),oklch(0.7 0.012 265));
+--vibeui-switch-002-muted:color-mix(in oklab,var(--vibeui-switch-002-fg) 68%,transparent);
 --vibeui-switch-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-switch-002-track:light-dark(oklch(0.88 0.008 265),oklch(0.43 0.014 265));
 --vibeui-switch-002-thumb:light-dark(oklch(1 0 0),oklch(0.93 0.004 265));
@@ -30,6 +27,9 @@ const STYLES = `
 --vibeui-switch-002-badge-ink:light-dark(oklch(1 0 0),oklch(0.2 0.03 155));
 --vibeui-switch-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="switch-002"]{color-scheme:dark}
 [data-vibeui-block="switch-002"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:20rem;box-sizing:border-box;padding:1rem;
@@ -50,14 +50,14 @@ outline:2px solid var(--vibeui-switch-002-accent);outline-offset:2px;
 [data-vibeui-block="switch-002"] [data-part="head"]{
 display:flex;align-items:center;justify-content:space-between;gap:0.75rem;
 }
-[data-vibeui-block="switch-002"] [data-part="title"]{font-size:0.9375rem;font-weight:650;line-height:1.3}
+[data-vibeui-block="switch-002"] [data-part="title"]{font-size:0.875rem;font-weight:650;line-height:1.3}
 [data-vibeui-block="switch-002"] [data-part="description"]{
 font-size:0.8125rem;line-height:1.5;color:var(--vibeui-switch-002-muted);
 }
 [data-vibeui-block="switch-002"] [data-part="track"]{position:relative;display:flex;flex:none}
 [data-vibeui-block="switch-002"] input{
 appearance:none;-webkit-appearance:none;margin:0;
-width:2.625rem;height:1.5rem;border-radius:9999px;
+width:2.75rem;height:1.5rem;border-radius:9999px;
 background:var(--vibeui-switch-002-track);cursor:inherit;
 transition:background-color .18s ease;
 }
@@ -69,7 +69,7 @@ background:var(--vibeui-switch-002-thumb);
 box-shadow:0 1px 2px oklch(0.2 0.02 265 / 28%);
 transition:transform .18s cubic-bezier(.32,.72,0,1);
 }
-[data-vibeui-block="switch-002"] input:checked + [data-part="thumb"]{transform:translateX(1.125rem)}
+[data-vibeui-block="switch-002"] input:checked + [data-part="thumb"]{transform:translateX(1.25rem)}
 /* Бейдж появляется только у включённой плитки — через :has(), без JS. */
 [data-vibeui-block="switch-002"] [data-part="badge"]{
 display:none;align-self:flex-start;
@@ -135,6 +135,7 @@ export function Switch002({
         {STYLES}
       </style>
       <label
+        data-slot="switch"
         data-vibeui-block="switch-002"
         className={className}
         style={palette}

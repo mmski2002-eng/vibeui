@@ -26,7 +26,7 @@ const STYLES = `
 :where([data-vibeui-block="pagination-007"]){
 --vibeui-pagination-007-bg:transparent;
 --vibeui-pagination-007-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
---vibeui-pagination-007-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-pagination-007-muted:color-mix(in oklab,var(--vibeui-pagination-007-fg) 68%,transparent);
 --vibeui-pagination-007-border:light-dark(oklch(0.91 0.006 265),oklch(0.38 0.012 265));
 --vibeui-pagination-007-field:light-dark(oklch(0.97 0.003 265),oklch(0.29 0.009 265));
 --vibeui-pagination-007-hover:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.82 0.02 265 / 14%));
@@ -34,6 +34,9 @@ const STYLES = `
 --vibeui-pagination-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="pagination-007"]{color-scheme:dark}
 [data-vibeui-block="pagination-007"]{
 box-sizing:border-box;width:100%;max-width:34rem;
 font-family:var(--vibeui-pagination-007-font);color:var(--vibeui-pagination-007-fg);
@@ -170,6 +173,7 @@ export function Pagination007({
         {STYLES}
       </style>
       <nav
+        data-slot="pagination"
         data-vibeui-block="pagination-007"
         aria-label={labelText.nav ?? LABEL.nav}
         className={className}

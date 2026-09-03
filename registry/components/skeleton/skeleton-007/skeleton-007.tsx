@@ -1,6 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Skeleton007Props = ComponentPropsWithoutRef<"div"> & {
+export type Skeleton007Props = ComponentProps<"div"> & {
   tiles?: number
   /** Минимальная ширина плитки: от неё сетка сама считает число колонок. */
   minTile?: string
@@ -25,6 +25,9 @@ const STYLES = `
 --vibeui-skeleton-007-min:6rem;
 --vibeui-skeleton-007-delay:0s;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="skeleton-007"]{color-scheme:dark}
 [data-vibeui-block="skeleton-007"]{
 width:100%;max-width:30rem;box-sizing:border-box;padding:0.875rem;
 background:var(--vibeui-skeleton-007-bg);
@@ -122,6 +125,7 @@ export function Skeleton007({
       </style>
       <div
         {...props}
+        data-slot="skeleton"
         data-vibeui-block="skeleton-007"
         role="status"
         aria-busy="true"

@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Cascader014Account = {
   code: string
@@ -11,7 +11,7 @@ export type Cascader014Account = {
 }
 
 export type Cascader014Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onSelect"
 > & {
   label?: string
@@ -41,7 +41,7 @@ const STYLES = `
 :where([data-vibeui-block="cascader-014"]){
 --vibeui-cascader-014-bg:transparent;
 --vibeui-cascader-014-fg:light-dark(oklch(0.22 0.014 250),oklch(0.94 0.006 250));
---vibeui-cascader-014-muted:light-dark(oklch(0.55 0.014 250),oklch(0.71 0.012 250));
+--vibeui-cascader-014-muted:color-mix(in oklab,var(--vibeui-cascader-014-fg) 68%,transparent);
 --vibeui-cascader-014-faint:light-dark(oklch(0.76 0.01 250),oklch(0.55 0.014 250));
 --vibeui-cascader-014-border:light-dark(oklch(0.9 0.008 250),oklch(0.35 0.012 250));
 --vibeui-cascader-014-soft:light-dark(oklch(0.965 0.006 250),oklch(0.28 0.012 250));
@@ -51,6 +51,9 @@ const STYLES = `
 --vibeui-cascader-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-cascader-014-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="cascader-014"]{color-scheme:dark}
 [data-vibeui-block="cascader-014"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:23rem;box-sizing:border-box;padding:0.875rem;
@@ -64,18 +67,18 @@ font-family:var(--vibeui-cascader-014-font);
 margin:0;font-size:0.875rem;font-weight:700;letter-spacing:-0.01em;
 }
 [data-vibeui-block="cascader-014"] [data-part="code"]{
-margin:0;padding:0.45rem 0.6rem;border-radius:var(--vibeui-cascader-014-radius);
+margin:0;padding:0.4375rem 0.625rem;border-radius:var(--vibeui-cascader-014-radius);
 background:var(--vibeui-cascader-014-accentsoft);
-font-family:var(--vibeui-cascader-014-mono);font-size:1.05rem;font-weight:700;letter-spacing:0.04em;
+font-family:var(--vibeui-cascader-014-mono);font-size:1.0625rem;font-weight:700;letter-spacing:0.04em;
 }
 [data-vibeui-block="cascader-014"] [data-part="code"] i{font-style:normal;color:var(--vibeui-cascader-014-faint)}
 [data-vibeui-block="cascader-014"] [data-part="crumbs"]{
-display:flex;flex-wrap:wrap;align-items:center;gap:0.2rem;margin:0;padding:0;list-style:none;
+display:flex;flex-wrap:wrap;align-items:center;gap:0.1875rem;margin:0;padding:0;list-style:none;
 font-size:0.75rem;
 }
 [data-vibeui-block="cascader-014"] [data-part="crumb"]{
 appearance:none;cursor:pointer;font:inherit;
-padding:0.15rem 0.4rem;border-radius:0.35rem;
+padding:0.125rem 0.375rem;border-radius:0.375rem;
 border:0;background:var(--vibeui-cascader-014-soft);color:var(--vibeui-cascader-014-muted);
 }
 [data-vibeui-block="cascader-014"] [data-part="crumb"]:hover{color:var(--vibeui-cascader-014-fg)}
@@ -83,16 +86,16 @@ border:0;background:var(--vibeui-cascader-014-soft);color:var(--vibeui-cascader-
 outline:2px solid var(--vibeui-cascader-014-accent);outline-offset:1px;
 }
 [data-vibeui-block="cascader-014"] [data-part="list"]{
-margin:0;padding:0.2rem;list-style:none;display:flex;flex-direction:column;gap:0.1rem;
+margin:0;padding:0.1875rem;list-style:none;display:flex;flex-direction:column;gap:0.125rem;
 max-height:12rem;overflow:auto;
 border:1px solid var(--vibeui-cascader-014-border);
 border-radius:var(--vibeui-cascader-014-radius);
 }
 [data-vibeui-block="cascader-014"] [data-part="row"]{
 appearance:none;cursor:pointer;font:inherit;width:100%;
-display:grid;grid-template-columns:3.4rem 1fr auto;align-items:center;gap:0.4rem;
-box-sizing:border-box;padding:0.4rem 0.5rem;
-border:0;border-radius:0.45rem;background:transparent;color:inherit;text-align:left;
+display:grid;grid-template-columns:3.375rem 1fr auto;align-items:center;gap:0.375rem;
+box-sizing:border-box;padding:0.375rem 0.5rem;
+border:0;border-radius:0.4375rem;background:transparent;color:inherit;text-align:left;
 transition:background-color .16s ease;
 }
 [data-vibeui-block="cascader-014"] [data-part="row"]:hover:not(:disabled){background:var(--vibeui-cascader-014-soft)}
@@ -104,15 +107,15 @@ outline:2px solid var(--vibeui-cascader-014-accent);outline-offset:-2px;
 background:var(--vibeui-cascader-014-accentsoft);font-weight:600;
 }
 [data-vibeui-block="cascader-014"] [data-part="num"]{
-font-family:var(--vibeui-cascader-014-mono);font-size:0.78rem;font-weight:700;
+font-family:var(--vibeui-cascader-014-mono);font-size:0.8125rem;font-weight:700;
 }
 [data-vibeui-block="cascader-014"] [data-part="name"]{
 min-width:0;font-size:0.8125rem;
 overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 }
-[data-vibeui-block="cascader-014"] [data-part="more"]{color:var(--vibeui-cascader-014-muted);font-size:0.8rem}
+[data-vibeui-block="cascader-014"] [data-part="more"]{color:var(--vibeui-cascader-014-muted);font-size:0.8125rem}
 [data-vibeui-block="cascader-014"] [data-part="note"]{
-margin:0;font-size:0.78rem;color:var(--vibeui-cascader-014-muted);
+margin:0;font-size:0.8125rem;color:var(--vibeui-cascader-014-muted);
 }
 [data-vibeui-block="cascader-014"] [data-part="note"] b{color:var(--vibeui-cascader-014-fg)}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="cascader-014"] *{animation:none!important;transition:none!important}}
@@ -253,6 +256,7 @@ export function Cascader014({
       </style>
       <div
         {...props}
+        data-slot="cascader"
         data-vibeui-block="cascader-014"
         className={className}
         style={palette}

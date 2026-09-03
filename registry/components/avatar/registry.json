@@ -132,7 +132,8 @@
               "props": {
                 "name": "Anna Rebrova"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-001-* variables. The photo is supplied through the src prop as a plain <img> with object-fit: cover — the component is portable and does not depend on next/image. Without a photo the initials are shown, and the background hue is computed from the name by the deterministic hueOf function and fed into the --vibeui-avatar-001-hue variable: the background and the letter colour are derived from it through oklch, so contrast holds at any hue. The full name lies in hidden text for a screen reader, and the initials are marked aria-hidden. The theme comes from color-scheme through light-dark(), and the component switches the class-based dark theme on for itself."
           }
         },
         "cardControls": ["name", "size", "status", "src"],
@@ -275,7 +276,8 @@
               "props": {
                 "name": "Anna Rebrova"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-002-* variables. Server-side: there are no hooks. The initials lie underneath as an absolutely positioned backdrop and the photo is a layer on top with alt=\"\", so a failed load leaves the backdrop rather than a broken-image icon. The name is exposed as a hidden line for a screen reader. The size is set by a single variable, --vibeui-avatar-002-size, and three ready-made values are selected by the data-size attribute. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
           }
         },
         "cardControls": ["name", "size", "src"],
@@ -431,7 +433,8 @@
                 ],
                 "label": "Members"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-003-* variables. The markup is a ul/li list: the overlap comes from a negative margin, so the stack's width is honest, and the layering order is set by the --vibeui-avatar-003-z variable and is not limited by the number of participants. With tooltip on, the circle becomes a button, enters the tab order and gets :focus-visible, while the label lies inside the button as ordinary text and is revealed by :hover and :focus-visible rules — with no state and no JS. The names of the folded participants stay in the markup as hidden text. The theme comes from color-scheme through light-dark(), and the component switches the class-based dark theme on for itself."
           }
         },
         "cardControls": ["visible", "size", "label", "tooltip"],
@@ -581,7 +584,8 @@
               "props": {
                 "name": "Anna Rebrova"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-004-* variables. Server-side: there are no hooks. The ring is a conic-gradient cut out by a radial-gradient mask, so the thickness changes through a single variable and needs neither SVG nor arc-length maths. The value arrives in degrees (percent × 3.6) and is duplicated as text in the aria-label and in a hidden line. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
           }
         },
         "cardControls": ["name", "value", "size", "accent"],
@@ -719,7 +723,8 @@
               "props": {
                 "name": "Mark Ilyin"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-005-* variables. Server-side: there are no hooks. The badge is separated from the photo by a box-shadow ring in the surface colour, so it reads the same on a light and on a dark shot. The kind of badge is switched by the data-badge attribute, and its value is duplicated in words in the aria-label. The tick is drawn with two borders. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
           }
         },
         "cardControls": ["name", "badge", "size"],
@@ -893,7 +898,8 @@
                 "label": "Change photo",
                 "hint": "JPG or PNG, square, up to 2 MB"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-006-* variables. The role of the button is played by a <label> tied to an input type=\"file\" through useId. The field is hidden by size and opacity but stays in the flow — display:none would have taken focus away from it. The veil with its caption appears both on hover and on focus of the field through an adjacent selector, and the ring is placed on the wrapper through :has(). The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
           }
         },
         "cardControls": ["name", "label", "hint", "background", "textColor"]
@@ -1055,7 +1061,8 @@
                   "offline": "offline"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-007-* variables. Server-side: there are no hooks. The link is stretched across the whole card by an ::after pseudo-element, and the visible focus ring is placed on the root through :has(a:focus-visible) — otherwise only the name would be highlighted. The three text fields are truncated with an ellipsis. The status is captioned with a word, and the colour only duplicates that caption. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
           }
         },
         "cardControls": [
@@ -1238,7 +1245,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-008-* variables. Server-side: there are no hooks. The shimmer is a moving linear gradient at 200% width, and the delay is set per row through nth-child. The container is declared role=\"status\" with aria-busy and a caption. Under prefers-reduced-motion the animation is removed and the shapes are filled with a flat tone. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
           }
         },
         "cardControls": ["count", "label", "background", "ready"]
@@ -1366,7 +1374,8 @@
               "props": {
                 "name": "Assistant"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-009-* variables. Server-side: there are no hooks. The shape is a rounded square with a radius derived from the size, and the background is two overlaid gradients. The glyph is assembled from a ring and a pseudo-element. The \"typing\" dots blink with a delay set through nth-child and go out entirely under prefers-reduced-motion. The state is spelled out in the aria-label. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
           }
         },
         "cardControls": ["name", "typing", "size", "accent"],
@@ -1498,7 +1507,8 @@
               "props": {
                 "label": "Deleted account"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-010-* variables. Server-side: there are no hooks. The kind is switched by the data-reason attribute: an invited person gets a dashed border and a transparent background, and an anonymous one gets a silhouette made of two pseudo-elements instead of a mark. Each kind has a caption of its own in the aria-label, which can be replaced through the label prop. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
           }
         },
         "cardControls": ["reason", "size", "label"],
@@ -1630,7 +1640,8 @@
               "props": {
                 "name": "Polyot Studio"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-011-* variables. Server-side: there are no hooks. The background, the text and the border are derived from a single accent through color-mix, so the brand colour is set by one prop. The logo is inserted with object-fit: contain and inner padding — somebody else's mark must not be cropped. The monogram takes the first letter of the name, dropping quotation marks. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
           }
         },
         "cardControls": ["name", "size", "accent"],
@@ -1821,7 +1832,8 @@
                 "target": "the catalogue mockup",
                 "moreText": "and"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-012-* variables. Server-side: there are no hooks. The caption is built on the \"two and N others\" rule: listing everyone in a feed is not an option, the line has to stay single and is truncated with an ellipsis. The circles are marked aria-hidden — the names are already in the text and there is no point duplicating them for a screen reader. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
           }
         },
         "cardControls": [
@@ -1980,7 +1992,8 @@
                   "reader": "reader"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-013-* variables. Server-side: there are no hooks. The gap around the dot is made with a mask-image over the portrait rather than with a ring in the background colour — a ring gives itself away as soon as the background changes. The four states differ in shape (a circle, a ring, a square, an empty outline) and are duplicated by a word in the hidden caption, so the dot is not left mute for a screen reader. The sm/md/lg sizes override only --vibeui-avatar-013-size and --vibeui-avatar-013-dot. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
           }
         },
         "cardControls": ["status", "size", "role", "src"],
@@ -2138,7 +2151,8 @@
                 "name": "Mark Ilyin",
                 "role": "Frontend"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-014-* variables. Server-side: there are no hooks. The shapes are set with clip-path (a polygon for the hexagon, a rounding for the squircle), so they stay crisp at any scale and drag no mask image along. The ring is drawn as a separate backing layer under the clip-path: a border would be clipped together with the shape. The initials are centred against the rectangle, which is why the hexagon carries an optical nudge of 1px — without it the letters look raised. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
           }
         },
         "cardControls": ["shape", "role", "name", "size"],
@@ -2310,7 +2324,8 @@
                 "removeLabel": "Remove photo",
                 "captureLabel": "Take a photo"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-015-* variables. Client-side: \"use client\", with useState and useRef holding the selected action and a reference to the popover. The menu is a native HTML popover with popovertarget: closing on Escape and on an outside click comes from the browser rather than being written by hand. The positioning uses CSS anchor positioning under @supports (anchor-name: --a) with an ordinary absolute fallback. The edit button is scaled down and moved into the corner, and its accessible caption names the person — in a list of cards \"change photo\" without a name is useless. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
           }
         },
         "cardControls": [
@@ -2495,7 +2510,8 @@
                 ],
                 "title": "On the project"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-016-* variables. Server-side: there are no hooks. The columns are set by repeat(auto-fill, minmax(4.5rem, 1fr)), so the browser works out their number from the actual width rather than a prop: when the width changes, the rows reflow on their own. The circle's hue is derived from the name by an FNV-1a function, so one person always keeps one colour. The names are captioned under the faces and truncated with an ellipsis — a truncated name is more honest than a tooltip that never appears on a phone. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
           }
         },
         "cardControls": [
@@ -2664,7 +2680,8 @@
                 "meta": "last seen 20 minutes ago",
                 "action": "Message"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-017-* variables. Server-side: there are no hooks. The whole row is the link target: a::after is stretched to inset:0, while the button on the right is lifted by z-index, so opening the profile and writing a message stay separate actions. The focus ring is placed on the row through :has(a:focus-visible), so from the keyboard the whole target is visible rather than an underlined name. The role and the secondary line are separated by weight: two identical greys merge into one. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
           }
         },
         "cardControls": ["role", "action", "background", "name", "textColor"]
@@ -2798,7 +2815,8 @@
                   "bot": "bot"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-018-* variables. Server-side: there are no hooks. The role ring is a conic-gradient with a radial mask: it stays even at any size and needs no SVG. The roles differ in arc length (owner is the full ring, editor three quarters, reader a half, robot a quarter) rather than colour alone, and are duplicated by a word in the caption: an arc without text is unreadable. A presence dot is deliberately not added here — it is taken by a different meaning, and hanging a second indicator on the ring is not allowed. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
           }
         },
         "cardControls": ["role", "size", "team"],
@@ -2994,7 +3012,8 @@
                 ],
                 "action": "Send a message"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-019-* variables. Server-side: there are no hooks. This is the content of the card, not the popping-up mechanism: the calling code places it in a popover or a hover-card at its own discretion — that keeps the card usable on a touch screen too, where hovering does not exist. The stats are set in tabular figures and stand three to a row; a fourth breaks the line on a narrow screen, so the extras are dropped from the markup through slice. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
           }
         },
         "cardControls": ["action", "background", "name", "bio", "textColor"]
@@ -3133,7 +3152,8 @@
                 "name": "Mark Ilyin",
                 "label": "unread messages"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-020-* variables. Server-side: there are no hooks. The badge sits in a mask-image cut-out, so the gap between the number and the portrait stays even on any background. More than ninety-nine is shown as \"99+\": an exact number in a circle is unreadable and changes nothing. Zero is not drawn at all — an empty circle reads as \"there is something new\". The number is duplicated in words in the hidden caption, otherwise it stays a mute badge for a screen reader. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
           }
         },
         "cardControls": ["count", "size", "name", "label"],
@@ -3278,7 +3298,8 @@
                   "none": "no stories"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-021-* variables. Server-side: there are no hooks, the root is an ordinary button. The ring is drawn with a conic-gradient and cut out by a radial mask on closest-side, so the gap between the frame and the portrait holds on any background and the thickness changes through a single variable. The seen state is not dimmed into invisibility: it loses colour and halves in thickness, but the ring remains — otherwise there is no telling whether the person has a story at all. The state is duplicated by a word in the hidden caption. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
           }
         },
         "cardControls": ["state", "size", "name"],
@@ -3454,7 +3475,8 @@
                 "idleText": "online",
                 "typingText": "typing…"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-022-* variables. Server-side: there are no hooks. The three-dot bubble is separated from the portrait by a ring in the card colour — the card is its own, so the surface colour is known. The dots blink through nth-child with a delay and go out entirely under prefers-reduced-motion. The state is duplicated by a line in role=\"status\": bouncing dots are an empty element for a screen reader. The status line has a fixed height, so the list does not jolt when a person starts and stops typing. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
           }
         },
         "cardControls": [
@@ -3632,7 +3654,8 @@
                 "label": "Catalogue team",
                 "membersText": "Members"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-023-* variables. Server-side: there are no hooks. The mosaic is a 2×2 grid inside a round wrapper with overflow: hidden; the layout is switched by the data-count attribute, because with three faces the square leaves an empty cell — the first face then takes a whole column. The gap between the cells is drawn in the card colour rather than with a border, so as not to eat usable area. The fifth participant and beyond fold into a counter, and the full list of names is moved into the text alongside: the cells are unreadable. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
           }
         },
         "cardControls": [
@@ -3794,7 +3817,8 @@
                 "items": ["Profile", "Settings", "Appearance"],
                 "signOutLabel": "Sign out"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-028-* variables. Server-side: there is no state at all — opening and closing are done by the native HTML popover through popovertarget, while Escape, an outside click and the top layer come from the browser. The positioning uses CSS anchor positioning under @supports (anchor-name: --a) with a fixed fallback. The menu header repeats the name and the e-mail: in products with several accounts it is the only place where you can see who you are signed in as. Sign-out is separated by a rule and painted in the danger colour. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
           }
         },
         "cardControls": [
@@ -3965,7 +3989,8 @@
                 "name": "Maria Gurova",
                 "role": "Head of customer experience"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-030-* variables. Server-side: there are no hooks. Job titles in real lists differ in length — \"Designer\" and \"Head of the customer experience practice\"; free wrapping wrecks the height of the cards in a row, while truncating to a single line eats half the meaning. Room for two lines is reserved by a min-height derived from the line variable, and the tail is cut by -webkit-line-clamp. The full text stays in title, so the truncation loses nothing for good. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
           }
         },
         "cardControls": ["role", "size", "background", "name", "textColor"]
@@ -4096,7 +4121,8 @@
                   "Irina Kim"
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-031-* variables. Server-side: there are no hooks, the spreading is entirely in CSS. The overlap is set by a negative margin expressed as a fraction of the size, so a single number governs both the density and the width of the row, and the spreading is that same margin going to zero with a transition. The spreading hangs on :hover and on :focus-within: there is no hovering on a keyboard. Every face is a separate button with an accessible caption: a circle covered by half cannot be clicked. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
           }
         },
         "cardControls": ["overlap", "size", "visible"],
@@ -4270,7 +4296,8 @@
                   "muted": "mic off"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-033-* variables. Server-side: there are no hooks. The pulsing ring spreads out from the portrait: movement is caught by peripheral vision, and a list of ten people is not scanned by eye. But movement cannot be the only sign — under prefers-reduced-motion the pulse is replaced by a steady ring of the same colour, the microphone is drawn with pseudo-elements (a capsule on a stem, struck through when muted), and the state is duplicated by a word. The three states are switched by the data-state attribute. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
           }
         },
         "cardControls": [
@@ -4442,7 +4469,8 @@
                 },
                 "seenText": "last seen"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-034-* variables. Server-side: there are no hooks — relative time is not recomputed on the client and drags no hydration mismatch along. The caption lives in a <time> element with a machine dateTime: a person reads \"yesterday at 18:40\", while the markup carries the exact stamp that can be parsed programmatically. Recency is duplicated by the shape of the mark — filled, hollow, dashed — because three shades of grey are indistinguishable from one another, and the mark is declared role=\"img\" with a caption. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
           }
         },
         "cardControls": [
@@ -4611,7 +4639,8 @@
                   "creator": "Creator verified"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-035-* variables. Server-side: there are no hooks. The mark is moved into the name line rather than the corner of the portrait: it is the name that gets verified, and in the corner a tick sits next to presence and role and gets lost among them. The three kinds of verification differ in the shape of the mark — a circle, a rounded square, a hexagon on clip-path — and each is spelled out in words in the second line. The tick itself is drawn with two borders of a pseudo-element, no icon package is needed for it. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
           }
         },
         "cardControls": [
@@ -4763,7 +4792,8 @@
                 "resetLabel": "Reset",
                 "emptyText": "No photo chosen"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-036-* variables. The file is read through URL.createObjectURL, the frame is set by the --vibeui-avatar-036-x/-y/-zoom CSS variables on the image's transform, dragging runs on pointer events with setPointerCapture, and the keyboard arrows move the shot in eight-pixel steps. The cropping is done by a canvas: the same transformation at the scale of the output frame, and the result goes to onCrop as an image/webp Blob. The round mask is appearance only: the circle is not baked into the file, otherwise transparent corners would land on somebody else's background. The theme comes from color-scheme through light-dark(), and the component switches the class-based dark theme on for itself."
           }
         }
       }
@@ -4902,7 +4932,8 @@
                 "name": "Anna Rebrova",
                 "seed": "anna@vibeui.ru"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-037-* variables. The identifier is folded into FNV-1a — the same hash as in the rest of the category's avatars, so a person's hue matches everywhere. From the hash a 5×5 grid is computed: the three left-hand columns are taken from the bits and the two right-hand ones mirror them, because a symmetric figure reads as a mark while an asymmetric one reads as noise. It is drawn as inline SVG in a 0 0 5 5 viewBox, with no images and no requests. The name lies in hidden text for a screen reader, and the pattern is marked aria-hidden. The theme comes from color-scheme through light-dark(), and the component switches the class-based dark theme on for itself."
           }
         }
       }
@@ -5064,7 +5095,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-039-* variables. The portrait overlaps the cover through a negative margin rather than absolute positioning: the header height is computed on its own, and the text under the portrait does not have to be pushed down by hand. The cover is drawn with gradients so that the component looks finished without an image. The layout is driven by the header's own width through container-type: inline-size — in a narrow column it is vertical, and from 30rem the name and the button stand in one line. The hue of the cover and of the portrait is computed from the name by the same FNV-1a as in the rest of the category's avatars. The theme comes from color-scheme through light-dark(), and the component switches the class-based dark theme on for itself."
           }
         }
       }

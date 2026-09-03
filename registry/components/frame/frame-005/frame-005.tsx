@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties, ReactNode } from "react"
+import type { ComponentProps, CSSProperties, ReactNode } from "react"
 
-export type Frame005Props = Omit<
-  ComponentPropsWithoutRef<"figure">,
-  "title"
-> & {
+export type Frame005Props = Omit<ComponentProps<"figure">, "title"> & {
   title?: string
   tone?: "silver" | "graphite"
   /** Пусто — экран прозрачный, сквозь него виден фон страницы. */
@@ -23,10 +20,13 @@ const STYLES = `
 --vibeui-frame-005-base:light-dark(oklch(0.85 0.006 265),oklch(0.66 0.007 265));
 --vibeui-frame-005-screen:transparent;
 --vibeui-frame-005-fg:light-dark(oklch(0.23 0.014 265),oklch(0.93 0.005 265));
---vibeui-frame-005-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-frame-005-muted:color-mix(in oklab,var(--vibeui-frame-005-fg) 68%,transparent);
 --vibeui-frame-005-soft:light-dark(oklch(0.96 0.004 265),oklch(0.33 0.008 265));
 --vibeui-frame-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="frame-005"]{color-scheme:dark}
 [data-vibeui-block="frame-005"]{
 display:flex;flex-direction:column;align-items:center;margin:0;
 width:100%;max-width:30rem;box-sizing:border-box;
@@ -132,6 +132,7 @@ export function Frame005({
       </style>
       <figure
         {...props}
+        data-slot="frame"
         data-vibeui-block="frame-005"
         data-tone={tone}
         className={className}

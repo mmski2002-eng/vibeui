@@ -1,10 +1,10 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Calendar012Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange" | "defaultValue"
 > & {
   defaultValue?: number
@@ -29,16 +29,19 @@ const STYLES = `
 :where([data-vibeui-block="calendar-012"]){
 --vibeui-calendar-012-bg:transparent;
 --vibeui-calendar-012-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
---vibeui-calendar-012-muted:light-dark(oklch(0.62 0.014 265),oklch(0.68 0.012 265));
+--vibeui-calendar-012-muted:color-mix(in oklab,var(--vibeui-calendar-012-fg) 68%,transparent);
 --vibeui-calendar-012-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-calendar-012-hover:light-dark(oklch(0.96 0.004 265),oklch(0.29 0.014 265));
 --vibeui-calendar-012-accent:light-dark(oklch(0.54 0.16 285),oklch(0.72 0.14 285));
 --vibeui-calendar-012-on-accent:light-dark(oklch(0.99 0.01 285),oklch(0.19 0.03 285));
 --vibeui-calendar-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="calendar-012"]{color-scheme:dark}
 [data-vibeui-block="calendar-012"]{
 display:flex;flex-direction:column;gap:0.75rem;
-width:100%;max-width:19rem;box-sizing:border-box;padding:0.875rem;
+width:100%;max-width:19rem;box-sizing:border-box;padding:0.9375rem;
 background:var(--vibeui-calendar-012-bg);
 border:1px solid var(--vibeui-calendar-012-border);border-radius:0.875rem;
 color:var(--vibeui-calendar-012-fg);font-family:var(--vibeui-calendar-012-font);
@@ -72,7 +75,7 @@ display:grid;grid-template-columns:repeat(4,1fr);gap:0.25rem;
 appearance:none;cursor:pointer;
 height:2.5rem;padding:0;border:0;border-radius:0.5rem;
 background:transparent;color:inherit;
-font:inherit;font-size:0.875rem;font-variant-numeric:tabular-nums;
+font:inherit;font-size:0.8125rem;font-variant-numeric:tabular-nums;
 transition:background-color .14s ease;
 }
 [data-vibeui-block="calendar-012"] [data-part="grid"] button:hover:not(:disabled){background:var(--vibeui-calendar-012-hover)}
@@ -86,7 +89,7 @@ background:var(--vibeui-calendar-012-accent);color:var(--vibeui-calendar-012-on-
 }
 [data-vibeui-block="calendar-012"] [data-part="foot"]{
 display:flex;align-items:center;justify-content:space-between;gap:0.5rem;
-font-size:0.75rem;color:var(--vibeui-calendar-012-muted);
+font-size:0.875rem;color:var(--vibeui-calendar-012-muted);
 }
 [data-vibeui-block="calendar-012"] [data-part="foot"] strong{
 color:var(--vibeui-calendar-012-fg);font-variant-numeric:tabular-nums;
@@ -96,6 +99,44 @@ color:var(--vibeui-calendar-012-fg);font-variant-numeric:tabular-nums;
 
 function decadeStart(year: number) {
   return Math.floor(year / 10) * 10
+}
+
+// Стрелки водят фокус по сетке. Без них до нужного дня приходится жать Tab
+// столько раз, сколько до него дней.
+function moveFocus(event: KeyboardEvent<HTMLElement>, columns: number) {
+  const steps: Record<string, number> = {
+    ArrowLeft: -1,
+    ArrowRight: 1,
+    ArrowUp: -columns,
+    ArrowDown: columns,
+  }
+  const step = steps[event.key]
+
+  if (step === undefined) {
+    return
+  }
+
+  const buttons = Array.from(
+    event.currentTarget.querySelectorAll<HTMLButtonElement>("button"),
+  )
+  const from = buttons.indexOf(document.activeElement as HTMLButtonElement)
+
+  if (from < 0) {
+    return
+  }
+
+  let index = from + step
+
+  while (buttons[index]?.disabled) {
+    index += step
+  }
+
+  if (!buttons[index]) {
+    return
+  }
+
+  event.preventDefault()
+  buttons[index].focus()
 }
 
 /**
@@ -143,6 +184,11 @@ export function Calendar012({
   const [decade, setDecade] = useState(() => decadeStart(defaultValue))
 
   const years = Array.from({ length: 12 }, (_, index) => decade - 1 + index)
+  // Ровно одна кнопка сетки в табуляции: выбранный год, а если он в другом
+  // десятилетии — первый доступный из показанных.
+  const stop = years.includes(selected)
+    ? selected
+    : (years.find((year) => year >= min && year <= max) ?? years[0])
 
   const palette = {
     ...(accent ? { "--vibeui-calendar-012-accent": accent } : null),
@@ -168,6 +214,7 @@ export function Calendar012({
       </style>
       <div
         {...props}
+        data-slot="calendar"
         data-vibeui-block="calendar-012"
         className={className}
         style={palette}
@@ -195,11 +242,17 @@ export function Calendar012({
             </button>
           </span>
         </div>
-        <div data-part="grid" role="group" aria-label={groupLabel}>
+        <div
+          data-part="grid"
+          role="group"
+          aria-label={groupLabel}
+          onKeyDown={(event) => moveFocus(event, 4)}
+        >
           {years.map((year) => (
             <button
               key={year}
               type="button"
+              tabIndex={year === stop ? 0 : -1}
               aria-pressed={year === selected}
               data-outside={year < decade || year > decade + 9}
               disabled={year < min || year > max}

@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties, MouseEvent } from "react"
+import type { ComponentProps, CSSProperties, MouseEvent } from "react"
 
 export type Contextmenu001Item = {
   label: string
@@ -9,10 +9,7 @@ export type Contextmenu001Item = {
   danger?: boolean
 }
 
-export type Contextmenu001Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Contextmenu001Props = Omit<ComponentProps<"div">, "children"> & {
   items?: Contextmenu001Item[]
   hint?: string
   /** Подпись кнопки-дублёра: компонент несёт русскую, проект подставляет свою. */
@@ -32,7 +29,7 @@ const STYLES = `
 --vibeui-contextmenu-001-bg:transparent;
 --vibeui-contextmenu-001-surface:light-dark(oklch(1 0 0),oklch(0.24 0.013 265));
 --vibeui-contextmenu-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
---vibeui-contextmenu-001-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-contextmenu-001-muted:color-mix(in oklab,var(--vibeui-contextmenu-001-fg) 68%,transparent);
 --vibeui-contextmenu-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
 --vibeui-contextmenu-001-hover:light-dark(oklch(0.55 0.02 265 / 9%),oklch(0.92 0.02 265 / 12%));
 --vibeui-contextmenu-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
@@ -42,6 +39,9 @@ const STYLES = `
 --vibeui-contextmenu-001-x:50%;
 --vibeui-contextmenu-001-y:50%;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="contextmenu-001"]{color-scheme:dark}
 [data-vibeui-block="contextmenu-001"]{
 width:100%;max-width:22rem;box-sizing:border-box;
 font-family:var(--vibeui-contextmenu-001-font);color:var(--vibeui-contextmenu-001-fg);
@@ -163,6 +163,7 @@ export function Contextmenu001({
       </style>
       <div
         {...props}
+        data-slot="context-menu"
         data-vibeui-block="contextmenu-001"
         className={className}
         style={palette}

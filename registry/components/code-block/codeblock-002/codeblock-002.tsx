@@ -1,10 +1,10 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Codeblock002Props = Omit<
-  ComponentPropsWithoutRef<"figure">,
+  ComponentProps<"figure">,
   "children" | "title"
 > & {
   title?: string
@@ -26,7 +26,7 @@ const STYLES = `
 :where([data-vibeui-block="codeblock-002"]){
 --vibeui-codeblock-002-bg:transparent;
 --vibeui-codeblock-002-fg:light-dark(oklch(0.26 0.014 265),oklch(0.94 0.005 265));
---vibeui-codeblock-002-muted:light-dark(oklch(0.52 0.016 265),oklch(0.67 0.012 265));
+--vibeui-codeblock-002-muted:color-mix(in oklab,var(--vibeui-codeblock-002-fg) 68%,transparent);
 --vibeui-codeblock-002-border:light-dark(oklch(0 0 0 / 13%),oklch(1 0 0 / 13%));
 --vibeui-codeblock-002-chip:light-dark(oklch(0 0 0 / 7%),oklch(1 0 0 / 9%));
 --vibeui-codeblock-002-chip-hover:light-dark(oklch(0 0 0 / 13%),oklch(1 0 0 / 16%));
@@ -34,6 +34,9 @@ const STYLES = `
 --vibeui-codeblock-002-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-codeblock-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="codeblock-002"]{color-scheme:dark}
 [data-vibeui-block="codeblock-002"]{
 position:relative;display:block;
 width:100%;max-width:32rem;box-sizing:border-box;margin:0;
@@ -159,6 +162,7 @@ export function Codeblock002({
       </style>
       <figure
         {...props}
+        data-slot="code-block"
         data-vibeui-block="codeblock-002"
         className={className}
         style={palette}

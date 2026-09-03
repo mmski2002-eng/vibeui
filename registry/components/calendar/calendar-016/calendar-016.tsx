@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Calendar016Member = {
   name: string
@@ -7,7 +7,7 @@ export type Calendar016Member = {
 }
 
 export type Calendar016Props = Omit<
-  ComponentPropsWithoutRef<"section">,
+  ComponentProps<"section">,
   "children" | "title"
 > & {
   weekStart?: string
@@ -36,15 +36,18 @@ const STYLES = `
 :where([data-vibeui-block="calendar-016"]){
 --vibeui-calendar-016-bg:transparent;
 --vibeui-calendar-016-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
---vibeui-calendar-016-muted:light-dark(oklch(0.62 0.014 265),oklch(0.67 0.013 265));
+--vibeui-calendar-016-muted:color-mix(in oklab,var(--vibeui-calendar-016-fg) 68%,transparent);
 --vibeui-calendar-016-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-calendar-016-track:light-dark(oklch(0.95 0.004 265),oklch(0.3 0.011 265));
 --vibeui-calendar-016-accent:light-dark(oklch(0.55 0.15 210),oklch(0.72 0.13 210));
 --vibeui-calendar-016-full:light-dark(oklch(0.56 0.16 25),oklch(0.74 0.14 25));
 --vibeui-calendar-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="calendar-016"]{color-scheme:dark}
 [data-vibeui-block="calendar-016"]{
-width:100%;max-width:44rem;box-sizing:border-box;padding:1rem;
+width:100%;max-width:44rem;box-sizing:border-box;padding:0.9375rem;
 background:var(--vibeui-calendar-016-bg);
 border:1px solid var(--vibeui-calendar-016-border);border-radius:1rem;
 color:var(--vibeui-calendar-016-fg);font-family:var(--vibeui-calendar-016-font);
@@ -57,7 +60,7 @@ margin:0 0 0.75rem;
 margin:0;font-size:0.9375rem;font-weight:700;letter-spacing:-0.01em;
 }
 [data-vibeui-block="calendar-016"] [data-part="range"]{
-font-size:0.75rem;color:var(--vibeui-calendar-016-muted);
+font-size:0.875rem;color:var(--vibeui-calendar-016-muted);
 }
 [data-vibeui-block="calendar-016"] [data-part="scroll"]{overflow-x:auto}
 [data-vibeui-block="calendar-016"] table{width:100%;min-width:30rem;border-collapse:collapse}
@@ -93,7 +96,7 @@ background:var(--vibeui-calendar-016-accent);
    — разные новости для того, кто раздаёт задачи. */
 [data-vibeui-block="calendar-016"] [data-part="cell"][data-state="full"] [data-part="bar"] i{background:var(--vibeui-calendar-016-full)}
 [data-vibeui-block="calendar-016"] [data-part="hours"]{
-font-size:0.6875rem;font-variant-numeric:tabular-nums;color:var(--vibeui-calendar-016-muted);
+font-size:0.75rem;font-variant-numeric:tabular-nums;color:var(--vibeui-calendar-016-muted);
 }
 [data-vibeui-block="calendar-016"] [data-part="cell"][data-state="free"] [data-part="hours"]{opacity:.5}
 [data-vibeui-block="calendar-016"] [data-part="cell"][data-state="full"] [data-part="hours"]{
@@ -101,7 +104,7 @@ color:var(--vibeui-calendar-016-full);font-weight:650;
 }
 [data-vibeui-block="calendar-016"] [data-part="legend"]{
 display:flex;flex-wrap:wrap;gap:0.875rem;margin:0.75rem 0 0;
-font-size:0.6875rem;color:var(--vibeui-calendar-016-muted);
+font-size:0.75rem;color:var(--vibeui-calendar-016-muted);
 }
 [data-vibeui-block="calendar-016"] [data-part="legend"] span{display:inline-flex;align-items:center;gap:0.3125rem}
 [data-vibeui-block="calendar-016"] [data-part="legend"] i{
@@ -158,11 +161,31 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 }
 
 /**
+ * Дата и локаль из пропов или дефолты компонента. Чужая страница не должна
+ * падать из-за опечатки в значении: Intl бросает RangeError и на Invalid Date,
+ * и на нераспознанной локали, а это белый экран вместо всего сайта.
+ */
+function safeDate(value: string, fallback: string) {
+  return Number.isNaN(new Date(`${value}T00:00:00`).getTime())
+    ? fallback
+    : value
+}
+
+function safeLocale(value: string, fallback: string) {
+  try {
+    Intl.DateTimeFormat.supportedLocalesOf(value)
+    return value
+  } catch {
+    return fallback
+  }
+}
+
+/**
  * Недельная сетка занятости команды: люди по строкам, дни по столбцам.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Calendar016({
-  weekStart = "2026-03-16",
+  weekStart: weekStartProp = "2026-03-16",
   members = DEFAULT_MEMBERS,
   capacity = 8,
   heading = "Загрузка команды",
@@ -170,13 +193,15 @@ export function Calendar016({
   cellTitleText = "{name}, {date}: {hours} из {capacity} ч",
   hoursText = "{hours} ч",
   legendText = DEFAULT_LEGEND,
-  locale = "ru-RU",
+  locale: localeProp = "ru-RU",
   accent,
   background = "",
   className,
   style,
   ...props
 }: Calendar016Props) {
+  const weekStart = safeDate(weekStartProp, "2026-03-16")
+  const locale = safeLocale(localeProp, "ru-RU")
   const [year, month, day] = weekStart.split("-").map(Number)
   const first = new Date(year, month - 1, day)
   const columns = Math.max(1, ...members.map((member) => member.hours.length))
@@ -211,6 +236,7 @@ export function Calendar016({
       </style>
       <section
         {...props}
+        data-slot="calendar"
         data-vibeui-block="calendar-016"
         className={className}
         style={palette}

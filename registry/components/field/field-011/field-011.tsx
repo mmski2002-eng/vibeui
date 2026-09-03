@@ -1,12 +1,12 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import { useEffect, useId, useState } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Field011Phase = "idle" | "pending" | "saving" | "saved"
 
 export type Field011Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "defaultValue"
 > & {
   label?: string
@@ -33,13 +33,16 @@ const STYLES = `
 --vibeui-field-011-bg:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
 --vibeui-field-011-surface:transparent;
 --vibeui-field-011-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
---vibeui-field-011-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-field-011-muted:color-mix(in oklab,var(--vibeui-field-011-fg) 68%,transparent);
 --vibeui-field-011-border:light-dark(oklch(0.88 0.008 265),oklch(0.4 0.012 265));
 --vibeui-field-011-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.011 265));
 --vibeui-field-011-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
 --vibeui-field-011-ok:light-dark(oklch(0.5 0.13 155),oklch(0.75 0.13 155));
 --vibeui-field-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="field-011"]{color-scheme:dark}
 [data-vibeui-block="field-011"]{
 display:flex;flex-direction:column;gap:0.4375rem;
 width:100%;max-width:24rem;box-sizing:border-box;padding:0.875rem;
@@ -108,6 +111,19 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 }
 
 /**
+ * Неверная локаль из пропа не должна ронять страницу-хост: toLocaleTimeString
+ * бросает на ней RangeError, поэтому непригодное значение откатываем на дефолт.
+ */
+function safeLocale(value: string, fallback: string) {
+  try {
+    Intl.DateTimeFormat.supportedLocalesOf(value)
+    return value
+  } catch {
+    return fallback
+  }
+}
+
+/**
  * Поле с автосохранением черновика: пауза после ввода запускает сохранение,
  * а под полем остаётся метка времени последнего сохранения.
  */
@@ -125,6 +141,7 @@ export function Field011({
   style,
   ...props
 }: Field011Props) {
+  const id = useId()
   const [value, setValue] = useState(defaultValue)
   const [saved, setSaved] = useState<{ text: string; at: Date } | null>(null)
   const [savingFor, setSavingFor] = useState<string | null>(null)
@@ -164,7 +181,7 @@ export function Field011({
 
   const timestamp =
     phase === "saved" && saved
-      ? saved.at.toLocaleTimeString(locale, {
+      ? saved.at.toLocaleTimeString(safeLocale(locale, "ru-RU"), {
           hour: "2-digit",
           minute: "2-digit",
         })
@@ -188,24 +205,25 @@ export function Field011({
       </style>
       <div
         {...props}
+        data-slot="field"
         data-vibeui-block="field-011"
         data-phase={phase}
         className={className}
         style={palette}
       >
         <div data-part="row">
-          <label htmlFor="field-011-input">{label}</label>
+          <label htmlFor={id}>{label}</label>
         </div>
         <textarea
-          id="field-011-input"
+          id={id}
           name="draft"
           rows={3}
           placeholder={placeholder}
           value={value}
-          aria-describedby="field-011-status"
+          aria-describedby={`${id}-status`}
           onChange={(event) => setValue(event.target.value)}
         />
-        <p id="field-011-status" data-part="status" role="status">
+        <p id={`${id}-status`} data-part="status" role="status">
           <span data-part="dot" aria-hidden="true" />
           {statusText[phase] ?? STATUS_TEXT[phase]}
           {timestamp ? savedAtText.replace("{time}", timestamp) : ""}

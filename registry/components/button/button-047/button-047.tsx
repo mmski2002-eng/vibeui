@@ -1,6 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Button047Props = ComponentPropsWithoutRef<"a"> & {
+export type Button047Props = ComponentProps<"a"> & {
   href?: string
   /** Показывать домен назначения рядом с подписью. */
   showHost?: boolean
@@ -20,15 +20,18 @@ const STYLES = `
 --vibeui-button-047-surface:light-dark(oklch(1 0 0),oklch(0.25 0.014 265));
 --vibeui-button-047-border:light-dark(oklch(0.9 0.006 265),oklch(0.4 0.014 265));
 --vibeui-button-047-fg:light-dark(oklch(0.26 0.02 265),oklch(0.93 0.008 265));
---vibeui-button-047-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-button-047-muted:color-mix(in oklab,var(--vibeui-button-047-fg) 68%,transparent);
 --vibeui-button-047-accent:light-dark(oklch(0.5 0.16 245),oklch(0.75 0.13 245));
 --vibeui-button-047-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-button-047-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="button-047"]{color-scheme:dark}
 [data-vibeui-block="button-047"]{
 position:relative;
 display:inline-flex;align-items:center;gap:0.625rem;box-sizing:border-box;
-height:2.625rem;padding:0 0.875rem;border-radius:0.625rem;
+height:2.5rem;padding:0 0.875rem;border-radius:0.625rem;
 border:1px solid var(--vibeui-button-047-border);
 background:var(--vibeui-button-047-surface);color:var(--vibeui-button-047-fg);
 font-family:var(--vibeui-button-047-font);font-size:0.875rem;font-weight:600;line-height:1;
@@ -130,6 +133,7 @@ export function Button047({
         href={href}
         target="_blank"
         rel="noreferrer noopener"
+        data-slot="button"
         data-vibeui-block="button-047"
         className={className}
         style={palette}

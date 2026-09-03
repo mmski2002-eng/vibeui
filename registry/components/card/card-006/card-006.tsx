@@ -1,7 +1,7 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Card006Props = Omit<
-  ComponentPropsWithoutRef<"article">,
+  ComponentProps<"article">,
   "children" | "title"
 > & {
   title?: string
@@ -34,7 +34,7 @@ const STYLES = `
 :where([data-vibeui-block="card-006"]){
 --vibeui-card-006-bg:transparent;
 --vibeui-card-006-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-card-006-muted:light-dark(oklch(0.56 0.014 265),oklch(0.72 0.012 265));
+--vibeui-card-006-muted:color-mix(in oklab,var(--vibeui-card-006-fg) 68%,transparent);
 --vibeui-card-006-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-card-006-track:light-dark(oklch(0.93 0.005 265),oklch(0.33 0.01 265));
 --vibeui-card-006-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
@@ -44,6 +44,9 @@ const STYLES = `
 --vibeui-card-006-chip-ink:light-dark(oklch(0.2 0.02 265),oklch(0.97 0.008 265));
 --vibeui-card-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="card-006"]{color-scheme:dark}
 [data-vibeui-block="card-006"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:18rem;box-sizing:border-box;padding:0.875rem;
@@ -85,8 +88,8 @@ font-size:0.75rem;color:var(--vibeui-card-006-muted);
 [data-vibeui-block="card-006"] [data-part="face"]{
 display:flex;align-items:center;justify-content:center;flex:none;
 width:1.375rem;height:1.375rem;border-radius:9999px;
-background:oklch(0.92 0.05 var(--vibeui-card-006-hue,250));
-color:oklch(0.38 0.09 var(--vibeui-card-006-hue,250));
+background:light-dark(oklch(0.92 0.05 var(--vibeui-card-006-hue,250)),oklch(0.33 0.07 var(--vibeui-card-006-hue,250)));
+color:light-dark(oklch(0.38 0.09 var(--vibeui-card-006-hue,250)),oklch(0.92 0.05 var(--vibeui-card-006-hue,250)));
 font-size:0.625rem;font-weight:700;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="card-006"] *{animation:none!important;transition:none!important}}
@@ -193,6 +196,7 @@ export function Card006({
       </style>
       <article
         {...props}
+        data-slot="card"
         data-vibeui-block="card-006"
         data-status={status}
         className={className}

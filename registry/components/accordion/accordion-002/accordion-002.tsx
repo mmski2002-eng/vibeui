@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Accordion002Item = {
   question: string
@@ -12,10 +12,7 @@ export type Accordion002Marker =
 /** Чем открытая карточка отделяется от закрытых. */
 export type Accordion002Elevation = "lift" | "ring" | "flat"
 
-export type Accordion002Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Accordion002Props = Omit<ComponentProps<"div">, "children"> & {
   items?: Accordion002Item[]
   /** Номер раздела, открытого сразу. -1 — все закрыты. */
   defaultOpen?: number
@@ -38,7 +35,7 @@ export type Accordion002Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="accordion-002"]){
 --vibeui-accordion-002-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.005 265));
---vibeui-accordion-002-muted:light-dark(oklch(0.5 0.014 265),oklch(0.68 0.01 265));
+--vibeui-accordion-002-muted:color-mix(in oklab,var(--vibeui-accordion-002-fg) 68%,transparent);
 --vibeui-accordion-002-bg:transparent;
 --vibeui-accordion-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.32 0.01 265));
 --vibeui-accordion-002-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.16 262));
@@ -74,7 +71,7 @@ box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-accordion-002-accent) 18%,t
 }
 [data-vibeui-block="accordion-002"] summary{
 display:flex;align-items:center;justify-content:space-between;gap:1rem;
-padding:0.9375rem 1.125rem;cursor:pointer;list-style:none;
+padding:0.9375rem 1.0625rem;cursor:pointer;list-style:none;
 font-size:0.9375rem;font-weight:550;line-height:1.4;
 }
 [data-vibeui-block="accordion-002"] summary::-webkit-details-marker{display:none}
@@ -142,13 +139,16 @@ background:var(--vibeui-accordion-002-accent);
 transform:scaleY(0);opacity:0;
 }
 [data-vibeui-block="accordion-002"] [data-part="answer"]{
-margin:0;padding:0 1.125rem 1.0625rem;
+margin:0;padding:0 1.0625rem 1.0625rem;
 font-size:0.875rem;line-height:1.6;color:var(--vibeui-accordion-002-muted);max-width:62ch;
 }
 @container (min-width: 32rem){
 [data-vibeui-block="accordion-002"] summary{padding:1.0625rem 1.375rem;font-size:1rem}
 [data-vibeui-block="accordion-002"] [data-part="answer"]{padding:0 1.375rem 1.25rem;font-size:0.9375rem}
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="accordion-002"]{color-scheme:dark}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="accordion-002"] *{animation:none!important;transition:none!important}}
 `
 
@@ -226,6 +226,7 @@ export function Accordion002({
       </style>
       <div
         {...props}
+        data-slot="accordion"
         data-vibeui-block="accordion-002"
         data-marker={marker}
         data-elevation={elevation}

@@ -13,6 +13,8 @@ export type Navmenu008Props = {
   recentTitle?: string
   /** Подпись навигации для скринридера. */
   label?: string
+  /** Подпись текущего раздела: он помечается aria-current. */
+  current?: string
   /** Подложка полосы и панели. Пусто — своя палитра компонента. */
   background?: string
   accent?: string
@@ -29,7 +31,7 @@ const STYLES = `
 --vibeui-navmenu-008-bg:light-dark(oklch(1 0 0),oklch(0.23 0.013 265));
 --vibeui-navmenu-008-field:light-dark(oklch(0.97 0.003 265),oklch(0.28 0.012 265));
 --vibeui-navmenu-008-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-navmenu-008-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-navmenu-008-muted:color-mix(in oklab,var(--vibeui-navmenu-008-fg) 68%,transparent);
 --vibeui-navmenu-008-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-navmenu-008-hover:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.85 0.02 265 / 12%));
 --vibeui-navmenu-008-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
@@ -37,6 +39,9 @@ const STYLES = `
 --vibeui-navmenu-008-shadow:light-dark(oklch(0.2 0.03 265 / 40%),oklch(0 0 0 / 70%));
 --vibeui-navmenu-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="navmenu-008"]{color-scheme:dark}
 [data-vibeui-block="navmenu-008"]{
 box-sizing:border-box;width:100%;max-width:38rem;
 font-family:var(--vibeui-navmenu-008-font);color:var(--vibeui-navmenu-008-fg);
@@ -122,6 +127,12 @@ text-decoration:none;color:inherit;font-size:0.875rem;
 [data-vibeui-block="navmenu-008"] [data-part="link"]:hover{background:var(--vibeui-navmenu-008-hover)}
 [data-vibeui-block="navmenu-008"] [data-part="link"]:focus-visible{outline:2px solid var(--vibeui-navmenu-008-accent);outline-offset:-2px}
 [data-vibeui-block="navmenu-008"] [data-part="clock"]{color:var(--vibeui-navmenu-008-muted);font-size:0.75rem}
+/* Текущий раздел: подчёркивание и вес, а не один только цвет. */
+[data-vibeui-block="navmenu-008"] [aria-current="page"]{
+font-weight:700;
+text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:0.3125rem;
+text-decoration-color:var(--vibeui-navmenu-008-accent);
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="navmenu-008"] *{animation:none!important;transition:none!important}}
 `
 
@@ -171,6 +182,7 @@ export function Navmenu008({
   submitLabel = "Найти",
   recentTitle = "Недавнее",
   label = "Основная навигация",
+  current = "Справка",
   background = "",
   accent,
   className,
@@ -193,6 +205,7 @@ export function Navmenu008({
         {STYLES}
       </style>
       <nav
+        data-slot="navigation-menu"
         data-vibeui-block="navmenu-008"
         aria-label={label}
         className={className}
@@ -200,7 +213,12 @@ export function Navmenu008({
       >
         <div data-part="bar">
           {barLinks.map((entry) => (
-            <a key={entry} data-part="plain" href="#">
+            <a
+              key={entry}
+              data-part="plain"
+              href="#"
+              aria-current={entry === current ? "page" : undefined}
+            >
               {entry}
             </a>
           ))}

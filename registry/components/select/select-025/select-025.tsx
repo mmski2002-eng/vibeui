@@ -1,7 +1,7 @@
 "use client"
 
 import { useId, useMemo, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Select025Group = {
   value: string
@@ -9,10 +9,7 @@ export type Select025Group = {
   items: { value: string; label: string }[]
 }
 
-export type Select025Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Select025Props = Omit<ComponentProps<"div">, "children"> & {
   categoryLabel?: string
   itemLabel?: string
   name?: string
@@ -32,12 +29,15 @@ const STYLES = `
 --vibeui-select-025-surface:transparent;
 --vibeui-select-025-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-select-025-fg:light-dark(oklch(0.23 0.016 265),oklch(0.94 0.005 265));
---vibeui-select-025-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-select-025-muted:color-mix(in oklab,var(--vibeui-select-025-fg) 68%,transparent);
 --vibeui-select-025-field:light-dark(oklch(0.985 0.002 265),oklch(0.27 0.012 265));
 --vibeui-select-025-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.012 265));
 --vibeui-select-025-accent:light-dark(oklch(0.55 0.19 262),oklch(0.73 0.17 262));
 --vibeui-select-025-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="select-025"]{color-scheme:dark}
 [data-vibeui-block="select-025"]{
 display:flex;flex-direction:column;gap:0.75rem;
 width:100%;max-width:22rem;box-sizing:border-box;padding:0.875rem;
@@ -183,6 +183,7 @@ export function Select025({
       </style>
       <div
         {...props}
+        data-slot="select"
         data-vibeui-block="select-025"
         className={className}
         style={palette}

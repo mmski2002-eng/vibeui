@@ -1,7 +1,7 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Rating002Props = Omit<
-  ComponentPropsWithoutRef<"fieldset">,
+  ComponentProps<"fieldset">,
   "children" | "defaultValue"
 > & {
   legend?: string
@@ -33,12 +33,19 @@ const STYLES = `
 --vibeui-rating-002-surface:transparent;
 --vibeui-rating-002-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-rating-002-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
---vibeui-rating-002-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
---vibeui-rating-002-empty:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
---vibeui-rating-002-accent:light-dark(oklch(0.75 0.16 78),oklch(0.84 0.15 80));
+--vibeui-rating-002-muted:color-mix(in oklab,var(--vibeui-rating-002-fg) 68%,transparent);
+/* Звёзды — текстовые глифы, а не иконки, поэтому обе краски держат 4.5:1 к
+   фону. На светлой странице это загоняет обе в узкую тёмную полосу, и чтобы
+   закраска всё же читалась ярче пустой звезды, серый уведён темнее охры —
+   как в тёмной ветке, где золото светлее серого. */
+--vibeui-rating-002-empty:light-dark(oklch(0.42 0.008 265),oklch(0.58 0.014 265));
+--vibeui-rating-002-accent:light-dark(oklch(0.54 0.16 78),oklch(0.84 0.15 80));
 --vibeui-rating-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-rating-002-fill:0%;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="rating-002"]{color-scheme:dark}
 /* Подложки по умолчанию нет: оценка ложится на фон страницы. */
 [data-vibeui-block="rating-002"]{
 display:flex;flex-direction:column;gap:0.5rem;
@@ -169,6 +176,7 @@ export function Rating002({
       </style>
       <fieldset
         {...props}
+        data-slot="rating"
         data-vibeui-block="rating-002"
         className={className}
         style={palette}
@@ -182,7 +190,7 @@ export function Rating002({
             ★★★★★
           </span>
           {STEPS.map((step, index) => (
-            <span key={step}>
+            <label key={step}>
               <input
                 type="radio"
                 name={name}
@@ -198,7 +206,7 @@ export function Rating002({
                 data-value={step}
                 style={{ left: `${index * 10}%` }}
               />
-            </span>
+            </label>
           ))}
         </div>
         <div data-part="values" aria-live="polite">

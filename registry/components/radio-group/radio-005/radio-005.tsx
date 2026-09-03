@@ -1,7 +1,7 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Radio005Props = Omit<
-  ComponentPropsWithoutRef<"fieldset">,
+  ComponentProps<"fieldset">,
   "children" | "defaultValue"
 > & {
   legend?: string
@@ -24,7 +24,7 @@ const STYLES = `
 :where([data-vibeui-block="radio-005"]){
 --vibeui-radio-005-bg:transparent;
 --vibeui-radio-005-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-radio-005-muted:light-dark(oklch(0.5 0.014 265),oklch(0.72 0.012 265));
+--vibeui-radio-005-muted:color-mix(in oklab,var(--vibeui-radio-005-fg) 68%,transparent);
 --vibeui-radio-005-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-radio-005-rail:light-dark(oklch(0.96 0.003 265),oklch(0.29 0.008 265));
 --vibeui-radio-005-accent:light-dark(oklch(0.55 0.19 262),oklch(0.68 0.17 262));
@@ -33,6 +33,9 @@ const STYLES = `
 --vibeui-radio-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-radio-005-count:3;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="radio-005"]{color-scheme:dark}
 [data-vibeui-block="radio-005"]{
 display:flex;flex-direction:column;
 width:100%;max-width:22rem;box-sizing:border-box;
@@ -141,6 +144,7 @@ export function Radio005({
       </style>
       <fieldset
         {...props}
+        data-slot="radio-group"
         data-vibeui-block="radio-005"
         className={className}
         style={palette}

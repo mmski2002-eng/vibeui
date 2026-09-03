@@ -1,12 +1,9 @@
 "use client"
 
 import { useId, useRef, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Dropdown013Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Dropdown013Props = Omit<ComponentProps<"div">, "children"> & {
   name?: string
   email?: string
   role?: string
@@ -35,7 +32,7 @@ const STYLES = `
 :where([data-vibeui-block="dropdown-013"]){
 --vibeui-dropdown-013-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 255));
 --vibeui-dropdown-013-fg:light-dark(oklch(0.24 0.014 255),oklch(0.94 0.006 255));
---vibeui-dropdown-013-muted:light-dark(oklch(0.56 0.014 255),oklch(0.7 0.012 255));
+--vibeui-dropdown-013-muted:color-mix(in oklab,var(--vibeui-dropdown-013-fg) 68%,transparent);
 --vibeui-dropdown-013-border:light-dark(oklch(0.9 0.006 255),oklch(0.37 0.012 255));
 --vibeui-dropdown-013-hover:light-dark(oklch(0.96 0.004 255),oklch(0.32 0.014 255));
 --vibeui-dropdown-013-danger:light-dark(oklch(0.56 0.19 25),oklch(0.72 0.16 25));
@@ -43,6 +40,9 @@ const STYLES = `
 --vibeui-dropdown-013-hue:255;
 --vibeui-dropdown-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="dropdown-013"]{color-scheme:dark}
 [data-vibeui-block="dropdown-013"]{
 position:relative;display:inline-block;
 font-family:var(--vibeui-dropdown-013-font);color:var(--vibeui-dropdown-013-fg);
@@ -62,8 +62,8 @@ transition:background-color .16s ease;
 [data-vibeui-block="dropdown-013"] [data-part="face"]{
 display:flex;align-items:center;justify-content:center;flex:none;
 width:1.875rem;height:1.875rem;border-radius:9999px;
-background:oklch(0.92 0.05 var(--vibeui-dropdown-013-hue));
-color:oklch(0.38 0.09 var(--vibeui-dropdown-013-hue));
+background:light-dark(oklch(0.92 0.05 var(--vibeui-dropdown-013-hue)),oklch(0.34 0.065 var(--vibeui-dropdown-013-hue)));
+color:light-dark(oklch(0.38 0.09 var(--vibeui-dropdown-013-hue)),oklch(0.88 0.063 var(--vibeui-dropdown-013-hue)));
 font-size:0.6875rem;font-weight:700;
 }
 [data-vibeui-block="dropdown-013"] [data-part="menu"]{
@@ -239,6 +239,7 @@ export function Dropdown013({
       </style>
       <div
         {...props}
+        data-slot="dropdown-menu"
         data-vibeui-block="dropdown-013"
         className={className}
         style={palette}

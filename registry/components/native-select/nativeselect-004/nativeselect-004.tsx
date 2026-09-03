@@ -1,8 +1,8 @@
 import { useId } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Nativeselect004Props = Omit<
-  ComponentPropsWithoutRef<"select">,
+  ComponentProps<"select">,
   "children" | "size" | "multiple"
 > & {
   label?: string
@@ -30,13 +30,16 @@ const STYLES = `
 --vibeui-nativeselect-004-line:light-dark(oklch(0.91 0.006 265),oklch(0.33 0.012 265));
 --vibeui-nativeselect-004-field:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
 --vibeui-nativeselect-004-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.004 265));
---vibeui-nativeselect-004-muted:light-dark(oklch(0.54 0.014 265),oklch(0.68 0.012 265));
+--vibeui-nativeselect-004-muted:color-mix(in oklab,var(--vibeui-nativeselect-004-fg) 68%,transparent);
 --vibeui-nativeselect-004-field-border:light-dark(oklch(0.85 0.01 265),oklch(0.42 0.014 265));
 --vibeui-nativeselect-004-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
 --vibeui-nativeselect-004-key-bg:light-dark(oklch(0.96 0.004 265),oklch(0.34 0.012 265));
 --vibeui-nativeselect-004-radius:0.625rem;
 --vibeui-nativeselect-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="nativeselect-004"]{color-scheme:dark}
 [data-vibeui-block="nativeselect-004"]{
 box-sizing:border-box;width:100%;max-width:22rem;
 padding:1rem;border-radius:0.875rem;
@@ -46,13 +49,13 @@ font-family:var(--vibeui-nativeselect-004-font);color:var(--vibeui-nativeselect-
 display:flex;flex-direction:column;gap:0.4375rem;
 }
 [data-vibeui-block="nativeselect-004"] label{
-font-size:0.875rem;font-weight:600;line-height:1.3;cursor:pointer;
+font-size:0.8125rem;font-weight:600;line-height:1.3;cursor:pointer;
 }
 /* Раскрытому списку appearance:none не нужен: стрелки у него нет, а
    собственная рамка и скругление задаются напрямую. */
 [data-vibeui-block="nativeselect-004"] select{
 box-sizing:border-box;width:100%;padding:0.25rem;
-font:inherit;font-size:0.9375rem;line-height:1.4;
+font:inherit;font-size:0.875rem;line-height:1.4;
 color:var(--vibeui-nativeselect-004-fg);
 background:var(--vibeui-nativeselect-004-field);
 border:1px solid var(--vibeui-nativeselect-004-field-border);
@@ -148,6 +151,7 @@ export function Nativeselect004({
         {STYLES}
       </style>
       <div
+        data-slot="native-select"
         data-vibeui-block="nativeselect-004"
         className={className}
         style={palette}

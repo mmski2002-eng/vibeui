@@ -140,7 +140,8 @@
                 "label": "Project budget",
                 "unit": " k₽"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-slider-001-*. Client component: \"use client\" for the sake of the value. The travelled part of the track is filled with a gradient by percentage, and the percentage is passed through the --vibeui-slider-001-fill variable. The identifier comes from useId, so two sliders on one page do not confuse their labels. The theme comes from the surrounding color-scheme through light-dark(): the component has no surface of its own by default, it sits directly on the page background and darkens with it. The background prop turns on a surface of its own, and then the theme branch is computed from its lightness."
           }
         },
         "cardControls": ["defaultValue", "accent", "background"]
@@ -315,7 +316,8 @@
                 "minText": "mild",
                 "maxText": "fire"
               }
-            }
+            },
+            "docs": "Client component: useState holds the value, and two variables are computed from it — the fill percentage and the same share as a number. The bubble is positioned by percentage, and its offset is corrected by half the thumb width through calc with that share: without the correction it hangs away from the thumb at 0% and 100%. The bubble's tail is a square at 45°. The track fill is a linear gradient by percentage. The palette lives in --vibeui-slider-002-*. The theme comes from the surrounding color-scheme through light-dark(): the component has no surface of its own by default, it sits directly on the page background. The background prop turns on a surface of its own, and then the theme branch is computed from its lightness."
           }
         },
         "cardControls": ["defaultValue", "accent", "background"]
@@ -453,7 +455,8 @@
                 "label": "Digest frequency",
                 "ticks": ["Never", "Monthly", "Weekly", "Every day"]
               }
-            }
+            },
+            "docs": "Server component: no state is needed, the form reads the value. The ticks are a repeating-linear-gradient across the track width, so there are no extra nodes, and the number of marks is set by the steps variable. The captions are laid out in a grid of equal columns matching the number of steps: the outer ones are pinned to the edges, the middle ones centred. The value is announced through aria-valuetext, because a scale number means nothing on its own. The palette lives in --vibeui-slider-003-*. The theme comes from the surrounding color-scheme through light-dark(): the component has no surface of its own by default, it sits directly on the page background. The background prop turns on a surface of its own, and then the theme branch is computed from its lightness."
           }
         },
         "cardControls": ["defaultValue", "accent", "background"]
@@ -619,7 +622,8 @@
                 "fromText": "from",
                 "toText": "to"
               }
-            }
+            },
+            "docs": "Client component: useState for the lower and the upper bound, each clamping its neighbour by one step on input. The track is drawn once as a separate layer — otherwise two stripes show where they overlap. Both inputs are transparent and get pointer-events:none, and events are switched back on only for the thumb pseudo-elements: without that the upper input would cover the lower one across the whole width. The palette lives in --vibeui-slider-004-*. The theme comes from the surrounding color-scheme through light-dark(): the component has no surface of its own by default, it sits directly on the page background. The background prop turns on a surface of its own, and then the theme branch is computed from its lightness."
           }
         },
         "cardControls": ["defaultFrom", "defaultTo", "accent", "background"]
@@ -768,7 +772,8 @@
                 "label": "Volume",
                 "muteText": "Mute"
               }
-            }
+            },
+            "docs": "Client component: useState for the current level and for the one remembered before muting. The level is reduced to three steps and put into data-level on the root, from where CSS turns the waves off. The speaker is cut out with clip-path, and the waves are arcs made of circles with transparent edges, selected with an adjacent combinator rather than nth-of-type: every node here is the same span type. The button is declared with aria-pressed. The palette lives in --vibeui-slider-005-*. The theme comes from the surrounding color-scheme through light-dark(): the component has no surface of its own by default, it sits directly on the page background. The background prop turns on a surface of its own, and then the theme branch is computed from its lightness."
           }
         },
         "cardControls": ["defaultValue", "accent", "background"]
@@ -934,7 +939,8 @@
                 "increaseText": "Increase by {step} {unit}",
                 "stepText": "step {step}"
               }
-            }
+            },
+            "docs": "Client component: useState for the value; the buttons add and subtract the step with clamping at the bounds and switch off at the ends of the scale. The \"−\" and \"+\" signs are drawn as bars on pseudo-elements, so they do not depend on the font and do not jump around the baseline. The value is announced through aria-valuetext together with its unit. The track fill is a gradient by percentage. The palette lives in --vibeui-slider-006-*. The button captions and the step line are templates with {step} and {unit}, so translation does not require editing the markup. The theme comes from the surrounding color-scheme through light-dark(): the component has no surface of its own by default, it sits directly on the page background. The background prop turns on a surface of its own, and then the theme branch is computed from its lightness."
           }
         },
         "cardControls": ["defaultValue", "accent", "background"]
@@ -1084,7 +1090,8 @@
               "props": {
                 "label": "Lamp brightness"
               }
-            }
+            },
+            "docs": "Client component: useState holds the value, and the fill share is computed from it. The vertical orientation is set with writing-mode:vertical-lr together with direction:rtl rather than a transform: an element rotated with rotate stays horizontal for layout and covers its neighbours with its box. The fill runs as a to-top gradient. The scale stands in a column beside it, captioned from top to bottom. The value is announced through aria-valuetext. The palette lives in --vibeui-slider-007-*. The theme comes from the surrounding color-scheme through light-dark(): the component has no surface of its own by default, it sits directly on the page background. The background prop turns on a surface of its own, and then the theme branch is computed from its lightness."
           }
         },
         "cardControls": ["defaultValue", "accent", "background"]
@@ -1250,7 +1257,8 @@
                 "exactText": "{label}, exact value",
                 "hintText": "from {min} to {max} {unit}, step {step}"
               }
-            }
+            },
+            "docs": "Client component: useState for the value and separately for the input string. The field is not coerced into the range on every keystroke — otherwise \"10\" cannot be typed when the minimum is 100; clamping at the bounds happens on blur and on Enter. The number field's spinners are removed with vendor pseudo-elements, the figures are tabular, and the width is fixed. The track fill is a gradient by percentage. The palette lives in --vibeui-slider-008-*. The field caption and the hint line are templates with {label}, {min}, {max}, {unit} and {step}, so translation does not require editing the markup. The theme comes from the surrounding color-scheme through light-dark(): the component has no surface of its own by default, it sits directly on the page background. The background prop turns on a surface of its own, and then the theme branch is computed from its lightness."
           }
         },
         "cardControls": ["defaultValue", "accent", "background"]
@@ -1381,7 +1389,8 @@
               "props": {
                 "label": "Ringer volume"
               }
-            }
+            },
+            "docs": "Client component: useState for the value; the bubble computes its offset by percentage with a correction of half its own width — as in Value Bubble Slider. The icons at the edges are static and do not react to dragging: they only label the direction of the scale with bars of increasing height, without an icon package. The palette lives in --vibeui-slider-009-*. The theme comes from the surrounding color-scheme through light-dark(): the component has no surface of its own by default, it sits directly on the page background. The background prop turns on a surface of its own, and then the theme branch is computed from its lightness."
           }
         },
         "cardControls": ["defaultValue", "accent", "background"]
@@ -1528,7 +1537,8 @@
                 "label": "Loan term",
                 "unit": " mo."
               }
-            }
+            },
+            "docs": "Client component: useState for the value; the ticks and the captions under them are positioned as percentages of the range through an inline style rather than in grid columns — that way a scale with an uneven step (6, 12, 24…) stays accurate. The ticks are drawn as a separate layer over the track with pointer-events:none, while the thumb travels freely between them. The palette lives in --vibeui-slider-010-*. The theme comes from the surrounding color-scheme through light-dark(): the component has no surface of its own by default, it sits directly on the page background. The background prop turns on a surface of its own, and then the theme branch is computed from its lightness."
           }
         },
         "cardControls": ["defaultValue", "accent", "background"]
@@ -1691,7 +1701,8 @@
                 "exactText": "{label}, exact value in {currency}",
                 "locale": "en-US"
               }
-            }
+            },
+            "docs": "Client component: useState for the value and for the field's draft string. Unlike deferred clamping, the sync here is instant on every keystroke — the price minimum is zero, so a number can be typed from any digit without conflicting with the lower bound. The heading formats the price with thousands grouping through Intl.NumberFormat, while the input field stays plain digits. The palette lives in --vibeui-slider-011-*. The formatting locale is exposed through the locale prop, and the field captions through fieldText and the exactText template. The theme comes from the surrounding color-scheme through light-dark(): the component has no surface of its own by default, it sits directly on the page background. The background prop turns on a surface of its own, and then the theme branch is computed from its lightness."
           }
         },
         "cardControls": ["defaultValue", "accent", "background"]
@@ -1830,7 +1841,8 @@
                 "zones": ["low", "medium", "high"],
                 "zoneText": "{value}{unit}, zone: {zone}"
               }
-            }
+            },
+            "docs": "Client component: useState for the value; the track is painted with a fixed three-colour gradient — it is a map of the whole scale rather than a fill indicator, so its background does not depend on value. The zone is computed by thirds of the range and put into data-zone on the root, from where CSS switches the colour of the pill and of the thumb border through a single attribute. The palette lives in --vibeui-slider-012-*. The zone pill is mixed with its own zone-blend token rather than with white, so in a dark theme it darkens together with its surroundings. The theme comes from the surrounding color-scheme through light-dark(): the component has no surface of its own by default, it sits directly on the page background. The background prop turns on a surface of its own, and then the theme branch is computed from its lightness."
           }
         },
         "cardControls": ["defaultValue", "background"]

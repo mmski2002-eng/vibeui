@@ -1,7 +1,7 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Field005Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "defaultValue"
 > & {
   label?: string
@@ -28,12 +28,15 @@ const STYLES = `
 --vibeui-field-005-surface:transparent;
 --vibeui-field-005-fill:light-dark(oklch(0.975 0.004 265),oklch(0.29 0.011 265));
 --vibeui-field-005-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
---vibeui-field-005-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-field-005-muted:color-mix(in oklab,var(--vibeui-field-005-fg) 68%,transparent);
 --vibeui-field-005-border:light-dark(oklch(0.88 0.008 265),oklch(0.4 0.012 265));
 --vibeui-field-005-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.011 265));
 --vibeui-field-005-accent:light-dark(oklch(0.52 0.14 175),oklch(0.76 0.12 175));
 --vibeui-field-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="field-005"]{color-scheme:dark}
 /* Подложки по умолчанию нет: поле ложится на фон страницы. */
 [data-vibeui-block="field-005"]{
 display:flex;flex-direction:column;gap:0.4375rem;
@@ -155,6 +158,7 @@ export function Field005({
       </style>
       <div
         {...props}
+        data-slot="field"
         data-vibeui-block="field-005"
         className={className}
         style={palette}

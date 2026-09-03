@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Progress004Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Progress004Props = Omit<ComponentProps<"div">, "children"> & {
   fileName?: string
   /** Передано и всего — в байтах: проценты и остаток считаются из них. */
   loaded?: number
@@ -27,17 +24,22 @@ const STYLES = `
 :where([data-vibeui-block="progress-004"]){
 --vibeui-progress-004-bg:transparent;
 --vibeui-progress-004-fg:light-dark(oklch(0.25 0.016 265),oklch(0.94 0.006 265));
---vibeui-progress-004-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-progress-004-muted:color-mix(in oklab,var(--vibeui-progress-004-fg) 68%,transparent);
 --vibeui-progress-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-progress-004-track:light-dark(oklch(0.93 0.005 265),oklch(0.3 0.011 265));
---vibeui-progress-004-accent:light-dark(oklch(0.55 0.19 262),oklch(0.72 0.16 262));
+/* Светлая ветка притемнена до 0.535: этим же цветом набрано «PDF» на бледной
+   плитке, и на 0.55 подпись давала 4.3:1. */
+--vibeui-progress-004-accent:light-dark(oklch(0.535 0.19 262),oklch(0.72 0.16 262));
 --vibeui-progress-004-tile:light-dark(oklch(0.95 0.021 262),oklch(0.32 0.045 262));
 --vibeui-progress-004-value:0;
 --vibeui-progress-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="progress-004"]{color-scheme:dark}
 [data-vibeui-block="progress-004"]{
 display:flex;gap:0.875rem;align-items:flex-start;
-width:100%;max-width:26rem;box-sizing:border-box;padding:0.875rem 1rem;
+width:100%;max-width:26rem;box-sizing:border-box;padding:0.9375rem 1.0625rem;
 background:var(--vibeui-progress-004-bg);
 border:1px solid var(--vibeui-progress-004-border);border-radius:0.875rem;
 font-family:var(--vibeui-progress-004-font);color:var(--vibeui-progress-004-fg);
@@ -53,7 +55,7 @@ clip-path:polygon(0 0,72% 0,100% 26%,100% 100%,0 100%);
 display:flex;flex-direction:column;gap:0.375rem;flex:1 1 auto;min-width:0;
 }
 [data-vibeui-block="progress-004"] [data-part="name"]{
-font-size:0.8125rem;font-weight:650;
+font-size:0.9375rem;font-weight:650;
 overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 }
 [data-vibeui-block="progress-004"] [data-part="track"]{
@@ -69,7 +71,7 @@ transition:width .3s cubic-bezier(.32,.72,0,1);
 /* Три показателя в одну строку: объём слева, скорость и остаток справа. */
 [data-vibeui-block="progress-004"] [data-part="stats"]{
 display:flex;justify-content:space-between;gap:0.75rem;
-font-size:0.6875rem;color:var(--vibeui-progress-004-muted);
+font-size:0.875rem;color:var(--vibeui-progress-004-muted);
 font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="progress-004"] [data-part="stats"] span{
@@ -185,6 +187,7 @@ export function Progress004({
       </style>
       <div
         {...props}
+        data-slot="progress"
         data-vibeui-block="progress-004"
         className={className}
         style={palette}

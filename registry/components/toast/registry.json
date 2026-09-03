@@ -35,7 +35,8 @@
             "aria-label у крестика: иначе скринридер прочитает «×»",
             "правило prefers-reduced-motion, которое убирает полосу вместо того, чтобы её анимировать",
             "блок <style> внутри компонента — в нём вся палитра, тона и анимация",
-            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "визуально скрытую подпись тона: точка отличает успех от ошибки только цветом, и без подписи скринридер их не различает"
           ],
           "adapt": [
             "тексты title и description, подпись undoLabel",
@@ -43,7 +44,8 @@
             "duration — сколько секунд живёт уведомление; 0 убирает полосу",
             "обработчики onUndo и onClose — они и есть логика: компонент сам себя не удаляет",
             "ширину и положение через className: контейнер тостов делает вызывающий код",
-            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "toneLabels — как называются тона для скринридера"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
@@ -118,7 +120,8 @@
                 "the aria-label on the close button: otherwise a screen reader announces \"×\"",
                 "the prefers-reduced-motion rule that removes the bar instead of animating it",
                 "the <style> block inside the component — it holds the palette, the tones and the animation",
-                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the visually hidden tone caption: the dot separates success from failure by colour alone, and without the caption a screen reader cannot tell them apart"
               ],
               "adapt": [
                 "the title and description copy and the undoLabel",
@@ -126,7 +129,8 @@
                 "duration — how many seconds the toast lives; 0 removes the bar",
                 "the onUndo and onClose handlers — they are the logic: the component does not remove itself",
                 "width and placement through className: the toast container is the caller's job",
-                "background — the component surface; empty means no surface of its own, taking the page colour"
+                "background — the component surface; empty means no surface of its own, taking the page colour",
+                "toneLabels — what the tones are called for a screen reader"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
@@ -170,9 +174,15 @@
                 "title": "Page published",
                 "description": "The changes are live at your project address.",
                 "undoLabel": "Undo",
-                "closeLabel": "Dismiss notification"
+                "closeLabel": "Dismiss notification",
+                "toneLabels": {
+                  "neutral": "Notice",
+                  "success": "Success",
+                  "danger": "Error"
+                }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-toast-001-* variables. The time bar is a CSS scaleX animation whose duration arrives in the --vibeui-toast-001-duration variable from the duration prop: the timer is not counted in JS and causes no re-renders. The component itself only displays the notification: its appearance, the queue and its removal are governed by the calling code through onClose. The role is picked from the tone: danger is alert, the rest are status."
           }
         },
         "cardControls": ["tone", "duration", "background"]
@@ -346,7 +356,8 @@
                 "doneLabel": "Done",
                 "expiredLabel": "Time is up"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-toast-002-* variables. Client-side: \"use client\". The remaining time is kept in milliseconds and decreased by a 100 ms interval; the pause lives in a ref, so hovering causes no re-render. The message is declared role=\"status\" with aria-live=\"polite\"."
           }
         },
         "cardControls": ["seconds", "accent", "background"]
@@ -384,7 +395,8 @@
             "тон полоской, а не заливкой: сообщение должно оставаться читаемым",
             "имя сообщения в подписи кнопки закрытия",
             "новые сообщения сверху — читают сверху вниз",
-            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "визуально скрытую подпись тона у карточки: полоска слева различает сообщения только цветом, и в общем потоке успех звучал бы как ошибка"
           ],
           "adapt": [
             "массив items и их тон",
@@ -392,7 +404,8 @@
             "поведение кнопки закрытия",
             "акцент через проп accent",
             "подписи listLabel, dismissText, moreText, expandLabel, allShownText и collapseLabel — русские по умолчанию; {title} и {count} заменяются значениями",
-            "background — подложка карточек; пусто означает «без своей подложки», по цвету страницы"
+            "background — подложка карточек; пусто означает «без своей подложки», по цвету страницы",
+            "toneLabels — как называются тона для скринридера"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
@@ -436,7 +449,8 @@
                 "tone as a bar rather than a fill: the message must stay readable",
                 "the message name in the dismiss button's label",
                 "new messages on top — people read downward",
-                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the visually hidden tone caption on a card: the left bar separates messages by colour alone, so in the stream a success would sound like a failure"
               ],
               "adapt": [
                 "the items array and their tone",
@@ -444,7 +458,8 @@
                 "what dismissal does",
                 "the accent through the accent prop",
                 "the listLabel, dismissText, moreText, expandLabel, allShownText and collapseLabel copy — Russian by default; {title} and {count} are replaced with values",
-                "background — the card surface; empty means no surface of its own, taking the page colour"
+                "background — the card surface; empty means no surface of its own, taking the page colour",
+                "toneLabels — what the tones are called for a screen reader"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
@@ -498,9 +513,15 @@
                 "moreText": "{count} more",
                 "expandLabel": "Show all",
                 "allShownText": "All {count} shown",
-                "collapseLabel": "Collapse"
+                "collapseLabel": "Collapse",
+                "toneLabels": {
+                  "info": "Notice",
+                  "success": "Success",
+                  "danger": "Error"
+                }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-toast-003-* variables. Client-side: \"use client\". The container is declared role=\"log\" with aria-live=\"polite\": that is how streams of messages are read. The tone is set by a bar on the left through data-tone, and every card has a dismiss button carrying the name of the message."
           }
         },
         "cardControls": ["max", "accent", "background"]
@@ -658,7 +679,8 @@
                 "errorText": "Could not pack the archive",
                 "hint": "Files over 200 MB are skipped."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-toast-004-* variables. Server-side: there are no hooks, the stage arrives through the state prop. The loading ring is a conic gradient cut into a thin rim by a radial mask, and the result mark lies in the same layer and is switched by [data-state] rules. The \"pulse\" bar shows an indeterminate duration and hides as soon as the stage stops being loading. The role changes with the stage: an error is announced as alert, everything else as status."
           }
         },
         "cardControls": ["state", "background"]
@@ -818,7 +840,8 @@
                 "detailsLabel": "Details",
                 "details": "PUT /api/drafts/8412 — 504 Gateway Timeout\n17:42:06, attempt 2 of 3"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-toast-005-* variables. Server-side: the native <details> holds the disclosure state, no handler is needed. The summary marker is removed through list-style:none and ::-webkit-details-marker, so the line looks like a link but remains a disclosure control. The card is declared role=\"alert\": the error is read immediately. The left edge is painted in the error tone — the colour is duplicated by a glyph and by words, not by the fill alone."
           }
         },
         "cardControls": ["tone", "background"]
@@ -976,7 +999,8 @@
                 "countLabel": "15 of 24 files",
                 "cancelLabel": "Cancel"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-toast-006-* variables. Server-side: the value arrives through the value prop and is put into the --vibeui-toast-006-value variable, and calc computes the bar width — on a re-render one number changes rather than the markup. The bar is marked role=\"progressbar\" with aria-valuenow, so progress is read aloud. The value is clamped to the 0–100 range and rounded so that a fraction does not spread the tabular figures apart."
           }
         },
         "cardControls": ["value", "tone", "background"]
@@ -1145,7 +1169,8 @@
                 "secondaryLabel": "Later",
                 "closeLabel": "Dismiss notification"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-toast-007-* variables. Server-side: there are no hooks. The layout is a three-column grid: the glyph occupies three rows, the heading and the cross stand in the first one, and the description and the actions are stretched across two columns. The description is clamped at two lines through -webkit-line-clamp: a third line turns the notification into a letter. The actions are moved to the bottom, so on a narrow screen the heading is not squeezed down to a single word."
           }
         },
         "cardControls": ["tone", "background"]
@@ -1295,7 +1320,8 @@
                 "hintText": "application area",
                 "legendText": "stack corner: {corner}, offset {offset}"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-toast-008-* variables. Server-side: there are no hooks. The corner is parsed by the [data-corner^=\"top\"] and [data-corner$=\"right\"] selectors, so four variants take four short lines of CSS instead of four rule sets. For the bottom corners the card order is reversed with column-reverse: the newest message is always closer to the edge. The stage with the chequered background depicts an application window — otherwise there is nothing to show a \"screen corner\" against. The stack is declared role=\"log\" with aria-live=\"polite\"."
           }
         },
         "cardControls": ["corner", "tone", "background"]
@@ -1446,7 +1472,8 @@
                 "replyLabel": "Reply…",
                 "replyText": "Reply to {name}"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-toast-009-* variables. Server-side: there are no hooks. The hue of the circle is derived from the name with an FNV-1a hash and put into --vibeui-toast-009-hue, so every correspondent gets their own colour without a mapping dictionary. The reply field is a button styled to look like an input: a real form inside a notification needs a focus trap, and a notification lives for a few seconds. The text is clamped at two lines."
           }
         },
         "cardControls": ["background"]
@@ -1581,7 +1608,8 @@
                 "message": "Link copied",
                 "glyph": "✓"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-toast-010-* variables. Server-side: there are no hooks. The shape and the weight are what separate the pill from the cards: a 9999px radius, a single ellipsised line, width by content. The appearance is a short rise with a scale; the prefers-reduced-motion rule switches it off for the block itself, not only for its children. The tone changes the glyph colour alone: the fill stays dark so that the pill does not fight the interface."
           }
         },
         "cardControls": ["tone", "background"]
@@ -1727,7 +1755,8 @@
                 "emptyLabel": "No notifications left",
                 "behindText": "{count} more behind this card"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-toast-011-* variables. Every card is an absolutely positioned element whose shift, scale and opacity are computed by calc() from the --vibeui-toast-011-index variable, so a deck of any number of cards needs no separate CSS rule per index. The top card is the only one in the tab order and in the accessibility tree: the cards beneath it carry aria-hidden=\"true\" and tabIndex={-1}, and the pointer is switched off through data-behind. Clicking the cross removes the top card and the deck shifts up — the state lives in useState, the component is client-side."
           }
         },
         "cardControls": ["background"]
@@ -1883,7 +1912,8 @@
                 "loadingText": "Uploading",
                 "cancelledText": "Upload cancelled"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-toast-012-* variables. Unlike the card with an external value, the percentage here is counted by an internal timer: setInterval recomputes the elapsed time relative to duration and puts the result into the --vibeui-toast-012-value variable, so the bar is moved by calc() rather than by rebuilding the markup. On reaching 100% the card is not recreated but switched to the \"done\" state — the glyph and the heading change in place. The \"Cancel\" button stops the timer and moves the card to the \"cancelled\" state; the timer is cleared in useEffect on unmount and on a phase change."
           }
         },
         "cardControls": ["duration", "tone", "background"]
@@ -2063,7 +2093,8 @@
                 "countdownText": "You can still undo for {seconds}s",
                 "expiredText": "Time is up"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-toast-013-* variables. The theme comes from the surrounding color-scheme through light-dark(), while the background prop replaces only the card surface. The timer is a conic-gradient whose fraction of the circle is computed from the --vibeui-toast-013-percent variable, and the number of seconds in the centre of the ring duplicates the same value as text, so the countdown is readable both by eye and aloud through aria-live. Hover and focus pause the timer through a ref rather than through a re-render. After \"Restore\" is pressed the ring turns into a checkmark and the button disappears — the state is held by useState, the component is client-side. Every caption is exposed as a prop: message, returnedMessage, returnLabel, expiredText and the countdownText template with its {seconds} placeholder."
           }
         },
         "cardControls": ["seconds", "tone", "background"]
@@ -2246,7 +2277,8 @@
                   "bottom-right": "Bottom right"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-toast-014-* variables. The theme comes from the surrounding color-scheme through light-dark(), while the background prop replaces only the stage surface. The corner is set by two pairs of CSS switches (top/bottom and left/right), but here the corner also changes the direction of the entrance: the card is remounted through key={corner}, so the entrance animation replays and always comes from the side the card stands on. The switch buttons are marked aria-pressed, and the stage is a demo area with position: relative rather than position: fixed against the window. The corner captions live in the cornerLabels prop, the remaining strings in pickerLabel, stageHint and legendLabel."
           }
         },
         "cardControls": ["defaultCorner", "tone", "background"]
@@ -2417,7 +2449,8 @@
                 "closeLabel": "Dismiss",
                 "closeContext": "message from {name}"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-toast-015-* variables. Client-side: \"use client\". The avatar is an image from avatarSrc; if the prop is empty or the <img> fires onError, the circle quietly switches to initials taken from the first two words of name, so no separate dictionary of placeholders has to be maintained. The message text is clamped to a single line through text-overflow: ellipsis — a long letter is read in the thread, not in a notification. The \"Reply\" button is an ordinary button with a handler of its own rather than a field styled to look like an input. The theme comes from the surrounding color-scheme through light-dark(), while the background prop replaces only the card surface. The qualifier for the cross is exposed through the closeContext prop with a {name} placeholder."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2609,7 +2642,8 @@
                 "reconnectingHint": "This takes a few seconds",
                 "onlineHint": "You can carry on working"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-toast-016-* variables. Client-side: \"use client\". The three stages — offline, reconnecting, online — are held in useState and switched by timers in useEffect (in a real project they are replaced by online/offline listeners or by a socket status through onStatusChange). The indicator is three bars coloured by data-status and blinking while reconnecting; the role and aria-live are switched with the stage as well: offline is role=\"alert\" with aria-live=\"assertive\", everything else is role=\"status\" with aria-live=\"polite\". The theme comes from the surrounding color-scheme through light-dark(), while the background prop replaces only the card surface. The second lines of the stages are exposed through the offlineHint, reconnectingHint and onlineHint props."
           }
         },
         "cardControls": ["reconnectAfter", "hideAfter", "background"]
@@ -2790,7 +2824,8 @@
                 "keptResult": "Draft kept",
                 "deletedResult": "Draft deleted"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-toast-017-* variables. Client-side: \"use client\". The decision is kept in useState with three values — pending, kept, deleted — and on a choice the card does not close itself but switches its content to an outcome line: the buttons are replaced by the text of the decision. The card is declared role=\"alert\" with aria-live=\"assertive\" throughout, because a question about deletion has to be heard at once. The theme comes from the surrounding color-scheme through light-dark(), while the background prop replaces only the card surface; the fill of the destructive button is computed from the tone through color-mix, so the danger prop repaints both the label and the button surface in a single line."
           }
         },
         "cardControls": ["danger", "background"]
@@ -2992,7 +3027,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-toast-018-* variables. Client-side: \"use client\". The list is capped by visibleCount, the remainder is obtained by subtraction and rendered as a \"Show all · N more\" line; a click toggles useState and the data-expanded attribute, which switches the max-height of the <ul> — the expansion is animated in pure CSS without measuring height in JS. The expand button carries aria-expanded, and every item is dismissed by its own button with the event name in its aria-label. The theme comes from the surrounding color-scheme through light-dark(), while the background prop replaces only the card surface. The expand caption is the expandLabel template with a {count} placeholder, and the empty-list line is exposed through emptyText."
           }
         },
         "cardControls": ["visibleCount", "accent", "background"]
@@ -3187,7 +3223,8 @@
                 "downloadLabel": "Download",
                 "closeLabel": "Dismiss"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-toast-019-* variables. Client-side: \"use client\". The status is held in useState: exporting counts the percentage with a self-contained timer in useEffect (in a real project it is replaced by the progress of a real fetch/XHR or of a socket), on reaching 100% it switches to ready and calls onReady. The \"Cancel\" button is visible only while preparing, and the \"Download\" link is an ordinary <a href download> that appears only in the ready state. The close cross works in any status. The theme comes from the surrounding color-scheme through light-dark(), while the background prop replaces only the card surface. Every caption is exposed as a prop: exportingLabel, readyLabel, cancelLabel, cancelledLabel, progressLabel, downloadLabel and closeLabel."
           }
         },
         "cardControls": ["durationMs", "tone", "background"]
@@ -3367,7 +3404,8 @@
                 "closeLabel": "Dismiss",
                 "pausedText": " · paused"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-toast-020-* variables. Client-side: \"use client\". The remaining milliseconds are held in useState and decrease in useEffect through setInterval, while the pause flag lies in useRef and is kept in sync with the state so that the interval is not recreated on every re-render; hover and keyboard focus (onMouseEnter/Leave, onFocus/onBlur) pause it in exactly the same way. On reaching zero, onExpire is called once (a flag in useRef guards against a repeat), and the \"Stay signed in\" button returns left to the original total and calls onExtend. The theme comes from the surrounding color-scheme through light-dark(), while the background prop replaces only the card surface. The \"paused\" suffix is drawn by ::after from the --vibeui-toast-020-paused-text variable, so its text is set by the pausedText prop rather than hardwired into the CSS."
           }
         },
         "cardControls": ["seconds", "tone", "background"]
@@ -3545,7 +3583,8 @@
                 "replayLabel": "Show again",
                 "stageHint": "app area"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-toast-021-* variables. Client-side: \"use client\". The gridded stage with position:relative depicts an application window — without it there is nothing to show \"top-centre\" against; the pill lies inside it with position:absolute and translateX(-50%) and drops in from the top through keyframes. Auto-hide is a timer in useEffect driven by autoHideMs (0 switches it off), the cross hides the pill by hand at any moment, and the \"Show again\" button toggles key so that the entrance animation replays. The theme comes from the surrounding color-scheme through light-dark(): the pill is always the opposite of the stage in lightness, so in the dark branch it is light and the surface of the cross on it is darker. The background prop replaces only the stage surface, and the stage caption is exposed through stageHint."
           }
         },
         "cardControls": ["tone", "autoHideMs", "background"]

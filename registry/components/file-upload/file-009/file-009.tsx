@@ -1,7 +1,7 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type File009Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "defaultValue"
 > & {
   title?: string
@@ -41,12 +41,15 @@ const STYLES = `
 --vibeui-file-009-raise:light-dark(oklch(1 0 0),oklch(0.34 0.014 265));
 --vibeui-file-009-tile:light-dark(oklch(0.965 0.005 265),oklch(0.26 0.012 265));
 --vibeui-file-009-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
---vibeui-file-009-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-file-009-muted:color-mix(in oklab,var(--vibeui-file-009-fg) 68%,transparent);
 --vibeui-file-009-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
 --vibeui-file-009-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-file-009-accent:light-dark(oklch(0.52 0.17 255),oklch(0.74 0.16 255));
 --vibeui-file-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="file-009"]{color-scheme:dark}
 /* Панель без собственной заливки: рамка очерчивает блок на любом фоне. */
 [data-vibeui-block="file-009"]{
 display:flex;flex-direction:column;gap:0.5rem;
@@ -183,6 +186,7 @@ export function File009({
       </style>
       <div
         {...props}
+        data-slot="file-upload"
         data-vibeui-block="file-009"
         className={className}
         style={palette}

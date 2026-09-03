@@ -1,7 +1,7 @@
 "use client"
 
 import { useId, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Select018Language = {
   value: string
@@ -10,7 +10,7 @@ export type Select018Language = {
 }
 
 export type Select018Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   label?: string
@@ -31,13 +31,16 @@ const STYLES = `
 --vibeui-select-018-surface:transparent;
 --vibeui-select-018-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-select-018-fg:light-dark(oklch(0.23 0.016 265),oklch(0.94 0.005 265));
---vibeui-select-018-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-select-018-muted:color-mix(in oklab,var(--vibeui-select-018-fg) 68%,transparent);
 --vibeui-select-018-border:light-dark(oklch(0.87 0.008 265),oklch(0.4 0.012 265));
 --vibeui-select-018-accent:light-dark(oklch(0.55 0.19 262),oklch(0.73 0.17 262));
 --vibeui-select-018-tint:light-dark(oklch(0.55 0.19 262 / 12%),oklch(0.73 0.17 262 / 20%));
 --vibeui-select-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-select-018-mono:ui-monospace,"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="select-018"]{color-scheme:dark}
 [data-vibeui-block="select-018"]{
 display:flex;flex-direction:column;gap:0.375rem;
 width:100%;max-width:18rem;box-sizing:border-box;padding:0.875rem;
@@ -149,6 +152,7 @@ export function Select018({
       </style>
       <div
         {...props}
+        data-slot="select"
         data-vibeui-block="select-018"
         className={className}
         style={palette}

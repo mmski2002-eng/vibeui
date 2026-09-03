@@ -1,7 +1,7 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Switch008Props = Omit<
-  ComponentPropsWithoutRef<"input">,
+  ComponentProps<"input">,
   "type" | "size" | "disabled"
 > & {
   label?: string
@@ -22,7 +22,7 @@ const STYLES = `
 :where([data-vibeui-block="switch-008"]){
 --vibeui-switch-008-bg:transparent;
 --vibeui-switch-008-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-switch-008-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-switch-008-muted:color-mix(in oklab,var(--vibeui-switch-008-fg) 68%,transparent);
 --vibeui-switch-008-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-switch-008-track:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
 --vibeui-switch-008-thumb:light-dark(oklch(0.97 0.002 265),oklch(0.56 0.01 265));
@@ -31,6 +31,9 @@ const STYLES = `
 --vibeui-switch-008-lock-tint:light-dark(oklch(0.66 0.13 75 / 12%),oklch(0.79 0.13 75 / 16%));
 --vibeui-switch-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="switch-008"]{color-scheme:dark}
 [data-vibeui-block="switch-008"]{
 display:flex;flex-direction:column;gap:0.625rem;
 width:100%;max-width:21rem;box-sizing:border-box;padding:0.875rem;
@@ -43,7 +46,7 @@ display:flex;align-items:center;gap:0.875rem;cursor:not-allowed;
 }
 [data-vibeui-block="switch-008"] [data-part="label"]{
 display:flex;align-items:center;gap:0.375rem;flex:1 1 auto;min-width:0;
-font-size:0.9375rem;font-weight:600;color:var(--vibeui-switch-008-muted);
+font-size:0.875rem;font-weight:600;color:var(--vibeui-switch-008-muted);
 }
 /* Замок нарисован дужкой на псевдоэлементе поверх корпуса: значок
    блокировки без иконочного пакета. */
@@ -138,7 +141,12 @@ export function Switch008({
       <style href="vibeui-switch-008" precedence="medium">
         {STYLES}
       </style>
-      <div data-vibeui-block="switch-008" className={className} style={palette}>
+      <div
+        data-slot="switch"
+        data-vibeui-block="switch-008"
+        className={className}
+        style={palette}
+      >
         <label data-part="row">
           <span data-part="label">
             <span data-part="lock" aria-hidden="true" />

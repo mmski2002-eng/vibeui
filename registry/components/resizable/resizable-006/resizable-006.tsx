@@ -2,14 +2,14 @@
 
 import { useId, useRef, useState } from "react"
 import type {
-  ComponentPropsWithoutRef,
+  ComponentProps,
   CSSProperties,
   KeyboardEvent,
   PointerEvent,
 } from "react"
 
 export type Resizable006Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   defaultRow?: number
@@ -41,7 +41,7 @@ const STYLES = `
 --vibeui-resizable-006-bg:transparent;
 --vibeui-resizable-006-pane:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
 --vibeui-resizable-006-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-resizable-006-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-resizable-006-muted:color-mix(in oklab,var(--vibeui-resizable-006-fg) 68%,transparent);
 --vibeui-resizable-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
 --vibeui-resizable-006-surface:light-dark(oklch(0.975 0.004 265),oklch(0.31 0.011 265));
 --vibeui-resizable-006-console:light-dark(oklch(0.26 0.02 265),oklch(0.17 0.014 265));
@@ -49,6 +49,9 @@ const STYLES = `
 --vibeui-resizable-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-resizable-006-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="resizable-006"]{color-scheme:dark}
 [data-vibeui-block="resizable-006"]{
 box-sizing:border-box;display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:34rem;padding:0.875rem;
@@ -68,6 +71,7 @@ flex:none;min-width:0;padding:0.625rem;overflow:auto;background:var(--vibeui-res
 [data-vibeui-block="resizable-006"] [data-part="editor"]{
 flex:1;min-width:0;padding:0.625rem;overflow:auto;background:var(--vibeui-resizable-006-pane);
 }
+/* Текст консоли светлый без второй ветки: её подложка тёмная в обеих темах. */
 [data-vibeui-block="resizable-006"] [data-part="console"]{
 flex:1;min-height:0;overflow:auto;padding:0.625rem 0.75rem;
 background:var(--vibeui-resizable-006-console);color:oklch(0.94 0.01 265);
@@ -225,6 +229,7 @@ export function Resizable006({
       </style>
       <div
         {...props}
+        data-slot="resizable"
         data-vibeui-block="resizable-006"
         className={className}
         style={palette}

@@ -1,10 +1,10 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Calendar019Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange" | "defaultValue"
 > & {
   year?: number
@@ -43,7 +43,7 @@ const STYLES = `
 :where([data-vibeui-block="calendar-019"]){
 --vibeui-calendar-019-bg:transparent;
 --vibeui-calendar-019-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
---vibeui-calendar-019-muted:light-dark(oklch(0.62 0.014 265),oklch(0.67 0.013 265));
+--vibeui-calendar-019-muted:color-mix(in oklab,var(--vibeui-calendar-019-fg) 68%,transparent);
 --vibeui-calendar-019-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
 --vibeui-calendar-019-hover:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.012 265));
 --vibeui-calendar-019-accent:light-dark(oklch(0.5 0.14 175),oklch(0.72 0.12 175));
@@ -51,9 +51,12 @@ const STYLES = `
 --vibeui-calendar-019-on-accent:light-dark(oklch(0.99 0.01 175),oklch(0.2 0.03 175));
 --vibeui-calendar-019-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="calendar-019"]{color-scheme:dark}
 [data-vibeui-block="calendar-019"]{
 display:flex;flex-direction:column;gap:0.75rem;
-width:100%;max-width:26rem;box-sizing:border-box;padding:1rem;
+width:100%;max-width:26rem;box-sizing:border-box;padding:0.9375rem;
 background:var(--vibeui-calendar-019-bg);
 border:1px solid var(--vibeui-calendar-019-border);border-radius:1rem;
 color:var(--vibeui-calendar-019-fg);font-family:var(--vibeui-calendar-019-font);
@@ -67,7 +70,7 @@ margin:0;font-size:0.9375rem;font-weight:700;letter-spacing:-0.01em;
 /* Заглавная только первая буква: capitalize поднимает и «г.» в «январь 2026 г.». */
 [data-vibeui-block="calendar-019"] [data-part="title"]::first-letter{text-transform:uppercase}
 [data-vibeui-block="calendar-019"] [data-part="from"]{
-font-size:0.75rem;color:var(--vibeui-calendar-019-muted);
+font-size:0.875rem;color:var(--vibeui-calendar-019-muted);
 }
 [data-vibeui-block="calendar-019"] [data-part="from"] b{color:var(--vibeui-calendar-019-cheap);font-variant-numeric:tabular-nums}
 [data-vibeui-block="calendar-019"] [data-part="grid"]{
@@ -88,7 +91,7 @@ border:1px solid transparent;background:transparent;color:inherit;font:inherit;
 [data-vibeui-block="calendar-019"] [data-part="grid"] button:focus-visible{outline:2px solid var(--vibeui-calendar-019-accent);outline-offset:-2px}
 [data-vibeui-block="calendar-019"] [data-part="day"]{font-size:0.8125rem;line-height:1;font-variant-numeric:tabular-nums}
 [data-vibeui-block="calendar-019"] [data-part="price"]{
-font-size:0.625rem;line-height:1.1;font-variant-numeric:tabular-nums;
+font-size:0.6875rem;line-height:1.1;font-variant-numeric:tabular-nums;
 color:var(--vibeui-calendar-019-muted);
 }
 [data-vibeui-block="calendar-019"] [data-part="grid"] button[data-cheap="true"] [data-part="price"]{
@@ -107,7 +110,7 @@ color:var(--vibeui-calendar-019-on-accent);
 [data-vibeui-block="calendar-019"] [data-part="total"]{
 display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:0.5rem;
 padding-top:0.75rem;border-top:1px solid var(--vibeui-calendar-019-border);
-font-size:0.8125rem;color:var(--vibeui-calendar-019-muted);
+font-size:0.875rem;color:var(--vibeui-calendar-019-muted);
 }
 [data-vibeui-block="calendar-019"] [data-part="sum"]{
 font-size:1.125rem;font-weight:700;color:var(--vibeui-calendar-019-fg);
@@ -140,6 +143,44 @@ function fillText(template: string, values: Record<string, string | number>) {
   )
 }
 
+// Стрелки водят фокус по сетке. Без них до нужного дня приходится жать Tab
+// столько раз, сколько до него дней.
+function moveFocus(event: KeyboardEvent<HTMLElement>, columns: number) {
+  const steps: Record<string, number> = {
+    ArrowLeft: -1,
+    ArrowRight: 1,
+    ArrowUp: -columns,
+    ArrowDown: columns,
+  }
+  const step = steps[event.key]
+
+  if (step === undefined) {
+    return
+  }
+
+  const buttons = Array.from(
+    event.currentTarget.querySelectorAll<HTMLButtonElement>("button"),
+  )
+  const from = buttons.indexOf(document.activeElement as HTMLButtonElement)
+
+  if (from < 0) {
+    return
+  }
+
+  let index = from + step
+
+  while (buttons[index]?.disabled) {
+    index += step
+  }
+
+  if (!buttons[index]) {
+    return
+  }
+
+  event.preventDefault()
+  buttons[index].focus()
+}
+
 /**
  * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
  * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
@@ -163,12 +204,32 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 }
 
 /**
+ * Месяц и локаль из пропов или дефолты компонента. Чужая страница не должна
+ * падать из-за неверного значения: NaN даёт Invalid Date, а Intl бросает
+ * RangeError и на нём, и на нераспознанной локали — белый экран вместо сайта.
+ */
+function safeMonth(year: number, month: number, fallback: number[]) {
+  return Number.isNaN(new Date(year, month - 1, 1).getTime())
+    ? fallback
+    : [year, month]
+}
+
+function safeLocale(value: string, fallback: string) {
+  try {
+    Intl.DateTimeFormat.supportedLocalesOf(value)
+    return value
+  } catch {
+    return fallback
+  }
+}
+
+/**
  * Календарь бронирования с ценой ночи в каждой клетке и итогом за срок.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Calendar019({
-  year = 2026,
-  month = 4,
+  year: yearProp = 2026,
+  month: monthProp = 4,
   basePrice = 4200,
   nights = 2,
   currency = "₽",
@@ -180,7 +241,7 @@ export function Calendar019({
   soldOutText = "нет",
   nightsText = DEFAULT_NIGHTS_TEXT,
   checkInText = "Заезд {date}, {nights}",
-  locale = "ru-RU",
+  locale: localeProp = "ru-RU",
   onChange,
   accent,
   background = "",
@@ -188,6 +249,8 @@ export function Calendar019({
   style,
   ...props
 }: Calendar019Props) {
+  const [year, month] = safeMonth(yearProp, monthProp, [2026, 4])
+  const locale = safeLocale(localeProp, "ru-RU")
   const first = new Date(year, month - 1, 1)
   const lead = (first.getDay() + 6) % 7
   const length = new Date(year, month, 0).getDate()
@@ -212,6 +275,11 @@ export function Calendar019({
       days.find((entry) => !entry.sold && entry.price === cheapest)?.day ?? 1,
   )
 
+  // Ровно одна кнопка сетки в табуляции: выбранный день, иначе первый свободный.
+  const stop =
+    days.find((entry) => entry.day === selected && !entry.sold)?.day ??
+    days.find((entry) => !entry.sold)?.day
+
   const money = new Intl.NumberFormat(locale, { maximumFractionDigits: 0 })
   const weekdayName = new Intl.DateTimeFormat(locale, { weekday: "short" })
   const weekdays = Array.from({ length: 7 }, (_, index) =>
@@ -221,7 +289,8 @@ export function Calendar019({
     month: "long",
     year: "numeric",
   }).format(first)
-  const long = new Intl.DateTimeFormat(locale, { dateStyle: "long" })
+  // В сетке нет <th scope="col">, поэтому день недели звучит в подписи дня.
+  const long = new Intl.DateTimeFormat(locale, { dateStyle: "full" })
 
   // Формы счётчика выбираются по правилам самого языка, а не по русским:
   // словарь приходит пропсом, а категорию называет Intl.
@@ -262,6 +331,7 @@ export function Calendar019({
       </style>
       <div
         {...props}
+        data-slot="calendar"
         data-vibeui-block="calendar-019"
         className={className}
         style={palette}
@@ -276,7 +346,12 @@ export function Calendar019({
             {fromAfter}
           </p>
         </div>
-        <div data-part="grid" role="group" aria-label={groupLabel}>
+        <div
+          data-part="grid"
+          role="group"
+          aria-label={groupLabel}
+          onKeyDown={(event) => moveFocus(event, 7)}
+        >
           {weekdays.map((label) => (
             <span key={label} data-part="wd" aria-hidden="true">
               {label}
@@ -289,6 +364,7 @@ export function Calendar019({
             <button
               key={entry.day}
               type="button"
+              tabIndex={entry.day === stop ? 0 : -1}
               aria-pressed={entry.day === selected}
               disabled={entry.sold}
               data-cheap={!entry.sold && entry.price === cheapest}

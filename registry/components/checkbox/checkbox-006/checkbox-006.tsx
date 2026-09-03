@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Checkbox006Row = {
   id: string
@@ -10,7 +10,7 @@ export type Checkbox006Row = {
 }
 
 export type Checkbox006Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   rows?: Checkbox006Row[]
@@ -43,13 +43,16 @@ const STYLES = `
 --vibeui-checkbox-006-surface:transparent;
 --vibeui-checkbox-006-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
 --vibeui-checkbox-006-fg:light-dark(oklch(0.22 0.014 265),oklch(0.95 0.005 265));
---vibeui-checkbox-006-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-checkbox-006-muted:color-mix(in oklab,var(--vibeui-checkbox-006-fg) 68%,transparent);
 --vibeui-checkbox-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265));
 --vibeui-checkbox-006-row:light-dark(oklch(0.97 0.004 265),oklch(0.31 0.012 265));
 --vibeui-checkbox-006-accent:light-dark(oklch(0.55 0.17 265),oklch(0.73 0.15 265));
 --vibeui-checkbox-006-mark:light-dark(oklch(0.99 0.01 265),oklch(0.2 0.014 265));
 --vibeui-checkbox-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="checkbox-006"]{color-scheme:dark}
 [data-vibeui-block="checkbox-006"]{
 display:flex;flex-direction:column;
 width:100%;max-width:22rem;box-sizing:border-box;overflow:hidden;
@@ -81,7 +84,7 @@ font-size:0.8125rem;
 [data-vibeui-block="checkbox-006"] [data-part="head"]{color:var(--vibeui-checkbox-006-muted);font-size:0.75rem}
 [data-vibeui-block="checkbox-006"] input{
 appearance:none;flex:none;cursor:pointer;position:relative;
-width:1.0625rem;height:1.0625rem;margin:0;box-sizing:border-box;
+width:1.125rem;height:1.125rem;margin:0;box-sizing:border-box;
 border:1.5px solid var(--vibeui-checkbox-006-border);border-radius:0.3125rem;
 background:var(--vibeui-checkbox-006-bg);
 }
@@ -191,6 +194,7 @@ export function Checkbox006({
       </style>
       <div
         {...props}
+        data-slot="checkbox"
         data-vibeui-block="checkbox-006"
         className={className}
         style={palette}

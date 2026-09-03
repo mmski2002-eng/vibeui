@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties, MouseEvent } from "react"
+import type { ComponentProps, CSSProperties, MouseEvent } from "react"
 
 export type Contextmenu009Action = {
   label: string
@@ -9,7 +9,7 @@ export type Contextmenu009Action = {
 }
 
 export type Contextmenu009Props = Omit<
-  ComponentPropsWithoutRef<"section">,
+  ComponentProps<"section">,
   "children" | "title"
 > & {
   fileName?: string
@@ -40,7 +40,7 @@ const STYLES = `
 --vibeui-contextmenu-009-bg:transparent;
 --vibeui-contextmenu-009-surface:light-dark(oklch(1 0 0),oklch(0.24 0.013 265));
 --vibeui-contextmenu-009-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
---vibeui-contextmenu-009-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-contextmenu-009-muted:color-mix(in oklab,var(--vibeui-contextmenu-009-fg) 68%,transparent);
 --vibeui-contextmenu-009-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
 --vibeui-contextmenu-009-hover:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.014 265));
 --vibeui-contextmenu-009-accent:light-dark(oklch(0.55 0.18 258),oklch(0.75 0.14 258));
@@ -48,6 +48,9 @@ const STYLES = `
 --vibeui-contextmenu-009-shadow:light-dark(oklch(0.2 0.03 265 / 50%),oklch(0 0 0 / 72%));
 --vibeui-contextmenu-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="contextmenu-009"]{color-scheme:dark}
 [data-vibeui-block="contextmenu-009"]{
 display:flex;flex-direction:column;gap:0.625rem;
 width:100%;max-width:22rem;box-sizing:border-box;padding:0.875rem;
@@ -259,6 +262,7 @@ export function Contextmenu009({
       </style>
       <section
         {...props}
+        data-slot="context-menu"
         data-vibeui-block="contextmenu-009"
         aria-label={sectionLabel}
         className={className}

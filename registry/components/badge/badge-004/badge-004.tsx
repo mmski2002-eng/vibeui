@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties, ReactNode } from "react"
+import type { ComponentProps, CSSProperties, ReactNode } from "react"
 
-export type Badge004Props = Omit<
-  ComponentPropsWithoutRef<"span">,
-  "children"
-> & {
+export type Badge004Props = Omit<ComponentProps<"span">, "children"> & {
   children?: ReactNode
   /** Что именно случилось: текст уходит скринридеру, точка — глазу. */
   label?: string
@@ -24,6 +21,9 @@ const STYLES = `
 --vibeui-badge-004-cut:light-dark(oklch(1 0 0),oklch(0.19 0.008 265));
 --vibeui-badge-004-size:0.5rem;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="badge-004"]{color-scheme:dark}
 [data-vibeui-block="badge-004"]{position:relative;display:inline-flex;vertical-align:middle}
 [data-vibeui-block="badge-004"][data-tone="accent"]{--vibeui-badge-004-dot:light-dark(oklch(0.58 0.16 265),oklch(0.68 0.16 265))}
 [data-vibeui-block="badge-004"][data-tone="success"]{--vibeui-badge-004-dot:light-dark(oklch(0.63 0.17 152),oklch(0.74 0.16 152))}
@@ -113,6 +113,7 @@ export function Badge004({
       </style>
       <span
         {...props}
+        data-slot="badge"
         data-vibeui-block="badge-004"
         data-tone={tone}
         data-placement={placement}

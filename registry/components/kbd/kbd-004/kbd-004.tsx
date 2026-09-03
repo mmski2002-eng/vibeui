@@ -1,9 +1,11 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Kbd004Hint = { keys: string[]; action: string }
 
-export type Kbd004Props = Omit<ComponentPropsWithoutRef<"div">, "children"> & {
+export type Kbd004Props = Omit<ComponentProps<"div">, "children"> & {
   hints?: Kbd004Hint[]
+  /** Чем рисовать клавишу "Mod": на macOS это ⌘, на Windows и Linux — Ctrl. */
+  mod?: string
   align?: "start" | "center" | "between"
   size?: "sm" | "md"
   /** Пусто — подложки нет, полоса лежит прямо на фоне страницы. */
@@ -22,12 +24,15 @@ const STYLES = `
 :where([data-vibeui-block="kbd-004"]){
 --vibeui-kbd-004-surface:transparent;
 --vibeui-kbd-004-fg:light-dark(oklch(0.3 0.014 265),oklch(0.91 0.006 265));
---vibeui-kbd-004-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-kbd-004-muted:color-mix(in oklab,var(--vibeui-kbd-004-fg) 68%,transparent);
 --vibeui-kbd-004-border:light-dark(oklch(0.89 0.008 265),oklch(0.38 0.012 265));
 --vibeui-kbd-004-key:light-dark(oklch(0.97 0.003 265),oklch(0.3 0.012 265));
 --vibeui-kbd-004-gap:0.875rem;
 --vibeui-kbd-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="kbd-004"]{color-scheme:dark}
 [data-vibeui-block="kbd-004"]{
 display:flex;align-items:center;flex-wrap:wrap;
 gap:0.375rem var(--vibeui-kbd-004-gap);
@@ -59,7 +64,7 @@ font-family:inherit;font-size:0.6875rem;font-weight:650;line-height:1;
 const DEFAULT_HINTS: Kbd004Hint[] = [
   { keys: ["↑", "↓"], action: "перемещение" },
   { keys: ["↵"], action: "выбрать" },
-  { keys: ["⌘", "K"], action: "поиск" },
+  { keys: ["Mod", "K"], action: "поиск" },
   { keys: ["Esc"], action: "закрыть" },
 ]
 
@@ -91,6 +96,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Kbd004({
   hints = DEFAULT_HINTS,
+  mod = "⌘",
   align = "start",
   size = "sm",
   background = "",
@@ -115,6 +121,7 @@ export function Kbd004({
       </style>
       <div
         {...props}
+        data-slot="kbd"
         data-vibeui-block="kbd-004"
         data-align={align}
         data-size={size}
@@ -125,7 +132,7 @@ export function Kbd004({
           <span key={hint.action} data-part="hint">
             <span data-part="keys">
               {hint.keys.map((key) => (
-                <kbd key={key}>{key}</kbd>
+                <kbd key={key}>{key === "Mod" ? mod : key}</kbd>
               ))}
             </span>
             <span data-part="action">{hint.action}</span>

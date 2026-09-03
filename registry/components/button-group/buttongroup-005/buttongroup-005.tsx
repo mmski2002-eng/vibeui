@@ -1,7 +1,7 @@
 "use client"
 
-import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import { useRef, useState } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Buttongroup005View = {
   id: string
@@ -9,7 +9,7 @@ export type Buttongroup005View = {
 }
 
 export type Buttongroup005Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   views?: Buttongroup005View[]
@@ -25,17 +25,22 @@ export type Buttongroup005Props = Omit<
 // набор кнопок-тумблеров. Состояние объявляется через aria-pressed, поэтому
 // скринридер читает «Сетка, нажато», а не догадывается по цвету. Radio здесь
 // был бы неправдой: значение никуда не отправляется, оно меняет вид списка.
+// Отсюда toolbar с roving tabindex: группа — один остановочный пункт Tab,
+// внутри переключаются стрелками, как в панели форматирования.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-005"]){
 --vibeui-buttongroup-005-surface:light-dark(oklch(0.97 0.004 265),oklch(0.28 0.012 265));
 --vibeui-buttongroup-005-on:light-dark(oklch(1 0 0),oklch(0.4 0.014 265));
 --vibeui-buttongroup-005-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.006 265));
---vibeui-buttongroup-005-muted:light-dark(oklch(0.54 0.014 265),oklch(0.7 0.012 265));
+--vibeui-buttongroup-005-muted:color-mix(in oklab,var(--vibeui-buttongroup-005-fg) 68%,transparent);
 --vibeui-buttongroup-005-border:light-dark(oklch(0.89 0.008 265),oklch(0.38 0.012 265));
 --vibeui-buttongroup-005-accent:light-dark(oklch(0.55 0.17 265),oklch(0.75 0.15 265));
 --vibeui-buttongroup-005-radius:0.5rem;
 --vibeui-buttongroup-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="buttongroup-005"]{color-scheme:dark}
 [data-vibeui-block="buttongroup-005"]{
 box-sizing:border-box;display:inline-flex;align-items:center;gap:0.1875rem;
 padding:0.1875rem;
@@ -121,6 +126,17 @@ export function Buttongroup005({
   ...props
 }: Buttongroup005Props) {
   const [current, setCurrent] = useState(defaultView)
+  const track = useRef<HTMLDivElement>(null)
+  const index = Math.max(
+    0,
+    views.findIndex((view) => view.id === current),
+  )
+
+  const select = (id: string, position: number) => {
+    setCurrent(id)
+    onChange?.(id)
+    track.current?.querySelectorAll("button")[position]?.focus()
+  }
 
   const palette = {
     ...(accent ? { "--vibeui-buttongroup-005-accent": accent } : null),
@@ -140,21 +156,37 @@ export function Buttongroup005({
       </style>
       <div
         {...props}
+        data-slot="button-group"
         data-vibeui-block="buttongroup-005"
-        role="group"
+        ref={track}
+        role="toolbar"
         aria-label={label}
         className={className}
         style={palette}
+        onKeyDown={(event) => {
+          const step =
+            event.key === "ArrowRight" || event.key === "ArrowDown"
+              ? 1
+              : event.key === "ArrowLeft" || event.key === "ArrowUp"
+                ? -1
+                : 0
+
+          if (step === 0) {
+            return
+          }
+
+          event.preventDefault()
+          const next = (index + step + views.length) % views.length
+          select(views[next].id, next)
+        }}
       >
-        {views.map((view) => (
+        {views.map((view, position) => (
           <button
             key={view.id}
             type="button"
             aria-pressed={current === view.id}
-            onClick={() => {
-              setCurrent(view.id)
-              onChange?.(view.id)
-            }}
+            tabIndex={position === index ? 0 : -1}
+            onClick={() => select(view.id, position)}
           >
             <svg viewBox="0 0 19 18" fill="none" aria-hidden="true">
               <path

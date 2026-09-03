@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Spinner003Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Spinner003Props = Omit<ComponentProps<"div">, "children"> & {
   label?: string
   hint?: string
   height?: number
@@ -26,25 +23,28 @@ const STYLES = `
 --vibeui-spinner-003-surface:transparent;
 --vibeui-spinner-003-border:light-dark(oklch(0.9 0.006 265),oklch(0.32 0.012 265));
 --vibeui-spinner-003-fg:light-dark(oklch(0.26 0.014 265),oklch(0.94 0.005 265));
---vibeui-spinner-003-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-spinner-003-muted:color-mix(in oklab,var(--vibeui-spinner-003-fg) 68%,transparent);
 --vibeui-spinner-003-track:light-dark(oklch(0.93 0.006 265),oklch(0.36 0.012 265));
 --vibeui-spinner-003-accent:light-dark(oklch(0.55 0.17 262),oklch(0.72 0.16 262));
 --vibeui-spinner-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="spinner-003"]{color-scheme:dark}
 /* Подложки нет по умолчанию: плашка появляется только пропом background. */
 [data-vibeui-block="spinner-003"]{
 display:flex;flex-direction:column;gap:0.5rem;
-width:100%;max-width:22rem;box-sizing:border-box;padding:0.875rem 1rem;
+width:100%;max-width:22rem;box-sizing:border-box;padding:0.9375rem 1.0625rem;
 background:var(--vibeui-spinner-003-surface);
 border:1px solid var(--vibeui-spinner-003-border);border-radius:0.875rem;
 font-family:var(--vibeui-spinner-003-font);color:var(--vibeui-spinner-003-fg);
 }
 [data-vibeui-block="spinner-003"] [data-part="head"]{
 display:flex;align-items:baseline;justify-content:space-between;gap:1rem;
-font-size:0.8125rem;
+font-size:0.9375rem;
 }
 [data-vibeui-block="spinner-003"] [data-part="hint"]{
-font-size:0.75rem;color:var(--vibeui-spinner-003-muted);
+font-size:0.875rem;color:var(--vibeui-spinner-003-muted);
 }
 [data-vibeui-block="spinner-003"] [data-part="track"]{
 position:relative;overflow:hidden;
@@ -125,6 +125,7 @@ export function Spinner003({
       </style>
       <div
         {...props}
+        data-slot="spinner"
         data-vibeui-block="spinner-003"
         className={className}
         style={palette}

@@ -41,7 +41,8 @@
             "current — номер текущего шага, считая с нуля",
             "акцент через проп accent — цвет пройденных кружков и линии",
             "ширину и внешние отступы через className",
-            "label — доступное имя списка шагов для скринридера"
+            "label — доступное имя списка шагов для скринридера",
+            "stateText — подписи состояний для скринридера: пройден, текущий, впереди"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
@@ -75,7 +76,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Process Stepper",
             "description": "A step indicator where completed steps are marked with a check, not colour alone. The line fills up to the current step, so progress reads without reading the labels.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-stepper-001-* variables. The step state (done, current, todo) is derived from the current prop and lands in a data attribute, which drives both the circle and the line. The line is a ::before on every step except the first, reaching back from the previous circle's centre. The current step is marked aria-current=\"step\". In a narrow column the hints are hidden through @container, leaving the circles and the labels.",
             "ai": {
               "summary": "A process stepper: numbered circles, a check instead of the number on completed steps, labels and optional hints. The connecting line is filled up to the current step. Every state is derived from one number, so the steps cannot fall out of sync. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
@@ -93,7 +96,8 @@
                 "current — the index of the active step, counting from zero",
                 "the accent through the accent prop — it colours completed circles and the line",
                 "width and outer spacing through className",
-                "label — the accessible name of the step list for screen readers"
+                "label — the accessible name of the step list for screen readers",
+                "stateText — the state captions for screen readers: completed, current, ahead"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
@@ -116,7 +120,6 @@
                 "default": "Steps"
               }
             },
-            "title": "Process Stepper",
             "preview": {
               "props": {
                 "label": "Steps",
@@ -136,7 +139,12 @@
                   {
                     "label": "Publish"
                   }
-                ]
+                ],
+                "stateText": {
+                  "done": " — step completed",
+                  "current": " — current step",
+                  "todo": " — ahead"
+                }
               }
             }
           }
@@ -226,7 +234,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Chevron Steps",
             "description": "A chevron step ribbon that reads like process breadcrumbs: number and label sit on one line, the arrow is cut with clip-path, and a finished step carries a check mark and a word.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the --vibeui-stepper-002-* variables. Server component: no hooks. The chevron shape comes from a single clip-path on the item — a notch on the left and a point on the right — so no extra nodes or pseudo-elements are needed for the arrow, and the neighbouring item overlaps it with a negative margin. The current step is marked aria-current=\"step\"; each item's state is duplicated by a visually hidden phrase, because a fill colour conveys nothing on its own. A container query measures the width: below 32rem the labels of inactive steps are hidden, leaving the numbers and the check marks.",
             "ai": {
               "summary": "A horizontal chevron step ribbon with numbers: the current step is marked with aria-current, finished ones with a check mark and a word. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -272,7 +282,6 @@
                 "label": "Background"
               }
             },
-            "title": "Chevron Steps",
             "preview": {
               "props": {
                 "label": "Checkout",
@@ -371,7 +380,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Vertical Steps",
             "description": "A vertical step list where every step has room for an explanation and a timestamp, and its state is spelled out in a word beside the title.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the --vibeui-stepper-003-* variables. Server component: no hooks. An item is a two-column grid: the circle takes the first column across all rows (grid-row: 1 / span 3) and the text goes into the second, so the description and the time align to the title without manual indents. The connecting line is the item's ::before: it starts under the circle and stops at the last step, so it does not dangle into empty space. The current step is marked aria-current=\"step\", and each item's state is duplicated by the caption \"Done / Now / Ahead\": the line colour is not the only carrier of meaning.",
             "ai": {
               "summary": "Vertical steps with descriptions, timestamps and a word for the state. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -417,7 +428,6 @@
                 "label": "Background"
               }
             },
-            "title": "Vertical Steps",
             "preview": {
               "props": {
                 "label": "Application progress",
@@ -527,7 +537,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Step States",
             "description": "Steps with the full set of states: done, error, skipped, current and upcoming. Each has its own glyph and its own word, not just a colour.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the --vibeui-stepper-004-* variables. Server component: no hooks. The state arrives as data rather than being derived from the number: a skipped step can sit between completed ones. An item's colour is set by the single --vibeui-stepper-004-tone variable, which paints the circle, the border and the caption — a new state costs one line of CSS plus a glyph in MARKS and a word in WORDS. The connector takes its colour from the left-hand neighbour through an inline variable, so the break shows exactly where the error is. A skipped step is additionally marked with a dashed border: shape works where colour does not.",
             "ai": {
               "summary": "Steps with done, error, skipped and current states: a glyph, a shape and a word rather than colour alone. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -569,7 +581,6 @@
                 "label": "Background"
               }
             },
-            "title": "Step States",
             "preview": {
               "props": {
                 "label": "Store setup",
@@ -703,7 +714,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Connector Progress",
             "description": "Steps where the progress lives inside the connector: the line before the current step is filled only part of the way, and the same fraction is printed as a number.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the --vibeui-stepper-005-* variables. Server component: no hooks. The connector's track and fill are two pseudo-elements of the same item; the fill width is computed as calc(100% * var(--vibeui-stepper-005-fill)), where the variable arrives inline as a unitless number: CSS cannot multiply percentages by percentages. Completed steps get a fill of 1, the current one gets its readiness fraction and future ones get 0. The percentage is duplicated as text under the circle: a bar does not exist for a screen reader. The current step is marked aria-current=\"step\", completed ones carry a check mark and the word \"Done\".",
             "ai": {
               "summary": "Steps with a partly filled connector: readiness shows as both a bar and a number. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -752,7 +765,6 @@
                 "default": "Catalogue import"
               }
             },
-            "title": "Connector Progress",
             "preview": {
               "props": {
                 "label": "Catalogue import",
@@ -849,7 +861,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Mobile Counter",
             "description": "A compact indicator for phones: a \"step 2 of 5\" counter, the current step's name, a hint about the next one, and segment bars instead of a ribbon of labels.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the --vibeui-stepper-006-* variables. Server component: no hooks. At phone width five labels do not fit, so instead of the ribbon it prints a counter and one title in large type. The segments stay an ol: each item carries its own state and a visually hidden phrase, so the indicator is announced as a list of steps rather than as a decorative bar. The current segment is marked aria-current=\"step\" and stretched with flex-grow, so the position reads without reading the counter. The step number is clamped to the array bounds: a current outside the range will not produce an empty title.",
             "ai": {
               "summary": "A compact step counter for phones: \"step 2 of 5\", the current step in large type and segment bars. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -896,7 +910,6 @@
                 "label": "Background"
               }
             },
-            "title": "Mobile Counter",
             "preview": {
               "props": {
                 "label": "Checkout",
@@ -999,7 +1012,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Checkout Steps",
             "description": "Checkout steps you can go back to: a finished step shows the chosen value and a return link, while an upcoming one stays plain text instead of a disabled button.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the --vibeui-stepper-007-* variables. Server component: no hooks, going back is done with ordinary links. A completed step prints the chosen value, so the list works as an order summary as well. The return link has an accessible name of the form \"Edit: delivery\": in a list of four links the same word \"Edit\" is useless. Upcoming steps deliberately do not pretend to be disabled buttons — they are text captioned \"Ahead\" that does not take focus and does not promise a press. An item is a three-column grid with the glyph and the right-hand block pinned to their own columns, so the row does not fall apart when there is no value.",
             "ai": {
               "summary": "Checkout steps with a summary of the choices and a return link to a finished step. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1045,7 +1060,6 @@
                 "label": "Background"
               }
             },
-            "title": "Checkout Steps",
             "preview": {
               "props": {
                 "label": "Checkout",
@@ -1164,7 +1178,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Optional Steps",
             "description": "Steps with optional stages among them: those are marked with a word and a dashed outline, while the counter on top counts only the required ones so the progress does not lie.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the --vibeui-stepper-008-* variables. Server component: the required steps are counted at render. Optionality is marked three times: by a word in the label, by the item's dashed border and by a dashed circle — colour plays no part here at all. The counter at the top deliberately counts required steps only: \"2 of 6\" is intimidating when four steps can be skipped. The items sit in a wrapping ol, so a long list does not run off into a scroll but rebuilds into several rows. The current step is marked aria-current=\"step\", and the states are duplicated by a hidden phrase.",
             "ai": {
               "summary": "Steps with optional stages: a word label, a dashed outline and a counter over required steps only. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1211,7 +1227,6 @@
                 "label": "Background"
               }
             },
-            "title": "Optional Steps",
             "preview": {
               "props": {
                 "label": "Workspace setup",
@@ -1335,7 +1350,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Setup Steps",
             "description": "An install guide as steps: the command is shown only inside the step being performed right now, while the others collapse to a title and a state.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the --vibeui-stepper-009-* variables. Server component: no hooks, the expansion is decided by the step number rather than by a click. The code sits in pre + code with tabIndex={0}: without focus a long command cannot be scrolled from the keyboard, and horizontal scrolling stays the only way to see it in full. The dark code block carries its own background and monospace font variables, so it does not depend on the project's theme. The current step is marked aria-current=\"step\", the states are captioned with the words \"Done / Now / Ahead\", and the line on the left is coloured only along the completed stretch.",
             "ai": {
               "summary": "Install steps: the command is expanded only for the current step and the code block scrolls from the keyboard. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1381,7 +1398,6 @@
                 "label": "Background"
               }
             },
-            "title": "Setup Steps",
             "preview": {
               "props": {
                 "label": "Installing the component",
@@ -1496,7 +1512,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Detail Steps",
             "description": "Vertical steps with a one-line summary on each and an expanded detail panel on the current one — details show only once their turn has come.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the --vibeui-stepper-010-* variables. Server component: no hooks. The circle is stretched across all of the item's rows through grid-row: 1 / -1, so the row height is not tied to the amount of text. The detail panel is a separate data-part=\"panel\" block, rendered only when the step's state is current and it has a details array; on the other steps only the title and a one-line summary are visible. The current step is marked aria-current=\"step\", and the state is duplicated by a word next to the title.",
             "ai": {
               "summary": "Vertical steps with a one-line summary on each and an expanded detail panel on the current step. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1541,7 +1559,6 @@
                 "label": "Background"
               }
             },
-            "title": "Detail Steps",
             "preview": {
               "props": {
                 "label": "Store migration",
@@ -1655,7 +1672,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Error Recovery",
             "description": "Steps where the failing stage is marked not just with an icon but with its own card explaining what went wrong and the exact action that fixes it.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the --vibeui-stepper-011-* variables. Server component: no hooks. The circle and connector colour comes from the --vibeui-stepper-011-tone variable, which the item overrides according to its state — a new state can be added in one line of CSS. Below the ribbon, cards for every step in the error state are printed as a separate list: a heading with the step number, issue and fix as separate paragraphs and an action link when href is set. The set of states is deliberately narrower than in the general state component: done, error, current and ahead only.",
             "ai": {
               "summary": "A step ribbon where the failing stage expands into a card: what went wrong and exactly what to fix, with a direct link to the right form. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1698,7 +1717,6 @@
                 "label": "Background"
               }
             },
-            "title": "Error Recovery",
             "preview": {
               "props": {
                 "label": "Store setup",
@@ -1821,7 +1839,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Order Summary",
             "description": "Checkout steps sitting beside an order summary card: the total, delivery and discount stay visible on every step, not only at the very end.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the --vibeui-stepper-012-* variables. Server component: no hooks. The root carries container-type: inline-size, and the two-column layout is set on data-part=\"layout\" — that selector, not the block root, is what changes inside @container, because the query applies only to the container's descendants. The summary is a separate aside with its own aria-label, and the step list on the left stays an ol with its state duplicated by visually hidden text.",
             "ai": {
               "summary": "Checkout steps paired with an order summary card: line items and the total sit next to the ribbon on every step. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1867,7 +1887,6 @@
                 "label": "Background"
               }
             },
-            "title": "Order Summary",
             "preview": {
               "props": {
                 "label": "Checkout",
@@ -1989,7 +2008,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Progress Counter",
             "description": "A \"step 2 of 5\" numeric indicator with a percentage and a continuous progress bar — a compact stand-in for a ribbon when there is nowhere to put step names.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the --vibeui-stepper-013-* variables. Server component: no hooks. The visible part is the counter, the current step title and a single progress bar; track and fill are marked aria-hidden, because their meaning is already spoken by the text. The real step semantics live in a visually hidden ol: every item carries its state as a word, and aria-current sits on the current one. The percentage is computed as the ratio of the step's ordinal number to their total count.",
             "ai": {
               "summary": "A \"step N of M\" counter with a percentage and a continuous progress bar; the step list stays for screen readers. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -2030,7 +2051,6 @@
                 "label": "Background"
               }
             },
-            "title": "Progress Counter",
             "preview": {
               "props": {
                 "steps": ["Account", "Company", "Team", "Plan", "Done"],
@@ -2131,7 +2151,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Skip Step",
             "description": "Steps where one stage is explicitly optional: a dashed circle, an \"Optional\" badge and a \"Skip this step\" link right inside it while it is current.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the --vibeui-stepper-014-* variables. Server component: no hooks, skipping is done with an ordinary link. A step's optionality is marked twice: by the circle's dashed border and by the \"Optional\" label next to the title. The \"Skip this step\" link is rendered only when three conditions hold at once — step.optional, the current state and a set step.skipHref — so a completed or not-yet-open step cannot be skipped.",
             "ai": {
               "summary": "Vertical steps with one optional stage: a dashed marker, an \"Optional\" word and a skip link right on the current step. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -2177,7 +2199,6 @@
                 "label": "Background"
               }
             },
-            "title": "Skip Step",
             "preview": {
               "props": {
                 "steps": [
@@ -2256,6 +2277,7 @@
             "адреса через backHref и confirmHref",
             "заголовок карточки сверки через panelTitle",
             "текст до последнего шага через pendingText — {step} подставляется",
+            "stateText — подписи состояний для скринридера: пройден, текущий, впереди",
             "акцент через проп accent",
             "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
@@ -2298,7 +2320,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Review Steps",
             "description": "Steps where the final stage expands into a review card: values by section, an edit link for each and an explicit \"Back\" action.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the --vibeui-stepper-015-* variables. Server component: no hooks, \"Back\" and \"Confirm\" are ordinary links. The step ribbon at the top is a compressed row of circles with labels; below it is a review card that is rendered only when current points at the last step. Every review item has its own edit link with an accessible name of the form \"Edit: address\" rather than just \"Edit\".",
             "ai": {
               "summary": "Steps where the last stage is a review card: values by section, edit links and an explicit way back. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -2318,6 +2342,7 @@
                 "the targets through backHref and confirmHref",
                 "the review card heading through panelTitle",
                 "the text shown before the last step through pendingText — {step} is substituted",
+                "stateText — the state captions for screen readers: completed, current, ahead",
                 "the accent through the accent prop",
                 "background — the component background; empty means no background, taking the page colour"
               ],
@@ -2345,7 +2370,6 @@
                 "label": "Background"
               }
             },
-            "title": "Review Steps",
             "preview": {
               "props": {
                 "steps": ["Details", "Address", "Payment", "Review"],
@@ -2371,7 +2395,12 @@
                 "editLabel": "Edit",
                 "backLabel": "Back",
                 "confirmLabel": "Confirm",
-                "label": "Checkout"
+                "label": "Checkout",
+                "stateText": {
+                  "done": " — step completed",
+                  "current": " — current step",
+                  "todo": " — ahead"
+                }
               }
             }
           }

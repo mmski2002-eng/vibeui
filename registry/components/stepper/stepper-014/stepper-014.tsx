@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Stepper014Step = {
   title: string
@@ -7,10 +7,7 @@ export type Stepper014Step = {
   skipHref?: string
 }
 
-export type Stepper014Props = Omit<
-  ComponentPropsWithoutRef<"nav">,
-  "children"
-> & {
+export type Stepper014Props = Omit<ComponentProps<"nav">, "children"> & {
   steps?: Stepper014Step[]
   /** Номер текущего шага, считая с нуля. */
   current?: number
@@ -35,7 +32,7 @@ const STYLES = `
 :where([data-vibeui-block="stepper-014"]){
 --vibeui-stepper-014-bg:transparent;
 --vibeui-stepper-014-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.005 265));
---vibeui-stepper-014-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.013 265));
+--vibeui-stepper-014-muted:color-mix(in oklab,var(--vibeui-stepper-014-fg) 68%,transparent);
 --vibeui-stepper-014-border:light-dark(oklch(0.92 0.006 265),oklch(0.35 0.012 265));
 --vibeui-stepper-014-line:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265));
 --vibeui-stepper-014-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
@@ -43,6 +40,9 @@ const STYLES = `
 --vibeui-stepper-014-dot:1.5rem;
 --vibeui-stepper-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="stepper-014"]{color-scheme:dark}
 [data-vibeui-block="stepper-014"]{
 width:100%;max-width:32rem;box-sizing:border-box;
 font-family:var(--vibeui-stepper-014-font);color:var(--vibeui-stepper-014-fg);
@@ -197,6 +197,7 @@ export function Stepper014({
       </style>
       <nav
         {...props}
+        data-slot="stepper"
         data-vibeui-block="stepper-014"
         aria-label={label}
         className={className}

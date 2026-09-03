@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Spinner008Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Spinner008Props = Omit<ComponentProps<"div">, "children"> & {
   label?: string
   /** Строка под полосой: она и объясняет, почему процента нет. */
   hint?: string
@@ -26,24 +23,27 @@ const STYLES = `
 --vibeui-spinner-008-surface:transparent;
 --vibeui-spinner-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.32 0.012 265));
 --vibeui-spinner-008-fg:light-dark(oklch(0.26 0.014 265),oklch(0.94 0.005 265));
---vibeui-spinner-008-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-spinner-008-muted:color-mix(in oklab,var(--vibeui-spinner-008-fg) 68%,transparent);
 --vibeui-spinner-008-track:light-dark(oklch(0.93 0.006 265),oklch(0.34 0.012 265));
 --vibeui-spinner-008-accent:light-dark(oklch(0.55 0.17 262),oklch(0.72 0.16 262));
 --vibeui-spinner-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="spinner-008"]{color-scheme:dark}
 /* Подложки нет по умолчанию: плашка появляется только пропом background. */
 [data-vibeui-block="spinner-008"]{
 display:flex;flex-direction:column;gap:0.5rem;
-width:100%;max-width:22rem;box-sizing:border-box;padding:0.875rem 1rem;
+width:100%;max-width:22rem;box-sizing:border-box;padding:0.9375rem 1.0625rem;
 background:var(--vibeui-spinner-008-surface);
 border:1px solid var(--vibeui-spinner-008-border);border-radius:0.875rem;
 font-family:var(--vibeui-spinner-008-font);color:var(--vibeui-spinner-008-fg);
 }
 [data-vibeui-block="spinner-008"] [data-part="label"]{
-font-size:0.8125rem;font-weight:600;
+font-size:0.9375rem;font-weight:600;
 }
 [data-vibeui-block="spinner-008"] [data-part="hint"]{
-font-size:0.75rem;color:var(--vibeui-spinner-008-muted);
+font-size:0.875rem;color:var(--vibeui-spinner-008-muted);
 }
 /* Вся полоса — движущийся конвейер полос, а не дорожка с бегунком. */
 [data-vibeui-block="spinner-008"] [data-part="track"]{
@@ -119,6 +119,7 @@ export function Spinner008({
       </style>
       <div
         {...props}
+        data-slot="spinner"
         data-vibeui-block="spinner-008"
         className={className}
         style={palette}

@@ -1,12 +1,9 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Toast008Corner =
   "top-left" | "top-right" | "bottom-left" | "bottom-right"
 
-export type Toast008Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Toast008Props = Omit<ComponentProps<"div">, "children"> & {
   /** Угол экрана, в котором копятся уведомления. */
   corner?: Toast008Corner
   /** Отступ стопки от краёв области. */
@@ -32,7 +29,7 @@ const STYLES = `
 :where([data-vibeui-block="toast-008"]){
 --vibeui-toast-008-bg:light-dark(oklch(0.97 0.004 265),oklch(0.2 0.014 265));
 --vibeui-toast-008-fg:light-dark(oklch(0.24 0.014 265),oklch(0.95 0.004 265));
---vibeui-toast-008-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-toast-008-muted:color-mix(in oklab,var(--vibeui-toast-008-fg) 68%,transparent);
 --vibeui-toast-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.014 265));
 --vibeui-toast-008-card:light-dark(oklch(1 0 0),oklch(0.28 0.014 265));
 --vibeui-toast-008-grid:light-dark(oklch(0.88 0.008 265 / 45%),oklch(0.5 0.01 265 / 35%));
@@ -42,6 +39,9 @@ const STYLES = `
 --vibeui-toast-008-radius:0.875rem;
 --vibeui-toast-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="toast-008"]{color-scheme:dark}
 [data-vibeui-block="toast-008"]{
 width:100%;max-width:34rem;box-sizing:border-box;
 font-family:var(--vibeui-toast-008-font);color:var(--vibeui-toast-008-fg);
@@ -162,6 +162,7 @@ export function Toast008({
       </style>
       <div
         {...props}
+        data-slot="toast"
         data-vibeui-block="toast-008"
         data-corner={corner}
         className={className}

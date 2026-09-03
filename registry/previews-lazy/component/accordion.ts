@@ -61,4 +61,14 @@ export const PREVIEWS = {
       (module) => module.Accordion011,
     ),
   ),
+  "accordion-012": dynamic(() =>
+    import("@/registry/components/accordion/accordion-012/accordion-012").then(
+      (module) => module.Accordion012,
+    ),
+  ),
+  "accordion-013": dynamic(() =>
+    import("@/registry/components/accordion/accordion-013/accordion-013").then(
+      (module) => module.Accordion013,
+    ),
+  ),
 } satisfies PreviewMap

@@ -127,7 +127,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-faq-001-*. Native <details>/<summary> hold the disclosure: an answer is found through find-on-page (the browser opens the matching section itself) and works before hydration. The sections are independent on purpose — on a questions page people open several at once. The two-column layout is turned on by a container query against the block's own width; the heading column becomes sticky."
           }
         },
         "controls": [
@@ -315,7 +316,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-faq-002-*. A server component; native <details> hold the disclosure. The two columns are made with column-count rather than a grid: with a grid the order would run left to right and the numbering would get tangled, while columns keep the reading vertical. break-inside:avoid stops a card from breaking across columns. One column up to 44rem of the block's own width, two beyond that."
           }
         },
         "cardControls": ["accent", "background"]
@@ -523,7 +525,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-faq-003-*. A server component. The tabs are built on radio buttons of a single group: they are hidden visually-hidden but stay in the focus order, so the arrows page through the tabs the same way they do in a real tablist. The active tab and its panel are matched by :nth-of-type(n):checked ~ ... rules, so up to five categories are supported — more requires writing further rules. The answers inside a panel are native details with a plus sign built from pseudo-elements."
           }
         },
         "cardControls": ["accent", "background"]
@@ -688,7 +691,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-faq-004-*. A server component. Every <details> gets the same name attribute and the browser closes the previous answer when the next one opens: this is the standard behaviour of an exclusive accordion, not an emulation on state. The heading and the numbers are set in a serif face, the questions in a sans one: the typeface contrast separates the spoken part from the functional one. The layout is narrow by design — long answers about terms are read in one column."
           }
         },
         "cardControls": ["accent", "background"]
@@ -877,7 +881,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is a client one: \"use client\" is needed for the search field and useState, there is no other state. One file, no dependencies, its own palette in local variables --vibeui-faq-005-*. The filter splits the query into words and requires each of them to match in the joined \"question + answer + topic\", so \"when will it arrive\" finds the section about delivery. The result is computed in useMemo so that the list is not rebuilt on every render. The result counter is marked aria-live=\"polite\": without it a screen-reader user never learns that the list under the field has changed."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1065,7 +1070,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-faq-006-*. A server component; native <details> hold the disclosure. The help card is an <aside> with a label, and on the wide layout it becomes sticky: someone who has not found their question usually abandons the list halfway, and the contacts have to be in view exactly there. The contact channels are laid out as links with an explanation rather than a single \"Contact us\" button: the explanation answers \"when will I get a reply\" before the click."
           }
         },
         "cardControls": ["accent", "background"]

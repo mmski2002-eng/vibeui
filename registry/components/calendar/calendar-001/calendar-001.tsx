@@ -1,10 +1,10 @@
 "use client"
 
 import { useMemo, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Calendar001Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange" | "defaultValue"
 > & {
   /** Дата в ISO: 2026-03-14. Строка, а не Date — её проще передать с сервера. */
@@ -28,16 +28,19 @@ const STYLES = `
 :where([data-vibeui-block="calendar-001"]){
 --vibeui-calendar-001-bg:transparent;
 --vibeui-calendar-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
---vibeui-calendar-001-muted:light-dark(oklch(0.6 0.014 265),oklch(0.68 0.012 265));
+--vibeui-calendar-001-muted:color-mix(in oklab,var(--vibeui-calendar-001-fg) 68%,transparent);
 --vibeui-calendar-001-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-calendar-001-hover:light-dark(oklch(0.96 0.004 265),oklch(0.29 0.014 265));
 --vibeui-calendar-001-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
 --vibeui-calendar-001-on-accent:light-dark(oklch(0.99 0.01 265),oklch(0.19 0.03 265));
 --vibeui-calendar-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="calendar-001"]{color-scheme:dark}
 [data-vibeui-block="calendar-001"]{
 display:flex;flex-direction:column;gap:0.625rem;
-width:100%;max-width:18rem;box-sizing:border-box;padding:0.875rem;
+width:100%;max-width:18rem;box-sizing:border-box;padding:0.9375rem;
 background:var(--vibeui-calendar-001-bg);
 border:1px solid var(--vibeui-calendar-001-border);border-radius:0.875rem;
 color:var(--vibeui-calendar-001-fg);font-family:var(--vibeui-calendar-001-font);
@@ -46,7 +49,7 @@ color:var(--vibeui-calendar-001-fg);font-family:var(--vibeui-calendar-001-font);
 display:flex;align-items:center;justify-content:space-between;gap:0.5rem;
 }
 [data-vibeui-block="calendar-001"] [data-part="title"]{
-font-size:0.875rem;font-weight:650;
+font-size:0.9375rem;font-weight:650;
 }
 /* Заглавная только первая буква: capitalize поднимает и «г.» в «январь 2026 г.». */
 [data-vibeui-block="calendar-001"] [data-part="title"]::first-letter{text-transform:uppercase}
@@ -90,11 +93,11 @@ background:var(--vibeui-calendar-001-accent);color:var(--vibeui-calendar-001-on-
 }
 [data-vibeui-block="calendar-001"] [data-part="footer"]{
 display:flex;align-items:center;justify-content:space-between;gap:0.5rem;
-font-size:0.75rem;color:var(--vibeui-calendar-001-muted);
+font-size:0.875rem;color:var(--vibeui-calendar-001-muted);
 }
 [data-vibeui-block="calendar-001"] [data-part="today"]{
 appearance:none;border:0;background:transparent;cursor:pointer;padding:0;
-color:var(--vibeui-calendar-001-accent);font:inherit;font-size:0.75rem;font-weight:600;
+color:var(--vibeui-calendar-001-accent);font:inherit;font-size:0.875rem;font-weight:600;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="calendar-001"] *{animation:none!important;transition:none!important}}
 `
@@ -121,6 +124,44 @@ function buildGrid(year: number, month: number) {
   )
 }
 
+// Стрелки водят фокус по сетке. Без них до нужного дня приходится жать Tab
+// столько раз, сколько до него дней: сорок две кнопки подряд в порядке табуляции.
+function moveFocus(event: KeyboardEvent<HTMLElement>, columns: number) {
+  const steps: Record<string, number> = {
+    ArrowLeft: -1,
+    ArrowRight: 1,
+    ArrowUp: -columns,
+    ArrowDown: columns,
+  }
+  const step = steps[event.key]
+
+  if (step === undefined) {
+    return
+  }
+
+  const buttons = Array.from(
+    event.currentTarget.querySelectorAll<HTMLButtonElement>("button"),
+  )
+  const from = buttons.indexOf(document.activeElement as HTMLButtonElement)
+
+  if (from < 0) {
+    return
+  }
+
+  let index = from + step
+
+  while (buttons[index]?.disabled) {
+    index += step
+  }
+
+  if (!buttons[index]) {
+    return
+  }
+
+  event.preventDefault()
+  buttons[index].focus()
+}
+
 /**
  * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
  * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
@@ -144,12 +185,32 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 }
 
 /**
+ * Дата и локаль из пропов или дефолты компонента. Чужая страница не должна
+ * падать из-за опечатки в значении: Intl бросает RangeError и на Invalid Date,
+ * и на нераспознанной локали, а это белый экран вместо всего сайта.
+ */
+function safeDate(value: string, fallback: string) {
+  return Number.isNaN(new Date(`${value}T00:00:00`).getTime())
+    ? fallback
+    : value
+}
+
+function safeLocale(value: string, fallback: string) {
+  try {
+    Intl.DateTimeFormat.supportedLocalesOf(value)
+    return value
+  } catch {
+    return fallback
+  }
+}
+
+/**
  * Месяц на сетке 7×6 с постоянной высотой и неделей с понедельника.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Calendar001({
-  defaultValue = "2026-03-14",
-  locale = "ru-RU",
+  defaultValue: defaultValueProp = "2026-03-14",
+  locale: localeProp = "ru-RU",
   onChange,
   accent,
   background = "",
@@ -160,6 +221,8 @@ export function Calendar001({
   style,
   ...props
 }: Calendar001Props) {
+  const defaultValue = safeDate(defaultValueProp, "2026-03-14")
+  const locale = safeLocale(localeProp, "ru-RU")
   const [selected, setSelected] = useState(defaultValue)
   const [cursor, setCursor] = useState(() => {
     const [year, month] = defaultValue.split("-").map(Number)
@@ -196,6 +259,11 @@ export function Calendar001({
   } as CSSProperties
 
   const today = iso(new Date())
+  // Ровно одна кнопка сетки участвует в табуляции: выбранный день, а если он
+  // в другом месяце — первое число показанного.
+  const stop = days.some((date) => iso(date) === selected)
+    ? selected
+    : iso(new Date(cursor.year, cursor.month, 1))
 
   const shift = (delta: number) => {
     const next = new Date(cursor.year, cursor.month + delta, 1)
@@ -215,6 +283,7 @@ export function Calendar001({
       </style>
       <div
         {...props}
+        data-slot="calendar"
         data-vibeui-block="calendar-001"
         className={className}
         style={palette}
@@ -248,7 +317,7 @@ export function Calendar001({
               ))}
             </tr>
           </thead>
-          <tbody>
+          <tbody onKeyDown={(event) => moveFocus(event, 7)}>
             {Array.from({ length: 6 }, (_, row) => (
               <tr key={row}>
                 {days.slice(row * 7, row * 7 + 7).map((date) => {
@@ -258,8 +327,13 @@ export function Calendar001({
                     <td key={value}>
                       <button
                         type="button"
+                        tabIndex={value === stop ? 0 : -1}
                         aria-pressed={value === selected}
-                        aria-label={titles.full.format(date)}
+                        aria-label={
+                          value === today
+                            ? `${titles.full.format(date)}, ${todayLabel}`
+                            : titles.full.format(date)
+                        }
                         data-outside={date.getMonth() !== cursor.month}
                         data-today={value === today}
                         onClick={() => pick(date)}

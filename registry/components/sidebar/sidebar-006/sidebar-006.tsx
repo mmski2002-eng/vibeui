@@ -1,14 +1,11 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Sidebar006Item = {
   label: string
   href?: string
 }
 
-export type Sidebar006Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Sidebar006Props = Omit<ComponentProps<"div">, "children"> & {
   items?: Sidebar006Item[]
   activeLabel?: string
   userName?: string
@@ -38,13 +35,16 @@ const STYLES = `
 --vibeui-sidebar-006-bg:transparent;
 --vibeui-sidebar-006-panel:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
 --vibeui-sidebar-006-fg:light-dark(oklch(0.25 0.016 265),oklch(0.93 0.006 265));
---vibeui-sidebar-006-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-sidebar-006-muted:color-mix(in oklab,var(--vibeui-sidebar-006-fg) 68%,transparent);
 --vibeui-sidebar-006-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
 --vibeui-sidebar-006-hover:light-dark(oklch(0.55 0.02 265 / 7%),oklch(0.85 0.02 265 / 10%));
 --vibeui-sidebar-006-shadow:light-dark(oklch(0.2 0.02 265 / 14%),oklch(0 0 0 / 55%));
 --vibeui-sidebar-006-accent:light-dark(oklch(0.55 0.16 200),oklch(0.74 0.14 200));
 --vibeui-sidebar-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="sidebar-006"]{color-scheme:dark}
 [data-vibeui-block="sidebar-006"]{
 display:flex;flex-direction:column;gap:0.75rem;
 width:100%;max-width:15rem;min-height:17rem;box-sizing:border-box;padding:0.625rem;
@@ -55,7 +55,7 @@ font-family:var(--vibeui-sidebar-006-font);
 [data-vibeui-block="sidebar-006"] [data-part="nav"] ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:0.125rem}
 [data-vibeui-block="sidebar-006"] [data-part="nav"] a{
 display:block;padding:0.4375rem 0.5rem;border-radius:0.5rem;
-color:var(--vibeui-sidebar-006-muted);text-decoration:none;font-size:0.875rem;line-height:1.3;
+color:var(--vibeui-sidebar-006-muted);text-decoration:none;font-size:0.9375rem;line-height:1.3;
 }
 [data-vibeui-block="sidebar-006"] [data-part="nav"] a:hover{background:var(--vibeui-sidebar-006-hover);color:var(--vibeui-sidebar-006-fg)}
 [data-vibeui-block="sidebar-006"] [data-part="nav"] a:focus-visible{outline:2px solid var(--vibeui-sidebar-006-accent);outline-offset:-2px}
@@ -77,11 +77,11 @@ padding:0.375rem 0.5rem;border-radius:0.5rem;
 display:flex;align-items:center;justify-content:center;flex:none;
 width:1.75rem;height:1.75rem;border-radius:9999px;
 background:color-mix(in oklab,var(--vibeui-sidebar-006-accent) 18%,transparent);
-color:var(--vibeui-sidebar-006-fg);font-size:0.6875rem;font-weight:700;
+color:var(--vibeui-sidebar-006-fg);font-size:0.75rem;font-weight:700;
 }
 [data-vibeui-block="sidebar-006"] [data-part="who"]{display:flex;flex-direction:column;min-width:0}
-[data-vibeui-block="sidebar-006"] [data-part="name"]{font-size:0.8125rem;font-weight:650;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-[data-vibeui-block="sidebar-006"] [data-part="meta"]{font-size:0.6875rem;color:var(--vibeui-sidebar-006-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+[data-vibeui-block="sidebar-006"] [data-part="name"]{font-size:0.875rem;font-weight:650;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+[data-vibeui-block="sidebar-006"] [data-part="meta"]{font-size:0.8125rem;color:var(--vibeui-sidebar-006-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 [data-vibeui-block="sidebar-006"] [data-part="dots"]{
 margin-left:auto;flex:none;color:var(--vibeui-sidebar-006-muted);font-size:0.875rem;line-height:1;
 }
@@ -95,7 +95,7 @@ box-shadow:0 8px 24px var(--vibeui-sidebar-006-shadow);
 }
 [data-vibeui-block="sidebar-006"] [data-part="menu"] a{
 display:block;padding:0.375rem 0.5rem;border-radius:0.375rem;
-color:var(--vibeui-sidebar-006-fg);text-decoration:none;font-size:0.8125rem;
+color:var(--vibeui-sidebar-006-fg);text-decoration:none;font-size:0.875rem;
 }
 [data-vibeui-block="sidebar-006"] [data-part="menu"] a:hover{background:var(--vibeui-sidebar-006-hover)}
 [data-vibeui-block="sidebar-006"] [data-part="menu"] a:focus-visible{outline:2px solid var(--vibeui-sidebar-006-accent);outline-offset:-2px}
@@ -180,6 +180,7 @@ export function Sidebar006({
       </style>
       <div
         {...props}
+        data-slot="sidebar"
         data-vibeui-block="sidebar-006"
         className={className}
         style={palette}

@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Sidebar001Item = {
   label: string
@@ -12,10 +12,7 @@ export type Sidebar001Section = {
   items: Sidebar001Item[]
 }
 
-export type Sidebar001Props = Omit<
-  ComponentPropsWithoutRef<"nav">,
-  "children"
-> & {
+export type Sidebar001Props = Omit<ComponentProps<"nav">, "children"> & {
   sections?: Sidebar001Section[]
   /** Подпись активного пункта. Сравнивается по тексту, а не по адресу. */
   activeLabel?: string
@@ -35,7 +32,7 @@ export type Sidebar001Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="sidebar-001"]){
 --vibeui-sidebar-001-fg:light-dark(oklch(0.26 0.016 265),oklch(0.93 0.006 265));
---vibeui-sidebar-001-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-sidebar-001-muted:color-mix(in oklab,var(--vibeui-sidebar-001-fg) 68%,transparent);
 --vibeui-sidebar-001-bg:transparent;
 --vibeui-sidebar-001-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
 --vibeui-sidebar-001-hover:light-dark(oklch(0.55 0.02 265 / 7%),oklch(0.85 0.02 265 / 10%));
@@ -44,6 +41,9 @@ const STYLES = `
 --vibeui-sidebar-001-radius:0.5rem;
 --vibeui-sidebar-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="sidebar-001"]{color-scheme:dark}
 [data-vibeui-block="sidebar-001"]{
 display:flex;flex-direction:column;gap:1.125rem;
 width:100%;max-width:15rem;box-sizing:border-box;
@@ -56,7 +56,7 @@ font-family:var(--vibeui-sidebar-001-font);
 [data-vibeui-block="sidebar-001"] [data-part="section"]{display:flex;flex-direction:column;gap:0.125rem}
 [data-vibeui-block="sidebar-001"] [data-part="title"]{
 padding:0 0.5rem 0.375rem;
-font-size:0.6875rem;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;
+font-size:0.75rem;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;
 color:var(--vibeui-sidebar-001-muted);
 }
 [data-vibeui-block="sidebar-001"] ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:0.125rem}
@@ -64,7 +64,7 @@ color:var(--vibeui-sidebar-001-muted);
 position:relative;display:flex;align-items:center;justify-content:space-between;gap:0.5rem;
 padding:0.4375rem 0.5rem;border-radius:var(--vibeui-sidebar-001-radius);
 color:var(--vibeui-sidebar-001-muted);text-decoration:none;
-font-size:0.875rem;line-height:1.35;
+font-size:0.9375rem;line-height:1.35;
 transition:background-color .16s ease,color .16s ease;
 }
 [data-vibeui-block="sidebar-001"] a:hover{background:var(--vibeui-sidebar-001-hover);color:var(--vibeui-sidebar-001-fg)}
@@ -78,7 +78,7 @@ content:"";position:absolute;left:-0.75rem;top:0.3125rem;bottom:0.3125rem;
 width:2px;border-radius:0 2px 2px 0;background:var(--vibeui-sidebar-001-accent);
 }
 [data-vibeui-block="sidebar-001"] [data-part="count"]{
-flex:none;font-size:0.75rem;color:var(--vibeui-sidebar-001-muted);
+flex:none;font-size:0.875rem;color:var(--vibeui-sidebar-001-muted);
 font-variant-numeric:tabular-nums;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="sidebar-001"] *{animation:none!important;transition:none!important}}
@@ -157,6 +157,7 @@ export function Sidebar001({
       </style>
       <nav
         {...props}
+        data-slot="sidebar"
         data-vibeui-block="sidebar-001"
         aria-label={navLabel}
         className={className}

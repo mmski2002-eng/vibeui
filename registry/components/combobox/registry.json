@@ -90,6 +90,7 @@
         "i18n": {
           "en": {
             "description": "A basic combobox: the trigger shows the selection, the panel holds a filter field and the list, and the value can only come from the list.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-combobox-001-* variables. Client component: useState holds the value, the query, the open state and the cursor index, and useEffect moves focus into the filter field on opening. The trigger button carries aria-haspopup=\"listbox\" and aria-expanded, the field inside the panel is a role=\"combobox\" with aria-controls and aria-activedescendant, and the list is a role=\"listbox\" with role=\"option\" rows and aria-selected. Keyboard: the arrows move the cursor in a loop, Home and End jump to the edges, Enter selects, Escape closes the panel and returns focus to the button. The panel lies in the flow rather than on top: a floating layer in a narrow column has nothing to position it against without measurement. Mouse selection goes through onMouseDown with preventDefault, so that the field does not lose focus before the selection.",
             "ai": {
               "summary": "A combobox with a filter and full keyboard support: the value is picked from a known list and the filter text never becomes the value. One file, zero dependencies, client component.",
               "preserve": [
@@ -239,6 +240,7 @@
         "i18n": {
           "en": {
             "description": "A combobox with sections: group headings label the rows, empty groups disappear while filtering, and the arrow keys step straight past the headings.",
+            "docs": "The component is self-contained: one file, no dependencies, its own --vibeui-combobox-002-* palette. Client component: useState holds the query, the value and the cursor index, and useMemo rebuilds the groups and the flat row order. The markup is nested: an outer ul with role=\"listbox\", inside it li elements with role=\"presentation\" holding a ul with role=\"group\" and an aria-labelledby pointing at the heading. A group heading is an li with role=\"presentation\", so it does not count towards the rows and the arrows jump over it; the option numbering is continuous and aria-activedescendant rests on it. The counter beside a heading shows how many rows are left in the section after filtering. A group with no matches is dropped entirely: an empty heading misleads more than its absence.",
             "ai": {
               "summary": "A combobox with groups and section headings: headings stay out of the keyboard's way, empty groups are hidden, and every group shows a match count. One file, zero dependencies.",
               "preserve": [
@@ -388,6 +390,7 @@
         "i18n": {
           "en": {
             "description": "Multi-select with chips: a picked row stays in the list with a check mark, a counter holds the limit, and Backspace in an empty field drops the last chip.",
+            "docs": "The component is self-contained: one file, no dependencies, its own --vibeui-combobox-003-* palette. Client component: useState holds the array of selected items, the query and the cursor. The list is declared aria-multiselectable=\"true\", and every row carries aria-selected according to the actual selection and draws its own check mark. Unlike a tag picker, a selected item is not removed from the list: pressing it again clears the selection in the same place where it was made. The chips lie in a shared field with the input, and the focus ring is put on the field through :has(input:focus-visible). The maxSelected limit blocks further additions and hides the placeholder, and the counter in the header is declared aria-live=\"polite\".",
             "ai": {
               "summary": "Multi-select from a closed list: chips in the field, check marks in the list, a limit with a counter and Backspace to drop the last chip. One file, zero dependencies.",
               "preserve": [
@@ -536,6 +539,7 @@
         "i18n": {
           "en": {
             "description": "A person picker: an initials avatar, a second line with the email and the role, and a search that runs over both lines at once.",
+            "docs": "The component is self-contained: one file, no dependencies, its own --vibeui-combobox-004-* palette. Client component: useState holds the query, the selected name and the cursor, and useMemo filters the people over the concatenation of the name and the second line. The avatar hue is computed from the name with an FNV-1a hash and arrives in an inline style as a single --vibeui-combobox-004-hue variable, from which oklch assembles the background and the text colour — that keeps the palette manageable instead of turning it into a set of hard-coded colours. The row is laid out with flex: a fixed-width avatar, two-storey text with overflow:hidden, and the check mark of the selected row pushed over by margin-left:auto. The ARIA roles are complete: role=\"combobox\" with aria-controls and aria-activedescendant on the field, role=\"listbox\" and role=\"option\" with aria-selected on the list.",
             "ai": {
               "summary": "A people combobox: an initials circle, a name and a second line with email and role, search across both lines. One file, zero dependencies, the avatar color is derived from the name.",
               "preserve": [
@@ -698,6 +702,7 @@
         "i18n": {
           "en": {
             "description": "A combobox that can create: the last row turns the query into a new label, selects it right away and marks it as new.",
+            "docs": "The component is self-contained: one file, no dependencies, its own --vibeui-combobox-005-* palette. Client component: useState holds the known list, the list of created items, the query, the value and the cursor. The create row is appended to the end of the row array only when the query is non-empty and there is no exact match; it is a full role=\"option\", so it is reached with the arrows and Enter rather than by a separate button off the keyboard path. What gets created goes into known and receives a badge — the person sees that the list changed because of them. aria-selected on the create row is always false: only an existing value counts as selected. The row is set off by a dashed rule and by colour, so that it is not pressed blindly instead of a match.",
             "ai": {
               "summary": "A combobox that can add what is missing: a \"Create …\" row appears when there is no exact match, works from the keyboard and puts the value into the list. One file, zero dependencies.",
               "preserve": [
@@ -747,6 +752,7 @@
               "props": {
                 "label": "Issue label",
                 "placeholder": "Find or create",
+                "createLabel": "Create “{query}”",
                 "newBadge": "new",
                 "selectedText": "Selected: {value}",
                 "emptyText": "Nothing selected",
@@ -843,6 +849,7 @@
         "i18n": {
           "en": {
             "description": "A combobox with recent values: the latest choices rise into their own block on top, disappear from the main list and can be cleared in one press.",
+            "docs": "The component is self-contained: one file, no dependencies, its own --vibeui-combobox-006-* palette. Client component: useState holds the list of recent values, the query, the value and the cursor, and useMemo assembles the two groups and the shared flat order. The selected value moves to the front of the recent list and is trimmed by recentLimit; it is excluded from the main block so that one row does not appear twice and break the arrow count. The section headings are li elements with role=\"presentation\", and the clear control lives right in the heading. The clock icon is drawn with pseudo-elements on a circle: an SVG file would be redundant here. The ARIA roles are complete and the cursor is carried by aria-activedescendant.",
             "ai": {
               "summary": "A combobox that remembers: recent values sit in a separate block on top and are cleared with one button. One file, zero dependencies, client component.",
               "preserve": [
@@ -994,6 +1001,7 @@
         "i18n": {
           "en": {
             "description": "A combobox for a directory of hundreds of rows: only a window of the first matches is rendered, with an honest \"showing N of M\" line and a coverage bar below.",
+            "docs": "The component is self-contained: one file, no dependencies, its own --vibeui-combobox-007-* palette. Client component: useMemo filters the list and cuts it to visibleLimit, while useState holds the query, the value and the cursor. No more than visibleLimit rows reach the DOM — a cheap substitute for virtualisation with no external library and no height measurement. The \"showing N of M\" caption lies in an aria-live=\"polite\" region and is linked to the field through aria-describedby: it explains why the one being looked for is not on screen. The bar under the list shows the share that is displayed and carries no text, hence aria-hidden. The keyboard adds PageDown and PageUp — a jump of ten rows, without which a long list cannot be paged through.",
             "ai": {
               "summary": "A combobox for a long directory: the DOM holds a window of the first matches, the counter shows the real result size, and PageUp/PageDown jump ten rows at a time. One file, zero dependencies.",
               "preserve": [
@@ -1376,6 +1384,7 @@
         "i18n": {
           "en": {
             "description": "A combobox with the two forgotten states: skeleton bars while the list is on its way, and a useful empty state with ready-made queries instead of \"nothing found\".",
+            "docs": "The component is self-contained: one file, no dependencies, its own --vibeui-combobox-008-* palette. Client component: there are two states — the typed query and the shown one — and the waiting state is derived from them: while the shown one has not caught up with the typed one, the list counts as in transit, and there is no separate loading flag. useEffect only sets a timer on delay and clears it on the next keystroke, so a stale answer does not overwrite a fresh one, and there is no synchronous setState in the effect body. The panel keeps a min-height and the skeletons repeat the row height — the panel does not jump when the state changes. The field declares aria-busy while waiting and the skeleton block is a role=\"status\" with a caption, so the loading is spoken. An empty result does not end at a message: below it lie buttons with queries that are known to return something. The list is hidden with the hidden attribute rather than removed — aria-controls has to point at an existing node.",
             "ai": {
               "summary": "A combobox with honest waiting and empty states: a skeleton instead of a jumping panel and ready queries instead of a dead end. One file, zero dependencies, the timer is cleared on every keystroke.",
               "preserve": [
@@ -1425,6 +1434,7 @@
                 "label": "City",
                 "placeholder": "Start typing",
                 "loadingLabel": "Looking for matches",
+                "emptyLabel": "Nothing found",
                 "emptyHint": "Check the spelling or try one of the queries below.",
                 "defaultQuery": "pra",
                 "options": [
@@ -1521,6 +1531,7 @@
         "i18n": {
           "en": {
             "description": "A combobox with a status on every row: a colored dot and a state caption, while unavailable nodes are disabled and skipped by the arrow keys.",
+            "docs": "The component is self-contained: one file, no dependencies, its own --vibeui-combobox-009-* palette. Client component: useState holds the query, the value and the cursor. The status arrives as a data field and colours the dot through data-status rather than through separate classes. Rows with the down status carry aria-disabled=\"true\", selection does not fire on them, and the cursor movement jumps over them in a loop bounded by the list length — if there are no available rows, the cursor stays where it is instead of hanging. The state caption repeats the colour as a word: the state does not read from colour alone under colour blindness and in black-and-white print. The row is laid out as a three-column grid, so the captions line up on the right edge regardless of the name length.",
             "ai": {
               "summary": "A combobox with row states: color plus word, unavailable rows disabled and skipped from the keyboard. One file, zero dependencies, client component.",
               "preserve": [
@@ -1687,6 +1698,7 @@
         "i18n": {
           "en": {
             "description": "A required choice inside a form: the error shows up only after a submit, is tied to the field through aria-describedby and clears as soon as a row is picked.",
+            "docs": "The component is self-contained: one file, no dependencies, its own --vibeui-combobox-010-* palette. The root is a form with noValidate: browser validation cannot check a hand-drawn list, so the checking is done by the submit handler. The error is set only after an attempt to submit, not on every keystroke: telling someone off while they are still filling in the form is the worst thing a field can do. The field gets aria-invalid and an aria-describedby pointing at the message or at the hint, and the message lives in a role=\"alert\" and is therefore spoken without moving focus. Enter in the field selects a row and does not submit the form — otherwise half of the people would submit it having missed the list. After a failed submit focus returns to the field.",
             "ai": {
               "summary": "A required combobox with form validation: the error message lives in role=\"alert\", the field carries aria-invalid and focus returns after a failed submit. One file, zero dependencies.",
               "preserve": [
@@ -1830,6 +1842,7 @@
         "i18n": {
           "en": {
             "description": "A clearable combobox: the selected value sits as a chip in the field, the cross removes it and keeps focus in place, and the dropped value can be restored in one press.",
+            "docs": "The component is self-contained: one file, no dependencies, its own --vibeui-combobox-011-* palette. Client component: useState holds the value, the dropped value, the query and the cursor. The chip with the value and the filter field lie in one container, and the focus ring is put on the container through :has(input:focus-visible) — visually this is one element, so the focus is shared too. The cross carries an aria-label with the value itself: \"Clear\" without a name is useless in a row of filters. After clearing, focus stays in the field so that filters can be changed one after another without a mouse. Escape first erases the query and then drops the value — two steps instead of one. The line below with aria-live=\"polite\" reports the state and offers to bring the dropped value back.",
             "ai": {
               "summary": "A combobox with a clear cross and an undo for the dropped value: the value is shown as a chip and focus stays in the field after clearing. One file, zero dependencies, client component.",
               "preserve": [
@@ -1879,6 +1892,8 @@
               "props": {
                 "label": "Project",
                 "placeholder": "Find a project",
+                "clearLabel": "Clear selection",
+                "undoLabel": "restore",
                 "droppedText": "Dropped: {value}",
                 "selectedText": "Selected: {value}",
                 "emptyText": "No filter set",
@@ -1976,6 +1991,7 @@
         "i18n": {
           "en": {
             "description": "A combobox inside a form: people see the caption while a hidden input with a real name carries the code, so the form submits normally and lands in FormData.",
+            "docs": "The component is self-contained: one file, no dependencies, its own --vibeui-combobox-012-* palette. The root is a form, and the value lives in an input type=\"hidden\" with a real name, so ordinary submission, FormData and a Server Action all work: a hand-drawn list cannot submit itself. The label and the code are kept apart: options are value and label pairs, the list shows the code in small monospaced text, and it is the code that travels to the server. The submit button is disabled while nothing is chosen; the handler reads FormData from the form and shows what actually went out. The filter field is a role=\"combobox\" with aria-controls and aria-activedescendant, and the list is a role=\"listbox\" with aria-selected on the rows.",
             "ai": {
               "summary": "A submit-ready combobox: a hidden input with a name carries the value code, the button is disabled without a choice, and the FormData payload is shown under the form. One file, zero dependencies.",
               "preserve": [
@@ -2141,6 +2157,7 @@
         "i18n": {
           "en": {
             "description": "A “section then value” picker: sections on the left, their contents on the right, and the moment you type, both panes collapse into one cross-section list of matches.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-combobox-013-* variables. Client component: the query, the active section and the value live in useState. The layout is a two-column grid, and the left column scrolls separately from the right. The key mechanism is in useMemo: while the query is empty the right column shows the items of the active section, and once the query is non-empty the list is assembled with a flatMap over every section and each row gains a section caption [data-part=\"where\"] — so the search does not break the hierarchy but temporarily flattens it. The left column is hidden with the hidden attribute rather than by unmounting, so the width does not twitch. ARIA: an input with role=\"combobox\", the right column a role=\"listbox\", the rows buttons with role=\"option\" inside li role=\"none\", so the keyboard works without managing activedescendant by hand.",
             "ai": {
               "summary": "A picker for a catalogue split into sections: the section list with counts on the left, the values of the active section on the right. While the field is empty you navigate the hierarchy; the moment someone types, the search runs across every section and each match is labelled with the section it came from. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -2324,6 +2341,7 @@
         "i18n": {
           "en": {
             "description": "An option picker with previews: every row carries a thumbnail, and when there is no image URL it falls back to a gradient with initials whose hue is derived deterministically from the name.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-combobox-014-* variables. Client component: the query and the selected value live in useState. A list row is a 2.4rem + 1fr grid: the preview on the left, the name and the caption on the right, with both lines of text truncated by an ellipsis, so a long name does not break the layout. When an option has a src, an ordinary <img> is drawn with object-fit: cover and an empty alt (the picture is decorative, the name sits beside it as text); when there is no link, a gradient is shown whose hue is computed by hueOf — a deterministic FNV hash of the name, so an option is always the same colour. The hue is passed as a single inline --vibeui-combobox-014-hue variable: it is a dynamic value that cannot be expressed by a static class.",
             "ai": {
               "summary": "A list of options that differ by appearance: email templates, themes, cover images. Every row has a 2.4rem preview, a name and a caption with supporting data. When no picture is available a gradient with initials takes its place, and its hue comes from the name, so the same option is always recognisable by colour. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -2496,6 +2514,7 @@
         "i18n": {
           "en": {
             "description": "A search where matches are ordered by relevance and the matched fragment is highlighted: the start of a string outranks the start of a word, and mid-word matches come last.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-combobox-015-* variables. Client component: the query and the value live in useState. The ranking is done by the scoreOf function: it returns a rank (0 for a match at the start of the string, 1 at the start of a word, 2 inside a word) and the position of the occurrence. The sort goes by rank, then by position, then alphabetically — three keys give a stable order with no jitter while typing. The highlighting does not use dangerouslySetInnerHTML: the string is cut into three pieces by index and the middle one is wrapped in a semantic <mark>, so the highlighting survives any text, including markup characters. The rank is labelled in words on the right, so that the order is explainable rather than magical.",
             "ai": {
               "summary": "List search with honest ranking: rows where the query sits at the start come before rows where it hides in the middle. The matched fragment is wrapped in <mark>, and a label on the right says why the row landed where it did. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -2656,6 +2675,7 @@
         "i18n": {
           "en": {
             "description": "Multi-select with a cap: the counter shows the remaining allowance at all times, and at the limit unselected options go disabled instead of raising an error.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-combobox-016-* variables. Client component: the array of selected values and the query live in useState. The \"limit reached\" flag is raised to the root as a data-full attribute, so the counter and the note are recoloured by one CSS rule without duplicating the logic in JSX. At the cap the unselected options get the native disabled — they drop out of the tab order, and the ban is announced by a screen reader rather than merely shown in colour. The list is marked aria-multiselectable, and the selected values are additionally shown as chips above, each with a remove button. The note below is linked to the field through aria-describedby and announced through aria-live.",
             "ai": {
               "summary": "A multi-select with a hard ceiling: five skills, three categories, ten recipients. The “2 / 5” counter sits next to the field caption and is visible before the first click; once the limit is reached the remaining options go dim through native disabled and the note explains what to do. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -2803,6 +2823,7 @@
         "i18n": {
           "en": {
             "description": "A picker with pinned favourites: the star lifts an option into a group at the top, and that group stays put while you type.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-combobox-017-* variables. Client component: the query, the value and the set of favourites live in useState. The filtered options are split into two arrays — pinned and rest — and each group is rendered under its own [data-part=\"caption\"] heading inside a single listbox. The star is a separate button beside the option rather than nested inside it: a button inside a button is invalid and breaks the keyboard, and in meaning \"to mark\" and \"to select\" are different actions. The star has aria-pressed and a full aria-label with the name, and the option is a role=\"option\" inside an li role=\"none\". Both groups are wrapped in a ul role=\"none\", so that the nested lists do not turn into nested listboxes.",
             "ai": {
               "summary": "A list where people decide themselves what to keep close: the star next to a row moves it into the pinned group at the top. Out of a hundred accounts, warehouses or projects three are needed daily — and they stay on the first screen even while searching. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -2968,6 +2989,7 @@
         "i18n": {
           "en": {
             "description": "A picker with an asynchronous check: after a click the status line goes into “checking”, then answers with the stock left or a refusal with a reason.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-combobox-018-* variables. Client component: the query, the value and the check state live in useState. The check is moved into a useEffect with a cleanup function: the timer is cancelled on every change of the value, so when options are switched quickly the last selection wins rather than the last answer to arrive — this cures the classic race. The check state is one of four values (idle, checking, ok, bad) and is raised as a data-state attribute, so the colour of the status line is set by CSS rather than by branching styles in JSX. The spinner is assembled from a border with a rotation animation and is switched off by a prefers-reduced-motion rule. The status line is linked to the field through aria-describedby and announced through aria-live.",
             "ai": {
               "summary": "A picker where the chosen value still has to be verified on the server: is there stock, is the domain free, is the licence valid. A click moves the status line into “checking”, and the answer arrives as a number or a refusal. The response race is handled by clearing the timer in the effect: rapid switching lets the last selection win. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -3129,6 +3151,7 @@
         "i18n": {
           "en": {
             "description": "Options you have no rights to stay in the list: disabled, labelled with the reason and paired with a request-access button instead of quietly disappearing.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-combobox-019-* variables. Client component: the query, the value and the list of sent access requests live in useState. A locked option gets the native disabled and an extended aria-label with the reason sewn into it, so a screen reader announces not just \"unavailable\" but why. The \"Request\" button is a separate element beside the option inside a shared [data-part=\"row\"] row rather than inside the option button: it has to stay reachable while the option itself is blocked. After a press the button is replaced by a static \"Requested\" caption, so that repeat requests do not go out in batches. The list is a role=\"listbox\" and the rows are role=\"option\" inside li role=\"none\".",
             "ai": {
               "summary": "A list where some options are locked by permissions. Hiding them is wrong — people search for what they cannot see; dimming them without a reason is wrong too — they will open a support ticket. So the row stays, the reason sits beside it with a “Request” button, and the selection itself is blocked by native disabled. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -3305,6 +3328,7 @@
         "i18n": {
           "en": {
             "description": "A picker for a narrow column where the list truncates on the right while the selected value truncates in the middle, keeping both its head and its tail.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-combobox-020-* variables. Client component: the query and the value live in useState. The width is capped at 15rem — this is a table cell, a sidebar column or a side panel. The truncation is done two different ways on purpose: the list rows are cut by CSS (white-space: nowrap plus text-overflow: ellipsis), because a list is read from the start; the selected value is cut in the middle by the shorten function, because for a path, a branch or a file the tail is what matters. The full text is not lost anywhere: it sits in the title of every row, in the option's aria-label, and is printed in full below with overflow-wrap: anywhere. The monospace font is switched on for the values only — that way identical prefixes line up visually into a column.",
             "ai": {
               "summary": "A picker for tight places: a sidebar, a table cell, a side panel. Long values are truncated two different ways — the list is cut on the right because it is read from the start, and the selected value is cut in the middle because the tail of a branch, path or filename is what distinguishes it. The full text stays available in title, in aria-label and as a line below. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -3446,6 +3470,7 @@
         "i18n": {
           "en": {
             "description": "A combobox that creates a value on the first row: \"Create '…'\" sits at the top of the list, so Enter creates by default instead of picking a match.",
+            "docs": "The component is self-contained: one file, no dependencies, its own --vibeui-combobox-021-* palette. Client component: useState holds the known list, the list of created items, the query, the value and the cursor. The create row is added to the start of the row array rather than to the end: canCreate is computed the same way as in the closed variant, but rows are assembled as [needle, ...matches]. The cursor index is always reset to 0 on typing, so Enter lands on the create row by default — an existing match has to be taken deliberately with the down arrow. The create row is a full role=\"option\" with aria-selected=\"false\", set off by a dashed rule below and by an icon of its own, so it cannot be confused with an ordinary option.",
             "ai": {
               "summary": "A combobox where creating a value is the first row of the list: Enter creates a new value from the query by default, and an existing option has to be picked with the down arrow. One file, zero dependencies.",
               "preserve": [
@@ -3594,6 +3619,7 @@
         "i18n": {
           "en": {
             "description": "A combobox with recent values and no section headings: a thin role=\"separator\" line sets them apart from the rest, and every recent row carries a \"recent\" tag.",
+            "docs": "The component is self-contained: one file, no dependencies, its own --vibeui-combobox-022-* palette. Client component: useState holds the list of recent values, the query, the value and the cursor, and useMemo assembles the two groups and the shared flat order. The selected value moves to the front of the recent list and is trimmed by recentLimit; it is excluded from the main block so that one row does not appear twice and break the arrow count. Instead of captioned sections there is an li role=\"separator\" aria-orientation=\"horizontal\" between the groups — a thin line with no text; the most recent row carries a compact text tag recentTag instead of an icon. The separator is rendered only when both groups are non-empty, so with an empty query and no recent values it does not appear for nothing.",
             "ai": {
               "summary": "A combobox with recent values on top, marked not by headings but by a semantic separator and a small \"recent\" tag on the row. One file, zero dependencies, client component.",
               "preserve": [
@@ -3745,6 +3771,7 @@
         "i18n": {
           "en": {
             "description": "A search that highlights every occurrence of the query in a row, not just the first one; the row order never changes — this is a highlighted filter, not ranking.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-combobox-023-* variables. Client component: the query and the value live in useState. The highlight function slices the string with an indexOf loop, finding every occurrence in turn and wrapping each one in a semantic <mark> rather than only the first, as in the ranked variant — dangerouslySetInnerHTML is not used. The list is not sorted: the row order equals the order of options, and only the presence of a match is filtered. The line with the match count in an aria-live=\"polite\" region announces the change of the result set on every keystroke.",
             "ai": {
               "summary": "A combobox with query highlighting: every occurrence in a row is wrapped in <mark>, and the row order stays fixed — a plain, honest filter without relevance ranking. One file, zero dependencies.",
               "preserve": [
@@ -3893,6 +3920,7 @@
         "i18n": {
           "en": {
             "description": "Multi-select with collapsing chips: beyond the limit, selected values hide behind a \"+N\" button that expands and collapses the full row itself.",
+            "docs": "The component is self-contained: one file, no dependencies, its own --vibeui-combobox-024-* palette. Client component: useState holds the array of selected items, the expanded flag and the query. The shown chips are computed as selected.slice(0, visibleChips) while the expanded flag is not set; the overflow — Math.max(0, selected.length - visibleChips) — is printed into a \"+N\" button with aria-expanded, which toggles the flag and turns into a \"Collapse\" button. Unlike a capped multi-select there is no upper bound on how much can be selected here — only the display collapses, not the selection itself. The list is a role=\"listbox\" with aria-multiselectable, and the rows carry a checkbox indicator data-part=\"box\".",
             "ai": {
               "summary": "A multi-select where chips do not stretch the field endlessly: beyond visibleChips the selection collapses into a \"+N\" button that reveals the full row on click. One file, zero dependencies.",
               "preserve": [
@@ -4052,6 +4080,7 @@
         "i18n": {
           "en": {
             "description": "A picker with a preview pane on the right: it holds the description of the option under the active row, updating on hover and arrow keys, not only after a choice.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-combobox-025-* variables. Client component: the query, the value and the cursor live in useState. The layout is a flex-wrap of two blocks: the list on the left and the preview pane on the right, and at a narrow width they wrap below one another with no media queries. The pane shows the description of the row under the cursor (matches[active]) rather than only of the confirmed value — so the preview can be scrolled with the arrow keys before Enter is pressed. The pane is a role=\"region\" with aria-live=\"polite\", and the list is a role=\"listbox\" with aria-activedescendant on the filter field.",
             "ai": {
               "summary": "A combobox with a preview pane: the list on the left, the description of the active row on the right. The preview follows the cursor and the arrow keys, not only the confirmed choice — so options can be compared without picking anything. One file, zero dependencies.",
               "preserve": [
@@ -4217,6 +4246,7 @@
         "i18n": {
           "en": {
             "description": "A picker with real debounce: a short query never starts the search, a long one waits for a pause in typing, and the spinner lives inside the field rather than as a separate block.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-combobox-026-* variables. Client component: three states are derived from two strings — typed (query) and debounced. While the query is shorter than minChars the search does not start at all: the useEffect with the timer does not even subscribe. As soon as the length is enough, the effect sets a setTimeout on delay and clears it on every change of the query — the classic protection against a race; the loading state is derived as debounced !== needle, there is no separate boolean flag. The spinner is a rotating border inside the field wrapper, position:absolute rather than a block under the list. The list is hidden with the hidden attribute rather than removed, so aria-controls always points at an existing node.",
             "ai": {
               "summary": "A combobox with honest debounce: a \"type N more characters\" hint while the query is too short, a spinner inside the field during the typing pause, and a clear \"nothing found\" afterward. One file, zero dependencies.",
               "preserve": [
@@ -4366,6 +4396,7 @@
         "i18n": {
           "en": {
             "description": "An assignee picker with avatars and an online status: the list sorts so people available right now come first, and every avatar carries a colored dot plus a status caption.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-combobox-027-* variables. Client component: the query, the value and the cursor live in useState. useMemo first filters the people by name and role, then applies a stable sort by status rank (online 0, away 1, offline 2) — people with the same status keep their original order. The avatar hue is computed from the name with the same FNV-1a hash as in the people picker and arrives in the inline --vibeui-combobox-027-hue variable. The status dot is an absolutely positioned pseudo-element in the corner of the avatar, aria-hidden=\"true\", because the status is already there as a word in the detail caption — colour is not the sole carrier of meaning.",
             "ai": {
               "summary": "An assignee combobox where availability outranks the alphabet: people online come first, and every avatar has a colored status dot with a word next to the role. One file, zero dependencies, the avatar color is derived from the name.",
               "preserve": [
@@ -4539,6 +4570,7 @@
         "i18n": {
           "en": {
             "description": "A combobox that opens with a global hotkey: the shortcut hint is printed right on the trigger button, and the listener skips typing inside someone else's text field.",
+            "docs": "The component is self-contained: one file, no dependencies, its own --vibeui-combobox-028-* palette. Client component: a useEffect subscribes to document keydown and catches Ctrl or Cmd together with triggerKey; before it fires there is a check for whether focus is inside someone else's input, textarea or contenteditable — otherwise the shortcut would intercept typing in any third-party form on the page. A second useEffect moves focus into the filter field on opening, exactly as in the base variant with a trigger button. The shortcut hint sits in a <kbd> inside the trigger button itself — it is not hidden in a tooltip and does not require hovering. Escape closes the panel and returns focus to the button from anywhere, including the case where the panel was opened with the hotkey.",
             "ai": {
               "summary": "A combobox that opens with a keyboard shortcut from anywhere on the page: the shortcut hint sits printed on the button, and the global listener steps aside when someone is already typing in another field. One file, zero dependencies.",
               "preserve": [

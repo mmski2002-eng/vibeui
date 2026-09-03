@@ -22,7 +22,17 @@
         "preview": {
           "props": {
             "open": true
-          }
+          },
+          "states": [
+            {
+              "id": "vibeui-tooltip-001-top",
+              "side": "top"
+            },
+            {
+              "id": "vibeui-tooltip-001-bottom",
+              "side": "bottom"
+            }
+          ]
         },
         "ai": {
           "export": "Tooltip001",
@@ -139,7 +149,8 @@
                 "open": true,
                 "tip": "Copy the project link"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-tooltip-001-*. The appearance rests on :hover and :focus-within of the wrapper, so no JS is needed and the component stays a server one. The tail is a rotated square in the same colour. The bubble is marked role=\"tooltip\" and has an id: link the trigger to it through aria-describedby. With no children passed, a placeholder button is drawn — it exists only for the preview."
           }
         },
         "cardControls": ["side", "background"]
@@ -280,7 +291,8 @@
                 "customCaption": "instant, arrowed, on focus",
                 "note": "The native tooltip never shows up on Tab and is unreadable on a phone. The custom one opens on hover and on focus alike — and looks the same on every system."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-tooltip-002-*. It is a server component: both tooltips rest on :hover and :focus-within, no JS is needed. The left cell is deliberately left native — the title attribute shows the system tooltip after a second or so, with no arrow and no reaction to Tab. The right one is assembled by hand: the tail is a rotated square in the same colour, the opening is duplicated by focus, and the link to the button is declared through aria-describedby."
           }
         },
         "cardControls": ["background"]
@@ -406,7 +418,8 @@
                 "triggerLabel": "Search",
                 "keys": ["Ctrl", "K"]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-tooltip-003-*. It is a server component: the opening rests on :hover and :focus-within. The keys are drawn with <kbd> tags and a semi-transparent fill rather than as the text \"Ctrl+K\": that is what makes them look like keys. The button carries aria-keyshortcuts, so the combination is available without hovering, and the key group is given a spoken label through aria-label — otherwise a screen reader reads out a run of letters."
           }
         },
         "cardControls": ["background"]
@@ -536,7 +549,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-tooltip-004-*. It is a server component: the opening rests on :hover and :focus-within of the cell rather than of the panel — otherwise hovering the panel would open every tooltip at once. The panel is declared role=\"toolbar\", every button has an aria-label, and the visible tooltip is marked aria-hidden so that the name is not read twice. The side it opens on is switched by the side prop."
           }
         },
         "cardControls": ["side", "background"]
@@ -660,7 +674,8 @@
                 "tip": "The balance is the paid volume minus what has been used in the current period. Going over does not block anything: it moves to the next invoice as a separate line.",
                 "tipWidth": "17rem"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-tooltip-005-*. It is a server component: the opening rests on :hover and :focus-within. The maximum width lives in the --vibeui-tooltip-005-width variable and is additionally capped by the viewport width, so near the edge of the screen the tooltip shrinks instead of running off. The wrapping is assembled from white-space:normal, overflow-wrap:anywhere and text-wrap:pretty — the last line is never left with a single word. The trigger carries a light surface of its own."
           }
         },
         "cardControls": ["background"]
@@ -778,7 +793,8 @@
                 "labels": ["At the left edge", "Centred", "At the right edge"],
                 "note": "Hover the outer buttons: the tooltip hugs its own side and the arrow slides to the button — nothing leaves the area."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-tooltip-006-*. It is a server component: the alignment is declared by the data-align attribute on the cell, and three rules set left:0, the centre and right:0. The tail is positioned separately for each variant, so when the tooltip shifts it stays under the button. In the demonstration three buttons are placed at the edges and the centre of the area — that way the flip is visible without resizing the window."
           }
         },
         "cardControls": ["background"]
@@ -907,7 +923,8 @@
                 "hint": "At least 12 characters, one digit and one symbol. Spaces count.",
                 "note": "The hint appears once the field takes focus."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-tooltip-007-*. It is a server component: the hint opens by the :focus-within rule on the field wrapper, so no handlers are needed. It is declared as the input's aria-describedby and marked role=\"note\", so it is read aloud together with the field. The hint is taken out of the flow by absolute positioning: its appearance does not shift the form. The wrapper is stretched to the field width, so the hint lines up with its edges."
           }
         },
         "cardControls": ["background"]
@@ -1035,7 +1052,8 @@
                 "definition": "The top five percent of the month's samples are dropped and the bill uses the next value. Short spikes never reach the invoice.",
                 "after": " model, so the nightly backup does not affect the bill."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-tooltip-008-*. It is a server component: the opening rests on :hover and :focus-visible of the word itself. The term stays an inline element with tabIndex=0 — not a button and not a link, so the setting is not broken, yet it can be reached by keyboard focus. The tooltip is set in a sans-serif face inside a serif paragraph: that is what makes it read as an aside rather than part of the text. The dotted rule is made with the text-decoration property rather than a border."
           }
         },
         "cardControls": ["background"]
@@ -1164,7 +1182,8 @@
                 "labels": ["Copy", "Duplicate", "Archive"],
                 "note": "The opening delay is {delay} s. Sweep the pointer along the row: the tips never flicker, because hiding has no delay."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-tooltip-009-*. It is a server component: the delay sits only in the open-state rule through transition-delay, while the base rule zeroes it — that is why the appearance waits and the disappearance happens at once. The delay length lives in --vibeui-tooltip-009-delay and arrives through the delay prop, so JS timers are not needed. The tooltips are bound to their own cells, so hovering a neighbour does not open the whole row."
           }
         },
         "cardControls": ["delay", "background"]
@@ -1279,7 +1298,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-tooltip-010-*. It is a server component: the tooltip rests on :hover and :focus-within of the item rather than of the whole panel. A menu item already shows the action caption as text, so the tooltip does not repeat it — it carries only the shortcut chip in a monospaced face. The tooltip opens to the right of the item rather than upwards, because the menu is built as a vertical list."
           }
         },
         "controls": [
@@ -1416,7 +1436,8 @@
                 "nodeLabel": "Node {number}",
                 "note": "The opening delay is {delay} s, hiding is instant. Sweep the pointer across the grid: the tips never flicker on every dot."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-tooltip-011-*. It is a server component: the delay sits only in the open-state rule through transition-delay, while the base rule zeroes it — the appearance waits, the disappearance happens at once. The delay length lives in --vibeui-tooltip-011-delay and arrives through the delay prop. The dot colour is set by the data-status attribute on the cell through an intermediate variable, so the status palette is configured in one place."
           }
         },
         "cardControls": ["delay", "background"]
@@ -1539,7 +1560,8 @@
                 "heading": "Trial period",
                 "detail": "14 days with full access. No card required, cancel at any moment."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-tooltip-012-*. It is a server component: the opening rests on :hover and :focus-within. The tooltip is deliberately narrow — the --vibeui-tooltip-012-width variable sets about thirteen and a half rem, so the explanation wraps on its own, and the heading and the text are separated as two distinct flex-column blocks rather than one line broken by <br>."
           }
         },
         "cardControls": ["background"]
@@ -1657,7 +1679,8 @@
                 "labels": ["Near the top", "Near the bottom"],
                 "note": "The top item opens its tooltip downward and the bottom one upward: the side is set by data-side, not by measuring the free space."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-tooltip-013-*. It is a server component: the side is declared by the data-side attribute on the cell, and two rules set top and bottom together with the tail offset. Unlike switching along the horizontal, here the vertical side of the opening changes — an item near the top edge opens its tooltip downwards, one near the bottom opens it upwards, and the tail stays on its own edge."
           }
         },
         "cardControls": ["background"]
@@ -1778,7 +1801,8 @@
                 "label": "Publish",
                 "reason": "Fill in the required fields first: a title and at least one picture."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-tooltip-014-*. It is a server component: the button is marked aria-disabled=\"true\" instead of the disabled attribute, so it stays in the tab order and receives hover — a real disabled accepts neither, and a tooltip on it would never appear. The not-allowed cursor and the dimmed colour report the state visually, and the lock glyph duplicates it for scanning by eye."
           }
         },
         "cardControls": ["showLock"]
@@ -1902,7 +1926,8 @@
                 "caption": "1600×1000 · added today",
                 "alt": "Image preview thumbnail"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-tooltip-015-*. It is a server component: the opening rests on :hover and :focus-within. The tooltip is an opaque card with an image on top and a caption below rather than a semi-transparent bubble: the image has no background of its own, and the text under it has to stay readable. The default placeholder is an inline SVG image through a data: URI, so the src prop also accepts a plain URL without carrying files next to the component."
           }
         },
         "cardControls": ["accent"]
@@ -2032,7 +2057,8 @@
                 "options": ["HH:MM, 24-hour", "HH:MM AM/PM", "Hours only"],
                 "note": "The hint appears when the field takes keyboard focus — Tab. A mouse click never opens it."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-tooltip-016-*. It is a server component: the hint is bound to :focus-visible of the select itself through the general sibling selector (~) rather than to :focus-within of the wrapper. The browser marks focus on a select as \"visible\" only when it was reached by keyboard — a mouse click sets no such mark, so the hint opens exclusively while tabbing. For a text field this technique will not work: on text inputs focus is always \"visible\"."
           }
         },
         "cardControls": ["background"]

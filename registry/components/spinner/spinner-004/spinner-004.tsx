@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Spinner004Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Spinner004Props = Omit<ComponentProps<"div">, "children"> & {
   value?: number
   label?: string
   size?: "sm" | "md" | "lg"
@@ -29,15 +26,18 @@ const STYLES = `
 --vibeui-spinner-004-surface:transparent;
 --vibeui-spinner-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.32 0.012 265));
 --vibeui-spinner-004-fg:light-dark(oklch(0.24 0.014 265),oklch(0.95 0.005 265));
---vibeui-spinner-004-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-spinner-004-muted:color-mix(in oklab,var(--vibeui-spinner-004-fg) 68%,transparent);
 --vibeui-spinner-004-track:light-dark(oklch(0.93 0.006 265),oklch(0.36 0.012 265));
 --vibeui-spinner-004-accent:light-dark(oklch(0.55 0.17 262),oklch(0.72 0.16 262));
 --vibeui-spinner-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="spinner-004"]{color-scheme:dark}
 /* Подложки нет по умолчанию: плашка появляется только пропом background. */
 [data-vibeui-block="spinner-004"]{
 display:inline-flex;align-items:center;gap:0.875rem;
-box-sizing:border-box;padding:0.875rem 1.125rem 0.875rem 0.875rem;
+box-sizing:border-box;padding:0.9375rem 1.0625rem 0.9375rem 0.9375rem;
 background:var(--vibeui-spinner-004-surface);
 border:1px solid var(--vibeui-spinner-004-border);border-radius:1rem;
 font-family:var(--vibeui-spinner-004-font);color:var(--vibeui-spinner-004-fg);
@@ -65,8 +65,8 @@ font-weight:700;font-variant-numeric:tabular-nums;
 [data-vibeui-block="spinner-004"] [data-part="text"]{
 display:flex;flex-direction:column;gap:0.125rem;min-width:0;
 }
-[data-vibeui-block="spinner-004"] [data-part="label"]{font-size:0.875rem;font-weight:650}
-[data-vibeui-block="spinner-004"] [data-part="hint"]{font-size:0.75rem;color:var(--vibeui-spinner-004-muted)}
+[data-vibeui-block="spinner-004"] [data-part="label"]{font-size:0.9375rem;font-weight:650}
+[data-vibeui-block="spinner-004"] [data-part="hint"]{font-size:0.875rem;color:var(--vibeui-spinner-004-muted)}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="spinner-004"] *{animation:none!important;transition:none!important}}
 `
 
@@ -125,6 +125,7 @@ export function Spinner004({
       </style>
       <div
         {...props}
+        data-slot="spinner"
         data-vibeui-block="spinner-004"
         data-size={size}
         className={className}

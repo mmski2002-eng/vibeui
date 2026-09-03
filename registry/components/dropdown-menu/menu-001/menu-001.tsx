@@ -1,5 +1,7 @@
-import { useId } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+"use client"
+
+import { useId, useRef } from "react"
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Menu001Item = {
   label: string
@@ -7,7 +9,7 @@ export type Menu001Item = {
   danger?: boolean
 }
 
-export type Menu001Props = Omit<ComponentPropsWithoutRef<"div">, "children"> & {
+export type Menu001Props = Omit<ComponentProps<"div">, "children"> & {
   label?: string
   groups?: Menu001Item[][]
   accent?: string
@@ -26,13 +28,16 @@ const STYLES = `
 :where([data-vibeui-block="menu-001"]){
 --vibeui-menu-001-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
 --vibeui-menu-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
---vibeui-menu-001-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-menu-001-muted:color-mix(in oklab,var(--vibeui-menu-001-fg) 68%,transparent);
 --vibeui-menu-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
 --vibeui-menu-001-hover:light-dark(oklch(0.96 0.004 265),oklch(0.32 0.014 265));
 --vibeui-menu-001-danger:light-dark(oklch(0.56 0.19 25),oklch(0.72 0.16 25));
 --vibeui-menu-001-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-menu-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="menu-001"]{color-scheme:dark}
 [data-vibeui-block="menu-001"]{
 display:inline-block;font-family:var(--vibeui-menu-001-font);color:var(--vibeui-menu-001-fg);
 }
@@ -99,6 +104,26 @@ const DEFAULT_GROUPS: Menu001Item[][] = [
   [{ label: "Удалить проект", hint: "⌫", danger: true }],
 ]
 
+// role="menu" обязывает водить по пунктам стрелками: Tab внутри меню
+// пользователю уже не обещан. Список берётся из DOM, поэтому разделы и
+// скрытые пункты не приходится держать во втором месте.
+function stepFocus(menu: HTMLElement | null, delta: number) {
+  if (!menu) {
+    return
+  }
+
+  const items = Array.from(
+    menu.querySelectorAll<HTMLElement>('[data-part="item"]'),
+  )
+
+  if (items.length === 0) {
+    return
+  }
+
+  const from = items.indexOf(document.activeElement as HTMLElement)
+  items[(from + delta + items.length) % items.length].focus()
+}
+
 /**
  * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
  * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
@@ -135,6 +160,34 @@ export function Menu001({
   ...props
 }: Menu001Props) {
   const id = useId().replace(/:/g, "")
+  const menu = useRef<HTMLDivElement>(null)
+
+  const openAndFocus = () => {
+    const node = menu.current
+
+    if (!node) {
+      return
+    }
+
+    if (!node.matches(":popover-open")) {
+      node.showPopover()
+    }
+
+    requestAnimationFrame(() =>
+      node.querySelector<HTMLElement>('[data-part="item"]')?.focus(),
+    )
+  }
+
+  const onMenuKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "ArrowDown") {
+      event.preventDefault()
+      stepFocus(menu.current, 1)
+    } else if (event.key === "ArrowUp") {
+      event.preventDefault()
+      stepFocus(menu.current, -1)
+    }
+  }
+
   const palette = {
     ...(accent ? { "--vibeui-menu-001-accent": accent } : null),
     ...(background
@@ -153,15 +206,34 @@ export function Menu001({
       </style>
       <div
         {...props}
+        data-slot="dropdown-menu"
         data-vibeui-block="menu-001"
         className={className}
         style={palette}
       >
-        <button type="button" data-part="trigger" popoverTarget={`${id}-menu`}>
+        <button
+          type="button"
+          data-part="trigger"
+          popoverTarget={`${id}-menu`}
+          aria-haspopup="menu"
+          onKeyDown={(event) => {
+            if (event.key === "ArrowDown") {
+              event.preventDefault()
+              openAndFocus()
+            }
+          }}
+        >
           {label}
           <span data-part="caret" aria-hidden="true" />
         </button>
-        <div id={`${id}-menu`} popover="auto" role="menu" aria-label={label}>
+        <div
+          id={`${id}-menu`}
+          ref={menu}
+          popover="auto"
+          role="menu"
+          aria-label={label}
+          onKeyDown={onMenuKeyDown}
+        >
           {groups.map((group, index) => (
             <div key={index} data-part="group" role="group">
               {group.map((item) => (

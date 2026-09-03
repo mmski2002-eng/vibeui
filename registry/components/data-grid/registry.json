@@ -82,6 +82,7 @@
         "i18n": {
           "en": {
             "description": "A grid that sorts by several columns at once: the click order sets key priority, shown as a number in the header and as chips in the toolbar.",
+            "docs": "The component is self-contained: one file, no dependencies, the palette in the local --vibeui-datagrid-001-* variables. A client component: useState holds the ordered list of sort keys, and a third click on a column removes its key. The header is a button filling the whole cell, the direction is declared through aria-sort on th and duplicated by a textual arrow in the markup: it is read aloud together with the name of the column. The priority is shown as a number in a circle and repeated by chips in the toolbar — without it the row order looks random; every chip removes its own key and carries an explicit aria-label. The scrolling is moved into a container with role=region, aria-label and tabindex=0, so the table can be panned from the keyboard too. The row density is switched by the data-density attribute, which changes a single padding variable. The theme comes from the surrounding color-scheme through light-dark(): by default the grid lays no panel under itself, it sits on the page background and darkens along with it, while the background prop switches on a panel of its own.",
             "ai": {
               "summary": "A data grid with multi-column sorting: key priority is visible as a number and as chips, and the state is announced through aria-sort. Zero dependencies, one file.",
               "preserve": [
@@ -275,6 +276,7 @@
         "i18n": {
           "en": {
             "description": "A grid with row selection: the toolbar turns into a bulk-action bar with a counter and the total of what is selected, without shifting the table.",
+            "docs": "The component is self-contained: one file, no dependencies, the palette in --vibeui-datagrid-002-*. A client component: useState holds the list of selected ids. The header checkbox gets indeterminate through a ref callback — this state cannot be set from markup. The action bar occupies the same place as the ordinary header and keeps a min-height, so the rows do not jump at the very first tick. The counter of what is selected is declared aria-live=polite and shows the total straight away — that total is usually the reason rows are selected at all. A selected row is marked both by a fill and by a stripe on the left through an inset box-shadow: a fill alone is not enough next to a hovered row. Every row checkbox has its own aria-label carrying the client name. The theme comes from the surrounding color-scheme through light-dark(): by default the grid lays no panel under itself, it sits on the page background, while the background prop switches on a panel of its own.",
             "ai": {
               "summary": "A grid with row selection and a bulk-action bar: a counter, the selected total and a mixed-state header checkbox. Zero dependencies, one file.",
               "preserve": [
@@ -473,6 +475,7 @@
         "i18n": {
           "en": {
             "description": "A wide grid with both edge columns frozen: the row label on the left and the owner on the right stay put while the weeks scroll between them.",
+            "docs": "The component is self-contained: one file, no dependencies, the palette in --vibeui-datagrid-003-*. Server rendered: there is no state, everything rests on CSS. The edge columns are pinned with position:sticky at left:0 and right:0 and carry a background of their own — without it the scrolling cells show straight through. The table is built with border-collapse:separate: with collapsed borders a sticky cell loses its own line. The scrolling lives in a container with role=region, aria-label and tabindex=0, so it works from the keyboard. The shadow at the pinned edges appears on scrolling through animation-timeline:scroll under @supports — where that is unavailable there is simply no shadow, and the layout does not suffer. The maximum of the week is marked with a pill in a color-mix of the accent. The theme comes from the surrounding color-scheme through light-dark(); the surface stays opaque deliberately — through transparent sticky cells the scrolling rows would show through — and is overridden by the background prop.",
             "ai": {
               "summary": "A wide grid with two frozen columns and horizontal scrolling that works from the keyboard. Server component, zero dependencies, one file.",
               "preserve": [
@@ -655,6 +658,7 @@
         "i18n": {
           "en": {
             "description": "A long grid that scrolls inside its own frame: the header sticks to the top and the totals row to the bottom, so the sum stays visible mid-list.",
+            "docs": "The component is self-contained: one file, no dependencies, the palette in --vibeui-datagrid-004-*. Server rendered: there is no state. The height of the scroll viewport arrives as a number in rem and goes into the --vibeui-datagrid-004-height variable, so the viewport grows together with the reader's font. The header and the tfoot are pinned with position:sticky and carry a background of their own; the table is built with border-collapse:separate, otherwise the sticky cells lose their borders. The scroll container is marked role=region, aria-label and tabindex=0 — a vertical list is paged from the keyboard too. The amounts are set in tabular-nums, and an outgoing is marked with a minus sign and a colour at the same time. The theme comes from the surrounding color-scheme through light-dark(): by default the grid lays no panel under itself, it sits on the page background, while the background prop switches on a panel of its own.",
             "ai": {
               "summary": "A grid with a pinned header and a pinned totals row under vertical scrolling. Server component, zero dependencies, one file.",
               "preserve": [
@@ -889,6 +893,7 @@
         "i18n": {
           "en": {
             "description": "A grid that edits a value in place: Enter commits, Escape restores the previous value, and changed cells stay marked until Save is pressed.",
+            "docs": "The component is self-contained: one file, no dependencies, the palette in --vibeui-datagrid-005-*. A client component: the base rows live in one piece of state and the edits as an overlay in another, so \"Cancel\" restores everything in a single action and \"Save\" moves the overlay into the base. A cell at rest is a button spanning the full width: only that way does editing open from the keyboard, which a div with onClick cannot do. The input field takes focus when it appears and carries an aria-label with the name of the column and of the row. Enter commits, Escape cancels, and losing focus saves. Changed cells are marked with a fill and a dot, and the counter of unsaved changes is declared aria-live. The theme comes from the surrounding color-scheme through light-dark(): by default the grid lays no panel under itself, it sits on the page background, while the background prop switches on a panel of its own.",
             "ai": {
               "summary": "A grid with in-place cell editing: keyboard access, Escape to cancel and visible marks on unsaved changes. Zero dependencies, one file.",
               "preserve": [
@@ -1076,6 +1081,7 @@
         "i18n": {
           "en": {
             "description": "A grid whose filter lives in its own column header: text fields and a status list instead of one shared search box.",
+            "docs": "The component is self-contained: one file, no dependencies, the palette in --vibeui-datagrid-006-*. A client component: three filter states, with the selection made by a case-insensitive substring and by an exact status match. The second row of thead is given over to the fields: a field sits exactly under its own column, so there is no guessing what a shared search box is looking through. Every field has its own aria-label — a placeholder disappears on typing and is not a label. The counter of matches is declared aria-live=polite. An empty result is shown as a row inside tbody: the header and the filters deliberately stay in place. The status is marked with a dot through ::before rather than by the text colour alone. The theme comes from the surrounding color-scheme through light-dark(): by default the grid lays no panel under itself, it sits on the page background, while the background prop switches on a panel of its own.",
             "ai": {
               "summary": "A grid with a filter in every column header and a live count of matches. Zero dependencies, one file, client state on useState.",
               "preserve": [
@@ -1281,6 +1287,7 @@
         "i18n": {
           "en": {
             "description": "A grid that groups rows: each group gets a header row with its task count and hour total, and collapses with a single button.",
+            "docs": "The component is self-contained: one file, no dependencies, the palette in --vibeui-datagrid-007-*. A client component: useState holds the list of collapsed groups. Every group is a separate tbody, so the grouping is expressed by the markup rather than by indentation. The group header row uses th scope=colgroup, with a button carrying aria-expanded inside it; the arrow is turned with transform, so the state is visible without reading the text. The group and sprint totals are computed from the same rows — a collapsed group without a sum loses its point. The scrolling is moved into a container with role=region, aria-label and tabindex=0. The theme comes from the surrounding color-scheme through light-dark(): by default the grid lays no panel under itself, it sits on the page background, while the background prop switches on a panel of its own.",
             "ai": {
               "summary": "A grid with row grouping and collapsible groups: totals are computed per group and the state is announced through aria-expanded. Zero dependencies, one file.",
               "preserve": [
@@ -1477,6 +1484,7 @@
         "i18n": {
           "en": {
             "description": "A grid where a row opens its details right underneath: a full-width panel, with the button-to-panel link declared through aria-controls.",
+            "docs": "The component is self-contained: one file, no dependencies, the palette in --vibeui-datagrid-008-*. A client component: useState holds the list of expanded rows, and useId gives stable panel ids for aria-controls. The disclosure button carries aria-expanded and its own aria-label with the name of the shipment. The details lie in a separate row with a colSpan across the full width — a nested table would break cell navigation. The term-value pairs are collected in a dl, and the wrapper of a pair gets display:contents, otherwise the columns drift apart. The panel appears smoothly through @starting-style: where it is unsupported the panel simply appears at once. The single mode keeps one row open at a time. The theme comes from the surrounding color-scheme through light-dark(): by default the grid lays no panel under itself, it sits on the page background, while the background prop switches on a panel of its own.",
             "ai": {
               "summary": "A grid with an expandable detail row: a full-width panel under its own row and the relationship declared through aria-controls. Zero dependencies, one file.",
               "preserve": [
@@ -1704,6 +1712,7 @@
         "i18n": {
           "en": {
             "description": "A grid with resizable columns: the separator between headers is dragged with the mouse and nudged with the arrow keys.",
+            "docs": "The component is self-contained: one file, no dependencies, the palette in --vibeui-datagrid-009-*. A client component: the widths live in state and the drag draft in a ref, so that pointer movement does not drive extra renders. The separator is a button with role=separator, aria-orientation, aria-valuenow, aria-valuemin and aria-valuemax; the left and right arrows change the width in steps of 16 px, so a column can be set up without a mouse. The pointer is captured through setPointerCapture: without it the drag breaks the moment the cursor leaves the header. The widths are applied to the colgroup under table-layout:fixed, otherwise the browser recomputes them from the content. The cell content is truncated with an ellipsis, and the full value stays in title. The theme comes from the surrounding color-scheme through light-dark(): by default the grid lays no panel under itself, it sits on the page background, while the background prop switches on a panel of its own.",
             "ai": {
               "summary": "A grid with draggable column edges and keyboard width control through role=separator. Zero dependencies, one file.",
               "preserve": [
@@ -1883,6 +1892,7 @@
         "i18n": {
           "en": {
             "description": "A grid with page-by-page browsing: a rows-per-page choice, the record range and page numbers inside a real navigation landmark.",
+            "docs": "The component is self-contained: one file, no dependencies, the palette in --vibeui-datagrid-010-*. A client component: the page and the page size live in state, and the visible rows are taken as a slice of the array. The page numbers are collected in a nav with aria-label, and the current one is marked aria-current=page — colour alone does not report state. Changing the page size returns to the first page: otherwise the user ends up on a page that does not exist. The \"showing N–M of K\" range is declared aria-live=polite. The \"back\" and \"forward\" buttons are disabled at the ends and carry aria-labels of their own instead of bare arrows. The theme comes from the surrounding color-scheme through light-dark(): by default the grid lays no panel under itself, it sits on the page background, while the background prop switches on a panel of its own.",
             "ai": {
               "summary": "A grid with pagination and a page-size choice: the record range, page numbers with aria-current and navigation inside nav. Zero dependencies, one file.",
               "preserve": [
@@ -2197,6 +2207,7 @@
         "i18n": {
           "en": {
             "description": "A grid with an empty state: when the filters meet at zero, the table body names the cause, lists the active filters and offers to clear them.",
+            "docs": "The component is self-contained: one file, no dependencies, the palette in --vibeui-datagrid-011-*. A client component: the active filters live as a list of identifiers, each carrying its own predicate. A filter chip is a button with its own aria-label, removing exactly one filter. The empty state is shown as a row inside tbody with a colSpan across the full width: the header stays in place, otherwise it looks as though the table has gone. The text lists the filters in force — \"nothing found\" without a cause is useless; the block is declared aria-live=polite. The glyph is drawn with borders and a pseudo-element so that the component stays a single file with no images. The starting state is deliberately empty: that way the variant is visible in the catalogue. The theme comes from the surrounding color-scheme through light-dark(): by default the grid lays no panel under itself, it sits on the page background, while the background prop switches on a panel of its own.",
             "ai": {
               "summary": "A grid with an empty state and filter reset: the cause is named by listing the filters and the way out sits right beside it. Zero dependencies, one file.",
               "preserve": [
@@ -2403,6 +2414,7 @@
         "i18n": {
           "en": {
             "description": "A grid with a loading skeleton: the bars mirror the column layout at varying lengths, the region is marked aria-busy and the status is repeated in text.",
+            "docs": "The component is self-contained: one file, no dependencies, the palette in --vibeui-datagrid-012-*. A client component: a single boolean state switches between the skeleton and the data, and the number of skeleton rows arrives as a prop. A bar is a span with its width coming from the --vibeui-datagrid-012-w variable: the length is computed from the row number, so the rows do not look printed from one template. The shimmer is assembled from a linear-gradient and a single keyframes on background-position, and the prefers-reduced-motion rule suppresses it. The scroll area is marked aria-busy, with a textual status carrying role=status beside it: an animation tells a screen reader nothing. The header and the tfoot stay in place during loading, and the totals are shown as a dash. The theme comes from the surrounding color-scheme through light-dark(): by default the grid lays no panel under itself, it sits on the page background, while the background prop switches on a panel of its own.",
             "ai": {
               "summary": "A grid with skeleton rows: the bars mirror the columns, the region is marked aria-busy and the status is repeated in text. Zero dependencies, one file.",
               "preserve": [
@@ -2601,6 +2613,7 @@
           "en": {
             "title": "Column Visibility",
             "description": "A grid with a column-visibility menu: the reader assembles the set of columns with checkboxes, and the last remaining column cannot be switched off.",
+            "docs": "The component is self-contained: one file, no dependencies, the palette in --vibeui-datagrid-013-*. A client component: useState holds the list of hidden column keys and the state of the menu. The menu is not a list of links but a fieldset with a legend and real checkboxes: a screen reader announces both the group and the name of every column. The checkbox of the last visible column is blocked, otherwise the table collapses to a single column of SKUs. Escape on the root closes the menu — an open panel over the table has to be dismissible from the keyboard. The counter of shown columns is declared aria-live: a change of set would otherwise pass without a trace. The scrolling is moved into a container with role=region, aria-label and tabindex=0. The theme comes from the surrounding color-scheme through light-dark(): by default the grid lays no panel under itself, it sits directly on the page background and darkens along with it.",
             "ai": {
               "summary": "A grid with a column-visibility menu: the column set is built from checkboxes and the last column is protected from being hidden. The theme comes from the surrounding color-scheme through light-dark(), and the grid carries no surface of its own. Zero dependencies, one file.",
               "preserve": [
@@ -2800,6 +2813,7 @@
           "en": {
             "title": "Pin On Demand",
             "description": "A wide grid where pinning is the reader's call: a pin in the header makes the column sticky, and its offset is derived from the columns already pinned.",
+            "docs": "The component is self-contained: one file, no dependencies, the palette in --vibeui-datagrid-014-*. A client component: useState holds the list of pinned keys, but the order is taken from the order of the columns rather than of the clicks — otherwise the columns would swap places under the cursor. The column width is fixed by the --vibeui-datagrid-014-col variable together with table-layout:fixed: only that way is left computed by a calc formula, with no measuring in the browser. A sticky cell carries a background of its own, and the table is built with border-collapse:separate. The pin is a button with aria-pressed and an aria-label of its own, and the number of pinned columns is capped by a prop. The scrolling lives in a container with role=region, aria-label and tabindex=0. The theme comes from the surrounding color-scheme through light-dark(): by default the grid lays no panel under itself, it sits directly on the page background and darkens along with it, and an opaque background of its own is left only on the sticky cells.",
             "ai": {
               "summary": "A grid with on-demand column pinning: a pin in the header switches the column to position:sticky. The theme comes from the surrounding color-scheme through light-dark(), and the grid carries no surface of its own. Zero dependencies, one file.",
               "preserve": [
@@ -3008,6 +3022,7 @@
           "en": {
             "title": "Reorder Rows",
             "description": "A grid that reorders rows: the grip drags with the mouse while the arrows, Home and End move a row from the keyboard and announce its new position.",
+            "docs": "The component is self-contained: one file, no dependencies, the palette in --vibeui-datagrid-015-*. A client component: useState holds the row order, the id of the row being dragged and the row under the cursor. The grip is a button with draggable: the up and down arrows move the row by one step, and Home and End send it to the beginning and to the end, so the order changes without a mouse. Every move is written into a region with role=status and aria-live: for a screen reader the row would otherwise simply disappear from its former place. The row under the cursor is marked both by a fill and by a stripe on top through an inset box-shadow — a fill alone matches the hover state. The position number is recomputed from the index rather than stored in the data. The theme comes from the surrounding color-scheme through light-dark(): by default the grid lays no panel under itself, it sits directly on the page background and darkens along with it.",
             "ai": {
               "summary": "A grid that reorders rows by dragging and from the keyboard: the position is announced through aria-live. The theme comes from the surrounding color-scheme through light-dark(), and the grid carries no surface of its own. Zero dependencies, one file.",
               "preserve": [
@@ -3200,6 +3215,7 @@
           "en": {
             "title": "Selection Summary",
             "description": "A grid whose totals row counts only the ticked rows, with the fold — sum, average, minimum or maximum — chosen by the reader.",
+            "docs": "The component is self-contained: one file, no dependencies, the palette in --vibeui-datagrid-016-*. A client component: useState holds the list of ticked ids and the chosen fold function. The total lives in the tfoot and changes its label together with the function — \"Total\" above an average would be a lie. A row checkbox carries its own aria-label with the name of the campaign, and the totals heading is declared aria-live, so a change of selection is heard. A selected row is marked both by a fill and by a stripe on the left through an inset box-shadow. On an empty selection the numeric cells hold a dash rather than a zero: a zero reads as a computed result. The theme comes from the surrounding color-scheme through light-dark(): by default the grid lays no panel under itself, it sits directly on the page background and darkens along with it. The aggregate prop sets the starting fold and keeps acting after mounting: the reader's choice is stored alongside the prop rather than instead of it.",
             "ai": {
               "summary": "A grid with a totals row over the selected rows and a switchable aggregate function. The theme comes from the surrounding color-scheme through light-dark(), and the grid carries no surface of its own. Zero dependencies, one file.",
               "preserve": [
@@ -3412,6 +3428,7 @@
           "en": {
             "title": "Export Confirm",
             "description": "A grid that exports the ticked rows behind a confirmation: a native dialog names the row count, the total, the format and the estimated file size before anything happens.",
+            "docs": "The component is self-contained: one file, no dependencies, the palette in --vibeui-datagrid-017-*. A client component: useState holds the selected rows, the format and the result text, and a ref holds the native dialog. showModal traps focus itself, closes on Escape and draws the ::backdrop, so no overlay of your own is needed; the dialog is given margin:auto — without it it sticks to the top-left corner. The formats are collected as radio buttons inside a fieldset; the legend carries float:left with width:100%, so the neighbouring labels get clear:both, otherwise they would wrap around the legend. The result is declared role=status. The dialog shows the total and an estimate of the size: a confirmation without figures is just an extra click. The theme comes from the surrounding color-scheme through light-dark(): by default the grid lays no panel under itself, it sits directly on the page background and darkens along with it, and the opaque background is left on the modal dialog.",
             "ai": {
               "summary": "A grid that exports the selected rows with a native confirmation dialog and a format choice. The theme comes from the surrounding color-scheme through light-dark(), and the grid carries no surface of its own. Zero dependencies, one file.",
               "preserve": [
@@ -3618,6 +3635,7 @@
           "en": {
             "title": "Grid Search",
             "description": "A grid with search across every column: matches are highlighted with a real mark tag, and the counter separates the number of hits from the number of rows.",
+            "docs": "The component is self-contained: one file, no dependencies, the palette in --vibeui-datagrid-018-*. A client component: useState holds the query and the \"matches only\" mode, and useId ties the field to its hidden label. The value of a cell is cut into pieces around the matches and highlighted with a real mark tag — the semantics of highlighting come for free, and a background variable of its own sits under it. Matches and rows are counted separately: a single \"4 found\" does not answer whether four means rows or occurrences. The counter is declared role=status and aria-live. Rows without matches are muted rather than hidden until the filtering mode is switched on; the scrolling is moved into a container with role=region and tabindex=0. The theme comes from the surrounding color-scheme through light-dark(): by default the grid lays no panel under itself, it sits directly on the page background and darkens along with it. The defaultQuery prop keeps acting after mounting: what the reader types is stored alongside the prop rather than instead of it.",
             "ai": {
               "summary": "A grid with search across all columns and matches highlighted with a mark tag. The theme comes from the surrounding color-scheme through light-dark(), and the grid carries no surface of its own. Zero dependencies, one file.",
               "preserve": [
@@ -3817,6 +3835,7 @@
           "en": {
             "title": "Filter Builder",
             "description": "A grid with a condition builder: field, operator and value on every line, one and/or joiner for the whole set and a live count of matching rows.",
+            "docs": "The component is self-contained: one file, no dependencies, the palette in --vibeui-datagrid-019-*. A client component: useState holds the array of conditions and the joiner; changing the field resets the operator and the value, because numbers and text take different operator sets. The builder is collected in a fieldset with a legend — for a screen reader this is one group rather than a scatter of fields; the legend carries float:left with width:100%, so the condition rows get clear:both. The joiner is shown as a separate line between the conditions and is not built into them: otherwise \"and\" reads as part of the neighbouring condition. Every field has its own aria-label with the number of the condition, and the counter of matches is declared role=status. The theme comes from the surrounding color-scheme through light-dark(): by default the grid lays no panel under itself, it sits directly on the page background and darkens along with it. The joiner and defaultRules props keep acting after mounting: the reader's edits are stored alongside them rather than instead of them.",
             "ai": {
               "summary": "A grid with an and/or condition builder: field, operator and value on every line. The theme comes from the surrounding color-scheme through light-dark(), and the grid carries no surface of its own. Zero dependencies, one file.",
               "preserve": [
@@ -4058,6 +4077,7 @@
           "en": {
             "title": "Saved Views",
             "description": "A grid with saved views: a tab restores the filter and the sort at once, and any drift from the saved set is marked «changed».",
+            "docs": "The component is self-contained: one file, no dependencies, the palette in --vibeui-datagrid-020-*. A client component: useState holds the list of views, the active name and the current state separately from it. Comparing the current state with the saved one gives the \"changed\" marker — without it there is no telling whether you are looking at a view or already at something of your own; the save button is blocked while there are no changes. The tabs lie in a nav with aria-label, and the active one is marked aria-current rather than by colour alone. A view stores both the filter and the sort: half a restored state is worse than none. The theme comes from the surrounding color-scheme through light-dark(): by default the grid lays no panel under itself, it sits directly on the page background and darkens along with it. The views and startView props keep acting after mounting: the reader's edits are stored alongside them rather than instead of them.",
             "ai": {
               "summary": "A grid with saved views: the filter and the sort come back with a single tab. The theme comes from the surrounding color-scheme through light-dark(), and the grid carries no surface of its own. Zero dependencies, one file.",
               "preserve": [
@@ -4304,6 +4324,7 @@
           "en": {
             "title": "Batch Edit",
             "description": "A grid with batch editing: numeric cells become fields at once, a log shows «before → after» with per-entry undo, and one save covers the whole draft.",
+            "docs": "The component is self-contained: one file, no dependencies, the palette in --vibeui-datagrid-021-*. A client component: the base rows live in one piece of state and the draft of the edits as a flat \"row:field → value\" map in another. That split gives three things for free: the highlighting of changed cells, a log with the original value and the undo of a single edit without losing the rest. A value that has returned to its original drops out of the draft by itself — otherwise the counter would lie. The rows are given a fixed height, so switching on edit mode does not move the table. The counter of unsaved changes is declared role=status. The theme comes from the surrounding color-scheme through light-dark(): by default the grid lays no panel under itself, it sits directly on the page background and darkens along with it. The rows prop keeps acting after mounting: the saved edits are stored alongside it rather than instead of it.",
             "ai": {
               "summary": "A grid that edits several cells behind one save: a «before → after» log with per-entry undo. The theme comes from the surrounding color-scheme through light-dark(), and the grid carries no surface of its own. Zero dependencies, one file.",
               "preserve": [
@@ -4504,6 +4525,7 @@
           "en": {
             "title": "Cell Validation",
             "description": "A grid that validates in place: the error sits under the value itself, the field carries aria-invalid and a link to the message, and saving is blocked until it is fixed.",
+            "docs": "The component is self-contained: one file, no dependencies, the palette in --vibeui-datagrid-022-*. A client component: the values live in state, the validation is computed on every render, and useId gives stable identifiers for aria-describedby. A field with an error gets aria-invalid and a link to the error text — a red border alone tells a screen reader nothing. Under every cell a line the height of the message is reserved, so the appearance of an error does not move the neighbouring rows. The save button is switched off while errors remain, and their number is declared role=status. The cells are aligned to the top edge: otherwise a row with an error skews its neighbours. The theme comes from the surrounding color-scheme through light-dark(): by default the grid lays no panel under itself, it sits directly on the page background and darkens along with it. The rows prop keeps acting after mounting: the reader's edits are stored alongside it rather than instead of it.",
             "ai": {
               "summary": "A grid with in-place cell validation: aria-invalid, the error under the value and a blocked save. The theme comes from the surrounding color-scheme through light-dark(), and the grid carries no surface of its own. Zero dependencies, one file.",
               "preserve": [
@@ -4696,6 +4718,7 @@
           "en": {
             "title": "Paste Rows",
             "description": "A grid that pastes several rows from the clipboard: the text is parsed by separators, broken lines are named with their number and reason, and only whole rows reach the table.",
+            "docs": "The component is self-contained: one file, no dependencies, the palette in --vibeui-datagrid-023-*. A client component: useState holds the table, the pasted text and the list of just-added identifiers; useId ties the field to its label. The parser cuts the text on line breaks and the fields on a tab, a semicolon or two consecutive spaces: that way both a paste from a spreadsheet and text from an email survive. Broken lines are not dropped in silence but shown in the body of the table with their number and reason — otherwise half the paste disappears unnoticed. The added rows are marked with a fill until the next paste. The parse report is declared role=status. The theme comes from the surrounding color-scheme through light-dark(): by default the grid lays no panel under itself, it sits directly on the page background and darkens along with it. The rows and sample props keep acting after mounting: what was added and typed is stored alongside them rather than instead of them.",
             "ai": {
               "summary": "A grid that pastes several rows from the clipboard and parses them, flagging the broken lines. The theme comes from the surrounding color-scheme through light-dark(), and the grid carries no surface of its own. Zero dependencies, one file.",
               "preserve": [
@@ -4872,6 +4895,7 @@
           "en": {
             "title": "Tree Grid",
             "description": "A tree grid with expandable child rows: the level is declared through aria-level, the indent is derived from it, and a parent's total is recomputed from its branch.",
+            "docs": "The component is self-contained: one file, no dependencies, the palette in --vibeui-datagrid-024-*. A client component: useState holds the list of expanded branches, and a walk of the tree flattens it into a plain list of rows. The level is declared by the markup: the row carries aria-level and the parent aria-expanded, and the indent arrives through the --vibeui-datagrid-024-depth variable and is multiplied by the step. A parent's total is always computed from its descendants recursively: a collapsed branch without a sum of its own hides the data rather than folding it. The disclosure button carries its own aria-label with the name of the branch, and the arrow is turned with transform. The scrolling is moved into a container with role=region and tabindex=0. The theme comes from the surrounding color-scheme through light-dark(): by default the grid lays no panel under itself, it sits directly on the page background and darkens along with it.",
             "ai": {
               "summary": "A tree grid with expandable child rows and a parent total computed from the branch. The theme comes from the surrounding color-scheme through light-dark(), and the grid carries no surface of its own. Zero dependencies, one file.",
               "preserve": [
@@ -5095,6 +5119,7 @@
         "i18n": {
           "en": {
             "description": "A long grid that loads on scroll: a counter and a bar show how many rows have arrived, and a «Load more» button repeats the auto-load for the keyboard.",
+            "docs": "The component is self-contained: one file, no dependencies, the palette in --vibeui-datagrid-025-*. A client component: useState holds the number of shown rows, and a slice of the array gives the visible ones. The auto-load hangs on the container's onScroll and fires 24 px before the bottom — without that margin the threshold is missed on a fast scroll. The \"Load more\" button is kept deliberately: it duplicates the auto-load for the keyboard and for anyone who jumped to the end of the list. The share loaded is shown both as a number and as a bar with role=progressbar and aria-valuenow: an endless list with no bottom is disorienting. The header sticks to the top, so the columns are visible at any depth. The theme comes from the surrounding color-scheme through light-dark(): by default the feed lays no panel under itself, it sits directly on the page background and darkens along with it.",
             "ai": {
               "summary": "A grid with infinite scrolling, a loaded-rows counter and a progress bar. The theme comes from the surrounding color-scheme through light-dark(), and the feed carries no surface of its own. Zero dependencies, one file.",
               "preserve": [
@@ -5419,6 +5444,7 @@
         "i18n": {
           "en": {
             "description": "A grid with a pinned comparison row: the model picked by radio button sticks under the header while every other row shows its signed deviation from it.",
+            "docs": "The component is self-contained: one file, no dependencies, the palette in --vibeui-datagrid-026-*. A client component: useState holds the identifier of the reference and the deviation display mode. The reference is chosen with a radio button — this is a choice of one out of many, and a checkbox would lie here; the reference row is rendered first and pinned with position:sticky under the sticky header, so the top offset is set explicitly. The table is built with border-collapse:separate: with collapsed borders the sticky row loses its line. The deviation is labelled with a plus or minus sign along with the colour: colour alone does not read for colour blindness, and \"cheaper\" and \"more expensive\" are opposite in meaning here. The theme comes from the surrounding color-scheme through light-dark(): by default the table lays no panel under itself, it sits directly on the page background and darkens along with it, and an opaque background of its own is left only on the sticky cells.",
             "ai": {
               "summary": "A grid with a pinned reference row and the deviation of every other row from it. The theme comes from the surrounding color-scheme through light-dark(), and the table carries no surface of its own. Zero dependencies, one file.",
               "preserve": [
@@ -5617,6 +5643,7 @@
         "i18n": {
           "en": {
             "description": "A grid with a density switch: compact, regular and roomy change the padding, the type size and the row height at once, and the roomy setting reveals a note.",
+            "docs": "The component is self-contained: one file, no dependencies, the palette in --vibeui-datagrid-027-*. A client component: useState holds the mode, which goes into data-density on the root; three variables — the padding, the type size and the leading — are overridden by a single selector per mode, so no new rules for the cells are needed. Density here is not only about padding: in the roomy mode a second line with a note is shown, which the compact mode does not have — otherwise \"roomy\" is just air. The switch is assembled from radio buttons inside a fieldset: this is a choice of one out of three, not three independent buttons. The current state is duplicated in text with role=status. The theme comes from the surrounding color-scheme through light-dark(): by default the table lays no panel under itself, it sits directly on the page background and darkens along with it.",
             "ai": {
               "summary": "A grid with three density levels: padding, type size and row height change together. The theme comes from the surrounding color-scheme through light-dark(), and the table carries no surface of its own. Zero dependencies, one file.",
               "preserve": [
@@ -5820,6 +5847,7 @@
         "i18n": {
           "en": {
             "description": "A grid with an actions column: five commands live in a menu that walks with the arrows, closes on Escape returning focus, and keeps deletion behind a divider.",
+            "docs": "The component is self-contained: one file, no dependencies, the palette in --vibeui-datagrid-028-*. A client component: useState holds the identifier of the open row, a ref holds the trigger buttons, and useId gives stable panel ids for aria-controls. The menu is built on the keyboard model: the down arrow on the button opens it, the arrows walk the items, Home and End jump to the ends, and Escape closes it and returns focus to the button — without that return the focus flies to the top of the page. The markup is honest: a list with role=menu and buttons with role=menuitem. The destructive item is separated by a line and marked with a colour together with the word \"Delete\": colour alone is not a warning. The theme comes from the surrounding color-scheme through light-dark(): by default the table lays no panel under itself, it sits directly on the page background and darkens along with it, and the opaque background is left on the menu — a popup layer has to cover the rows.",
             "ai": {
               "summary": "A grid with a row-actions column and a menu with keyboard navigation and focus return. The theme comes from the surrounding color-scheme through light-dark(), and the table carries no surface of its own. Zero dependencies, one file.",
               "preserve": [
@@ -6015,6 +6043,7 @@
         "i18n": {
           "en": {
             "description": "A shift schedule with only the first column frozen: the employee name stays put while the days scroll sideways, with no second sticky edge on the right.",
+            "docs": "The component is self-contained: one file, no dependencies, the palette in --vibeui-datagrid-030-*. Server rendered: there is no state, everything rests on CSS. Only the first column is frozen (position:sticky, left:0) — unlike grids with two sticky edges, there is nothing to pin on the right here: what matters is the day you have scrolled to, not a totals column. The sticky cell carries a background of its own and border-collapse:separate, otherwise the scrolled days show through it and the column loses its line. The scrolling lives in a container with role=region, aria-label and tabindex=0, so it works from the keyboard. The shift code of every cell is duplicated in words in an aria-label — a coloured pill on its own is not enough. The theme comes from the surrounding color-scheme through light-dark(): by default the schedule lays no panel under itself, it sits directly on the page background and darkens along with it, and the opaque background is left only on the sticky column, in a separate --vibeui-datagrid-030-surface token.",
             "ai": {
               "summary": "A shift schedule with a single frozen lead column and horizontal scrolling that works from the keyboard. The theme comes from the surrounding color-scheme through light-dark(), and the schedule carries no surface of its own. Server component, zero dependencies, one file.",
               "preserve": [
@@ -6257,6 +6286,7 @@
         "i18n": {
           "en": {
             "description": "A grid with a load-error state: the header stays put while the body carries the explanation, the error code, a retry button and an attempt counter.",
+            "docs": "The component is self-contained: one file, no dependencies, the palette in --vibeui-datagrid-029-*. A client component: one boolean state switches between the failure and the data, and a second counts the retry attempts. The error is shown as a row inside tbody with a colSpan across the full width: the header stays, so it is visible exactly what failed to load — otherwise it looks as though the table has gone. The block is marked role=alert, because the user may already have looked away. The attempt counter is declared aria-live: without it the retry button looks broken. The glyph is drawn with borders and pseudo-elements so that the component stays a single file with no images; in the demonstration the third attempt succeeds. The theme comes from the surrounding color-scheme through light-dark(): by default the table lays no panel under itself, it sits directly on the page background and darkens along with it, while the error block has a lightness pair of its own.",
             "ai": {
               "summary": "A grid with a load-error state and a retry: the error code, an explanation and an attempt counter. The theme comes from the surrounding color-scheme through light-dark(), and the table carries no surface of its own. Zero dependencies, one file.",
               "preserve": [

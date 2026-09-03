@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Datagrid001Row = {
   title: string
@@ -11,10 +11,7 @@ export type Datagrid001Row = {
   updated: string
 }
 
-export type Datagrid001Props = Omit<
-  ComponentPropsWithoutRef<"section">,
-  "children"
-> & {
+export type Datagrid001Props = Omit<ComponentProps<"section">, "children"> & {
   rows?: Datagrid001Row[]
   caption?: string
   density?: "comfortable" | "compact"
@@ -52,7 +49,7 @@ const STYLES = `
 :where([data-vibeui-block="datagrid-001"]){
 --vibeui-datagrid-001-bg:transparent;
 --vibeui-datagrid-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
---vibeui-datagrid-001-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-datagrid-001-muted:color-mix(in oklab,var(--vibeui-datagrid-001-fg) 68%,transparent);
 --vibeui-datagrid-001-border:light-dark(oklch(0.92 0.006 265),oklch(0.34 0.012 265));
 --vibeui-datagrid-001-head:light-dark(oklch(0.975 0.003 265),oklch(0.27 0.012 265));
 --vibeui-datagrid-001-hover:light-dark(oklch(0.55 0.02 265 / 6%),oklch(0.78 0.03 265 / 10%));
@@ -63,6 +60,9 @@ const STYLES = `
 --vibeui-datagrid-001-pad:0.625rem;
 --vibeui-datagrid-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="datagrid-001"]{color-scheme:dark}
 [data-vibeui-block="datagrid-001"]{
 box-sizing:border-box;width:100%;max-width:64rem;margin:0 auto;
 background:var(--vibeui-datagrid-001-bg);color:var(--vibeui-datagrid-001-fg);
@@ -327,6 +327,7 @@ export function Datagrid001({
       </style>
       <section
         {...props}
+        data-slot="data-grid"
         data-vibeui-block="datagrid-001"
         data-density={density}
         className={className}

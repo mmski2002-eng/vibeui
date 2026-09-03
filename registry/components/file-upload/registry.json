@@ -146,7 +146,8 @@
                 "hint": "PNG, JPG or PDF up to 10 MB. Several at once is fine",
                 "sizeText": "{size} KB"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-file-001-* variables. Client component: \"use client\". The zone is a <label> with a hidden input type=\"file\", so choosing is available without a mouse. The dragover and drop handlers prevent the browser's default behaviour, and the hover state is exposed as data-over. The list of picked files shows names and sizes. The theme comes from the surrounding color-scheme through light-dark(): the zone has no surface by default, it sits directly on the page background and darkens with it, while the background prop turns on a surface of its own."
           }
         },
         "cardControls": ["accent", "background"]
@@ -302,7 +303,8 @@
                 },
                 "clipboardName": "From the clipboard"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-file-002-* variables. Client component: \"use client\". The zone is not a label but a focusable element with role=\"button\" and tabIndex 0: Enter and Space open the same system dialog as a click on the hidden input, while the onPaste handler accepts files from the clipboard. A hovering file is exposed as data-over, and the default dragover behaviour is prevented. All three ways are listed as text inside the zone. The theme comes from the surrounding color-scheme through light-dark(): the panel has no surface by default, it sits directly on the page background and darkens with it, while the background prop turns on a surface of its own."
           }
         },
         "cardControls": ["accent", "background"]
@@ -460,7 +462,8 @@
                 "cancelLabel": "Cancel {name}",
                 "removeLabel": "Remove {name}"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-file-003-* variables. Client component: \"use client\" for the sake of cancelling. Progress is a native <progress> with an aria-label built from the file name, so the share and the caption reach assistive technology without hand-written markup. Rows at a hundred percent get data-done: the bar turns green and the button caption changes from \"Cancel\" to \"Remove\". The progress values arrive through the items prop — the component does not compute them. The theme comes from the surrounding color-scheme through light-dark(): the panel has no surface by default, it sits directly on the page background and darkens with it, while the background prop turns on a surface of its own."
           }
         },
         "cardControls": ["accent", "background"]
@@ -629,7 +632,8 @@
                 "removeText": "Remove",
                 "previewAlt": "Preview of {name}"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-file-004-* variables. Client component: \"use client\". The preview is built from the picked file through URL.createObjectURL, so nothing reaches the server before the form is submitted; the previous link is released in a useEffect through URL.revokeObjectURL, otherwise the tab accumulates images in memory. The tile is a <label> with a hidden input type=\"file\": the place where you choose and the place where you look are the same. The theme comes from the surrounding color-scheme through light-dark(): the field has no surface by default, it sits directly on the page background and darkens with it, while the background prop turns on a surface of its own."
           }
         },
         "cardControls": ["accent", "background"]
@@ -789,7 +793,8 @@
                 "zoomText": "Zoom · {value}%",
                 "photoAlt": "Chosen profile photo"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-file-005-* variables. Client component: \"use client\". The circular frame is a <label> with a hidden input type=\"file\" and overflow:hidden, so the crop is visible at once. The scale lives in the --vibeui-file-005-zoom variable and is applied through transform:scale rather than through dimensions — the image is not repainted. The slider is a native input[type=range], so keyboard arrows and value announcement come free. The previous link is released through revokeObjectURL. The theme comes from the surrounding color-scheme through light-dark(): the card has no surface by default, it sits directly on the page background and darkens with it, while the background prop turns on a surface of its own."
           }
         },
         "cardControls": ["zoom", "accent", "background"]
@@ -942,7 +947,8 @@
                   "accepted": "File accepted — the rules are met."
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-file-006-* variables. Client component: \"use client\" for the sake of the check. The extension is taken from the name, the size from file.size; the broken rule is highlighted in the list through data-broken, and the root gets data-rejected. The rejection message sits in role=\"alert\" and names both the rule and the limit. The accept attribute is assembled from the formats list and only filters the dialog, guaranteeing nothing. The theme comes from the surrounding color-scheme through light-dark(): the field has no surface by default, it sits directly on the page background and darkens with it, while the background prop turns on a surface of its own."
           }
         },
         "cardControls": ["maxSizeMb", "accent", "background"]
@@ -1129,7 +1135,8 @@
                 "countText": "Done {done} of {total}. You can close this tab.",
                 "detailsText": "Per-file detail"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-file-007-* variables. Server component: the disclosure is held by a native <details>, there is no state and no hydration either. The overall share is shown by a native <progress> with max set to the number of files and an aria-label of the form \"Uploaded N of M\", and the percentage is computed from the same numbers. The file list lies inside the <details> and takes no space until it is needed. File states are stored under the done, active and queued keys, while the visible captions arrive through the stateText dictionary. The theme comes from the surrounding color-scheme through light-dark(): the summary has no surface by default, it sits directly on the page background and darkens with it, while the background prop turns on a surface of its own."
           }
         },
         "cardControls": ["done", "total", "accent", "background"]
@@ -1289,7 +1296,8 @@
                 "stagedText": "New version, not saved yet",
                 "hint": "Replacing does not delete the previous version — it stays in the document history."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-file-008-* variables. Client component: \"use client\" for the sake of keeping the previous name. The replace button is a <label> with a hidden input type=\"file\", so choosing is available from the keyboard. After a replacement the previous name is kept in state and shown in a line with role=\"status\" and an undo button; the line disappears as soon as undo is pressed. The file glyph is drawn with borders and pseudo-elements. The theme comes from the surrounding color-scheme through light-dark(): the card has no surface by default, it sits directly on the page background and darkens with it, while the background prop turns on a surface of its own."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1452,7 +1460,8 @@
                 "linkPlaceholder": "https://example.com/photo.jpg",
                 "linkNote": "We download the image once — if the link dies later, the product keeps its photo."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-file-009-* variables. Server component: the tabs are built on two radio inputs inside labels, and which panel shows is decided by :has on the root through the data-choice attribute — there are no identifiers in the styles, so the component ports over without a single edit. The radio inputs are hidden visually but stay focusable, and the focus ring is drawn on the label through :has(input:focus-visible). The theme comes from the surrounding color-scheme through light-dark(): the block has no surface by default, it sits directly on the page background and darkens with it, while the background prop turns on a surface of its own. The active tab and the address field are painted with a separate --vibeui-file-009-raise token, so a transparent surface does not swallow the raised tile."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1616,7 +1625,8 @@
                 "retryAriaLabel": "{label}: {name}",
                 "hint": "The file is still selected — a retry does not send you hunting for it again."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-file-010-* variables. Client component: \"use client\" for the sake of the retry. The state of the row is exposed as data-status on the root: the cross, the waiting ring or the check mark are drawn from it. A retry moves the row into the waiting state, and a useEffect on a timer carries it through to success — in a real project a request stands where the timer is. The state text sits in role=\"status\", so the glyph never works alone. The theme comes from the surrounding color-scheme through light-dark(): the row has no surface by default, it sits directly on the page background and darkens with it, while the background prop turns on a surface of its own."
           }
         },
         "cardControls": ["accent", "background"]

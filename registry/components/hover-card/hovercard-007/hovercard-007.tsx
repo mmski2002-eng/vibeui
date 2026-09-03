@@ -1,9 +1,8 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+"use client"
 
-export type Hovercard007Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
+
+export type Hovercard007Props = Omit<ComponentProps<"div">, "children"> & {
   label?: string
   title?: string
   text?: string
@@ -33,12 +32,15 @@ const STYLES = `
 --vibeui-hovercard-007-bg:transparent;
 --vibeui-hovercard-007-card:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
 --vibeui-hovercard-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-hovercard-007-muted:light-dark(oklch(0.54 0.014 265),oklch(0.71 0.012 265));
+--vibeui-hovercard-007-muted:color-mix(in oklab,var(--vibeui-hovercard-007-fg) 68%,transparent);
 --vibeui-hovercard-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
 --vibeui-hovercard-007-accent:light-dark(oklch(0.55 0.16 200),oklch(0.76 0.13 200));
 --vibeui-hovercard-007-delay:0.45s;
 --vibeui-hovercard-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="hovercard-007"]{color-scheme:dark}
 [data-vibeui-block="hovercard-007"]{
 width:100%;max-width:28rem;box-sizing:border-box;
 padding:1rem 1.125rem;
@@ -113,6 +115,16 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 }
 
 /**
+ * Escape убирает фокус с триггера. Карточка держится на :focus-within,
+ * поэтому снятого фокуса достаточно, чтобы закрыть её с клавиатуры.
+ */
+function closeOnEscape(event: KeyboardEvent<HTMLElement>) {
+  if (event.key === "Escape") {
+    ;(event.target as HTMLElement).blur()
+  }
+}
+
+/**
  * Карточка с задержкой раскрытия: полоска ожидания и отмена при уходе курсора.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -151,6 +163,8 @@ export function Hovercard007({
       </style>
       <div
         {...props}
+        data-slot="hover-card"
+        onKeyDown={closeOnEscape}
         data-vibeui-block="hovercard-007"
         className={className}
         style={palette}

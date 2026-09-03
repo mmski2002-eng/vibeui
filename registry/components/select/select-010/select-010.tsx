@@ -1,21 +1,14 @@
 "use client"
 
 import { useEffect, useId, useMemo, useRef, useState } from "react"
-import type {
-  ComponentPropsWithoutRef,
-  CSSProperties,
-  KeyboardEvent,
-} from "react"
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Select010Option = {
   value: string
   label: string
 }
 
-export type Select010Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Select010Props = Omit<ComponentProps<"div">, "children"> & {
   label?: string
   name?: string
   options?: Select010Option[]
@@ -43,7 +36,7 @@ const STYLES = `
 --vibeui-select-010-surface-pad:0;
 --vibeui-select-010-surface-radius:0;
 --vibeui-select-010-fg:light-dark(oklch(0.23 0.016 265),oklch(0.94 0.005 265));
---vibeui-select-010-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-select-010-muted:color-mix(in oklab,var(--vibeui-select-010-fg) 68%,transparent);
 --vibeui-select-010-field:light-dark(oklch(0.985 0.002 265),oklch(0.25 0.012 265));
 --vibeui-select-010-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.014 265));
 --vibeui-select-010-accent:light-dark(oklch(0.55 0.19 262),oklch(0.75 0.15 262));
@@ -52,6 +45,9 @@ const STYLES = `
 --vibeui-select-010-shadow:light-dark(oklch(0 0 0 / 16%),oklch(0 0 0 / 48%));
 --vibeui-select-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="select-010"]{color-scheme:dark}
 /* Подложка появляется только вместе с пропом background: по умолчанию поле
    лежит прямо на фоне страницы. */
 [data-vibeui-block="select-010"]{
@@ -268,6 +264,7 @@ export function Select010({
       <div
         {...props}
         ref={rootRef}
+        data-slot="select"
         data-vibeui-block="select-010"
         className={className}
         style={palette}

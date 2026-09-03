@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Iconstack005Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Iconstack005Props = Omit<ComponentProps<"div">, "children"> & {
   names?: string[]
   ring?: string
   /** Подпись тёмной полосы. */
@@ -35,6 +32,9 @@ const STYLES = `
 --vibeui-iconstack-005-light-muted:oklch(0.55 0.014 265);
 --vibeui-iconstack-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="iconstack-005"]{color-scheme:dark}
 [data-vibeui-block="iconstack-005"]{
 display:inline-flex;flex-direction:column;gap:0.5rem;
 box-sizing:border-box;padding:0.625rem;
@@ -64,6 +64,8 @@ display:inline-flex;flex-direction:row-reverse;justify-content:flex-end;flex:non
 margin-right:calc(var(--vibeui-iconstack-005-overlap) * -1);
 }
 [data-vibeui-block="iconstack-005"] [data-part="stack"] > *:first-child{margin-right:0}
+/* Кружок одной парой цветов: он всегда лежит на своей полосе — светлой или
+   тёмной, — а не на фоне страницы, поэтому тему не слушает. */
 [data-vibeui-block="iconstack-005"] [data-part="face"]{
 display:inline-flex;align-items:center;justify-content:center;flex:none;box-sizing:border-box;
 width:var(--vibeui-iconstack-005-size);height:var(--vibeui-iconstack-005-size);
@@ -164,6 +166,7 @@ export function Iconstack005({
       </style>
       <div
         {...props}
+        data-slot="icon-stack"
         data-vibeui-block="iconstack-005"
         className={className}
         style={palette}

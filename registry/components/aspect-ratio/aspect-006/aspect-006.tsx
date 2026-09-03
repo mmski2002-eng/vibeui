@@ -1,14 +1,11 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Aspect006Tile = {
   label: string
   hue?: number
 }
 
-export type Aspect006Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Aspect006Props = Omit<ComponentProps<"div">, "children"> & {
   tiles?: Aspect006Tile[]
   /** Сколько кадров показывать сверх главного: остальные сворачиваются в счётчик. */
   visible?: number
@@ -31,6 +28,9 @@ const STYLES = `
 --vibeui-aspect-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="aspect-006"]{color-scheme:dark}
 [data-vibeui-block="aspect-006"]{display:block;width:100%;box-sizing:border-box;font-family:var(--vibeui-aspect-006-font)}
 /* Соотношение держит сетка целиком, а не каждая плитка отдельно. */
 /* Раскладка живёт на внутренней рамке, а не на корне: контейнерный запрос
@@ -100,6 +100,7 @@ export function Aspect006({
       </style>
       <div
         {...props}
+        data-slot="aspect-ratio"
         data-vibeui-block="aspect-006"
         className={className}
         style={style as CSSProperties}

@@ -29,13 +29,16 @@ export type Dialog009Props = {
 const STYLES = `
 :where([data-vibeui-block="dialog-009"]){
 --vibeui-dialog-009-fg:light-dark(oklch(0.22 0.016 265),oklch(0.94 0.005 265));
---vibeui-dialog-009-muted:light-dark(oklch(0.5 0.014 265),oklch(0.7 0.012 265));
+--vibeui-dialog-009-muted:color-mix(in oklab,var(--vibeui-dialog-009-fg) 68%,transparent);
 --vibeui-dialog-009-bg:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
 --vibeui-dialog-009-border:light-dark(oklch(0.89 0.006 265),oklch(0.38 0.012 265));
 --vibeui-dialog-009-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
 --vibeui-dialog-009-radius:1rem;
 --vibeui-dialog-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="dialog-009"]{color-scheme:dark}
 [data-vibeui-block="dialog-009"]{display:inline-flex;font-family:var(--vibeui-dialog-009-font)}
 [data-vibeui-block="dialog-009"] [data-part="trigger"]{
 appearance:none;cursor:pointer;font:inherit;font-size:0.875rem;font-weight:500;
@@ -68,7 +71,7 @@ width:1.5rem;height:0.25rem;border-radius:9999px;
 background:var(--vibeui-dialog-009-border,light-dark(oklch(0.89 0.006 265),oklch(0.38 0.012 265)));
 transition:background-color .18s ease;
 }
-[data-vibeui-dialog-009-window] [data-part="title"]{margin:0 0 0.25rem;font-size:1rem;font-weight:620;line-height:1.35}
+[data-vibeui-dialog-009-window] [data-part="title"]{margin:0 0 0.25rem;font-size:1.0625rem;font-weight:620;line-height:1.35}
 [data-vibeui-dialog-009-window] [data-part="description"]{margin:0 0 0.875rem;font-size:0.8125rem;line-height:1.5;color:var(--vibeui-dialog-009-muted,light-dark(oklch(0.5 0.014 265),oklch(0.7 0.012 265)))}
 [data-vibeui-dialog-009-window] label[data-part="field"]{display:flex;flex-direction:column;gap:0.375rem;font-size:0.8125rem;font-weight:500}
 [data-vibeui-dialog-009-window] input[type="text"]{
@@ -100,6 +103,8 @@ background:transparent;color:inherit;border-color:var(--vibeui-dialog-009-border
 background:var(--vibeui-dialog-009-accent,light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262)));
 }
 [data-vibeui-dialog-009-window] :focus-visible{outline:2px solid var(--vibeui-dialog-009-accent,light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262)));outline-offset:2px}
+/* Popover страницу не блокирует: фон под окном иначе продолжает прокручиваться. */
+html:has([data-vibeui-dialog-009-window]:popover-open){overflow:hidden}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="dialog-009"] *{animation:none!important;transition:none!important}
 [data-vibeui-dialog-009-window]{transition:none!important;opacity:1;transform:none}
@@ -176,7 +181,12 @@ export function Dialog009({
       <style href="vibeui-dialog-009" precedence="medium">
         {STYLES}
       </style>
-      <div data-vibeui-block="dialog-009" className={className} style={palette}>
+      <div
+        data-slot="dialog"
+        data-vibeui-block="dialog-009"
+        className={className}
+        style={palette}
+      >
         <button data-part="trigger" type="button" popoverTarget={id}>
           {trigger}
         </button>
@@ -221,7 +231,11 @@ export function Dialog009({
               <p data-part="description">{step.description}</p>
               <label data-part="field">
                 {step.fieldLabel}
-                <input type="text" placeholder={step.placeholder} />
+                <input
+                  type="text"
+                  placeholder={step.placeholder}
+                  autoFocus={index === 0}
+                />
               </label>
               <div data-part="actions">
                 {index === 0 ? (

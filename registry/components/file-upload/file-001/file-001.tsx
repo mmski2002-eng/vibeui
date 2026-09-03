@@ -1,10 +1,10 @@
 "use client"
 
 import { useId, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties, DragEvent } from "react"
+import type { ComponentProps, CSSProperties, DragEvent } from "react"
 
 export type File001Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   label?: string
@@ -29,12 +29,15 @@ const STYLES = `
 :where([data-vibeui-block="file-001"]){
 --vibeui-file-001-bg:transparent;
 --vibeui-file-001-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-file-001-muted:light-dark(oklch(0.56 0.014 265),oklch(0.68 0.012 265));
+--vibeui-file-001-muted:color-mix(in oklab,var(--vibeui-file-001-fg) 68%,transparent);
 --vibeui-file-001-border:light-dark(oklch(0.86 0.008 265),oklch(0.42 0.014 265));
 --vibeui-file-001-hover:light-dark(oklch(0.97 0.003 265),oklch(0.28 0.012 265));
 --vibeui-file-001-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-file-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="file-001"]{color-scheme:dark}
 [data-vibeui-block="file-001"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:22rem;box-sizing:border-box;
@@ -69,7 +72,7 @@ border-left:2px solid var(--vibeui-file-001-muted);
 border-top:2px solid var(--vibeui-file-001-muted);
 transform:rotate(45deg);
 }
-[data-vibeui-block="file-001"] [data-part="title"]{font-size:0.875rem;font-weight:650}
+[data-vibeui-block="file-001"] [data-part="title"]{font-size:0.8125rem;font-weight:650}
 [data-vibeui-block="file-001"] [data-part="hint"]{font-size:0.75rem;line-height:1.4;color:var(--vibeui-file-001-muted)}
 /* Список выбранного: без него непонятно, что именно улетело. */
 [data-vibeui-block="file-001"] ul{display:flex;flex-direction:column;gap:0.25rem;margin:0;padding:0;list-style:none}
@@ -162,6 +165,7 @@ export function File001({
       </style>
       <div
         {...props}
+        data-slot="file-upload"
         data-vibeui-block="file-001"
         data-over={over}
         className={className}

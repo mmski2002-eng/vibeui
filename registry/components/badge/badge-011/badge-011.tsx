@@ -1,10 +1,10 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Badge011Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   options?: string[]
@@ -31,6 +31,9 @@ const STYLES = `
 --vibeui-badge-011-on-bg:color-mix(in oklab,var(--vibeui-badge-011-accent) 14%,var(--vibeui-badge-011-surface));
 --vibeui-badge-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="badge-011"]{color-scheme:dark}
 [data-vibeui-block="badge-011"]{
 display:flex;flex-wrap:wrap;gap:0.375rem;
 font-family:var(--vibeui-badge-011-font);
@@ -126,6 +129,7 @@ export function Badge011({
       </style>
       <div
         {...props}
+        data-slot="badge"
         data-vibeui-block="badge-011"
         className={className}
         style={palette}

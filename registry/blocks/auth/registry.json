@@ -139,7 +139,8 @@
                 "orLabel": "or",
                 "emailPlaceholder": "name@company.com"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-001-*. A server component: there are no hooks. The fields are declared autoComplete=\"username\" and \"current-password\", so a password manager fills the data in. The divider before sign-in through providers is built with a grid rather than a background behind the word."
           }
         },
         "cardControls": ["accent", "background"]
@@ -291,7 +292,8 @@
                   "a symbol or 16+"
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-002-*. A client component: \"use client\" is there for the password scoring. The score is computed from the length and the variety of characters, is announced through aria-live and is duplicated by a requirements list with ticks."
           }
         },
         "cardControls": ["accent", "background"]
@@ -432,7 +434,8 @@
                 "emailPlaceholder": "name@company.com",
                 "email": "anna@vibeui.com"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-003-*. A server component: there are no hooks, and the state arrives through the state prop. Both screens — the form and the send confirmation — live inside one block, and the \"if the address is registered\" wording keeps the form from probing other people's emails."
           }
         },
         "cardControls": ["state", "accent", "background"]
@@ -571,7 +574,8 @@
                 "email": "anna@vibeui.com",
                 "digitLabel": "Digit {index} of {total}"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-004-*. A client component: \"use client\" is there for the cell-by-cell entry. The paste handler lays a copied code out across the fields, every field is given inputMode=\"numeric\" and autoComplete=\"one-time-code\", and the cells are set in a monospaced face."
           }
         },
         "cardControls": ["length", "accent", "background"]
@@ -734,7 +738,8 @@
                 "emailPlaceholder": "name@company.com",
                 "passwordLabel": "Password"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-005-*. A server component: there are no hooks. The form comes first in the markup and is moved into the right column by the grid at a width from 44rem; the dark column with the promise is hidden entirely rather than squeezed."
           }
         },
         "cardControls": ["accent", "background"]
@@ -882,7 +887,8 @@
                 "roleTemplate": "Role: {role}",
                 "membersTemplate": "{count} people are already in: {names}"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-006-*. A server component: there are no hooks. The hue of the inviter's avatar is computed as an FNV-1a hash of the name. The list of the role's rights is put in a separate block before the buttons, and the invitation's expiry is spelled out."
           }
         },
         "cardControls": ["role", "accent", "background"]
@@ -1033,7 +1039,8 @@
                 "capsLabel": "Caps Lock is on.",
                 "keepLabel": "Keep me signed in on this device"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-007-*. A client component: \"use client\" is there for the field checks and the password reveal. Validation runs on onBlur rather than on every character; Caps Lock is caught through event.getModifierState in onKeyUp; the shared error notice is marked role=\"alert\". The card layout is measured by a container query against the block's width."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1192,7 +1199,8 @@
                 "emailLabel": "Email",
                 "emailPlaceholder": "name@company.com"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-008-*. A server component: there are no hooks. The divider is built with a grid from two pseudo-element lines rather than a background behind the word. The mark on the last provider is tied to the button through aria-describedby so that a screen reader hears it."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1342,7 +1350,8 @@
                 "detailsText": "Storing your email and name for account access, the history of installed blocks and service emails about how it works. Marketing emails only with the separate checkbox above.",
                 "requiredHint": "Tick the required consent to continue."
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-009-*. A client component: \"use client\" is there for tying the consent checkbox to the button state. The full text of the terms sits in a <details> so as not to lead away from the page; the hint line under the button is marked role=\"status\"."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1492,7 +1501,8 @@
                 "sentTemplate": "If that address is registered, the email has already been sent. You can send it again in {left} s.",
                 "back": "Remembered it — back to sign in"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-010-*. A client component: \"use client\" is there for the countdown on useState and a useEffect with setTimeout. The right column with the list of steps is hidden entirely at a narrow width through a container query, and the step numbers are drawn by a counter rather than by the markup."
           }
         },
         "cardControls": ["cooldown", "accent", "background"]
@@ -1643,7 +1653,8 @@
                 "mismatchText": "The passwords do not match yet.",
                 "note": "Once saved, sessions on other devices end and the link from the email stops working."
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-011-*. A client component: \"use client\" is there for parsing the password and checking the repeat. The requirements are computed with regular expressions carrying the u flag (they support Cyrillic), the list is marked aria-live=\"polite\", and the button is disabled until every requirement is met and the repeat matches."
           }
         },
         "cardControls": ["minLength", "accent", "background"]
@@ -1786,7 +1797,8 @@
                 "resend": "Send the code again",
                 "changeEmail": "Change the address"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-012-*. A client component: \"use client\" is there for stripping non-digits on input. One field with letter-spacing and a text-indent compensating for the tracking after the last character; autoComplete=\"one-time-code\" and inputMode=\"numeric\" turn on code filling on a phone."
           }
         },
         "cardControls": ["length", "attempts", "accent", "background"]
@@ -1951,7 +1963,8 @@
                 "resendText": "Send again",
                 "changeText": "Use another address"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-013-*. A server component: there are no hooks, and the state arrives through the state prop. The theme comes from the surrounding color-scheme through light-dark(): the block has no background by default, it sits directly on the page background. Both screens — the request and the send — live inside one block; at a wide width the \"how it works\" list unfolds into three columns through a container query."
           }
         },
         "cardControls": ["state", "linkMinutes", "accent", "background"]
@@ -2115,7 +2128,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-014-*. A client component: \"use client\" is there for stripping non-digits and for disabling the button until six characters are in. The theme comes from the surrounding color-scheme through light-dark(): the block has no background by default, and the glow under the card stays an accent patch in both themes. The fallback routes are ordinary buttons in a list rather than links in the footer."
           }
         },
         "cardControls": ["trustDays", "accent", "background"]
@@ -2269,7 +2283,8 @@
                 "printText": "Print",
                 "leftText": "Unused codes left: {left} of {total}"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-015-*. A client component: \"use client\" is there for the save checkbox and the \"copied\" mark. The theme comes from the surrounding color-scheme through light-dark(): the block has no background by default, it sits directly on the page background. Used codes are marked data-used and struck through rather than disappearing; a visually hidden caption is added to them for a screen reader."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2446,7 +2461,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-016-*. A client component: \"use client\" is there for the filter and the selected value. The theme comes from the surrounding color-scheme through light-dark(): the block has no background by default, it sits directly on the page background. The items are labels with a radio inside, and the highlight on the selected one rests on :has(input:checked); the avatar hue is computed as an FNV-1a hash of the name."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2633,7 +2649,8 @@
                 "footLink": "Sign in with another account",
                 "ariaLabel": "Invitation to the {project} project"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-017-*. A server component: there are no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block has no background by default, it sits directly on the page background. At a wide width the heading and the figures line up in a row through a container query; the hue of every avatar is computed as an FNV-1a hash of the name, and the stack is marked aria-hidden and duplicated as text."
           }
         },
         "cardControls": ["expiresDays", "accent", "background"]
@@ -2803,7 +2820,8 @@
                 "legalText": "By creating an account you accept the terms of use and the privacy policy.",
                 "ariaLabel": "Sign-up by invitation to {project}"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-018-*. A server component: there are no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block has no background by default, it sits directly on the page background. The invited address is rendered with an <output> element with aria-labelledby instead of a locked input: a readonly field is submitted with the form and confuses autofill."
           }
         },
         "cardControls": ["minPassword", "accent", "background"]
@@ -2955,7 +2973,8 @@
                 "retryText": "Try again",
                 "noteText": "If the attempts continue, the waiting window grows. Changing the password lifts the lock at once."
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-019-*. A client component: \"use client\" is there for the countdown on useState and a useEffect with setTimeout. The theme comes from the surrounding color-scheme through light-dark(): the block has no background by default, it sits directly on the page background. The time is set in a monospaced face with font-variant-numeric:tabular-nums so that the digits do not jitter; the bar is marked role=\"progressbar\" with aria-valuenow."
           }
         },
         "cardControls": ["seconds", "attempts", "accent", "background"]
@@ -3131,7 +3150,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-020-*. A client component: \"use client\" is there for the confirmation and the \"done\" state. The theme comes from the surrounding color-scheme through light-dark(): the block has no background by default, it sits directly on the page background. At a wide width the session time moves to the right through a container query; the current session is marked data-current and cannot be switched off."
           }
         },
         "cardControls": ["accent", "background"]
@@ -3281,7 +3301,8 @@
                 "whyText": "We ask again because the action is irreversible and the session has been open for over an hour.",
                 "footText": "The event goes into the project security log with the time and the device."
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-021-*. A server component: there are no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block has no background by default, it sits directly on the page background. The order \"consequences → field → buttons\" is set by the markup; at a wide width the buttons line up in a row through row-reverse, so that the confirmation ends up on the right while staying second in the DOM."
           }
         },
         "cardControls": ["accent", "background"]
@@ -3426,7 +3447,8 @@
                 "savedText": "The page draft is saved — nothing will be lost.",
                 "passwordLabel": "Password"
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-022-*. A server component: there are no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block has no background by default, it sits directly on the page background. The blurred layer is assembled from plain bars with filter:blur and marked aria-hidden; the card is declared role=\"alertdialog\" and tied to the heading through aria-labelledby."
           }
         },
         "cardControls": ["accent", "background"]
@@ -3600,7 +3622,8 @@
                 "skipText": "Skip — I'll fill it in later",
                 "doneText": "Step 1 creates the account. Step 2 changes nothing but your byline in comments."
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-023-*. A client component: \"use client\" is there for switching the steps. The theme comes from the surrounding color-scheme through light-dark(): the block has no background by default, it sits directly on the page background. The indicator is a list of two items with data-active and a divider line; at a wide width the profile fields go into two columns through a container query."
           }
         },
         "cardControls": ["defaultStep", "accent", "background"]
@@ -3778,7 +3801,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-024-*. A client component: \"use client\" is there for the selection and the cap. The theme comes from the surrounding color-scheme through light-dark(): the block has no background by default, it sits directly on the page background. The cards are labels with a visually hidden checkbox inside, and the highlight rests on :has(input:checked); once the limit is spent the remaining checkboxes are given disabled."
           }
         },
         "cardControls": ["limit", "accent", "background"]
@@ -3962,7 +3986,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-025-*. A client component: \"use client\" is there for the period and the chosen plan. The plans are labels with a radio inside, and the highlight rests on :has(input:checked); at a wide width the cards go into three columns and the form into two. The theme comes from the surrounding color-scheme through light-dark(): the block has no background by default, it sits directly on the page background, and the background prop brings it back."
           }
         },
         "cardControls": ["yearlyOff", "accent", "background"]
@@ -4144,7 +4169,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-026-*. A client component: \"use client\" is there for the two steps and for cleaning the input. The number accepts only digits, spaces and hyphens; the code field is a single one, with letter-spacing and a compensating text-indent. The theme comes from the surrounding color-scheme through light-dark(): the block has no background by default, it sits directly on the page background, and the background prop brings it back."
           }
         },
         "cardControls": ["codeLength", "accent", "background"]
@@ -4307,7 +4333,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-027-*. A client component: \"use client\" is there for the reason text and the \"request sent\" state. A sent request replaces only the form rather than the whole screen; the hue of an administrator's avatar is computed as an FNV-1a hash of the name. The theme comes from the surrounding color-scheme through light-dark(): the block has no background by default, it sits directly on the page background, and the background prop brings it back."
           }
         },
         "cardControls": ["accent", "background"]
@@ -4476,7 +4503,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-028-*. A client component: \"use client\" is there for the state of the switches. The switches are ordinary checkboxes with a transparent input over the track, and the look is given by CSS through :has(input:checked); the required purpose is given disabled. The theme comes from the surrounding color-scheme through light-dark(): the block has no background by default, it sits directly on the page background, and the background prop brings it back."
           }
         },
         "cardControls": ["accent", "background"]
@@ -4638,7 +4666,8 @@
                   "Support messages — we delete them separately on request"
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-029-*. A client component: \"use client\" is there for checking the typed address. The comparison is case-insensitive and the delete button is disabled until it matches; at a wide width the consequence columns stand side by side through a container query. The theme comes from the surrounding color-scheme through light-dark(): the block has no background by default, it sits directly on the page background, and the background prop brings it back."
           }
         },
         "cardControls": ["graceDays", "accent", "background"]

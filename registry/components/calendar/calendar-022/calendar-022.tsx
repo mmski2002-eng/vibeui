@@ -1,10 +1,10 @@
 "use client"
 
 import { Fragment, useMemo, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties, ReactNode } from "react"
+import type { ComponentProps, CSSProperties, ReactNode } from "react"
 
 export type Calendar022Props = Omit<
-  ComponentPropsWithoutRef<"fieldset">,
+  ComponentProps<"fieldset">,
   "children" | "onChange"
 > & {
   label?: string
@@ -38,7 +38,7 @@ const STYLES = `
 :where([data-vibeui-block="calendar-022"]){
 --vibeui-calendar-022-bg:transparent;
 --vibeui-calendar-022-fg:light-dark(oklch(0.24 0.014 160),oklch(0.93 0.008 160));
---vibeui-calendar-022-muted:light-dark(oklch(0.55 0.014 160),oklch(0.68 0.014 160));
+--vibeui-calendar-022-muted:color-mix(in oklab,var(--vibeui-calendar-022-fg) 68%,transparent);
 --vibeui-calendar-022-border:light-dark(oklch(0.9 0.008 160),oklch(0.35 0.014 160));
 --vibeui-calendar-022-soft:light-dark(oklch(0.97 0.008 160),oklch(0.29 0.012 160));
 --vibeui-calendar-022-accent:light-dark(oklch(0.5 0.11 160),oklch(0.72 0.11 160));
@@ -47,10 +47,13 @@ const STYLES = `
 --vibeui-calendar-022-radius:0.75rem;
 --vibeui-calendar-022-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="calendar-022"]{color-scheme:dark}
 [data-vibeui-block="calendar-022"]{
 display:flex;flex-direction:column;gap:0.75rem;
 width:100%;max-width:24rem;box-sizing:border-box;
-margin:0;padding:1rem;
+margin:0;padding:0.9375rem;
 background:var(--vibeui-calendar-022-bg);
 border:1px solid var(--vibeui-calendar-022-border);
 border-radius:calc(var(--vibeui-calendar-022-radius) + 0.25rem);
@@ -58,20 +61,20 @@ color:var(--vibeui-calendar-022-fg);
 font-family:var(--vibeui-calendar-022-font);
 }
 [data-vibeui-block="calendar-022"] legend{
-padding:0;font-size:0.9rem;font-weight:700;letter-spacing:-0.01em;
+padding:0;font-size:0.9375rem;font-weight:700;letter-spacing:-0.01em;
 }
 [data-vibeui-block="calendar-022"] [data-part="days"]{
-display:grid;grid-template-columns:repeat(7,1fr);gap:0.3rem;
+display:grid;grid-template-columns:repeat(7,1fr);gap:0.3125rem;
 }
 [data-vibeui-block="calendar-022"] [data-part="day"]{
 appearance:none;cursor:pointer;font:inherit;
-display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.1rem;
-min-width:0;padding:0.4rem 0.1rem;
+display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.125rem;
+min-width:0;padding:0.375rem 0.125rem;
 border:1px solid var(--vibeui-calendar-022-border);
-border-radius:0.6rem;
+border-radius:0.625rem;
 background:var(--vibeui-calendar-022-soft);
 color:var(--vibeui-calendar-022-muted);
-font-size:0.7rem;font-weight:600;text-transform:capitalize;
+font-size:0.6875rem;font-weight:600;text-transform:capitalize;
 transition:background-color .16s ease,color .16s ease,border-color .16s ease;
 }
 [data-vibeui-block="calendar-022"] [data-part="day"]:hover{border-color:var(--vibeui-calendar-022-accent)}
@@ -85,13 +88,13 @@ color:var(--vibeui-calendar-022-on-accent);
 [data-vibeui-block="calendar-022"] [data-part="day"][data-weekend="true"][aria-pressed="false"]{
 background:transparent;border-style:dashed;
 }
-[data-vibeui-block="calendar-022"] [data-part="mark"]{font-size:0.9rem;line-height:1.1;font-weight:700}
+[data-vibeui-block="calendar-022"] [data-part="mark"]{font-size:0.875rem;line-height:1.1;font-weight:700}
 [data-vibeui-block="calendar-022"] [data-part="presets"]{
-display:flex;flex-wrap:wrap;gap:0.35rem;
+display:flex;flex-wrap:wrap;gap:0.375rem;
 }
 [data-vibeui-block="calendar-022"] [data-part="preset"]{
 appearance:none;cursor:pointer;font:inherit;
-padding:0.3rem 0.6rem;border-radius:999px;
+padding:0.3125rem 0.625rem;border-radius:999px;
 border:1px solid var(--vibeui-calendar-022-border);
 background:transparent;color:var(--vibeui-calendar-022-muted);
 font-size:0.75rem;font-weight:600;
@@ -104,9 +107,9 @@ background:var(--vibeui-calendar-022-accentsoft);color:var(--vibeui-calendar-022
 outline:2px solid var(--vibeui-calendar-022-accent);outline-offset:2px;
 }
 [data-vibeui-block="calendar-022"] [data-part="total"]{
-margin:0;padding-top:0.65rem;
+margin:0;padding-top:0.625rem;
 border-top:1px solid var(--vibeui-calendar-022-border);
-font-size:0.8125rem;color:var(--vibeui-calendar-022-muted);
+font-size:0.875rem;color:var(--vibeui-calendar-022-muted);
 }
 [data-vibeui-block="calendar-022"] [data-part="total"] b{
 color:var(--vibeui-calendar-022-fg);font-variant-numeric:tabular-nums;
@@ -173,6 +176,20 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 }
 
 /**
+ * Локаль из пропа или дефолт компонента. Чужая страница не должна падать
+ * из-за опечатки в значении: на нераспознанной локали Intl бросает
+ * RangeError, а это белый экран вместо всего сайта.
+ */
+function safeLocale(value: string, fallback: string) {
+  try {
+    Intl.DateTimeFormat.supportedLocalesOf(value)
+    return value
+  } catch {
+    return fallback
+  }
+}
+
+/**
  * Выбор рабочих дней недели с пресетами и итогом в часах.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -186,7 +203,7 @@ export function Calendar022({
   perDayText = "{count} ч",
   totalText = "{days} × {perDay} = {total} в неделю",
   emptyText = "Рабочих дней нет — график пустой",
-  locale = "ru-RU",
+  locale: localeProp = "ru-RU",
   onChange,
   accent,
   background = "",
@@ -194,6 +211,7 @@ export function Calendar022({
   style,
   ...props
 }: Calendar022Props) {
+  const locale = safeLocale(localeProp, "ru-RU")
   const [days, setDays] = useState(defaultDays)
 
   const names = useMemo(() => {
@@ -260,6 +278,7 @@ export function Calendar022({
       </style>
       <fieldset
         {...props}
+        data-slot="calendar"
         data-vibeui-block="calendar-022"
         className={className}
         style={palette}

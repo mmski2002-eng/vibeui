@@ -1,10 +1,10 @@
 "use client"
 
 import { useId, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Currency007Props = Omit<
-  ComponentPropsWithoutRef<"fieldset">,
+  ComponentProps<"fieldset">,
   "children" | "defaultValue"
 > & {
   legend?: string
@@ -35,11 +35,14 @@ const STYLES = `
 --vibeui-currency-007-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.011 265));
 --vibeui-currency-007-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-currency-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-currency-007-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.014 265));
+--vibeui-currency-007-muted:color-mix(in oklab,var(--vibeui-currency-007-fg) 68%,transparent);
 --vibeui-currency-007-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.013 265));
 --vibeui-currency-007-accent:light-dark(oklch(0.55 0.18 40),oklch(0.76 0.15 45));
 --vibeui-currency-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="currency-007"]{color-scheme:dark}
 /* Подложки по умолчанию нет: фильтр ложится на фон страницы. */
 [data-vibeui-block="currency-007"]{
 display:flex;flex-direction:column;gap:0.5rem;
@@ -191,6 +194,7 @@ export function Currency007({
       </style>
       <fieldset
         {...props}
+        data-slot="currency-input"
         data-vibeui-block="currency-007"
         className={className}
         style={palette}

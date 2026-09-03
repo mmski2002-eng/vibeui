@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Sidebar002Item = {
   label: string
@@ -6,10 +6,7 @@ export type Sidebar002Item = {
   count?: number
 }
 
-export type Sidebar002Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Sidebar002Props = Omit<ComponentProps<"div">, "children"> & {
   items?: Sidebar002Item[]
   activeLabel?: string
   title?: string
@@ -29,13 +26,16 @@ const STYLES = `
 --vibeui-sidebar-002-width:12.5rem;
 --vibeui-sidebar-002-bg:transparent;
 --vibeui-sidebar-002-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
---vibeui-sidebar-002-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-sidebar-002-muted:color-mix(in oklab,var(--vibeui-sidebar-002-fg) 68%,transparent);
 --vibeui-sidebar-002-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
 --vibeui-sidebar-002-hover:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.85 0.02 265 / 11%));
 --vibeui-sidebar-002-active:light-dark(oklch(0.55 0.02 265 / 13%),oklch(0.85 0.02 265 / 18%));
 --vibeui-sidebar-002-accent:light-dark(oklch(0.55 0.2 262),oklch(0.73 0.17 262));
 --vibeui-sidebar-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="sidebar-002"]{color-scheme:dark}
 [data-vibeui-block="sidebar-002"]{
 display:flex;flex-direction:column;gap:0.25rem;
 width:var(--vibeui-sidebar-002-width);box-sizing:border-box;padding:0.5rem;
@@ -50,7 +50,7 @@ transition:width .16s ease;
 [data-vibeui-block="sidebar-002"] [data-part="switch"]{
 display:flex;align-items:center;gap:0.5rem;cursor:pointer;
 min-height:2rem;padding:0 0.5rem;border-radius:0.5rem;
-font-size:0.75rem;color:var(--vibeui-sidebar-002-muted);
+font-size:0.875rem;color:var(--vibeui-sidebar-002-muted);
 }
 [data-vibeui-block="sidebar-002"] [data-part="switch"]:hover{background:var(--vibeui-sidebar-002-hover)}
 [data-vibeui-block="sidebar-002"] [data-part="toggle"]:focus-visible + [data-part="switch"]{outline:2px solid var(--vibeui-sidebar-002-accent);outline-offset:-2px}
@@ -62,7 +62,7 @@ border-top:1.5px solid currentColor;border-bottom:1.5px solid currentColor;
 [data-vibeui-block="sidebar-002"] [data-part="row"]{
 display:flex;align-items:center;gap:0.5rem;
 min-height:2rem;padding:0 0.5rem;border-radius:0.5rem;
-color:inherit;text-decoration:none;font-size:0.8125rem;
+color:inherit;text-decoration:none;font-size:0.9375rem;
 }
 [data-vibeui-block="sidebar-002"] [data-part="row"]:hover{background:var(--vibeui-sidebar-002-hover)}
 [data-vibeui-block="sidebar-002"] [data-part="row"]:focus-visible{outline:2px solid var(--vibeui-sidebar-002-accent);outline-offset:-2px}
@@ -79,7 +79,7 @@ flex:1 1 auto;min-width:0;overflow:hidden;white-space:nowrap;
 transition:opacity .12s ease;
 }
 [data-vibeui-block="sidebar-002"] [data-part="count"]{
-flex:none;font-size:0.6875rem;color:var(--vibeui-sidebar-002-muted);
+flex:none;font-size:0.875rem;color:var(--vibeui-sidebar-002-muted);
 font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="sidebar-002"]:has([data-part="toggle"]:checked) [data-part="text"],
@@ -151,6 +151,7 @@ export function Sidebar002({
       </style>
       <div
         {...props}
+        data-slot="sidebar"
         data-vibeui-block="sidebar-002"
         className={className}
         style={palette}

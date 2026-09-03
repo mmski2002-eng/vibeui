@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Badge020Props = Omit<
-  ComponentPropsWithoutRef<"span">,
-  "children"
-> & {
+export type Badge020Props = Omit<ComponentProps<"span">, "children"> & {
   days?: number
   warnAt?: number
   /** Формулировки состояний: {days} подставляется числом со словом. */
@@ -31,6 +28,9 @@ const STYLES = `
 --vibeui-badge-020-mark:light-dark(oklch(0.55 calc(var(--vibeui-badge-020-chroma) * 1.4) var(--vibeui-badge-020-hue)),oklch(0.76 calc(var(--vibeui-badge-020-chroma) * 1.1) var(--vibeui-badge-020-hue)));
 --vibeui-badge-020-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="badge-020"]{color-scheme:dark}
 [data-vibeui-block="badge-020"]{
 display:inline-flex;align-items:center;gap:0.375rem;
 box-sizing:border-box;height:1.75rem;padding:0 0.6875rem;
@@ -87,6 +87,19 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 }
 
 /**
+ * Неверная локаль из пропа не должна ронять страницу-хост: Intl бросает на
+ * ней RangeError, поэтому неразбираемое значение откатываем на дефолтное.
+ */
+function safeLocale(value: string, fallback: string) {
+  try {
+    Intl.PluralRules.supportedLocalesOf(value)
+    return value
+  } catch {
+    return fallback
+  }
+}
+
+/**
  * Плашка срока: тон и формулировка меняются по порогу.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -113,7 +126,7 @@ export function Badge020({
           ? "soon"
           : "calm"
 
-  const rule = new Intl.PluralRules(locale).select(overdue)
+  const rule = new Intl.PluralRules(safeLocale(locale, "ru")).select(overdue)
   const counted = `${overdue} ${dayForms[rule] ?? dayForms.other ?? ""}`.trim()
   const template = stateText[state] ?? STATE_TEXT[state]
   const text = template.replace("{days}", counted)
@@ -135,6 +148,7 @@ export function Badge020({
       </style>
       <span
         {...props}
+        data-slot="badge"
         data-vibeui-block="badge-020"
         data-state={state}
         className={className}

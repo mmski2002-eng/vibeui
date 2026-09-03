@@ -1,14 +1,10 @@
 "use client"
 
 import { useId, useRef, useState } from "react"
-import type {
-  ClipboardEvent,
-  ComponentPropsWithoutRef,
-  CSSProperties,
-} from "react"
+import type { ClipboardEvent, ComponentProps, CSSProperties } from "react"
 
 export type Otp007Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onSubmit"
 > & {
   label?: string
@@ -43,22 +39,26 @@ const STYLES = `
 --vibeui-otp-007-surface:light-dark(oklch(1 0 0),oklch(0.26 0.014 265));
 --vibeui-otp-007-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-otp-007-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
---vibeui-otp-007-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.014 265));
+--vibeui-otp-007-muted:color-mix(in oklab,var(--vibeui-otp-007-fg) 68%,transparent);
 --vibeui-otp-007-field:light-dark(oklch(0.98 0.002 265),oklch(0.26 0.014 265));
 --vibeui-otp-007-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.014 265));
 --vibeui-otp-007-accent:light-dark(oklch(0.5 0.17 250),oklch(0.74 0.15 250));
 --vibeui-otp-007-ok:light-dark(oklch(0.48 0.13 155),oklch(0.74 0.14 155));
 --vibeui-otp-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="otp-007"]{color-scheme:dark}
 [data-vibeui-block="otp-007"]{
 display:flex;flex-direction:column;gap:0.5rem;
-width:100%;max-width:21rem;box-sizing:border-box;padding:0.875rem;
+width:100%;max-width:21rem;box-sizing:border-box;padding:0.9375rem;
 background:var(--vibeui-otp-007-bg);
 border:1px solid var(--vibeui-otp-007-shell);border-radius:0.875rem;
 font-family:var(--vibeui-otp-007-font);color:var(--vibeui-otp-007-fg);
 }
 [data-vibeui-block="otp-007"] *{box-sizing:border-box}
-[data-vibeui-block="otp-007"] [data-part="label"]{font-size:0.8125rem;font-weight:600}
+[data-vibeui-block="otp-007"] [data-part="label"]{font-size:0.9375rem;font-weight:600}
 [data-vibeui-block="otp-007"] [data-part="row"]{display:flex;gap:0.375rem}
 [data-vibeui-block="otp-007"] input{
 flex:1;min-width:0;height:3rem;padding:0;
@@ -92,10 +92,11 @@ animation:vibeui-otp-007-run 1.1s ease-in-out infinite;
 }
 [data-vibeui-block="otp-007"] [data-part="foot"]{
 display:flex;align-items:center;justify-content:space-between;gap:0.5rem;
-min-height:2rem;
+flex-wrap:wrap;min-height:2rem;
 }
 [data-vibeui-block="otp-007"] [data-part="status"]{
-font-size:0.75rem;line-height:1.4;color:var(--vibeui-otp-007-muted);
+flex:1 1 9rem;
+font-size:0.875rem;line-height:1.4;color:var(--vibeui-otp-007-muted);
 }
 [data-vibeui-block="otp-007"] [data-state="done"] [data-part="status"]{
 color:var(--vibeui-otp-007-ok);font-weight:600;
@@ -105,10 +106,16 @@ appearance:none;flex:none;cursor:pointer;
 height:2rem;padding:0 0.75rem;border-radius:0.5rem;
 border:1px solid var(--vibeui-otp-007-border);
 background:transparent;color:inherit;
-font:inherit;font-size:0.75rem;font-weight:600;
+font:inherit;font-size:0.875rem;font-weight:600;
 }
 [data-vibeui-block="otp-007"] [data-part="again"]:focus-visible{
 outline:2px solid var(--vibeui-otp-007-accent);outline-offset:2px;
+}
+/* Шкала категории. Порог 19rem, а не 32rem: карточка упёрта в max-width:21rem. */
+@container (min-width: 19rem){
+[data-vibeui-block="otp-007"] [data-part="label"]{font-size:1rem}
+[data-vibeui-block="otp-007"] [data-part="status"]{font-size:0.9375rem}
+[data-vibeui-block="otp-007"] [data-part="again"]{font-size:0.9375rem}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="otp-007"] *{animation:none!important;transition:none!important}}
 `
@@ -210,6 +217,7 @@ export function Otp007({
       </style>
       <div
         {...props}
+        data-slot="input-otp"
         data-vibeui-block="otp-007"
         className={className}
         style={palette}

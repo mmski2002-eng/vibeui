@@ -1,6 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Skeleton005Props = ComponentPropsWithoutRef<"div"> & {
+export type Skeleton005Props = ComponentProps<"div"> & {
   /** Высота обложки: под неё же считается наезд аватара. */
   cover?: string
   label?: string
@@ -24,6 +24,9 @@ const STYLES = `
 --vibeui-skeleton-005-cover:5.5rem;
 --vibeui-skeleton-005-avatar:4.25rem;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="skeleton-005"]{color-scheme:dark}
 [data-vibeui-block="skeleton-005"]{
 width:100%;max-width:22rem;box-sizing:border-box;overflow:hidden;
 background:var(--vibeui-skeleton-005-bg);
@@ -131,6 +134,7 @@ export function Skeleton005({
       </style>
       <div
         {...props}
+        data-slot="skeleton"
         data-vibeui-block="skeleton-005"
         role="status"
         aria-busy="true"

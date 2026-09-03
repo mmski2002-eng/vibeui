@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Stepper004State = "done" | "error" | "skipped" | "current" | "todo"
 
@@ -8,10 +8,7 @@ export type Stepper004Step = {
   hint?: string
 }
 
-export type Stepper004Props = Omit<
-  ComponentPropsWithoutRef<"nav">,
-  "children"
-> & {
+export type Stepper004Props = Omit<ComponentProps<"nav">, "children"> & {
   steps?: Stepper004Step[]
   /** Подписи состояний: компонент несёт русские, проект подставляет свои. */
   stateText?: Record<Stepper004State, string>
@@ -33,17 +30,22 @@ const STYLES = `
 --vibeui-stepper-004-bg:transparent;
 --vibeui-stepper-004-surface:light-dark(oklch(1 0 0),oklch(0.2 0.012 265));
 --vibeui-stepper-004-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
---vibeui-stepper-004-muted:light-dark(oklch(0.56 0.014 265),oklch(0.68 0.012 265));
+--vibeui-stepper-004-muted:color-mix(in oklab,var(--vibeui-stepper-004-fg) 68%,transparent);
 --vibeui-stepper-004-border:light-dark(oklch(0.92 0.006 265),oklch(0.32 0.012 265));
 --vibeui-stepper-004-line:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-stepper-004-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.16 262));
---vibeui-stepper-004-done:light-dark(oklch(0.55 0.14 155),oklch(0.74 0.14 155));
+/* Светлые ветки притемнены: этими же цветами набраны подписи состояний под
+   кружками, и на прежних 0.55 и 0.65 «Готово» давало 4.1:1, «Пропущен» — 3.0:1. */
+--vibeui-stepper-004-done:light-dark(oklch(0.525 0.14 155),oklch(0.74 0.14 155));
 --vibeui-stepper-004-error:light-dark(oklch(0.55 0.19 27),oklch(0.72 0.16 27));
---vibeui-stepper-004-skip:light-dark(oklch(0.65 0.03 265),oklch(0.6 0.02 265));
+--vibeui-stepper-004-skip:light-dark(oklch(0.545 0.03 265),oklch(0.6 0.02 265));
 --vibeui-stepper-004-on:light-dark(oklch(1 0 0),oklch(0.18 0.02 265));
 --vibeui-stepper-004-size:2rem;
 --vibeui-stepper-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="stepper-004"]{color-scheme:dark}
 [data-vibeui-block="stepper-004"]{
 container-type:inline-size;width:100%;box-sizing:border-box;
 font-family:var(--vibeui-stepper-004-font);color:var(--vibeui-stepper-004-fg);
@@ -191,6 +193,7 @@ export function Stepper004({
       </style>
       <nav
         {...props}
+        data-slot="stepper"
         data-vibeui-block="stepper-004"
         aria-label={label}
         className={className}

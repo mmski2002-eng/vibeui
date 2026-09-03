@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Calendar010Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Calendar010Props = Omit<ComponentProps<"div">, "children"> & {
   title?: string
   date?: string
   time?: string
@@ -25,7 +22,7 @@ const STYLES = `
 :where([data-vibeui-block="calendar-010"]){
 --vibeui-calendar-010-bg:transparent;
 --vibeui-calendar-010-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
---vibeui-calendar-010-muted:light-dark(oklch(0.58 0.014 265),oklch(0.68 0.012 265));
+--vibeui-calendar-010-muted:color-mix(in oklab,var(--vibeui-calendar-010-fg) 68%,transparent);
 --vibeui-calendar-010-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-calendar-010-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
 --vibeui-calendar-010-sheet:light-dark(oklch(0.98 0.002 265),oklch(0.28 0.012 265));
@@ -34,9 +31,12 @@ const STYLES = `
 --vibeui-calendar-010-ring:light-dark(oklch(1 0 0),oklch(0.19 0.012 265));
 --vibeui-calendar-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="calendar-010"]{color-scheme:dark}
 [data-vibeui-block="calendar-010"]{
 display:flex;gap:0.875rem;
-width:100%;max-width:22rem;box-sizing:border-box;padding:0.875rem;
+width:100%;max-width:22rem;box-sizing:border-box;padding:0.9375rem;
 background:var(--vibeui-calendar-010-bg);
 border:1px solid var(--vibeui-calendar-010-border);border-radius:0.875rem;
 color:var(--vibeui-calendar-010-fg);font-family:var(--vibeui-calendar-010-font);
@@ -49,20 +49,20 @@ border:1px solid var(--vibeui-calendar-010-border);
 background:var(--vibeui-calendar-010-sheet);
 }
 [data-vibeui-block="calendar-010"] [data-part="month"]{
-font-size:0.625rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;
+font-size:0.6875rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;
 color:var(--vibeui-calendar-010-accent);
 }
 [data-vibeui-block="calendar-010"] [data-part="day"]{
 font-size:1.375rem;font-weight:680;line-height:1.1;font-variant-numeric:tabular-nums;
 }
-[data-vibeui-block="calendar-010"] [data-part="weekday"]{font-size:0.625rem;color:var(--vibeui-calendar-010-muted)}
+[data-vibeui-block="calendar-010"] [data-part="weekday"]{font-size:0.6875rem;color:var(--vibeui-calendar-010-muted)}
 [data-vibeui-block="calendar-010"] [data-part="body"]{display:flex;flex-direction:column;gap:0.25rem;min-width:0}
 [data-vibeui-block="calendar-010"] [data-part="title"]{
 margin:0;font-size:0.9375rem;font-weight:650;line-height:1.25;
 }
 [data-vibeui-block="calendar-010"] [data-part="line"]{
 display:flex;align-items:center;gap:0.375rem;
-font-size:0.8125rem;color:var(--vibeui-calendar-010-muted);
+font-size:0.875rem;color:var(--vibeui-calendar-010-muted);
 }
 [data-vibeui-block="calendar-010"] [data-part="clock"]{
 position:relative;flex:none;width:0.75rem;height:0.75rem;
@@ -82,9 +82,11 @@ transform:rotate(-45deg);
 display:flex;align-items:center;justify-content:center;flex:none;
 width:1.5rem;height:1.5rem;border-radius:9999px;
 box-shadow:0 0 0 2px var(--vibeui-calendar-010-ring);
-background:oklch(0.93 0.04 var(--vibeui-calendar-010-hue,250));
-color:oklch(0.38 0.08 var(--vibeui-calendar-010-hue,250));
-font-size:0.625rem;font-weight:700;
+/* Кружок участника считается от своего тона, поэтому light-dark() нужен
+   и здесь: без него на тёмной подложке горит светлая пастель. */
+background:light-dark(oklch(0.93 0.04 var(--vibeui-calendar-010-hue,250)),oklch(0.34 0.06 var(--vibeui-calendar-010-hue,250)));
+color:light-dark(oklch(0.38 0.08 var(--vibeui-calendar-010-hue,250)),oklch(0.92 0.05 var(--vibeui-calendar-010-hue,250)));
+font-size:0.6875rem;font-weight:700;
 }
 [data-vibeui-block="calendar-010"] [data-part="face"] + [data-part="face"]{margin-left:-0.4375rem}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="calendar-010"] *{animation:none!important;transition:none!important}}
@@ -132,16 +134,36 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 }
 
 /**
+ * Дата и локаль из пропов или дефолты компонента. Чужая страница не должна
+ * падать из-за опечатки в значении: Intl бросает RangeError и на Invalid Date,
+ * и на нераспознанной локали, а это белый экран вместо всего сайта.
+ */
+function safeDate(value: string, fallback: string) {
+  return Number.isNaN(new Date(`${value}T00:00:00`).getTime())
+    ? fallback
+    : value
+}
+
+function safeLocale(value: string, fallback: string) {
+  try {
+    Intl.DateTimeFormat.supportedLocalesOf(value)
+    return value
+  } catch {
+    return fallback
+  }
+}
+
+/**
  * Карточка встречи: отрывной листок с датой, время, место и участники.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Calendar010({
   title = "Разбор каталога с дизайнером",
-  date = "2026-03-17",
+  date: dateProp = "2026-03-17",
   time = "11:00 — 12:00",
   place = "Переговорная «Полёт»",
   people = ["Анна Петрова", "Марк Ильин", "Мария Гурова"],
-  locale = "ru-RU",
+  locale: localeProp = "ru-RU",
   peopleLabel = "Участники: {people}",
   accent,
   background = "",
@@ -149,6 +171,8 @@ export function Calendar010({
   style,
   ...props
 }: Calendar010Props) {
+  const date = safeDate(dateProp, "2026-03-17")
+  const locale = safeLocale(localeProp, "ru-RU")
   const value = new Date(`${date}T00:00:00`)
   const month = new Intl.DateTimeFormat(locale, { month: "short" }).format(
     value,
@@ -179,6 +203,7 @@ export function Calendar010({
       </style>
       <article
         {...props}
+        data-slot="calendar"
         data-vibeui-block="calendar-010"
         className={className}
         style={palette}

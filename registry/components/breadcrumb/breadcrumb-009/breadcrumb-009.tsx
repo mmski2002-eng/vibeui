@@ -1,14 +1,11 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Breadcrumb009Step = {
   label: string
   href?: string
 }
 
-export type Breadcrumb009Props = Omit<
-  ComponentPropsWithoutRef<"nav">,
-  "children"
-> & {
+export type Breadcrumb009Props = Omit<ComponentProps<"nav">, "children"> & {
   steps?: Breadcrumb009Step[]
   current?: number
   /** Подпись навигации; {step} — номер шага, {total} — их число. */
@@ -28,7 +25,7 @@ export type Breadcrumb009Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="breadcrumb-009"]){
 --vibeui-breadcrumb-009-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.008 265));
---vibeui-breadcrumb-009-muted:light-dark(oklch(0.6 0.014 265),oklch(0.68 0.012 265));
+--vibeui-breadcrumb-009-muted:color-mix(in oklab,var(--vibeui-breadcrumb-009-fg) 68%,transparent);
 --vibeui-breadcrumb-009-line:light-dark(oklch(0.86 0.008 265),oklch(0.4 0.012 265));
 --vibeui-breadcrumb-009-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-breadcrumb-009-done:light-dark(oklch(0.6 0.15 152),oklch(0.72 0.16 152));
@@ -38,6 +35,9 @@ const STYLES = `
 --vibeui-breadcrumb-009-radius:0;
 --vibeui-breadcrumb-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="breadcrumb-009"]{color-scheme:dark}
 [data-vibeui-block="breadcrumb-009"]{
 box-sizing:border-box;padding:var(--vibeui-breadcrumb-009-pad);
 background:var(--vibeui-breadcrumb-009-bg);
@@ -143,6 +143,7 @@ export function Breadcrumb009({
       </style>
       <nav
         {...props}
+        data-slot="breadcrumb"
         data-vibeui-block="breadcrumb-009"
         aria-label={navLabel
           .replace("{step}", String(current + 1))

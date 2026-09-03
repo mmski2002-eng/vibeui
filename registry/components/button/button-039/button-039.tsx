@@ -1,6 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Button039Props = ComponentPropsWithoutRef<"button"> & {
+export type Button039Props = ComponentProps<"button"> & {
   size?: "sm" | "md" | "lg" | "xl"
   accent?: string
 }
@@ -17,6 +17,9 @@ const STYLES = `
 --vibeui-button-039-fg:light-dark(oklch(0.99 0.01 320),oklch(0.98 0.012 320));
 --vibeui-button-039-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="button-039"]{color-scheme:dark}
 [data-vibeui-block="button-039"]{
 appearance:none;border:0;cursor:pointer;box-sizing:border-box;
 display:inline-flex;align-items:center;justify-content:center;
@@ -86,6 +89,7 @@ export function Button039({
       <button
         {...props}
         type={type}
+        data-slot="button"
         data-vibeui-block="button-039"
         data-size={size}
         className={className}

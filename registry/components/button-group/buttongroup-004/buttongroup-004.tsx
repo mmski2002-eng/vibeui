@@ -1,21 +1,14 @@
 "use client"
 
 import { useRef, useState } from "react"
-import type {
-  ComponentPropsWithoutRef,
-  CSSProperties,
-  KeyboardEvent,
-} from "react"
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Buttongroup004Tool = {
   id: string
   label: string
 }
 
-export type Buttongroup004Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Buttongroup004Props = Omit<ComponentProps<"div">, "children"> & {
   tools?: Buttongroup004Tool[]
   label?: string
   showLabels?: boolean
@@ -32,13 +25,16 @@ const STYLES = `
 :where([data-vibeui-block="buttongroup-004"]){
 --vibeui-buttongroup-004-surface:transparent;
 --vibeui-buttongroup-004-fg:light-dark(oklch(0.27 0.016 265),oklch(0.94 0.006 265));
---vibeui-buttongroup-004-muted:light-dark(oklch(0.52 0.014 265),oklch(0.7 0.012 265));
+--vibeui-buttongroup-004-muted:color-mix(in oklab,var(--vibeui-buttongroup-004-fg) 68%,transparent);
 --vibeui-buttongroup-004-border:light-dark(oklch(0.89 0.008 265),oklch(0.37 0.012 265));
 --vibeui-buttongroup-004-hover:light-dark(oklch(0.96 0.004 265),oklch(0.3 0.012 265));
 --vibeui-buttongroup-004-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
 --vibeui-buttongroup-004-radius:0.75rem;
 --vibeui-buttongroup-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="buttongroup-004"]{color-scheme:dark}
 [data-vibeui-block="buttongroup-004"]{
 box-sizing:border-box;display:inline-flex;align-items:center;gap:0.125rem;
 padding:0.25rem;
@@ -182,6 +178,7 @@ export function Buttongroup004({
       <div
         {...props}
         ref={bar}
+        data-slot="button-group"
         data-vibeui-block="buttongroup-004"
         data-labels={showLabels ? "on" : "off"}
         role="toolbar"

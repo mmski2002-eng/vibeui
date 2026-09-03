@@ -34,7 +34,7 @@ export type Dropdown001Props = {
 const STYLES = `
 :where([data-vibeui-block="dropdown-001"]){
 --vibeui-dropdown-001-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
---vibeui-dropdown-001-muted:light-dark(oklch(0.52 0.014 265),oklch(0.7 0.012 265));
+--vibeui-dropdown-001-muted:color-mix(in oklab,var(--vibeui-dropdown-001-fg) 68%,transparent);
 --vibeui-dropdown-001-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
 --vibeui-dropdown-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
 --vibeui-dropdown-001-hover:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.86 0.02 265 / 12%));
@@ -43,6 +43,9 @@ const STYLES = `
 --vibeui-dropdown-001-radius:0.625rem;
 --vibeui-dropdown-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="dropdown-001"]{color-scheme:dark}
 [data-vibeui-block="dropdown-001"]{display:inline-flex;font-family:var(--vibeui-dropdown-001-font)}
 [data-vibeui-block="dropdown-001"] [data-part="trigger"]{
 appearance:none;cursor:pointer;
@@ -50,7 +53,7 @@ display:inline-flex;align-items:center;gap:0.5rem;
 height:2.25rem;padding:0 0.875rem;
 border:1px solid var(--vibeui-dropdown-001-border);border-radius:0.5rem;
 background:var(--vibeui-dropdown-001-bg);color:var(--vibeui-dropdown-001-fg);
-font:inherit;font-size:0.875rem;font-weight:500;
+font:inherit;font-size:0.8125rem;font-weight:500;
 anchor-name:--vibeui-dropdown-001-anchor;
 transition:border-color .16s ease,background-color .16s ease;
 }
@@ -87,8 +90,8 @@ position-try-fallbacks:flip-block,flip-inline;
 }
 [data-vibeui-dropdown-001-menu] [data-part="item"]{
 display:flex;align-items:center;width:100%;box-sizing:border-box;
-padding:0.4375rem 0.5625rem;border-radius:0.4375rem;
-color:inherit;text-decoration:none;font-size:0.875rem;line-height:1.3;
+padding:0.4375rem 0.5rem;border-radius:0.4375rem;
+color:inherit;text-decoration:none;font-size:0.8125rem;line-height:1.3;
 transition:background-color .14s ease;
 }
 [data-vibeui-dropdown-001-menu] [data-part="item"]:hover{background:var(--vibeui-dropdown-001-hover,light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.86 0.02 265 / 12%)))}
@@ -170,6 +173,7 @@ export function Dropdown001({
         {STYLES}
       </style>
       <div
+        data-slot="dropdown-menu"
         data-vibeui-block="dropdown-001"
         className={className}
         style={palette}

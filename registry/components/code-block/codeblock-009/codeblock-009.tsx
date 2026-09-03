@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Codeblock009Props = Omit<
-  ComponentPropsWithoutRef<"figure">,
-  "children"
-> & {
+export type Codeblock009Props = Omit<ComponentProps<"figure">, "children"> & {
   path?: string
   status?: string
   code?: string
@@ -25,7 +22,7 @@ const STYLES = `
 --vibeui-codeblock-009-bg:transparent;
 --vibeui-codeblock-009-code-bg:light-dark(oklch(0 0 0 / 3%),oklch(1 0 0 / 4%));
 --vibeui-codeblock-009-fg:light-dark(oklch(0.26 0.016 265),oklch(0.93 0.008 265));
---vibeui-codeblock-009-muted:light-dark(oklch(0.56 0.014 265),oklch(0.67 0.014 265));
+--vibeui-codeblock-009-muted:color-mix(in oklab,var(--vibeui-codeblock-009-fg) 68%,transparent);
 --vibeui-codeblock-009-border:light-dark(oklch(0.9 0.006 265),oklch(1 0 0 / 14%));
 --vibeui-codeblock-009-badge-bg:light-dark(oklch(0.93 0.04 250),oklch(0.45 0.09 250 / 48%));
 --vibeui-codeblock-009-badge-fg:light-dark(oklch(0.42 0.13 255),oklch(0.86 0.09 255));
@@ -34,6 +31,9 @@ const STYLES = `
 --vibeui-codeblock-009-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-codeblock-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="codeblock-009"]{color-scheme:dark}
 [data-vibeui-block="codeblock-009"]{
 display:flex;flex-direction:column;
 width:100%;max-width:32rem;box-sizing:border-box;margin:0;overflow:hidden;
@@ -48,7 +48,7 @@ padding:0.5rem 0.75rem;border-bottom:1px solid var(--vibeui-codeblock-009-border
 [data-vibeui-block="codeblock-009"] [data-part="badge"]{
 flex:none;padding:0.1875rem 0.375rem;border-radius:0.3125rem;
 background:var(--vibeui-codeblock-009-badge-bg);color:var(--vibeui-codeblock-009-badge-fg);
-font-size:0.625rem;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;
+font-size:0.6875rem;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;
 }
 [data-vibeui-block="codeblock-009"] [data-part="crumbs"]{
 display:flex;align-items:baseline;min-width:0;flex:1 1 auto;
@@ -138,6 +138,7 @@ export function Codeblock009({
       </style>
       <figure
         {...props}
+        data-slot="code-block"
         data-vibeui-block="codeblock-009"
         className={className}
         style={palette}

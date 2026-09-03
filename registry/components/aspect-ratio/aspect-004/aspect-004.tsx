@@ -1,7 +1,7 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Aspect004Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "title" | "children"
 > & {
   title?: string
@@ -26,13 +26,16 @@ const STYLES = `
 :where([data-vibeui-block="aspect-004"]){
 --vibeui-aspect-004-ink:oklch(0.18 0.02 265);
 --vibeui-aspect-004-fg:oklch(0.99 0.003 265);
---vibeui-aspect-004-muted:oklch(0.86 0.01 265);
+--vibeui-aspect-004-muted:color-mix(in oklab,var(--vibeui-aspect-004-fg) 68%,transparent);
 --vibeui-aspect-004-accent:oklch(0.75 0.14 75);
 --vibeui-aspect-004-radius:1rem;
 --vibeui-aspect-004-serif:ui-serif,Georgia,"Times New Roman",Times,serif;
 --vibeui-aspect-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="aspect-004"]{color-scheme:dark}
 [data-vibeui-block="aspect-004"]{
 position:relative;display:block;width:100%;max-width:20rem;box-sizing:border-box;overflow:hidden;
 aspect-ratio:3 / 4;border-radius:var(--vibeui-aspect-004-radius);
@@ -51,7 +54,10 @@ background:linear-gradient(to top,var(--vibeui-aspect-004-ink) 8%,color-mix(in o
 [data-vibeui-block="aspect-004"] [data-part="eyebrow"]{
 position:absolute;left:1rem;top:1rem;
 padding:0.1875rem 0.5rem;border-radius:9999px;
-background:oklch(1 0 0 / 16%);backdrop-filter:blur(4px);
+/* Плашка тонируется своим тёмным тоном, а не осветляется белым: белая
+   полупрозрачная поднимала фон под белой подписью до 4.4:1, а на светлом
+   снимке подпись пропала бы совсем. Затемняющая — работает на любом кадре. */
+background:color-mix(in oklab,var(--vibeui-aspect-004-ink) 55%,transparent);backdrop-filter:blur(4px);
 font-size:0.6875rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;
 }
 [data-vibeui-block="aspect-004"] [data-part="text"]{
@@ -106,6 +112,7 @@ export function Aspect004({
       </style>
       {href ? (
         <a
+          data-slot="aspect-ratio"
           data-vibeui-block="aspect-004"
           href={href}
           className={className}

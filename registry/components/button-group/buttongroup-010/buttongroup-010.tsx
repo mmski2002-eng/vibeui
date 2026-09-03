@@ -1,7 +1,7 @@
 "use client"
 
-import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import { useRef, useState } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Buttongroup010Period = {
   label: string
@@ -9,7 +9,7 @@ export type Buttongroup010Period = {
 }
 
 export type Buttongroup010Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   periods?: Buttongroup010Period[]
@@ -30,12 +30,14 @@ export type Buttongroup010Props = Omit<
 // иначе смещение на «индекс × 100%» перестало бы попадать в сегмент.
 // Строка диапазона объявляется через aria-live: смена вида без слов не
 // сообщает незрячему, что данные под группой уже другие.
+// Трек — toolbar с roving tabindex: период выбирают стрелками, а Tab
+// проходит группу целиком, как один элемент управления.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-010"]){
 --vibeui-buttongroup-010-surface:transparent;
 --vibeui-buttongroup-010-track:light-dark(oklch(0.965 0.004 265),oklch(0.29 0.012 265));
 --vibeui-buttongroup-010-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.006 265));
---vibeui-buttongroup-010-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-buttongroup-010-muted:color-mix(in oklab,var(--vibeui-buttongroup-010-fg) 68%,transparent);
 --vibeui-buttongroup-010-border:light-dark(oklch(0.89 0.008 265),oklch(0.37 0.012 265));
 --vibeui-buttongroup-010-accent:light-dark(oklch(0.53 0.17 265),oklch(0.62 0.17 265));
 --vibeui-buttongroup-010-on-accent:oklch(0.99 0.005 265);
@@ -44,6 +46,9 @@ const STYLES = `
 --vibeui-buttongroup-010-index:0;
 --vibeui-buttongroup-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="buttongroup-010"]{color-scheme:dark}
 [data-vibeui-block="buttongroup-010"]{
 box-sizing:border-box;display:inline-flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:22rem;padding:0.625rem;
@@ -142,10 +147,17 @@ export function Buttongroup010({
   ...props
 }: Buttongroup010Props) {
   const [current, setCurrent] = useState(defaultPeriod)
+  const track = useRef<HTMLDivElement>(null)
   const index = Math.max(
     0,
     periods.findIndex((period) => period.label === current),
   )
+
+  const select = (label: string, position: number) => {
+    setCurrent(label)
+    onChange?.(label)
+    track.current?.querySelectorAll("button")[position]?.focus()
+  }
 
   const palette = {
     "--vibeui-buttongroup-010-count": periods.length,
@@ -167,21 +179,41 @@ export function Buttongroup010({
       </style>
       <div
         {...props}
+        data-slot="button-group"
         data-vibeui-block="buttongroup-010"
         className={className}
         style={palette}
       >
-        <div data-part="track" role="group" aria-label={label}>
+        <div
+          data-part="track"
+          ref={track}
+          role="toolbar"
+          aria-label={label}
+          onKeyDown={(event) => {
+            const step =
+              event.key === "ArrowRight" || event.key === "ArrowDown"
+                ? 1
+                : event.key === "ArrowLeft" || event.key === "ArrowUp"
+                  ? -1
+                  : 0
+
+            if (step === 0) {
+              return
+            }
+
+            event.preventDefault()
+            const next = (index + step + periods.length) % periods.length
+            select(periods[next].label, next)
+          }}
+        >
           <span data-part="thumb" aria-hidden="true" />
-          {periods.map((period) => (
+          {periods.map((period, position) => (
             <button
               key={period.label}
               type="button"
               aria-pressed={period.label === current}
-              onClick={() => {
-                setCurrent(period.label)
-                onChange?.(period.label)
-              }}
+              tabIndex={position === index ? 0 : -1}
+              onClick={() => select(period.label, position)}
             >
               {period.label}
             </button>

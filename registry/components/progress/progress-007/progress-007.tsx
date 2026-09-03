@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Progress007Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Progress007Props = Omit<ComponentProps<"div">, "children"> & {
   label?: string
   /** Сколько единиц работы уже сделано: честное число вместо выдуманной доли. */
   processed?: number
@@ -26,12 +23,15 @@ const STYLES = `
 :where([data-vibeui-block="progress-007"]){
 --vibeui-progress-007-bg:transparent;
 --vibeui-progress-007-fg:light-dark(oklch(0.25 0.016 265),oklch(0.94 0.006 265));
---vibeui-progress-007-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-progress-007-muted:color-mix(in oklab,var(--vibeui-progress-007-fg) 68%,transparent);
 --vibeui-progress-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-progress-007-track:light-dark(oklch(0.93 0.005 265),oklch(0.3 0.011 265));
 --vibeui-progress-007-accent:light-dark(oklch(0.6 0.15 262),oklch(0.72 0.14 262));
 --vibeui-progress-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="progress-007"]{color-scheme:dark}
 [data-vibeui-block="progress-007"]{
 display:flex;flex-direction:column;gap:0.625rem;
 width:100%;max-width:24rem;box-sizing:border-box;padding:0.9375rem 1.0625rem;
@@ -40,7 +40,7 @@ border:1px solid var(--vibeui-progress-007-border);border-radius:0.875rem;
 font-family:var(--vibeui-progress-007-font);color:var(--vibeui-progress-007-fg);
 }
 [data-vibeui-block="progress-007"] [data-part="head"]{
-display:flex;align-items:center;gap:0.5rem;font-size:0.8125rem;font-weight:650;
+display:flex;align-items:center;gap:0.5rem;font-size:0.9375rem;font-weight:650;
 }
 /* Точка-маячок: подпись остаётся живой, даже когда полосу не видно. */
 [data-vibeui-block="progress-007"] [data-part="pip"]{
@@ -69,7 +69,7 @@ animation:vibeui-progress-007-drift 0.9s linear infinite;
 }
 [data-vibeui-block="progress-007"] [data-part="foot"]{
 display:flex;justify-content:space-between;gap:0.75rem;
-font-size:0.6875rem;color:var(--vibeui-progress-007-muted);
+font-size:0.875rem;color:var(--vibeui-progress-007-muted);
 font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="progress-007"] [data-part="foot"] strong{
@@ -148,6 +148,7 @@ export function Progress007({
       </style>
       <div
         {...props}
+        data-slot="progress"
         data-vibeui-block="progress-007"
         className={className}
         style={palette}

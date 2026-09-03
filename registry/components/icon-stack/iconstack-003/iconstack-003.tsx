@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Iconstack003Props = Omit<
-  ComponentPropsWithoutRef<"details">,
-  "children"
-> & {
+export type Iconstack003Props = Omit<ComponentProps<"details">, "children"> & {
   names?: string[]
   max?: number
   label?: string
@@ -24,12 +21,15 @@ const STYLES = `
 --vibeui-iconstack-003-ring:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
 --vibeui-iconstack-003-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.01 265));
 --vibeui-iconstack-003-fg:light-dark(oklch(0.26 0.014 265),oklch(0.94 0.005 265));
---vibeui-iconstack-003-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-iconstack-003-muted:color-mix(in oklab,var(--vibeui-iconstack-003-fg) 68%,transparent);
 --vibeui-iconstack-003-more-bg:light-dark(oklch(0.28 0.014 265),oklch(0.86 0.01 265));
 --vibeui-iconstack-003-more-fg:light-dark(oklch(0.99 0 0),oklch(0.2 0.014 265));
 --vibeui-iconstack-003-focus:light-dark(oklch(0.55 0.17 262 / 60%),oklch(0.76 0.15 262 / 70%));
 --vibeui-iconstack-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="iconstack-003"]{color-scheme:dark}
 /* Подложки по умолчанию нет: карточка лежит на фоне страницы. */
 [data-vibeui-block="iconstack-003"]{
 display:inline-block;box-sizing:border-box;
@@ -59,8 +59,8 @@ border-radius:9999px;border:2px solid var(--vibeui-iconstack-003-ring);
 font-size:0.625rem;font-weight:700;line-height:1;
 }
 [data-vibeui-block="iconstack-003"] [data-part="face"]{
-background:oklch(0.9 0.06 var(--vibeui-iconstack-003-hue,265));
-color:oklch(0.36 0.12 var(--vibeui-iconstack-003-hue,265));
+background:light-dark(oklch(0.9 0.06 var(--vibeui-iconstack-003-hue,265)),oklch(0.36 0.07 var(--vibeui-iconstack-003-hue,265)));
+color:light-dark(oklch(0.36 0.12 var(--vibeui-iconstack-003-hue,265)),oklch(0.88 0.08 var(--vibeui-iconstack-003-hue,265)));
 }
 /* Счётчик слева от стопки: справа он читается как ещё один участник. */
 [data-vibeui-block="iconstack-003"] [data-part="more"]{
@@ -168,6 +168,7 @@ export function Iconstack003({
       </style>
       <details
         {...props}
+        data-slot="icon-stack"
         data-vibeui-block="iconstack-003"
         className={className}
         style={palette}

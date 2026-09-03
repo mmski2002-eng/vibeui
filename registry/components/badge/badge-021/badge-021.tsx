@@ -1,8 +1,8 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Badge021Env = "prod" | "stage" | "dev"
 
-export type Badge021Props = ComponentPropsWithoutRef<"span"> & {
+export type Badge021Props = ComponentProps<"span"> & {
   env?: Badge021Env
   label?: string
 }
@@ -18,6 +18,9 @@ const STYLES = `
 --vibeui-badge-021-border:light-dark(oklch(0.86 0.008 265),oklch(0.42 0.012 265));
 --vibeui-badge-021-font:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="badge-021"]{color-scheme:dark}
 [data-vibeui-block="badge-021"]{
 display:inline-flex;align-items:center;box-sizing:border-box;
 height:1.5rem;padding:0 0.625rem;
@@ -69,6 +72,7 @@ export function Badge021({
       </style>
       <span
         {...props}
+        data-slot="badge"
         data-vibeui-block="badge-021"
         data-env={env}
         className={className}

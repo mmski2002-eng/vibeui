@@ -1,7 +1,7 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Scrollarea001Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "title"
 > & {
   title?: string
@@ -22,12 +22,16 @@ const STYLES = `
 :where([data-vibeui-block="scrollarea-001"]){
 --vibeui-scrollarea-001-bg:transparent;
 --vibeui-scrollarea-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
---vibeui-scrollarea-001-muted:light-dark(oklch(0.56 0.014 265),oklch(0.69 0.012 265));
+--vibeui-scrollarea-001-muted:color-mix(in oklab,var(--vibeui-scrollarea-001-fg) 68%,transparent);
 --vibeui-scrollarea-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.33 0.012 265));
 --vibeui-scrollarea-001-stripe:light-dark(oklch(0.975 0.002 265),oklch(0.255 0.009 265));
+--vibeui-scrollarea-001-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-scrollarea-001-height:12rem;
 --vibeui-scrollarea-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="scrollarea-001"]{color-scheme:dark}
 [data-vibeui-block="scrollarea-001"]{
 display:flex;flex-direction:column;
 width:100%;max-width:20rem;box-sizing:border-box;overflow:hidden;
@@ -46,6 +50,10 @@ font-size:0.8125rem;font-weight:650;
 height:var(--vibeui-scrollarea-001-height);overflow-y:auto;overscroll-behavior:contain;
 scrollbar-width:thin;
 mask:linear-gradient(to bottom,transparent,oklch(0 0 0) 0.75rem,oklch(0 0 0) calc(100% - 0.75rem),transparent);
+}
+/* Область получает фокус с клавиатуры, значит обязана его показывать. */
+[data-vibeui-block="scrollarea-001"] [data-part="area"]:focus-visible{
+outline:2px solid var(--vibeui-scrollarea-001-accent);outline-offset:-2px;
 }
 [data-vibeui-block="scrollarea-001"] ul{margin:0;padding:0.375rem;list-style:none}
 [data-vibeui-block="scrollarea-001"] li{
@@ -122,6 +130,7 @@ export function Scrollarea001({
       </style>
       <div
         {...props}
+        data-slot="scroll-area"
         data-vibeui-block="scrollarea-001"
         className={className}
         style={palette}
@@ -130,7 +139,7 @@ export function Scrollarea001({
           <span>{title}</span>
           <span data-part="count">{items.length}</span>
         </div>
-        <div data-part="area" tabIndex={0} role="group" aria-label={title}>
+        <div data-part="area" tabIndex={0} role="region" aria-label={title}>
           <ul>
             {items.map((item) => (
               <li key={item}>{item}</li>

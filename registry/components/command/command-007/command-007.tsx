@@ -1,11 +1,7 @@
 "use client"
 
 import { useId, useState } from "react"
-import type {
-  ComponentPropsWithoutRef,
-  CSSProperties,
-  KeyboardEvent,
-} from "react"
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Command007Entry = {
   label: string
@@ -17,10 +13,7 @@ export type Command007Hint = {
   text: string
 }
 
-export type Command007Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Command007Props = Omit<ComponentProps<"div">, "children"> & {
   entries?: Command007Entry[]
   placeholder?: string
   /** Легенда синтаксиса: компонент несёт русскую, проект подставляет свою. */
@@ -50,7 +43,7 @@ const STYLES = `
 :where([data-vibeui-block="command-007"]){
 --vibeui-command-007-bg:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
 --vibeui-command-007-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.006 265));
---vibeui-command-007-muted:light-dark(oklch(0.57 0.014 265),oklch(0.68 0.012 265));
+--vibeui-command-007-muted:color-mix(in oklab,var(--vibeui-command-007-fg) 68%,transparent);
 --vibeui-command-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
 --vibeui-command-007-accent:light-dark(oklch(0.62 0.16 55),oklch(0.78 0.13 55));
 --vibeui-command-007-chip:light-dark(oklch(0.48 0.14 55),oklch(0.85 0.11 55));
@@ -59,6 +52,9 @@ const STYLES = `
 --vibeui-command-007-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-command-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="command-007"]{color-scheme:dark}
 [data-vibeui-block="command-007"]{
 display:block;box-sizing:border-box;width:100%;max-width:24rem;overflow:hidden;
 background:var(--vibeui-command-007-bg);color:var(--vibeui-command-007-fg);
@@ -225,6 +221,7 @@ export function Command007({
       </style>
       <div
         {...props}
+        data-slot="command"
         data-vibeui-block="command-007"
         className={className}
         style={paletteStyle}

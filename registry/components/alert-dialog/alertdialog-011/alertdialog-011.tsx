@@ -1,10 +1,10 @@
 "use client"
 
-import { useRef, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import { useId, useRef, useState } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Alertdialog011Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "title"
 > & {
   triggerLabel?: string
@@ -32,7 +32,7 @@ const STYLES = `
 --vibeui-alertdialog-011-bg:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
 --vibeui-alertdialog-011-panel:light-dark(oklch(0.97 0.003 265),oklch(0.27 0.01 265));
 --vibeui-alertdialog-011-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-alertdialog-011-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-alertdialog-011-muted:color-mix(in oklab,var(--vibeui-alertdialog-011-fg) 68%,transparent);
 --vibeui-alertdialog-011-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
 --vibeui-alertdialog-011-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
 --vibeui-alertdialog-011-on-accent:light-dark(oklch(1 0 0),oklch(0.17 0.03 262));
@@ -42,6 +42,9 @@ const STYLES = `
 --vibeui-alertdialog-011-shadow:light-dark(oklch(0.2 0.03 265 / 55%),oklch(0.02 0.01 265 / 70%));
 --vibeui-alertdialog-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="alertdialog-011"]{color-scheme:dark}
 [data-vibeui-block="alertdialog-011"]{
 font-family:var(--vibeui-alertdialog-011-font);color:var(--vibeui-alertdialog-011-fg);
 }
@@ -101,6 +104,8 @@ font:inherit;font-size:0.8125rem;font-weight:650;
 border:1px solid var(--vibeui-alertdialog-011-border);background:var(--vibeui-alertdialog-011-bg);color:inherit;
 }
 [data-vibeui-block="alertdialog-011"] dialog button:focus-visible{outline:2px solid var(--vibeui-alertdialog-011-accent);outline-offset:2px}
+/* showModal() делает фон inert, но не запрещает прокрутку страницы. */
+html:has([data-vibeui-block="alertdialog-011"] dialog[open]){overflow:hidden}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="alertdialog-011"] *{animation:none!important;transition:none!important}}
 `
 
@@ -147,6 +152,7 @@ export function Alertdialog011({
   ...props
 }: Alertdialog011Props) {
   const box = useRef<HTMLDialogElement>(null)
+  const uid = useId()
   const [choice, setChoice] = useState("")
 
   const palette = {
@@ -167,6 +173,7 @@ export function Alertdialog011({
       </style>
       <div
         {...props}
+        data-slot="alert-dialog"
         data-vibeui-block="alertdialog-011"
         className={className}
         style={palette}
@@ -182,21 +189,29 @@ export function Alertdialog011({
           {triggerLabel}
         </button>
 
-        <dialog ref={box} aria-labelledby="vibeui-alertdialog-011-title">
+        <dialog
+          ref={box}
+          role="alertdialog"
+          aria-modal="true"
+          aria-labelledby={`${uid}-title`}
+          aria-describedby={`${uid}-text`}
+        >
           <div data-part="head">
             <span data-part="mark" aria-hidden="true">
               !
             </span>
             <div>
-              <h2 id="vibeui-alertdialog-011-title">{title}</h2>
-              <p data-part="text">{text}</p>
+              <h2 id={`${uid}-title`}>{title}</h2>
+              <p id={`${uid}-text`} data-part="text">
+                {text}
+              </p>
             </div>
           </div>
 
           <label data-part="choice">
             <input
               type="radio"
-              name="vibeui-alertdialog-011-choice"
+              name={`${uid}-choice`}
               value="mine"
               checked={choice === "mine"}
               onChange={() => setChoice("mine")}
@@ -210,7 +225,7 @@ export function Alertdialog011({
           <label data-part="choice">
             <input
               type="radio"
-              name="vibeui-alertdialog-011-choice"
+              name={`${uid}-choice`}
               value="theirs"
               checked={choice === "theirs"}
               onChange={() => setChoice("theirs")}

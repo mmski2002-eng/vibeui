@@ -1,11 +1,11 @@
 "use client"
 
 import { useSyncExternalStore } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Kbd005Platform = "auto" | "mac" | "windows"
 
-export type Kbd005Props = Omit<ComponentPropsWithoutRef<"div">, "children"> & {
+export type Kbd005Props = Omit<ComponentProps<"div">, "children"> & {
   platform?: Kbd005Platform
   action?: string
   letter?: string
@@ -28,11 +28,14 @@ const STYLES = `
 :where([data-vibeui-block="kbd-005"]){
 --vibeui-kbd-005-surface:transparent;
 --vibeui-kbd-005-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
---vibeui-kbd-005-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-kbd-005-muted:color-mix(in oklab,var(--vibeui-kbd-005-fg) 68%,transparent);
 --vibeui-kbd-005-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.012 265));
 --vibeui-kbd-005-key:light-dark(oklch(0.975 0.003 265),oklch(0.3 0.012 265));
 --vibeui-kbd-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="kbd-005"]{color-scheme:dark}
 [data-vibeui-block="kbd-005"]{
 display:inline-flex;align-items:center;justify-content:space-between;gap:1.25rem;
 box-sizing:border-box;padding:0.75rem 0.875rem;
@@ -134,6 +137,7 @@ export function Kbd005({
       </style>
       <div
         {...props}
+        data-slot="kbd"
         data-vibeui-block="kbd-005"
         data-system={system}
         className={className}

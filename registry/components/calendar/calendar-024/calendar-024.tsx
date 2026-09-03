@@ -1,10 +1,10 @@
 "use client"
 
 import { useId, useMemo, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Calendar024Props = Omit<
-  ComponentPropsWithoutRef<"fieldset">,
+  ComponentProps<"fieldset">,
   "children" | "onChange"
 > & {
   label?: string
@@ -34,7 +34,7 @@ const STYLES = `
 :where([data-vibeui-block="calendar-024"]){
 --vibeui-calendar-024-bg:transparent;
 --vibeui-calendar-024-fg:light-dark(oklch(0.23 0.014 275),oklch(0.93 0.008 275));
---vibeui-calendar-024-muted:light-dark(oklch(0.56 0.014 275),oklch(0.68 0.014 275));
+--vibeui-calendar-024-muted:color-mix(in oklab,var(--vibeui-calendar-024-fg) 68%,transparent);
 --vibeui-calendar-024-border:light-dark(oklch(0.9 0.008 275),oklch(0.35 0.012 275));
 --vibeui-calendar-024-field:light-dark(oklch(0.985 0.004 275),oklch(0.28 0.012 275));
 --vibeui-calendar-024-accent:light-dark(oklch(0.51 0.13 275),oklch(0.72 0.12 275));
@@ -43,10 +43,13 @@ const STYLES = `
 --vibeui-calendar-024-radius:0.625rem;
 --vibeui-calendar-024-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="calendar-024"]{color-scheme:dark}
 [data-vibeui-block="calendar-024"]{
-display:flex;flex-direction:column;gap:0.6rem;
+display:flex;flex-direction:column;gap:0.625rem;
 width:100%;max-width:23rem;box-sizing:border-box;
-margin:0;padding:1rem;
+margin:0;padding:0.9375rem;
 background:var(--vibeui-calendar-024-bg);
 border:1px solid var(--vibeui-calendar-024-border);
 border-radius:calc(var(--vibeui-calendar-024-radius) + 0.25rem);
@@ -54,25 +57,25 @@ color:var(--vibeui-calendar-024-fg);
 font-family:var(--vibeui-calendar-024-font);
 }
 [data-vibeui-block="calendar-024"] legend{
-padding:0;font-size:0.9rem;font-weight:700;letter-spacing:-0.01em;
+padding:0;font-size:0.9375rem;font-weight:700;letter-spacing:-0.01em;
 }
 [data-vibeui-block="calendar-024"] [data-part="row"]{
-display:grid;grid-template-columns:4.5rem 1fr 5.5rem;gap:0.4rem;align-items:end;
+display:grid;grid-template-columns:4.5rem 1fr 5.5rem;gap:0.375rem;align-items:end;
 }
 [data-vibeui-block="calendar-024"] [data-part="cell"]{
-display:flex;flex-direction:column;gap:0.2rem;min-width:0;
+display:flex;flex-direction:column;gap:0.1875rem;min-width:0;
 }
 [data-vibeui-block="calendar-024"] [data-part="cell"] label{
-font-size:0.7rem;font-weight:600;letter-spacing:0.03em;text-transform:uppercase;
+font-size:0.6875rem;font-weight:600;letter-spacing:0.03em;text-transform:uppercase;
 color:var(--vibeui-calendar-024-muted);
 }
 [data-vibeui-block="calendar-024"] input,
 [data-vibeui-block="calendar-024"] select{
-box-sizing:border-box;width:100%;height:2.4rem;padding:0 0.55rem;
+box-sizing:border-box;width:100%;height:2.5rem;padding:0 0.5625rem;
 border:1px solid var(--vibeui-calendar-024-border);
 border-radius:var(--vibeui-calendar-024-radius);
 background:var(--vibeui-calendar-024-field);
-color:inherit;font:inherit;font-size:0.875rem;
+color:inherit;font:inherit;font-size:0.9375rem;
 font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="calendar-024"] select{text-transform:capitalize}
@@ -85,13 +88,13 @@ outline:2px solid var(--vibeui-calendar-024-accent);outline-offset:1px;border-co
 border-color:var(--vibeui-calendar-024-bad);
 }
 [data-vibeui-block="calendar-024"] [data-part="note"]{
-margin:0;display:flex;align-items:center;gap:0.35rem;
-min-height:1.15rem;font-size:0.8125rem;color:var(--vibeui-calendar-024-muted);
+margin:0;display:flex;align-items:center;gap:0.375rem;
+min-height:1.125rem;font-size:0.875rem;color:var(--vibeui-calendar-024-muted);
 }
 [data-vibeui-block="calendar-024"][data-state="bad"] [data-part="note"]{color:var(--vibeui-calendar-024-bad)}
 [data-vibeui-block="calendar-024"][data-state="ok"] [data-part="note"]{color:var(--vibeui-calendar-024-ok)}
 [data-vibeui-block="calendar-024"] [data-part="dot"]{
-width:0.45rem;height:0.45rem;border-radius:50%;flex:none;background:currentColor;
+width:0.4375rem;height:0.4375rem;border-radius:50%;flex:none;background:currentColor;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="calendar-024"] *{animation:none!important;transition:none!important}}
 `
@@ -152,6 +155,26 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 }
 
 /**
+ * Дата и локаль из пропов или дефолты компонента. Чужая страница не должна
+ * падать из-за опечатки в значении: Intl бросает RangeError и на Invalid Date,
+ * и на нераспознанной локали, а это белый экран вместо всего сайта.
+ */
+function safeDate(value: string, fallback: string) {
+  return Number.isNaN(new Date(`${value}T00:00:00`).getTime())
+    ? fallback
+    : value
+}
+
+function safeLocale(value: string, fallback: string) {
+  try {
+    Intl.DateTimeFormat.supportedLocalesOf(value)
+    return value
+  } catch {
+    return fallback
+  }
+}
+
+/**
  * Дата рождения тремя полями с разбором ошибок и подсчётом возраста.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -160,8 +183,8 @@ export function Calendar024({
   defaultValue = "1994-07-19",
   minAge = 18,
   maxAge = 120,
-  today = "2026-04-15",
-  locale = "ru-RU",
+  today: todayProp = "2026-04-15",
+  locale: localeProp = "ru-RU",
   fieldLabels = DEFAULT_FIELD_LABELS,
   noteText = DEFAULT_NOTE_TEXT,
   ageText = DEFAULT_AGE_TEXT,
@@ -172,6 +195,8 @@ export function Calendar024({
   style,
   ...props
 }: Calendar024Props) {
+  const today = safeDate(todayProp, "2026-04-15")
+  const locale = safeLocale(localeProp, "ru-RU")
   const id = useId()
   const parts = defaultValue.split("-")
   const [year, setYear] = useState(parts[0] ?? "")
@@ -279,6 +304,7 @@ export function Calendar024({
       </style>
       <fieldset
         {...props}
+        data-slot="calendar"
         data-vibeui-block="calendar-024"
         data-state={check.state}
         className={className}

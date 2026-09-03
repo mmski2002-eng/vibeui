@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Stepper011State = "done" | "error" | "current" | "todo"
 
@@ -13,10 +13,7 @@ export type Stepper011Step = {
   actionLabel?: string
 }
 
-export type Stepper011Props = Omit<
-  ComponentPropsWithoutRef<"nav">,
-  "children"
-> & {
+export type Stepper011Props = Omit<ComponentProps<"nav">, "children"> & {
   steps?: Stepper011Step[]
   /** Заголовок карточки ошибки. {title} — название шага. */
   alertTitleText?: string
@@ -41,7 +38,7 @@ const STYLES = `
 --vibeui-stepper-011-bg:transparent;
 --vibeui-stepper-011-surface:light-dark(oklch(1 0 0),oklch(0.2 0.012 265));
 --vibeui-stepper-011-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
---vibeui-stepper-011-muted:light-dark(oklch(0.56 0.014 265),oklch(0.68 0.012 265));
+--vibeui-stepper-011-muted:color-mix(in oklab,var(--vibeui-stepper-011-fg) 68%,transparent);
 --vibeui-stepper-011-border:light-dark(oklch(0.92 0.006 265),oklch(0.32 0.012 265));
 --vibeui-stepper-011-line:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-stepper-011-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.16 262));
@@ -52,6 +49,9 @@ const STYLES = `
 --vibeui-stepper-011-size:2rem;
 --vibeui-stepper-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="stepper-011"]{color-scheme:dark}
 [data-vibeui-block="stepper-011"]{
 width:100%;box-sizing:border-box;
 font-family:var(--vibeui-stepper-011-font);color:var(--vibeui-stepper-011-fg);
@@ -212,6 +212,7 @@ export function Stepper011({
       </style>
       <nav
         {...props}
+        data-slot="stepper"
         data-vibeui-block="stepper-011"
         aria-label={label}
         className={className}

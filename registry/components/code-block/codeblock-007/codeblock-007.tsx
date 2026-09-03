@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Codeblock007Props = Omit<
-  ComponentPropsWithoutRef<"figure">,
-  "children"
-> & {
+export type Codeblock007Props = Omit<ComponentProps<"figure">, "children"> & {
   path?: string
   message?: string
   errorFrom?: number
@@ -26,7 +23,7 @@ const STYLES = `
 --vibeui-codeblock-007-bg:transparent;
 --vibeui-codeblock-007-head:light-dark(oklch(0 0 0 / 4%),oklch(1 0 0 / 5%));
 --vibeui-codeblock-007-fg:light-dark(oklch(0.27 0.015 30),oklch(0.93 0.006 30));
---vibeui-codeblock-007-muted:light-dark(oklch(0.49 0.016 30),oklch(0.66 0.014 30));
+--vibeui-codeblock-007-muted:color-mix(in oklab,var(--vibeui-codeblock-007-fg) 68%,transparent);
 --vibeui-codeblock-007-gutter:light-dark(oklch(0.66 0.02 30),oklch(0.5 0.02 30));
 --vibeui-codeblock-007-border:light-dark(oklch(0 0 0 / 13%),oklch(1 0 0 / 13%));
 --vibeui-codeblock-007-bad:light-dark(oklch(0.52 0.21 25),oklch(0.72 0.19 25));
@@ -34,6 +31,9 @@ const STYLES = `
 --vibeui-codeblock-007-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-codeblock-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="codeblock-007"]{color-scheme:dark}
 [data-vibeui-block="codeblock-007"]{
 display:flex;flex-direction:column;
 width:100%;max-width:34rem;box-sizing:border-box;margin:0;overflow:hidden;
@@ -151,6 +151,7 @@ export function Codeblock007({
       </style>
       <figure
         {...props}
+        data-slot="code-block"
         data-vibeui-block="codeblock-007"
         className={className}
         style={palette}

@@ -1,7 +1,7 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Toast009Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "title"
 > & {
   name?: string
@@ -22,12 +22,13 @@ export type Toast009Props = Omit<
 //
 // Тема берётся из color-scheme окружения через light-dark(): в тёмной ветке
 // граница карточки светлее её подложки, а не темнее. Оттенок кружка считается
-// из имени и читается в обеих темах, поэтому остаётся одной парой значений.
+// из имени, а светлота берётся из темы: пастельная плашка на тёмной карточке
+// светилась бы, поэтому у кружка своя пара значений.
 const STYLES = `
 :where([data-vibeui-block="toast-009"]){
 --vibeui-toast-009-bg:light-dark(oklch(1 0 0),oklch(0.26 0.014 265));
 --vibeui-toast-009-fg:light-dark(oklch(0.23 0.014 265),oklch(0.95 0.004 265));
---vibeui-toast-009-muted:light-dark(oklch(0.55 0.014 265),oklch(0.73 0.012 265));
+--vibeui-toast-009-muted:color-mix(in oklab,var(--vibeui-toast-009-fg) 68%,transparent);
 --vibeui-toast-009-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.014 265));
 --vibeui-toast-009-field:light-dark(oklch(0.97 0.004 265),oklch(0.31 0.014 265));
 --vibeui-toast-009-field-hover:light-dark(oklch(1 0 0),oklch(0.35 0.014 265));
@@ -36,6 +37,9 @@ const STYLES = `
 --vibeui-toast-009-radius:1.125rem;
 --vibeui-toast-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="toast-009"]{color-scheme:dark}
 [data-vibeui-block="toast-009"]{
 display:flex;gap:0.6875rem;align-items:flex-start;
 width:100%;max-width:23rem;box-sizing:border-box;
@@ -50,8 +54,8 @@ box-shadow:0 20px 42px -28px var(--vibeui-toast-009-shadow);
 [data-vibeui-block="toast-009"] [data-part="face"]{
 flex:none;display:flex;align-items:center;justify-content:center;
 width:2.375rem;height:2.375rem;border-radius:9999px;
-background:oklch(0.91 0.06 var(--vibeui-toast-009-hue));
-color:oklch(0.36 0.1 var(--vibeui-toast-009-hue));
+background:light-dark(oklch(0.91 0.06 var(--vibeui-toast-009-hue)),oklch(0.37 0.06 var(--vibeui-toast-009-hue)));
+color:light-dark(oklch(0.36 0.1 var(--vibeui-toast-009-hue)),oklch(0.9 0.07 var(--vibeui-toast-009-hue)));
 font-size:0.8125rem;font-weight:700;letter-spacing:0.02em;
 }
 [data-vibeui-block="toast-009"] [data-part="body"]{display:flex;flex-direction:column;gap:0.125rem;min-width:0;flex:1 1 auto}
@@ -154,6 +158,7 @@ export function Toast009({
       </style>
       <div
         {...props}
+        data-slot="toast"
         data-vibeui-block="toast-009"
         role="status"
         aria-live="polite"

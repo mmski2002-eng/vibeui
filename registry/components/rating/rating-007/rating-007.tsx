@@ -1,7 +1,7 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Rating007Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "defaultValue"
 > & {
   value?: number
@@ -32,13 +32,16 @@ const STYLES = `
 --vibeui-rating-007-surface:transparent;
 --vibeui-rating-007-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-rating-007-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
---vibeui-rating-007-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-rating-007-muted:color-mix(in oklab,var(--vibeui-rating-007-fg) 68%,transparent);
 --vibeui-rating-007-empty:light-dark(oklch(0.9 0.008 265),oklch(0.4 0.014 265));
 --vibeui-rating-007-track:light-dark(oklch(0.94 0.005 265),oklch(0.31 0.012 265));
 --vibeui-rating-007-accent:light-dark(oklch(0.75 0.16 78),oklch(0.84 0.15 80));
 --vibeui-rating-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-rating-007-fill:0%;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="rating-007"]{color-scheme:dark}
 /* Подложки по умолчанию нет: карточка ложится на фон страницы. */
 [data-vibeui-block="rating-007"]{
 display:flex;flex-direction:column;gap:0.75rem;
@@ -158,6 +161,7 @@ export function Rating007({
       </style>
       <div
         {...props}
+        data-slot="rating"
         data-vibeui-block="rating-007"
         className={className}
         style={palette}

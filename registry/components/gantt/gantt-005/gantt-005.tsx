@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Gantt005Task = {
   title: string
@@ -10,7 +10,7 @@ export type Gantt005Task = {
 }
 
 export type Gantt005Props = Omit<
-  ComponentPropsWithoutRef<"section">,
+  ComponentProps<"section">,
   "children" | "title"
 > & {
   heading?: string
@@ -46,7 +46,7 @@ const STYLES = `
 --vibeui-gantt-005-bg:transparent;
 --vibeui-gantt-005-sticky:light-dark(oklch(0.995 0.001 265),oklch(0.19 0.008 265));
 --vibeui-gantt-005-fg:light-dark(oklch(0.23 0.014 265),oklch(0.93 0.006 265));
---vibeui-gantt-005-muted:light-dark(oklch(0.6 0.014 265),oklch(0.7 0.012 265));
+--vibeui-gantt-005-muted:color-mix(in oklab,var(--vibeui-gantt-005-fg) 68%,transparent);
 --vibeui-gantt-005-border:light-dark(oklch(0.91 0.006 265),oklch(0.37 0.012 265));
 --vibeui-gantt-005-line:light-dark(oklch(0.955 0.004 265),oklch(0.3 0.01 265));
 --vibeui-gantt-005-group:light-dark(oklch(0.97 0.004 265),oklch(0.25 0.01 265));
@@ -55,11 +55,16 @@ const STYLES = `
 --vibeui-gantt-005-done:light-dark(oklch(0.6 0.12 165),oklch(0.76 0.12 165));
 --vibeui-gantt-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="gantt-005"]{color-scheme:dark}
 [data-vibeui-block="gantt-005"]{
 width:100%;box-sizing:border-box;padding:1rem;
 background:var(--vibeui-gantt-005-bg);
 border:1px solid var(--vibeui-gantt-005-border);border-radius:1rem;
 color:var(--vibeui-gantt-005-fg);font-family:var(--vibeui-gantt-005-font);
+/* Шкала кегля растёт от собственной ширины блока, а не от окна. */
+container-type:inline-size;
 }
 [data-vibeui-block="gantt-005"] *{box-sizing:border-box}
 [data-vibeui-block="gantt-005"] [data-part="head"]{
@@ -68,6 +73,10 @@ gap:0.5rem;margin:0 0 0.75rem;
 }
 [data-vibeui-block="gantt-005"] [data-part="heading"]{
 margin:0;font-size:0.9375rem;font-weight:700;letter-spacing:-0.01em;
+}
+@container (min-width:32rem){
+[data-vibeui-block="gantt-005"] [data-part="heading"]{font-size:1rem}
+[data-vibeui-block="gantt-005"] [data-part="head"]{margin-bottom:1.0625rem}
 }
 [data-vibeui-block="gantt-005"] [data-part="hint"]{
 margin:0;font-size:0.75rem;color:var(--vibeui-gantt-005-muted);
@@ -287,6 +296,7 @@ export function Gantt005({
       </style>
       <section
         {...props}
+        data-slot="gantt"
         data-vibeui-block="gantt-005"
         aria-label={heading}
         className={className}

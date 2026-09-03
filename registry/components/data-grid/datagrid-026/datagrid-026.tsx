@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Datagrid026Row = {
   id: string
@@ -12,10 +12,7 @@ export type Datagrid026Row = {
   warranty: number
 }
 
-export type Datagrid026Props = Omit<
-  ComponentPropsWithoutRef<"section">,
-  "children"
-> & {
+export type Datagrid026Props = Omit<ComponentProps<"section">, "children"> & {
   rows?: Datagrid026Row[]
   caption?: string
   showDelta?: boolean
@@ -50,7 +47,7 @@ const STYLES = `
 :where([data-vibeui-block="datagrid-026"]){
 --vibeui-datagrid-026-bg:transparent;
 --vibeui-datagrid-026-fg:light-dark(oklch(0.23 0.014 285),oklch(0.93 0.006 285));
---vibeui-datagrid-026-muted:light-dark(oklch(0.55 0.014 285),oklch(0.68 0.012 285));
+--vibeui-datagrid-026-muted:color-mix(in oklab,var(--vibeui-datagrid-026-fg) 68%,transparent);
 --vibeui-datagrid-026-border:light-dark(oklch(0.92 0.006 285),oklch(0.35 0.012 285));
 --vibeui-datagrid-026-head:light-dark(oklch(0.975 0.003 285),oklch(0.27 0.012 285));
 --vibeui-datagrid-026-accent:light-dark(oklch(0.5 0.16 30),oklch(0.72 0.15 30));
@@ -60,6 +57,9 @@ const STYLES = `
 --vibeui-datagrid-026-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 30));
 --vibeui-datagrid-026-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="datagrid-026"]{color-scheme:dark}
 [data-vibeui-block="datagrid-026"]{
 box-sizing:border-box;width:100%;max-width:50rem;margin:0 auto;
 background:var(--vibeui-datagrid-026-bg);color:var(--vibeui-datagrid-026-fg);
@@ -288,6 +288,7 @@ export function Datagrid026({
       </style>
       <section
         {...props}
+        data-slot="data-grid"
         data-vibeui-block="datagrid-026"
         className={className}
         style={palette}

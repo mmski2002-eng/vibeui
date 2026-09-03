@@ -1,8 +1,8 @@
 "use client"
 
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Button053Props = ComponentPropsWithoutRef<"button"> & {
+export type Button053Props = ComponentProps<"button"> & {
   /** Подсказка сочетания рядом с подписью. */
   hint?: string
   accent?: string
@@ -19,15 +19,18 @@ const STYLES = `
 --vibeui-button-053-surface:light-dark(oklch(1 0 0),oklch(0.25 0.014 265));
 --vibeui-button-053-border:light-dark(oklch(0.88 0.006 265),oklch(0.41 0.014 265));
 --vibeui-button-053-fg:light-dark(oklch(0.26 0.02 265),oklch(0.93 0.008 265));
---vibeui-button-053-muted:light-dark(oklch(0.58 0.014 265),oklch(0.72 0.012 265));
+--vibeui-button-053-muted:color-mix(in oklab,var(--vibeui-button-053-fg) 68%,transparent);
 --vibeui-button-053-accent:light-dark(oklch(0.5 0.13 245),oklch(0.74 0.12 245));
 --vibeui-button-053-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-button-053-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="button-053"]{color-scheme:dark}
 [data-vibeui-block="button-053"]{
 appearance:none;cursor:pointer;box-sizing:border-box;
 display:inline-flex;align-items:center;gap:0.625rem;
-height:2.625rem;padding:0 0.75rem 0 0.875rem;border-radius:0.625rem;
+height:2.5rem;padding:0 0.75rem 0 0.875rem;border-radius:0.625rem;
 border:1px solid var(--vibeui-button-053-border);
 background:var(--vibeui-button-053-surface);color:var(--vibeui-button-053-fg);
 font-family:var(--vibeui-button-053-font);font-size:0.875rem;font-weight:600;line-height:1;
@@ -122,6 +125,7 @@ export function Button053({
       <button
         {...props}
         type={type}
+        data-slot="button"
         data-vibeui-block="button-053"
         className={className}
         style={palette}

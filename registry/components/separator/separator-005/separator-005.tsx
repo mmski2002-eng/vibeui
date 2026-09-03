@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Separator005Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Separator005Props = Omit<ComponentProps<"div">, "children"> & {
   glyph?: string
   tone?: "neutral" | "accent"
   label?: string
@@ -25,6 +22,9 @@ const STYLES = `
 --vibeui-separator-005-fg:light-dark(oklch(0.45 0.014 265),oklch(0.86 0.01 265));
 --vibeui-separator-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="separator-005"]{color-scheme:dark}
 [data-vibeui-block="separator-005"]{
 display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:0.75rem;
 width:100%;max-width:22rem;box-sizing:border-box;
@@ -76,6 +76,7 @@ export function Separator005({
       </style>
       <div
         {...props}
+        data-slot="separator"
         data-vibeui-block="separator-005"
         data-tone={tone}
         role="separator"

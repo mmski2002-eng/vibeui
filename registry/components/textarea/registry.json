@@ -104,6 +104,7 @@
         "i18n": {
           "en": {
             "description": "A multiline field that grows with the text up to a set number of rows and scrolls after that. CSS holds the height; there is no React state.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-textarea-001-* variables. The growth rests on a grid technique: the textarea and an ::after pseudo-element carrying the same text sit in one cell, and the copy sets the cell height. The onInput handler only rewrites the wrapper's data-value — there is no React state and no re-render of the tree. The ceiling is set by the maxRows prop through the --vibeui-textarea-001-max-rows variable.",
             "ai": {
               "summary": "A multiline field that grows with its content. The height comes from an invisible copy of the text sharing one grid cell, and the input handler only rewrites the wrapper's data-value — no React state, no re-render. It grows up to maxRows and scrolls beyond. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -259,6 +260,7 @@
         "i18n": {
           "en": {
             "description": "A limited textarea that never truncates silently: the counter turns red and the person decides what to cut.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-textarea-002-* variables. A client component: \"use client\". The maxlength attribute is deliberately not used: it silently stops accepting input. Going over the limit is exposed through data-over, the field is marked aria-invalid, and the counter is declared role=\"status\" and tied to the field via aria-describedby.",
             "ai": {
               "summary": "A multiline field with a limit: a character counter, a red border past the limit and a line saying what to do. Zero dependencies, one file.",
               "preserve": [
@@ -404,6 +406,7 @@
         "i18n": {
           "en": {
             "description": "A field that grows with its text: the layout itself computes the height from an invisible copy of the content, with no scrollHeight measuring and no jitter.",
+            "docs": "A client component: useState holds the text, which is duplicated into data-value on the wrapper. The wrapper is a grid, and the textarea and the ::after pseudo-element with content:attr(data-value) occupy one cell, so the cell height always equals the height of the text. The copy is hidden with visibility:hidden and inherits the font and the line height — otherwise the heights would diverge. Scrolling in the field is switched off, and so is resizing with the mouse. The palette lives in --vibeui-textarea-003-*.",
             "ai": {
               "summary": "An autogrowing field built on a grid text copy, with no height measuring. One file, zero dependencies, a client component.",
               "preserve": [
@@ -547,6 +550,7 @@
         "i18n": {
           "en": {
             "description": "A field with a formatting toolbar: the buttons wrap the selection in markdown characters through setRangeText, so the browser's undo history stays alive.",
+            "docs": "A client component: a useRef on the textarea, a useState on the text. Wrapping the selection is done with setRangeText rather than by assembling a new string: only this way does the browser keep its own undo history and Ctrl+Z keeps working; after the insertion the selection is restored. The list button puts the prefix at the start of the current line, found by the last line break. The panel is declared role=\"toolbar\". The palette lives in --vibeui-textarea-004-*.",
             "ai": {
               "summary": "A field with a markdown toolbar over a plain textarea. One file, zero dependencies, a client component.",
               "preserve": [
@@ -697,6 +701,7 @@
         "i18n": {
           "en": {
             "description": "A field with @-mentions: the list of colleagues opens only when the character starts a word, and picking someone inserts the handle straight into the text.",
+            "docs": "A client component: a useRef on the field, a useState on the text and on the current query after the \"@\". The query is found by a regular expression over the text before the caret and only at the start of a word — otherwise the suggestion would pop up inside every email address. Insertion goes through setRangeText, so the undo history is kept and the caret lands after the handle. The list buttons suppress mousedown so that the field does not lose focus before the click. The palette lives in --vibeui-textarea-005-*.",
             "ai": {
               "summary": "A comment field with an @-mention suggestion list. One file, zero dependencies, a client component.",
               "preserve": [
@@ -861,6 +866,7 @@
         "i18n": {
           "en": {
             "description": "A field with draft autosave: the write fires after a pause in typing, and the line below shows \"unsaved edits\", \"saved\" and the time it happened.",
+            "docs": "A client component: a useState on the text, the phase and the time, a useRef on the timer, and a useEffect that clears it on unmount. The pause is mandatory — saving on every keystroke means a request per letter. The time is assembled by an own function rather than by toLocaleTimeString: the local format of the server and of the browser differ and break hydration. The status line is declared role=\"status\" and keeps a minimum height. The palette lives in --vibeui-textarea-006-*.",
             "ai": {
               "summary": "A field that saves its draft after a typing pause, with status and time. One file, zero dependencies, a client component.",
               "preserve": [
@@ -1009,6 +1015,7 @@
         "i18n": {
           "en": {
             "description": "A field for editors: words, characters and reading time sit under the text, and a bar shows how far the target volume still is.",
+            "docs": "A client component: useState holds the text, and words, minutes and the share of the target are computed from it. Words are counted by splitting on separators rather than by counting spaces — otherwise a double space would add an extra word. The volume bar is an ordinary node with its width coming from a CSS variable and the progressbar role: a <progress> would have to be recoloured through three vendor pseudo-elements. The statistics are tied to the field via aria-describedby. The palette lives in --vibeui-textarea-007-*.",
             "ai": {
               "summary": "A field counting words, characters and reading time with a progress bar. One file, zero dependencies, a client component.",
               "preserve": [
@@ -1154,6 +1161,7 @@
         "i18n": {
           "en": {
             "description": "A read-only field with a copy button: the text can be selected and read, and when the clipboard is unavailable it is simply selected in full.",
+            "docs": "A client component: a useRef on the field, a useState on the \"copied\" flag. The field is marked readOnly rather than disabled: a disabled field cannot be selected or read by a screen reader, and here the text is the content. Copying goes through navigator.clipboard with a fallback path — without a secure connection the API is unavailable, and then the text is selected in full. The button icon turns into a check mark by a rule on data-copied on the root. The palette lives in --vibeui-textarea-008-*.",
             "ai": {
               "summary": "A read-only field with clipboard copying and a selection fallback. One file, zero dependencies, a client component.",
               "preserve": [

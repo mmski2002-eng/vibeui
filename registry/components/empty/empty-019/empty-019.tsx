@@ -25,13 +25,16 @@ const STYLES = `
 :where([data-vibeui-block="empty-019"]){
 --vibeui-empty-019-bg:transparent;
 --vibeui-empty-019-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.006 265));
---vibeui-empty-019-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-empty-019-muted:color-mix(in oklab,var(--vibeui-empty-019-fg) 68%,transparent);
 --vibeui-empty-019-border:light-dark(oklch(0.88 0.008 265),oklch(0.4 0.014 265));
 --vibeui-empty-019-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
 --vibeui-empty-019-on-accent:light-dark(oklch(0.99 0.01 265),oklch(0.18 0.02 265));
 --vibeui-empty-019-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="empty-019"]{color-scheme:dark}
 [data-vibeui-block="empty-019"]{
 display:flex;flex-direction:column;align-items:center;gap:0.5rem;
 width:100%;max-width:26rem;box-sizing:border-box;padding:2rem 1.25rem;
@@ -148,6 +151,7 @@ export function Empty019({
         {STYLES}
       </style>
       <div
+        data-slot="empty"
         data-vibeui-block="empty-019"
         data-dragging={isDragging}
         className={className}

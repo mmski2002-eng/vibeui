@@ -1,11 +1,7 @@
 "use client"
 
 import { useId, useRef } from "react"
-import type {
-  ComponentPropsWithoutRef,
-  CSSProperties,
-  KeyboardEvent,
-} from "react"
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Dropdown010Item = {
   label: string
@@ -13,10 +9,7 @@ export type Dropdown010Item = {
   glyph: string
 }
 
-export type Dropdown010Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Dropdown010Props = Omit<ComponentProps<"div">, "children"> & {
   trigger?: string
   menuWidth?: number
   items?: Dropdown010Item[]
@@ -37,7 +30,7 @@ const STYLES = `
 :where([data-vibeui-block="dropdown-010"]){
 --vibeui-dropdown-010-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
 --vibeui-dropdown-010-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
---vibeui-dropdown-010-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-dropdown-010-muted:color-mix(in oklab,var(--vibeui-dropdown-010-fg) 68%,transparent);
 --vibeui-dropdown-010-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
 --vibeui-dropdown-010-hover:light-dark(oklch(0.96 0.004 265),oklch(0.32 0.014 265));
 --vibeui-dropdown-010-accent:light-dark(oklch(0.55 0.16 190),oklch(0.74 0.13 190));
@@ -45,6 +38,9 @@ const STYLES = `
 --vibeui-dropdown-010-width:18rem;
 --vibeui-dropdown-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="dropdown-010"]{color-scheme:dark}
 [data-vibeui-block="dropdown-010"]{
 display:inline-flex;box-sizing:border-box;padding:0.4375rem;
 background:var(--vibeui-dropdown-010-bg);color:var(--vibeui-dropdown-010-fg);
@@ -207,6 +203,7 @@ export function Dropdown010({
       </style>
       <div
         {...props}
+        data-slot="dropdown-menu"
         data-vibeui-block="dropdown-010"
         className={className}
         style={palette}

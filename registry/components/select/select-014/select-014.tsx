@@ -1,11 +1,7 @@
 "use client"
 
 import { useEffect, useId, useRef, useState } from "react"
-import type {
-  ComponentPropsWithoutRef,
-  CSSProperties,
-  KeyboardEvent,
-} from "react"
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Select014Person = {
   value: string
@@ -13,10 +9,7 @@ export type Select014Person = {
   role: string
 }
 
-export type Select014Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Select014Props = Omit<ComponentProps<"div">, "children"> & {
   label?: string
   name?: string
   people?: Select014Person[]
@@ -36,13 +29,16 @@ const STYLES = `
 --vibeui-select-014-surface:transparent;
 --vibeui-select-014-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-select-014-fg:light-dark(oklch(0.23 0.016 265),oklch(0.94 0.005 265));
---vibeui-select-014-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-select-014-muted:color-mix(in oklab,var(--vibeui-select-014-fg) 68%,transparent);
 --vibeui-select-014-border:light-dark(oklch(0.87 0.008 265),oklch(0.4 0.012 265));
 --vibeui-select-014-accent:light-dark(oklch(0.55 0.19 262),oklch(0.73 0.17 262));
 --vibeui-select-014-tint:light-dark(oklch(0.55 0.19 262 / 12%),oklch(0.73 0.17 262 / 20%));
 --vibeui-select-014-panel:light-dark(oklch(1 0 0),oklch(0.25 0.014 265));
 --vibeui-select-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="select-014"]{color-scheme:dark}
 [data-vibeui-block="select-014"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:20rem;box-sizing:border-box;padding:0.875rem;
@@ -68,8 +64,8 @@ box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-select-014-accent) 22%,tran
 [data-vibeui-block="select-014"] [data-part="avatar"]{
 flex:none;display:flex;align-items:center;justify-content:center;
 width:2.25rem;height:2.25rem;border-radius:9999px;
-background:oklch(0.9 0.05 var(--vibeui-select-014-hue,265));
-color:oklch(0.35 0.09 var(--vibeui-select-014-hue,265));
+background:light-dark(oklch(0.9 0.05 var(--vibeui-select-014-hue,265)),oklch(0.37 0.05 var(--vibeui-select-014-hue,265)));
+color:light-dark(oklch(0.35 0.09 var(--vibeui-select-014-hue,265)),oklch(0.9 0.06 var(--vibeui-select-014-hue,265)));
 font-size:0.75rem;font-weight:700;
 }
 [data-vibeui-block="select-014"] [data-part="body"]{min-width:0;display:flex;flex-direction:column;gap:0.0625rem}
@@ -97,7 +93,7 @@ margin:0;padding:0.375rem;list-style:none;
 max-height:16rem;overflow-y:auto;
 background:var(--vibeui-select-014-panel);
 border:1px solid var(--vibeui-select-014-border);border-radius:0.875rem;
-box-shadow:0 0.75rem 1.75rem oklch(0 0 0 / 16%);
+box-shadow:0 0.75rem 1.75rem light-dark(oklch(0 0 0 / 16%),oklch(0 0 0 / 48%));
 }
 [data-vibeui-block="select-014"] [data-part="option"]{
 display:flex;align-items:center;gap:0.625rem;
@@ -271,6 +267,7 @@ export function Select014({
       <div
         {...props}
         ref={rootRef}
+        data-slot="select"
         data-vibeui-block="select-014"
         className={className}
         style={palette}

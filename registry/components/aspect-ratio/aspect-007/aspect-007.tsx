@@ -1,7 +1,7 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Aspect007Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "title" | "children"
 > & {
   title?: string
@@ -25,7 +25,7 @@ export type Aspect007Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="aspect-007"]){
 --vibeui-aspect-007-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
---vibeui-aspect-007-muted:light-dark(oklch(0.52 0.014 265),oklch(0.7 0.012 265));
+--vibeui-aspect-007-muted:color-mix(in oklab,var(--vibeui-aspect-007-fg) 68%,transparent);
 --vibeui-aspect-007-bg:transparent;
 --vibeui-aspect-007-line:light-dark(oklch(0.9 0.008 265),oklch(0.33 0.012 265));
 --vibeui-aspect-007-border:light-dark(oklch(0.89 0.006 265),oklch(0.38 0.012 265));
@@ -34,6 +34,9 @@ const STYLES = `
 --vibeui-aspect-007-radius:0.875rem;
 --vibeui-aspect-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="aspect-007"]{color-scheme:dark}
 [data-vibeui-block="aspect-007"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;box-sizing:border-box;
@@ -124,6 +127,7 @@ export function Aspect007({
       </style>
       <figure
         {...props}
+        data-slot="aspect-ratio"
         data-vibeui-block="aspect-007"
         className={className}
         style={palette}

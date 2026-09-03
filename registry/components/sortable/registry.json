@@ -80,6 +80,7 @@
         "i18n": {
           "en": {
             "description": "A sortable list: native drag and drop plus arrow buttons — the only route available from a keyboard.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-sortable-001-*. Client-side: \"use client\" for the sake of the order. Moving is built on HTML5 drag and drop, so no library is needed; the \"up\" and \"down\" buttons give the same result from a keyboard and speak the row's current position aloud. The theme comes from the surrounding color-scheme through light-dark(): the component has no surface of its own by default, it sits directly on the page background and darkens along with it.",
             "ai": {
               "summary": "A drag-to-reorder list: row numbers, a grip, move buttons and an insertion line. Zero dependencies, one file.",
               "preserve": [
@@ -229,6 +230,7 @@
         "i18n": {
           "en": {
             "description": "A list whose grip is the keyboard control itself: space picks a row up, arrows carry it, space drops it and Escape restores the order from the moment of pick-up.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-sortable-002-*. Client-side: \"use client\" for the sake of the order and the move mode. The grip is a button with aria-pressed handling Space, the up and down arrows and Escape; the order snapshot is taken at the moment of pick-up, so cancelling restores the original view. The mouse path is native HTML5 drag and drop with an insertion line. A role=status live region with aria-live=assertive names the position after every step. The theme comes from the surrounding color-scheme through light-dark(): the component has no surface of its own by default, it sits directly on the page background. Every live-region phrase and grip label is a prop, the Russian values sit in the component as defaults.",
             "ai": {
               "summary": "A list whose grip works with mouse and keyboard alike on a pick-up, carry, drop model, with Escape to cancel. Zero dependencies, one file.",
               "preserve": [
@@ -379,6 +381,7 @@
         "i18n": {
           "en": {
             "description": "A table whose columns are reordered instead of its rows: the order lives in a single array, so headers and data cannot drift apart.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-sortable-003-*. Client-side: \"use client\" for the sake of the column order. The body cells are drawn from the same array of column descriptions as the headers, so they cannot drift apart. The header stays a th element with scope=\"col\": dragging is no reason to turn a table into a set of divs. The grip inside th is a button with left and right arrows, the mouse path is a native drag with a vertical insertion line, and the result goes into a role=status live region. The theme comes from the surrounding color-scheme through light-dark(): the component has no surface of its own by default, it sits directly on the page background. The grip label and the live-region phrases are lifted into props, the Russian values remain the defaults.",
             "ai": {
               "summary": "A table with reorderable columns: a grip in the header, mouse dragging and keyboard arrows. Zero dependencies, one file.",
               "preserve": [
@@ -560,6 +563,7 @@
         "i18n": {
           "en": {
             "description": "Transfer between two lists where the receiver never collapses into a strip: an empty list keeps its height and an explaining caption, and every row has a transfer button.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-sortable-004-*. Client-side: \"use client\" for the sake of both lists' state. The panels are described by a single array and drawn by shared markup, so both sides behave alike. The minimum panel height is set explicitly, so an empty list stays a visible target for the mouse. The arrow button on every row names both sides of the transfer, and the role=status live region reports the result and what is left in both lists. The theme comes from the surrounding color-scheme through light-dark(): the component has no surface of its own by default, it sits directly on the page background. The empty-panel caption, the button label and the live-region phrase are lifted into props, the Russian values remain the defaults.",
             "ai": {
               "summary": "Two panels with transfer between them: mouse dragging, an arrow button from the keyboard, counters and an explanation in an empty panel. Zero dependencies, one file.",
               "preserve": [
@@ -714,6 +718,7 @@
         "i18n": {
           "en": {
             "description": "Reordering in a grid rather than a column: left and right arrows move a tile one position, up and down move it a whole row at a time.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-sortable-005-*. Client-side: \"use client\" for the sake of the tile order. The column count arrives as a prop and is substituted both into grid-template-columns through a variable and into the keyboard move step, so the layout and the keyboard count rows the same way. The tile is a button, so focus and the arrows work without tabindex. The position is named by row and column, not by number alone; the result goes into a role=status live region. The theme comes from the surrounding color-scheme through light-dark(): the component has no surface of its own by default, it sits directly on the page background. The hint, the tile label and the live-region phrases are lifted into props, the Russian values remain the defaults.",
             "ai": {
               "summary": "A reorderable tile grid: mouse dragging plus two-dimensional keyboard moving with arrows. Zero dependencies, one file.",
               "preserve": [
@@ -887,6 +892,7 @@
         "i18n": {
           "en": {
             "description": "A list with a pinned first slot: the pinned row has no move controls, and a movable one cannot go above it — the refusal is spoken, not ignored.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-sortable-006-*. Client-side: \"use client\" for the sake of the order. The pinned row is not part of the sortable array: it is rendered separately, without a grip or buttons, so impossible states simply do not exist. Numbering of the movable rows starts at two, and an attempt to move above the first position writes the reason into a role=status live region. The mouse path is a native drag, the keyboard path is the \"up\" and \"down\" buttons. The theme comes from the surrounding color-scheme through light-dark(): the component has no surface of its own by default, it sits directly on the page background. The pin label, the button labels and the live-region phrases are lifted into props, the Russian values remain the defaults.",
             "ai": {
               "summary": "A list with a pinned first row: it never moves and has no grip, the rest sort with mouse and buttons. Zero dependencies, one file.",
               "preserve": [
@@ -1049,6 +1055,7 @@
         "i18n": {
           "en": {
             "description": "A list with undo for the last move: every move pushes the previous order onto a stack, and a bar below names the action in words and offers a way back.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-sortable-007-*. Client-side: \"use client\" for the sake of the order and the history. Every move — by mouse or by buttons — pushes the previous array and a description of the step onto a stack, so undo does not recompute the movement but restores a snapshot. The undo bar is absent from the markup while the history is empty: a disabled button with no cause is confusing. The restored row is highlighted, and the undo is announced in a role=status live region. The theme comes from the surrounding color-scheme through light-dark(): the component has no surface of its own by default, it sits directly on the page background. The step description, the undo bar line, the button labels and the live-region phrases are lifted into props, the Russian values remain the defaults; the step snapshot stores the row itself, so the label can be rewritten without breaking undo.",
             "ai": {
               "summary": "A list with a move history: a stack of previous orders, a bar describing the last step and an undo button. Zero dependencies, one file.",
               "preserve": [
@@ -1194,6 +1201,7 @@
         "i18n": {
           "en": {
             "description": "A task checklist with drag-to-reorder and up/down buttons for the keyboard: the done checkbox never moves a row, and a live region names the whole new order.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in local variables --vibeui-sortable-008-*. Client-side: the order and the tasks' completion live in state. The checkbox marks a task done and strikes through the text, but does not reorder the row — completion and order are kept apart deliberately. Moving is built on native drag and drop with the \"up\"/\"down\" buttons as the only keyboard path; after every move aria-live speaks the whole list, not just the shifted row. The theme comes from the surrounding color-scheme through light-dark(): the component has no surface of its own by default, it sits directly on the page background. The checkbox and button labels and the live-region phrase are lifted into props, the Russian values remain the defaults.",
             "ai": {
               "summary": "A task checklist with a done checkbox and manual sorting: dragging, keyboard move buttons and a live region naming the full new order. Zero dependencies, one file.",
               "preserve": [

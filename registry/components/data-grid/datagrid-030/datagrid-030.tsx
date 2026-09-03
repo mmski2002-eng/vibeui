@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Datagrid030Shift = "day" | "night" | "off" | "vacation"
 
@@ -8,10 +8,7 @@ export type Datagrid030Row = {
   shifts: Datagrid030Shift[]
 }
 
-export type Datagrid030Props = Omit<
-  ComponentPropsWithoutRef<"section">,
-  "children"
-> & {
+export type Datagrid030Props = Omit<ComponentProps<"section">, "children"> & {
   rows?: Datagrid030Row[]
   days?: string[]
   caption?: string
@@ -44,7 +41,7 @@ const STYLES = `
 --vibeui-datagrid-030-bg:transparent;
 --vibeui-datagrid-030-surface:light-dark(oklch(1 0 0),oklch(0.22 0.012 250));
 --vibeui-datagrid-030-fg:light-dark(oklch(0.23 0.014 250),oklch(0.93 0.006 250));
---vibeui-datagrid-030-muted:light-dark(oklch(0.55 0.014 250),oklch(0.68 0.012 250));
+--vibeui-datagrid-030-muted:color-mix(in oklab,var(--vibeui-datagrid-030-fg) 68%,transparent);
 --vibeui-datagrid-030-border:light-dark(oklch(0.92 0.006 250),oklch(0.35 0.012 250));
 --vibeui-datagrid-030-head:light-dark(oklch(0.975 0.003 250),oklch(0.27 0.012 250));
 --vibeui-datagrid-030-accent:light-dark(oklch(0.52 0.14 250),oklch(0.75 0.13 250));
@@ -55,6 +52,9 @@ const STYLES = `
 --vibeui-datagrid-030-shadow:light-dark(oklch(0.23 0.014 250 / 18%),oklch(0 0 0 / 55%));
 --vibeui-datagrid-030-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="datagrid-030"]{color-scheme:dark}
 [data-vibeui-block="datagrid-030"]{
 box-sizing:border-box;width:100%;max-width:56rem;margin:0 auto;
 background:var(--vibeui-datagrid-030-bg);color:var(--vibeui-datagrid-030-fg);
@@ -295,6 +295,7 @@ export function Datagrid030({
       </style>
       <section
         {...props}
+        data-slot="data-grid"
         data-vibeui-block="datagrid-030"
         className={className}
         style={palette}

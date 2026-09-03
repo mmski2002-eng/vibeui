@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Progress001Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Progress001Props = Omit<ComponentProps<"div">, "children"> & {
   /** Значение 0–100. `null` — процесс идёт, но длительность неизвестна. */
   value?: number | null
   label?: string
@@ -26,7 +23,7 @@ export type Progress001Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="progress-001"]){
 --vibeui-progress-001-fg:light-dark(oklch(0.28 0.016 265),oklch(0.94 0.006 265));
---vibeui-progress-001-muted:light-dark(oklch(0.54 0.014 265),oklch(0.7 0.012 265));
+--vibeui-progress-001-muted:color-mix(in oklab,var(--vibeui-progress-001-fg) 68%,transparent);
 --vibeui-progress-001-track:light-dark(oklch(0.92 0.006 265),oklch(0.31 0.012 265));
 --vibeui-progress-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.7 0.17 262));
 --vibeui-progress-001-bg:transparent;
@@ -35,6 +32,9 @@ const STYLES = `
 --vibeui-progress-001-height:0.5rem;
 --vibeui-progress-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="progress-001"]{color-scheme:dark}
 [data-vibeui-block="progress-001"]{
 display:flex;flex-direction:column;gap:0.5rem;width:100%;
 box-sizing:border-box;padding:var(--vibeui-progress-001-pad);
@@ -45,7 +45,7 @@ font-family:var(--vibeui-progress-001-font);color:var(--vibeui-progress-001-fg);
 [data-vibeui-block="progress-001"][data-size="sm"]{--vibeui-progress-001-height:0.25rem}
 [data-vibeui-block="progress-001"] [data-part="head"]{
 display:flex;align-items:baseline;justify-content:space-between;gap:1rem;
-font-size:0.8125rem;
+font-size:0.9375rem;
 }
 [data-vibeui-block="progress-001"] [data-part="hint"]{
 color:var(--vibeui-progress-001-muted);font-variant-numeric:tabular-nums;
@@ -124,7 +124,7 @@ export function Progress001({
     ...(background
       ? {
           "--vibeui-progress-001-bg": background,
-          "--vibeui-progress-001-pad": "0.875rem 1rem",
+          "--vibeui-progress-001-pad": "0.9375rem 1.0625rem",
           "--vibeui-progress-001-radius": "0.75rem",
           colorScheme: schemeForBackground(background),
         }
@@ -141,6 +141,7 @@ export function Progress001({
       </style>
       <div
         {...props}
+        data-slot="progress"
         data-vibeui-block="progress-001"
         data-size={size}
         data-indeterminate={indeterminate || undefined}

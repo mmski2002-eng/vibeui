@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Buttongroup041Reaction = {
   emoji: string
@@ -10,7 +10,7 @@ export type Buttongroup041Reaction = {
 }
 
 export type Buttongroup041Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   reactions?: Buttongroup041Reaction[]
@@ -35,13 +35,16 @@ const STYLES = `
 :where([data-vibeui-block="buttongroup-041"]){
 --vibeui-buttongroup-041-surface:transparent;
 --vibeui-buttongroup-041-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.005 265));
---vibeui-buttongroup-041-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-buttongroup-041-muted:color-mix(in oklab,var(--vibeui-buttongroup-041-fg) 68%,transparent);
 --vibeui-buttongroup-041-border:light-dark(oklch(0.89 0.008 265),oklch(0.42 0.012 265));
 --vibeui-buttongroup-041-line:light-dark(oklch(0.8 0.01 265),oklch(0.56 0.014 265));
 --vibeui-buttongroup-041-on:light-dark(oklch(0.95 0.045 250),oklch(0.33 0.06 250));
 --vibeui-buttongroup-041-accent:light-dark(oklch(0.5 0.16 250),oklch(0.78 0.13 250));
 --vibeui-buttongroup-041-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="buttongroup-041"]{color-scheme:dark}
 [data-vibeui-block="buttongroup-041"]{
 box-sizing:border-box;display:flex;flex-wrap:wrap;gap:0.375rem;
 width:100%;max-width:26rem;
@@ -154,6 +157,7 @@ export function Buttongroup041({
       </style>
       <div
         {...props}
+        data-slot="button-group"
         data-vibeui-block="buttongroup-041"
         className={className}
         style={palette}

@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Sidebar004Child = {
   label: string
@@ -10,14 +10,13 @@ export type Sidebar004Group = {
   children: Sidebar004Child[]
 }
 
-export type Sidebar004Props = Omit<
-  ComponentPropsWithoutRef<"nav">,
-  "children"
-> & {
+export type Sidebar004Props = Omit<ComponentProps<"nav">, "children"> & {
   groups?: Sidebar004Group[]
   activeLabel?: string
   /** Подпись всей навигации для скринридера. */
   navLabel?: string
+  /** Что скринридер читает у свёрнутой группы с текущим пунктом. */
+  holdsActiveText?: string
   /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
   background?: string
   accent?: string
@@ -35,12 +34,15 @@ const STYLES = `
 :where([data-vibeui-block="sidebar-004"]){
 --vibeui-sidebar-004-bg:transparent;
 --vibeui-sidebar-004-fg:light-dark(oklch(0.25 0.016 265),oklch(0.93 0.006 265));
---vibeui-sidebar-004-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-sidebar-004-muted:color-mix(in oklab,var(--vibeui-sidebar-004-fg) 68%,transparent);
 --vibeui-sidebar-004-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
 --vibeui-sidebar-004-hover:light-dark(oklch(0.55 0.02 265 / 7%),oklch(0.85 0.02 265 / 10%));
 --vibeui-sidebar-004-accent:light-dark(oklch(0.54 0.16 300),oklch(0.74 0.14 300));
 --vibeui-sidebar-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="sidebar-004"]{color-scheme:dark}
 [data-vibeui-block="sidebar-004"]{
 display:flex;flex-direction:column;gap:0.125rem;
 width:100%;max-width:15rem;box-sizing:border-box;padding:0.625rem;
@@ -51,7 +53,7 @@ font-family:var(--vibeui-sidebar-004-font);
 [data-vibeui-block="sidebar-004"] summary{
 display:flex;align-items:center;gap:0.5rem;cursor:pointer;list-style:none;
 padding:0.4375rem 0.5rem;border-radius:0.5rem;
-font-size:0.875rem;font-weight:600;line-height:1.3;
+font-size:0.9375rem;font-weight:600;line-height:1.3;
 }
 [data-vibeui-block="sidebar-004"] summary::-webkit-details-marker{display:none}
 [data-vibeui-block="sidebar-004"] summary:hover{background:var(--vibeui-sidebar-004-hover)}
@@ -70,15 +72,20 @@ margin-left:auto;width:0.375rem;height:0.375rem;border-radius:9999px;
 background:var(--vibeui-sidebar-004-accent);
 }
 [data-vibeui-block="sidebar-004"] details[open] > summary [data-part="mark"]{display:none}
+[data-vibeui-block="sidebar-004"] [data-part="hint"]{
+position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;
+}
+/* Подпись уходит вместе с точкой: у раскрытой группы текущий пункт слышно и так. */
+[data-vibeui-block="sidebar-004"] details[open] > summary [data-part="hint"]{display:none}
 [data-vibeui-block="sidebar-004"] ul{
 margin:0.0625rem 0 0.375rem 0.6875rem;padding:0 0 0 0.5rem;list-style:none;
 display:flex;flex-direction:column;gap:0.0625rem;
 border-left:1px solid var(--vibeui-sidebar-004-border);
 }
 [data-vibeui-block="sidebar-004"] a{
-display:block;padding:0.3125rem 0.5rem;border-radius:0.375rem;
+display:block;padding:0.375rem 0.5rem;border-radius:0.375rem;
 color:var(--vibeui-sidebar-004-muted);text-decoration:none;
-font-size:0.8125rem;line-height:1.3;
+font-size:0.875rem;line-height:1.3;
 }
 [data-vibeui-block="sidebar-004"] a:hover{background:var(--vibeui-sidebar-004-hover);color:var(--vibeui-sidebar-004-fg)}
 [data-vibeui-block="sidebar-004"] a:focus-visible{outline:2px solid var(--vibeui-sidebar-004-accent);outline-offset:-2px}
@@ -144,6 +151,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 export function Sidebar004({
   groups = DEFAULT_GROUPS,
   activeLabel = "Возвраты",
+  holdsActiveText = "Здесь текущий раздел",
   navLabel = "Разделы магазина",
   background = "",
   accent,
@@ -169,6 +177,7 @@ export function Sidebar004({
       </style>
       <nav
         {...props}
+        data-slot="sidebar"
         data-vibeui-block="sidebar-004"
         aria-label={navLabel}
         className={className}
@@ -184,7 +193,10 @@ export function Sidebar004({
                 <span data-part="chevron" aria-hidden="true" />
                 {group.label}
                 {holdsActive ? (
-                  <span data-part="mark" aria-hidden="true" />
+                  <>
+                    <span data-part="mark" aria-hidden="true" />
+                    <span data-part="hint">{holdsActiveText}</span>
+                  </>
                 ) : null}
               </summary>
               <ul>

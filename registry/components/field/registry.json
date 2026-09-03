@@ -146,7 +146,8 @@
                 "defaultValue": "name@company",
                 "requiredText": "· required"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-field-001-*. A server component: no hooks. The error marks the field through aria-invalid and joins aria-describedby together with the note: the requirements stay on screen exactly when they are needed most. The error carries a mark, not colour alone."
           }
         },
         "cardControls": ["required", "background"]
@@ -325,7 +326,8 @@
                 "defaultValue": "Component catalog",
                 "placeholder": "What shall we call it"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-field-002-*. A server component: there is no state, the highlight rides on :focus-within. Through children you drop any control inside the border — an input, a textarea or a select; by default an input is rendered with an id built from the name prop. The hint and the error occupy the same slot, and the error turns on data-invalid on the root, aria-invalid on the field and role=\"alert\" on the note."
           }
         },
         "cardControls": ["accent", "background"]
@@ -509,7 +511,8 @@
                 "optionalPlaceholder": "Anything we should know upfront",
                 "legend": "Starred fields are required to submit."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-field-003-*. A server component: there is no state. The asterisk is wrapped in an <abbr title>, doubled by visually hidden text and explained by a footnote under the pair of fields. Beside it stands an optional field with an explicit marker — the pair shows the difference instead of hinting at it. The required field carries required and aria-required."
           }
         },
         "cardControls": ["background"]
@@ -679,7 +682,8 @@
                 "hint": "No longer than {limit} characters — that is what fits on a catalog card.",
                 "statusText": "{left} of {limit} characters left"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-field-004-*. A client component: \"use client\" for the sake of the value length. The ring is drawn with a conic-gradient whose share lives in the --vibeui-field-004-ratio variable and is cut out by a pseudo-element in the centre; the alarm threshold is a quarter of the limit, and it raises data-low on the root. Only the last quarter is announced aloud: role=\"status\" on a hidden line, otherwise a screen reader reads the counter on every letter."
           }
         },
         "cardControls": ["limit", "accent", "background"]
@@ -847,7 +851,8 @@
                 "unitLabel": "Unit of measurement",
                 "hint": "The value and the unit are submitted as two form fields — nothing needs converting."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-field-005-*. A server component: the group highlight rides on :focus-within. The border lives on the group, and neither the input nor the select has one. The prefix is a non-interactive span with user-select:none, and the unit is a native select with appearance:none and an arrow made of two edges. The value and the unit are submitted as two form fields: name and `${name}-unit`."
           }
         },
         "cardControls": ["defaultValue", "background"]
@@ -1013,7 +1018,8 @@
                 "note": "The code shows up on the receipt, the discount updates at once.",
                 "doneText": "Code \"{code}\" accepted"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-field-006-*. A client component: \"use client\" for the sake of the value and the result. The wrapper is a real <form> with onSubmit and preventDefault, so Enter in the field presses the button without a single key handler. The button is disabled on an empty value, and the result is announced through role=\"status\" and raises data-done on the root."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1180,7 +1186,8 @@
                 "copiedText": "Done",
                 "copiedHint": "Copied to the clipboard"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-field-007-*. A client component: \"use client\" for the sake of the clipboard. The value lives in a readOnly field rather than in a <code>: it has to be selectable, scrollable and reachable by a password manager. The button first selects the text through a ref and then tries navigator.clipboard.writeText — the selection stays as the fallback when it is refused. Success raises data-copied and is announced through role=\"status\"."
           }
         },
         "cardControls": ["background"]
@@ -1351,7 +1358,8 @@
                   "free": "Free — we will reserve this address for you."
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-field-008-*. A client component: \"use client\" for the sake of the check. The check is started in a useEffect on a timer and cancelled on the next keystroke, so a long address sends one request rather than a dozen. The state is lifted into data-state on the root: it colours the border and turns on the glyph. The state colour is passed through a separate --vibeui-field-008-state variable."
           }
         },
         "cardControls": ["delay", "background"]
@@ -1543,7 +1551,8 @@
                 "cityLabel": "City",
                 "cityPlaceholder": "For example, Lisbon"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-field-009-*. A server component: there is no state. The layout is computed by a container query on the block's own width, so a form in a side panel behaves as narrow even on a desktop. The @container rule targets the inner [data-part=\"shell\"] and its rows rather than the container itself: a container query does not apply to the element that declared it. The width of the label column is set by the --vibeui-field-009-label variable."
           }
         },
         "cardControls": ["background"]
@@ -1749,7 +1758,8 @@
                 ],
                 "defaultMonth": "February"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-field-010-*. A server component: there is no state. The group is declared as a real <fieldset> with a <legend>, and the message is tied to it through aria-describedby and role=\"alert\", so it is audible on entering any of the three fields. The error raises data-invalid on the root and colours the borders of every field in the group, not just one. The fieldset has min-inline-size reset, otherwise it refuses to shrink."
           }
         },
         "cardControls": ["background"]
@@ -1918,7 +1928,8 @@
                   "saved": "Saved"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its palette in --vibeui-field-011-*. A client component: two consecutive pauses decide when to save. The first is silence after typing for delay milliseconds, the second is a short fixed \"saving\" phase that confirms the save really happened rather than the time merely running out. The state is derived by comparing the current text with the last saved value rather than stored as a separate flag, so it cannot drift away from the actual field content. The timestamp is taken once at the moment of saving and is not recomputed on every render."
           }
         },
         "cardControls": ["delay", "background"]

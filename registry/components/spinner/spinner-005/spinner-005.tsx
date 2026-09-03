@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties, ReactNode } from "react"
+import type { ComponentProps, CSSProperties, ReactNode } from "react"
 
-export type Spinner005Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Spinner005Props = Omit<ComponentProps<"div">, "children"> & {
   busy?: boolean
   label?: string
   /** Заголовок демо-содержимого: показывается, пока слот пуст. */
@@ -29,12 +26,15 @@ const STYLES = `
 --vibeui-spinner-005-veil:light-dark(oklch(1 0 0 / 78%),oklch(0.19 0.012 265 / 78%));
 --vibeui-spinner-005-border:light-dark(oklch(0.9 0.006 265),oklch(0.32 0.012 265));
 --vibeui-spinner-005-fg:light-dark(oklch(0.24 0.014 265),oklch(0.95 0.005 265));
---vibeui-spinner-005-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-spinner-005-muted:color-mix(in oklab,var(--vibeui-spinner-005-fg) 68%,transparent);
 --vibeui-spinner-005-soft:light-dark(oklch(0.96 0.004 265),oklch(0.28 0.01 265));
 --vibeui-spinner-005-track:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
 --vibeui-spinner-005-accent:light-dark(oklch(0.55 0.17 262),oklch(0.72 0.16 262));
 --vibeui-spinner-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="spinner-005"]{color-scheme:dark}
 /* Подложки нет по умолчанию: плашка появляется только пропом background. */
 [data-vibeui-block="spinner-005"]{
 position:relative;overflow:hidden;
@@ -44,12 +44,12 @@ border:1px solid var(--vibeui-spinner-005-border);border-radius:1rem;
 font-family:var(--vibeui-spinner-005-font);color:var(--vibeui-spinner-005-fg);
 }
 [data-vibeui-block="spinner-005"] [data-part="content"]{
-display:flex;flex-direction:column;gap:0.625rem;padding:1rem;
+display:flex;flex-direction:column;gap:0.625rem;padding:0.9375rem 1.0625rem;
 }
 [data-vibeui-block="spinner-005"] [data-part="title"]{margin:0;font-size:0.9375rem;font-weight:700}
 [data-vibeui-block="spinner-005"] [data-part="field"]{
 display:flex;flex-direction:column;gap:0.3125rem;
-font-size:0.75rem;color:var(--vibeui-spinner-005-muted);
+font-size:0.875rem;color:var(--vibeui-spinner-005-muted);
 }
 [data-vibeui-block="spinner-005"] [data-part="box"]{
 height:2.25rem;border-radius:0.5rem;
@@ -73,7 +73,7 @@ animation:vibeui-spinner-005-spin .7s linear infinite;
 @keyframes vibeui-spinner-005-spin{to{transform:rotate(360deg)}}
 @keyframes vibeui-spinner-005-pulse{0%,100%{opacity:.35}50%{opacity:1}}
 [data-vibeui-block="spinner-005"] [data-part="veil-label"]{
-font-size:0.8125rem;font-weight:650;
+font-size:0.9375rem;font-weight:650;
 }
 /* Без движения кольцо не крутится, а дышит: состояние сохраняется. */
 @media (prefers-reduced-motion:reduce){
@@ -140,6 +140,7 @@ export function Spinner005({
       </style>
       <div
         {...props}
+        data-slot="spinner"
         data-vibeui-block="spinner-005"
         aria-busy={busy}
         className={className}

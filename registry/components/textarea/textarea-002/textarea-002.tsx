@@ -1,10 +1,10 @@
 "use client"
 
 import { useId, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Textarea002Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange" | "defaultValue"
 > & {
   label?: string
@@ -31,13 +31,16 @@ const STYLES = `
 :where([data-vibeui-block="textarea-002"]){
 --vibeui-textarea-002-bg:transparent;
 --vibeui-textarea-002-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-textarea-002-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-textarea-002-muted:color-mix(in oklab,var(--vibeui-textarea-002-fg) 68%,transparent);
 --vibeui-textarea-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-textarea-002-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.012 265));
 --vibeui-textarea-002-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
 --vibeui-textarea-002-danger:light-dark(oklch(0.56 0.19 25),oklch(0.72 0.16 25));
 --vibeui-textarea-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="textarea-002"]{color-scheme:dark}
 [data-vibeui-block="textarea-002"]{
 display:flex;flex-direction:column;gap:0.375rem;
 width:100%;max-width:22rem;box-sizing:border-box;padding:0.875rem;
@@ -136,6 +139,7 @@ export function Textarea002({
       </style>
       <div
         {...props}
+        data-slot="textarea"
         data-vibeui-block="textarea-002"
         data-over={over}
         className={className}

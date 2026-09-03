@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Radio014Method = {
   value: string
@@ -9,7 +9,7 @@ export type Radio014Method = {
 }
 
 export type Radio014Props = Omit<
-  ComponentPropsWithoutRef<"fieldset">,
+  ComponentProps<"fieldset">,
   "children" | "defaultValue"
 > & {
   legend?: string
@@ -31,7 +31,7 @@ const STYLES = `
 :where([data-vibeui-block="radio-014"]){
 --vibeui-radio-014-bg:transparent;
 --vibeui-radio-014-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-radio-014-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-radio-014-muted:color-mix(in oklab,var(--vibeui-radio-014-fg) 68%,transparent);
 --vibeui-radio-014-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
 --vibeui-radio-014-ring:light-dark(oklch(0.74 0.012 265),oklch(0.5 0.014 265));
 --vibeui-radio-014-accent:light-dark(oklch(0.52 0.17 260),oklch(0.74 0.15 260));
@@ -40,6 +40,9 @@ const STYLES = `
 --vibeui-radio-014-logo-fg:light-dark(oklch(0.42 0.014 265),oklch(0.83 0.01 265));
 --vibeui-radio-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="radio-014"]{color-scheme:dark}
 [data-vibeui-block="radio-014"]{
 display:flex;flex-direction:column;
 width:100%;max-width:23rem;box-sizing:border-box;
@@ -54,7 +57,7 @@ font-size:0.8125rem;font-weight:650;
 }
 [data-vibeui-block="radio-014"] [data-part="list"]{clear:both;display:flex;flex-direction:column;gap:0.5rem}
 [data-vibeui-block="radio-014"] [data-part="method"]{
-display:flex;align-items:center;gap:0.75rem;
+display:flex;align-items:center;gap:0.625rem;
 padding:0.625rem 0.75rem;border-radius:0.625rem;cursor:pointer;
 border:1px solid var(--vibeui-radio-014-border);
 transition:border-color .16s ease,background-color .16s ease;
@@ -70,7 +73,7 @@ cursor:not-allowed;opacity:.55;background:transparent;
 }
 [data-vibeui-block="radio-014"] input{
 appearance:none;-webkit-appearance:none;flex:none;margin:0;cursor:inherit;
-width:1.0625rem;height:1.0625rem;border-radius:9999px;
+width:1.125rem;height:1.125rem;border-radius:9999px;
 border:1.5px solid var(--vibeui-radio-014-ring);
 background:transparent;
 }
@@ -178,6 +181,7 @@ export function Radio014({
       </style>
       <fieldset
         {...props}
+        data-slot="radio-group"
         data-vibeui-block="radio-014"
         className={className}
         style={palette}

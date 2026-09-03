@@ -16,7 +16,7 @@
           "target": "@components/vibeui/hovercard-001.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-hovercard-001-*. Серверный: хуков нет, кроме useId для связи через aria-describedby. Раскрытие идёт на :hover и :focus-within, поэтому клавиатура видит карточку. Внутри нет интерактивных элементов: карточка объявлена role=\"tooltip\".",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-hovercard-001-*. Клиентский только ради Escape: обработчик снимает фокус с триггера, и карточка на :focus-within закрывается — само раскрытие остаётся на CSS. Из хуков только useId для связи через aria-describedby. Раскрытие идёт на :hover и :focus-within, поэтому клавиатура видит карточку. Внутри нет интерактивных элементов: карточка объявлена role=\"tooltip\".",
       "meta": {
         "tags": ["hover card", "mention", "profile", "no-js"],
         "ai": {
@@ -151,7 +151,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-hovercard-001-* variables. Client-side only for the sake of Escape: the handler removes focus from the trigger and the card, held open by :focus-within, closes — the reveal itself stays in CSS. The only hook is useId, used for the aria-describedby link. The reveal runs on :hover and :focus-within, so the keyboard sees the card. There are no interactive elements inside: the card is declared role=\"tooltip\"."
           }
         },
         "cardControls": ["accent", "background"]
@@ -172,7 +173,7 @@
           "target": "@components/vibeui/hovercard-002.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-hovercard-002-*. Серверный: раскрытие держится на :hover и :focus-within обёртки ссылки, а не всего абзаца — иначе карточка вылезала бы при наведении на любой текст. Оттенок обложки выводится из домена хешем FNV-1a и кладётся в --vibeui-hovercard-002-hue. Заголовок обрезан на двух строках, отрывок — на трёх через -webkit-line-clamp. Карточка скрыта visibility, поэтому не ловит курсор в закрытом виде.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-hovercard-002-*. Клиентский только ради Escape: обработчик снимает фокус с триггера, и карточка на :focus-within закрывается — само раскрытие остаётся на CSS. Раскрытие держится на :hover и :focus-within обёртки ссылки, а не всего абзаца — иначе карточка вылезала бы при наведении на любой текст. Оттенок обложки выводится из домена хешем FNV-1a и кладётся в --vibeui-hovercard-002-hue. Заголовок обрезан на двух строках, отрывок — на трёх через -webkit-line-clamp. Карточка скрыта visibility, поэтому не ловит курсор в закрытом виде.",
       "meta": {
         "tags": ["hovercard", "link", "preview", "article"],
         "preview": {
@@ -296,7 +297,8 @@
                 "leadText": "More on that — ",
                 "tailText": " — hover to see where it leads."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-hovercard-002-* variables. Client-side only for the sake of Escape: the handler removes focus from the trigger and the card, held open by :focus-within, closes — the reveal itself stays in CSS. The reveal rests on :hover and :focus-within of the link wrapper rather than of the whole paragraph — otherwise the card would pop up over any text. The cover hue is derived from the domain by an FNV-1a hash and put into --vibeui-hovercard-002-hue. The title is clamped at two lines and the excerpt at three through -webkit-line-clamp. The card is hidden with visibility, so while closed it does not catch the pointer."
           }
         },
         "cardControls": ["accent", "background"]
@@ -317,7 +319,7 @@
           "target": "@components/vibeui/hovercard-003.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-hovercard-003-*. Серверный: раскрытие держится на :hover и :focus-within обёртки ссылки. Рейтинг нарисован строкой из пяти звёзд в ::before, залитой линейным градиентом с точкой перелома calc(rating * 20%) и обрезанной по тексту — дробная оценка показывается честно, без набора полузвёзд. Значение приходит в --vibeui-hovercard-003-rating. Наличие подписано словом, а не только цветом.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-hovercard-003-*. Клиентский только ради Escape: обработчик снимает фокус с триггера, и карточка на :focus-within закрывается — само раскрытие остаётся на CSS. Раскрытие держится на :hover и :focus-within обёртки ссылки. Рейтинг нарисован строкой из пяти звёзд в ::before, залитой линейным градиентом с точкой перелома calc(rating * 20%) и обрезанной по тексту — дробная оценка показывается честно, без набора полузвёзд. Значение приходит в --vibeui-hovercard-003-rating. Наличие подписано словом, а не только цветом.",
       "meta": {
         "tags": ["hovercard", "product", "price", "rating"],
         "preview": {
@@ -443,7 +445,8 @@
                 "ratingText": "{rating} · {reviews} reviews",
                 "locale": "en-US"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-hovercard-003-* variables. Client-side only for the sake of Escape: the handler removes focus from the trigger and the card, held open by :focus-within, closes — the reveal itself stays in CSS. The reveal rests on :hover and :focus-within of the link wrapper. The rating is drawn as a string of five stars in ::before, filled with a linear gradient whose breakpoint is calc(rating * 20%) and clipped to the text — a fractional score is shown honestly, without a set of half-stars. The value arrives in --vibeui-hovercard-003-rating. Availability is spelled out in a word, not only by colour."
           }
         },
         "cardControls": ["rating", "accent", "background"]
@@ -464,7 +467,7 @@
           "target": "@components/vibeui/hovercard-004.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-hovercard-004-*. Серверный: раскрытие держится на :hover и :focus-within обёртки ссылки. Пара владелец/имя набрана одним размером, но разным весом — так она читается как одно целое и при этом видно, где имя. Цвет языка приходит пропом languageColor и кладётся в --vibeui-hovercard-004-lang. Ссылка в тексте набрана моноширинным шрифтом: путь узнают по форме.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-hovercard-004-*. Клиентский только ради Escape: обработчик снимает фокус с триггера, и карточка на :focus-within закрывается — само раскрытие остаётся на CSS. Раскрытие держится на :hover и :focus-within обёртки ссылки. Пара владелец/имя набрана одним размером, но разным весом — так она читается как одно целое и при этом видно, где имя. Цвет языка приходит пропом languageColor и кладётся в --vibeui-hovercard-004-lang. Ссылка в тексте набрана моноширинным шрифтом: путь узнают по форме.",
       "meta": {
         "tags": ["hovercard", "repository", "code", "stats"],
         "preview": {
@@ -599,7 +602,8 @@
                 "starsLabel": "stars",
                 "forksLabel": "forks"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-hovercard-004-* variables. Client-side only for the sake of Escape: the handler removes focus from the trigger and the card, held open by :focus-within, closes — the reveal itself stays in CSS. The reveal rests on :hover and :focus-within of the link wrapper. The owner/name pair is set at one size but in different weights — that way it reads as a single whole while it is still clear where the name begins. The language colour arrives through the languageColor prop and is put into --vibeui-hovercard-004-lang. The link in the text is set in a monospaced font: the path is recognised by shape."
           }
         },
         "cardControls": ["languageColor", "accent", "background"]
@@ -620,7 +624,7 @@
           "target": "@components/vibeui/hovercard-005.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-hovercard-005-*. Серверный: раскрытие держится на :hover и :focus-visible самого сокращения внутри обёртки. Сокращение остаётся строчным элементом с tabIndex=0 — не ссылка и не кнопка, поэтому набор текста не рвётся. Карточка помечена ролью tooltip и связана через aria-describedby. Левая грань окрашена акцентом: это признак словарной статьи, а не уведомления.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-hovercard-005-*. Клиентский только ради Escape: обработчик снимает фокус с триггера, и карточка на :focus-within закрывается — само раскрытие остаётся на CSS. Раскрытие держится на :hover и :focus-visible самого сокращения внутри обёртки. Сокращение остаётся строчным элементом с tabIndex=0 — не ссылка и не кнопка, поэтому набор текста не рвётся. Карточка помечена ролью tooltip и связана через aria-describedby. Левая грань окрашена акцентом: это признак словарной статьи, а не уведомления.",
       "meta": {
         "tags": ["hovercard", "glossary", "term", "definition"],
         "preview": {
@@ -744,7 +748,8 @@
                 "tailText": ", so the first load comes from the nearest city.",
                 "relatedLabel": "see also: "
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-hovercard-005-* variables. Client-side only for the sake of Escape: the handler removes focus from the trigger and the card, held open by :focus-within, closes — the reveal itself stays in CSS. The reveal rests on :hover and :focus-visible of the abbreviation itself inside the wrapper. The abbreviation stays an inline element with tabIndex=0 — not a link and not a button, so the setting of the text is not broken. The card is marked with the tooltip role and linked through aria-describedby. The left edge is coloured with the accent: this marks a glossary entry rather than a notification."
           }
         },
         "cardControls": ["accent", "background"]
@@ -765,7 +770,7 @@
           "target": "@components/vibeui/hovercard-006.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-hovercard-006-*. Серверный: раскрытие держится на :hover и :focus-within обёртки ссылки. Дата собрана из двух полос в отдельном блоке — узнаваемую форму читают быстрее строки. Аватары участников перекрываются отрицательным правым отступом и обведены рамкой цвета подложки, поэтому веер читается как группа; сверх трёх показывается счётчик. Ссылка в тексте подчёркнута внутренней тенью, а не подчёркиванием.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-hovercard-006-*. Клиентский только ради Escape: обработчик снимает фокус с триггера, и карточка на :focus-within закрывается — само раскрытие остаётся на CSS. Раскрытие держится на :hover и :focus-within обёртки ссылки. Дата собрана из двух полос в отдельном блоке — узнаваемую форму читают быстрее строки. Аватары участников перекрываются отрицательным правым отступом и обведены рамкой цвета подложки, поэтому веер читается как группа; сверх трёх показывается счётчик. Ссылка в тексте подчёркнута внутренней тенью, а не подчёркиванием.",
       "meta": {
         "tags": ["hovercard", "calendar", "event", "people"],
         "preview": {
@@ -895,7 +900,8 @@
                 "tailText": " — time and place without opening the calendar.",
                 "restText": "and {count} more"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-hovercard-006-* variables. Client-side only for the sake of Escape: the handler removes focus from the trigger and the card, held open by :focus-within, closes — the reveal itself stays in CSS. The reveal rests on :hover and :focus-within of the link wrapper. The date is assembled from two bands in a block of its own — a recognisable shape is read faster than a line of text. The attendee avatars overlap through a negative right margin and are ringed in the surface colour, so the fan reads as a group; anything past three shows as a count. The link in the text is underlined with an inset shadow rather than with text-decoration."
           }
         },
         "cardControls": ["accent", "background"]
@@ -916,7 +922,7 @@
           "target": "@components/vibeui/hovercard-007.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-hovercard-007-*. Серверный: задержка стоит только в правиле открытого состояния через transition-delay, а базовое правило обнуляет её, поэтому уход курсора отменяет и полоску, и раскрытие. Полоска — псевдоэлемент ::after ссылки, растянутый scaleX за то же время, что и задержка: ожидание становится видимым. Величина живёт в --vibeui-hovercard-007-delay и приходит пропом delay.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-hovercard-007-*. Клиентский только ради Escape: обработчик снимает фокус с триггера, и карточка на :focus-within закрывается — само раскрытие остаётся на CSS. Задержка стоит только в правиле открытого состояния через transition-delay, а базовое правило обнуляет её, поэтому уход курсора отменяет и полоску, и раскрытие. Полоска — псевдоэлемент ::after ссылки, растянутый scaleX за то же время, что и задержка: ожидание становится видимым. Величина живёт в --vibeui-hovercard-007-delay и приходит пропом delay.",
       "meta": {
         "tags": ["hovercard", "delay", "hover intent", "progress"],
         "preview": {
@@ -1039,7 +1045,8 @@
                 "hintText": "the card opens after {delay} of hovering",
                 "delayUnit": "s"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-hovercard-007-* variables. Client-side only for the sake of Escape: the handler removes focus from the trigger and the card, held open by :focus-within, closes — the reveal itself stays in CSS. The delay sits only in the open-state rule, through transition-delay, while the base rule zeroes it, so the pointer leaving cancels both the bar and the reveal. The bar is the link's ::after pseudo-element, stretched with scaleX over the same time as the delay: the waiting becomes visible. The value lives in --vibeui-hovercard-007-delay and arrives through the delay prop."
           }
         },
         "cardControls": ["delay", "accent", "background"]
@@ -1060,7 +1067,7 @@
           "target": "@components/vibeui/hovercard-008.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-hovercard-008-*. Серверный: раскрытие держится на :hover и :focus-within обёртки триггера. Триггер — компактная пилюля с точкой языка, а не подчёркнутая ссылка внутри абзаца: её видно сразу, не дочитывая предложение. Карточка достаёт то, чего паспорту owner/name обычно не хватает: время последнего коммита в шапке и число открытых issue в подвале рядом с лицензией.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-hovercard-008-*. Клиентский только ради Escape: обработчик снимает фокус с триггера, и карточка на :focus-within закрывается — само раскрытие остаётся на CSS. Раскрытие держится на :hover и :focus-within обёртки триггера. Триггер — компактная пилюля с точкой языка, а не подчёркнутая ссылка внутри абзаца: её видно сразу, не дочитывая предложение. Карточка достаёт то, чего паспорту owner/name обычно не хватает: время последнего коммита в шапке и число открытых issue в подвале рядом с лицензией.",
       "meta": {
         "tags": ["hovercard", "repository", "activity", "stats"],
         "preview": {
@@ -1211,7 +1218,8 @@
                 "starsLabel": "stars",
                 "issuesText": "{count} open issues"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-hovercard-008-* variables. Client-side only for the sake of Escape: the handler removes focus from the trigger and the card, held open by :focus-within, closes — the reveal itself stays in CSS. The reveal rests on :hover and :focus-within of the trigger wrapper. The trigger is a compact pill with a language dot rather than an underlined link inside the paragraph: it is visible at once, without reading the sentence to the end. The card supplies what the owner/name pair usually lacks: the time of the last commit in the header and the number of open issues in the footer next to the license."
           }
         },
         "cardControls": ["languageColor", "accent", "background"]

@@ -1,7 +1,7 @@
-import type { ComponentPropsWithoutRef, CSSProperties, ReactNode } from "react"
+import type { ComponentProps, CSSProperties, ReactNode } from "react"
 
 export type Tooltip001Props = Omit<
-  ComponentPropsWithoutRef<"span">,
+  ComponentProps<"span">,
   "children" | "id"
 > & {
   /** Текст подсказки. */
@@ -28,6 +28,9 @@ const STYLES = `
 --vibeui-tooltip-001-gap:0.5rem;
 --vibeui-tooltip-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="tooltip-001"]{color-scheme:dark}
 [data-vibeui-block="tooltip-001"]{
 position:relative;display:inline-flex;font-family:var(--vibeui-tooltip-001-font);
 }
@@ -125,6 +128,7 @@ export function Tooltip001({
       </style>
       <span
         {...props}
+        data-slot="tooltip"
         data-vibeui-block="tooltip-001"
         data-side={side}
         data-open={open || undefined}

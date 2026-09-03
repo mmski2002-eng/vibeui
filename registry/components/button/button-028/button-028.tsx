@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Button028Props = Omit<
-  ComponentPropsWithoutRef<"button">,
-  "children"
-> & {
+export type Button028Props = Omit<ComponentProps<"button">, "children"> & {
   /** Имя действия. Оно же уходит в aria-label и в подсказку. */
   label?: string
   icon?: "info" | "trash" | "edit"
@@ -29,6 +26,9 @@ const STYLES = `
 --vibeui-button-028-size:2.25rem;
 --vibeui-button-028-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="button-028"]{color-scheme:dark}
 [data-vibeui-block="button-028"]{
 position:relative;display:inline-flex;
 font-family:var(--vibeui-button-028-font);
@@ -160,6 +160,7 @@ export function Button028({
         {STYLES}
       </style>
       <span
+        data-slot="button"
         data-vibeui-block="button-028"
         data-side={side}
         className={className}

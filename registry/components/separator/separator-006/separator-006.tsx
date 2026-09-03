@@ -1,13 +1,10 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Separator006Space = "xs" | "sm" | "md" | "lg" | "xl"
 
 export type Separator006Row = { title: string; hint: string }
 
-export type Separator006Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Separator006Props = Omit<ComponentProps<"div">, "children"> & {
   space?: Separator006Space
   inset?: boolean
   /** Строки списка: компонент несёт русские, проект подставляет свои. */
@@ -33,9 +30,12 @@ const STYLES = `
 --vibeui-separator-006-surface:transparent;
 --vibeui-separator-006-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-separator-006-fg:light-dark(oklch(0.26 0.014 265),oklch(0.94 0.006 265));
---vibeui-separator-006-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-separator-006-muted:color-mix(in oklab,var(--vibeui-separator-006-fg) 68%,transparent);
 --vibeui-separator-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="separator-006"]{color-scheme:dark}
 [data-vibeui-block="separator-006"]{
 display:block;
 width:100%;max-width:22rem;box-sizing:border-box;padding:0.875rem 1rem;
@@ -121,6 +121,7 @@ export function Separator006({
       </style>
       <div
         {...props}
+        data-slot="separator"
         data-vibeui-block="separator-006"
         data-space={space}
         data-inset={inset}

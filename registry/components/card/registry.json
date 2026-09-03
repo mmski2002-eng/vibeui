@@ -98,6 +98,7 @@
         "i18n": {
           "en": {
             "description": "A content card: cover, eyebrow, title and footer. The whole surface is clickable while it still contains a single link.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-card-001-*. The ::after technique on the title link stretches its area over the whole card: a click works anywhere, while a single link remains in the accessibility tree. The cover is drawn with gradients and needs no image. The inner padding and the heading size are measured against the card's own width through @container, so the card looks the same in a narrow column and in a wide grid.",
             "ai": {
               "summary": "A content card for a grid: a gradient cover, an eyebrow, a title link, a description and a footer. The entire surface is clickable through ::after on the one link, so twenty cards do not become sixty links. The layout is measured against the card's own width. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -261,6 +262,7 @@
         "i18n": {
           "en": {
             "description": "A metric card: the number large, the change with a sign and arrow, and history bars below — one figure never separates a trend from noise.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-card-002-*. Server-side: no hooks. The history bars are a flex row with percentage heights taken from the row's maximum, so the chart pulls in no library. The good direction is set by the goodDirection prop: for churn, a rise is bad news. The change is duplicated in words in the aria-label.",
             "ai": {
               "summary": "A dashboard metric card: title, value, signed change with an arrow and history bars drawn without a charting library. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -423,6 +425,7 @@
         "i18n": {
           "en": {
             "description": "A person card: avatar, role, a row of figures and two actions; the bio is clamped to two lines so the grid stays even.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-card-003-*. Server-side: no hooks. The avatar hue is computed from the name with FNV-1a across twelve steps of the circle. The text is clamped to two lines with -webkit-line-clamp, the figures are lifted into a row between rules, and the actions take equal width.",
             "ai": {
               "summary": "A person card for a team list: name-derived initials, role, a short bio, a row of figures and two actions. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -612,6 +615,7 @@
         "i18n": {
           "en": {
             "description": "A product card for a grid: the add-to-cart button is its own target above the link, or adding would open the page instead.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-card-004-*. Server-side: no hooks. The link is stretched over the card with an ::after pseudo-element and the button is raised with z-index, so the two targets do not conflict. The focus ring is placed on the card through :has(). The star is drawn with clip-path, and the rating is duplicated as text in the aria-label.",
             "ai": {
               "summary": "A product card: a square frame, a discount badge, a two-line title, a numeric rating, price with a struck-through old price and an add-to-cart button. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -762,6 +766,7 @@
         "i18n": {
           "en": {
             "description": "Plan selection as cards on real radios: the tap target is the whole card, not a 16-pixel circle.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-card-005-*. Client-side: \"use client\". The whole card is a <label> with a transparent radio inside, so the radio group's keyboard model works without handlers. The selected card is styled through :has(input:checked) and stands out by its border, the dot and an inner ring.",
             "ai": {
               "summary": "Single-choice cards: real radios, the whole card clickable, and the selected one marked by a border and a dot. Zero dependencies, one file.",
               "preserve": [
@@ -931,6 +936,7 @@
         "i18n": {
           "en": {
             "description": "A task card: a status chip, subtask progress spelled \"7 of 12\", and a due date that turns red only once it has passed.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-card-006-*. Server-side: no hooks. The status is switched by data-status and colours the chip through color-mix from a single variable. The progress bar is declared role=\"progressbar\" with aria-valuenow and a label. The assignee's avatar hue is derived from the name.",
             "ai": {
               "summary": "A board task card: a status chip, subtask progress in numbers and percent, an assignee and a due date. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1102,6 +1108,7 @@
         "i18n": {
           "en": {
             "description": "A notification with inline actions: answer without opening it, and after the answer the card stays with a report.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-card-007-*. Client-side: \"use client\". After the answer the buttons are replaced by a result line with role=\"status\", so the change of state is announced to a screen reader. The unread dot is marked with an aria-label. The avatar hue is computed from the sender's name.",
             "ai": {
               "summary": "A notification card: sender, headline, two lines of text and a pair of actions that give way to a result line. Zero dependencies, one file.",
               "preserve": [
@@ -1248,6 +1255,7 @@
         "i18n": {
           "en": {
             "description": "An empty \"add\" card: dashed and transparent, because it holds no data and must not look like a real one.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-card-008-*. Server-side: no hooks. The root is a <button>, not a div with onClick: role, keyboard and focus come free. The minimum height is set so that the card matches the real ones in a row. The plus is drawn as a circle with two pseudo-elements.",
             "ai": {
               "summary": "An add card: a dashed border, a plus and a line explaining what appears after the click. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1390,6 +1398,7 @@
         "i18n": {
           "en": {
             "description": "A card with details on a native details element: the essentials stay visible, the rest hides for those who need it.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-card-009-*. A server component: the disclosure is held by a native <details>, useId is needed for the group name. The details are laid out as a dl with display:contents on the rows, so label–value pairs stay pairs in the markup and are laid out by a grid.",
             "ai": {
               "summary": "A card with a summary and expandable details: native details, a definition list of label–value pairs, zero client code. Zero dependencies, one file.",
               "preserve": [
@@ -1549,6 +1558,7 @@
         "i18n": {
           "en": {
             "description": "A product-card skeleton: a square cover and lines of matching length — matching the metrics is the whole point.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-card-010-*. Server-side: no hooks. The proportions mirror card-004: a square cover, two title lines and a short price line. The shimmer is a moving gradient with a per-row delay; under prefers-reduced-motion it is removed and the shapes are filled with a flat tone.",
             "ai": {
               "summary": "A card skeleton: a square cover and lines mirroring the metrics of the real product card. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1694,6 +1704,7 @@
         "i18n": {
           "en": {
             "description": "A bookmark card for an outside link: the domain is visible before the click, the whole surface is the target, and the markup still holds one link.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-card-011-*. Server-side: no hooks. The title link is stretched over the whole card with an ::after pseudo-element, so the hit target is the entire surface while a single entry per card remains in the list of links. The card takes the focus ring on itself through :has(a:focus-visible). The letter mark's hue is derived from the domain with FNV-1a, so one source always keeps one colour. The outside link gets target and rel, and the new-tab warning goes into visually hidden text.",
             "ai": {
               "summary": "A bookmark card for an outside link: a letter mark for the source, the domain in plain text, a title link covering the whole surface and a two-line description. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1850,6 +1861,7 @@
         "i18n": {
           "en": {
             "description": "A card with media on top at a locked aspect ratio: the space is reserved before the image loads, so the text below never jumps.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-card-012-*. Server-side: no hooks. The frame holds its proportion through aspect-ratio, the value arriving from data-ratio and a variable, so four ratios live without duplicating rules. The badge and the duration lie over the frame on semi-transparent backings rather than beside it. An empty frame is filled with gradients — an image is not required; a supplied <img> gets object-fit:cover and fills the frame without distortion.",
             "ai": {
               "summary": "A card with media on top: a frame at a fixed aspect ratio, a badge and a duration over it, a title and a description below. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1996,6 +2008,7 @@
         "i18n": {
           "en": {
             "description": "A card that decides for itself whether to be a row or a tile: the frame sits on top in a narrow column and to the left in a wide one, measured against its own width.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-card-013-*. Server-side: no hooks. The root is declared container-type:inline-size and the whole layout sits on the inner [data-part=\"shell\"] — a container query applies to descendants but not to the container itself, and a rule on the root would silently change nothing. There are two thresholds: at 30rem the card becomes horizontal, at 44rem the frame narrows and the description is clamped to two lines.",
             "ai": {
               "summary": "One card in two layouts: vertical in a tight spot, horizontal in a wide one. The switch is an @container query on the card's own width. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -2144,6 +2157,7 @@
         "i18n": {
           "en": {
             "description": "A metric tile built around the change: sign, percent and absolute value beside the comparison baseline, because \"+12%\" on its own says nothing.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-card-014-*. Server-side: no hooks. The direction and the tone are computed once and go out into data-direction and data-tone, so the colour and the arrow's rotation live in CSS rather than in the markup. The invert prop flips the reading for metrics where a rise is bad news. The word \"rise\"/\"decline\" is duplicated in visually hidden text: an arrow is not read aloud.",
             "ai": {
               "summary": "A metric tile: a large value, a change chip with a sign and an arrow, and below the rule the comparison baseline and the absolute delta. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -2293,6 +2307,7 @@
         "i18n": {
           "en": {
             "description": "A task card with the checklist in plain sight: progress is a row of segments, one per item, so the remainder reads without the caption.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-card-015-*. Server-side: no hooks. The progress is not a bar but a row of equal segments, one per item, declared role=\"progressbar\" with aria-valuemax from the list length. The items are an ordinary ul; the state lives in data-done, so the tick, the border colour and the strike-through switch from a single attribute. The words \"done\"/\"not done\" go into visually hidden text: a strike-through is not read aloud.",
             "ai": {
               "summary": "A task card with a checklist: a title, a counter, segmented progress with one segment per item, and the items themselves with ticks. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -2464,6 +2479,7 @@
         "i18n": {
           "en": {
             "description": "A file card for a list: a sheet glyph carrying the extension, the name on one line, and a row of facts separated by dots — type, size, date.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-card-016-*. Server-side: no hooks. The glyph is not a format icon but a sheet corner: one clip-path shape plus a pseudo-element for the folded corner, with the colour arriving from data-kind through a single variable. The extension is cut out of the name and printed on the glyph, so a name ellipsised at the end does not lose its type. The facts are laid out in a row with separators on ::before rather than as three lines: in a list of forty files the row height is worth more than the detail.",
             "ai": {
               "summary": "A file card: a glyph with the extension and the type colour, the name as a one-line link, a row of facts and a download button. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -2625,6 +2641,7 @@
         "i18n": {
           "en": {
             "description": "A testimonial card on figure and blockquote: the author is tied to the quote by the markup, not by proximity, and the rating is spelled out as a number.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-card-017-*. Server-side: no hooks. The markup is a figure with a blockquote and a figcaption: the link between the author and the quote is described by the standard, not by proximity in the layout. The decorative quote mark is drawn with a pseudo-element and is therefore absent from the accessibility tree. The stars are cut out with clip-path and marked aria-hidden, and the rating is duplicated by a visually hidden \"Rated 5 out of 5\" line. The hue of the initials circle is computed from the name with FNV-1a.",
             "ai": {
               "summary": "A testimonial card: a star rating, the quote in a blockquote and a caption with initials, name, role and source. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -2775,6 +2792,7 @@
         "i18n": {
           "en": {
             "description": "A pricing card with a recommended state: the highlight is a featured flag rather than a separate component, so neighbouring plans never drift apart.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-card-018-*. Server-side: no hooks. The highlight is switched on by the data-featured attribute and changes three things at once: the border, a light gradient backing and the button's fill; the ribbon sits absolutely over the top border. The featured variant's backing stays light deliberately — a dark card in a row of light ones reads as disabled rather than as the primary one. The feature list is a ul with a tick on an inline SVG.",
             "ai": {
               "summary": "A pricing card: name, price with a period, a short line, a feature list, a button and a small terms line. The featured flag adds a ribbon, an accent border and a filled button. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -2926,6 +2944,7 @@
         "i18n": {
           "en": {
             "description": "An empty state with exactly one way out: a three-sheet drawing, an explanation and a single button. The hint below is text, not a second button.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-card-019-*. Server-side: no hooks. The drawing is assembled from three blank sheets on ordinary spans with transform rotations — no picture is needed, and neither is an icon font. The whole block is marked aria-hidden, because the meaning is carried by the text. There is exactly one action, and the alternative is given as a line of text: two equal buttons in an empty state turn the way out into a question.",
             "ai": {
               "summary": "An empty state: a three-sheet drawing, a heading, an explanation, one button and a quiet hint beneath it. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -3073,6 +3092,7 @@
         "i18n": {
           "en": {
             "description": "A system notification with a severity and a timestamp: \"12 min ago\" sits inside <time datetime>, so machines still read an exact date.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-card-020-*. Server-side: no hooks. The severity arrives in the data-severity attribute and, through a single variable, colours the rail on ::before, the icon circle and the action link; the icon shape is picked by the same severity from a map of SVG paths. The severity word is duplicated in visually hidden text before the heading — a coloured rail is not read aloud. The time is output with a <time> tag carrying a machine-readable datetime.",
             "ai": {
               "summary": "A system notification card: a coloured severity rail, an icon, a heading, a timestamp in <time>, the message, one action link and a close button. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -3230,6 +3250,7 @@
         "i18n": {
           "en": {
             "description": "A comment feed skeleton: rows with an avatar and two lines of text, a shimmer travelling as a wave, and a flat fill under prefers-reduced-motion.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-card-021-*. Server-side: no hooks. The shimmer is a single @keyframes moving background-position along a gradient 300% wide; the delay is set by the row's nth-child, so the movement reads as a wave rather than a synchronous blink. Under prefers-reduced-motion the animation is removed entirely and the shapes are filled with a flat tone — a half-hearted slowdown does not help here. The root is declared role=\"status\" with aria-busy, the label goes into visually hidden text, and the shapes themselves are marked aria-hidden.",
             "ai": {
               "summary": "A feed skeleton: rows with an avatar circle, a short name line and two text lines, with a shimmer moving across them as a wave. Zero dependencies, one file, no client JS.",
               "preserve": [

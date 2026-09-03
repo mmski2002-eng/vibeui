@@ -1,7 +1,7 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Tags007Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "defaultValue"
 > & {
   label?: string
@@ -28,12 +28,15 @@ const STYLES = `
 --vibeui-tags-007-surface:transparent;
 --vibeui-tags-007-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.01 265));
 --vibeui-tags-007-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
---vibeui-tags-007-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-tags-007-muted:color-mix(in oklab,var(--vibeui-tags-007-fg) 68%,transparent);
 --vibeui-tags-007-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.012 265));
 --vibeui-tags-007-chip:light-dark(oklch(0.96 0.004 265),oklch(0.3 0.012 265));
 --vibeui-tags-007-accent:light-dark(oklch(0.5 0.15 265),oklch(0.78 0.13 265));
 --vibeui-tags-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="tags-007"]{color-scheme:dark}
 /* Подложка по умолчанию прозрачная: список ложится на фон страницы. */
 [data-vibeui-block="tags-007"]{
 display:flex;flex-direction:column;gap:0.375rem;
@@ -133,6 +136,7 @@ export function Tags007({
       </style>
       <div
         {...props}
+        data-slot="tags-input"
         data-vibeui-block="tags-007"
         className={className}
         style={palette}

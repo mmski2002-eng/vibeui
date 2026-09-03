@@ -1,10 +1,10 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Toggle009Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   label?: string
@@ -23,13 +23,16 @@ const STYLES = `
 :where([data-vibeui-block="toggle-009"]){
 --vibeui-toggle-009-bg:transparent;
 --vibeui-toggle-009-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-toggle-009-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-toggle-009-muted:color-mix(in oklab,var(--vibeui-toggle-009-fg) 68%,transparent);
 --vibeui-toggle-009-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
 --vibeui-toggle-009-hover:light-dark(oklch(0.97 0.004 265),oklch(0.29 0.01 265));
 --vibeui-toggle-009-accent:light-dark(oklch(0.63 0.22 15),oklch(0.72 0.19 15));
 --vibeui-toggle-009-on:light-dark(oklch(0.99 0 0),oklch(0.18 0.014 265));
 --vibeui-toggle-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="toggle-009"]{color-scheme:dark}
 [data-vibeui-block="toggle-009"]{
 box-sizing:border-box;display:inline-flex;align-items:center;gap:0.625rem;
 padding:0.625rem 0.75rem;
@@ -71,7 +74,7 @@ font-size:0.625rem;font-weight:700;line-height:1;font-variant-numeric:tabular-nu
 animation:vibeui-toggle-009-pop .22s ease;
 }
 [data-vibeui-block="toggle-009"] [data-part="hint"]{
-margin:0;font-size:0.8125rem;font-weight:600;color:var(--vibeui-toggle-009-fg);
+margin:0;font-size:0.875rem;font-weight:600;color:var(--vibeui-toggle-009-fg);
 }
 @keyframes vibeui-toggle-009-beat{
 0%{transform:scale(1)}
@@ -146,6 +149,7 @@ export function Toggle009({
       </style>
       <div
         {...props}
+        data-slot="toggle"
         data-vibeui-block="toggle-009"
         className={className}
         style={palette}

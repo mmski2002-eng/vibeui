@@ -1,14 +1,11 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Breadcrumb002Item = {
   label: string
   href?: string
 }
 
-export type Breadcrumb002Props = Omit<
-  ComponentPropsWithoutRef<"nav">,
-  "children"
-> & {
+export type Breadcrumb002Props = Omit<ComponentProps<"nav">, "children"> & {
   items?: Breadcrumb002Item[]
   separator?: string
   /** Подпись навигации: компонент несёт русскую, проект подставляет свою. */
@@ -28,7 +25,7 @@ export type Breadcrumb002Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="breadcrumb-002"]){
 --vibeui-breadcrumb-002-fg:light-dark(oklch(0.28 0.016 265),oklch(0.93 0.008 265));
---vibeui-breadcrumb-002-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-breadcrumb-002-muted:color-mix(in oklab,var(--vibeui-breadcrumb-002-fg) 68%,transparent);
 --vibeui-breadcrumb-002-sep:light-dark(oklch(0.75 0.01 265),oklch(0.5 0.012 265));
 --vibeui-breadcrumb-002-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-breadcrumb-002-bg:transparent;
@@ -37,6 +34,9 @@ const STYLES = `
 --vibeui-breadcrumb-002-separator:"/";
 --vibeui-breadcrumb-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="breadcrumb-002"]{color-scheme:dark}
 [data-vibeui-block="breadcrumb-002"]{
 box-sizing:border-box;padding:var(--vibeui-breadcrumb-002-pad);
 background:var(--vibeui-breadcrumb-002-bg);
@@ -129,6 +129,7 @@ export function Breadcrumb002({
       </style>
       <nav
         {...props}
+        data-slot="breadcrumb"
         data-vibeui-block="breadcrumb-002"
         aria-label={navLabel}
         className={className}

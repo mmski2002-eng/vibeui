@@ -1,7 +1,7 @@
 "use client"
 
 import { useId, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Inputgroup033Unit = {
   value: string
@@ -9,7 +9,7 @@ export type Inputgroup033Unit = {
 }
 
 export type Inputgroup033Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "defaultValue" | "onChange"
 > & {
   name?: string
@@ -46,7 +46,7 @@ const STYLES = `
 --vibeui-inputgroup-033-surface:transparent;
 --vibeui-inputgroup-033-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-inputgroup-033-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-inputgroup-033-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-inputgroup-033-muted:color-mix(in oklab,var(--vibeui-inputgroup-033-fg) 68%,transparent);
 --vibeui-inputgroup-033-field:light-dark(oklch(0.99 0.002 265),oklch(0.26 0.012 265));
 --vibeui-inputgroup-033-fixed:light-dark(oklch(0.965 0.003 265),oklch(0.31 0.012 265));
 --vibeui-inputgroup-033-border:light-dark(oklch(0.86 0.008 265),oklch(0.42 0.014 265));
@@ -54,6 +54,9 @@ const STYLES = `
 --vibeui-inputgroup-033-radius:0.75rem;
 --vibeui-inputgroup-033-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="inputgroup-033"]{color-scheme:dark}
 [data-vibeui-block="inputgroup-033"]{
 display:flex;flex-direction:column;gap:0.4375rem;margin:0;
 width:100%;max-width:20rem;box-sizing:border-box;padding:0.875rem;
@@ -178,6 +181,7 @@ export function Inputgroup033({
       </style>
       <div
         {...props}
+        data-slot="input-group"
         data-vibeui-block="inputgroup-033"
         className={className}
         style={palette}

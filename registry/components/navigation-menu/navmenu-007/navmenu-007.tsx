@@ -13,6 +13,8 @@ export type Navmenu007Props = {
   secondaryLabel?: string
   /** Подпись группы разделов для скринридера. */
   label?: string
+  /** Подпись текущего раздела: он помечается aria-current. */
+  current?: string
   /** Подложка шапки. Пусто — своя палитра компонента. */
   background?: string
   accent?: string
@@ -28,7 +30,7 @@ const STYLES = `
 :where([data-vibeui-block="navmenu-007"]){
 --vibeui-navmenu-007-bg:light-dark(oklch(1 0 0),oklch(0.23 0.013 265));
 --vibeui-navmenu-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-navmenu-007-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-navmenu-007-muted:color-mix(in oklab,var(--vibeui-navmenu-007-fg) 68%,transparent);
 --vibeui-navmenu-007-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-navmenu-007-hover:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.85 0.02 265 / 12%));
 --vibeui-navmenu-007-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
@@ -39,6 +41,9 @@ const STYLES = `
 --vibeui-navmenu-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="navmenu-007"]{color-scheme:dark}
 [data-vibeui-block="navmenu-007"]{
 box-sizing:border-box;width:100%;max-width:46rem;
 font-family:var(--vibeui-navmenu-007-font);color:var(--vibeui-navmenu-007-fg);
@@ -112,6 +117,12 @@ font-size:0.875rem;font-weight:600;
 [data-vibeui-block="navmenu-007"] [data-part="ghost"]{display:none}
 [data-vibeui-block="navmenu-007"] [data-part="right"]{margin-left:auto}
 }
+/* Текущий раздел: подчёркивание и вес, а не один только цвет. */
+[data-vibeui-block="navmenu-007"] [aria-current="page"]{
+font-weight:700;
+text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:0.3125rem;
+text-decoration-color:var(--vibeui-navmenu-007-accent);
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="navmenu-007"] *{animation:none!important;transition:none!important}}
 `
 
@@ -155,6 +166,7 @@ export function Navmenu007({
   actionLabel = "Начать",
   secondaryLabel = "Войти",
   label = "Разделы сайта",
+  current = "Цены",
   background = "",
   accent,
   className,
@@ -177,6 +189,7 @@ export function Navmenu007({
         {STYLES}
       </style>
       <div
+        data-slot="navigation-menu"
         data-vibeui-block="navmenu-007"
         className={className}
         style={palette}
@@ -209,7 +222,12 @@ export function Navmenu007({
                   </ul>
                 </details>
               ) : (
-                <a key={entry.label} data-part="plain" href={entry.href ?? "#"}>
+                <a
+                  key={entry.label}
+                  data-part="plain"
+                  href={entry.href ?? "#"}
+                  aria-current={entry.label === current ? "page" : undefined}
+                >
                   {entry.label}
                 </a>
               ),

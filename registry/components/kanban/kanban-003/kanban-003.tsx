@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import type {
-  ComponentPropsWithoutRef,
+  ComponentProps,
   CSSProperties,
   DragEvent,
   KeyboardEvent,
@@ -17,7 +17,7 @@ export type Kanban003Card = {
 }
 
 export type Kanban003Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   columns?: string[]
@@ -48,13 +48,16 @@ const STYLES = `
 --vibeui-kanban-003-bg:transparent;
 --vibeui-kanban-003-card:light-dark(oklch(1 0 0),oklch(0.27 0.012 265));
 --vibeui-kanban-003-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
---vibeui-kanban-003-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-kanban-003-muted:color-mix(in oklab,var(--vibeui-kanban-003-fg) 68%,transparent);
 --vibeui-kanban-003-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-kanban-003-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.15 262));
 --vibeui-kanban-003-late:light-dark(oklch(0.58 0.19 27),oklch(0.74 0.16 27));
 --vibeui-kanban-003-shadow:light-dark(oklch(0.2 0.02 265 / 6%),oklch(0 0 0 / 32%));
 --vibeui-kanban-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="kanban-003"]{color-scheme:dark}
 [data-vibeui-block="kanban-003"]{
 position:relative;display:grid;grid-auto-flow:column;grid-auto-columns:minmax(11.5rem,1fr);gap:0.625rem;
 width:100%;box-sizing:border-box;padding:0.75rem;overflow-x:auto;
@@ -291,6 +294,7 @@ export function Kanban003({
       </style>
       <div
         {...props}
+        data-slot="kanban"
         data-vibeui-block="kanban-003"
         className={className}
         style={palette}

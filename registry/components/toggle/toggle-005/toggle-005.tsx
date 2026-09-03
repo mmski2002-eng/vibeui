@@ -1,10 +1,10 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Toggle005Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   label?: string
@@ -27,13 +27,16 @@ const STYLES = `
 :where([data-vibeui-block="toggle-005"]){
 --vibeui-toggle-005-bg:transparent;
 --vibeui-toggle-005-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-toggle-005-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-toggle-005-muted:color-mix(in oklab,var(--vibeui-toggle-005-fg) 68%,transparent);
 --vibeui-toggle-005-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
 --vibeui-toggle-005-accent:light-dark(oklch(0.55 0.17 285),oklch(0.75 0.14 285));
 --vibeui-toggle-005-track:light-dark(oklch(0.93 0.006 265),oklch(0.33 0.012 265));
 --vibeui-toggle-005-on:light-dark(oklch(0.99 0 0),oklch(0.18 0.014 265));
 --vibeui-toggle-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="toggle-005"]{color-scheme:dark}
 [data-vibeui-block="toggle-005"]{
 box-sizing:border-box;display:flex;align-items:center;gap:0.75rem;
 width:100%;max-width:21rem;padding:0.75rem 0.875rem;
@@ -62,7 +65,7 @@ color:var(--vibeui-toggle-005-on);
 [data-vibeui-block="toggle-005"] button[aria-pressed="true"] [data-part="silent"]{display:block}
 [data-vibeui-block="toggle-005"] [data-part="text"]{flex:1;min-width:0}
 [data-vibeui-block="toggle-005"] [data-part="state"]{
-margin:0;font-size:0.8125rem;font-weight:600;line-height:1.3;
+margin:0;font-size:0.875rem;font-weight:600;line-height:1.3;
 }
 [data-vibeui-block="toggle-005"] [data-part="meter"]{
 display:block;margin-top:0.4375rem;height:0.375rem;border-radius:9999px;
@@ -155,6 +158,7 @@ export function Toggle005({
       </style>
       <div
         {...props}
+        data-slot="toggle"
         data-vibeui-block="toggle-005"
         data-muted={pressed}
         className={className}

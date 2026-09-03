@@ -1,9 +1,8 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+"use client"
 
-export type Hovercard003Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
+
+export type Hovercard003Props = Omit<ComponentProps<"div">, "children"> & {
   name?: string
   price?: string
   oldPrice?: string
@@ -35,7 +34,7 @@ const STYLES = `
 --vibeui-hovercard-003-bg:transparent;
 --vibeui-hovercard-003-card:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
 --vibeui-hovercard-003-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-hovercard-003-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-hovercard-003-muted:color-mix(in oklab,var(--vibeui-hovercard-003-fg) 68%,transparent);
 --vibeui-hovercard-003-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
 --vibeui-hovercard-003-accent:light-dark(oklch(0.55 0.17 265),oklch(0.76 0.14 265));
 --vibeui-hovercard-003-star:light-dark(oklch(0.78 0.15 80),oklch(0.84 0.15 85));
@@ -47,6 +46,9 @@ const STYLES = `
 --vibeui-hovercard-003-rating:0;
 --vibeui-hovercard-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="hovercard-003"]{color-scheme:dark}
 [data-vibeui-block="hovercard-003"]{
 width:100%;max-width:28rem;box-sizing:border-box;
 padding:1rem 1.125rem;
@@ -133,6 +135,16 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 }
 
 /**
+ * Escape убирает фокус с триггера. Карточка держится на :focus-within,
+ * поэтому снятого фокуса достаточно, чтобы закрыть её с клавиатуры.
+ */
+function closeOnEscape(event: KeyboardEvent<HTMLElement>) {
+  if (event.key === "Escape") {
+    ;(event.target as HTMLElement).blur()
+  }
+}
+
+/**
  * Карточка товара у названия в тексте: цена, наличие и дробный рейтинг.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -175,6 +187,8 @@ export function Hovercard003({
       </style>
       <div
         {...props}
+        data-slot="hover-card"
+        onKeyDown={closeOnEscape}
         data-vibeui-block="hovercard-003"
         className={className}
         style={palette}

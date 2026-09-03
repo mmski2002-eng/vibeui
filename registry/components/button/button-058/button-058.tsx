@@ -1,12 +1,9 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Button058Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Button058Props = Omit<ComponentProps<"div">, "children"> & {
   /** Подпись поля: без неё кнопка-глаз висит в воздухе. */
   label?: string
   placeholder?: string
@@ -27,10 +24,13 @@ const STYLES = `
 --vibeui-button-058-surface:light-dark(oklch(1 0 0),oklch(0.24 0.014 265));
 --vibeui-button-058-border:light-dark(oklch(0.88 0.006 265),oklch(0.42 0.014 265));
 --vibeui-button-058-fg:light-dark(oklch(0.24 0.02 265),oklch(0.94 0.008 265));
---vibeui-button-058-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-button-058-muted:color-mix(in oklab,var(--vibeui-button-058-fg) 68%,transparent);
 --vibeui-button-058-accent:light-dark(oklch(0.53 0.16 265),oklch(0.75 0.13 265));
 --vibeui-button-058-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="button-058"]{color-scheme:dark}
 [data-vibeui-block="button-058"]{
 display:flex;flex-direction:column;gap:0.375rem;box-sizing:border-box;
 width:100%;max-width:20rem;
@@ -50,8 +50,8 @@ outline-offset:1px;
 }
 [data-vibeui-block="button-058"] input{
 flex:1;min-width:0;appearance:none;border:0;background:transparent;outline:0;
-height:2.625rem;padding:0 2.75rem 0 0.75rem;
-font:inherit;font-size:0.9375rem;color:inherit;
+height:2.5rem;padding:0 2.75rem 0 0.75rem;
+font:inherit;font-size:0.875rem;color:inherit;
 letter-spacing:0.02em;
 }
 [data-vibeui-block="button-058"] [data-part="toggle"]{
@@ -145,6 +145,7 @@ export function Button058({
       </style>
       <div
         {...props}
+        data-slot="button"
         data-vibeui-block="button-058"
         className={className}
         style={palette}

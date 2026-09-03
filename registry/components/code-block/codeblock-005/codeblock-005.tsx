@@ -1,14 +1,11 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Codeblock005Line = {
   text: string
   kind?: "add" | "del"
 }
 
-export type Codeblock005Props = Omit<
-  ComponentPropsWithoutRef<"figure">,
-  "children"
-> & {
+export type Codeblock005Props = Omit<ComponentProps<"figure">, "children"> & {
   path?: string
   showStats?: boolean
   lines?: Codeblock005Line[]
@@ -29,7 +26,7 @@ const STYLES = `
 --vibeui-codeblock-005-bg:transparent;
 --vibeui-codeblock-005-head:light-dark(oklch(0 0 0 / 4%),oklch(1 0 0 / 5%));
 --vibeui-codeblock-005-fg:light-dark(oklch(0.27 0.014 265),oklch(0.92 0.006 265));
---vibeui-codeblock-005-muted:light-dark(oklch(0.5 0.016 265),oklch(0.67 0.014 265));
+--vibeui-codeblock-005-muted:color-mix(in oklab,var(--vibeui-codeblock-005-fg) 68%,transparent);
 --vibeui-codeblock-005-border:light-dark(oklch(0 0 0 / 13%),oklch(1 0 0 / 13%));
 --vibeui-codeblock-005-add:light-dark(oklch(0.49 0.15 150),oklch(0.84 0.15 150));
 --vibeui-codeblock-005-add-bg:light-dark(oklch(0.75 0.16 150 / 28%),oklch(0.5 0.13 150 / 22%));
@@ -38,6 +35,9 @@ const STYLES = `
 --vibeui-codeblock-005-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-codeblock-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="codeblock-005"]{color-scheme:dark}
 [data-vibeui-block="codeblock-005"]{
 display:flex;flex-direction:column;
 width:100%;max-width:34rem;box-sizing:border-box;margin:0;overflow:hidden;
@@ -77,6 +77,14 @@ user-select:none;-webkit-user-select:none;
 [data-vibeui-block="codeblock-005"] [data-part="row"][data-kind="del"]{background:var(--vibeui-codeblock-005-del-bg)}
 [data-vibeui-block="codeblock-005"] [data-part="row"][data-kind="del"]::before{content:"−";color:var(--vibeui-codeblock-005-del);font-weight:700}
 [data-vibeui-block="codeblock-005"] [data-part="row"][data-kind="del"] span{opacity:.85}
+/* Знак строки — псевдоэлемент, подложка — цвет: в дерево доступности не
+   попадает ни то, ни другое. user-select:none держит подпись вне выделения,
+   иначе она уехала бы в буфер вместе с кодом. */
+[data-vibeui-block="codeblock-005"] [data-part="sr"]{
+position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0;
+user-select:none;-webkit-user-select:none;
+}
 `
 
 const LINES: Codeblock005Line[] = [
@@ -145,6 +153,7 @@ export function Codeblock005({
       </style>
       <figure
         {...props}
+        data-slot="code-block"
         data-vibeui-block="codeblock-005"
         className={className}
         style={palette}
@@ -165,16 +174,12 @@ export function Codeblock005({
         <pre>
           <code>
             {lines.map((line, index) => (
-              <span
-                key={index}
-                data-part="row"
-                data-kind={line.kind}
-                aria-label={
-                  line.kind
-                    ? (kindText[line.kind] ?? KIND_TEXT[line.kind])
-                    : undefined
-                }
-              >
+              <span key={index} data-part="row" data-kind={line.kind}>
+                {line.kind ? (
+                  <span data-part="sr">
+                    {kindText[line.kind] ?? KIND_TEXT[line.kind]}
+                  </span>
+                ) : null}
                 <span>{line.text}</span>
               </span>
             ))}

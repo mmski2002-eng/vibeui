@@ -1,14 +1,10 @@
 "use client"
 
 import { useId, useRef, useState } from "react"
-import type {
-  ComponentPropsWithoutRef,
-  CSSProperties,
-  KeyboardEvent,
-} from "react"
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Togglegroup014Props = Omit<
-  ComponentPropsWithoutRef<"section">,
+  ComponentProps<"section">,
   "children" | "onChange"
 > & {
   label?: string
@@ -34,7 +30,7 @@ const STYLES = `
 :where([data-vibeui-block="togglegroup-014"]){
 --vibeui-togglegroup-014-bg:transparent;
 --vibeui-togglegroup-014-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-togglegroup-014-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-togglegroup-014-muted:color-mix(in oklab,var(--vibeui-togglegroup-014-fg) 68%,transparent);
 --vibeui-togglegroup-014-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
 --vibeui-togglegroup-014-surface:light-dark(oklch(0.97 0.004 265),oklch(0.27 0.011 265));
 --vibeui-togglegroup-014-raised:light-dark(oklch(1 0 0),oklch(0.36 0.014 265));
@@ -44,6 +40,9 @@ const STYLES = `
 --vibeui-togglegroup-014-tip-fg:light-dark(oklch(0.98 0 0),oklch(0.2 0.014 265));
 --vibeui-togglegroup-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="togglegroup-014"]{color-scheme:dark}
 [data-vibeui-block="togglegroup-014"]{
 box-sizing:border-box;display:flex;flex-direction:column;gap:0.875rem;
 width:100%;max-width:20rem;padding:1.25rem 0.875rem 0.875rem;
@@ -201,6 +200,7 @@ export function Togglegroup014({
       </style>
       <section
         {...props}
+        data-slot="toggle-group"
         data-vibeui-block="togglegroup-014"
         className={className}
         style={palette}

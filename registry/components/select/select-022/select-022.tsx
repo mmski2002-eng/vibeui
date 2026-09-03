@@ -1,11 +1,11 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Select022Option = {
   value: string
   label: string
 }
 
-export type Select022Props = Omit<ComponentPropsWithoutRef<"p">, "children"> & {
+export type Select022Props = Omit<ComponentProps<"p">, "children"> & {
   before?: string
   after?: string
   label?: string
@@ -22,13 +22,19 @@ export type Select022Props = Omit<ComponentPropsWithoutRef<"p">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="select-022"]){
 --vibeui-select-022-fg:light-dark(oklch(0.23 0.016 265),oklch(0.94 0.005 265));
---vibeui-select-022-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-select-022-muted:color-mix(in oklab,var(--vibeui-select-022-fg) 68%,transparent);
 --vibeui-select-022-accent:light-dark(oklch(0.55 0.19 262),oklch(0.75 0.16 262));
 --vibeui-select-022-tint:light-dark(oklch(0.55 0.19 262 / 10%),oklch(0.75 0.16 262 / 18%));
 --vibeui-select-022-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="select-022"]{color-scheme:dark}
 [data-vibeui-block="select-022"]{
-margin:0;max-width:26rem;
+/* width вместе с max-width: container-type отвязывает ширину от содержимого,
+   и без явной ширины строка схлопывается в кадре, который центрирует
+   содержимое флексом. */
+margin:0;width:100%;max-width:26rem;
 font-family:var(--vibeui-select-022-font);font-size:0.9375rem;line-height:1.6;
 color:var(--vibeui-select-022-fg);
 container-type:inline-size;
@@ -99,6 +105,7 @@ export function Select022({
       </style>
       <p
         {...props}
+        data-slot="select"
         data-vibeui-block="select-022"
         className={className}
         style={palette}

@@ -1,14 +1,11 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Toast019Status = "exporting" | "ready" | "cancelled"
 
-export type Toast019Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Toast019Props = Omit<ComponentProps<"div">, "children"> & {
   fileName?: string
   fileSize?: string
   downloadHref?: string
@@ -41,7 +38,7 @@ const STYLES = `
 :where([data-vibeui-block="toast-019"]){
 --vibeui-toast-019-bg:light-dark(oklch(0.99 0.002 265),oklch(0.25 0.014 265));
 --vibeui-toast-019-fg:light-dark(oklch(0.22 0.014 265),oklch(0.96 0.003 265));
---vibeui-toast-019-muted:light-dark(oklch(0.56 0.014 265),oklch(0.76 0.01 265));
+--vibeui-toast-019-muted:color-mix(in oklab,var(--vibeui-toast-019-fg) 68%,transparent);
 --vibeui-toast-019-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.014 265));
 --vibeui-toast-019-track:light-dark(oklch(0.92 0.006 265),oklch(0.33 0.012 265));
 --vibeui-toast-019-hover:light-dark(oklch(0.2 0.02 265 / 7%),oklch(1 0 0 / 12%));
@@ -53,6 +50,9 @@ const STYLES = `
 --vibeui-toast-019-radius:0.875rem;
 --vibeui-toast-019-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="toast-019"]{color-scheme:dark}
 [data-vibeui-block="toast-019"]{
 display:flex;align-items:flex-start;gap:0.75rem;
 width:100%;max-width:23rem;box-sizing:border-box;
@@ -73,7 +73,7 @@ background:color-mix(in oklab,var(--vibeui-toast-019-success) 16%,transparent);
 color:var(--vibeui-toast-019-success);
 }
 [data-vibeui-block="toast-019"] [data-part="body"]{flex:1;min-width:0}
-[data-vibeui-block="toast-019"] [data-part="title"]{font-size:0.8438rem;font-weight:600;line-height:1.35}
+[data-vibeui-block="toast-019"] [data-part="title"]{font-size:0.875rem;font-weight:600;line-height:1.35}
 [data-vibeui-block="toast-019"] [data-part="name"]{
 display:block;margin-top:0.125rem;font-size:0.75rem;color:var(--vibeui-toast-019-muted);
 overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
@@ -221,6 +221,7 @@ export function Toast019({
       </style>
       <div
         {...props}
+        data-slot="toast"
         data-vibeui-block="toast-019"
         data-status={status}
         role="status"

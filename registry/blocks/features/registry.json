@@ -139,7 +139,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, always dark whatever theme the project runs. The colours live in the local variables --vibeui-features-001-*; the accent is changed with the accent prop. The layout is switched by container queries against the block's own width. This is a section, not a hero: the heading is an h2, so the block can sit under a hero without bringing a second h1 onto the page."
           }
         },
         "controls": [
@@ -338,7 +339,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "A server component, one file, zero dependencies. The --vibeui-features-002-* palette is moved to light-dark(): the section follows the surrounding color-scheme, and the background is transparent by default and set by the background prop. The grid is built with the gap:1px plus container background technique: the lines between cells are a gap rather than a border, so at a narrow width the grid folds into a column with no dangling rules. The icons are inline SVG paths taken from a dictionary by key, and the colour comes from currentColor. One column up to 34rem, two from 34rem and three from 60rem — all through container queries against the block's width."
           }
         },
         "cardControls": ["accent", "background"]
@@ -504,7 +506,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "A server component, one file, zero dependencies. The --vibeui-features-003-* palette is moved to light-dark(): the section follows the surrounding color-scheme, and the background is transparent by default and set by the background prop. The typeface pairing is the system one: serif for the headings, sans for everything else. The columns are flex columns and the link is pinned to the bottom with margin-top:auto, so the bottom edge of the spread stays level across descriptions of different lengths. The layout: one column up to 56rem, three from 56rem through a container query. The only motion is a colour and gap transition on the link, and prefers-reduced-motion is declared for it."
           }
         },
         "cardControls": ["accent", "background"]
@@ -673,7 +676,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "A server component, one file, zero dependencies. The --vibeui-features-004-* palette is moved to light-dark(): the section follows the surrounding color-scheme, and the background is transparent by default and set by the background prop. The illustration is coloured directly in the figure rule rather than through a variable: var(--hue) inside a variable would be substituted once on the root and every row would take the same hue. The markup is identical across the rows: the zigzag is made by an nth-child(even) rule with order on figure, so adding a row means adding an array entry. The illustration hue arrives as the inline variable --vibeui-features-004-hue computed from the row index; a default value is declared on the root. The layout: one column up to 56rem, two from 56rem through a container query."
           }
         },
         "cardControls": ["accent", "background"]
@@ -834,7 +838,8 @@
                 ],
                 "excludedTitle": "What is not here"
               }
-            }
+            },
+            "docs": "A server component, one file, zero dependencies. The --vibeui-features-005-* palette, a dark green base. The tick and the dash are ::before and ::after on <li> rather than icons in the markup: the list stays a clean <ul>, a screen reader reads only the text, and inserting an item does not require copying an SVG. The exclusions column differs only by the data-part attribute and recolours the marker. The layout: one column up to 34rem, two from 34rem, three from 60rem through container queries."
           }
         },
         "cardControls": ["accent"]
@@ -1026,7 +1031,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "A server component, one file, zero dependencies. The --vibeui-features-006-* palette is moved to light-dark(): the section follows the surrounding color-scheme, the background is transparent by default and set by the background prop, and the table canvas lives in a separate card token. The markup is a real table: <caption>, a thead with scope=\"col\" and row headings through <th scope=\"row\">, so a screen reader announces both the row and the column. Your own column is marked with data-part=\"mine\" on the cells and highlighted with a background. The wrapper carries overflow-x:auto and the table a min-width: at a narrow width the comparison scrolls instead of falling apart into cards. A true value is drawn as a tick with the word from the yesLabel prop, false as a dash with an aria-label from noLabel. The table caption, the first column heading and both words are exposed as the caption, featureLabel, yesLabel and noLabel props."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1184,7 +1190,8 @@
                   "href": "#"
                 }
               }
-            }
+            },
+            "docs": "A server component, one file, zero dependencies. The --vibeui-features-007-* palette is moved to light-dark(): the section follows the surrounding color-scheme, and the background is transparent by default and set by the background prop. The steps are marked up as an <ol>: the order matters and has to be read out loud, not only shown by coloured circles. The connecting line is a ::before on the step, hidden on the last one. At a narrow width the line is vertical and the circles sit on the left; from 56rem the line becomes horizontal and the circles move to the top — both layouts are set by the same pseudo-element through a container query."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1371,7 +1378,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "A server component, one file, zero dependencies. The --vibeui-features-008-* palette is moved to light-dark(): the section follows the surrounding color-scheme, and the background is transparent by default and set by the background prop. The screen-reader name of the tab group is exposed as the tablistLabel prop. The radio buttons sit before the tab list and the panels, and the active panel is selected with a selector of the form input:checked ~ [data-part=\"panels\"] [data-part=\"panel\"]:nth-child(n). The inputs are moved off screen but stay in the focus order, and the ring is drawn on the label through :focus-visible. The radio group brings the keyboard arrows and the state announcement. The panel layout lives on the inner [data-part=\"panelgrid\"], so a hidden panel does not surface at a wide width."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1519,7 +1527,8 @@
                 ],
                 "source": "Data for January to December, 3,400 projects with telemetry enabled."
               }
-            }
+            },
+            "docs": "A server component, one file, zero dependencies. The --vibeui-features-009-* palette, a dark base. The metrics are marked up as a <dl> with pairs: the value in <dd>, the label and the note in <dt>, with the order swapped through order so that the figure comes first visually. The cells are separated by grid lines using the gap:1px plus container background technique rather than borders. The numbers are set in tabular-nums, and the unit is a nested span at 0.32em. One column up to 34rem, two from 34rem and four from 60rem through container queries."
           }
         },
         "cardControls": ["accent"]
@@ -1704,7 +1713,8 @@
                 },
                 "note": "Your stack is not on the list? The section still installs — all it needs is React."
               }
-            }
+            },
+            "docs": "A server component, one file, zero dependencies. The --vibeui-features-010-* palette is moved to light-dark(): the section follows the surrounding color-scheme, and the background is transparent by default and set by the background prop. The monogram is coloured directly in its own rule rather than through a variable: var(--hue) inside a variable would be substituted once on the root and every tile would take the same hue. The monogram is the first letter of the name on a tint whose hue is computed as an FNV hash of the name and arrives as the inline variable --vibeui-features-010-hue; a default value is declared on the root. The same name always yields the same colour, so reordering the list repaints no tiles. The grid is repeat(auto-fill, minmax(9.5rem, 1fr)): the column count depends on the block's width rather than on a number chosen in advance."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1878,7 +1888,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "A server component, one file, zero dependencies. The --vibeui-features-011-* palette is moved to light-dark(): the section follows the surrounding color-scheme, and the background is transparent by default and set by the background prop. The button on the band is inverted to accent-fg rather than to the section background: a transparent background would make it invisible on the solid fill. The minor points live in a separate <ul> with top rules and do not argue with the band by weight. The layout: the band splits into text and metric from 60rem, the points go into two columns from 34rem and into four from 60rem — all through container queries."
           }
         },
         "cardControls": ["accent", "accentForeground", "background"]
@@ -2065,7 +2076,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "A server component, one file, zero dependencies. The --vibeui-features-012-* palette is moved to light-dark(): the section follows the surrounding color-scheme, and the background is transparent by default and set by the background prop. The caption of the card link is exposed as the linkLabel prop. The change of state is shown with two lines: the \"now\" one struck through in grey and the \"will be\" one in the accent — the contrast of the two lines explains the value faster than a list. The card is clickable as a whole thanks to the stretched ::after pseudo-link on the <a>, yet the accessibility tree keeps one link per role. The focus ring is drawn on the card through :focus-within. The layout: one column, two from 34rem, three from 64rem through container queries."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2239,7 +2251,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "A server component, one file, zero dependencies. The --vibeui-features-013-* palette, a dark blue base. A certificate status is text, not colour: a glyph with no caption proves nothing and is inaccessible to a colour-blind reader. An unfinished certificate is marked with the pending flag: the shield gets a data-pending attribute and the warning tone, but the status is still spelled out in words. The document links are a separate <ul> at the bottom: without them the section stays a badge collection. The layout: the shields in two columns, from 34rem in four; the controls in one, two and four columns through container queries."
           }
         },
         "cardControls": ["accent"]
@@ -2397,7 +2410,8 @@
                   "href": "#"
                 }
               }
-            }
+            },
+            "docs": "A server component, one file, zero dependencies. The --vibeui-features-014-* palette is on light-dark(): a warm paper range in the light theme and a warm dark one in the dark theme, with no background by default — the section sits on the page background and the background prop sets it. The markup is a <figure> with a <blockquote> and a <figcaption>: the attribution is formally tied to the quote rather than merely placed beneath it. The opening quotation mark is drawn with a pseudo-element and hung in the left margin, so the first line of the quote does not shift. The quote is set in the system serif, the interface text in sans. The layout: one column up to 60rem, two columns from 60rem through a container query."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2601,7 +2615,8 @@
                 ],
                 "footnote": "The specs are the same for every section in the catalogue: it is a registry requirement, not a property of this particular block."
               }
-            }
+            },
+            "docs": "A server component, one file, zero dependencies. The --vibeui-features-015-* palette is on light-dark(): a cool light range in the light theme and a cool dark one in the dark theme, with no background by default — the section sits on the page background and the background prop sets it. Every group is a <section> with an h3 and a <dl>: the parameter in <dt>, the value in <dd>, aligned right. The values are set in a monospaced face with tabular-nums, so the column is read vertically without comparing characters by eye. The separator between pairs is a dotted bottom border, removed on the last pair. The layout: one group per column, two from 34rem, three from 60rem through container queries."
           }
         },
         "cardControls": ["accent", "background"]

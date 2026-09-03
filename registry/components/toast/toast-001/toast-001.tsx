@@ -1,12 +1,14 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Toast001Tone = "neutral" | "success" | "danger"
 
 export type Toast001Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "title" | "children"
 > & {
   tone?: Toast001Tone
+  /** Что скринридер читает вместо цветной точки тона. */
+  toneLabels?: Record<Toast001Tone, string>
   title?: string
   description?: string
   /** Подпись действия отмены. Пустая строка убирает кнопку. */
@@ -30,15 +32,18 @@ export type Toast001Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="toast-001"]){
 --vibeui-toast-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.97 0.002 265));
---vibeui-toast-001-muted:light-dark(oklch(0.52 0.012 265),oklch(0.78 0.008 265));
+--vibeui-toast-001-muted:color-mix(in oklab,var(--vibeui-toast-001-fg) 68%,transparent);
 --vibeui-toast-001-bg:light-dark(oklch(0.99 0.002 265),oklch(0.24 0.014 265));
 --vibeui-toast-001-line:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.014 265));
 --vibeui-toast-001-hover:light-dark(oklch(0.2 0.02 265 / 8%),oklch(1 0 0 / 10%));
 --vibeui-toast-001-shadow:light-dark(oklch(0.55 0.02 265 / 22%),oklch(0.15 0.02 265 / 60%));
---vibeui-toast-001-tone:light-dark(oklch(0.55 0.14 152),oklch(0.72 0.15 152));
+--vibeui-toast-001-tone:light-dark(oklch(0.53 0.14 152),oklch(0.72 0.15 152));
 --vibeui-toast-001-radius:0.75rem;
 --vibeui-toast-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="toast-001"]{color-scheme:dark}
 [data-vibeui-block="toast-001"]{
 position:relative;display:flex;align-items:flex-start;gap:0.75rem;
 width:100%;max-width:24rem;box-sizing:border-box;overflow:hidden;
@@ -51,6 +56,12 @@ box-shadow:0 0 0 1px var(--vibeui-toast-001-line),0 18px 40px -20px var(--vibeui
 [data-vibeui-block="toast-001"] [data-part="dot"]{
 width:0.5rem;height:0.5rem;flex:none;margin-top:0.3125rem;border-radius:9999px;
 background:var(--vibeui-toast-001-tone);
+}
+/* Тон различается только цветом точки, а она aria-hidden: без этой подписи
+   успех и ошибка звучат одинаково. */
+[data-vibeui-block="toast-001"] [data-part="sr"]{
+position:absolute;width:1px;height:1px;overflow:hidden;
+clip-path:inset(50%);white-space:nowrap;
 }
 [data-vibeui-block="toast-001"] [data-part="text"]{display:flex;flex-direction:column;gap:0.125rem;flex:1 1 auto;min-width:0}
 [data-vibeui-block="toast-001"] [data-part="title"]{font-size:0.875rem;font-weight:600;line-height:1.35}
@@ -117,8 +128,15 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Уведомление с полосой оставшегося времени и действием отмены.
  * Один файл, ноль зависимостей, собственная палитра.
  */
+const TONE_LABELS: Record<Toast001Tone, string> = {
+  neutral: "Сообщение",
+  success: "Успешно",
+  danger: "Ошибка",
+}
+
 export function Toast001({
   tone = "success",
+  toneLabels = TONE_LABELS,
   title = "Страница опубликована",
   description = "Изменения уже видны по адресу проекта.",
   undoLabel = "Отменить",
@@ -149,6 +167,7 @@ export function Toast001({
       </style>
       <div
         {...props}
+        data-slot="toast"
         data-vibeui-block="toast-001"
         data-tone={tone}
         role={tone === "danger" ? "alert" : "status"}
@@ -156,6 +175,7 @@ export function Toast001({
         style={palette}
       >
         <span data-part="dot" aria-hidden="true" />
+        <span data-part="sr">{toneLabels[tone]}</span>
         <span data-part="text">
           <span data-part="title">{title}</span>
           {description ? (

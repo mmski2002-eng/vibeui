@@ -1,12 +1,9 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Button009Props = Omit<
-  ComponentPropsWithoutRef<"button">,
-  "onClick"
-> & {
+export type Button009Props = Omit<ComponentProps<"button">, "onClick"> & {
   defaultPressed?: boolean
   onPressedChange?: (pressed: boolean) => void
   onLabel?: string
@@ -34,6 +31,9 @@ const STYLES = `
 --vibeui-button-009-ring:light-dark(oklch(0.55 0.02 265 / 60%),oklch(0.82 0.02 265 / 60%));
 --vibeui-button-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="button-009"]{color-scheme:dark}
 [data-vibeui-block="button-009"]{
 appearance:none;cursor:pointer;
 display:inline-flex;align-items:center;gap:0.625rem;
@@ -54,6 +54,7 @@ background:var(--vibeui-button-009-track);transition:background-color .2s ease;
 [data-vibeui-block="button-009"][aria-pressed="true"] [data-part="track"]{background:var(--vibeui-button-009-accent)}
 [data-vibeui-block="button-009"] [data-part="thumb"]{
 position:absolute;top:0.1875rem;left:0.1875rem;width:0.75rem;height:0.75rem;border-radius:9999px;
+/* Бегунок белый в обеих темах: он ездит по дорожке переключателя, а не по странице. */
 background:oklch(1 0 0);box-shadow:0 1px 2px oklch(0 0 0 / 25%);
 transition:transform .22s cubic-bezier(0.16,1,0.3,1);
 }
@@ -94,6 +95,7 @@ export function Button009({
       <button
         {...props}
         type={type}
+        data-slot="button"
         data-vibeui-block="button-009"
         aria-pressed={pressed}
         className={className}

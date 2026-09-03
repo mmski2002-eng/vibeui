@@ -1,15 +1,12 @@
 import { useId } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Carousel001Slide = {
   label: string
   hue?: number
 }
 
-export type Carousel001Props = Omit<
-  ComponentPropsWithoutRef<"section">,
-  "children"
-> & {
+export type Carousel001Props = Omit<ComponentProps<"section">, "children"> & {
   slides?: Carousel001Slide[]
   label?: string
   /** Подпись под лентой: компонент несёт русскую, проект подставляет свою. */
@@ -38,7 +35,7 @@ const STYLES = `
 :where([data-vibeui-block="carousel-001"]){
 --vibeui-carousel-001-bg:transparent;
 --vibeui-carousel-001-fg:light-dark(oklch(0.22 0.014 265),oklch(0.93 0.006 265));
---vibeui-carousel-001-muted:light-dark(oklch(0.58 0.014 265),oklch(0.68 0.012 265));
+--vibeui-carousel-001-muted:color-mix(in oklab,var(--vibeui-carousel-001-fg) 68%,transparent);
 --vibeui-carousel-001-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-carousel-001-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-carousel-001-radius:0.875rem;
@@ -46,6 +43,9 @@ const STYLES = `
 --vibeui-carousel-001-shell:0;
 --vibeui-carousel-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="carousel-001"]{color-scheme:dark}
 [data-vibeui-block="carousel-001"]{
 display:flex;flex-direction:column;gap:0.625rem;
 width:100%;max-width:26rem;box-sizing:border-box;
@@ -63,6 +63,8 @@ scroll-snap-type:x mandatory;scroll-behavior:smooth;
 scrollbar-width:none;
 }
 [data-vibeui-block="carousel-001"] [data-part="track"]::-webkit-scrollbar{display:none}
+/* Кадр стоит вместо фотографии: градиент и светлый текст на нём одинаковы
+   в любой теме страницы, поэтому второй ветки у них нет. */
 [data-vibeui-block="carousel-001"] [data-part="slide"]{
 flex:0 0 100%;scroll-snap-align:center;
 display:flex;align-items:flex-end;
@@ -171,6 +173,7 @@ export function Carousel001({
       </style>
       <section
         {...props}
+        data-slot="carousel"
         data-vibeui-block="carousel-001"
         aria-roledescription={roleText}
         aria-label={label}

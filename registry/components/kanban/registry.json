@@ -138,7 +138,8 @@
                 ],
                 "columnPickerLabel": "Column for “{title}”"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-kanban-001-*. It is a client component: \"use client\" for the moving. The columns sit in a grid with auto columns and horizontal scrolling. The header counter is computed from the cards rather than stored as a separate number."
           }
         },
         "cardControls": ["accent", "background"]
@@ -312,7 +313,8 @@
                   "next": "Move “{title}” to the next column"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-kanban-002-*. It is a client component: \"use client\" for the board state. A column is described by a name and a limit; the occupancy is computed from the cards and shown both as a «3 / 4» number and as a bar. There is a single move function for mouse and keyboard: it checks the limit and, on a refusal, writes the reason into a role=status live region. The mouse path is native HTML5 drag and drop, the keyboard path is arrow buttons on the card."
           }
         },
         "cardControls": ["accent", "warn", "background"]
@@ -488,7 +490,8 @@
                   "late": "overdue"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-kanban-003-*. It is a client component: \"use client\" for the board state. The tint of the initials circle is derived by a hash function from the assignee name and passed in through a variable, so the palette of people does not have to be kept by hand. The due date is compared against the date string from the today prop rather than Date.now(): the current time differs on server and client and breaks hydration. Moving: native mouse drag, and left and right arrows on the card itself from the keyboard, with the result going into the live region."
           }
         },
         "cardControls": ["accent", "late", "background"]
@@ -645,7 +648,8 @@
                   "next": "Move “{title}” to the next column"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-kanban-004-*. It is a client component: \"use client\" for the board state and the set of collapsed columns. The columns sit in a flex layout, a collapsed one gets a fixed narrow basis and its header is turned around with writing-mode. The card list of a collapsed column is marked with hidden, so it drops out of both rendering and the focus order. The header button carries aria-expanded, and every change is announced in a role=status live region."
           }
         },
         "cardControls": ["accent", "background"]
@@ -817,7 +821,8 @@
                   "next": "Move “{title}” to the next column"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-kanban-005-*. It is a client component: \"use client\" for the filter and the board state. The list of assignees is collected from the cards through a Set, so it does not have to be maintained separately. The filter is a row of buttons with aria-pressed rather than a set of links: a choice does not change the page address. The column counter prints the shown and the total number, an emptied column shows an explanation instead of blankness, and a filter change and a move are announced in a role=status live region."
           }
         },
         "cardControls": ["accent", "background"]
@@ -981,7 +986,8 @@
                   "card": "{title}, column “{name}”, position {index} of {total}"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-kanban-006-*. It is a client component: \"use client\" for the moving mode. A card is a button, so focus and keys come for free without tabindex. Space toggles the pick-up and stores a board snapshot, left and right arrows change the column, up and down the place inside the column, and Escape restores the snapshot. A role=status live region with aria-live=assertive names the column and the position after every step, and the column «in hand» is highlighted."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1148,7 +1154,8 @@
                   "summary": "{count} tasks across {columns} columns"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-kanban-007-*. It is a client component: \"use client\" for the board state. The column total, the share and the grand total are computed from the cards array rather than stored as a number: a stored sum drifts from the contents after the first move. The share is shown both as a percentage and as a bar, so that columns can be compared at a glance. The totals row is moved into a footer tag. Moving: native mouse drag, and a column select on the card from the keyboard, with the result announced in the live region."
           }
         },
         "cardControls": ["accent", "background"]

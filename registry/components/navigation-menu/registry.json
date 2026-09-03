@@ -41,7 +41,8 @@
             "label — подпись раздела",
             "акцент через проп accent",
             "число колонок",
-            "background — подложка кнопки и панели; пусто оставляет собственную палитру компонента"
+            "background — подложка кнопки и панели; пусто оставляет собственную палитру компонента",
+            "текущий раздел через проп current — его подпись помечается aria-current"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
@@ -75,6 +76,7 @@
         "i18n": {
           "en": {
             "description": "A wide navigation menu on details: columns with a line of explanation per link — twenty bare names are a sitemap, not navigation.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-menu-006-*. A server component: the disclosure is held by native details, useId is needed for the group name. The root is declared a container and the columns live on the inner panel: a container query only applies to descendants. From 26rem of its own width the panel folds into a single column.",
             "ai": {
               "summary": "A mega menu: disclosure on details, two columns with section headings and a hint under every link. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -92,7 +94,8 @@
                 "label — the trigger's text",
                 "the accent through the accent prop",
                 "the number of columns",
-                "background — the surface of the trigger and the panel; empty keeps the component's own palette"
+                "background — the surface of the trigger and the panel; empty keeps the component's own palette",
+                "the current section through the current prop — its label gets aria-current"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
@@ -154,7 +157,8 @@
                       }
                     ]
                   }
-                ]
+                ],
+                "current": "Catalog"
               }
             }
           }
@@ -203,7 +207,8 @@
             "акцент через проп accent — цвет колец фокуса",
             "высоту полосы навигации",
             "background — подложка полосы и панели; пусто оставляет собственную палитру компонента",
-            "label — подпись навигации для скринридера"
+            "label — подпись навигации для скринридера",
+            "текущий раздел через проп current — его подпись помечается aria-current"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
@@ -237,6 +242,7 @@
         "i18n": {
           "en": {
             "description": "Site navigation with a drop-down panel of columns: every link carries a line of explanation, so a section says what is inside it.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-navmenu-001-*. Server-side: no hooks, the panel is opened by popover=\"auto\". The whole navigation bar serves as the anchor (anchor-name on [data-part=\"bar\"]), so a wide panel sits under the bar as a whole rather than under a single button. The columns are laid out by a grid with auto-fit and minmax, so their number adjusts to the panel width. Sections without a panel are plain links.",
             "ai": {
               "summary": "Site navigation with a wide drop-down panel: columns of links, each with a line of explanation. The panel runs on the HTML popover and anchors to the nav bar, so Escape and outside clicks come from the browser. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -255,7 +261,8 @@
                 "the accent through the accent prop — it colours the focus rings",
                 "the height of the nav bar",
                 "background — the surface of the bar and the panel; empty keeps the component's own palette",
-                "label — the navigation label for screen readers"
+                "label — the navigation label for screen readers",
+                "the current section through the current prop — its label gets aria-current"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
@@ -352,7 +359,8 @@
                     "label": "Documentation",
                     "href": "#"
                   }
-                ]
+                ],
+                "current": "Pricing"
               }
             }
           }
@@ -402,7 +410,8 @@
             "акцент через проп accent — цвет метки и колец фокуса",
             "пропорции колонок панели",
             "background — подложка полосы и панели; пусто оставляет собственную палитру компонента",
-            "подписи badgeText, linksTitle и label — метка промо, заголовок списка и подпись навигации"
+            "подписи badgeText, linksTitle и label — метка промо, заголовок списка и подпись навигации",
+            "текущий раздел через проп current — его подпись помечается aria-current"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
@@ -450,6 +459,7 @@
         "i18n": {
           "en": {
             "description": "A drop-down panel with a priority: a full-height promo card on the left, ordinary links on the right — instead of a flat list of equals.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-navmenu-002-*. Server-side: no hooks, the panel is a popover=\"auto\" anchored to the navigation bar. The panel is laid out in two grid columns: the promo and the list. The promo is a link in its entirety, so the whole card is clickable, and its background is built from a radial gradient over a flat colour — the component pulls in no images.",
             "ai": {
               "summary": "Navigation with a drop-down panel that has a headline exhibit: the promo block on the left sets the priority, the links on the right list the rest. The promo is one large link with a gradient background and no images. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -469,7 +479,8 @@
                 "the accent through the accent prop — it colours the badge and the focus rings",
                 "the column proportions of the panel",
                 "background — the surface of the bar and the panel; empty keeps the component's own palette",
-                "the badgeText, linksTitle and label captions — the promo badge, the list heading and the navigation label"
+                "the badgeText, linksTitle and label captions — the promo badge, the list heading and the navigation label",
+                "the current section through the current prop — its label gets aria-current"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
@@ -528,7 +539,8 @@
                     "label": "Integrations",
                     "hint": "CRM, mail, payments"
                   }
-                ]
+                ],
+                "current": "Pricing"
               }
             }
           }
@@ -577,7 +589,8 @@
             "акцент через проп accent — цвет колец фокуса",
             "высоту полосы навигации",
             "background — подложка полосы и выпадающего столбика; пусто оставляет собственную палитру компонента",
-            "label — подпись навигации для скринридера"
+            "label — подпись навигации для скринридера",
+            "текущий раздел через проп current — его подпись помечается aria-current"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
@@ -611,6 +624,7 @@
         "i18n": {
           "en": {
             "description": "The plainest drop-down site menu: a column of links with no blurbs or pictures, with the name attribute on details doing the mutual closing.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-navmenu-003-*. Server-side: no hooks. A section with sub-items is a <details> with a shared name attribute, so the browser itself keeps only one open. The menu is positioned absolutely from its own wrapper, anchor positioning is not required. The caret on the button flips from the open attribute, so the state reads on the button itself. Sections without sub-items are plain links.",
             "ai": {
               "summary": "An ordinary site menu: sections with a drop-down column of links, and link-only sections without a list. Opening and mutual closing come from <details> with a shared name, so the menu works before hydration and with scripts disabled. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -629,7 +643,8 @@
                 "the accent through the accent prop — it colours the focus rings",
                 "the height of the nav bar",
                 "background — the surface of the bar and the drop-down column; empty keeps the component's own palette",
-                "label — the navigation label for screen readers"
+                "label — the navigation label for screen readers",
+                "the current section through the current prop — its label gets aria-current"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
@@ -678,7 +693,8 @@
                     "label": "Blog",
                     "href": "#"
                   }
-                ]
+                ],
+                "current": "Pricing"
               }
             }
           }
@@ -727,7 +743,8 @@
             "акцент через проп accent — цвет ссылки в подвале панели и колец фокуса",
             "размер плитки и число колонок",
             "background — подложка полосы и панели; пусто оставляет собственную палитру компонента",
-            "подписи entries, footerNote и label — ссылки полосы, строка подвала и подпись навигации"
+            "подписи entries, footerNote и label — ссылки полосы, строка подвала и подпись навигации",
+            "текущий раздел через проп current — его подпись помечается aria-current"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
@@ -768,6 +785,7 @@
         "i18n": {
           "en": {
             "description": "A catalog mega menu: category tiles with glyphs and counts, where the glyph colour is derived from the name instead of stored in data.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-navmenu-004-*. Server-side: no hooks, the panel is a popover=\"auto\" anchored to the navigation bar. The glyph hue is computed by the hue function: a hash of the label gives a number from 0 to 330, it goes out in the variable --vibeui-navmenu-004-hue and is substituted into oklch. The tiles are laid out by a grid with auto-fit, so their number depends on the panel width.",
             "ai": {
               "summary": "A catalog mega menu: a grid-glyph button opens a panel of category tiles. Every tile carries a coloured glyph, a label, a hint and an item count. The glyph colour is hashed from the name, so a category keeps one colour and the palette needs no upkeep. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -786,7 +804,8 @@
                 "the accent through the accent prop — it colours the footer link and the focus rings",
                 "the tile size and the number of columns",
                 "background — the surface of the bar and the panel; empty keeps the component's own palette",
-                "the entries, footerNote and label captions — the bar links, the footer line and the navigation label"
+                "the entries, footerNote and label captions — the bar links, the footer line and the navigation label",
+                "the current section through the current prop — its label gets aria-current"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
@@ -852,7 +871,8 @@
                     "hint": "Drives and memory cards",
                     "count": 187
                   }
-                ]
+                ],
+                "current": "Delivery"
               }
             }
           }
@@ -902,7 +922,8 @@
             "акцент через проп accent — цвет колец фокуса",
             "размер области превью и оформление карточек",
             "background — подложка полосы и панели; пусто оставляет собственную палитру компонента",
-            "подписи barLinks и label — ссылки полосы и подпись навигации"
+            "подписи barLinks и label — ссылки полосы и подпись навигации",
+            "текущий раздел через проп current — его подпись помечается aria-current"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
@@ -936,6 +957,7 @@
         "i18n": {
           "en": {
             "description": "A menu with a preview on the right: hovering or focusing a row shows its own picture, all of it on :has(), with no state and no JS.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-navmenu-005-*. Server-side: no hooks. The previews lie stacked in a shared area, and the one shown is whichever row is under the cursor or focused — through :has() rules on data-index. When nothing is selected the first one is shown: a separate rule with a double :not(:has(...)) is responsible for that. The pictures are drawn as gradients from the hue of the label, so the menu pulls in no image files.",
             "ai": {
               "summary": "A menu with a live preview beside it: hovering or focusing a link reveals its picture. :has() does the switching, so there is no state and no handlers. The pictures are gradients tinted by a hash of the label and need no files. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -955,7 +977,8 @@
                 "the accent through the accent prop — it colours the focus rings",
                 "the preview size and the card styling",
                 "background — the surface of the bar and the panel; empty keeps the component's own palette",
-                "the barLinks and label captions — the bar links and the navigation label"
+                "the barLinks and label captions — the bar links and the navigation label",
+                "the current section through the current prop — its label gets aria-current"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
@@ -1009,7 +1032,8 @@
                     "shotTitle": "Your own address",
                     "shotText": "The certificate is issued and renewed on its own."
                   }
-                ]
+                ],
+                "current": "Pricing"
               }
             }
           }
@@ -1055,7 +1079,8 @@
             "акцент через проп accent — цвет кнопки действия и колец фокуса",
             "высоту шапки и отступы в листе",
             "background — подложка карточки; пусто оставляет собственную палитру компонента",
-            "подписи burgerLabel, toggleLabel и label — текст у бургера, имя переключателя и подпись навигации"
+            "подписи burgerLabel, toggleLabel и label — текст у бургера, имя переключателя и подпись навигации",
+            "текущий раздел через проп current — его подпись помечается aria-current"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
@@ -1103,6 +1128,7 @@
         "i18n": {
           "en": {
             "description": "Mobile navigation: the burger opens a sheet, and sections inside unfold as a list downwards rather than as a floating panel.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-navmenu-006-*. Server-side: no hooks. The sheet is opened by a checkbox, the state is read through :has(input:checked). The expansion is done by switching grid-template-rows from 0fr to 1fr — that way the height animates without magic numbers and without measuring. The sections inside are <details>. The burger's bars fold into a cross from the same checkbox state.",
             "ai": {
               "summary": "Mobile navigation: a header with a wordmark and a burger, and an expanding sheet with the sections below it. Sections unfold as a list and push the content down instead of floating over it — a panel has nowhere to sit on a narrow screen. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1121,7 +1147,8 @@
                 "the accent through the accent prop — it colours the action button and the focus rings",
                 "the header height and the spacing inside the sheet",
                 "background — the card surface; empty keeps the component's own palette",
-                "the burgerLabel, toggleLabel and label captions — the burger text, the toggle's name and the navigation label"
+                "the burgerLabel, toggleLabel and label captions — the burger text, the toggle's name and the navigation label",
+                "the current section through the current prop — its label gets aria-current"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
@@ -1182,7 +1209,8 @@
                     "label": "Documentation",
                     "href": "#"
                   }
-                ]
+                ],
+                "current": "Pricing"
               }
             }
           }
@@ -1231,7 +1259,8 @@
             "акцент через проп accent — цвет знака логотипа и главной кнопки",
             "высоту шапки и радиус скругления",
             "background — подложка шапки; пусто оставляет собственную палитру компонента",
-            "secondaryLabel и label — вторичная ссылка и подпись группы разделов"
+            "secondaryLabel и label — вторичная ссылка и подпись группы разделов",
+            "текущий раздел через проп current — его подпись помечается aria-current"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
@@ -1279,6 +1308,7 @@
         "i18n": {
           "en": {
             "description": "A whole site header: wordmark on the left, sections in the middle, sign-in and the primary action on the right, shedding parts when narrow.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-navmenu-007-*. Server-side: no hooks, sections with sub-items are <details> with a shared name attribute. The middle section is stretched with flex:1, so the right group stays at the edge at any width. The logo mark is drawn with a gradient rather than an image. At a narrow width a container query removes the links and the secondary action, leaving the wordmark and the primary button.",
             "ai": {
               "summary": "A site header: a wordmark with a logo mark, sections with drop-down lists, a secondary link and the primary button on the right. When narrow, only the wordmark and the button remain — a container query removes the rest. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1297,7 +1327,8 @@
                 "the accent through the accent prop — it colours the logo mark and the primary button",
                 "the header height and the corner radius",
                 "background — the header surface; empty keeps the component's own palette",
-                "secondaryLabel and label — the secondary link and the label of the section group"
+                "secondaryLabel and label — the secondary link and the label of the section group",
+                "the current section through the current prop — its label gets aria-current"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
@@ -1352,7 +1383,8 @@
                     "label": "Blog",
                     "href": "#"
                   }
-                ]
+                ],
+                "current": "Pricing"
               }
             }
           }
@@ -1401,7 +1433,8 @@
             "адрес формы: сейчас это заглушка",
             "акцент через проп accent — цвет кнопки «Найти» и колец фокуса",
             "background — подложка полосы и панели; пусто оставляет собственную палитру компонента",
-            "подписи barLinks, submitLabel, recentTitle и label — ссылки полосы, кнопка формы, заголовок недавнего и подпись навигации"
+            "подписи barLinks, submitLabel, recentTitle и label — ссылки полосы, кнопка формы, заголовок недавнего и подпись навигации",
+            "текущий раздел через проп current — его подпись помечается aria-current"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
@@ -1449,6 +1482,7 @@
         "i18n": {
           "en": {
             "description": "Navigation with a panel that opens on a search field: frequent queries and recent ones sit under it, all as ordinary links.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-navmenu-008-*. Server-side: no hooks. The panel is a popover=\"auto\" anchored to the navigation bar and aligned to its right edge. The field sits in a real <form method=\"get\"> with role=\"search\", so the query reaches the results page without JS as well. The suggestions under the field are plain links, and the magnifier is drawn as a circle with a stroke made of borders.",
             "ai": {
               "summary": "Navigation with a search field inside the drop-down panel: an input, a Search button, frequent queries as chips and recent ones as a list. The form is real, so search works without JS. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1467,7 +1501,8 @@
                 "the form action: it is a stub right now",
                 "the accent through the accent prop — it colours the Search button and the focus rings",
                 "background — the surface of the bar and the panel; empty keeps the component's own palette",
-                "the barLinks, submitLabel, recentTitle and label captions — the bar links, the form button, the recent heading and the navigation label"
+                "the barLinks, submitLabel, recentTitle and label captions — the bar links, the form button, the recent heading and the navigation label",
+                "the current section through the current prop — its label gets aria-current"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
@@ -1514,7 +1549,8 @@
                   "Forms",
                   "API"
                 ],
-                "recent": ["How to connect a domain", "Exporting statistics"]
+                "recent": ["How to connect a domain", "Exporting statistics"],
+                "current": "Help"
               }
             }
           }

@@ -123,7 +123,8 @@
               "props": {
                 "label": "Loading"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-skeleton-001-*. The shimmer is a movement of background-position on a gradient 200% wide rather than a separate layer: only the background is repainted. The three shapes (text, avatar, block) are switched by a data attribute. The container is declared as role=\"status\" with aria-busy and a label, so a screen reader reports the loading instead of staying silent."
           }
         },
         "cardControls": ["shape", "lines"]
@@ -246,7 +247,8 @@
               "props": {
                 "label": "Card is loading"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-skeleton-002-*. It is a server component: there are no hooks. The space for the cover is reserved through aspect-ratio rather than a fixed height, so the card keeps the same height at any column width and its grid neighbours do not jump. The fill is declared by a single rule for the cover, the bars and the buttons at once: the shimmer and the base cannot drift apart between the parts. The shimmer rides background-position rather than transform, so the elements stay where they are. The root is marked with role=\"status\" and aria-busy, so assistive technology reports the loading instead of reading empty rectangles."
           }
         },
         "cardControls": ["ratio", "background"]
@@ -370,7 +372,8 @@
               "props": {
                 "label": "List is loading"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-skeleton-003-*. It is a server component: there are no hooks. The delay is passed to a row by the inline --vibeui-skeleton-003-delay variable and picked up by the animation-delay rule, so the number of rows can be changed by a prop without touching the CSS. The widths of the text bars alternate through :nth-child: identical rectangles read as a table rather than as a list of people. The avatar and the bars share one fill rule so that the shimmer travels across the whole row. The root is marked with role=\"status\" and aria-busy; under prefers-reduced-motion the shimmer is removed and a flat fill remains."
           }
         },
         "cardControls": ["rows", "background"]
@@ -494,7 +497,8 @@
               "props": {
                 "label": "Table is loading"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-skeleton-004-*. It is a server component: there are no hooks. The layout is set by a single --vibeui-skeleton-004-columns variable picked up by both the header and every row: the columns cannot drift apart because they literally share one grid. The cell lengths alternate through the data-fill attribute and :nth-child rules, otherwise the placeholder reads as a lattice. The header is set apart by a background and a bottom border, so the table is recognisable before any text appears. The root is marked with role=\"status\" and aria-busy; under prefers-reduced-motion the shimmer is removed."
           }
         },
         "cardControls": ["rows", "background"]
@@ -619,7 +623,8 @@
               "props": {
                 "label": "Profile is loading"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-skeleton-005-*. It is a server component: there are no hooks. The cover height is declared as a variable, and the negative margin of the avatar is computed as half its diameter, so changing the height does not break the frame and the real header lands exactly where the placeholder was. The ring around the avatar is drawn by a box-shadow in the surface colour — that is cheaper than a border and does not grow the circle. The stats are laid out on a grid of three equal columns, as many as in the real header. The root is marked with role=\"status\" and aria-busy; under prefers-reduced-motion the shimmer becomes a flat fill."
           }
         },
         "cardControls": ["cover", "background"]
@@ -730,7 +735,8 @@
               "props": {
                 "label": "Text is loading"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-skeleton-006-*. It is a server component: there are no hooks. A paragraph is a single element whose shimmer background is cut by a repeating-linear-gradient in the mask property: the number of lines is set by a variable rather than by a count of nodes, and the height is computed from the line and the step. The unfinished last line is drawn by a surface-coloured patch that sits as a sibling rather than a child: inside the masked element it would be cut away along with the lines. The tail widths are taken from a fixed array rather than at random — random ones would mismatch between server and client during hydration. The root is marked with role=\"status\" and aria-busy."
           }
         },
         "cardControls": ["background"]
@@ -853,7 +859,8 @@
               "props": {
                 "label": "Gallery is loading"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-skeleton-007-*. It is a server component: there are no hooks. The grid is declared as repeat(auto-fill, minmax(var(--vibeui-skeleton-007-min), 1fr)): the column count is derived from the block's own width, so the layout is equally honest inside a catalog card and on a full page. A tile is square by aspect-ratio rather than by height, so it stretches together with its column. The shimmer delay is handed out in a cycle of six values: the wave travels across the grid but does not stretch endlessly as the number of tiles grows. The root is marked with role=\"status\" and aria-busy."
           }
         },
         "cardControls": ["tiles", "minTile", "background"]
@@ -976,7 +983,8 @@
               "props": {
                 "label": "Chart is loading"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-skeleton-008-*. It is a server component: there are no hooks. The plot area holds its height by a variable, and the grid lines are drawn by a repeating-linear-gradient on the area itself, so there are no separate elements for them. The bar heights are set by an explicit array and passed to each bar by an inline variable: random numbers would mismatch between server and client during hydration and React would report a mismatch. The legend above and the axis ticks below reserve their space in advance, so the arrival of the real chart does not shift the neighbouring text. The root is marked with role=\"status\" and aria-busy."
           }
         },
         "cardControls": ["height", "background"]
@@ -1099,7 +1107,8 @@
               "props": {
                 "label": "Product is loading"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-skeleton-009-*. It is a server component: there are no hooks. The space for the cover is reserved through aspect-ratio rather than a fixed height, so the card keeps the same height at any grid column width. The fill is declared by a single rule for the cover, the title lines and the price bar at once — the shimmer cannot drift apart between the parts. The price bar is shorter and thicker than the title lines and stands as a separate element with a top margin, so the eye recognises a product card in the placeholder rather than an arbitrary block of text. All the decorative markup is marked aria-hidden, and the placeholder text for a screen reader lives in the root's aria-label."
           }
         },
         "cardControls": ["ratio", "background"]
@@ -1223,7 +1232,8 @@
               "props": {
                 "label": "Table is loading"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-skeleton-010-*. It is a server component: there are no hooks. Unlike skeleton-004, where the header and the rows are drawn by a grid of divs, real table, thead and tbody markup is used here: the table semantics are preserved even though there is no data in it yet. That is why the table element itself is marked aria-hidden — it is decorative, and the placeholder text for a screen reader lives in the aria-label of the wrapper with role=\"status\" and aria-busy. Five rows are drawn by default: that is the size of the first page of results, the one a placeholder is asked for most often. The cell lengths alternate by column and by row number, so the placeholder does not read as a lattice."
           }
         },
         "cardControls": ["rows", "background"]

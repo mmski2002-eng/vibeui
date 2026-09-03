@@ -1,10 +1,10 @@
 "use client"
 
-import { useRef } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import { useId, useRef } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Alertdialog010Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "title"
 > & {
   triggerLabel?: string
@@ -36,7 +36,7 @@ const STYLES = `
 --vibeui-alertdialog-010-bg:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
 --vibeui-alertdialog-010-panel:light-dark(oklch(0.97 0.003 265),oklch(0.27 0.01 265));
 --vibeui-alertdialog-010-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-alertdialog-010-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-alertdialog-010-muted:color-mix(in oklab,var(--vibeui-alertdialog-010-fg) 68%,transparent);
 --vibeui-alertdialog-010-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
 --vibeui-alertdialog-010-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
 --vibeui-alertdialog-010-on-accent:light-dark(oklch(1 0 0),oklch(0.17 0.03 262));
@@ -45,8 +45,10 @@ const STYLES = `
 --vibeui-alertdialog-010-when-bg:light-dark(oklch(0.55 0.2 262 / 8%),oklch(0.72 0.18 262 / 14%));
 --vibeui-alertdialog-010-shadow:light-dark(oklch(0.2 0.03 265 / 55%),oklch(0.02 0.01 265 / 70%));
 --vibeui-alertdialog-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="alertdialog-010"]{color-scheme:dark}
 [data-vibeui-block="alertdialog-010"]{
 font-family:var(--vibeui-alertdialog-010-font);color:var(--vibeui-alertdialog-010-fg);
 }
@@ -58,8 +60,12 @@ background:var(--vibeui-alertdialog-010-bg);color:inherit;
 font:inherit;font-size:0.8125rem;font-weight:650;
 }
 [data-vibeui-block="alertdialog-010"] [data-part="open"]:focus-visible{outline:2px solid var(--vibeui-alertdialog-010-accent);outline-offset:2px}
-/* margin:auto — без него модалка липнет к левому верхнему углу. */
+/* margin:auto — без него модалка липнет к левому верхнему углу.
+   Контейнер объявлен здесь, а не на корне: корень широк ровно настолько,
+   насколько велика кнопка открытия, и раскладку списков надо мерить по самому
+   окну. На корне container-type ещё и отвязал бы кнопку от её содержимого. */
 [data-vibeui-block="alertdialog-010"] dialog{
+container-type:inline-size;
 margin:auto;width:min(26rem,calc(100vw - 2rem));padding:1.125rem;
 border:1px solid var(--vibeui-alertdialog-010-border);border-radius:0.875rem;
 background:var(--vibeui-alertdialog-010-bg);color:var(--vibeui-alertdialog-010-fg);
@@ -78,7 +84,10 @@ background:var(--vibeui-alertdialog-010-panel);color:var(--vibeui-alertdialog-01
 }
 /* Два списка рядом: без «что останется» понижение читается как потеря всего. */
 [data-vibeui-block="alertdialog-010"] [data-part="lists"]{display:grid;grid-template-columns:1fr;gap:0.5rem;margin-bottom:0.875rem}
-@container (min-width: 24rem){
+/* 22rem, а не 26rem: запрос меряет содержимое окна, из ширины уже вычтены
+   поля и рамка. На узком экране окно сжимается по 100vw и колонки снова
+   встают друг под друга. */
+@container (min-width: 22rem){
 [data-vibeui-block="alertdialog-010"] [data-part="lists"]{grid-template-columns:1fr 1fr}
 }
 [data-vibeui-block="alertdialog-010"] [data-part="col"]{
@@ -109,6 +118,8 @@ font:inherit;font-size:0.8125rem;font-weight:650;
 border:1px solid var(--vibeui-alertdialog-010-border);background:var(--vibeui-alertdialog-010-bg);color:inherit;
 }
 [data-vibeui-block="alertdialog-010"] dialog button:focus-visible{outline:2px solid var(--vibeui-alertdialog-010-accent);outline-offset:2px}
+/* showModal() делает фон inert, но не запрещает прокрутку страницы. */
+html:has([data-vibeui-block="alertdialog-010"] dialog[open]){overflow:hidden}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="alertdialog-010"] *{animation:none!important;transition:none!important}}
 `
 
@@ -169,6 +180,7 @@ export function Alertdialog010({
   ...props
 }: Alertdialog010Props) {
   const box = useRef<HTMLDialogElement>(null)
+  const uid = useId()
 
   const palette = {
     ...(accent ? { "--vibeui-alertdialog-010-accent": accent } : null),
@@ -188,6 +200,7 @@ export function Alertdialog010({
       </style>
       <div
         {...props}
+        data-slot="alert-dialog"
         data-vibeui-block="alertdialog-010"
         className={className}
         style={palette}
@@ -200,8 +213,13 @@ export function Alertdialog010({
           {triggerLabel}
         </button>
 
-        <dialog ref={box} aria-labelledby="vibeui-alertdialog-010-title">
-          <h2 id="vibeui-alertdialog-010-title">{title}</h2>
+        <dialog
+          ref={box}
+          role="alertdialog"
+          aria-modal="true"
+          aria-labelledby={`${uid}-title`}
+        >
+          <h2 id={`${uid}-title`}>{title}</h2>
           <p data-part="move">
             <span data-part="plan">{fromPlan}</span>
             <span aria-hidden="true">→</span>

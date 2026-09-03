@@ -1,17 +1,14 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Toast018Item = {
   id: string
   title: string
 }
 
-export type Toast018Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Toast018Props = Omit<ComponentProps<"div">, "children"> & {
   groupTitle?: string
   items?: Toast018Item[]
   /** Сколько пунктов показывать свёрнутыми до счётчика «ещё N». */
@@ -40,7 +37,7 @@ const STYLES = `
 :where([data-vibeui-block="toast-018"]){
 --vibeui-toast-018-bg:light-dark(oklch(0.99 0.002 265),oklch(0.25 0.014 265));
 --vibeui-toast-018-fg:light-dark(oklch(0.22 0.014 265),oklch(0.96 0.003 265));
---vibeui-toast-018-muted:light-dark(oklch(0.56 0.014 265),oklch(0.76 0.01 265));
+--vibeui-toast-018-muted:color-mix(in oklab,var(--vibeui-toast-018-fg) 68%,transparent);
 --vibeui-toast-018-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.014 265));
 --vibeui-toast-018-shadow:light-dark(oklch(0.18 0.02 265 / 55%),oklch(0.05 0.01 265 / 70%));
 --vibeui-toast-018-hover:light-dark(oklch(0.2 0.02 265 / 7%),oklch(1 0 0 / 12%));
@@ -49,6 +46,9 @@ const STYLES = `
 --vibeui-toast-018-radius:0.875rem;
 --vibeui-toast-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="toast-018"]{color-scheme:dark}
 [data-vibeui-block="toast-018"]{
 width:100%;max-width:23rem;box-sizing:border-box;
 padding:0.875rem;border-radius:var(--vibeui-toast-018-radius);
@@ -176,6 +176,7 @@ export function Toast018({
       </style>
       <div
         {...props}
+        data-slot="toast"
         data-vibeui-block="toast-018"
         role="status"
         aria-live="polite"

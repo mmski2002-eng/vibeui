@@ -29,12 +29,15 @@ const STYLES = `
 --vibeui-sparkline-001-surface:transparent;
 --vibeui-sparkline-001-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-sparkline-001-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
---vibeui-sparkline-001-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-sparkline-001-muted:color-mix(in oklab,var(--vibeui-sparkline-001-fg) 68%,transparent);
 --vibeui-sparkline-001-up:light-dark(oklch(0.58 0.15 152),oklch(0.76 0.14 152));
 --vibeui-sparkline-001-down:light-dark(oklch(0.56 0.19 25),oklch(0.72 0.17 25));
 --vibeui-sparkline-001-accent:var(--vibeui-sparkline-001-up);
 --vibeui-sparkline-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="sparkline-001"]{color-scheme:dark}
 /* Рамка держит показатель отдельной строкой, а подложка по умолчанию
    прозрачна: цвет приходит со страницы. */
 [data-vibeui-block="sparkline-001"]{
@@ -152,6 +155,7 @@ export function Sparkline001({
         {STYLES}
       </style>
       <span
+        data-slot="sparkline"
         data-vibeui-block="sparkline-001"
         data-trend={trend}
         className={className}

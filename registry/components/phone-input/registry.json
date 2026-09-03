@@ -88,7 +88,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Country Code",
             "description": "A phone field with the country code in a native list and an emoji flag: the code and the number are two inputs fused into one border.",
+            "docs": "The component is self-contained: one file, zero dependencies, its palette in the local --vibeui-phoneinput-001-* variables. Server component: useId is the only hook, there is no state. The country code is a native <select>: on a phone it opens the system wheel rather than a hand-built list that does not fit the screen. The flag is an emoji in the option text, so neither sprites nor an icon package are needed. There is one border for the two fields: select and input have none, the [data-part=\"group\"] wrapper draws it, and focus lights the whole pair through :has(:focus-visible) — otherwise half the border would light up. The number field is declared type=\"tel\" with inputMode=\"tel\" and autoComplete=\"tel-national\": on a phone the numeric keypad opens, and autofill inserts the number without the country code.",
             "ai": {
               "summary": "A phone field with country-code selection: a native select with a flag on the left and the number on the right inside a shared border. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -137,7 +139,6 @@
                 "label": "Background"
               }
             },
-            "title": "Country Code",
             "preview": {
               "props": {
                 "label": "Phone",
@@ -258,7 +259,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Country Mask",
             "description": "A phone field whose mask changes with the country: typed and pasted numbers are brought to the same shape.",
+            "docs": "A client component: the country and the raw digits live in useState, and the displayed value is assembled by the applyMask function from the country template. One file, zero dependencies, the palette in the local --vibeui-phoneinput-002-* variables. The mask is not hard-wired into the field but described in the country record, so switching the code switches the template as well. Formatting works from digits: everything that is not a digit is dropped on input, which means \"+7 (999) 123-45-67\" from the clipboard turns into the same number as one typed by hand. The length is capped by the number of slots in the template, and extra digits simply do not get in. The digits are set in tabular figures: proportional ones make the number jerk on every character.",
             "ai": {
               "summary": "A phone field with a per-country mask: the template lives in the country record, and input and paste are normalised to digits. One file, zero dependencies, state on useState.",
               "preserve": [
@@ -303,7 +306,6 @@
                 "label": "Background"
               }
             },
-            "title": "Country Mask",
             "preview": {
               "props": {
                 "label": "Phone",
@@ -451,7 +453,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Digit Meter",
             "description": "A phone field with a length check: a row of dots under the input shows how many of the expected digits are typed, so a missing one is obvious.",
+            "docs": "A client component: the field value lives in useState, and only the digits are counted from it. One file, zero dependencies, the palette in the local --vibeui-phoneinput-003-* variables. A row of dots sits under the field — one per expected digit; the typed ones are filled with the accent, and on an exact length match the whole row, the border and the status line turn green. The status line is marked aria-live=\"polite\" and tied to the field through aria-describedby, so the progress is heard and not only seen. The dots are marked aria-hidden: duplicating the status text with geometry is pointless for speech. Separators are ignored when counting, so a paste from the clipboard in any format is counted correctly.",
             "ai": {
               "summary": "A phone field with a digit counter: a row of dots and a status line show how many digits of the expected count are in. One file, zero dependencies, state on useState.",
               "preserve": [
@@ -511,7 +515,6 @@
                 "label": "Background"
               }
             },
-            "title": "Digit Meter",
             "preview": {
               "props": {
                 "label": "Mobile phone",
@@ -627,7 +630,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Detected Country",
             "description": "A phone field with no country list: the country is detected from the code the person types after the \"+\" and shown as a chip on the right.",
+            "docs": "A client component: the field value lives in useState, and the country is derived from it by the detect function. One file, zero dependencies, the palette in the local --vibeui-phoneinput-004-* variables. The match is found by the longest suitable code rather than the first one: +1 and +1242 differ only in length, and the short code must not win. The country chip is placed to the right of the input deliberately — on the left it would shift the caret on every detection. Until the code is recognised the field inserts nothing on its own: injecting over the input is the fastest way to ruin a typed number. The line under the field is marked aria-live=\"polite\", so the recognised country is spoken.",
             "ai": {
               "summary": "A phone field that recognises the country from the typed code and shows it as a chip. One file, zero dependencies, state on useState.",
               "preserve": [
@@ -684,7 +689,6 @@
                 "label": "Background"
               }
             },
-            "title": "Detected Country",
             "preview": {
               "props": {
                 "label": "Phone",
@@ -825,7 +829,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Format Sample",
             "description": "A phone field with a shown format sample instead of a hard mask: the input accepts any notation while the expected shape stays visible below.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-phoneinput-005-* variables. Server component: useId is the only hook, there is no state. Instead of a mask it shows a sample: the example is set in a monospace face and wrapped in <samp> so that it is confused with neither the typed value nor the caption. The field does not restrict input — brackets, dashes and spaces are allowed, so a number from the clipboard is pasted without a fight. Both lines under the field are tied to it through aria-describedby by listing the identifiers, so both the sample and the note are read aloud. The pattern attribute is deliberately left out: it rejects valid numbers written differently.",
             "ai": {
               "summary": "A phone field with a format sample underneath: input is unrestricted and the expected shape is shown by example. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -878,7 +884,6 @@
                 "label": "Background"
               }
             },
-            "title": "Format Sample",
             "preview": {
               "props": {
                 "label": "Contact phone",
@@ -999,7 +1004,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Not A Number",
             "description": "A phone field in its error state: the typed and the expected values sit side by side, so the missing digit shows and the input is never wiped.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-phoneinput-006-* variables. Server component: useId is the only hook. The message shows the difference rather than a diagnosis: under the error text sits a two-row grid — \"typed\" and \"expected\" — aligned on the baseline, so the digits are compared by eye from top to bottom. Both samples are set in a monospace face. The state rests on aria-invalid on the field: the border, the caption (through :has() on the root) and the focus ring are coloured from it, there is no separate class. The typed value stays in the field — clearing the field on an error makes a person retype everything and leave the form.",
             "ai": {
               "summary": "A phone field whose error shows the difference between what was typed and what is expected. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1059,7 +1066,6 @@
                 "label": "Background"
               }
             },
-            "title": "Not A Number",
             "preview": {
               "props": {
                 "label": "Phone",
@@ -1176,7 +1182,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "With Extension",
             "description": "A phone field with a separate extension input: two values mean two fields with different autofill hints, and the narrow one states its own length.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-phoneinput-007-* variables. Server component: useId is the only hook. The extension is moved into its own field with autoComplete=\"tel-extension\", so the browser does not paste it inside the main number and does not confuse autofill. The root is declared container-type: inline-size, and the layout sits on the inner shell [data-part=\"shell\"]: a rule inside @container does not apply to the container itself. From 20rem of the component's own width the fields line up in a row, with 6rem given to the extension — the width itself says three or four digits belong there; at a narrow width the fields stack. Bottom alignment (align-items: flex-end) keeps the field borders on one line when the captions differ in length.",
             "ai": {
               "summary": "A work phone field with a separate extension: side by side at wider widths, stacked at narrow ones. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1233,7 +1241,6 @@
                 "label": "Background"
               }
             },
-            "title": "With Extension",
             "preview": {
               "props": {
                 "label": "Work phone",
@@ -1325,7 +1332,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Format Check",
             "description": "A phone field with format validation as you type: the border and status line change colour while the line above the field always names the expected mask for the selected country.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-phoneinput-008-* variables. Client component: the country and the digits are in state. The mask hint and the format check are two different messages: the line above the field is static and names the expected shape of the number for the country, while the line under the field is live and, through aria-live, compares the number of typed digits with the expected one. The number is typed as raw digits with no auto-formatting, so that the check is not confused with mask substitution.",
             "ai": {
               "summary": "A phone field with live format validation: the border and status line change colour by digit count, while the line above the field always names the mask for the selected country. One file, zero dependencies, state on useState.",
               "preserve": [
@@ -1370,7 +1379,6 @@
                 "label": "Background"
               }
             },
-            "title": "Format Check",
             "preview": {
               "props": {
                 "label": "Phone",

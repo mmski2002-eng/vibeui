@@ -1,7 +1,7 @@
-import type { ComponentPropsWithoutRef, CSSProperties, ReactNode } from "react"
+import type { ComponentProps, CSSProperties, ReactNode } from "react"
 
 export type Dialog001Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "title" | "children" | "id"
 > & {
   /** Уникальный идентификатор: связывает кнопку и окно. */
@@ -25,7 +25,7 @@ export type Dialog001Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="dialog-001"]){
 --vibeui-dialog-001-fg:light-dark(oklch(0.22 0.016 265),oklch(0.94 0.005 265));
---vibeui-dialog-001-muted:light-dark(oklch(0.5 0.014 265),oklch(0.7 0.012 265));
+--vibeui-dialog-001-muted:color-mix(in oklab,var(--vibeui-dialog-001-fg) 68%,transparent);
 --vibeui-dialog-001-bg:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
 --vibeui-dialog-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265));
 --vibeui-dialog-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
@@ -33,6 +33,9 @@ const STYLES = `
 --vibeui-dialog-001-radius:1rem;
 --vibeui-dialog-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="dialog-001"]{color-scheme:dark}
 [data-vibeui-block="dialog-001"]{
 display:inline-flex;font-family:var(--vibeui-dialog-001-font);
 }
@@ -85,6 +88,8 @@ background:oklch(0.18 0.02 265 / 45%);backdrop-filter:blur(2px);
 [data-vibeui-dialog-001-window] [data-part="title"]{margin:0 0 0.375rem;font-size:1.0625rem;font-weight:600;line-height:1.35}
 [data-vibeui-dialog-001-window] [data-part="body"]{margin:0;font-size:0.875rem;line-height:1.55;color:var(--vibeui-dialog-001-muted,light-dark(oklch(0.5 0.014 265),oklch(0.7 0.012 265)))}
 [data-vibeui-dialog-001-window] [data-part="actions"]{display:flex;justify-content:flex-end;gap:0.5rem;margin-top:1.125rem}
+/* Popover страницу не блокирует: фон под окном иначе продолжает прокручиваться. */
+html:has([data-vibeui-dialog-001-window]:popover-open){overflow:hidden}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="dialog-001"] *{animation:none!important;transition:none!important}
 [data-vibeui-dialog-001-window]{transition:none!important;opacity:1;transform:none}
@@ -150,6 +155,7 @@ export function Dialog001({
       </style>
       <div
         {...props}
+        data-slot="dialog"
         data-vibeui-block="dialog-001"
         className={className}
         style={palette}
@@ -163,14 +169,24 @@ export function Dialog001({
           data-vibeui-dialog-001-window=""
           role="dialog"
           aria-labelledby={`${id}-title`}
+          aria-describedby={children ? undefined : `${id}-description`}
           style={palette}
         >
           <h2 data-part="title" id={`${id}-title`}>
             {title}
           </h2>
-          {children ?? <p data-part="body">{description}</p>}
+          {children ?? (
+            <p data-part="body" id={`${id}-description`}>
+              {description}
+            </p>
+          )}
           <div data-part="actions">
-            <button data-part="cancel" type="button" popoverTarget={id}>
+            <button
+              data-part="cancel"
+              type="button"
+              popoverTarget={id}
+              autoFocus
+            >
               {cancelLabel}
             </button>
             <button data-part="confirm" type="button" popoverTarget={id}>

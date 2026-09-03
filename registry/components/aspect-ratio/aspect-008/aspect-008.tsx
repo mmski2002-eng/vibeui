@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Aspect008Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Aspect008Props = Omit<ComponentProps<"div">, "children"> & {
   ratio?: string
   /** Сколько кадров показывать: сетка заглушек под будущую галерею. */
   count?: number
@@ -27,6 +24,9 @@ const STYLES = `
 --vibeui-aspect-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="aspect-008"]{color-scheme:dark}
 [data-vibeui-block="aspect-008"]{display:block;width:100%;box-sizing:border-box;font-family:var(--vibeui-aspect-008-font)}
 /* Раскладка живёт на внутренней рамке, а не на корне: контейнерный запрос
    применяется к потомкам контейнера, но не к нему самому. */
@@ -91,6 +91,7 @@ export function Aspect008({
       </style>
       <div
         {...props}
+        data-slot="aspect-ratio"
         data-vibeui-block="aspect-008"
         role="status"
         aria-busy="true"

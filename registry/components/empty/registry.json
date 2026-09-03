@@ -98,6 +98,7 @@
         "i18n": {
           "en": {
             "description": "An empty state that explains the next step instead of reporting missing data. The illustration is CSS and hints at the list to come.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-empty-001-*. The illustration is three CSS tiles with a rotation and different opacities: it hints at the list that will appear here and needs no illustration from a library. The dashed border separates the empty state from a filled screen. The padding and the heading size are computed from its own width through @container.",
             "ai": {
               "summary": "An empty state with a three-tile illustration, a heading, an explanation, a primary action and a hint beneath it. The action is the point: the screen says what to do rather than noting that nothing is there. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -252,6 +253,7 @@
         "i18n": {
           "en": {
             "description": "An empty search result: the query itself, the likely cause and ready moves instead of \"try another search\".",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-empty-002-*. Server-side: no hooks. The block is declared role=\"status\": the disappearance of the results has to be heard. The mark is drawn as a circle and a stroke with pseudo-elements. The suggestions are buttons rather than text, so they can be pressed.",
             "ai": {
               "summary": "A no-results screen: a search mark, the query quoted in the text, ready-made queries as buttons and a filter reset. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -417,6 +419,7 @@
         "i18n": {
           "en": {
             "description": "An empty search that takes the query apart: the words become chips, the excess ones are struck through, and one action repeats the search with a shorter query.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-empty-003-*. Server-side: no hooks, no state. The query is split on spaces, the first keep words count as the base, and the rest are marked data-extra and struck through. The block is declared role=\"status\": losing the results has to be heard. The palette is built on light-dark(): the card follows the surrounding color-scheme and lays no surface of its own by default — the background prop turns it on.",
             "ai": {
               "summary": "A no-results state with a query breakdown: the words are laid out as chips, the extra ones struck through, with an explanation below and exactly one action — search the shortened query. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -575,6 +578,7 @@
         "i18n": {
           "en": {
             "description": "An empty folder that is itself the drop zone: the dashed border and the tray arrow promise dragging before any text does.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-empty-004-*. Server-side: no hooks. The dashed border sits on the block itself, the arrow is drawn with pseudo-elements and a nested i, and the highlight at the top is a radial gradient from the accent. The drag handler is not part of the component: it stays with the calling code, and the button gives the same path to those who do not drag files with a mouse.",
             "ai": {
               "summary": "An empty folder as an upload area: a dashed border, an arrow into a tray, an explanation, one file-picking button and a line of accepted formats. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -720,6 +724,7 @@
         "i18n": {
           "en": {
             "description": "A first run where the emptiness is not missing data but work not yet started: three numbered steps, the current one highlighted, one action.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-empty-005-*. Server-side: no hooks. The steps are an ol with numbers in circles; the connecting line is drawn with a pseudo-element on every item except the last, so no stray tail appears under the last number. The current step is marked data-current, the rest are muted by the caption colour.",
             "ai": {
               "summary": "A first-run empty state: a heading, a readiness counter, three numbered steps with explanations and one button that starts the first step. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -878,6 +883,7 @@
         "i18n": {
           "en": {
             "description": "The list is empty because of the filters, not by itself: the active conditions are listed and the number of records waiting after a reset is named.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-empty-006-*. Server-side: no hooks. The funnel mark is assembled from two pseudo-elements, the upper one clipped by clip-path. The conditions are laid out as a ul of chips, and the record count is printed through toLocaleString. The block is declared role=\"status\". The palette is built on light-dark(): the component follows the surrounding color-scheme and lays no surface by default — the background prop turns it on.",
             "ai": {
               "summary": "An empty list after filtering: a funnel, a heading, the active conditions as chips, the unfiltered record count and one reset button with a condition counter. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -1030,6 +1036,7 @@
         "i18n": {
           "en": {
             "description": "A load error rather than an empty section: the data exists but did not arrive, so the primary action is retry and the technical detail hides in a details element.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-empty-007-*. Server-side: no hooks, the detail disclosure is held by native details, so no client code is required. The block is declared role=\"alert\". The mark is drawn with pseudo-elements, and the code and the error text are set in a monospace font with white-space:pre-line.",
             "ai": {
               "summary": "A load error screen: an alert mark, a heading, an explanation, a retry button and expandable technical detail with the response code. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1186,6 +1193,7 @@
         "i18n": {
           "en": {
             "description": "A closed section rather than an empty one: the reason for the refusal is named, so is the person who grants access, and there is one action — ask them.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-empty-008-*. Server-side: no hooks. The padlock is drawn with two pseudo-elements: the shackle is a border with a radius on top, the body a rectangle in the accent colour. The reason is lifted into a separate pill above the explanation, and the block is declared role=\"status\". The palette is built on light-dark(): the component follows the surrounding color-scheme and lays no surface by default — the background prop turns it on.",
             "ai": {
               "summary": "An access refusal screen: a padlock, a heading, the reason as a pill, an explanation of the rules, one request button and a line naming who grants access. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -1342,6 +1350,7 @@
         "i18n": {
           "en": {
             "description": "An offline state that does not look like a broken app: the retries are visibly ongoing, and the age of the data on screen is spelled out.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-empty-009-*. Server-side: no hooks. The crossed-out cloud is drawn with pseudo-elements, the waiting dot pulses through the vibeui-empty-009-pulse keyframes, and a prefers-reduced-motion rule stops it. The block is declared role=\"status\" with aria-live=\"polite\". The palette is built on light-dark(): the component follows the surrounding color-scheme and lays no surface by default — the background prop turns it on.",
             "ai": {
               "summary": "An offline state: a broken-connection mark, a heading, a pulsing \"reconnecting\" label, an explanation, a manual retry button and the time of the last update. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -1495,6 +1504,7 @@
         "i18n": {
           "en": {
             "description": "An empty search result with an editable field: chips fill in a word, and the reset button restores the original query instead of a static caption.",
+            "docs": "The component is client-side: useState holds the field value. The form sends a request on submit, the chips fill the field with a word in a single click, and the reset button restores the original query and is disabled if the field already matches it. The form's width and layout are computed from its own container through @container: at a narrow width the field and the search button stack one under the other. The magnifier icon is an inline svg.",
             "ai": {
               "summary": "A no-results screen with an editable search field: a search mark, a heading, a retry form, suggestion chips that fill the field, and a button restoring the original query. One file, a client component using useState, no external dependencies.",
               "preserve": [
@@ -1645,6 +1655,7 @@
         "i18n": {
           "en": {
             "description": "A closed section with an access-request form: pick the needed role from a list, submit it, and the card switches to a confirmation.",
+            "docs": "The component is client-side: useState keeps the selected role and a submitted flag. The roles are a radio group in a fieldset with a legend, and every option has its own caption and explanation. After submit the form is hidden and a confirmation with a checkmark takes its place — clicking \"Request\" a second time is no longer possible. The padlock is an inline svg.",
             "ai": {
               "summary": "An access-refusal screen with a request form: a padlock, a heading, an explanation, a role radio group with descriptions and a submit button; after sending, the card switches to a confirmation. One file, a client component using useState, no external dependencies.",
               "preserve": [
@@ -1824,6 +1835,7 @@
         "i18n": {
           "en": {
             "description": "A load error with auto-retry: the response code shows right on the card, a countdown to the next attempt, and a manual retry at any time.",
+            "docs": "The component is client-side: useState and useEffect hold the countdown and call onRetry when it reaches zero, after which the countdown starts again. The \"Retry now\" button resets the countdown and calls onRetry immediately. The autoRetry=false prop switches off the timer and the progress bar, leaving only the manual retry. The alert mark is an inline svg, and the response code is shown right on the card rather than hidden in details.",
             "ai": {
               "summary": "A load-error screen with auto-retry: an alert mark, a heading, an explanation, the response code as a pill, a manual retry button, a countdown to the next attempt and a progress bar. One file, a client component using useState/useEffect, no external dependencies.",
               "preserve": [
@@ -1975,6 +1987,7 @@
         "i18n": {
           "en": {
             "description": "A first run as a checklist: steps can be ticked in any order, a progress bar counts readiness, and there is one action that does not wait for everything to be checked.",
+            "docs": "The component is client-side: useState keeps the ticks by step id. Every step is a button with aria-pressed rather than a checkbox: a click toggles the state, and the struck-through text and the fill mark it done. The progress bar and the counter are computed from the number of ticked steps. The checkmark inside the tick is an inline svg, drawn only when the step is done.",
             "ai": {
               "summary": "A first-run empty state shaped as a checklist: a heading, a counter and progress bar, step buttons that can be ticked in any order, and one primary-action button. One file, a client component using useState, no external dependencies.",
               "preserve": [
@@ -2135,6 +2148,7 @@
         "i18n": {
           "en": {
             "description": "An empty cart with a single action — go back to the catalog; wishlist items, if any, are not silently lost.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-empty-014-*. Server-side: no hooks. The cart mark is an inline svg. The card width is computed from its own container through @container: at a narrow width the wishlist line turns into a column.",
             "ai": {
               "summary": "An empty cart: a cart mark, a heading, an explanation and one button back to the catalog; if there are wishlist items, a separate link to them appears under the button. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -2282,6 +2296,7 @@
         "i18n": {
           "en": {
             "description": "An offline banner over cached data: the list stays on screen, each record carries a cache timestamp, reconnecting is manual.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-empty-015-*. Server-side: no hooks. The broken-connection mark is an inline svg, and the block is declared role=\"status\" with aria-live=\"polite\". The banner and the list are computed from their own container through @container: at a narrow width the retry button wraps under the text.",
             "ai": {
               "summary": "An offline banner above a list of cached data: a broken-connection mark, a heading, an explanation, a manual retry button, and the list itself with a cache timestamp on every record. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -2446,6 +2461,7 @@
         "i18n": {
           "en": {
             "description": "An empty list after filtering with per-condition reset: every condition clears with its own chip button, a bulk reset stays alongside.",
+            "docs": "The component is client-side: useState keeps the list of active conditions, initialised from the filters prop. Every chip carries its own remove button with an inline svg cross and an aria-label naming the condition; the bulk reset drops every condition at once. The reset button's layout is computed from its own container through @container. The funnel mark is an inline svg.",
             "ai": {
               "summary": "An empty list after filtering: a funnel, a heading, an explanation with the unfiltered record count, condition chips each with their own remove button, and a bulk reset with a counter. One file, a client component using useState, no external dependencies.",
               "preserve": [
@@ -2603,6 +2619,7 @@
         "i18n": {
           "en": {
             "description": "An empty inbox: everything is read, the last-checked time shows right away, and there is one action — write a new message.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-empty-017-*. Server-side: no hooks. The mark is an envelope with a checkmark, an inline svg. The block is declared role=\"status\": an emptied inbox is worth announcing, not only drawing. The heading width and size are computed from its own width through @container.",
             "ai": {
               "summary": "An empty inbox: an envelope with a checkmark, a heading, an explanation, one \"Compose\" button and a last-checked line. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -2737,6 +2754,7 @@
         "i18n": {
           "en": {
             "description": "A quiet state with no notifications: the status of the enabled channels confirms alerts are working, and the action leads to their settings.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-empty-018-*. Server-side: no hooks. The mark is a crossed-out bell, an inline svg. The status of the enabled channels is shown by a pill with an indicator dot. The heading width and size are computed from its own width through @container.",
             "ai": {
               "summary": "An empty notifications list: a crossed-out bell, a heading, an explanation, a channel-status pill and a button into notification settings. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -2876,6 +2894,7 @@
         "i18n": {
           "en": {
             "description": "An empty project as a live drop zone: the border lights up while files are being dragged over it, not only once they are dropped.",
+            "docs": "The component is client-side: useState keeps the isDragging flag, toggled by the onDragOver, onDragLeave and onDrop handlers on the root block — the border highlight changes in real time, not only once a file has been dropped. The files are passed outwards through onDropFiles, and parsing the FileList stays with the calling code. The button is a second door into the same action for those who do not drag with a mouse. The icon is an inline svg, and the padding is computed from its own width through @container.",
             "ai": {
               "summary": "An empty project as an upload zone: a border that lights up while files are dragged over it, a mark, an explanation, a file-picking button and a formats line. One file, a client component using useState, no external dependencies.",
               "preserve": [
@@ -3016,6 +3035,7 @@
         "i18n": {
           "en": {
             "description": "A section still in progress: a promised timeframe, a notify-me subscription form, and a confirmation instead of a repeatedly clickable button after submitting.",
+            "docs": "The component is client-side: useState keeps the email field value and a submitted flag. The form is sent on submit and the email is validated by the native required and type=\"email\"; after submitting, the form is hidden and a confirmation takes its place — pressing the button again is impossible. The field label is hidden visually through clip-path in the component's own CSS rather than through a theme utility class. The clock icon is an inline svg, and the form layout is computed from its own width through @container.",
             "ai": {
               "summary": "A section under construction: a clock mark, an ETA pill, a heading, an explanation and an email subscription form; after submitting, the form switches to a confirmation. One file, a client component using useState, no external dependencies.",
               "preserve": [

@@ -148,9 +148,11 @@
             "title": "Action Button",
             "preview": {
               "props": {
-                "children": "Get started"
+                "children": "Get started",
+                "loadingLabel": "Loading…"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-001-* variables. The accent is changed through the accent prop, while the sizes and tones are set by data attributes declared inside the component. It accepts any native <button> props. The spinner is pure CSS, no icon libraries needed."
           }
         },
         "cardControls": ["tone", "size", "loading"]
@@ -278,7 +280,8 @@
                 "children": "Publish",
                 "menuLabel": "More options"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-002-* variables. The root is a group of two buttons, so className lands on the group while the native button props land on the main zone. The second zone calls onMenuClick and must have a menuLabel: it has no visible caption."
           }
         },
         "cardControls": ["accent", "accentForeground"]
@@ -394,7 +397,8 @@
               "props": {
                 "children": "Start for free"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-003-* variables. The effect is entirely CSS: no JS and no cursor tracking, so the component stays a server component. The gradient is assembled from the two variables accent and accent-2."
           }
         },
         "cardControls": ["accent", "accentForeground"]
@@ -510,7 +514,8 @@
               "props": {
                 "children": "Cancel"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-004-* variables. The marker dot is turned off with the marker prop when the button stands in a dense row. The marker colour is changed with the tint prop."
           }
         },
         "cardControls": ["marker", "tint"]
@@ -642,7 +647,8 @@
                 "children": "Delete project",
                 "confirmLabel": "Delete for real?"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-005-* variables. Client component: the confirmation window is internal state. The length of the window is set by the timeout prop, and the confirmation arrives in onConfirm; the component deliberately does not accept an ordinary onClick."
           }
         },
         "cardControls": ["accent"]
@@ -749,7 +755,8 @@
               "props": {
                 "children": "Delete permanently"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-006-* variables. The hatching is drawn with repeating-linear-gradient and slides in on both hover and focus-visible, so the warning is visible from the keyboard too."
           }
         },
         "cardControls": ["danger"]
@@ -873,7 +880,8 @@
                 "hint": "+2,400 teams",
                 "people": ["AK", "MD", "LP"]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-007-* variables. The avatars are drawn in CSS from initials: no images and no network requests. The first three avatars get different tints automatically."
           }
         },
         "cardControls": ["accent"]
@@ -980,7 +988,8 @@
               "props": {
                 "children": "Quick search"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-008-* variables. The keys are set by the keys array and drawn with the kbd tag; the depth comes from a bottom edge made with box-shadow. The component does not attach the shortcut handler itself — that is the application's job."
           }
         },
         "cardControls": ["accent"]
@@ -1108,7 +1117,8 @@
                 "onLabel": "Notifications on",
                 "offLabel": "Notifications off"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-009-* variables. Client component: the toggle state is internal and is reported outwards through onPressedChange. The starting state is defaultPressed."
           }
         },
         "cardControls": ["defaultPressed", "accent"]
@@ -1264,7 +1274,8 @@
                 "loadingLabel": "Downloading… {percent}%",
                 "doneLabel": "Done"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-010-* variables. Progress arrives through the status and progress props — the component downloads nothing itself and knows nothing about the network. In the loading state the button becomes disabled and gains aria-busy."
           }
         },
         "cardControls": ["status", "accent"]
@@ -1380,7 +1391,8 @@
               "props": {
                 "children": "See all features"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-011-* variables. This is a button, not a link: it has no background, no border and no fixed height, so it sits straight in a line of copy. To navigate to an address use an ordinary <a>."
           }
         },
         "cardControls": ["arrow", "accent"]
@@ -1531,7 +1543,8 @@
               "props": {
                 "label": "Add"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-012-* variables. Server component: no hooks. The size is set by a single variable, while the shape and the tone are set by the data-shape and data-tone attributes. The four glyphs (plus, close, more, search) are assembled from borders and pseudo-elements, so no icon package is pulled in. The action name is mandatory and is duplicated in title."
           }
         },
         "cardControls": ["icon", "shape", "size", "tone"]
@@ -1652,9 +1665,11 @@
             "preview": {
               "props": {
                 "options": ["Day", "Week", "Month"],
-                "defaultValue": "Week"
+                "defaultValue": "Week",
+                "label": "Range"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-013-* variables. Client component: \"use client\". Inside there are real input type=\"radio\" elements sharing a name from useId; they are transparent and stretched over the label, so the keyboard model of a radio group works without a single line of handlers. The selected segment is styled through :has(input:checked)."
           }
         },
         "cardControls": ["background"]
@@ -1763,7 +1778,8 @@
               "props": {
                 "label": "New task"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-014-* variables. Server component: no hooks. The label is always in the markup, but its max-width is zero and grows to 12rem on hover and focus-visible — that way the button expands in the flow instead of covering its neighbours. The action name is duplicated in aria-label. The plus is drawn with two bars."
           }
         },
         "cardControls": ["accent"]
@@ -1899,7 +1915,8 @@
                 "label": "Copy",
                 "doneLabel": "Copied"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-015-* variables. Client component: \"use client\". Writing to the clipboard goes through navigator.clipboard in a try/catch: on a refusal the state does not change, because a false \"copied\" is worse than silence. The reset timer is cleared on unmount. The label is declared aria-live=\"polite\"."
           }
         },
         "cardControls": ["background"]
@@ -2045,7 +2062,8 @@
                 "label": "Open the docs",
                 "externalHint": "(opens in a new tab)"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-016-* variables. Server component: no hooks. This is an <a>, not a <button>: the context menu, the middle click and the status bar are preserved. For an external link target=\"_blank\" and rel=\"noopener noreferrer\" are set, a glyph is drawn and a hidden \"opens in a new tab\" line is added."
           }
         },
         "cardControls": ["tone", "external", "background"]
@@ -2178,7 +2196,8 @@
                 "pendingLabel": "Sending…",
                 "doneLabel": "Sent"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-017-* variables. Client component: \"use client\". The state is idle, pending or done; in pending the button is disabled and aria-busy, and a repeat call is cut off by an early return. The minimum width is set by the longest caption, so a change of text does not jerk the layout. The reset timer is cleared on unmount."
           }
         },
         "cardControls": ["accent"]
@@ -2329,7 +2348,8 @@
                 "decreaseLabel": "Decrease to {value}",
                 "increaseLabel": "Increase to {value}"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-018-* variables. Client component: \"use client\". The value lives in an input type=\"number\" with a hidden label through useId; the browser's arrows are removed, because custom buttons stand beside it. At the edges of the range the buttons are disabled, and their aria-label carries the value to come."
           }
         },
         "cardControls": ["defaultValue", "accent", "background"]
@@ -2474,7 +2494,8 @@
                 "label": "Like",
                 "countLabel": "{label}, reactions: {count}"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-019-* variables. Client component: \"use client\". The pressed state is aria-pressed, and the styling goes off it as well. The counter is recomputed on the client immediately, so the response is instant. The heart is assembled from two rotated shapes and is filled in the pressed state — colour is not the only cue."
           }
         },
         "cardControls": ["defaultPressed", "accent", "background"]
@@ -2623,7 +2644,8 @@
                 "price": "$59",
                 "hint": "Delivered tomorrow, pay on arrival"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-020-* variables. Server component: no hooks. The bottom padding is computed as the base plus env(safe-area-inset-bottom): without it the edge of the button slides under the system bar on an iPhone. The button height is 3rem, and the price is right-aligned in tabular figures."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2770,7 +2792,8 @@
                 "errorLabel": "Retry",
                 "doneLabel": "Done"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-021-* variables. Client component: the idle/pending/error/done states are internal. The work is passed through the action prop, which receives the AbortSignal of an internal AbortController, so a click during the work cancels the request. The four captions lie on top of each other in a single grid cell, with the inactive ones hidden by visibility:hidden — the width is computed from the longest. The default action is a showcase stub that fails on the first attempt."
           }
         },
         "cardControls": ["accent"]
@@ -2892,7 +2915,8 @@
                 "holdingLabel": "Keep holding…",
                 "doneLabel": "Deleted"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-022-* variables. Client component: the hold is tracked with pointer events and duplicated on the keyboard (keydown/keyup on Space and Enter, with auto-repeat cut off by event.repeat). The duration arrives through the hold prop and goes into the --vibeui-button-022-hold CSS variable, which the fill travels for exactly as long. The action is called once at the end and arrives in onConfirm."
           }
         },
         "cardControls": ["danger"]
@@ -3031,7 +3055,8 @@
                 "label": "Copy",
                 "doneLabel": "Copied"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-023-* variables. Client component: the \"Copied\" caption stays for hold milliseconds and rolls back on a timer, and the timer is cleared on unmount. The value is truncated visually through text-overflow, while the full value goes into navigator.clipboard.writeText. A clipboard refusal is caught in a try/catch and the state does not change — the button does not report what it did not do."
           }
         },
         "cardControls": ["accent", "background"]
@@ -3175,7 +3200,8 @@
               "props": {
                 "label": "Select all"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-024-* variables. Client component: the number of checked rows is held internally and reported outwards through onSelectedChange. The value of aria-pressed is derived from the counter: 0 is false, total is true, and anything between is mixed. The glyph in the box switches between a checkmark and a dash, and the counter is set in tabular-nums."
           }
         },
         "cardControls": ["defaultSelected", "accent", "background"]
@@ -3300,7 +3326,8 @@
                 "label": "Save draft",
                 "combo": "mod+s"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-025-* variables. Client component: a keydown listener sits on window, and a combo of the form \"mod+s\" is parsed into modifiers and a main key. The platform is read through useSyncExternalStore: the server snapshot is always false, so the server and client markup match, and after hydration the keys are repainted for the system. While the focus is in an input field or a contenteditable, the shortcut is not intercepted. The handler is kept in a ref so that the listener does not resubscribe on every render."
           }
         },
         "cardControls": ["accent"]
@@ -3440,7 +3467,8 @@
                 "fileName": "vibeui-report-march.pdf",
                 "size": "2.4 MB"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-026-* variables. Server component: no hooks. The root is an <a> tag with a download attribute, so the middle mouse button, \"save as\" and copying the address all work. The format is derived from the fileName extension and goes into data-format, which recolours the chip. The size arrives as a string: computing a file's weight is the server's job."
           }
         },
         "cardControls": ["accent", "background"]
@@ -3587,7 +3615,8 @@
                 "label": "Send the code again",
                 "waitingLabel": "Retry in"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-027-* variables. Client component: the remaining seconds are held in state and decremented by a setTimeout once a second, and the starting value matches on the server and on the client. The share remaining goes into the --vibeui-button-027-left CSS variable, from which a conic-gradient draws the ring. The live region announces only the moment of unlocking: the seconds are not read out every second."
           }
         },
         "cardControls": ["seconds", "accent", "background"]
@@ -3731,7 +3760,8 @@
               "props": {
                 "label": "Delete draft"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-028-* variables. Server component: no hooks, the tooltip is entirely CSS. It is shown through the adjacent selectors button:hover + [data-part=\"tip\"] and button:focus-visible + [data-part=\"tip\"]: with a 0.35s delay for the mouse, immediately for the keyboard. The side is set by data-side on the root. The info, trash and edit glyphs are assembled from borders and pseudo-elements."
           }
         },
         "cardControls": ["icon", "side", "accent", "background"]
@@ -3882,7 +3912,8 @@
                 "secondaryLabel": "Save draft",
                 "note": "We answer within one business day"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-029-* variables. Server component: no hooks. The layout is computed from the block's own width through container-type:inline-size, and the @container rules sit on the inner [data-part=\"shell\"] — a container query does not apply to the container itself. The primary button is declared type=\"submit\" and the second one type=\"button\", so that it does not submit the form."
           }
         },
         "cardControls": ["accent", "background"]
@@ -4042,7 +4073,8 @@
                 "label": "Notifications",
                 "unreadText": "{label}: {count} unread"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-030-* variables. Server component: the number arrives through the count prop, the component counts nothing itself. The badge is ringed in the surface colour through box-shadow, so it does not merge with the bell. The collapse threshold is set by the cap prop. The halo is a CSS animation that is switched off entirely under prefers-reduced-motion."
           }
         },
         "cardControls": ["count", "badge", "background"]
@@ -4211,7 +4243,8 @@
                   "b": "B"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-031-* variables. Client component: the name and the weight of the chosen file are held in state, and the file is reported outwards through onFileChange. The hidden input lies inside a label, so the browser opens the dialog with no handlers; the focus ring is drawn on the plate through :has(input:focus-visible). On a drop the file is placed into the input itself through a ref, so that the form submits the ordinary way."
           }
         },
         "cardControls": ["accent", "background"]
@@ -4358,7 +4391,8 @@
                 "items": ["Rename", "Duplicate", "Copy link"],
                 "dangerLabel": "Delete"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-032-* variables. Server component: no hooks, no JS at all. The layer is opened by the popover attribute and a popovertarget pair, and the entries close it through popovertargetaction=\"hide\". Positioning under the button is enabled inside @supports (anchor-name: --a); where anchor is unsupported the popover stays centred on the screen. The appearance is built on @starting-style with transition-behavior for display and overlay. The menu role is deliberately not set: it requires arrow-key navigation, which will not exist without JS."
           }
         },
         "cardControls": ["align", "accent", "background"]
@@ -4500,7 +4534,8 @@
               "props": {
                 "children": "Settings"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-033-* variables. Server component. The root of the block is not the button itself but the paper surface on which a ghost button is the only thing that reads; the button lies inside and is marked data-part=\"button\". The active state is declared through aria-current, so a screen reader sees it too rather than colour alone. The washes are made with color-mix from the accent, there are no separate variables for the tints."
           }
         },
         "cardControls": ["active", "disabled", "accent", "background"]
@@ -4634,7 +4669,8 @@
               "props": {
                 "children": "See plan details"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-034-* variables. Server component, the root is the <button> itself, so all native props pass straight through. The contour weight is lifted into the --vibeui-button-034-line variable and switched by the emphasis data attribute: the same value also drives the ring weight in the mark, so the lines cannot drift apart. Focus is moved outward with a 3px offset — otherwise the outline merges with the border."
           }
         },
         "cardControls": ["emphasis", "accent", "background"]
@@ -4785,7 +4821,8 @@
                 "before": "We charge on the 30th. You can ",
                 "after": " at any time."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-035-* variables. Server component. The root of the block is a <p> with text before and after the button: without the surroundings there is no way to check that the typography is inherited, so it is part of the component. The button itself is declared font:inherit and padding:0, so it does not break the line; the underline is made with background-image and background-size rather than text-decoration — that way its thickness and offset are controlled precisely and can be animated."
           }
         },
         "cardControls": ["accent", "background"]
@@ -4918,7 +4955,8 @@
               "props": {
                 "children": "Create project"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-036-* variables. Server component. Both icons are empty spans with data-part=\"lead\"/\"trail\" and data-icon, and the shape is drawn with the borders and backgrounds of pseudo-elements, so neither SVG nor an icon font is needed. The left padding is smaller than the right one: an icon is optically heavier than emptiness. The value \"none\" removes the node from the markup."
           }
         },
         "cardControls": ["leading", "trailing", "accent"]
@@ -5054,7 +5092,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-037-* variables. Client component: the expansion is internal state, and only the chosen id goes outwards through onSelect. The stagger is made with transition-delay computed from the element's index through the --vibeui-button-037-index variable — no timers in JS. The list is positioned absolutely above the button and hidden with the hidden attribute, so closed entries do not enter the Tab order."
           }
         },
         "cardControls": ["defaultOpen", "accent"]
@@ -5192,7 +5231,8 @@
               "props": {
                 "children": "Confirm moving the meeting to next week"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-038-* variables. Server component. The width is capped by the --vibeui-button-038-width variable, which the width prop sets in rem; text-wrap:balance, overflow-wrap:anywhere and hyphens:auto are enabled, so a long word does not break the button apart. align-items:flex-start plus an icon height equal to the line-height of the first line keep it on the top line."
           }
         },
         "cardControls": ["width", "accent", "background"]
@@ -5315,7 +5355,8 @@
               "props": {
                 "children": "Add block"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-039-* variables. Server component. The --vibeui-button-039-step variable is switched by the size data attribute and multiplies the base metrics: the height (--vibeui-button-039-unit), the padding, the type size, the radius, the focus ring width and the icon size. Letter spacing, on the contrary, is divided by the step — a large type size needs less tracking. A new size is added in a single line with a new step value."
           }
         },
         "cardControls": ["size", "accent"]
@@ -5453,7 +5494,8 @@
                 "children": "Start subscription",
                 "hint": "Free for 14 days, no card needed"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-040-* variables. Server component, the root is the <button> itself with width:100% and a max-width, so the width is set by the parent rather than by the viewport. The layout is switched by the align data attribute: center centres the content, between pushes the text block and the arrow apart. The second hint line is set in tabular-nums — it usually carries a price or a deadline."
           }
         },
         "cardControls": ["align", "accent"]
@@ -5586,7 +5628,8 @@
               "props": {
                 "children": "Build the page"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-041-* variables. Server component. The technique: border:2px solid transparent and two backgrounds — a solid one across padding-box for the middle and a linear gradient across border-box for the border. Because the border is transparent, the system focus outline is lost on the gradient, so focus-visible gives an outline with a 3px offset plus a white box-shadow ring separating the outline from the border."
           }
         },
         "cardControls": ["accent", "accentEnd", "background"]
@@ -5710,7 +5753,8 @@
               "props": {
                 "children": "Run build"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-042-* variables. Server component. The cut is set by a clip-path polygon, and the size of the corner is the --vibeui-button-042-cut variable, which the cut prop sets in pixels. A side effect of the technique: clip-path also clips the outline, so focus-visible zeroes the outline and draws a double inner ring through an inset box-shadow. The contrasting notch in the corner repeats the cut using the same variable value."
           }
         },
         "cardControls": ["cut", "accent"]
@@ -5843,7 +5887,8 @@
               "props": {
                 "children": "Open card"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-043-* variables. Server component, the root is the <button> itself. The shadow is assembled from three layers: a contact one with no blur, a middle one and a distant one; on hover the offset and blur of the two far layers change while the contact one stays. The lift height is placed in the --vibeui-button-043-lift variable and set by the lift prop in pixels. The transitions run on cubic-bezier(0.16,1,0.3,1)."
           }
         },
         "cardControls": ["lift", "accent", "background"]
@@ -5965,7 +6010,8 @@
               "props": {
                 "children": "Generating"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-044-* variables. Server component. The root of the block is a wrapper with 1.5px of padding and overflow:hidden; its pseudo-element is a square 220% of the width carrying a conic-gradient, which an animation rotates. The button with an opaque background lies on top, so only a border of the sector remains. The 220% size is not arbitrary: a smaller square does not cover the diagonal and the sector tears at the corners. The revolution speed is the speed prop, in seconds."
           }
         },
         "cardControls": ["speed", "accent"]
@@ -6089,7 +6135,8 @@
               "props": {
                 "children": "Press me"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-045-* variables. Server component. The depth comes from an unblurred box-shadow of height --vibeui-button-045-depth (the depth prop, in pixels); on :active the edge is zeroed and the button moves down by exactly the same amount, so the total height of the footprint stays constant and a row of buttons does not jerk. The inner highlight on top is a second inset layer of the same shadow."
           }
         },
         "cardControls": ["depth", "accent"]
@@ -6233,7 +6280,8 @@
               "props": {
                 "label": "Back to top"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-046-* variables. Client component: the scroll and resize listeners sit on window, scroll is attached with passive:true, and both are removed on unmount. The scroll fraction goes into the --vibeui-button-046-progress variable and draws the conic-gradient ring. The button hides only with autoHide; while hidden it gets pointer-events:none, aria-hidden and tabIndex -1, so it does not catch Tab. Scrolling to the top runs with behavior:smooth, and instantly under prefers-reduced-motion."
           }
         },
         "cardControls": ["accent", "background"]
@@ -6391,7 +6439,8 @@
                 "children": "shadcn documentation",
                 "newTabHint": "(opens in a new tab)"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-047-* variables. Server component, the root is a real <a> with target=\"_blank\" and rel=\"noreferrer noopener\": the address can be copied, opened in a new tab and seen in the status bar. The host is extracted from href through URL, with a fallback string parse. The \"arrow out of a frame\" mark is drawn with the borders of pseudo-elements; the hidden line for a screen reader is hidden with clip-path."
           }
         },
         "cardControls": ["showHost", "accent", "background"]
@@ -6514,7 +6563,8 @@
                   "apple": "Continue with Apple"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-048-* variables. Server component. The mark is taken out of the flow (position:absolute) and does not affect the centring of the label — because of that, several buttons for different providers line up on a shared text axis. The marks are stand-ins assembled from conic-gradient and pseudo-elements; the real logos are supplied by the project. The default label is taken from the LABELS map by the provider value."
           }
         },
         "cardControls": ["provider", "background"]
@@ -6662,7 +6712,8 @@
                 "addedLabel": "In cart — open",
                 "addedAnnounce": "Item added to the cart"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-049-* variables. Client component: the \"in cart\" state is internal, and two different handlers go outwards — onAdd and onOpenCart, with the component deciding which one to call. The minimum width is fixed, so the button does not jump when the label changes. The state change is announced by a hidden role=\"status\" line with aria-live=\"polite\"."
           }
         },
         "cardControls": ["defaultAdded", "accent"]
@@ -6807,7 +6858,8 @@
                 "label": "Add to favourites",
                 "activeLabel": "Remove from favourites"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-050-* variables. Client component: the state is internal and goes outwards through onChange. The state is declared through aria-pressed, and the button's name changes with it — there is no visible label, so the aria-label is the only carrier of meaning. The heart is drawn with two pseudo-elements sharing a transform-origin, and the fill arrives through background-color. The flash ring is a separate animation tied to aria-pressed."
           }
         },
         "cardControls": ["defaultPressed", "accent", "background"]
@@ -6964,7 +7016,8 @@
                 "followingLabel": "Following",
                 "unfollowLabel": "Unfollow"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-051-* variables. Client component: the state is internal, goes outwards through onChange and is additionally declared through aria-pressed. The label swap is made with two layers in one grid cell (grid-area:1/1): both lines are always in the markup and the width is taken from the longer one, so the button does not change size under the cursor. The swap also fires on :focus-visible, not only on :hover."
           }
         },
         "cardControls": ["defaultFollowing", "accent", "background"]
@@ -7101,7 +7154,8 @@
                 "phone": "+7 495 120-45-90",
                 "hint": "We answer 9:00–21:00"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-052-* variables. Server component, the root is an <a href=\"tel:…\">: on a phone the call goes to the dialer, on the desktop to the user's application. Spaces and separators are stripped from the visible number only inside the href, so the human-readable form is preserved. The handset is drawn with a border with transparent sides, the availability ring is an animation on a pseudo-element, and the number is set in monospace with tabular-nums."
           }
         },
         "cardControls": ["accent"]
@@ -7237,7 +7291,8 @@
                 "children": "Print invoice",
                 "hint": "Ctrl + P"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-053-* variables. Client component: the handler calls window.print(). The user's onClick is called first, and if it called preventDefault the dialog does not open — that way printing can be cancelled or replaced. The style block has its own @media print with display:none, so there is no need to hide the button from outside. The printer is drawn with three shapes: the body, the tray and the sheet sliding out."
           }
         },
         "cardControls": ["accent", "background"]
@@ -7371,7 +7426,8 @@
                 "children": "Share",
                 "copiedLabel": "Link copied"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-054-* variables. Client component. The handler checks navigator.share and, where it exists, opens the system sheet; a refusal by the user (AbortError) is caught and is not treated as an error. Otherwise the link goes to navigator.clipboard and the button moves into the \"copied\" state for 2.2 seconds — the timer is cleared in a useEffect. An empty url means the current page address, so the component is safe under server rendering."
           }
         },
         "cardControls": ["accent"]
@@ -7517,7 +7573,8 @@
                 "children": "Erase all data",
                 "lockedLabel": "Hold to erase"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-055-* variables. Client component: the keydown and keyup listeners sit on window and read the modifier flag (altKey, shiftKey or ctrlKey) straight from the event, so the state does not fall out of sync when the layout is switched. The window's blur is listened for as well: a key released outside the tab would otherwise leave the button armed. The armed state is announced through aria-disabled, and a click in the locked state is cancelled."
           }
         },
         "cardControls": ["modifier", "danger", "background"]
@@ -7651,7 +7708,8 @@
               "props": {
                 "label": "Interface language"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-056-* variables. Server component, no JS is needed at all: inside the plate stands a real <select> with appearance:none, while the globe and the chevron are drawn in CSS. Focus arrives on the select, and the outline is drawn by the plate through :has(select:focus-visible) — that is why the ring encloses the whole button. The chevron is marked pointer-events:none so that a click on it opens the list."
           }
         },
         "cardControls": ["defaultValue", "accent", "background"]
@@ -7807,7 +7865,8 @@
                   "million": "M"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-057-* variables. Server component. The number is shortened to \"тыс.\" and \"млн\" with a comma as the decimal separator; the full value through toLocaleString goes into title and aria-label, because the shortening rounds and lies. The bars are normalised to the maximum of the trend array, and a minimum height of 12% keeps zero values from disappearing. The last bar is highlighted as the current period."
           }
         },
         "cardControls": ["accent", "background"]
@@ -7959,7 +8018,8 @@
                 "showLabel": "Show password",
                 "hideLabel": "Hide password"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-058-* variables. Client component: the reveal state is internal. The field is always the same one — only the type attribute changes, so React does not recreate the node and the caret is not reset. The state is declared through aria-pressed, and the button's name changes with it. The focus ring is drawn by the field wrapper through :has(input:focus-visible). The stroke across the eye is a separate node with a shadow in the surface colour, which gives the cut-out."
           }
         },
         "cardControls": ["accent", "background"]
@@ -8110,7 +8170,8 @@
                 "submitLabel": "Send request",
                 "hint": "Enter an address to send"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-059-* variables. Server component, no JS is needed: the root is a <form>, and the form:has(:invalid) rule dims the button and shows the hint. Validity is computed by the browser from required and type=\"email\", not by our code. The hint always occupies its space (visibility, not display), so the layout does not jump when the status changes. The button stays clickable for a screen reader — instead of disabled it is dimmed visually, and an attempt to submit shows the system message about the field."
           }
         },
         "cardControls": ["accent", "background"]
@@ -8268,7 +8329,8 @@
                 "children": "In progress",
                 "clearLabel": "Clear the {label} filter"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-060-* variables. Client component: the on state is internal and goes outwards through onToggle and onClear. A button cannot be nested inside a button, so the two lie as siblings inside a shared wrapper with overflow:hidden and a shared radius. The focus ring is drawn with a negative offset — otherwise it would be clipped by the wrapper. The on state is declared through aria-pressed on the left button."
           }
         },
         "cardControls": ["defaultActive", "count", "accent", "background"]
@@ -8428,7 +8490,8 @@
                 "task": "Importing 4,210 rows",
                 "slowHint": "longer than usual"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-061-* variables. Client component: the interval is started in a useEffect while running and cleared on a stop or on unmount, and the counter is reset on every start. The operation itself lives in the application — the component only counts the time and calls onCancel. The slowAfter threshold, in seconds, moves the plate into a warning tone through data-slow; the spinner and the border change colour together. The time is set in monospace with tabular-nums."
           }
         },
         "cardControls": ["running", "accent", "background"]

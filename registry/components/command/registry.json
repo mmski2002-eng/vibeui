@@ -175,7 +175,8 @@
                 "placeholder": "Command or jump to…",
                 "emptyText": "Nothing found. Try different wording."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-command-001-* variables. Client-side: \"use client\" for the sake of search and the arrow keys. The modal is opened with the showModal() method, so the focus trap and closing on Escape work by themselves. The arrows walk the visible order of the rows rather than the source array: after grouping it is a different one."
           }
         },
         "cardControls": ["background"]
@@ -370,7 +371,8 @@
                 "emptyText": "No matches. Try another word.",
                 "hintText": "↑↓ move · Enter run · Esc dismiss"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-command-002-* variables. Client-side: \"use client\" for the sake of search and the keyboard. The panel is not modal, so the whole ARIA contract is declared explicitly: role=dialog on the root, role=combobox with aria-expanded and aria-controls on the field, role=listbox on the list, role=group on the groups, role=option on the rows. Focus stays in the field and the highlight is passed through aria-activedescendant. The arrows walk the flat visible order — after grouping it does not match the source array."
           }
         },
         "cardControls": ["accent", "background"]
@@ -542,7 +544,8 @@
                 "recentText": "Recent",
                 "clearLabel": "clear"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-command-003-* variables. Client-side: \"use client\" for the sake of useState on the query and the history. An empty query switches the list to the history, any input switches it to a filter over the full set of commands; the heading above the list changes with the mode. Running a command lifts it to the top of the history and trims the list to four entries, so the history does not grow. The combobox, listbox and option roles are set explicitly, and the highlight is passed through aria-activedescendant."
           }
         },
         "cardControls": ["accent", "background"]
@@ -721,7 +724,8 @@
                 "childPlaceholder": "Subcommand…",
                 "hintText": "Enter — open subcommands · Esc — dismiss"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-command-004-* variables. Client-side: \"use client\" for the sake of the level and query state. A command with a children array is not executed but opens a second level: the query is reset, a breadcrumb chip with the parent name appears to the left of the field, and the list is replaced by the subcommands. Stepping back is bound to Backspace on an empty query and to Escape, as well as to the cross in the chip. The combobox, listbox and option roles are declared explicitly."
           }
         },
         "cardControls": ["accent", "background"]
@@ -898,9 +902,11 @@
                 "label": "Project search",
                 "listLabel": "Results",
                 "emptyText": "Nothing matches that query.",
-                "footText": "Found {found} of {total}"
+                "footText": "Found {found} of {total}",
+                "placeholder": "Search the project…"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-command-005-* variables. Client-side: \"use client\" for the sake of search and the keyboard. The filter runs over both the label and the second line (the path or context), and the grouping by the kind field is computed from the data — a new type creates its own group. Every row carries a square badge with the first letter of the type and a dimmed monospaced path with an ellipsis. The listbox, group and option roles are declared explicitly, and the arrows walk the flat visible order."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1070,9 +1076,12 @@
                 ],
                 "label": "Keyboard shortcuts",
                 "listLabel": "Commands",
-                "keysLabel": "Shortcut: {keys}"
+                "keysLabel": "Shortcut: {keys}",
+                "placeholder": "Command or shortcut…",
+                "emptyText": "No such shortcut — try another one."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-command-006-* variables. Client-side: \"use client\" for the sake of search and the arrow keys. A combination is described by a keys array rather than a string, so every key gets its own <kbd> and sequences such as «G then C» read as two presses. The filter checks both the label and the joined keys: «⌘K» finds a command faster than trying to recall its name. The key group is given an aria-label, otherwise the row is announced as a set of separate symbols."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1260,9 +1269,12 @@
                 ],
                 "emptyText": "Nothing found. Check the prefix:",
                 "label": "Command palette with syntax",
-                "listLabel": "Results"
+                "listLabel": "Results",
+                "placeholder": "Type > @ or #",
+                "leadText": "Start with a prefix:"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-command-007-* variables. Client-side: \"use client\" for the sake of parsing the query. The first character of the query determines the mode: > for commands, @ for symbols, # for lines; the same character is shown as a chip to the left of the field, so the link «typed a prefix — the list changed» is obvious. An empty result is replaced by a legend of the prefixes: a list with no rows is where the user got stuck, and a hint is more useful there than a no-matches message. The combobox, listbox and option roles are declared explicitly."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1406,7 +1418,8 @@
                 "placeholder": "File name…",
                 "chipText": "file"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-command-008-* variables. Client-side: \"use client\" for the sake of search and the keyboard. A row is split into the file name and the directory: the name is picked out by weight, the directory is dimmed and truncated with an ellipsis on the left through direction:rtl, so the end of the path stays visible. The match is highlighted with a <mark> tag rather than a span with a class — the highlight carries meaning in a screen reader too. The full path of the highlighted row is pinned in the footer so that the truncated directory does not get in the way of checking the address."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1582,7 +1595,8 @@
                 "targetKind": "Layer",
                 "placeholder": "Action…"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-command-009-* variables. Client-side: \"use client\" for the sake of search and the keyboard. The object row sits above the field and takes no part in the list scrolling, and its id is given to the dialog's aria-labelledby — that way the palette is announced together with the object it belongs to. Actions with tone=\"danger\" get spacing, a dividing rule and a highlight colour of their own: an arrow-key slip onto delete costs too much. The combobox, listbox and option roles are declared explicitly."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1741,9 +1755,12 @@
                 "label": "Command search",
                 "listLabel": "Results",
                 "loadingText": "Searching the server…",
-                "countText": "Results: {count}"
+                "countText": "Results: {count}",
+                "placeholder": "Searching the server…",
+                "emptyText": "Nothing found. Refine the query."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-command-010-* variables. Client-side: \"use client\" for the sake of useState and useEffect. The loading flag is turned on in the input handler, and the effect only waits for the answer on a timer and restarts when the query changes — an ordinary debounce around a real request behaves the same way. Loading is shown in two ways: a runner in the bar beneath the field and skeleton rows of the same height, so the list does not jump once the answer lands. The field carries aria-busy, the footer role=status, and the arrows are blocked while loading so that the highlight does not point at rows that are about to vanish."
           }
         },
         "cardControls": ["accent", "background"]

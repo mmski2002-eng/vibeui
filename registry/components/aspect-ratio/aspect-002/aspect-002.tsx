@@ -1,7 +1,7 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Aspect002Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "title" | "children"
 > & {
   title?: string
@@ -114,6 +114,7 @@ export function Aspect002({
       </style>
       {href ? (
         <a
+          data-slot="aspect-ratio"
           data-vibeui-block="aspect-002"
           href={href}
           className={className}

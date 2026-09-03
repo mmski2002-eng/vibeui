@@ -1,11 +1,8 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Item009State = "ok" | "wait" | "fail" | "off"
 
-export type Item009Props = Omit<
-  ComponentPropsWithoutRef<"li">,
-  "children" | "title"
-> & {
+export type Item009Props = Omit<ComponentProps<"li">, "children" | "title"> & {
   title?: string
   meta?: string
   state?: Item009State
@@ -29,7 +26,7 @@ const STYLES = `
 :where([data-vibeui-block="item-009"]){
 --vibeui-item-009-bg:transparent;
 --vibeui-item-009-fg:light-dark(oklch(0.23 0.014 265),oklch(0.93 0.006 265));
---vibeui-item-009-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-item-009-muted:color-mix(in oklab,var(--vibeui-item-009-fg) 68%,transparent);
 --vibeui-item-009-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
 --vibeui-item-009-ok:light-dark(oklch(0.58 0.15 152),oklch(0.76 0.14 152));
 --vibeui-item-009-wait:light-dark(oklch(0.68 0.14 78),oklch(0.83 0.13 82));
@@ -37,6 +34,9 @@ const STYLES = `
 --vibeui-item-009-off:light-dark(oklch(0.6 0.01 265),oklch(0.68 0.01 265));
 --vibeui-item-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="item-009"]{color-scheme:dark}
 [data-vibeui-block="item-009"]{
 display:flex;align-items:center;gap:0.75rem;
 width:100%;max-width:23rem;box-sizing:border-box;padding:0.625rem 0.75rem;
@@ -137,6 +137,7 @@ export function Item009({
       </style>
       <li
         {...props}
+        data-slot="item"
         data-vibeui-block="item-009"
         data-state={state}
         className={className}

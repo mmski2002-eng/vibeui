@@ -1,14 +1,10 @@
 "use client"
 
 import { useId, useRef, useState } from "react"
-import type {
-  ComponentPropsWithoutRef,
-  CSSProperties,
-  KeyboardEvent,
-} from "react"
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Dropdown005Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   trigger?: string
@@ -37,12 +33,15 @@ const STYLES = `
 :where([data-vibeui-block="dropdown-005"]){
 --vibeui-dropdown-005-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 285));
 --vibeui-dropdown-005-fg:light-dark(oklch(0.24 0.014 285),oklch(0.94 0.006 285));
---vibeui-dropdown-005-muted:light-dark(oklch(0.56 0.014 285),oklch(0.7 0.012 285));
+--vibeui-dropdown-005-muted:color-mix(in oklab,var(--vibeui-dropdown-005-fg) 68%,transparent);
 --vibeui-dropdown-005-border:light-dark(oklch(0.9 0.006 285),oklch(0.37 0.012 285));
 --vibeui-dropdown-005-hover:light-dark(oklch(0.96 0.004 285),oklch(0.32 0.014 285));
 --vibeui-dropdown-005-accent:light-dark(oklch(0.6 0.16 155),oklch(0.74 0.14 155));
 --vibeui-dropdown-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="dropdown-005"]{color-scheme:dark}
 [data-vibeui-block="dropdown-005"]{
 display:inline-flex;align-items:center;gap:0.75rem;
 box-sizing:border-box;padding:0.5rem 0.5rem 0.5rem 0.875rem;
@@ -51,7 +50,7 @@ border:1px solid var(--vibeui-dropdown-005-border);border-radius:9999px;
 font-family:var(--vibeui-dropdown-005-font);
 }
 [data-vibeui-block="dropdown-005"] [data-part="caption"]{
-font-size:0.8125rem;color:var(--vibeui-dropdown-005-muted);
+font-size:0.75rem;color:var(--vibeui-dropdown-005-muted);
 }
 [data-vibeui-block="dropdown-005"] [data-part="trigger"]{
 appearance:none;cursor:pointer;
@@ -92,13 +91,15 @@ color:var(--vibeui-dropdown-005-muted);
 display:flex;align-items:center;gap:0.625rem;
 width:100%;box-sizing:border-box;
 appearance:none;border:0;background:none;cursor:pointer;
-padding:0.375rem 0.5rem;border-radius:0.625rem;
+padding:0.4375rem 0.5rem;border-radius:0.625rem;
 font:inherit;font-size:0.8125rem;color:inherit;text-align:left;
 transition:background-color .14s ease;
 }
 [data-vibeui-block="dropdown-005"] [data-part="item"]:hover{background:var(--vibeui-dropdown-005-hover)}
 [data-vibeui-block="dropdown-005"] [data-part="item"]:focus-visible{outline:2px solid var(--vibeui-dropdown-005-accent);outline-offset:-2px}
-/* Образец темы: две полосы вместо слов — «светлая» и «системная» на слух одинаковы. */
+/* Образец темы: две полосы вместо слов — «светлая» и «системная» на слух
+   одинаковы. Полосы рисуют сами темы, поэтому их цвета от темы страницы
+   не зависят: светлая половина светлая всегда, тёмная — тёмная. */
 [data-vibeui-block="dropdown-005"] [data-part="swatch"]{
 display:flex;flex:none;overflow:hidden;
 width:1.75rem;height:1.25rem;
@@ -204,6 +205,7 @@ export function Dropdown005({
       </style>
       <div
         {...props}
+        data-slot="dropdown-menu"
         data-vibeui-block="dropdown-005"
         className={className}
         style={palette}

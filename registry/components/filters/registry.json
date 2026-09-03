@@ -158,7 +158,8 @@
                   "remove": "Remove condition: {rule}"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-filters-001-* variables. Client-side: \"use client\" for the sake of the condition set. A condition row is assembled from native select and input elements, so the keyboard and the mobile pickers work by themselves. The remove button names the whole condition rather than «remove row 2»."
           }
         },
         "cardControls": ["accent", "background"]
@@ -330,7 +331,8 @@
                   "remove": "Remove filter {group}: {value}"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-filters-002-* variables. Client-side: \"use client\" for the sake of removing conditions. A chip shows the group and the value together, and the remove button's label names the whole condition rather than a number. The result counter sits in aria-live=\"polite\": it changes from the user's own actions. The «reset all» button appears from two chips onwards — on a single one it duplicates the cross."
           }
         },
         "cardControls": ["accent", "background"]
@@ -502,7 +504,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-filters-003-* variables. Server-side: the groups are opened by a native <details> and the checkboxes are uncontrolled. Every group is a <fieldset> with a visually hidden <legend>: the heading already stands in the <summary>, but a group has to be a group in the markup as well. Empty values are marked disabled and dimmed rather than removed: vanishing rows send people hunting for the missing item."
           }
         },
         "cardControls": ["accent", "background"]
@@ -679,7 +682,8 @@
                   "empty": "No bounds set — any price."
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-filters-004-* variables. Client-side: \"use client\" for the sake of the values and the presets. The presets are buttons with aria-pressed; they light up when both fields match the set. The bounds are swapped in the onBlur handler instead of being flagged as an error: a mixed-up «from» and «to» is something the user already sees. The summary sits in role=\"status\" and restates the result in words."
           }
         },
         "cardControls": ["accent", "background"]
@@ -837,7 +841,8 @@
                   "note": "The period is counted in your time zone, both bounds included."
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-filters-005-* variables. Server-side: the presets are radio buttons inside a <fieldset> with a <legend>, and the date pair is shown by a :has selector keyed to the checked radio button with data-choice=\"custom\". There is no state, so empty date fields neither get in the way nor go into the form without need. The radio buttons are drawn through appearance:none with border thickness."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1002,7 +1007,8 @@
                   "count": "Showing {shown} of {total} · {checked} selected"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-filters-006-* variables. Client-side: \"use client\" for the sake of the query and the ticks. The search narrows only the value list, not the results; the checked items are computed separately and are always output on top with a divider, even when they do not match the query — otherwise a tick disappears from the screen and reads as unticked. The «showing N of M» counter sits in role=\"status\"."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1171,7 +1177,8 @@
                   "newSummary": "The current selection"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-filters-007-* variables. Client-side: \"use client\" for the sake of the selection and saving. A view is a full-width button with aria-pressed: the target is large and the state is declared by the role, not only by colour. Under the name there is a spelled-out set of conditions, because a week later the name alone will not recall the contents. Shared views carry a marker of their own."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1346,7 +1353,8 @@
                   "apply": "Show {found}"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-filters-008-* variables. Server-side: the disclosure is held by a native <details>, there is no state. While closed, the <summary> carries the active-condition count and the result count. The layout inside is computed by a container query on the block's own width and lives on the inner [data-part=\"shell\"] rather than on the root: a container query does not apply to the element that declared it."
           }
         },
         "cardControls": ["active", "accent", "background"]
@@ -1513,7 +1521,8 @@
                   "apply": "Show {count}"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-filters-009-* variables. Client-side: \"use client\" for the sake of the draft. Two sets live in state — the draft and the applied one; their divergence raises data-dirty on the root and changes the state line. The predicted number is a sum of the same counts that stand beside the values, so the button does not promise what the list does not show. The button is disabled while the draft matches the applied set."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1670,7 +1679,8 @@
                   "selected": "Selected: {count}"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-filters-010-* variables. Client-side: \"use client\" for the sake of toggling the chips. Every chip is grouped by category and declared with aria-pressed — it is a toggle in its own right, not a label for a condition already applied. The selection counter sits in role=\"status\". The reset button appears from a single selected chip: here it is the only way to clear a selection."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1821,7 +1831,8 @@
                   "empty": "No range set — pick a preset or the dates."
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-filters-011-* variables. Client-side: \"use client\" for the sake of the values and the presets. The presets are buttons with aria-pressed that compute dates from «today» through an ordinary Date. Both date fields stay visible at all times; a preset only fills in their values. Flipped bounds are swapped when focus leaves, and the summary sits in role=\"status\"."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1982,10 +1993,12 @@
                 ],
                 "labels": {
                   "empty": "No saved presets yet.",
-                  "remove": "Delete the \"{name}\" preset"
+                  "remove": "Delete the \"{name}\" preset",
+                  "applied": "Applied"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-filters-012-* variables. Client-side: \"use client\" for the sake of the selection and the application draft. The preset list is marked up as a <fieldset> with a <legend> and real radio buttons. Choosing and applying are separate steps: the apply button is disabled while the draft matches the already applied preset. Deleting a preset is a separate button in the row and has no side effects on the selection."
           }
         },
         "cardControls": ["accent", "background"]

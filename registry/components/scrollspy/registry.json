@@ -76,6 +76,7 @@
         "i18n": {
           "en": {
             "description": "A table of contents that highlights the section in view: tracking runs on IntersectionObserver, not a scroll handler.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-scrollspy-001-*. Client-side: \"use client\" for the sake of IntersectionObserver. The observer is confined to the text area through root, and rootMargin cuts off the bottom 60%, otherwise a section that has only just appeared from below becomes active. The last section has tail space beneath it — without it it never scrolls into view.",
             "ai": {
               "summary": "A table of contents with current-section highlighting: the list on the left, scrollable text on the right, a bar on the active item. Zero dependencies, one file.",
               "preserve": [
@@ -226,6 +227,7 @@
         "i18n": {
           "en": {
             "description": "An article outline placed above the text rather than beside it: the items are numbered, the active one gets a filled number, and the row scrolls by touch.",
+            "docs": "The component is self-contained: one file, no dependencies, the palette in local variables --vibeui-scrollspy-002-*. Client-side (\"use client\") — IntersectionObserver is needed. The observer watches the sections inside its own scroll area: root is the text block itself, rootMargin cuts off the bottom 65%, so the section at the top edge becomes active rather than any visible one. The links are plain anchors without preventDefault: without JS they still take you to the section, the observer only adds the highlight. The active item is marked with aria-current and a filled number circle: in a horizontal row the text colour alone is not enough.",
             "ai": {
               "summary": "A single-row article outline: the anchor links work without JS and an IntersectionObserver adds the current-section highlight. Zero dependencies, one file.",
               "preserve": [
@@ -377,6 +379,7 @@
         "i18n": {
           "en": {
             "description": "A two-level outline that does not dump every sub-item at once: only the chapter the reader is currently inside stays expanded.",
+            "docs": "The component is self-contained: one file, no dependencies, the palette in local variables --vibeui-scrollspy-003-*. Client-side (\"use client\") — IntersectionObserver is needed. The observer watches the sections of both levels at once, so a chapter and its sub-item can each become active. Expansion of the second level is not held in state: the list is shown by the rule li[data-open=\"true\"] > [data-part=\"sub\"], where data-open is derived from whether the chapter or any of its descendants is active. The links are plain anchors, the highlight runs through aria-current on both levels.",
             "ai": {
               "summary": "A two-level outline: sub-items show only for the current chapter and the highlight covers both levels. Zero dependencies, one file.",
               "preserve": [
@@ -555,6 +558,7 @@
         "i18n": {
           "en": {
             "description": "A documentation sidebar that answers two questions at once: the highlight says where you are, the vertical bar says how much text is left.",
+            "docs": "The component is self-contained: one file, no dependencies, the palette in local variables --vibeui-scrollspy-004-*. Client-side (\"use client\") — IntersectionObserver and a scroll handler are needed. The observer finds the active section, while the read percentage is computed from the reading area's scrollTop and scrollHeight and goes into CSS through the variable --vibeui-scrollspy-004-progress: the share of the text and the section number are different quantities, because sections differ in length. The bar is marked with role=\"progressbar\" and aria-valuenow, the links stay plain anchors.",
             "ai": {
               "summary": "A documentation outline with a read percentage: progress comes from scrolling, not from the section number. Zero dependencies, one file.",
               "preserve": [
@@ -714,6 +718,7 @@
         "i18n": {
           "en": {
             "description": "A horizontal section bar stuck to the top of a long page: the active item scrolls itself to the centre of the bar when it drifts off the edge.",
+            "docs": "The component is self-contained: one file, no dependencies, the palette in local variables --vibeui-scrollspy-005-*. Client-side (\"use client\") — IntersectionObserver and scrollIntoView are needed. The bar sticks to the top of the reading area: sticky sits on the nav wrapper while the inner ul is what scrolls, because only an element whose parent has spare height can stick. The active item is brought to the centre by a scrollIntoView({block:\"nearest\",inline:\"center\"}) call — block:\"nearest\" is mandatory, otherwise the browser pulls the whole page to the centre. The highlight is an underline drawn with a pseudo-element plus aria-current.",
             "ai": {
               "summary": "A sticky section bar that auto-centres the active item and underlines the current one. Zero dependencies, one file.",
               "preserve": [
@@ -877,6 +882,7 @@
         "i18n": {
           "en": {
             "description": "An outline with a return to the top: the \"back to top\" button is a plain anchor link that hides itself while the start of the text is still on screen.",
+            "docs": "The component is self-contained: one file, no dependencies, the palette in local variables --vibeui-scrollspy-006-*. Client-side (\"use client\") — IntersectionObserver is needed. There are two observers: the first highlights the active section, the second watches a sentinel marker at the very top of the text and hides the return link while the start is visible. The initial state is the link shown, so with JS disabled it stays in place and works as a plain anchor. It is hidden with the hidden attribute rather than opacity: an invisible link must not catch focus on Tab.",
             "ai": {
               "summary": "An outline plus a return control: an anchor to the first section, hidden by an observer while the start is visible. Zero dependencies, one file.",
               "preserve": [
@@ -1036,6 +1042,7 @@
         "i18n": {
           "en": {
             "description": "One outline in two shapes: a wide block keeps it as a left column, a narrow one folds it into a disclosure whose summary names the current section.",
+            "docs": "The component is self-contained: one file, no dependencies, the palette in local variables --vibeui-scrollspy-007-*. Client-side (\"use client\") — IntersectionObserver and ResizeObserver are needed. The collapse threshold is measured against the block's own width, not the window width: the same component may sit in a narrow column on a large screen. In compact mode the list lives inside <details>, and the current section stands in the summary heading — a collapsed outline has to answer \"where am I\". The links stay plain anchors and close the list after a choice.",
             "ai": {
               "summary": "An outline that collapses by block width: in compact mode the summary names the current section. Zero dependencies, one file.",
               "preserve": [

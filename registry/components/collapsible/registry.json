@@ -131,7 +131,8 @@
                 "hint": "30 seconds",
                 "text": "Copy the command from the card and run it in the project root — the file lands in components/vibeui and works straight away: it has no external dependencies."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-collapsible-001-*. It is a server component: there are no hooks, and the root of the block is the details element itself. The system marker is removed through list-style:none and ::-webkit-details-marker, and in its place a glyph built from two edges of a square is drawn, with the rotation tied to the [open] selector. The trailing hint is pushed right by margin-left:auto, so when there is no hint the glyph takes the auto for itself through :only-child."
           }
         },
         "cardControls": ["accent", "background"]
@@ -266,7 +267,8 @@
                 "title": "What you get",
                 "text": "One .tsx file with every style inside, no npm dependencies and no calls into your project theme. The palette is declared in local variables, so the component looks the same in any environment."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-collapsible-002-*. It is a client component: \"use client\" for useState and aria-expanded. The height animation is done with grid: the [data-part=\"wrap\"] wrapper switches grid-template-rows from 0fr to 1fr, and the inner layer keeps overflow:hidden and min-height:0 — without it the grid row will not shrink below its content. The collapsed part is marked with the inert attribute, so while collapsed its content drops out of the tab order."
           }
         },
         "cardControls": ["defaultOpen", "accent", "background"]
@@ -405,7 +407,8 @@
                 "moreText": "Show more",
                 "lessText": "Collapse"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-collapsible-003-*. It is a client component: \"use client\" for useState. The clamp is made by the pairing of display:-webkit-box, -webkit-box-orient:vertical and -webkit-line-clamp, where the number of lines arrives through the --vibeui-collapsible-003-lines variable from the lines prop — that is why the boundary always lands on a line baseline. The gradient lives in the ::after of the clamp container and ends in the same background variable as the whole card. The button is linked to the paragraph through aria-controls and carries aria-expanded."
           }
         },
         "cardControls": ["lines", "accent", "background"]
@@ -544,7 +547,8 @@
                 "linesText": "{count} lines",
                 "errorsText": "{count} errors"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-collapsible-004-*. It is a server component: there are no hooks, and the root is details. The number of errors is computed from the lines array by its level field and lands in summary, so the block does not have to be expanded just to count them. The line numbers are drawn by a CSS counter through counter-reset and li::before: they are not in the markup, and a copy of the log stays clean. The surface is dark, the log is monospaced, and the levels are told apart by line colour."
           }
         },
         "cardControls": ["accent"]
@@ -681,7 +685,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-collapsible-005-*. It is a server component: there are no hooks. A shared name attribute on all the details turns them into a radio group — only one stays open, and the state is not duplicated in React. The step number is drawn by a CSS counter on summary::before, so reordering the steps array changes the numbering right away. The open step is highlighted by the circle fill through the details[open] selector."
           }
         },
         "cardControls": ["accent", "background"]
@@ -828,7 +833,8 @@
                 ],
                 "restLabel": "{count} more members"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-collapsible-006-*. It is a server component: there are no hooks, and the root is details. The people array is split by the visible prop into a shown and a hidden part, and the size of the hidden part is exactly the «+N» circle label. The avatar stack is assembled with a negative margin-left and a background-coloured ring, and the initials are computed from the name, so no pictures are needed. In the expanded state the counter circle changes colour through the [open] selector."
           }
         },
         "cardControls": ["visible", "accent", "background"]
@@ -983,7 +989,8 @@
                 "expandLabel": "Expand the panel",
                 "collapseLabel": "Collapse the panel"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-collapsible-007-*. It is a client component: \"use client\" for useState. The panel width rides on the --vibeui-collapsible-007-width variable, which the [data-collapsed=\"true\"] selector overrides — the transition is described by a single property. The labels are not unmounted but collapse to zero width with overflow:hidden, so the accessible name of a button is preserved and the tab order does not change. While collapsed, the label is duplicated in the button's title."
           }
         },
         "cardControls": ["defaultCollapsed", "accent", "background"]
@@ -1132,7 +1139,8 @@
                 "defaultText": "defaults",
                 "changedText": "{count} changed"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-collapsible-008-*. It is a server component: there are no hooks, and the root is details. The number of changed parameters is computed from the settings array by the changed flag and shown as a badge in summary; at zero the badge changes its text and is muted through the data-clean attribute. The rows are built on dl/dt/dd — these are descriptions of values, not a table; a changed row gets a dot in dt::before, a fill and a bold monospaced value."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1275,7 +1283,8 @@
                 "expandText": "expand",
                 "collapseText": "collapse"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-collapsible-009-*. It is a server component: there are no hooks, and the open flag of each release goes straight into the details attribute. This is not an «initial state value» but the state itself: nothing flashes before hydration, and printing and find-in-page see the content. The toggle caption changes without React — two data-when nodes sit in the markup and the details[open] selector shows the right one."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1432,7 +1441,8 @@
                 ],
                 "totalText": "{count} components"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-collapsible-010-*. It is a server component: there are no hooks. Scrolling is confined to the [data-part=\"scroll\"] container with max-height and overscroll-behavior:contain, while the summary inside it gets position:sticky and top:0 — the pinning works only because the scroll container is its own rather than the window. The total number of items is computed from the sections array and printed in the card header."
           }
         },
         "cardControls": ["accent", "background"]

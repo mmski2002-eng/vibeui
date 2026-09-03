@@ -1,10 +1,10 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Range003Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "defaultValue" | "onChange"
 > & {
   label?: string
@@ -38,7 +38,7 @@ const STYLES = `
 --vibeui-range-003-knob:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
 --vibeui-range-003-shell:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.011 265));
 --vibeui-range-003-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
---vibeui-range-003-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-range-003-muted:color-mix(in oklab,var(--vibeui-range-003-fg) 68%,transparent);
 --vibeui-range-003-track:light-dark(oklch(0.93 0.006 265),oklch(0.33 0.012 265));
 --vibeui-range-003-accent:light-dark(oklch(0.52 0.16 210),oklch(0.78 0.12 210));
 --vibeui-range-003-soft:light-dark(oklch(0.52 0.16 210 / 12%),oklch(0.78 0.12 210 / 20%));
@@ -47,6 +47,9 @@ const STYLES = `
 --vibeui-range-003-from:0%;
 --vibeui-range-003-to:100%;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="range-003"]{color-scheme:dark}
 /* Подложки по умолчанию нет: фильтр ложится на фон страницы, плашку включает проп background. */
 [data-vibeui-block="range-003"]{
 display:flex;flex-direction:column;gap:0.625rem;
@@ -125,6 +128,24 @@ function dayLabel(startDate: string, offset: number, locale: string) {
   })
 }
 
+// Неверный проп не должен ронять страницу-хост: на Invalid Date и на
+// неразбираемой локали Intl бросает RangeError. Оба значения откатываем на
+// дефолтные, чтобы item выглядел как в превью каталога.
+function safeStartDate(value: string, fallback: string) {
+  const [year, month, day] = value.split("-").map(Number)
+
+  return Number.isNaN(Date.UTC(year, month - 1, day)) ? fallback : value
+}
+
+function safeLocale(value: string, fallback: string) {
+  try {
+    Intl.DateTimeFormat.supportedLocalesOf(value)
+    return value
+  } catch {
+    return fallback
+  }
+}
+
 // Форму слова выбирает Intl по локали: в русском их три, и своя таблица
 // правил сломалась бы на любом другом языке.
 function nightsWord(
@@ -179,6 +200,8 @@ export function Range003({
 }: Range003Props) {
   const [from, setFrom] = useState(defaultFrom)
   const [to, setTo] = useState(defaultTo)
+  const start = safeStartDate(startDate, "2026-09-01")
+  const tag = safeLocale(locale, "ru-RU")
   const percent = (value: number) => `${(value / days) * 100}%`
 
   const palette = {
@@ -201,17 +224,18 @@ export function Range003({
       </style>
       <div
         {...props}
+        data-slot="range"
         data-vibeui-block="range-003"
         className={className}
         style={palette}
       >
         <p data-part="label">{label}</p>
         <p data-part="dates" aria-live="polite">
-          <span data-part="date">{dayLabel(startDate, from, locale)}</span>
+          <span data-part="date">{dayLabel(start, from, tag)}</span>
           <span data-part="nights">
-            {to - from} {nightsWord(to - from, locale, nightsText)}
+            {to - from} {nightsWord(to - from, tag, nightsText)}
           </span>
-          <span data-part="date">{dayLabel(startDate, to, locale)}</span>
+          <span data-part="date">{dayLabel(start, to, tag)}</span>
         </p>
         <div data-part="rail">
           <input
@@ -221,7 +245,7 @@ export function Range003({
             step={1}
             value={from}
             aria-label={handleText.from ?? HANDLE_TEXT.from}
-            aria-valuetext={dayLabel(startDate, from, locale)}
+            aria-valuetext={dayLabel(start, from, tag)}
             onChange={(event) =>
               setFrom(Math.min(Number(event.target.value), to - 1))
             }
@@ -233,15 +257,15 @@ export function Range003({
             step={1}
             value={to}
             aria-label={handleText.to ?? HANDLE_TEXT.to}
-            aria-valuetext={dayLabel(startDate, to, locale)}
+            aria-valuetext={dayLabel(start, to, tag)}
             onChange={(event) =>
               setTo(Math.max(Number(event.target.value), from + 1))
             }
           />
         </div>
         <p data-part="scale">
-          <span>{dayLabel(startDate, 0, locale)}</span>
-          <span>{dayLabel(startDate, days, locale)}</span>
+          <span>{dayLabel(start, 0, tag)}</span>
+          <span>{dayLabel(start, days, tag)}</span>
         </p>
       </div>
     </>

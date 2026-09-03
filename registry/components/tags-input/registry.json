@@ -135,7 +135,8 @@
                 "placeholderText": "Add…",
                 "fullText": "Limit reached"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-tags-001-*. A client component: \"use client\" for the sake of the input. Tags and the draft are stored separately, duplicates are dropped silently. The input stretches across the remainder of the line and wraps together with the tags, while the counter shows the limit."
           }
         },
         "cardControls": ["max", "accent", "background"]
@@ -274,7 +275,8 @@
                 "placeholderText": "Start typing…",
                 "hintText": "Your own values are not accepted: the list is shared across the catalogue"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, zero dependencies, its palette in local variables --vibeui-tags-002-*. A client component: the picked list and the draft live in state. Suggestions are handed to the native datalist — it filters by what has been typed on its own, handles the keyboard and appears the system way on a phone, so there is no need to write a dropdown. The match is looked up case-insensitively, and the canonical value from options is what reaches the list. Next to it, the options not yet picked sit as buttons: until the first letter is typed a person does not know what can be chosen at all."
           }
         },
         "cardControls": ["accent", "background"]
@@ -414,7 +416,8 @@
                 "fullText": "Limit {max}: the next tag pushes out “{tag}”.",
                 "restText": "You can add {rest} more. At the cap a new tag pushes out the oldest one."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, zero dependencies, its palette in local variables --vibeui-tags-003-*. A client component: the tag list and the draft live in state. At the limit the field is not locked: the new tag is added and the list is trimmed from the end with slice(-max), that is, the first one leaves. While the draft holds text, the first chip is marked data-doomed and struck through — eviction has to be predictable. The fill bar and the counter show the limit without recounting the chips by eye."
           }
         },
         "cardControls": ["max", "accent", "background"]
@@ -545,7 +548,8 @@
                 "duplicateText": "The tag “{tag}” is already there — it is highlighted above.",
                 "hintText": "Case and dots do not count: “Repair” and “repair.” are one tag."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, zero dependencies, its palette in local variables --vibeui-tags-004-*. A client component: the tag list, the draft and the name of the highlighted tag live in state. Comparison runs on the normalised form — lowercase, collapsed whitespace, punctuation stripped from the edges — so \"Repair\", \"repair\" and \"repair.\" count as one tag; the spelling saved first is the one shown. The highlight is cleared on onAnimationEnd, otherwise the flash plays once and never repeats again. The message sits in an aria-live=\"assertive\" region: a refusal has to be heard immediately."
           }
         },
         "cardControls": ["accent", "background"]
@@ -676,7 +680,8 @@
                 "pastedText": "{count} addresses added from a single paste",
                 "legendText": "end a tag, and a pasted list is split as a whole"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, zero dependencies, its palette in local variables --vibeui-tags-005-*. A client component: the list, the draft and the number added by the last paste live in state. Parsing is one and the same for every case — a split function on comma, semicolon, newline and tab — so typing on the keyboard and pasting from an email behave identically. The onPaste handler intercepts only text with delimiters: an ordinary paste of a single word must work as usual. Backspace in an empty field removes the last chip."
           }
         },
         "cardControls": ["accent", "background"]
@@ -821,7 +826,8 @@
                 "placeholderText": "New label…",
                 "hintText": "The category is chosen before typing — the label colour comes from its name"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, zero dependencies, its palette in local variables --vibeui-tags-006-*. A client component: the tag list with categories, the draft and the selected category live in state. The hue is not picked by hand but derived from the category name with the FNV hash function and substituted into --vibeui-tags-006-hue, so a new category gets a stable colour straight away and the palette does not have to be maintained as a separate list. All three chip colours — background, text and dot — are built from one hue in oklch, so contrast does not break at any hue."
           }
         },
         "cardControls": ["accent", "background"]
@@ -968,7 +974,8 @@
                 ],
                 "moreText": "{count} more: {tags}"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, zero dependencies, its palette in local variables --vibeui-tags-007-*. A server component: there is nothing to expand here, this is a display, not a form. The visible tags are shown as an ordinary ul, and the extra ones collapse into a \"+N\" counter; their names are listed in title and aria-label, so what is hidden can be found by hover and heard by a screen reader. Markup as a list rather than a set of spans: this is an enumeration and a screen reader has to announce the number of items."
           }
         },
         "cardControls": ["visible", "accent", "background"]

@@ -1,9 +1,8 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+"use client"
 
-export type Hovercard006Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
+
+export type Hovercard006Props = Omit<ComponentProps<"div">, "children"> & {
   title?: string
   day?: string
   month?: string
@@ -33,13 +32,16 @@ const STYLES = `
 --vibeui-hovercard-006-bg:transparent;
 --vibeui-hovercard-006-card:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
 --vibeui-hovercard-006-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-hovercard-006-muted:light-dark(oklch(0.54 0.014 265),oklch(0.71 0.012 265));
+--vibeui-hovercard-006-muted:color-mix(in oklab,var(--vibeui-hovercard-006-fg) 68%,transparent);
 --vibeui-hovercard-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
 --vibeui-hovercard-006-accent:light-dark(oklch(0.55 0.18 20),oklch(0.66 0.17 20));
 --vibeui-hovercard-006-face:light-dark(oklch(0.92 0.04 265),oklch(0.38 0.05 265));
 --vibeui-hovercard-006-face-fg:light-dark(oklch(0.36 0.07 265),oklch(0.92 0.04 265));
 --vibeui-hovercard-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="hovercard-006"]{color-scheme:dark}
 [data-vibeui-block="hovercard-006"]{
 width:100%;max-width:28rem;box-sizing:border-box;
 padding:1rem 1.125rem;
@@ -139,6 +141,16 @@ function initials(name: string) {
 }
 
 /**
+ * Escape убирает фокус с триггера. Карточка держится на :focus-within,
+ * поэтому снятого фокуса достаточно, чтобы закрыть её с клавиатуры.
+ */
+function closeOnEscape(event: KeyboardEvent<HTMLElement>) {
+  if (event.key === "Escape") {
+    ;(event.target as HTMLElement).blur()
+  }
+}
+
+/**
  * Карточка события календаря: отрывной листок с датой, время, место и участники.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -178,6 +190,8 @@ export function Hovercard006({
       </style>
       <div
         {...props}
+        data-slot="hover-card"
+        onKeyDown={closeOnEscape}
         data-vibeui-block="hovercard-006"
         className={className}
         style={palette}

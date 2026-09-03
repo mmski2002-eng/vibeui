@@ -1,11 +1,7 @@
 "use client"
 
 import { useRef, useState } from "react"
-import type {
-  ComponentPropsWithoutRef,
-  CSSProperties,
-  PointerEvent,
-} from "react"
+import type { ComponentProps, CSSProperties, PointerEvent } from "react"
 
 export type Datagrid009Row = {
   file: string
@@ -14,10 +10,7 @@ export type Datagrid009Row = {
   size: string
 }
 
-export type Datagrid009Props = Omit<
-  ComponentPropsWithoutRef<"section">,
-  "children"
-> & {
+export type Datagrid009Props = Omit<ComponentProps<"section">, "children"> & {
   rows?: Datagrid009Row[]
   caption?: string
   minWidth?: number
@@ -50,13 +43,16 @@ const STYLES = `
 :where([data-vibeui-block="datagrid-009"]){
 --vibeui-datagrid-009-bg:transparent;
 --vibeui-datagrid-009-fg:light-dark(oklch(0.23 0.012 240),oklch(0.93 0.006 240));
---vibeui-datagrid-009-muted:light-dark(oklch(0.55 0.012 240),oklch(0.68 0.012 240));
+--vibeui-datagrid-009-muted:color-mix(in oklab,var(--vibeui-datagrid-009-fg) 68%,transparent);
 --vibeui-datagrid-009-border:light-dark(oklch(0.92 0.006 240),oklch(0.34 0.012 240));
 --vibeui-datagrid-009-head:light-dark(oklch(0.975 0.003 240),oklch(0.27 0.012 240));
 --vibeui-datagrid-009-field:light-dark(oklch(1 0 0),oklch(0.22 0.012 240));
 --vibeui-datagrid-009-accent:light-dark(oklch(0.55 0.16 250),oklch(0.76 0.14 250));
 --vibeui-datagrid-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="datagrid-009"]{color-scheme:dark}
 [data-vibeui-block="datagrid-009"]{
 box-sizing:border-box;width:100%;max-width:52rem;margin:0 auto;
 background:var(--vibeui-datagrid-009-bg);color:var(--vibeui-datagrid-009-fg);
@@ -261,6 +257,7 @@ export function Datagrid009({
       </style>
       <section
         {...props}
+        data-slot="data-grid"
         data-vibeui-block="datagrid-009"
         className={className}
         style={palette}

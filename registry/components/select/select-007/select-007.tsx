@@ -1,7 +1,8 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import { useId } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Select007Props = Omit<
-  ComponentPropsWithoutRef<"select">,
+  ComponentProps<"select">,
   "size" | "children"
 > & {
   label?: string
@@ -30,12 +31,15 @@ const STYLES = `
 --vibeui-select-007-surface-pad:0;
 --vibeui-select-007-surface-radius:0;
 --vibeui-select-007-fg:light-dark(oklch(0.23 0.016 265),oklch(0.94 0.005 265));
---vibeui-select-007-muted:light-dark(oklch(0.57 0.014 265),oklch(0.71 0.012 265));
+--vibeui-select-007-muted:color-mix(in oklab,var(--vibeui-select-007-fg) 68%,transparent);
 --vibeui-select-007-field:light-dark(oklch(0.985 0.002 265),oklch(0.25 0.012 265));
 --vibeui-select-007-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.014 265));
 --vibeui-select-007-accent:light-dark(oklch(0.55 0.19 245),oklch(0.76 0.15 245));
 --vibeui-select-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="select-007"]{color-scheme:dark}
 /* Подложка появляется только вместе с пропом background: по умолчанию поле
    лежит прямо на фоне страницы. */
 [data-vibeui-block="select-007"]{
@@ -146,6 +150,8 @@ export function Select007({
   style,
   ...props
 }: Select007Props) {
+  const generatedId = useId()
+  const fieldId = id ?? generatedId
   // Подложка приходит вместе с полями и скруглением: без неё поле лежит
   // прямо на странице, и лишние поля по бокам ему только мешают.
   const palette = {
@@ -169,18 +175,19 @@ export function Select007({
         {STYLES}
       </style>
       <div
+        data-slot="select"
         data-vibeui-block="select-007"
         data-loading={loading}
         className={className}
         style={palette}
       >
-        <label data-part="label" htmlFor={id}>
+        <label data-part="label" htmlFor={fieldId}>
           {label}
         </label>
         <span data-part="field">
           <select
             {...props}
-            id={id}
+            id={fieldId}
             disabled={loading}
             aria-busy={loading}
             defaultValue=""

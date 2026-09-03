@@ -1,10 +1,10 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Toggle010Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   label?: string
@@ -26,12 +26,15 @@ const STYLES = `
 :where([data-vibeui-block="toggle-010"]){
 --vibeui-toggle-010-bg:transparent;
 --vibeui-toggle-010-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-toggle-010-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-toggle-010-muted:color-mix(in oklab,var(--vibeui-toggle-010-fg) 68%,transparent);
 --vibeui-toggle-010-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
 --vibeui-toggle-010-accent:light-dark(oklch(0.58 0.17 250),oklch(0.76 0.14 250));
 --vibeui-toggle-010-off:light-dark(oklch(0.7 0.01 265),oklch(0.48 0.012 265));
 --vibeui-toggle-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="toggle-010"]{color-scheme:dark}
 [data-vibeui-block="toggle-010"]{
 box-sizing:border-box;display:flex;align-items:center;gap:0.75rem;
 width:100%;max-width:19rem;padding:0.75rem 0.875rem;
@@ -149,6 +152,7 @@ export function Toggle010({
       </style>
       <div
         {...props}
+        data-slot="toggle"
         data-vibeui-block="toggle-010"
         className={className}
         style={palette}

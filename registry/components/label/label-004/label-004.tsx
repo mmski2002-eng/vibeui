@@ -1,10 +1,7 @@
 import { useId } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Label004Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Label004Props = Omit<ComponentProps<"div">, "children"> & {
   label?: string
   hint?: string
   labelWidth?: number
@@ -23,7 +20,7 @@ const STYLES = `
 --vibeui-label-004-surface:transparent;
 --vibeui-label-004-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.33 0.012 265));
 --vibeui-label-004-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.005 265));
---vibeui-label-004-muted:light-dark(oklch(0.54 0.014 265),oklch(0.7 0.012 265));
+--vibeui-label-004-muted:color-mix(in oklab,var(--vibeui-label-004-fg) 68%,transparent);
 --vibeui-label-004-field-border:light-dark(oklch(0.85 0.01 265),oklch(0.4 0.014 265));
 --vibeui-label-004-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.16 262));
 --vibeui-label-004-label-width:9rem;
@@ -31,6 +28,9 @@ const STYLES = `
 --vibeui-label-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="label-004"]{color-scheme:dark}
 [data-vibeui-block="label-004"]{
 box-sizing:border-box;width:100%;max-width:38rem;
 padding:1rem;border-radius:0.875rem;
@@ -135,6 +135,7 @@ export function Label004({
       </style>
       <div
         {...props}
+        data-slot="label"
         data-vibeui-block="label-004"
         className={className}
         style={palette}

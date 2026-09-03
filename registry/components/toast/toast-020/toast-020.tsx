@@ -1,12 +1,9 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Toast020Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Toast020Props = Omit<ComponentProps<"div">, "children"> & {
   message?: string
   expiredMessage?: string
   extendLabel?: string
@@ -36,7 +33,7 @@ const STYLES = `
 :where([data-vibeui-block="toast-020"]){
 --vibeui-toast-020-bg:light-dark(oklch(0.99 0.002 265),oklch(0.25 0.014 265));
 --vibeui-toast-020-fg:light-dark(oklch(0.22 0.014 265),oklch(0.96 0.003 265));
---vibeui-toast-020-muted:light-dark(oklch(0.56 0.014 265),oklch(0.76 0.01 265));
+--vibeui-toast-020-muted:color-mix(in oklab,var(--vibeui-toast-020-fg) 68%,transparent);
 --vibeui-toast-020-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.014 265));
 --vibeui-toast-020-track:light-dark(oklch(0.92 0.006 265),oklch(0.33 0.012 265));
 --vibeui-toast-020-hover:light-dark(oklch(0.2 0.02 265 / 7%),oklch(1 0 0 / 12%));
@@ -48,6 +45,9 @@ const STYLES = `
 --vibeui-toast-020-radius:0.875rem;
 --vibeui-toast-020-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="toast-020"]{color-scheme:dark}
 [data-vibeui-block="toast-020"]{
 width:100%;max-width:23rem;box-sizing:border-box;
 padding:0.875rem;border-radius:var(--vibeui-toast-020-radius);
@@ -59,7 +59,7 @@ box-shadow:0 16px 34px -24px var(--vibeui-toast-020-shadow);
 [data-vibeui-block="toast-020"] [data-part="head"]{
 display:flex;align-items:flex-start;justify-content:space-between;gap:0.75rem;
 }
-[data-vibeui-block="toast-020"] [data-part="text"]{min-width:0;font-size:0.8438rem;line-height:1.4}
+[data-vibeui-block="toast-020"] [data-part="text"]{min-width:0;font-size:0.875rem;line-height:1.4}
 [data-vibeui-block="toast-020"] [data-part="clock"]{
 flex:none;font-size:0.8125rem;font-weight:700;color:var(--vibeui-toast-020-tone);
 font-variant-numeric:tabular-nums;margin-top:0.0625rem;
@@ -199,6 +199,7 @@ export function Toast020({
       </style>
       <div
         {...props}
+        data-slot="toast"
         data-vibeui-block="toast-020"
         data-paused={paused && !expired}
         role="status"

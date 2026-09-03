@@ -28,13 +28,16 @@ export type Dialog002Props = {
 const STYLES = `
 :where([data-vibeui-block="dialog-002"]){
 --vibeui-dialog-002-fg:light-dark(oklch(0.22 0.016 265),oklch(0.94 0.005 265));
---vibeui-dialog-002-muted:light-dark(oklch(0.5 0.014 265),oklch(0.7 0.012 265));
+--vibeui-dialog-002-muted:color-mix(in oklab,var(--vibeui-dialog-002-fg) 68%,transparent);
 --vibeui-dialog-002-bg:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
 --vibeui-dialog-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265));
 --vibeui-dialog-002-danger:light-dark(oklch(0.56 0.19 25),oklch(0.7 0.17 25));
 --vibeui-dialog-002-radius:1rem;
 --vibeui-dialog-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="dialog-002"]{color-scheme:dark}
 [data-vibeui-block="dialog-002"]{display:inline-flex;font-family:var(--vibeui-dialog-002-font)}
 [data-vibeui-block="dialog-002"] [data-part="trigger"]{
 appearance:none;cursor:pointer;font:inherit;font-size:0.875rem;font-weight:600;
@@ -99,6 +102,8 @@ background:var(--vibeui-dialog-002-danger,light-dark(oklch(0.56 0.19 25),oklch(0
 }
 [data-vibeui-dialog-002-window] [data-part="confirm"]:hover{filter:brightness(0.94)}
 [data-vibeui-dialog-002-window] button:focus-visible{outline:2px solid var(--vibeui-dialog-002-danger,light-dark(oklch(0.56 0.19 25),oklch(0.7 0.17 25)));outline-offset:2px}
+/* Popover страницу не блокирует: фон под окном иначе продолжает прокручиваться. */
+html:has([data-vibeui-dialog-002-window]:popover-open){overflow:hidden}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="dialog-002"] *{animation:none!important;transition:none!important}
 [data-vibeui-dialog-002-window]{transition:none!important;opacity:1;transform:none}
@@ -167,7 +172,12 @@ export function Dialog002({
       <style href="vibeui-dialog-002" precedence="medium">
         {STYLES}
       </style>
-      <div data-vibeui-block="dialog-002" className={className} style={palette}>
+      <div
+        data-slot="dialog"
+        data-vibeui-block="dialog-002"
+        className={className}
+        style={palette}
+      >
         <button data-part="trigger" type="button" popoverTarget={id}>
           {trigger}
         </button>
@@ -177,6 +187,7 @@ export function Dialog002({
           data-vibeui-dialog-002-window=""
           role="alertdialog"
           aria-labelledby={`${id}-title`}
+          aria-describedby={`${id}-description`}
           style={palette}
         >
           <span data-part="mark" aria-hidden="true">
@@ -185,7 +196,9 @@ export function Dialog002({
           <h2 data-part="title" id={`${id}-title`}>
             {title}
           </h2>
-          <p data-part="description">{description}</p>
+          <p data-part="description" id={`${id}-description`}>
+            {description}
+          </p>
           {losses.length ? (
             <ul>
               {losses.map((loss) => (
@@ -194,7 +207,12 @@ export function Dialog002({
             </ul>
           ) : null}
           <div data-part="actions">
-            <button data-part="cancel" type="button" popoverTarget={id}>
+            <button
+              data-part="cancel"
+              type="button"
+              popoverTarget={id}
+              autoFocus
+            >
               {cancelLabel}
             </button>
             <button data-part="confirm" type="button" popoverTarget={id}>

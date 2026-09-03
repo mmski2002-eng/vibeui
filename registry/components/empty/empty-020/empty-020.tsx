@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, type CSSProperties, type FormEvent } from "react"
+import { useId, useState, type CSSProperties, type FormEvent } from "react"
 
 export type Empty020Props = {
   title?: string
@@ -27,13 +27,16 @@ const STYLES = `
 :where([data-vibeui-block="empty-020"]){
 --vibeui-empty-020-bg:transparent;
 --vibeui-empty-020-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.006 265));
---vibeui-empty-020-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-empty-020-muted:color-mix(in oklab,var(--vibeui-empty-020-fg) 68%,transparent);
 --vibeui-empty-020-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-empty-020-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
 --vibeui-empty-020-on-accent:light-dark(oklch(0.99 0.01 265),oklch(0.18 0.02 265));
 --vibeui-empty-020-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="empty-020"]{color-scheme:dark}
 [data-vibeui-block="empty-020"]{
 display:flex;flex-direction:column;align-items:center;gap:0.625rem;
 width:100%;max-width:26rem;box-sizing:border-box;padding:1.75rem 1.5rem;
@@ -137,6 +140,7 @@ export function Empty020({
 }: Empty020Props) {
   const [email, setEmail] = useState("")
   const [submitted, setSubmitted] = useState(false)
+  const fieldId = useId()
   const palette = {
     ...(accent ? { "--vibeui-empty-020-accent": accent } : null),
     ...(background
@@ -161,6 +165,7 @@ export function Empty020({
         {STYLES}
       </style>
       <div
+        data-slot="empty"
         data-vibeui-block="empty-020"
         role="status"
         className={className}
@@ -201,11 +206,11 @@ export function Empty020({
           </p>
         ) : (
           <form data-part="form" onSubmit={handleSubmit}>
-            <label data-part="field-label" htmlFor="empty-020-email">
+            <label data-part="field-label" htmlFor={fieldId}>
               {fieldLabel}
             </label>
             <input
-              id="empty-020-email"
+              id={fieldId}
               data-part="field"
               type="email"
               required

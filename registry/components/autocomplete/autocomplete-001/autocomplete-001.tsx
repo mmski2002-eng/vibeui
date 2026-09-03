@@ -1,10 +1,7 @@
 import { useId } from "react"
 import type { ComponentProps, CSSProperties } from "react"
 
-export type Autocomplete001Props = Omit<
-  ComponentProps<"div">,
-  "children"
-> & {
+export type Autocomplete001Props = Omit<ComponentProps<"div">, "children"> & {
   label?: string
   hint?: string
   placeholder?: string

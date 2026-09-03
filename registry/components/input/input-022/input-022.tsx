@@ -1,10 +1,10 @@
 "use client"
 
 import { useId, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Input022Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "defaultValue" | "onChange"
 > & {
   label?: string
@@ -34,13 +34,16 @@ const STYLES = `
 --vibeui-input-022-surface:transparent;
 --vibeui-input-022-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-input-022-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
---vibeui-input-022-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-input-022-muted:color-mix(in oklab,var(--vibeui-input-022-fg) 68%,transparent);
 --vibeui-input-022-field:light-dark(oklch(0.985 0.002 265),oklch(0.27 0.011 265));
 --vibeui-input-022-border:light-dark(oklch(0.88 0.008 265),oklch(0.41 0.013 265));
 --vibeui-input-022-accent:light-dark(oklch(0.55 0.16 40),oklch(0.74 0.15 40));
 --vibeui-input-022-on-accent:light-dark(oklch(1 0 0),oklch(0.2 0.03 40));
 --vibeui-input-022-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="input-022"]{color-scheme:dark}
 [data-vibeui-block="input-022"]{
 display:flex;flex-direction:column;gap:0.4375rem;
 width:100%;max-width:21rem;box-sizing:border-box;padding:0.875rem;
@@ -180,6 +183,7 @@ export function Input022({
       </style>
       <div
         {...props}
+        data-slot="input"
         data-vibeui-block="input-022"
         className={className}
         style={palette}

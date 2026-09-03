@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Carousel004Props = Omit<
-  ComponentPropsWithoutRef<"section">,
-  "children"
-> & {
+export type Carousel004Props = Omit<ComponentProps<"section">, "children"> & {
   items?: string[]
   label?: string
   /** Секунд на полный проход ленты. Меньше 20 — рябит в глазах. */
@@ -23,11 +20,14 @@ const STYLES = `
 :where([data-vibeui-block="carousel-004"]){
 --vibeui-carousel-004-bg:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
 --vibeui-carousel-004-fg:light-dark(oklch(0.35 0.014 265),oklch(0.92 0.007 265));
---vibeui-carousel-004-muted:light-dark(oklch(0.58 0.014 265),oklch(0.7 0.012 265));
+--vibeui-carousel-004-muted:color-mix(in oklab,var(--vibeui-carousel-004-fg) 68%,transparent);
 --vibeui-carousel-004-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-carousel-004-duration:32s;
 --vibeui-carousel-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="carousel-004"]{color-scheme:dark}
 [data-vibeui-block="carousel-004"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:30rem;box-sizing:border-box;padding:0.875rem;
@@ -49,7 +49,9 @@ display:flex;width:max-content;gap:2rem;
 margin:0;padding:0;list-style:none;
 animation:vibeui-carousel-004-run var(--vibeui-carousel-004-duration) linear infinite;
 }
-[data-vibeui-block="carousel-004"] [data-part="rail"]:hover{animation-play-state:paused}
+/* Пауза и по наведению, и по фокусу: с клавиатуры лента тоже должна замереть. */
+[data-vibeui-block="carousel-004"]:hover [data-part="rail"],
+[data-vibeui-block="carousel-004"]:focus-within [data-part="rail"]{animation-play-state:paused}
 [data-vibeui-block="carousel-004"] [data-part="item"]{
 flex:none;font-size:0.9375rem;font-weight:650;letter-spacing:-0.01em;white-space:nowrap;
 }
@@ -125,6 +127,7 @@ export function Carousel004({
       </style>
       <section
         {...props}
+        data-slot="carousel"
         data-vibeui-block="carousel-004"
         aria-label={label}
         className={className}

@@ -161,7 +161,8 @@
                 "unit": "%",
                 "ariaTemplate": "{label}: {value}, change {delta}{unit}"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-sparkline-001-* variables. The curve is an SVG path computed from the values array on the server: there is no client JS. The direction is derived from the delta prop and lands in data-trend, which drives both the line colour and the rotation of the arrow: the colour cannot be set by hand against the sign. The component is inline-flex, so it fits into a table cell and into a line of a card."
           }
         },
         "cardControls": ["delta", "accent", "background"]
@@ -339,7 +340,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-sparkline-002-* variables. Server-side: there are no hooks. The root is a real table, so the charts need no separate text alternative: the curves are marked aria-hidden. The sparkline path is computed from the values array in a 100×24 coordinate system with preserveAspectRatio=\"none\", and the stroke width is held by vector-effect: non-scaling-stroke. The direction is derived from the sign of delta with a half-percent threshold and lands in data-trend on the row, which drives both the curve colour and the colour of the change."
           }
         },
         "cardControls": ["accent", "background"]

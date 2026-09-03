@@ -1,17 +1,16 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Timeline004Point = {
   date: string
+  /** Машиночитаемая дата для <time datetime>: «14 января» роботу не дата. */
+  dateTime: string
   title: string
   text?: string
   /** Веха рисуется ромбом и не теряется среди рядовых записей. */
   milestone?: boolean
 }
 
-export type Timeline004Props = Omit<
-  ComponentPropsWithoutRef<"section">,
-  "children"
-> & {
+export type Timeline004Props = Omit<ComponentProps<"section">, "children"> & {
   points?: Timeline004Point[]
   title?: string
   accent?: string
@@ -31,12 +30,15 @@ const STYLES = `
 :where([data-vibeui-block="timeline-004"]){
 --vibeui-timeline-004-bg:transparent;
 --vibeui-timeline-004-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-timeline-004-muted:light-dark(oklch(0.57 0.014 265),oklch(0.69 0.012 265));
+--vibeui-timeline-004-muted:color-mix(in oklab,var(--vibeui-timeline-004-fg) 68%,transparent);
 --vibeui-timeline-004-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-timeline-004-accent:light-dark(oklch(0.55 0.19 30),oklch(0.76 0.16 40));
 --vibeui-timeline-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="timeline-004"]{color-scheme:dark}
 [data-vibeui-block="timeline-004"]{
 display:block;width:100%;max-width:34rem;box-sizing:border-box;
 font-family:var(--vibeui-timeline-004-font);color:var(--vibeui-timeline-004-fg);
@@ -95,20 +97,31 @@ color:var(--vibeui-timeline-004-accent);font-weight:700;
 const DEFAULT_POINTS: Timeline004Point[] = [
   {
     date: "14 января",
+    dateTime: "2026-01-14",
     title: "Старт проекта",
     text: "Собрана команда, согласован объём первой версии",
     milestone: true,
   },
-  { date: "02 февраля", title: "Прототип интерфейса" },
+  {
+    date: "02 февраля",
+    dateTime: "2026-02-02",
+    title: "Прототип интерфейса",
+  },
   {
     date: "27 февраля",
+    dateTime: "2026-02-27",
     title: "Внутренний релиз",
     text: "Сборка для команды: только каталог и поиск",
     milestone: true,
   },
-  { date: "11 марта", title: "Правки после теста на пользователях" },
+  {
+    date: "11 марта",
+    dateTime: "2026-03-11",
+    title: "Правки после теста на пользователях",
+  },
   {
     date: "05 апреля",
+    dateTime: "2026-04-05",
     title: "Публичный запуск",
     text: "Открытая регистрация и первый платный тариф",
     milestone: true,
@@ -168,6 +181,7 @@ export function Timeline004({
       </style>
       <section
         {...props}
+        data-slot="timeline"
         data-vibeui-block="timeline-004"
         className={className}
         style={palette}
@@ -181,7 +195,9 @@ export function Timeline004({
                 data-kind={point.milestone ? "milestone" : "event"}
               >
                 <span data-part="mark" aria-hidden="true" />
-                <span data-part="date">{point.date}</span>
+                <time data-part="date" dateTime={point.dateTime}>
+                  {point.date}
+                </time>
                 <div data-part="body">
                   <span data-part="name">{point.title}</span>
                   {point.text ? <p data-part="text">{point.text}</p> : null}

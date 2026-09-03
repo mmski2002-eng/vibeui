@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Gantt003Row =
   | {
@@ -18,7 +18,7 @@ export type Gantt003Row =
     }
 
 export type Gantt003Props = Omit<
-  ComponentPropsWithoutRef<"section">,
+  ComponentProps<"section">,
   "children" | "title"
 > & {
   heading?: string
@@ -56,7 +56,7 @@ const STYLES = `
 --vibeui-gantt-003-bg:transparent;
 --vibeui-gantt-003-sticky:light-dark(oklch(0.995 0.001 265),oklch(0.19 0.008 265));
 --vibeui-gantt-003-fg:light-dark(oklch(0.23 0.014 265),oklch(0.93 0.006 265));
---vibeui-gantt-003-muted:light-dark(oklch(0.6 0.014 265),oklch(0.7 0.012 265));
+--vibeui-gantt-003-muted:color-mix(in oklab,var(--vibeui-gantt-003-fg) 68%,transparent);
 --vibeui-gantt-003-border:light-dark(oklch(0.91 0.006 265),oklch(0.37 0.012 265));
 --vibeui-gantt-003-line:light-dark(oklch(0.955 0.004 265),oklch(0.3 0.01 265));
 --vibeui-gantt-003-accent:light-dark(oklch(0.55 0.16 275),oklch(0.74 0.14 275));
@@ -65,11 +65,16 @@ const STYLES = `
 --vibeui-gantt-003-day:2.125rem;
 --vibeui-gantt-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="gantt-003"]{color-scheme:dark}
 [data-vibeui-block="gantt-003"]{
 width:100%;box-sizing:border-box;padding:1rem;
 background:var(--vibeui-gantt-003-bg);
 border:1px solid var(--vibeui-gantt-003-border);border-radius:1rem;
 color:var(--vibeui-gantt-003-fg);font-family:var(--vibeui-gantt-003-font);
+/* Шкала кегля растёт от собственной ширины блока, а не от окна. */
+container-type:inline-size;
 }
 [data-vibeui-block="gantt-003"] *{box-sizing:border-box}
 [data-vibeui-block="gantt-003"] [data-part="head"]{
@@ -78,6 +83,10 @@ gap:0.5rem;margin:0 0 0.75rem;
 }
 [data-vibeui-block="gantt-003"] [data-part="heading"]{
 margin:0;font-size:0.9375rem;font-weight:700;letter-spacing:-0.01em;
+}
+@container (min-width:32rem){
+[data-vibeui-block="gantt-003"] [data-part="heading"]{font-size:1rem}
+[data-vibeui-block="gantt-003"] [data-part="head"]{margin-bottom:1.0625rem}
 }
 [data-vibeui-block="gantt-003"] [data-part="hint"]{
 margin:0;font-size:0.75rem;color:var(--vibeui-gantt-003-muted);
@@ -240,6 +249,16 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 }
 
 /**
+ * Неверный проп не должен ронять страницу-хост: на Invalid Date toISOString
+ * бросает RangeError, поэтому дату начала откатываем на дефолтную.
+ */
+function safeStart(value: string, fallback: string) {
+  const time = new Date(`${value}T00:00:00Z`).getTime()
+
+  return Number.isNaN(time) ? new Date(`${fallback}T00:00:00Z`).getTime() : time
+}
+
+/**
  * План с вехами-ромбами: задача — полоса, веха — точка со своей формой
  * и датой. Один файл, ноль зависимостей, клиентского JS нет.
  */
@@ -260,7 +279,7 @@ export function Gantt003({
   style,
   ...props
 }: Gantt003Props) {
-  const origin = new Date(`${startDate}T00:00:00Z`).getTime()
+  const origin = safeStart(startDate, "2026-04-06")
   const days =
     Math.max(
       ...rows.map((row) => row.start + (row.kind === "task" ? row.days : 1)),
@@ -299,6 +318,7 @@ export function Gantt003({
       </style>
       <section
         {...props}
+        data-slot="gantt"
         data-vibeui-block="gantt-003"
         aria-label={heading}
         className={className}

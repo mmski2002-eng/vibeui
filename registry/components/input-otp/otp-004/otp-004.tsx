@@ -1,14 +1,10 @@
 "use client"
 
 import { useId, useRef, useState } from "react"
-import type {
-  ClipboardEvent,
-  ComponentPropsWithoutRef,
-  CSSProperties,
-} from "react"
+import type { ClipboardEvent, ComponentProps, CSSProperties } from "react"
 
 export type Otp004Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onSubmit"
 > & {
   label?: string
@@ -42,22 +38,26 @@ const STYLES = `
 --vibeui-otp-004-surface:light-dark(oklch(1 0 0),oklch(0.26 0.014 265));
 --vibeui-otp-004-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-otp-004-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
---vibeui-otp-004-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.014 265));
+--vibeui-otp-004-muted:color-mix(in oklab,var(--vibeui-otp-004-fg) 68%,transparent);
 --vibeui-otp-004-field:light-dark(oklch(0.98 0.002 265),oklch(0.26 0.014 265));
 --vibeui-otp-004-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.014 265));
 --vibeui-otp-004-accent:light-dark(oklch(0.52 0.18 285),oklch(0.74 0.16 285));
 --vibeui-otp-004-bad:light-dark(oklch(0.55 0.21 25),oklch(0.72 0.17 25));
 --vibeui-otp-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="otp-004"]{color-scheme:dark}
 [data-vibeui-block="otp-004"]{
 display:flex;flex-direction:column;gap:0.5rem;
-width:100%;max-width:21rem;box-sizing:border-box;padding:0.875rem;
+width:100%;max-width:21rem;box-sizing:border-box;padding:0.9375rem;
 background:var(--vibeui-otp-004-bg);
 border:1px solid var(--vibeui-otp-004-shell);border-radius:0.875rem;
 font-family:var(--vibeui-otp-004-font);color:var(--vibeui-otp-004-fg);
 }
 [data-vibeui-block="otp-004"] *{box-sizing:border-box}
-[data-vibeui-block="otp-004"] [data-part="label"]{font-size:0.8125rem;font-weight:600}
+[data-vibeui-block="otp-004"] [data-part="label"]{font-size:0.9375rem;font-weight:600}
 [data-vibeui-block="otp-004"] [data-part="row"]{display:flex;gap:0.375rem}
 /* Встряска — одно движение туда-обратно. Длинная анимация читается как
    поломка интерфейса, а не как отказ. */
@@ -98,11 +98,17 @@ background:color-mix(in oklab,var(--vibeui-otp-004-bad) 7%,var(--vibeui-otp-004-
 }
 [data-vibeui-block="otp-004"] [data-part="foot"]{
 display:flex;align-items:center;justify-content:space-between;gap:0.5rem;
-font-size:0.75rem;line-height:1.4;color:var(--vibeui-otp-004-muted);
+flex-wrap:wrap;margin:0;
+font-size:0.875rem;line-height:1.4;color:var(--vibeui-otp-004-muted);
 }
 [data-vibeui-block="otp-004"] [data-part="foot"][data-bad="1"]{color:var(--vibeui-otp-004-bad)}
 [data-vibeui-block="otp-004"] [data-part="left"]{
 flex:none;font-variant-numeric:tabular-nums;
+}
+/* Шкала категории. Порог 19rem, а не 32rem: карточка упёрта в max-width:21rem. */
+@container (min-width: 19rem){
+[data-vibeui-block="otp-004"] [data-part="label"]{font-size:1rem}
+[data-vibeui-block="otp-004"] [data-part="foot"]{font-size:0.9375rem}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="otp-004"] *{animation:none!important;transition:none!important}}
 `
@@ -217,6 +223,7 @@ export function Otp004({
       </style>
       <div
         {...props}
+        data-slot="input-otp"
         data-vibeui-block="otp-004"
         className={className}
         style={palette}

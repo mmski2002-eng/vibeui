@@ -1,10 +1,10 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Buttongroup022Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   steps?: number[]
@@ -32,13 +32,16 @@ const STYLES = `
 :where([data-vibeui-block="buttongroup-022"]){
 --vibeui-buttongroup-022-surface:transparent;
 --vibeui-buttongroup-022-fg:light-dark(oklch(0.25 0.016 265),oklch(0.94 0.006 265));
---vibeui-buttongroup-022-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-buttongroup-022-muted:color-mix(in oklab,var(--vibeui-buttongroup-022-fg) 68%,transparent);
 --vibeui-buttongroup-022-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.012 265));
 --vibeui-buttongroup-022-hover:light-dark(oklch(0.965 0.005 265),oklch(0.31 0.012 265));
 --vibeui-buttongroup-022-accent:light-dark(oklch(0.52 0.16 265),oklch(0.76 0.13 265));
 --vibeui-buttongroup-022-radius:0.625rem;
 --vibeui-buttongroup-022-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="buttongroup-022"]{color-scheme:dark}
 [data-vibeui-block="buttongroup-022"]{
 box-sizing:border-box;display:inline-flex;isolation:isolate;
 border:1px solid var(--vibeui-buttongroup-022-border);
@@ -159,6 +162,7 @@ export function Buttongroup022({
       </style>
       <div
         {...props}
+        data-slot="button-group"
         data-vibeui-block="buttongroup-022"
         className={className}
         style={palette}

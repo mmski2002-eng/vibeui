@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Chart005Part = {
   label: string
@@ -7,7 +7,7 @@ export type Chart005Part = {
 }
 
 export type Chart005Props = Omit<
-  ComponentPropsWithoutRef<"figure">,
+  ComponentProps<"figure">,
   "children" | "title"
 > & {
   title?: string
@@ -31,11 +31,14 @@ const STYLES = `
 :where([data-vibeui-block="chart-005"]){
 --vibeui-chart-005-bg:transparent;
 --vibeui-chart-005-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-chart-005-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-chart-005-muted:color-mix(in oklab,var(--vibeui-chart-005-fg) 68%,transparent);
 --vibeui-chart-005-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-chart-005-accent:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
 --vibeui-chart-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="chart-005"]{color-scheme:dark}
 [data-vibeui-block="chart-005"]{
 display:flex;flex-direction:column;gap:0.625rem;
 width:100%;max-width:24rem;box-sizing:border-box;margin:0;padding:0.875rem;
@@ -53,6 +56,8 @@ color:var(--vibeui-chart-005-accent);
 [data-vibeui-block="chart-005"] [data-part="bar"]{
 display:flex;height:1.5rem;overflow:hidden;border-radius:0.5rem;
 }
+/* Цвет доли один на обе темы: он несёт данные, а не подложку, и точка
+   легенды обязана совпасть с ним. Подпись поверх насыщенной заливки — белая. */
 [data-vibeui-block="chart-005"] [data-part="part"]{
 display:flex;align-items:center;justify-content:center;min-width:0;
 background:oklch(0.62 0.15 var(--vibeui-chart-005-hue,250));
@@ -146,6 +151,7 @@ export function Chart005({
       </style>
       <figure
         {...props}
+        data-slot="chart"
         data-vibeui-block="chart-005"
         className={className}
         style={palette}

@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Breadcrumb012Props = Omit<
-  ComponentPropsWithoutRef<"nav">,
-  "children"
-> & {
+export type Breadcrumb012Props = Omit<ComponentProps<"nav">, "children"> & {
   parentLabel?: string
   parentHref?: string
   currentLabel?: string
@@ -24,7 +21,7 @@ export type Breadcrumb012Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="breadcrumb-012"]){
 --vibeui-breadcrumb-012-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.008 265));
---vibeui-breadcrumb-012-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-breadcrumb-012-muted:color-mix(in oklab,var(--vibeui-breadcrumb-012-fg) 68%,transparent);
 --vibeui-breadcrumb-012-sep:light-dark(oklch(0.78 0.01 265),oklch(0.5 0.012 265));
 --vibeui-breadcrumb-012-hover:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.012 265));
 --vibeui-breadcrumb-012-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
@@ -33,14 +30,22 @@ const STYLES = `
 --vibeui-breadcrumb-012-radius:0;
 --vibeui-breadcrumb-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="breadcrumb-012"]{color-scheme:dark}
 [data-vibeui-block="breadcrumb-012"]{
 box-sizing:border-box;padding:var(--vibeui-breadcrumb-012-pad);
 background:var(--vibeui-breadcrumb-012-bg);
 border-radius:var(--vibeui-breadcrumb-012-radius);
-display:flex;align-items:center;gap:0.5rem;min-width:0;
+min-width:0;
 font-family:var(--vibeui-breadcrumb-012-font);font-size:0.8125rem;line-height:1.4;
 color:var(--vibeui-breadcrumb-012-muted);
 }
+[data-vibeui-block="breadcrumb-012"] ol{
+display:flex;align-items:center;gap:0.5rem;min-width:0;
+margin:0;padding:0;list-style:none;
+}
+[data-vibeui-block="breadcrumb-012"] li{display:inline-flex;align-items:center;gap:0.5rem;min-width:0}
 [data-vibeui-block="breadcrumb-012"] a{
 display:inline-flex;align-items:center;gap:0.375rem;flex:none;
 color:inherit;text-decoration:none;
@@ -121,21 +126,28 @@ export function Breadcrumb012({
       </style>
       <nav
         {...props}
+        data-slot="breadcrumb"
         data-vibeui-block="breadcrumb-012"
         aria-label={navLabel}
         className={className}
         style={palette}
       >
-        <a href={parentHref}>
-          <span data-part="arrow" aria-hidden="true" />
-          {parentLabel}
-        </a>
-        <span data-part="dot" aria-hidden="true">
-          /
-        </span>
-        <span data-part="current" aria-current="page">
-          {currentLabel}
-        </span>
+        <ol>
+          <li>
+            <a href={parentHref}>
+              <span data-part="arrow" aria-hidden="true" />
+              {parentLabel}
+            </a>
+          </li>
+          <li>
+            <span data-part="dot" aria-hidden="true">
+              /
+            </span>
+            <span data-part="current" aria-current="page">
+              {currentLabel}
+            </span>
+          </li>
+        </ol>
       </nav>
     </>
   )

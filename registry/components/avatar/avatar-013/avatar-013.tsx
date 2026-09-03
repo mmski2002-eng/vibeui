@@ -68,7 +68,7 @@ border-radius:9999px;
 background:var(--vibeui-avatar-013-owner);color:oklch(1 0 0);
 font-size:calc(var(--vibeui-avatar-013-dot) * 0.72);font-weight:700;line-height:1;
 }
-[data-vibeui-block="avatar-013"][data-role="editor"] [data-part="role"]{background:oklch(0.6 0.13 195)}
+[data-vibeui-block="avatar-013"][data-role="editor"] [data-part="role"]{background:light-dark(oklch(0.6 0.13 195),oklch(0.72 0.13 195))}
 [data-vibeui-block="avatar-013"][data-role="reader"] [data-part="role"]{background:light-dark(oklch(0.62 0.02 265),oklch(0.66 0.02 265))}
 [data-vibeui-block="avatar-013"] [data-part="dot"]{
 position:absolute;right:0;bottom:0;

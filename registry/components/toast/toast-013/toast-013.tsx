@@ -1,12 +1,9 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Toast013Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Toast013Props = Omit<ComponentProps<"div">, "children"> & {
   message?: string
   /** Текст после возврата: компонент несёт русский, проект подставляет свой. */
   returnedMessage?: string
@@ -35,7 +32,7 @@ const STYLES = `
 :where([data-vibeui-block="toast-013"]){
 --vibeui-toast-013-bg:light-dark(oklch(0.99 0.002 265),oklch(0.25 0.014 265));
 --vibeui-toast-013-fg:light-dark(oklch(0.24 0.014 265),oklch(0.97 0.002 265));
---vibeui-toast-013-muted:light-dark(oklch(0.52 0.012 265),oklch(0.78 0.008 265));
+--vibeui-toast-013-muted:color-mix(in oklab,var(--vibeui-toast-013-fg) 68%,transparent);
 --vibeui-toast-013-line:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.014 265));
 --vibeui-toast-013-track:light-dark(oklch(0.2 0.02 265 / 14%),oklch(1 0 0 / 20%));
 --vibeui-toast-013-key:light-dark(oklch(0.2 0.02 265 / 7%),oklch(1 0 0 / 12%));
@@ -45,6 +42,9 @@ const STYLES = `
 --vibeui-toast-013-percent:100;
 --vibeui-toast-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="toast-013"]{color-scheme:dark}
 [data-vibeui-block="toast-013"]{
 display:flex;align-items:center;gap:0.75rem;
 width:100%;max-width:23rem;box-sizing:border-box;
@@ -174,6 +174,7 @@ export function Toast013({
       </style>
       <div
         {...props}
+        data-slot="toast"
         data-vibeui-block="toast-013"
         role="status"
         aria-live="polite"

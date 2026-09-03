@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Datagrid020Row = {
   id: string
@@ -20,10 +20,7 @@ export type Datagrid020View = {
   state: { stage: string; sort: Datagrid020Sort }
 }
 
-export type Datagrid020Props = Omit<
-  ComponentPropsWithoutRef<"section">,
-  "children"
-> & {
+export type Datagrid020Props = Omit<ComponentProps<"section">, "children"> & {
   rows?: Datagrid020Row[]
   caption?: string
   startView?: string
@@ -69,7 +66,7 @@ const STYLES = `
 :where([data-vibeui-block="datagrid-020"]){
 --vibeui-datagrid-020-bg:transparent;
 --vibeui-datagrid-020-fg:light-dark(oklch(0.23 0.014 285),oklch(0.93 0.006 285));
---vibeui-datagrid-020-muted:light-dark(oklch(0.55 0.014 285),oklch(0.68 0.012 285));
+--vibeui-datagrid-020-muted:color-mix(in oklab,var(--vibeui-datagrid-020-fg) 68%,transparent);
 --vibeui-datagrid-020-border:light-dark(oklch(0.92 0.006 285),oklch(0.35 0.012 285));
 --vibeui-datagrid-020-head:light-dark(oklch(0.975 0.003 285),oklch(0.27 0.012 285));
 --vibeui-datagrid-020-panel:light-dark(oklch(0.985 0.004 285),oklch(0.26 0.011 285));
@@ -77,6 +74,9 @@ const STYLES = `
 --vibeui-datagrid-020-chip:light-dark(oklch(0.97 0.025 320),oklch(0.31 0.045 320));
 --vibeui-datagrid-020-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="datagrid-020"]{color-scheme:dark}
 [data-vibeui-block="datagrid-020"]{
 box-sizing:border-box;width:100%;max-width:52rem;margin:0 auto;
 background:var(--vibeui-datagrid-020-bg);color:var(--vibeui-datagrid-020-fg);
@@ -297,6 +297,15 @@ export function Datagrid020({
   const dirty =
     !saved || saved.stage !== state.stage || saved.sort !== state.sort
 
+  // Порядок задан списком, а не щелчком по шапке, но колонка всё равно обязана
+  // сообщить о себе: без aria-sort скринридер не узнает, чем отсортирована таблица.
+  const sortOf = (column: ViewState["sort"]) =>
+    state.sort !== column
+      ? "none"
+      : column === "amount"
+        ? "descending"
+        : "ascending"
+
   const visible = rows
     .filter((row) => state.stage === "" || row.stage === state.stage)
     .slice()
@@ -330,6 +339,7 @@ export function Datagrid020({
       </style>
       <section
         {...props}
+        data-slot="data-grid"
         data-vibeui-block="datagrid-020"
         className={className}
         style={palette}
@@ -418,10 +428,14 @@ export function Datagrid020({
             <caption>{caption}</caption>
             <thead>
               <tr>
-                <th scope="col">{columnText.deal ?? COLUMN_TEXT.deal}</th>
-                <th scope="col">{columnText.stage ?? COLUMN_TEXT.stage}</th>
+                <th scope="col" aria-sort={sortOf("deal")}>
+                  {columnText.deal ?? COLUMN_TEXT.deal}
+                </th>
+                <th scope="col" aria-sort={sortOf("stage")}>
+                  {columnText.stage ?? COLUMN_TEXT.stage}
+                </th>
                 <th scope="col">{columnText.owner ?? COLUMN_TEXT.owner}</th>
-                <th scope="col" data-align="end">
+                <th scope="col" data-align="end" aria-sort={sortOf("amount")}>
                   {columnText.amount ?? COLUMN_TEXT.amount}
                 </th>
               </tr>

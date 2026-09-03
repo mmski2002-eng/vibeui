@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Icontile008CategoryIcon =
   "code" | "design" | "chart" | "rocket" | "shield" | "spark"
@@ -9,10 +9,7 @@ export type Icontile008Category = {
   count?: number
 }
 
-export type Icontile008Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Icontile008Props = Omit<ComponentProps<"div">, "children"> & {
   items?: Icontile008Category[]
   /** Подпись счётчика: {count} подставляется числом. */
   countText?: string
@@ -38,18 +35,17 @@ const DEFAULT_ITEMS: Icontile008Category[] = [
   { label: "Идеи", icon: "spark", count: 17 },
 ]
 
-// Идея компонента: сетка плиток-категорий, где число колонок считается от
-// ширины самого контейнера, а не окна браузера — в узкой боковой панели и на
-// всю ширину страницы получаем разное число колонок из одной разметки. Ховер
+// Идея компонента: сетка плиток-категорий, где число колонок набирается
+// auto-fit от доступной ширины, а не от окна браузера — в узкой боковой
+// панели и на всю ширину страницы получаем разное число колонок. Ховер
 // поднимает плитку и красит рамку сразу двумя признаками — тенью и сдвигом,
 // а не одним цветом, поэтому наведение видно и в чёрно-белом режиме. Каждая
 // категория держит свой оттенок плитки-иконки — так ряд не превращается в
 // одноцветный список.
 const STYLES = `
 :where([data-vibeui-block="icontile-008"]){
-container-type:inline-size;
 --vibeui-icontile-008-fg:light-dark(oklch(0.26 0.014 265),oklch(0.93 0.006 265));
---vibeui-icontile-008-muted:light-dark(oklch(0.52 0.014 265),oklch(0.71 0.012 265));
+--vibeui-icontile-008-muted:color-mix(in oklab,var(--vibeui-icontile-008-fg) 68%,transparent);
 --vibeui-icontile-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.008 265));
 --vibeui-icontile-008-surface:transparent;
 --vibeui-icontile-008-hover-surface:light-dark(oklch(0.97 0.008 262),oklch(0.3 0.016 262));
@@ -58,11 +54,19 @@ container-type:inline-size;
 --vibeui-icontile-008-ring:light-dark(oklch(0.55 0.15 262),oklch(0.74 0.14 262));
 --vibeui-icontile-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="icontile-008"]{color-scheme:dark}
+/* Число колонок набирает auto-fit, а не контейнерные запросы: container-type
+   отвязал бы ширину сетки от содержимого, и в кадре, который меряет компонент
+   по содержимому, она схлопнулась бы в ноль. min-width — нижняя граница той
+   же ширины: без неё auto-fit при неопределённой ширине даёт одну колонку и
+   сетка вытягивается в столбик. */
 [data-vibeui-block="icontile-008"]{
-display:block;font-family:var(--vibeui-icontile-008-font);
+display:block;min-width:17rem;font-family:var(--vibeui-icontile-008-font);
 }
 [data-vibeui-block="icontile-008"] [data-part="grid"]{
-display:grid;gap:0.75rem;grid-template-columns:repeat(2,minmax(0,1fr));
+display:grid;gap:0.75rem;grid-template-columns:repeat(auto-fit,minmax(8rem,1fr));
 }
 [data-vibeui-block="icontile-008"] [data-part="item"]{
 appearance:none;cursor:pointer;text-align:left;
@@ -95,12 +99,6 @@ font-size:0.875rem;font-weight:650;color:var(--vibeui-icontile-008-fg);
 [data-vibeui-block="icontile-008"] [data-part="count"]{
 margin:0;font-size:0.75rem;color:var(--vibeui-icontile-008-muted);
 font-variant-numeric:tabular-nums;
-}
-@container (min-width: 460px){
-[data-vibeui-block="icontile-008"] [data-part="grid"]{grid-template-columns:repeat(3,minmax(0,1fr))}
-}
-@container (min-width: 680px){
-[data-vibeui-block="icontile-008"] [data-part="grid"]{grid-template-columns:repeat(4,minmax(0,1fr))}
 }
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="icontile-008"] [data-part="item"]{transition:none!important}
@@ -213,6 +211,7 @@ export function Icontile008({
       </style>
       <div
         {...props}
+        data-slot="icon-tile"
         data-vibeui-block="icontile-008"
         className={className}
         style={palette}

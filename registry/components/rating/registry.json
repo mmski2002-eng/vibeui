@@ -88,7 +88,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Star Rating",
             "description": "A star rating without JS: the stars are reversed in the markup and flipped back by flex, so one selector drives the highlight.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-rating-001-* variables. Server component: no hooks, the state is held by the radio buttons. The star order in the markup is reversed, and flex-direction: row-reverse puts them back in place — that is the only way the ~ sibling selector can paint the stars to the left. The score caption is picked by CSS as well: the visible line is the one whose value is checked.",
             "ai": {
               "summary": "A star rating: hovering previews the choice and the caption changes without JS. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -136,7 +138,6 @@
                 "label": "Background"
               }
             },
-            "title": "Star Rating",
             "preview": {
               "props": {
                 "legend": "Rate this component",
@@ -146,7 +147,19 @@
             }
           }
         },
-        "cardControls": ["max", "defaultValue", "accent", "background"]
+        "cardControls": ["max", "defaultValue", "accent", "background"],
+        "preview": {
+          "states": [
+            {
+              "name": "vibeui-rating-001-low",
+              "defaultValue": 1
+            },
+            {
+              "name": "vibeui-rating-001-high",
+              "defaultValue": 5
+            }
+          ]
+        }
       }
     },
     {
@@ -230,7 +243,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Half Stars",
             "description": "Half stars without a line of JS: the fill is a stripe over the grey row, and its width comes from the checked radio through :has().",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-rating-002-* variables. Server component: everything rests on radio buttons and :has(). The halves are made not from cut-up stars but from a fill stripe over the grey row — any granularity comes down to a single percentage in the --vibeui-rating-002-fill variable. The hit zones are ten transparent labels half a star wide, positioned absolutely over the row; a mouse selection lands on a half, while the arrow keys work as in an ordinary radio group.",
             "ai": {
               "summary": "A star rating with a half-star step built on radios and :has(), no JS. Server component, zero dependencies, one file.",
               "preserve": [
@@ -277,7 +292,6 @@
                 "label": "Background"
               }
             },
-            "title": "Half Stars",
             "preview": {
               "props": {
                 "legend": "How was it",
@@ -288,7 +302,8 @@
             }
           }
         },
-        "cardControls": ["defaultValue", "accent", "background"]
+        "cardControls": ["defaultValue", "accent", "background"],
+        "preview": {}
       }
     },
     {
@@ -380,7 +395,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Ten Point Scale",
             "description": "A ten-point scale of numbered cells: at ten notches stars have to be recounted by eye, while a digit names the score straight away.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-rating-003-* variables. Client component: the score is in state and the arrow keys are handled. The group is built on the radiogroup and radio roles with a manual roving tabindex: focus enters the group once and the arrows move the choice inside it — ten buttons in the tab order would mean ten extra Tab presses before the next field. The cells up to the selected one are filled with a muted accent through color-mix, so the score reads both as a number and as a length.",
             "ai": {
               "summary": "A one-to-ten scale of numbered cells with cumulative fill; arrow keys move the choice inside the group. Zero dependencies, one file.",
               "preserve": [
@@ -430,7 +447,6 @@
                 "label": "Background"
               }
             },
-            "title": "Ten Point Scale",
             "preview": {
               "props": {
                 "label": "Rate the service",
@@ -452,7 +468,17 @@
             }
           }
         },
-        "cardControls": ["max", "defaultValue", "accent", "background"]
+        "cardControls": ["max", "defaultValue", "accent", "background"],
+        "preview": {
+          "states": [
+            {
+              "defaultValue": 3
+            },
+            {
+              "defaultValue": 9
+            }
+          ]
+        }
       }
     },
     {
@@ -535,7 +561,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Emoji Faces",
             "description": "A rating in faces: stars ask \"how many\", emoji ask \"how was it\", and an impression is answered faster that way.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-rating-004-* variables. Server component: everything rests on radio buttons and :has(). The unpicked faces are desaturated with a grayscale filter and muted with opacity — a full-colour row of five faces looks festive but does not show the choice. The caption under the row is switched by :has rules keyed to the value of the checked radio button, so there is no text in JS at all.",
             "ai": {
               "summary": "A five-emoji rating on radios: the picked face is coloured and larger, the rest are desaturated. Server component, zero dependencies, one file.",
               "preserve": [
@@ -581,7 +609,6 @@
                 "label": "Background"
               }
             },
-            "title": "Emoji Faces",
             "preview": {
               "props": {
                 "legend": "How was your order?",
@@ -703,7 +730,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Thumbs Vote",
             "description": "A binary vote with counters: \"was this article helpful\" has two answers, and five stars only make the choice longer.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-rating-005-* variables. Client component: the vote is in state. Pressing the same button again withdraws the vote — an accidental click has to be reversible. The counters are the sum of the incoming numbers and your own vote, so the digit moves right after the press: \"thank you, recorded\" without the counter moving looks like a lie. The button state is conveyed through aria-pressed, and the zone colour through data-vote.",
             "ai": {
               "summary": "A thumbs up / thumbs down vote with counters, where pressing the same button again withdraws the vote. Zero dependencies, one file.",
               "preserve": [
@@ -752,7 +781,6 @@
                 "label": "Background"
               }
             },
-            "title": "Thumbs Vote",
             "preview": {
               "props": {
                 "question": "Was this article helpful?",
@@ -859,7 +887,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Reason Required",
             "description": "A rating that demands a comment below a threshold: three stars on their own do not say what to fix.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-rating-006-* variables. Client component: the score and the text are in state, and the comment field appears conditionally. Below the threshold a mandatory field opens, and the submit button stays disabled while it holds fewer than the minimum characters; at a high score there is no field at all — demanding text from a happy person means losing the rating too. The counter shows how many characters are left to the threshold, not how many are already written.",
             "ai": {
               "summary": "A star rating with a mandatory comment below the threshold and a submit button disabled until the text is long enough. Zero dependencies, one file.",
               "preserve": [
@@ -909,7 +939,6 @@
                 "label": "Background"
               }
             },
-            "title": "Reason Required",
             "preview": {
               "props": {
                 "legend": "Rate the delivery",
@@ -1008,7 +1037,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Average Summary",
             "description": "A read-only average with the review count and a per-star breakdown: 4.5 built from fours and fives is a different product from 4.5 built from fives and ones.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-rating-007-* variables. Server component: there is nothing to press here, so there are neither buttons nor radio buttons — only text and bars. The fractional average is shown as a fill stripe over the grey row through the --vibeui-rating-007-fill variable: rounding 4.7 up to five stars means lying in the product's favour. The star row is marked role=\"img\" with a full aria-label, so a screen reader reads one phrase instead of five glyphs. The number of reviews is agreed by the Russian numeral rule.",
             "ai": {
               "summary": "An average-rating display: a large number, fractional star fill, a review counter and a breakdown per score. Server component, zero dependencies, one file.",
               "preserve": [
@@ -1054,7 +1085,6 @@
                 "label": "Background"
               }
             },
-            "title": "Average Summary",
             "preview": {
               "props": {
                 "reviewWords": {
@@ -1068,7 +1098,8 @@
             }
           }
         },
-        "cardControls": ["value", "accent", "background"]
+        "cardControls": ["value", "accent", "background"],
+        "preview": {}
       }
     },
     {
@@ -1157,7 +1188,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "NPS Scale",
             "description": "An NPS scale from zero to ten with detractor, passive and promoter zones — coloured before the answer, not after it.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-rating-008-* variables. Server component: everything rests on radio buttons and :has(). The scale starts at zero and is split into three zones — 0–6, 7–8, 9–10; the zone colour is set through data-zone up front, because a person has to see that a seven does not mean \"good\" here. The reply line is switched by :has rules keyed to the value of the checked button: eleven selectors are grouped into three sets.",
             "ai": {
               "summary": "An NPS survey: eleven notches from zero to ten, three colour zones and a reply line with no JS. Server component, zero dependencies, one file.",
               "preserve": [
@@ -1208,7 +1241,6 @@
                 "label": "Background"
               }
             },
-            "title": "NPS Scale",
             "preview": {
               "props": {
                 "legend": "How likely are you to recommend us to a colleague?",
@@ -1289,7 +1321,9 @@
         ],
         "i18n": {
           "en": {
+            "title": "Vote Spread",
             "description": "A star-vote distribution: the average score is a marker on a one-to-five rail, with a vote count for every notch underneath.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-rating-009-* variables. Server component: read-only, there is nothing to click. The average is shown not with stars but with a marker on a rail from one to five — the position is computed as a weighted mean over votes, so the number and its place on the rail cannot diverge. Under the rail there are not only percentages but the live vote counts for every notch: the same share out of a thousand and out of ten votes means different confidence, and the counter makes that visible.",
             "ai": {
               "summary": "A vote spread: an average marker on a one-to-five rail plus a vote count next to the percentage share for every score. Server component, zero dependencies, one file.",
               "preserve": [
@@ -1326,7 +1360,6 @@
                 "label": "Background"
               }
             },
-            "title": "Vote Spread",
             "preview": {
               "props": {
                 "voteWords": {

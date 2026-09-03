@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties, ReactNode } from "react"
+import type { ComponentProps, CSSProperties, ReactNode } from "react"
 
-export type Frame016Props = Omit<
-  ComponentPropsWithoutRef<"figure">,
-  "title"
-> & {
+export type Frame016Props = Omit<ComponentProps<"figure">, "title"> & {
   time?: string
   subtitle?: string
   caption?: string
@@ -33,6 +30,9 @@ const STYLES = `
 --vibeui-frame-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="frame-016"]{color-scheme:dark}
 [data-vibeui-block="frame-016"]{
 display:block;margin:0;width:100%;box-sizing:border-box;
 font-family:var(--vibeui-frame-016-font);
@@ -126,6 +126,7 @@ export function Frame016({
       </style>
       <figure
         {...props}
+        data-slot="frame"
         data-vibeui-block="frame-016"
         className={className}
         style={palette}

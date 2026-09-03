@@ -1,10 +1,10 @@
 "use client"
 
 import { useId, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Inputgroup018Props = Omit<
-  ComponentPropsWithoutRef<"fieldset">,
+  ComponentProps<"fieldset">,
   "children" | "defaultValue"
 > & {
   name?: string
@@ -84,7 +84,7 @@ const STYLES = `
 --vibeui-inputgroup-018-surface:transparent;
 --vibeui-inputgroup-018-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-inputgroup-018-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-inputgroup-018-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-inputgroup-018-muted:color-mix(in oklab,var(--vibeui-inputgroup-018-fg) 68%,transparent);
 --vibeui-inputgroup-018-field:light-dark(oklch(0.99 0.002 265),oklch(0.26 0.012 265));
 --vibeui-inputgroup-018-border:light-dark(oklch(0.86 0.008 265),oklch(0.4 0.014 265));
 --vibeui-inputgroup-018-accent:light-dark(oklch(0.5 0.13 165),oklch(0.74 0.13 165));
@@ -92,6 +92,9 @@ const STYLES = `
 --vibeui-inputgroup-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="inputgroup-018"]{color-scheme:dark}
 [data-vibeui-block="inputgroup-018"]{
 display:block;margin:0;padding:0.875rem;
 width:100%;max-width:26rem;box-sizing:border-box;
@@ -155,7 +158,7 @@ border-radius:var(--vibeui-inputgroup-018-radius) 0 0 var(--vibeui-inputgroup-01
 [data-vibeui-block="inputgroup-018"] [data-part="group"] > *:last-child{
 border-radius:0 var(--vibeui-inputgroup-018-radius) var(--vibeui-inputgroup-018-radius) 0;
 }
-[data-vibeui-block="inputgroup-018"] [data-part="cell"]{flex:1;height:2.875rem}
+[data-vibeui-block="inputgroup-018"] [data-part="cell"]{flex:1;height:2.75rem}
 [data-vibeui-block="inputgroup-018"] [data-part="dash"]{
 width:1.75rem;height:auto;align-self:stretch;transform:none;
 }
@@ -211,6 +214,7 @@ export function Inputgroup018({
       </style>
       <fieldset
         {...props}
+        data-slot="input-group"
         data-vibeui-block="inputgroup-018"
         className={className}
         style={palette}

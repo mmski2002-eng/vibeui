@@ -1,10 +1,10 @@
 "use client"
 
 import { useEffect, useId, useRef, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Popover011Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   label?: string
@@ -58,6 +58,19 @@ function todayParts() {
   return { year: now.getFullYear(), month: now.getMonth(), day: now.getDate() }
 }
 
+// Неверный defaultValue не должен ломать страницу-хост: NaN в году или месяце
+// оставил бы сетку пустой, поэтому непонятное значение откатываем на дефолт —
+// текущий месяц, то же самое, что при пустом пропе.
+function viewFromValue(value: string | undefined) {
+  const [year, month] = (value ?? "").split("-").map(Number)
+
+  if (!Number.isFinite(year) || !Number.isFinite(month)) {
+    return null
+  }
+
+  return { year, month: month - 1 }
+}
+
 // Идея компонента: календарь открывается от поля, а не от иконки в углу —
 // сама кнопка выглядит как поле формы, называет выбранную дату и открывает
 // панель по нажатию. Панель управляется состоянием: Escape и клик вне
@@ -68,13 +81,16 @@ const STYLES = `
 :where([data-vibeui-block="popover-011"]){
 --vibeui-popover-011-surface:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
 --vibeui-popover-011-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.006 265));
---vibeui-popover-011-muted:light-dark(oklch(0.53 0.014 265),oklch(0.71 0.012 265));
+--vibeui-popover-011-muted:color-mix(in oklab,var(--vibeui-popover-011-fg) 68%,transparent);
 --vibeui-popover-011-border:light-dark(oklch(0.89 0.006 265),oklch(0.36 0.012 265));
 --vibeui-popover-011-accent:light-dark(oklch(0.53 0.18 268),oklch(0.73 0.16 268));
 --vibeui-popover-011-on-accent:light-dark(oklch(1 0 0),oklch(0.17 0.03 268));
 --vibeui-popover-011-shadow:light-dark(oklch(0.2 0.02 265 / 60%),oklch(0.02 0.01 265 / 72%));
 --vibeui-popover-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="popover-011"]{color-scheme:dark}
 [data-vibeui-block="popover-011"]{
 position:relative;display:inline-flex;flex-direction:column;gap:0.25rem;
 font-family:var(--vibeui-popover-011-font);color:var(--vibeui-popover-011-fg);
@@ -186,11 +202,9 @@ export function Popover011({
   const [selected, setSelected] = useState(defaultValue ?? "")
   const today = todayParts()
   const [view, setView] = useState(() => {
-    if (defaultValue) {
-      const [year, month] = defaultValue.split("-").map(Number)
-      return { year, month: month - 1 }
-    }
-    return { year: today.year, month: today.month }
+    return (
+      viewFromValue(defaultValue) ?? { year: today.year, month: today.month }
+    )
   })
   const rootRef = useRef<HTMLDivElement>(null)
   const triggerRef = useRef<HTMLButtonElement>(null)
@@ -253,6 +267,7 @@ export function Popover011({
       <div
         {...props}
         ref={rootRef}
+        data-slot="popover"
         data-vibeui-block="popover-011"
         className={className}
         style={palette}

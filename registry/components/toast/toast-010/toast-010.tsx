@@ -1,11 +1,8 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Toast010Tone = "neutral" | "success" | "warning"
 
-export type Toast010Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Toast010Props = Omit<ComponentProps<"div">, "children"> & {
   message?: string
   tone?: Toast010Tone
   /** Значок слева. Пустая строка убирает его. */
@@ -29,6 +26,9 @@ const STYLES = `
 --vibeui-toast-010-tone:light-dark(oklch(0.78 0.13 152),oklch(0.5 0.14 152));
 --vibeui-toast-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="toast-010"]{color-scheme:dark}
 [data-vibeui-block="toast-010"]{
 display:inline-flex;align-items:center;gap:0.5rem;
 max-width:22rem;box-sizing:border-box;
@@ -112,6 +112,7 @@ export function Toast010({
       </style>
       <div
         {...props}
+        data-slot="toast"
         data-vibeui-block="toast-010"
         data-tone={tone}
         role="status"

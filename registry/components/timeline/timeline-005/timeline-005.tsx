@@ -1,19 +1,18 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Timeline005Revision = {
   version: string
   author: string
   note: string
   time: string
+  /** Машиночитаемый момент для <time datetime>: «вчера» роботу не дата. */
+  dateTime: string
   added?: number
   removed?: number
   current?: boolean
 }
 
-export type Timeline005Props = Omit<
-  ComponentPropsWithoutRef<"section">,
-  "children"
-> & {
+export type Timeline005Props = Omit<ComponentProps<"section">, "children"> & {
   revisions?: Timeline005Revision[]
   title?: string
   /** Метка текущей версии: компонент несёт русскую, проект подставляет свою. */
@@ -34,13 +33,16 @@ const STYLES = `
 :where([data-vibeui-block="timeline-005"]){
 --vibeui-timeline-005-bg:transparent;
 --vibeui-timeline-005-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-timeline-005-muted:light-dark(oklch(0.57 0.014 265),oklch(0.69 0.012 265));
+--vibeui-timeline-005-muted:color-mix(in oklab,var(--vibeui-timeline-005-fg) 68%,transparent);
 --vibeui-timeline-005-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-timeline-005-added:light-dark(oklch(0.6 0.13 150),oklch(0.74 0.13 150));
 --vibeui-timeline-005-removed:light-dark(oklch(0.6 0.16 25),oklch(0.72 0.15 25));
 --vibeui-timeline-005-accent:light-dark(oklch(0.55 0.18 262),oklch(0.74 0.16 262));
 --vibeui-timeline-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="timeline-005"]{color-scheme:dark}
 [data-vibeui-block="timeline-005"]{
 display:flex;flex-direction:column;gap:0.75rem;
 width:100%;max-width:28rem;box-sizing:border-box;padding:0.9375rem;
@@ -102,6 +104,7 @@ const DEFAULT_REVISIONS: Timeline005Revision[] = [
     author: "Марк Иванов",
     note: "Переписан раздел про тарифы",
     time: "сегодня, 14:20",
+    dateTime: "2026-03-14T14:20",
     added: 64,
     removed: 12,
     current: true,
@@ -111,6 +114,7 @@ const DEFAULT_REVISIONS: Timeline005Revision[] = [
     author: "Аня Петрова",
     note: "Правки после юридической проверки",
     time: "вчера, 18:05",
+    dateTime: "2026-03-13T18:05",
     added: 18,
     removed: 44,
   },
@@ -119,6 +123,7 @@ const DEFAULT_REVISIONS: Timeline005Revision[] = [
     author: "Лиза Ким",
     note: "Добавлены примеры договоров",
     time: "11 марта",
+    dateTime: "2026-03-11",
     added: 132,
     removed: 3,
   },
@@ -127,6 +132,7 @@ const DEFAULT_REVISIONS: Timeline005Revision[] = [
     author: "Марк Иванов",
     note: "Первая полная версия",
     time: "6 марта",
+    dateTime: "2026-03-06",
     added: 210,
     removed: 0,
   },
@@ -186,6 +192,7 @@ export function Timeline005({
       </style>
       <section
         {...props}
+        data-slot="timeline"
         data-vibeui-block="timeline-005"
         className={className}
         style={palette}
@@ -203,7 +210,7 @@ export function Timeline005({
                   <span data-part="note">{revision.note}</span>
                   <span data-part="by">
                     <span data-part="who">{revision.author}</span> ·{" "}
-                    {revision.time}
+                    <time dateTime={revision.dateTime}>{revision.time}</time>
                   </span>
                   <p data-part="diff">
                     <span

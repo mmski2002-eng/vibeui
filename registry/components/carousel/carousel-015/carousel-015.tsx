@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Carousel015Slide = {
   caption: string
@@ -10,10 +10,7 @@ export type Carousel015Slide = {
   hue?: number
 }
 
-export type Carousel015Props = Omit<
-  ComponentPropsWithoutRef<"section">,
-  "children"
-> & {
+export type Carousel015Props = Omit<ComponentProps<"section">, "children"> & {
   slides?: Carousel015Slide[]
   label?: string
   /** Роль блока для скринридера: компонент несёт русскую, проект подставит свою. */
@@ -40,12 +37,15 @@ const STYLES = `
 :where([data-vibeui-block="carousel-015"]){
 --vibeui-carousel-015-bg:transparent;
 --vibeui-carousel-015-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-carousel-015-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-carousel-015-muted:color-mix(in oklab,var(--vibeui-carousel-015-fg) 68%,transparent);
 --vibeui-carousel-015-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-carousel-015-hover:light-dark(oklch(0.96 0.004 265),oklch(0.32 0.012 265));
 --vibeui-carousel-015-accent:light-dark(oklch(0.52 0.16 200),oklch(0.76 0.13 200));
 --vibeui-carousel-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="carousel-015"]{color-scheme:dark}
 [data-vibeui-block="carousel-015"]{
 display:flex;flex-direction:column;gap:0.625rem;
 width:100%;max-width:26rem;box-sizing:border-box;padding:0.875rem;
@@ -183,6 +183,7 @@ export function Carousel015({
       </style>
       <section
         {...props}
+        data-slot="carousel"
         data-vibeui-block="carousel-015"
         aria-roledescription={roleDescription}
         aria-label={label}
@@ -202,11 +203,7 @@ export function Carousel015({
           </figcaption>
         </figure>
         <div data-part="bar">
-          <button
-            type="button"
-            aria-label={prevLabel}
-            onClick={() => go(-1)}
-          >
+          <button type="button" aria-label={prevLabel} onClick={() => go(-1)}>
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor">
               <path
                 d="M10 3 5 8l5 5"
@@ -225,11 +222,7 @@ export function Carousel015({
               />
             ))}
           </ul>
-          <button
-            type="button"
-            aria-label={nextLabel}
-            onClick={() => go(1)}
-          >
+          <button type="button" aria-label={nextLabel} onClick={() => go(1)}>
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor">
               <path
                 d="m6 3 5 5-5 5"

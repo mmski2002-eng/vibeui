@@ -157,7 +157,8 @@
                 "cancelLabel": "Cancel",
                 "closeLabel": "Close panel"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-drawer-001-*. Client component: \"use client\" — only for the ref behind showModal and close. The slide-in is a translate transition with transition-behavior for overlay and display, and the starting position is set in @starting-style. The actions are pinned to the bottom of the panel through margin-top: auto."
           }
         },
         "cardControls": ["background"]
@@ -324,7 +325,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-drawer-002-*. Client component: \"use client\" — a ref is needed for showModal and close. The drawer is pinned to the bottom by the native dialog with an explicit inset, so margin:auto is not required. Escape and a click on the backdrop close the sheet: the first comes from the browser, the second from comparing event.target with the dialog itself. The action card and the cancel button are separated by a gap, and the destructive action carries its own tone through data-tone."
           }
         },
         "cardControls": ["background"]
@@ -510,7 +512,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-drawer-003-*. Client component: \"use client\"; useState holds the selected values, useRef holds showModal and close. The drawer slides in from the left, only the middle area scrolls (flex + min-height:0), and the header with the reset and the footer with the apply button stay put. The tick is drawn with a pseudo-element on appearance:none — there are no icons."
           }
         },
         "cardControls": ["background"]
@@ -702,7 +705,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-drawer-004-*. Client component: \"use client\" — a ref for showModal and close. The fields are laid out as a dl definition list on a two-column grid, and the event history is a list with a vertical line on border-left and dots as pseudo-elements. The initials in the badge are computed from the heading, and the badge colour is a color-mix of the accent."
           }
         },
         "cardControls": ["background"]
@@ -887,7 +891,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-drawer-005-*. Client component: \"use client\"; useState holds the per-row quantity, useRef holds showModal and close. The sums are computed on the fly and printed through toLocaleString, and the thumbnails are drawn with a gradient. The list scrolls, and the footer with the total and the checkout button is pinned to the bottom of the flex column."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1058,7 +1063,8 @@
                   "about": "I build interfaces and keep a component catalog."
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-drawer-006-*. Client component: \"use client\"; useState holds the dirty flag and whether the warning is shown. Escape is intercepted through the dialog's own cancel event: event.preventDefault() cancels the close. The form is declared method=\"dialog\", so submitting closes the drawer without a handler. The dirty flag is set by a single onInput on the form rather than by subscribing to every field."
           }
         },
         "cardControls": ["background"]
@@ -1230,7 +1236,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-drawer-007-*. Client component: \"use client\"; useState holds the consent, useRef holds showModal and close. Only the middle column scrolls (flex:1 and min-height:0), and the section headings hold on position:sticky with an opaque background — otherwise the text shows through them. The accept button is disabled until the checkbox is ticked."
           }
         },
         "cardControls": ["background"]
@@ -1403,7 +1410,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-drawer-008-*. Client component: \"use client\"; useState holds the step number, useId the name of the radio group, useRef showModal and close. The step bar is built from segments and declared role=\"progressbar\" with aria-valuenow. The choices are radio buttons, and the selected card is highlighted through :has(input:checked)."
           }
         },
         "cardControls": ["background"]

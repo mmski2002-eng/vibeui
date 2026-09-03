@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties, ReactNode } from "react"
+import type { ComponentProps, CSSProperties, ReactNode } from "react"
 
-export type Card001Props = Omit<
-  ComponentPropsWithoutRef<"article">,
-  "title"
-> & {
+export type Card001Props = Omit<ComponentProps<"article">, "title"> & {
   title?: string
   description?: string
   /** Надпись над заголовком: раздел, дата, тип материала. */
@@ -26,7 +23,7 @@ export type Card001Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="card-001"]){
 --vibeui-card-001-fg:light-dark(oklch(0.22 0.016 265),oklch(0.94 0.006 265));
---vibeui-card-001-muted:light-dark(oklch(0.52 0.014 265),oklch(0.71 0.012 265));
+--vibeui-card-001-muted:color-mix(in oklab,var(--vibeui-card-001-fg) 68%,transparent);
 --vibeui-card-001-bg:transparent;
 --vibeui-card-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
 --vibeui-card-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
@@ -37,9 +34,15 @@ const STYLES = `
 --vibeui-card-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="card-001"]{color-scheme:dark}
 [data-vibeui-block="card-001"]{
 position:relative;display:flex;flex-direction:column;
-max-width:22rem;box-sizing:border-box;
+/* width вместе с max-width: container-type отвязывает ширину от содержимого,
+   и без явной ширины карточка схлопывается в кадре, который центрирует
+   содержимое флексом. */
+width:100%;max-width:22rem;box-sizing:border-box;
 border:1px solid var(--vibeui-card-001-border);
 border-radius:var(--vibeui-card-001-radius);
 background:var(--vibeui-card-001-bg);color:var(--vibeui-card-001-fg);
@@ -51,7 +54,9 @@ border-color:color-mix(in oklab,var(--vibeui-card-001-accent) 35%,var(--vibeui-c
 box-shadow:0 8px 24px -12px var(--vibeui-card-001-shadow);
 transform:translateY(-2px);
 }
-[data-vibeui-block="card-001"]:focus-within{
+/* :has(a:focus-visible), а не :focus-within: по клику мышью кольцо вокруг
+   всей карточки выглядит как ошибка, клавиатуре же оно необходимо. */
+[data-vibeui-block="card-001"]:has(a:focus-visible){
 border-color:var(--vibeui-card-001-accent);
 box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-card-001-accent) 20%,transparent);
 }
@@ -152,6 +157,7 @@ export function Card001({
       </style>
       <article
         {...props}
+        data-slot="card"
         data-vibeui-block="card-001"
         className={className}
         style={palette}

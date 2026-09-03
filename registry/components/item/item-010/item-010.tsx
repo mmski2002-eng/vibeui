@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Item010Row = {
   code: string
@@ -6,7 +6,7 @@ export type Item010Row = {
   value: string
 }
 
-export type Item010Props = Omit<ComponentPropsWithoutRef<"ul">, "children"> & {
+export type Item010Props = Omit<ComponentProps<"ul">, "children"> & {
   rows?: Item010Row[]
   density?: "tight" | "compact" | "cozy"
   /** Пусто — подложки нет, список лежит прямо на фоне страницы. */
@@ -27,13 +27,16 @@ const STYLES = `
 :where([data-vibeui-block="item-010"]){
 --vibeui-item-010-bg:transparent;
 --vibeui-item-010-fg:light-dark(oklch(0.23 0.014 265),oklch(0.93 0.006 265));
---vibeui-item-010-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-item-010-muted:color-mix(in oklab,var(--vibeui-item-010-fg) 68%,transparent);
 --vibeui-item-010-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
 --vibeui-item-010-hover:color-mix(in oklab,var(--vibeui-item-010-fg) 6%,var(--vibeui-item-010-bg));
 --vibeui-item-010-accent:light-dark(oklch(0.55 0.19 262),oklch(0.75 0.16 262));
 --vibeui-item-010-step:1.625rem;
 --vibeui-item-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="item-010"]{color-scheme:dark}
 [data-vibeui-block="item-010"]{
 list-style:none;margin:0;padding:0;overflow:hidden;
 width:100%;max-width:24rem;box-sizing:border-box;
@@ -133,6 +136,7 @@ export function Item010({
       </style>
       <ul
         {...props}
+        data-slot="item"
         data-vibeui-block="item-010"
         data-density={density}
         className={className}

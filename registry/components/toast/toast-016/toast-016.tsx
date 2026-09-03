@@ -1,14 +1,11 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Toast016Status = "offline" | "reconnecting" | "online"
 
-export type Toast016Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Toast016Props = Omit<ComponentProps<"div">, "children"> & {
   offlineText?: string
   reconnectingText?: string
   onlineText?: string
@@ -36,7 +33,7 @@ const STYLES = `
 :where([data-vibeui-block="toast-016"]){
 --vibeui-toast-016-bg:light-dark(oklch(0.99 0.002 265),oklch(0.25 0.014 265));
 --vibeui-toast-016-fg:light-dark(oklch(0.22 0.014 265),oklch(0.96 0.003 265));
---vibeui-toast-016-muted:light-dark(oklch(0.56 0.014 265),oklch(0.76 0.01 265));
+--vibeui-toast-016-muted:color-mix(in oklab,var(--vibeui-toast-016-fg) 68%,transparent);
 --vibeui-toast-016-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.014 265));
 --vibeui-toast-016-shadow:light-dark(oklch(0.18 0.02 265 / 55%),oklch(0.05 0.01 265 / 70%));
 --vibeui-toast-016-danger:light-dark(oklch(0.56 0.19 25),oklch(0.7 0.17 25));
@@ -45,6 +42,9 @@ const STYLES = `
 --vibeui-toast-016-radius:0.875rem;
 --vibeui-toast-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="toast-016"]{color-scheme:dark}
 [data-vibeui-block="toast-016"]{
 display:flex;align-items:center;gap:0.75rem;
 width:100%;max-width:22rem;box-sizing:border-box;
@@ -72,7 +72,7 @@ background:var(--vibeui-toast-016-warning);animation:vibeui-toast-016-pulse 1s e
 [data-vibeui-block="toast-016"][data-status="reconnecting"] [data-part="bar"]:nth-child(3){animation-delay:.3s}
 [data-vibeui-block="toast-016"][data-status="online"] [data-part="bar"]{background:var(--vibeui-toast-016-success)}
 @keyframes vibeui-toast-016-pulse{0%,100%{opacity:0.3}50%{opacity:1}}
-[data-vibeui-block="toast-016"] [data-part="text"]{flex:1;min-width:0;font-size:0.8438rem;line-height:1.35}
+[data-vibeui-block="toast-016"] [data-part="text"]{flex:1;min-width:0;font-size:0.875rem;line-height:1.35}
 [data-vibeui-block="toast-016"] [data-part="sub"]{display:block;margin-top:0.125rem;font-size:0.75rem;color:var(--vibeui-toast-016-muted)}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="toast-016"] *{animation:none!important;transition:none!important}}
 `
@@ -180,6 +180,7 @@ export function Toast016({
       </style>
       <div
         {...props}
+        data-slot="toast"
         data-vibeui-block="toast-016"
         data-status={status}
         role={status === "offline" ? "alert" : "status"}

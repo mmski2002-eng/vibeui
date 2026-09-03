@@ -1,10 +1,10 @@
 "use client"
 
-import { useId, useMemo, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import { useId, useMemo, useRef, useState } from "react"
+import type { CSSProperties, ComponentProps, KeyboardEvent } from "react"
 
 export type Combobox020Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onSelect"
 > & {
   label?: string
@@ -34,7 +34,7 @@ const STYLES = `
 :where([data-vibeui-block="combobox-020"]){
 --vibeui-combobox-020-bg:transparent;
 --vibeui-combobox-020-fg:light-dark(oklch(0.22 0.014 175),oklch(0.94 0.006 175));
---vibeui-combobox-020-muted:light-dark(oklch(0.55 0.014 175),oklch(0.7 0.012 175));
+--vibeui-combobox-020-muted:color-mix(in oklab,var(--vibeui-combobox-020-fg) 68%,transparent);
 --vibeui-combobox-020-border:light-dark(oklch(0.9 0.008 175),oklch(0.35 0.012 175));
 --vibeui-combobox-020-field:light-dark(oklch(0.985 0.004 175),oklch(0.27 0.012 175));
 --vibeui-combobox-020-soft:light-dark(oklch(0.96 0.008 175),oklch(0.31 0.014 175));
@@ -45,6 +45,9 @@ const STYLES = `
 --vibeui-combobox-020-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-combobox-020-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="combobox-020"]{color-scheme:dark}
 [data-vibeui-block="combobox-020"]{
 display:flex;flex-direction:column;gap:0.35rem;
 width:100%;max-width:15rem;box-sizing:border-box;padding:0.75rem;
@@ -177,6 +180,44 @@ export function Combobox020({
     return options.filter((option) => option.toLowerCase().includes(needle))
   }, [query, options])
 
+  const rootRef = useRef<HTMLDivElement | null>(null)
+
+  // Список открыт всегда, поэтому стрелки водят по нему настоящим фокусом:
+  // варианты — обычные кнопки, и без клавиатуры роль listbox обещает
+  // скринридеру навигацию, которой нет.
+  function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
+    const options = Array.from(
+      rootRef.current?.querySelectorAll<HTMLButtonElement>('[role="option"]') ??
+        [],
+    )
+
+    if (options.length === 0) {
+      return
+    }
+
+    const current = options.indexOf(document.activeElement as HTMLButtonElement)
+
+    if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+      event.preventDefault()
+      const step = event.key === "ArrowDown" ? 1 : -1
+      const next =
+        current === -1 ? 0 : (current + step + options.length) % options.length
+      options[next].focus()
+    } else if (
+      current !== -1 &&
+      (event.key === "Home" || event.key === "End")
+    ) {
+      event.preventDefault()
+      options[event.key === "Home" ? 0 : options.length - 1].focus()
+    } else if (event.key === "Escape") {
+      event.preventDefault()
+      setQuery("")
+      rootRef.current
+        ?.querySelector<HTMLInputElement>('[role="combobox"]')
+        ?.focus()
+    }
+  }
+
   const palette = {
     ...(accent ? { "--vibeui-combobox-020-accent": accent } : null),
     ...(background
@@ -195,6 +236,9 @@ export function Combobox020({
       </style>
       <div
         {...props}
+        ref={rootRef}
+        onKeyDown={handleKeyDown}
+        data-slot="combobox"
         data-vibeui-block="combobox-020"
         className={className}
         style={palette}

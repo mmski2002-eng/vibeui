@@ -1,7 +1,7 @@
 "use client"
 
 import { useId, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Togglegroup015Task = {
   id: string
@@ -10,7 +10,7 @@ export type Togglegroup015Task = {
 }
 
 export type Togglegroup015Props = Omit<
-  ComponentPropsWithoutRef<"section">,
+  ComponentProps<"section">,
   "children" | "onChange"
 > & {
   label?: string
@@ -39,13 +39,16 @@ const STYLES = `
 :where([data-vibeui-block="togglegroup-015"]){
 --vibeui-togglegroup-015-bg:transparent;
 --vibeui-togglegroup-015-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-togglegroup-015-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-togglegroup-015-muted:color-mix(in oklab,var(--vibeui-togglegroup-015-fg) 68%,transparent);
 --vibeui-togglegroup-015-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
 --vibeui-togglegroup-015-surface:light-dark(oklch(0.97 0.004 265),oklch(0.28 0.011 265));
 --vibeui-togglegroup-015-accent:light-dark(oklch(0.55 0.15 265),oklch(0.73 0.13 265));
 --vibeui-togglegroup-015-on-accent:light-dark(oklch(0.99 0 0),oklch(0.18 0.012 265));
 --vibeui-togglegroup-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="togglegroup-015"]{color-scheme:dark}
 [data-vibeui-block="togglegroup-015"]{
 box-sizing:border-box;display:flex;flex-direction:column;gap:0.75rem;
 width:100%;max-width:25rem;padding:0.875rem;
@@ -143,6 +146,39 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 }
 
 /**
+ * Стрелки водят фокус внутри группы: до дальней кнопки не нужно дожимать
+ * Tab через все предыдущие, а Home и End бросают на края.
+ */
+function moveFocus(event: KeyboardEvent<HTMLDivElement>) {
+  const step =
+    event.key === "ArrowRight" || event.key === "ArrowDown"
+      ? 1
+      : event.key === "ArrowLeft" || event.key === "ArrowUp"
+        ? -1
+        : 0
+
+  if (step === 0 && event.key !== "Home" && event.key !== "End") {
+    return
+  }
+
+  const buttons = Array.from(
+    event.currentTarget.querySelectorAll<HTMLButtonElement>("button"),
+  )
+  const from = buttons.indexOf(document.activeElement as HTMLButtonElement)
+
+  if (from === -1) {
+    return
+  }
+
+  const last = buttons.length - 1
+  const next =
+    event.key === "Home" ? 0 : event.key === "End" ? last : from + step
+
+  event.preventDefault()
+  buttons[next < 0 ? last : next > last ? 0 : next].focus()
+}
+
+/**
  * Фильтр-сегмент одиночным выбором со счётчиком в каждой кнопке: цифра
  * всегда считается от списка задач под группой. Один файл, ноль
  * зависимостей.
@@ -190,11 +226,17 @@ export function Togglegroup015({
       </style>
       <section
         {...props}
+        data-slot="toggle-group"
         data-vibeui-block="togglegroup-015"
         className={className}
         style={palette}
       >
-        <div data-part="group" role="group" aria-label={label}>
+        <div
+          data-part="group"
+          role="group"
+          aria-label={label}
+          onKeyDown={moveFocus}
+        >
           {FILTERS.map((filter) => {
             const count = countFor(filter)
             const caption = filterText[filter] ?? FILTER_LABEL[filter] ?? filter

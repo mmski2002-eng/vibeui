@@ -1,16 +1,15 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Timeline001Event = {
   time: string
+  /** Машиночитаемая дата для <time datetime>: «Сегодня» роботу ничего не говорит. */
+  dateTime: string
   title: string
   text?: string
   state?: "done" | "current" | "todo"
 }
 
-export type Timeline001Props = Omit<
-  ComponentPropsWithoutRef<"ol">,
-  "children"
-> & {
+export type Timeline001Props = Omit<ComponentProps<"ol">, "children"> & {
   events?: Timeline001Event[]
   accent?: string
   /** Цвет пройденного шага: заливка точки у state="done". */
@@ -31,15 +30,18 @@ const STYLES = `
 --vibeui-timeline-001-bg:transparent;
 --vibeui-timeline-001-dot:light-dark(oklch(0.99 0 0),oklch(0.21 0.014 265));
 --vibeui-timeline-001-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-timeline-001-muted:light-dark(oklch(0.56 0.014 265),oklch(0.69 0.012 265));
+--vibeui-timeline-001-muted:color-mix(in oklab,var(--vibeui-timeline-001-fg) 68%,transparent);
 --vibeui-timeline-001-line:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
 --vibeui-timeline-001-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-timeline-001-done:light-dark(oklch(0.58 0.15 152),oklch(0.75 0.14 152));
 --vibeui-timeline-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="timeline-001"]{color-scheme:dark}
 [data-vibeui-block="timeline-001"]{
 display:flex;flex-direction:column;
-width:100%;max-width:22rem;box-sizing:border-box;margin:0;padding:0.875rem;
+width:100%;max-width:22rem;box-sizing:border-box;margin:0;padding:0.9375rem;
 list-style:none;
 background:var(--vibeui-timeline-001-bg);
 border:1px solid var(--vibeui-timeline-001-line);border-radius:0.875rem;
@@ -75,23 +77,31 @@ box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-timeline-001-accent) 18%,tr
 const DEFAULT_EVENTS: Timeline001Event[] = [
   {
     time: "12 марта, 10:20",
+    dateTime: "2026-03-12T10:20",
     title: "Заказ собран",
     text: "Курьер забрал посылку со склада",
     state: "done",
   },
   {
     time: "13 марта, 08:40",
+    dateTime: "2026-03-13T08:40",
     title: "В пути",
     text: "Отправление прибыло в сортировочный центр",
     state: "done",
   },
   {
     time: "Сегодня",
+    dateTime: "2026-03-14",
     title: "В доставке",
     text: "Курьер привезёт с 10:00 до 14:00",
     state: "current",
   },
-  { time: "Завтра", title: "Вручение", state: "todo" },
+  {
+    time: "Завтра",
+    dateTime: "2026-03-15",
+    title: "Вручение",
+    state: "todo",
+  },
 ]
 
 /**
@@ -151,6 +161,7 @@ export function Timeline001({
       </style>
       <ol
         {...props}
+        data-slot="timeline"
         data-vibeui-block="timeline-001"
         className={className}
         style={palette}
@@ -158,7 +169,9 @@ export function Timeline001({
         {events.map((event) => (
           <li key={event.title} data-state={event.state ?? "todo"}>
             <span data-part="dot" aria-hidden="true" />
-            <span data-part="time">{event.time}</span>
+            <time data-part="time" dateTime={event.dateTime}>
+              {event.time}
+            </time>
             <span data-part="title">{event.title}</span>
             {event.text ? <p data-part="text">{event.text}</p> : null}
           </li>

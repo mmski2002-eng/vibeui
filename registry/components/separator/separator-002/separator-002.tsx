@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Separator002Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Separator002Props = Omit<ComponentProps<"div">, "children"> & {
   label?: string
   align?: "start" | "center" | "end"
   /** Цвет линии и рамки пилюли. Пусто — цвет из палитры компонента. */
@@ -25,6 +22,9 @@ const STYLES = `
 --vibeui-separator-002-fg:light-dark(oklch(0.35 0.014 265),oklch(0.9 0.008 265));
 --vibeui-separator-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="separator-002"]{color-scheme:dark}
 [data-vibeui-block="separator-002"]{
 display:grid;align-items:center;gap:0.625rem;
 width:100%;max-width:24rem;box-sizing:border-box;
@@ -73,6 +73,7 @@ export function Separator002({
       </style>
       <div
         {...props}
+        data-slot="separator"
         data-vibeui-block="separator-002"
         data-align={align}
         role="separator"

@@ -134,7 +134,8 @@
                 "placeholder": "name@company.com",
                 "requiredText": ", required field"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, a palette in local variables --vibeui-label-001-*. It is a server component: useId is the only hook, there is no state. The asterisk is marked aria-hidden, and its meaning is carried by the visually hidden text «, required field» — otherwise a screen reader says «asterisk» and leaves the rest to guesswork. The explanation line is tied to the field through aria-describedby, so it is read right after the field name instead of being lost. The field gets the native required: browser validation stays working. The palette is built on light-dark(): the block follows the surrounding color-scheme and by default lays no plate under itself — a surface appears only through the background prop, and color-scheme is set at the same time to match its lightness."
           }
         },
         "cardControls": ["accent", "background"]
@@ -281,7 +282,8 @@
                 "question": "Where to find the unit code",
                 "answer": "Four digits from the contract header, the «Unit» line. If the contract is not at hand, your manager knows the code."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, a palette in local variables --vibeui-label-002-*. It is a server component: useId is the only hook. The hint is a native element with the popover=\"auto\" attribute, and the button opens it through popoverTarget: the browser itself provides dismissal by Esc and by a click outside, there are no handlers. The hint position comes from CSS anchor positioning under @supports (anchor-name: --a) with position-try-fallbacks; where anchor is unsupported the browser puts the popover in the middle of the screen — ugly, but the text is available. The button is a plain <button> with an aria-label, so it lands in the tab order and opens from the keyboard. The palette is built on light-dark(): the block follows the surrounding color-scheme, there is no surface by default, and it appears only through the background prop."
           }
         },
         "cardControls": ["accent", "background"]
@@ -417,7 +419,8 @@
                 "optionalText": "optional",
                 "placeholder": "For example: call an hour before delivery"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, a palette in local variables --vibeui-label-003-*. It is a server component: useId is the only hook. The label row is a flex with justify-content:space-between and align-items:baseline: the tag is pushed to the right edge yet sits on the same baseline as the label even though its type size is smaller. The tag is made of plain text in a pill rather than an icon or a colour: the \"optional\" state has to be readable aloud and in black-and-white print. The field is a textarea with resize:vertical, so a long comment can be expanded without breaking the form width. The palette is built on light-dark(): the block follows the surrounding color-scheme, there is no surface by default, and it appears only through the background prop."
           }
         },
         "cardControls": ["accent", "background"]
@@ -553,7 +556,8 @@
                 "label": "Company name",
                 "hint": "Exactly as written in your registration details, without quotes."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, a palette in local variables --vibeui-label-004-*. It is a server component: useId is the only hook. The root is declared container-type:inline-size, but the layout itself lives on the inner [data-part=\"shell\"] shell — a rule inside @container does not apply to the container itself, so switching grid on the root is pointless. The layout is grid-template-areas: in a single column the label, the field and the hint stack up, and from 28rem of the block's own width the label becomes a left column of width --vibeui-label-004-label-width while the hint stays under the field in the second column. The label gets a padding-top so that it sits on the first line of text inside the field rather than on its top border. The palette is built on light-dark(): the block follows the surrounding color-scheme, there is no surface by default, and it appears only through the background prop."
           }
         },
         "cardControls": ["labelWidth", "accent", "background"]
@@ -693,7 +697,8 @@
                   "Postal service"
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, a palette in local variables --vibeui-label-005-*. It is a server component: useId is the only hook, and the state is held by native radio buttons sharing one name. The group heading is a <legend>, not a <label>: a <label> names a single field, while the question applies to every option, and the announcement repeats the legend before each of them. The legend has its special layout inside the border removed by the float:left;width:100% technique; the price for that is the wrapping, so the hint and the option shell get clear:both. Selecting an option highlights the whole row through :has(input:checked), and the focus ring is placed on the row through :has(input:focus-visible) — the tap target is visible in full. The palette is built on light-dark(): the block follows the surrounding color-scheme, there is no surface by default, and it appears only through the background prop."
           }
         },
         "cardControls": ["accent", "background"]
@@ -833,7 +838,8 @@
                 "overText": "{count} characters over",
                 "nearText": "{count} characters left"
               }
-            }
+            },
+            "docs": "A client component: the field value is held by useState, and the remaining count is computed from it. One file, no dependencies, a palette in local variables --vibeui-label-006-*. The counter stands in the label row rather than under the field: the limit is visible before a person has started typing. The counter state is expressed by the data-state attribute (ok/near/over), and the colours hang on it — there are no separate classes. The field deliberately has no hard maxLength: text pasted from the clipboard is not truncated silently, instead the field gets aria-invalid and the counter turns red. The figures are set in tabular numerals (font-variant-numeric:tabular-nums), so the right edge does not jitter while typing. The live message is turned on only near the limit: announcing every character is noise that makes people turn the screen reader off. The palette is built on light-dark(): the block follows the surrounding color-scheme, there is no surface by default, and it appears only through the background prop."
           }
         },
         "cardControls": ["limit", "accent", "background"]
@@ -969,7 +975,8 @@
                 "error": "No such address: check that a domain follows the @.",
                 "defaultValue": "accounting@company"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, a palette in local variables --vibeui-label-007-*. It is a server component: useId is the only hook. The single source of state is the field's aria-invalid: the label turns red by the :has(input[aria-invalid=\"true\"]) rule, and the border and the focus ring by a selector on the same attribute. There is no separate \"error\" class, so the states cannot drift apart. The message stands between the label and the field: on a phone the keyboard covers the bottom of the screen and text under the field is not visible. An icon drawn with a border is added to the colour — colour must not be the only sign of an error. The message is tied to the field through aria-describedby. The palette is built on light-dark(): the block follows the surrounding color-scheme, there is no surface by default, and it appears only through the background prop."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1117,7 +1124,8 @@
                 "actionText": "Pay now",
                 "defaultValue": "Team, 12 seats"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, a palette in local variables --vibeui-label-008-*. It is a server component: useId is the only hook, there is no state. The key decision is readOnly plus aria-disabled instead of a real disabled: disabled throws the field out of the tab order and a keyboard user never reaches the reason, while readonly keeps focus and lets the text tied through aria-describedby be read. The padlock is drawn by CSS means: the body is the element's background, the shackle is the border of a pseudo-element, and an icon package is not needed for a single glyph. Next to the reason there is a link that lifts the restriction — without it the interface turns into a dead end. The palette is built on light-dark(): the block follows the surrounding color-scheme, there is no surface by default, and it appears only through the background prop."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1261,7 +1269,8 @@
                 "hint": "We'll call it if the courier can't reach the backup number.",
                 "placeholder": "+1 555 010 0199"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, a palette in local variables --vibeui-label-009-*. It is a server component: useId is the only hook, there is no state. Instead of an asterisk with an expansion for a screen reader, there is a readable \"Required\" badge nested directly inside the <label> — it is spoken together with the field name without a separate skip text and aria-hidden. The explanation stands under the field and is tied to it through aria-describedby. The field gets the native required, so browser validation stays working. The palette is built on light-dark(): the block follows the surrounding color-scheme, there is no surface by default, and it appears only through the background prop."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1405,7 +1414,8 @@
                 "answer": "A three-letter ISO 4217 code (e.g. RUB or USD) — the payment gateway reads it to set the invoice currency and avoid conversion mistakes.",
                 "placeholder": "USD"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, a palette in local variables --vibeui-label-010-*. It is a server component: useId is the only hook, there is no state — the expansion is held by a native <details>. The trigger button is a plain <summary> with the system marker removed and a chevron of its own on transform:rotate; aria-expanded is set by the browser itself. The answer is tied to the field through aria-describedby regardless of the open state. Unlike a popover hint, a long answer pushes the form downwards instead of covering the neighbouring fields. The palette is built on light-dark(): the block follows the surrounding color-scheme, there is no surface by default, and it appears only through the background prop."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1517,7 +1527,8 @@
                 "countText": "{checked} of {total} selected",
                 "liveText": "{checked} of {total} selected"
               }
-            }
+            },
+            "docs": "A client component: the list of selected values is held by useState, and the counter is computed from it. One file, no dependencies, a palette in local variables --vibeui-label-011-*. A checkbox group has no single field for a <label> to name, so the counter is built into the <legend> — the shared heading of the group rather than the label of one of the fields. The <legend> gets its layout through the project's technique (float:left;width:100%), while the \"text + counter\" row inside it is a plain flex on a nested <span>, free of the browser limits on a flex legend. A separate visually hidden paragraph with aria-live echoes the total for a screen reader, so the whole list of checkboxes does not have to be listened through again after every click. The palette is built on light-dark(): the block follows the surrounding color-scheme, there is no surface by default, and it appears only through the background prop."
           }
         },
         "controls": [
@@ -1675,7 +1686,8 @@
                 "optionalText": "optional",
                 "placeholder": "Acme LLC"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, a palette in local variables --vibeui-label-012-*. It is a server component: useId is the only hook, there is no state. The \"optional\" note is not a separate element with a background and a border but muted text inside the same <label> as the field name: the label is read and spoken as one phrase rather than as a label plus a stuck-on tag. The muting is done only by the var(--vibeui-label-012-muted) colour and a regular weight against the bold field name. The palette is built on light-dark(): the block follows the surrounding color-scheme, there is no surface by default, and it appears only through the background prop."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1828,7 +1840,8 @@
                 "firstLabel": "Password",
                 "secondLabel": "Confirm password"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, a palette in local variables --vibeui-label-013-*. It is a server component: useId is the only hook, there is no state. A password and a password confirmation are two fields, but the \"do not match\" error belongs to both at once rather than to one of them: duplicating it under each field is noise and a reason to guess which field is actually wrong. There is a single message, it stands directly under the <legend> and is tied through aria-describedby both to the <fieldset> as a whole and to each field separately, so it is announced regardless of which of the two fields has focus."
           }
         },
         "cardControls": ["accent", "background"]

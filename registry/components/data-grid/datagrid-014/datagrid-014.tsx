@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Datagrid014Row = {
   id: string
@@ -14,10 +14,7 @@ export type Datagrid014Row = {
   nps: number
 }
 
-export type Datagrid014Props = Omit<
-  ComponentPropsWithoutRef<"section">,
-  "children"
-> & {
+export type Datagrid014Props = Omit<ComponentProps<"section">, "children"> & {
   rows?: Datagrid014Row[]
   caption?: string
   maxPinned?: number
@@ -54,7 +51,7 @@ const STYLES = `
 :where([data-vibeui-block="datagrid-014"]){
 --vibeui-datagrid-014-bg:transparent;
 --vibeui-datagrid-014-fg:light-dark(oklch(0.23 0.014 285),oklch(0.93 0.006 285));
---vibeui-datagrid-014-muted:light-dark(oklch(0.55 0.014 285),oklch(0.68 0.012 285));
+--vibeui-datagrid-014-muted:color-mix(in oklab,var(--vibeui-datagrid-014-fg) 68%,transparent);
 --vibeui-datagrid-014-border:light-dark(oklch(0.92 0.006 285),oklch(0.35 0.012 285));
 --vibeui-datagrid-014-head:light-dark(oklch(0.975 0.003 285),oklch(0.27 0.012 285));
 --vibeui-datagrid-014-accent:light-dark(oklch(0.5 0.15 195),oklch(0.78 0.13 195));
@@ -63,6 +60,9 @@ const STYLES = `
 --vibeui-datagrid-014-col:11rem;
 --vibeui-datagrid-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="datagrid-014"]{color-scheme:dark}
 [data-vibeui-block="datagrid-014"]{
 box-sizing:border-box;width:100%;max-width:56rem;margin:0 auto;
 background:var(--vibeui-datagrid-014-bg);color:var(--vibeui-datagrid-014-fg);
@@ -297,6 +297,7 @@ export function Datagrid014({
       </style>
       <section
         {...props}
+        data-slot="data-grid"
         data-vibeui-block="datagrid-014"
         className={className}
         style={palette}

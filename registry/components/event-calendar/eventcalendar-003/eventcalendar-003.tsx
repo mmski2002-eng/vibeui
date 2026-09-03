@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Eventcalendar003Event = {
   from: string
@@ -9,7 +9,7 @@ export type Eventcalendar003Event = {
 }
 
 export type Eventcalendar003Props = Omit<
-  ComponentPropsWithoutRef<"section">,
+  ComponentProps<"section">,
   "children" | "title"
 > & {
   date?: string
@@ -37,7 +37,7 @@ const STYLES = `
 --vibeui-eventcalendar-003-bg:transparent;
 --vibeui-eventcalendar-003-panel:light-dark(oklch(1 0 0),oklch(0.24 0.011 265));
 --vibeui-eventcalendar-003-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.006 265));
---vibeui-eventcalendar-003-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-eventcalendar-003-muted:color-mix(in oklab,var(--vibeui-eventcalendar-003-fg) 68%,transparent);
 --vibeui-eventcalendar-003-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
 --vibeui-eventcalendar-003-line:light-dark(oklch(0.95 0.004 265),oklch(0.31 0.01 265));
 --vibeui-eventcalendar-003-accent:light-dark(oklch(0.55 0.16 275),oklch(0.74 0.15 275));
@@ -46,6 +46,9 @@ const STYLES = `
 --vibeui-eventcalendar-003-hour:3.25rem;
 --vibeui-eventcalendar-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="eventcalendar-003"]{color-scheme:dark}
 [data-vibeui-block="eventcalendar-003"]{
 width:100%;max-width:34rem;box-sizing:border-box;padding:1rem;
 background:var(--vibeui-eventcalendar-003-bg);
@@ -233,6 +236,26 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 }
 
 /**
+ * Неверный проп не должен ронять страницу-хост: на Invalid Date форматтер
+ * Intl бросает RangeError, поэтому дату откатываем на дефолтную.
+ */
+function safeDay(value: string, fallback: string) {
+  const date = new Date(`${value}T00:00:00Z`)
+
+  return Number.isNaN(date.getTime()) ? new Date(`${fallback}T00:00:00Z`) : date
+}
+
+/** По той же причине неразбираемая локаль откатывается на дефолтную. */
+function safeLocale(value: string, fallback: string) {
+  try {
+    Intl.DateTimeFormat.supportedLocalesOf(value)
+    return value
+  } catch {
+    return fallback
+  }
+}
+
+/**
  * День с временной шкалой: пересекающиеся события расходятся по дорожкам
  * внутри своей группы. Один файл, ноль зависимостей, клиентского JS нет.
  */
@@ -255,12 +278,12 @@ export function Eventcalendar003({
   const { placed, groupWidth } = layout(events)
   const overlaps = groupWidth.filter((width) => width > 1).length
 
-  const label = new Intl.DateTimeFormat(locale, {
+  const label = new Intl.DateTimeFormat(safeLocale(locale, "ru-RU"), {
     weekday: "long",
     day: "numeric",
     month: "long",
     timeZone: "UTC",
-  }).format(new Date(`${date}T00:00:00Z`))
+  }).format(safeDay(date, "2026-03-17"))
 
   const palette = {
     "--vibeui-eventcalendar-003-span": hours.length,
@@ -282,6 +305,7 @@ export function Eventcalendar003({
       </style>
       <section
         {...props}
+        data-slot="event-calendar"
         data-vibeui-block="eventcalendar-003"
         aria-label={label}
         className={className}

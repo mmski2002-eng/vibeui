@@ -1,7 +1,7 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Slider003Props = Omit<
-  ComponentPropsWithoutRef<"input">,
+  ComponentProps<"input">,
   "type" | "list" | "children"
 > & {
   label?: string
@@ -25,7 +25,7 @@ const STYLES = `
 --vibeui-slider-003-bg:transparent;
 --vibeui-slider-003-surface:light-dark(oklch(1 0 0),oklch(0.28 0.012 265));
 --vibeui-slider-003-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-slider-003-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-slider-003-muted:color-mix(in oklab,var(--vibeui-slider-003-fg) 68%,transparent);
 --vibeui-slider-003-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
 --vibeui-slider-003-track:light-dark(oklch(0.91 0.006 265),oklch(0.44 0.012 265));
 --vibeui-slider-003-accent:light-dark(oklch(0.52 0.14 195),oklch(0.74 0.13 195));
@@ -33,6 +33,9 @@ const STYLES = `
 --vibeui-slider-003-steps:3;
 --vibeui-slider-003-marks:4;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="slider-003"]{color-scheme:dark}
 [data-vibeui-block="slider-003"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:21rem;box-sizing:border-box;padding:0.875rem;
@@ -139,7 +142,12 @@ export function Slider003({
       <style href="vibeui-slider-003" precedence="medium">
         {STYLES}
       </style>
-      <div data-vibeui-block="slider-003" className={className} style={palette}>
+      <div
+        data-slot="slider"
+        data-vibeui-block="slider-003"
+        className={className}
+        style={palette}
+      >
         <label data-part="label" htmlFor={id}>
           {label}
         </label>

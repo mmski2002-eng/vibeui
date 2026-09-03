@@ -1,10 +1,10 @@
 "use client"
 
 import { useEffect, useId, useRef, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Switch013Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   label?: string
@@ -27,7 +27,7 @@ const STYLES = `
 :where([data-vibeui-block="switch-013"]){
 --vibeui-switch-013-bg:transparent;
 --vibeui-switch-013-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-switch-013-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-switch-013-muted:color-mix(in oklab,var(--vibeui-switch-013-fg) 68%,transparent);
 --vibeui-switch-013-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-switch-013-track:light-dark(oklch(0.88 0.008 265),oklch(0.43 0.014 265));
 --vibeui-switch-013-thumb:light-dark(oklch(1 0 0),oklch(0.93 0.004 265));
@@ -36,6 +36,9 @@ const STYLES = `
 --vibeui-switch-013-ok-tint:light-dark(oklch(0.55 0.15 155 / 12%),oklch(0.78 0.15 155 / 18%));
 --vibeui-switch-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="switch-013"]{color-scheme:dark}
 [data-vibeui-block="switch-013"]{
 box-sizing:border-box;width:100%;max-width:21rem;padding:0.875rem;
 background:var(--vibeui-switch-013-bg);
@@ -44,7 +47,7 @@ font-family:var(--vibeui-switch-013-font);color:var(--vibeui-switch-013-fg);
 }
 [data-vibeui-block="switch-013"] [data-part="row"]{display:flex;align-items:center;gap:1rem;cursor:pointer}
 [data-vibeui-block="switch-013"] [data-part="text"]{display:flex;flex-direction:column;gap:0.125rem;flex:1 1 auto;min-width:0}
-[data-vibeui-block="switch-013"] [data-part="label"]{font-size:0.9375rem;font-weight:600;line-height:1.3}
+[data-vibeui-block="switch-013"] [data-part="label"]{font-size:0.875rem;font-weight:600;line-height:1.3}
 [data-vibeui-block="switch-013"] [data-part="description"]{font-size:0.8125rem;line-height:1.4;color:var(--vibeui-switch-013-muted)}
 [data-vibeui-block="switch-013"] [data-part="track"]{position:relative;display:flex;flex:none}
 [data-vibeui-block="switch-013"] input{
@@ -166,6 +169,7 @@ export function Switch013({
       </style>
       <div
         {...props}
+        data-slot="switch"
         data-vibeui-block="switch-013"
         data-state={state}
         className={className}

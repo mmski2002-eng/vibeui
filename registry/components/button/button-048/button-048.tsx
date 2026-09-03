@@ -1,11 +1,8 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Button048Provider = "google" | "github" | "apple"
 
-export type Button048Props = Omit<
-  ComponentPropsWithoutRef<"button">,
-  "children"
-> & {
+export type Button048Props = Omit<ComponentProps<"button">, "children"> & {
   /** Провайдер входа: от него зависят подпись и знак слева. */
   provider?: Button048Provider
   label?: string
@@ -30,6 +27,9 @@ const STYLES = `
 --vibeui-button-048-mark:light-dark(oklch(0.24 0.01 265),oklch(0.9 0.008 265));
 --vibeui-button-048-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="button-048"]{color-scheme:dark}
 [data-vibeui-block="button-048"]{
 position:relative;appearance:none;cursor:pointer;box-sizing:border-box;
 display:flex;align-items:center;justify-content:center;
@@ -137,6 +137,7 @@ export function Button048({
       <button
         {...props}
         type={type}
+        data-slot="button"
         data-vibeui-block="button-048"
         data-provider={provider}
         className={className}

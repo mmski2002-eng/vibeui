@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Datagrid021Row = {
   id: string
@@ -11,10 +11,7 @@ export type Datagrid021Row = {
   price: number
 }
 
-export type Datagrid021Props = Omit<
-  ComponentPropsWithoutRef<"section">,
-  "children"
-> & {
+export type Datagrid021Props = Omit<ComponentProps<"section">, "children"> & {
   rows?: Datagrid021Row[]
   caption?: string
   editLabel?: string
@@ -57,7 +54,7 @@ const STYLES = `
 :where([data-vibeui-block="datagrid-021"]){
 --vibeui-datagrid-021-bg:transparent;
 --vibeui-datagrid-021-fg:light-dark(oklch(0.23 0.014 285),oklch(0.93 0.006 285));
---vibeui-datagrid-021-muted:light-dark(oklch(0.55 0.014 285),oklch(0.68 0.012 285));
+--vibeui-datagrid-021-muted:color-mix(in oklab,var(--vibeui-datagrid-021-fg) 68%,transparent);
 --vibeui-datagrid-021-border:light-dark(oklch(0.92 0.006 285),oklch(0.35 0.012 285));
 --vibeui-datagrid-021-head:light-dark(oklch(0.975 0.003 285),oklch(0.27 0.012 285));
 --vibeui-datagrid-021-panel:light-dark(oklch(0.985 0.004 285),oklch(0.26 0.011 285));
@@ -67,6 +64,9 @@ const STYLES = `
 --vibeui-datagrid-021-dirty-line:light-dark(oklch(0.62 0.14 85),oklch(0.72 0.13 85));
 --vibeui-datagrid-021-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="datagrid-021"]{color-scheme:dark}
 [data-vibeui-block="datagrid-021"]{
 box-sizing:border-box;width:100%;max-width:52rem;margin:0 auto;
 background:var(--vibeui-datagrid-021-bg);color:var(--vibeui-datagrid-021-fg);
@@ -266,6 +266,7 @@ export function Datagrid021({
       </style>
       <section
         {...props}
+        data-slot="data-grid"
         data-vibeui-block="datagrid-021"
         className={className}
         style={palette}

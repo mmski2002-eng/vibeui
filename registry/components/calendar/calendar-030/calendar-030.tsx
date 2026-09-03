@@ -1,10 +1,15 @@
 "use client"
 
 import { Fragment, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties, ReactNode } from "react"
+import type {
+  ComponentProps,
+  CSSProperties,
+  ReactNode,
+  KeyboardEvent,
+} from "react"
 
 export type Calendar030Props = Omit<
-  ComponentPropsWithoutRef<"section">,
+  ComponentProps<"section">,
   "children" | "onChange"
 > & {
   month?: string
@@ -33,7 +38,7 @@ const STYLES = `
 :where([data-vibeui-block="calendar-030"]){
 --vibeui-calendar-030-bg:transparent;
 --vibeui-calendar-030-fg:light-dark(oklch(0.23 0.014 165),oklch(0.94 0.005 165));
---vibeui-calendar-030-muted:light-dark(oklch(0.57 0.014 165),oklch(0.68 0.012 165));
+--vibeui-calendar-030-muted:color-mix(in oklab,var(--vibeui-calendar-030-fg) 68%,transparent);
 --vibeui-calendar-030-faint:light-dark(oklch(0.82 0.01 165),oklch(0.43 0.012 165));
 --vibeui-calendar-030-border:light-dark(oklch(0.91 0.008 165),oklch(0.34 0.014 165));
 --vibeui-calendar-030-soft:light-dark(oklch(0.97 0.008 165),oklch(0.27 0.012 165));
@@ -43,9 +48,12 @@ const STYLES = `
 --vibeui-calendar-030-radius:0.75rem;
 --vibeui-calendar-030-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="calendar-030"]{color-scheme:dark}
 [data-vibeui-block="calendar-030"]{
-display:flex;flex-direction:column;gap:0.7rem;
-width:100%;max-width:22rem;box-sizing:border-box;padding:1rem;
+display:flex;flex-direction:column;gap:0.6875rem;
+width:100%;max-width:22rem;box-sizing:border-box;padding:0.9375rem;
 background:var(--vibeui-calendar-030-bg);
 border:1px solid var(--vibeui-calendar-030-border);
 border-radius:calc(var(--vibeui-calendar-030-radius) + 0.25rem);
@@ -53,23 +61,23 @@ color:var(--vibeui-calendar-030-fg);
 font-family:var(--vibeui-calendar-030-font);
 }
 [data-vibeui-block="calendar-030"] [data-part="title"]{
-margin:0;font-size:0.95rem;font-weight:700;letter-spacing:-0.01em;text-transform:capitalize;
+margin:0;font-size:0.9375rem;font-weight:700;letter-spacing:-0.01em;text-transform:capitalize;
 }
 [data-vibeui-block="calendar-030"] [data-part="rule"]{
-margin:0.15rem 0 0;font-size:0.75rem;color:var(--vibeui-calendar-030-muted);
+margin:0.125rem 0 0;font-size:0.875rem;color:var(--vibeui-calendar-030-muted);
 }
 [data-vibeui-block="calendar-030"] [data-part="grid"]{
-display:grid;grid-template-columns:repeat(7,1fr);gap:0.15rem;
+display:grid;grid-template-columns:repeat(7,1fr);gap:0.125rem;
 }
 [data-vibeui-block="calendar-030"] [data-part="dow"]{
-text-align:center;font-size:0.65rem;font-weight:700;text-transform:uppercase;
-color:var(--vibeui-calendar-030-muted);padding-bottom:0.2rem;
+text-align:center;font-size:0.6875rem;font-weight:700;text-transform:uppercase;
+color:var(--vibeui-calendar-030-muted);padding-bottom:0.1875rem;
 }
 [data-vibeui-block="calendar-030"] [data-part="day"]{
 appearance:none;cursor:pointer;font:inherit;
-height:2.1rem;border:0;border-radius:0.45rem;
+height:2.125rem;border:0;border-radius:0.4375rem;
 background:var(--vibeui-calendar-030-soft);color:inherit;
-font-size:0.8rem;font-variant-numeric:tabular-nums;
+font-size:0.8125rem;font-variant-numeric:tabular-nums;
 transition:background-color .16s ease,color .16s ease;
 }
 [data-vibeui-block="calendar-030"] [data-part="day"]:hover:not(:disabled){
@@ -89,26 +97,26 @@ background:var(--vibeui-calendar-030-accent);color:var(--vibeui-calendar-030-ona
 }
 [data-vibeui-block="calendar-030"] [data-part="foot"]{
 display:flex;align-items:center;justify-content:space-between;gap:0.5rem;
-padding-top:0.6rem;border-top:1px solid var(--vibeui-calendar-030-border);
+padding-top:0.625rem;border-top:1px solid var(--vibeui-calendar-030-border);
 }
 [data-vibeui-block="calendar-030"] [data-part="count"]{
-margin:0;font-size:0.8125rem;color:var(--vibeui-calendar-030-muted);
+margin:0;font-size:0.875rem;color:var(--vibeui-calendar-030-muted);
 }
 [data-vibeui-block="calendar-030"] [data-part="count"] b{
 color:var(--vibeui-calendar-030-fg);font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="calendar-030"] [data-part="reset"]{
 appearance:none;cursor:pointer;font:inherit;flex:none;
-padding:0.35rem 0.7rem;border-radius:0.5rem;
+padding:0.375rem 0.6875rem;border-radius:0.5rem;
 border:1px solid var(--vibeui-calendar-030-border);
 background:transparent;color:var(--vibeui-calendar-030-muted);
-font-size:0.78rem;font-weight:600;
+font-size:0.875rem;font-weight:600;
 }
 [data-vibeui-block="calendar-030"] [data-part="reset"]:focus-visible{
 outline:2px solid var(--vibeui-calendar-030-accent);outline-offset:2px;
 }
 [data-vibeui-block="calendar-030"] [data-part="bar"]{
-height:0.3rem;border-radius:999px;overflow:hidden;background:var(--vibeui-calendar-030-soft);
+height:0.3125rem;border-radius:999px;overflow:hidden;background:var(--vibeui-calendar-030-soft);
 }
 [data-vibeui-block="calendar-030"] [data-part="bar"] i{
 display:block;height:100%;border-radius:inherit;
@@ -164,6 +172,44 @@ function pluralize(count: number, forms: [string, string, string]) {
   return forms[2]
 }
 
+// Стрелки водят фокус по сетке. Без них до нужного дня приходится жать Tab
+// столько раз, сколько до него дней.
+function moveFocus(event: KeyboardEvent<HTMLElement>, columns: number) {
+  const steps: Record<string, number> = {
+    ArrowLeft: -1,
+    ArrowRight: 1,
+    ArrowUp: -columns,
+    ArrowDown: columns,
+  }
+  const step = steps[event.key]
+
+  if (step === undefined) {
+    return
+  }
+
+  const buttons = Array.from(
+    event.currentTarget.querySelectorAll<HTMLButtonElement>("button"),
+  )
+  const from = buttons.indexOf(document.activeElement as HTMLButtonElement)
+
+  if (from < 0) {
+    return
+  }
+
+  let index = from + step
+
+  while (buttons[index]?.disabled) {
+    index += step
+  }
+
+  if (!buttons[index]) {
+    return
+  }
+
+  event.preventDefault()
+  buttons[index].focus()
+}
+
 /**
  * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
  * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
@@ -187,15 +233,46 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 }
 
 /**
+ * Дата, месяц и локаль из пропов или дефолты компонента. Чужая страница не
+ * должна падать из-за опечатки в значении: Intl бросает RangeError и на
+ * Invalid Date, и на нераспознанной локали — белый экран вместо всего сайта.
+ * Пустая граница диапазона законна, её не трогаем.
+ */
+function safeDate(value: string, fallback: string) {
+  if (!value) {
+    return value
+  }
+
+  return Number.isNaN(new Date(`${value}T00:00:00`).getTime())
+    ? fallback
+    : value
+}
+
+function safeMonth(value: string, fallback: string) {
+  return Number.isNaN(new Date(`${value}-01T00:00:00`).getTime())
+    ? fallback
+    : value
+}
+
+function safeLocale(value: string, fallback: string) {
+  try {
+    Intl.DateTimeFormat.supportedLocalesOf(value)
+    return value
+  } catch {
+    return fallback
+  }
+}
+
+/**
  * Диапазон с потолком в N дней: лишние дни гаснут сразу после первой даты.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Calendar030({
-  month = "2026-04",
+  month: monthProp = "2026-04",
   maxDays = 14,
-  defaultFrom = "2026-04-06",
-  defaultTo = "2026-04-12",
-  locale = "ru-RU",
+  defaultFrom: defaultFromProp = "2026-04-06",
+  defaultTo: defaultToProp = "2026-04-12",
+  locale: localeProp = "ru-RU",
   text = TEXT,
   dayForms = ["дня", "дней", "дней"],
   background = "",
@@ -205,8 +282,12 @@ export function Calendar030({
   style,
   ...props
 }: Calendar030Props) {
-  const [from, setFrom] = useState(defaultFrom)
-  const [to, setTo] = useState(defaultTo)
+  const month = safeMonth(monthProp, "2026-04")
+  const locale = safeLocale(localeProp, "ru-RU")
+  const [from, setFrom] = useState(() =>
+    safeDate(defaultFromProp, "2026-04-06"),
+  )
+  const [to, setTo] = useState(() => safeDate(defaultToProp, "2026-04-12"))
 
   const [year, index] = month.split("-").map(Number)
   const first = new Date(year, index - 1, 1)
@@ -258,6 +339,17 @@ export function Calendar030({
     year: "numeric",
   }).format(first)
 
+  // В сетке нет <th scope="col">, поэтому день недели звучит в подписи дня.
+  const long = new Intl.DateTimeFormat(locale, { dateStyle: "full" })
+  // Ровно одна кнопка сетки в табуляции: начало диапазона, иначе первое
+  // доступное число месяца.
+  const stop =
+    from ||
+    stamp(
+      cells.find((date) => date.getMonth() === index - 1 && !blocked(date)) ??
+        first,
+    )
+
   const palette = {
     "--vibeui-calendar-030-fill": Math.min(
       100,
@@ -280,6 +372,7 @@ export function Calendar030({
       </style>
       <section
         {...props}
+        data-slot="calendar"
         data-vibeui-block="calendar-030"
         className={className}
         style={palette}
@@ -293,7 +386,7 @@ export function Calendar030({
             })}
           </p>
         </header>
-        <div data-part="grid">
+        <div data-part="grid" onKeyDown={(event) => moveFocus(event, 7)}>
           {weekdays.map((name) => (
             <span key={name} data-part="dow">
               {name}
@@ -303,6 +396,7 @@ export function Calendar030({
             const time = date.getTime()
             const edge = stamp(date) === from || stamp(date) === to
             const inside = Boolean(to) && time > start && time < finish
+            const off = blocked(date) || date.getMonth() !== index - 1
 
             return (
               <button
@@ -311,7 +405,9 @@ export function Calendar030({
                 data-part="day"
                 data-edge={edge}
                 data-inside={inside}
-                disabled={blocked(date) || date.getMonth() !== index - 1}
+                disabled={off}
+                tabIndex={stamp(date) === stop ? 0 : -1}
+                aria-label={long.format(date)}
                 aria-pressed={edge || inside}
                 onClick={() => choose(date)}
               >

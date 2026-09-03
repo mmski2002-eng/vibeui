@@ -1,14 +1,11 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Table010Row = {
   source: string
   visits: number
 }
 
-export type Table010Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Table010Props = Omit<ComponentProps<"div">, "children"> & {
   rows?: Table010Row[]
   caption?: string
   /** Заголовки колонок: компонент несёт русские, проект подставляет свои. */
@@ -33,13 +30,16 @@ const STYLES = `
 :where([data-vibeui-block="table-010"]){
 --vibeui-table-010-bg:transparent;
 --vibeui-table-010-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
---vibeui-table-010-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-table-010-muted:color-mix(in oklab,var(--vibeui-table-010-fg) 68%,transparent);
 --vibeui-table-010-border:light-dark(oklch(0.92 0.006 265),oklch(0.36 0.011 265));
 --vibeui-table-010-head:light-dark(oklch(0.5 0.02 265 / 5%),oklch(0.85 0.02 265 / 7%));
 --vibeui-table-010-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.16 262));
 --vibeui-table-010-bar:color-mix(in oklab,var(--vibeui-table-010-accent) 16%,transparent);
 --vibeui-table-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="table-010"]{color-scheme:dark}
 [data-vibeui-block="table-010"]{
 width:100%;box-sizing:border-box;overflow-x:auto;
 background:var(--vibeui-table-010-bg);
@@ -144,6 +144,7 @@ export function Table010({
       </style>
       <div
         {...props}
+        data-slot="table"
         data-vibeui-block="table-010"
         className={className}
         style={palette}

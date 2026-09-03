@@ -77,6 +77,7 @@
         "i18n": {
           "en": {
             "description": "A desktop-style menubar: arrows move between sections and the down arrow opens the list.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-menu-003-* variables. A client component: \"use client\". The references to the titles are held in an array of refs, the arrow keys move focus between them, the down arrow opens the list, and Escape closes it and returns the focus. The open menu is switched by hovering a neighbouring title.",
             "ai": {
               "summary": "A menubar: sections with keyboard navigation, hover switching of the open menu and focus return on Escape. Zero dependencies, one file.",
               "preserve": [
@@ -187,7 +188,8 @@
             "акцент через проп accent",
             "высоту строки меню",
             "menubarLabel — имя строки меню для скринридера",
-            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "group — приставка к id меню и имени якоря; двум строкам меню на одной странице нужны разные приставки"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
@@ -214,6 +216,7 @@
         "i18n": {
           "en": {
             "description": "An application menubar: opening, Escape and closing a neighbouring menu all come from the HTML popover, not from your code.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-menubar-001-* variables. Server rendered: no hooks, the browser holds the state. Every menu is a popover=\"auto\", so Escape, an outside click and the closing of a neighbour work on their own. The position under its own button comes from CSS anchor positioning: the anchor name is unique for each pair and is passed through a variable.",
             "ai": {
               "summary": "An application menubar: sections with drop-down lists, shortcuts on the right and muted disabled items. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -232,7 +235,8 @@
                 "the accent through the accent prop",
                 "the menubar height",
                 "menubarLabel — the menubar name for screen readers",
-                "background — the component background; empty means no background, taking the page colour"
+                "background — the component background; empty means no background, taking the page colour",
+                "group — the prefix for menu ids and anchor names; two menu bars on one page need different prefixes"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
@@ -393,6 +397,7 @@
         "i18n": {
           "en": {
             "description": "A menubar you walk with arrow keys: left and right move between sections, down opens the list and lands focus on the first item.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-menubar-002-* variables. A client component: \"use client\" for the state of the open menu and for the keyboard. The markup follows the WAI-ARIA menubar pattern: role=\"menubar\", buttons with role=\"menuitem\" carrying aria-haspopup and aria-expanded, lists with role=\"menu\". Only one section lives in the Tab order (a roving tabindex), and moving between sections goes through the arrow keys. The menu is positioned absolutely from its own wrapper, so anchor positioning is not needed. An outside click closes the list through a pointerdown listener that is removed together with the closing.",
             "ai": {
               "summary": "An application menubar with full keyboard support: left and right arrows move between sections in a loop, Home and End jump to the ends, arrow down opens the menu and focuses its first item, Escape closes it and returns focus to the section button. Inside an open list, up and down walk the items. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -543,7 +548,8 @@
             "акцент через проп accent — цвет кольца фокуса",
             "оформление <kbd>: рамку, фон и размер",
             "menubarLabel — имя строки меню для скринридера",
-            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "group — имя радиогруппы <details>; двум строкам меню на одной странице нужны разные имена"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
@@ -577,6 +583,7 @@
         "i18n": {
           "en": {
             "description": "A menubar where the shortcuts line up in a column of their own and are written platform-independently: ⌘ on Mac, Ctrl on Windows.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-menubar-003-* variables. Server rendered: no hooks, the browser holds the state. Every section is a <details> with a shared name attribute, so the browser itself makes sure only one is open. An item is a two-column grid, and the shortcut is always pushed to the right edge. The key labels are stored as \"Mod S\" and are expanded by the keysFor function into ⌘ or Ctrl according to the platform prop, with every key rendered in its own <kbd>.",
             "ai": {
               "summary": "A menubar with a shortcut column: labels on the left, key combinations on the right, every key in its own <kbd>. Sections close one another without JS — that is the name attribute on <details>. Shortcuts are stored as \"Mod S\" and expanded for the platform. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -595,7 +602,8 @@
                 "the accent through the accent prop — it colours the focus ring",
                 "the <kbd> styling: border, background and size",
                 "menubarLabel — the menubar name for screen readers",
-                "background — the component background; empty means no background, taking the page colour"
+                "background — the component background; empty means no background, taking the page colour",
+                "group — the <details> radio-group name; two menu bars on one page need different names"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
@@ -728,7 +736,8 @@
             "текст сводки справа от кнопки раздела",
             "подписи меню: triggerLabel, togglesTitle, choicesTitle и menubarLabel",
             "stateText — строку состояния; {count} — сколько включено, {choice} — выбранный вариант",
-            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "group — приставка к id меню и имени якоря; двум строкам меню на одной странице нужны разные приставки"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
@@ -769,6 +778,7 @@
         "i18n": {
           "en": {
             "description": "A View menu whose items hold state instead of firing actions: checkable toggles and mutually exclusive options marked with a dot.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-menubar-004-* variables. A client component: \"use client\" for the state of the toggles. The menu is a popover=\"auto\", so Escape and an outside click come from the browser, while a click inside does not close it — which is exactly what toggle items need. The items are marked role=\"menuitemcheckbox\" and role=\"menuitemradio\" with aria-checked. The mark lives in a separate column of fixed width, so the labels do not shift when something is switched on.",
             "ai": {
               "summary": "A menu of stateful items: checks for independent settings, dots for mutually exclusive options, and the current state visible right in the menubar. Zero dependencies, one file, its own palette.",
               "preserve": [
@@ -788,7 +798,8 @@
                 "the summary text beside the section button",
                 "the menu labels: triggerLabel, togglesTitle, choicesTitle and menubarLabel",
                 "stateText — the state line; {count} is how many are on, {choice} is the selected option",
-                "background — the component background; empty means no background, taking the page colour"
+                "background — the component background; empty means no background, taking the page colour",
+                "group — the prefix for menu ids and anchor names; two menu bars on one page need different prefixes"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
@@ -900,7 +911,8 @@
             "порог переключения в контейнерном запросе",
             "акцент через проп accent — цвет кольца фокуса",
             "menubarLabel — имя строки меню для скринридера",
-            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "group — имя радиогруппы <details>; двум строкам меню на одной странице нужны разные имена"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
@@ -934,6 +946,7 @@
         "i18n": {
           "en": {
             "description": "A menubar that folds into a burger on narrow widths: the threshold comes from the block's own width, not the window size.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-menubar-005-* variables. Server rendered: no hooks, the state is held by <details>. The wide and the narrow view sit in the markup at the same time, and the surplus one is removed with display:none — that way it lands neither in the tab order nor in the accessibility tree. The switching threshold is set by a container query on the inner [data-part=\"shell\"], because a rule inside @container does not apply to the container itself. In the wide view the sections close one another through the shared name attribute.",
             "ai": {
               "summary": "A menubar with two faces: a wide row of sections and a burger when space runs out. A container query does the switching, so the component behaves the same on a phone and in a narrow desktop column. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -952,7 +965,8 @@
                 "the switching threshold in the container query",
                 "the accent through the accent prop — it colours the focus ring",
                 "menubarLabel — the menubar name for screen readers",
-                "background — the component background; empty means no background, taking the page colour"
+                "background — the component background; empty means no background, taking the page colour",
+                "group — the <details> radio-group name; two menu bars on one page need different names"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
@@ -1080,6 +1094,7 @@
         "i18n": {
           "en": {
             "description": "An app menubar where the active section is not merely highlighted but unfolded: a second row lists that section's own pages.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-menubar-006-* variables. Server rendered: no hooks, the active section arrives through the activeLabel prop. There are no drop-down lists at all — the pages of the active section are rendered in a second row, so no state is needed either. The active section is marked with aria-current=\"page\" and with a bar through ::after. Both rows are a <nav> with a label of its own, and the counters are set in tabular figures.",
             "ai": {
               "summary": "Two-row app navigation: sections on top with the current one marked, that section's pages with counters below. Not a single drop-down, so there is no state and nothing overlaps. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1233,7 +1248,8 @@
             "акцент через проп accent — цвет кольца фокуса",
             "ширину меню и подменю",
             "menubarLabel — имя строки меню для скринридера",
-            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "group — имя радиогруппы <details>; двум строкам меню на одной странице нужны разные имена"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
@@ -1260,6 +1276,7 @@
         "i18n": {
           "en": {
             "description": "A menubar with nested submenus that fly out sideways on hover and on focus — without a single line of JS.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-menubar-007-* variables. Server rendered: no hooks. The sections are <details> with a shared name attribute, so exactly one is open at a time. The submenu is shown by a :hover and :focus-within rule on its own row: focus on the parent item already unfolds the list, and it can be entered by tabbing, so the nesting is reachable without a mouse too. An item with a continuation is marked with aria-haspopup and an arrow made of borders.",
             "ai": {
               "summary": "A menubar with two-level lists: an item with an arrow opens a submenu sideways. :hover and :focus-within do the opening, so the nested menu is reachable with a mouse and with a keyboard, and the component holds no state at all. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1278,7 +1295,8 @@
                 "the accent through the accent prop — it colours the focus ring",
                 "the width of the menu and the submenu",
                 "menubarLabel — the menubar name for screen readers",
-                "background — the component background; empty means no background, taking the page colour"
+                "background — the component background; empty means no background, taking the page colour",
+                "group — the <details> radio-group name; two menu bars on one page need different names"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
@@ -1416,7 +1434,8 @@
             "accent — цвет кружка профиля и обводки фокуса",
             "подписи: menubarLabel, notificationsTitle, notifications и profileItems",
             "notificationsLabel — имя кнопки уведомлений; {count} — число непрочитанных",
-            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "group — приставка к id меню и имени якоря; двум строкам меню на одной странице нужны разные приставки"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
@@ -1458,6 +1477,7 @@
         "i18n": {
           "en": {
             "description": "A menubar with a right-hand cluster: sections on the left, a notification count and a profile menu pinned to the right edge.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-menubar-008-* variables. Server rendered: no hooks, all the menus are popover=\"auto\". The right-hand group is pushed by margin-left:auto, and its menus are aligned to the right edge of the button through position-area:bottom span-left, otherwise they run past the edge of the window. The unread count goes into the button's aria-label, and the badge itself is hidden from the screen reader. In a narrow block the user name is hidden by a container query, leaving the circle with the initials.",
             "ai": {
               "summary": "An app menubar with a right-hand block: sections on the left, a notifications button with a badge and a profile menu on the right. The menus run on the HTML popover, so Escape, outside clicks and mutual closing come from the browser. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -1479,7 +1499,8 @@
                 "accent — the colour of the profile circle and the focus ring",
                 "the labels: menubarLabel, notificationsTitle, notifications and profileItems",
                 "notificationsLabel — the notifications button name; {count} is the unread count",
-                "background — the component background; empty means no background, taking the page colour"
+                "background — the component background; empty means no background, taking the page colour",
+                "group — the prefix for menu ids and anchor names; two menu bars on one page need different prefixes"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",

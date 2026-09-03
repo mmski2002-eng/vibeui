@@ -1,15 +1,12 @@
 import { Fragment } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Buttongroup054Tool = {
   id: string
   label: string
 }
 
-export type Buttongroup054Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Buttongroup054Props = Omit<ComponentProps<"div">, "children"> & {
   tools?: Buttongroup054Tool[]
   label?: string
   /** Пусто — заливки нет, панель ложится на фон страницы. */
@@ -28,13 +25,16 @@ const STYLES = `
 :where([data-vibeui-block="buttongroup-054"]){
 --vibeui-buttongroup-054-surface:transparent;
 --vibeui-buttongroup-054-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.005 265));
---vibeui-buttongroup-054-muted:light-dark(oklch(0.6 0.014 265),oklch(0.71 0.012 265));
+--vibeui-buttongroup-054-muted:color-mix(in oklab,var(--vibeui-buttongroup-054-fg) 68%,transparent);
 --vibeui-buttongroup-054-border:light-dark(oklch(0.9 0.006 265),oklch(0.4 0.012 265));
 --vibeui-buttongroup-054-hover:light-dark(oklch(0.955 0.005 265),oklch(0.34 0.01 265));
 --vibeui-buttongroup-054-accent:light-dark(oklch(0.5 0.16 265),oklch(0.76 0.14 265));
 --vibeui-buttongroup-054-radius:0.375rem;
 --vibeui-buttongroup-054-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="buttongroup-054"]{color-scheme:dark}
 [data-vibeui-block="buttongroup-054"]{
 box-sizing:border-box;display:inline-flex;align-items:center;gap:0.125rem;
 padding:0.1875rem;
@@ -144,6 +144,7 @@ export function Buttongroup054({
       </style>
       <div
         {...props}
+        data-slot="button-group"
         data-vibeui-block="buttongroup-054"
         className={className}
         style={palette}

@@ -28,11 +28,14 @@ const STYLES = `
 --vibeui-pagination-012-bg:transparent;
 --vibeui-pagination-012-row:light-dark(oklch(0.975 0.003 265),oklch(0.27 0.009 265));
 --vibeui-pagination-012-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
---vibeui-pagination-012-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-pagination-012-muted:color-mix(in oklab,var(--vibeui-pagination-012-fg) 68%,transparent);
 --vibeui-pagination-012-border:light-dark(oklch(0.91 0.006 265),oklch(0.38 0.012 265));
 --vibeui-pagination-012-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.16 262));
 --vibeui-pagination-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="pagination-012"]{color-scheme:dark}
 [data-vibeui-block="pagination-012"]{
 box-sizing:border-box;width:100%;max-width:26rem;
 background:var(--vibeui-pagination-012-bg);color:var(--vibeui-pagination-012-fg);
@@ -177,6 +180,7 @@ export function Pagination012({
         {STYLES}
       </style>
       <div
+        data-slot="pagination"
         data-vibeui-block="pagination-012"
         className={className}
         style={palette}

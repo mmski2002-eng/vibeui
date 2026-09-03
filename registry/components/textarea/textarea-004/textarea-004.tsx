@@ -1,10 +1,10 @@
 "use client"
 
 import { Fragment, useId, useRef, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Textarea004Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange" | "defaultValue"
 > & {
   label?: string
@@ -35,7 +35,7 @@ const STYLES = `
 :where([data-vibeui-block="textarea-004"]){
 --vibeui-textarea-004-bg:transparent;
 --vibeui-textarea-004-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-textarea-004-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-textarea-004-muted:color-mix(in oklab,var(--vibeui-textarea-004-fg) 68%,transparent);
 --vibeui-textarea-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-textarea-004-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.012 265));
 --vibeui-textarea-004-bar:light-dark(oklch(0.97 0.003 265),oklch(0.3 0.013 265));
@@ -43,6 +43,9 @@ const STYLES = `
 --vibeui-textarea-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-textarea-004-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="textarea-004"]{color-scheme:dark}
 [data-vibeui-block="textarea-004"]{
 display:flex;flex-direction:column;gap:0.375rem;
 width:100%;max-width:23rem;box-sizing:border-box;padding:0.875rem;
@@ -211,6 +214,7 @@ export function Textarea004({
       </style>
       <div
         {...props}
+        data-slot="textarea"
         data-vibeui-block="textarea-004"
         className={className}
         style={palette}
@@ -252,10 +256,11 @@ export function Textarea004({
             ref={field}
             value={value}
             placeholder={placeholder}
+            aria-describedby={`${id}-hint`}
             onChange={(event) => setValue(event.target.value)}
           />
         </div>
-        <p data-part="hint">
+        <p data-part="hint" id={`${id}-hint`}>
           {hint}:{" "}
           {examples.map((example, index) => (
             <Fragment key={example}>

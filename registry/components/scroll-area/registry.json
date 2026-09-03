@@ -73,6 +73,7 @@
         "i18n": {
           "en": {
             "description": "A scroll area with masked edges: the fade is the only honest sign that the list continues.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-scrollarea-001-* variables. Server rendered: no hooks. The edges are faded out by a mask gradient at the top and the bottom, and the height is set by a variable. The area gets tabIndex and role=\"group\" with a name: without them it cannot be scrolled by keyboard. The scrollbar stays visible.",
             "ai": {
               "summary": "A fixed-height scrollable list: a header with a counter, masked edges and striped rows. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -195,6 +196,7 @@
         "i18n": {
           "en": {
             "description": "A scroll area where the edge shadows appear only on the side that still has content, done in pure CSS: four background layers instead of a scroll handler.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-scrollarea-002-* variables. Server rendered: no hooks and no handlers. The trick rests on background-attachment: two \"covers\" in the surface colour are declared as local and travel with the content, while two radial shadows are declared as scroll and are pinned to the frame. As long as the list has not moved, the cover hides the shadow; on scrolling the cover slides away and the shadow is revealed. The scrolling node gets tabindex=\"0\" and role=\"region\" with aria-label: without them the area cannot be scrolled by keyboard and does not appear in the list of landmarks. overscroll-behavior: contain keeps the scroll from falling through to the page.",
             "ai": {
               "summary": "A scroll area with edge hints: the shadows are four background layers that reveal themselves, with no onScroll. Zero dependencies, one file, server rendered.",
               "preserve": [
@@ -337,6 +339,7 @@
         "i18n": {
           "en": {
             "description": "A horizontal rail with snapping: the scroll always stops at the start of a card rather than mid-card, and the last card never presses against the edge of the area.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-scrollarea-003-* variables. Server rendered: no hooks and no handlers. Snapping is assembled from a pair of properties: scroll-snap-type: x mandatory on the rail and scroll-snap-align: start on the cards; scroll-padding-inline repeats the inner padding, so a snapped card is not pressed against the very edge. The padding sits on the rail rather than on the container: otherwise the last card would be clipped by the edge of the scroller. The rail gets tabindex=\"0\" and role=\"region\" with aria-label so that it can be scrolled by keyboard. The card width is lifted into a variable: it decides how many cards are visible at a time.",
             "ai": {
               "summary": "A horizontal card rail that snaps to card starts and scrolls from the keyboard. Zero dependencies, one file, server rendered.",
               "preserve": [
@@ -493,6 +496,7 @@
         "i18n": {
           "en": {
             "description": "A scroll area whose section headers stick to its own top rather than the page's: the area itself is the scrolling ancestor that sticky measures against.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-scrollarea-004-* variables. Server rendered: no hooks. The list is built as a single dl: dt is the section header with position: sticky and top: 0, dd are the rows; the groups are wrapped in fragments, so there is no extra node with overflow between dl and dt that would cancel the sticking. Sticky measures the top against the nearest scrolling ancestor, so the area has to be that ancestor — hence its fixed height and overflow-y. The scrolling node gets tabindex=\"0\" and role=\"region\" with aria-label. An opaque header background is mandatory: the departing rows show through a transparent one.",
             "ai": {
               "summary": "An area with sticky section headers: sticky measures against the area, and the markup is one flat dl with no extra wrappers. Zero dependencies, one file, server rendered.",
               "preserve": [
@@ -656,6 +660,7 @@
         "i18n": {
           "en": {
             "description": "An area whose height is expressed in visible rows rather than pixels: the cut always lands on a row boundary, and the \"6 of 12 visible\" caption never lies.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-scrollarea-005-* variables. Server rendered: no hooks. The height is computed as row × row count from two variables, so the bottom edge of the area coincides with a row boundary and no half row appears. The numbering is drawn by a CSS counter in a pseudo-element: there are no numbers in the markup, and the list does not have to be renumbered by hand when the order changes. The scrolling node gets tabindex=\"0\" and role=\"region\" with aria-label. The footer carries an honest \"N of M visible\", where N is clamped by the number of items: if there are fewer rows than fit, the caption does not promise more than there is.",
             "ai": {
               "summary": "A fixed-height area measured in rows, with a capacity counter and numbering from a CSS counter. Zero dependencies, one file, server rendered.",
               "preserve": [
@@ -820,6 +825,7 @@
         "i18n": {
           "en": {
             "description": "An area that scrolls itself to the active item on first paint, with a \"jump to current\" button that brings the view back after manual scrolling.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-scrollarea-006-* variables. A client component: it needs a useRef on the area and on the active item plus a useEffect for the first placement. The position is computed by hand — scrollTop from offsetTop corrected by half the height of the area — rather than through scrollIntoView: that one scrolls every ancestor as well, and the page travels along with the area. The button runs the same calculation with smooth behaviour. The scrolling node gets tabindex=\"0\" and role=\"region\" with aria-label. The active row is marked with aria-current and, besides the fill, carries a thick marker on the left: colour alone does not read for colour blindness.",
             "ai": {
               "summary": "An area that reveals the active item on mount, plus a button to return to it. Zero dependencies, one file, client component.",
               "preserve": [
@@ -979,6 +985,7 @@
         "i18n": {
           "en": {
             "description": "An area with a thin scrollbar declared twice: once with the standard properties and once as a WebKit pseudo-element fallback — the look is the same everywhere.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-scrollarea-007-* variables. Server rendered: no hooks. The standard scrollbar-width and scrollbar-color come first — Firefox and recent builds of Chrome and Safari understand them. Then, under @supports not (scrollbar-width: thin), the same look is assembled with ::-webkit-scrollbar rules: the fallback path does not switch on where the standard one works, so the two implementations do not fight. scrollbar-gutter: stable reserves room for the bar, and the content does not jerk when it appears. The bar is not hidden: without it both the cue that there is more to scroll and the ability to drag it with the mouse disappear. The scrolling node gets tabindex=\"0\" and role=\"region\" with aria-label.",
             "ai": {
               "summary": "An area with a thin styled scrollbar plus a ::-webkit-scrollbar fallback guarded by @supports not. Zero dependencies, one file, server rendered.",
               "preserve": [

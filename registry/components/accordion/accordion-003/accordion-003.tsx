@@ -1,44 +1,50 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Accordion003Item = {
   question: string
   answer: string
 }
 
-/** Значок раздела. Все фигуры рисует компонент, картинка одна во всех движках. */
-export type Accordion003Marker =
-  "plus" | "chevron" | "triangle" | "square" | "none"
+/** Каретка слева от вопроса: курсор, стоящий на найденной строке. */
+export type Accordion003Caret = "bar" | "none"
 
-export type Accordion003Divider = "line" | "dashed" | "none"
-
-export type Accordion003Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Accordion003Props = Omit<ComponentProps<"div">, "children"> & {
   items?: Accordion003Item[]
+  /** Номер раздела, открытого сразу. -1 — все закрыты. */
   defaultOpen?: number
   /** Открытым остаётся только один раздел. */
   exclusive?: boolean
-  marker?: Accordion003Marker
-  divider?: Accordion003Divider
+  /**
+   * Имя группы взаимного исключения. Двум аккордеонам на одной странице
+   * нужны разные имена, иначе они делят одну радиогруппу.
+   */
+  group?: string
+  caret?: Accordion003Caret
+  /** Цвет пигмента подсветки. Увести его от жёлтого — потерять приём. */
+  highlight?: string
   /** Пусто — фона нет, список лежит прямо на фоне страницы. */
   background?: string
+  /** Цвет каретки и обводки фокуса. */
   accent?: string
 }
 
-// Идея компонента: аккордеон без рамок — только строки и волосяные линии
-// между ними. Он не выглядит вставкой на странице и годится там, где список
-// вопросов идёт внутри текста. Знак «плюс» превращается в «минус» поворотом
-// одной полосы: это читается даже боковым зрением.
+// Идея компонента: единственное, чего не умеет ни один аккордеон на useState,
+// — браузер сам раскрывает нативный details, когда находит внутри текст
+// поиском по странице. Компонент говорит именно об этом: открытый вопрос
+// лежит под пигментом find-in-page, слева стоит каретка. Всё остальное
+// убрано — ни рамок, ни скруглений, ни фона строк.
 //
-// Тема берётся из color-scheme окружения через light-dark(): собственного
-// фона у компонента нет, он темнеет вместе со страницей.
+// Пигмент не гасится в тёмной теме. Браузер в тёмном режиме тоже красит
+// найденное ярким и переводит буквы под ним в тёмный; приглушить пигмент
+// «чтобы не резал глаз» — значит превратить приём в обычный акцент.
 const STYLES = `
 :where([data-vibeui-block="accordion-003"]){
---vibeui-accordion-003-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-accordion-003-muted:light-dark(oklch(0.5 0.014 265),oklch(0.68 0.01 265));
---vibeui-accordion-003-line:light-dark(oklch(0.9 0.006 265),oklch(0.3 0.01 265));
---vibeui-accordion-003-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.16 262));
+--vibeui-accordion-003-fg:light-dark(oklch(0.18 0.006 265),oklch(0.95 0.004 265));
+--vibeui-accordion-003-muted:color-mix(in oklab,var(--vibeui-accordion-003-fg) 68%,transparent);
+--vibeui-accordion-003-highlight:light-dark(oklch(0.93 0.155 105),oklch(0.86 0.17 100));
+/* Буквы под пигментом всегда тёмные — как их красит сам браузер. */
+--vibeui-accordion-003-highlight-ink:oklch(0.19 0.02 100);
+--vibeui-accordion-003-accent:var(--vibeui-accordion-003-fg);
 --vibeui-accordion-003-bg:transparent;
 --vibeui-accordion-003-pad:0;
 --vibeui-accordion-003-radius:0;
@@ -47,85 +53,61 @@ container-type:inline-size;
 }
 [data-vibeui-block="accordion-003"]{
 display:flex;flex-direction:column;
-width:100%;max-width:42rem;box-sizing:border-box;
+width:100%;max-width:44rem;box-sizing:border-box;
 padding:var(--vibeui-accordion-003-pad);
 background:var(--vibeui-accordion-003-bg);
 border-radius:var(--vibeui-accordion-003-radius);
-color:var(--vibeui-accordion-003-fg);font-family:var(--vibeui-accordion-003-font);
-border-top:1px solid transparent;
+color:var(--vibeui-accordion-003-fg);
+font-family:var(--vibeui-accordion-003-font);
 }
-/* Линия всегда занимает свой пиксель: смена разделителей не двигает строки. */
-[data-vibeui-block="accordion-003"] details{border-bottom:1px solid transparent}
-[data-vibeui-block="accordion-003"][data-divider="line"]{border-top-color:var(--vibeui-accordion-003-line)}
-[data-vibeui-block="accordion-003"][data-divider="line"] details{border-bottom-color:var(--vibeui-accordion-003-line)}
-[data-vibeui-block="accordion-003"][data-divider="dashed"]{border-top:1px dashed var(--vibeui-accordion-003-line)}
-[data-vibeui-block="accordion-003"][data-divider="dashed"] details{border-bottom:1px dashed var(--vibeui-accordion-003-line)}
+[data-vibeui-block="accordion-003"] details{padding:0.375rem 0}
+[data-vibeui-block="accordion-003"] details + details{margin-top:0.375rem}
 [data-vibeui-block="accordion-003"] summary{
-display:flex;align-items:flex-start;justify-content:space-between;gap:1.25rem;
-padding:1rem 0.25rem;cursor:pointer;list-style:none;
-font-size:0.9375rem;font-weight:550;line-height:1.45;
-transition:color .16s ease;
+display:flex;align-items:baseline;gap:0.6875rem;cursor:pointer;list-style:none;
+font-size:1rem;font-weight:500;letter-spacing:-0.015em;line-height:1.45;
 }
 [data-vibeui-block="accordion-003"] summary::-webkit-details-marker{display:none}
-[data-vibeui-block="accordion-003"] summary:hover{color:var(--vibeui-accordion-003-accent)}
-[data-vibeui-block="accordion-003"] summary:focus-visible{outline:2px solid var(--vibeui-accordion-003-accent);outline-offset:2px;border-radius:0.375rem}
-/* Бокс значка одного размера при любой фигуре: заголовок не перетекает. */
-[data-vibeui-block="accordion-003"] [data-part="marker"]{
-position:relative;flex:none;width:0.875rem;height:0.875rem;margin-top:0.3125rem;
+[data-vibeui-block="accordion-003"] summary:focus-visible{
+outline:2px solid var(--vibeui-accordion-003-accent);outline-offset:3px;border-radius:2px;
 }
-[data-vibeui-block="accordion-003"] [data-part="marker"]::before{
-content:"";position:absolute;left:50%;top:50%;
-transition:transform .2s cubic-bezier(.32,.72,0,1),background-color .16s ease,border-color .16s ease;
-}
-/* Плюс и минус: горизонтальная полоса на месте, вертикальная складывается. */
-[data-vibeui-block="accordion-003"][data-marker="plus"] [data-part="marker"]::before,
-[data-vibeui-block="accordion-003"][data-marker="plus"] [data-part="marker"]::after{
-content:"";position:absolute;left:0;top:50%;
-width:100%;height:1.5px;margin-top:-0.75px;margin-left:0;border-radius:1px;
-transform:none;
+/* Каретка — курсор, стоящий на найденной строке: у открытого раздела толще. */
+[data-vibeui-block="accordion-003"] [data-part="caret"]{
+width:1px;height:1.05em;flex:none;
 background:var(--vibeui-accordion-003-muted);
-transition:transform .2s cubic-bezier(.32,.72,0,1),background-color .16s ease;
+transform:translateY(0.16em);
+transition:width .12s ease,background .12s ease;
 }
-[data-vibeui-block="accordion-003"][data-marker="plus"] [data-part="marker"]::after{transform:rotate(90deg)}
-[data-vibeui-block="accordion-003"][data-marker="plus"] details[open] [data-part="marker"]::after{transform:rotate(0deg)}
-[data-vibeui-block="accordion-003"][data-marker="plus"] details[open] [data-part="marker"]::before,
-[data-vibeui-block="accordion-003"][data-marker="plus"] details[open] [data-part="marker"]::after{background:var(--vibeui-accordion-003-accent)}
-[data-vibeui-block="accordion-003"][data-marker="chevron"] [data-part="marker"]::before{
-width:0.4375rem;height:0.4375rem;
-border-right:1.5px solid var(--vibeui-accordion-003-muted);
-border-bottom:1.5px solid var(--vibeui-accordion-003-muted);
-transform:translate(-70%,-50%) rotate(-45deg);
+[data-vibeui-block="accordion-003"] details[open] [data-part="caret"]{
+width:2px;background:var(--vibeui-accordion-003-accent);
 }
-[data-vibeui-block="accordion-003"][data-marker="chevron"] details[open] [data-part="marker"]::before{
-transform:translate(-50%,-70%) rotate(45deg);
-border-right-color:var(--vibeui-accordion-003-accent);
-border-bottom-color:var(--vibeui-accordion-003-accent);
+/* Пигмент лежит на одном узле с текстом: разбей заголовок на два элемента —
+   и подсветка разъедется по строкам вместе с переносом. */
+[data-vibeui-block="accordion-003"] [data-part="hit"]{
+padding:0.08em 0.3em;margin-left:-0.3em;background:transparent;
+box-decoration-break:clone;-webkit-box-decoration-break:clone;
+transition:background .14s ease,color .14s ease;
 }
-[data-vibeui-block="accordion-003"][data-marker="triangle"] [data-part="marker"]::before{
-width:0.5rem;height:0.5rem;transform:translate(-50%,-50%);
-background:var(--vibeui-accordion-003-muted);
-clip-path:polygon(15% 0,100% 50%,15% 100%);
+/* Наведение показывает механику до клика: пигмент проступает наполовину. */
+[data-vibeui-block="accordion-003"] summary:hover [data-part="hit"]{
+background:color-mix(in oklab,var(--vibeui-accordion-003-highlight) 40%,transparent);
 }
-[data-vibeui-block="accordion-003"][data-marker="triangle"] details[open] [data-part="marker"]::before{
-transform:translate(-50%,-50%) rotate(90deg);background:var(--vibeui-accordion-003-accent);
-}
-[data-vibeui-block="accordion-003"][data-marker="square"] [data-part="marker"]::before{
-width:0.5rem;height:0.5rem;border-radius:1px;transform:translate(-50%,-50%);
-box-shadow:inset 0 0 0 1.5px var(--vibeui-accordion-003-muted);
-}
-[data-vibeui-block="accordion-003"][data-marker="square"] details[open] [data-part="marker"]::before{
-transform:translate(-50%,-50%) rotate(45deg);
-background:var(--vibeui-accordion-003-accent);
-box-shadow:inset 0 0 0 1.5px var(--vibeui-accordion-003-accent);
+[data-vibeui-block="accordion-003"] details[open] [data-part="hit"]{
+background:var(--vibeui-accordion-003-highlight);
+color:var(--vibeui-accordion-003-highlight-ink);
 }
 [data-vibeui-block="accordion-003"] [data-part="answer"]{
-margin:0;padding:0 2.5rem 1.125rem 0.25rem;
-font-size:0.875rem;line-height:1.65;color:var(--vibeui-accordion-003-muted);max-width:64ch;
+margin:0.5rem 0 0;padding-left:1.4375rem;max-width:62ch;
+font-size:0.875rem;line-height:1.7;color:var(--vibeui-accordion-003-muted);
 }
+[data-vibeui-block="accordion-003"][data-caret="none"] [data-part="caret"]{display:none}
+[data-vibeui-block="accordion-003"][data-caret="none"] [data-part="answer"]{padding-left:0}
 @container (min-width: 32rem){
-[data-vibeui-block="accordion-003"] summary{padding:1.125rem 0.25rem;font-size:1rem}
+[data-vibeui-block="accordion-003"] summary{font-size:1.0625rem}
 [data-vibeui-block="accordion-003"] [data-part="answer"]{font-size:0.9375rem}
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="accordion-003"]{color-scheme:dark}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="accordion-003"] *{animation:none!important;transition:none!important}}
 `
 
@@ -175,15 +157,16 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 }
 
 /**
- * Аккордеон без рамок: строки, волосяные линии и знак «плюс».
- * Один файл, ноль зависимостей, собственная палитра.
+ * Аккордеон с подсветкой поиска: открытый вопрос лежит под пигментом
+ * find-in-page. Один файл, ноль зависимостей, собственная палитра.
  */
 export function Accordion003({
   items = DEFAULT_ITEMS,
   defaultOpen = -1,
-  exclusive = false,
-  marker = "plus",
-  divider = "line",
+  exclusive = true,
+  group = "vibeui-accordion-003",
+  caret = "bar",
+  highlight,
   background = "",
   accent,
   className,
@@ -193,11 +176,12 @@ export function Accordion003({
   // Фон появляется вместе с внутренними отступами: без фона список лежит
   // прямо на странице, и поля по бокам ему только мешают.
   const palette = {
+    ...(highlight ? { "--vibeui-accordion-003-highlight": highlight } : null),
     ...(accent ? { "--vibeui-accordion-003-accent": accent } : null),
     ...(background
       ? {
           "--vibeui-accordion-003-bg": background,
-          "--vibeui-accordion-003-pad": "0.25rem 1.25rem 0.75rem",
+          "--vibeui-accordion-003-pad": "1.375rem 1.5rem",
           "--vibeui-accordion-003-radius": "0.5rem",
           colorScheme: schemeForBackground(background),
         }
@@ -212,23 +196,23 @@ export function Accordion003({
       </style>
       <div
         {...props}
+        data-slot="accordion"
         data-vibeui-block="accordion-003"
-        data-marker={marker}
-        data-divider={divider}
+        data-caret={caret}
         className={className}
         style={palette}
       >
         {items.map((item, index) => (
           <details
             key={item.question}
-            name={exclusive ? "vibeui-accordion-003" : undefined}
+            name={exclusive ? group : undefined}
             open={index === defaultOpen}
           >
             <summary>
-              {item.question}
-              {marker === "none" ? null : (
-                <span data-part="marker" aria-hidden="true" />
+              {caret === "none" ? null : (
+                <span data-part="caret" aria-hidden="true" />
               )}
+              <span data-part="hit">{item.question}</span>
             </summary>
             <p data-part="answer">{item.answer}</p>
           </details>

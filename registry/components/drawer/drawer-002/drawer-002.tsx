@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Drawer002Action = {
   label: string
@@ -10,7 +10,7 @@ export type Drawer002Action = {
 }
 
 export type Drawer002Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "title"
 > & {
   triggerLabel?: string
@@ -31,13 +31,16 @@ const STYLES = `
 --vibeui-drawer-002-bg:transparent;
 --vibeui-drawer-002-surface:light-dark(oklch(1 0 0),oklch(0.22 0.013 265));
 --vibeui-drawer-002-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
---vibeui-drawer-002-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-drawer-002-muted:color-mix(in oklab,var(--vibeui-drawer-002-fg) 68%,transparent);
 --vibeui-drawer-002-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-drawer-002-accent:light-dark(oklch(0.55 0.17 265),oklch(0.73 0.15 265));
 --vibeui-drawer-002-danger:light-dark(oklch(0.55 0.2 25),oklch(0.73 0.17 25));
 --vibeui-drawer-002-hover:light-dark(oklch(0.97 0.003 265),oklch(0.28 0.013 265));
 --vibeui-drawer-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="drawer-002"]{color-scheme:dark}
 [data-vibeui-block="drawer-002"]{
 display:inline-block;font-family:var(--vibeui-drawer-002-font);color:var(--vibeui-drawer-002-fg);
 }
@@ -60,6 +63,7 @@ translate:0 100%;transition:translate .24s ease,overlay .24s allow-discrete,disp
 @starting-style{
 [data-vibeui-block="drawer-002"] dialog[open]{translate:0 100%}
 }
+/* Затемнение позади ящика одно на обе темы: подложка гасит страницу, а не красится вместе с ней. */
 [data-vibeui-block="drawer-002"] dialog::backdrop{background:oklch(0.19 0.02 265 / 48%)}
 [data-vibeui-block="drawer-002"] [data-part="panel"]{
 display:flex;flex-direction:column;gap:0.5rem;box-sizing:border-box;
@@ -182,6 +186,7 @@ export function Drawer002({
       </style>
       <div
         {...props}
+        data-slot="drawer"
         data-vibeui-block="drawer-002"
         className={className}
         style={palette}

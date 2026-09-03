@@ -1,14 +1,10 @@
 "use client"
 
 import { useId, useMemo, useRef, useState } from "react"
-import type {
-  ComponentPropsWithoutRef,
-  CSSProperties,
-  KeyboardEvent,
-} from "react"
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Combobox006Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onSelect"
 > & {
   label?: string
@@ -35,7 +31,7 @@ const STYLES = `
 :where([data-vibeui-block="combobox-006"]){
 --vibeui-combobox-006-bg:transparent;
 --vibeui-combobox-006-fg:light-dark(oklch(0.24 0.02 70),oklch(0.94 0.008 70));
---vibeui-combobox-006-muted:light-dark(oklch(0.55 0.02 70),oklch(0.71 0.016 70));
+--vibeui-combobox-006-muted:color-mix(in oklab,var(--vibeui-combobox-006-fg) 68%,transparent);
 --vibeui-combobox-006-border:light-dark(oklch(0.9 0.012 70),oklch(0.38 0.016 70));
 --vibeui-combobox-006-field:light-dark(oklch(0.985 0.006 70),oklch(0.3 0.014 70));
 --vibeui-combobox-006-active:light-dark(oklch(0.95 0.045 70),oklch(0.37 0.045 70));
@@ -43,6 +39,9 @@ const STYLES = `
 --vibeui-combobox-006-radius:0.625rem;
 --vibeui-combobox-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="combobox-006"]{color-scheme:dark}
 [data-vibeui-block="combobox-006"]{
 display:flex;flex-direction:column;gap:0.375rem;
 width:100%;max-width:21rem;box-sizing:border-box;padding:0.875rem;
@@ -253,6 +252,7 @@ export function Combobox006({
       </style>
       <div
         {...props}
+        data-slot="combobox"
         data-vibeui-block="combobox-006"
         className={className}
         style={palette}

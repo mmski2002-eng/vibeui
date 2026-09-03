@@ -1,7 +1,7 @@
 "use client"
 
 import { useId, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Togglegroup009Item = {
   id: string
@@ -11,7 +11,7 @@ export type Togglegroup009Item = {
 }
 
 export type Togglegroup009Props = Omit<
-  ComponentPropsWithoutRef<"section">,
+  ComponentProps<"section">,
   "children" | "onChange"
 > & {
   label?: string
@@ -40,7 +40,7 @@ const STYLES = `
 :where([data-vibeui-block="togglegroup-009"]){
 --vibeui-togglegroup-009-bg:transparent;
 --vibeui-togglegroup-009-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-togglegroup-009-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-togglegroup-009-muted:color-mix(in oklab,var(--vibeui-togglegroup-009-fg) 68%,transparent);
 --vibeui-togglegroup-009-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
 --vibeui-togglegroup-009-surface:light-dark(oklch(0.97 0.004 265),oklch(0.26 0.01 265));
 --vibeui-togglegroup-009-raised:light-dark(oklch(1 0 0),oklch(0.34 0.012 265));
@@ -48,6 +48,9 @@ const STYLES = `
 --vibeui-togglegroup-009-accent:light-dark(oklch(0.56 0.16 230),oklch(0.76 0.14 230));
 --vibeui-togglegroup-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="togglegroup-009"]{color-scheme:dark}
 [data-vibeui-block="togglegroup-009"]{
 box-sizing:border-box;display:flex;flex-direction:column;gap:0.75rem;
 width:100%;max-width:28rem;padding:0.875rem;
@@ -68,7 +71,7 @@ border-radius:0.625rem;background:var(--vibeui-togglegroup-009-surface);
 [data-vibeui-block="togglegroup-009"] [data-part="group"] button{
 appearance:none;cursor:pointer;font:inherit;
 display:inline-flex;align-items:center;gap:0.375rem;
-height:1.875rem;padding:0 0.625rem;border:0;border-radius:0.4375rem;
+height:2rem;padding:0 0.625rem;border:0;border-radius:0.4375rem;
 background:transparent;color:var(--vibeui-togglegroup-009-muted);
 font-size:0.75rem;font-weight:600;line-height:1;
 transition:background-color .15s ease,color .15s ease;
@@ -167,6 +170,39 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 }
 
 /**
+ * Стрелки водят фокус внутри группы: до дальней кнопки не нужно дожимать
+ * Tab через все предыдущие, а Home и End бросают на края.
+ */
+function moveFocus(event: KeyboardEvent<HTMLDivElement>) {
+  const step =
+    event.key === "ArrowRight" || event.key === "ArrowDown"
+      ? 1
+      : event.key === "ArrowLeft" || event.key === "ArrowUp"
+        ? -1
+        : 0
+
+  if (step === 0 && event.key !== "Home" && event.key !== "End") {
+    return
+  }
+
+  const buttons = Array.from(
+    event.currentTarget.querySelectorAll<HTMLButtonElement>("button"),
+  )
+  const from = buttons.indexOf(document.activeElement as HTMLButtonElement)
+
+  if (from === -1) {
+    return
+  }
+
+  const last = buttons.length - 1
+  const next =
+    event.key === "Home" ? 0 : event.key === "End" ? last : from + step
+
+  event.preventDefault()
+  buttons[next < 0 ? last : next > last ? 0 : next].focus()
+}
+
+/**
  * Переключатель вида списка одиночным выбором: сетка, список и таблица —
  * три реальные разметки одних данных. Один файл, ноль зависимостей.
  */
@@ -205,13 +241,19 @@ export function Togglegroup009({
       </style>
       <section
         {...props}
+        data-slot="toggle-group"
         data-vibeui-block="togglegroup-009"
         className={className}
         style={palette}
       >
         <div data-part="head">
           <h3>{heading}</h3>
-          <div data-part="group" role="group" aria-label={label}>
+          <div
+            data-part="group"
+            role="group"
+            aria-label={label}
+            onKeyDown={moveFocus}
+          >
             {VIEWS.map((view) => (
               <button
                 key={view.id}

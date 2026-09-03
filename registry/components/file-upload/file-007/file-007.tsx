@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type File007State = "done" | "active" | "queued"
 
@@ -7,7 +7,7 @@ export type File007Entry = {
   state: File007State
 }
 
-export type File007Props = Omit<ComponentPropsWithoutRef<"div">, "children"> & {
+export type File007Props = Omit<ComponentProps<"div">, "children"> & {
   title?: string
   done?: number
   total?: number
@@ -37,7 +37,7 @@ const STYLES = `
 :where([data-vibeui-block="file-007"]){
 --vibeui-file-007-surface:transparent;
 --vibeui-file-007-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
---vibeui-file-007-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-file-007-muted:color-mix(in oklab,var(--vibeui-file-007-fg) 68%,transparent);
 --vibeui-file-007-border:light-dark(oklch(0.89 0.008 265),oklch(0.4 0.014 265));
 --vibeui-file-007-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-file-007-track:light-dark(oklch(0.93 0.006 265),oklch(0.32 0.012 265));
@@ -45,6 +45,9 @@ const STYLES = `
 --vibeui-file-007-ok:light-dark(oklch(0.52 0.13 155),oklch(0.76 0.14 155));
 --vibeui-file-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="file-007"]{color-scheme:dark}
 /* Панель без собственной заливки: рамка очерчивает сводку на любом фоне. */
 [data-vibeui-block="file-007"]{
 display:flex;flex-direction:column;gap:0.5rem;
@@ -183,6 +186,7 @@ export function File007({
       </style>
       <div
         {...props}
+        data-slot="file-upload"
         data-vibeui-block="file-007"
         className={className}
         style={palette}

@@ -1,9 +1,8 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+"use client"
 
-export type Hovercard005Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
+
+export type Hovercard005Props = Omit<ComponentProps<"div">, "children"> & {
   /** Сокращение, набранное в тексте. */
   term?: string
   /** Полная расшифровка сокращения. */
@@ -34,11 +33,14 @@ const STYLES = `
 --vibeui-hovercard-005-bg:transparent;
 --vibeui-hovercard-005-card:light-dark(oklch(0.995 0.004 90),oklch(0.26 0.012 70));
 --vibeui-hovercard-005-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 90));
---vibeui-hovercard-005-muted:light-dark(oklch(0.52 0.014 265),oklch(0.73 0.012 90));
+--vibeui-hovercard-005-muted:color-mix(in oklab,var(--vibeui-hovercard-005-fg) 68%,transparent);
 --vibeui-hovercard-005-border:light-dark(oklch(0.89 0.01 90),oklch(0.37 0.014 70));
 --vibeui-hovercard-005-accent:light-dark(oklch(0.48 0.13 45),oklch(0.79 0.13 55));
 --vibeui-hovercard-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="hovercard-005"]{color-scheme:dark}
 [data-vibeui-block="hovercard-005"]{
 width:100%;max-width:28rem;box-sizing:border-box;
 padding:1rem 1.125rem;
@@ -113,6 +115,16 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 }
 
 /**
+ * Escape убирает фокус с триггера. Карточка держится на :focus-within,
+ * поэтому снятого фокуса достаточно, чтобы закрыть её с клавиатуры.
+ */
+function closeOnEscape(event: KeyboardEvent<HTMLElement>) {
+  if (event.key === "Escape") {
+    ;(event.target as HTMLElement).blur()
+  }
+}
+
+/**
  * Карточка термина глоссария: расшифровка, раздел, определение и смежные слова.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -149,6 +161,8 @@ export function Hovercard005({
       </style>
       <div
         {...props}
+        data-slot="hover-card"
+        onKeyDown={closeOnEscape}
         data-vibeui-block="hovercard-005"
         className={className}
         style={palette}

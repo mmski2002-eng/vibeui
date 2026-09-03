@@ -1,19 +1,18 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Stepper001Step = {
   label: string
   hint?: string
 }
 
-export type Stepper001Props = Omit<
-  ComponentPropsWithoutRef<"nav">,
-  "children"
-> & {
+export type Stepper001Props = Omit<ComponentProps<"nav">, "children"> & {
   steps?: Stepper001Step[]
   /** Номер текущего шага, считая с нуля. Предыдущие показываются пройденными. */
   current?: number
   /** Доступное имя списка шагов для скринридера. */
   label?: string
+  /** Состояния словами: галочка и цвет скринридеру ничего не говорят. */
+  stateText?: Record<string, string>
   accent?: string
 }
 
@@ -26,7 +25,7 @@ export type Stepper001Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="stepper-001"]){
 --vibeui-stepper-001-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
---vibeui-stepper-001-muted:light-dark(oklch(0.56 0.014 265),oklch(0.68 0.012 265));
+--vibeui-stepper-001-muted:color-mix(in oklab,var(--vibeui-stepper-001-fg) 68%,transparent);
 --vibeui-stepper-001-line:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-stepper-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.16 262));
 --vibeui-stepper-001-accent-fg:light-dark(oklch(1 0 0),oklch(0.19 0.02 262));
@@ -35,6 +34,9 @@ const STYLES = `
 --vibeui-stepper-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="stepper-001"]{color-scheme:dark}
 [data-vibeui-block="stepper-001"]{
 width:100%;box-sizing:border-box;
 font-family:var(--vibeui-stepper-001-font);color:var(--vibeui-stepper-001-fg);
@@ -70,6 +72,9 @@ background:var(--vibeui-stepper-001-accent);color:var(--vibeui-stepper-001-accen
 [data-vibeui-block="stepper-001"] [data-part="label"]{font-size:0.8125rem;font-weight:500;line-height:1.3}
 [data-vibeui-block="stepper-001"] li[data-state="todo"] [data-part="label"]{color:var(--vibeui-stepper-001-muted);font-weight:400}
 [data-vibeui-block="stepper-001"] [data-part="hint"]{font-size:0.75rem;line-height:1.3;color:var(--vibeui-stepper-001-muted)}
+[data-vibeui-block="stepper-001"] [data-part="sr"]{
+position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;
+}
 /* В узкой колонке подписи прячутся: остаются кружки и линия. */
 @container (max-width: 26rem){
 [data-vibeui-block="stepper-001"] [data-part="hint"]{display:none}
@@ -85,6 +90,12 @@ const DEFAULT_STEPS: Stepper001Step[] = [
   { label: "Публикация" },
 ]
 
+const STATE_TEXT: Record<string, string> = {
+  done: " — шаг пройден",
+  current: " — текущий шаг",
+  todo: " — впереди",
+}
+
 /**
  * Индикатор шагов: пройденные отмечены галочкой, линия заполнена до текущего.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -93,6 +104,7 @@ export function Stepper001({
   steps = DEFAULT_STEPS,
   current = 2,
   label = "Шаги",
+  stateText = STATE_TEXT,
   accent,
   className,
   style,
@@ -110,6 +122,7 @@ export function Stepper001({
       </style>
       <nav
         {...props}
+        data-slot="stepper"
         data-vibeui-block="stepper-001"
         aria-label={label}
         className={className}
@@ -130,6 +143,9 @@ export function Stepper001({
                   {state === "done" ? "✓" : index + 1}
                 </span>
                 <span data-part="label">{step.label}</span>
+                <span data-part="sr">
+                  {stateText[state] ?? STATE_TEXT[state]}
+                </span>
                 {step.hint ? <span data-part="hint">{step.hint}</span> : null}
               </li>
             )

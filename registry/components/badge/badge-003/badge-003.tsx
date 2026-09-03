@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Badge003Props = Omit<
-  ComponentPropsWithoutRef<"span">,
-  "children"
-> & {
+export type Badge003Props = Omit<ComponentProps<"span">, "children"> & {
   value?: number
   /** Порог, после которого печатается «99+». */
   max?: number
@@ -24,6 +21,9 @@ const STYLES = `
 --vibeui-badge-003-fg:light-dark(oklch(0.3 0.014 265),oklch(0.93 0.006 265));
 --vibeui-badge-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="badge-003"]{color-scheme:dark}
 [data-vibeui-block="badge-003"]{
 display:inline-flex;align-items:center;justify-content:center;
 min-width:var(--vibeui-badge-003-size);height:var(--vibeui-badge-003-size);
@@ -35,7 +35,9 @@ font-family:var(--vibeui-badge-003-font);font-size:0.6875rem;font-weight:700;
 font-variant-numeric:tabular-nums;line-height:1;vertical-align:middle;
 }
 [data-vibeui-block="badge-003"][data-tone="accent"]{--vibeui-badge-003-bg:light-dark(oklch(0.58 0.16 265),oklch(0.63 0.17 265));--vibeui-badge-003-fg:oklch(0.99 0.01 265)}
-[data-vibeui-block="badge-003"][data-tone="danger"]{--vibeui-badge-003-bg:light-dark(oklch(0.58 0.2 25),oklch(0.64 0.2 25));--vibeui-badge-003-fg:oklch(0.99 0.01 25)}
+/* Тёмная ветка не светлее светлой: текст на счётчике почти белый, а с ним
+   красная заливка держит 4.5:1 только до L≈0.58. */
+[data-vibeui-block="badge-003"][data-tone="danger"]{--vibeui-badge-003-bg:light-dark(oklch(0.58 0.2 25),oklch(0.57 0.2 25));--vibeui-badge-003-fg:oklch(0.99 0.01 25)}
 [data-vibeui-block="badge-003"][data-zero="true"]{opacity:.45}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="badge-003"] *{animation:none!important;transition:none!important}}
 `
@@ -95,6 +97,7 @@ export function Badge003({
       </style>
       <span
         {...props}
+        data-slot="badge"
         data-vibeui-block="badge-003"
         data-tone={tone}
         data-zero={safe === 0}

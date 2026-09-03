@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Badge012Props = Omit<
-  ComponentPropsWithoutRef<"span">,
-  "children"
-> & {
+export type Badge012Props = Omit<ComponentProps<"span">, "children"> & {
   label?: string
   /** Сколько осталось: без оценки ожидание выглядит зависанием. */
   hint?: string
@@ -20,11 +17,14 @@ const STYLES = `
 :where([data-vibeui-block="badge-012"]){
 --vibeui-badge-012-bg:light-dark(oklch(0.96 0.004 265),oklch(0.27 0.009 265));
 --vibeui-badge-012-fg:light-dark(oklch(0.32 0.014 265),oklch(0.93 0.006 265));
---vibeui-badge-012-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-badge-012-muted:color-mix(in oklab,var(--vibeui-badge-012-fg) 68%,transparent);
 --vibeui-badge-012-track:light-dark(oklch(0.86 0.008 265),oklch(0.41 0.011 265));
 --vibeui-badge-012-accent:light-dark(oklch(0.58 0.16 265),oklch(0.75 0.15 265));
 --vibeui-badge-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="badge-012"]{color-scheme:dark}
 [data-vibeui-block="badge-012"]{
 display:inline-flex;align-items:center;gap:0.4375rem;
 height:1.625rem;padding:0 0.6875rem 0 0.5625rem;
@@ -104,6 +104,7 @@ export function Badge012({
       </style>
       <span
         {...props}
+        data-slot="badge"
         data-vibeui-block="badge-012"
         className={className}
         style={palette}

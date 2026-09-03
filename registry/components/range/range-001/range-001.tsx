@@ -1,10 +1,10 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Range001Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "defaultValue" | "onChange"
 > & {
   label?: string
@@ -36,7 +36,7 @@ const STYLES = `
 --vibeui-range-001-bg:transparent;
 --vibeui-range-001-knob:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
 --vibeui-range-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
---vibeui-range-001-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-range-001-muted:color-mix(in oklab,var(--vibeui-range-001-fg) 68%,transparent);
 --vibeui-range-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.011 265));
 --vibeui-range-001-track:light-dark(oklch(0.92 0.006 265),oklch(0.33 0.012 265));
 --vibeui-range-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
@@ -45,6 +45,9 @@ const STYLES = `
 --vibeui-range-001-from:0%;
 --vibeui-range-001-to:100%;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="range-001"]{color-scheme:dark}
 [data-vibeui-block="range-001"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:20rem;box-sizing:border-box;padding:0.875rem;
@@ -54,7 +57,7 @@ font-family:var(--vibeui-range-001-font);color:var(--vibeui-range-001-fg);
 }
 [data-vibeui-block="range-001"] [data-part="head"]{
 display:flex;align-items:baseline;justify-content:space-between;gap:1rem;
-margin:0;font-size:0.875rem;
+margin:0;font-size:0.8125rem;
 }
 [data-vibeui-block="range-001"] [data-part="value"]{font-weight:650;font-variant-numeric:tabular-nums}
 [data-vibeui-block="range-001"] [data-part="rail"]{
@@ -121,6 +124,19 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 }
 
 /**
+ * Неверная локаль из пропа не должна ронять страницу-хост: toLocaleString
+ * бросает на ней RangeError, поэтому непригодное значение откатываем на дефолт.
+ */
+function safeLocale(value: string, fallback: string) {
+  try {
+    Intl.NumberFormat.supportedLocalesOf(value)
+    return value
+  } catch {
+    return fallback
+  }
+}
+
+/**
  * Диапазон двумя нативными ползунками: границы не перепрыгивают друг друга.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -142,6 +158,7 @@ export function Range001({
 }: Range001Props) {
   const [from, setFrom] = useState(defaultFrom)
   const [to, setTo] = useState(defaultTo)
+  const tag = safeLocale(locale, "ru-RU")
   const percent = (value: number) => `${((value - min) / (max - min)) * 100}%`
 
   const palette = {
@@ -164,6 +181,7 @@ export function Range001({
       </style>
       <div
         {...props}
+        data-slot="range"
         data-vibeui-block="range-001"
         className={className}
         style={palette}
@@ -171,8 +189,8 @@ export function Range001({
         <p data-part="head">
           {label}
           <span data-part="value">
-            {from.toLocaleString(locale)}
-            {unit} — {to.toLocaleString(locale)}
+            {from.toLocaleString(tag)}
+            {unit} — {to.toLocaleString(tag)}
             {unit}
           </span>
         </p>
@@ -202,11 +220,11 @@ export function Range001({
         </div>
         <p data-part="scale">
           <span>
-            {min.toLocaleString(locale)}
+            {min.toLocaleString(tag)}
             {unit}
           </span>
           <span>
-            {max.toLocaleString(locale)}
+            {max.toLocaleString(tag)}
             {unit}
           </span>
         </p>

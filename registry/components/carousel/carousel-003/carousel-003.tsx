@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Carousel003Slide = {
   title: string
@@ -9,10 +9,7 @@ export type Carousel003Slide = {
   hue?: number
 }
 
-export type Carousel003Props = Omit<
-  ComponentPropsWithoutRef<"section">,
-  "children"
-> & {
+export type Carousel003Props = Omit<ComponentProps<"section">, "children"> & {
   slides?: Carousel003Slide[]
   label?: string
   /** Роль секции для скринридера. */
@@ -42,11 +39,14 @@ const STYLES = `
 --vibeui-carousel-003-surface:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
 --vibeui-carousel-003-bg:light-dark(oklch(1 0 0),oklch(0.26 0.013 265));
 --vibeui-carousel-003-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-carousel-003-muted:light-dark(oklch(0.58 0.014 265),oklch(0.7 0.012 265));
+--vibeui-carousel-003-muted:color-mix(in oklab,var(--vibeui-carousel-003-fg) 68%,transparent);
 --vibeui-carousel-003-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-carousel-003-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-carousel-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="carousel-003"]{color-scheme:dark}
 /* Собственная подложка: заголовок и счётчик — это текст, и на тёмной
    странице он обязан читаться без правки палитры проекта. */
 [data-vibeui-block="carousel-003"]{
@@ -56,6 +56,8 @@ display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:26rem;box-sizing:border-box;
 font-family:var(--vibeui-carousel-003-font);color:var(--vibeui-carousel-003-fg);
 }
+/* Кадр и миниатюры стоят вместо фотографий: градиент и светлый текст на нём
+   одинаковы в любой теме страницы, поэтому второй ветки у них нет. */
 [data-vibeui-block="carousel-003"] [data-part="stage"]{
 position:relative;display:flex;flex-direction:column;justify-content:flex-end;gap:0.25rem;
 aspect-ratio:16 / 9;padding:1rem;box-sizing:border-box;overflow:hidden;
@@ -179,6 +181,7 @@ export function Carousel003({
       </style>
       <section
         {...props}
+        data-slot="carousel"
         data-vibeui-block="carousel-003"
         aria-roledescription={roleText}
         aria-label={label}

@@ -145,7 +145,8 @@
                 "value": "$240",
                 "status": "Awaiting payment"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-item-001-* variables. Server component: no hooks. The link is stretched with an ::after pseudo-element, and the focus ring is placed on the root through :has(a:focus-visible). The root is an <li>, so the rows go into an ordinary list. The value is right-aligned in tabular figures."
           }
         },
         "cardControls": ["background"]
@@ -283,7 +284,8 @@
                 "meta": "14 files · updated yesterday",
                 "glyph": "PD"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-item-002-* variables. Server component: no hooks and no handlers. The root is an li with flex; the glyph tile has a fixed 2.25rem square and does not shrink, so the titles of all rows start on the same vertical. The tile background and the glyph colour are computed from --vibeui-item-002-tint through color-mix, so the pair cannot drift apart. Text nodes are truncated with an ellipsis and do not break the row height."
           }
         },
         "cardControls": ["tint", "background"]
@@ -421,7 +423,8 @@
                 "meta": "maria@studio.ru · viewer",
                 "action": "Invite"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-item-003-* variables. Server component: there is no state, the handler is attached by the calling code through the onClick prop. The layout is a flex of a text block and a button; the button is marked flex:none and does not shrink, while the text is truncated with an ellipsis. The button's aria-label is assembled from the action and the row title, so ten identical buttons in a row are distinguishable by ear."
           }
         },
         "cardControls": ["accent", "background"]
@@ -559,7 +562,8 @@
                 "meta": "Email, Telegram and the weekly digest",
                 "hint": "12"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-item-004-* variables. Server component: no hooks. The root element is an a, so the row enters the page's link list as a whole rather than by its title alone, and needs no stretched ::after the way item-001 does. The :hover and :focus-visible states are described by a single rule, so the keyboard path looks the same as the mouse one."
           }
         },
         "cardControls": ["accent", "background"]
@@ -697,7 +701,8 @@
                 "meta": "Roman Tishchenko · 3 days ago",
                 "badge": "12:40"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-item-005-* variables. Server component: no hooks. The thumbnail is a fixed-width block with aspect-ratio 16 / 9 and overflow:hidden; without the image prop it holds a gradient stand-in, so the row height is the same with a picture and without one. The duration badge lies over the thumbnail under aria-hidden and is repeated as text in the secondary line. The title is clamped to two lines through -webkit-line-clamp."
           }
         },
         "cardControls": ["accent", "background"]
@@ -836,7 +841,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-item-006-* variables. Server component: no hooks. The root is an li with container-type:inline-size; the whole layout lies on the inner [data-part=\"shell\"], because a container query applies to descendants rather than to the container itself. The cells are described with a dl of dt/dd pairs, so the label and the value are linked by markup. The values are set in tabular figures and are truncated with an ellipsis."
           }
         },
         "cardControls": ["accent", "background"]
@@ -971,7 +977,8 @@
                 "title": "Custom domain",
                 "meta": "Connects in five minutes · $6 a month"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-item-007-* variables. Server component: there is no React state, the value is held by a native input type=checkbox and submitted with the form. The input is not hidden with display:none but stretched transparently over the row — otherwise it would drop out of the focus order. A selected row changes its background, its border and the fill of the small square at once, because colour alone is not enough under colour blindness."
           }
         },
         "cardControls": ["defaultChecked", "accent", "background"]
@@ -1129,7 +1136,8 @@
                   "moved": "“{title}” moved to position {target} of {total}."
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-item-008-* variables. Client component: \"use client\" for the sake of the move mode. The handle is a button with aria-pressed, handling Space, the up and down arrows and Escape; the move itself is performed by the calling code through the onMove prop, so the order is owned by the list rather than by the row. A role=status live region announces the pick-up, the step and the cancel. The mouse path is native HTML5 drag and drop on the row itself."
           }
         },
         "cardControls": ["position", "total", "background"]
@@ -1264,7 +1272,8 @@
                   "off": "Disabled"
                 }
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-item-009-* variables. Server component: no hooks. The state arrives through the state prop and lands in data-state on the root; the tone of the badge is chosen by the --vibeui-item-009-tone variable, so the background, the border and the text of the pill are computed from a single value. The shape of the marker is set by border-radius, clip-path and box-shadow: the circle, the triangle, the diamond and the ring stay distinguishable under colour blindness and in black-and-white print."
           }
         },
         "cardControls": ["state", "background"]
@@ -1424,7 +1433,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-item-010-* variables. Server component: no hooks. The root is a ul, and each row is an li with a three-column grid. The row height is taken from --vibeui-item-010-step, and the density prop switches the step through data-density, so the density changes with a single value. The divider is made with an inset shadow on adjacent rows rather than a border on each: borders would double up at the joins."
           }
         },
         "cardControls": ["density", "accent", "background"]
@@ -1572,7 +1582,8 @@
                 "assignee": "MK",
                 "assigneeName": "Maria Kovaleva"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-item-011-* variables. Server component: there is no React state, the value is held by a native input type=checkbox inside a nested label and submitted with the form, as in item-007. The input is not hidden with display:none but stretched transparently over its label — otherwise it would drop out of the focus order. The checkmark toggles not only the fill of the small square but also the strike-through of the title, through :has(input:checked): a completed task reads at once, without a glance at the checkbox itself. The assignee tile shows the initials, while the full name lies in the aria-label."
           }
         },
         "cardControls": ["defaultChecked", "accent", "background"]
@@ -1722,7 +1733,8 @@
                 "time": "2:32 PM",
                 "unreadText": "Unread."
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-item-012-* variables. Server component: no hooks. The unread state arrives through the unread prop and lands in data-unread on the root; three rules depend on it at once — the visibility of the dot, the font weight of the title and a light tint of the row. The dot is marked aria-hidden, because it duplicates the meaning: the real signal for a screen reader is the hidden \"Unread\" text before the title, which exists in the markup only in the unread state."
           }
         },
         "cardControls": ["unread", "accent", "background"]

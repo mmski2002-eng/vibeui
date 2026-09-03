@@ -1,7 +1,7 @@
 "use client"
 
 import { useId, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type SliderMark = {
   value: number
@@ -9,7 +9,7 @@ export type SliderMark = {
 }
 
 export type Slider010Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "defaultValue" | "onChange"
 > & {
   label?: string
@@ -45,7 +45,7 @@ const STYLES = `
 --vibeui-slider-010-bg:transparent;
 --vibeui-slider-010-surface:light-dark(oklch(1 0 0),oklch(0.28 0.012 265));
 --vibeui-slider-010-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-slider-010-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-slider-010-muted:color-mix(in oklab,var(--vibeui-slider-010-fg) 68%,transparent);
 --vibeui-slider-010-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
 --vibeui-slider-010-track:light-dark(oklch(0.92 0.006 265),oklch(0.42 0.012 265));
 --vibeui-slider-010-mark:light-dark(oklch(0.75 0.012 265),oklch(0.58 0.012 265));
@@ -53,6 +53,9 @@ const STYLES = `
 --vibeui-slider-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-slider-010-fill:40%;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="slider-010"]{color-scheme:dark}
 [data-vibeui-block="slider-010"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:22rem;box-sizing:border-box;padding:0.875rem;
@@ -172,6 +175,7 @@ export function Slider010({
       </style>
       <div
         {...props}
+        data-slot="slider"
         data-vibeui-block="slider-010"
         className={className}
         style={palette}

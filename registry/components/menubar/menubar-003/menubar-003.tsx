@@ -16,6 +16,11 @@ export type Menubar003Props = {
   platform?: "mac" | "windows"
   /** Имя строки меню для скринридера. */
   menubarLabel?: string
+  /**
+   * Имя радиогруппы <details>. Двум строкам меню на одной странице нужны
+   * разные имена, иначе открытый раздел одной закрывает раздел другой.
+   */
+  group?: string
   /** Пусто — подложки нет, строка лежит прямо на фоне страницы. */
   background?: string
   accent?: string
@@ -32,7 +37,7 @@ const STYLES = `
 --vibeui-menubar-003-bg:transparent;
 --vibeui-menubar-003-panel:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
 --vibeui-menubar-003-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
---vibeui-menubar-003-muted:light-dark(oklch(0.58 0.014 265),oklch(0.68 0.012 265));
+--vibeui-menubar-003-muted:color-mix(in oklab,var(--vibeui-menubar-003-fg) 68%,transparent);
 --vibeui-menubar-003-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-menubar-003-hover:light-dark(oklch(0.55 0.02 265 / 10%),oklch(0.88 0.02 265 / 14%));
 --vibeui-menubar-003-key:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.012 265));
@@ -40,6 +45,9 @@ const STYLES = `
 --vibeui-menubar-003-shadow:light-dark(oklch(0.2 0.03 265 / 45%),oklch(0 0 0 / 62%));
 --vibeui-menubar-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="menubar-003"]{color-scheme:dark}
 [data-vibeui-block="menubar-003"]{
 box-sizing:border-box;width:100%;max-width:34rem;padding:0.25rem;
 display:flex;align-items:center;gap:0.125rem;
@@ -155,6 +163,7 @@ export function Menubar003({
   menus = DEFAULT_MENUS,
   platform = "mac",
   menubarLabel = "Меню приложения",
+  group = "vibeui-menubar-003",
   background = "",
   accent,
   className,
@@ -178,6 +187,7 @@ export function Menubar003({
         {STYLES}
       </style>
       <div
+        data-slot="menubar"
         data-vibeui-block="menubar-003"
         role="menubar"
         aria-label={menubarLabel}
@@ -185,7 +195,7 @@ export function Menubar003({
         style={palette}
       >
         {menus.map((menu) => (
-          <details key={menu.label} data-part="slot" name="vibeui-menubar-003">
+          <details key={menu.label} data-part="slot" name={group}>
             <summary data-part="trigger" role="menuitem">
               {menu.label}
             </summary>

@@ -1,11 +1,7 @@
 "use client"
 
 import { useEffect, useId, useRef, useState } from "react"
-import type {
-  ComponentPropsWithoutRef,
-  CSSProperties,
-  KeyboardEvent,
-} from "react"
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Select016Zone = {
   value: string
@@ -13,10 +9,7 @@ export type Select016Zone = {
   timeZone: string
 }
 
-export type Select016Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Select016Props = Omit<ComponentProps<"div">, "children"> & {
   label?: string
   name?: string
   zones?: Select016Zone[]
@@ -37,7 +30,7 @@ const STYLES = `
 --vibeui-select-016-surface:transparent;
 --vibeui-select-016-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-select-016-fg:light-dark(oklch(0.23 0.016 265),oklch(0.94 0.005 265));
---vibeui-select-016-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-select-016-muted:color-mix(in oklab,var(--vibeui-select-016-fg) 68%,transparent);
 --vibeui-select-016-border:light-dark(oklch(0.87 0.008 265),oklch(0.4 0.012 265));
 --vibeui-select-016-accent:light-dark(oklch(0.55 0.19 262),oklch(0.73 0.17 262));
 --vibeui-select-016-tint:light-dark(oklch(0.55 0.19 262 / 12%),oklch(0.73 0.17 262 / 20%));
@@ -45,6 +38,9 @@ const STYLES = `
 --vibeui-select-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-select-016-mono:ui-monospace,"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="select-016"]{color-scheme:dark}
 [data-vibeui-block="select-016"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:20rem;box-sizing:border-box;padding:0.875rem;
@@ -87,7 +83,7 @@ margin:0;padding:0.375rem;list-style:none;
 max-height:16rem;overflow-y:auto;
 background:var(--vibeui-select-016-panel);
 border:1px solid var(--vibeui-select-016-border);border-radius:0.875rem;
-box-shadow:0 0.75rem 1.75rem oklch(0 0 0 / 16%);
+box-shadow:0 0.75rem 1.75rem light-dark(oklch(0 0 0 / 16%),oklch(0 0 0 / 48%));
 }
 [data-vibeui-block="select-016"] [data-part="option"]{
 display:flex;align-items:center;justify-content:space-between;gap:0.625rem;
@@ -270,6 +266,7 @@ export function Select016({
       <div
         {...props}
         ref={rootRef}
+        data-slot="select"
         data-vibeui-block="select-016"
         className={className}
         style={palette}

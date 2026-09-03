@@ -116,7 +116,8 @@
                 "label": "Background"
               }
             },
-            "title": "Ratio Frame"
+            "title": "Ratio Frame",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-aspect-001-*. The ratio arrives as a prop into the --vibeui-aspect-001-ratio variable and is substituted into aspect-ratio: breeding a class per proportion means deciding in advance for the user which ones they will need. Direct img, video and iframe children stretch across the whole frame with object-fit:cover. An empty frame shows hatching and a label so that it does not look broken. The theme comes from the surrounding color-scheme through light-dark(): the frame has no background by default, it sits on the page background and darkens with it, and the background prop turns the fill on."
           }
         },
         "cardControls": ["ratio", "background"]
@@ -242,7 +243,8 @@
                 "watchLabel": "Watch: {title}",
                 "watchFallbackLabel": "Watch the video"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-aspect-002-*. The frame holds 16:9 and renders as a link by default: a player iframe weighs hundreds of kilobytes and is only attached on click. The play triangle is drawn with borders, the duration sits as a pill in the corner, and the caption goes over the gradient at the bottom. The frame deliberately stays dark in both themes: this is a video poster, not an interface panel. The screen-reader label of the link is exposed through the watchLabel and watchFallbackLabel props, where {title} is replaced with the video title."
           }
         },
         "cardControls": ["accent"]
@@ -392,7 +394,8 @@
                 "oldPrice": "€69",
                 "badge": "−30 %"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-aspect-003-*. The frame holds 1:1, the discount pill sits in its corner, the title is clamped to two lines, and the price with the struck-through old price stand under the frame. The title link is stretched across the whole card through ::after, so a grid keeps one link per product. The theme comes from the surrounding color-scheme through light-dark(): the card is held by a border rather than a fill, it has no background by default, and the background prop turns one on when needed."
           }
         },
         "cardControls": ["accent", "background"]
@@ -473,6 +476,12 @@
             "label": "Тон градиента",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
           }
         ],
         "i18n": {
@@ -519,6 +528,9 @@
               },
               "ink": {
                 "label": "Gradient tone"
+              },
+              "accent": {
+                "label": "Accent"
               }
             },
             "title": "Portrait Frame",
@@ -528,7 +540,8 @@
                 "title": "Evening light over the workshop",
                 "subtitle": "Shot at Flight studio, March"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-aspect-004-*. The frame holds 3:4 and renders as a link. The heading size is computed in cqi against the frame's own width, so the caption does not break in a narrow column. The gradient under the text is built from the component's own dark tone rather than translucent black. The frame deliberately stays dark in both themes: this is a photo cover, not an interface panel. The tone of the gradient under the caption is exposed through the ink prop."
           }
         },
         "cardControls": ["ink"]
@@ -662,7 +675,8 @@
                 "description": "Ready-made blocks, one-command install and instructions your agent can follow.",
                 "actionLabel": "Open the catalog"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-aspect-005-*. The ratio and the whole layout live on the inner frame rather than on the root: the root is declared a container, and a container query applies only to descendants. From 30rem of its own width the proportion switches from 21:9 to 4:3. Type size and padding are computed in cqi. The band deliberately stays dark in both themes: it is a ground for a photograph and light text, not an interface panel."
           }
         },
         "cardControls": ["accent"]
@@ -802,7 +816,8 @@
                 ],
                 "moreLabel": "+"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-aspect-006-*. The grid and its 3:2 ratio live on an inner element, because the root is declared a container and a container query acts only on descendants. The first tile spans two columns and two rows; in a narrow column the grid reflows to two columns and three rows with a 3:4 proportion. The tile hue is set by a variable. The tile fill is built from that hue and reads in both themes; of the fixed colours only the border remains, and it follows the surrounding color-scheme through light-dark(). The collage has no background of its own."
           }
         },
         "cardControls": ["visible"]
@@ -939,7 +954,8 @@
                 "title": "Directions to the studio",
                 "source": "Source: OpenStreetMap"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-aspect-007-*. The frame holds 16:10 — the familiar proportion of a map and a slide. The iframe carries loading=\"lazy\" and title: without a title a screen reader calls the embed simply \"frame\". The placeholder is drawn with a grid of two gradients and a pin marker, so an empty frame reads as a map. The theme comes from the surrounding color-scheme through light-dark(): the frame has no background by default, it sits on the page background and darkens with it, and the background prop turns the fill on."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1063,7 +1079,8 @@
               "props": {
                 "label": "Loading photos"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-aspect-008-*. The grid lives on an inner element, because the root is declared a container. The ratio is set once in a variable and applied to every tile. The shimmer runs along a gradient with a per-tile delay: a simultaneous flash looks like the screen blinking. The container is declared role=\"status\" with aria-busy. The theme comes from the surrounding color-scheme through light-dark(): the placeholder darkens together with the page, otherwise light tiles would burn through a dark layout."
           }
         },
         "cardControls": ["ratio", "count"]

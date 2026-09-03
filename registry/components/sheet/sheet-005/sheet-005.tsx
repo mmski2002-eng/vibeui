@@ -1,10 +1,10 @@
 "use client"
 
 import { useId, useRef, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Sheet005Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "title"
 > & {
   triggerLabel?: string
@@ -31,7 +31,7 @@ const STYLES = `
 :where([data-vibeui-block="sheet-005"]){
 --vibeui-sheet-005-bg:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
 --vibeui-sheet-005-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.006 265));
---vibeui-sheet-005-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
+--vibeui-sheet-005-muted:color-mix(in oklab,var(--vibeui-sheet-005-fg) 68%,transparent);
 --vibeui-sheet-005-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-sheet-005-field:light-dark(oklch(0.97 0.004 265),oklch(0.28 0.012 265));
 --vibeui-sheet-005-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.16 265));
@@ -40,6 +40,9 @@ const STYLES = `
 --vibeui-sheet-005-scrim:light-dark(oklch(0.19 0.02 265 / 45%),oklch(0.08 0.014 265 / 60%));
 --vibeui-sheet-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="sheet-005"]{color-scheme:dark}
 [data-vibeui-block="sheet-005"]{
 display:inline-block;font-family:var(--vibeui-sheet-005-font);color:var(--vibeui-sheet-005-fg);
 }
@@ -51,7 +54,7 @@ font:inherit;font-size:0.8125rem;font-weight:600;
 }
 [data-vibeui-block="sheet-005"] [data-part="trigger"]:focus-visible{outline:2px solid var(--vibeui-sheet-005-accent);outline-offset:2px}
 [data-vibeui-block="sheet-005"] dialog{
-position:fixed;inset:auto 0 0 0;margin:0;
+position:fixed;inset:auto 0 0 0;margin:0;container-type:inline-size;
 width:100%;max-width:100vw;height:min(32rem,90dvh);
 padding:0;border:0;border-radius:1.25rem 1.25rem 0 0;overflow:hidden;
 background:var(--vibeui-sheet-005-bg);color:var(--vibeui-sheet-005-fg);
@@ -106,6 +109,12 @@ background:var(--vibeui-sheet-005-accent);color:var(--vibeui-sheet-005-on-accent
 font:inherit;font-size:0.9375rem;font-weight:650;
 }
 [data-vibeui-block="sheet-005"] [data-part="confirm"]:focus-visible{outline:2px solid var(--vibeui-sheet-005-accent);outline-offset:2px}
+/* Шкала категории: на планшете и шире лист получает крупный кегль и воздух. */
+@container (min-width: 32rem){
+[data-vibeui-block="sheet-005"] [data-part="option"]{font-size:1rem;padding:0.8125rem 0}
+[data-vibeui-block="sheet-005"] [data-part="empty"]{font-size:0.9375rem}
+[data-vibeui-block="sheet-005"] [data-part="search"] input{font-size:0.9375rem}
+}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="sheet-005"] *{animation:none!important;transition:none!important}
 [data-vibeui-block="sheet-005"] dialog{translate:0 0}
@@ -196,6 +205,7 @@ export function Sheet005({
       </style>
       <div
         {...props}
+        data-slot="sheet"
         data-vibeui-block="sheet-005"
         className={className}
         style={palette}

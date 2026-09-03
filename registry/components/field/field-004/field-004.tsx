@@ -1,10 +1,10 @@
 "use client"
 
-import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import { useId, useState } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Field004Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "defaultValue" | "onChange"
 > & {
   label?: string
@@ -31,7 +31,7 @@ const STYLES = `
 --vibeui-field-004-bg:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
 --vibeui-field-004-surface:transparent;
 --vibeui-field-004-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
---vibeui-field-004-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-field-004-muted:color-mix(in oklab,var(--vibeui-field-004-fg) 68%,transparent);
 --vibeui-field-004-border:light-dark(oklch(0.88 0.008 265),oklch(0.4 0.012 265));
 --vibeui-field-004-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.011 265));
 --vibeui-field-004-track:light-dark(oklch(0.92 0.006 265),oklch(0.36 0.01 265));
@@ -40,6 +40,9 @@ const STYLES = `
 --vibeui-field-004-ratio:0;
 --vibeui-field-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="field-004"]{color-scheme:dark}
 /* Подложки по умолчанию нет: поле ложится на фон страницы. */
 [data-vibeui-block="field-004"]{
 display:flex;flex-direction:column;gap:0.4375rem;
@@ -136,6 +139,7 @@ export function Field004({
   style,
   ...props
 }: Field004Props) {
+  const id = useId()
   const [value, setValue] = useState(defaultValue)
   const left = Math.max(0, limit - value.length)
   const ratio = limit > 0 ? Math.min(1, value.length / limit) : 0
@@ -163,20 +167,21 @@ export function Field004({
       </style>
       <div
         {...props}
+        data-slot="field"
         data-vibeui-block="field-004"
         data-low={low ? "true" : undefined}
         className={className}
         style={palette}
       >
-        <label htmlFor="field-004-input">{label}</label>
+        <label htmlFor={id}>{label}</label>
         <div data-part="frame">
           <input
-            id="field-004-input"
+            id={id}
             type="text"
             value={value}
             maxLength={limit}
             placeholder={placeholder}
-            aria-describedby="field-004-hint"
+            aria-describedby={`${id}-hint`}
             onChange={(event) => {
               setValue(event.target.value)
               onChange?.(event.target.value)
@@ -191,7 +196,7 @@ export function Field004({
         <p data-part="status" role="status">
           {low ? fill(statusText) : ""}
         </p>
-        <p id="field-004-hint" data-part="hint">
+        <p id={`${id}-hint`} data-part="hint">
           {fill(hint)}
         </p>
       </div>

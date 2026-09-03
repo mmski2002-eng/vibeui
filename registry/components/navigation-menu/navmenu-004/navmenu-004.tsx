@@ -17,6 +17,8 @@ export type Navmenu004Props = {
   footerNote?: string
   /** Подпись навигации для скринридера. */
   label?: string
+  /** Подпись текущего раздела: он помечается aria-current. */
+  current?: string
   /** Подложка полосы и панели. Пусто — своя палитра компонента. */
   background?: string
   accent?: string
@@ -32,13 +34,16 @@ const STYLES = `
 :where([data-vibeui-block="navmenu-004"]){
 --vibeui-navmenu-004-bg:light-dark(oklch(1 0 0),oklch(0.23 0.013 265));
 --vibeui-navmenu-004-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-navmenu-004-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-navmenu-004-muted:color-mix(in oklab,var(--vibeui-navmenu-004-fg) 68%,transparent);
 --vibeui-navmenu-004-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-navmenu-004-hover:light-dark(oklch(0.55 0.02 265 / 7%),oklch(0.85 0.02 265 / 12%));
 --vibeui-navmenu-004-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
 --vibeui-navmenu-004-shadow:light-dark(oklch(0.2 0.03 265 / 40%),oklch(0 0 0 / 70%));
 --vibeui-navmenu-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="navmenu-004"]{color-scheme:dark}
 [data-vibeui-block="navmenu-004"]{
 box-sizing:border-box;width:100%;max-width:42rem;
 font-family:var(--vibeui-navmenu-004-font);color:var(--vibeui-navmenu-004-fg);
@@ -94,8 +99,8 @@ padding:0.5rem;border-radius:0.625rem;text-decoration:none;color:inherit;
 /* Значок: оттенок приходит переменной, посчитанной из подписи категории. */
 [data-vibeui-block="navmenu-004"] [data-part="icon"]{
 width:2rem;height:2rem;border-radius:0.5rem;display:grid;place-items:center;
-background:oklch(0.94 0.06 var(--vibeui-navmenu-004-hue));
-color:oklch(0.42 0.13 var(--vibeui-navmenu-004-hue));
+background:light-dark(oklch(0.94 0.06 var(--vibeui-navmenu-004-hue)),oklch(0.38 0.06 var(--vibeui-navmenu-004-hue)));
+color:light-dark(oklch(0.42 0.13 var(--vibeui-navmenu-004-hue)),oklch(0.9 0.08 var(--vibeui-navmenu-004-hue)));
 font-size:0.8125rem;font-weight:700;
 }
 [data-vibeui-block="navmenu-004"] [data-part="name"]{display:block;font-size:0.875rem;font-weight:550}
@@ -109,6 +114,12 @@ font-size:0.8125rem;color:var(--vibeui-navmenu-004-muted);
 }
 [data-vibeui-block="navmenu-004"] [data-part="all"]{color:var(--vibeui-navmenu-004-accent);text-decoration:none;font-weight:600}
 [data-vibeui-block="navmenu-004"] [data-part="all"]:focus-visible{outline:2px solid var(--vibeui-navmenu-004-accent);outline-offset:2px;border-radius:0.25rem}
+/* Текущий раздел: подчёркивание и вес, а не один только цвет. */
+[data-vibeui-block="navmenu-004"] [aria-current="page"]{
+font-weight:700;
+text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:0.3125rem;
+text-decoration-color:var(--vibeui-navmenu-004-accent);
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="navmenu-004"] *{animation:none!important;transition:none!important}}
 `
 
@@ -170,6 +181,7 @@ export function Navmenu004({
   entries = ["Доставка", "Оплата"],
   footerNote = "Товары в наличии на складе",
   label = "Каталог",
+  current = "Доставка",
   background = "",
   accent,
   className,
@@ -192,6 +204,7 @@ export function Navmenu004({
         {STYLES}
       </style>
       <nav
+        data-slot="navigation-menu"
         data-vibeui-block="navmenu-004"
         aria-label={label}
         className={className}
@@ -213,7 +226,12 @@ export function Navmenu004({
             {triggerLabel}
           </button>
           {entries.map((entry) => (
-            <a key={entry} data-part="plain" href="#">
+            <a
+              key={entry}
+              data-part="plain"
+              href="#"
+              aria-current={entry === current ? "page" : undefined}
+            >
               {entry}
             </a>
           ))}

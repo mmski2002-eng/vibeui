@@ -1,10 +1,10 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Togglegroup008Props = Omit<
-  ComponentPropsWithoutRef<"section">,
+  ComponentProps<"section">,
   "children" | "onChange"
 > & {
   label?: string
@@ -33,7 +33,7 @@ const STYLES = `
 :where([data-vibeui-block="togglegroup-008"]){
 --vibeui-togglegroup-008-bg:transparent;
 --vibeui-togglegroup-008-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-togglegroup-008-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-togglegroup-008-muted:color-mix(in oklab,var(--vibeui-togglegroup-008-fg) 68%,transparent);
 --vibeui-togglegroup-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
 --vibeui-togglegroup-008-surface:light-dark(oklch(0.97 0.004 265),oklch(0.26 0.01 265));
 --vibeui-togglegroup-008-raised:light-dark(oklch(1 0 0),oklch(0.29 0.01 265));
@@ -41,6 +41,9 @@ const STYLES = `
 --vibeui-togglegroup-008-warn:light-dark(oklch(0.58 0.17 30),oklch(0.75 0.15 30));
 --vibeui-togglegroup-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="togglegroup-008"]{color-scheme:dark}
 [data-vibeui-block="togglegroup-008"]{
 box-sizing:border-box;display:flex;flex-direction:column;gap:0.625rem;
 width:100%;max-width:24rem;padding:0.875rem;
@@ -136,6 +139,39 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 }
 
 /**
+ * Стрелки водят фокус внутри группы: до дальней кнопки не нужно дожимать
+ * Tab через все предыдущие, а Home и End бросают на края.
+ */
+function moveFocus(event: KeyboardEvent<HTMLDivElement>) {
+  const step =
+    event.key === "ArrowRight" || event.key === "ArrowDown"
+      ? 1
+      : event.key === "ArrowLeft" || event.key === "ArrowUp"
+        ? -1
+        : 0
+
+  if (step === 0 && event.key !== "Home" && event.key !== "End") {
+    return
+  }
+
+  const buttons = Array.from(
+    event.currentTarget.querySelectorAll<HTMLButtonElement>("button"),
+  )
+  const from = buttons.indexOf(document.activeElement as HTMLButtonElement)
+
+  if (from === -1) {
+    return
+  }
+
+  const last = buttons.length - 1
+  const next =
+    event.key === "Home" ? 0 : event.key === "End" ? last : from + step
+
+  event.preventDefault()
+  buttons[next < 0 ? last : next > last ? 0 : next].focus()
+}
+
+/**
  * Группа тумблеров с обязательным минимумом: последняя нажатая кнопка
  * помечена aria-disabled и объясняет отказ. Один файл, ноль зависимостей.
  */
@@ -193,12 +229,18 @@ export function Togglegroup008({
       </style>
       <section
         {...props}
+        data-slot="toggle-group"
         data-vibeui-block="togglegroup-008"
         className={className}
         style={palette}
       >
         <h3>{label}</h3>
-        <div data-part="group" role="group" aria-label={label}>
+        <div
+          data-part="group"
+          role="group"
+          aria-label={label}
+          onKeyDown={moveFocus}
+        >
           {COLUMNS.map((column) => (
             <button
               key={column}

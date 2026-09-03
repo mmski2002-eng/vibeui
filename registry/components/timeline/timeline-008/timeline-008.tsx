@@ -1,20 +1,21 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Timeline008Entry = {
   time: string
+  /** Машиночитаемый момент для <time datetime>. */
+  dateTime: string
   title: string
   text?: string
 }
 
 export type Timeline008Day = {
   date: string
+  /** Машиночитаемая дата дня для <time datetime>: «Сегодня» роботу не дата. */
+  dateTime: string
   entries: Timeline008Entry[]
 }
 
-export type Timeline008Props = Omit<
-  ComponentPropsWithoutRef<"section">,
-  "children"
-> & {
+export type Timeline008Props = Omit<ComponentProps<"section">, "children"> & {
   days?: Timeline008Day[]
   title?: string
   /** Подпись области прокрутки; {title} подставляется заголовком. */
@@ -37,11 +38,14 @@ const STYLES = `
 --vibeui-timeline-008-bg:transparent;
 --vibeui-timeline-008-sticky:light-dark(oklch(0.99 0.002 265),oklch(0.19 0.012 265));
 --vibeui-timeline-008-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-timeline-008-muted:light-dark(oklch(0.57 0.014 265),oklch(0.69 0.012 265));
+--vibeui-timeline-008-muted:color-mix(in oklab,var(--vibeui-timeline-008-fg) 68%,transparent);
 --vibeui-timeline-008-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-timeline-008-accent:light-dark(oklch(0.55 0.18 262),oklch(0.74 0.16 262));
 --vibeui-timeline-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="timeline-008"]{color-scheme:dark}
 [data-vibeui-block="timeline-008"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:26rem;box-sizing:border-box;padding:0.9375rem;
@@ -97,32 +101,49 @@ font-variant-numeric:tabular-nums;padding-top:0.125rem;
 const DEFAULT_DAYS: Timeline008Day[] = [
   {
     date: "Сегодня",
+    dateTime: "2026-03-14",
     entries: [
       {
         time: "14:20",
+        dateTime: "2026-03-14T14:20",
         title: "Счёт оплачен",
         text: "Платёж прошёл, чек отправлен на почту",
       },
-      { time: "11:05", title: "Заявка принята в работу" },
+      {
+        time: "11:05",
+        dateTime: "2026-03-14T11:05",
+        title: "Заявка принята в работу",
+      },
     ],
   },
   {
     date: "Вчера",
+    dateTime: "2026-03-13",
     entries: [
-      { time: "19:42", title: "Добавлен комментарий инженера" },
+      {
+        time: "19:42",
+        dateTime: "2026-03-13T19:42",
+        title: "Добавлен комментарий инженера",
+      },
       {
         time: "16:10",
+        dateTime: "2026-03-13T16:10",
         title: "Назначен исполнитель",
         text: "Бригада №3, выезд утром",
       },
-      { time: "09:30", title: "Создана заявка" },
+      { time: "09:30", dateTime: "2026-03-13T09:30", title: "Создана заявка" },
     ],
   },
   {
     date: "12 марта",
+    dateTime: "2026-03-12",
     entries: [
-      { time: "18:00", title: "Звонок клиенту" },
-      { time: "10:15", title: "Первичный осмотр" },
+      { time: "18:00", dateTime: "2026-03-12T18:00", title: "Звонок клиенту" },
+      {
+        time: "10:15",
+        dateTime: "2026-03-12T10:15",
+        title: "Первичный осмотр",
+      },
     ],
   },
 ]
@@ -183,6 +204,7 @@ export function Timeline008({
       </style>
       <section
         {...props}
+        data-slot="timeline"
         data-vibeui-block="timeline-008"
         className={className}
         style={palette}
@@ -195,15 +217,16 @@ export function Timeline008({
           aria-label={feedLabelText.replace("{title}", title)}
         >
           {days.map((day) => (
-            <li data-part="day" key={day.date}>
-              <h4 data-part="date">{day.date}</h4>
+            <li data-part="day" key={day.dateTime}>
+              <h4 data-part="date">
+                <time dateTime={day.dateTime}>{day.date}</time>
+              </h4>
               <ul>
                 {day.entries.map((entry) => (
-                  <li
-                    data-part="row"
-                    key={`${day.date}-${entry.time}-${entry.title}`}
-                  >
-                    <span data-part="time">{entry.time}</span>
+                  <li data-part="row" key={entry.dateTime}>
+                    <time data-part="time" dateTime={entry.dateTime}>
+                      {entry.time}
+                    </time>
                     <span data-part="dot" aria-hidden="true" />
                     <div data-part="body">
                       <span data-part="name">{entry.title}</span>

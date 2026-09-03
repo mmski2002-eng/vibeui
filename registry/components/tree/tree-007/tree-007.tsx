@@ -35,13 +35,16 @@ const STYLES = `
 :where([data-vibeui-block="tree-007"]){
 --vibeui-tree-007-bg:transparent;
 --vibeui-tree-007-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
---vibeui-tree-007-muted:light-dark(oklch(0.56 0.014 265),oklch(0.67 0.012 265));
+--vibeui-tree-007-muted:color-mix(in oklab,var(--vibeui-tree-007-fg) 68%,transparent);
 --vibeui-tree-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-tree-007-hover:light-dark(oklch(0.97 0.004 265),oklch(0.29 0.01 265));
 --vibeui-tree-007-skeleton:light-dark(oklch(0.93 0.005 265),oklch(0.33 0.01 265));
 --vibeui-tree-007-accent:light-dark(oklch(0.53 0.19 265),oklch(0.75 0.16 265));
 --vibeui-tree-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="tree-007"]{color-scheme:dark}
 [data-vibeui-block="tree-007"]{
 width:100%;max-width:21rem;box-sizing:border-box;padding:0.625rem;
 background:var(--vibeui-tree-007-bg);
@@ -226,7 +229,12 @@ export function Tree007({
       <style href="vibeui-tree-007" precedence="medium">
         {STYLES}
       </style>
-      <div data-vibeui-block="tree-007" className={className} style={palette}>
+      <div
+        data-slot="tree"
+        data-vibeui-block="tree-007"
+        className={className}
+        style={palette}
+      >
         <ul role="tree" aria-label={label}>
           {nodes.map((node) => {
             const id = node.name

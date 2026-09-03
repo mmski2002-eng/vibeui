@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Iconstack002Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Iconstack002Props = Omit<ComponentProps<"div">, "children"> & {
   items?: string[]
   caption?: string
   overlap?: number
@@ -24,9 +21,12 @@ const STYLES = `
 --vibeui-iconstack-002-ring:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
 --vibeui-iconstack-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.01 265));
 --vibeui-iconstack-002-fg:light-dark(oklch(0.26 0.014 265),oklch(0.94 0.005 265));
---vibeui-iconstack-002-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-iconstack-002-muted:color-mix(in oklab,var(--vibeui-iconstack-002-fg) 68%,transparent);
 --vibeui-iconstack-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="iconstack-002"]{color-scheme:dark}
 /* Подложки по умолчанию нет: карточка лежит на фоне страницы. */
 [data-vibeui-block="iconstack-002"]{
 display:inline-flex;flex-direction:column;gap:0.5rem;
@@ -49,8 +49,8 @@ box-sizing:border-box;
 width:var(--vibeui-iconstack-002-size);height:var(--vibeui-iconstack-002-size);
 border-radius:0.5rem;
 border:2px solid var(--vibeui-iconstack-002-ring);
-background:oklch(0.92 0.06 var(--vibeui-iconstack-002-hue,265));
-color:oklch(0.36 0.13 var(--vibeui-iconstack-002-hue,265));
+background:light-dark(oklch(0.92 0.06 var(--vibeui-iconstack-002-hue,265)),oklch(0.36 0.07 var(--vibeui-iconstack-002-hue,265)));
+color:light-dark(oklch(0.36 0.13 var(--vibeui-iconstack-002-hue,265)),oklch(0.89 0.09 var(--vibeui-iconstack-002-hue,265)));
 font-size:0.6875rem;font-weight:700;line-height:1;
 }
 [data-vibeui-block="iconstack-002"] [data-part="caption"]{
@@ -134,6 +134,7 @@ export function Iconstack002({
       </style>
       <div
         {...props}
+        data-slot="icon-stack"
         data-vibeui-block="iconstack-002"
         className={className}
         style={palette}

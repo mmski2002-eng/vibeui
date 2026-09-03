@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Item012Props = Omit<
-  ComponentPropsWithoutRef<"li">,
-  "children" | "title"
-> & {
+export type Item012Props = Omit<ComponentProps<"li">, "children" | "title"> & {
   title?: string
   meta?: string
   time?: string
@@ -28,11 +25,14 @@ const STYLES = `
 :where([data-vibeui-block="item-012"]){
 --vibeui-item-012-bg:transparent;
 --vibeui-item-012-fg:light-dark(oklch(0.23 0.014 265),oklch(0.93 0.006 265));
---vibeui-item-012-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-item-012-muted:color-mix(in oklab,var(--vibeui-item-012-fg) 68%,transparent);
 --vibeui-item-012-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
 --vibeui-item-012-accent:light-dark(oklch(0.58 0.18 258),oklch(0.75 0.16 258));
 --vibeui-item-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="item-012"]{color-scheme:dark}
 [data-vibeui-block="item-012"]{
 display:flex;align-items:flex-start;gap:0.625rem;
 width:100%;max-width:24rem;box-sizing:border-box;padding:0.625rem 0.75rem;
@@ -126,6 +126,7 @@ export function Item012({
       </style>
       <li
         {...props}
+        data-slot="item"
         data-vibeui-block="item-012"
         data-unread={unread || undefined}
         className={className}

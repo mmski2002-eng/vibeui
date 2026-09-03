@@ -1,11 +1,8 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Switch007Size = "sm" | "md" | "lg"
 
-export type Switch007Props = Omit<
-  ComponentPropsWithoutRef<"fieldset">,
-  "children"
-> & {
+export type Switch007Props = Omit<ComponentProps<"fieldset">, "children"> & {
   legend?: string
   /** Какой размер показан включённым — остальные остаются выключенными. */
   checkedSize?: Switch007Size
@@ -24,7 +21,7 @@ const STYLES = `
 :where([data-vibeui-block="switch-007"]){
 --vibeui-switch-007-bg:transparent;
 --vibeui-switch-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-switch-007-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-switch-007-muted:color-mix(in oklab,var(--vibeui-switch-007-fg) 68%,transparent);
 --vibeui-switch-007-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
 --vibeui-switch-007-track:light-dark(oklch(0.88 0.008 265),oklch(0.43 0.014 265));
 --vibeui-switch-007-thumb:light-dark(oklch(1 0 0),oklch(0.93 0.004 265));
@@ -32,6 +29,9 @@ const STYLES = `
 --vibeui-switch-007-unit:1.5rem;
 --vibeui-switch-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="switch-007"]{color-scheme:dark}
 [data-vibeui-block="switch-007"]{
 display:flex;flex-direction:column;
 width:100%;max-width:19rem;box-sizing:border-box;
@@ -150,6 +150,7 @@ export function Switch007({
       </style>
       <fieldset
         {...props}
+        data-slot="switch"
         data-vibeui-block="switch-007"
         className={className}
         style={palette}

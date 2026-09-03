@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Table002Value = boolean | string
 
@@ -7,10 +7,7 @@ export type Table002Row = {
   values: Table002Value[]
 }
 
-export type Table002Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Table002Props = Omit<ComponentProps<"div">, "children"> & {
   /** Названия сравниваемых вариантов. */
   options?: string[]
   rows?: Table002Row[]
@@ -34,7 +31,7 @@ export type Table002Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="table-002"]){
 --vibeui-table-002-fg:light-dark(oklch(0.24 0.016 265),oklch(0.93 0.006 265));
---vibeui-table-002-muted:light-dark(oklch(0.54 0.014 265),oklch(0.69 0.012 265));
+--vibeui-table-002-muted:color-mix(in oklab,var(--vibeui-table-002-fg) 68%,transparent);
 --vibeui-table-002-bg:transparent;
 --vibeui-table-002-head:light-dark(oklch(0.975 0.003 265),oklch(0.27 0.012 265));
 --vibeui-table-002-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.011 265));
@@ -43,6 +40,9 @@ const STYLES = `
 --vibeui-table-002-radius:0.75rem;
 --vibeui-table-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="table-002"]{color-scheme:dark}
 [data-vibeui-block="table-002"]{
 width:100%;box-sizing:border-box;overflow-x:auto;
 border:1px solid var(--vibeui-table-002-border);
@@ -155,6 +155,7 @@ export function Table002({
       </style>
       <div
         {...props}
+        data-slot="table"
         data-vibeui-block="table-002"
         className={className}
         style={palette}

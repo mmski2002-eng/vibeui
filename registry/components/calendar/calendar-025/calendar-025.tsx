@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Calendar025Shift = "day" | "night" | "off" | "leave"
 
@@ -9,10 +9,7 @@ export type Calendar025Person = {
   shifts: Calendar025Shift[]
 }
 
-export type Calendar025Props = Omit<
-  ComponentPropsWithoutRef<"section">,
-  "children"
-> & {
+export type Calendar025Props = Omit<ComponentProps<"section">, "children"> & {
   heading?: string
   weekStart?: string
   people?: Calendar025Person[]
@@ -39,7 +36,7 @@ const STYLES = `
 :where([data-vibeui-block="calendar-025"]){
 --vibeui-calendar-025-bg:transparent;
 --vibeui-calendar-025-fg:light-dark(oklch(0.23 0.014 250),oklch(0.94 0.005 250));
---vibeui-calendar-025-muted:light-dark(oklch(0.57 0.014 250),oklch(0.68 0.012 250));
+--vibeui-calendar-025-muted:color-mix(in oklab,var(--vibeui-calendar-025-fg) 68%,transparent);
 --vibeui-calendar-025-border:light-dark(oklch(0.91 0.006 250),oklch(0.34 0.012 250));
 --vibeui-calendar-025-soft:light-dark(oklch(0.97 0.006 250),oklch(0.27 0.01 250));
 --vibeui-calendar-025-day:light-dark(oklch(0.93 0.06 95),oklch(0.43 0.07 95));
@@ -48,48 +45,51 @@ const STYLES = `
 --vibeui-calendar-025-nightfg:light-dark(oklch(0.38 0.11 275),oklch(0.9 0.06 275));
 --vibeui-calendar-025-leave:light-dark(oklch(0.93 0.05 160),oklch(0.41 0.06 160));
 --vibeui-calendar-025-leavefg:light-dark(oklch(0.4 0.08 160),oklch(0.9 0.05 160));
---vibeui-calendar-025-cell:2.1rem;
+--vibeui-calendar-025-cell:2.125rem;
 --vibeui-calendar-025-radius:0.75rem;
 --vibeui-calendar-025-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="calendar-025"]{color-scheme:dark}
 [data-vibeui-block="calendar-025"]{
-display:flex;flex-direction:column;gap:0.7rem;
-width:100%;max-width:32rem;box-sizing:border-box;padding:1rem;
+display:flex;flex-direction:column;gap:0.6875rem;
+width:100%;max-width:32rem;box-sizing:border-box;padding:0.9375rem;
 background:var(--vibeui-calendar-025-bg);
 border:1px solid var(--vibeui-calendar-025-border);
 border-radius:calc(var(--vibeui-calendar-025-radius) + 0.25rem);
 color:var(--vibeui-calendar-025-fg);
 font-family:var(--vibeui-calendar-025-font);
 }
-[data-vibeui-block="calendar-025"][data-density="comfortable"]{--vibeui-calendar-025-cell:2.6rem}
+[data-vibeui-block="calendar-025"][data-density="comfortable"]{--vibeui-calendar-025-cell:2.625rem}
 [data-vibeui-block="calendar-025"] [data-part="title"]{
-margin:0;font-size:0.95rem;font-weight:700;letter-spacing:-0.01em;
+margin:0;font-size:0.9375rem;font-weight:700;letter-spacing:-0.01em;
 }
 [data-vibeui-block="calendar-025"] [data-part="range"]{
-margin:0.15rem 0 0;font-size:0.75rem;color:var(--vibeui-calendar-025-muted);
+margin:0.125rem 0 0;font-size:0.875rem;color:var(--vibeui-calendar-025-muted);
 }
 [data-vibeui-block="calendar-025"] [data-part="scroll"]{overflow-x:auto}
 [data-vibeui-block="calendar-025"] table{
-width:100%;min-width:24rem;border-collapse:separate;border-spacing:0.15rem;
+width:100%;min-width:24rem;border-collapse:separate;border-spacing:0.125rem;
 font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="calendar-025"] th,
 [data-vibeui-block="calendar-025"] td{padding:0;text-align:center;font-weight:600}
 [data-vibeui-block="calendar-025"] thead th{
-font-size:0.68rem;text-transform:uppercase;letter-spacing:0.04em;
-color:var(--vibeui-calendar-025-muted);padding-bottom:0.15rem;
+font-size:0.6875rem;text-transform:uppercase;letter-spacing:0.04em;
+color:var(--vibeui-calendar-025-muted);padding-bottom:0.125rem;
 }
 [data-vibeui-block="calendar-025"] thead th[data-weekend="true"]{color:var(--vibeui-calendar-025-fg)}
 [data-vibeui-block="calendar-025"] [data-part="who"]{
 width:8rem;text-align:left;font-size:0.8125rem;line-height:1.15;
-padding-right:0.35rem;
+padding-right:0.375rem;
 }
 [data-vibeui-block="calendar-025"] [data-part="who"] small{
-display:block;font-size:0.68rem;font-weight:500;color:var(--vibeui-calendar-025-muted);
+display:block;font-size:0.6875rem;font-weight:500;color:var(--vibeui-calendar-025-muted);
 }
 [data-vibeui-block="calendar-025"] [data-part="cell"]{
 position:relative;display:flex;align-items:center;justify-content:center;
-height:var(--vibeui-calendar-025-cell);border-radius:0.45rem;
+height:var(--vibeui-calendar-025-cell);border-radius:0.4375rem;
 background:var(--vibeui-calendar-025-soft);
 color:var(--vibeui-calendar-025-muted);font-size:0.75rem;
 }
@@ -106,16 +106,16 @@ background:var(--vibeui-calendar-025-leave);color:var(--vibeui-calendar-025-leav
 position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;
 }
 [data-vibeui-block="calendar-025"] [data-part="total"]{
-width:2.4rem;font-size:0.8125rem;color:var(--vibeui-calendar-025-muted);
+width:2.5rem;font-size:0.875rem;color:var(--vibeui-calendar-025-muted);
 }
 [data-vibeui-block="calendar-025"] [data-part="legend"]{
-display:flex;flex-wrap:wrap;gap:0.75rem;margin:0;padding-top:0.6rem;
+display:flex;flex-wrap:wrap;gap:0.75rem;margin:0;padding-top:0.625rem;
 border-top:1px solid var(--vibeui-calendar-025-border);
 font-size:0.75rem;color:var(--vibeui-calendar-025-muted);
 }
-[data-vibeui-block="calendar-025"] [data-part="key"]{display:inline-flex;align-items:center;gap:0.3rem}
+[data-vibeui-block="calendar-025"] [data-part="key"]{display:inline-flex;align-items:center;gap:0.3125rem}
 [data-vibeui-block="calendar-025"] [data-part="chip"]{
-width:0.85rem;height:0.85rem;border-radius:0.25rem;background:var(--vibeui-calendar-025-soft);
+width:0.875rem;height:0.875rem;border-radius:0.25rem;background:var(--vibeui-calendar-025-soft);
 }
 [data-vibeui-block="calendar-025"] [data-part="chip"][data-shift="day"]{background:var(--vibeui-calendar-025-day)}
 [data-vibeui-block="calendar-025"] [data-part="chip"][data-shift="night"]{background:var(--vibeui-calendar-025-night)}
@@ -184,15 +184,35 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 }
 
 /**
+ * Дата и локаль из пропов или дефолты компонента. Чужая страница не должна
+ * падать из-за опечатки в значении: Intl бросает RangeError и на Invalid Date,
+ * и на нераспознанной локали, а это белый экран вместо всего сайта.
+ */
+function safeDate(value: string, fallback: string) {
+  return Number.isNaN(new Date(`${value}T00:00:00`).getTime())
+    ? fallback
+    : value
+}
+
+function safeLocale(value: string, fallback: string) {
+  try {
+    Intl.DateTimeFormat.supportedLocalesOf(value)
+    return value
+  } catch {
+    return fallback
+  }
+}
+
+/**
  * График смен: сотрудники по строкам, дни недели по столбцам.
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Calendar025({
   heading = "График смен",
-  weekStart = "2026-04-13",
+  weekStart: weekStartProp = "2026-04-13",
   people = CREW,
   density = "compact",
-  locale = "ru-RU",
+  locale: localeProp = "ru-RU",
   shiftText = SHIFT_TEXT,
   shiftCode = SHIFT_CODE,
   staffLabel = "Сотрудник",
@@ -203,6 +223,8 @@ export function Calendar025({
   style,
   ...props
 }: Calendar025Props) {
+  const weekStart = safeDate(weekStartProp, "2026-04-13")
+  const locale = safeLocale(localeProp, "ru-RU")
   const first = new Date(`${weekStart}T00:00:00`)
   const days = Array.from({ length: 7 }, (_, index) => {
     const date = new Date(first)
@@ -235,6 +257,7 @@ export function Calendar025({
       </style>
       <section
         {...props}
+        data-slot="calendar"
         data-vibeui-block="calendar-025"
         data-density={density}
         className={className}

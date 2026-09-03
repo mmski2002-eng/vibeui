@@ -1,11 +1,7 @@
 "use client"
 
 import { useId, useRef, useState } from "react"
-import type {
-  ComponentPropsWithoutRef,
-  CSSProperties,
-  KeyboardEvent,
-} from "react"
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Dropdown016Label = {
   name: string
@@ -13,10 +9,7 @@ export type Dropdown016Label = {
   count: number
 }
 
-export type Dropdown016Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Dropdown016Props = Omit<ComponentProps<"div">, "children"> & {
   trigger?: string
   labels?: Dropdown016Label[]
   /** Подпись над кнопкой: где стоит фильтр. */
@@ -46,13 +39,16 @@ const STYLES = `
 :where([data-vibeui-block="dropdown-016"]){
 --vibeui-dropdown-016-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 150));
 --vibeui-dropdown-016-fg:light-dark(oklch(0.24 0.014 150),oklch(0.94 0.006 150));
---vibeui-dropdown-016-muted:light-dark(oklch(0.56 0.014 150),oklch(0.7 0.012 150));
+--vibeui-dropdown-016-muted:color-mix(in oklab,var(--vibeui-dropdown-016-fg) 68%,transparent);
 --vibeui-dropdown-016-border:light-dark(oklch(0.9 0.006 150),oklch(0.37 0.012 150));
 --vibeui-dropdown-016-hover:light-dark(oklch(0.96 0.004 150),oklch(0.32 0.014 150));
 --vibeui-dropdown-016-accent:light-dark(oklch(0.58 0.15 150),oklch(0.76 0.13 150));
 --vibeui-dropdown-016-on-accent:light-dark(oklch(1 0 0),oklch(0.2 0.03 150));
 --vibeui-dropdown-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="dropdown-016"]{color-scheme:dark}
 [data-vibeui-block="dropdown-016"]{
 position:relative;display:inline-flex;flex-direction:column;gap:0.375rem;
 box-sizing:border-box;padding:0.625rem 0.75rem;
@@ -126,6 +122,9 @@ background:var(--vibeui-dropdown-016-accent);border-color:var(--vibeui-dropdown-
 }
 [data-vibeui-block="dropdown-016"] [data-part="box"] svg{width:0.75rem;height:0.75rem;opacity:0}
 [data-vibeui-block="dropdown-016"] [data-part="item"][aria-checked="true"] [data-part="box"] svg{opacity:1;color:var(--vibeui-dropdown-016-on-accent)}
+/* Цвет кружка — сама метка, а не оформление: он одинаков в обеих темах,
+   иначе «Срочно» перестанет быть узнаваемым. Светлота средняя, чтобы
+   читаться и на белой карточке, и на тёмной. */
 [data-vibeui-block="dropdown-016"] [data-part="dot"]{
 flex:none;width:0.5rem;height:0.5rem;border-radius:9999px;
 background:oklch(0.62 0.16 var(--vibeui-dropdown-016-dot));
@@ -241,6 +240,7 @@ export function Dropdown016({
       </style>
       <div
         {...props}
+        data-slot="dropdown-menu"
         data-vibeui-block="dropdown-016"
         className={className}
         style={palette}

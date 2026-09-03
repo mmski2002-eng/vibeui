@@ -136,7 +136,8 @@
                   "Singapore, UTC+8"
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, palette in the local --vibeui-nativeselect-001-* variables. Server component: the only hook is useId. appearance:none removes the platform's own arrow, and a custom one is drawn instead from two borders of a square; the arrow is marked pointer-events:none, so the whole area of the field stays a target for the select itself. The right padding of the field is measured for the arrow: without it a long option slides underneath. The arrow lights up on focus through :has(select:focus-visible) on the wrapper. The list stays a system one — on a phone that is the familiar wheel, which does not break when the page is zoomed and needs no line of JS."
           }
         },
         "cardControls": ["background"]
@@ -285,7 +286,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, palette in the local --vibeui-nativeselect-002-* variables. Server component: the only hook is useId. Sections are declared with the built-in <optgroup label>: the browser draws the headings non-clickable on its own, and a screen reader speaks the section name before the option — in a hand-built list the same thing has to be assembled from role=\"group\" and aria-labelledby. The typeface of the headings is the only thing you can influence inside an open list, so optgroup gets a font-weight and a color, while option is returned to normal weight. The arrow is drawn with two borders and does not catch clicks."
           }
         },
         "cardControls": ["background"]
@@ -427,7 +429,8 @@
                   "Changed my mind"
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, palette in the local --vibeui-nativeselect-003-* variables. Server component: the only hook is useId. A select has no placeholder attribute, so the first option always looks selected — here the stand-in role is played by <option value=\"\" disabled hidden>: it shows in the collapsed field but is unavailable in the open list. The choice is set through defaultValue=\"\" on the select itself rather than a selected attribute on the option: React warns otherwise. While the stand-in is selected the field does not pass required, and the select:required:invalid rule paints the text muted — the \"nothing chosen\" state is visible without a script. The asterisk is marked aria-hidden, its meaning is carried by visually hidden text."
           }
         },
         "cardControls": ["background"]
@@ -571,7 +574,8 @@
                   "Português"
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, palette in the local --vibeui-nativeselect-004-* variables. Server component: the only hook is useId, the state is held by the select itself through the multiple attribute. The list is opened up front by the size attribute (the rows prop): a collapsed multiple field shows only the first row and lies about how much is selected. Below the field there is a line with <kbd> naming the keys outright — otherwise nobody guesses about Ctrl and Shift. appearance:none is not needed here: an open list has no arrow, so the border and the rounding are set directly. Chosen options are highlighted by the option:checked rule, but how far the styling reaches depends on the platform."
           }
         },
         "cardControls": ["rows", "accent", "background"]
@@ -708,7 +712,8 @@
                 "secondLabel": "Show",
                 "secondOptions": ["all", "mine only", "archived"]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, palette in the local --vibeui-nativeselect-005-* variables. Server component: the only hook is useId, the identifiers of the two fields are derived from a single root. In a filter row a field must not look like a form field: the border is transparent and appears on hover and focus, and the width of the select is left auto — the browser takes it from the longest option, so the row does not stretch. The caption sits to the left of the field and stays a real <label> with htmlFor: the link to the field matters more than compactness. The row wraps (flex-wrap), so on a narrow screen the caption-field pairs stack one under another."
           }
         },
         "cardControls": ["background"]
@@ -860,7 +865,8 @@
                   "Invoice for a company"
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, palette in the local --vibeui-nativeselect-006-* variables. Server component: the only hook is useId. The single source of state is aria-invalid on the field: the border, the arrow (through :has() on the root), the label and the focus ring are painted from it, there is no separate \"error\" class and the states cannot drift apart. The message stays in the markup permanently and is linked to the field through aria-describedby — unlike the browser's own bubble, which shows once and disappears. The color of an unfilled field comes from the select:not(:invalid) rule, and the stand-in is an option with an empty value."
           }
         },
         "cardControls": ["background"]
@@ -994,7 +1000,8 @@
                 "label": "Package size",
                 "options": ["Envelope", "Box S", "Box M", "Pallet"]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, palette in the local --vibeui-nativeselect-007-* variables. Server component: the only hook is useId. The size is expressed by a data-size attribute on the root, which overrides four variables: the height, the type size, the padding and the side of the arrow. The rules of the field are written once and read those variables, so a new step is four lines rather than a copy of the component. The right padding of the field is computed by a formula from the padding and the arrow side, so the text does not slide under the arrow on any step, and the arrow itself is centered by an offset of half its own side."
           }
         },
         "cardControls": ["size", "background"]

@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Sidebar007Item = {
   label: string
@@ -8,10 +8,7 @@ export type Sidebar007Item = {
   tone?: "muted" | "alert" | "new"
 }
 
-export type Sidebar007Props = Omit<
-  ComponentPropsWithoutRef<"nav">,
-  "children"
-> & {
+export type Sidebar007Props = Omit<ComponentProps<"nav">, "children"> & {
   items?: Sidebar007Item[]
   activeLabel?: string
   /** Число, выше которого счётчик показывается как «99+». */
@@ -22,6 +19,8 @@ export type Sidebar007Props = Omit<
   countText?: string
   /** Что скринридер читает у точки «есть новое». */
   newText?: string
+  /** Срочность залитой плашки видна только цветом — здесь она словами. */
+  alertText?: string
   /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
   background?: string
   accent?: string
@@ -39,7 +38,7 @@ const STYLES = `
 :where([data-vibeui-block="sidebar-007"]){
 --vibeui-sidebar-007-bg:transparent;
 --vibeui-sidebar-007-fg:light-dark(oklch(0.25 0.016 265),oklch(0.93 0.006 265));
---vibeui-sidebar-007-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-sidebar-007-muted:color-mix(in oklab,var(--vibeui-sidebar-007-fg) 68%,transparent);
 --vibeui-sidebar-007-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
 --vibeui-sidebar-007-hover:light-dark(oklch(0.55 0.02 265 / 7%),oklch(0.85 0.02 265 / 10%));
 --vibeui-sidebar-007-chip:light-dark(oklch(0.55 0.02 265 / 10%),oklch(0.85 0.02 265 / 14%));
@@ -48,6 +47,9 @@ const STYLES = `
 --vibeui-sidebar-007-alert-fg:light-dark(oklch(1 0 0),oklch(0.16 0.02 25));
 --vibeui-sidebar-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="sidebar-007"]{color-scheme:dark}
 [data-vibeui-block="sidebar-007"]{
 display:flex;flex-direction:column;gap:0.125rem;
 width:100%;max-width:15rem;box-sizing:border-box;padding:0.625rem;
@@ -60,7 +62,7 @@ font-family:var(--vibeui-sidebar-007-font);
 display:flex;align-items:center;gap:0.5rem;
 padding:0.4375rem 0.5rem;border-radius:0.5rem;
 color:var(--vibeui-sidebar-007-muted);text-decoration:none;
-font-size:0.875rem;line-height:1.3;
+font-size:0.9375rem;line-height:1.3;
 }
 [data-vibeui-block="sidebar-007"] a:hover{background:var(--vibeui-sidebar-007-hover);color:var(--vibeui-sidebar-007-fg)}
 [data-vibeui-block="sidebar-007"] a:focus-visible{outline:2px solid var(--vibeui-sidebar-007-accent);outline-offset:-2px}
@@ -73,9 +75,9 @@ color:var(--vibeui-sidebar-007-fg);font-weight:600;
    обязаны стоять по одной вертикали. */
 [data-vibeui-block="sidebar-007"] [data-part="badge"]{
 margin-left:auto;flex:none;
-min-width:1.25rem;box-sizing:border-box;padding:0 0.3125rem;
+min-width:1.375rem;box-sizing:border-box;padding:0 0.375rem;
 border-radius:9999px;text-align:center;
-font-size:0.6875rem;font-weight:700;line-height:1.125rem;
+font-size:0.75rem;font-weight:700;line-height:1.25rem;
 font-variant-numeric:tabular-nums;
 background:var(--vibeui-sidebar-007-chip);color:var(--vibeui-sidebar-007-muted);
 }
@@ -134,6 +136,7 @@ export function Sidebar007({
   navLabel = "Почта",
   countText = " непрочитанных",
   newText = "есть новое",
+  alertText = "требуют внимания",
   background = "",
   accent,
   className,
@@ -158,6 +161,7 @@ export function Sidebar007({
       </style>
       <nav
         {...props}
+        data-slot="sidebar"
         data-vibeui-block="sidebar-007"
         aria-label={navLabel}
         className={className}
@@ -174,7 +178,10 @@ export function Sidebar007({
                 {item.count !== undefined ? (
                   <span data-part="badge">
                     {item.count > cap ? `${cap}+` : item.count}
-                    <span data-part="hint">{countText}</span>
+                    <span data-part="hint">
+                      {countText}
+                      {item.tone === "alert" ? `, ${alertText}` : null}
+                    </span>
                   </span>
                 ) : null}
                 {item.count === undefined && item.tone === "new" ? (

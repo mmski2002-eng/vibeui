@@ -1,12 +1,9 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Button046Props = Omit<
-  ComponentPropsWithoutRef<"button">,
-  "children"
-> & {
+export type Button046Props = Omit<ComponentProps<"button">, "children"> & {
   label?: string
   /** Прокрутка в пикселях, после которой кнопка нужна. */
   threshold?: number
@@ -32,6 +29,9 @@ const STYLES = `
 --vibeui-button-046-size:3rem;
 --vibeui-button-046-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="button-046"]{color-scheme:dark}
 [data-vibeui-block="button-046"]{
 position:relative;appearance:none;cursor:pointer;box-sizing:border-box;
 display:inline-flex;align-items:center;justify-content:center;
@@ -158,6 +158,7 @@ export function Button046({
       <button
         {...props}
         type={type}
+        data-slot="button"
         data-vibeui-block="button-046"
         data-visible={String(visible)}
         className={className}

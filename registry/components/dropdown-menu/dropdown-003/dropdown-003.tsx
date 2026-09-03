@@ -1,11 +1,7 @@
 "use client"
 
 import { useId, useRef } from "react"
-import type {
-  ComponentPropsWithoutRef,
-  CSSProperties,
-  KeyboardEvent,
-} from "react"
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Dropdown003Item = {
   label: string
@@ -14,10 +10,7 @@ export type Dropdown003Item = {
   danger?: boolean
 }
 
-export type Dropdown003Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Dropdown003Props = Omit<ComponentProps<"div">, "children"> & {
   trigger?: string
   keysLabel?: string
   items?: Dropdown003Item[]
@@ -38,7 +31,7 @@ const STYLES = `
 :where([data-vibeui-block="dropdown-003"]){
 --vibeui-dropdown-003-bg:light-dark(oklch(1 0 0),oklch(0.25 0.013 275));
 --vibeui-dropdown-003-fg:light-dark(oklch(0.25 0.015 275),oklch(0.94 0.006 275));
---vibeui-dropdown-003-muted:light-dark(oklch(0.56 0.014 275),oklch(0.7 0.012 275));
+--vibeui-dropdown-003-muted:color-mix(in oklab,var(--vibeui-dropdown-003-fg) 68%,transparent);
 --vibeui-dropdown-003-border:light-dark(oklch(0.9 0.006 275),oklch(0.37 0.012 275));
 --vibeui-dropdown-003-hover:light-dark(oklch(0.96 0.005 275),oklch(0.32 0.014 275));
 --vibeui-dropdown-003-accent:light-dark(oklch(0.55 0.18 285),oklch(0.62 0.17 285));
@@ -46,6 +39,9 @@ const STYLES = `
 --vibeui-dropdown-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-dropdown-003-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="dropdown-003"]{color-scheme:dark}
 [data-vibeui-block="dropdown-003"]{
 display:inline-flex;align-items:center;gap:0.625rem;
 box-sizing:border-box;padding:0.4375rem;
@@ -215,6 +211,7 @@ export function Dropdown003({
       </style>
       <div
         {...props}
+        data-slot="dropdown-menu"
         data-vibeui-block="dropdown-003"
         className={className}
         style={palette}

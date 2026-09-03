@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Spinner006Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Spinner006Props = Omit<ComponentProps<"div">, "children"> & {
   lines?: number
   media?: boolean
   label?: string
@@ -28,10 +25,13 @@ const STYLES = `
 --vibeui-spinner-006-radius:0.5rem;
 --vibeui-spinner-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="spinner-006"]{color-scheme:dark}
 /* Подложки нет по умолчанию: плашка появляется только пропом background. */
 [data-vibeui-block="spinner-006"]{
 display:flex;flex-direction:column;gap:0.75rem;
-width:100%;max-width:20rem;box-sizing:border-box;padding:0.875rem;
+width:100%;max-width:20rem;box-sizing:border-box;padding:0.9375rem 1.0625rem;
 background:var(--vibeui-spinner-006-surface);
 border:1px solid var(--vibeui-spinner-006-border);border-radius:0.875rem;
 font-family:var(--vibeui-spinner-006-font);
@@ -124,6 +124,7 @@ export function Spinner006({
       </style>
       <div
         {...props}
+        data-slot="spinner"
         data-vibeui-block="spinner-006"
         role="status"
         aria-live="polite"

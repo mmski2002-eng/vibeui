@@ -1,10 +1,10 @@
 "use client"
 
-import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties, FormEvent } from "react"
+import { useId, useState } from "react"
+import type { ComponentProps, CSSProperties, FormEvent } from "react"
 
 export type Field006Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "defaultValue" | "onSubmit"
 > & {
   label?: string
@@ -29,7 +29,7 @@ const STYLES = `
 --vibeui-field-006-bg:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
 --vibeui-field-006-surface:transparent;
 --vibeui-field-006-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
---vibeui-field-006-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-field-006-muted:color-mix(in oklab,var(--vibeui-field-006-fg) 68%,transparent);
 --vibeui-field-006-border:light-dark(oklch(0.88 0.008 265),oklch(0.4 0.012 265));
 --vibeui-field-006-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.011 265));
 --vibeui-field-006-accent:light-dark(oklch(0.52 0.19 285),oklch(0.72 0.16 285));
@@ -37,6 +37,9 @@ const STYLES = `
 --vibeui-field-006-ok:light-dark(oklch(0.5 0.13 155),oklch(0.75 0.13 155));
 --vibeui-field-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="field-006"]{color-scheme:dark}
 /* Подложки по умолчанию нет: поле ложится на фон страницы. */
 [data-vibeui-block="field-006"]{
 display:flex;flex-direction:column;gap:0.4375rem;
@@ -129,6 +132,7 @@ export function Field006({
   style,
   ...props
 }: Field006Props) {
+  const id = useId()
   const [value, setValue] = useState("")
   const [applied, setApplied] = useState("")
 
@@ -157,23 +161,24 @@ export function Field006({
       </style>
       <div
         {...props}
+        data-slot="field"
         data-vibeui-block="field-006"
         data-done={applied ? "true" : undefined}
         className={className}
         style={palette}
       >
-        <label htmlFor="field-006-input">{label}</label>
+        <label htmlFor={id}>{label}</label>
         {/* Настоящая форма: Enter нажимает кнопку без обработчика клавиш. */}
         <form onSubmit={submit}>
           <div data-part="frame">
             <input
-              id="field-006-input"
+              id={id}
               name="promo"
               type="text"
               autoComplete="off"
               placeholder={placeholder}
               value={value}
-              aria-describedby="field-006-note"
+              aria-describedby={`${id}-note`}
               onChange={(event) => {
                 setValue(event.target.value)
                 setApplied("")
@@ -184,7 +189,7 @@ export function Field006({
             </button>
           </div>
         </form>
-        <p id="field-006-note" data-part="note" role="status">
+        <p id={`${id}-note`} data-part="note" role="status">
           {applied ? (
             <>
               <span data-part="tick" aria-hidden="true" />

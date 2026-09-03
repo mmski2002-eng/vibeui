@@ -1,7 +1,7 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Aspect005Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "title" | "children"
 > & {
   title?: string
@@ -23,13 +23,16 @@ const STYLES = `
 :where([data-vibeui-block="aspect-005"]){
 --vibeui-aspect-005-ink:oklch(0.2 0.02 265);
 --vibeui-aspect-005-fg:oklch(0.99 0.003 265);
---vibeui-aspect-005-muted:oklch(0.84 0.012 265);
+--vibeui-aspect-005-muted:color-mix(in oklab,var(--vibeui-aspect-005-fg) 68%,transparent);
 --vibeui-aspect-005-accent:oklch(0.72 0.16 195);
 --vibeui-aspect-005-radius:1rem;
 --vibeui-aspect-005-ratio:21 / 9;
 --vibeui-aspect-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="aspect-005"]{color-scheme:dark}
 [data-vibeui-block="aspect-005"]{display:block;width:100%;box-sizing:border-box}
 /* Раскладка живёт на внутренней рамке, а не на корне: контейнерный запрос
    применяется к потомкам контейнера, но не к нему самому. */
@@ -96,6 +99,7 @@ export function Aspect005({
       </style>
       <div
         {...props}
+        data-slot="aspect-ratio"
         data-vibeui-block="aspect-005"
         className={className}
         style={palette}

@@ -1,10 +1,10 @@
 "use client"
 
 import { useSyncExternalStore } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Alert018Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "title" | "children"
 > & {
   title?: string
@@ -28,7 +28,7 @@ const STYLES = `
 :where([data-vibeui-block="alert-018"]){
 --vibeui-alert-018-fg:oklch(0.97 0.004 265);
 --vibeui-alert-018-bg:oklch(0.32 0.016 265);
---vibeui-alert-018-muted:oklch(0.82 0.01 265);
+--vibeui-alert-018-muted:color-mix(in oklab,var(--vibeui-alert-018-fg) 68%,transparent);
 --vibeui-alert-018-radius:9999px;
 --vibeui-alert-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -100,6 +100,7 @@ export function Alert018({
       </style>
       <div
         {...props}
+        data-slot="alert"
         data-vibeui-block="alert-018"
         role="status"
         aria-live="polite"

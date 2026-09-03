@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Spinner001Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Spinner001Props = Omit<ComponentProps<"div">, "children"> & {
   label?: string
   hint?: string
   size?: "sm" | "md" | "lg"
@@ -25,15 +22,18 @@ const STYLES = `
 --vibeui-spinner-001-bg:transparent;
 --vibeui-spinner-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.32 0.012 265));
 --vibeui-spinner-001-fg:light-dark(oklch(0.28 0.014 265),oklch(0.94 0.005 265));
---vibeui-spinner-001-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-spinner-001-muted:color-mix(in oklab,var(--vibeui-spinner-001-fg) 68%,transparent);
 --vibeui-spinner-001-track:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
 --vibeui-spinner-001-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.16 265));
 --vibeui-spinner-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="spinner-001"]{color-scheme:dark}
 /* Подложки нет по умолчанию: ожидание ложится на фон страницы. */
 [data-vibeui-block="spinner-001"]{
 display:inline-flex;align-items:center;gap:0.625rem;
-box-sizing:border-box;padding:0.75rem 1rem;
+box-sizing:border-box;padding:0.9375rem 1.0625rem;
 background:var(--vibeui-spinner-001-bg);
 border:1px solid var(--vibeui-spinner-001-border);border-radius:0.875rem;
 font-family:var(--vibeui-spinner-001-font);color:var(--vibeui-spinner-001-fg);
@@ -51,8 +51,8 @@ animation:vibeui-spinner-001-spin .7s linear infinite;
 @keyframes vibeui-spinner-001-spin{to{transform:rotate(360deg)}}
 @keyframes vibeui-spinner-001-pulse{0%,100%{opacity:.35}50%{opacity:1}}
 [data-vibeui-block="spinner-001"] [data-part="text"]{display:flex;flex-direction:column;gap:0.0625rem;min-width:0}
-[data-vibeui-block="spinner-001"] [data-part="label"]{font-size:0.875rem;font-weight:650;line-height:1.2}
-[data-vibeui-block="spinner-001"] [data-part="hint"]{font-size:0.75rem;color:var(--vibeui-spinner-001-muted)}
+[data-vibeui-block="spinner-001"] [data-part="label"]{font-size:0.9375rem;font-weight:650;line-height:1.2}
+[data-vibeui-block="spinner-001"] [data-part="hint"]{font-size:0.875rem;color:var(--vibeui-spinner-001-muted)}
 /* Без движения состояние остаётся: кольцо не крутится, а пульсирует. */
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="spinner-001"] [data-part="ring"]{
@@ -116,6 +116,7 @@ export function Spinner001({
       </style>
       <div
         {...props}
+        data-slot="spinner"
         data-vibeui-block="spinner-001"
         data-size={size}
         role="status"

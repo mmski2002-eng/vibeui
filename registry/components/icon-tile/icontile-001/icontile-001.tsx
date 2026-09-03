@@ -1,7 +1,7 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Icontile001Props = Omit<
-  ComponentPropsWithoutRef<"span">,
+  ComponentProps<"span">,
   "children" | "color"
 > & {
   glyph?: string
@@ -30,6 +30,9 @@ const STYLES = `
 --vibeui-icontile-001-mark:light-dark(oklch(0.45 calc(var(--vibeui-icontile-001-chroma) * 4) var(--vibeui-icontile-001-hue)),oklch(0.89 calc(var(--vibeui-icontile-001-chroma) * 2.4) var(--vibeui-icontile-001-hue)));
 --vibeui-icontile-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="icontile-001"]{color-scheme:dark}
 /* Фон и знак считаются от одного оттенка: пара цветов не подбирается руками. */
 [data-vibeui-block="icontile-001"]{
 display:inline-flex;align-items:center;justify-content:center;flex:none;
@@ -72,6 +75,7 @@ export function Icontile001({
       </style>
       <span
         {...props}
+        data-slot="icon-tile"
         data-vibeui-block="icontile-001"
         data-tone={tone}
         data-size={size}

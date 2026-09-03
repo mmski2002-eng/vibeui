@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Eventcalendar002Event = {
   /** Индекс дня недели в показанном диапазоне, 0 — первый столбец. */
@@ -11,7 +11,7 @@ export type Eventcalendar002Event = {
 }
 
 export type Eventcalendar002Props = Omit<
-  ComponentPropsWithoutRef<"section">,
+  ComponentProps<"section">,
   "children" | "title"
 > & {
   weekStart?: string
@@ -42,7 +42,7 @@ const STYLES = `
 --vibeui-eventcalendar-002-bg:transparent;
 --vibeui-eventcalendar-002-panel:light-dark(oklch(1 0 0),oklch(0.24 0.011 265));
 --vibeui-eventcalendar-002-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
---vibeui-eventcalendar-002-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-eventcalendar-002-muted:color-mix(in oklab,var(--vibeui-eventcalendar-002-fg) 68%,transparent);
 --vibeui-eventcalendar-002-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
 --vibeui-eventcalendar-002-line:light-dark(oklch(0.95 0.004 265),oklch(0.31 0.01 265));
 --vibeui-eventcalendar-002-accent:light-dark(oklch(0.55 0.16 262),oklch(0.74 0.15 262));
@@ -51,6 +51,9 @@ const STYLES = `
 --vibeui-eventcalendar-002-now:light-dark(oklch(0.58 0.19 25),oklch(0.72 0.18 25));
 --vibeui-eventcalendar-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="eventcalendar-002"]{color-scheme:dark}
 [data-vibeui-block="eventcalendar-002"]{
 width:100%;max-width:52rem;box-sizing:border-box;padding:1rem;
 background:var(--vibeui-eventcalendar-002-bg);
@@ -215,6 +218,26 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 }
 
 /**
+ * Неверный проп не должен ронять страницу-хост: на Invalid Date форматтеры
+ * Intl и toISOString бросают RangeError, поэтому дату откатываем на дефолтную.
+ */
+function safeDay(value: string, fallback: string) {
+  const date = new Date(`${value}T00:00:00Z`)
+
+  return Number.isNaN(date.getTime()) ? new Date(`${fallback}T00:00:00Z`) : date
+}
+
+/** По той же причине неразбираемая локаль откатывается на дефолтную. */
+function safeLocale(value: string, fallback: string) {
+  try {
+    Intl.DateTimeFormat.supportedLocalesOf(value)
+    return value
+  } catch {
+    return fallback
+  }
+}
+
+/**
  * Неделя колонками дней: события стоят по времени в процентах от рабочего
  * дня, события на весь день — отдельной строкой. Один файл, ноль зависимостей.
  */
@@ -234,7 +257,8 @@ export function Eventcalendar002({
   style,
   ...props
 }: Eventcalendar002Props) {
-  const start = new Date(`${weekStart}T00:00:00Z`).getTime()
+  const start = safeDay(weekStart, "2026-03-16").getTime()
+  const tag = safeLocale(locale, "ru-RU")
   const span = (dayTo - dayFrom) * 60
   const days = 7
 
@@ -243,7 +267,7 @@ export function Eventcalendar002({
 
     return {
       key: date.toISOString().slice(0, 10),
-      weekday: new Intl.DateTimeFormat(locale, {
+      weekday: new Intl.DateTimeFormat(tag, {
         weekday: "short",
         timeZone: "UTC",
       }).format(date),
@@ -280,6 +304,7 @@ export function Eventcalendar002({
       </style>
       <section
         {...props}
+        data-slot="event-calendar"
         data-vibeui-block="eventcalendar-002"
         aria-label={heading}
         className={className}

@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Pagination001Props = Omit<
-  ComponentPropsWithoutRef<"nav">,
-  "children"
-> & {
+export type Pagination001Props = Omit<ComponentProps<"nav">, "children"> & {
   page?: number
   total?: number
   /** Сколько номеров показывать вокруг текущего. */
@@ -22,7 +19,7 @@ export type Pagination001Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="pagination-001"]){
 --vibeui-pagination-001-fg:light-dark(oklch(0.26 0.016 265),oklch(0.93 0.006 265));
---vibeui-pagination-001-muted:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-pagination-001-muted:color-mix(in oklab,var(--vibeui-pagination-001-fg) 68%,transparent);
 --vibeui-pagination-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
 --vibeui-pagination-001-hover:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.82 0.02 265 / 14%));
 --vibeui-pagination-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.7 0.16 262));
@@ -30,6 +27,9 @@ const STYLES = `
 --vibeui-pagination-001-size:2.25rem;
 --vibeui-pagination-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="pagination-001"]{color-scheme:dark}
 [data-vibeui-block="pagination-001"]{font-family:var(--vibeui-pagination-001-font)}
 [data-vibeui-block="pagination-001"] ul{
 display:flex;align-items:center;gap:0.25rem;margin:0;padding:0;list-style:none;
@@ -120,6 +120,7 @@ export function Pagination001({
       </style>
       <nav
         {...props}
+        data-slot="pagination"
         data-vibeui-block="pagination-001"
         aria-label={labelText.nav ?? LABEL.nav}
         className={className}

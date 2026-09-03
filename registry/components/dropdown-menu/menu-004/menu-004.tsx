@@ -1,7 +1,9 @@
-import { useId } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+"use client"
 
-export type Menu004Props = Omit<ComponentPropsWithoutRef<"div">, "children"> & {
+import { useId, useRef } from "react"
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
+
+export type Menu004Props = Omit<ComponentProps<"div">, "children"> & {
   name?: string
   email?: string
   plan?: string
@@ -29,7 +31,7 @@ const STYLES = `
 :where([data-vibeui-block="menu-004"]){
 --vibeui-menu-004-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
 --vibeui-menu-004-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
---vibeui-menu-004-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.012 265));
+--vibeui-menu-004-muted:color-mix(in oklab,var(--vibeui-menu-004-fg) 68%,transparent);
 --vibeui-menu-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
 --vibeui-menu-004-hover:light-dark(oklch(0.96 0.004 265),oklch(0.32 0.014 265));
 --vibeui-menu-004-danger:light-dark(oklch(0.56 0.19 25),oklch(0.72 0.16 25));
@@ -37,6 +39,9 @@ const STYLES = `
 --vibeui-menu-004-hue:250;
 --vibeui-menu-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="menu-004"]{color-scheme:dark}
 [data-vibeui-block="menu-004"]{
 display:inline-block;font-family:var(--vibeui-menu-004-font);color:var(--vibeui-menu-004-fg);
 }
@@ -54,8 +59,8 @@ anchor-name:--vibeui-menu-004-anchor;
 [data-vibeui-block="menu-004"] [data-part="face"]{
 display:flex;align-items:center;justify-content:center;flex:none;
 width:1.75rem;height:1.75rem;border-radius:9999px;
-background:oklch(0.92 0.05 var(--vibeui-menu-004-hue));
-color:oklch(0.38 0.09 var(--vibeui-menu-004-hue));
+background:light-dark(oklch(0.92 0.05 var(--vibeui-menu-004-hue)),oklch(0.34 0.065 var(--vibeui-menu-004-hue)));
+color:light-dark(oklch(0.38 0.09 var(--vibeui-menu-004-hue)),oklch(0.88 0.063 var(--vibeui-menu-004-hue)));
 font-size:0.6875rem;font-weight:700;
 }
 [data-vibeui-block="menu-004"] [popover]{
@@ -147,6 +152,26 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
   return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
+// role="menu" обязывает водить по пунктам стрелками: Tab внутри меню
+// пользователю уже не обещан. Список берётся из DOM, поэтому шапка и
+// отделённый выход не приходится держать во втором месте.
+function stepFocus(menu: HTMLElement | null, delta: number) {
+  if (!menu) {
+    return
+  }
+
+  const items = Array.from(
+    menu.querySelectorAll<HTMLElement>('[data-part="item"]'),
+  )
+
+  if (items.length === 0) {
+    return
+  }
+
+  const from = items.indexOf(document.activeElement as HTMLElement)
+  items[(from + delta + items.length) % items.length].focus()
+}
+
 /**
  * Меню профиля: шапка с именем и почтой, выход отделён чертой.
  * Один файл, ноль зависимостей, собственная палитра.
@@ -166,6 +191,34 @@ export function Menu004({
   ...props
 }: Menu004Props) {
   const id = useId().replace(/:/g, "")
+  const menu = useRef<HTMLDivElement>(null)
+
+  const openAndFocus = () => {
+    const node = menu.current
+
+    if (!node) {
+      return
+    }
+
+    if (!node.matches(":popover-open")) {
+      node.showPopover()
+    }
+
+    requestAnimationFrame(() =>
+      node.querySelector<HTMLElement>('[data-part="item"]')?.focus(),
+    )
+  }
+
+  const onMenuKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "ArrowDown") {
+      event.preventDefault()
+      stepFocus(menu.current, 1)
+    } else if (event.key === "ArrowUp") {
+      event.preventDefault()
+      stepFocus(menu.current, -1)
+    }
+  }
+
   const palette = {
     "--vibeui-menu-004-hue": hue(name),
     ...(accent ? { "--vibeui-menu-004-accent": accent } : null),
@@ -185,6 +238,7 @@ export function Menu004({
       </style>
       <div
         {...props}
+        data-slot="dropdown-menu"
         data-vibeui-block="menu-004"
         className={className}
         style={palette}
@@ -193,7 +247,14 @@ export function Menu004({
           type="button"
           data-part="trigger"
           popoverTarget={`${id}-menu`}
+          aria-haspopup="menu"
           aria-label={triggerLabel.replace("{name}", name)}
+          onKeyDown={(event) => {
+            if (event.key === "ArrowDown") {
+              event.preventDefault()
+              openAndFocus()
+            }
+          }}
         >
           <span data-part="face" aria-hidden="true">
             {initials(name)}
@@ -202,9 +263,11 @@ export function Menu004({
         </button>
         <div
           id={`${id}-menu`}
+          ref={menu}
           popover="auto"
           role="menu"
           aria-label={menuLabel}
+          onKeyDown={onMenuKeyDown}
         >
           <div data-part="head">
             <span data-part="name">{name}</span>

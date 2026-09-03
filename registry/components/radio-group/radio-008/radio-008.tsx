@@ -1,10 +1,10 @@
 "use client"
 
 import { useId, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Radio008Props = Omit<
-  ComponentPropsWithoutRef<"fieldset">,
+  ComponentProps<"fieldset">,
   "children" | "defaultValue" | "onChange"
 > & {
   legend?: string
@@ -30,13 +30,16 @@ const STYLES = `
 :where([data-vibeui-block="radio-008"]){
 --vibeui-radio-008-bg:transparent;
 --vibeui-radio-008-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-radio-008-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-radio-008-muted:color-mix(in oklab,var(--vibeui-radio-008-fg) 68%,transparent);
 --vibeui-radio-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
 --vibeui-radio-008-ring:light-dark(oklch(0.74 0.012 265),oklch(0.53 0.014 265));
 --vibeui-radio-008-field:light-dark(oklch(0.985 0.002 265),oklch(0.28 0.008 265));
 --vibeui-radio-008-accent:light-dark(oklch(0.55 0.19 300),oklch(0.75 0.15 300));
 --vibeui-radio-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="radio-008"]{color-scheme:dark}
 [data-vibeui-block="radio-008"]{
 display:flex;flex-direction:column;
 width:100%;max-width:21rem;box-sizing:border-box;
@@ -55,7 +58,7 @@ display:flex;align-items:center;gap:0.625rem;cursor:pointer;font-size:0.875rem;
 }
 [data-vibeui-block="radio-008"] input[type="radio"]{
 appearance:none;-webkit-appearance:none;flex:none;margin:0;cursor:pointer;
-width:1.0625rem;height:1.0625rem;border-radius:9999px;
+width:1.125rem;height:1.125rem;border-radius:9999px;
 border:1.5px solid var(--vibeui-radio-008-ring);
 background:transparent;
 }
@@ -69,7 +72,7 @@ background:radial-gradient(circle at 50% 50%,var(--vibeui-radio-008-accent) 0 0.
 /* Поле сдвинуто под подпись «другое» и всегда занимает место: исчезающее
    поле дёргает всю форму и прячет саму возможность ответить словами. */
 [data-vibeui-block="radio-008"] [data-part="other-field"]{
-margin-left:1.6875rem;margin-top:0.5rem;
+margin-left:1.75rem;margin-top:0.5rem;
 }
 [data-vibeui-block="radio-008"] input[type="text"]{
 box-sizing:border-box;width:100%;height:2.25rem;padding:0 0.625rem;
@@ -164,6 +167,7 @@ export function Radio008({
       </style>
       <fieldset
         {...props}
+        data-slot="radio-group"
         data-vibeui-block="radio-008"
         className={className}
         style={palette}

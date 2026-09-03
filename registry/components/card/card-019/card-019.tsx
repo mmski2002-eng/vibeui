@@ -1,7 +1,7 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Card019Props = Omit<
-  ComponentPropsWithoutRef<"section">,
+  ComponentProps<"section">,
   "children" | "title"
 > & {
   title?: string
@@ -28,11 +28,14 @@ const STYLES = `
 --vibeui-card-019-ink:light-dark(oklch(0.18 0.02 265),oklch(0.98 0.005 265));
 --vibeui-card-019-on-accent:light-dark(oklch(0.99 0 0),oklch(0.17 0.015 262));
 --vibeui-card-019-fg:light-dark(oklch(0.22 0.015 265),oklch(0.94 0.006 265));
---vibeui-card-019-muted:light-dark(oklch(0.55 0.013 265),oklch(0.71 0.012 265));
+--vibeui-card-019-muted:color-mix(in oklab,var(--vibeui-card-019-fg) 68%,transparent);
 --vibeui-card-019-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-card-019-accent:light-dark(oklch(0.55 0.18 262),oklch(0.72 0.15 262));
 --vibeui-card-019-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="card-019"]{color-scheme:dark}
 [data-vibeui-block="card-019"]{
 display:flex;flex-direction:column;align-items:center;gap:0.5rem;
 width:100%;max-width:26rem;box-sizing:border-box;padding:2rem 1.5rem 1.75rem;
@@ -146,6 +149,7 @@ export function Card019({
       </style>
       <section
         {...props}
+        data-slot="card"
         data-vibeui-block="card-019"
         className={className}
         style={palette}

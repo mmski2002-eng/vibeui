@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Spinner002Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Spinner002Props = Omit<ComponentProps<"div">, "children"> & {
   label?: string
   speed?: number
   /** Пусто — подложки нет, компонент лежит на фоне страницы. */
@@ -28,14 +25,17 @@ const STYLES = `
 --vibeui-spinner-002-accent:light-dark(oklch(0.55 0.17 262),oklch(0.72 0.16 262));
 --vibeui-spinner-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="spinner-002"]{color-scheme:dark}
 /* Подложки нет по умолчанию: плашка появляется только пропом background. */
 [data-vibeui-block="spinner-002"]{
 display:inline-flex;align-items:center;gap:0.625rem;
-box-sizing:border-box;padding:0.625rem 0.875rem;
+box-sizing:border-box;padding:0.75rem 1rem;
 background:var(--vibeui-spinner-002-surface);
 border:1px solid var(--vibeui-spinner-002-border);border-radius:9999px;
 font-family:var(--vibeui-spinner-002-font);color:var(--vibeui-spinner-002-fg);
-font-size:0.8125rem;
+font-size:0.9375rem;
 }
 [data-vibeui-block="spinner-002"] [data-part="dots"]{
 display:inline-flex;align-items:center;gap:0.25rem;flex:none;
@@ -118,6 +118,7 @@ export function Spinner002({
       </style>
       <div
         {...props}
+        data-slot="spinner"
         data-vibeui-block="spinner-002"
         role="status"
         aria-live="polite"

@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Accordion006Step = {
   title: string
@@ -12,12 +12,16 @@ export type Accordion006Step = {
 /** Что показывать в шапке над списком шагов. */
 export type Accordion006Progress = "bar" | "count" | "none"
 
-export type Accordion006Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Accordion006Props = Omit<ComponentProps<"div">, "children"> & {
   title?: string
   steps?: Accordion006Step[]
+  /** Слово «выполнено» для скринридера: галочка в плитке ему не видна. */
+  doneLabel?: string
+  /**
+   * Счётчик шагов. Шаблон, а не склеенная строка: порядок слов и предлог
+   * в разных языках свои, и переводится он целиком.
+   */
+  countText?: string
   /** Номер раскрытого шага. По умолчанию — первый невыполненный. */
   defaultOpen?: number
   progress?: Accordion006Progress
@@ -36,7 +40,7 @@ export type Accordion006Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="accordion-006"]){
 --vibeui-accordion-006-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-accordion-006-muted:light-dark(oklch(0.52 0.014 265),oklch(0.68 0.01 265));
+--vibeui-accordion-006-muted:color-mix(in oklab,var(--vibeui-accordion-006-fg) 68%,transparent);
 --vibeui-accordion-006-bg:transparent;
 --vibeui-accordion-006-border:light-dark(oklch(0.91 0.006 265),oklch(0.31 0.01 265));
 --vibeui-accordion-006-track:light-dark(oklch(0.93 0.006 265),oklch(0.28 0.01 265));
@@ -56,7 +60,7 @@ color:var(--vibeui-accordion-006-fg);font-family:var(--vibeui-accordion-006-font
 }
 [data-vibeui-block="accordion-006"] [data-part="head"]{
 display:flex;flex-direction:column;gap:0.625rem;
-padding:1.125rem 1.25rem;border-bottom:1px solid var(--vibeui-accordion-006-border);
+padding:1.0625rem 1.0625rem;border-bottom:1px solid var(--vibeui-accordion-006-border);
 }
 [data-vibeui-block="accordion-006"] [data-part="head-row"]{
 display:flex;align-items:baseline;justify-content:space-between;gap:1rem;
@@ -80,7 +84,7 @@ transition:width .3s cubic-bezier(.32,.72,0,1);
 [data-vibeui-block="accordion-006"] details + details{border-top:1px solid var(--vibeui-accordion-006-border)}
 [data-vibeui-block="accordion-006"] summary{
 display:flex;align-items:flex-start;gap:0.75rem;
-padding:0.9375rem 1.25rem;cursor:pointer;list-style:none;
+padding:0.9375rem 1.0625rem;cursor:pointer;list-style:none;
 font-size:0.9375rem;line-height:1.4;
 }
 [data-vibeui-block="accordion-006"] summary::-webkit-details-marker{display:none}
@@ -102,14 +106,30 @@ color:var(--vibeui-accordion-006-accent-fg);
 [data-vibeui-block="accordion-006"] [data-part="hint"]{
 flex:none;font-size:0.75rem;color:var(--vibeui-accordion-006-muted);white-space:nowrap;
 }
+/* Состояние шага названо словом: плитка с галочкой скрыта от скринридера,
+   и без этой подписи сделанный шаг звучит так же, как несделанный. */
+[data-vibeui-block="accordion-006"] [data-part="said"]{
+position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;
+clip-path:inset(50%);white-space:nowrap;border:0;
+}
 [data-vibeui-block="accordion-006"] [data-part="body"]{
-margin:0;padding:0 1.25rem 1.125rem 3.5rem;
+margin:0;padding:0 1.0625rem 1.0625rem 3.3125rem;
 font-size:0.875rem;line-height:1.6;color:var(--vibeui-accordion-006-muted);max-width:58ch;
+}
+/* Общая шкала категории: на широкой раскладке строка и текст подрастают
+   на один шаг, тот же, что у соседних аккордеонов. */
+@container (min-width: 32rem){
+[data-vibeui-block="accordion-006"] [data-part="head"]{padding:1.125rem 1.375rem}
+[data-vibeui-block="accordion-006"] summary{padding:1.0625rem 1.375rem;font-size:1rem}
+[data-vibeui-block="accordion-006"] [data-part="body"]{padding:0 1.375rem 1.125rem 3.625rem;font-size:0.9375rem}
 }
 @container (max-width: 26rem){
 [data-vibeui-block="accordion-006"] [data-part="hint"]{display:none}
 [data-vibeui-block="accordion-006"] [data-part="body"]{padding-left:1.25rem}
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="accordion-006"]{color-scheme:dark}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="accordion-006"] *{animation:none!important;transition:none!important}}
 `
 
@@ -167,6 +187,8 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 export function Accordion006({
   title = "Настройка проекта",
   steps = DEFAULT_STEPS,
+  doneLabel = "выполнено",
+  countText = "{done} из {total}",
   defaultOpen,
   progress = "bar",
   background = "",
@@ -199,6 +221,7 @@ export function Accordion006({
       </style>
       <div
         {...props}
+        data-slot="accordion"
         data-vibeui-block="accordion-006"
         data-progress={progress}
         className={className}
@@ -208,7 +231,9 @@ export function Accordion006({
           <div data-part="head-row">
             <p data-part="title">{title}</p>
             <span data-part="count">
-              {done} из {steps.length}
+              {countText
+                .replace("{done}", String(done))
+                .replace("{total}", String(steps.length))}
             </span>
           </div>
           <div
@@ -233,6 +258,7 @@ export function Accordion006({
                 {step.done ? "✓" : index + 1}
               </span>
               <span data-part="text">{step.title}</span>
+              {step.done ? <span data-part="said">{doneLabel}</span> : null}
               {step.hint ? <span data-part="hint">{step.hint}</span> : null}
             </summary>
             <p data-part="body">{step.body}</p>

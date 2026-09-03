@@ -1,15 +1,14 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Timeline007Stage = {
   title: string
   date?: string
+  /** Машиночитаемая дата для <time datetime>: «сегодня» роботу не дата. */
+  dateTime?: string
   state?: "done" | "current" | "todo"
 }
 
-export type Timeline007Props = Omit<
-  ComponentPropsWithoutRef<"section">,
-  "children"
-> & {
+export type Timeline007Props = Omit<ComponentProps<"section">, "children"> & {
   stages?: Timeline007Stage[]
   title?: string
   accent?: string
@@ -29,13 +28,16 @@ const STYLES = `
 :where([data-vibeui-block="timeline-007"]){
 --vibeui-timeline-007-bg:transparent;
 --vibeui-timeline-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-timeline-007-muted:light-dark(oklch(0.57 0.014 265),oklch(0.69 0.012 265));
+--vibeui-timeline-007-muted:color-mix(in oklab,var(--vibeui-timeline-007-fg) 68%,transparent);
 --vibeui-timeline-007-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-timeline-007-done:light-dark(oklch(0.58 0.14 152),oklch(0.72 0.14 152));
 --vibeui-timeline-007-on-done:light-dark(oklch(1 0 0),oklch(0.19 0.04 152));
 --vibeui-timeline-007-accent:light-dark(oklch(0.55 0.18 262),oklch(0.74 0.16 262));
 --vibeui-timeline-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="timeline-007"]{color-scheme:dark}
 [data-vibeui-block="timeline-007"]{
 display:flex;flex-direction:column;gap:0.75rem;
 width:100%;max-width:32rem;box-sizing:border-box;padding:0.9375rem;
@@ -86,11 +88,21 @@ box-shadow:0 0 0 4px color-mix(in oklab,var(--vibeui-timeline-007-accent) 15%,tr
 `
 
 const DEFAULT_STAGES: Timeline007Stage[] = [
-  { title: "Заявка", date: "3 марта", state: "done" },
-  { title: "Оценка", date: "6 марта", state: "done" },
-  { title: "Договор", date: "сегодня", state: "current" },
-  { title: "Работы", date: "с 20 марта", state: "todo" },
-  { title: "Сдача", date: "апрель", state: "todo" },
+  { title: "Заявка", date: "3 марта", dateTime: "2026-03-03", state: "done" },
+  { title: "Оценка", date: "6 марта", dateTime: "2026-03-06", state: "done" },
+  {
+    title: "Договор",
+    date: "сегодня",
+    dateTime: "2026-03-14",
+    state: "current",
+  },
+  {
+    title: "Работы",
+    date: "с 20 марта",
+    dateTime: "2026-03-20",
+    state: "todo",
+  },
+  { title: "Сдача", date: "апрель", dateTime: "2026-04", state: "todo" },
 ]
 
 /**
@@ -146,6 +158,7 @@ export function Timeline007({
       </style>
       <section
         {...props}
+        data-slot="timeline"
         data-vibeui-block="timeline-007"
         className={className}
         style={palette}
@@ -163,7 +176,11 @@ export function Timeline007({
                   {index + 1}
                 </span>
                 <span data-part="stage">{stage.title}</span>
-                {stage.date ? <span data-part="date">{stage.date}</span> : null}
+                {stage.date ? (
+                  <time data-part="date" dateTime={stage.dateTime}>
+                    {stage.date}
+                  </time>
+                ) : null}
               </li>
             )
           })}

@@ -33,7 +33,7 @@ const STYLES = `
 :where([data-vibeui-block="tree-002"]){
 --vibeui-tree-002-bg:transparent;
 --vibeui-tree-002-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
---vibeui-tree-002-muted:light-dark(oklch(0.56 0.014 265),oklch(0.67 0.012 265));
+--vibeui-tree-002-muted:color-mix(in oklab,var(--vibeui-tree-002-fg) 68%,transparent);
 --vibeui-tree-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-tree-002-hover:light-dark(oklch(0.97 0.003 265),oklch(0.29 0.01 265));
 --vibeui-tree-002-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
@@ -42,6 +42,9 @@ const STYLES = `
 --vibeui-tree-002-indent:0.875rem;
 --vibeui-tree-002-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="tree-002"]{color-scheme:dark}
 [data-vibeui-block="tree-002"]{
 width:100%;max-width:21rem;box-sizing:border-box;padding:0.5rem;
 background:var(--vibeui-tree-002-bg);
@@ -74,12 +77,13 @@ transform:rotate(90deg);
 [data-vibeui-block="tree-002"] [data-part="badge"]{
 flex:none;display:grid;place-items:center;
 width:1.125rem;height:1.125rem;border-radius:0.3125rem;
-background:oklch(0.93 0.06 var(--vibeui-tree-002-hue));
-color:oklch(0.4 0.14 var(--vibeui-tree-002-hue));
+background:light-dark(oklch(0.93 0.06 var(--vibeui-tree-002-hue)),oklch(0.37 0.07 var(--vibeui-tree-002-hue)));
+color:light-dark(oklch(0.4 0.14 var(--vibeui-tree-002-hue)),oklch(0.9 0.08 var(--vibeui-tree-002-hue)));
 font-size:0.5rem;font-weight:800;letter-spacing:0.02em;
 }
 [data-vibeui-block="tree-002"] [data-part="badge"][data-kind="folder"]{
-background:oklch(0.94 0.05 85);color:oklch(0.45 0.11 75);
+background:light-dark(oklch(0.94 0.05 85),oklch(0.38 0.06 85));
+color:light-dark(oklch(0.45 0.11 75),oklch(0.9 0.08 80));
 }
 [data-vibeui-block="tree-002"] [data-part="name"]{
 flex:1 1 auto;min-width:0;
@@ -317,7 +321,12 @@ export function Tree002({
       <style href="vibeui-tree-002" precedence="medium">
         {STYLES}
       </style>
-      <div data-vibeui-block="tree-002" className={className} style={palette}>
+      <div
+        data-slot="tree"
+        data-vibeui-block="tree-002"
+        className={className}
+        style={palette}
+      >
         <ul role="tree" aria-label={label}>
           {rows.map((row, index) => {
             const extension = row.branch

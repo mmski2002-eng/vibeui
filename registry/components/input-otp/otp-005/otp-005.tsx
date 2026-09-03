@@ -3,13 +3,13 @@
 import { Fragment, useId, useRef, useState } from "react"
 import type {
   ClipboardEvent,
-  ComponentPropsWithoutRef,
+  ComponentProps,
   CSSProperties,
   KeyboardEvent,
 } from "react"
 
 export type Otp005Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   label?: string
@@ -34,21 +34,25 @@ const STYLES = `
 --vibeui-otp-005-surface:light-dark(oklch(1 0 0),oklch(0.31 0.014 265));
 --vibeui-otp-005-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-otp-005-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
---vibeui-otp-005-muted:light-dark(oklch(0.56 0.014 265),oklch(0.7 0.014 265));
+--vibeui-otp-005-muted:color-mix(in oklab,var(--vibeui-otp-005-fg) 68%,transparent);
 --vibeui-otp-005-field:light-dark(oklch(0.98 0.002 265),oklch(0.25 0.014 265));
 --vibeui-otp-005-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.014 265));
 --vibeui-otp-005-accent:light-dark(oklch(0.5 0.15 160),oklch(0.74 0.14 160));
 --vibeui-otp-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="otp-005"]{color-scheme:dark}
 [data-vibeui-block="otp-005"]{
 display:flex;flex-direction:column;gap:0.5rem;
-width:100%;max-width:22rem;box-sizing:border-box;padding:0.875rem;
+width:100%;max-width:22rem;box-sizing:border-box;padding:0.9375rem;
 background:var(--vibeui-otp-005-bg);
 border:1px solid var(--vibeui-otp-005-shell);border-radius:0.875rem;
 font-family:var(--vibeui-otp-005-font);color:var(--vibeui-otp-005-fg);
 }
 [data-vibeui-block="otp-005"] *{box-sizing:border-box}
-[data-vibeui-block="otp-005"] [data-part="label"]{font-size:0.8125rem;font-weight:600}
+[data-vibeui-block="otp-005"] [data-part="label"]{font-size:0.9375rem;font-weight:600}
 [data-vibeui-block="otp-005"] [data-part="row"]{display:flex;align-items:center;gap:0.5rem}
 /* Внутри группы клетки сцеплены: общая рамка, схлопнутые границы,
    фокусная клетка поднимается над соседями. */
@@ -78,7 +82,12 @@ flex:none;width:0.75rem;height:2px;border-radius:1px;
 background:var(--vibeui-otp-005-muted);opacity:.5;
 }
 [data-vibeui-block="otp-005"] [data-part="hint"]{
-margin:0;font-size:0.75rem;line-height:1.4;color:var(--vibeui-otp-005-muted);
+margin:0;font-size:0.875rem;line-height:1.4;color:var(--vibeui-otp-005-muted);
+}
+/* Шкала категории. Порог 19rem, а не 32rem: карточка упёрта в max-width:22rem. */
+@container (min-width: 19rem){
+[data-vibeui-block="otp-005"] [data-part="label"]{font-size:1rem}
+[data-vibeui-block="otp-005"] [data-part="hint"]{font-size:0.9375rem}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="otp-005"] *{animation:none!important;transition:none!important}}
 `
@@ -194,6 +203,7 @@ export function Otp005({
       </style>
       <div
         {...props}
+        data-slot="input-otp"
         data-vibeui-block="otp-005"
         className={className}
         style={palette}

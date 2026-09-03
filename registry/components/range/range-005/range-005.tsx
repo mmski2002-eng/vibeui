@@ -1,10 +1,10 @@
 "use client"
 
 import { useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Range005Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "defaultValue" | "onChange"
 > & {
   label?: string
@@ -33,7 +33,7 @@ const STYLES = `
 --vibeui-range-005-knob:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
 --vibeui-range-005-shell:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.011 265));
 --vibeui-range-005-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
---vibeui-range-005-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-range-005-muted:color-mix(in oklab,var(--vibeui-range-005-fg) 68%,transparent);
 --vibeui-range-005-track:light-dark(oklch(0.93 0.006 265),oklch(0.33 0.012 265));
 --vibeui-range-005-accent:light-dark(oklch(0.5 0.17 320),oklch(0.76 0.14 320));
 --vibeui-range-005-shadow:light-dark(oklch(0.2 0.02 265 / 25%),oklch(0 0 0 / 45%));
@@ -42,6 +42,9 @@ const STYLES = `
 --vibeui-range-005-to:100%;
 --vibeui-range-005-gutter:8%;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="range-005"]{color-scheme:dark}
 /* Подложки по умолчанию нет: фильтр ложится на фон страницы, плашку включает проп background. */
 [data-vibeui-block="range-005"]{
 display:flex;flex-direction:column;gap:0.5rem;
@@ -168,6 +171,7 @@ export function Range005({
       </style>
       <div
         {...props}
+        data-slot="range"
         data-vibeui-block="range-005"
         className={className}
         style={palette}

@@ -185,7 +185,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-table-001-*. Scrolling lives in the wrapper rather than on the page: the table does not break the layout on a narrow screen. The header sticks to the top of the wrapper through position:sticky. Numeric columns are marked with the numeric flag in the column description and get right alignment and tabular-nums. The dense mode changes a single spacing variable."
           }
         },
         "cardControls": ["dense", "background"]
@@ -356,7 +357,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-table-002-*. The first column is held by position:sticky against the left edge with a shadow border. A cell value is either a string or a boolean: a boolean turns into a check or a dash, with a word beside it for a screen reader. The column highlight is set by a data attribute on the cells of every row, not on the header alone."
           }
         },
         "cardControls": ["highlight", "accent", "background"]
@@ -541,7 +543,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-table-003-*. The total and the tax are computed from the array of lines right inside the component — there is no separate \"amount\" prop, so they cannot drift from the items. The total row sits in <tfoot> and sticks to the bottom of the wrapper. Amounts are formatted by a local function: a space as the thousands separator, a comma for the fraction and the currency symbol as a prop — Intl is not used, so as not to depend on the project locale."
           }
         },
         "cardControls": ["taxRate", "accent", "background"]
@@ -707,7 +710,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-table-004-*. A client component: \"use client\" for the sake of sorting. A column heading is a button, and the state is declared with the aria-sort attribute on the cell. Numbers are compared by subtraction, strings by localeCompare with the Russian locale, so \"ё\" lands in its proper place."
           }
         },
         "cardControls": ["accent", "background"]
@@ -872,7 +876,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-table-005-*. A client component: \"use client\" for the sake of selection. The indeterminate property of the header checkbox is set through a ref: HTML has no attribute for it. The bulk bar takes the place of the caption, so it does not cover the first row."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1048,7 +1053,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-table-006-*. A server component: no hooks, the state is held by a checkbox. The details row is a separate <tr> with colspan, so it takes the full width and does not break the columns; it is shown by a :has() selector matching the checked checkbox of the neighbouring row."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1114,6 +1120,12 @@
             "maxLength": 32
           },
           {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
             "prop": "background",
             "label": "Фон",
             "type": "color",
@@ -1157,6 +1169,9 @@
                 "label": "Caption",
                 "default": "March invoices"
               },
+              "accent": {
+                "label": "Accent"
+              },
               "background": {
                 "label": "Background"
               }
@@ -1192,10 +1207,11 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-table-007-*. A server component: no hooks. The width is measured by a container query, so the table also rebuilds inside a narrow column on a wide screen. The rebuild rules live on the inner wrapper: an element with container-type cannot answer its own query."
           }
         },
-        "cardControls": ["background"]
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1365,7 +1381,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-table-008-*. A server component: no hooks. The table body is set in a monospaced font with tabular figures, so addresses and codes line up in a column. The row tone is computed from the response code by a function rather than arriving as a prop."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1517,7 +1534,8 @@
                 "emptyText": "Issued invoices will show up here. You can create the first one right now.",
                 "actionLabel": "Issue an invoice"
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-table-009-*. A server component: no hooks, the state arrives through a prop. While loading, the table is marked aria-busy, and the bar widths are set by rules keyed to the column number, so no inline styles are needed. Under prefers-reduced-motion the pulse is switched off."
           }
         },
         "cardControls": ["state", "rows", "accent", "background"]
@@ -1677,7 +1695,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-table-010-*. A server component: no hooks. The bar is a linear gradient in the cell background: no extra element and no chart library. The share is computed from the sum of the visits, and the total row prints that same sum."
           }
         },
         "cardControls": ["accent", "background"]
@@ -1862,7 +1881,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its palette in the --vibeui-table-011-* variables. A server component: no hooks. The features are row headers (th scope=\"row\") and the plans are column headers (th scope=\"col\"), so a cell with a check mark is announced as the pair \"feature — plan\" rather than as a lone symbol. The ✓ and — glyphs are covered by aria-hidden, and a visually hidden \"yes\"/\"no\" word sits beside them: the glyph and the colour do not stay the only carriers of meaning. The recommended column is marked data-featured and tinted through color-mix from the accent; it has no palette of its own. The table is wide, so it sits in a role=\"region\" wrapper with tabindex=0 and a visible focus: otherwise the horizontal scrolling cannot be reached from the keyboard."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2038,7 +2058,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its palette in the --vibeui-table-012-* variables. A server component: it computes the subtotal and the tax at render time, and there is no state. The line items sit in tbody and the arithmetic in tfoot, where every label is marked up as th scope=\"row\" with colSpan, so a number is always announced together with its word. Amounts are printed by a local money() function: the digit groups are separated by a narrow no-break space rather than by Intl, because Intl output depends on the environment locale and would differ between server and client. Numeric columns get font-variant-numeric:tabular-nums and white-space:nowrap: the digit groups line up and an amount does not break across lines."
           }
         },
         "cardControls": ["taxRate", "accent", "background"]
@@ -2260,7 +2281,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its palette in the --vibeui-table-013-* variables. A server component: no hooks. A two-dimensional table: th scope=\"col\" on the days and th scope=\"row\" on the times — only that gives a cell both coordinates when announced. The columns do not shrink (min-width), and the whole grid sits in a role=\"region\" wrapper with tabindex=0: a wide schedule moves into horizontal scrolling that is reachable from the keyboard. The visible heading is lifted into the block header while the caption is hidden visually, so the text is not duplicated but the table keeps its name. The event colour is set by data-tone through a single --vibeui-table-013-tone variable, so a new shade is one line of CSS."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2425,7 +2447,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its palette in the --vibeui-table-014-* variables. A server component: no hooks. The upper header cells are declared as th scope=\"colgroup\" with colSpan — without colgroup a screen reader will not tie a number to its year, and the two \"Plan\" columns become indistinguishable. The first cell gets rowSpan={2} and stays a th scope=\"col\". The flat column list is assembled from the groups with flatMap, so the table body is drawn in a single pass and the cell order cannot drift from the header. The boundary between groups is drawn with data-edge rather than nth-child: the rule survives adding a column."
           }
         },
         "cardControls": ["background"]
@@ -2612,7 +2635,8 @@
                   "Percentage points, not percent: compared with the previous quarter."
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its palette in the --vibeui-table-015-* variables. A server component: no hooks. The footnotes sit in an ol under the table, every entry has its own id, and the marker in the row is a link to that id with an id of its own for the way back. On top of the jump, the row header carries aria-describedby: a screen reader reads the note straight away without taking the user out of the table. All ids are built from idPrefix, so two instances on one page do not share anchors. The marker stays a full-sized target: the link has padding and a visible focus, despite the small sup type size."
           }
         },
         "cardControls": ["accent", "background"]
@@ -2797,7 +2821,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its palette in the --vibeui-table-016-* variables. A server component: the totals are computed at render, and there is no state. A number is split by the split() function into the sign, the integer part and the fractional part, and the markup places them in a grid of three columns of 0.75ch / 1fr / auto — the column boundaries are shared by every row, so the separators line up and a hanging minus does not shift the digit groups. The minus is the typographic \"−\" sign (U+2212) rather than a hyphen: it is wider and reads as a minus. A negative value is tinted, but the meaning is carried by the sign itself, not by the colour. The digit groups are separated by a narrow no-break space, and the font is set in tabular-nums."
           }
         },
         "cardControls": ["decimals", "background"]
@@ -2843,6 +2868,7 @@
             "подпись таблицы через caption",
             "порог перестроения — правкой значения в @container",
             "leadTitle и columnText — подпись первой колонки и заголовки остальных",
+            "акцент через проп accent",
             "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
@@ -2876,6 +2902,12 @@
             "maxLength": 40
           },
           {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
             "prop": "background",
             "label": "Фон",
             "type": "color",
@@ -2902,6 +2934,7 @@
                 "the table caption through caption",
                 "the switch threshold by editing the value in @container",
                 "leadTitle and columnText — the first column caption and the headings of the rest",
+                "the accent through the accent prop",
                 "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
@@ -2925,6 +2958,9 @@
               "caption": {
                 "label": "Caption",
                 "default": "Customer subscriptions"
+              },
+              "accent": {
+                "label": "Accent"
               },
               "background": {
                 "label": "Background"
@@ -2972,10 +3008,11 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its palette in the --vibeui-table-017-* variables. A server component: no hooks. The width is measured by a container query rather than a media query: the table may sit in a narrow column on a wide screen. All the narrow-layout rules hang on the descendants of [data-part=\"shell\"], because @container does not apply to the container itself. Below 34rem the tbody becomes a grid with auto-fill, so a tablet fits two cards in a row and a phone one. The column labels sit in the markup next to the value and are simply hidden at wide widths — a second list layout is not needed, and the markup stays a single table."
           }
         },
-        "cardControls": ["background"]
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -3159,7 +3196,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its palette in the --vibeui-table-018-* variables. A server component: no hooks. The rail is made with box-shadow:inset rather than border-left: under border-collapse the cell borders collapse and the left stripe disappears. The status colour is set once by the --vibeui-table-018-edge variable on the row, and the dot and the chip border are coloured from it too — adding a status means adding one line of CSS. Every status is labelled with a word from the LABELS table, so the row reads under colour blindness and in black-and-white print. The row density is switched by data-density through a spacing variable rather than by a second copy of the rules."
           }
         },
         "cardControls": ["density", "background"]
@@ -3343,7 +3381,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its palette in the --vibeui-table-019-* variables. A server component: the total and the shares are computed at render. The total sits in tfoot and is set off by a double rule — the accepted report sign for \"the sum is below\". The share is printed as a number and doubled by a bar: the fill width arrives through the inline --vibeui-table-019-fill variable, because it is a dynamic value that cannot be expressed as a class. The bar is covered by aria-hidden, and the meaning is carried by the text beside it. The total label additionally explains what exactly has been summed and in which units: a \"total\" without units is the commonest mistake in report tables."
           }
         },
         "cardControls": ["accent", "background"]
@@ -3531,7 +3570,8 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its palette in the --vibeui-table-020-* variables. A server component: no hooks. The heading and the note sit inside the caption, so a screen reader announces the reading rules before the first cell rather than after it — a paragraph above the table gives nothing of the kind. caption-side:top is set explicitly: in print browsers like to move the caption to the bottom. The unit of measurement is printed in the header on its own line, and the abbreviations are expanded through abbr with a title and a dotted underline that does not pretend to be a link. The numeric columns come with tabular-nums, and the values are right-aligned."
           }
         },
         "cardControls": ["background"]

@@ -27,12 +27,15 @@ export type Tabs001Props = {
 const STYLES = `
 :where([data-vibeui-block="tabs-001"]){
 --vibeui-tabs-001-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.005 265));
---vibeui-tabs-001-muted:light-dark(oklch(0.52 0.014 265),oklch(0.7 0.012 265));
+--vibeui-tabs-001-muted:color-mix(in oklab,var(--vibeui-tabs-001-fg) 68%,transparent);
 --vibeui-tabs-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-tabs-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
 --vibeui-tabs-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="tabs-001"]{color-scheme:dark}
 [data-vibeui-block="tabs-001"]{
 display:flex;flex-direction:column;width:100%;box-sizing:border-box;
 font-family:var(--vibeui-tabs-001-font);color:var(--vibeui-tabs-001-fg);
@@ -68,6 +71,13 @@ transition:transform .18s cubic-bezier(.32,.72,0,1);
 padding:1rem 0.125rem;font-size:0.9375rem;line-height:1.6;color:var(--vibeui-tabs-001-muted);
 }
 [data-vibeui-block="tabs-001"] [data-part="panel"]:focus-visible{outline:2px solid var(--vibeui-tabs-001-accent);outline-offset:4px;border-radius:0.5rem}
+/* Шире 32rem вкладки перестают быть узкой полосой: шаг шкалы вверх у подписи
+   и текста панели, полоска подстраивается под новые внутренние отступы. */
+@container (min-width: 32rem){
+[data-vibeui-block="tabs-001"] [data-part="tab"]{font-size:0.9375rem;padding:0.75rem 0.875rem}
+[data-vibeui-block="tabs-001"] [data-part="tab"]::after{left:0.875rem;right:0.875rem}
+[data-vibeui-block="tabs-001"] [data-part="panel"]{font-size:1rem;padding:1.0625rem 0.125rem}
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="tabs-001"] *{animation:none!important;transition:none!important}}
 `
 
@@ -144,7 +154,12 @@ export function Tabs001({
       <style href="vibeui-tabs-001" precedence="medium">
         {STYLES}
       </style>
-      <div data-vibeui-block="tabs-001" className={className} style={palette}>
+      <div
+        data-slot="tabs"
+        data-vibeui-block="tabs-001"
+        className={className}
+        style={palette}
+      >
         <div
           data-part="list"
           role="tablist"

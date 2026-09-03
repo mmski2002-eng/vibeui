@@ -1,14 +1,16 @@
 "use client"
 
 import { useId, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Currency001Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "children" | "onChange"
 > & {
   label?: string
   currency?: string
+  /** Валюта словом: знак «₽» скринридер не называет. */
+  currencyText?: string
   hint?: string
   presets?: number[]
   /** Локаль разрядов: компонент несёт русскую, проект подставляет свою. */
@@ -30,13 +32,16 @@ const STYLES = `
 :where([data-vibeui-block="currency-001"]){
 --vibeui-currency-001-bg:transparent;
 --vibeui-currency-001-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-currency-001-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.014 265));
+--vibeui-currency-001-muted:color-mix(in oklab,var(--vibeui-currency-001-fg) 68%,transparent);
 --vibeui-currency-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
 --vibeui-currency-001-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.011 265));
 --vibeui-currency-001-hover:light-dark(oklch(0.96 0.004 265),oklch(0.32 0.012 265));
 --vibeui-currency-001-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-currency-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="currency-001"]{color-scheme:dark}
 [data-vibeui-block="currency-001"]{
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:20rem;box-sizing:border-box;padding:0.875rem;
@@ -75,6 +80,10 @@ font:inherit;font-size:0.75rem;font-weight:600;font-variant-numeric:tabular-nums
 [data-vibeui-block="currency-001"] button:hover{background:var(--vibeui-currency-001-hover)}
 [data-vibeui-block="currency-001"] button:focus-visible{outline:2px solid var(--vibeui-currency-001-accent);outline-offset:2px}
 [data-vibeui-block="currency-001"] [data-part="hint"]{font-size:0.75rem;line-height:1.4;color:var(--vibeui-currency-001-muted)}
+[data-vibeui-block="currency-001"] [data-part="sr"]{
+position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+clip:rect(0,0,0,0);white-space:nowrap;border:0;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="currency-001"] *{animation:none!important;transition:none!important}}
 `
 
@@ -114,6 +123,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 export function Currency001({
   label = "Сумма пополнения",
   currency = "₽",
+  currencyText = "в рублях",
   hint = "Минимум 100 ₽, зачислится в течение минуты",
   presets = DEFAULT_PRESETS,
   locale = "ru-RU",
@@ -152,11 +162,15 @@ export function Currency001({
       </style>
       <div
         {...props}
+        data-slot="currency-input"
         data-vibeui-block="currency-001"
         className={className}
         style={palette}
       >
-        <label htmlFor={id}>{label}</label>
+        <label htmlFor={id}>
+          {label}
+          <span data-part="sr"> {currencyText}</span>
+        </label>
         <div data-part="row">
           <input
             id={id}

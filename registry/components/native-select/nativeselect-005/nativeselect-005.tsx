@@ -1,10 +1,7 @@
 import { useId } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Nativeselect005Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Nativeselect005Props = Omit<ComponentProps<"div">, "children"> & {
   label?: string
   options?: string[]
   secondLabel?: string
@@ -28,12 +25,15 @@ const STYLES = `
 --vibeui-nativeselect-005-bg:transparent;
 --vibeui-nativeselect-005-line:light-dark(oklch(0.91 0.006 265),oklch(0.33 0.012 265));
 --vibeui-nativeselect-005-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.004 265));
---vibeui-nativeselect-005-muted:light-dark(oklch(0.54 0.014 265),oklch(0.68 0.012 265));
+--vibeui-nativeselect-005-muted:color-mix(in oklab,var(--vibeui-nativeselect-005-fg) 68%,transparent);
 --vibeui-nativeselect-005-hover:light-dark(oklch(1 0 0),oklch(0.3 0.012 265));
 --vibeui-nativeselect-005-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
 --vibeui-nativeselect-005-radius:0.5rem;
 --vibeui-nativeselect-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="nativeselect-005"]{color-scheme:dark}
 [data-vibeui-block="nativeselect-005"]{
 box-sizing:border-box;width:100%;max-width:32rem;
 display:flex;flex-wrap:wrap;align-items:center;gap:0.25rem 1rem;
@@ -74,6 +74,8 @@ outline:2px solid var(--vibeui-nativeselect-005-accent);outline-offset:1px;
 background:var(--vibeui-nativeselect-005-hover);
 }
 [data-vibeui-block="nativeselect-005"] option{color:var(--vibeui-nativeselect-005-fg)}
+/* Chrome рисует свой индикатор поверх appearance:none — гасим, стрелка своя. */
+[data-vibeui-block="nativeselect-005"] select::-webkit-calendar-picker-indicator{display:none}
 [data-vibeui-block="nativeselect-005"] [data-part="arrow"]{
 position:absolute;right:0.5rem;top:50%;pointer-events:none;
 width:0.3125rem;height:0.3125rem;
@@ -141,6 +143,7 @@ export function Nativeselect005({
       </style>
       <div
         {...props}
+        data-slot="native-select"
         data-vibeui-block="nativeselect-005"
         className={className}
         style={palette}

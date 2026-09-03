@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties, ReactNode } from "react"
+import type { ComponentProps, CSSProperties, ReactNode } from "react"
 
 export type Table001Column = {
   key: string
@@ -9,10 +9,7 @@ export type Table001Column = {
 
 export type Table001Row = Record<string, ReactNode>
 
-export type Table001Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Table001Props = Omit<ComponentProps<"div">, "children"> & {
   columns?: Table001Column[]
   rows?: Table001Row[]
   caption?: string
@@ -33,7 +30,7 @@ export type Table001Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="table-001"]){
 --vibeui-table-001-fg:light-dark(oklch(0.24 0.016 265),oklch(0.93 0.006 265));
---vibeui-table-001-muted:light-dark(oklch(0.54 0.014 265),oklch(0.69 0.012 265));
+--vibeui-table-001-muted:color-mix(in oklab,var(--vibeui-table-001-fg) 68%,transparent);
 --vibeui-table-001-bg:transparent;
 --vibeui-table-001-head:light-dark(oklch(0.975 0.003 265),oklch(0.27 0.012 265));
 --vibeui-table-001-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.011 265));
@@ -43,6 +40,9 @@ const STYLES = `
 --vibeui-table-001-pad:0.6875rem;
 --vibeui-table-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="table-001"]{color-scheme:dark}
 [data-vibeui-block="table-001"]{
 width:100%;box-sizing:border-box;overflow:auto;
 max-height:22rem;
@@ -65,7 +65,7 @@ position:sticky;top:0;z-index:1;
 padding:var(--vibeui-table-001-pad) 0.875rem;text-align:left;
 background:var(--vibeui-table-001-head);
 border-bottom:1px solid var(--vibeui-table-001-border);
-font-size:0.75rem;font-weight:600;letter-spacing:0.02em;
+font-size:0.8125rem;font-weight:600;letter-spacing:0.02em;
 color:var(--vibeui-table-001-muted);white-space:nowrap;
 }
 [data-vibeui-block="table-001"] td{
@@ -161,6 +161,7 @@ export function Table001({
       </style>
       <div
         {...props}
+        data-slot="table"
         data-vibeui-block="table-001"
         data-dense={dense || undefined}
         className={className}

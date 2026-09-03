@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Badge025Props = Omit<
-  ComponentPropsWithoutRef<"span">,
-  "children"
-> & {
+export type Badge025Props = Omit<ComponentProps<"span">, "children"> & {
   label?: string
   value?: string
   /** Тон ключа: заливка левой зоны и рамка всей плашки. */
@@ -28,6 +25,9 @@ const STYLES = `
 --vibeui-badge-025-border:light-dark(oklch(0.38 0.016 265),oklch(0.52 0.016 265));
 --vibeui-badge-025-font:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="badge-025"]{color-scheme:dark}
 [data-vibeui-block="badge-025"]{
 display:inline-flex;align-items:stretch;box-sizing:border-box;
 height:1.5rem;max-width:100%;
@@ -111,6 +111,7 @@ export function Badge025({
       </style>
       <span
         {...props}
+        data-slot="badge"
         data-vibeui-block="badge-025"
         className={className}
         style={palette}

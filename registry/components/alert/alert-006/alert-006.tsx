@@ -1,7 +1,7 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Alert006Props = Omit<
-  ComponentPropsWithoutRef<"div">,
+  ComponentProps<"div">,
   "title" | "children"
 > & {
   badge?: string
@@ -26,7 +26,7 @@ export type Alert006Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="alert-006"]){
 --vibeui-alert-006-fg:light-dark(oklch(0.22 0.014 265),oklch(0.95 0.006 265));
---vibeui-alert-006-muted:light-dark(oklch(0.5 0.014 265),oklch(0.72 0.012 265));
+--vibeui-alert-006-muted:color-mix(in oklab,var(--vibeui-alert-006-fg) 68%,transparent);
 --vibeui-alert-006-bg:transparent;
 --vibeui-alert-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
 --vibeui-alert-006-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
@@ -36,6 +36,9 @@ const STYLES = `
 --vibeui-alert-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="alert-006"]{color-scheme:dark}
 [data-vibeui-block="alert-006"]{
 /* flex-wrap живёт здесь, а не в @container: контейнерный запрос применяется
    к потомкам контейнера, но не к нему самому. На широкой раскладке перенос
@@ -156,6 +159,7 @@ export function Alert006({
       </style>
       <div
         {...props}
+        data-slot="alert"
         data-vibeui-block="alert-006"
         role="region"
         aria-label={title}

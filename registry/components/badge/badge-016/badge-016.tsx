@@ -1,6 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Badge016Props = Omit<ComponentPropsWithoutRef<"a">, "href"> & {
+export type Badge016Props = Omit<ComponentProps<"a">, "href"> & {
   href?: string
   hint?: string
   accent?: string
@@ -22,6 +22,9 @@ const STYLES = `
 --vibeui-badge-016-ring:light-dark(oklch(0.55 0.16 265),oklch(0.74 0.14 265));
 --vibeui-badge-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="badge-016"]{color-scheme:dark}
 [data-vibeui-block="badge-016"]{
 display:inline-flex;align-items:center;gap:0.375rem;
 box-sizing:border-box;height:1.75rem;padding:0 0.625rem 0 0.75rem;
@@ -111,6 +114,7 @@ export function Badge016({
       <a
         {...props}
         href={href}
+        data-slot="badge"
         data-vibeui-block="badge-016"
         data-external={external}
         className={className}

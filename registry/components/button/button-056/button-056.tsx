@@ -1,11 +1,8 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Button056Language = { code: string; label: string }
 
-export type Button056Props = Omit<
-  ComponentPropsWithoutRef<"select">,
-  "children"
-> & {
+export type Button056Props = Omit<ComponentProps<"select">, "children"> & {
   label?: string
   languages?: Button056Language[]
   accent?: string
@@ -22,13 +19,16 @@ const STYLES = `
 --vibeui-button-056-surface:light-dark(oklch(1 0 0),oklch(0.25 0.014 265));
 --vibeui-button-056-border:light-dark(oklch(0.88 0.006 265),oklch(0.42 0.014 265));
 --vibeui-button-056-fg:light-dark(oklch(0.26 0.02 265),oklch(0.93 0.008 265));
---vibeui-button-056-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-button-056-muted:color-mix(in oklab,var(--vibeui-button-056-fg) 68%,transparent);
 --vibeui-button-056-accent:light-dark(oklch(0.52 0.15 275),oklch(0.74 0.13 275));
 --vibeui-button-056-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="button-056"]{color-scheme:dark}
 [data-vibeui-block="button-056"]{
 position:relative;display:inline-flex;align-items:center;gap:0.5rem;box-sizing:border-box;
-height:2.625rem;padding:0 0.75rem;border-radius:0.625rem;
+height:2.5rem;padding:0 0.75rem;border-radius:0.625rem;
 border:1px solid var(--vibeui-button-056-border);
 background:var(--vibeui-button-056-surface);color:var(--vibeui-button-056-fg);
 font-family:var(--vibeui-button-056-font);font-size:0.875rem;font-weight:600;line-height:1;
@@ -128,7 +128,12 @@ export function Button056({
       <style href="vibeui-button-056" precedence="medium">
         {STYLES}
       </style>
-      <div data-vibeui-block="button-056" className={className} style={palette}>
+      <div
+        data-slot="button"
+        data-vibeui-block="button-056"
+        className={className}
+        style={palette}
+      >
         <span data-part="globe" aria-hidden="true" />
         <select {...props} defaultValue={defaultValue} aria-label={label}>
           {languages.map((language) => (

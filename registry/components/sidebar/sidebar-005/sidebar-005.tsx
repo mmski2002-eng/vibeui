@@ -1,7 +1,7 @@
 "use client"
 
 import { useId, useMemo, useState } from "react"
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
 export type Sidebar005Item = {
   label: string
@@ -9,10 +9,7 @@ export type Sidebar005Item = {
   group: string
 }
 
-export type Sidebar005Props = Omit<
-  ComponentPropsWithoutRef<"nav">,
-  "children"
-> & {
+export type Sidebar005Props = Omit<ComponentProps<"nav">, "children"> & {
   items?: Sidebar005Item[]
   activeLabel?: string
   placeholder?: string
@@ -36,13 +33,16 @@ const STYLES = `
 :where([data-vibeui-block="sidebar-005"]){
 --vibeui-sidebar-005-bg:transparent;
 --vibeui-sidebar-005-fg:light-dark(oklch(0.25 0.016 265),oklch(0.93 0.006 265));
---vibeui-sidebar-005-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
+--vibeui-sidebar-005-muted:color-mix(in oklab,var(--vibeui-sidebar-005-fg) 68%,transparent);
 --vibeui-sidebar-005-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
 --vibeui-sidebar-005-field:light-dark(oklch(0.98 0.002 265),oklch(0.28 0.012 265));
 --vibeui-sidebar-005-hover:light-dark(oklch(0.55 0.02 265 / 7%),oklch(0.85 0.02 265 / 10%));
 --vibeui-sidebar-005-accent:light-dark(oklch(0.55 0.19 262),oklch(0.73 0.16 262));
 --vibeui-sidebar-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="sidebar-005"]{color-scheme:dark}
 [data-vibeui-block="sidebar-005"]{
 display:flex;flex-direction:column;gap:0.625rem;
 width:100%;max-width:15rem;box-sizing:border-box;padding:0.625rem;
@@ -55,20 +55,20 @@ width:100%;box-sizing:border-box;
 padding:0.4375rem 0.625rem;border-radius:0.5rem;
 border:1px solid var(--vibeui-sidebar-005-border);
 background:var(--vibeui-sidebar-005-field);color:inherit;
-font-family:inherit;font-size:0.8125rem;line-height:1.3;
+font-family:inherit;font-size:0.875rem;line-height:1.3;
 }
 [data-vibeui-block="sidebar-005"] [data-part="search"]::placeholder{color:var(--vibeui-sidebar-005-muted)}
 [data-vibeui-block="sidebar-005"] [data-part="search"]:focus-visible{outline:2px solid var(--vibeui-sidebar-005-accent);outline-offset:1px}
 [data-vibeui-block="sidebar-005"] [data-part="list"]{display:flex;flex-direction:column;gap:0.625rem;max-height:14rem;overflow-y:auto;overscroll-behavior:contain}
 [data-vibeui-block="sidebar-005"] [data-part="group"]{display:flex;flex-direction:column;gap:0.125rem}
 [data-vibeui-block="sidebar-005"] [data-part="title"]{
-padding:0 0.5rem;font-size:0.625rem;font-weight:700;letter-spacing:0.07em;
+padding:0 0.5rem;font-size:0.75rem;font-weight:700;letter-spacing:0.07em;
 text-transform:uppercase;color:var(--vibeui-sidebar-005-muted);
 }
 [data-vibeui-block="sidebar-005"] ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:0.0625rem}
 [data-vibeui-block="sidebar-005"] a{
-display:block;padding:0.375rem 0.5rem;border-radius:0.375rem;
-color:var(--vibeui-sidebar-005-muted);text-decoration:none;font-size:0.8125rem;line-height:1.3;
+display:block;padding:0.4375rem 0.5rem;border-radius:0.375rem;
+color:var(--vibeui-sidebar-005-muted);text-decoration:none;font-size:0.9375rem;line-height:1.3;
 }
 [data-vibeui-block="sidebar-005"] a:hover{background:var(--vibeui-sidebar-005-hover);color:var(--vibeui-sidebar-005-fg)}
 [data-vibeui-block="sidebar-005"] a:focus-visible{outline:2px solid var(--vibeui-sidebar-005-accent);outline-offset:-2px}
@@ -82,7 +82,7 @@ background:color-mix(in oklab,var(--vibeui-sidebar-005-accent) 24%,transparent);
 color:var(--vibeui-sidebar-005-fg);border-radius:0.1875rem;padding:0 0.0625rem;
 }
 [data-vibeui-block="sidebar-005"] [data-part="empty"]{
-margin:0;padding:0.5rem;font-size:0.8125rem;line-height:1.4;
+margin:0;padding:0.5rem;font-size:0.875rem;line-height:1.4;
 color:var(--vibeui-sidebar-005-muted);
 }
 [data-vibeui-block="sidebar-005"] [data-part="status"]{
@@ -195,6 +195,7 @@ export function Sidebar005({
       </style>
       <nav
         {...props}
+        data-slot="sidebar"
         data-vibeui-block="sidebar-005"
         aria-label={navLabel}
         className={className}

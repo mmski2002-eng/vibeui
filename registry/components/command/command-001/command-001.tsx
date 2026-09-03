@@ -1,11 +1,7 @@
 "use client"
 
-import { useRef, useState } from "react"
-import type {
-  ComponentPropsWithoutRef,
-  CSSProperties,
-  KeyboardEvent,
-} from "react"
+import { useId, useRef, useState } from "react"
+import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Command001Command = {
   label: string
@@ -13,10 +9,7 @@ export type Command001Command = {
   keys?: string
 }
 
-export type Command001Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Command001Props = Omit<ComponentProps<"div">, "children"> & {
   commands?: Command001Command[]
   placeholder?: string
   triggerLabel?: string
@@ -38,13 +31,16 @@ const STYLES = `
 :where([data-vibeui-block="command-001"]){
 --vibeui-command-001-bg:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
 --vibeui-command-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
---vibeui-command-001-muted:light-dark(oklch(0.58 0.014 265),oklch(0.68 0.012 265));
+--vibeui-command-001-muted:color-mix(in oklab,var(--vibeui-command-001-fg) 68%,transparent);
 --vibeui-command-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
 --vibeui-command-001-active:light-dark(oklch(0.55 0.02 265 / 10%),oklch(0.86 0.03 265 / 14%));
 --vibeui-command-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
 --vibeui-command-001-shadow:light-dark(oklch(0.2 0.03 265 / 55%),oklch(0.04 0.015 265 / 72%));
 --vibeui-command-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="command-001"]{color-scheme:dark}
 [data-vibeui-block="command-001"] [data-part="open"]{
 display:inline-flex;align-items:center;gap:0.625rem;
 appearance:none;cursor:pointer;
@@ -146,6 +142,8 @@ export function Command001({
   const dialog = useRef<HTMLDialogElement>(null)
   const [query, setQuery] = useState("")
   const [active, setActive] = useState(0)
+  const listId = useId()
+  const rowId = useId()
 
   const found = commands.filter((command) =>
     command.label.toLowerCase().includes(query.trim().toLowerCase()),
@@ -161,14 +159,23 @@ export function Command001({
   )
   // Стрелки идут по тому порядку, который видит глаз, а не по исходному массиву.
   const ordered = Object.values(groups).flat()
+  const current = ordered[Math.min(active, ordered.length - 1)]
 
   const move = (event: KeyboardEvent<HTMLDivElement>) => {
-    if (event.key !== "ArrowDown" && event.key !== "ArrowUp") return
-    event.preventDefault()
-    const step = event.key === "ArrowDown" ? 1 : -1
-    setActive(
-      (index) => (index + step + ordered.length) % Math.max(ordered.length, 1),
-    )
+    if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+      event.preventDefault()
+      if (ordered.length === 0) return
+      const step = event.key === "ArrowDown" ? 1 : -1
+      setActive((index) => (index + step + ordered.length) % ordered.length)
+      return
+    }
+
+    // Enter запускает подсвеченную строку: без него стрелки двигают подсветку,
+    // которая ничем не заканчивается, — фокус остаётся в поле ввода.
+    if (event.key === "Enter" && current) {
+      event.preventDefault()
+      dialog.current?.close()
+    }
   }
 
   const palette = {
@@ -189,6 +196,7 @@ export function Command001({
       </style>
       <div
         {...props}
+        data-slot="command"
         data-vibeui-block="command-001"
         className={className}
         style={palette}
@@ -210,6 +218,13 @@ export function Command001({
             <input
               data-part="search"
               type="search"
+              role="combobox"
+              aria-expanded={ordered.length > 0}
+              aria-controls={listId}
+              aria-autocomplete="list"
+              aria-activedescendant={
+                current ? `${rowId}-${ordered.indexOf(current)}` : undefined
+              }
               value={query}
               placeholder={placeholder}
               aria-label={placeholder}
@@ -221,19 +236,25 @@ export function Command001({
             {found.length === 0 ? (
               <p data-part="empty">{emptyText}</p>
             ) : (
-              <ul data-part="list">
+              <ul
+                id={listId}
+                data-part="list"
+                role="listbox"
+                aria-label={triggerLabel}
+              >
                 {Object.entries(groups).map(([group, rows]) => (
-                  <li key={group}>
+                  <li key={group} role="presentation">
                     <p data-part="group">{group}</p>
-                    <ul data-part="list">
+                    <ul data-part="list" role="group" aria-label={group}>
                       {rows.map((command) => (
-                        <li key={command.label}>
+                        <li key={command.label} role="presentation">
                           <button
                             type="button"
+                            id={`${rowId}-${ordered.indexOf(command)}`}
                             data-part="row"
-                            data-active={
-                              ordered[active]?.label === command.label
-                            }
+                            role="option"
+                            aria-selected={current?.label === command.label}
+                            data-active={current?.label === command.label}
                             onClick={() => dialog.current?.close()}
                           >
                             {command.label}

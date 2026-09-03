@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Buttongroup009Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Buttongroup009Props = Omit<ComponentProps<"div">, "children"> & {
   primary?: string
   actions?: string[]
   moreLabel?: string
@@ -26,7 +23,7 @@ const STYLES = `
 --vibeui-buttongroup-009-surface:transparent;
 --vibeui-buttongroup-009-sheet:light-dark(oklch(1 0 0),oklch(0.24 0.014 265));
 --vibeui-buttongroup-009-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.006 265));
---vibeui-buttongroup-009-muted:light-dark(oklch(0.53 0.014 265),oklch(0.7 0.012 265));
+--vibeui-buttongroup-009-muted:color-mix(in oklab,var(--vibeui-buttongroup-009-fg) 68%,transparent);
 --vibeui-buttongroup-009-border:light-dark(oklch(0.88 0.008 265),oklch(0.37 0.012 265));
 --vibeui-buttongroup-009-hover:light-dark(oklch(0.96 0.004 265),oklch(0.3 0.012 265));
 --vibeui-buttongroup-009-accent:light-dark(oklch(0.52 0.17 265),oklch(0.62 0.17 265));
@@ -36,6 +33,9 @@ const STYLES = `
 --vibeui-buttongroup-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="buttongroup-009"]{color-scheme:dark}
 [data-vibeui-block="buttongroup-009"]{
 box-sizing:border-box;width:100%;max-width:44rem;
 font-family:var(--vibeui-buttongroup-009-font);
@@ -52,7 +52,7 @@ background:var(--vibeui-buttongroup-009-surface);
 [data-vibeui-block="buttongroup-009"] summary{
 appearance:none;cursor:pointer;font:inherit;
 display:inline-flex;align-items:center;justify-content:center;gap:0.375rem;
-height:2.125rem;padding:0 0.75rem;
+height:2.25rem;padding:0 0.75rem;
 border:1px solid transparent;border-radius:var(--vibeui-buttongroup-009-radius);
 background:transparent;color:var(--vibeui-buttongroup-009-muted);
 font-size:0.8125rem;font-weight:600;line-height:1;white-space:nowrap;
@@ -167,6 +167,7 @@ export function Buttongroup009({
       </style>
       <div
         {...props}
+        data-slot="button-group"
         data-vibeui-block="buttongroup-009"
         className={className}
         style={palette}
