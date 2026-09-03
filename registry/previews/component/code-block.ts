@@ -33,6 +33,9 @@ import { Codeblock025 } from "@/registry/components/code-block/codeblock-025/cod
 import { Codeblock026 } from "@/registry/components/code-block/codeblock-026/codeblock-026"
 import { Codeblock027 } from "@/registry/components/code-block/codeblock-027/codeblock-027"
 import { Code001 } from "@/registry/components/code-block/code-001/code-001"
+import { Codeblock028 } from "@/registry/components/code-block/codeblock-028/codeblock-028"
+import { Codeblock029 } from "@/registry/components/code-block/codeblock-029/codeblock-029"
+import { Codeblock030 } from "@/registry/components/code-block/codeblock-030/codeblock-030"
 
 export const PREVIEWS = {
   "codeblock-001": Codeblock001,
@@ -63,4 +66,7 @@ export const PREVIEWS = {
   "codeblock-026": Codeblock026,
   "codeblock-027": Codeblock027,
   "code-001": Code001,
+  "codeblock-028": Codeblock028,
+  "codeblock-029": Codeblock029,
+  "codeblock-030": Codeblock030,
 } satisfies Record<string, ComponentType<PreviewProps>>

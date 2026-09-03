@@ -39,7 +39,7 @@ const STYLES = `
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="codeblock-002"]{color-scheme:dark}
 [data-vibeui-block="codeblock-002"]{
 position:relative;display:block;
-width:100%;max-width:32rem;box-sizing:border-box;margin:0;
+width:100%;box-sizing:border-box;margin:0;
 border:1px solid var(--vibeui-codeblock-002-border);border-radius:0.875rem;
 background:var(--vibeui-codeblock-002-bg);color:var(--vibeui-codeblock-002-fg);
 font-family:var(--vibeui-codeblock-002-font);
@@ -60,7 +60,7 @@ font-size:0.8125rem;line-height:1.65;white-space:pre;
 position:absolute;top:0.5rem;right:0.5rem;
 appearance:none;border:0;cursor:pointer;overflow:hidden;
 display:inline-flex;align-items:center;gap:0.375rem;
-height:1.875rem;padding:0 0.6875rem;border-radius:0.5rem;
+min-height:1.875rem;padding:0.25rem 0.6875rem;border-radius:0.5rem;
 background:var(--vibeui-codeblock-002-chip);color:var(--vibeui-codeblock-002-fg);
 font:inherit;font-size:0.75rem;font-weight:650;
 transition:background-color .16s ease,color .16s ease;

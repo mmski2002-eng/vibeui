@@ -36,7 +36,7 @@ const STYLES = `
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="codeblock-006"]{color-scheme:dark}
 [data-vibeui-block="codeblock-006"]{
-display:block;width:100%;max-width:32rem;box-sizing:border-box;margin:0;
+display:block;width:100%;box-sizing:border-box;margin:0;
 overflow:hidden;border:1px solid var(--vibeui-codeblock-006-border);border-radius:0.75rem;
 background:var(--vibeui-codeblock-006-bg);color:var(--vibeui-codeblock-006-fg);
 font-family:var(--vibeui-codeblock-006-font);
@@ -122,6 +122,7 @@ export function Codeblock006({
   background = "",
   className,
   style,
+  ...props
 }: Codeblock006Props) {
   const head = lines.slice(0, visibleCount)
   const tail = lines.slice(visibleCount)
@@ -141,6 +142,7 @@ export function Codeblock006({
         {STYLES}
       </style>
       <figure
+        {...props}
         data-slot="code-block"
         data-vibeui-block="codeblock-006"
         className={className}

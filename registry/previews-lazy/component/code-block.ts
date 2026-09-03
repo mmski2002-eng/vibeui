@@ -146,4 +146,19 @@ export const PREVIEWS = {
       (module) => module.Code001,
     ),
   ),
+  "codeblock-028": dynamic(() =>
+    import("@/registry/components/code-block/codeblock-028/codeblock-028").then(
+      (module) => module.Codeblock028,
+    ),
+  ),
+  "codeblock-029": dynamic(() =>
+    import("@/registry/components/code-block/codeblock-029/codeblock-029").then(
+      (module) => module.Codeblock029,
+    ),
+  ),
+  "codeblock-030": dynamic(() =>
+    import("@/registry/components/code-block/codeblock-030/codeblock-030").then(
+      (module) => module.Codeblock030,
+    ),
+  ),
 } satisfies PreviewMap

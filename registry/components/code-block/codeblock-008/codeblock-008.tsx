@@ -35,19 +35,19 @@ const STYLES = `
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="codeblock-008"]{color-scheme:dark}
 [data-vibeui-block="codeblock-008"]{
 display:flex;flex-direction:column;
-width:100%;max-width:32rem;box-sizing:border-box;margin:0;overflow:hidden;
+width:100%;box-sizing:border-box;margin:0;overflow:hidden;
 border:1px solid var(--vibeui-codeblock-008-border);border-radius:0.75rem;
 background:var(--vibeui-codeblock-008-bg);color:var(--vibeui-codeblock-008-fg);
 font-family:var(--vibeui-codeblock-008-font);
 }
 [data-vibeui-block="codeblock-008"] figcaption{
-display:flex;align-items:center;justify-content:space-between;gap:0.75rem;
+display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:0.375rem 0.75rem;
 padding:0.4375rem 0.625rem 0.4375rem 0.875rem;
 background:var(--vibeui-codeblock-008-head);
 border-bottom:1px solid var(--vibeui-codeblock-008-border);
 font-size:0.75rem;color:var(--vibeui-codeblock-008-muted);
 }
-[data-vibeui-block="codeblock-008"] [data-part="name"]{font-family:var(--vibeui-codeblock-008-mono)}
+[data-vibeui-block="codeblock-008"] [data-part="name"]{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:var(--vibeui-codeblock-008-mono)}
 [data-vibeui-block="codeblock-008"] [data-part="toggle"]{
 display:inline-flex;align-items:center;gap:0.5rem;cursor:pointer;
 padding:0.1875rem 0.375rem;border-radius:0.5rem;
@@ -120,6 +120,7 @@ export function Codeblock008({
   background = "",
   className,
   style,
+  ...props
 }: Codeblock008Props) {
   const palette = {
     ...(background
@@ -137,6 +138,7 @@ export function Codeblock008({
         {STYLES}
       </style>
       <figure
+        {...props}
         data-slot="code-block"
         data-vibeui-block="codeblock-008"
         className={className}

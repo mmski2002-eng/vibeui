@@ -17,6 +17,9 @@ export type Codeblock003Props = {
 //
 // Тема берётся из color-scheme окружения через light-dark(): подложки у блока
 // нет, полоса вкладок и активная вкладка — полупрозрачные накладки.
+// Радиогруппа лежит в собственной <form>: одинаковое имя в двух блоках на
+// одной странице иначе объединило бы их в одну группу, и первый блок
+// остался бы без отмеченной вкладки.
 const STYLES = `
 :where([data-vibeui-block="codeblock-003"]){
 --vibeui-codeblock-003-bg:transparent;
@@ -35,7 +38,7 @@ const STYLES = `
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="codeblock-003"]{color-scheme:dark}
 [data-vibeui-block="codeblock-003"]{
-display:block;width:100%;max-width:30rem;box-sizing:border-box;
+display:block;width:100%;box-sizing:border-box;
 font-family:var(--vibeui-codeblock-003-font);
 }
 [data-vibeui-block="codeblock-003"] [data-part="shell"]{
@@ -116,6 +119,7 @@ export function Codeblock003({
   background = "",
   className,
   style,
+  ...props
 }: Codeblock003Props) {
   const palette = {
     ...(background
@@ -133,13 +137,14 @@ export function Codeblock003({
         {STYLES}
       </style>
       <div
+        {...props}
         data-slot="code-block"
         data-vibeui-block="codeblock-003"
         className={className}
         style={palette}
       >
         <div data-part="shell">
-          <div data-part="tabs" role="group" aria-label={groupLabel}>
+          <form data-part="tabs" role="group" aria-label={groupLabel}>
             {MANAGERS.map((manager, index) => (
               <label key={manager.id}>
                 <input
@@ -151,7 +156,7 @@ export function Codeblock003({
                 {manager.binary}
               </label>
             ))}
-          </div>
+          </form>
           {MANAGERS.map((manager) => (
             <pre key={manager.id} data-manager={manager.id}>
               <code>

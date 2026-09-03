@@ -43,7 +43,7 @@ const STYLES = `
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="codeblock-013"]{color-scheme:dark}
 [data-vibeui-block="codeblock-013"]{
 display:flex;flex-direction:column;
-width:100%;max-width:32rem;box-sizing:border-box;margin:0;overflow:hidden;
+width:100%;box-sizing:border-box;margin:0;overflow:hidden;
 border:1px solid var(--vibeui-codeblock-013-border);border-radius:0.75rem;
 background:var(--vibeui-codeblock-013-bg);color:var(--vibeui-codeblock-013-fg);
 font-family:var(--vibeui-codeblock-013-font);
@@ -93,6 +93,11 @@ opacity:0;transition:opacity .16s ease,color .16s ease;
 [data-vibeui-block="codeblock-013"] button:focus-visible,
 [data-vibeui-block="codeblock-013"] button[data-copied="true"]{opacity:1}
 [data-vibeui-block="codeblock-013"] button:hover{color:var(--vibeui-codeblock-013-fg)}
+/* Без мыши наведения не бывает: на телефоне кнопки видны сразу, иначе
+   копирование построчно там просто не существует. */
+@media (hover:none){
+[data-vibeui-block="codeblock-013"] button{opacity:1}
+}
 [data-vibeui-block="codeblock-013"] button:focus-visible{outline:2px solid var(--vibeui-codeblock-013-ok);outline-offset:2px}
 [data-vibeui-block="codeblock-013"] button[data-copied="true"]{color:var(--vibeui-codeblock-013-ok)}
 [data-vibeui-block="codeblock-013"] svg{width:0.875rem;height:0.875rem}
@@ -138,6 +143,7 @@ export function Codeblock013({
   background = "",
   className,
   style,
+  ...props
 }: Codeblock013Props) {
   const [copied, setCopied] = useState(-1)
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -177,6 +183,7 @@ export function Codeblock013({
         {STYLES}
       </style>
       <figure
+        {...props}
         data-slot="code-block"
         data-vibeui-block="codeblock-013"
         className={className}

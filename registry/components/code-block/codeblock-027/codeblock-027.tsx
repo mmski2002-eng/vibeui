@@ -50,7 +50,7 @@ const STYLES = `
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="codeblock-027"]{color-scheme:dark}
 [data-vibeui-block="codeblock-027"]{
 display:flex;flex-direction:column;
-width:100%;max-width:34rem;box-sizing:border-box;margin:0;overflow:hidden;
+width:100%;box-sizing:border-box;margin:0;overflow:hidden;
 border:1px solid var(--vibeui-codeblock-027-border);border-radius:0.75rem;
 background:var(--vibeui-codeblock-027-bg);color:var(--vibeui-codeblock-027-fg);
 font-family:var(--vibeui-codeblock-027-font);
@@ -180,6 +180,7 @@ export function Codeblock027({
   background = "",
   className,
   style,
+  ...props
 }: Codeblock027Props) {
   const own = frames.filter((frame) => !frame.vendor)
   const vendor = frames.filter((frame) => frame.vendor)
@@ -210,6 +211,7 @@ export function Codeblock027({
         {STYLES}
       </style>
       <section
+        {...props}
         data-slot="code-block"
         data-vibeui-block="codeblock-027"
         className={className}

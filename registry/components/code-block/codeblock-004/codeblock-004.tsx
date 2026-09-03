@@ -29,7 +29,7 @@ const STYLES = `
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="codeblock-004"]{color-scheme:dark}
 [data-vibeui-block="codeblock-004"]{
-display:block;width:100%;max-width:30rem;box-sizing:border-box;
+display:block;width:100%;box-sizing:border-box;
 padding:0.75rem 0.9375rem;
 border:1px solid var(--vibeui-codeblock-004-border);border-radius:0.625rem;
 background:var(--vibeui-codeblock-004-bg);color:var(--vibeui-codeblock-004-fg);

@@ -36,19 +36,20 @@ const STYLES = `
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="codeblock-017"]{color-scheme:dark}
 [data-vibeui-block="codeblock-017"]{
 display:flex;flex-direction:column;
-width:100%;max-width:34rem;box-sizing:border-box;margin:0;overflow:hidden;
+width:100%;box-sizing:border-box;margin:0;overflow:hidden;
 border:1px solid var(--vibeui-codeblock-017-border);border-radius:0.75rem;
 background:var(--vibeui-codeblock-017-bg);color:var(--vibeui-codeblock-017-fg);
 font-family:var(--vibeui-codeblock-017-font);
 }
 [data-vibeui-block="codeblock-017"] [data-part="head"]{
-display:flex;align-items:center;justify-content:space-between;gap:0.75rem;
+display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:0.375rem 0.75rem;
 padding:0.5rem 0.875rem;
 background:var(--vibeui-codeblock-017-head);
 border-bottom:1px solid var(--vibeui-codeblock-017-border);
 font-size:0.75rem;color:var(--vibeui-codeblock-017-muted);
 }
 [data-vibeui-block="codeblock-017"] [data-part="path"]{
+min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 font-family:var(--vibeui-codeblock-017-mono);
 }
 [data-vibeui-block="codeblock-017"] [data-part="ago"]{
@@ -134,6 +135,7 @@ export function Codeblock017({
   background = "",
   className,
   style,
+  ...props
 }: Codeblock017Props) {
   const palette = {
     ...(background
@@ -151,6 +153,7 @@ export function Codeblock017({
         {STYLES}
       </style>
       <figure
+        {...props}
         data-slot="code-block"
         data-vibeui-block="codeblock-017"
         className={className}

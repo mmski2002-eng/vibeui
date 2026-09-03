@@ -29,6 +29,9 @@ export type Codeblock015Props = {
 //
 // Тема берётся из color-scheme окружения через light-dark(): подложки у блока
 // нет, подсветка синтаксиса подобрана отдельно для светлой и тёмной ветки.
+// Радиогруппа лежит в собственной <form>: одинаковое имя в двух блоках на
+// одной странице иначе объединило бы их в одну группу, и первый блок
+// остался бы без отмеченной вкладки.
 const STYLES = `
 :where([data-vibeui-block="codeblock-015"]){
 --vibeui-codeblock-015-bg:transparent;
@@ -51,7 +54,7 @@ container-type:inline-size;
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="codeblock-015"]{color-scheme:dark}
 [data-vibeui-block="codeblock-015"]{
-display:block;width:100%;max-width:38rem;box-sizing:border-box;margin:0;
+display:block;width:100%;box-sizing:border-box;margin:0;
 font-family:var(--vibeui-codeblock-015-font);
 }
 [data-vibeui-block="codeblock-015"] [data-part="shell"]{
@@ -226,6 +229,7 @@ export function Codeblock015({
   background = "",
   className,
   style,
+  ...props
 }: Codeblock015Props) {
   const palette = {
     ...(background
@@ -243,13 +247,14 @@ export function Codeblock015({
         {STYLES}
       </style>
       <figure
+        {...props}
         data-slot="code-block"
         data-vibeui-block="codeblock-015"
         className={className}
         style={palette}
       >
         <div data-part="shell">
-          <div data-part="rail" role="group" aria-label={railLabel}>
+          <form data-part="rail" role="group" aria-label={railLabel}>
             <span data-part="root">{root}</span>
             {files.slice(0, 6).map((file, index) => (
               <label key={file.name}>
@@ -262,7 +267,7 @@ export function Codeblock015({
                 {file.name}
               </label>
             ))}
-          </div>
+          </form>
           {files.slice(0, 6).map((file, index) => (
             <pre key={file.name} data-index={index} aria-label={file.name}>
               <code>

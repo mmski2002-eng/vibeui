@@ -39,7 +39,7 @@ const STYLES = `
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="codeblock-012"]{color-scheme:dark}
 [data-vibeui-block="codeblock-012"]{
 display:flex;flex-direction:column;
-width:100%;max-width:32rem;box-sizing:border-box;overflow:hidden;
+width:100%;box-sizing:border-box;overflow:hidden;
 border:1px solid var(--vibeui-codeblock-012-border);border-radius:0.75rem;
 background:var(--vibeui-codeblock-012-bg);color:var(--vibeui-codeblock-012-fg);
 font-family:var(--vibeui-codeblock-012-font);

@@ -27,7 +27,16 @@ import { Codeblock024 } from "@/registry/components/code-block/codeblock-024/cod
 import { Codeblock025 } from "@/registry/components/code-block/codeblock-025/codeblock-025"
 import { Codeblock026 } from "@/registry/components/code-block/codeblock-026/codeblock-026"
 import { Codeblock027 } from "@/registry/components/code-block/codeblock-027/codeblock-027"
+import { Codeblock028 } from "@/registry/components/code-block/codeblock-028/codeblock-028"
+import { Codeblock029 } from "@/registry/components/code-block/codeblock-029/codeblock-029"
+import { Codeblock030 } from "@/registry/components/code-block/codeblock-030/codeblock-030"
 import { Code001 } from "@/registry/components/code-block/code-001/code-001"
+
+const JSON_SAMPLE = `{
+  "base": "https://api.vibeui.ru/v1",
+  "retries": 3,
+  "cache": true
+}`
 
 /** Seed прогона: с ним набор воспроизводится один в один. */
 export const SEED = 92189
@@ -318,17 +327,67 @@ export const CHECKS: LabCheck[] = [
     name: "code-001",
     title: "Блок кода",
     notes: [
-      "Заголовок: Проверка",
-      "Язык: Ок",
-      "Подпись кнопки: Проверка",
-      "Подпись после копирования: Смена",
+      "Путь к файлу: config/api.json",
+      "Язык: json",
+      "Номера строк: выключены",
+      "Переносить строки: включено",
     ],
     node: (
       <Code001
-        title="Проверка"
-        language="Ок"
-        copyText="Проверка"
-        copiedText="Смена"
+        title="config/api.json"
+        language="json"
+        showNumbers={false}
+        wrap
+        code={JSON_SAMPLE}
+      />
+    ),
+  },
+  {
+    name: "codeblock-028",
+    title: "Результат и код",
+    notes: [
+      "Путь к файлу: examples/badge.tsx",
+      "Вкладка результата: Живьём",
+      "Вкладка кода: Исходник",
+      "Сразу код: включено",
+    ],
+    node: (
+      <Codeblock028
+        title="examples/badge.tsx"
+        resultLabel="Живьём"
+        codeLabel="Исходник"
+        codeFirst
+        group="lab-codeblock-028"
+        code={'<Badge tone="warning">Черновик</Badge>'}
+      />
+    ),
+  },
+  {
+    name: "codeblock-029",
+    title: "Команда с подстановкой",
+    notes: [
+      "Заголовок: Отправка события",
+      "Подпись кнопки: Взять строку",
+      "Счётчик незаполненного: Не заполнено: {count}",
+    ],
+    node: (
+      <Codeblock029
+        title="Отправка события"
+        copyText="Взять строку"
+        copiedText="В буфере"
+        leftTemplate="Не заполнено: {count}"
+      />
+    ),
+  },
+  {
+    name: "codeblock-030",
+    title: "Журнал с уровнями",
+    notes: ["Имя файла: logs/worker.log", "Высота окна: 9rem"],
+    node: (
+      <Codeblock030
+        title="logs/worker.log"
+        maxHeight={9}
+        group="lab-codeblock-030"
       />
     ),
   },

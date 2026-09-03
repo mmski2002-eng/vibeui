@@ -42,7 +42,7 @@ const STYLES = `
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="codeblock-018"]{color-scheme:dark}
 [data-vibeui-block="codeblock-018"]{
 display:flex;flex-direction:column;
-width:100%;max-width:34rem;box-sizing:border-box;margin:0;overflow:hidden;
+width:100%;box-sizing:border-box;margin:0;overflow:hidden;
 border:1px solid var(--vibeui-codeblock-018-border);border-radius:0.75rem;
 background:var(--vibeui-codeblock-018-bg);color:var(--vibeui-codeblock-018-fg);
 font-family:var(--vibeui-codeblock-018-font);
@@ -156,6 +156,7 @@ export function Codeblock018({
   background = "",
   className,
   style,
+  ...props
 }: Codeblock018Props) {
   const numbers = new Map(notes.map((note, index) => [note.line, index + 1]))
   const palette = {
@@ -174,6 +175,7 @@ export function Codeblock018({
         {STYLES}
       </style>
       <figure
+        {...props}
         data-slot="code-block"
         data-vibeui-block="codeblock-018"
         className={className}

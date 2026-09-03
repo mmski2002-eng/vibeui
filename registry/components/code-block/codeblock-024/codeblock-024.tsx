@@ -43,7 +43,7 @@ container-type:inline-size;
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="codeblock-024"]{color-scheme:dark}
 [data-vibeui-block="codeblock-024"]{
-display:block;width:100%;max-width:44rem;box-sizing:border-box;margin:0;
+display:block;width:100%;box-sizing:border-box;margin:0;
 overflow:hidden;border:1px solid var(--vibeui-codeblock-024-border);
 border-radius:0.75rem;
 background:var(--vibeui-codeblock-024-bg);color:var(--vibeui-codeblock-024-fg);
@@ -160,6 +160,7 @@ export function Codeblock024({
   background = "",
   className,
   style,
+  ...props
 }: Codeblock024Props) {
   const panes = [
     { side: "before" as const, label: beforeLabel },
@@ -181,6 +182,7 @@ export function Codeblock024({
         {STYLES}
       </style>
       <figure
+        {...props}
         data-slot="code-block"
         data-vibeui-block="codeblock-024"
         className={className}

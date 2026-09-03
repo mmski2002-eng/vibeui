@@ -25,6 +25,9 @@ export type Codeblock016Props = {
 //
 // Тема берётся из color-scheme окружения через light-dark(): подложки у блока
 // нет, подсветка синтаксиса подобрана отдельно для светлой и тёмной ветки.
+// Радиогруппа лежит в собственной <form>: одинаковое имя в двух блоках на
+// одной странице иначе объединило бы их в одну группу, и первый блок
+// остался бы без отмеченной вкладки.
 const STYLES = `
 :where([data-vibeui-block="codeblock-016"]){
 --vibeui-codeblock-016-bg:transparent;
@@ -48,7 +51,7 @@ const STYLES = `
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="codeblock-016"]{color-scheme:dark}
 [data-vibeui-block="codeblock-016"]{
 display:flex;flex-direction:column;
-width:100%;max-width:33rem;box-sizing:border-box;margin:0;overflow:hidden;
+width:100%;box-sizing:border-box;margin:0;overflow:hidden;
 border:1px solid var(--vibeui-codeblock-016-border);border-radius:0.75rem;
 background:var(--vibeui-codeblock-016-bg);color:var(--vibeui-codeblock-016-fg);
 font-family:var(--vibeui-codeblock-016-font);
@@ -212,6 +215,7 @@ export function Codeblock016({
   background = "",
   className,
   style,
+  ...props
 }: Codeblock016Props) {
   const active = samples.findIndex(
     (sample) => sample.language === defaultLanguage,
@@ -233,6 +237,7 @@ export function Codeblock016({
         {STYLES}
       </style>
       <figure
+        {...props}
         data-slot="code-block"
         data-vibeui-block="codeblock-016"
         className={className}
@@ -240,7 +245,7 @@ export function Codeblock016({
       >
         <figcaption data-part="head">
           <span data-part="title">{title}</span>
-          <div data-part="switch" role="group" aria-label={switchLabel}>
+          <form data-part="switch" role="group" aria-label={switchLabel}>
             <span data-part="thumb" aria-hidden="true" />
             {samples.map((sample, index) => (
               <label key={sample.language}>
@@ -253,7 +258,7 @@ export function Codeblock016({
                 {sample.short}
               </label>
             ))}
-          </div>
+          </form>
         </figcaption>
         {samples.map((sample, index) => (
           <pre
