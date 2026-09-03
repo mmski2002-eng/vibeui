@@ -12,6 +12,9 @@ import { Tags004 } from "@/registry/components/tags-input/tags-004/tags-004"
 import { Tags005 } from "@/registry/components/tags-input/tags-005/tags-005"
 import { Tags006 } from "@/registry/components/tags-input/tags-006/tags-006"
 import { Tags007 } from "@/registry/components/tags-input/tags-007/tags-007"
+import { Tags008 } from "@/registry/components/tags-input/tags-008/tags-008"
+import { Tags009 } from "@/registry/components/tags-input/tags-009/tags-009"
+import { Tags010 } from "@/registry/components/tags-input/tags-010/tags-010"
 
 export const PREVIEWS = {
   "tags-001": Tags001,
@@ -21,4 +24,7 @@ export const PREVIEWS = {
   "tags-005": Tags005,
   "tags-006": Tags006,
   "tags-007": Tags007,
+  "tags-008": Tags008,
+  "tags-009": Tags009,
+  "tags-010": Tags010,
 } satisfies Record<string, ComponentType<PreviewProps>>

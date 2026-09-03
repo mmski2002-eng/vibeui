@@ -7,6 +7,9 @@ import { Tags004 } from "@/registry/components/tags-input/tags-004/tags-004"
 import { Tags005 } from "@/registry/components/tags-input/tags-005/tags-005"
 import { Tags006 } from "@/registry/components/tags-input/tags-006/tags-006"
 import { Tags007 } from "@/registry/components/tags-input/tags-007/tags-007"
+import { Tags008 } from "@/registry/components/tags-input/tags-008/tags-008"
+import { Tags009 } from "@/registry/components/tags-input/tags-009/tags-009"
+import { Tags010 } from "@/registry/components/tags-input/tags-010/tags-010"
 
 /** Seed прогона: с ним набор воспроизводится один в один. */
 export const SEED = 92189
@@ -53,5 +56,29 @@ export const CHECKS: LabCheck[] = [
     title: "Переполнение только для чтения",
     notes: ["Заголовок: Черновик", "Видимых: 2", "Акцент: #c9d7c3"],
     node: <Tags007 label="Черновик" visible={2} accent="#c9d7c3" />,
+  },
+  {
+    name: "tags-008",
+    title: "Приглашения по почте",
+    notes: ["Заголовок: Участники проекта", "Акцент: #2a9d8f"],
+    node: <Tags008 title="Участники проекта" accent="#2a9d8f" />,
+  },
+  {
+    name: "tags-009",
+    title: "Создание нового тега",
+    notes: ["Заголовок: Темы статьи", "Текст создания: Добавить «{name}»", "Акцент: #7c5cff"],
+    node: (
+      <Tags009
+        title="Темы статьи"
+        createTemplate="Добавить «{name}»"
+        accent="#7c5cff"
+      />
+    ),
+  },
+  {
+    name: "tags-010",
+    title: "Порядок тегов",
+    notes: ["Заголовок: Приоритеты недели", "Акцент: #e07a5f"],
+    node: <Tags010 title="Приоритеты недели" accent="#e07a5f" />,
   },
 ]

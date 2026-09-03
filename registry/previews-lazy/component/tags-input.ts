@@ -41,4 +41,19 @@ export const PREVIEWS = {
       (module) => module.Tags007,
     ),
   ),
+  "tags-008": dynamic(() =>
+    import("@/registry/components/tags-input/tags-008/tags-008").then(
+      (module) => module.Tags008,
+    ),
+  ),
+  "tags-009": dynamic(() =>
+    import("@/registry/components/tags-input/tags-009/tags-009").then(
+      (module) => module.Tags009,
+    ),
+  ),
+  "tags-010": dynamic(() =>
+    import("@/registry/components/tags-input/tags-010/tags-010").then(
+      (module) => module.Tags010,
+    ),
+  ),
 } satisfies PreviewMap
