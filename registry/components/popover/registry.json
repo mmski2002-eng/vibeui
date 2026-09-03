@@ -6,7 +6,9 @@
       "type": "registry:component",
       "title": "Всплывающая справка",
       "description": "Всплывающая карточка на HTML popover: в неё можно попасть мышью и Tab, поэтому она не закрывается по уходу курсора.",
-      "categories": ["popover"],
+      "categories": [
+        "popover"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-popover-001-*. Серверный компонент: открытие и закрытие держит HTML popover, позиция — anchor positioning с запасным правилом в @supports. Внутри карточки живут заголовок, текст и кнопка, поэтому нужен именно popover, а не подсказка.",
       "meta": {
-        "tags": ["popover", "explain", "no-js", "anchor"],
+        "tags": [
+          "popover",
+          "explain",
+          "no-js",
+          "anchor"
+        ],
         "ai": {
           "export": "Popover001",
           "usage": "<Popover001 label=\"Что это значит\" title=\"Как считается охват\" />",
@@ -38,14 +45,16 @@
             "actionLabel — действие внутри карточки",
             "акцент через проп accent",
             "background — подложка карточки и кнопки открытия; пусто оставляет штатную палитру",
-            "ширину карточки"
+            "ширину карточки",
+            "раскрытие панели на месте через defaultOpen"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Для короткой подписи к иконке нужна подсказка (tooltip-001), а не эта карточка.",
             "Не кладите внутрь форму: попап с полями лучше делать диалогом.",
             "Карточка не переворачивается у края экрана: при необходимости добавьте position-try.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "defaultOpen показывает панель раскрытой прямо в потоке — это режим витрины и документации. В работе панель открывает сам браузер по popovertarget, и тогда действуют верхний слой, Escape и закрытие по щелчку мимо."
           ]
         },
         "controls": [
@@ -104,14 +113,16 @@
                 "actionLabel — the action inside",
                 "the accent through the accent prop",
                 "background — the surface of the card and the trigger; empty keeps the built-in palette",
-                "the card width"
+                "the card width",
+                "showing the panel open in place through defaultOpen"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "For a short icon caption use a tooltip (tooltip-001), not this card.",
                 "Do not put a form inside: a popup with fields belongs in a dialog.",
                 "The card does not flip near the viewport edge: add position-try if you need that.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "defaultOpen shows the panel open right in the flow — that is the showcase and documentation mode. In production the browser opens it through popovertarget, which brings the top layer, Escape and light dismiss."
               ],
               "usage": "<Popover001 label=\"What this means\" title=\"How reach is measured\" />"
             },
@@ -141,12 +152,25 @@
                 "label": "What this means",
                 "title": "How reach is measured",
                 "text": "We take unique visitors over seven days and subtract bots from a list of known agents.",
-                "actionLabel": "Open the method"
+                "actionLabel": "Open the method",
+                "defaultOpen": true
               }
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "title",
+          "actionLabel",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "defaultOpen": true
+          }
+        }
       }
     },
     {
@@ -154,7 +178,9 @@
       "type": "registry:component",
       "title": "Быстрое добавление",
       "description": "Быстрое действие без ухода со страницы: в поповере живёт настоящая форма из поля и списка, а отправка закрывает панель штатным popovertargetaction.",
-      "categories": ["popover"],
+      "categories": [
+        "popover"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -166,7 +192,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-popover-002-*. Серверный: слой, Escape и клик вне достаются от HTML popover, идентификаторы разводит useId. Раскладка панели объявлена только в :popover-open, иначе display перебил бы встроенный display:none. Позиционирование сделано CSS anchor positioning с откатом на absolute под @supports not. Кнопка отправки закрывает панель через popovertargetaction=\"hide\", поэтому обработчик закрытия не нужен.",
       "meta": {
-        "tags": ["popover", "form", "quick add", "anchor"],
+        "tags": [
+          "popover",
+          "form",
+          "quick add",
+          "anchor"
+        ],
         "ai": {
           "export": "Popover002",
           "usage": "<Popover002\n  label=\"Новая задача\"\n  fieldLabel=\"Что сделать\"\n  submitLabel=\"Добавить\"\n  lists={[\"Входящие\", \"На неделю\"]}\n/>",
@@ -185,14 +216,16 @@
             "заглушку через placeholder и подпись отправки через submitLabel",
             "подпись выпадающего списка через listLabel и его состав через lists",
             "акцент через проп accent",
-            "background — подложка панели, полей и кнопки; пусто оставляет штатную палитру"
+            "background — подложка панели, полей и кнопки; пусто оставляет штатную палитру",
+            "раскрытие панели на месте через defaultOpen"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Форма ничего не отправляет: обработчик submit вешает вызывающий код.",
             "Внутри поповера намеренно два поля — третье превращает панель в диалог, которому нужен свой заголовок.",
             "Панель закрывается кликом вне: незавершённый ввод при этом теряется, предупредите пользователя или сохраняйте черновик.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "defaultOpen показывает панель раскрытой прямо в потоке — это режим витрины и документации. В работе панель открывает сам браузер по popovertarget, и тогда действуют верхний слой, Escape и закрытие по щелчку мимо."
           ]
         },
         "controls": [
@@ -209,13 +242,6 @@
             "type": "text",
             "default": "Что сделать",
             "maxLength": 24
-          },
-          {
-            "prop": "listLabel",
-            "label": "Подпись списка",
-            "type": "text",
-            "default": "Список",
-            "maxLength": 20
           },
           {
             "prop": "submitLabel",
@@ -257,14 +283,16 @@
                 "the placeholder through placeholder and the submit caption through submitLabel",
                 "the dropdown caption through listLabel and its contents through lists",
                 "the accent through the accent prop",
-                "background — the surface of the panel, the fields and the trigger; empty keeps the built-in palette"
+                "background — the surface of the panel, the fields and the trigger; empty keeps the built-in palette",
+                "showing the panel open in place through defaultOpen"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The form submits nothing: the caller attaches the submit handler.",
                 "Two fields is deliberate — a third turns the panel into a dialog that needs its own heading.",
                 "An outside click closes the panel and discards unfinished input: warn the user or keep a draft.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "defaultOpen shows the panel open right in the flow — that is the showcase and documentation mode. In production the browser opens it through popovertarget, which brings the top layer, Escape and light dismiss."
               ],
               "usage": "<Popover002\n  label=\"New task\"\n  fieldLabel=\"What to do\"\n  submitLabel=\"Add\"\n  lists={[\"Inbox\", \"This week\"]}\n/>"
             },
@@ -276,10 +304,6 @@
               "fieldLabel": {
                 "label": "Field caption",
                 "default": "What to do"
-              },
-              "listLabel": {
-                "label": "List caption",
-                "default": "List"
               },
               "submitLabel": {
                 "label": "Submit",
@@ -301,12 +325,29 @@
                 "placeholder": "Draft the August report",
                 "submitLabel": "Add",
                 "listLabel": "List",
-                "lists": ["Inbox", "This week", "Someday"]
+                "lists": [
+                  "Inbox",
+                  "This week",
+                  "Someday"
+                ],
+                "defaultOpen": true
               }
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "fieldLabel",
+          "submitLabel",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "defaultOpen": true
+          }
+        }
       }
     },
     {
@@ -314,7 +355,9 @@
       "type": "registry:component",
       "title": "Подтверждение во всплывашке",
       "description": "Подтверждение у самой кнопки вместо модального окна на весь экран: вопрос называет последствие, а отмена стоит первой.",
-      "categories": ["popover"],
+      "categories": [
+        "popover"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -326,7 +369,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-popover-003-*. Серверный: панель на HTML popover, идентификаторы разводит useId. Раскладка объявлена только в :popover-open — display в обычном правиле сломал бы закрытие. Панель центрируется относительно кнопки через left:anchor(center) и translate, под @supports not есть откат. Обе кнопки закрывают панель штатным popovertargetaction, подтверждение дополнительно вызывает onConfirm.",
       "meta": {
-        "tags": ["popover", "confirm", "danger", "inline"],
+        "tags": [
+          "popover",
+          "confirm",
+          "danger",
+          "inline"
+        ],
         "ai": {
           "export": "Popover003",
           "usage": "<Popover003\n  label=\"Удалить папку\"\n  title=\"Удалить «Архив 2024»?\"\n  confirmLabel=\"Удалить\"\n  cancelLabel=\"Отмена\"\n/>",
@@ -345,14 +393,16 @@
             "подписи через confirmLabel и cancelLabel",
             "тон опасности через проп danger — заливка подтверждения и обводка фокуса",
             "background — подложка панели и кнопки открытия; пусто оставляет штатную палитру",
-            "ширину панели через width в правиле панели"
+            "ширину панели через width в правиле панели",
+            "раскрытие панели на месте через defaultOpen"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент ничего не удаляет: onConfirm вызывает вызывающий код.",
             "Необратимое действие лучше подтверждать диалогом с вводом имени, а не поповером.",
             "Панель закрывается кликом вне — это равно отмене, и так и должно быть.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "defaultOpen показывает панель раскрытой прямо в потоке — это режим витрины и документации. В работе панель открывает сам браузер по popovertarget, и тогда действуют верхний слой, Escape и закрытие по щелчку мимо."
           ]
         },
         "controls": [
@@ -410,14 +460,16 @@
                 "the captions through confirmLabel and cancelLabel",
                 "the danger tone through the danger prop — it fills confirm and draws the focus ring",
                 "background — the surface of the panel and the trigger; empty keeps the built-in palette",
-                "the panel width through width in the panel rule"
+                "the panel width through width in the panel rule",
+                "showing the panel open in place through defaultOpen"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component deletes nothing: onConfirm is called by the caller.",
                 "An irreversible action is better confirmed by a dialog asking for the name, not a popover.",
                 "An outside click closes the panel — that equals cancel, and it should.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "defaultOpen shows the panel open right in the flow — that is the showcase and documentation mode. In production the browser opens it through popovertarget, which brings the top layer, Escape and light dismiss."
               ],
               "usage": "<Popover003\n  label=\"Delete folder\"\n  title=\"Delete «Archive 2024»?\"\n  confirmLabel=\"Delete\"\n  cancelLabel=\"Cancel\"\n/>"
             },
@@ -448,12 +500,25 @@
                 "title": "Delete «Archive 2024»?",
                 "text": "128 files go with the folder. They stay recoverable from the bin for 30 days.",
                 "confirmLabel": "Delete",
-                "cancelLabel": "Cancel"
+                "cancelLabel": "Cancel",
+                "defaultOpen": true
               }
             }
           }
         },
-        "cardControls": ["danger", "background"]
+        "cardControls": [
+          "label",
+          "confirmLabel",
+          "cancelLabel",
+          "danger",
+          "background"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "defaultOpen": true
+          }
+        }
       }
     },
     {
@@ -461,7 +526,9 @@
       "type": "registry:component",
       "title": "Настройки списка",
       "description": "Настройки списка там, где сам список: сортировка радиокнопками и видимость колонок чекбоксами, обе группы размечены fieldset с legend.",
-      "categories": ["popover"],
+      "categories": [
+        "popover"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -473,7 +540,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-popover-004-*. Серверный: панель на HTML popover, имена групп разводит useId. Раскладка объявлена только в :popover-open. Заголовки групп сделаны настоящими legend, а не div — иначе назначение группы не объявляется. Legend с float:left заставляет следующих детей обтекать, поэтому у контейнера пунктов стоит clear:both. Панель прижата к правому краю кнопки через right:anchor(right) с откатом под @supports not.",
       "meta": {
-        "tags": ["popover", "settings", "fieldset", "columns"],
+        "tags": [
+          "popover",
+          "settings",
+          "fieldset",
+          "columns"
+        ],
         "ai": {
           "export": "Popover004",
           "usage": "<Popover004\n  label=\"Вид списка\"\n  sorts={[\"По дате\", \"По названию\"]}\n  columns={[\"Автор\", \"Размер\"]}\n/>",
@@ -492,14 +564,16 @@
             "заголовки групп через sortsLabel и columnsLabel",
             "варианты сортировки через sorts и список колонок через columns",
             "акцент через проп accent",
-            "background — подложка панели и кнопки открытия; пусто оставляет штатную палитру"
+            "background — подложка панели и кнопки открытия; пусто оставляет штатную палитру",
+            "раскрытие панели на месте через defaultOpen"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Значения не поднимаются наверх: обработчик изменения вешает вызывающий код.",
             "По умолчанию включены первые две колонки — при другом наборе поправьте условие.",
             "Настройки применяются сразу, кнопки «Применить» нет: если применение дорогое, добавьте её.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "defaultOpen показывает панель раскрытой прямо в потоке — это режим витрины и документации. В работе панель открывает сам браузер по popovertarget, и тогда действуют верхний слой, Escape и закрытие по щелчку мимо."
           ]
         },
         "controls": [
@@ -557,14 +631,16 @@
                 "the group headings through sortsLabel and columnsLabel",
                 "the sorting options through sorts and the column list through columns",
                 "the accent through the accent prop",
-                "background — the surface of the panel and the trigger; empty keeps the built-in palette"
+                "background — the surface of the panel and the trigger; empty keeps the built-in palette",
+                "showing the panel open in place through defaultOpen"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The values are not lifted up: the caller attaches the change handler.",
                 "The first two columns are checked by default — adjust the condition for another set.",
                 "Settings apply immediately, there is no \"Apply\" button: add one if applying is expensive.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "defaultOpen shows the panel open right in the flow — that is the showcase and documentation mode. In production the browser opens it through popovertarget, which brings the top layer, Escape and light dismiss."
               ],
               "usage": "<Popover004\n  label=\"List view\"\n  sorts={[\"By date\", \"By name\"]}\n  columns={[\"Author\", \"Size\"]}\n/>"
             },
@@ -594,13 +670,35 @@
                 "label": "List view",
                 "sortsLabel": "Sorting",
                 "columnsLabel": "Columns",
-                "sorts": ["By date modified", "By name", "By size"],
-                "columns": ["Author", "Size", "Tags", "Status"]
+                "sorts": [
+                  "By date modified",
+                  "By name",
+                  "By size"
+                ],
+                "columns": [
+                  "Author",
+                  "Size",
+                  "Tags",
+                  "Status"
+                ],
+                "defaultOpen": true
               }
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "sortsLabel",
+          "columnsLabel",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "defaultOpen": true
+          }
+        }
       }
     },
     {
@@ -608,7 +706,9 @@
       "type": "registry:component",
       "title": "Выбор цвета",
       "description": "Выбор цвета метки, где цвет — это радиокнопка, а не div с обработчиком: выбор работает стрелками, попадает в форму и не требует ни строчки JS.",
-      "categories": ["popover"],
+      "categories": [
+        "popover"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -620,7 +720,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-popover-005-*. Серверный: панель на HTML popover, имя группы разводит useId. Раскладка объявлена только в :popover-open. Кружки — это label с визуально скрытым radio внутри; выбранный обведён кольцом через :has(input:checked), а фокус ловится через :has(input:focus-visible). Цвет каждого кружка приходит в собственной переменной --vibeui-popover-005-swatch. Legend с float:left требует clear:both у сетки.",
       "meta": {
-        "tags": ["popover", "color", "radio", "swatches"],
+        "tags": [
+          "popover",
+          "color",
+          "radio",
+          "swatches"
+        ],
         "ai": {
           "export": "Popover005",
           "usage": "<Popover005\n  label=\"Цвет метки\"\n  selected=\"Синий\"\n  swatches={[{ name: \"Синий\", value: \"oklch(0.6 0.17 255)\" }]}\n/>",
@@ -640,7 +745,8 @@
             "набор оттенков через swatches и пояснение под сеткой через hint",
             "число колонок в правиле сетки",
             "акцент фокуса через проп accent",
-            "background — подложка панели и кнопки открытия; пусто оставляет штатную палитру"
+            "background — подложка панели и кнопки открытия; пусто оставляет штатную палитру",
+            "раскрытие панели на месте через defaultOpen"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
@@ -648,7 +754,8 @@
             "Выбор не поднимается наверх: обработчик изменения вешает вызывающий код.",
             "Кольцо выбранного кружка держится на :has(): в старых браузерах оно просто не появится.",
             "Десять оттенков в двух рядах — потолок читаемости, длинную палитру лучше делить на разделы.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "defaultOpen показывает панель раскрытой прямо в потоке — это режим витрины и документации. В работе панель открывает сам браузер по popovertarget, и тогда действуют верхний слой, Escape и закрытие по щелчку мимо."
           ]
         },
         "controls": [
@@ -718,7 +825,8 @@
                 "the palette through swatches and the note under the grid through hint",
                 "the number of columns in the grid rule",
                 "the focus accent through the accent prop",
-                "background — the surface of the panel and the trigger; empty keeps the built-in palette"
+                "background — the surface of the panel and the trigger; empty keeps the built-in palette",
+                "showing the panel open in place through defaultOpen"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
@@ -726,7 +834,8 @@
                 "The selection is not lifted up: the caller attaches the change handler.",
                 "The ring on the selected swatch relies on :has(): in older browsers it simply will not appear.",
                 "Ten swatches in two rows is the readability ceiling; a long palette is better split into sections.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "defaultOpen shows the panel open right in the flow — that is the showcase and documentation mode. In production the browser opens it through popovertarget, which brings the top layer, Escape and light dismiss."
               ],
               "usage": "<Popover005\n  label=\"Label colour\"\n  selected=\"Blue\"\n  swatches={[{ name: \"Blue\", value: \"oklch(0.6 0.17 255)\" }]}\n/>"
             },
@@ -796,12 +905,25 @@
                     "name": "Lavender",
                     "value": "oklch(0.75 0.09 290)"
                   }
-                ]
+                ],
+                "defaultOpen": true
               }
             }
           }
         },
-        "cardControls": ["selected", "accent", "background"]
+        "cardControls": [
+          "label",
+          "hint",
+          "selected",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "defaultOpen": true
+          }
+        }
       }
     },
     {
@@ -809,7 +931,9 @@
       "type": "registry:component",
       "title": "Подсказка рядом с полем",
       "description": "Справка внутри строки текста: в отличие от подсказки, внутрь можно войти мышью и Tab — там живёт ссылка на документацию.",
-      "categories": ["popover"],
+      "categories": [
+        "popover"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -821,7 +945,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-popover-006-*. Серверный: карточка на HTML popover, идентификатор разводит useId. Раскладка объявлена только в :popover-open. Карточка сделана строчным элементом со свойством popover, поэтому она остаётся допустимым содержимым абзаца; заголовок и текст внутри — тоже строчные с display:block. Позиционирование через anchor positioning с откатом под @supports not. Триггер — кнопка, стилизованная под слово в тексте.",
       "meta": {
-        "tags": ["popover", "help", "inline", "link"],
+        "tags": [
+          "popover",
+          "help",
+          "inline",
+          "link"
+        ],
         "ai": {
           "export": "Popover006",
           "usage": "<Popover006\n  term=\"холодный старт\"\n  title=\"Что такое холодный старт\"\n  linkLabel=\"Как его избежать\"\n  href=\"/docs/cold-start\"\n/>",
@@ -841,14 +970,16 @@
             "подпись ссылки через linkLabel и адрес через href",
             "текст вокруг термина через textBefore и textAfter, доступную подпись — через triggerHint с {term}",
             "акцент через проп accent",
-            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "раскрытие панели на месте через defaultOpen"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Карточка не закрывается по уходу курсора — это осознанно: иначе до ссылки не дойти.",
             "Если термин переносится на другую строку, карточка встанет по первой части слова.",
             "Escape и клик вне закрывают карточку сами: свой обработчик закрытия не нужен.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "defaultOpen показывает панель раскрытой прямо в потоке — это режим витрины и документации. В работе панель открывает сам браузер по popovertarget, и тогда действуют верхний слой, Escape и закрытие по щелчку мимо."
           ]
         },
         "controls": [
@@ -907,14 +1038,16 @@
                 "the link caption through linkLabel and the target through href",
                 "the copy around the term through textBefore and textAfter, the accessible name through triggerHint with {term}",
                 "the accent through the accent prop",
-                "background — the component surface; empty means no surface, taking the page colour"
+                "background — the component surface; empty means no surface, taking the page colour",
+                "showing the panel open in place through defaultOpen"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The card does not close when the pointer leaves — deliberately: otherwise the link is unreachable.",
                 "If the term wraps to the next line, the card anchors to the first fragment of the word.",
                 "Escape and outside clicks close the card on their own: no custom close handler is needed.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "defaultOpen shows the panel open right in the flow — that is the showcase and documentation mode. In production the browser opens it through popovertarget, which brings the top layer, Escape and light dismiss."
               ],
               "usage": "<Popover006\n  term=\"cold start\"\n  title=\"What a cold start is\"\n  linkLabel=\"How to avoid it\"\n  href=\"/docs/cold-start\"\n/>"
             },
@@ -947,12 +1080,25 @@
                 "linkLabel": "How to avoid it",
                 "textBefore": "The first answer after an idle period arrives slower — that is a ",
                 "textAfter": ", and it goes away by itself after a minute of traffic.",
-                "triggerHint": "Help: {term}"
+                "triggerHint": "Help: {term}",
+                "defaultOpen": true
               }
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "term",
+          "title",
+          "linkLabel",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "defaultOpen": true
+          }
+        }
       }
     },
     {
@@ -960,7 +1106,9 @@
       "type": "registry:component",
       "title": "Колокольчик уведомлений",
       "description": "Колокольчик со счётчиком и списком внутри: непрочитанное помечено точкой и весом, а строки — настоящие ссылки, по которым ходят с клавиатуры.",
-      "categories": ["popover"],
+      "categories": [
+        "popover"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -972,7 +1120,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-popover-007-*. Серверный: панель на HTML popover, идентификатор разводит useId. Раскладка объявлена только в :popover-open. Значок-счётчик обведён рамкой цвета подложки, поэтому читается на любой кнопке. Прочитанные строки отличаются весом и цветом, а не только точкой. Список ограничен по высоте и прокручивается, панель прижата к правому краю кнопки через right:anchor(right) с откатом под @supports not.",
       "meta": {
-        "tags": ["popover", "notifications", "badge", "list"],
+        "tags": [
+          "popover",
+          "notifications",
+          "badge",
+          "list"
+        ],
         "ai": {
           "export": "Popover007",
           "usage": "<Popover007\n  count={2}\n  items={[{ title: \"Сборка 412 прошла\", meta: \"конвейер\", unread: true }]}\n  footerLabel=\"Все уведомления\"\n/>",
@@ -992,14 +1145,16 @@
             "заголовок панели через title и подпись подвала через footerLabel",
             "строку о непрочитанных через unreadText и подпись кнопки через unreadHint — оба с {count}",
             "цвет значка через проп accent",
-            "background — подложка панели и кнопки; пусто оставляет штатную палитру"
+            "background — подложка панели и кнопки; пусто оставляет штатную палитру",
+            "раскрытие панели на месте через defaultOpen"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Число больше 99 показывается как «99+», сама панель длину списка не ограничивает.",
             "Компонент не помечает уведомления прочитанными: это делает вызывающий код.",
             "Ссылки ведут на заглушки — подставьте настоящие адреса, иначе панель бесполезна.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "defaultOpen показывает панель раскрытой прямо в потоке — это режим витрины и документации. В работе панель открывает сам браузер по popovertarget, и тогда действуют верхний слой, Escape и закрытие по щелчку мимо."
           ]
         },
         "controls": [
@@ -1059,14 +1214,16 @@
                 "the panel heading through title and the footer caption through footerLabel",
                 "the unread line through unreadText and the button name through unreadHint — both take {count}",
                 "the badge colour through the accent prop",
-                "background — the surface of the panel and the button; empty keeps the built-in palette"
+                "background — the surface of the panel and the button; empty keeps the built-in palette",
+                "showing the panel open in place through defaultOpen"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Anything above 99 shows as \"99+\"; the panel itself does not cap the list length.",
                 "The component does not mark anything as read: the caller does that.",
                 "The links point at placeholders — put real targets in, otherwise the panel is useless.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "defaultOpen shows the panel open right in the flow — that is the showcase and documentation mode. In production the browser opens it through popovertarget, which brings the top layer, Escape and light dismiss."
               ],
               "usage": "<Popover007\n  count={2}\n  items={[{ title: \"Build 412 passed\", meta: \"pipeline\", unread: true }]}\n  footerLabel=\"All notifications\"\n/>"
             },
@@ -1116,12 +1273,25 @@
                     "title": "An access key expires in 7 days",
                     "meta": "security · yesterday"
                   }
-                ]
+                ],
+                "defaultOpen": true
               }
             }
           }
         },
-        "cardControls": ["count", "accent", "background"]
+        "cardControls": [
+          "count",
+          "title",
+          "footerLabel",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "defaultOpen": true
+          }
+        }
       }
     },
     {
@@ -1129,7 +1299,9 @@
       "type": "registry:component",
       "title": "Вложенная всплывашка",
       "description": "Поповер внутри поповера: кнопка второго уровня лежит внутри первой панели, поэтому браузер считает панели вложенными и не закрывает родителя.",
-      "categories": ["popover"],
+      "categories": [
+        "popover"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1141,7 +1313,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-popover-008-*. Серверный: обе панели на HTML popover, идентификаторы разводит useId. Раскладка обеих объявлена только в :popover-open. Вложенность возникает из того, что кнопка второй панели находится внутри первой: браузер выстраивает стек, Escape закрывает панели по одной изнутри наружу. Вторая панель прицеплена к строке-родителю через собственный anchor-name, у обеих есть откат под @supports not.",
       "meta": {
-        "tags": ["popover", "nested", "menu", "share"],
+        "tags": [
+          "popover",
+          "nested",
+          "menu",
+          "share"
+        ],
         "ai": {
           "export": "Popover008",
           "usage": "<Popover008\n  label=\"Поделиться\"\n  nestedLabel=\"Уровень доступа\"\n  levels={[\"Только чтение\", \"Редактирование\"]}\n/>",
@@ -1160,14 +1337,16 @@
             "подписи пунктов первой панели через copyLabel и inviteLabel",
             "варианты второго уровня через levels",
             "акцент через проп accent",
-            "background — подложка панелей и кнопки открытия; пусто оставляет штатную палитру"
+            "background — подложка панелей и кнопки открытия; пусто оставляет штатную палитру",
+            "раскрытие панели на месте через defaultOpen"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Третий уровень вложенности работает так же, но пользоваться им тяжело: два уровня — практический потолок.",
             "Выбор уровня не сохраняется: обработчики вешает вызывающий код.",
             "В браузерах без anchor positioning вторая панель встаёт под первой, а не сбоку — это осознанный откат.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "defaultOpen показывает панель раскрытой прямо в потоке — это режим витрины и документации. В работе панель открывает сам браузер по popovertarget, и тогда действуют верхний слой, Escape и закрытие по щелчку мимо."
           ]
         },
         "controls": [
@@ -1225,14 +1404,16 @@
                 "the first panel's row captions through copyLabel and inviteLabel",
                 "the second-level options through levels",
                 "the accent through the accent prop",
-                "background — the surface of the panels and the trigger; empty keeps the built-in palette"
+                "background — the surface of the panels and the trigger; empty keeps the built-in palette",
+                "showing the panel open in place through defaultOpen"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "A third level works the same way but is hard to use: two levels is the practical ceiling.",
                 "The chosen level is not stored: the caller attaches the handlers.",
                 "Without anchor positioning the second panel drops below the first instead of beside it — a deliberate fallback.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "defaultOpen shows the panel open right in the flow — that is the showcase and documentation mode. In production the browser opens it through popovertarget, which brings the top layer, Escape and light dismiss."
               ],
               "usage": "<Popover008\n  label=\"Share\"\n  nestedLabel=\"Access level\"\n  levels={[\"Read only\", \"Can edit\"]}\n/>"
             },
@@ -1264,12 +1445,29 @@
                 "nestedLabel": "Access level",
                 "copyLabel": "Copy link",
                 "inviteLabel": "Invite by email",
-                "levels": ["Read only", "Can comment", "Can edit"]
+                "levels": [
+                  "Read only",
+                  "Can comment",
+                  "Can edit"
+                ],
+                "defaultOpen": true
               }
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "title",
+          "nestedLabel",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "defaultOpen": true
+          }
+        }
       }
     },
     {
@@ -1277,7 +1475,9 @@
       "type": "registry:component",
       "title": "Быстрая правка",
       "description": "Поповер быстрой правки одного поля с кнопками «Сохранить» и «Отмена»: черновик живёт в состоянии, а закрытие по Escape и клику вне откатывает его без сохранения.",
-      "categories": ["popover"],
+      "categories": [
+        "popover"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1289,7 +1489,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-popover-009-*. Клиентский: \"use client\" ради черновика и управления фокусом. Кнопка несёт aria-haspopup=\"dialog\" и aria-expanded, панель — role=\"dialog\". Escape и клик вне откатывают черновик к value и закрывают панель; сохраняет только явная кнопка. Панель лежит в контейнере с position:relative и не вылезает за карточку каталога.",
       "meta": {
-        "tags": ["popover", "edit", "form", "inline"],
+        "tags": [
+          "popover",
+          "edit",
+          "form",
+          "inline"
+        ],
         "ai": {
           "export": "Popover009",
           "usage": "<Popover009\n  label=\"Изменить\"\n  fieldLabel=\"Название\"\n  value=\"Список задач\"\n  onSave={(value) => rename(value)}\n/>",
@@ -1310,14 +1515,16 @@
             "подписи кнопок через saveLabel и cancelLabel",
             "обработчик onSave: он получает новое значение поля",
             "акцент через проп accent",
-            "background — подложка панели, поля и кнопки; пусто оставляет штатную палитру"
+            "background — подложка панели, поля и кнопки; пусто оставляет штатную палитру",
+            "раскрытие панели на месте через defaultOpen"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент не сохраняет значение сам: onSave вызывает вызывающий код, а value обновляет вызывающий код снаружи.",
             "Панель держит одно поле: для формы с несколькими полями нужен диалог, а не поповер.",
             "Клик вне закрывает панель и откатывает черновик — это осознанно, как и отмена.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "defaultOpen показывает панель раскрытой прямо в потоке — это режим витрины и документации. В работе панель открывает сам браузер по popovertarget, и тогда действуют верхний слой, Escape и закрытие по щелчку мимо."
           ]
         },
         "controls": [
@@ -1326,13 +1533,6 @@
             "label": "Кнопка",
             "type": "text",
             "default": "Изменить",
-            "maxLength": 24
-          },
-          {
-            "prop": "fieldLabel",
-            "label": "Подпись поля",
-            "type": "text",
-            "default": "Название",
             "maxLength": 24
           },
           {
@@ -1347,13 +1547,6 @@
             "label": "Сохранить",
             "type": "text",
             "default": "Сохранить",
-            "maxLength": 20
-          },
-          {
-            "prop": "cancelLabel",
-            "label": "Отмена",
-            "type": "text",
-            "default": "Отмена",
             "maxLength": 20
           },
           {
@@ -1391,14 +1584,16 @@
                 "the button captions through saveLabel and cancelLabel",
                 "the onSave handler: it receives the new field value",
                 "the accent through the accent prop",
-                "background — the surface of the panel, the field and the button; empty keeps the built-in palette"
+                "background — the surface of the panel, the field and the button; empty keeps the built-in palette",
+                "showing the panel open in place through defaultOpen"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component does not persist the value itself: onSave is called by the caller, and value is updated by the caller too.",
                 "The panel holds a single field: a form with several fields needs a dialog, not a popover.",
                 "An outside click closes the panel and rolls back the draft — deliberately, same as Cancel.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "defaultOpen shows the panel open right in the flow — that is the showcase and documentation mode. In production the browser opens it through popovertarget, which brings the top layer, Escape and light dismiss."
               ],
               "usage": "<Popover009\n  label=\"Edit\"\n  fieldLabel=\"Name\"\n  value=\"Task list\"\n  onSave={(value) => rename(value)}\n/>"
             },
@@ -1407,10 +1602,6 @@
                 "label": "Button",
                 "default": "Edit"
               },
-              "fieldLabel": {
-                "label": "Field caption",
-                "default": "Name"
-              },
               "value": {
                 "label": "Value",
                 "default": "Task list"
@@ -1418,10 +1609,6 @@
               "saveLabel": {
                 "label": "Save",
                 "default": "Save"
-              },
-              "cancelLabel": {
-                "label": "Cancel",
-                "default": "Cancel"
               },
               "accent": {
                 "label": "Accent"
@@ -1437,12 +1624,25 @@
                 "fieldLabel": "Name",
                 "value": "Task list",
                 "saveLabel": "Save",
-                "cancelLabel": "Cancel"
+                "cancelLabel": "Cancel",
+                "defaultOpen": true
               }
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "value",
+          "saveLabel",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "defaultOpen": true
+          }
+        }
       }
     },
     {
@@ -1450,7 +1650,9 @@
       "type": "registry:component",
       "title": "Карточка пользователя",
       "description": "Карточка пользователя открывается по наведению на имя и по фокусу с клавиатуры, с паузой на закрытие, чтобы курсор успел перейти на карточку; Escape и клик вне закрывают её сразу.",
-      "categories": ["popover"],
+      "categories": [
+        "popover"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1462,7 +1664,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-popover-010-*. Клиентский: \"use client\" ради наведения, фокуса и паузы закрытия. Имя — кнопка с aria-haspopup=\"dialog\" и aria-expanded, открывается по mouseenter и focus, а также по клику для тач-экранов. Закрытие при уходе курсора откладывается на 160 мс и отменяется входом в карточку; Escape закрывает сразу и возвращает фокус на имя.",
       "meta": {
-        "tags": ["popover", "hover", "profile", "card"],
+        "tags": [
+          "popover",
+          "hover",
+          "profile",
+          "card"
+        ],
         "ai": {
           "export": "Popover010",
           "usage": "<Popover010\n  name=\"Аня Соколова\"\n  role=\"Дизайнер продукта\"\n  email=\"anya@example.com\"\n  onAction={() => openChat()}\n/>",
@@ -1483,14 +1690,16 @@
             "подпись действия через actionLabel и доступную подпись карточки через cardHint с {name}",
             "обработчик onAction: вызывается по нажатию на действие внутри карточки",
             "акцент через проп accent — цвет аватара",
-            "background — подложка карточки и кнопки действия; пусто оставляет штатную палитру"
+            "background — подложка карточки и кнопки действия; пусто оставляет штатную палитру",
+            "раскрытие панели на месте через defaultOpen"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент не запрашивает данные пользователя: name, role и email передаёт вызывающий код.",
             "Пауза закрытия — 160 мс: для более медленной или быстрой мыши подстройте константу в исходнике.",
             "На тач-экранах наведения нет — карточка открывается нажатием на имя, как обычная кнопка.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "defaultOpen показывает панель раскрытой прямо в потоке — это режим витрины и документации. В работе панель открывает сам браузер по popovertarget, и тогда действуют верхний слой, Escape и закрытие по щелчку мимо."
           ]
         },
         "controls": [
@@ -1550,14 +1759,16 @@
                 "the action caption through actionLabel and the card's accessible name through cardHint with {name}",
                 "the onAction handler: called on pressing the action inside the card",
                 "the accent through the accent prop — it colours the avatar",
-                "background — the surface of the card and the action button; empty keeps the built-in palette"
+                "background — the surface of the card and the action button; empty keeps the built-in palette",
+                "showing the panel open in place through defaultOpen"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component fetches no user data: name, role and email are passed in by the caller.",
                 "The closing pause is 160ms: tune the constant in the source for a slower or faster mouse.",
                 "Touch screens have no hover — the card opens by tapping the name, like an ordinary button.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "defaultOpen shows the panel open right in the flow — that is the showcase and documentation mode. In production the browser opens it through popovertarget, which brings the top layer, Escape and light dismiss."
               ],
               "usage": "<Popover010\n  name=\"Alex Turner\"\n  role=\"Product designer\"\n  email=\"alex@example.com\"\n  onAction={() => openChat()}\n/>"
             },
@@ -1588,12 +1799,25 @@
                 "role": "Product designer",
                 "email": "alex@example.com",
                 "actionLabel": "Message",
-                "cardHint": "User card for {name}"
+                "cardHint": "User card for {name}",
+                "defaultOpen": true
               }
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "name",
+          "role",
+          "actionLabel",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "defaultOpen": true
+          }
+        }
       }
     },
     {
@@ -1601,7 +1825,9 @@
       "type": "registry:component",
       "title": "Выбор даты у поля",
       "description": "Календарь открывается от кнопки-поля, а не от отдельной иконки: кнопка называет выбранную дату, стрелки листают месяц, выбор дня закрывает панель и возвращает фокус на поле.",
-      "categories": ["popover"],
+      "categories": [
+        "popover"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1613,7 +1839,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-popover-011-*. Клиентский: \"use client\" ради месяца, выбора и управления фокусом. Кнопка-поле несёт aria-haspopup=\"dialog\" и aria-expanded, панель — role=\"dialog\" с сеткой дней-кнопок. Дата считается через обычный Date без библиотек. Escape и клик вне закрывают панель без выбора и возвращают фокус на поле.",
       "meta": {
-        "tags": ["popover", "date", "calendar", "field"],
+        "tags": [
+          "popover",
+          "date",
+          "calendar",
+          "field"
+        ],
         "ai": {
           "export": "Popover011",
           "usage": "<Popover011\n  label=\"Дата встречи\"\n  onChange={(value) => setDate(value)}\n/>",
@@ -1634,14 +1865,16 @@
             "язык календаря через weekdays и months, подписи стрелок через prevLabel и nextLabel, подпись панели через panelHint с {label}",
             "обработчик onChange: он получает выбранную дату в формате YYYY-MM-DD",
             "акцент через проп accent — цвет выбранного дня и рамки при фокусе",
-            "background — подложка панели, поля и кнопок; пусто оставляет штатную палитру"
+            "background — подложка панели, поля и кнопок; пусто оставляет штатную палитру",
+            "раскрытие панели на месте через defaultOpen"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент не проверяет диапазон дат: ограничения вроде «не раньше сегодня» добавляет вызывающий код.",
             "Календарь строится от локального времени браузера — на сервере даты не совпадут с часовым поясом пользователя.",
             "Стрелочная навигация по ячейкам календаря не реализована: доступен только последовательный Tab по дням.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "defaultOpen показывает панель раскрытой прямо в потоке — это режим витрины и документации. В работе панель открывает сам браузер по popovertarget, и тогда действуют верхний слой, Escape и закрытие по щелчку мимо."
           ]
         },
         "controls": [
@@ -1694,14 +1927,16 @@
                 "the calendar language through weekdays and months, the arrow labels through prevLabel and nextLabel, the panel name through panelHint with {label}",
                 "the onChange handler: it receives the chosen date in YYYY-MM-DD format",
                 "the accent through the accent prop — it colours the selected day and the focus ring",
-                "background — the surface of the panel, the field and the buttons; empty keeps the built-in palette"
+                "background — the surface of the panel, the field and the buttons; empty keeps the built-in palette",
+                "showing the panel open in place through defaultOpen"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component does not validate the date range: limits like \"not before today\" are added by the caller.",
                 "The calendar is built from the browser's local time — on the server the dates will not match the user's time zone.",
                 "Arrow-key navigation across calendar cells is not implemented: only sequential Tab through the days works.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "defaultOpen shows the panel open right in the flow — that is the showcase and documentation mode. In production the browser opens it through popovertarget, which brings the top layer, Escape and light dismiss."
               ],
               "usage": "<Popover011\n  label=\"Meeting date\"\n  onChange={(value) => setDate(value)}\n/>"
             },
@@ -1726,7 +1961,15 @@
               "props": {
                 "label": "Meeting date",
                 "placeholder": "Choose a date",
-                "weekdays": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+                "weekdays": [
+                  "Mon",
+                  "Tue",
+                  "Wed",
+                  "Thu",
+                  "Fri",
+                  "Sat",
+                  "Sun"
+                ],
                 "months": [
                   "January",
                   "February",
@@ -1743,12 +1986,617 @@
                 ],
                 "prevLabel": "Previous month",
                 "nextLabel": "Next month",
-                "panelHint": "{label}: pick a date"
+                "panelHint": "{label}: pick a date",
+                "defaultOpen": true
               }
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "placeholder",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "defaultOpen": true
+          }
+        }
+      }
+    },
+    {
+      "name": "popover-012",
+      "type": "registry:component",
+      "title": "Фильтр списка",
+      "description": "Фильтр в панели у самой кнопки: список за ней виден, а число отмеченного стоит на кнопке.",
+      "categories": [
+        "popover"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "popover-012/popover-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/popover-012.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-popover-012-*. Клиентский: отмеченное живёт в состоянии, панель открывает нативный popover. Счётчик отмеченного выведен на кнопку, поэтому включённый фильтр виден при закрытой панели. Кнопка сброса отключается, пока сбрасывать нечего, а применение закрывает панель средствами браузера через popovertargetaction.",
+      "meta": {
+        "tags": [
+          "popover",
+          "filter",
+          "checkbox",
+          "anchor"
+        ],
+        "ai": {
+          "export": "Popover012",
+          "usage": "<Popover012 options={filters} defaultValue={['open']} />",
+          "summary": "Фильтр списка во всплывающей панели: счётчик отмеченного на кнопке, числа у вариантов, сброс рядом с применением.",
+          "preserve": [
+            "локальную палитру --vibeui-popover-012-* и не подменять её токенами вашей темы",
+            "счётчик на кнопке: закрытая панель иначе не говорит, что фильтр включён",
+            "числа у вариантов — пустую ветку выбирать незачем, и это видно заранее",
+            "отключённый сброс, когда сбрасывать нечего: кнопка не должна обещать лишнего",
+            "нативный popover: Escape и закрытие по щелчку мимо приходят от браузера",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "состав вариантов через options и отмеченное через defaultValue",
+            "подписи label, title, applyLabel и resetLabel",
+            "вид счётчика через badgeTemplate",
+            "раскрытие панели на месте через defaultOpen",
+            "accent — цвет счётчика, галочек и главной кнопки",
+            "background — подложка панели; пусто означает штатную палитру"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "defaultOpen показывает панель раскрытой прямо в потоке — это режим витрины и документации. В работе панель открывает сам браузер по popovertarget, и тогда действуют верхний слой, Escape и закрытие по щелчку мимо.",
+            "Положение панели держит CSS Anchor Positioning с запасной веткой на absolute: там, где anchor() ещё не поддержан, панель встаёт под кнопкой обычным способом.",
+            "Применение здесь только закрывает панель: запрос за отфильтрованным списком подключается обработчиком на изменение состояния.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись кнопки",
+            "type": "text",
+            "default": "Фильтр",
+            "maxLength": 18
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок панели",
+            "type": "text",
+            "default": "Показывать задачи",
+            "maxLength": 24
+          },
+          {
+            "prop": "applyLabel",
+            "label": "Подпись применения",
+            "type": "text",
+            "default": "Применить",
+            "maxLength": 16
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "List Filter",
+            "description": "A filter in a panel next to its button: the list behind stays visible and the chosen count sits on the button.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-popover-012-* variables. Client component: the chosen values live in state and the panel is opened by the native popover. The chosen count is shown on the button, so an active filter is visible while the panel is closed. Reset disables itself when there is nothing to reset, and Apply closes the panel through popovertargetaction.",
+            "ai": {
+              "summary": "A list filter in a popover: the chosen count on the button, numbers next to the options and reset beside apply.",
+              "preserve": [
+                "the local --vibeui-popover-012-* palette — do not swap it for your theme tokens",
+                "the count on the button: a closed panel otherwise never says the filter is on",
+                "numbers next to options — an empty branch is not worth choosing, and it shows up front",
+                "the disabled reset when there is nothing to reset: a button must not promise more than it does",
+                "the native popover: Escape and light dismiss come from the browser",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "the options through options and the chosen ones through defaultValue",
+                "the label, title, applyLabel and resetLabel captions",
+                "the badge shape through badgeTemplate",
+                "showing the panel open in place through defaultOpen",
+                "accent — the badge, checkbox and primary button colour",
+                "background — the panel surface; empty means the built-in palette"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "defaultOpen shows the panel open right in the flow — that is the showcase and documentation mode. In production the browser opens it through popovertarget, which brings the top layer, Escape and light dismiss.",
+                "The position comes from CSS Anchor Positioning with an absolute fallback: where anchor() is not supported yet, the panel simply sits under the button.",
+                "Apply only closes the panel here: fetching the filtered list is wired through a handler on the state change.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Popover012 options={filters} defaultValue={['open']} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Button caption",
+                "default": "Filter"
+              },
+              "title": {
+                "label": "Panel heading",
+                "default": "Show tasks"
+              },
+              "applyLabel": {
+                "label": "Apply caption",
+                "default": "Apply"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "defaultOpen": true,
+                "label": "Filter",
+                "title": "Show tasks",
+                "applyLabel": "Apply",
+                "resetLabel": "Reset",
+                "options": [
+                  {
+                    "value": "open",
+                    "label": "Open",
+                    "count": 42
+                  },
+                  {
+                    "value": "mine",
+                    "label": "Mine",
+                    "count": 12
+                  },
+                  {
+                    "value": "review",
+                    "label": "In review",
+                    "count": 7
+                  },
+                  {
+                    "value": "late",
+                    "label": "Overdue",
+                    "count": 3
+                  },
+                  {
+                    "value": "done",
+                    "label": "Closed",
+                    "count": 128
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "preview": {
+          "width": "full",
+          "props": {
+            "defaultOpen": true
+          }
+        },
+        "cardControls": [
+          "label",
+          "title",
+          "applyLabel",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "popover-013",
+      "type": "registry:component",
+      "title": "Горячие клавиши",
+      "description": "Список сочетаний рядом с работой: клавиши набраны kbd, группы названы по задачам, а не по модификаторам.",
+      "categories": [
+        "popover"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "popover-013/popover-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/popover-013.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-popover-013-*. Серверный: клавиши не меняются, состояния здесь нет. Сочетания набраны элементом kbd, поэтому переживают увеличение шрифта, копируются текстом и читаются скринридером как клавиши. Описание и сочетание связаны списком определений, а не расположением в двух колонках.",
+      "meta": {
+        "tags": [
+          "popover",
+          "shortcuts",
+          "keyboard",
+          "help"
+        ],
+        "ai": {
+          "export": "Popover013",
+          "usage": "<Popover013 groups={groups} />",
+          "summary": "Панель горячих клавиш: сочетания элементом kbd, группы по задачам, сноска на полную справку. Без состояния.",
+          "preserve": [
+            "локальную палитру --vibeui-popover-013-* и не подменять её токенами вашей темы",
+            "kbd вместо картинок: клавиши переживают увеличение шрифта и копируются текстом",
+            "список определений: связь описания и сочетания приходит от разметки",
+            "названия групп по задачам, а не по модификаторам — ищут «как отправить», а не «что делает Ctrl»",
+            "нативный popover: Escape и закрытие по щелчку мимо приходят от браузера",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "группы и сочетания через groups",
+            "подписи label и title",
+            "сноску через footnote",
+            "раскрытие панели на месте через defaultOpen",
+            "accent — цвет фокуса",
+            "background — подложка панели; пусто означает штатную палитру"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "defaultOpen показывает панель раскрытой прямо в потоке — это режим витрины и документации. В работе панель открывает сам браузер по popovertarget, и тогда действуют верхний слой, Escape и закрытие по щелчку мимо.",
+            "Положение панели держит CSS Anchor Positioning с запасной веткой на absolute: там, где anchor() ещё не поддержан, панель встаёт под кнопкой обычным способом.",
+            "Сочетания приходят строкой, части разделяются пробелом. Для macOS передавайте свой набор: подменять Ctrl на Cmd компонент не берётся.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись кнопки",
+            "type": "text",
+            "default": "Горячие клавиши",
+            "maxLength": 20
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок панели",
+            "type": "text",
+            "default": "Что можно нажать",
+            "maxLength": 24
+          },
+          {
+            "prop": "footnote",
+            "label": "Сноска",
+            "type": "text",
+            "default": "Полный список — в справке, раздел «Клавиатура».",
+            "maxLength": 52
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Keyboard Shortcuts",
+            "description": "A shortcut list next to the work: keys typeset with kbd, groups named after tasks rather than modifiers.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-popover-013-* variables. Server component: shortcuts do not change and there is no state here. The combinations use the kbd element, so they survive font scaling, copy as text and are announced as keys. Description and shortcut are tied by a definition list rather than by sitting in two columns.",
+            "ai": {
+              "summary": "A shortcuts panel: combinations in kbd, groups by task and a footnote pointing at the full reference. No state.",
+              "preserve": [
+                "the local --vibeui-popover-013-* palette — do not swap it for your theme tokens",
+                "kbd instead of images: keys survive font scaling and copy as text",
+                "the definition list: the tie between description and shortcut comes from the markup",
+                "group names by task rather than by modifier — people look for «how to send», not «what Ctrl does»",
+                "the native popover: Escape and light dismiss come from the browser",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "the groups and shortcuts through groups",
+                "the label and title captions",
+                "the footnote",
+                "showing the panel open in place through defaultOpen",
+                "accent — the focus ring colour",
+                "background — the panel surface; empty means the built-in palette"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "defaultOpen shows the panel open right in the flow — that is the showcase and documentation mode. In production the browser opens it through popovertarget, which brings the top layer, Escape and light dismiss.",
+                "The position comes from CSS Anchor Positioning with an absolute fallback: where anchor() is not supported yet, the panel simply sits under the button.",
+                "Shortcuts arrive as a string with parts separated by spaces. For macOS pass your own set: the component does not swap Ctrl for Cmd on its own.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Popover013 groups={groups} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Button caption",
+                "default": "Shortcuts"
+              },
+              "title": {
+                "label": "Panel heading",
+                "default": "What you can press"
+              },
+              "footnote": {
+                "label": "Footnote",
+                "default": "The full list lives in Help, under «Keyboard»."
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "defaultOpen": true,
+                "label": "Shortcuts",
+                "title": "What you can press",
+                "footnote": "The full list lives in Help, under «Keyboard».",
+                "groups": [
+                  {
+                    "title": "Message",
+                    "items": [
+                      {
+                        "keys": "Ctrl Enter",
+                        "text": "Send"
+                      },
+                      {
+                        "keys": "Ctrl S",
+                        "text": "Save draft"
+                      },
+                      {
+                        "keys": "Esc",
+                        "text": "Collapse the window"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "List",
+                    "items": [
+                      {
+                        "keys": "J",
+                        "text": "Next message"
+                      },
+                      {
+                        "keys": "K",
+                        "text": "Previous message"
+                      },
+                      {
+                        "keys": "E",
+                        "text": "Archive"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "preview": {
+          "width": "full",
+          "props": {
+            "defaultOpen": true
+          }
+        },
+        "cardControls": [
+          "label",
+          "title",
+          "footnote",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "popover-014",
+      "type": "registry:component",
+      "title": "Выбор реакции",
+      "description": "Ряд реакций, у каждой из которых есть имя: знак сопровождается подписью для скринридера и счётчиком.",
+      "categories": [
+        "popover"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "popover-014/popover-014.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/popover-014.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-popover-014-*. Клиентский: выбранная реакция живёт в состоянии, панель открывает нативный popover и раскрывается вверх от кнопки. У каждой кнопки есть имя в aria-label и подсказке, счётчик стоит под знаком, а повторное нажатие снимает свою реакцию. Выбор объявляется скрытой строкой с aria-live.",
+      "meta": {
+        "tags": [
+          "popover",
+          "reactions",
+          "emoji",
+          "feedback"
+        ],
+        "ai": {
+          "export": "Popover014",
+          "usage": "<Popover014 reactions={reactions} />",
+          "summary": "Панель реакций: имя у каждого знака, счётчик под ним, повторное нажатие снимает свою реакцию, выбор объявляется вслух.",
+          "preserve": [
+            "локальную палитру --vibeui-popover-014-* и не подменять её токенами вашей темы",
+            "имя реакции в aria-label и подсказке: один знак в разных системах читается по-разному",
+            "счётчик под знаком — он превращает набор картинок в понятный итог",
+            "снятие своей реакции повторным нажатием: поставить и убрать должно стоить одинаково",
+            "aria-pressed у кнопок и объявление выбора через aria-live",
+            "нативный popover: Escape и закрытие по щелчку мимо приходят от браузера",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "набор реакций и счётчики через reactions",
+            "подписи label, title и chosenTemplate",
+            "стартовый выбор через defaultValue",
+            "раскрытие панели на месте через defaultOpen",
+            "accent — цвет выбранной реакции",
+            "background — подложка панели; пусто означает штатную палитру"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "defaultOpen показывает панель раскрытой прямо в потоке — это режим витрины и документации. В работе панель открывает сам браузер по popovertarget, и тогда действуют верхний слой, Escape и закрытие по щелчку мимо.",
+            "Положение панели держит CSS Anchor Positioning с запасной веткой на absolute: там, где anchor() ещё не поддержан, панель встаёт под кнопкой обычным способом.",
+            "Счётчики приходят пропсом и не увеличиваются сами: свою реакцию прибавляйте на своей стороне, чтобы число не расходилось с сервером.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись кнопки",
+            "type": "text",
+            "default": "Реакция",
+            "maxLength": 18
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок панели",
+            "type": "text",
+            "default": "Как отметить",
+            "maxLength": 22
+          },
+          {
+            "prop": "defaultValue",
+            "label": "Выбранная реакция",
+            "type": "select",
+            "default": "",
+            "options": [
+              "",
+              "Согласен",
+              "Отлично",
+              "Смотрю",
+              "Есть вопрос",
+              "Берём в работу"
+            ]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Reaction Picker",
+            "description": "A row of reactions where every glyph has a name: a screen-reader label and a counter come with it.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-popover-014-* variables. Client component: the chosen reaction lives in state, the panel is opened by the native popover and unfolds upwards from the button. Every button carries a name in aria-label and the tooltip, the counter sits under the glyph, and pressing again removes your own reaction. The choice is announced through a hidden aria-live line.",
+            "ai": {
+              "summary": "A reactions panel: a name on every glyph, a counter under it, a second press removes your reaction and the choice is announced.",
+              "preserve": [
+                "the local --vibeui-popover-014-* palette — do not swap it for your theme tokens",
+                "the reaction name in aria-label and the tooltip: the same glyph reads differently across systems",
+                "the counter under the glyph — it turns a set of pictures into a readable total",
+                "removing your reaction by pressing again: adding and removing must cost the same",
+                "aria-pressed on the buttons and the aria-live announcement of the choice",
+                "the native popover: Escape and light dismiss come from the browser",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "the reactions and their counters through reactions",
+                "the label, title and chosenTemplate captions",
+                "the starting choice through defaultValue",
+                "showing the panel open in place through defaultOpen",
+                "accent — the chosen reaction colour",
+                "background — the panel surface; empty means the built-in palette"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "defaultOpen shows the panel open right in the flow — that is the showcase and documentation mode. In production the browser opens it through popovertarget, which brings the top layer, Escape and light dismiss.",
+                "The position comes from CSS Anchor Positioning with an absolute fallback: where anchor() is not supported yet, the panel simply sits under the button.",
+                "Counters arrive as props and do not increment themselves: add your own reaction on your side so the number never drifts from the server.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Popover014 reactions={reactions} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Button caption",
+                "default": "React"
+              },
+              "title": {
+                "label": "Panel heading",
+                "default": "How to mark it"
+              },
+              "defaultValue": {
+                "label": "Chosen reaction"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "defaultOpen": true,
+                "label": "React",
+                "title": "How to mark it",
+                "chosenTemplate": "Your reaction: {label}",
+                "reactions": [
+                  {
+                    "glyph": "👍",
+                    "label": "Agree",
+                    "count": 12
+                  },
+                  {
+                    "glyph": "🎉",
+                    "label": "Nice",
+                    "count": 4
+                  },
+                  {
+                    "glyph": "👀",
+                    "label": "Watching",
+                    "count": 3
+                  },
+                  {
+                    "glyph": "🤔",
+                    "label": "Question",
+                    "count": 2
+                  },
+                  {
+                    "glyph": "🚀",
+                    "label": "Taking it"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "preview": {
+          "width": "full",
+          "props": {
+            "defaultOpen": true
+          }
+        },
+        "cardControls": [
+          "label",
+          "title",
+          "defaultValue",
+          "accent",
+          "background"
+        ]
       }
     }
   ]

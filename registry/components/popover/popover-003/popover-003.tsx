@@ -13,6 +13,8 @@ export type Popover003Props = Omit<
   cancelLabel?: string
   onConfirm?: () => void
   /** Тон опасности: заливка подтверждения и обводка фокуса. */
+  /** Показать панель раскрытой и в потоке: витрине и документации нужна открытая. */
+  defaultOpen?: boolean
   danger?: string
   /** Подложка панели и кнопки. Пусто — штатная палитра. */
   background?: string
@@ -84,6 +86,12 @@ border:0;background:var(--vibeui-popover-003-danger);color:var(--vibeui-popover-
 }
 [data-vibeui-block="popover-003"] [data-part="cancel"]:focus-visible,
 [data-vibeui-block="popover-003"] [data-part="confirm"]:focus-visible{outline:2px solid var(--vibeui-popover-003-danger);outline-offset:2px}
+/* Раскрытая панель на месте: атрибут popover прячет её правилом браузера,
+   а это правило той же специфичности его переопределяет и возвращает панель
+   в поток. Так её показывают на витрине и в документации, без верхнего слоя. */
+[data-vibeui-block="popover-003"][data-open] [popover]{
+display:block;position:static;inset:auto;margin:0.5rem 0 0;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="popover-003"] *{animation:none!important;transition:none!important}}
 `
 
@@ -120,6 +128,7 @@ export function Popover003({
   confirmLabel = "Удалить",
   cancelLabel = "Отмена",
   onConfirm,
+  defaultOpen = false,
   danger,
   background = "",
   className,
@@ -147,6 +156,7 @@ export function Popover003({
         {...props}
         data-slot="popover"
         data-vibeui-block="popover-003"
+        data-open={defaultOpen || undefined}
         className={className}
         style={palette}
       >

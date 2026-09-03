@@ -16,6 +16,9 @@ import { Popover008 } from "@/registry/components/popover/popover-008/popover-00
 import { Popover009 } from "@/registry/components/popover/popover-009/popover-009"
 import { Popover010 } from "@/registry/components/popover/popover-010/popover-010"
 import { Popover011 } from "@/registry/components/popover/popover-011/popover-011"
+import { Popover012 } from "@/registry/components/popover/popover-012/popover-012"
+import { Popover013 } from "@/registry/components/popover/popover-013/popover-013"
+import { Popover014 } from "@/registry/components/popover/popover-014/popover-014"
 
 export const PREVIEWS = {
   "popover-001": Popover001,
@@ -29,4 +32,7 @@ export const PREVIEWS = {
   "popover-009": Popover009,
   "popover-010": Popover010,
   "popover-011": Popover011,
+  "popover-012": Popover012,
+  "popover-013": Popover013,
+  "popover-014": Popover014,
 } satisfies Record<string, ComponentType<PreviewProps>>

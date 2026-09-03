@@ -11,6 +11,9 @@ import { Popover008 } from "@/registry/components/popover/popover-008/popover-00
 import { Popover009 } from "@/registry/components/popover/popover-009/popover-009"
 import { Popover010 } from "@/registry/components/popover/popover-010/popover-010"
 import { Popover011 } from "@/registry/components/popover/popover-011/popover-011"
+import { Popover012 } from "@/registry/components/popover/popover-012/popover-012"
+import { Popover013 } from "@/registry/components/popover/popover-013/popover-013"
+import { Popover014 } from "@/registry/components/popover/popover-014/popover-014"
 
 /** Seed прогона: с ним набор воспроизводится один в один. */
 export const SEED = 68432
@@ -26,8 +29,7 @@ export const CHECKS: LabCheck[] = [
       "Акцент: #d4e090",
     ],
     node: (
-      <Popover001
-        label="Смена"
+      <Popover001 defaultOpen         label="Смена"
         title="Смена"
         actionLabel="Смена"
         accent="#d4e090"
@@ -45,8 +47,7 @@ export const CHECKS: LabCheck[] = [
       "Акцент: #335392",
     ],
     node: (
-      <Popover002
-        label="Смена"
+      <Popover002 defaultOpen         label="Смена"
         fieldLabel="Подпись: тест"
         listLabel="Подпись: тест"
         submitLabel="Что дальше"
@@ -64,8 +65,7 @@ export const CHECKS: LabCheck[] = [
       "Опасность: #e5e6de",
     ],
     node: (
-      <Popover003
-        label="Подпись: тест"
+      <Popover003 defaultOpen         label="Подпись: тест"
         confirmLabel="Проверка"
         cancelLabel="Черновик"
         danger="#e5e6de"
@@ -82,8 +82,7 @@ export const CHECKS: LabCheck[] = [
       "Акцент: #5fb80d",
     ],
     node: (
-      <Popover004
-        label="Черновик"
+      <Popover004 defaultOpen         label="Черновик"
         sortsLabel="Смена"
         columnsLabel="Что дальше"
         accent="#5fb80d"
@@ -100,8 +99,7 @@ export const CHECKS: LabCheck[] = [
       "Акцент: #c2c33d",
     ],
     node: (
-      <Popover005
-        label="Смена"
+      <Popover005 defaultOpen         label="Смена"
         hint="Черновик"
         selected="Жёлтый"
         accent="#c2c33d"
@@ -118,8 +116,7 @@ export const CHECKS: LabCheck[] = [
       "Акцент: #2b8299",
     ],
     node: (
-      <Popover006
-        term="Черновик"
+      <Popover006 defaultOpen         term="Черновик"
         title="Черновик"
         linkLabel="Проверка"
         accent="#2b8299"
@@ -136,8 +133,7 @@ export const CHECKS: LabCheck[] = [
       "Акцент: #dd7cbc",
     ],
     node: (
-      <Popover007
-        count={95}
+      <Popover007 defaultOpen         count={95}
         title="Подпись: тест"
         footerLabel="Что дальше"
         accent="#dd7cbc"
@@ -154,8 +150,7 @@ export const CHECKS: LabCheck[] = [
       "Акцент: #cdc4b4",
     ],
     node: (
-      <Popover008
-        label="Подпись: тест"
+      <Popover008 defaultOpen         label="Подпись: тест"
         title="Черновик"
         nestedLabel="Черновик"
         accent="#cdc4b4"
@@ -174,8 +169,7 @@ export const CHECKS: LabCheck[] = [
       "Акцент: #2628e1",
     ],
     node: (
-      <Popover009
-        label="Что дальше"
+      <Popover009 defaultOpen         label="Что дальше"
         fieldLabel="Подпись: тест"
         value="Проверка"
         saveLabel="Черновик"
@@ -194,8 +188,7 @@ export const CHECKS: LabCheck[] = [
       "Акцент: #13d739",
     ],
     node: (
-      <Popover010
-        name="Черновик"
+      <Popover010 defaultOpen         name="Черновик"
         role="Проверка"
         actionLabel="Проверка"
         accent="#13d739"
@@ -211,7 +204,60 @@ export const CHECKS: LabCheck[] = [
       "Акцент: #1656bf",
     ],
     node: (
-      <Popover011 label="Смена" placeholder="Подпись: тест" accent="#1656bf" />
+      <Popover011 defaultOpen label="Смена" placeholder="Подпись: тест" accent="#1656bf" />
+    ),
+  },
+  {
+    name: "popover-012",
+    title: "Фильтр списка",
+    notes: [
+      "Подпись кнопки: Отбор",
+      "Заголовок панели: Что показывать",
+      "Подпись применения: Готово",
+      "Акцент: #2a9d8f",
+    ],
+    node: (
+      <Popover012
+        defaultOpen
+        label="Отбор"
+        title="Что показывать"
+        applyLabel="Готово"
+        accent="#2a9d8f"
+      />
+    ),
+  },
+  {
+    name: "popover-013",
+    title: "Горячие клавиши",
+    notes: [
+      "Подпись кнопки: Клавиши",
+      "Заголовок панели: Быстрые действия",
+      "Акцент: #9d4edd",
+    ],
+    node: (
+      <Popover013
+        defaultOpen
+        label="Клавиши"
+        title="Быстрые действия"
+        accent="#9d4edd"
+      />
+    ),
+  },
+  {
+    name: "popover-014",
+    title: "Выбор реакции",
+    notes: [
+      "Подпись кнопки: Отметить",
+      "Выбранная реакция: Отлично",
+      "Акцент: #f4a261",
+    ],
+    node: (
+      <Popover014
+        defaultOpen
+        label="Отметить"
+        defaultValue="Отлично"
+        accent="#f4a261"
+      />
     ),
   },
 ]

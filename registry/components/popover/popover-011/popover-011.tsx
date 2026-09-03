@@ -11,6 +11,8 @@ export type Popover011Props = Omit<
   placeholder?: string
   defaultValue?: string
   onChange?: (value: string) => void
+  /** Показать панель раскрытой и в потоке: витрине и документации нужна открытая. */
+  defaultOpen?: boolean
   accent?: string
   /** Сокращения дней недели, начиная с понедельника. */
   weekdays?: string[]
@@ -149,6 +151,17 @@ transition:background-color .16s ease,border-color .16s ease,color .16s ease;
 [data-vibeui-block="popover-011"] [data-part="day"][aria-pressed="true"]{
 background:var(--vibeui-popover-011-accent);border-color:var(--vibeui-popover-011-accent);color:var(--vibeui-popover-011-on-accent);
 }
+/* Раскрытая панель на месте: атрибут popover прячет её правилом браузера,
+   а это правило той же специфичности его переопределяет и возвращает панель
+   в поток. Так её показывают на витрине и в документации, без верхнего слоя. */
+[data-vibeui-block="popover-011"][data-open] [popover]{
+display:block;position:static;inset:auto;margin:0.5rem 0 0;
+}
+/* Раскрытая панель на месте: в потоке, а не поверх карточки. Так её
+   показывают на витрине и в документации. */
+[data-vibeui-block="popover-011"][data-open] [data-part="panel"]{
+position:static;inset:auto;margin:0.5rem 0 0;
+}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="popover-011"] *{animation:none!important;transition:none!important}
 }
@@ -186,6 +199,7 @@ export function Popover011({
   placeholder = "Выберите дату",
   defaultValue,
   onChange,
+  defaultOpen = false,
   accent,
   weekdays = WEEKDAYS,
   months = MONTHS,
@@ -198,7 +212,7 @@ export function Popover011({
   ...props
 }: Popover011Props) {
   const id = useId().replace(/:/g, "")
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(defaultOpen)
   const [selected, setSelected] = useState(defaultValue ?? "")
   const today = todayParts()
   const [view, setView] = useState(() => {
@@ -269,6 +283,7 @@ export function Popover011({
         ref={rootRef}
         data-slot="popover"
         data-vibeui-block="popover-011"
+        data-open={defaultOpen || undefined}
         className={className}
         style={palette}
       >

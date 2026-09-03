@@ -11,6 +11,8 @@ export type Popover004Props = Omit<ComponentProps<"div">, "children"> & {
   sorts?: string[]
   /** Колонки таблицы: чекбоксы, можно выключить любую. */
   columns?: string[]
+  /** Показать панель раскрытой и в потоке: витрине и документации нужна открытая. */
+  defaultOpen?: boolean
   accent?: string
   /** Подложка панели и кнопки. Пусто — штатная палитра. */
   background?: string
@@ -81,6 +83,12 @@ transition:background-color .14s ease;
 [data-vibeui-block="popover-004"] [data-part="option"] input{accent-color:var(--vibeui-popover-004-accent);margin:0;flex:none}
 [data-vibeui-block="popover-004"] [data-part="option"]:focus-within{outline:2px solid var(--vibeui-popover-004-accent);outline-offset:1px}
 [data-vibeui-block="popover-004"] [data-part="divider"]{height:1px;background:var(--vibeui-popover-004-border);margin:0 -0.75rem}
+/* Раскрытая панель на месте: атрибут popover прячет её правилом браузера,
+   а это правило той же специфичности его переопределяет и возвращает панель
+   в поток. Так её показывают на витрине и в документации, без верхнего слоя. */
+[data-vibeui-block="popover-004"][data-open] [popover]{
+display:block;position:static;inset:auto;margin:0.5rem 0 0;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="popover-004"] *{animation:none!important;transition:none!important}}
 `
 
@@ -119,6 +127,7 @@ export function Popover004({
   columnsLabel = "Колонки",
   sorts = DEFAULT_SORTS,
   columns = DEFAULT_COLUMNS,
+  defaultOpen = false,
   accent,
   background = "",
   className,
@@ -146,6 +155,7 @@ export function Popover004({
         {...props}
         data-slot="popover"
         data-vibeui-block="popover-004"
+        data-open={defaultOpen || undefined}
         className={className}
         style={palette}
       >

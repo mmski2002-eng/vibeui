@@ -61,4 +61,19 @@ export const PREVIEWS = {
       (module) => module.Popover011,
     ),
   ),
+  "popover-012": dynamic(() =>
+    import("@/registry/components/popover/popover-012/popover-012").then(
+      (module) => module.Popover012,
+    ),
+  ),
+  "popover-013": dynamic(() =>
+    import("@/registry/components/popover/popover-013/popover-013").then(
+      (module) => module.Popover013,
+    ),
+  ),
+  "popover-014": dynamic(() =>
+    import("@/registry/components/popover/popover-014/popover-014").then(
+      (module) => module.Popover014,
+    ),
+  ),
 } satisfies PreviewMap

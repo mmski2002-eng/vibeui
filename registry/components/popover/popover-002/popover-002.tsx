@@ -14,6 +14,8 @@ export type Popover002Props = Omit<
   listLabel?: string
   /** Варианты списка, куда попадёт запись. */
   lists?: string[]
+  /** Показать панель раскрытой и в потоке: витрине и документации нужна открытая. */
+  defaultOpen?: boolean
   accent?: string
   /** Подложка панели и полей. Пусто — штатная палитра. */
   background?: string
@@ -90,6 +92,12 @@ background:var(--vibeui-popover-002-accent);color:var(--vibeui-popover-002-on-ac
 font:inherit;font-size:0.8125rem;font-weight:650;
 }
 [data-vibeui-block="popover-002"] [data-part="submit"]:focus-visible{outline:2px solid var(--vibeui-popover-002-accent);outline-offset:2px}
+/* Раскрытая панель на месте: атрибут popover прячет её правилом браузера,
+   а это правило той же специфичности его переопределяет и возвращает панель
+   в поток. Так её показывают на витрине и в документации, без верхнего слоя. */
+[data-vibeui-block="popover-002"][data-open] [popover]{
+display:block;position:static;inset:auto;margin:0.5rem 0 0;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="popover-002"] *{animation:none!important;transition:none!important}}
 `
 
@@ -129,6 +137,7 @@ export function Popover002({
   submitLabel = "Добавить",
   listLabel = "Список",
   lists = DEFAULT_LISTS,
+  defaultOpen = false,
   accent,
   background = "",
   className,
@@ -156,6 +165,7 @@ export function Popover002({
         {...props}
         data-slot="popover"
         data-vibeui-block="popover-002"
+        data-open={defaultOpen || undefined}
         className={className}
         style={palette}
       >

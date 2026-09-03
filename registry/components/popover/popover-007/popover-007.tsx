@@ -21,6 +21,8 @@ export type Popover007Props = Omit<
   unreadText?: string
   /** Доступная подпись кнопки со счётчиком. {count} подставляется. */
   unreadHint?: string
+  /** Показать панель раскрытой и в потоке: витрине и документации нужна открытая. */
+  defaultOpen?: boolean
   accent?: string
   /** Подложка панели и кнопки. Пусто — штатная палитра. */
   background?: string
@@ -115,6 +117,12 @@ color:var(--vibeui-popover-007-fg);text-decoration:none;
 }
 [data-vibeui-block="popover-007"] [data-part="foot"]:hover{background:var(--vibeui-popover-007-hover)}
 [data-vibeui-block="popover-007"] [data-part="foot"]:focus-visible{outline:2px solid var(--vibeui-popover-007-accent);outline-offset:-2px}
+/* Раскрытая панель на месте: атрибут popover прячет её правилом браузера,
+   а это правило той же специфичности его переопределяет и возвращает панель
+   в поток. Так её показывают на витрине и в документации, без верхнего слоя. */
+[data-vibeui-block="popover-007"][data-open] [popover]{
+display:block;position:static;inset:auto;margin:0.5rem 0 0;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="popover-007"] *{animation:none!important;transition:none!important}}
 `
 
@@ -166,6 +174,7 @@ export function Popover007({
   title = "Уведомления",
   unreadText = "{count} новых",
   unreadHint = "Уведомления, непрочитанных: {count}",
+  defaultOpen = false,
   accent,
   background = "",
   className,
@@ -193,6 +202,7 @@ export function Popover007({
         {...props}
         data-slot="popover"
         data-vibeui-block="popover-007"
+        data-open={defaultOpen || undefined}
         className={className}
         style={palette}
       >

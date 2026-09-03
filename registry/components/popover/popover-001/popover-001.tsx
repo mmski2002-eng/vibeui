@@ -9,6 +9,8 @@ export type Popover001Props = Omit<
   title?: string
   text?: string
   actionLabel?: string
+  /** Показать панель раскрытой и в потоке: витрине и документации нужна открытая. */
+  defaultOpen?: boolean
   accent?: string
   /** Подложка карточки и кнопки. Пусто — штатная палитра. */
   background?: string
@@ -70,6 +72,12 @@ background:var(--vibeui-popover-001-accent);color:var(--vibeui-popover-001-on-ac
 font:inherit;font-size:0.8125rem;font-weight:650;
 }
 [data-vibeui-block="popover-001"] [data-part="action"]:focus-visible{outline:2px solid var(--vibeui-popover-001-accent);outline-offset:2px}
+/* Раскрытая панель на месте: атрибут popover прячет её правилом браузера,
+   а это правило той же специфичности его переопределяет и возвращает панель
+   в поток. Так её показывают на витрине и в документации, без верхнего слоя. */
+[data-vibeui-block="popover-001"][data-open] [popover]{
+display:block;position:static;inset:auto;margin:0.5rem 0 0;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="popover-001"] *{animation:none!important;transition:none!important}}
 `
 
@@ -104,6 +112,7 @@ export function Popover001({
   title = "Как считается охват",
   text = "Берём уникальных посетителей за семь дней и вычитаем ботов по списку известных агентов.",
   actionLabel = "Открыть методику",
+  defaultOpen = false,
   accent,
   background = "",
   className,
@@ -131,6 +140,7 @@ export function Popover001({
         {...props}
         data-slot="popover"
         data-vibeui-block="popover-001"
+        data-open={defaultOpen || undefined}
         className={className}
         style={palette}
       >

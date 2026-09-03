@@ -13,6 +13,8 @@ export type Popover009Props = Omit<
   saveLabel?: string
   cancelLabel?: string
   onSave?: (value: string) => void
+  /** Показать панель раскрытой и в потоке: витрине и документации нужна открытая. */
+  defaultOpen?: boolean
   accent?: string
   /** Подложка панели, кнопки и поля. Пусто — штатная палитра. */
   background?: string
@@ -92,6 +94,17 @@ border:0;background:var(--vibeui-popover-009-accent);color:var(--vibeui-popover-
 }
 [data-vibeui-block="popover-009"] [data-part="cancel"]:focus-visible,
 [data-vibeui-block="popover-009"] [data-part="save"]:focus-visible{outline:2px solid var(--vibeui-popover-009-accent);outline-offset:2px}
+/* Раскрытая панель на месте: атрибут popover прячет её правилом браузера,
+   а это правило той же специфичности его переопределяет и возвращает панель
+   в поток. Так её показывают на витрине и в документации, без верхнего слоя. */
+[data-vibeui-block="popover-009"][data-open] [popover]{
+display:block;position:static;inset:auto;margin:0.5rem 0 0;
+}
+/* Раскрытая панель на месте: в потоке, а не поверх карточки. Так её
+   показывают на витрине и в документации. */
+[data-vibeui-block="popover-009"][data-open] [data-part="panel"]{
+position:static;inset:auto;margin:0.5rem 0 0;
+}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="popover-009"] *{animation:none!important;transition:none!important}
 }
@@ -131,6 +144,7 @@ export function Popover009({
   saveLabel = "Сохранить",
   cancelLabel = "Отмена",
   onSave,
+  defaultOpen = false,
   accent,
   background = "",
   className,
@@ -138,7 +152,7 @@ export function Popover009({
   ...props
 }: Popover009Props) {
   const id = useId().replace(/:/g, "")
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(defaultOpen)
   const [draft, setDraft] = useState(value)
   const rootRef = useRef<HTMLDivElement>(null)
   const triggerRef = useRef<HTMLButtonElement>(null)
@@ -210,6 +224,7 @@ export function Popover009({
         ref={rootRef}
         data-slot="popover"
         data-vibeui-block="popover-009"
+        data-open={defaultOpen || undefined}
         className={className}
         style={palette}
       >

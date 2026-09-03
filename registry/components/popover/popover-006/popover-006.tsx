@@ -17,6 +17,8 @@ export type Popover006Props = Omit<
   textAfter?: string
   /** Доступная подпись кнопки-термина. {term} подставляется. */
   triggerHint?: string
+  /** Показать панель раскрытой и в потоке: витрине и документации нужна открытая. */
+  defaultOpen?: boolean
   accent?: string
   /** Пусто — плашки нет, компонент лежит прямо на фоне страницы. */
   background?: string
@@ -89,6 +91,12 @@ text-decoration:none;border-radius:0.25rem;
 }
 [data-vibeui-block="popover-006"] [data-part="link"]:hover{text-decoration:underline;text-underline-offset:0.2em}
 [data-vibeui-block="popover-006"] [data-part="link"]:focus-visible{outline:2px solid var(--vibeui-popover-006-accent);outline-offset:2px}
+/* Раскрытая панель на месте: атрибут popover прячет её правилом браузера,
+   а это правило той же специфичности его переопределяет и возвращает панель
+   в поток. Так её показывают на витрине и в документации, без верхнего слоя. */
+[data-vibeui-block="popover-006"][data-open] [popover]{
+display:block;position:static;inset:auto;margin:0.5rem 0 0;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="popover-006"] *{animation:none!important;transition:none!important}}
 `
 
@@ -127,6 +135,7 @@ export function Popover006({
   textBefore = "Первый ответ после простоя приходит медленнее — это ",
   textAfter = ", и он проходит сам через минуту работы.",
   triggerHint = "Справка: {term}",
+  defaultOpen = false,
   accent,
   background = "",
   className,
@@ -154,6 +163,7 @@ export function Popover006({
         {...props}
         data-slot="popover"
         data-vibeui-block="popover-006"
+        data-open={defaultOpen || undefined}
         className={className}
         style={palette}
       >

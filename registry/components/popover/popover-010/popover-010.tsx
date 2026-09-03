@@ -10,6 +10,8 @@ export type Popover010Props = Omit<ComponentProps<"div">, "children"> & {
   initials?: string
   actionLabel?: string
   onAction?: () => void
+  /** Показать панель раскрытой и в потоке: витрине и документации нужна открытая. */
+  defaultOpen?: boolean
   accent?: string
   /** Доступная подпись карточки. {name} подставляется. */
   cardHint?: string
@@ -81,6 +83,17 @@ font:inherit;font-size:0.8125rem;font-weight:650;
 }
 [data-vibeui-block="popover-010"] [data-part="action"]:hover{border-color:var(--vibeui-popover-010-accent)}
 [data-vibeui-block="popover-010"] [data-part="action"]:focus-visible{outline:2px solid var(--vibeui-popover-010-accent);outline-offset:2px}
+/* Раскрытая панель на месте: атрибут popover прячет её правилом браузера,
+   а это правило той же специфичности его переопределяет и возвращает панель
+   в поток. Так её показывают на витрине и в документации, без верхнего слоя. */
+[data-vibeui-block="popover-010"][data-open] [popover]{
+display:block;position:static;inset:auto;margin:0.5rem 0 0;
+}
+/* Раскрытая панель на месте: в потоке, а не поверх карточки. Так её
+   показывают на витрине и в документации. */
+[data-vibeui-block="popover-010"][data-open] [data-part="card"]{
+position:static;inset:auto;margin:0.5rem 0 0;
+}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="popover-010"] *{animation:none!important;transition:none!important}
 }
@@ -121,6 +134,7 @@ export function Popover010({
   initials,
   actionLabel = "Написать",
   onAction,
+  defaultOpen = false,
   accent,
   cardHint = "Карточка пользователя {name}",
   background = "",
@@ -129,7 +143,7 @@ export function Popover010({
   ...props
 }: Popover010Props) {
   const id = useId().replace(/:/g, "")
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(defaultOpen)
   const rootRef = useRef<HTMLDivElement>(null)
   const triggerRef = useRef<HTMLButtonElement>(null)
   const closeTimer = useRef<ReturnType<typeof setTimeout>>(undefined)
@@ -201,6 +215,7 @@ export function Popover010({
         ref={rootRef}
         data-slot="popover"
         data-vibeui-block="popover-010"
+        data-open={defaultOpen || undefined}
         className={className}
         style={palette}
         onMouseEnter={() => {

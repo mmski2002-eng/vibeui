@@ -9,6 +9,8 @@ export type Popover005Props = Omit<ComponentProps<"div">, "children"> & {
   selected?: string
   /** Пояснение под сеткой. */
   hint?: string
+  /** Показать панель раскрытой и в потоке: витрине и документации нужна открытая. */
+  defaultOpen?: boolean
   accent?: string
   /** Подложка панели и кнопки. Пусто — штатная палитра. */
   background?: string
@@ -99,6 +101,12 @@ overflow:hidden;clip-path:inset(50%);white-space:nowrap;
 [data-vibeui-block="popover-005"] [data-part="hint"]{
 margin:0;font-size:0.75rem;line-height:1.4;color:var(--vibeui-popover-005-muted);
 }
+/* Раскрытая панель на месте: атрибут popover прячет её правилом браузера,
+   а это правило той же специфичности его переопределяет и возвращает панель
+   в поток. Так её показывают на витрине и в документации, без верхнего слоя. */
+[data-vibeui-block="popover-005"][data-open] [popover]{
+display:block;position:static;inset:auto;margin:0.5rem 0 0;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="popover-005"] *{animation:none!important;transition:none!important}}
 `
 
@@ -146,6 +154,7 @@ export function Popover005({
   swatches = DEFAULT_SWATCHES,
   selected = "Синий",
   hint = "Цвет применится ко всем задачам с этой меткой.",
+  defaultOpen = false,
   accent,
   background = "",
   className,
@@ -175,6 +184,7 @@ export function Popover005({
         {...props}
         data-slot="popover"
         data-vibeui-block="popover-005"
+        data-open={defaultOpen || undefined}
         className={className}
         style={palette}
       >

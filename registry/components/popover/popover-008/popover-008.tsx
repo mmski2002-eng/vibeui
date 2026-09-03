@@ -12,6 +12,8 @@ export type Popover008Props = Omit<ComponentProps<"div">, "children"> & {
   copyLabel?: string
   /** Подпись второго пункта первой панели. */
   inviteLabel?: string
+  /** Показать панель раскрытой и в потоке: витрине и документации нужна открытая. */
+  defaultOpen?: boolean
   accent?: string
   /** Подложка панелей и кнопки. Пусто — штатная палитра. */
   background?: string
@@ -95,6 +97,12 @@ transition:background-color .14s ease;
 [data-vibeui-block="popover-008"] [data-part="mark"]{
 flex:none;width:1.125rem;text-align:center;color:var(--vibeui-popover-008-muted);
 }
+/* Раскрытая панель на месте: атрибут popover прячет её правилом браузера,
+   а это правило той же специфичности его переопределяет и возвращает панель
+   в поток. Так её показывают на витрине и в документации, без верхнего слоя. */
+[data-vibeui-block="popover-008"][data-open] [popover]{
+display:block;position:static;inset:auto;margin:0.5rem 0 0;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="popover-008"] *{animation:none!important;transition:none!important}}
 `
 
@@ -133,6 +141,7 @@ export function Popover008({
   levels = DEFAULT_LEVELS,
   copyLabel = "Скопировать ссылку",
   inviteLabel = "Пригласить по почте",
+  defaultOpen = false,
   accent,
   background = "",
   className,
@@ -160,6 +169,7 @@ export function Popover008({
         {...props}
         data-slot="popover"
         data-vibeui-block="popover-008"
+        data-open={defaultOpen || undefined}
         className={className}
         style={palette}
       >
