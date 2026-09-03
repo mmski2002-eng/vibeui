@@ -6,7 +6,9 @@
       "type": "registry:component",
       "title": "Поле одноразового кода",
       "description": "Код из СМС по клеткам: вставка целиком раскладывается сама, а Backspace на пустой клетке уводит назад.",
-      "categories": ["input-otp"],
+      "categories": [
+        "input-otp"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-otp-001-*. Клиентский: \"use client\". Клетки — массив ref, ввод цифры переводит фокус вперёд, Backspace на пустой клетке — назад, стрелки ходят по клеткам. Вставка перехватывается на любой клетке и раскладывается целиком. У первой клетки autocomplete=\"one-time-code\".",
       "meta": {
-        "tags": ["input", "otp", "code", "auth"],
+        "tags": [
+          "input",
+          "otp",
+          "code",
+          "auth"
+        ],
         "ai": {
           "export": "Otp001",
           "usage": "<Otp001 length={6} onChange={(code) => verify(code)} />",
@@ -147,7 +154,16 @@
             }
           }
         },
-        "cardControls": ["length", "accent", "background"]
+        "cardControls": [
+          "length",
+          "label",
+          "hint",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -155,7 +171,9 @@
       "type": "registry:component",
       "title": "Одна каретка",
       "description": "Клеток шесть, а поле одно: прозрачный input лежит поверх ячеек, поэтому вставка, автопереход и системная подстановка кода работают сами.",
-      "categories": ["input-otp"],
+      "categories": [
+        "input-otp"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -167,7 +185,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-otp-002-*. Клиентский: \"use client\". Настоящий input растянут по всей сцепке (position:absolute; inset:0), полностью прозрачен и принимает щелчки, а ячейки — это отрисовка его значения с pointer-events:none. Такой приём отдаёт браузеру вставку, автопереход, Backspace, стрелки и отмену. Каретка нарисована отдельным элементом, потому что у прозрачного поля её не видно.",
       "meta": {
-        "tags": ["otp", "code", "auth", "input"],
+        "tags": [
+          "otp",
+          "code",
+          "auth",
+          "input"
+        ],
         "ai": {
           "export": "Otp002",
           "usage": "<Otp002 length={6} onChange={(code) => verify(code)} />",
@@ -282,7 +305,15 @@
             }
           }
         },
-        "cardControls": ["length", "accent", "background"]
+        "cardControls": [
+          "label",
+          "length",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -290,7 +321,9 @@
       "type": "registry:component",
       "title": "Таймер повтора",
       "description": "Код с повторной отправкой: пока идёт отсчёт, кнопка выключена, а остаток времени виден полосой и читается вслух словами.",
-      "categories": ["input-otp"],
+      "categories": [
+        "input-otp"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -302,7 +335,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-otp-003-*. Клиентский: \"use client\". Отсчёт ведётся от отметки времени (Date.now() + seconds*1000), а не сложением секунд по тикам: в свёрнутой вкладке таймеры тормозят и счёт по тикам врёт. Повторная отправка увеличивает счётчик round, от него перезапускается эффект. Ширина полосы — единственное инлайновое значение, потому что она вычисляется. Клетки — массив ref с автопереходом и вставкой.",
       "meta": {
-        "tags": ["otp", "timer", "resend", "auth"],
+        "tags": [
+          "otp",
+          "timer",
+          "resend",
+          "auth"
+        ],
         "ai": {
           "export": "Otp003",
           "usage": "<Otp003 seconds={45} onChange={(code) => verify(code)} />",
@@ -433,7 +471,16 @@
             }
           }
         },
-        "cardControls": ["length", "seconds", "accent", "background"]
+        "cardControls": [
+          "label",
+          "seconds",
+          "length",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -441,7 +488,9 @@
       "type": "registry:component",
       "title": "Встряска при ошибке",
       "description": "Неверный код оформлен всерьёз: короткая встряска, красная рамка, счётчик оставшихся попыток и возврат фокуса на первую клетку.",
-      "categories": ["input-otp"],
+      "categories": [
+        "input-otp"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -453,7 +502,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-otp-004-*. Клиентский: \"use client\". Встряска перезапускается сменой имени анимации: два одинаковых набора кадров чередуются по счётчику ошибок, поэтому вторая подряд ошибка тоже тряхнёт поле, а клетки не размонтируются и фокус не теряется. Правило prefers-reduced-motion гасит анимацию целиком — смысл несут цвет и текст. Сообщение объявляется через aria-live=\"assertive\".",
       "meta": {
-        "tags": ["otp", "error", "motion", "auth"],
+        "tags": [
+          "otp",
+          "error",
+          "motion",
+          "auth"
+        ],
         "ai": {
           "export": "Otp004",
           "usage": "<Otp004 expected=\"482913\" attempts={3} onSubmit={(code) => enter(code)} />",
@@ -585,7 +639,16 @@
             }
           }
         },
-        "cardControls": ["attempts", "accent", "background"]
+        "cardControls": [
+          "label",
+          "expected",
+          "attempts",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -593,7 +656,9 @@
       "type": "registry:component",
       "title": "Код по группам",
       "description": "Код группами через дефис: внутри группы клетки сцеплены общей рамкой, а дефис нарисован — набирать его не нужно.",
-      "categories": ["input-otp"],
+      "categories": [
+        "input-otp"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -605,7 +670,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-otp-005-*. Клиентский: \"use client\". Группы задаются массивом длин, поэтому «3-3», «2-2-2» и «4-4» — один и тот же компонент. Внутри группы клетки сцеплены схлопнутыми границами, скругления только на концах группы, фокусная клетка поднимается z-index'ом. Дефис — отдельный элемент с aria-hidden. Вставка перехватывается на любой клетке и раскладывается по всем группам сразу.",
       "meta": {
-        "tags": ["otp", "code", "groups", "auth"],
+        "tags": [
+          "otp",
+          "code",
+          "groups",
+          "auth"
+        ],
         "ai": {
           "export": "Otp005",
           "usage": "<Otp005 groups={[3, 3]} onChange={(code) => verify(code)} />",
@@ -723,7 +793,15 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "hint",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -731,7 +809,9 @@
       "type": "registry:component",
       "title": "Скрытая строка",
       "description": "Код одной строкой без клеток: моноширинная разрядка, подложка из точек под всю длину и кнопка показа скрытых цифр.",
-      "categories": ["input-otp"],
+      "categories": [
+        "input-otp"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -743,7 +823,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-otp-006-*. Клиентский: \"use client\". Это обычный input с моноширинным шрифтом и letter-spacing, а место под недобранные цифры держит абсолютно спозиционированная подложка из точек с pointer-events:none — поэтому строка не растёт по мере набора и не двигает кнопку показа. Тип поля переключается между password и text, состояние кнопки объявляется через aria-pressed.",
       "meta": {
-        "tags": ["otp", "mask", "single", "auth"],
+        "tags": [
+          "otp",
+          "mask",
+          "single",
+          "auth"
+        ],
         "ai": {
           "export": "Otp006",
           "usage": "<Otp006 length={6} onChange={(code) => verify(code)} />",
@@ -864,7 +949,15 @@
             }
           }
         },
-        "cardControls": ["length", "accent", "background"]
+        "cardControls": [
+          "label",
+          "length",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -872,7 +965,9 @@
       "type": "registry:component",
       "title": "Автоотправка",
       "description": "Кнопки подтверждения нет: последняя цифра сама запускает проверку, а клетки блокируются и показывают полосу ожидания.",
-      "categories": ["input-otp"],
+      "categories": [
+        "input-otp"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -884,7 +979,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-otp-007-*. Клиентский: \"use client\". Ввод и вставка идут через один шаг push, и отправка запускается именно там: код можно дособрать вводом, вставкой или правкой средней клетки, и все пути обязаны привести к одному действию. На время проверки клетки disabled — это же и защита от повторной отправки, — поверх идёт полоса, состояние объявляется через aria-live. После успеха доступна кнопка «Ввести заново»: без неё поле осталось бы заблокированным навсегда.",
       "meta": {
-        "tags": ["otp", "autosubmit", "auth", "state"],
+        "tags": [
+          "otp",
+          "autosubmit",
+          "auth",
+          "state"
+        ],
         "ai": {
           "export": "Otp007",
           "usage": "<Otp007 length={6} onSubmit={(code) => enter(code)} />",
@@ -1007,7 +1107,516 @@
             }
           }
         },
-        "cardControls": ["length", "accent", "background"]
+        "cardControls": [
+          "label",
+          "length",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
+      }
+    },
+    {
+      "name": "otp-008",
+      "type": "registry:component",
+      "title": "Проверка кода",
+      "description": "Пауза между последней цифрой и ответом названа: поля запираются, подпись говорит «проверяем», ответ приходит туда же.",
+      "categories": [
+        "input-otp"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "otp-008/otp-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/otp-008.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-otp-008-*. Клиентский. Проверка запускается сама на последней цифре и держит поля запертыми, пока идёт; ответ приходит в ту же строку и объявляется через aria-live. Ошибка не стирает введённое — правится одна цифра, а не весь код. Кружок ожидания вращается только во время проверки и замирает при выключенном движении.",
+      "meta": {
+        "tags": [
+          "otp",
+          "verify",
+          "loading",
+          "feedback"
+        ],
+        "ai": {
+          "export": "Otp008",
+          "usage": "<Otp008 correctCode=\"482913\" checkDelay={1200} />",
+          "summary": "Ввод кода с проверкой: поля запираются на время ответа, состояние названо словом, ошибка не стирает набранное.",
+          "preserve": [
+            "локальную палитру --vibeui-otp-008-* и не подменять её токенами вашей темы",
+            "запертые поля во время проверки: принимать ввод в никуда хуже, чем показать паузу",
+            "сохранение набранного при ошибке — вводить шесть цифр заново из-за одной опечатки незачем",
+            "ответ в том же месте, куда человек уже смотрит",
+            "aria-live у строки состояния: смена подписи иначе не событие для скринридера",
+            "inputMode numeric и autocomplete one-time-code на первой клетке — иначе код из сообщения не подставится",
+            "раскладку вставленного кода по клеткам: строку из сообщения человек делить не должен",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "заголовок title и пояснение hint",
+            "длину кода через length",
+            "подписи состояний через checkingText, okText и errorText",
+            "задержку ответа через checkDelay",
+            "accent — цвет фокуса и кружка ожидания",
+            "background — подложка компонента; пусто означает штатную палитру"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "correctCode и checkDelay существуют ради показа: в бою код проверяет сервер, а состояние приходит из ответа.",
+            "После успеха поля остаются запертыми — предполагается переход дальше. Если экран остаётся, снимайте состояние сами.",
+            "Автоподстановка кода из сообщения работает только в защищённом контексте и только на первой клетке.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Код подтверждения",
+            "maxLength": 22
+          },
+          {
+            "prop": "length",
+            "label": "Длина кода",
+            "type": "number",
+            "default": 6,
+            "min": 4,
+            "max": 8,
+            "step": 1
+          },
+          {
+            "prop": "checkDelay",
+            "label": "Задержка ответа",
+            "type": "number",
+            "default": 1200,
+            "min": 200,
+            "max": 3000,
+            "step": 100
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Code Check",
+            "description": "The pause between the last digit and the answer is named: the cells lock, the caption says «checking», the answer lands in the same place.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-otp-008-* variables. Client component. The check starts on the last digit and keeps the cells locked while it runs; the answer lands in the same line and is announced through aria-live. An error does not wipe what was typed — one digit gets fixed, not the whole code. The spinner turns only during the check and freezes when motion is reduced.",
+            "ai": {
+              "summary": "Code entry with a check: the cells lock while the answer is pending, the state is named in words, and an error keeps what was typed.",
+              "preserve": [
+                "the local --vibeui-otp-008-* palette — do not swap it for your theme tokens",
+                "the locked cells during the check: taking input into nowhere is worse than showing the pause",
+                "keeping the typed code on error — retyping six digits over one typo is a punishment",
+                "the answer in the place the person is already looking at",
+                "aria-live on the status line: a changing caption is not an event otherwise",
+                "inputMode numeric and autocomplete one-time-code on the first cell — the SMS code will not autofill without them",
+                "spreading a pasted code across the cells: nobody should split that string by hand",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "the heading title and the hint",
+                "the code length through length",
+                "the state captions through checkingText, okText and errorText",
+                "the answer delay through checkDelay",
+                "accent — the focus ring and spinner colour",
+                "background — the component surface; empty means the built-in palette"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "correctCode and checkDelay exist for the demo: in production the server checks the code and the state comes from its answer.",
+                "After success the cells stay locked, assuming navigation follows. If the screen stays, clear the state yourself.",
+                "SMS autofill works only in a secure context and only on the first cell.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Otp008 correctCode=\"482913\" checkDelay={1200} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Verification code"
+              },
+              "length": {
+                "label": "Code length"
+              },
+              "checkDelay": {
+                "label": "Answer delay"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Verification code",
+                "hint": "Enter the code from the message. For the demo 482913 works.",
+                "checkingText": "Checking the code…",
+                "okText": "Code accepted",
+                "errorText": "That code did not match. Check the last digits."
+              }
+            }
+          }
+        },
+        "preview": {
+          "width": "full"
+        },
+        "cardControls": [
+          "title",
+          "length",
+          "checkDelay",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "otp-009",
+      "type": "registry:component",
+      "title": "Буквенно-цифровой код",
+      "description": "Код приглашения из букв и цифр: похожие знаки приводятся сами, регистр повышается, дефис нарисован.",
+      "categories": [
+        "input-otp"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "otp-009/otp-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/otp-009.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-otp-009-*. Клиентский. Алфавит исключает знаки, которые путают при диктовке: «I» и «L» неотличимы от единицы, «O» от ноля, «U» от «V». Введённые исключённые знаки не отвергаются, а приводятся к тому, что человек имел в виду. Регистр повышается разметкой и разбором, разделитель между группами нарисован и в буфер не попадает.",
+      "meta": {
+        "tags": [
+          "otp",
+          "alphanumeric",
+          "invite",
+          "code"
+        ],
+        "ai": {
+          "export": "Otp009",
+          "usage": "<Otp009 groupSize={4} groups={2} />",
+          "summary": "Ввод буквенно-цифрового кода: алфавит без похожих знаков, автоматическая замена «O» на ноль, верхний регистр и нарисованный разделитель.",
+          "preserve": [
+            "локальную палитру --vibeui-otp-009-* и не подменять её токенами вашей темы",
+            "алфавит без «I», «L», «O» и «U»: эти знаки путают при диктовке по телефону",
+            "молчаливую замену вместо отказа — человек напечатал «O», имея в виду ноль",
+            "верхний регистр: код печатают как придётся, а сверяют в одном виде",
+            "нарисованный разделитель: в буфер он не уходит и набирать его не нужно",
+            "моноширинный шрифт — в коде важны отдельные знаки, а не слово целиком",
+            "раскладку вставленного кода по клеткам",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "заголовок title и пояснение hint",
+            "размер группы и число групп через groupSize и groups",
+            "вид разделителя через separator",
+            "текст счётчика через counterTemplate",
+            "accent — цвет фокуса",
+            "background — подложка компонента; пусто означает штатную палитру"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Алфавит и замены лежат в константах ALLOWED и FIXES рядом с компонентом: сверяйте их с тем, что генерирует ваш сервер.",
+            "Проверка кода здесь не делается: компонент только собирает строку.",
+            "autocomplete one-time-code стоит на первой клетке. Для кодов приглашения браузер обычно ничего не подставляет, и это нормально.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Код приглашения",
+            "maxLength": 22
+          },
+          {
+            "prop": "groupSize",
+            "label": "Знаков в группе",
+            "type": "number",
+            "default": 4,
+            "min": 3,
+            "max": 6,
+            "step": 1
+          },
+          {
+            "prop": "groups",
+            "label": "Число групп",
+            "type": "number",
+            "default": 2,
+            "min": 1,
+            "max": 3,
+            "step": 1
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Alphanumeric Code",
+            "description": "An invite code of letters and digits: look-alike characters fold on their own, the case rises and the dash is drawn.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-otp-009-* variables. Client component. The alphabet drops the characters that get confused over the phone: «I» and «L» look like a one, «O» like a zero, «U» like a «V». Excluded characters are not rejected but folded into what the person meant. The case is raised in both markup and parsing, and the group separator is drawn rather than typed, so it never reaches the clipboard.",
+            "ai": {
+              "summary": "Alphanumeric code entry: an alphabet without look-alikes, «O» folded into zero, upper case and a drawn separator.",
+              "preserve": [
+                "the local --vibeui-otp-009-* palette — do not swap it for your theme tokens",
+                "the alphabet without «I», «L», «O» and «U»: those get confused when a code is read aloud",
+                "silent folding instead of rejection — the person typed «O» meaning zero",
+                "upper case: a code is typed any way and compared in one form",
+                "the drawn separator: it never reaches the clipboard and needs no typing",
+                "the monospaced face — single characters matter here, not the word shape",
+                "spreading a pasted code across the cells",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "the heading title and the hint",
+                "the group size and count through groupSize and groups",
+                "the separator look through separator",
+                "the counter text through counterTemplate",
+                "accent — the focus ring colour",
+                "background — the component surface; empty means the built-in palette"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The alphabet and the folds live in the ALLOWED and FIXES constants next to the component: keep them in sync with what your server generates.",
+                "No verification happens here: the component only assembles the string.",
+                "autocomplete one-time-code sits on the first cell. For invite codes browsers usually fill nothing, and that is fine.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Otp009 groupSize={4} groups={2} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Invite code"
+              },
+              "groupSize": {
+                "label": "Characters per group"
+              },
+              "groups": {
+                "label": "Group count"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Invite code",
+                "hint": "From the email or from whoever invited you. Case does not matter.",
+                "counterTemplate": "{filled} of {total}"
+              }
+            }
+          }
+        },
+        "preview": {
+          "width": "full"
+        },
+        "cardControls": [
+          "title",
+          "groupSize",
+          "groups",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "otp-010",
+      "type": "registry:component",
+      "title": "Срок действия кода",
+      "description": "Код с видимым сроком: остаток показан полосой и цифрами, истёкший код запирает поля и предлагает новый.",
+      "categories": [
+        "input-otp"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "otp-010/otp-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/otp-010.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-otp-010-*. Клиентский. Остаток идёт полосой и цифрами: полоса даёт мгновенную оценку, цифры — точность. За полминуты до конца оба перекрашиваются. По истечении поля запираются, а на месте таймера встаёт кнопка нового кода. Бегущие секунды намеренно не объявляются вслух — озвучивается только истечение.",
+      "meta": {
+        "tags": [
+          "otp",
+          "expiry",
+          "timer",
+          "code"
+        ],
+        "ai": {
+          "export": "Otp010",
+          "usage": "<Otp010 seconds={150} length={6} />",
+          "summary": "Ввод кода со сроком действия: полоса и цифры остатка, перекраска у конца, запертые поля и кнопка нового кода после истечения.",
+          "preserve": [
+            "локальную палитру --vibeui-otp-010-* и не подменять её токенами вашей темы",
+            "полосу вместе с цифрами: полоса даёт оценку, цифры — точность, по отдельности хуже обе",
+            "запертые поля после истечения — вводить то, что уже не примут, незачем",
+            "кнопку нового кода на месте таймера: следующий шаг стоит там, где кончился прежний",
+            "молчание таймера для скринридера: посекундное объявление превращает поле в непрерывную речь",
+            "inputMode numeric и autocomplete one-time-code на первой клетке",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "заголовок title и длину кода через length",
+            "срок жизни кода через seconds",
+            "подписи через leftTemplate, expiredText и renewLabel",
+            "порог тревожного цвета — он задан в коде одним сравнением",
+            "accent — цвет полосы и фокуса",
+            "background — подложка компонента; пусто означает штатную палитру"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Отсчёт идёт в браузере и не сверяется с сервером: настоящий срок знает тот, кто выдал код. Считайте таймер подсказкой, а отказ — ответом сервера.",
+            "Кнопка нового кода только сбрасывает поля и таймер: запрос к серверу подключается обработчиком.",
+            "Вкладка в фоне может замедлять таймеры — при возврате пересчитайте остаток от метки времени, а не от числа тиков.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Код из письма",
+            "maxLength": 22
+          },
+          {
+            "prop": "seconds",
+            "label": "Срок, секунд",
+            "type": "number",
+            "default": 150,
+            "min": 30,
+            "max": 600,
+            "step": 10
+          },
+          {
+            "prop": "renewLabel",
+            "label": "Подпись кнопки",
+            "type": "text",
+            "default": "Новый код",
+            "maxLength": 18
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Code Expiry",
+            "description": "A code with a visible lifetime: the remainder shows as a bar and digits, and an expired code locks the cells and offers a new one.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-otp-010-* variables. Client component. The remainder runs as a bar and as digits: the bar gives the instant read, the digits the precision. Half a minute before the end both recolour. On expiry the cells lock and a new-code button takes the timer's place. The ticking seconds are deliberately not announced — only the expiry is.",
+            "ai": {
+              "summary": "Code entry with a lifetime: a bar and digits for the remainder, recolouring near the end, locked cells and a new-code button after expiry.",
+              "preserve": [
+                "the local --vibeui-otp-010-* palette — do not swap it for your theme tokens",
+                "the bar together with the digits: the bar estimates, the digits are precise, either alone is worse",
+                "the locked cells after expiry — typing what will not be accepted is pointless",
+                "the new-code button in the timer's place: the next step sits where the previous one ended",
+                "the silent timer for screen readers: a per-second announcement turns the field into constant speech",
+                "inputMode numeric and autocomplete one-time-code on the first cell",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "the heading title and the code length through length",
+                "the lifetime through seconds",
+                "the captions through leftTemplate, expiredText and renewLabel",
+                "the alarm threshold — one comparison in the code",
+                "accent — the bar and focus colour",
+                "background — the component surface; empty means the built-in palette"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The countdown runs in the browser and is not checked against the server: only the issuer knows the real deadline. Treat the timer as a hint and the rejection as the server's answer.",
+                "The new-code button only resets the cells and the timer: wire the server request through a handler.",
+                "A background tab may throttle timers — on return recompute the remainder from a timestamp rather than from tick count.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Otp010 seconds={150} length={6} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Code from the email"
+              },
+              "seconds": {
+                "label": "Lifetime, seconds"
+              },
+              "renewLabel": {
+                "label": "Button caption",
+                "default": "New code"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Code from the email",
+                "leftTemplate": "The code is valid for another {time}",
+                "expiredText": "The code has expired",
+                "renewLabel": "New code"
+              }
+            }
+          }
+        },
+        "preview": {
+          "width": "full"
+        },
+        "cardControls": [
+          "title",
+          "seconds",
+          "renewLabel",
+          "accent",
+          "background"
+        ]
       }
     }
   ]
