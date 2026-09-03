@@ -56,7 +56,7 @@ box-shadow:0 22px 48px -30px var(--vibeui-banner-003-shadow);
 [data-vibeui-block="banner-003"] [data-part="accept"],
 [data-vibeui-block="banner-003"] [data-part="reject"]{
 appearance:none;cursor:pointer;
-height:2.125rem;padding:0 1rem;border-radius:0.625rem;
+min-height:2.125rem;padding:0.25rem 1rem;display:inline-flex;align-items:center;justify-content:center;border-radius:0.625rem;
 font:inherit;font-size:0.875rem;font-weight:650;
 transition:background-color .16s ease,color .16s ease;
 }

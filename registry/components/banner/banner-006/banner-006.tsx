@@ -61,7 +61,7 @@ animation:vibeui-banner-006-fade 1.8s ease-in-out infinite;
 [data-vibeui-block="banner-006"] [data-part="detail"]{font-size:0.875rem;line-height:1.45;color:var(--vibeui-banner-006-muted)}
 [data-vibeui-block="banner-006"] [data-part="retry"]{
 appearance:none;cursor:pointer;flex:none;
-height:2rem;padding:0 0.875rem;border-radius:0.5rem;
+min-height:2rem;padding:0.25rem 0.875rem;display:inline-flex;align-items:center;justify-content:center;border-radius:0.5rem;
 border:1px solid oklch(1 0 0 / 26%);background:transparent;
 color:var(--vibeui-banner-006-fg);
 font:inherit;font-size:0.875rem;font-weight:640;

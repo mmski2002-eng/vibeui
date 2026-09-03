@@ -67,7 +67,7 @@ background:var(--vibeui-banner-002-chip);color:var(--vibeui-banner-002-muted);
 }
 [data-vibeui-block="banner-002"] [data-part="action"]{
 appearance:none;cursor:pointer;border:0;flex:none;
-height:1.9375rem;padding:0 0.8125rem;border-radius:0.5rem;
+min-height:1.9375rem;padding:0.25rem 0.8125rem;display:inline-flex;align-items:center;justify-content:center;border-radius:0.5rem;
 background:var(--vibeui-banner-002-accent);color:var(--vibeui-banner-002-on-accent);
 font:inherit;font-size:0.875rem;font-weight:650;
 transition:filter .16s ease;

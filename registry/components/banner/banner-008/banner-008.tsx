@@ -62,7 +62,7 @@ border:1px dashed oklch(1 0 0 / 45%);background:oklch(1 0 0 / 14%);
 font-family:var(--vibeui-banner-008-mono);font-size:0.75rem;font-weight:700;letter-spacing:0.06em;
 }
 [data-vibeui-block="banner-008"] [data-part="action"]{
-flex:none;display:inline-flex;align-items:center;height:1.9375rem;padding:0 0.8125rem;
+flex:none;display:inline-flex;align-items:center;justify-content:center;min-height:1.9375rem;padding:0.25rem 0.8125rem;
 border-radius:0.5rem;background:oklch(1 0 0);color:var(--vibeui-banner-008-from);
 font-size:0.875rem;font-weight:700;text-decoration:none;
 transition:transform .16s ease;
@@ -79,7 +79,10 @@ transition:background-color .16s ease,color .16s ease;
 [data-vibeui-block="banner-008"] [data-part="switch"]:focus-visible + [data-part="shell"] [data-part="close"]{outline:2px solid oklch(1 0 0);outline-offset:2px}
 [data-vibeui-block="banner-008"] [data-part="action"]:focus-visible{outline:2px solid oklch(1 0 0);outline-offset:2px}
 @container (max-width: 26rem){
-[data-vibeui-block="banner-008"] [data-part="action"]{flex:1 1 100%;justify-content:center}
+[data-vibeui-block="banner-008"] [data-part="shell"]{position:relative;padding-right:2.625rem}
+[data-vibeui-block="banner-008"] [data-part="action"]{flex:1 1 100%}
+/* Крестик уходит в угол: иначе он занимает отдельную строку под кнопкой. */
+[data-vibeui-block="banner-008"] [data-part="close"]{position:absolute;top:0.5rem;right:0.5rem}
 }
 @container (min-width: 32rem){
 [data-vibeui-block="banner-008"] [data-part="shell"]{padding:1.0625rem 0.875rem 1.0625rem 1.125rem}

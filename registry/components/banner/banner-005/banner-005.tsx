@@ -81,7 +81,7 @@ grid-column:1 / -1;margin:0;font-size:0.875rem;line-height:1.45;color:var(--vibe
 }
 [data-vibeui-block="banner-005"] [data-part="action"]{
 appearance:none;cursor:pointer;border:0;
-height:2.125rem;padding:0 0.9375rem;border-radius:0.625rem;
+min-height:2.125rem;padding:0.25rem 0.9375rem;display:inline-flex;align-items:center;justify-content:center;border-radius:0.625rem;
 background:var(--vibeui-banner-005-tone);color:var(--vibeui-banner-005-on-tone);
 font:inherit;font-size:0.875rem;font-weight:650;white-space:nowrap;
 transition:filter .16s ease;

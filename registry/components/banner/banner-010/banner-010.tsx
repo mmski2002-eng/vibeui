@@ -73,7 +73,7 @@ overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
    потому что закрыть режим и закрыть сообщение о нём — разные вещи. */
 [data-vibeui-block="banner-010"] [data-part="exit"]{
 flex:none;display:inline-flex;align-items:center;
-height:2.125rem;padding:0 0.875rem;border-radius:0.5rem;
+min-height:2.125rem;padding:0.25rem 0.875rem;display:inline-flex;align-items:center;justify-content:center;border-radius:0.5rem;
 border:1px solid var(--vibeui-banner-010-ink);
 background:transparent;color:var(--vibeui-banner-010-ink);
 font:inherit;font-size:0.8125rem;font-weight:650;text-decoration:none;

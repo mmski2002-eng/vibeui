@@ -99,7 +99,7 @@ outline:2px solid var(--vibeui-banner-011-accent);outline-offset:2px;
 display:none;
 }
 @container (max-width: 26rem){
-[data-vibeui-block="banner-011"] [data-part="action"]{width:100%;margin-left:0.9375rem}
+[data-vibeui-block="banner-011"] [data-part="action"]{width:calc(100% - 0.9375rem);margin-left:0.9375rem}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="banner-011"] *{animation:none!important;transition:none!important}}
 `

@@ -72,7 +72,7 @@ overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 }
 [data-vibeui-block="banner-014"] [data-part="action"]{
 flex:none;display:inline-flex;align-items:center;
-height:2rem;padding:0 0.75rem;border-radius:0.5rem;
+min-height:2rem;padding:0.25rem 0.75rem;justify-content:center;border-radius:0.5rem;
 border:1px solid var(--vibeui-banner-014-ink);
 background:transparent;color:var(--vibeui-banner-014-ink);
 font:inherit;font-size:0.8125rem;font-weight:650;text-decoration:none;
