@@ -1,9 +1,6 @@
 import type { LabCheck } from "@/components/lab/check-types"
 
 import { Dropdown001 } from "@/registry/components/dropdown-menu/dropdown-001/dropdown-001"
-import { Menu001 } from "@/registry/components/dropdown-menu/menu-001/menu-001"
-import { Menu004 } from "@/registry/components/dropdown-menu/menu-004/menu-004"
-import { Menu005 } from "@/registry/components/dropdown-menu/menu-005/menu-005"
 import { Dropdown002 } from "@/registry/components/dropdown-menu/dropdown-002/dropdown-002"
 import { Dropdown003 } from "@/registry/components/dropdown-menu/dropdown-003/dropdown-003"
 import { Dropdown004 } from "@/registry/components/dropdown-menu/dropdown-004/dropdown-004"
@@ -21,6 +18,9 @@ import { Dropdown015 } from "@/registry/components/dropdown-menu/dropdown-015/dr
 import { Dropdown016 } from "@/registry/components/dropdown-menu/dropdown-016/dropdown-016"
 import { Dropdown017 } from "@/registry/components/dropdown-menu/dropdown-017/dropdown-017"
 import { Dropdown018 } from "@/registry/components/dropdown-menu/dropdown-018/dropdown-018"
+import { Dropdown019 } from "@/registry/components/dropdown-menu/dropdown-019/dropdown-019"
+import { Dropdown020 } from "@/registry/components/dropdown-menu/dropdown-020/dropdown-020"
+import { Dropdown021 } from "@/registry/components/dropdown-menu/dropdown-021/dropdown-021"
 
 /** Seed прогона: с ним набор воспроизводится один в один. */
 export const SEED = 15946
@@ -31,36 +31,6 @@ export const CHECKS: LabCheck[] = [
     title: "Привязанное меню",
     notes: ["Кнопка: Что дальше", "Развернуто: true", "Акцент: #1cf16e"],
     node: <Dropdown001 trigger="Что дальше" open={true} accent="#1cf16e" />,
-  },
-  {
-    name: "menu-001",
-    title: "Меню действий",
-    notes: ["Подпись кнопки: Что дальше", "Акцент: #2708e7"],
-    node: <Menu001 label="Что дальше" accent="#2708e7" />,
-  },
-  {
-    name: "menu-004",
-    title: "Меню профиля",
-    notes: [
-      "Имя: Подпись: тест",
-      "Почта: Подпись: тест",
-      "Тариф: Черновик",
-      "Акцент: #b93b55",
-    ],
-    node: (
-      <Menu004
-        name="Подпись: тест"
-        email="Подпись: тест"
-        plan="Черновик"
-        accent="#b93b55"
-      />
-    ),
-  },
-  {
-    name: "menu-005",
-    title: "Меню настроек",
-    notes: ["Заголовок: Смена", "Акцент: #dabe53"],
-    node: <Menu005 label="Смена" accent="#dabe53" />,
   },
   {
     name: "dropdown-002",
@@ -237,5 +207,23 @@ export const CHECKS: LabCheck[] = [
     title: "Выбор исполнителя",
     notes: ["Подсказка поиска: Черновик", "Акцент: #b929f0"],
     node: <Dropdown018 placeholder="Черновик" accent="#b929f0" />,
+  },
+  {
+    name: "dropdown-019",
+    title: "Раздвоенная кнопка",
+    notes: ["Действие: Сохранить", "Развернуто: true", "Акцент: #2f6df6"],
+    node: <Dropdown019 action="Сохранить" open={true} accent="#2f6df6" />,
+  },
+  {
+    name: "dropdown-020",
+    title: "Меню, которое становится листом",
+    notes: ["Кнопка: Действия", "Заголовок листа: Файл", "Развернуто: true"],
+    node: <Dropdown020 trigger="Действия" title="Файл" open={true} accent="#0f9d6b" />,
+  },
+  {
+    name: "dropdown-021",
+    title: "Меню присутствия",
+    notes: ["Имя: Женя Осипов", "Статус: busy", "Развернуто: true"],
+    node: <Dropdown021 name="Женя Осипов" status="busy" open={true} accent="#c0416a" />,
   },
 ]

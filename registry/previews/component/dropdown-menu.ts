@@ -6,9 +6,6 @@ import type { ComponentType } from "react"
 import type { PreviewProps } from "@/registry/preview-types"
 
 import { Dropdown001 } from "@/registry/components/dropdown-menu/dropdown-001/dropdown-001"
-import { Menu001 } from "@/registry/components/dropdown-menu/menu-001/menu-001"
-import { Menu004 } from "@/registry/components/dropdown-menu/menu-004/menu-004"
-import { Menu005 } from "@/registry/components/dropdown-menu/menu-005/menu-005"
 import { Dropdown002 } from "@/registry/components/dropdown-menu/dropdown-002/dropdown-002"
 import { Dropdown003 } from "@/registry/components/dropdown-menu/dropdown-003/dropdown-003"
 import { Dropdown004 } from "@/registry/components/dropdown-menu/dropdown-004/dropdown-004"
@@ -32,9 +29,6 @@ import { Dropdown021 } from "@/registry/components/dropdown-menu/dropdown-021/dr
 
 export const PREVIEWS = {
   "dropdown-001": Dropdown001,
-  "menu-001": Menu001,
-  "menu-004": Menu004,
-  "menu-005": Menu005,
   "dropdown-002": Dropdown002,
   "dropdown-003": Dropdown003,
   "dropdown-004": Dropdown004,

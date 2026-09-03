@@ -11,21 +11,6 @@ export const PREVIEWS = {
       (module) => module.Dropdown001,
     ),
   ),
-  "menu-001": dynamic(() =>
-    import("@/registry/components/dropdown-menu/menu-001/menu-001").then(
-      (module) => module.Menu001,
-    ),
-  ),
-  "menu-004": dynamic(() =>
-    import("@/registry/components/dropdown-menu/menu-004/menu-004").then(
-      (module) => module.Menu004,
-    ),
-  ),
-  "menu-005": dynamic(() =>
-    import("@/registry/components/dropdown-menu/menu-005/menu-005").then(
-      (module) => module.Menu005,
-    ),
-  ),
   "dropdown-002": dynamic(() =>
     import("@/registry/components/dropdown-menu/dropdown-002/dropdown-002").then(
       (module) => module.Dropdown002,

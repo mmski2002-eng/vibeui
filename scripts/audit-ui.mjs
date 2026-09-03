@@ -57,6 +57,12 @@ const CODE_RULES = [
           continue
         }
 
+        // Правило про потомка кнопки — не про саму кнопку: у иконки и галочки
+        // внутри неё размер квадратный и фиксированный, и так и должно быть.
+        if (/\[data-part="[^"]*"\]\s+\S/.test(rule.slice(0, rule.indexOf("{")))) {
+          continue
+        }
+
         if (/[^-]height:\s*\d/.test(rule) && !/min-height/.test(rule)) {
           return "у кнопки с настраиваемой подписью стоит height: длинный перевод вылезет за пределы"
         }
@@ -79,9 +85,20 @@ const CODE_RULES = [
         return null
       }
 
+      // Ветка по фокусу закрывает вопрос не хуже @media (hover:none): тап по
+      // фокусируемому триггеру даёт фокус, и подсказка появляется. Так живут
+      // все tooltip и hover-card — для них наведение и есть суть компонента.
+      const focusShows = /:focus(-within|-visible)?\s+(button|\[data-part)/.test(
+        source,
+      )
+
+      if (focusShows) {
+        return null
+      }
+
       return /@media\s*\(hover:\s*none\)/.test(source)
         ? null
-        : "кнопка появляется по наведению, но нет @media (hover:none): на телефоне её не существует"
+        : "элемент появляется по наведению, но нет ни ветки по фокусу, ни @media (hover:none): на телефоне его не существует"
     },
   },
   {
