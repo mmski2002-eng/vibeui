@@ -8,6 +8,9 @@ import { Date005 } from "@/registry/components/date-selector/date-005/date-005"
 import { Date006 } from "@/registry/components/date-selector/date-006/date-006"
 import { Date007 } from "@/registry/components/date-selector/date-007/date-007"
 import { Date008 } from "@/registry/components/date-selector/date-008/date-008"
+import { Date009 } from "@/registry/components/date-selector/date-009/date-009"
+import { Date010 } from "@/registry/components/date-selector/date-010/date-010"
+import { Date011 } from "@/registry/components/date-selector/date-011/date-011"
 
 /** Seed прогона: с ним набор воспроизводится один в один. */
 export const SEED = 15946
@@ -114,5 +117,43 @@ export const CHECKS: LabCheck[] = [
     title: "Слоты по четверти часа",
     notes: ["Подпись: Смена", "Шаг, мин: 48", "Акцент: #505a9b"],
     node: <Date008 label="Смена" stepMinutes={48} accent="#505a9b" />,
+  },
+  {
+    name: "date-009",
+    title: "Период отчёта",
+    notes: ["Заголовок: Сводка за", "Отрезок: quarter", "Акцент: #2a9d8f"],
+    node: (
+      <Date009
+        label="Сводка за"
+        defaultUnit="quarter"
+        defaultValue="2026-Q3"
+        accent="#2a9d8f"
+      />
+    ),
+  },
+  {
+    name: "date-010",
+    title: "Диапазон с пресетами",
+    notes: ["Заголовок: Отрезок", "Подпись начала: Начало", "Подпись конца: Конец", "Акцент: #9d4edd"],
+    node: (
+      <Date010
+        label="Отрезок"
+        fromLabel="Начало"
+        toLabel="Конец"
+        accent="#9d4edd"
+      />
+    ),
+  },
+  {
+    name: "date-011",
+    title: "Занятые даты",
+    notes: ["Заголовок: Запись на приём", "Выходные заняты: выключено", "Акцент: #e07a5f"],
+    node: (
+      <Date011
+        label="Запись на приём"
+        skipWeekend={false}
+        accent="#e07a5f"
+      />
+    ),
   },
 ]

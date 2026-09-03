@@ -46,4 +46,19 @@ export const PREVIEWS = {
       (module) => module.Date008,
     ),
   ),
+  "date-009": dynamic(() =>
+    import("@/registry/components/date-selector/date-009/date-009").then(
+      (module) => module.Date009,
+    ),
+  ),
+  "date-010": dynamic(() =>
+    import("@/registry/components/date-selector/date-010/date-010").then(
+      (module) => module.Date010,
+    ),
+  ),
+  "date-011": dynamic(() =>
+    import("@/registry/components/date-selector/date-011/date-011").then(
+      (module) => module.Date011,
+    ),
+  ),
 } satisfies PreviewMap

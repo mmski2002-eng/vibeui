@@ -13,6 +13,9 @@ import { Date005 } from "@/registry/components/date-selector/date-005/date-005"
 import { Date006 } from "@/registry/components/date-selector/date-006/date-006"
 import { Date007 } from "@/registry/components/date-selector/date-007/date-007"
 import { Date008 } from "@/registry/components/date-selector/date-008/date-008"
+import { Date009 } from "@/registry/components/date-selector/date-009/date-009"
+import { Date010 } from "@/registry/components/date-selector/date-010/date-010"
+import { Date011 } from "@/registry/components/date-selector/date-011/date-011"
 
 export const PREVIEWS = {
   "date-001": Date001,
@@ -23,4 +26,7 @@ export const PREVIEWS = {
   "date-006": Date006,
   "date-007": Date007,
   "date-008": Date008,
+  "date-009": Date009,
+  "date-010": Date010,
+  "date-011": Date011,
 } satisfies Record<string, ComponentType<PreviewProps>>
