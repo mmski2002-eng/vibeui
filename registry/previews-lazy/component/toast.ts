@@ -111,4 +111,19 @@ export const PREVIEWS = {
       (module) => module.Toast021,
     ),
   ),
+  "toast-022": dynamic(() =>
+    import("@/registry/components/toast/toast-022/toast-022").then(
+      (module) => module.Toast022,
+    ),
+  ),
+  "toast-023": dynamic(() =>
+    import("@/registry/components/toast/toast-023/toast-023").then(
+      (module) => module.Toast023,
+    ),
+  ),
+  "toast-024": dynamic(() =>
+    import("@/registry/components/toast/toast-024/toast-024").then(
+      (module) => module.Toast024,
+    ),
+  ),
 } satisfies PreviewMap

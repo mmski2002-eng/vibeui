@@ -62,6 +62,10 @@ position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
 margin:0;font-size:0.75rem;letter-spacing:0.04em;text-transform:uppercase;
 color:var(--vibeui-toast-008-muted);
 }
+/* Подпись сцены уходит от стопки: при трёх сообщениях та занимает половину
+   высоты, и по центру надпись оказывалась прямо под карточками. */
+[data-vibeui-block="toast-008"][data-corner^="top"] [data-part="hint"]{top:72%}
+[data-vibeui-block="toast-008"][data-corner^="bottom"] [data-part="hint"]{top:28%}
 /* Стопка. Угол — это пара переменных и пара переключателей выравнивания. */
 [data-vibeui-block="toast-008"] [data-part="region"]{
 position:absolute;z-index:2;

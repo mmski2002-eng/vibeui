@@ -26,6 +26,9 @@ import { Toast018 } from "@/registry/components/toast/toast-018/toast-018"
 import { Toast019 } from "@/registry/components/toast/toast-019/toast-019"
 import { Toast020 } from "@/registry/components/toast/toast-020/toast-020"
 import { Toast021 } from "@/registry/components/toast/toast-021/toast-021"
+import { Toast022 } from "@/registry/components/toast/toast-022/toast-022"
+import { Toast023 } from "@/registry/components/toast/toast-023/toast-023"
+import { Toast024 } from "@/registry/components/toast/toast-024/toast-024"
 
 export const PREVIEWS = {
   "toast-001": Toast001,
@@ -49,4 +52,7 @@ export const PREVIEWS = {
   "toast-019": Toast019,
   "toast-020": Toast020,
   "toast-021": Toast021,
+  "toast-022": Toast022,
+  "toast-023": Toast023,
+  "toast-024": Toast024,
 } satisfies Record<string, ComponentType<PreviewProps>>

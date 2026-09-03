@@ -21,6 +21,9 @@ import { Toast018 } from "@/registry/components/toast/toast-018/toast-018"
 import { Toast019 } from "@/registry/components/toast/toast-019/toast-019"
 import { Toast020 } from "@/registry/components/toast/toast-020/toast-020"
 import { Toast021 } from "@/registry/components/toast/toast-021/toast-021"
+import { Toast022 } from "@/registry/components/toast/toast-022/toast-022"
+import { Toast023 } from "@/registry/components/toast/toast-023/toast-023"
+import { Toast024 } from "@/registry/components/toast/toast-024/toast-024"
 
 /** Seed прогона: с ним набор воспроизводится один в один. */
 export const SEED = 52594
@@ -451,6 +454,56 @@ export const CHECKS: LabCheck[] = [
         closeLabel="Проверка"
         replayLabel="Подпись: тест"
         stageHint="Смена"
+      />
+    ),
+  },
+  {
+    name: "toast-022",
+    title: "Сообщение с подавлением",
+    notes: [
+      "Заголовок: Автосохранение включено",
+      "Подпись подавления: Не напоминать",
+      "Тон: #2a9d8f",
+    ],
+    node: (
+      <Toast022
+        title="Автосохранение включено"
+        muteLabel="Не напоминать"
+        tone="#2a9d8f"
+      />
+    ),
+  },
+  {
+    name: "toast-023",
+    title: "Сводка ошибок формы",
+    notes: [
+      "Заголовок: Осталось полей: {count}",
+      "Подпись перехода: К первой ошибке",
+      "Цвет отказа: #c1121f",
+    ],
+    node: (
+      <Toast023
+        titleTemplate="Осталось полей: {count}"
+        firstLabel="К первой ошибке"
+        danger="#c1121f"
+      />
+    ),
+  },
+  {
+    name: "toast-024",
+    title: "Несколько фоновых задач",
+    notes: [
+      "Заголовок: Обработка: {done} из {total}",
+      "Шаг, мс: 700",
+      "Подпись разворота: Подробности",
+      "Тон: #7c5cff",
+    ],
+    node: (
+      <Toast024
+        titleTemplate="Обработка: {done} из {total}"
+        stepMs={700}
+        expandLabel="Подробности"
+        tone="#7c5cff"
       />
     ),
   },

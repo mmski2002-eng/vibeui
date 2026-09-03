@@ -154,8 +154,14 @@ export function Toast020({
     pausedRef.current = paused
   }, [paused])
 
+  // Отсчёт зависит от факта «время ещё есть», а не от самого остатка:
+  // иначе интервал пересоздавался бы каждые двести миллисекунд.
+  const running = left > 0
+
   useEffect(() => {
-    if (left <= 0) return
+    if (!running) {
+      return
+    }
 
     const timer = setInterval(() => {
       if (pausedRef.current) return
@@ -163,7 +169,7 @@ export function Toast020({
     }, 200)
 
     return () => clearInterval(timer)
-  }, [left <= 0])
+  }, [running])
 
   useEffect(() => {
     if (left === 0 && !expiredRef.current) {
