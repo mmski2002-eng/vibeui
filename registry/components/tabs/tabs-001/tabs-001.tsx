@@ -37,7 +37,10 @@ container-type:inline-size;
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="tabs-001"]{color-scheme:dark}
 [data-vibeui-block="tabs-001"]{
-display:flex;flex-direction:column;width:100%;box-sizing:border-box;
+display:flex;flex-direction:column;width:100%;
+/* container-type отрывает ширину от содержимого: без нижней границы
+   блок схлопывается внутри flex-контейнера. */
+min-width:min(100%,20rem);box-sizing:border-box;
 font-family:var(--vibeui-tabs-001-font);color:var(--vibeui-tabs-001-fg);
 }
 [data-vibeui-block="tabs-001"] [data-part="list"]{
@@ -110,6 +113,7 @@ export function Tabs001({
   accent,
   className,
   style,
+  ...props
 }: Tabs001Props) {
   const [active, setActive] = useState(defaultId ?? items[0]?.id)
   const listRef = useRef<HTMLDivElement>(null)
@@ -155,6 +159,7 @@ export function Tabs001({
         {STYLES}
       </style>
       <div
+        {...props}
         data-slot="tabs"
         data-vibeui-block="tabs-001"
         className={className}

@@ -16,6 +16,9 @@ import { Tabs007 } from "@/registry/components/tabs/tabs-007/tabs-007"
 import { Tabs008 } from "@/registry/components/tabs/tabs-008/tabs-008"
 import { Tabs009 } from "@/registry/components/tabs/tabs-009/tabs-009"
 import { Tabs010 } from "@/registry/components/tabs/tabs-010/tabs-010"
+import { Tabs011 } from "@/registry/components/tabs/tabs-011/tabs-011"
+import { Tabs012 } from "@/registry/components/tabs/tabs-012/tabs-012"
+import { Tabs013 } from "@/registry/components/tabs/tabs-013/tabs-013"
 
 export const PREVIEWS = {
   "tabs-001": Tabs001,
@@ -29,4 +32,7 @@ export const PREVIEWS = {
   "tabs-008": Tabs008,
   "tabs-009": Tabs009,
   "tabs-010": Tabs010,
+  "tabs-011": Tabs011,
+  "tabs-012": Tabs012,
+  "tabs-013": Tabs013,
 } satisfies Record<string, ComponentType<PreviewProps>>

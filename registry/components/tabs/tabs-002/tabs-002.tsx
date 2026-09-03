@@ -22,6 +22,9 @@ export type Tabs002Props = Omit<ComponentProps<"div">, "children"> & {
 //
 // Тема берётся из color-scheme окружения через light-dark(): в тёмном
 // контексте дорожка темнее фона, а рамка светлее его.
+// Радиогруппа лежит в собственной <form>: одинаковое имя в двух блоках на
+// одной странице иначе объединило бы их в одну группу, и первый блок
+// остался бы без отмеченной вкладки.
 const STYLES = `
 :where([data-vibeui-block="tabs-002"]){
 --vibeui-tabs-002-bg:transparent;
@@ -150,7 +153,7 @@ export function Tabs002({
         className={className}
         style={palette}
       >
-        <div data-part="strip" role="radiogroup" aria-label={groupLabel}>
+        <form data-part="strip" role="radiogroup" aria-label={groupLabel}>
           {tabs.map((tab, index) => (
             <label key={tab.label}>
               <input
@@ -163,7 +166,7 @@ export function Tabs002({
               <span data-part="tab">{tab.label}</span>
             </label>
           ))}
-        </div>
+        </form>
         {tabs.map((tab, index) => (
           <p key={tab.label} data-part="panel" data-index={index}>
             {tab.text}

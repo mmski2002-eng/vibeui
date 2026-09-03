@@ -169,6 +169,7 @@ export function Tabs006({
   countLabel = "{label}, писем {count}",
   className,
   style,
+  ...props
 }: Tabs006Props) {
   const [active, setActive] = useState(defaultId ?? items[0]?.id)
   const listRef = useRef<HTMLDivElement>(null)
@@ -222,6 +223,7 @@ export function Tabs006({
         {STYLES}
       </style>
       <div
+        {...props}
         data-slot="tabs"
         data-vibeui-block="tabs-006"
         className={className}

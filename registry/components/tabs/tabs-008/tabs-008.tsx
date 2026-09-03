@@ -156,6 +156,7 @@ export function Tabs008({
   menuLabel = "Скрытые вкладки",
   className,
   style,
+  ...props
 }: Tabs008Props) {
   const [active, setActive] = useState(defaultId ?? items[0]?.id)
   const [promoted, setPromoted] = useState<string | null>(null)
@@ -254,6 +255,7 @@ export function Tabs008({
         {STYLES}
       </style>
       <div
+        {...props}
         data-slot="tabs"
         data-vibeui-block="tabs-008"
         className={className}

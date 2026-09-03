@@ -6,7 +6,9 @@
       "type": "registry:component",
       "title": "Вкладки с клавиатурой",
       "description": "Вкладки, которые слушаются клавиатуры так же, как системные: стрелки переводят выбор, Home и End прыгают к краям. Полоска едет за активной вкладкой.",
-      "categories": ["tabs"],
+      "categories": [
+        "tabs"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tabs-001-*. Разметка следует паттерну tabs из WAI-ARIA: role=\"tablist\", role=\"tab\" с aria-selected и aria-controls, role=\"tabpanel\" с aria-labelledby. В Tab-порядке живёт только активная вкладка (roving tabindex), остальные переключаются стрелками. Полоска под вкладкой — собственный ::after каждой вкладки, ширина берётся от текста, поэтому ничего не измеряется в JS.",
       "meta": {
-        "tags": ["tabs", "navigation", "keyboard", "aria"],
+        "tags": [
+          "tabs",
+          "navigation",
+          "keyboard",
+          "aria"
+        ],
         "preview": {
           "width": "full"
         },
@@ -58,7 +65,11 @@
             "label": "Открыта вкладка",
             "type": "select",
             "default": "overview",
-            "options": ["overview", "pages", "domains"]
+            "options": [
+              "overview",
+              "pages",
+              "domains"
+            ]
           },
           {
             "prop": "accent",
@@ -132,7 +143,10 @@
             }
           }
         },
-        "cardControls": ["defaultId", "accent"]
+        "cardControls": [
+          "defaultId",
+          "accent"
+        ]
       }
     },
     {
@@ -140,7 +154,9 @@
       "type": "registry:component",
       "title": "Полоса вкладок на телефоне",
       "description": "Нижняя панель навигации для телефона: высота учитывает safe area, активный пункт помечен и точкой, не только цветом.",
-      "categories": ["tabs"],
+      "categories": [
+        "tabs"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -152,7 +168,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tabbar-001-*. Серверный: хуков нет. Нижний отступ берётся из env(safe-area-inset-bottom), иначе на iPhone пункт уходит под системную полосу. Значок со счётчиком спрятан от скринридера, а число попадает в aria-label ссылки.",
       "meta": {
-        "tags": ["tabbar", "mobile", "navigation", "safe-area"],
+        "tags": [
+          "tabbar",
+          "mobile",
+          "navigation",
+          "safe-area"
+        ],
         "ai": {
           "export": "Tabbar001",
           "usage": "<Tabbar001 items={[{ label: \"Каталог\" }, { label: \"Заказы\", count: 3 }]} activeLabel=\"Каталог\" />",
@@ -189,7 +210,12 @@
             "label": "Активный",
             "type": "select",
             "default": "Каталог",
-            "options": ["Каталог", "Поиск", "Заказы", "Профиль"]
+            "options": [
+              "Каталог",
+              "Поиск",
+              "Заказы",
+              "Профиль"
+            ]
           },
           {
             "prop": "accent",
@@ -278,7 +304,14 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "activeLabel",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -286,7 +319,9 @@
       "type": "registry:component",
       "title": "Вкладки на CSS",
       "description": "Вкладки на радиокнопках: переключение, выбор одной из группы и стрелки достаются от браузера, JS не нужен.",
-      "categories": ["tabs"],
+      "categories": [
+        "tabs"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -298,7 +333,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tabs-002-*. Серверный: хуков нет, состояние держат радиокнопки. Панель показывает селектор :has() по отмеченной кнопке, поэтому правила выписаны на шесть вкладок. Полоса вкладок прокручивается по горизонтали: на узком экране подписи не переносятся.",
       "meta": {
-        "tags": ["tabs", "radio", "no-js", "css"],
+        "tags": [
+          "tabs",
+          "radio",
+          "no-js",
+          "css"
+        ],
         "ai": {
           "export": "Tabs002",
           "usage": "<Tabs002 tabs={[{ label: \"Обзор\", text: \"…\" }]} name=\"docs\" />",
@@ -417,7 +457,14 @@
             }
           }
         },
-        "cardControls": ["background"]
+        "cardControls": [
+          "name",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -425,7 +472,9 @@
       "type": "registry:component",
       "title": "Скользящее подчёркивание",
       "description": "Вкладки с одним переезжающим индикатором: позиция считается арифметикой в CSS от индекса и количества, ничего не измеряется в JS.",
-      "categories": ["tabs"],
+      "categories": [
+        "tabs"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -437,7 +486,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tabs-003-*. Клиентский: \"use client\" ради выбранной вкладки и клавиатуры. Вкладки лежат в сетке равными колонками, а индикатор абсолютно спозиционирован и потому не занимает колонку. Его ширина — 100%/count, сдвиг — translateX(index * 100%); оба числа приходят переменными --vibeui-tabs-003-count и --vibeui-tabs-003-index. Разметка следует паттерну tabs из WAI-ARIA, в Tab-порядке живёт только активная вкладка.",
       "meta": {
-        "tags": ["tabs", "indicator", "keyboard", "aria"],
+        "tags": [
+          "tabs",
+          "indicator",
+          "keyboard",
+          "aria"
+        ],
         "preview": {
           "width": "full"
         },
@@ -477,7 +531,11 @@
             "label": "Открыта вкладка",
             "type": "select",
             "default": "brief",
-            "options": ["brief", "team", "budget"]
+            "options": [
+              "brief",
+              "team",
+              "budget"
+            ]
           },
           {
             "prop": "accent",
@@ -561,7 +619,11 @@
             }
           }
         },
-        "cardControls": ["defaultId", "accent", "background"]
+        "cardControls": [
+          "defaultId",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -569,7 +631,9 @@
       "type": "registry:component",
       "title": "Вкладки-пилюли",
       "description": "Вкладки-пилюли как в системном сегментированном переключателе: активная залита акцентом, между неактивными — тонкие разделители.",
-      "categories": ["tabs"],
+      "categories": [
+        "tabs"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -581,7 +645,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tabs-004-*. Клиентский: \"use client\" ради выбранной вкладки и клавиатуры. Разделитель — ::before у каждой вкладки, кроме первой; рядом с активной пилюлей он гасится правилами по aria-selected, иначе линия у края заливки выглядит грязью. Разметка следует паттерну tabs из WAI-ARIA, в Tab-порядке живёт только активная вкладка.",
       "meta": {
-        "tags": ["tabs", "segmented", "pills", "aria"],
+        "tags": [
+          "tabs",
+          "segmented",
+          "pills",
+          "aria"
+        ],
         "ai": {
           "export": "Tabs004",
           "usage": "<Tabs004\n  defaultId=\"week\"\n  items={[\n    { id: \"day\", label: \"Сутки\", content: \"1 284 визита\" },\n    { id: \"week\", label: \"Неделя\", content: \"9 470 визитов\" },\n  ]}\n/>",
@@ -618,7 +687,11 @@
             "label": "Период",
             "type": "select",
             "default": "day",
-            "options": ["day", "week", "month"]
+            "options": [
+              "day",
+              "week",
+              "month"
+            ]
           },
           {
             "prop": "accent",
@@ -702,7 +775,14 @@
             }
           }
         },
-        "cardControls": ["defaultId", "accent", "background"]
+        "cardControls": [
+          "defaultId",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -710,7 +790,9 @@
       "type": "registry:component",
       "title": "Вертикальные вкладки",
       "description": "Вертикальные вкладки настроек: список слева читается сверху вниз, поэтому подписи с пояснениями помещаются целиком.",
-      "categories": ["tabs"],
+      "categories": [
+        "tabs"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -722,7 +804,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tabs-005-*. Клиентский: \"use client\" ради выбранной вкладки и клавиатуры. Список помечен aria-orientation=\"vertical\", и стрелки соответственно вертикальные: вверх и вниз, плюс Home и End. Две колонки появляются контейнерным запросом на внутреннем [data-part=\"shell\"], потому что правило внутри @container не действует на сам контейнер; в узком блоке список ложится над содержимым.",
       "meta": {
-        "tags": ["tabs", "vertical", "settings", "container-query"],
+        "tags": [
+          "tabs",
+          "vertical",
+          "settings",
+          "container-query"
+        ],
         "preview": {
           "width": "full"
         },
@@ -762,7 +849,12 @@
             "label": "Раздел",
             "type": "select",
             "default": "profile",
-            "options": ["profile", "security", "alerts", "billing"]
+            "options": [
+              "profile",
+              "security",
+              "alerts",
+              "billing"
+            ]
           },
           {
             "prop": "accent",
@@ -855,7 +947,11 @@
             }
           }
         },
-        "cardControls": ["defaultId", "accent", "background"]
+        "cardControls": [
+          "defaultId",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -863,7 +959,9 @@
       "type": "registry:component",
       "title": "Вкладки со счётчиками",
       "description": "Вкладки почтовых папок: значок, подпись и счётчик в одной строке, причём число уходит в имя вкладки, а не читается отдельной цифрой.",
-      "categories": ["tabs"],
+      "categories": [
+        "tabs"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -875,7 +973,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tabs-006-*. Клиентский: \"use client\" ради выбранной вкладки и клавиатуры. Значки нарисованы бордюрами и clip-path по атрибуту data-glyph, поэтому иконочный шрифт не нужен. Счётчик помечен aria-hidden, а число попадает в aria-label вкладки. Разметка следует паттерну tabs из WAI-ARIA, ряд прокручивается по горизонтали со скрытой полосой прокрутки.",
       "meta": {
-        "tags": ["tabs", "icons", "counters", "mail"],
+        "tags": [
+          "tabs",
+          "icons",
+          "counters",
+          "mail"
+        ],
         "preview": {
           "width": "full"
         },
@@ -915,7 +1018,12 @@
             "label": "Папка",
             "type": "select",
             "default": "inbox",
-            "options": ["inbox", "star", "later", "trash"]
+            "options": [
+              "inbox",
+              "star",
+              "later",
+              "trash"
+            ]
           },
           {
             "prop": "accent",
@@ -1012,7 +1120,11 @@
             }
           }
         },
-        "cardControls": ["defaultId", "accent", "background"]
+        "cardControls": [
+          "defaultId",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1020,7 +1132,9 @@
       "type": "registry:component",
       "title": "Прокручиваемые вкладки",
       "description": "Прокручиваемый ряд вкладок с тенями по краям: тень появляется только с той стороны, где содержимое ещё осталось, и всё это без JS.",
-      "categories": ["tabs"],
+      "categories": [
+        "tabs"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1032,7 +1146,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tabs-007-*. Клиентский: \"use client\" ради выбранной вкладки и клавиатуры, но тени по краям сделаны чистым CSS: четыре градиента с разной привязкой фона — «маска» цвета фона едет вместе с содержимым (background-attachment:local), а сама тень стоит на месте (scroll), поэтому у докрученного края тень закрывается маской. Стрелки дополнительно доводят выбранную вкладку в поле зрения через scrollIntoView.",
       "meta": {
-        "tags": ["tabs", "scroll", "shadow", "overflow"],
+        "tags": [
+          "tabs",
+          "scroll",
+          "shadow",
+          "overflow"
+        ],
         "ai": {
           "export": "Tabs007",
           "usage": "<Tabs007\n  defaultId=\"msk\"\n  items={[\n    { id: \"all\", label: \"Все\", content: \"Полный список\" },\n    { id: \"msk\", label: \"Москва\", content: \"Доставка в день заказа\" },\n  ]}\n/>",
@@ -1069,7 +1188,15 @@
             "label": "Город",
             "type": "select",
             "default": "all",
-            "options": ["all", "msk", "spb", "ekb", "nsk", "kzn", "sochi"]
+            "options": [
+              "all",
+              "msk",
+              "spb",
+              "ekb",
+              "nsk",
+              "kzn",
+              "sochi"
+            ]
           },
           {
             "prop": "accent",
@@ -1173,7 +1300,14 @@
             }
           }
         },
-        "cardControls": ["defaultId", "accent", "background"]
+        "cardControls": [
+          "defaultId",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -1181,7 +1315,9 @@
       "type": "registry:component",
       "title": "Вкладки с переполнением",
       "description": "Вкладки со свёрткой лишних в «ещё»: выбранная из списка занимает последнее видимое место, поэтому активная вкладка всегда на виду.",
-      "categories": ["tabs"],
+      "categories": [
+        "tabs"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1193,7 +1329,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tabs-008-*. Клиентский: \"use client\" ради выбора, открытия списка и подмены видимой вкладки. Видимый ряд — первые visible вкладок, где последнее место отдано вкладке, выбранной из «ещё»; вытесненная уходит в список. Панель одна на все вкладки, её aria-labelledby указывает на активную. Разметка следует паттерну tabs из WAI-ARIA, стрелки ходят по видимому ряду.",
       "meta": {
-        "tags": ["tabs", "overflow", "more menu", "responsive"],
+        "tags": [
+          "tabs",
+          "overflow",
+          "more menu",
+          "responsive"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1346,7 +1487,12 @@
             }
           }
         },
-        "cardControls": ["visible", "accent", "background"]
+        "cardControls": [
+          "visible",
+          "moreLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1354,7 +1500,9 @@
       "type": "registry:component",
       "title": "Вкладки редактора",
       "description": "Вкладки редактора с закрытием: у несохранённого файла крестик заменён точкой, поэтому правки не теряются одним промахом мыши.",
-      "categories": ["tabs"],
+      "categories": [
+        "tabs"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1366,7 +1514,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tabs-009-*. Клиентский: \"use client\" ради списка открытых файлов и выбора. Вкладка — элемент с role=\"tab\", а крестик внутри неё — отдельная кнопка с tabIndex -1 и остановкой всплытия, поэтому закрытие не срабатывает при переключении. Точка несохранённого файла подменяется крестиком по :hover и :focus-within. Закрытая вкладка отдаёт выбор соседу слева.",
       "meta": {
-        "tags": ["tabs", "editor", "close", "dirty state"],
+        "tags": [
+          "tabs",
+          "editor",
+          "close",
+          "dirty state"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1406,7 +1559,11 @@
             "label": "Открыт файл",
             "type": "select",
             "default": "page",
-            "options": ["page", "layout", "styles"]
+            "options": [
+              "page",
+              "layout",
+              "styles"
+            ]
           },
           {
             "prop": "accent",
@@ -1494,7 +1651,11 @@
             }
           }
         },
-        "cardControls": ["defaultId", "accent", "background"]
+        "cardControls": [
+          "defaultId",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1502,7 +1663,9 @@
       "type": "registry:component",
       "title": "Вкладки на радиокнопках",
       "description": "Вкладки без JS, но с переезжающим индикатором: выбор держат радиокнопки, а положение полосы задаёт правило :has() и арифметика в CSS.",
-      "categories": ["tabs"],
+      "categories": [
+        "tabs"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1514,7 +1677,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tabs-010-*. Серверный: хуков нет, выбор держат радиокнопки, и браузер сам даёт по ним переход стрелками. Отмеченная кнопка через :has() выставляет переменную --vibeui-tabs-010-index, от которой считается сдвиг индикатора; панели показываются такими же правилами по data-index. Правила заданы на шесть вкладок — больше требует ещё двух строк CSS.",
       "meta": {
-        "tags": ["tabs", "no-js", "radio", "has-selector"],
+        "tags": [
+          "tabs",
+          "no-js",
+          "radio",
+          "has-selector"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1633,7 +1801,537 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "tabs-011",
+      "type": "registry:component",
+      "title": "Вкладки в адресе",
+      "description": "Переключение якорями: открытая вкладка попадает в адрес, ссылку можно отправить, «назад» возвращает прежнюю.",
+      "categories": [
+        "tabs"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tabs-011/tabs-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tabs-011.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tabs-011-*. Серверный: вкладки — обычные ссылки на якоря, активная панель выбирается через :target. Пока в адресе нет решётки, показана первая панель. Подсветка активной ссылки собирается из идентификаторов панелей и вставляется вторым тегом style с ключом по их набору.",
+      "meta": {
+        "tags": [
+          "tabs",
+          "anchor",
+          "deep-link",
+          "no-js"
+        ],
+        "ai": {
+          "export": "Tabs011",
+          "usage": "<Tabs011 panels={panels} />",
+          "summary": "Вкладки на якорях: состояние живёт в адресе, поэтому ссылка ведёт на нужную вкладку, а кнопка «назад» работает как ожидается.",
+          "preserve": [
+            "локальную палитру --vibeui-tabs-011-* и не подменять её токенами вашей темы",
+            "состояние в адресе: этим компонент и отличается от обычных вкладок",
+            "показ первой панели, пока решётки в адресе нет — иначе страница выглядит пустой",
+            "ссылки вместо кнопок: только их можно скопировать и открыть в новой вкладке",
+            "подчёркивание активной вкладки, а не один цвет текста",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "состав панелей и их идентификаторы через panels",
+            "подпись полосы для скринридера через groupLabel",
+            "пояснение под панелью через hint",
+            "accent — цвет подчёркивания активной вкладки",
+            "background — подложка компонента; пусто означает штатную палитру"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Идентификаторы панелей попадают и в адрес, и в CSS-селекторы: делайте их уникальными на странице и без пробелов.",
+            "Переход по якорю прокручивает страницу к панели. Если это мешает, добавьте scroll-margin-top блоку или перехватите переход своим роутером.",
+            "На странице с несколькими такими блоками идентификаторы обязаны различаться: адрес один на всю страницу.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "groupLabel",
+            "label": "Подпись полосы",
+            "type": "text",
+            "default": "Разделы товара",
+            "maxLength": 24
+          },
+          {
+            "prop": "hint",
+            "label": "Пояснение",
+            "type": "text",
+            "default": "Вкладка попадает в адрес: ссылку можно отправить, «назад» вернёт прежнюю.",
+            "maxLength": 80
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Tabs In The URL",
+            "description": "Anchor-driven switching: the open tab lands in the address, the link can be shared and Back returns the previous one.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-tabs-011-* variables. Server component: the tabs are plain anchor links and the active panel is chosen through :target. While the address carries no hash, the first panel shows. The active-link highlight is assembled from the panel ids and injected as a second style tag keyed by that set.",
+            "ai": {
+              "summary": "Anchor tabs: the state lives in the address, so a link opens the right tab and the Back button behaves as expected.",
+              "preserve": [
+                "the local --vibeui-tabs-011-* palette — do not swap it for your theme tokens",
+                "the state in the address: that is what separates this from ordinary tabs",
+                "showing the first panel while the address has no hash — otherwise the page looks empty",
+                "links instead of buttons: only those can be copied and opened in a new tab",
+                "the underline on the active tab rather than colour alone",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "the panels and their ids through panels",
+                "the strip label for screen readers through groupLabel",
+                "the note under the panel through hint",
+                "accent — the active tab underline colour",
+                "background — the component surface; empty means the built-in palette"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Panel ids end up both in the address and in CSS selectors: keep them unique on the page and free of spaces.",
+                "Following an anchor scrolls the page to the panel. If that gets in the way, add scroll-margin-top to the block or intercept the navigation in your router.",
+                "With several such blocks on a page the ids must differ: there is only one address.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tabs011 panels={panels} />"
+            },
+            "controls": {
+              "groupLabel": {
+                "label": "Strip label",
+                "default": "Product sections"
+              },
+              "hint": {
+                "label": "Hint",
+                "default": "The tab lands in the address: the link can be shared, Back returns the previous one."
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "groupLabel": "Product sections",
+                "hint": "The tab lands in the address: the link can be shared, Back returns the previous one.",
+                "panels": [
+                  {
+                    "id": "vibeui-tabs-011-about",
+                    "label": "Description",
+                    "text": "A desk lamp with warm light and a swivel base. Mains powered, the cord is 1.8 metres."
+                  },
+                  {
+                    "id": "vibeui-tabs-011-delivery",
+                    "label": "Delivery",
+                    "text": "Next-day courier in town, two days to a pickup point. Warehouse collection runs until nine in the evening."
+                  },
+                  {
+                    "id": "vibeui-tabs-011-returns",
+                    "label": "Returns",
+                    "text": "Fourteen days with no questions if the packaging survived. Return shipping is on us."
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "preview": {
+          "width": "full"
+        },
+        "cardControls": [
+          "groupLabel",
+          "hint",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "tabs-012",
+      "type": "registry:component",
+      "title": "Вкладки-значки",
+      "description": "Узкая полоса без подписей: имя вкладки не исчезает, а живёт в подсказке и метке для скринридера.",
+      "categories": [
+        "tabs"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tabs-012/tabs-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tabs-012.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tabs-012-*. Клиентский. Стрелки, Home и End ходят по вкладкам и переносят фокус, как ожидается от tablist. Значок собран из двух букв, поэтому иконочный пакет не нужен; подпись уходит в aria-label и title, а переключателем возвращается на полосу целиком. Активная вкладка помечена заливкой, а не только цветом текста.",
+      "meta": {
+        "tags": [
+          "tabs",
+          "icons",
+          "compact",
+          "keyboard"
+        ],
+        "ai": {
+          "export": "Tabs012",
+          "usage": "<Tabs012 tabs={views} currentId=\"board\" />",
+          "summary": "Компактная полоса вкладок значками: подпись в aria-label и подсказке, переключатель возвращает текст, клавиатура ходит стрелками.",
+          "preserve": [
+            "локальную палитру --vibeui-tabs-012-* и не подменять её токенами вашей темы",
+            "подпись у значка в aria-label и title: значок без имени опознаётся не всеми",
+            "заливку у активной вкладки — цвет сам по себе не переживает печать и дальтонизм",
+            "стрелки, Home и End: без них tablist недоступен с клавиатуры",
+            "tabIndex −1 у неактивных вкладок — таб не должен обходить всю полосу",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "состав вкладок, значки в поле mark и текущую через currentId",
+            "показ подписей на полосе через withLabels",
+            "подпись полосы через groupLabel",
+            "accent — цвет активной вкладки",
+            "background — подложка компонента; пусто означает штатную палитру"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Значок — две буквы, а не иконка: ради полосы из трёх кнопок иконочный пакет не подключают. Свою иконку можно передать в mark.",
+            "title показывается только по наведению мыши: он дублирует aria-label, а не заменяет его.",
+            "Панель здесь одна и меняет содержимое. Для тяжёлых панелей держите их смонтированными и переключайте видимость.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "currentId",
+            "label": "Открытая вкладка",
+            "type": "select",
+            "default": "board",
+            "options": [
+              "grid",
+              "board",
+              "chart"
+            ]
+          },
+          {
+            "prop": "withLabels",
+            "label": "Показывать подписи",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "groupLabel",
+            "label": "Подпись полосы",
+            "type": "text",
+            "default": "Вид данных",
+            "maxLength": 22
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Icon Tabs",
+            "description": "A narrow strip without captions: the tab name does not disappear but lives in the tooltip and the screen-reader label.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-tabs-012-* variables. Client component. Arrows, Home and End walk the tabs and move focus as expected from a tablist. The mark is two letters, so no icon package is needed; the caption goes into aria-label and title and a toggle brings it back onto the strip. The active tab is marked by a fill rather than by text colour alone.",
+            "ai": {
+              "summary": "A compact icon tab strip: the caption sits in aria-label and the tooltip, a toggle brings the text back, and the keyboard walks with arrows.",
+              "preserve": [
+                "the local --vibeui-tabs-012-* palette — do not swap it for your theme tokens",
+                "the caption in aria-label and title: a mark without a name is not read by everyone",
+                "the fill on the active tab — colour alone survives neither print nor colour blindness",
+                "arrows, Home and End: without them a tablist is unreachable from the keyboard",
+                "tabIndex −1 on inactive tabs — Tab must not walk the whole strip",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "the tabs, the marks in the mark field and the open one through currentId",
+                "showing captions on the strip through withLabels",
+                "the strip label through groupLabel",
+                "accent — the active tab colour",
+                "background — the component surface; empty means the built-in palette"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The mark is two letters, not an icon: an icon package is not worth a strip of three buttons. Pass your own icon through mark if you have one.",
+                "title only appears on mouse hover: it duplicates aria-label rather than replacing it.",
+                "There is one panel here and it swaps content. For heavy panels keep them mounted and toggle visibility instead.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tabs012 tabs={views} currentId=\"board\" />"
+            },
+            "controls": {
+              "currentId": {
+                "label": "Open tab"
+              },
+              "withLabels": {
+                "label": "Show captions"
+              },
+              "groupLabel": {
+                "label": "Strip label",
+                "default": "Data view"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "groupLabel": "Data view",
+                "tabs": [
+                  {
+                    "id": "grid",
+                    "label": "Table",
+                    "mark": "Tb",
+                    "text": "Rows and columns: handy for comparing one measure across items."
+                  },
+                  {
+                    "id": "board",
+                    "label": "Board",
+                    "mark": "Bd",
+                    "text": "Cards in columns: shows which step the work is stuck on."
+                  },
+                  {
+                    "id": "chart",
+                    "label": "Chart",
+                    "mark": "Ch",
+                    "text": "One line per metric: the shape matters more than exact numbers."
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "preview": {
+          "width": "full"
+        },
+        "cardControls": [
+          "currentId",
+          "withLabels",
+          "groupLabel",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "tabs-013",
+      "type": "registry:component",
+      "title": "Загрузка панели",
+      "description": "Панель вкладки приходит с сервера: на время паузы стоит скелетон, отказ назван словом и снабжён повтором.",
+      "categories": [
+        "tabs"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tabs-013/tabs-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tabs-013.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tabs-013-*. Клиентский. Состояние каждой панели хранится отдельно, поэтому уже загруженная вкладка открывается сразу. Скелетон повторяет форму будущего текста, панель несёт aria-busy, а ошибка выводится с role=alert и кнопкой повтора. Полоса вкладок не блокируется на время загрузки.",
+      "meta": {
+        "tags": [
+          "tabs",
+          "loading",
+          "skeleton",
+          "error"
+        ],
+        "ai": {
+          "export": "Tabs013",
+          "usage": "<Tabs013 tabs={sections} />",
+          "summary": "Вкладки с загрузкой панели: скелетон вместо пустоты, точка ожидания на самой вкладке, отказ с повтором и незаблокированная полоса.",
+          "preserve": [
+            "локальную палитру --vibeui-tabs-013-* и не подменять её токенами вашей темы",
+            "скелетон формы будущего текста — иначе раскладка прыгает в момент прихода данных",
+            "aria-busy на панели: ожидание должно быть слышно, а не только видно",
+            "role=alert у отказа и кнопку повтора рядом с ним",
+            "незаблокированную полосу: уйти с медленной вкладки должно быть можно всегда",
+            "память состояния по вкладкам — загруженная панель не должна грузиться заново",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "состав вкладок, их тексты и задержки",
+            "подписи через loadingText, errorText и retryLabel",
+            "открытую вкладку через currentId",
+            "accent — цвет подчёркивания и точки ожидания",
+            "background — подложка компонента; пусто означает штатную палитру"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "delay и fails существуют ради показа: в бою состояние приходит из запроса, а не из таймера.",
+            "Повтор сбрасывает состояние только текущей вкладки: соседние загруженные панели остаются на месте.",
+            "Пульсация точки выключается при prefers-reduced-motion — точка остаётся, но перестаёт мигать.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "currentId",
+            "label": "Открытая вкладка",
+            "type": "select",
+            "default": "summary",
+            "options": [
+              "summary",
+              "logs",
+              "billing"
+            ]
+          },
+          {
+            "prop": "loadingText",
+            "label": "Подпись загрузки",
+            "type": "text",
+            "default": "Загружаем раздел…",
+            "maxLength": 24
+          },
+          {
+            "prop": "errorText",
+            "label": "Подпись ошибки",
+            "type": "text",
+            "default": "Раздел не загрузился",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Panel Loading",
+            "description": "The tab panel arrives from the server: a skeleton fills the pause, and a failure is named and given a retry.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-tabs-013-* variables. Client component. Each panel keeps its own state, so an already loaded tab opens instantly. The skeleton repeats the shape of the future text, the panel carries aria-busy, and the error is announced with role=alert next to a retry button. The tab strip is never blocked while loading.",
+            "ai": {
+              "summary": "Tabs with a loading panel: a skeleton instead of emptiness, a waiting dot on the tab itself, a failure with retry and a strip that stays usable.",
+              "preserve": [
+                "the local --vibeui-tabs-013-* palette — do not swap it for your theme tokens",
+                "the skeleton shaped like the future text — otherwise the layout jumps when data lands",
+                "aria-busy on the panel: waiting has to be audible, not only visible",
+                "role=alert on the failure and the retry button next to it",
+                "the unblocked strip: leaving a slow tab must always be possible",
+                "per-tab state memory — a loaded panel must not reload",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "the tabs, their texts and delays",
+                "the captions through loadingText, errorText and retryLabel",
+                "the open tab through currentId",
+                "accent — the underline and waiting-dot colour",
+                "background — the component surface; empty means the built-in palette"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "delay and fails exist for the demo: in production the state comes from a request, not a timer.",
+                "Retry resets only the current tab: neighbouring loaded panels stay as they are.",
+                "The dot stops pulsing under prefers-reduced-motion — it stays visible but still.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tabs013 tabs={sections} />"
+            },
+            "controls": {
+              "currentId": {
+                "label": "Open tab"
+              },
+              "loadingText": {
+                "label": "Loading caption",
+                "default": "Loading the section…"
+              },
+              "errorText": {
+                "label": "Error caption",
+                "default": "The section failed to load"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "groupLabel": "Report sections",
+                "loadingText": "Loading the section…",
+                "errorText": "The section failed to load",
+                "retryLabel": "Try again",
+                "tabs": [
+                  {
+                    "id": "summary",
+                    "label": "Summary",
+                    "text": "1,284 visits in a day, the average session lasts 2 minutes 40 seconds.",
+                    "delay": 700
+                  },
+                  {
+                    "id": "logs",
+                    "label": "Log",
+                    "text": "42 records in an hour: 39 ordinary, two warnings, one build error.",
+                    "delay": 1400
+                  },
+                  {
+                    "id": "billing",
+                    "label": "Invoices",
+                    "text": "",
+                    "delay": 900,
+                    "fails": true
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "preview": {
+          "width": "full"
+        },
+        "cardControls": [
+          "currentId",
+          "loadingText",
+          "errorText",
+          "accent",
+          "background"
+        ]
       }
     }
   ]

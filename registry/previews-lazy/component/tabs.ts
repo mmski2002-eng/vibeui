@@ -61,4 +61,19 @@ export const PREVIEWS = {
       (module) => module.Tabs010,
     ),
   ),
+  "tabs-011": dynamic(() =>
+    import("@/registry/components/tabs/tabs-011/tabs-011").then(
+      (module) => module.Tabs011,
+    ),
+  ),
+  "tabs-012": dynamic(() =>
+    import("@/registry/components/tabs/tabs-012/tabs-012").then(
+      (module) => module.Tabs012,
+    ),
+  ),
+  "tabs-013": dynamic(() =>
+    import("@/registry/components/tabs/tabs-013/tabs-013").then(
+      (module) => module.Tabs013,
+    ),
+  ),
 } satisfies PreviewMap

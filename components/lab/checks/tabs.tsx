@@ -11,6 +11,9 @@ import { Tabs007 } from "@/registry/components/tabs/tabs-007/tabs-007"
 import { Tabs008 } from "@/registry/components/tabs/tabs-008/tabs-008"
 import { Tabs009 } from "@/registry/components/tabs/tabs-009/tabs-009"
 import { Tabs010 } from "@/registry/components/tabs/tabs-010/tabs-010"
+import { Tabs011 } from "@/registry/components/tabs/tabs-011/tabs-011"
+import { Tabs012 } from "@/registry/components/tabs/tabs-012/tabs-012"
+import { Tabs013 } from "@/registry/components/tabs/tabs-013/tabs-013"
 
 /** Seed прогона: с ним набор воспроизводится один в один. */
 export const SEED = 44675
@@ -81,5 +84,47 @@ export const CHECKS: LabCheck[] = [
     title: "Вкладки на радиокнопках",
     notes: ["Акцент: #fdb5ea"],
     node: <Tabs010 accent="#fdb5ea" />,
+  },
+  {
+    name: "tabs-011",
+    title: "Вкладки в адресе",
+    notes: ["Подпись полосы: Разделы услуги", "Акцент: #0f766e"],
+    node: <Tabs011 groupLabel="Разделы услуги" accent="#0f766e" />,
+  },
+  {
+    name: "tabs-012",
+    title: "Вкладки-значки",
+    notes: [
+      "Открытая вкладка: chart",
+      "Показывать подписи: включено",
+      "Подпись полосы: Представление",
+      "Акцент: #9d4edd",
+    ],
+    node: (
+      <Tabs012
+        currentId="chart"
+        withLabels
+        groupLabel="Представление"
+        accent="#9d4edd"
+      />
+    ),
+  },
+  {
+    name: "tabs-013",
+    title: "Загрузка панели",
+    notes: [
+      "Открытая вкладка: logs",
+      "Подпись загрузки: Тянем данные…",
+      "Подпись ошибки: Не отдалось",
+      "Акцент: #ef476f",
+    ],
+    node: (
+      <Tabs013
+        currentId="logs"
+        loadingText="Тянем данные…"
+        errorText="Не отдалось"
+        accent="#ef476f"
+      />
+    ),
   },
 ]

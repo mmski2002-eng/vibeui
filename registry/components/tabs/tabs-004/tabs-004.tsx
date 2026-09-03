@@ -151,6 +151,7 @@ export function Tabs004({
   listLabel = "Период",
   className,
   style,
+  ...props
 }: Tabs004Props) {
   const [active, setActive] = useState(defaultId ?? items[0]?.id)
   const listRef = useRef<HTMLDivElement>(null)
@@ -204,6 +205,7 @@ export function Tabs004({
         {STYLES}
       </style>
       <div
+        {...props}
         data-slot="tabs"
         data-vibeui-block="tabs-004"
         className={className}

@@ -167,6 +167,7 @@ export function Tabs009({
   emptyText = "Все вкладки закрыты",
   className,
   style,
+  ...props
 }: Tabs009Props) {
   const [open, setOpen] = useState(files)
   const [active, setActive] = useState(defaultId ?? files[0]?.id)
@@ -234,6 +235,7 @@ export function Tabs009({
         {STYLES}
       </style>
       <div
+        {...props}
         data-slot="tabs"
         data-vibeui-block="tabs-009"
         className={className}
