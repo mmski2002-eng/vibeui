@@ -41,6 +41,9 @@ const STYLES = `
 --vibeui-dashboard-013-shadow:light-dark(oklch(0.2 0.03 265 / 45%),oklch(0.04 0.01 265 / 72%));
 --vibeui-dashboard-013-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="dashboard-013"]{color-scheme:dark}
 [data-vibeui-block="dashboard-013"]{
 box-sizing:border-box;
 font-family:var(--vibeui-dashboard-013-sans);color:var(--vibeui-dashboard-013-fg);

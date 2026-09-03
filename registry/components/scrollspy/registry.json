@@ -6,7 +6,9 @@
       "type": "registry:component",
       "title": "Оглавление с подсветкой",
       "description": "Оглавление подсвечивает раздел, видимый сейчас: слежение на IntersectionObserver, а не на обработчике прокрутки.",
-      "categories": ["scrollspy"],
+      "categories": [
+        "scrollspy"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-scrollspy-001-*. Клиентский: \"use client\" ради IntersectionObserver. Наблюдатель ограничен областью текста через root, а rootMargin отрезает нижние 60%, иначе активным становится раздел, который только показался снизу. У последнего раздела есть запас снизу — без него он не долистывается.",
       "meta": {
-        "tags": ["scrollspy", "toc", "reading", "observer"],
+        "tags": [
+          "scrollspy",
+          "toc",
+          "reading",
+          "observer"
+        ],
         "preview": {
           "width": "full"
         },
@@ -149,7 +156,11 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "title",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -157,7 +168,9 @@
       "type": "registry:component",
       "title": "Оглавление статьи",
       "description": "Оглавление статьи стоит не сбоку, а над текстом: пункты пронумерованы, у активного номер заливается, а ряд прокручивается пальцем.",
-      "categories": ["scrollspy"],
+      "categories": [
+        "scrollspy"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -169,7 +182,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-scrollspy-002-*. Клиентский (\"use client\") — нужен IntersectionObserver. Наблюдатель следит за разделами внутри собственной области прокрутки: root — сам блок текста, rootMargin обрезает нижние 65%, поэтому активным становится раздел у верхней кромки, а не любой видимый. Ссылки — обычные якоря без preventDefault: без JS они по-прежнему доводят до раздела, наблюдатель добавляет только подсветку. Активный пункт помечен aria-current и залитым кружком номера: в горизонтальном ряду цвета текста мало.",
       "meta": {
-        "tags": ["scrollspy", "toc", "article", "navigation"],
+        "tags": [
+          "scrollspy",
+          "toc",
+          "article",
+          "navigation"
+        ],
         "preview": {
           "width": "full"
         },
@@ -301,7 +319,11 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "title",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -309,7 +331,9 @@
       "type": "registry:component",
       "title": "Вложенное оглавление",
       "description": "Двухуровневое оглавление, которое не вываливает сразу все подпункты: раскрыта только глава, внутри которой читатель сейчас находится.",
-      "categories": ["scrollspy"],
+      "categories": [
+        "scrollspy"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -321,7 +345,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-scrollspy-003-*. Клиентский (\"use client\") — нужен IntersectionObserver. Наблюдатель следит за разделами обоих уровней сразу, поэтому активным может стать и глава, и её подпункт. Раскрытие второго уровня не хранится состоянием: список показывается правилом li[data-open=\"true\"] > [data-part=\"sub\"], где data-open вычисляется из того, активна ли глава или любой её потомок. Ссылки — обычные якоря, подсветка идёт через aria-current на обоих уровнях.",
       "meta": {
-        "tags": ["scrollspy", "toc", "nested", "docs"],
+        "tags": [
+          "scrollspy",
+          "toc",
+          "nested",
+          "docs"
+        ],
         "preview": {
           "width": "full"
         },
@@ -479,7 +508,11 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "title",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -487,7 +520,9 @@
       "type": "registry:component",
       "title": "Прогресс чтения",
       "description": "Боковое оглавление документации отвечает на два вопроса сразу: подсветка говорит «где я», а вертикальная полоса — сколько текста осталось.",
-      "categories": ["scrollspy"],
+      "categories": [
+        "scrollspy"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -499,7 +534,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-scrollspy-004-*. Клиентский (\"use client\") — нужны IntersectionObserver и обработчик прокрутки. Активный раздел ищет наблюдатель, а процент прочитанного считается от scrollTop и scrollHeight области чтения и уезжает в CSS переменной --vibeui-scrollspy-004-progress: доля текста и номер раздела — разные величины, потому что разделы разной длины. Полоса помечена role=\"progressbar\" с aria-valuenow, ссылки остаются обычными якорями.",
       "meta": {
-        "tags": ["scrollspy", "docs", "progress", "sidebar"],
+        "tags": [
+          "scrollspy",
+          "docs",
+          "progress",
+          "sidebar"
+        ],
         "preview": {
           "width": "full"
         },
@@ -639,7 +679,11 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "title",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -647,7 +691,9 @@
       "type": "registry:component",
       "title": "Липкая полоса раздела",
       "description": "Горизонтальная панель разделов, прилипшая к верху длинной страницы: активный пункт сам доезжает до центра панели, когда уходит за край.",
-      "categories": ["scrollspy"],
+      "categories": [
+        "scrollspy"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -659,7 +705,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-scrollspy-005-*. Клиентский (\"use client\") — нужны IntersectionObserver и scrollIntoView. Панель липнет к верху области чтения: sticky стоит на обёртке nav, а прокручивается внутренний ul, потому что липнуть может только элемент, у родителя которого есть запас высоты. Активный пункт доводится до центра вызовом scrollIntoView({block:\"nearest\",inline:\"center\"}) — block:\"nearest\" обязателен, иначе браузер подтянет к центру всю страницу. Подсветка — подчёркивание псевдоэлементом плюс aria-current.",
       "meta": {
-        "tags": ["scrollspy", "sticky", "tabs", "navigation"],
+        "tags": [
+          "scrollspy",
+          "sticky",
+          "tabs",
+          "navigation"
+        ],
         "preview": {
           "width": "full"
         },
@@ -803,7 +854,11 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -811,7 +866,9 @@
       "type": "registry:component",
       "title": "Наверх",
       "description": "Оглавление с возвратом к началу: кнопка «наверх» — обычная якорная ссылка, которая прячется, пока начало текста и так на экране.",
-      "categories": ["scrollspy"],
+      "categories": [
+        "scrollspy"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -823,7 +880,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-scrollspy-006-*. Клиентский (\"use client\") — нужен IntersectionObserver. Наблюдателей два: первый подсвечивает активный раздел, второй следит за меткой-сентинелом в самом верху текста и прячет ссылку возврата, пока начало видно. Начальное состояние — ссылка показана, поэтому при отключённом JS она остаётся на месте и работает как обычный якорь. Прячется она атрибутом hidden, а не прозрачностью: невидимая ссылка не должна ловить фокус табом.",
       "meta": {
-        "tags": ["scrollspy", "toc", "back-to-top", "anchor"],
+        "tags": [
+          "scrollspy",
+          "toc",
+          "back-to-top",
+          "anchor"
+        ],
         "preview": {
           "width": "full"
         },
@@ -963,7 +1025,11 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "topLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -971,7 +1037,9 @@
       "type": "registry:component",
       "title": "Компактное оглавление",
       "description": "Одно оглавление в двух видах: широкий блок держит его колонкой слева, узкий сворачивает в раскрывающийся список с названием текущего раздела в заголовке.",
-      "categories": ["scrollspy"],
+      "categories": [
+        "scrollspy"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -983,7 +1051,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-scrollspy-007-*. Клиентский (\"use client\") — нужны IntersectionObserver и ResizeObserver. Порог сворачивания считается от ширины самого блока, а не от ширины окна: тот же компонент может стоять в узкой колонке на большом экране. В компактном виде список живёт внутри <details>, а в заголовке summary стоит текущий раздел — свёрнутое оглавление обязано отвечать «где я». Ссылки остаются обычными якорями и закрывают список после выбора.",
       "meta": {
-        "tags": ["scrollspy", "toc", "responsive", "details"],
+        "tags": [
+          "scrollspy",
+          "toc",
+          "responsive",
+          "details"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1121,7 +1194,11 @@
             }
           }
         },
-        "cardControls": ["compactAt", "accent", "background"]
+        "cardControls": [
+          "compactAt",
+          "accent",
+          "background"
+        ]
       }
     }
   ]

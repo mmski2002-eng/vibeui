@@ -16,7 +16,8 @@
     "indexes": "node scripts/build-indexes.mjs",
     "indexes:check": "node scripts/build-indexes.mjs --check",
     "predev": "npm run indexes",
-    "item": "node scripts/new-item.mjs"
+    "item": "node scripts/new-item.mjs",
+    "audit": "node scripts/audit-ui.mjs"
   },
   "dependencies": {
     "clsx": "^2.1.1",

@@ -154,7 +154,10 @@
           "max",
           "accent",
           "background"
-        ]
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -308,7 +311,10 @@
           "label",
           "accent",
           "background"
-        ]
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -465,7 +471,10 @@
           "max",
           "accent",
           "background"
-        ]
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -611,7 +620,10 @@
           "label",
           "accent",
           "background"
-        ]
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -756,7 +768,10 @@
           "label",
           "accent",
           "background"
-        ]
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -917,7 +932,10 @@
           "label",
           "accent",
           "background"
-        ]
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -1077,7 +1095,10 @@
           "visible",
           "accent",
           "background"
-        ]
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {

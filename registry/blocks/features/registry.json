@@ -6,7 +6,9 @@
       "type": "registry:block",
       "title": "Возможности с акцентом",
       "description": "Тёмная секция возможностей с иерархией: полноширинная шапка, крупная панель с одной главной возможностью и абстрактной геометрией, рядом три второстепенные строки на волосяных линиях. Самодостаточна: не зависит от темы и стиля проекта.",
-      "categories": ["features"],
+      "categories": [
+        "features"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,14 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, всегда тёмный независимо от темы проекта. Цвета живут в локальных переменных --vibeui-features-001-*; акцент меняется пропом accent. Раскладка переключается container-запросами от ширины самого блока. Это секция, а не герой: заголовок — h2, поэтому блок можно ставить под hero, не создавая второй h1 на странице.",
       "meta": {
-        "tags": ["dark", "features", "saas", "editorial", "landing", "section"],
+        "tags": [
+          "dark",
+          "features",
+          "saas",
+          "editorial",
+          "landing",
+          "section"
+        ],
         "ai": {
           "summary": "Тёмная графитовая секция возможностей. Полноширинная шапка: акцентная черта с eyebrow, h2 в две части, описание и опциональная ссылка. Ниже асимметричное тело: слева панель с одной главной возможностью — заголовок, абзац и абстрактная геометрическая иллюстрация на inline SVG; справа ровно три второстепенные возможности строками, разделёнными волосяными линиями, с акцентными индексами. Плоско, без теней и свечения. Разделители прочерчиваются, контент проявляется со стагером. Ноль зависимостей, один файл, раскладка и типографика считаются от ширины блока через container-запросы и cqi.",
           "preserve": [
@@ -172,7 +181,15 @@
             "default": ""
           }
         ],
-        "cardControls": ["accent"]
+        "cardControls": [
+          "title",
+          "titleAccent",
+          "eyebrow",
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -180,7 +197,9 @@
       "type": "registry:block",
       "title": "Сетка возможностей с иконками",
       "description": "Сетка из шести возможностей с иконками: ячейки лежат на линиях зазора, а не в рамках карточек. Иконки нарисованы inline-путями, библиотека иконок не нужна.",
-      "categories": ["features"],
+      "categories": [
+        "features"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -192,7 +211,12 @@
       ],
       "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-features-002-* переведена на light-dark(): секция следует color-scheme окружения, подложка по умолчанию прозрачная и задаётся пропом background. Сетка собрана приёмом gap:1px плюс фон контейнера: линии между ячейками — это просвет, а не border, поэтому на узкой ширине сетка сворачивается в столбец без «висящих» рамок. Иконки — inline SVG-пути из словаря по ключу, цвет берётся из currentColor. Колонок одна до 34rem, две от 34rem и три от 60rem — всё container-запросами от ширины блока.",
       "meta": {
-        "tags": ["features", "grid", "icons", "light"],
+        "tags": [
+          "features",
+          "grid",
+          "icons",
+          "light"
+        ],
         "preview": {
           "width": "full"
         },
@@ -343,7 +367,12 @@
             "docs": "A server component, one file, zero dependencies. The --vibeui-features-002-* palette is moved to light-dark(): the section follows the surrounding color-scheme, and the background is transparent by default and set by the background prop. The grid is built with the gap:1px plus container background technique: the lines between cells are a gap rather than a border, so at a narrow width the grid folds into a column with no dangling rules. The icons are inline SVG paths taken from a dictionary by key, and the colour comes from currentColor. One column up to 34rem, two from 34rem and three from 60rem — all through container queries against the block's width."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -351,7 +380,9 @@
       "type": "registry:block",
       "title": "Редакторские колонки",
       "description": "Журнальная полоса в три колонки: верхние линейки, римские номера и serif-заголовки. Ни карточек, ни иконок — иерархию держат типографика и линии.",
-      "categories": ["features"],
+      "categories": [
+        "features"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -363,7 +394,12 @@
       ],
       "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-features-003-* переведена на light-dark(): секция следует color-scheme окружения, подложка по умолчанию прозрачная и задаётся пропом background. Пара шрифтов системная: serif для заголовков, sans для остального. Колонки — flex-столбцы, ссылка прижата к низу через margin-top:auto, поэтому нижний край полосы ровный при разной длине описаний. Раскладка: один столбец до 56rem, три от 56rem container-запросом. Из движения только transition цвета и зазора у ссылки, для него объявлен prefers-reduced-motion.",
       "meta": {
-        "tags": ["features", "editorial", "columns", "serif"],
+        "tags": [
+          "features",
+          "editorial",
+          "columns",
+          "serif"
+        ],
         "preview": {
           "width": "full"
         },
@@ -510,7 +546,12 @@
             "docs": "A server component, one file, zero dependencies. The --vibeui-features-003-* palette is moved to light-dark(): the section follows the surrounding color-scheme, and the background is transparent by default and set by the background prop. The typeface pairing is the system one: serif for the headings, sans for everything else. The columns are flex columns and the link is pinned to the bottom with margin-top:auto, so the bottom edge of the spread stays level across descriptions of different lengths. The layout: one column up to 56rem, three from 56rem through a container query. The only motion is a colour and gap transition on the link, and prefers-reduced-motion is declared for it."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "title",
+          "lede",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -518,7 +559,9 @@
       "type": "registry:block",
       "title": "Возможности зигзагом",
       "description": "Чередование текст/картинка: ряды идут змейкой, у чётных иллюстрация уезжает в первую колонку через order. Картинки нарисованы градиентами со своим оттенком у каждого ряда.",
-      "categories": ["features"],
+      "categories": [
+        "features"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -530,7 +573,12 @@
       ],
       "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-features-004-* переведена на light-dark(): секция следует color-scheme окружения, подложка по умолчанию прозрачная и задаётся пропом background. Иллюстрация красится прямо в правиле figure, а не через переменную: var(--hue) внутри переменной подставился бы один раз на корне и все ряды стали бы одного оттенка. Разметка у всех рядов одинаковая: змейка сделана правилом nth-child(even) с order у figure, поэтому добавить ряд — это добавить элемент массива. Оттенок иллюстрации приходит инлайновой переменной --vibeui-features-004-hue, посчитанной от индекса ряда; в корне объявлено значение по умолчанию. Раскладка: одна колонка до 56rem, две от 56rem container-запросом.",
       "meta": {
-        "tags": ["features", "zigzag", "alternating", "light"],
+        "tags": [
+          "features",
+          "zigzag",
+          "alternating",
+          "light"
+        ],
         "preview": {
           "width": "full"
         },
@@ -680,7 +728,12 @@
             "docs": "A server component, one file, zero dependencies. The --vibeui-features-004-* palette is moved to light-dark(): the section follows the surrounding color-scheme, and the background is transparent by default and set by the background prop. The illustration is coloured directly in the figure rule rather than through a variable: var(--hue) inside a variable would be substituted once on the root and every row would take the same hue. The markup is identical across the rows: the zigzag is made by an nth-child(even) rule with order on figure, so adding a row means adding an array entry. The illustration hue arrives as the inline variable --vibeui-features-004-hue computed from the row index; a default value is declared on the root. The layout: one column up to 56rem, two from 56rem through a container query."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -688,7 +741,9 @@
       "type": "registry:block",
       "title": "Возможности чеклистом",
       "description": "Список с галочками, у которого есть вторая половина: две колонки того, что входит, и честная колонка того, чего нет. Маркеры нарисованы псевдоэлементами.",
-      "categories": ["features"],
+      "categories": [
+        "features"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -700,7 +755,12 @@
       ],
       "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-features-005-*, тёмная зелёная база. Галочка и прочерк — это ::before и ::after у <li>, а не иконки в разметке: список остаётся чистым <ul>, скринридер читает только текст, а вставка пункта не требует копировать SVG. Колонка исключений отличается только атрибутом data-part и перекрашивает маркер. Раскладка: один столбец до 34rem, два от 34rem, три от 60rem container-запросами.",
       "meta": {
-        "tags": ["features", "checklist", "dark", "comparison"],
+        "tags": [
+          "features",
+          "checklist",
+          "dark",
+          "comparison"
+        ],
         "preview": {
           "width": "full"
         },
@@ -842,7 +902,12 @@
             "docs": "A server component, one file, zero dependencies. The --vibeui-features-005-* palette, a dark green base. The tick and the dash are ::before and ::after on <li> rather than icons in the markup: the list stays a clean <ul>, a screen reader reads only the text, and inserting an item does not require copying an SVG. The exclusions column differs only by the data-part attribute and recolours the marker. The layout: one column up to 34rem, two from 34rem, three from 60rem through container queries."
           }
         },
-        "cardControls": ["accent"]
+        "cardControls": [
+          "title",
+          "excludedTitle",
+          "eyebrow",
+          "accent"
+        ]
       }
     },
     {
@@ -850,7 +915,9 @@
       "type": "registry:block",
       "title": "Таблица сравнения",
       "description": "Таблица сравнения с альтернативой: настоящая <table> с caption и scope, своя колонка подсвечена на всю высоту, на узкой ширине таблица прокручивается вбок.",
-      "categories": ["features"],
+      "categories": [
+        "features"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -862,7 +929,12 @@
       ],
       "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-features-006-* переведена на light-dark(): секция следует color-scheme окружения, подложка по умолчанию прозрачная и задаётся пропом background, полотно таблицы живёт в отдельном токене card. Разметка — настоящая таблица: <caption>, thead со scope=\"col\", заголовки строк через <th scope=\"row\">, поэтому скринридер объявляет и строку, и колонку. Своя колонка помечена data-part=\"mine\" у ячеек и подсвечена фоном. Обёртка со overflow-x:auto и min-width у таблицы: на узкой ширине сравнение прокручивается, а не разваливается на карточки. Значение true рисуется галочкой со словом из пропа yesLabel, false — прочерком с aria-label из noLabel. Подпись таблицы, заголовок первой колонки и оба слова вынесены в пропсы caption, featureLabel, yesLabel и noLabel.",
       "meta": {
-        "tags": ["features", "comparison", "table", "light"],
+        "tags": [
+          "features",
+          "comparison",
+          "table",
+          "light"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1035,7 +1107,13 @@
             "docs": "A server component, one file, zero dependencies. The --vibeui-features-006-* palette is moved to light-dark(): the section follows the surrounding color-scheme, the background is transparent by default and set by the background prop, and the table canvas lives in a separate card token. The markup is a real table: <caption>, a thead with scope=\"col\" and row headings through <th scope=\"row\">, so a screen reader announces both the row and the column. Your own column is marked with data-part=\"mine\" on the cells and highlighted with a background. The wrapper carries overflow-x:auto and the table a min-width: at a narrow width the comparison scrolls instead of falling apart into cards. A true value is drawn as a tick with the word from the yesLabel prop, false as a dash with an aria-label from noLabel. The table caption, the first column heading and both words are exposed as the caption, featureLabel, yesLabel and noLabel props."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "ourName",
+          "theirName",
+          "yesLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1043,7 +1121,9 @@
       "type": "registry:block",
       "title": "Три шага",
       "description": "Блок «как это работает» в три шага: нумерованные кружки на соединительной линии, у каждого шага описание и техническая деталь в рамке.",
-      "categories": ["features"],
+      "categories": [
+        "features"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1055,7 +1135,12 @@
       ],
       "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-features-007-* переведена на light-dark(): секция следует color-scheme окружения, подложка по умолчанию прозрачная и задаётся пропом background. Шаги размечены как <ol>: порядок важен и должен читаться голосом, а не только цветными кружками. Соединительная линия — ::before у шага, у последнего она скрыта. На узкой ширине линия вертикальная и кружки стоят слева, от 56rem линия становится горизонтальной, а кружки уезжают наверх — обе раскладки задаются одним и тем же псевдоэлементом через container-запрос.",
       "meta": {
-        "tags": ["features", "steps", "process", "light"],
+        "tags": [
+          "features",
+          "steps",
+          "process",
+          "light"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1194,7 +1279,12 @@
             "docs": "A server component, one file, zero dependencies. The --vibeui-features-007-* palette is moved to light-dark(): the section follows the surrounding color-scheme, and the background is transparent by default and set by the background prop. The steps are marked up as an <ol>: the order matters and has to be read out loud, not only shown by coloured circles. The connecting line is a ::before on the step, hidden on the last one. At a narrow width the line is vertical and the circles sit on the left; from 56rem the line becomes horizontal and the circles move to the top — both layouts are set by the same pseudo-element through a container query."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1202,7 +1292,9 @@
       "type": "registry:block",
       "title": "Возможности по вкладкам на CSS",
       "description": "Вкладки по возможностям без единой строки JavaScript: переключение держится на группе радиокнопок и селекторе :checked. Панель показывает описание, список и метрику.",
-      "categories": ["features"],
+      "categories": [
+        "features"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1214,7 +1306,12 @@
       ],
       "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-features-008-* переведена на light-dark(): секция следует color-scheme окружения, подложка по умолчанию прозрачная и задаётся пропом background. Название группы вкладок для скринридера вынесено в проп tablistLabel. Радиокнопки лежат перед списком вкладок и панелями, активная панель выбирается селектором вида input:checked ~ [data-part=\"panels\"] [data-part=\"panel\"]:nth-child(n). Инпуты уводятся с экрана, но остаются в потоке фокуса, а кольцо рисуется на подписи через :focus-visible. От радиогруппы достаются стрелки клавиатуры и объявление состояния. Раскладка панели — внутренний [data-part=\"panelgrid\"], поэтому скрытая панель не всплывает на широкой ширине.",
       "meta": {
-        "tags": ["features", "tabs", "no-js", "light"],
+        "tags": [
+          "features",
+          "tabs",
+          "no-js",
+          "light"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1382,7 +1479,12 @@
             "docs": "A server component, one file, zero dependencies. The --vibeui-features-008-* palette is moved to light-dark(): the section follows the surrounding color-scheme, and the background is transparent by default and set by the background prop. The screen-reader name of the tab group is exposed as the tablistLabel prop. The radio buttons sit before the tab list and the panels, and the active panel is selected with a selector of the form input:checked ~ [data-part=\"panels\"] [data-part=\"panel\"]:nth-child(n). The inputs are moved off screen but stay in the focus order, and the ring is drawn on the label through :focus-visible. The radio group brings the keyboard arrows and the state announcement. The panel layout lives on the inner [data-part=\"panelgrid\"], so a hidden panel does not surface at a wide width."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1390,7 +1492,9 @@
       "type": "registry:block",
       "title": "Цифры достижений",
       "description": "Блок цифр и достижений: четыре крупных показателя на линиях сетки, у каждого единица измерения, подпись и сноска о том, что именно измерялось.",
-      "categories": ["features"],
+      "categories": [
+        "features"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1402,7 +1506,12 @@
       ],
       "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-features-009-*, тёмная база. Показатели размечены как <dl> с парами: значение в <dd>, подпись и уточнение в <dt>, порядок переставлен через order, поэтому число визуально идёт первым. Ячейки разделены линиями сетки приёмом gap:1px плюс фон контейнера, а не рамками. Числа набраны tabular-nums, единица измерения — вложенный span на 0.32em. Колонок одна до 34rem, две от 34rem и четыре от 60rem container-запросами.",
       "meta": {
-        "tags": ["features", "stats", "numbers", "dark"],
+        "tags": [
+          "features",
+          "stats",
+          "numbers",
+          "dark"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1531,7 +1640,11 @@
             "docs": "A server component, one file, zero dependencies. The --vibeui-features-009-* palette, a dark base. The metrics are marked up as a <dl> with pairs: the value in <dd>, the label and the note in <dt>, with the order swapped through order so that the figure comes first visually. The cells are separated by grid lines using the gap:1px plus container background technique rather than borders. The numbers are set in tabular-nums, and the unit is a nested span at 0.32em. One column up to 34rem, two from 34rem and four from 60rem through container queries."
           }
         },
-        "cardControls": ["accent"]
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent"
+        ]
       }
     },
     {
@@ -1539,7 +1652,9 @@
       "type": "registry:block",
       "title": "Плитки интеграций",
       "description": "Витрина интеграций без единого логотипа-картинки: плитки с монограммами, оттенок каждой посчитан из названия. Сетка автозаполняемая и зависит от ширины блока.",
-      "categories": ["features"],
+      "categories": [
+        "features"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1551,7 +1666,12 @@
       ],
       "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-features-010-* переведена на light-dark(): секция следует color-scheme окружения, подложка по умолчанию прозрачная и задаётся пропом background. Монограмма красится прямо в своём правиле, а не через переменную: var(--hue) внутри переменной подставился бы один раз на корне и все плитки стали бы одного оттенка. Монограмма — первая буква названия на подложке, оттенок которой считается FNV-хешем от названия и приходит инлайновой переменной --vibeui-features-010-hue; в корне объявлено значение по умолчанию. Одинаковое имя всегда даёт один цвет, поэтому переупорядочивание списка не перекрашивает плитки. Сетка — repeat(auto-fill, minmax(9.5rem, 1fr)): число колонок зависит от ширины блока, а не от заранее выбранного числа.",
       "meta": {
-        "tags": ["features", "integrations", "logos", "grid"],
+        "tags": [
+          "features",
+          "integrations",
+          "logos",
+          "grid"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1717,7 +1837,12 @@
             "docs": "A server component, one file, zero dependencies. The --vibeui-features-010-* palette is moved to light-dark(): the section follows the surrounding color-scheme, and the background is transparent by default and set by the background prop. The monogram is coloured directly in its own rule rather than through a variable: var(--hue) inside a variable would be substituted once on the root and every tile would take the same hue. The monogram is the first letter of the name on a tint whose hue is computed as an FNV hash of the name and arrives as the inline variable --vibeui-features-010-hue; a default value is declared on the root. The same name always yields the same colour, so reordering the list repaints no tiles. The grid is repeat(auto-fill, minmax(9.5rem, 1fr)): the column count depends on the block's width rather than on a number chosen in advance."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1725,7 +1850,9 @@
       "type": "registry:block",
       "title": "Полоса главной выгоды",
       "description": "Преимущества с акцентом на главном: залитая акцентом полоса сверху с одним утверждением, числом и кнопкой, под ней четыре второстепенных пункта нейтральным текстом.",
-      "categories": ["features"],
+      "categories": [
+        "features"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1737,7 +1864,12 @@
       ],
       "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-features-011-* переведена на light-dark(): секция следует color-scheme окружения, подложка по умолчанию прозрачная и задаётся пропом background. Кнопка на полосе инвертирована в accent-fg, а не в фон секции: прозрачный фон сделал бы её невидимой на плотной заливке. Второстепенные пункты живут в отдельном <ul> с верхними линейками и не спорят с полосой по весу. Раскладка: полоса разбивается на текст и метрику от 60rem, пункты идут в два столбца от 34rem и в четыре от 60rem — всё container-запросами.",
       "meta": {
-        "tags": ["features", "benefits", "accent", "hierarchy"],
+        "tags": [
+          "features",
+          "benefits",
+          "accent",
+          "hierarchy"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1892,7 +2024,13 @@
             "docs": "A server component, one file, zero dependencies. The --vibeui-features-011-* palette is moved to light-dark(): the section follows the surrounding color-scheme, and the background is transparent by default and set by the background prop. The button on the band is inverted to accent-fg rather than to the section background: a transparent background would make it invisible on the solid fill. The minor points live in a separate <ul> with top rules and do not argue with the band by weight. The layout: the band splits into text and metric from 60rem, the points go into two columns from 34rem and into four from 60rem — all through container queries."
           }
         },
-        "cardControls": ["accent", "accentForeground", "background"]
+        "cardControls": [
+          "headline",
+          "eyebrow",
+          "accent",
+          "accentForeground",
+          "background"
+        ]
       }
     },
     {
@@ -1900,7 +2038,9 @@
       "type": "registry:block",
       "title": "Карточки ролей",
       "description": "Блок «для кого» с ролями: у каждой карточки зачёркнутая боль и акцентный результат, ниже три конкретные задачи роли и ссылка на сценарий.",
-      "categories": ["features"],
+      "categories": [
+        "features"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1912,7 +2052,12 @@
       ],
       "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-features-012-* переведена на light-dark(): секция следует color-scheme окружения, подложка по умолчанию прозрачная и задаётся пропом background. Подпись ссылки в карточке вынесена в проп linkLabel. Смена состояния показана двумя строками: «сейчас» зачёркнутым серым и «станет» акцентом — контраст двух строк объясняет ценность быстрее списка. Карточка кликабельна целиком за счёт растянутой псевдоссылки ::after у <a>, но в дереве доступности на роль приходится одна ссылка. Фокус-кольцо рисуется на карточке через :focus-within. Раскладка: один столбец, два от 34rem, три от 64rem container-запросами.",
       "meta": {
-        "tags": ["features", "audience", "roles", "cards"],
+        "tags": [
+          "features",
+          "audience",
+          "roles",
+          "cards"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2080,7 +2225,13 @@
             "docs": "A server component, one file, zero dependencies. The --vibeui-features-012-* palette is moved to light-dark(): the section follows the surrounding color-scheme, and the background is transparent by default and set by the background prop. The caption of the card link is exposed as the linkLabel prop. The change of state is shown with two lines: the \"now\" one struck through in grey and the \"will be\" one in the accent — the contrast of the two lines explains the value faster than a list. The card is clickable as a whole thanks to the stretched ::after pseudo-link on the <a>, yet the accessibility tree keeps one link per role. The focus ring is drawn on the card through :focus-within. The layout: one column, two from 34rem, three from 64rem through container queries."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "title",
+          "linkLabel",
+          "eyebrow",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2088,7 +2239,9 @@
       "type": "registry:block",
       "title": "Щиты соответствия",
       "description": "Блок безопасности и соответствия: ряд щитов с явным статусом словами, четыре контроля обычным списком и ссылки на документы под ними.",
-      "categories": ["features"],
+      "categories": [
+        "features"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2100,7 +2253,12 @@
       ],
       "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-features-013-*, тёмная синяя база. Статус сертификата — текст, а не цвет: значок без подписи ничего не доказывает и недоступен дальтонику. Незавершённый сертификат помечается флагом pending: щит получает атрибут data-pending и предупреждающий оттенок, но статус всё равно написан словами. Ссылки на документы — отдельный <ul> внизу: без них секция остаётся набором бейджей. Раскладка: щиты в две колонки, от 34rem в четыре; контроли в один, два и четыре столбца container-запросами.",
       "meta": {
-        "tags": ["features", "security", "compliance", "dark"],
+        "tags": [
+          "features",
+          "security",
+          "compliance",
+          "dark"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2255,7 +2413,11 @@
             "docs": "A server component, one file, zero dependencies. The --vibeui-features-013-* palette, a dark blue base. A certificate status is text, not colour: a glyph with no caption proves nothing and is inaccessible to a colour-blind reader. An unfinished certificate is marked with the pending flag: the shield gets a data-pending attribute and the warning tone, but the status is still spelled out in words. The document links are a separate <ul> at the bottom: without them the section stays a badge collection. The layout: the shields in two columns, from 34rem in four; the controls in one, two and four columns through container queries."
           }
         },
-        "cardControls": ["accent"]
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent"
+        ]
       }
     },
     {
@@ -2263,7 +2425,9 @@
       "type": "registry:block",
       "title": "Цитата и показатель",
       "description": "Большая цитата клиента слева и один измеримый результат справа: <figure> с <blockquote> и подписью, рядом панель с крупным числом и двумя вспомогательными показателями.",
-      "categories": ["features"],
+      "categories": [
+        "features"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2275,7 +2439,12 @@
       ],
       "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-features-014-* на light-dark(): тёплая бумажная гамма в светлой теме и тёплая тёмная в тёмной, подложки по умолчанию нет — секция лежит на фоне страницы, а проп background её задаёт. Разметка — <figure> с <blockquote> и <figcaption>: подпись формально связана с цитатой, а не просто лежит под ней. Открывающая кавычка нарисована псевдоэлементом и вынесена в левое поле, поэтому первая строка цитаты не съезжает. Цитата набрана системным serif, интерфейсный текст — sans. Раскладка: один столбец до 60rem, две колонки от 60rem container-запросом.",
       "meta": {
-        "tags": ["features", "quote", "metric", "testimonial"],
+        "tags": [
+          "features",
+          "quote",
+          "metric",
+          "testimonial"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2414,7 +2583,12 @@
             "docs": "A server component, one file, zero dependencies. The --vibeui-features-014-* palette is on light-dark(): a warm paper range in the light theme and a warm dark one in the dark theme, with no background by default — the section sits on the page background and the background prop sets it. The markup is a <figure> with a <blockquote> and a <figcaption>: the attribution is formally tied to the quote rather than merely placed beneath it. The opening quotation mark is drawn with a pseudo-element and hung in the left margin, so the first line of the quote does not shift. The quote is set in the system serif, the interface text in sans. The layout: one column up to 60rem, two columns from 60rem through a container query."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "authorName",
+          "company",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2422,7 +2596,9 @@
       "type": "registry:block",
       "title": "Лист характеристик",
       "description": "Технические характеристики в стиле даташита: три группы пар «параметр — значение», значения моноширинным шрифтом, между парами точечная линия.",
-      "categories": ["features"],
+      "categories": [
+        "features"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2434,7 +2610,12 @@
       ],
       "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-features-015-* на light-dark(): холодная светлая гамма в светлой теме и холодная тёмная в тёмной, подложки по умолчанию нет — секция лежит на фоне страницы, а проп background её задаёт. Каждая группа — <section> с h3 и <dl>: параметр в <dt>, значение в <dd>, выключенное вправо. Значения набраны моноширинным шрифтом с tabular-nums, поэтому колонка читается по вертикали без сравнения символов глазами. Разделитель между парами — пунктирная нижняя граница, у последней пары снятая. Раскладка: одна группа в столбец, две от 34rem, три от 60rem container-запросами.",
       "meta": {
-        "tags": ["features", "specs", "datasheet", "technical"],
+        "tags": [
+          "features",
+          "specs",
+          "datasheet",
+          "technical"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2619,7 +2800,12 @@
             "docs": "A server component, one file, zero dependencies. The --vibeui-features-015-* palette is on light-dark(): a cool light range in the light theme and a cool dark one in the dark theme, with no background by default — the section sits on the page background and the background prop sets it. Every group is a <section> with an h3 and a <dl>: the parameter in <dt>, the value in <dd>, aligned right. The values are set in a monospaced face with tabular-nums, so the column is read vertically without comparing characters by eye. The separator between pairs is a dotted bottom border, removed on the last pair. The layout: one group per column, two from 34rem, three from 60rem through container queries."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ]
       }
     }
   ]

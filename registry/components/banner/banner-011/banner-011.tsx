@@ -50,6 +50,9 @@ container-type:inline-size;
 [data-vibeui-block="banner-011"]{
 display:flex;flex-direction:column;gap:0.375rem;
 box-sizing:border-box;width:100%;
+/* container-type отрывает ширину от содержимого: без нижней границы
+   блок схлопывается внутри flex-контейнера. */
+min-width:min(100%,16rem);
 color:var(--vibeui-banner-011-fg);
 font-family:var(--vibeui-banner-011-font);
 }

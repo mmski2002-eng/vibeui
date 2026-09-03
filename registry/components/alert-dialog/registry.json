@@ -6,7 +6,9 @@
       "type": "registry:component",
       "title": "Диалог подтверждения",
       "description": "Подтверждение на нативном dialog: фокус стоит на отмене, а кнопка называет действие, а не отвечает «Да».",
-      "categories": ["alert-dialog"],
+      "categories": [
+        "alert-dialog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alertdialog-001-*. Клиентский: \"use client\" ради открытия окна. Модалка открывается методом showModal(), поэтому ловушка фокуса, закрытие по Escape и затемнение достаются от браузера. Отмена стоит первой в разметке и получает фокус, порядок кнопок задаёт row-reverse.",
       "meta": {
-        "tags": ["alert-dialog", "confirm", "dialog", "a11y"],
+        "tags": [
+          "alert-dialog",
+          "confirm",
+          "dialog",
+          "a11y"
+        ],
         "ai": {
           "export": "Alertdialog001",
           "usage": "<Alertdialog001 title=\"Опубликовать каталог?\" confirm=\"Опубликовать\" cancel=\"Не сейчас\" />",
@@ -160,7 +167,17 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-alertdialog-001-* variables. Client-side: \"use client\" for the sake of opening the dialog. The modal is opened with the showModal() method, so the focus trap, closing on Escape and the backdrop come from the browser. Cancel stands first in the markup and takes focus, while the button order is set by row-reverse."
           }
         },
-        "cardControls": ["background"]
+        "cardControls": [
+          "title",
+          "text",
+          "confirm",
+          "cancel",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -168,7 +185,9 @@
       "type": "registry:component",
       "title": "Подтверждение вводом",
       "description": "Удаление с вводом имени: случайно набрать имя проекта нельзя, поэтому промах по кнопке не проходит.",
-      "categories": ["alert-dialog"],
+      "categories": [
+        "alert-dialog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -180,7 +199,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alertdialog-002-*. Клиентский: \"use client\" ради проверки ввода. Сравнение точное, без приведения регистра: имя показано рядом моноширинным шрифтом и копируется глазами. Последствия перечислены списком до кнопок.",
       "meta": {
-        "tags": ["alert-dialog", "destructive", "confirm", "delete"],
+        "tags": [
+          "alert-dialog",
+          "destructive",
+          "confirm",
+          "delete"
+        ],
         "ai": {
           "export": "Alertdialog002",
           "usage": "<Alertdialog002 target=\"vibeui-catalog\" confirm=\"Удалить навсегда\" />",
@@ -318,7 +342,16 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-alertdialog-002-* variables. Client-side: \"use client\" for the sake of checking the input. The comparison is exact, with no case folding: the name is shown alongside in a monospaced font and copied by eye. The consequences are listed before the buttons."
           }
         },
-        "cardControls": ["danger"]
+        "cardControls": [
+          "target",
+          "title",
+          "confirm",
+          "danger",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -326,7 +359,9 @@
       "type": "registry:component",
       "title": "Несохранённые изменения",
       "description": "Развилка о несохранённых изменениях: три исхода, потому что «остаться» нельзя выкидывать ради симметрии кнопок.",
-      "categories": ["alert-dialog"],
+      "categories": [
+        "alert-dialog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -338,7 +373,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alertdialog-003-*. Клиентский: \"use client\" ради открытия окна. Три исхода выведены кнопками в столбик, разрушающий вариант оформлен вторичной кнопкой, закрытие по Escape равнозначно «остаться».",
       "meta": {
-        "tags": ["alert-dialog", "unsaved", "editor", "confirm"],
+        "tags": [
+          "alert-dialog",
+          "unsaved",
+          "editor",
+          "confirm"
+        ],
         "ai": {
           "export": "Alertdialog003",
           "usage": "<Alertdialog003 saveLabel=\"Сохранить и закрыть\" discardLabel=\"Закрыть без сохранения\" />",
@@ -459,7 +499,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-alertdialog-003-* variables. Client-side: \"use client\" for the sake of opening the dialog. The three outcomes are laid out as stacked buttons, the destructive option is styled as a secondary button, and closing on Escape is equivalent to \"stay\"."
           }
         },
-        "cardControls": ["background"]
+        "cardControls": [
+          "title",
+          "discardLabel",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -467,7 +515,9 @@
       "type": "registry:component",
       "title": "Подтверждение с задержкой",
       "description": "Подтверждение с задержкой: кнопка включается через несколько секунд — пауза стоит там, где жмут по инерции.",
-      "categories": ["alert-dialog"],
+      "categories": [
+        "alert-dialog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -479,7 +529,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alertdialog-004-*. Клиентский: \"use client\" ради отсчёта. Таймер живёт в эффекте и снимается при закрытии окна, оставшиеся секунды написаны цифрой в кнопке и продублированы полосой.",
       "meta": {
-        "tags": ["alert-dialog", "delay", "destructive", "confirm"],
+        "tags": [
+          "alert-dialog",
+          "delay",
+          "destructive",
+          "confirm"
+        ],
         "ai": {
           "export": "Alertdialog004",
           "usage": "<Alertdialog004 seconds={5} confirm=\"Стереть\" />",
@@ -600,7 +655,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-alertdialog-004-* variables. Client-side: \"use client\" for the sake of the countdown. The timer lives in an effect and is cleared when the dialog closes; the remaining seconds are written as a digit in the button and duplicated by a bar."
           }
         },
-        "cardControls": ["danger"]
+        "cardControls": [
+          "seconds",
+          "confirm",
+          "danger",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -608,7 +671,9 @@
       "type": "registry:component",
       "title": "Массовое подтверждение",
       "description": "Подтверждение массового действия со списком: «удалить 24 записи» звучит одинаково для нужных и для случайных.",
-      "categories": ["alert-dialog"],
+      "categories": [
+        "alert-dialog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -620,7 +685,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alertdialog-005-*. Клиентский: \"use client\" ради открытия окна. Общее число считается из длины списка и остатка, поэтому заголовок и содержимое не расходятся; список прокручивается и ограничен по высоте.",
       "meta": {
-        "tags": ["alert-dialog", "bulk", "confirm", "list"],
+        "tags": [
+          "alert-dialog",
+          "bulk",
+          "confirm",
+          "list"
+        ],
         "ai": {
           "export": "Alertdialog005",
           "usage": "<Alertdialog005 items={[\"Счёт № 300\"]} more={20} confirm=\"Удалить\" />",
@@ -749,7 +819,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-alertdialog-005-* variables. Client-side: \"use client\" for the sake of opening the dialog. The total is derived from the length of the list and the remainder, so the heading and the contents cannot diverge; the list scrolls and is capped in height."
           }
         },
-        "cardControls": ["more", "background"]
+        "cardControls": [
+          "more",
+          "confirm",
+          "danger",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -757,7 +835,9 @@
       "type": "registry:component",
       "title": "Подтверждение с итогом",
       "description": "Подтверждение, которое умеет провалиться: ожидание и ошибка живут в том же окне, а не исчезают вместе с ним.",
-      "categories": ["alert-dialog"],
+      "categories": [
+        "alert-dialog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -769,7 +849,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alertdialog-006-*. Клиентский: \"use client\" ради состояния запроса. Во время ожидания кнопки выключены, а событие cancel перехвачено, поэтому Escape не прерывает запрос на середине. Демонстрационный исход задаётся таймером и заменяется настоящим запросом.",
       "meta": {
-        "tags": ["alert-dialog", "async", "error", "retry"],
+        "tags": [
+          "alert-dialog",
+          "async",
+          "error",
+          "retry"
+        ],
         "ai": {
           "export": "Alertdialog006",
           "usage": "<Alertdialog006 title=\"Отозвать ключ доступа?\" retry=\"Повторить\" />",
@@ -896,7 +981,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-alertdialog-006-* variables. Client-side: \"use client\" for the sake of the request state. While waiting, the buttons are disabled and the cancel event is intercepted, so Escape does not abort the request midway. The demo outcome is driven by a timer and is replaced by a real request."
           }
         },
-        "cardControls": ["background"]
+        "cardControls": [
+          "title",
+          "errorTitle",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -904,7 +997,9 @@
       "type": "registry:component",
       "title": "Подтверждение с галочкой",
       "description": "Подтверждение с побочным решением: галочка выключена по умолчанию, а подпись кнопки меняется вместе с ней.",
-      "categories": ["alert-dialog"],
+      "categories": [
+        "alert-dialog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -916,7 +1011,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alertdialog-007-*. Клиентский: \"use client\" ради состояния галочки. Галочка выключена по умолчанию, а подпись главной кнопки собирается из выбора, поэтому перед нажатием видно, что именно произойдёт.",
       "meta": {
-        "tags": ["alert-dialog", "confirm", "checkbox", "consent"],
+        "tags": [
+          "alert-dialog",
+          "confirm",
+          "checkbox",
+          "consent"
+        ],
         "ai": {
           "export": "Alertdialog007",
           "usage": "<Alertdialog007 optionLabel=\"Сообщить участникам\" confirm=\"Опубликовать\" />",
@@ -1041,7 +1141,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-alertdialog-007-* variables. Client-side: \"use client\" for the sake of the checkbox state. The checkbox is off by default, and the label of the main button is assembled from the choice, so what exactly will happen is visible before the press."
           }
         },
-        "cardControls": ["background"]
+        "cardControls": [
+          "optionLabel",
+          "confirm",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -1049,7 +1157,9 @@
       "type": "registry:component",
       "title": "Запрос разрешения",
       "description": "Запрос разрешения до системного окна: браузер спрашивает один раз, поэтому сначала объясняют зачем.",
-      "categories": ["alert-dialog"],
+      "categories": [
+        "alert-dialog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1061,7 +1171,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alertdialog-008-*. Клиентский: \"use client\" ради открытия окна. Окно объясняет назначение доступа до вызова системного запроса, отказ вынесен полноценной кнопкой, а «никогда не спрашивать» стоит третьим тихим вариантом.",
       "meta": {
-        "tags": ["alert-dialog", "permission", "notifications", "consent"],
+        "tags": [
+          "alert-dialog",
+          "permission",
+          "notifications",
+          "consent"
+        ],
         "ai": {
           "export": "Alertdialog008",
           "usage": "<Alertdialog008 title=\"Присылать уведомления?\" uses={[\"письмо об упавшей сборке\"]} />",
@@ -1187,7 +1302,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-alertdialog-008-* variables. Client-side: \"use client\" for the sake of opening the dialog. The dialog explains the purpose of the permission before the system prompt is invoked, the refusal is given a button of its own, and \"never ask again\" stands third as the quiet option."
           }
         },
-        "cardControls": ["background"]
+        "cardControls": [
+          "title",
+          "allow",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -1195,7 +1318,9 @@
       "type": "registry:component",
       "title": "Выход со всех устройств",
       "description": "Выход со всех устройств: список сессий с местом и временем, а текущая помечена — иначе неясно, что потеряется.",
-      "categories": ["alert-dialog"],
+      "categories": [
+        "alert-dialog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1207,7 +1332,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alertdialog-009-*. Клиентский: \"use client\" ради открытия окна. Сессии выведены списком с устройством, местом и последним входом; текущая помечена рамкой и подписью, число сессий подставлено в кнопку.",
       "meta": {
-        "tags": ["alert-dialog", "sessions", "security", "signout"],
+        "tags": [
+          "alert-dialog",
+          "sessions",
+          "security",
+          "signout"
+        ],
         "ai": {
           "export": "Alertdialog009",
           "usage": "<Alertdialog009 sessions={[{ device: \"Chrome, Windows\", place: \"Москва\", seen: \"сейчас\", current: true }]} />",
@@ -1348,7 +1478,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-alertdialog-009-* variables. Client-side: \"use client\" for the sake of opening the dialog. The sessions are listed with device, place and last sign-in; the current one is marked with a border and a caption, and the number of sessions is substituted into the button."
           }
         },
-        "cardControls": ["background"]
+        "cardControls": [
+          "title",
+          "confirm",
+          "danger",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -1356,7 +1494,9 @@
       "type": "registry:component",
       "title": "Понижение тарифа",
       "description": "Понижение тарифа: два списка рядом — что пропадёт и что останется, потому что страх потерять всё держит на дорогом тарифе.",
-      "categories": ["alert-dialog"],
+      "categories": [
+        "alert-dialog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1368,7 +1508,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alertdialog-010-*. Клиентский: \"use client\" ради открытия окна. Списки потерь и сохранённого раскладываются в две колонки контейнерным запросом, дата вступления в силу вынесена отдельной строкой.",
       "meta": {
-        "tags": ["alert-dialog", "billing", "downgrade", "plan"],
+        "tags": [
+          "alert-dialog",
+          "billing",
+          "downgrade",
+          "plan"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1507,7 +1652,12 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-alertdialog-010-* variables. Client-side: \"use client\" for the sake of opening the dialog. The lists of losses and of what is kept lay out into two columns through a container query, and the effective date is pulled out onto a line of its own."
           }
         },
-        "cardControls": ["background"]
+        "cardControls": [
+          "toPlan",
+          "confirm",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1515,7 +1665,9 @@
       "type": "registry:component",
       "title": "Конфликт версий",
       "description": "Конфликт версий: обе правки настоящие, поэтому это выбор радиокнопками, а не «вы уверены», и ничего не выбрано заранее.",
-      "categories": ["alert-dialog"],
+      "categories": [
+        "alert-dialog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1527,7 +1679,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alertdialog-011-*. Клиентский: \"use client\" ради выбора версии. Оба варианта выведены радиокнопками с автором и временем правки, кнопка сохранения ждёт выбора, а отмена ведёт к сравнению версий.",
       "meta": {
-        "tags": ["alert-dialog", "conflict", "versions", "collaboration"],
+        "tags": [
+          "alert-dialog",
+          "conflict",
+          "versions",
+          "collaboration"
+        ],
         "ai": {
           "export": "Alertdialog011",
           "usage": "<Alertdialog011 mineLabel=\"Оставить мою версию\" theirsLabel=\"Взять версию Ильи\" />",
@@ -1651,7 +1808,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-alertdialog-011-* variables. Client-side: \"use client\" for the sake of the version choice. Both options are rendered as radio buttons with the author and the edit time, the save button waits for a choice, and cancelling leads to a comparison of the versions."
           }
         },
-        "cardControls": ["background"]
+        "cardControls": [
+          "title",
+          "cancel",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -1659,7 +1824,9 @@
       "type": "registry:component",
       "title": "Подтверждение списания",
       "description": "Подтверждение списания: сумма крупно и в кнопке, карта названа здесь же, а условия возврата — до нажатия.",
-      "categories": ["alert-dialog"],
+      "categories": [
+        "alert-dialog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1671,7 +1838,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alertdialog-012-*. Клиентский: \"use client\" ради открытия окна. Сумма набрана крупно табличными цифрами и повторена в кнопке, разбор суммы выведен списком определений, способ оплаты и условия возврата стоят до кнопок.",
       "meta": {
-        "tags": ["alert-dialog", "payment", "charge", "billing"],
+        "tags": [
+          "alert-dialog",
+          "payment",
+          "charge",
+          "billing"
+        ],
         "ai": {
           "export": "Alertdialog012",
           "usage": "<Alertdialog012 amount=\"99 200 ₽\" card=\"Visa · 6411\" lines={[{ label: \"Тариф\", value: \"124 000 ₽\" }]} />",
@@ -1810,7 +1982,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-alertdialog-012-* variables. Client-side: \"use client\" for the sake of opening the dialog. The amount is set large in tabular figures and repeated in the button, the breakdown of the amount is rendered as a definition list, and the payment method and the refund terms stand before the buttons."
           }
         },
-        "cardControls": ["accent"]
+        "cardControls": [
+          "amount",
+          "card",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -1818,7 +1998,9 @@
       "type": "registry:component",
       "title": "Блокировка участника",
       "description": "Блокировка участника: причина обязательна и записывается в историю — заблокированный спросит «за что» позже.",
-      "categories": ["alert-dialog"],
+      "categories": [
+        "alert-dialog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1830,7 +2012,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alertdialog-013-*. Клиентский: \"use client\" ради выбора причины. Причина — нативный select с пустым первым пунктом, кнопка ждёт выбора, комментарий связан с пояснением через aria-describedby. Тема берётся из color-scheme окружения через light-dark(): палитра держит отдельные светлую и тёмную ветки, собственной тёмной темы компонент не носит.",
       "meta": {
-        "tags": ["alert-dialog", "moderation", "team", "reason"],
+        "tags": [
+          "alert-dialog",
+          "moderation",
+          "team",
+          "reason"
+        ],
         "ai": {
           "export": "Alertdialog013",
           "usage": "<Alertdialog013 person=\"Ким Сон\" reasons={[\"Нарушение правил\"]} />",
@@ -1962,7 +2149,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-alertdialog-013-* variables. Client-side: \"use client\" for the sake of the reason choice. The reason is a native select with an empty first option, the button waits for a choice, and the comment is tied to its explanation through aria-describedby. The theme comes from the surrounding color-scheme through light-dark(): the palette holds separate light and dark branches, and the component does not ship a dark theme of its own."
           }
         },
-        "cardControls": ["danger", "background"]
+        "cardControls": [
+          "person",
+          "confirm",
+          "danger",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -1970,7 +2165,9 @@
       "type": "registry:component",
       "title": "Подтверждение с отключением",
       "description": "Подтверждение, которое можно отключить: галочка про следующий раз, и сразу сказано, где вернуть его обратно.",
-      "categories": ["alert-dialog"],
+      "categories": [
+        "alert-dialog"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1982,7 +2179,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alertdialog-014-*. Клиентский: \"use client\" ради состояния галочки и отключения. После отключения рядом с кнопкой появляется строка с возвратом подтверждения, поэтому решение обратимо в один клик. Тема берётся из color-scheme окружения через light-dark(): палитра держит отдельные светлую и тёмную ветки, собственной тёмной темы компонент не носит.",
       "meta": {
-        "tags": ["alert-dialog", "confirm", "preferences", "reversible"],
+        "tags": [
+          "alert-dialog",
+          "confirm",
+          "preferences",
+          "reversible"
+        ],
         "ai": {
           "export": "Alertdialog014",
           "usage": "<Alertdialog014 rememberLabel=\"Больше не спрашивать\" confirm=\"В архив\" />",
@@ -2106,7 +2308,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-alertdialog-014-* variables. Client-side: \"use client\" for the sake of the checkbox state and of switching the confirmation off. Once it is switched off, a line offering to bring the confirmation back appears next to the button, so the decision is reversible in one click. The theme comes from the surrounding color-scheme through light-dark(): the palette holds separate light and dark branches, and the component does not ship a dark theme of its own."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "title",
+          "confirm",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     }
   ]

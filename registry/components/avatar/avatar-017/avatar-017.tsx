@@ -33,7 +33,10 @@ const STYLES = `
 [data-vibeui-block="avatar-017"]{
 container-type:inline-size;flex-wrap:wrap;
 position:relative;display:flex;align-items:center;gap:0.625rem;
-box-sizing:border-box;width:100%;max-width:24rem;padding:0.5rem 0.625rem;
+box-sizing:border-box;width:100%;
+/* container-type отрывает ширину от содержимого: без нижней границы
+   блок схлопывается внутри flex-контейнера. */
+min-width:min(100%,16rem);max-width:24rem;padding:0.5rem 0.625rem;
 background:var(--vibeui-avatar-017-bg);
 border:1px solid var(--vibeui-avatar-017-border);border-radius:0.75rem;
 font-family:var(--vibeui-avatar-017-font);color:var(--vibeui-avatar-017-fg);

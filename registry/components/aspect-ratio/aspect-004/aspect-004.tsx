@@ -37,7 +37,10 @@ container-type:inline-size;
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="aspect-004"]{color-scheme:dark}
 [data-vibeui-block="aspect-004"]{
-position:relative;display:block;width:100%;max-width:20rem;box-sizing:border-box;overflow:hidden;
+position:relative;display:block;width:100%;
+/* container-type отрывает ширину от содержимого: без нижней границы
+   блок схлопывается внутри flex-контейнера. */
+min-width:min(100%,16rem);max-width:20rem;box-sizing:border-box;overflow:hidden;
 aspect-ratio:3 / 4;border-radius:var(--vibeui-aspect-004-radius);
 background:
 radial-gradient(90% 70% at 70% 15%,oklch(0.62 0.09 60),transparent 65%),

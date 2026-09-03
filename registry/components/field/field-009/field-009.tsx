@@ -42,7 +42,10 @@ container-type:inline-size;
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="field-009"]{color-scheme:dark}
 /* Подложки по умолчанию нет: строка ложится на фон страницы. */
 [data-vibeui-block="field-009"]{
-display:block;width:100%;max-width:34rem;box-sizing:border-box;padding:0.875rem;
+display:block;width:100%;
+/* container-type отрывает ширину от содержимого: без нижней границы
+   блок схлопывается внутри flex-контейнера. */
+min-width:min(100%,16rem);max-width:34rem;box-sizing:border-box;padding:0.875rem;
 background:var(--vibeui-field-009-surface);
 border:1px solid var(--vibeui-field-009-shell);border-radius:0.875rem;
 font-family:var(--vibeui-field-009-font);color:var(--vibeui-field-009-fg);

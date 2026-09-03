@@ -66,4 +66,9 @@ export const PREVIEWS = {
       (module) => module.Timeline012,
     ),
   ),
+  "timeline-013": dynamic(() =>
+    import("@/registry/components/timeline/timeline-013/timeline-013").then(
+      (module) => module.Timeline013,
+    ),
+  ),
 } satisfies PreviewMap

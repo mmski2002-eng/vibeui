@@ -42,7 +42,10 @@ position:relative;display:flex;flex-direction:column;
 /* width вместе с max-width: container-type отвязывает ширину от содержимого,
    и без явной ширины карточка схлопывается в кадре, который центрирует
    содержимое флексом. */
-width:100%;max-width:22rem;box-sizing:border-box;
+width:100%;
+/* container-type отрывает ширину от содержимого: без нижней границы
+   блок схлопывается внутри flex-контейнера. */
+min-width:min(100%,16rem);max-width:22rem;box-sizing:border-box;
 border:1px solid var(--vibeui-card-001-border);
 border-radius:var(--vibeui-card-001-radius);
 background:var(--vibeui-card-001-bg);color:var(--vibeui-card-001-fg);

@@ -50,6 +50,9 @@ const STYLES = `
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="alertdialog-010"]{color-scheme:dark}
 [data-vibeui-block="alertdialog-010"]{
+/* container-type отрывает ширину от содержимого: без нижней границы
+   блок схлопывается внутри flex-контейнера. */
+min-width:min(100%,16rem);
 font-family:var(--vibeui-alertdialog-010-font);color:var(--vibeui-alertdialog-010-fg);
 }
 [data-vibeui-block="alertdialog-010"] *{box-sizing:border-box}

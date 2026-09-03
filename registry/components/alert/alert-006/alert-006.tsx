@@ -44,7 +44,10 @@ container-type:inline-size;
    к потомкам контейнера, но не к нему самому. На широкой раскладке перенос
    ни на что не влияет — всё умещается в строку. */
 display:flex;flex-wrap:wrap;align-items:center;gap:1rem;
-width:100%;box-sizing:border-box;overflow:hidden;
+width:100%;
+/* container-type отрывает ширину от содержимого: без нижней границы
+   блок схлопывается внутри flex-контейнера. */
+min-width:min(100%,16rem);box-sizing:border-box;overflow:hidden;
 padding:1rem;
 border:1px solid var(--vibeui-alert-006-border);
 border-radius:var(--vibeui-alert-006-radius);

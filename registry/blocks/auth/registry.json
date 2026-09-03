@@ -6,7 +6,9 @@
       "type": "registry:block",
       "title": "Вход",
       "description": "Вход: подсказки autocomplete для менеджеров паролей, «забыли пароль» рядом с полем, вход через сервисы под формой.",
-      "categories": ["auth"],
+      "categories": [
+        "auth"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-001-*. Серверный: хуков нет. Поля объявлены autoComplete=\"username\" и \"current-password\", поэтому менеджер паролей подставляет данные. Разделитель перед входом через сервисы собран гридом, а не фоном под словом.",
       "meta": {
-        "tags": ["auth", "signin", "form", "password"],
+        "tags": [
+          "auth",
+          "signin",
+          "form",
+          "password"
+        ],
         "ai": {
           "export": "Auth001",
           "usage": "<Auth001 title=\"Вход\" providers={[\"Продолжить с Google\"]} />",
@@ -132,7 +139,10 @@
                 "passwordLabel": "Password",
                 "forgot": "Forgot password?",
                 "submit": "Sign in",
-                "providers": ["Continue with Google", "Continue with GitHub"],
+                "providers": [
+                  "Continue with Google",
+                  "Continue with GitHub"
+                ],
                 "switchText": "No account yet?",
                 "switchLink": "Create one",
                 "keepLabel": "Keep me signed in on this device",
@@ -143,7 +153,15 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-001-*. A server component: there are no hooks. The fields are declared autoComplete=\"username\" and \"current-password\", so a password manager fills the data in. The divider before sign-in through providers is built with a grid rather than a background behind the word."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "title",
+          "submit",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -151,7 +169,9 @@
       "type": "registry:block",
       "title": "Регистрация",
       "description": "Регистрация: оценка пароля словом и полосой, требования показаны заранее, а поля повтора пароля нет намеренно.",
-      "categories": ["auth"],
+      "categories": [
+        "auth"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -163,7 +183,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-002-*. Клиентский: \"use client\" ради оценки пароля. Оценка считается по длине и разнообразию символов, объявляется через aria-live и дублируется списком требований с отметками.",
       "meta": {
-        "tags": ["auth", "signup", "password", "strength"],
+        "tags": [
+          "auth",
+          "signup",
+          "password",
+          "strength"
+        ],
         "ai": {
           "export": "Auth002",
           "usage": "<Auth002 title=\"Создать аккаунт\" submit=\"Создать\" />",
@@ -284,7 +309,12 @@
                 "passwordLabel": "Password",
                 "showLabel": "Show",
                 "hideLabel": "Hide",
-                "verdicts": ["far too simple", "simple", "will do", "solid"],
+                "verdicts": [
+                  "far too simple",
+                  "simple",
+                  "will do",
+                  "solid"
+                ],
                 "verdictTemplate": "Password is {verdict}",
                 "ruleLabels": [
                   "10 characters or more",
@@ -296,7 +326,15 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-002-*. A client component: \"use client\" is there for the password scoring. The score is computed from the length and the variety of characters, is announced through aria-live and is duplicated by a requirements list with ticks."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "title",
+          "submit",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -304,7 +342,9 @@
       "type": "registry:block",
       "title": "Сброс пароля",
       "description": "Восстановление доступа: ответ не раскрывает, существует ли адрес, а экран отправки показывает почту и даёт повтор.",
-      "categories": ["auth"],
+      "categories": [
+        "auth"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -316,7 +356,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-003-*. Серверный: хуков нет, состояние приходит пропом state. Оба экрана — форма и подтверждение отправки — живут в одном блоке, а формулировка «если адрес зарегистрирован» не даёт проверять чужие почты.",
       "meta": {
-        "tags": ["auth", "reset", "email", "security"],
+        "tags": [
+          "auth",
+          "reset",
+          "email",
+          "security"
+        ],
         "ai": {
           "export": "Auth003",
           "usage": "<Auth003 state=\"sent\" sentText=\"Если адрес зарегистрирован, письмо отправлено.\" />",
@@ -352,7 +397,10 @@
             "label": "Состояние",
             "type": "select",
             "default": "form",
-            "options": ["form", "sent"]
+            "options": [
+              "form",
+              "sent"
+            ]
           },
           {
             "prop": "title",
@@ -438,7 +486,15 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-003-*. A server component: there are no hooks, and the state arrives through the state prop. Both screens — the form and the send confirmation — live inside one block, and the \"if the address is registered\" wording keeps the form from probing other people's emails."
           }
         },
-        "cardControls": ["state", "accent", "background"]
+        "cardControls": [
+          "state",
+          "title",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -446,7 +502,9 @@
       "type": "registry:block",
       "title": "Подтверждение кодом",
       "description": "Подтверждение кодом: вставка целиком раскладывается по клеткам, Backspace на пустой возвращает к предыдущей.",
-      "categories": ["auth"],
+      "categories": [
+        "auth"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -458,7 +516,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-004-*. Клиентский: \"use client\" ради ввода по клеткам. Обработчик вставки раскладывает скопированный код по полям, каждому полю заданы inputMode=\"numeric\" и autoComplete=\"one-time-code\", клетки набраны моноширинным шрифтом.",
       "meta": {
-        "tags": ["auth", "otp", "code", "verification"],
+        "tags": [
+          "auth",
+          "otp",
+          "code",
+          "verification"
+        ],
         "ai": {
           "export": "Auth004",
           "usage": "<Auth004 length={6} submit=\"Подтвердить\" />",
@@ -578,7 +641,15 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-004-*. A client component: \"use client\" is there for the cell-by-cell entry. The paste handler lays a copied code out across the fields, every field is given inputMode=\"numeric\" and autoComplete=\"one-time-code\", and the cells are set in a monospaced face."
           }
         },
-        "cardControls": ["length", "accent", "background"]
+        "cardControls": [
+          "length",
+          "title",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -586,7 +657,9 @@
       "type": "registry:block",
       "title": "Вход в две колонки",
       "description": "Вход на две колонки: обещание слева исчезает на узкой ширине, а форма стоит первой в разметке.",
-      "categories": ["auth"],
+      "categories": [
+        "auth"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -598,7 +671,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-005-*. Серверный: хуков нет. Форма идёт первой в разметке и переставляется в правую колонку гридом на ширине от 44rem; тёмная колонка с обещанием скрывается целиком, а не сжимается.",
       "meta": {
-        "tags": ["auth", "signin", "split", "marketing"],
+        "tags": [
+          "auth",
+          "signin",
+          "split",
+          "marketing"
+        ],
         "preview": {
           "width": "full"
         },
@@ -742,7 +820,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-005-*. A server component: there are no hooks. The form comes first in the markup and is moved into the right column by the grid at a width from 44rem; the dark column with the promise is hidden entirely rather than squeezed."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "claim",
+          "title",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -750,7 +833,9 @@
       "type": "registry:block",
       "title": "Приглашение в команду",
       "description": "Приглашение в проект: права роли перечислены до кнопки, а отказ — такая же кнопка рядом, а не ссылка в углу.",
-      "categories": ["auth"],
+      "categories": [
+        "auth"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -762,7 +847,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-006-*. Серверный: хуков нет. Оттенок аватара пригласившего считается хешем FNV-1a по имени. Список прав роли выведен отдельным блоком перед кнопками, срок действия приглашения написан явно.",
       "meta": {
-        "tags": ["auth", "invite", "team", "roles"],
+        "tags": [
+          "auth",
+          "invite",
+          "team",
+          "roles"
+        ],
         "ai": {
           "export": "Auth006",
           "usage": "<Auth006 project=\"Каталог\" role=\"Редактор\" rights={[\"Ставить блоки\"]} />",
@@ -805,7 +895,11 @@
             "label": "Роль",
             "type": "select",
             "default": "Редактор",
-            "options": ["Владелец", "Редактор", "Читатель"]
+            "options": [
+              "Владелец",
+              "Редактор",
+              "Читатель"
+            ]
           },
           {
             "prop": "accent",
@@ -878,7 +972,11 @@
                   "Place blocks into the team's projects",
                   "Invite readers, but not owners"
                 ],
-                "members": ["Ilya Mokhov", "Kim Son", "Peter Gai"],
+                "members": [
+                  "Ilya Mokhov",
+                  "Kim Son",
+                  "Peter Gai"
+                ],
                 "accept": "Accept the invitation",
                 "decline": "Decline",
                 "note": "Declining is reversible: ask to be invited again.",
@@ -891,7 +989,15 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-006-*. A server component: there are no hooks. The hue of the inviter's avatar is computed as an FNV-1a hash of the name. The list of the role's rights is put in a separate block before the buttons, and the invitation's expiry is spelled out."
           }
         },
-        "cardControls": ["role", "accent", "background"]
+        "cardControls": [
+          "project",
+          "role",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -899,7 +1005,9 @@
       "type": "registry:block",
       "title": "Почта и пароль",
       "description": "Вход почтой и паролем: проверка полей на выходе из них, подсказка о Caps Lock и одна общая ошибка, которая не выдаёт, что именно не подошло.",
-      "categories": ["auth"],
+      "categories": [
+        "auth"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -911,7 +1019,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-007-*. Клиентский: \"use client\" ради проверки полей и показа пароля. Валидация запускается по onBlur, а не на каждый символ; Caps Lock ловится через event.getModifierState в onKeyUp; общая плашка ошибки помечена role=\"alert\". Раскладка карточки считается контейнерным запросом от ширины блока.",
       "meta": {
-        "tags": ["auth", "signin", "form", "validation"],
+        "tags": [
+          "auth",
+          "signin",
+          "form",
+          "validation"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1043,7 +1156,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-007-*. A client component: \"use client\" is there for the field checks and the password reveal. Validation runs on onBlur rather than on every character; Caps Lock is caught through event.getModifierState in onKeyUp; the shared error notice is marked role=\"alert\". The card layout is measured by a container query against the block's width."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "title",
+          "submit",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1051,7 +1169,9 @@
       "type": "registry:block",
       "title": "Сначала вход через сервис",
       "description": "Вход через сервисы первым экраном: кнопки провайдеров сверху, разделитель «или», почта запасным путём и метка «в прошлый раз».",
-      "categories": ["auth"],
+      "categories": [
+        "auth"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1063,7 +1183,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-008-*. Серверный: хуков нет. Разделитель собран гридом из двух псевдоэлементов-линий, а не фоном под словом. Отметка последнего провайдера связана с кнопкой через aria-describedby, чтобы её услышал скринридер.",
       "meta": {
-        "tags": ["auth", "signin", "oauth", "providers"],
+        "tags": [
+          "auth",
+          "signin",
+          "oauth",
+          "providers"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1203,7 +1328,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-008-*. A server component: there are no hooks. The divider is built with a grid from two pseudo-element lines rather than a background behind the word. The mark on the last provider is tied to the button through aria-describedby so that a screen reader hears it."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "title",
+          "submit",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1211,7 +1341,9 @@
       "type": "registry:block",
       "title": "Регистрация с согласиями",
       "description": "Регистрация с осознанным согласием: кнопка ждёт обязательной галочки, рассылка выключена по умолчанию, текст условий раскрывается на месте.",
-      "categories": ["auth"],
+      "categories": [
+        "auth"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1223,7 +1355,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-009-*. Клиентский: \"use client\" ради связи чекбокса согласия с состоянием кнопки. Полный текст условий лежит в <details>, чтобы не уводить со страницы; строка-подсказка под кнопкой помечена role=\"status\".",
       "meta": {
-        "tags": ["auth", "signup", "consent", "terms"],
+        "tags": [
+          "auth",
+          "signup",
+          "consent",
+          "terms"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1354,7 +1491,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-009-*. A client component: \"use client\" is there for tying the consent checkbox to the button state. The full text of the terms sits in a <details> so as not to lead away from the page; the hint line under the button is marked role=\"status\"."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "title",
+          "submit",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1362,7 +1504,9 @@
       "type": "registry:block",
       "title": "Шаги сброса пароля",
       "description": "Запрос ссылки на смену пароля рядом с колонкой «что будет дальше»: адрес отправителя, срок жизни ссылки и обратный отсчёт до повтора.",
-      "categories": ["auth"],
+      "categories": [
+        "auth"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1374,7 +1518,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-010-*. Клиентский: \"use client\" ради обратного отсчёта на useState и useEffect с setTimeout. Правая колонка со списком шагов скрывается целиком на узкой ширине через контейнерный запрос, номера шагов рисует counter, а не разметка.",
       "meta": {
-        "tags": ["auth", "reset", "email", "cooldown"],
+        "tags": [
+          "auth",
+          "reset",
+          "email",
+          "cooldown"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1505,7 +1654,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-010-*. A client component: \"use client\" is there for the countdown on useState and a useEffect with setTimeout. The right column with the list of steps is hidden entirely at a narrow width through a container query, and the step numbers are drawn by a counter rather than by the markup."
           }
         },
-        "cardControls": ["cooldown", "accent", "background"]
+        "cardControls": [
+          "title",
+          "cooldown",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1513,7 +1667,9 @@
       "type": "registry:block",
       "title": "Новый пароль",
       "description": "Установка нового пароля: вместо полоски надёжности — четыре именованных требования с отметками и проверка совпадения прямо при вводе.",
-      "categories": ["auth"],
+      "categories": [
+        "auth"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1525,7 +1681,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-011-*. Клиентский: \"use client\" ради разбора пароля и сверки повтора. Требования считаются регулярными выражениями с флагом u (поддерживают кириллицу), список помечен aria-live=\"polite\", кнопка выключена, пока не закрыты все требования и не совпал повтор.",
       "meta": {
-        "tags": ["auth", "password", "strength", "reset"],
+        "tags": [
+          "auth",
+          "password",
+          "strength",
+          "reset"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1657,7 +1818,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-011-*. A client component: \"use client\" is there for parsing the password and checking the repeat. The requirements are computed with regular expressions carrying the u flag (they support Cyrillic), the list is marked aria-live=\"polite\", and the button is disabled until every requirement is met and the repeat matches."
           }
         },
-        "cardControls": ["minLength", "accent", "background"]
+        "cardControls": [
+          "title",
+          "minLength",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1665,7 +1831,9 @@
       "type": "registry:block",
       "title": "Код одним полем",
       "description": "Подтверждение почты кодом одним полем с широкой разрядкой вместо клеток: код вставляется и правится как обычный текст, попытки посчитаны.",
-      "categories": ["auth"],
+      "categories": [
+        "auth"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1677,7 +1845,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-012-*. Клиентский: \"use client\" ради отсечения нецифр на вводе. Одно поле с letter-spacing и text-indent, компенсирующим разрядку последнего знака; autoComplete=\"one-time-code\" и inputMode=\"numeric\" включают подстановку кода на телефоне.",
       "meta": {
-        "tags": ["auth", "otp", "email", "verification"],
+        "tags": [
+          "auth",
+          "otp",
+          "email",
+          "verification"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1801,7 +1974,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-012-*. A client component: \"use client\" is there for stripping non-digits on input. One field with letter-spacing and a text-indent compensating for the tracking after the last character; autoComplete=\"one-time-code\" and inputMode=\"numeric\" turn on code filling on a phone."
           }
         },
-        "cardControls": ["length", "attempts", "accent", "background"]
+        "cardControls": [
+          "length",
+          "attempts",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1809,7 +1987,9 @@
       "type": "registry:block",
       "title": "Вход по ссылке",
       "description": "Вход по одноразовой ссылке: форма запроса с объяснением «как это работает» и экран отправки с предупреждением, что ссылку нельзя пересылать.",
-      "categories": ["auth"],
+      "categories": [
+        "auth"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1821,7 +2001,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-013-*. Серверный: хуков нет, состояние приходит пропом state. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы. Оба экрана — запрос и отправка — живут в одном блоке; список «как это работает» на широкой ширине разворачивается в три колонки контейнерным запросом.",
       "meta": {
-        "tags": ["auth", "passwordless", "magic-link", "email"],
+        "tags": [
+          "auth",
+          "passwordless",
+          "magic-link",
+          "email"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1862,7 +2047,10 @@
             "label": "Состояние",
             "type": "select",
             "default": "request",
-            "options": ["request", "sent"]
+            "options": [
+              "request",
+              "sent"
+            ]
           },
           {
             "prop": "linkMinutes",
@@ -1967,7 +2155,13 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-013-*. A server component: there are no hooks, and the state arrives through the state prop. The theme comes from the surrounding color-scheme through light-dark(): the block has no background by default, it sits directly on the page background. Both screens — the request and the send — live inside one block; at a wide width the \"how it works\" list unfolds into three columns through a container query."
           }
         },
-        "cardControls": ["state", "linkMinutes", "accent", "background"]
+        "cardControls": [
+          "state",
+          "linkMinutes",
+          "accent",
+          "background",
+          "title"
+        ]
       }
     },
     {
@@ -1975,7 +2169,9 @@
       "type": "registry:block",
       "title": "Двухфакторная аутентификация",
       "description": "Второй шаг входа кодом из приложения: доверие браузеру с явным сроком и три запасных пути на случай потерянного телефона.",
-      "categories": ["auth"],
+      "categories": [
+        "auth"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1987,7 +2183,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-014-*. Клиентский: \"use client\" ради отсечения нецифр и блокировки кнопки до шести знаков. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, свечение под карточкой остаётся акцентным пятном в обеих темах. Запасные пути — обычные кнопки в списке, а не ссылки в подвале.",
       "meta": {
-        "tags": ["auth", "2fa", "otp", "security"],
+        "tags": [
+          "auth",
+          "2fa",
+          "otp",
+          "security"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2132,7 +2333,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-014-*. A client component: \"use client\" is there for stripping non-digits and for disabling the button until six characters are in. The theme comes from the surrounding color-scheme through light-dark(): the block has no background by default, and the glow under the card stays an accent patch in both themes. The fallback routes are ordinary buttons in a list rather than links in the footer."
           }
         },
-        "cardControls": ["trustDays", "accent", "background"]
+        "cardControls": [
+          "trustDays",
+          "accent",
+          "background",
+          "app"
+        ]
       }
     },
     {
@@ -2140,7 +2346,9 @@
       "type": "registry:block",
       "title": "Резервные коды",
       "description": "Экран резервных кодов двухфакторки: сетка кодов, три способа их унести и обязательное подтверждение перед закрытием.",
-      "categories": ["auth"],
+      "categories": [
+        "auth"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2152,7 +2360,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-015-*. Клиентский: \"use client\" ради галочки сохранения и отметки «скопировано». Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы. Использованные коды помечены data-used и зачёркиваются, а не исчезают; для скринридера к ним добавлена визуально скрытая подпись.",
       "meta": {
-        "tags": ["auth", "2fa", "backup", "recovery"],
+        "tags": [
+          "auth",
+          "2fa",
+          "backup",
+          "recovery"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2287,7 +2500,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-015-*. A client component: \"use client\" is there for the save checkbox and the \"copied\" mark. The theme comes from the surrounding color-scheme through light-dark(): the block has no background by default, it sits directly on the page background. Used codes are marked data-used and struck through rather than disappearing; a visually hidden caption is added to them for a screen reader."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "accent",
+          "background",
+          "confirm",
+          "submit"
+        ]
       }
     },
     {
@@ -2295,7 +2513,9 @@
       "type": "registry:block",
       "title": "Выбор рабочего пространства",
       "description": "Выбор рабочего пространства после входа: под каждым названием стоит роль, список — настоящая radiogroup, сверху поиск по названию.",
-      "categories": ["auth"],
+      "categories": [
+        "auth"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2307,7 +2527,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-016-*. Клиентский: \"use client\" ради фильтра и выбранного значения. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы. Пункты — label с radio внутри, подсветка выбранного держится на :has(input:checked); оттенок аватара считается хешем FNV-1a по названию.",
       "meta": {
-        "tags": ["auth", "workspace", "tenant", "signin"],
+        "tags": [
+          "auth",
+          "workspace",
+          "tenant",
+          "signin"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2465,7 +2690,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-016-*. A client component: \"use client\" is there for the filter and the selected value. The theme comes from the surrounding color-scheme through light-dark(): the block has no background by default, it sits directly on the page background. The items are labels with a radio inside, and the highlight on the selected one rests on :has(input:checked); the avatar hue is computed as an FNV-1a hash of the name."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "accent",
+          "background",
+          "title",
+          "account"
+        ]
       }
     },
     {
@@ -2473,7 +2703,9 @@
       "type": "registry:block",
       "title": "Баннер приглашения",
       "description": "Приглашение в команду широким баннером: стопка аватаров с именами, три числа о проекте и два равноправных ответа вместо ссылки-отказа.",
-      "categories": ["auth"],
+      "categories": [
+        "auth"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2485,7 +2717,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-017-*. Серверный: хуков нет. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы. На широкой ширине заголовок и числа встают в строку контейнерным запросом; оттенок каждого аватара считается хешем FNV-1a по имени, стопка помечена aria-hidden и продублирована текстом.",
       "meta": {
-        "tags": ["auth", "invite", "team", "onboarding"],
+        "tags": [
+          "auth",
+          "invite",
+          "team",
+          "onboarding"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2653,7 +2890,13 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-017-*. A server component: there are no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block has no background by default, it sits directly on the page background. At a wide width the heading and the figures line up in a row through a container query; the hue of every avatar is computed as an FNV-1a hash of the name, and the stack is marked aria-hidden and duplicated as text."
           }
         },
-        "cardControls": ["expiresDays", "accent", "background"]
+        "cardControls": [
+          "expiresDays",
+          "accent",
+          "background",
+          "project",
+          "role"
+        ]
       }
     },
     {
@@ -2661,7 +2904,9 @@
       "type": "registry:block",
       "title": "Регистрация по приглашению",
       "description": "Регистрация по приглашению: почта подставлена и заблокирована с объяснением почему, остаются только имя и пароль.",
-      "categories": ["auth"],
+      "categories": [
+        "auth"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2673,7 +2918,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-018-*. Серверный: хуков нет. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы. Приглашённый адрес выведен элементом <output> с aria-labelledby вместо заблокированного input: readonly-поле попадает в отправку формы и путает автозаполнение.",
       "meta": {
-        "tags": ["auth", "signup", "invite", "prefilled"],
+        "tags": [
+          "auth",
+          "signup",
+          "invite",
+          "prefilled"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2824,7 +3074,13 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-018-*. A server component: there are no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block has no background by default, it sits directly on the page background. The invited address is rendered with an <output> element with aria-labelledby instead of a locked input: a readonly field is submitted with the form and confuses autofill."
           }
         },
-        "cardControls": ["minPassword", "accent", "background"]
+        "cardControls": [
+          "minPassword",
+          "accent",
+          "background",
+          "project",
+          "email"
+        ]
       }
     },
     {
@@ -2832,7 +3088,9 @@
       "type": "registry:block",
       "title": "Вход заблокирован",
       "description": "Временная блокировка после неудачных попыток: живой отсчёт до разблокировки, полоса прогресса и два выхода — сброс пароля и «это были не вы».",
-      "categories": ["auth"],
+      "categories": [
+        "auth"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2844,7 +3102,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-019-*. Клиентский: \"use client\" ради отсчёта на useState и useEffect с setTimeout. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы. Время выводится моноширинным шрифтом с font-variant-numeric:tabular-nums, чтобы цифры не прыгали; полоса помечена role=\"progressbar\" с aria-valuenow.",
       "meta": {
-        "tags": ["auth", "lockout", "security", "timer"],
+        "tags": [
+          "auth",
+          "lockout",
+          "security",
+          "timer"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2977,7 +3240,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-019-*. A client component: \"use client\" is there for the countdown on useState and a useEffect with setTimeout. The theme comes from the surrounding color-scheme through light-dark(): the block has no background by default, it sits directly on the page background. The time is set in a monospaced face with font-variant-numeric:tabular-nums so that the digits do not jitter; the bar is marked role=\"progressbar\" with aria-valuenow."
           }
         },
-        "cardControls": ["seconds", "attempts", "accent", "background"]
+        "cardControls": [
+          "seconds",
+          "attempts",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2985,7 +3253,9 @@
       "type": "registry:block",
       "title": "Активные сессии",
       "description": "Выход со всех устройств списком: где открыт аккаунт, откуда и когда, текущий сеанс помечен, общий выход требует второго нажатия.",
-      "categories": ["auth"],
+      "categories": [
+        "auth"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2997,7 +3267,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-020-*. Клиентский: \"use client\" ради подтверждения и состояния «завершено». Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы. На широкой ширине время сеанса уезжает вправо контейнерным запросом; текущий сеанс помечен data-current и не выключается.",
       "meta": {
-        "tags": ["auth", "sessions", "devices", "security"],
+        "tags": [
+          "auth",
+          "sessions",
+          "devices",
+          "security"
+        ],
         "preview": {
           "width": "full"
         },
@@ -3154,7 +3429,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-020-*. A client component: \"use client\" is there for the confirmation and the \"done\" state. The theme comes from the surrounding color-scheme through light-dark(): the block has no background by default, it sits directly on the page background. At a wide width the session time moves to the right through a container query; the current session is marked data-current and cannot be switched off."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "accent",
+          "background",
+          "title",
+          "submit"
+        ]
       }
     },
     {
@@ -3162,7 +3442,9 @@
       "type": "registry:block",
       "title": "Подтверждение личности",
       "description": "Повторный запрос пароля перед опасным действием: сначала названы последствия списком, и только потом поле — согласие становится осознанным.",
-      "categories": ["auth"],
+      "categories": [
+        "auth"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3174,7 +3456,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-021-*. Серверный: хуков нет. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы. Порядок «последствия → поле → кнопки» задан разметкой; на широкой ширине кнопки встают в строку через row-reverse, чтобы подтверждение оказалось справа, оставаясь вторым в DOM.",
       "meta": {
-        "tags": ["auth", "confirm", "danger", "reauth"],
+        "tags": [
+          "auth",
+          "confirm",
+          "danger",
+          "reauth"
+        ],
         "preview": {
           "width": "full"
         },
@@ -3305,7 +3592,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-021-*. A server component: there are no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block has no background by default, it sits directly on the page background. The order \"consequences → field → buttons\" is set by the markup; at a wide width the buttons line up in a row through row-reverse, so that the confirmation ends up on the right while staying second in the DOM."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "accent",
+          "background",
+          "action",
+          "submit"
+        ]
       }
     },
     {
@@ -3313,7 +3605,9 @@
       "type": "registry:block",
       "title": "Сессия истекла",
       "description": "«Сессия истекла» окном поверх замороженной страницы: под ним виден размытый макет работы, а рядом с продолжением стоит честный выход.",
-      "categories": ["auth"],
+      "categories": [
+        "auth"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3325,7 +3619,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-022-*. Серверный: хуков нет. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы. Размытый слой собран из простых полос с filter:blur и помечен aria-hidden; карточка объявлена role=\"alertdialog\" и связана с заголовком через aria-labelledby.",
       "meta": {
-        "tags": ["auth", "session", "expired", "modal"],
+        "tags": [
+          "auth",
+          "session",
+          "expired",
+          "modal"
+        ],
         "preview": {
           "width": "full"
         },
@@ -3451,7 +3750,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-022-*. A server component: there are no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block has no background by default, it sits directly on the page background. The blurred layer is assembled from plain bars with filter:blur and marked aria-hidden; the card is declared role=\"alertdialog\" and tied to the heading through aria-labelledby."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "accent",
+          "background",
+          "title",
+          "leave"
+        ]
       }
     },
     {
@@ -3459,7 +3763,9 @@
       "type": "registry:block",
       "title": "Регистрация в два шага",
       "description": "Регистрация в два шага: сначала доступ, потом профиль, который можно пропустить — аккаунт уже создан на первом шаге.",
-      "categories": ["auth"],
+      "categories": [
+        "auth"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3471,7 +3777,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-023-*. Клиентский: \"use client\" ради переключения шагов. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы. Индикатор — список из двух пунктов с data-active и линией-разделителем; на широкой ширине поля профиля встают в две колонки контейнерным запросом.",
       "meta": {
-        "tags": ["auth", "signup", "steps", "onboarding"],
+        "tags": [
+          "auth",
+          "signup",
+          "steps",
+          "onboarding"
+        ],
         "preview": {
           "width": "full"
         },
@@ -3615,7 +3926,12 @@
                 "namePlaceholder": "Anna Sokolova",
                 "roleLabel": "What you do",
                 "rolePlaceholder": "Choose",
-                "roleOptions": ["Design", "Frontend", "Product", "Other"],
+                "roleOptions": [
+                  "Design",
+                  "Frontend",
+                  "Product",
+                  "Other"
+                ],
                 "companyLabel": "Company",
                 "companyPlaceholder": "Mera Studio",
                 "backText": "Back",
@@ -3626,7 +3942,13 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-023-*. A client component: \"use client\" is there for switching the steps. The theme comes from the surrounding color-scheme through light-dark(): the block has no background by default, it sits directly on the page background. The indicator is a list of two items with data-active and a divider line; at a wide width the profile fields go into two columns through a container query."
           }
         },
-        "cardControls": ["defaultStep", "accent", "background"]
+        "cardControls": [
+          "defaultStep",
+          "accent",
+          "background",
+          "title",
+          "submit"
+        ]
       }
     },
     {
@@ -3634,7 +3956,9 @@
       "type": "registry:block",
       "title": "Цели при знакомстве",
       "description": "Онбординг после регистрации: цели карточками с объяснением, на что влияет ответ, ограничение выбора и честное «пропустить».",
-      "categories": ["auth"],
+      "categories": [
+        "auth"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3646,7 +3970,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-024-*. Клиентский: \"use client\" ради выбора и предела. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы. Карточки — label с визуально скрытым чекбоксом внутри, подсветка держится на :has(input:checked); после исчерпания лимита остальные чекбоксы получают disabled.",
       "meta": {
-        "tags": ["auth", "onboarding", "goals", "survey"],
+        "tags": [
+          "auth",
+          "onboarding",
+          "goals",
+          "survey"
+        ],
         "preview": {
           "width": "full"
         },
@@ -3805,7 +4134,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-024-*. A client component: \"use client\" is there for the selection and the cap. The theme comes from the surrounding color-scheme through light-dark(): the block has no background by default, it sits directly on the page background. The cards are labels with a visually hidden checkbox inside, and the highlight rests on :has(input:checked); once the limit is spent the remaining checkboxes are given disabled."
           }
         },
-        "cardControls": ["limit", "accent", "background"]
+        "cardControls": [
+          "limit",
+          "accent",
+          "background",
+          "submit"
+        ]
       }
     },
     {
@@ -3813,7 +4147,9 @@
       "type": "registry:block",
       "title": "Регистрация с выбором тарифа",
       "description": "Выбор тарифа прямо в регистрации: цена пересчитывается при смене периода, бесплатный вариант стоит первым и выбран по умолчанию.",
-      "categories": ["auth"],
+      "categories": [
+        "auth"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3825,7 +4161,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-025-*. Клиентский: \"use client\" ради периода и выбранного тарифа. Тарифы — label с radio внутри, подсветка на :has(input:checked); на широкой ширине карточки встают в три колонки, а форма — в две. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы, а проп background её возвращает.",
       "meta": {
-        "tags": ["auth", "signup", "pricing", "plans"],
+        "tags": [
+          "auth",
+          "signup",
+          "pricing",
+          "plans"
+        ],
         "preview": {
           "width": "full"
         },
@@ -3990,7 +4331,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-025-*. A client component: \"use client\" is there for the period and the chosen plan. The plans are labels with a radio inside, and the highlight rests on :has(input:checked); at a wide width the cards go into three columns and the form into two. The theme comes from the surrounding color-scheme through light-dark(): the block has no background by default, it sits directly on the page background, and the background prop brings it back."
           }
         },
-        "cardControls": ["yearlyOff", "accent", "background"]
+        "cardControls": [
+          "yearlyOff",
+          "accent",
+          "background",
+          "submit"
+        ]
       }
     },
     {
@@ -3998,7 +4344,9 @@
       "type": "registry:block",
       "title": "Код по телефону",
       "description": "Вход по телефону: код страны отдельным списком, цифровая клавиатура на номере, а на втором шаге номер видно рядом с кнопкой «изменить».",
-      "categories": ["auth"],
+      "categories": [
+        "auth"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4010,7 +4358,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-026-*. Клиентский: \"use client\" ради двух шагов и очистки ввода. Номер принимает только цифры, пробелы и дефисы; поле кода — одно, с letter-spacing и компенсирующим text-indent. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы, а проп background её возвращает.",
       "meta": {
-        "tags": ["auth", "phone", "sms", "otp"],
+        "tags": [
+          "auth",
+          "phone",
+          "sms",
+          "otp"
+        ],
         "preview": {
           "width": "full"
         },
@@ -4173,7 +4526,13 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-026-*. A client component: \"use client\" is there for the two steps and for cleaning the input. The number accepts only digits, spaces and hyphens; the code field is a single one, with letter-spacing and a compensating text-indent. The theme comes from the surrounding color-scheme through light-dark(): the block has no background by default, it sits directly on the page background, and the background prop brings it back."
           }
         },
-        "cardControls": ["codeLength", "accent", "background"]
+        "cardControls": [
+          "codeLength",
+          "accent",
+          "background",
+          "title",
+          "submit"
+        ]
       }
     },
     {
@@ -4181,7 +4540,9 @@
       "type": "registry:block",
       "title": "Запрос доступа",
       "description": "Экран «нет доступа» как рабочий: что закрыто, какое право нужно, кто именно его выдаёт — и поле «зачем» рядом с кнопкой запроса.",
-      "categories": ["auth"],
+      "categories": [
+        "auth"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4193,7 +4554,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-027-*. Клиентский: \"use client\" ради текста причины и состояния «запрос отправлен». Отправленный запрос заменяет только форму, а не весь экран; оттенок аватара администратора считается хешем FNV-1a по имени. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы, а проп background её возвращает.",
       "meta": {
-        "tags": ["auth", "403", "permissions", "request"],
+        "tags": [
+          "auth",
+          "403",
+          "permissions",
+          "request"
+        ],
         "preview": {
           "width": "full"
         },
@@ -4337,7 +4703,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-027-*. A client component: \"use client\" is there for the reason text and the \"request sent\" state. A sent request replaces only the form rather than the whole screen; the hue of an administrator's avatar is computed as an FNV-1a hash of the name. The theme comes from the surrounding color-scheme through light-dark(): the block has no background by default, it sits directly on the page background, and the background prop brings it back."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "accent",
+          "background",
+          "needed",
+          "submit"
+        ]
       }
     },
     {
@@ -4345,7 +4716,9 @@
       "type": "registry:block",
       "title": "Согласие на обработку данных",
       "description": "Согласие на обработку данных по целям: переключатели с объяснениями, обязательная категория заблокирована, а «принять всё» и «сохранить выбор» равны по весу.",
-      "categories": ["auth"],
+      "categories": [
+        "auth"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4357,7 +4730,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-028-*. Клиентский: \"use client\" ради состояния переключателей. Переключатели — обычные чекбоксы с прозрачным input поверх дорожки, вид даёт CSS через :has(input:checked); обязательная цель получает disabled. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы, а проп background её возвращает.",
       "meta": {
-        "tags": ["auth", "consent", "privacy", "gdpr"],
+        "tags": [
+          "auth",
+          "consent",
+          "privacy",
+          "gdpr"
+        ],
         "preview": {
           "width": "full"
         },
@@ -4507,7 +4885,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-028-*. A client component: \"use client\" is there for the state of the switches. The switches are ordinary checkboxes with a transparent input over the track, and the look is given by CSS through :has(input:checked); the required purpose is given disabled. The theme comes from the surrounding color-scheme through light-dark(): the block has no background by default, it sits directly on the page background, and the background prop brings it back."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "accent",
+          "background",
+          "acceptAll",
+          "saveChoice"
+        ]
       }
     },
     {
@@ -4515,7 +4898,9 @@
       "type": "registry:block",
       "title": "Удаление аккаунта",
       "description": "Удаление аккаунта двумя колонками: что пропадёт и что останется у сервиса, срок восстановления и подтверждение вводом собственной почты.",
-      "categories": ["auth"],
+      "categories": [
+        "auth"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4527,7 +4912,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-029-*. Клиентский: \"use client\" ради сверки набранного адреса. Сравнение без учёта регистра, кнопка удаления выключена до совпадения; на широкой ширине колонки последствий встают рядом контейнерным запросом. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы, а проп background её возвращает.",
       "meta": {
-        "tags": ["auth", "delete", "account", "danger"],
+        "tags": [
+          "auth",
+          "delete",
+          "account",
+          "danger"
+        ],
         "preview": {
           "width": "full"
         },
@@ -4670,7 +5060,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-029-*. A client component: \"use client\" is there for checking the typed address. The comparison is case-insensitive and the delete button is disabled until it matches; at a wide width the consequence columns stand side by side through a container query. The theme comes from the surrounding color-scheme through light-dark(): the block has no background by default, it sits directly on the page background, and the background prop brings it back."
           }
         },
-        "cardControls": ["graceDays", "accent", "background"]
+        "cardControls": [
+          "graceDays",
+          "accent",
+          "background",
+          "submit"
+        ]
       }
     }
   ]

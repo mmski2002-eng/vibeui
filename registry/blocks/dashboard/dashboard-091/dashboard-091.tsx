@@ -64,8 +64,14 @@ const STYLES = `
 --vibeui-dashboard-091-serif:ui-serif,Georgia,"Times New Roman",serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="dashboard-091"]{color-scheme:dark}
 [data-vibeui-block="dashboard-091"]{
 box-sizing:border-box;width:100%;
+/* container-type отрывает ширину от содержимого: без нижней границы
+   блок схлопывается внутри flex-контейнера. */
+min-width:min(100%,16rem);
 background:var(--vibeui-dashboard-091-bg);
 color:var(--vibeui-dashboard-091-fg);
 font-family:var(--vibeui-dashboard-091-sans);

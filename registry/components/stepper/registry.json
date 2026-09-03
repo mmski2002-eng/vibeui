@@ -6,7 +6,9 @@
       "type": "registry:component",
       "title": "Шаги процесса",
       "description": "Индикатор шагов, где пройденное отмечено галочкой, а не только цветом. Линия заполнена до текущего шага, поэтому прогресс виден без чтения подписей.",
-      "categories": ["stepper"],
+      "categories": [
+        "stepper"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-stepper-001-*. Состояние шага (done, current, todo) выводится из пропа current и попадает в data-атрибут, от которого зависят и кружок, и линия. Линия — ::before у каждого шага кроме первого, она тянется от центра предыдущего кружка. Текущий шаг помечен aria-current=\"step\". В узкой колонке подсказки скрываются через @container, остаются кружки и подписи.",
       "meta": {
-        "tags": ["stepper", "progress", "wizard", "onboarding"],
+        "tags": [
+          "stepper",
+          "progress",
+          "wizard",
+          "onboarding"
+        ],
         "preview": {
           "width": "full"
         },
@@ -149,7 +156,11 @@
             }
           }
         },
-        "cardControls": ["current", "accent"]
+        "cardControls": [
+          "current",
+          "accent",
+          "label"
+        ]
       }
     },
     {
@@ -157,7 +168,9 @@
       "type": "registry:component",
       "title": "Шаги-шевроны",
       "description": "Лента шагов-шевронов, как хлебные крошки процесса: номер и подпись стоят в строку, стрелка режется clip-path, а пройденный шаг несёт галочку и слово.",
-      "categories": ["stepper"],
+      "categories": [
+        "stepper"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -169,7 +182,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в переменных --vibeui-stepper-002-*. Серверный: хуков нет. Форма шеврона получается одним clip-path на пункте — вырез слева и остриё справа, — поэтому дополнительных узлов и псевдоэлементов под стрелку не нужно, а соседний пункт наезжает отрицательным margin. Текущий шаг помечен aria-current=\"step\"; состояние каждого пункта дублируется визуально скрытой фразой, потому что цвет заливки сам по себе ничего не сообщает. Ширину меряет контейнерный запрос: ниже 32rem подписи неактивных шагов прячутся, остаются номера и галочки.",
       "meta": {
-        "tags": ["stepper", "navigation", "progress", "checkout"],
+        "tags": [
+          "stepper",
+          "navigation",
+          "progress",
+          "checkout"
+        ],
         "preview": {
           "width": "full"
         },
@@ -285,7 +303,12 @@
             "preview": {
               "props": {
                 "label": "Checkout",
-                "steps": ["Details", "Delivery", "Payment", "Done"],
+                "steps": [
+                  "Details",
+                  "Delivery",
+                  "Payment",
+                  "Done"
+                ],
                 "stateText": {
                   "done": " — step completed",
                   "current": " — current step",
@@ -295,7 +318,12 @@
             }
           }
         },
-        "cardControls": ["current", "accent", "background"]
+        "cardControls": [
+          "current",
+          "label",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -303,7 +331,9 @@
       "type": "registry:component",
       "title": "Вертикальные шаги",
       "description": "Вертикальная лента шагов, где у каждого есть место под объяснение и отметку времени, а состояние подписано словом рядом с заголовком.",
-      "categories": ["stepper"],
+      "categories": [
+        "stepper"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -315,7 +345,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в переменных --vibeui-stepper-003-*. Серверный: хуков нет. Пункт — двухколоночный grid: кружок занимает первую колонку на все строки (grid-row:1 / span 3), текст идёт во вторую, поэтому описание и время выравниваются по заголовку без ручных отступов. Соединительная линия — ::before пункта: она начинается под кружком и обрывается на последнем шаге, поэтому не свисает в пустоту. Текущий шаг помечен aria-current=\"step\", а состояние каждого пункта продублировано подписью «Готово / Сейчас / Впереди»: цвет линии не единственный носитель смысла.",
       "meta": {
-        "tags": ["stepper", "vertical", "timeline", "status"],
+        "tags": [
+          "stepper",
+          "vertical",
+          "timeline",
+          "status"
+        ],
         "preview": {
           "width": "full"
         },
@@ -461,7 +496,12 @@
             }
           }
         },
-        "cardControls": ["current", "accent", "background"]
+        "cardControls": [
+          "current",
+          "label",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -469,7 +509,9 @@
       "type": "registry:component",
       "title": "Состояния шагов",
       "description": "Шаги с полным набором состояний: готово, ошибка, пропущен, текущий и будущий. У каждого свой знак и своя подпись словом, а не только цвет.",
-      "categories": ["stepper"],
+      "categories": [
+        "stepper"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -481,7 +523,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в переменных --vibeui-stepper-004-*. Серверный: хуков нет. Состояние приходит данными, а не выводится из номера: пропущенный шаг может стоять между пройденными. Цвет пункта задаётся одной переменной --vibeui-stepper-004-tone, от неё красятся кружок, рамка и подпись — новое состояние добавляется одной строкой CSS плюс знаком в MARKS и словом в WORDS. Соединитель берёт цвет левого соседа через инлайновую переменную, поэтому разрыв виден ровно на месте ошибки. Пропущенный шаг дополнительно помечен пунктирной рамкой: форма работает там, где не работает цвет.",
       "meta": {
-        "tags": ["stepper", "states", "error", "accessibility"],
+        "tags": [
+          "stepper",
+          "states",
+          "error",
+          "accessibility"
+        ],
         "preview": {
           "width": "full"
         },
@@ -621,7 +668,11 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -629,7 +680,9 @@
       "type": "registry:component",
       "title": "Прогресс на соединителе",
       "description": "Шаги, где прогресс живёт внутри соединителя: линия перед текущим шагом залита не целиком, а на долю готовности, и та же доля напечатана числом.",
-      "categories": ["stepper"],
+      "categories": [
+        "stepper"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -641,7 +694,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в переменных --vibeui-stepper-005-*. Серверный: хуков нет. Дорожка и заливка соединителя — два псевдоэлемента одного пункта; ширина заливки считается как calc(100% * var(--vibeui-stepper-005-fill)), где переменная приходит инлайново безразмерным числом: умножать проценты на проценты CSS не умеет. Пройденные шаги получают заливку 1, текущий — долю готовности, будущие 0. Процент продублирован текстом под кружком: полоска для скринридера не существует. Текущий шаг помечен aria-current=\"step\", пройденные — галочкой и словом «Готово».",
       "meta": {
-        "tags": ["stepper", "progress", "connector", "loading"],
+        "tags": [
+          "stepper",
+          "progress",
+          "connector",
+          "loading"
+        ],
         "preview": {
           "width": "full"
         },
@@ -768,14 +826,25 @@
             "preview": {
               "props": {
                 "label": "Catalogue import",
-                "steps": ["Upload", "Check", "Processing", "Report"],
+                "steps": [
+                  "Upload",
+                  "Check",
+                  "Processing",
+                  "Report"
+                ],
                 "progressText": "{value}% done",
                 "doneText": "Done"
               }
             }
           }
         },
-        "cardControls": ["current", "progress", "accent", "background"]
+        "cardControls": [
+          "progress",
+          "current",
+          "accent",
+          "background",
+          "label"
+        ]
       }
     },
     {
@@ -783,7 +852,9 @@
       "type": "registry:component",
       "title": "Счётчик на телефоне",
       "description": "Компактный индикатор для телефона: счётчик «шаг 2 из 5», название текущего шага, подсказка про следующий и полоски-сегменты вместо ленты подписей.",
-      "categories": ["stepper"],
+      "categories": [
+        "stepper"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -795,7 +866,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в переменных --vibeui-stepper-006-*. Серверный: хуков нет. На ширине телефона пять подписей не помещаются, поэтому вместо ленты выводится счётчик и одно название — крупно. Сегменты остаются ol: каждый пункт несёт своё состояние и визуально скрытую фразу, поэтому индикатор озвучивается как список шагов, а не как декоративная полоса. Текущий сегмент помечен aria-current=\"step\" и растянут flex-grow, поэтому позиция читается и без чтения счётчика. Номер шага зажимается в границы массива: current вне диапазона не даст пустого заголовка.",
       "meta": {
-        "tags": ["stepper", "mobile", "compact", "progress"],
+        "tags": [
+          "stepper",
+          "mobile",
+          "compact",
+          "progress"
+        ],
         "preview": {
           "width": "full"
         },
@@ -913,7 +989,13 @@
             "preview": {
               "props": {
                 "label": "Checkout",
-                "steps": ["Cart", "Delivery", "Payment", "Review", "Done"],
+                "steps": [
+                  "Cart",
+                  "Delivery",
+                  "Payment",
+                  "Review",
+                  "Done"
+                ],
                 "nextPrefix": "Next",
                 "counterText": "Step {current} of {total}",
                 "leftText": "{left} left",
@@ -927,7 +1009,12 @@
             }
           }
         },
-        "cardControls": ["current", "accent", "background"]
+        "cardControls": [
+          "current",
+          "nextPrefix",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -935,7 +1022,9 @@
       "type": "registry:component",
       "title": "Шаги оформления",
       "description": "Шаги оформления заказа, к которым можно вернуться: пройденный шаг показывает выбранное значение и ссылку возврата, будущий остаётся текстом, а не отключённой кнопкой.",
-      "categories": ["stepper"],
+      "categories": [
+        "stepper"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -947,7 +1036,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в переменных --vibeui-stepper-007-*. Серверный: хуков нет, возврат — обычные ссылки. Пройденный шаг печатает выбранное значение, поэтому список работает и как сводка заказа. У ссылки возврата доступное имя вида «Изменить: доставка»: в списке из четырёх ссылок одинаковое слово «Изменить» бесполезно. Будущие шаги намеренно не притворяются отключёнными кнопками — это текст с подписью «Впереди», который не ловит фокус и не обещает нажатия. Пункт — grid из трёх колонок, значок и правый блок закреплены за своими колонками, поэтому строка не разъезжается без значения.",
       "meta": {
-        "tags": ["stepper", "checkout", "navigation", "links"],
+        "tags": [
+          "stepper",
+          "checkout",
+          "navigation",
+          "links"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1092,7 +1186,12 @@
             }
           }
         },
-        "cardControls": ["current", "accent", "background"]
+        "cardControls": [
+          "current",
+          "editLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1100,7 +1199,9 @@
       "type": "registry:component",
       "title": "Необязательные шаги",
       "description": "Шаги, среди которых есть необязательные: такие помечены словом и пунктирным контуром, а счётчик сверху считает только обязательные, чтобы прогресс не врал.",
-      "categories": ["stepper"],
+      "categories": [
+        "stepper"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1112,7 +1213,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в переменных --vibeui-stepper-008-*. Серверный: счёт обязательных шагов идёт при рендере. Необязательность помечена трижды: словом в метке, пунктирной рамкой пункта и пунктирным кружком — цвет здесь не участвует вовсе. Счётчик сверху намеренно считает только обязательные шаги: «2 из 6» пугает, когда четыре шага можно пропустить. Пункты лежат в ol с переносом, поэтому длинный список не уезжает в прокрутку, а перестраивается в несколько рядов. Текущий шаг помечен aria-current=\"step\", состояния продублированы скрытой фразой.",
       "meta": {
-        "tags": ["stepper", "optional", "onboarding", "progress"],
+        "tags": [
+          "stepper",
+          "optional",
+          "onboarding",
+          "progress"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1265,7 +1371,12 @@
             }
           }
         },
-        "cardControls": ["current", "accent", "background"]
+        "cardControls": [
+          "current",
+          "optionalLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1273,7 +1384,9 @@
       "type": "registry:component",
       "title": "Шаги настройки",
       "description": "Инструкция по установке шагами: команда показана только внутри того шага, который выполняется сейчас, остальные свёрнуты до заголовка и состояния.",
-      "categories": ["stepper"],
+      "categories": [
+        "stepper"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1285,7 +1398,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в переменных --vibeui-stepper-009-*. Серверный: хуков нет, раскрытие определяется номером шага, а не кликом. Код лежит в pre + code с tabIndex={0}: без фокуса длинную команду нельзя пролистать с клавиатуры, а горизонтальная прокрутка остаётся единственным способом её увидеть целиком. Тёмный блок кода несёт собственные переменные фона и моноширинного шрифта, поэтому не зависит от темы проекта. Текущий шаг помечен aria-current=\"step\", состояния подписаны словами «Готово / Сейчас / Впереди», а линия слева окрашена только на пройденном участке.",
       "meta": {
-        "tags": ["stepper", "install", "code", "docs"],
+        "tags": [
+          "stepper",
+          "install",
+          "code",
+          "docs"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1428,7 +1546,12 @@
             }
           }
         },
-        "cardControls": ["current", "accent", "background"]
+        "cardControls": [
+          "current",
+          "codeCaption",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1436,7 +1559,9 @@
       "type": "registry:component",
       "title": "Шаги с подробностями",
       "description": "Вертикальные шаги с короткой сводкой у каждого и развёрнутой панелью подробностей у текущего шага — детали видны только тогда, когда до них дошла очередь.",
-      "categories": ["stepper"],
+      "categories": [
+        "stepper"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1448,7 +1573,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в переменных --vibeui-stepper-010-*. Серверный: хуков нет. Кружок растянут на все строки пункта через grid-row:1 / -1, поэтому высота ряда не завязана на количество текста. Панель подробностей — отдельный блок data-part=\"panel\", который рендерится, только когда состояние шага current и у него задан массив details; у остальных шагов виден только заголовок и однострочная сводка. Текущий шаг помечен aria-current=\"step\", состояние продублировано словом рядом с заголовком.",
       "meta": {
-        "tags": ["stepper", "vertical", "details", "onboarding"],
+        "tags": [
+          "stepper",
+          "vertical",
+          "details",
+          "onboarding"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1595,7 +1725,12 @@
             }
           }
         },
-        "cardControls": ["current", "accent", "background"]
+        "cardControls": [
+          "current",
+          "label",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1603,7 +1738,9 @@
       "type": "registry:component",
       "title": "Возврат после ошибки",
       "description": "Шаги, где ошибочный этап отмечен не только значком, но и отдельной карточкой с тем, что пошло не так, и конкретным действием, которое его исправит.",
-      "categories": ["stepper"],
+      "categories": [
+        "stepper"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1615,7 +1752,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в переменных --vibeui-stepper-011-*. Серверный: хуков нет. Цвет кружка и соединителя берётся из переменной --vibeui-stepper-011-tone, которую пункт переопределяет по своему состоянию, — новое состояние можно добавить одной строкой CSS. Под лентой отдельным списком выводятся карточки для всех шагов в состоянии error: заголовок с номером шага, issue и fix отдельными абзацами и ссылка действия, если задан href. Набор состояний сознательно уже, чем в общем компоненте состояний: только готово, ошибка, сейчас и впереди.",
       "meta": {
-        "tags": ["stepper", "error", "recovery", "accessibility"],
+        "tags": [
+          "stepper",
+          "error",
+          "recovery",
+          "accessibility"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1754,7 +1896,11 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1762,7 +1908,9 @@
       "type": "registry:component",
       "title": "Итог заказа",
       "description": "Шаги оформления заказа рядом с карточкой итога: сумма, доставка и скидка видны на каждом шаге, а не только в самом конце пути.",
-      "categories": ["stepper"],
+      "categories": [
+        "stepper"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1774,7 +1922,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в переменных --vibeui-stepper-012-*. Серверный: хуков нет. Корень несёт container-type:inline-size, а раскладка на двух колонках задана на data-part=\"layout\" — именно этот селектор, а не корень блока, меняется внутри @container, потому что запрос применяется только к потомкам контейнера. Сводка — отдельный aside с собственным aria-label, список шагов слева остаётся ol с состоянием, продублированным визуально скрытым текстом.",
       "meta": {
-        "tags": ["stepper", "checkout", "summary", "layout"],
+        "tags": [
+          "stepper",
+          "checkout",
+          "summary",
+          "layout"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1930,7 +2083,12 @@
             }
           }
         },
-        "cardControls": ["current", "accent", "background"]
+        "cardControls": [
+          "current",
+          "totalLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1938,7 +2096,9 @@
       "type": "registry:component",
       "title": "Счётчик прогресса",
       "description": "Числовой индикатор «Шаг 2 из 5» с процентом и непрерывной полосой прогресса — компактная замена ленте, когда названия шагов негде разместить.",
-      "categories": ["stepper"],
+      "categories": [
+        "stepper"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1950,7 +2110,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в переменных --vibeui-stepper-013-*. Серверный: хуков нет. Видимая часть — счётчик, заголовок текущего шага и одна полоса прогресса; track и fill помечены aria-hidden, потому что их смысл уже озвучен текстом. Настоящая семантика шагов лежит в визуально скрытом ol: каждый пункт несёт состояние словом, а aria-current стоит на текущем. Процент считается как доля порядкового номера шага от их общего числа.",
       "meta": {
-        "tags": ["stepper", "progress", "counter", "mobile"],
+        "tags": [
+          "stepper",
+          "progress",
+          "counter",
+          "mobile"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2053,7 +2218,13 @@
             },
             "preview": {
               "props": {
-                "steps": ["Account", "Company", "Team", "Plan", "Done"],
+                "steps": [
+                  "Account",
+                  "Company",
+                  "Team",
+                  "Plan",
+                  "Done"
+                ],
                 "label": "Sign up",
                 "countText": "Step {current} of {total}",
                 "stateText": {
@@ -2065,7 +2236,11 @@
             }
           }
         },
-        "cardControls": ["current", "accent", "background"]
+        "cardControls": [
+          "current",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2073,7 +2248,9 @@
       "type": "registry:component",
       "title": "Пропуск шага",
       "description": "Шаги, где один этап явно необязателен: пунктирный кружок, метка «Необязательно» и ссылка «Пропустить этот шаг» прямо внутри него, когда он текущий.",
-      "categories": ["stepper"],
+      "categories": [
+        "stepper"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2085,7 +2262,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в переменных --vibeui-stepper-014-*. Серверный: хуков нет, переход по пропуску — обычная ссылка. Необязательность шага помечена дважды: пунктирной рамкой кружка и меткой «Необязательно» рядом с заголовком. Ссылка «Пропустить этот шаг» рендерится только при одновременном выполнении трёх условий — step.optional, состояние current и заданный step.skipHref, — поэтому пропустить пройденный или ещё не открытый шаг нельзя.",
       "meta": {
-        "tags": ["stepper", "optional", "skip", "onboarding"],
+        "tags": [
+          "stepper",
+          "optional",
+          "skip",
+          "onboarding"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2232,7 +2414,12 @@
             }
           }
         },
-        "cardControls": ["current", "accent", "background"]
+        "cardControls": [
+          "current",
+          "skipLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2240,7 +2427,9 @@
       "type": "registry:component",
       "title": "Шаги с проверкой",
       "description": "Шаги, где последний этап раскрывается в карточку сверки: значения по разделам, ссылки на редактирование каждого и явная кнопка «Назад».",
-      "categories": ["stepper"],
+      "categories": [
+        "stepper"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2252,7 +2441,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в переменных --vibeui-stepper-015-*. Серверный: хуков нет, «Назад» и «Подтвердить» — обычные ссылки. Лента шагов сверху — сжатый ряд кружков с подписями; ниже — карточка сверки, которая рендерится только когда current указывает на последний шаг. У каждого пункта сверки — своя ссылка редактирования с доступным именем вида «Изменить: адрес», а не просто «Изменить».",
       "meta": {
-        "tags": ["stepper", "confirmation", "review", "checkout"],
+        "tags": [
+          "stepper",
+          "confirmation",
+          "review",
+          "checkout"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2372,7 +2566,12 @@
             },
             "preview": {
               "props": {
-                "steps": ["Details", "Address", "Payment", "Review"],
+                "steps": [
+                  "Details",
+                  "Address",
+                  "Payment",
+                  "Review"
+                ],
                 "review": [
                   {
                     "label": "Recipient",
@@ -2405,7 +2604,12 @@
             }
           }
         },
-        "cardControls": ["current", "accent", "background"]
+        "cardControls": [
+          "current",
+          "editLabel",
+          "accent",
+          "background"
+        ]
       }
     }
   ]

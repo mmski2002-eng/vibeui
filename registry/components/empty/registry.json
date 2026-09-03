@@ -6,7 +6,9 @@
       "type": "registry:component",
       "title": "Пустое состояние",
       "description": "Пустой экран, который объясняет следующий шаг, а не сообщает об отсутствии данных. Рисунок собран на CSS и намекает на будущий список.",
-      "categories": ["empty"],
+      "categories": [
+        "empty"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-empty-001-*. Рисунок — три плитки на CSS с поворотом и разной прозрачностью: он намекает на список, который здесь появится, и не требует иллюстрации из библиотеки. Пунктирная рамка отделяет пустое состояние от заполненного экрана. Отступы и кегль заголовка считаются от собственной ширины через @container.",
       "meta": {
-        "tags": ["empty state", "onboarding", "placeholder", "cta"],
+        "tags": [
+          "empty state",
+          "onboarding",
+          "placeholder",
+          "cta"
+        ],
         "preview": {
           "width": "full"
         },
@@ -164,7 +171,14 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "title",
+          "description",
+          "actionLabel",
+          "hint",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -172,7 +186,9 @@
       "type": "registry:component",
       "title": "Ничего не найдено",
       "description": "Пустая выдача поиска: сам запрос, причина и готовые ходы вместо совета «попробуйте другой запрос».",
-      "categories": ["empty"],
+      "categories": [
+        "empty"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -184,7 +200,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-empty-002-*. Серверный: хуков нет. Блок объявлен role=\"status\": исчезновение результатов должно быть услышано. Знак нарисован кругом и чертой псевдоэлементами. Подсказки — кнопки, а не текст, поэтому по ним можно нажать.",
       "meta": {
-        "tags": ["empty", "search", "no results", "recovery"],
+        "tags": [
+          "empty",
+          "search",
+          "no results",
+          "recovery"
+        ],
         "ai": {
           "export": "Empty002",
           "usage": "<Empty002 query=\"карточка товара\" suggestions={[\"кнопка\"]} />",
@@ -310,13 +331,26 @@
                 "text": "turned up nothing. Filters may be in the way, or the query has a typo.",
                 "query": "product card",
                 "queryTemplate": "For “{query}”",
-                "suggestions": ["button", "card", "calendar"],
+                "suggestions": [
+                  "button",
+                  "card",
+                  "calendar"
+                ],
                 "resetLabel": "Clear filters"
               }
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "query",
+          "title",
+          "resetLabel",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -324,7 +358,9 @@
       "type": "registry:component",
       "title": "Разбор запроса",
       "description": "Пустой поиск, который разбирает сам запрос: слова показаны чипами, лишние зачёркнуты, и одно действие повторяет поиск по укороченному запросу.",
-      "categories": ["empty"],
+      "categories": [
+        "empty"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -336,7 +372,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-empty-003-*. Серверный: хуков нет, состояния нет. Запрос режется по пробелам, первые keep слов считаются основой, остальные помечаются data-extra и зачёркиваются. Блок объявлен role=\"status\": пропажа результатов должна быть услышана. Палитра построена на light-dark(): карточка следует color-scheme окружения, а своей подложки по умолчанию не выкладывает — её включает проп background.",
       "meta": {
-        "tags": ["empty", "search", "query", "recovery"],
+        "tags": [
+          "empty",
+          "search",
+          "query",
+          "recovery"
+        ],
         "preview": {
           "width": "full"
         },
@@ -487,7 +528,14 @@
             }
           }
         },
-        "cardControls": ["keep", "accent", "background"]
+        "cardControls": [
+          "query",
+          "keep",
+          "title",
+          "actionTemplate",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -495,7 +543,9 @@
       "type": "registry:component",
       "title": "Пустая папка",
       "description": "Пустая папка, которая сама и есть область загрузки: пунктирная рамка и стрелка в лоток обещают перетаскивание раньше любого текста.",
-      "categories": ["empty"],
+      "categories": [
+        "empty"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -507,7 +557,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-empty-004-*. Серверный: хуков нет. Пунктирная рамка лежит на самом блоке, стрелка нарисована псевдоэлементами и вложенным i, подсветка сверху — радиальный градиент от акцента. Обработчик перетаскивания не входит в компонент: он остаётся за вызывающим кодом, а кнопка даёт тот же путь для тех, кто не тащит файлы мышью.",
       "meta": {
-        "tags": ["empty", "upload", "dropzone", "files"],
+        "tags": [
+          "empty",
+          "upload",
+          "dropzone",
+          "files"
+        ],
         "preview": {
           "width": "full"
         },
@@ -638,7 +693,13 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "title",
+          "actionLabel",
+          "formats",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -646,7 +707,9 @@
       "type": "registry:component",
       "title": "Первый запуск",
       "description": "Первый запуск, где пусто не потому, что данных нет, а потому, что работа не начата: три шага с нумерацией, текущий выделен, действие одно.",
-      "categories": ["empty"],
+      "categories": [
+        "empty"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -658,7 +721,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-empty-005-*. Серверный: хуков нет. Шаги — ol с номерами в кружках; соединительная линия нарисована псевдоэлементом у всех элементов, кроме последнего, поэтому лишний хвост под последним номером не появляется. Текущий шаг помечен data-current, остальные приглушены цветом подписи.",
       "meta": {
-        "tags": ["empty", "onboarding", "steps", "first run"],
+        "tags": [
+          "empty",
+          "onboarding",
+          "steps",
+          "first run"
+        ],
         "preview": {
           "width": "full"
         },
@@ -795,7 +863,12 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "title",
+          "actionLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -803,7 +876,9 @@
       "type": "registry:component",
       "title": "Отсеяно фильтрами",
       "description": "Список опустел из-за фильтров, а не сам по себе: на экране перечислены включённые условия и сказано, сколько записей вернётся после сброса.",
-      "categories": ["empty"],
+      "categories": [
+        "empty"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -815,7 +890,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-empty-006-*. Серверный: хуков нет. Знак-воронка собран из двух псевдоэлементов, верхний обрезан clip-path. Условия выложены списком ul с чипами, число записей печатается через toLocaleString. Блок объявлен role=\"status\". Палитра построена на light-dark(): компонент следует color-scheme окружения, а подложку по умолчанию не выкладывает — её включает проп background.",
       "meta": {
-        "tags": ["empty", "filters", "reset", "list"],
+        "tags": [
+          "empty",
+          "filters",
+          "reset",
+          "list"
+        ],
         "preview": {
           "width": "full"
         },
@@ -937,12 +1017,21 @@
                 "text": "The records are there — the conditions below hide them. Without them the list holds {total} records.",
                 "locale": "en-US",
                 "resetLabel": "Clear filters",
-                "filters": ["Status: draft", "Author: me", "Last 7 days"]
+                "filters": [
+                  "Status: draft",
+                  "Author: me",
+                  "Last 7 days"
+                ]
               }
             }
           }
         },
-        "cardControls": ["total", "accent", "background"]
+        "cardControls": [
+          "title",
+          "total",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -950,7 +1039,9 @@
       "type": "registry:component",
       "title": "Ошибка загрузки",
       "description": "Ошибка загрузки, а не пустой раздел: данные есть, их не удалось получить, поэтому главное действие — повторить, а подробности спрятаны в details.",
-      "categories": ["empty"],
+      "categories": [
+        "empty"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -962,7 +1053,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-empty-007-*. Серверный: хуков нет, раскрытие подробностей держит нативный details, поэтому клиентского кода не требуется. Блок объявлен role=\"alert\". Знак нарисован псевдоэлементами, код и текст ошибки набраны моноширинным шрифтом с white-space:pre-line.",
       "meta": {
-        "tags": ["empty", "error", "retry", "details"],
+        "tags": [
+          "empty",
+          "error",
+          "retry",
+          "details"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1101,7 +1197,13 @@
             }
           }
         },
-        "cardControls": ["danger", "background"]
+        "cardControls": [
+          "title",
+          "code",
+          "retryLabel",
+          "danger",
+          "background"
+        ]
       }
     },
     {
@@ -1109,7 +1211,9 @@
       "type": "registry:component",
       "title": "Нет доступа",
       "description": "Закрытый раздел вместо пустого: названа причина отказа, назван владелец доступа и есть одно действие — попросить у него.",
-      "categories": ["empty"],
+      "categories": [
+        "empty"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1121,7 +1225,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-empty-008-*. Серверный: хуков нет. Замок нарисован двумя псевдоэлементами: дужка — бордюр с радиусом сверху, корпус — прямоугольник в цвете акцента. Причина вынесена в отдельную пилюлю над объяснением, блок объявлен role=\"status\". Палитра построена на light-dark(): компонент следует color-scheme окружения, а подложку по умолчанию не выкладывает — её включает проп background.",
       "meta": {
-        "tags": ["empty", "access", "permissions", "request"],
+        "tags": [
+          "empty",
+          "access",
+          "permissions",
+          "request"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1255,7 +1364,13 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "title",
+          "reason",
+          "actionLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1263,7 +1378,9 @@
       "type": "registry:component",
       "title": "Нет соединения",
       "description": "Офлайн-состояние, которое не выглядит поломкой приложения: видно, что попытки продолжаются сами, и сказано, насколько устарели данные на экране.",
-      "categories": ["empty"],
+      "categories": [
+        "empty"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1275,7 +1392,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-empty-009-*. Серверный: хуков нет. Облако с перечёркиванием нарисовано псевдоэлементами, точка ожидания пульсирует ключевыми кадрами vibeui-empty-009-pulse, и правило prefers-reduced-motion её останавливает. Блок объявлен role=\"status\" с aria-live=\"polite\". Палитра построена на light-dark(): компонент следует color-scheme окружения, а подложку по умолчанию не выкладывает — её включает проп background.",
       "meta": {
-        "tags": ["empty", "offline", "network", "retry"],
+        "tags": [
+          "empty",
+          "offline",
+          "network",
+          "retry"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1415,7 +1537,13 @@
             }
           }
         },
-        "cardControls": ["wait", "background"]
+        "cardControls": [
+          "title",
+          "updatedAt",
+          "retryLabel",
+          "wait",
+          "background"
+        ]
       }
     },
     {
@@ -1423,7 +1551,9 @@
       "type": "registry:component",
       "title": "Повтор поиска",
       "description": "Пустая выдача поиска с редактируемым полем: чипы подставляют слово, кнопка возвращает исходный запрос вместо статичной подписи.",
-      "categories": ["empty"],
+      "categories": [
+        "empty"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1435,7 +1565,12 @@
       ],
       "docs": "Компонент клиентский: useState держит значение поля. Форма отправляет запрос по submit, чипы подставляют слово в поле одним кликом, кнопка сброса возвращает исходный запрос и блокируется, если поле и так совпадает с ним. Ширина и раскладка формы считаются от собственного контейнера через @container: на узкой ширине поле и кнопка поиска встают друг под другом. Иконка лупы — инлайновый svg.",
       "meta": {
-        "tags": ["empty", "search", "no results", "recovery"],
+        "tags": [
+          "empty",
+          "search",
+          "no results",
+          "recovery"
+        ],
         "ai": {
           "export": "Empty010",
           "usage": "<Empty010 initialQuery=\"карточка товара\" suggestions={[\"кнопка\"]} onSearch={runSearch} />",
@@ -1560,7 +1695,11 @@
                 "title": "Nothing found",
                 "text": "Try another word or take one of the suggestions below.",
                 "initialQuery": "product card",
-                "suggestions": ["button", "card", "icon"],
+                "suggestions": [
+                  "button",
+                  "card",
+                  "icon"
+                ],
                 "placeholder": "What are you looking for?",
                 "searchLabel": "Search",
                 "resetLabel": "Restore the original query"
@@ -1568,7 +1707,16 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "title",
+          "initialQuery",
+          "searchLabel",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -1576,7 +1724,9 @@
       "type": "registry:component",
       "title": "Запрос разрешения",
       "description": "Закрытый раздел с формой запроса доступа: выбор нужной роли из списка, отправка и смена карточки на подтверждение.",
-      "categories": ["empty"],
+      "categories": [
+        "empty"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1588,7 +1738,12 @@
       ],
       "docs": "Компонент клиентский: useState хранит выбранную роль и флаг отправки. Роли — радиогруппа в fieldset с легендой, у каждой опции своя подпись и объяснение. После submit форма скрывается и её место занимает подтверждение с галочкой — повторный клик по «Запросить» больше невозможен. Замок нарисован инлайновым svg.",
       "meta": {
-        "tags": ["empty", "access", "permissions", "request"],
+        "tags": [
+          "empty",
+          "access",
+          "permissions",
+          "request"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1733,7 +1888,12 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "title",
+          "actionLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1741,7 +1901,9 @@
       "type": "registry:component",
       "title": "Повтор с отсчётом",
       "description": "Ошибка загрузки с автоповтором: код ответа виден сразу на карточке, отсчёт до следующей попытки и ручной повтор в любой момент.",
-      "categories": ["empty"],
+      "categories": [
+        "empty"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1753,7 +1915,12 @@
       ],
       "docs": "Компонент клиентский: useState и useEffect держат обратный отсчёт и вызывают onRetry, когда он доходит до нуля, после чего отсчёт стартует заново. Кнопка «Повторить сейчас» сбрасывает отсчёт и вызывает onRetry немедленно. Проп autoRetry=false отключает таймер и полосу прогресса, оставляя только ручной повтор. Знак тревоги — инлайновый svg, код ответа показан прямо на карточке, не спрятан в details.",
       "meta": {
-        "tags": ["empty", "error", "retry", "auto-retry"],
+        "tags": [
+          "empty",
+          "error",
+          "retry",
+          "auto-retry"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1903,7 +2070,14 @@
             }
           }
         },
-        "cardControls": ["autoRetry", "seconds", "danger", "background"]
+        "cardControls": [
+          "title",
+          "code",
+          "seconds",
+          "autoRetry",
+          "danger",
+          "background"
+        ]
       }
     },
     {
@@ -1911,7 +2085,9 @@
       "type": "registry:component",
       "title": "Чеклист знакомства",
       "description": "Первый запуск как чек-лист: шаги отмечаются в любом порядке, прогресс-бар считает готовность, а действие одно и не ждёт, пока отметят всё.",
-      "categories": ["empty"],
+      "categories": [
+        "empty"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1923,7 +2099,12 @@
       ],
       "docs": "Компонент клиентский: useState хранит отметки по id шага. Каждый шаг — кнопка с aria-pressed, а не чекбокс: клик переключает состояние, зачёркнутый текст и заливка отмечают выполненное. Прогресс-бар и счётчик считаются от количества отмеченных шагов. Галочка внутри отметки — инлайновый svg, рисуется только когда шаг выполнен.",
       "meta": {
-        "tags": ["empty", "onboarding", "checklist", "first run"],
+        "tags": [
+          "empty",
+          "onboarding",
+          "checklist",
+          "first run"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2058,7 +2239,12 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "title",
+          "actionLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2066,7 +2252,9 @@
       "type": "registry:component",
       "title": "Пустая корзина",
       "description": "Пустая корзина с единственным действием — вернуться в каталог; отложенные в избранное товары не теряются молча, если они есть.",
-      "categories": ["empty"],
+      "categories": [
+        "empty"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2078,7 +2266,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-empty-014-*. Серверный: хуков нет. Значок корзины — инлайновый svg. Ширина карточки считается от собственного контейнера через @container: на узкой ширине строка про избранное переходит в столбец.",
       "meta": {
-        "tags": ["empty", "cart", "commerce", "cta"],
+        "tags": [
+          "empty",
+          "cart",
+          "commerce",
+          "cta"
+        ],
         "ai": {
           "export": "Empty014",
           "usage": "<Empty014 actionLabel=\"Перейти в каталог\" onAction={goToCatalog} savedCount={3} onSavedClick={openWishlist} />",
@@ -2210,7 +2403,16 @@
             }
           }
         },
-        "cardControls": ["savedCount", "accent", "background"]
+        "cardControls": [
+          "title",
+          "actionLabel",
+          "savedCount",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -2218,7 +2420,9 @@
       "type": "registry:component",
       "title": "Баннер офлайн-кэша",
       "description": "Офлайн-баннер поверх сохранённых данных: список остаётся на экране, каждая запись помечена временем кэша, повтор подключения — вручную.",
-      "categories": ["empty"],
+      "categories": [
+        "empty"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2230,7 +2434,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-empty-015-*. Серверный: хуков нет. Значок разрыва связи — инлайновый svg, блок объявлен role=\"status\" с aria-live=\"polite\". Баннер и список считаются от собственного контейнера через @container: на узкой ширине кнопка повтора переносится под текст.",
       "meta": {
-        "tags": ["empty", "offline", "network", "cache"],
+        "tags": [
+          "empty",
+          "offline",
+          "network",
+          "cache"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2370,7 +2579,12 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "title",
+          "retryLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2378,7 +2592,9 @@
       "type": "registry:component",
       "title": "Сброс чипов фильтров",
       "description": "Пустой список после фильтров с посортовым сбросом: каждое условие снимается своей кнопкой на чипе, общий сброс остаётся рядом.",
-      "categories": ["empty"],
+      "categories": [
+        "empty"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2390,7 +2606,12 @@
       ],
       "docs": "Компонент клиентский: useState хранит список активных условий, инициализированный пропом filters. Каждый чип несёт свою кнопку снятия с инлайновым svg-крестиком и aria-label с названием условия; общий сброс снимает все условия разом. Раскладка кнопки сброса считается от собственного контейнера через @container. Значок воронки — инлайновый svg.",
       "meta": {
-        "tags": ["empty", "filters", "reset", "list"],
+        "tags": [
+          "empty",
+          "filters",
+          "reset",
+          "list"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2539,7 +2760,12 @@
             }
           }
         },
-        "cardControls": ["total", "accent", "background"]
+        "cardControls": [
+          "title",
+          "total",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2547,7 +2773,9 @@
       "type": "registry:component",
       "title": "Входящие разобраны",
       "description": "Пустой почтовый ящик: все письма прочитаны, время последней проверки видно сразу, а действие одно — написать новое письмо.",
-      "categories": ["empty"],
+      "categories": [
+        "empty"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2559,7 +2787,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-empty-017-*. Серверный: хуков нет. Знак — конверт с галочкой, инлайновый svg. Блок объявлен role=\"status\": опустевший ящик стоит объявлять, а не только рисовать. Ширина и кегль заголовка считаются от собственной ширины через @container.",
       "meta": {
-        "tags": ["empty", "inbox", "mail", "cta"],
+        "tags": [
+          "empty",
+          "inbox",
+          "mail",
+          "cta"
+        ],
         "ai": {
           "export": "Empty017",
           "usage": "<Empty017 actionLabel=\"Написать\" onAction={openComposer} checkedAt=\"Проверено в 14:32\" />",
@@ -2674,7 +2907,15 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "title",
+          "actionLabel",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -2682,7 +2923,9 @@
       "type": "registry:component",
       "title": "Нет уведомлений",
       "description": "Тихое состояние без уведомлений: статус включённых каналов подтверждает, что оповещения работают, а действие ведёт в их настройку.",
-      "categories": ["empty"],
+      "categories": [
+        "empty"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2694,7 +2937,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-empty-018-*. Серверный: хуков нет. Знак — перечёркнутый колокольчик, инлайновый svg. Статус включённых каналов показан пилюлей с точкой-индикатором. Ширина и кегль заголовка считаются от собственной ширины через @container.",
       "meta": {
-        "tags": ["empty", "notifications", "quiet", "settings"],
+        "tags": [
+          "empty",
+          "notifications",
+          "quiet",
+          "settings"
+        ],
         "ai": {
           "export": "Empty018",
           "usage": "<Empty018 status=\"Email и push включены\" actionLabel=\"Настроить уведомления\" onAction={openSettings} />",
@@ -2809,7 +3057,15 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "title",
+          "actionLabel",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -2817,7 +3073,9 @@
       "type": "registry:component",
       "title": "Зона перетаскивания",
       "description": "Пустой проект как рабочая зона загрузки: рамка подсвечивается прямо во время перетаскивания файлов, а не только по факту их сброса.",
-      "categories": ["empty"],
+      "categories": [
+        "empty"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2829,7 +3087,12 @@
       ],
       "docs": "Компонент клиентский: useState хранит флаг isDragging, который переключают обработчики onDragOver, onDragLeave и onDrop на корневом блоке — подсветка рамки меняется в реальном времени, а не только по факту сброса файла. Файлы передаются наружу через onDropFiles, разбор FileList остаётся за вызывающим кодом. Кнопка — второй вход в то же действие для тех, кто не перетаскивает мышью. Иконка — инлайновый svg, отступы считаются от собственной ширины через @container.",
       "meta": {
-        "tags": ["empty", "project", "upload", "dropzone"],
+        "tags": [
+          "empty",
+          "project",
+          "upload",
+          "dropzone"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2951,7 +3214,12 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "title",
+          "actionLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2959,7 +3227,9 @@
       "type": "registry:component",
       "title": "Скоро появится",
       "description": "Раздел в разработке: обещанный срок, форма подписки на уведомление и подтверждение вместо повторно нажимаемой кнопки после отправки.",
-      "categories": ["empty"],
+      "categories": [
+        "empty"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2971,7 +3241,12 @@
       ],
       "docs": "Компонент клиентский: useState хранит значение поля почты и флаг отправки. Форма сабмитится по submit, email проверяется нативным required и type=\"email\"; после отправки форма скрывается и её место занимает подтверждение — повторно нажать кнопку невозможно. Подпись поля спрятана визуально через clip-path в собственном CSS, а не через утилитный класс темы. Иконка часов — инлайновый svg, раскладка формы считается от собственной ширины через @container.",
       "meta": {
-        "tags": ["empty", "coming soon", "subscribe", "onboarding"],
+        "tags": [
+          "empty",
+          "coming soon",
+          "subscribe",
+          "onboarding"
+        ],
         "preview": {
           "width": "full"
         },
@@ -3094,7 +3369,12 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "title",
+          "submitLabel",
+          "accent",
+          "background"
+        ]
       }
     }
   ]

@@ -40,7 +40,10 @@ const STYLES = `
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="stepper-002"]{color-scheme:dark}
 [data-vibeui-block="stepper-002"]{
-container-type:inline-size;width:100%;box-sizing:border-box;
+container-type:inline-size;width:100%;
+/* container-type отрывает ширину от содержимого: без нижней границы
+   блок схлопывается внутри flex-контейнера. */
+min-width:min(100%,16rem);box-sizing:border-box;
 font-family:var(--vibeui-stepper-002-font);color:var(--vibeui-stepper-002-fg);
 }
 [data-vibeui-block="stepper-002"] [data-part="shell"]{

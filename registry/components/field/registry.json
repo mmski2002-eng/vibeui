@@ -6,7 +6,9 @@
       "type": "registry:component",
       "title": "Поле с ошибкой",
       "description": "Обвязка поля: пояснение и ошибка связаны через aria-describedby и читаются вслух вместе со значением, а не отдельно.",
-      "categories": ["field"],
+      "categories": [
+        "field"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-field-001-*. Серверный: хуков нет. Ошибка помечает поле через aria-invalid и попадает в aria-describedby вместе с пояснением: условия остаются на экране ровно тогда, когда они нужнее всего. Ошибка снабжена знаком, а не только цветом.",
       "meta": {
-        "tags": ["field", "error", "form", "a11y"],
+        "tags": [
+          "field",
+          "error",
+          "form",
+          "a11y"
+        ],
         "ai": {
           "export": "Field001",
           "usage": "<Field001 label=\"Рабочая почта\" hint=\"Пришлём ключ доступа.\" error=\"Адрес без «@».\" />",
@@ -150,7 +157,16 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-field-001-*. A server component: no hooks. The error marks the field through aria-invalid and joins aria-describedby together with the note: the requirements stay on screen exactly when they are needed most. The error carries a mark, not colour alone."
           }
         },
-        "cardControls": ["required", "background"]
+        "cardControls": [
+          "label",
+          "error",
+          "required",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -158,7 +174,9 @@
       "type": "registry:component",
       "title": "Оболочка поля",
       "description": "Каркас поля: рамка обнимает подпись и контрол вместе, а подсказка и ошибка делят одну строку снизу — форма не прыгает при появлении ошибки.",
-      "categories": ["field"],
+      "categories": [
+        "field"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -170,7 +188,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-field-002-*. Серверный: состояния нет, подсветка держится на :focus-within. Внутрь рамки через children кладут любой контрол — input, textarea или select; по умолчанию рендерится input с id из пропа name. Подсказка и ошибка занимают одно и то же место, ошибка включает data-invalid на корне, aria-invalid у поля и role=\"alert\" у примечания.",
       "meta": {
-        "tags": ["field", "form", "wrapper", "error"],
+        "tags": [
+          "field",
+          "form",
+          "wrapper",
+          "error"
+        ],
         "preview": {
           "width": "full"
         },
@@ -330,7 +353,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-field-002-*. A server component: there is no state, the highlight rides on :focus-within. Through children you drop any control inside the border — an input, a textarea or a select; by default an input is rendered with an id built from the name prop. The hint and the error occupy the same slot, and the error turns on data-invalid on the root, aria-invalid on the field and role=\"alert\" on the note."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "hint",
+          "error",
+          "badge",
+          "defaultValue",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -338,7 +369,9 @@
       "type": "registry:component",
       "title": "Отметка обязательного",
       "description": "Обязательное поле со звёздочкой, которая объясняет себя: расшифровка в <abbr>, скрытое слово для screen reader и сноска рядом с полями.",
-      "categories": ["field"],
+      "categories": [
+        "field"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -350,7 +383,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-field-003-*. Серверный: состояния нет. Звёздочка обёрнута в <abbr title>, продублирована визуально скрытым текстом и объяснена сноской под парой полей. Рядом стоит необязательное поле с явной меткой — пара показывает разницу, а не намекает на неё. У обязательного поля выставлены required и aria-required.",
       "meta": {
-        "tags": ["field", "required", "form", "a11y"],
+        "tags": [
+          "field",
+          "required",
+          "form",
+          "a11y"
+        ],
         "preview": {
           "width": "full"
         },
@@ -515,7 +553,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-field-003-*. A server component: there is no state. The asterisk is wrapped in an <abbr title>, doubled by visually hidden text and explained by a footnote under the pair of fields. Beside it stands an optional field with an explicit marker — the pair shows the difference instead of hinting at it. The required field carries required and aria-required."
           }
         },
-        "cardControls": ["background"]
+        "cardControls": [
+          "label",
+          "placeholder",
+          "optionalTitle",
+          "optionalLabel",
+          "legend",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -523,7 +569,9 @@
       "type": "registry:component",
       "title": "Кольцо счётчика",
       "description": "Поле со счётчиком остатка в виде кольца: доля заполнения видна краем глаза, точное число стоит внутри кольца, а последняя четверть краснеет.",
-      "categories": ["field"],
+      "categories": [
+        "field"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -535,7 +583,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-field-004-*. Клиентский: \"use client\" ради длины значения. Кольцо нарисовано conic-gradient с долей в переменной --vibeui-field-004-ratio и вырезано псевдоэлементом по центру; порог тревоги — четверть лимита, он поднимает data-low на корне. Вслух объявляется только последняя четверть: role=\"status\" на скрытой строке, иначе screen reader читает счётчик на каждую букву.",
       "meta": {
-        "tags": ["field", "counter", "limit", "form"],
+        "tags": [
+          "field",
+          "counter",
+          "limit",
+          "form"
+        ],
         "preview": {
           "width": "full"
         },
@@ -686,7 +739,14 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-field-004-*. A client component: \"use client\" for the sake of the value length. The ring is drawn with a conic-gradient whose share lives in the --vibeui-field-004-ratio variable and is cut out by a pseudo-element in the centre; the alarm threshold is a quarter of the limit, and it raises data-low on the root. Only the last quarter is announced aloud: role=\"status\" on a hidden line, otherwise a screen reader reads the counter on every letter."
           }
         },
-        "cardControls": ["limit", "accent", "background"]
+        "cardControls": [
+          "label",
+          "defaultValue",
+          "hint",
+          "limit",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -694,7 +754,9 @@
       "type": "registry:component",
       "title": "Единица у поля",
       "description": "Поле с текстовой приставкой слева и выбором единицы справа в одной рамке: значение и единица вводятся рядом и уходят на сервер двумя полями.",
-      "categories": ["field"],
+      "categories": [
+        "field"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -706,7 +768,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-field-005-*. Серверный: подсветка группы держится на :focus-within. Рамка живёт на группе, у input и select её нет. Приставка — неинтерактивный span с user-select:none, окончание — нативный select с appearance:none и стрелкой из двух граней. Значение и единица уходят двумя полями формы: name и `${name}-unit`.",
       "meta": {
-        "tags": ["field", "unit", "prefix", "form"],
+        "tags": [
+          "field",
+          "unit",
+          "prefix",
+          "form"
+        ],
         "preview": {
           "width": "full"
         },
@@ -847,7 +914,11 @@
               "props": {
                 "label": "Per-file limit",
                 "prefix": "at most",
-                "units": ["KB", "MB", "GB"],
+                "units": [
+                  "KB",
+                  "MB",
+                  "GB"
+                ],
                 "unitLabel": "Unit of measurement",
                 "hint": "The value and the unit are submitted as two form fields — nothing needs converting."
               }
@@ -855,7 +926,14 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-field-005-*. A server component: the group highlight rides on :focus-within. The border lives on the group, and neither the input nor the select has one. The prefix is a non-interactive span with user-select:none, and the unit is a native select with appearance:none and an arrow made of two edges. The value and the unit are submitted as two form fields: name and `${name}-unit`."
           }
         },
-        "cardControls": ["defaultValue", "background"]
+        "cardControls": [
+          "label",
+          "prefix",
+          "hint",
+          "defaultValue",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -863,7 +941,9 @@
       "type": "registry:component",
       "title": "Поле с действием",
       "description": "Поле с кнопкой действия внутри рамки: Enter отправляет без обработчика клавиш, а пока поле пустое, кнопка выключена — нажимать нечего.",
-      "categories": ["field"],
+      "categories": [
+        "field"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -875,7 +955,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-field-006-*. Клиентский: \"use client\" ради значения и результата. Обёртка — настоящий <form> с onSubmit и preventDefault, поэтому Enter в поле нажимает кнопку без единого обработчика клавиш. Кнопка выключена при пустом значении, результат объявляется через role=\"status\" и поднимает data-done на корне.",
       "meta": {
-        "tags": ["field", "action", "promo", "form"],
+        "tags": [
+          "field",
+          "action",
+          "promo",
+          "form"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1022,7 +1107,14 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-field-006-*. A client component: \"use client\" for the sake of the value and the result. The wrapper is a real <form> with onSubmit and preventDefault, so Enter in the field presses the button without a single key handler. The button is disabled on an empty value, and the result is announced through role=\"status\" and raises data-done on the root."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "action",
+          "placeholder",
+          "note",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1030,7 +1122,9 @@
       "type": "registry:component",
       "title": "Поле с копированием",
       "description": "Поле только для чтения с кнопкой копирования: значение лежит в настоящем input, а при отказе буфера оно просто выделяется целиком.",
-      "categories": ["field"],
+      "categories": [
+        "field"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1042,7 +1136,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-field-007-*. Клиентский: \"use client\" ради буфера обмена. Значение живёт в readOnly-поле, а не в <code>: его выделяют, прокручивают и отдают менеджеру паролей. Кнопка сначала выделяет текст через ref, затем пробует navigator.clipboard.writeText — выделение остаётся запасным путём при отказе. Успех поднимает data-copied и объявляется через role=\"status\".",
       "meta": {
-        "tags": ["field", "readonly", "copy", "clipboard"],
+        "tags": [
+          "field",
+          "readonly",
+          "copy",
+          "clipboard"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1190,7 +1289,14 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-field-007-*. A client component: \"use client\" for the sake of the clipboard. The value lives in a readOnly field rather than in a <code>: it has to be selectable, scrollable and reachable by a password manager. The button first selects the text through a ref and then tries navigator.clipboard.writeText — the selection stays as the fallback when it is refused. Success raises data-copied and is announced through role=\"status\"."
           }
         },
-        "cardControls": ["background"]
+        "cardControls": [
+          "label",
+          "value",
+          "hint",
+          "copyText",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1198,7 +1304,9 @@
       "type": "registry:component",
       "title": "Проверка занятости",
       "description": "Поле с проверкой занятости на лету: через паузу после ввода состояние показывается и значком, и словом — «проверяем», «занято», «свободно».",
-      "categories": ["field"],
+      "categories": [
+        "field"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1210,7 +1318,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-field-008-*. Клиентский: \"use client\" ради проверки. Проверка запускается в useEffect по таймеру и отменяется при следующем нажатии, поэтому на длинном адресе улетает один запрос, а не десяток. Состояние выносится в data-state на корне: по нему красится рамка и включается значок. Цвет состояния передаётся отдельной переменной --vibeui-field-008-state.",
       "meta": {
-        "tags": ["field", "validation", "async", "form"],
+        "tags": [
+          "field",
+          "validation",
+          "async",
+          "form"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1362,7 +1475,14 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-field-008-*. A client component: \"use client\" for the sake of the check. The check is started in a useEffect on a timer and cancelled on the next keystroke, so a long address sends one request rather than a dozen. The state is lifted into data-state on the root: it colours the border and turns on the glyph. The state colour is passed through a separate --vibeui-field-008-state variable."
           }
         },
-        "cardControls": ["delay", "background"]
+        "cardControls": [
+          "label",
+          "prefix",
+          "placeholder",
+          "delay",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1370,7 +1490,9 @@
       "type": "registry:component",
       "title": "Подпись в строке",
       "description": "Строка формы с подписью слева: на широкой ширине колонка подписей выравнивает форму по одной вертикали, на узкой строка складывается в столбец.",
-      "categories": ["field"],
+      "categories": [
+        "field"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1382,7 +1504,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-field-009-*. Серверный: состояния нет. Раскладка считается container query по собственной ширине блока, поэтому форма в боковой панели ведёт себя как узкая даже на десктопе. Правило @container целит во внутренний [data-part=\"shell\"] и его строки, а не в сам контейнер: контейнерный запрос не действует на элемент, который его объявил. Ширина колонки подписей задаётся переменной --vibeui-field-009-label.",
       "meta": {
-        "tags": ["field", "layout", "form", "responsive"],
+        "tags": [
+          "field",
+          "layout",
+          "form",
+          "responsive"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1547,7 +1674,11 @@
                 "hint": "This is how you appear in comments and history.",
                 "defaultValue": "Anna Kuznetsova",
                 "roleLabel": "Team role",
-                "roles": ["Owner", "Editor", "Viewer"],
+                "roles": [
+                  "Owner",
+                  "Editor",
+                  "Viewer"
+                ],
                 "cityLabel": "City",
                 "cityPlaceholder": "For example, Lisbon"
               }
@@ -1555,7 +1686,9 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-field-009-*. A server component: there is no state. The layout is computed by a container query on the block's own width, so a form in a side panel behaves as narrow even on a desktop. The @container rule targets the inner [data-part=\"shell\"] and its rows rather than the container itself: a container query does not apply to the element that declared it. The width of the label column is set by the --vibeui-field-009-label variable."
           }
         },
-        "cardControls": ["background"]
+        "cardControls": [
+          "background"
+        ]
       }
     },
     {
@@ -1563,7 +1696,9 @@
       "type": "registry:component",
       "title": "Ошибка группы полей",
       "description": "Группа полей даты с одной общей ошибкой: «31 февраля» неверно целиком, поэтому сообщение живёт на fieldset, а не под одним из трёх полей.",
-      "categories": ["field"],
+      "categories": [
+        "field"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1575,7 +1710,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-field-010-*. Серверный: состояния нет. Группа объявлена настоящим <fieldset> с <legend>, сообщение связано с ней через aria-describedby и role=\"alert\", поэтому его слышно при входе в любое из трёх полей. Ошибка поднимает data-invalid на корне и красит рамки всех полей группы, а не одного. У fieldset сброшен min-inline-size, иначе он не сжимается.",
       "meta": {
-        "tags": ["field", "fieldset", "error", "date"],
+        "tags": [
+          "field",
+          "fieldset",
+          "error",
+          "date"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1762,7 +1902,9 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-field-010-*. A server component: there is no state. The group is declared as a real <fieldset> with a <legend>, and the message is tied to it through aria-describedby and role=\"alert\", so it is audible on entering any of the three fields. The error raises data-invalid on the root and colours the borders of every field in the group, not just one. The fieldset has min-inline-size reset, otherwise it refuses to shrink."
           }
         },
-        "cardControls": ["background"]
+        "cardControls": [
+          "background"
+        ]
       }
     },
     {
@@ -1770,7 +1912,9 @@
       "type": "registry:component",
       "title": "Автосохранение черновика",
       "description": "Поле черновика с автосохранением: пауза после ввода сама запускает сохранение, а под текстом остаётся отметка времени последнего успешного сохранения.",
-      "categories": ["field"],
+      "categories": [
+        "field"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1782,7 +1926,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-field-011-*. Клиентский: две последовательные паузы решают, когда сохранять. Первая — тишина после ввода на delay миллисекунд, вторая — короткая фиксированная фаза «сохраняем», которая подтверждает, что сохранение действительно случилось, а не просто истекло время. Состояние выводится из сравнения текущего текста с последним сохранённым, а не хранится отдельным флагом, поэтому не может разъехаться с реальным содержимым поля. Метка времени берётся один раз в момент сохранения и не пересчитывается на каждый рендер.",
       "meta": {
-        "tags": ["field", "autosave", "draft", "status"],
+        "tags": [
+          "field",
+          "autosave",
+          "draft",
+          "status"
+        ],
         "ai": {
           "export": "Field011",
           "usage": "<Field011\n  label=\"Заметка к сделке\"\n  delay={1200}\n/>",
@@ -1932,7 +2081,17 @@
             "docs": "The component is self-contained: one file, no dependencies, its palette in --vibeui-field-011-*. A client component: two consecutive pauses decide when to save. The first is silence after typing for delay milliseconds, the second is a short fixed \"saving\" phase that confirms the save really happened rather than the time merely running out. The state is derived by comparing the current text with the last saved value rather than stored as a separate flag, so it cannot drift away from the actual field content. The timestamp is taken once at the moment of saving and is not recomputed on every render."
           }
         },
-        "cardControls": ["delay", "background"]
+        "cardControls": [
+          "label",
+          "placeholder",
+          "defaultValue",
+          "delay",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     }
   ]

@@ -6,7 +6,9 @@
       "type": "registry:component",
       "title": "Канбан-доска",
       "description": "Доска задач по колонкам: нативный перенос плюс выбор колонки списком, потому что drag недоступен с клавиатуры.",
-      "categories": ["kanban"],
+      "categories": [
+        "kanban"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-kanban-001-*. Клиентский: \"use client\" ради переноса. Колонки лежат в гриде с автоколонками и прокруткой по горизонтали. Счётчик в шапке считается из карточек, а не хранится отдельным числом.",
       "meta": {
-        "tags": ["kanban", "board", "drag", "tasks"],
+        "tags": [
+          "kanban",
+          "board",
+          "drag",
+          "tasks"
+        ],
         "preview": {
           "width": "full"
         },
@@ -109,7 +116,11 @@
             "title": "Kanban Board",
             "preview": {
               "props": {
-                "columns": ["Queue", "In progress", "Done"],
+                "columns": [
+                  "Queue",
+                  "In progress",
+                  "Done"
+                ],
                 "cards": [
                   {
                     "id": "1",
@@ -142,7 +153,10 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-kanban-001-*. It is a client component: \"use client\" for the moving. The columns sit in a grid with auto columns and horizontal scrolling. The header counter is computed from the cards rather than stored as a separate number."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -150,7 +164,9 @@
       "type": "registry:component",
       "title": "Доска с лимитом задач",
       "description": "Доска с лимитом карточек в колонке: заполнение видно до переноса, а перенос сверх лимита не отменяется молча, а объявляется отказом в живой области.",
-      "categories": ["kanban"],
+      "categories": [
+        "kanban"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -162,7 +178,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-kanban-002-*. Клиентский: \"use client\" ради состояния доски. Колонка описана парой имя и лимит; заполнение считается из карточек и показывается числом «3 / 4» и полосой. Функция переноса одна для мыши и клавиатуры: она проверяет лимит и в случае отказа пишет причину в живую область role=status. Мышиный путь — нативный HTML5 drag and drop, клавиатурный — кнопки со стрелками на карточке.",
       "meta": {
-        "tags": ["kanban", "wip", "limit", "a11y"],
+        "tags": [
+          "kanban",
+          "wip",
+          "limit",
+          "a11y"
+        ],
         "preview": {
           "width": "full"
         },
@@ -317,7 +338,11 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-kanban-002-*. It is a client component: \"use client\" for the board state. A column is described by a name and a limit; the occupancy is computed from the cards and shown both as a «3 / 4» number and as a bar. There is a single move function for mouse and keyboard: it checks the limit and, on a refusal, writes the reason into a role=status live region. The mouse path is native HTML5 drag and drop, the keyboard path is arrow buttons on the card."
           }
         },
-        "cardControls": ["accent", "warn", "background"]
+        "cardControls": [
+          "accent",
+          "warn",
+          "background"
+        ]
       }
     },
     {
@@ -325,7 +350,9 @@
       "type": "registry:component",
       "title": "Доска со сроками и исполнителями",
       "description": "Доска, где карточка отвечает на два вопроса до открытия: кто делает и когда срок. Просрочка помечена словом, а оттенок инициалов считается из имени.",
-      "categories": ["kanban"],
+      "categories": [
+        "kanban"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -337,7 +364,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-kanban-003-*. Клиентский: \"use client\" ради состояния доски. Оттенок кружка инициалов выводится хеш-функцией из имени исполнителя и подставляется переменной, поэтому палитру людей не нужно вести руками. Срок сравнивается со строкой даты из пропа today, а не с Date.now(): текущее время на сервере и на клиенте разное и ломает гидрацию. Перенос: нативный drag мышью и стрелки влево и вправо на самой карточке с клавиатуры, результат идёт в живую область.",
       "meta": {
-        "tags": ["kanban", "assignee", "due", "board"],
+        "tags": [
+          "kanban",
+          "assignee",
+          "due",
+          "board"
+        ],
         "preview": {
           "width": "full"
         },
@@ -450,7 +482,11 @@
             "title": "Assignee Due Board",
             "preview": {
               "props": {
-                "columns": ["Queue", "In progress", "Done"],
+                "columns": [
+                  "Queue",
+                  "In progress",
+                  "Done"
+                ],
                 "cards": [
                   {
                     "id": "1",
@@ -494,7 +530,12 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-kanban-003-*. It is a client component: \"use client\" for the board state. The tint of the initials circle is derived by a hash function from the assignee name and passed in through a variable, so the palette of people does not have to be kept by hand. The due date is compared against the date string from the today prop rather than Date.now(): the current time differs on server and client and breaks hydration. Moving: native mouse drag, and left and right arrows on the card itself from the keyboard, with the result going into the live region."
           }
         },
-        "cardControls": ["accent", "late", "background"]
+        "cardControls": [
+          "today",
+          "accent",
+          "late",
+          "background"
+        ]
       }
     },
     {
@@ -502,7 +543,9 @@
       "type": "registry:component",
       "title": "Сворачиваемые колонки",
       "description": "Доска, где колонку сворачивают в узкую полосу с вертикальным именем и счётчиком, а перенос в свёрнутую колонку не отклоняется, а разворачивает её.",
-      "categories": ["kanban"],
+      "categories": [
+        "kanban"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -514,7 +557,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-kanban-004-*. Клиентский: \"use client\" ради состояния доски и набора свёрнутых колонок. Колонки лежат во флексе, свёрнутая получает фиксированную узкую основу, а её заголовок переворачивается через writing-mode. Список карточек свёрнутой колонки помечен hidden, поэтому выпадает и из отрисовки, и из последовательности фокуса. Кнопка заголовка несёт aria-expanded, все изменения объявляются в живой области role=status.",
       "meta": {
-        "tags": ["kanban", "collapse", "column", "board"],
+        "tags": [
+          "kanban",
+          "collapse",
+          "column",
+          "board"
+        ],
         "preview": {
           "width": "full"
         },
@@ -605,8 +653,15 @@
             "title": "Collapsible Columns",
             "preview": {
               "props": {
-                "columns": ["Queue", "In progress", "Review", "Done"],
-                "collapsed": ["Done"],
+                "columns": [
+                  "Queue",
+                  "In progress",
+                  "Review",
+                  "Done"
+                ],
+                "collapsed": [
+                  "Done"
+                ],
                 "cards": [
                   {
                     "id": "1",
@@ -652,7 +707,10 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-kanban-004-*. It is a client component: \"use client\" for the board state and the set of collapsed columns. The columns sit in a flex layout, a collapsed one gets a fixed narrow basis and its header is turned around with writing-mode. The card list of a collapsed column is marked with hidden, so it drops out of both rendering and the focus order. The header button carries aria-expanded, and every change is announced in a role=status live region."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -660,7 +718,9 @@
       "type": "registry:component",
       "title": "Доска с фильтром по исполнителю",
       "description": "Доска с фильтром по исполнителю, где счётчик колонки показывает «показано из всего», а опустевшая после фильтра колонка объясняет словами, что скрыто.",
-      "categories": ["kanban"],
+      "categories": [
+        "kanban"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -672,7 +732,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-kanban-005-*. Клиентский: \"use client\" ради фильтра и состояния доски. Список исполнителей собирается из карточек через Set, поэтому его не надо вести отдельно. Фильтр — ряд кнопок с aria-pressed, а не набор ссылок: выбор не меняет адрес страницы. Счётчик колонки печатает видимое и общее число, пустая колонка показывает объяснение вместо пустоты, смена фильтра и перенос объявляются в живой области role=status.",
       "meta": {
-        "tags": ["kanban", "filter", "assignee", "board"],
+        "tags": [
+          "kanban",
+          "filter",
+          "assignee",
+          "board"
+        ],
         "preview": {
           "width": "full"
         },
@@ -775,7 +840,11 @@
             "preview": {
               "props": {
                 "everyone": "All",
-                "columns": ["Queue", "In progress", "Done"],
+                "columns": [
+                  "Queue",
+                  "In progress",
+                  "Done"
+                ],
                 "cards": [
                   {
                     "id": "1",
@@ -825,7 +894,11 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-kanban-005-*. It is a client component: \"use client\" for the filter and the board state. The list of assignees is collected from the cards through a Set, so it does not have to be maintained separately. The filter is a row of buttons with aria-pressed rather than a set of links: a choice does not change the page address. The column counter prints the shown and the total number, an emptied column shows an explanation instead of blankness, and a filter change and a move are announced in a role=status live region."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "everyone",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -833,7 +906,9 @@
       "type": "registry:component",
       "title": "Перенос карточки с клавиатуры",
       "description": "Доска, где перенос сделан клавиатурой в первую очередь: карточку берут пробелом, несут стрелками по колонкам и внутри колонки, кладут или отменяют Escape.",
-      "categories": ["kanban"],
+      "categories": [
+        "kanban"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -845,7 +920,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-kanban-006-*. Клиентский: \"use client\" ради режима переноса. Карточка — button, поэтому фокус и клавиши достаются без tabindex. Пробел переключает захват и запоминает снимок доски, стрелки влево и вправо меняют колонку, вверх и вниз — место внутри колонки, Escape возвращает снимок. Живая область role=status с aria-live=assertive называет колонку и позицию после каждого шага, колонка «в руке» подсвечена.",
       "meta": {
-        "tags": ["kanban", "keyboard", "a11y", "board"],
+        "tags": [
+          "kanban",
+          "keyboard",
+          "a11y",
+          "board"
+        ],
         "preview": {
           "width": "full"
         },
@@ -948,7 +1028,11 @@
             "preview": {
               "props": {
                 "hint": "Space picks the card up, arrows carry it, space drops it, Escape cancels.",
-                "columns": ["Backlog", "In progress", "Done"],
+                "columns": [
+                  "Backlog",
+                  "In progress",
+                  "Done"
+                ],
                 "cards": [
                   {
                     "id": "1",
@@ -990,7 +1074,11 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-kanban-006-*. It is a client component: \"use client\" for the moving mode. A card is a button, so focus and keys come for free without tabindex. Space toggles the pick-up and stores a board snapshot, left and right arrows change the column, up and down the place inside the column, and Escape restores the snapshot. A role=status live region with aria-live=assertive names the column and the position after every step, and the column «in hand» is highlighted."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "hint",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -998,7 +1086,9 @@
       "type": "registry:component",
       "title": "Доска с итогами колонок",
       "description": "Доска, которая считает не карточки, а часы: итог колонки, её доля от общего и итоговая строка выводятся из карточек при каждом рендере.",
-      "categories": ["kanban"],
+      "categories": [
+        "kanban"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1010,7 +1100,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-kanban-007-*. Клиентский: \"use client\" ради состояния доски. Итог колонки, доля и общий итог считаются из массива карточек, а не хранятся числом: сохранённая сумма расходится с содержимым после первого переноса. Доля показана и процентом, и полосой, чтобы колонки сравнивались с одного взгляда. Итоговая строка вынесена в тег footer. Перенос: нативный drag мышью и список колонок на карточке с клавиатуры, результат объявляется в живой области.",
       "meta": {
-        "tags": ["kanban", "totals", "estimate", "board"],
+        "tags": [
+          "kanban",
+          "totals",
+          "estimate",
+          "board"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1113,7 +1208,11 @@
             "preview": {
               "props": {
                 "unit": "h",
-                "columns": ["Estimated", "In progress", "Delivered"],
+                "columns": [
+                  "Estimated",
+                  "In progress",
+                  "Delivered"
+                ],
                 "cards": [
                   {
                     "id": "1",
@@ -1158,7 +1257,11 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-kanban-007-*. It is a client component: \"use client\" for the board state. The column total, the share and the grand total are computed from the cards array rather than stored as a number: a stored sum drifts from the contents after the first move. The share is shown both as a percentage and as a bar, so that columns can be compared at a glance. The totals row is moved into a footer tag. Moving: native mouse drag, and a column select on the card from the keyboard, with the result announced in the live region."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "unit",
+          "accent",
+          "background"
+        ]
       }
     }
   ]

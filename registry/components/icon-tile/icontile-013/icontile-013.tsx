@@ -36,6 +36,9 @@ const STYLES = `
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="icontile-013"]{color-scheme:dark}
 [data-vibeui-block="icontile-013"]{
+/* container-type отрывает ширину от содержимого: без нижней границы
+   блок схлопывается внутри flex-контейнера. */
+min-width:min(100%,16rem);
 display:inline-flex;flex-direction:column;align-items:center;min-width:0;
 box-sizing:border-box;
 padding:var(--vibeui-icontile-013-pad);

@@ -6,7 +6,9 @@
       "type": "registry:component",
       "title": "Поле с фильтрацией",
       "description": "Базовый combobox: кнопка показывает выбранное, панель открывает поле фильтра и список, значение берётся только из списка.",
-      "categories": ["combobox"],
+      "categories": [
+        "combobox"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,11 +20,17 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-combobox-001-*. Клиентский: useState держит значение, запрос, открытость и индекс курсора, useEffect переводит фокус в поле фильтра при открытии. Кнопка-триггер несёт aria-haspopup=\"listbox\" и aria-expanded, поле внутри панели — role=\"combobox\", aria-controls и aria-activedescendant, список — role=\"listbox\" со строками role=\"option\" и aria-selected. Клавиатура: стрелки ведут курсор по кругу, Home и End прыгают на края, Enter выбирает, Escape закрывает панель и возвращает фокус на кнопку. Панель лежит в потоке, а не поверх: всплывающий слой в узкой колонке нечем позиционировать без замера. Выбор мышью идёт по onMouseDown с preventDefault, чтобы поле не потеряло фокус раньше выбора.",
       "meta": {
-        "tags": ["combobox", "filter", "keyboard", "a11y"],
+        "tags": [
+          "combobox",
+          "filter",
+          "keyboard",
+          "a11y"
+        ],
         "preview": {
           "props": {
             "defaultOpen": true
-          }
+          },
+          "width": "full"
         },
         "ai": {
           "export": "Combobox001",
@@ -160,7 +168,13 @@
             }
           }
         },
-        "cardControls": ["defaultOpen", "accent", "background"]
+        "cardControls": [
+          "label",
+          "placeholder",
+          "defaultOpen",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -168,7 +182,9 @@
       "type": "registry:component",
       "title": "Сгруппированные разделы",
       "description": "Combobox с разделами: заголовки групп подписывают строки, пустые группы при фильтрации исчезают, а стрелки идут насквозь мимо заголовков.",
-      "categories": ["combobox"],
+      "categories": [
+        "combobox"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -180,7 +196,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-combobox-002-*. Клиентский: useState держит запрос, значение и индекс курсора, useMemo пересобирает группы и плоский порядок строк. Разметка вложенная: внешний ul с role=\"listbox\", внутри li role=\"presentation\" с ul role=\"group\" и aria-labelledby на заголовок. Заголовок группы — li role=\"presentation\", поэтому он не попадает в счёт строк и стрелки через него перепрыгивают; нумерация option'ов сквозная, на ней держится aria-activedescendant. Счётчик у заголовка показывает, сколько строк осталось в разделе после фильтра. Группа без совпадений выбрасывается целиком: пустой заголовок вводит в заблуждение сильнее, чем его отсутствие.",
       "meta": {
-        "tags": ["combobox", "groups", "sections", "keyboard"],
+        "tags": [
+          "combobox",
+          "groups",
+          "sections",
+          "keyboard"
+        ],
         "ai": {
           "export": "Combobox002",
           "usage": "<Combobox002\n  label=\"Раздел\"\n  placeholder=\"Найти раздел\"\n  groups={[{ label: \"Продажи\", options: [\"Новая сделка\", \"Список клиентов\"] }]}\n  onSelect={(value) => console.log(value)}\n/>",
@@ -293,22 +314,42 @@
                 "groups": [
                   {
                     "label": "Sales",
-                    "options": ["New deal", "Funnel report", "Client list"]
+                    "options": [
+                      "New deal",
+                      "Funnel report",
+                      "Client list"
+                    ]
                   },
                   {
                     "label": "Support",
-                    "options": ["New ticket", "Request queue", "Knowledge base"]
+                    "options": [
+                      "New ticket",
+                      "Request queue",
+                      "Knowledge base"
+                    ]
                   },
                   {
                     "label": "Settings",
-                    "options": ["Users", "Roles and access", "Integrations"]
+                    "options": [
+                      "Users",
+                      "Roles and access",
+                      "Integrations"
+                    ]
                   }
                 ]
               }
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "placeholder",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -316,7 +357,9 @@
       "type": "registry:component",
       "title": "Множественный выбор чипами",
       "description": "Множественный выбор фишками: отмеченное остаётся в списке с галочкой, счётчик держит лимит, Backspace в пустом поле снимает последнюю фишку.",
-      "categories": ["combobox"],
+      "categories": [
+        "combobox"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -328,7 +371,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-combobox-003-*. Клиентский: useState держит массив выбранного, запрос и курсор. Список объявлен aria-multiselectable=\"true\", каждая строка несёт aria-selected по факту выбора и рисует свой квадратик-отметку. В отличие от тег-пикера выбранное не удаляется из списка: повторное нажатие снимает выбор там же, где ставилось. Фишки лежат в общем поле с input, обводка фокуса ставится на поле через :has(input:focus-visible). Лимит maxSelected блокирует добавление и прячет заглушку, счётчик в шапке объявлен aria-live=\"polite\".",
       "meta": {
-        "tags": ["combobox", "multiselect", "chips", "keyboard"],
+        "tags": [
+          "combobox",
+          "multiselect",
+          "chips",
+          "keyboard"
+        ],
         "ai": {
           "export": "Combobox003",
           "usage": "<Combobox003\n  label=\"Команды\"\n  options={[\"Дизайн\", \"Фронтенд\", \"Бэкенд\"]}\n  defaultSelected={[\"Дизайн\"]}\n  maxSelected={3}\n  onChange={(values) => console.log(values)}\n/>",
@@ -453,12 +501,23 @@
                   "Support",
                   "Frontend"
                 ],
-                "defaultSelected": ["Design", "Frontend"]
+                "defaultSelected": [
+                  "Design",
+                  "Frontend"
+                ]
               }
             }
           }
         },
-        "cardControls": ["maxSelected", "accent", "background"]
+        "cardControls": [
+          "maxSelected",
+          "label",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -466,7 +525,9 @@
       "type": "registry:component",
       "title": "Выбор людей",
       "description": "Выбор человека: аватар с инициалами, вторая строка с почтой и ролью, поиск идёт по обеим строкам сразу.",
-      "categories": ["combobox"],
+      "categories": [
+        "combobox"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -478,7 +539,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-combobox-004-*. Клиентский: useState держит запрос, выбранное имя и курсор, useMemo фильтрует людей по склейке имени и второй строки. Оттенок аватара считается из имени хешем FNV-1a и приходит в inline-стиле одной переменной --vibeui-combobox-004-hue, из которой oklch собирает фон и цвет текста — так палитра остаётся управляемой и не превращается в набор захардкоженных цветов. Строка выложена flex: аватар фиксированной ширины, двухэтажный текст с overflow:hidden, галочка выбранного прижата margin-left:auto. Роли ARIA полные: role=\"combobox\" с aria-controls и aria-activedescendant на поле, role=\"listbox\" и role=\"option\" с aria-selected на списке.",
       "meta": {
-        "tags": ["combobox", "people", "avatar", "search"],
+        "tags": [
+          "combobox",
+          "people",
+          "avatar",
+          "search"
+        ],
         "ai": {
           "export": "Combobox004",
           "usage": "<Combobox004\n  label=\"Исполнитель\"\n  people={[{ name: \"Анна Ковалёва\", detail: \"anna@studio.ru · дизайн\" }]}\n  defaultValue=\"Анна Ковалёва\"\n  onSelect={(name) => console.log(name)}\n/>",
@@ -621,7 +687,15 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "defaultValue",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -629,7 +703,9 @@
       "type": "registry:component",
       "title": "Создание значения",
       "description": "Combobox с созданием значения: последняя строка списка заводит метку прямо из запроса, сразу выбирает её и помечает как новую.",
-      "categories": ["combobox"],
+      "categories": [
+        "combobox"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -641,7 +717,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-combobox-005-*. Клиентский: useState держит известный список, список созданного, запрос, значение и курсор. Строка создания добавляется в конец массива строк, только если запрос непустой и точного совпадения нет; она полноценный role=\"option\", поэтому берётся стрелками и Enter, а не отдельной кнопкой мимо клавиатуры. Созданное попадает в known и получает бейдж — человек видит, что список изменился по его вине. aria-selected на строке создания всегда false: выбранным считается только существующее значение. Строка отделена пунктиром и цветом, чтобы её не нажимали вслепую вместо совпадения.",
       "meta": {
-        "tags": ["combobox", "create", "tags", "keyboard"],
+        "tags": [
+          "combobox",
+          "create",
+          "tags",
+          "keyboard"
+        ],
         "ai": {
           "export": "Combobox005",
           "usage": "<Combobox005\n  label=\"Метка задачи\"\n  options={[\"Баг\", \"Улучшение\"]}\n  createLabel=\"Создать «{query}»\"\n  onSelect={(value, created) => console.log(value, created)}\n/>",
@@ -767,7 +848,15 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "createLabel",
+          "newBadge",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -775,7 +864,9 @@
       "type": "registry:component",
       "title": "Недавние сверху",
       "description": "Combobox с недавними значениями: последние выборы поднимаются отдельным блоком наверх, из общего списка при этом убираются, блок можно очистить.",
-      "categories": ["combobox"],
+      "categories": [
+        "combobox"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -787,7 +878,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-combobox-006-*. Клиентский: useState держит список недавних, запрос, значение и курсор, useMemo собирает две группы и общий плоский порядок. Выбранное значение уходит в начало недавних и подрезается по recentLimit; из общего блока оно исключается, чтобы одна строка не встречалась дважды и не ломала счёт стрелками. Заголовки разделов — li role=\"presentation\", кнопка очистки живёт прямо в заголовке. Иконка часов нарисована псевдоэлементами на кружке: SVG-файл здесь избыточен. Роли ARIA полные, курсор ведётся по aria-activedescendant.",
       "meta": {
-        "tags": ["combobox", "recent", "history", "keyboard"],
+        "tags": [
+          "combobox",
+          "recent",
+          "history",
+          "keyboard"
+        ],
         "ai": {
           "export": "Combobox006",
           "usage": "<Combobox006\n  label=\"Город доставки\"\n  options={[\"Москва\", \"Казань\", \"Самара\"]}\n  defaultRecent={[\"Казань\"]}\n  recentLimit={3}\n  onSelect={(value) => console.log(value)}\n/>",
@@ -915,12 +1011,23 @@
                   "Ufa",
                   "Krasnoyarsk"
                 ],
-                "defaultRecent": ["Kazan", "Moscow"]
+                "defaultRecent": [
+                  "Kazan",
+                  "Moscow"
+                ]
               }
             }
           }
         },
-        "cardControls": ["recentLimit", "accent", "background"]
+        "cardControls": [
+          "recentLimit",
+          "recentLabel",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -928,7 +1035,9 @@
       "type": "registry:component",
       "title": "Оконный список",
       "description": "Combobox для справочника на сотни строк: рисуется окно из первых совпадений, под списком честная подпись «показано N из M» и полоса охвата.",
-      "categories": ["combobox"],
+      "categories": [
+        "combobox"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -940,7 +1049,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-combobox-007-*. Клиентский: useMemo фильтрует список и режет его до visibleLimit, useState держит запрос, значение и курсор. В DOM попадает не больше visibleLimit строк — это дешёвая замена виртуализации без внешней библиотеки и без замеров высоты. Подпись «показано N из M» лежит в aria-live=\"polite\" и связана с полем через aria-describedby: она объясняет, почему нужного нет на экране. Полоса под списком показывает долю показанного и не несёт текста, поэтому aria-hidden. Клавиатура добавляет PageDown и PageUp — прыжок на десять строк, без него длинный список не пролистать.",
       "meta": {
-        "tags": ["combobox", "long list", "window", "performance"],
+        "tags": [
+          "combobox",
+          "long list",
+          "window",
+          "performance"
+        ],
         "ai": {
           "export": "Combobox007",
           "usage": "<Combobox007\n  label=\"Артикул\"\n  options={catalog}\n  visibleLimit={40}\n  onSelect={(value) => console.log(value)}\n/>",
@@ -1298,7 +1412,15 @@
             }
           }
         },
-        "cardControls": ["visibleLimit", "accent", "background"]
+        "cardControls": [
+          "visibleLimit",
+          "hintLabel",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -1306,7 +1428,9 @@
       "type": "registry:component",
       "title": "Загрузка и пустота",
       "description": "Combobox с двумя забытыми состояниями: полосы-заглушки, пока список едет, и содержательная пустота с готовыми запросами вместо «ничего не найдено».",
-      "categories": ["combobox"],
+      "categories": [
+        "combobox"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1318,11 +1442,17 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-combobox-008-*. Клиентский: состояний два — набранный запрос и показанный, — а ожидание из них выводится: пока показанный не догнал набранный, список считается едущим, и отдельного флага загрузки нет. useEffect только ставит таймер на delay и чистит его при следующем нажатии, поэтому устаревший ответ не перетирает свежий, а синхронного setState в теле эффекта нет. Панель держит min-height, заглушки повторяют высоту строк — панель не прыгает при смене состояния. Поле объявляет aria-busy на время ожидания, блок заглушек — role=\"status\" с подписью, поэтому загрузка проговаривается. Пустая выдача не заканчивается сообщением: под ним лежат кнопки с заведомо результативными запросами. Список скрывается атрибутом hidden, а не удаляется, — aria-controls обязан указывать на существующий узел.",
       "meta": {
-        "tags": ["combobox", "loading", "empty state", "skeleton"],
+        "tags": [
+          "combobox",
+          "loading",
+          "empty state",
+          "skeleton"
+        ],
         "preview": {
           "props": {
             "defaultQuery": "пра"
-          }
+          },
+          "width": "full"
         },
         "ai": {
           "export": "Combobox008",
@@ -1446,12 +1576,21 @@
                   "Busan",
                   "Poznan"
                 ],
-                "suggestions": ["Prague", "Busan", "Portland"]
+                "suggestions": [
+                  "Prague",
+                  "Busan",
+                  "Portland"
+                ]
               }
             }
           }
         },
-        "cardControls": ["delay", "accent", "background"]
+        "cardControls": [
+          "delay",
+          "emptyLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1459,7 +1598,9 @@
       "type": "registry:component",
       "title": "Строки со статусом",
       "description": "Combobox со статусом у каждой строки: цветная точка и подпись состояния, а недоступные узлы выключены и пропускаются стрелками.",
-      "categories": ["combobox"],
+      "categories": [
+        "combobox"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1471,7 +1612,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-combobox-009-*. Клиентский: useState держит запрос, значение и курсор. Статус приходит полем данных и раскрашивает точку через data-status, а не через отдельные классы. Строки со статусом down несут aria-disabled=\"true\", выбор на них не срабатывает, а перемещение курсора перепрыгивает их циклом с ограничением по длине списка — если доступных строк нет, курсор остаётся на месте вместо зависания. Подпись состояния дублирует цвет словом: по одному цвету состояние не читается при дальтонизме и в чёрно-белой печати. Строка выложена grid из трёх колонок, поэтому подписи выравниваются по правому краю независимо от длины имени.",
       "meta": {
-        "tags": ["combobox", "status", "disabled", "a11y"],
+        "tags": [
+          "combobox",
+          "status",
+          "disabled",
+          "a11y"
+        ],
         "ai": {
           "export": "Combobox009",
           "usage": "<Combobox009\n  label=\"Окружение\"\n  items={[{ name: \"prod-eu-1\", status: \"ok\", note: \"работает\" }]}\n  defaultValue=\"prod-eu-1\"\n  onSelect={(value) => console.log(value)}\n/>",
@@ -1618,7 +1764,15 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "defaultValue",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -1626,7 +1780,9 @@
       "type": "registry:component",
       "title": "Обязательный выбор",
       "description": "Обязательный выбор в форме: ошибка появляется только после отправки, связана с полем через aria-describedby и снимается выбором строки.",
-      "categories": ["combobox"],
+      "categories": [
+        "combobox"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1638,7 +1794,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-combobox-010-*. Корень — form с noValidate: браузерная валидация не умеет проверять рисованный список, поэтому проверку ведёт обработчик submit. Ошибка ставится только после попытки отправки, а не на каждое нажатие: ругаться на человека, пока он ещё заполняет форму, — худшее, что может сделать поле. Поле получает aria-invalid и aria-describedby, указывающий на сообщение или на подсказку, сообщение живёт в role=\"alert\" и потому проговаривается без перевода фокуса. Enter в поле выбирает строку и не отправляет форму — иначе половина людей отправит её, промахнувшись мимо списка. После неудачной отправки фокус возвращается в поле.",
       "meta": {
-        "tags": ["combobox", "form", "validation", "required"],
+        "tags": [
+          "combobox",
+          "form",
+          "validation",
+          "required"
+        ],
         "ai": {
           "export": "Combobox010",
           "usage": "<Combobox010\n  label=\"Способ оплаты\"\n  options={[\"Картой онлайн\", \"Наличными курьеру\"]}\n  errorText=\"Выберите способ оплаты из списка\"\n  onSubmitValue={(value) => console.log(value)}\n/>",
@@ -1761,7 +1922,15 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "errorText",
+          "submitLabel",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -1769,7 +1938,9 @@
       "type": "registry:component",
       "title": "Очищаемое значение",
       "description": "Combobox с очисткой: выбранное лежит фишкой в поле, крестик снимает его и оставляет фокус на месте, а снятое значение можно вернуть одним нажатием.",
-      "categories": ["combobox"],
+      "categories": [
+        "combobox"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1781,7 +1952,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-combobox-011-*. Клиентский: useState держит значение, снятое значение, запрос и курсор. Фишка со значением и поле фильтра лежат в одном контейнере, обводка фокуса ставится на контейнер через :has(input:focus-visible) — визуально это один элемент, значит и фокус общий. Крестик несёт aria-label с самим значением: «Очистить» без названия в списке фильтров бесполезно. После очистки фокус остаётся в поле, чтобы менять фильтр подряд без мыши. Escape сначала стирает запрос, затем снимает значение — две ступени вместо одной. Строка снизу с aria-live=\"polite\" сообщает состояние и предлагает вернуть снятое.",
       "meta": {
-        "tags": ["combobox", "clear", "filter", "undo"],
+        "tags": [
+          "combobox",
+          "clear",
+          "filter",
+          "undo"
+        ],
         "ai": {
           "export": "Combobox011",
           "usage": "<Combobox011\n  label=\"Проект\"\n  options={[\"Витрина\", \"Личный кабинет\"]}\n  defaultValue=\"Витрина\"\n  onSelect={(value) => console.log(value)}\n/>",
@@ -1910,7 +2086,15 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "clearLabel",
+          "undoLabel",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -1918,7 +2102,9 @@
       "type": "registry:component",
       "title": "Поле формы",
       "description": "Combobox внутри формы: человек видит подпись, а в скрытом input с настоящим name лежит код — форма уходит обычным submit и попадает в FormData.",
-      "categories": ["combobox"],
+      "categories": [
+        "combobox"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1930,7 +2116,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-combobox-012-*. Корень — form, значение живёт в input type=\"hidden\" с настоящим name, поэтому работает обычная отправка, FormData и Server Action: рисованный список сам по себе отправляться не умеет. Подпись и код разведены: options — это пары value и label, в списке код показан мелким моноширинным текстом, а на сервер уезжает именно он. Кнопка отправки выключена, пока ничего не выбрано; обработчик читает FormData с формы и показывает, что реально ушло. Поле фильтра — role=\"combobox\" с aria-controls и aria-activedescendant, список — role=\"listbox\" с aria-selected на строках.",
       "meta": {
-        "tags": ["combobox", "form", "formdata", "hidden input"],
+        "tags": [
+          "combobox",
+          "form",
+          "formdata",
+          "hidden input"
+        ],
         "ai": {
           "export": "Combobox012",
           "usage": "<Combobox012\n  label=\"Способ доставки\"\n  name=\"delivery\"\n  options={[{ value: \"pickup\", label: \"Самовывоз со склада\" }]}\n  onSubmitValue={(value) => console.log(value)}\n/>",
@@ -2069,7 +2260,15 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "name",
+          "submitLabel",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -2077,7 +2276,9 @@
       "type": "registry:component",
       "title": "Сначала раздел, потом значение",
       "description": "Выбор по иерархии «раздел → значение»: слева разделы, справа их содержимое, а как только в поле появляется текст, колонки схлопываются в сквозной список совпадений.",
-      "categories": ["combobox"],
+      "categories": [
+        "combobox"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2089,7 +2290,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-combobox-013-*. Клиентский: запрос, активный раздел и значение живут в useState. Раскладка — grid из двух колонок, левая прокручивается отдельно от правой. Ключевая механика в useMemo: пока запрос пуст, правая колонка показывает элементы активного раздела, а при непустом запросе список собирается flatMap по всем разделам и у каждой строки появляется подпись раздела [data-part=\"where\"] — так поиск не ломает иерархию, а временно её выпрямляет. Левая колонка скрывается атрибутом hidden, а не размонтированием, поэтому не дёргается ширина. ARIA: input с role=\"combobox\", правая колонка — role=\"listbox\", строки — кнопки с role=\"option\" внутри li role=\"none\", поэтому доступна клавиатура без ручного управления activedescendant.",
       "meta": {
-        "tags": ["combobox", "hierarchy", "two-pane", "search"],
+        "tags": [
+          "combobox",
+          "hierarchy",
+          "two-pane",
+          "search"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2256,7 +2462,12 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "placeholder",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2264,7 +2475,9 @@
       "type": "registry:component",
       "title": "Варианты с миниатюрами",
       "description": "Выбор варианта с превью: у каждой строки картинка, а если ссылки нет — свой градиент с инициалами, оттенок которого детерминированно считается из названия.",
-      "categories": ["combobox"],
+      "categories": [
+        "combobox"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2276,7 +2489,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-combobox-014-*. Клиентский: запрос и выбранное значение живут в useState. Строка списка — grid 2.4rem + 1fr: слева превью, справа название и подпись, обе строки текста обрезаются многоточием, поэтому длинное имя не ломает раскладку. Если у варианта есть src, рисуется обычный <img> с object-fit: cover и пустым alt (картинка декоративна, имя рядом текстом); если ссылки нет, показывается градиент, чей оттенок считает hueOf — детерминированный FNV-хэш по названию, поэтому вариант всегда одного цвета. Оттенок передаётся единственной инлайновой переменной --vibeui-combobox-014-hue: это динамическое значение, которое нельзя выразить статическим классом.",
       "meta": {
-        "tags": ["combobox", "thumbnail", "templates", "visual"],
+        "tags": [
+          "combobox",
+          "thumbnail",
+          "templates",
+          "visual"
+        ],
         "ai": {
           "export": "Combobox014",
           "usage": "<Combobox014 label=\"Шаблон письма\" defaultValue=\"Брошенная корзина\" />",
@@ -2429,7 +2647,15 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "defaultValue",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -2437,7 +2663,9 @@
       "type": "registry:component",
       "title": "Совпадения по релевантности",
       "description": "Поиск, где совпадения отсортированы по релевантности, а найденный кусок подсвечен: начало строки идёт выше начала слова, а середина — в самом конце.",
-      "categories": ["combobox"],
+      "categories": [
+        "combobox"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2449,7 +2677,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-combobox-015-*. Клиентский: запрос и значение живут в useState. Ранжирование делает функция scoreOf: она возвращает ранг (0 — совпадение с начала строки, 1 — с начала слова, 2 — внутри слова) и позицию вхождения. Сортировка идёт по рангу, затем по позиции, затем по алфавиту — три ключа дают устойчивый порядок без дребезга при вводе. Подсветка не использует dangerouslySetInnerHTML: строка режется на три куска по индексу, средний оборачивается в семантический <mark>, поэтому подсветка переживает любой текст, включая символы разметки. Ранг подписан словами справа, чтобы порядок был объясним, а не магичен.",
       "meta": {
-        "tags": ["combobox", "search", "ranking", "highlight"],
+        "tags": [
+          "combobox",
+          "search",
+          "ranking",
+          "highlight"
+        ],
         "ai": {
           "export": "Combobox015",
           "usage": "<Combobox015 label=\"Город доставки\" defaultQuery=\"нов\" />",
@@ -2581,7 +2814,11 @@
                   "Norfolk"
                 ],
                 "defaultQuery": "new",
-                "rankLabels": ["from the start", "word start", "inside"],
+                "rankLabels": [
+                  "from the start",
+                  "word start",
+                  "inside"
+                ],
                 "matchesText": "{count} matches, by relevance",
                 "alphabetText": "All options, alphabetical",
                 "emptyText": "Nothing found"
@@ -2589,7 +2826,15 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "defaultQuery",
+          "label",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -2597,7 +2842,9 @@
       "type": "registry:component",
       "title": "Множественный выбор с лимитом",
       "description": "Множественный выбор с потолком: счётчик показывает остаток всё время, а на пределе невыбранные варианты становятся недоступными вместо сообщения об ошибке.",
-      "categories": ["combobox"],
+      "categories": [
+        "combobox"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2609,7 +2856,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-combobox-016-*. Клиентский: массив выбранных значений и запрос живут в useState. Признак «предел достигнут» поднимается на корень атрибутом data-full, поэтому счётчик и подпись перекрашиваются одним правилом CSS без дублирования логики в JSX. На пределе невыбранные варианты получают нативный disabled — они выпадают из порядка табуляции, и запрет объявляется скринридером, а не только показывается цветом. Список помечен aria-multiselectable, выбранные значения дополнительно вынесены фишками сверху с кнопкой снятия у каждой. Подпись снизу связана с полем через aria-describedby и объявляется через aria-live.",
       "meta": {
-        "tags": ["combobox", "multiselect", "limit", "counter"],
+        "tags": [
+          "combobox",
+          "multiselect",
+          "limit",
+          "counter"
+        ],
         "ai": {
           "export": "Combobox016",
           "usage": "<Combobox016 maxItems={5} label=\"Навыки в резюме\" />",
@@ -2728,17 +2980,32 @@
               "props": {
                 "label": "Skills on the CV",
                 "placeholder": "Find a skill",
-                "defaultValue": ["TypeScript", "React"],
+                "defaultValue": [
+                  "TypeScript",
+                  "React"
+                ],
                 "chipsLabel": "Selected skills",
                 "removeText": "Remove {item}",
                 "fullText": "Cap of {max}: drop one skill to add another",
                 "leftText": "You can add {count} more {noun}",
-                "itemForms": ["skill", "skills", "skills"]
+                "itemForms": [
+                  "skill",
+                  "skills",
+                  "skills"
+                ]
               }
             }
           }
         },
-        "cardControls": ["maxItems", "accent", "background"]
+        "cardControls": [
+          "maxItems",
+          "label",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -2746,7 +3013,9 @@
       "type": "registry:component",
       "title": "Закреплённое избранное",
       "description": "Выбор с закреплёнными избранными: звёздочка поднимает вариант в группу сверху, и она остаётся на месте при вводе запроса.",
-      "categories": ["combobox"],
+      "categories": [
+        "combobox"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2758,7 +3027,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-combobox-017-*. Клиентский: запрос, значение и набор избранного живут в useState. Отфильтрованные варианты делятся на два массива — pinned и rest, и каждая группа рендерится под собственным заголовком [data-part=\"caption\"] внутри одного listbox. Звезда — отдельная кнопка рядом с вариантом, а не вложенная в него: кнопка внутри кнопки невалидна и ломает клавиатуру, а по смыслу «отметить» и «выбрать» — разные действия. У звезды aria-pressed и полный aria-label с названием, у варианта — role=\"option\" внутри li role=\"none\". Обе группы обёрнуты в ul role=\"none\", чтобы вложенные списки не превращались во вложенные listbox.",
       "meta": {
-        "tags": ["combobox", "favourites", "pinned", "shortcuts"],
+        "tags": [
+          "combobox",
+          "favourites",
+          "pinned",
+          "shortcuts"
+        ],
         "ai": {
           "export": "Combobox017",
           "usage": "<Combobox017 label=\"Счёт списания\" defaultFavourites={[\"Эквайринг · сайт\"]} />",
@@ -2903,7 +3177,15 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "defaultValue",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -2911,7 +3193,9 @@
       "type": "registry:component",
       "title": "Проверка на сервере",
       "description": "Выбор с асинхронной проверкой: после нажатия строка статуса уходит в «проверяем», а потом отвечает остатком на складе или отказом с объяснением.",
-      "categories": ["combobox"],
+      "categories": [
+        "combobox"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2923,7 +3207,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-combobox-018-*. Клиентский: запрос, значение и состояние проверки живут в useState. Проверка вынесена в useEffect с функцией очистки: таймер отменяется при каждой смене значения, поэтому при быстром переборе вариантов побеждает последний выбор, а не последний пришедший ответ — это лечит классическую гонку. Состояние проверки одно на четыре значения (idle, checking, ok, bad) и поднимается атрибутом data-state, поэтому цвет строки статуса задаётся CSS, а не ветвлением стилей в JSX. Спиннер собран из border с анимацией вращения и отключается правилом prefers-reduced-motion. Строка статуса связана с полем через aria-describedby и объявляется aria-live.",
       "meta": {
-        "tags": ["combobox", "async", "validation", "stock"],
+        "tags": [
+          "combobox",
+          "async",
+          "validation",
+          "stock"
+        ],
         "ai": {
           "export": "Combobox018",
           "usage": "<Combobox018 label=\"Склад отгрузки\" delay={700} />",
@@ -3061,12 +3350,24 @@
                 "okText": "{count} {noun} in stock",
                 "badText": "Out of stock — pick another warehouse",
                 "idleText": "Pick a warehouse to check the stock",
-                "unitForms": ["item", "items", "items"]
+                "unitForms": [
+                  "item",
+                  "items",
+                  "items"
+                ]
               }
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "delay",
+          "label",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -3074,7 +3375,9 @@
       "type": "registry:component",
       "title": "Недоступные варианты",
       "description": "Варианты без прав остаются в списке: они заблокированы, подписаны причиной и снабжены кнопкой запроса доступа вместо молчаливого исчезновения.",
-      "categories": ["combobox"],
+      "categories": [
+        "combobox"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3086,7 +3389,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-combobox-019-*. Клиентский: запрос, значение и список отправленных запросов доступа живут в useState. Закрытый вариант получает нативный disabled и расширенный aria-label, в который вшита причина, поэтому скринридер объявляет не просто «недоступно», а почему. Кнопка «Запросить» — отдельный элемент рядом с вариантом внутри общей строки [data-part=\"row\"], а не внутри кнопки-опции: она обязана оставаться доступной, когда сам вариант заблокирован. После нажатия кнопка заменяется статичной подписью «Запрошено», чтобы повторные запросы не уходили пачками. Список — role=\"listbox\", строки — role=\"option\" внутри li role=\"none\".",
       "meta": {
-        "tags": ["combobox", "permissions", "locked", "access"],
+        "tags": [
+          "combobox",
+          "permissions",
+          "locked",
+          "access"
+        ],
         "ai": {
           "export": "Combobox019",
           "usage": "<Combobox019 label=\"Рабочее пространство\" requestLabel=\"Запросить\" />",
@@ -3241,7 +3549,15 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "requestLabel",
+          "label",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -3249,7 +3565,9 @@
       "type": "registry:component",
       "title": "Узкая колонка",
       "description": "Выбор в узкой колонке, где список режется многоточием справа, а выбранное значение — по середине, чтобы сохранить и начало, и хвост.",
-      "categories": ["combobox"],
+      "categories": [
+        "combobox"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3261,7 +3579,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-combobox-020-*. Клиентский: запрос и значение живут в useState. Ширина ограничена 15rem — это ячейка таблицы, колонка сайдбара или боковая панель. Обрезка сделана двумя разными способами осознанно: строки списка режутся средствами CSS (white-space: nowrap + text-overflow: ellipsis), потому что список читают с начала; выбранное значение режется функцией shorten по середине, потому что у пути, ветки или файла значим хвост. Полный текст никуда не теряется: он лежит в title каждой строки, в aria-label варианта и целиком выводится внизу с overflow-wrap: anywhere. Моноширинный шрифт включён только для значений — так одинаковые префиксы визуально выстраиваются в столбец.",
       "meta": {
-        "tags": ["combobox", "narrow", "truncation", "sidebar"],
+        "tags": [
+          "combobox",
+          "narrow",
+          "truncation",
+          "sidebar"
+        ],
         "ai": {
           "export": "Combobox020",
           "usage": "<Combobox020 headChars={14} tailChars={10} />",
@@ -3388,7 +3711,15 @@
             }
           }
         },
-        "cardControls": ["headChars", "tailChars", "accent", "background"]
+        "cardControls": [
+          "headChars",
+          "tailChars",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -3396,7 +3727,9 @@
       "type": "registry:component",
       "title": "Создание первым пунктом",
       "description": "Combobox с созданием значения первой строкой: «Создать „…“» стоит наверху списка, поэтому Enter по умолчанию заводит новое значение, а не выбирает совпадение.",
-      "categories": ["combobox"],
+      "categories": [
+        "combobox"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3408,7 +3741,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-combobox-021-*. Клиентский: useState держит известный список, список созданного, запрос, значение и курсор. Строка создания добавляется в начало массива строк, а не в конец: canCreate вычисляется так же, как в закрытом варианте, но rows собирается как [needle, ...matches]. Индекс курсора всегда сбрасывается на 0 при вводе, поэтому Enter по умолчанию попадает на строку создания — существующее совпадение нужно взять стрелкой вниз осознанно. Строка создания — полноценный role=\"option\" с aria-selected=\"false\", отделена пунктирной линией снизу и своей иконкой, поэтому её нельзя перепутать с обычным вариантом.",
       "meta": {
-        "tags": ["combobox", "create", "keyboard", "tags"],
+        "tags": [
+          "combobox",
+          "create",
+          "keyboard",
+          "tags"
+        ],
         "ai": {
           "export": "Combobox021",
           "usage": "<Combobox021\n  label=\"Метка задачи\"\n  options={[\"Дизайн\", \"Фронтенд\"]}\n  createLabel=\"Создать\"\n  onSelect={(value, created) => console.log(value, created)}\n/>",
@@ -3538,7 +3876,15 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "createLabel",
+          "newBadge",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -3546,7 +3892,9 @@
       "type": "registry:component",
       "title": "Разделитель недавних",
       "description": "Combobox с недавними значениями без заголовков секций: тонкий разделитель role=\"separator\" отделяет их от общего списка, а у строки — метка «недавно».",
-      "categories": ["combobox"],
+      "categories": [
+        "combobox"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3558,7 +3906,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-combobox-022-*. Клиентский: useState держит список недавних, запрос, значение и курсор, useMemo собирает две группы и общий плоский порядок. Выбранное значение уходит в начало недавних и подрезается по recentLimit; из общего блока оно исключается, чтобы одна строка не встречалась дважды и не ломала счёт стрелками. Вместо подписанных секций между группами стоит li role=\"separator\" aria-orientation=\"horizontal\" — тонкая линия без текста; у самой недавней строки вместо иконки — компактная текстовая метка recentTag. Разделитель рендерится, только если обе группы непустые, поэтому при пустом запросе и без недавних он не появляется зря.",
       "meta": {
-        "tags": ["combobox", "recent", "separator", "keyboard"],
+        "tags": [
+          "combobox",
+          "recent",
+          "separator",
+          "keyboard"
+        ],
         "ai": {
           "export": "Combobox022",
           "usage": "<Combobox022\n  label=\"Город доставки\"\n  options={[\"Москва\", \"Казань\", \"Самара\"]}\n  defaultRecent={[\"Казань\"]}\n  recentLimit={3}\n  onSelect={(value) => console.log(value)}\n/>",
@@ -3678,14 +4031,25 @@
                   "Belfast",
                   "Glasgow"
                 ],
-                "defaultRecent": ["Leeds", "Cardiff"],
+                "defaultRecent": [
+                  "Leeds",
+                  "Cardiff"
+                ],
                 "recentTag": "recent",
                 "emptyLabel": "Nothing found"
               }
             }
           }
         },
-        "cardControls": ["recentLimit", "accent", "background"]
+        "cardControls": [
+          "recentLimit",
+          "recentTag",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -3693,7 +4057,9 @@
       "type": "registry:component",
       "title": "Подсветка всех совпадений",
       "description": "Поиск с подсветкой каждого вхождения запроса в строке, а не только первого; порядок строк не перестраивается — это фильтр с подсветкой, а не ранжирование.",
-      "categories": ["combobox"],
+      "categories": [
+        "combobox"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3705,11 +4071,17 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-combobox-023-*. Клиентский: запрос и значение живут в useState. Функция highlight нарезает строку циклом indexOf, находя все вхождения подряд, и оборачивает каждое в семантический <mark>, а не только первое, как в ранжированном варианте — dangerouslySetInnerHTML не используется. Список не сортируется: порядок строк равен порядку options, фильтруется только присутствие совпадения. Строка с числом совпадений в aria-live=\"polite\" объявляет изменение выдачи при каждом нажатии клавиши.",
       "meta": {
-        "tags": ["combobox", "search", "highlight", "filter"],
+        "tags": [
+          "combobox",
+          "search",
+          "highlight",
+          "filter"
+        ],
         "preview": {
           "props": {
             "defaultQuery": "бар"
-          }
+          },
+          "width": "full"
         },
         "ai": {
           "export": "Combobox023",
@@ -3838,7 +4210,12 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "defaultQuery",
+          "label",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -3846,7 +4223,9 @@
       "type": "registry:component",
       "title": "Переполнение чипов",
       "description": "Множественный выбор со сворачиванием фишек: сверх лимита выбранное прячется за кнопку «+N», которая сама разворачивает и сворачивает полный ряд.",
-      "categories": ["combobox"],
+      "categories": [
+        "combobox"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3858,7 +4237,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-combobox-024-*. Клиентский: useState держит массив выбранного, флаг развёрнутости и запрос. Показанные фишки считаются как selected.slice(0, visibleChips), пока не установлен флаг expanded; переполнение — Math.max(0, selected.length - visibleChips) — выводится в кнопку «+N» с aria-expanded, которая переключает флаг и превращается в кнопку «Свернуть». В отличие от лимитированного мультивыбора здесь нет верхней границы на количество выбранного — сворачивается только отображение, а не сам выбор. Список — role=\"listbox\" с aria-multiselectable, строки несут чекбокс-индикатор data-part=\"box\".",
       "meta": {
-        "tags": ["combobox", "multiselect", "chips", "overflow"],
+        "tags": [
+          "combobox",
+          "multiselect",
+          "chips",
+          "overflow"
+        ],
         "ai": {
           "export": "Combobox024",
           "usage": "<Combobox024\n  label=\"Команды в рассылке\"\n  options={[\"Дизайн\", \"Фронтенд\", \"Бэкенд\"]}\n  defaultSelected={[\"Дизайн\", \"Фронтенд\", \"Бэкенд\", \"Аналитика\"]}\n  visibleChips={3}\n  onChange={(values) => console.log(values)}\n/>",
@@ -3996,7 +4380,15 @@
             }
           }
         },
-        "cardControls": ["visibleChips", "accent", "background"]
+        "cardControls": [
+          "visibleChips",
+          "label",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -4004,7 +4396,9 @@
       "type": "registry:component",
       "title": "Панель предпросмотра",
       "description": "Выбор с панелью предпросмотра справа: там лежит описание варианта под активной строкой, оно обновляется при наведении и стрелками, а не только после выбора.",
-      "categories": ["combobox"],
+      "categories": [
+        "combobox"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4016,7 +4410,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-combobox-025-*. Клиентский: запрос, значение и курсор живут в useState. Раскладка — flex-wrap из двух блоков: список слева и панель предпросмотра справа, на узкой ширине они переносятся друг под друга без медиа-запросов. Панель показывает описание строки под курсором (matches[active]), а не только подтверждённого значения — так предпросмотр можно листать стрелками до того, как нажат Enter. Панель — role=\"region\" с aria-live=\"polite\", список — role=\"listbox\" с aria-activedescendant на поле фильтра.",
       "meta": {
-        "tags": ["combobox", "preview", "two-pane", "description"],
+        "tags": [
+          "combobox",
+          "preview",
+          "two-pane",
+          "description"
+        ],
         "preview": {
           "width": "full"
         },
@@ -4156,7 +4555,12 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "defaultValue",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -4164,7 +4568,9 @@
       "type": "registry:component",
       "title": "Поиск с задержкой",
       "description": "Выбор с настоящим debounce: короткий запрос не запускает поиск, длинный ждёт паузу в наборе, а спиннер живёт внутри поля, а не отдельным блоком.",
-      "categories": ["combobox"],
+      "categories": [
+        "combobox"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4176,11 +4582,17 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-combobox-026-*. Клиентский: три состояния выведены из двух строк — typed (query) и debounced. Пока запрос короче minChars, поиск не стартует вовсе: useEffect с таймером даже не подписывается. Как только длины хватает, эффект ставит setTimeout на delay и чистит его при каждой смене запроса — классическая защита от гонки; загрузка выводится как debounced !== needle, отдельного булева флага нет. Спиннер — вращающийся бордюр внутри обёртки поля, position:absolute, а не блок под списком. Список скрывается атрибутом hidden, а не удаляется, поэтому aria-controls всегда указывает на существующий узел.",
       "meta": {
-        "tags": ["combobox", "debounce", "async", "empty state"],
+        "tags": [
+          "combobox",
+          "debounce",
+          "async",
+          "empty state"
+        ],
         "preview": {
           "props": {
             "defaultValue": ""
-          }
+          },
+          "width": "full"
         },
         "ai": {
           "export": "Combobox026",
@@ -4315,7 +4727,12 @@
             }
           }
         },
-        "cardControls": ["minChars", "delay", "accent", "background"]
+        "cardControls": [
+          "minChars",
+          "delay",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -4323,7 +4740,9 @@
       "type": "registry:component",
       "title": "Присутствие в команде",
       "description": "Выбор исполнителя с аватарами и статусом онлайн: список сортируется так, что доступные сейчас люди идут первыми, у аватара — цветная точка и подпись статуса.",
-      "categories": ["combobox"],
+      "categories": [
+        "combobox"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4335,7 +4754,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-combobox-027-*. Клиентский: запрос, значение и курсор живут в useState. useMemo сначала фильтрует людей по имени и роли, затем сортирует стабильной сортировкой по рангу статуса (online 0, away 1, offline 2) — люди с одинаковым статусом сохраняют исходный порядок. Оттенок аватара считается из имени тем же FNV-1a хешем, что и в people picker, и приходит инлайновой переменной --vibeui-combobox-027-hue. Точка статуса — псевдоабсолютный элемент в углу аватара, aria-hidden=\"true\", потому что статус словом уже есть в подписи detail — цвет не единственный носитель смысла.",
       "meta": {
-        "tags": ["combobox", "people", "presence", "avatar"],
+        "tags": [
+          "combobox",
+          "people",
+          "presence",
+          "avatar"
+        ],
         "ai": {
           "export": "Combobox027",
           "usage": "<Combobox027\n  label=\"Исполнитель\"\n  people={[{ name: \"Анна Ковалёва\", role: \"дизайн\", status: \"online\" }]}\n  onSelect={(name) => console.log(name)}\n/>",
@@ -4488,7 +4912,15 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "placeholder",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -4496,7 +4928,9 @@
       "type": "registry:component",
       "title": "Открытие горячей клавишей",
       "description": "Combobox с открытием по глобальной горячей клавише: подсказка сочетания напечатана прямо на кнопке, слушатель пропускает набор в чужих текстовых полях.",
-      "categories": ["combobox"],
+      "categories": [
+        "combobox"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4508,7 +4942,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-combobox-028-*. Клиентский: useEffect подписывается на document keydown и ловит Ctrl или Cmd вместе с triggerKey; перед срабатыванием проверяется, не стоит ли фокус в чужом input, textarea или contenteditable — иначе сочетание перехватывало бы ввод в любой сторонней форме на странице. Второй useEffect переводит фокус в поле фильтра при открытии, так же как в базовом варианте с кнопкой-триггером. Подсказка сочетания лежит в <kbd> внутри самой кнопки-триггера — она не спрятана в тултипе и не требует наведения. Escape закрывает панель и возвращает фокус на кнопку из любого места, включая случай, когда панель была открыта горячей клавишей.",
       "meta": {
-        "tags": ["combobox", "hotkey", "shortcut", "keyboard"],
+        "tags": [
+          "combobox",
+          "hotkey",
+          "shortcut",
+          "keyboard"
+        ],
         "ai": {
           "export": "Combobox028",
           "usage": "<Combobox028\n  label=\"Быстрые команды\"\n  options={[\"Открыть проект\", \"Создать задачу\"]}\n  hotkeyLabel=\"Ctrl+K\"\n  triggerKey=\"k\"\n  onSelect={(value) => console.log(value)}\n/>",
@@ -4637,7 +5076,15 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "hotkeyLabel",
+          "label",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     }
   ]

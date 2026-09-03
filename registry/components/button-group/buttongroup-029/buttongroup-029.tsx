@@ -33,6 +33,9 @@ const STYLES = `
 --vibeui-buttongroup-029-radius:0.75rem;
 --vibeui-buttongroup-029-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="buttongroup-029"]{color-scheme:dark}
 [data-vibeui-block="buttongroup-029"]{
 box-sizing:border-box;display:block;width:100%;max-width:23rem;
 margin:0;padding:0;border:0;

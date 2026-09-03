@@ -31,7 +31,10 @@ const STYLES = `
 [data-vibeui-block="avatar-030"]{
 container-type:inline-size;
 display:flex;flex-direction:column;align-items:center;gap:0.5rem;
-box-sizing:border-box;width:100%;max-width:11rem;
+box-sizing:border-box;width:100%;
+/* container-type отрывает ширину от содержимого: без нижней границы
+   блок схлопывается внутри flex-контейнера. */
+min-width:min(100%,9rem);max-width:11rem;
 padding:1rem 0.875rem 1.125rem;text-align:center;
 background:var(--vibeui-avatar-030-bg);
 border:1px solid var(--vibeui-avatar-030-border);border-radius:1rem;

@@ -6,7 +6,9 @@
       "type": "registry:component",
       "title": "Сетка месяца",
       "description": "Месяц на сетке 7×6 с постоянной высотой: неделя с понедельника, дни соседних месяцев видны и кликабельны.",
-      "categories": ["calendar"],
+      "categories": [
+        "calendar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-calendar-001-*. Клиентский: \"use client\". Дата приходит и уходит строкой ISO — её проще передать с сервера, чем объект Date. Сетка всегда 42 клетки, неделя считается с понедельника через сдвиг (getDay() + 6) % 7. Названия месяцев и дней даёт Intl.DateTimeFormat, поэтому язык меняется одним пропом.",
       "meta": {
-        "tags": ["calendar", "date picker", "month", "intl"],
+        "tags": [
+          "calendar",
+          "date picker",
+          "month",
+          "intl"
+        ],
         "ai": {
           "export": "Calendar001",
           "usage": "<Calendar001 defaultValue=\"2026-03-14\" onChange={setDate} />",
@@ -62,7 +69,11 @@
             "label": "Локаль",
             "type": "select",
             "default": "ru-RU",
-            "options": ["ru-RU", "en-US", "de-DE"]
+            "options": [
+              "ru-RU",
+              "en-US",
+              "de-DE"
+            ]
           },
           {
             "prop": "accent",
@@ -136,7 +147,15 @@
             }
           }
         },
-        "cardControls": ["locale", "accent", "background"]
+        "cardControls": [
+          "defaultValue",
+          "locale",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -144,7 +163,9 @@
       "type": "registry:component",
       "title": "Выбор диапазона",
       "description": "Выбор диапазона в два клика: если вторая дата раньше первой, границы меняются местами вместо ошибки.",
-      "categories": ["calendar"],
+      "categories": [
+        "calendar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -156,7 +177,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-calendar-002-*. Клиентский: \"use client\". Подсветка диапазона живёт на ячейке таблицы, а не на кнопке дня: только так полоса между границами получается сплошной. Порядок дат нормализуется сравнением строк ISO — они сравниваются лексикографически. Внизу считается число ночей.",
       "meta": {
-        "tags": ["calendar", "range", "booking", "dates"],
+        "tags": [
+          "calendar",
+          "range",
+          "booking",
+          "dates"
+        ],
         "ai": {
           "export": "Calendar002",
           "usage": "<Calendar002 defaultFrom=\"2026-03-10\" defaultTo=\"2026-03-17\" onChange={setRange} />",
@@ -213,7 +239,11 @@
             "label": "Локаль",
             "type": "select",
             "default": "ru-RU",
-            "options": ["ru-RU", "en-US", "de-DE"]
+            "options": [
+              "ru-RU",
+              "en-US",
+              "de-DE"
+            ]
           },
           {
             "prop": "background",
@@ -286,7 +316,16 @@
             }
           }
         },
-        "cardControls": ["locale", "accent", "background"]
+        "cardControls": [
+          "defaultFrom",
+          "defaultTo",
+          "accent",
+          "locale",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -294,7 +333,9 @@
       "type": "registry:component",
       "title": "Полоса недели",
       "description": "Неделя полосой с прокруткой вбок: на телефоне месяц занимает пол-экрана, а выбирают почти всегда ближайшие дни.",
-      "categories": ["calendar"],
+      "categories": [
+        "calendar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -306,7 +347,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-calendar-003-*. Клиентский: \"use client\". Полоса прокручивается по горизонтали с scroll-snap по центру, поэтому день не останавливается наполовину. Сегодняшнее число помечено точкой, выходные окрашены отдельно. Полные даты уходят в aria-label каждого дня.",
       "meta": {
-        "tags": ["calendar", "week", "mobile", "scroll"],
+        "tags": [
+          "calendar",
+          "week",
+          "mobile",
+          "scroll"
+        ],
         "preview": {
           "width": "full"
         },
@@ -360,7 +406,11 @@
             "label": "Локаль",
             "type": "select",
             "default": "ru-RU",
-            "options": ["ru-RU", "en-US", "de-DE"]
+            "options": [
+              "ru-RU",
+              "en-US",
+              "de-DE"
+            ]
           },
           {
             "prop": "background",
@@ -426,7 +476,12 @@
             }
           }
         },
-        "cardControls": ["days", "locale", "accent", "background"]
+        "cardControls": [
+          "days",
+          "accent",
+          "locale",
+          "background"
+        ]
       }
     },
     {
@@ -434,7 +489,9 @@
       "type": "registry:component",
       "title": "Слоты времени",
       "description": "Сетка слотов записи: занятые остаются на месте штриховкой, а часовой пояс подписан под сеткой.",
-      "categories": ["calendar"],
+      "categories": [
+        "calendar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -446,7 +503,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-calendar-004-*. Клиентский: \"use client\". Слоты — настоящие radio в fieldset с legend, поэтому группа объявлена скринридеру целиком, а занятые слоты выключены атрибутом disabled. Корень объявлен контейнером, сетка живёт на внутреннем элементе: контейнерный запрос действует только на потомков.",
       "meta": {
-        "tags": ["calendar", "booking", "time", "radio"],
+        "tags": [
+          "calendar",
+          "booking",
+          "time",
+          "radio"
+        ],
         "ai": {
           "export": "Calendar004",
           "usage": "<Calendar004 slots={[{ time: \"10:00\" }, { time: \"10:30\", taken: true }]} onChange={setTime} />",
@@ -567,7 +629,12 @@
         "preview": {
           "width": "full"
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "date",
+          "timezone",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -575,7 +642,9 @@
       "type": "registry:component",
       "title": "Нативное поле даты",
       "description": "Поле даты на нативном input: календарь, формат и мобильный барабан приходят от системы, а границы объявлены словами.",
-      "categories": ["calendar"],
+      "categories": [
+        "calendar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -587,7 +656,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-calendar-005-*. Серверный компонент: useId нужен только для связи подписи и поля. Внутри input type=\"date\" с min и max; ограничения продублированы текстом через aria-describedby. Стилизуется только штатный значок календаря — остальное у input date недоступно.",
       "meta": {
-        "tags": ["calendar", "input", "native", "form"],
+        "tags": [
+          "calendar",
+          "input",
+          "native",
+          "form"
+        ],
         "ai": {
           "export": "Calendar005",
           "usage": "<Calendar005 label=\"Дата поездки\" min=\"2026-03-01\" max=\"2026-12-31\" />",
@@ -704,7 +778,15 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "hint",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -712,7 +794,9 @@
       "type": "registry:component",
       "title": "Повестка дня",
       "description": "Расписание дня списком: события со временем и подписанные промежутки «свободно 40 минут» вместо пустых часов.",
-      "categories": ["calendar"],
+      "categories": [
+        "calendar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -724,7 +808,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-calendar-006-*. Серверный: хуков нет. Промежутки считаются из времён соседних событий в минутах и печатаются словами. Строка события — grid в две колонки: время слева отдельной колонкой, чтобы взгляд шёл по одной линии. Тон события задаётся полосой слева, а не заливкой строки.",
       "meta": {
-        "tags": ["calendar", "agenda", "schedule", "day"],
+        "tags": [
+          "calendar",
+          "agenda",
+          "schedule",
+          "day"
+        ],
         "preview": {
           "width": "full"
         },
@@ -875,7 +964,12 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "date",
+          "freeLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -883,7 +977,9 @@
       "type": "registry:component",
       "title": "Тепловая карта загрузки",
       "description": "Месяц как карта загрузки: пять ступеней насыщенности и число внутри клетки — по цвету процент не назвать.",
-      "categories": ["calendar"],
+      "categories": [
+        "calendar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -895,7 +991,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-calendar-007-*. Серверный: хуков нет. Загрузка приходит массивом чисел от 0 до 1 по дням месяца и округляется до пяти ступеней; цвет считается через color-mix от акцента. У каждой клетки есть aria-label с процентом, легенда подписана словами «свободно» и «занято».",
       "meta": {
-        "tags": ["calendar", "heatmap", "load", "analytics"],
+        "tags": [
+          "calendar",
+          "heatmap",
+          "load",
+          "analytics"
+        ],
         "ai": {
           "export": "Calendar007",
           "usage": "<Calendar007 year={2026} month={3} load={[0.1, 0.9, 0.4]} />",
@@ -954,7 +1055,11 @@
             "label": "Локаль",
             "type": "select",
             "default": "ru-RU",
-            "options": ["ru-RU", "en-US", "de-DE"]
+            "options": [
+              "ru-RU",
+              "en-US",
+              "de-DE"
+            ]
           },
           {
             "prop": "background",
@@ -1024,7 +1129,16 @@
             }
           }
         },
-        "cardControls": ["month", "year", "locale", "accent", "background"]
+        "cardControls": [
+          "month",
+          "year",
+          "accent",
+          "locale",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -1032,7 +1146,9 @@
       "type": "registry:component",
       "title": "Выбор месяца",
       "description": "Выбор месяца без дней: отчёты и планы живут месяцами, и листать ради них сетку чисел — лишний шаг.",
-      "categories": ["calendar"],
+      "categories": [
+        "calendar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1044,7 +1160,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-calendar-008-*. Клиентский: \"use client\". Двенадцать месяцев разложены на три колонки — так они читаются кварталами. Год переключается стрелками рядом, текущий месяц обведён рамкой, выбранный залит акцентом. Названия месяцев берутся у Intl.DateTimeFormat.",
       "meta": {
-        "tags": ["calendar", "month", "picker", "reports"],
+        "tags": [
+          "calendar",
+          "month",
+          "picker",
+          "reports"
+        ],
         "ai": {
           "export": "Calendar008",
           "usage": "<Calendar008 defaultYear={2026} defaultMonth={3} onChange={setPeriod} />",
@@ -1103,7 +1224,11 @@
             "label": "Локаль",
             "type": "select",
             "default": "ru-RU",
-            "options": ["ru-RU", "en-US", "de-DE"]
+            "options": [
+              "ru-RU",
+              "en-US",
+              "de-DE"
+            ]
           },
           {
             "prop": "background",
@@ -1174,12 +1299,15 @@
           }
         },
         "cardControls": [
-          "defaultMonth",
           "defaultYear",
-          "locale",
+          "defaultMonth",
           "accent",
+          "locale",
           "background"
-        ]
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -1187,7 +1315,9 @@
       "type": "registry:component",
       "title": "Диапазон по двум месяцам",
       "description": "Два месяца рядом для брони: диапазон почти всегда пересекает границу месяца, и в одном окне счёт ночей теряется.",
-      "categories": ["calendar"],
+      "categories": [
+        "calendar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1199,7 +1329,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-calendar-009-*. Серверный: хуков нет, диапазон приходит пропами. Корень объявлен контейнером, раскладка живёт на внутренней карточке: контейнерный запрос применяется к потомкам, но не к самому контейнеру. От 30rem собственной ширины месяцы становятся друг под другом.",
       "meta": {
-        "tags": ["calendar", "range", "two months", "booking"],
+        "tags": [
+          "calendar",
+          "range",
+          "two months",
+          "booking"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1259,7 +1394,11 @@
             "label": "Локаль",
             "type": "select",
             "default": "ru-RU",
-            "options": ["ru-RU", "en-US", "de-DE"]
+            "options": [
+              "ru-RU",
+              "en-US",
+              "de-DE"
+            ]
           },
           {
             "prop": "background",
@@ -1329,7 +1468,13 @@
             }
           }
         },
-        "cardControls": ["locale", "accent", "background"]
+        "cardControls": [
+          "from",
+          "to",
+          "accent",
+          "locale",
+          "background"
+        ]
       }
     },
     {
@@ -1337,7 +1482,9 @@
       "type": "registry:component",
       "title": "Карточка события",
       "description": "Карточка встречи с отрывным листком даты: в ленте событий глаз ищет число, а не строку «17 марта 2026».",
-      "categories": ["calendar"],
+      "categories": [
+        "calendar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1349,7 +1496,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-calendar-010-*. Серверный: хуков нет. Дата разбирается из строки ISO и печатается тремя частями листка через Intl. Участники — инициалы на оттенке из имени (FNV-1a по двенадцати ступеням круга), полные имена уходят в aria-label стопки. Часы и метка нарисованы бордюрами.",
       "meta": {
-        "tags": ["calendar", "event", "card", "meeting"],
+        "tags": [
+          "calendar",
+          "event",
+          "card",
+          "meeting"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1417,7 +1569,11 @@
             "label": "Локаль",
             "type": "select",
             "default": "ru-RU",
-            "options": ["ru-RU", "en-US", "de-DE"]
+            "options": [
+              "ru-RU",
+              "en-US",
+              "de-DE"
+            ]
           },
           {
             "prop": "background",
@@ -1490,19 +1646,32 @@
                 "title": "Catalog review with the designer",
                 "time": "11:00 — 12:00",
                 "place": "The Polyot room",
-                "people": ["Anna Petrova", "Mark Ilyin", "Maria Gurova"],
+                "people": [
+                  "Anna Petrova",
+                  "Mark Ilyin",
+                  "Maria Gurova"
+                ],
                 "peopleLabel": "Attendees: {people}"
               }
             }
           }
         },
-        "cardControls": ["locale", "accent", "background"]
+        "cardControls": [
+          "title",
+          "time",
+          "place",
+          "accent",
+          "locale",
+          "background"
+        ]
       }
     },
     {
       "name": "calendar-011",
       "type": "registry:component",
-      "categories": ["calendar"],
+      "categories": [
+        "calendar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1516,7 +1685,12 @@
       "description": "Год двенадцатью миниатюрами месяцев: отмеченные дни залиты акцентом, рядом с названием месяца стоит их количество.",
       "docs": "Серверный компонент: состояния нет, всё считается на рендере из пропса year и списка ISO-дат marks. Двенадцать сеток раскладываются grid-ом с auto-fill и minmax(8.5rem,1fr) — колонки набираются от собственной ширины блока, container queries не нужны. Каждый месяц строится тремя числами: сдвиг первого дня до понедельника, длина месяца и множество отмеченных дат. Отметка — заливка всей клетки, а не точка: на клетке в десять пикселей точка не видна, а плотность года не читается. Дни недели берутся из Intl по опорной неделе 5–11 января 2026 года, чтобы неделя всегда начиналась с понедельника независимо от локали. Палитра построена на light-dark(): цвета берут ветку из color-scheme окружения, подложки по умолчанию нет, границу блока держит рамка.",
       "meta": {
-        "tags": ["calendar", "year", "overview", "grid"],
+        "tags": [
+          "calendar",
+          "year",
+          "overview",
+          "grid"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1564,7 +1738,11 @@
             "label": "Локаль",
             "type": "select",
             "default": "ru-RU",
-            "options": ["ru-RU", "en-US", "de-DE"]
+            "options": [
+              "ru-RU",
+              "en-US",
+              "de-DE"
+            ]
           },
           {
             "prop": "accent",
@@ -1631,19 +1809,30 @@
               "props": {
                 "locale": "en-US",
                 "totalText": "{count} {word} marked",
-                "countWords": ["date", "dates", "dates"],
+                "countWords": [
+                  "date",
+                  "dates",
+                  "dates"
+                ],
                 "markLabelText": "{date} — marked"
               }
             }
           }
         },
-        "cardControls": ["year", "locale", "accent", "background"]
+        "cardControls": [
+          "year",
+          "locale",
+          "accent",
+          "background"
+        ]
       }
     },
     {
       "name": "calendar-012",
       "type": "registry:component",
-      "categories": ["calendar"],
+      "categories": [
+        "calendar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1657,7 +1846,12 @@
       "description": "Выбор года десятилетиями: сетка 4×3 показывает десять лет плюс по одному соседнему с краёв, стрелки листают по десять лет.",
       "docs": "Клиентский компонент: useState держит выбранный год и текущее десятилетие, поэтому нужен «use client». Сетка из двенадцати кнопок — это десять лет десятилетия и по одному году с каждой стороны: переход через границу (1999 из сетки 2000-х) делается одним нажатием, без похода стрелкой назад. Соседние годы помечаются data-outside и приглушаются, но остаются нажимаемыми. Выход за min/max выключает кнопку через disabled и перечёркивает подпись, а стрелки блокируются, когда следующее десятилетие целиком вне диапазона. Выбранный год отмечен aria-pressed, поэтому скринридер сообщает состояние без дополнительной подписи.",
       "meta": {
-        "tags": ["calendar", "year", "picker", "decade"],
+        "tags": [
+          "calendar",
+          "year",
+          "picker",
+          "decade"
+        ],
         "ai": {
           "export": "Calendar012",
           "usage": "<Calendar012 defaultValue={2026} min={1970} max={2040} />",
@@ -1776,13 +1970,23 @@
             }
           }
         },
-        "cardControls": ["defaultValue", "accent", "background"]
+        "cardControls": [
+          "defaultValue",
+          "max",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
       "name": "calendar-013",
       "type": "registry:component",
-      "categories": ["calendar"],
+      "categories": [
+        "calendar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1796,7 +2000,12 @@
       "description": "Месяц с закрытым прошлым: недоступный день не молчит на нажатие, а показывает подписанную причину отказа под сеткой.",
       "docs": "Клиентский компонент: useState держит выбранную дату и текст последнего отказа. Прошедшие дни помечены aria-disabled, а не атрибутом disabled — такая кнопка остаётся в порядке обхода табом и принимает нажатие, поэтому вместо пустого клика показывается причина. Сравнение «прошло или нет» делается строками ISO, а не объектами Date: строковое сравнение YYYY-MM-DD корректно и не зависит от часового пояса. Опорный день приходит пропсом today строкой, а не из new Date() — иначе серверный и клиентский рендер разойдутся. Закрытый день перечёркнут, а не только приглушён: одной бледностью его не отличить от дня соседнего месяца. Полоса статуса живёт с role=status и aria-live, поэтому причина зачитывается сразу после нажатия.",
       "meta": {
-        "tags": ["calendar", "disabled", "booking", "a11y"],
+        "tags": [
+          "calendar",
+          "disabled",
+          "booking",
+          "a11y"
+        ],
         "ai": {
           "export": "Calendar013",
           "usage": "<Calendar013\n  today=\"2026-03-14\"\n  defaultValue=\"2026-03-18\"\n  reason=\"Запись закрывается за сутки: прошедшие дни выбрать нельзя\"\n/>",
@@ -1847,7 +2056,11 @@
             "label": "Язык подписей",
             "type": "select",
             "default": "ru-RU",
-            "options": ["ru-RU", "en-US", "de-DE"]
+            "options": [
+              "ru-RU",
+              "en-US",
+              "de-DE"
+            ]
           },
           {
             "prop": "accent",
@@ -1927,13 +2140,24 @@
             }
           }
         },
-        "cardControls": ["locale", "accent", "background"]
+        "cardControls": [
+          "reason",
+          "today",
+          "locale",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
       "name": "calendar-014",
       "type": "registry:component",
-      "categories": ["calendar"],
+      "categories": [
+        "calendar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1947,7 +2171,12 @@
       "description": "Мини-календарь для боковой колонки шириной в пятнадцать рем: под числами стоят точки событий, четвёртое и дальше сворачиваются в плюс.",
       "docs": "Серверный компонент: состояния нет, всё считается из пропсов year, month и словаря events. Точки стоят под числом, а не поверх: подложка под цифрой в клетке высотой тридцать пикселей съела бы саму цифру. Точек максимум три, дальше ставится плюс — четыре точки в ряд шириной в двадцать пикселей сливаются в полосу. Дни недели берутся из Intl в узком варианте по опорной неделе 5–11 января 2026 года, чтобы неделя начиналась с понедельника. Каждая клетка с событиями несёт aria-label с количеством и склонением, поэтому точки не остаются чисто визуальной информацией. Свой светлый фон обязателен: боковая колонка чужого сайта может быть любой.",
       "meta": {
-        "tags": ["calendar", "sidebar", "mini", "events"],
+        "tags": [
+          "calendar",
+          "sidebar",
+          "mini",
+          "events"
+        ],
         "ai": {
           "export": "Calendar014",
           "usage": "<Calendar014\n  year={2026}\n  month={3}\n  today={14}\n  events={{ 5: 2, 14: 3, 23: 5 }}\n  caption=\"Все события\"\n/>",
@@ -2097,13 +2326,25 @@
             }
           }
         },
-        "cardControls": ["month", "today", "accent", "background"]
+        "cardControls": [
+          "caption",
+          "month",
+          "year",
+          "today",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
       "name": "calendar-015",
       "type": "registry:component",
-      "categories": ["calendar"],
+      "categories": [
+        "calendar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2117,7 +2358,12 @@
       "description": "Дата и время в одном блоке: месяц слева, колонка свободных слотов справа, занятые часы перечёркнуты и не нажимаются.",
       "docs": "Клиентский компонент: useState держит выбранную дату и время. Две колонки лежат во flex с wrap, поэтому на узкой ширине время уходит под календарь, а не сжимается в нечитаемый столбик; ширины заданы через flex-basis, а не медиазапросами по вьюпорту. Сетка времени строится из opensAt, closesAt и шага step, а не задаётся списком: менять рабочие часы приходится чаще, чем сам компонент. Занятые слоты приходят массивом busy и выключаются атрибутом disabled с зачёркиванием. Колонка времени скроллится внутри себя с max-height, чтобы карточка не росла на весь экран при шаге в пятнадцать минут. Выбранная пара дата плюс время всегда показана в подвале словами — иначе после прокрутки не видно, что именно выбрано.",
       "meta": {
-        "tags": ["calendar", "datetime", "slots", "booking"],
+        "tags": [
+          "calendar",
+          "datetime",
+          "slots",
+          "booking"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2180,7 +2426,11 @@
             "label": "Язык подписей",
             "type": "select",
             "default": "ru-RU",
-            "options": ["ru-RU", "en-US", "de-DE"]
+            "options": [
+              "ru-RU",
+              "en-US",
+              "de-DE"
+            ]
           },
           {
             "prop": "accent",
@@ -2263,13 +2513,22 @@
             }
           }
         },
-        "cardControls": ["locale", "accent", "background"]
+        "cardControls": [
+          "defaultTime",
+          "submitText",
+          "step",
+          "locale",
+          "accent",
+          "background"
+        ]
       }
     },
     {
       "name": "calendar-016",
       "type": "registry:component",
-      "categories": ["calendar"],
+      "categories": [
+        "calendar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2283,7 +2542,12 @@
       "description": "Недельная сетка занятости команды: люди по строкам, дни по столбцам, в клетке полоса загрузки и число часов.",
       "docs": "Серверный компонент: данные приходят массивом members, состояния нет. Раскладка — обычная таблица с областями заголовков: имена в th со scope=row, даты в th со scope=col, поэтому скринридер называет клетку по человеку и дню. Клетка несёт и полосу, и число: полоса даёт увидеть свободное окно всей команды одним взглядом, число отвечает на вопрос «насколько занят», на который цвет не отвечает. Ширина полосы задаётся своей переменной в inline-стиле — это единственное динамическое значение, которое нельзя выразить статическим классом. Перегруз красится отдельным тоном: «занят на сто процентов» и «занят сверх нормы» — разные новости. Таблица лежит в контейнере с overflow-x, чтобы на телефоне блок скроллился внутри себя, а не растягивал страницу.",
       "meta": {
-        "tags": ["calendar", "team", "week", "availability"],
+        "tags": [
+          "calendar",
+          "team",
+          "week",
+          "availability"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2338,7 +2602,11 @@
             "label": "Язык дат",
             "type": "select",
             "default": "ru-RU",
-            "options": ["ru-RU", "en-US", "de-DE"]
+            "options": [
+              "ru-RU",
+              "en-US",
+              "de-DE"
+            ]
           },
           {
             "prop": "accent",
@@ -2420,36 +2688,74 @@
                 "members": [
                   {
                     "name": "Anna Kim",
-                    "hours": [6, 8, 4, 2, 0]
+                    "hours": [
+                      6,
+                      8,
+                      4,
+                      2,
+                      0
+                    ]
                   },
                   {
                     "name": "Boris Lesch",
-                    "hours": [3, 3, 8, 8, 5]
+                    "hours": [
+                      3,
+                      3,
+                      8,
+                      8,
+                      5
+                    ]
                   },
                   {
                     "name": "Vera Noy",
-                    "hours": [0, 2, 2, 6, 8]
+                    "hours": [
+                      0,
+                      2,
+                      2,
+                      6,
+                      8
+                    ]
                   },
                   {
                     "name": "Gleb Ro",
-                    "hours": [8, 8, 8, 4, 1]
+                    "hours": [
+                      8,
+                      8,
+                      8,
+                      4,
+                      1
+                    ]
                   },
                   {
                     "name": "Dina Sol",
-                    "hours": [2, 0, 5, 3, 7]
+                    "hours": [
+                      2,
+                      0,
+                      5,
+                      3,
+                      7
+                    ]
                   }
                 ]
               }
             }
           }
         },
-        "cardControls": ["capacity", "locale", "accent", "background"]
+        "cardControls": [
+          "heading",
+          "capacity",
+          "locale",
+          "accent",
+          "background"
+        ]
       }
     },
     {
       "name": "calendar-017",
       "type": "registry:component",
-      "categories": ["calendar"],
+      "categories": [
+        "calendar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2463,7 +2769,12 @@
       "description": "Месяц, где выходной, праздник и перенесённый рабочий день различаются формой: заливка, ромб вокруг числа и пунктирная рамка.",
       "docs": "Серверный компонент: праздники приходят словарём holidays, переносы — массивом workdays, состояния нет. Главный приём — кодирование типом формы, а не только цветом: выходной получает заливку клетки, праздник — ромб, нарисованный псевдоэлементом с поворотом на сорок пять градусов, перенос — пунктирную рамку. Число внутри ромба остаётся прямым, потому что повёрнут псевдоэлемент, а не клетка: поворот клетки положил бы цифру набок. Такой месяц одинаково читается при дальтонизме и на чёрно-белой печати. Под сеткой стоят легенда теми же формами и список праздников с названиями — форма без подписи всё равно не объясняет, что за день.",
       "meta": {
-        "tags": ["calendar", "holidays", "legend", "a11y"],
+        "tags": [
+          "calendar",
+          "holidays",
+          "legend",
+          "a11y"
+        ],
         "ai": {
           "export": "Calendar017",
           "usage": "<Calendar017\n  year={2026}\n  month={1}\n  holidays={{ 1: \"Новый год\", 7: \"Рождество\" }}\n  workdays={[17]}\n/>",
@@ -2516,7 +2827,11 @@
             "label": "Язык подписей",
             "type": "select",
             "default": "ru-RU",
-            "options": ["ru-RU", "en-US", "de-DE"]
+            "options": [
+              "ru-RU",
+              "en-US",
+              "de-DE"
+            ]
           },
           {
             "prop": "accent",
@@ -2601,13 +2916,24 @@
             }
           }
         },
-        "cardControls": ["month", "locale", "accent", "background"]
+        "cardControls": [
+          "month",
+          "year",
+          "locale",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
       "name": "calendar-018",
       "type": "registry:component",
-      "categories": ["calendar"],
+      "categories": [
+        "calendar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2621,7 +2947,12 @@
       "description": "Мультивыбор несмежных дат: клетки переключаются нажатием, а каждая выбранная дата дублируется чипом со снятием и счётчиком лимита.",
       "docs": "Клиентский компонент: useState держит массив выбранных ISO-дат. Диапазон здесь не подходит по смыслу — смены выпадают на вторник, четверг и субботу, поэтому переключение поштучное. Каждая выбранная дата дублируется чипом: снять дату в сетке из тридцати клеток труднее, чем в коротком списке под ней. При достижении лимита невыбранные клетки получают aria-disabled и приглушаются, но не исчезают: пропадающие кнопки читаются как ошибка вёрстки. Счётчик «сколько из скольких» стоит в шапке и меняет цвет на пределе. Крестик чипа нарисован двумя псевдоэлементами, чтобы не тащить иконочный пакет ради двух линий.",
       "meta": {
-        "tags": ["calendar", "multiselect", "chips", "limit"],
+        "tags": [
+          "calendar",
+          "multiselect",
+          "chips",
+          "limit"
+        ],
         "ai": {
           "export": "Calendar018",
           "usage": "<Calendar018\n  year={2026}\n  month={3}\n  max={5}\n  defaultValue={[\"2026-03-03\", \"2026-03-12\"]}\n/>",
@@ -2673,7 +3004,11 @@
             "label": "Язык подписей",
             "type": "select",
             "default": "ru-RU",
-            "options": ["ru-RU", "en-US", "de-DE"]
+            "options": [
+              "ru-RU",
+              "en-US",
+              "de-DE"
+            ]
           },
           {
             "prop": "accent",
@@ -2750,13 +3085,24 @@
             }
           }
         },
-        "cardControls": ["max", "locale", "accent", "background"]
+        "cardControls": [
+          "max",
+          "emptyHint",
+          "locale",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
       "name": "calendar-019",
       "type": "registry:component",
-      "categories": ["calendar"],
+      "categories": [
+        "calendar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2770,7 +3116,12 @@
       "description": "Календарь бронирования с ценой ночи прямо в клетке: самые дешёвые дни обведены, занятые перечёркнуты, внизу итог за срок.",
       "docs": "Клиентский компонент: useState держит выбранный день заезда. Цена считается детерминированной функцией от числа месяца и дня недели, а не случайно, — случайность развела бы серверный и клиентский рендер. Цена стоит в клетке, а не открывается после выбора: календарь бронирования отвечает на вопрос «когда дешевле», и ради этого клетка сделана выше обычной. Минимальная цена месяца вычисляется по доступным дням и помечается обводкой и цветом подписи, а не только цветом. Занятые дни выключены атрибутом disabled и перечёркнуты, но остаются в сетке: пропавший день читается как ошибка загрузки. Подвал показывает итог за выбранное число ночей — умножение в уме тут лишнее.",
       "meta": {
-        "tags": ["calendar", "booking", "price", "availability"],
+        "tags": [
+          "calendar",
+          "booking",
+          "price",
+          "availability"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2835,7 +3186,11 @@
             "label": "Язык подписей",
             "type": "select",
             "default": "ru-RU",
-            "options": ["ru-RU", "en-US", "de-DE"]
+            "options": [
+              "ru-RU",
+              "en-US",
+              "de-DE"
+            ]
           },
           {
             "prop": "accent",
@@ -2925,13 +3280,22 @@
             }
           }
         },
-        "cardControls": ["nights", "locale", "accent", "background"]
+        "cardControls": [
+          "basePrice",
+          "nights",
+          "currency",
+          "locale",
+          "accent",
+          "background"
+        ]
       }
     },
     {
       "name": "calendar-020",
       "type": "registry:component",
-      "categories": ["calendar"],
+      "categories": [
+        "calendar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2945,7 +3309,12 @@
       "description": "Карточка дедлайна: остаток словами вместо тикающего таймера, кольцо сгоревшего срока и дата сдачи с человекочитаемой подписью.",
       "docs": "Серверный компонент: и дедлайн, и опорное «сейчас» приходят строками, поэтому рендер детерминирован и гидрация не расходится — new Date() в разметке был бы ошибкой. Остаток переводится в слова с русским склонением: для срока в неделях секунды бесполезны, а тикающий таймер требует клиента. Кольцо показывает долю сгоревшего срока от startedAt до deadline: процент пугает точнее, чем оставшиеся дни сами по себе. Дырку в кольце делает маска на отдельном слое, а не кружок-заглушка: заглушка обязана совпасть с фоном карточки, а маска работает на любой подложке и не съедает подпись сверху. Тон переключается атрибутом data-tone: за трое суток до срока карточка желтеет, после срока краснеет и меняет формулировку на «просрочено».",
       "meta": {
-        "tags": ["calendar", "deadline", "countdown", "progress"],
+        "tags": [
+          "calendar",
+          "deadline",
+          "countdown",
+          "progress"
+        ],
         "ai": {
           "export": "Calendar020",
           "usage": "<Calendar020\n  deadline=\"2026-04-01T18:00\"\n  now=\"2026-03-14T09:30\"\n  startedAt=\"2026-02-20T10:00\"\n  heading=\"Сдача макетов\"\n/>",
@@ -2997,7 +3366,11 @@
             "label": "Язык подписей",
             "type": "select",
             "default": "ru-RU",
-            "options": ["ru-RU", "en-US", "de-DE"]
+            "options": [
+              "ru-RU",
+              "en-US",
+              "de-DE"
+            ]
           },
           {
             "prop": "accent",
@@ -3085,7 +3458,16 @@
             }
           }
         },
-        "cardControls": ["locale", "accent", "background"]
+        "cardControls": [
+          "heading",
+          "deadline",
+          "locale",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -3093,7 +3475,9 @@
       "type": "registry:component",
       "title": "Сетка по неделям ISO",
       "description": "Месячная сетка с колонкой номеров недель по ISO 8601: выбирается не день, а строка целиком, и подпись снизу переводит «неделя 16» в конкретные даты.",
-      "categories": ["calendar"],
+      "categories": [
+        "calendar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3105,7 +3489,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-calendar-021-*. Клиентский: номер выбранной недели живёт в useState. Разметка — обычная <table>, где заголовок строки <th scope=\"row\"> содержит кнопку с номером недели, поэтому связь «неделя → дни» читается скринридером без ARIA-костылей. Номер считает isoWeek: дата сдвигается на четверг своей недели и сравнивается с началом года в UTC, поэтому переход на летнее время и январские недели-перебежчики не ломают счёт. Сетка строится от понедельника ((getDay()+6)%7), пустые ведущие недели отбрасываются фильтром. Подсветка выбранной строки повешена на tr[data-picked=\"true\"], скругления краёв — на td:first-of-type и td:last-child.",
       "meta": {
-        "tags": ["calendar", "week", "iso-8601", "planning"],
+        "tags": [
+          "calendar",
+          "week",
+          "iso-8601",
+          "planning"
+        ],
         "ai": {
           "export": "Calendar021",
           "usage": "<Calendar021 month=\"2026-04\" defaultWeek={16} />",
@@ -3160,7 +3549,11 @@
             "label": "Локаль",
             "type": "select",
             "default": "ru-RU",
-            "options": ["ru-RU", "en-US", "de-DE"]
+            "options": [
+              "ru-RU",
+              "en-US",
+              "de-DE"
+            ]
           },
           {
             "prop": "accent",
@@ -3245,7 +3638,16 @@
             }
           }
         },
-        "cardControls": ["locale", "accent", "background"]
+        "cardControls": [
+          "month",
+          "hint",
+          "locale",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -3253,7 +3655,9 @@
       "type": "registry:component",
       "title": "Рабочие дни",
       "description": "Выбор рабочих дней недели семью переключателями: два пресета для типовых графиков и живой итог в часах вместо абстрактных галочек.",
-      "categories": ["calendar"],
+      "categories": [
+        "calendar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3265,7 +3669,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-calendar-022-*. Клиентский: набор выбранных дней живёт в useState как массив индексов, где 0 — понедельник. Корень — <fieldset> с <legend>, поэтому группа переключателей объявлена семантикой формы; каждый день — <button> с aria-pressed и aria-label из полного названия дня, короткая подпись помечена aria-hidden. Названия дней берутся из Intl.DateTimeFormat, поэтому смена locale меняет подписи без словаря в коде. Выходные отличаются пунктирной рамкой через [data-weekend], итог считается умножением количества дней на hoursPerDay и склоняется функцией pluralize.",
       "meta": {
-        "tags": ["calendar", "weekday", "schedule", "settings"],
+        "tags": [
+          "calendar",
+          "weekday",
+          "schedule",
+          "settings"
+        ],
         "ai": {
           "export": "Calendar022",
           "usage": "<Calendar022 hoursPerDay={8} defaultDays={[0, 1, 2, 3, 4]} />",
@@ -3321,7 +3730,11 @@
             "label": "Локаль",
             "type": "select",
             "default": "ru-RU",
-            "options": ["ru-RU", "en-US", "de-DE"]
+            "options": [
+              "ru-RU",
+              "en-US",
+              "de-DE"
+            ]
           },
           {
             "prop": "accent",
@@ -3416,7 +3829,16 @@
             }
           }
         },
-        "cardControls": ["hoursPerDay", "locale", "accent", "background"]
+        "cardControls": [
+          "hoursPerDay",
+          "label",
+          "locale",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -3424,7 +3846,9 @@
       "type": "registry:component",
       "title": "Слоты в двух поясах",
       "description": "Выбор слота созвона сразу в двух часовых поясах: каждая строка показывает своё и чужое время, а часы вне рабочего дня партнёра помечены.",
-      "categories": ["calendar"],
+      "categories": [
+        "calendar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3436,7 +3860,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-calendar-023-*. Клиентский: выбранный час живёт в useState. Разница поясов не хардкодится: zoneOffset читает смещение зоны через Intl.DateTimeFormat с timeZone и formatToParts, а instantOf двумя проходами находит момент UTC, которому соответствует заданное локальное время в домашней зоне (второй проход нужен в сутки перевода часов). Дальше один и тот же момент форматируется двумя Intl-форматтерами, поэтому строка «17:00 → 10:00» всегда согласована. Признак offhours считается по часу в чужой зоне и вешается на data-offhours, метка «вне часов» дорисовывается CSS-псевдоэлементом. Названия городов по умолчанию выводятся из имени зоны, поэтому смена awayZone меняет и подпись колонки.",
       "meta": {
-        "tags": ["calendar", "timezone", "meeting", "scheduling"],
+        "tags": [
+          "calendar",
+          "timezone",
+          "meeting",
+          "scheduling"
+        ],
         "ai": {
           "export": "Calendar023",
           "usage": "<Calendar023 homeZone=\"Europe/Moscow\" awayZone=\"America/New_York\" />",
@@ -3496,7 +3925,11 @@
             "label": "Локаль",
             "type": "select",
             "default": "ru-RU",
-            "options": ["ru-RU", "en-US", "de-DE"]
+            "options": [
+              "ru-RU",
+              "en-US",
+              "de-DE"
+            ]
           },
           {
             "prop": "accent",
@@ -3578,7 +4011,16 @@
             }
           }
         },
-        "cardControls": ["awayZone", "locale", "accent", "background"]
+        "cardControls": [
+          "awayZone",
+          "date",
+          "locale",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -3586,7 +4028,9 @@
       "type": "registry:component",
       "title": "Поля даты рождения",
       "description": "Дата рождения тремя полями вместо сетки месяца: день, месяц и год вводятся с клавиатуры, а проверка отдельно разбирает несуществующее число, будущее и возрастной ценз.",
-      "categories": ["calendar"],
+      "categories": [
+        "calendar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3598,7 +4042,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-calendar-024-*. Клиентский: три части даты живут в отдельных useState, наружу onChange отдаёт собранную строку YYYY-MM-DD или пустую строку, если дата неполная. Корень — <fieldset> с <legend>, у каждого поля своя <label>, а автозаполнение включено атрибутами autoComplete=\"bday-day|bday-month|bday-year\". Месяц сделан <select> с названиями из Intl, поэтому цифра 07 не спорит с форматом даты в стране пользователя. Проверка собрана в один useMemo и возвращает не булево, а состояние idle/ok/bad с текстом: количество дней в месяце считается через new Date(year, month, 0).getDate(), возраст — сравнением месяца и дня. Состояние поднимается на корень как data-state, поэтому рамки полей и цвет подписи красятся одним правилом.",
       "meta": {
-        "tags": ["calendar", "birthday", "form", "validation"],
+        "tags": [
+          "calendar",
+          "birthday",
+          "form",
+          "validation"
+        ],
         "ai": {
           "export": "Calendar024",
           "usage": "<Calendar024 minAge={18} defaultValue=\"1994-07-19\" />",
@@ -3654,7 +4103,11 @@
             "label": "Локаль",
             "type": "select",
             "default": "ru-RU",
-            "options": ["ru-RU", "en-US", "de-DE"]
+            "options": [
+              "ru-RU",
+              "en-US",
+              "de-DE"
+            ]
           },
           {
             "prop": "accent",
@@ -3750,7 +4203,16 @@
             }
           }
         },
-        "cardControls": ["minAge", "locale", "accent", "background"]
+        "cardControls": [
+          "minAge",
+          "label",
+          "locale",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -3758,7 +4220,9 @@
       "type": "registry:component",
       "title": "График смен",
       "description": "График смен таблицей «сотрудники × дни»: код смены в клетке, цвет по типу и итог смен справа, так что дыру в покрытии видно как пустой столбец.",
-      "categories": ["calendar"],
+      "categories": [
+        "calendar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3770,7 +4234,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-calendar-025-*. Серверный: состояния нет, всё считается из пропа people при рендере. Разметка — настоящая <table> с <th scope=\"col\"> у дней и <th scope=\"row\"> у сотрудников, поэтому скринридер читает клетку как «Ирина Соколова, вторник». В клетке лежит короткий код под aria-hidden и полное название смены в визуально скрытом [data-part=\"sr\"], так что цвет не единственный носитель смысла. Тип смены выражен атрибутом data-shift, палитра для каждого типа своя. Плотность строк переключается переменной --vibeui-calendar-025-cell через data-density, горизонтальная прокрутка живёт в отдельной обёртке [data-part=\"scroll\"], поэтому таблица не растягивает карточку. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней, а проп background возвращает плашку. Все подписи — заголовок колонки сотрудников, названия и коды смен — приходят пропами, русские значения лежат в дефолтах.",
       "meta": {
-        "tags": ["calendar", "shifts", "roster", "team"],
+        "tags": [
+          "calendar",
+          "shifts",
+          "roster",
+          "team"
+        ],
         "preview": {
           "width": "full"
         },
@@ -3814,7 +4283,10 @@
             "label": "Плотность",
             "type": "select",
             "default": "compact",
-            "options": ["compact", "comfortable"]
+            "options": [
+              "compact",
+              "comfortable"
+            ]
           },
           {
             "prop": "accent",
@@ -3965,7 +4437,12 @@
             }
           }
         },
-        "cardControls": ["density", "accent", "background"]
+        "cardControls": [
+          "density",
+          "accent",
+          "background",
+          "weekStart"
+        ]
       }
     },
     {
@@ -3973,7 +4450,9 @@
       "type": "registry:component",
       "title": "Правило повтора",
       "description": "Правило повтора события, которое сразу переводится во фразу словами и в список ближайших дат, а внизу показывает собранную строку RRULE.",
-      "categories": ["calendar"],
+      "categories": [
+        "calendar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3985,7 +4464,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-calendar-026-*. Клиентский: частота, интервал и дни недели живут в useState. Строка правила собирается чистой функцией ruleOf, поэтому onChange всегда получает актуальное значение, а не состояние прошлого рендера. Ближайшие даты считаются в useMemo тремя ветками: для daily и monthly — сдвигом даты, для weekly — перебором дней с проверкой номера недели от старта, поэтому «каждые 2 недели» действительно пропускает неделю. Фраза словами строится отдельно и склоняется через pluralize. Названия дней берутся из Intl.DateTimeFormat, кнопки дней показываются только для weekly. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней, а проп background возвращает плашку. Подписи полей, пункты списка единиц и шаблоны фразы приходят пропами — русские значения лежат в дефолтах, {count}, {unit}, {head}, {days} и {day} подставляются при сборке фразы.",
       "meta": {
-        "tags": ["calendar", "recurrence", "rrule", "form"],
+        "tags": [
+          "calendar",
+          "recurrence",
+          "rrule",
+          "form"
+        ],
         "ai": {
           "export": "Calendar026",
           "usage": "<Calendar026 defaultFrequency=\"weekly\" defaultInterval={2} occurrences={3} />",
@@ -4028,7 +4512,11 @@
             "label": "Единица повтора",
             "type": "select",
             "default": "weekly",
-            "options": ["daily", "weekly", "monthly"]
+            "options": [
+              "daily",
+              "weekly",
+              "monthly"
+            ]
           },
           {
             "prop": "defaultInterval",
@@ -4130,9 +4618,21 @@
                   "monthly": "months"
                 },
                 "unitForms": {
-                  "daily": ["day", "days", "days"],
-                  "weekly": ["week", "weeks", "weeks"],
-                  "monthly": ["month", "months", "months"]
+                  "daily": [
+                    "day",
+                    "days",
+                    "days"
+                  ],
+                  "weekly": [
+                    "week",
+                    "weeks",
+                    "weeks"
+                  ],
+                  "monthly": [
+                    "month",
+                    "months",
+                    "months"
+                  ]
                 },
                 "phraseText": {
                   "singleDaily": "Every day",
@@ -4153,7 +4653,10 @@
           "occurrences",
           "accent",
           "background"
-        ]
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -4161,7 +4664,9 @@
       "type": "registry:component",
       "title": "Готовые диапазоны",
       "description": "Выбор периода отчёта пресетами: «последние 7 дней», «прошлый месяц» и ещё четыре, а два поля дат ниже показывают, во что пресет развернулся.",
-      "categories": ["calendar"],
+      "categories": [
+        "calendar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4173,7 +4678,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-calendar-027-*. Клиентский: выбранный пресет и обе границы живут в useState. Пресеты разворачиваются чистой функцией resolve от опорной даты today, которая приходит пропом, — Date.now() внутри компонента развёл бы серверный и клиентский рендер. Поля дат — нативные input type=\"date\" с взаимными min и max, поэтому браузер сам не даёт перевернуть период; ручная правка переводит выбор в состояние custom. Итог считает количество дней включительно и склоняет его через pluralize, а невалидный период (конец раньше начала) показывается отдельным текстом на приглушённой подложке. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней, а проп background возвращает плашку. Подписи пресетов, полей и итога приходят пропами, русские значения лежат в дефолтах.",
       "meta": {
-        "tags": ["calendar", "range", "presets", "reports"],
+        "tags": [
+          "calendar",
+          "range",
+          "presets",
+          "reports"
+        ],
         "ai": {
           "export": "Calendar027",
           "usage": "<Calendar027 defaultPreset=\"7d\" today=\"2026-04-15\" />",
@@ -4215,7 +4725,14 @@
             "label": "Пресет",
             "type": "select",
             "default": "7d",
-            "options": ["today", "yesterday", "7d", "30d", "month", "prevMonth"]
+            "options": [
+              "today",
+              "yesterday",
+              "7d",
+              "30d",
+              "month",
+              "prevMonth"
+            ]
           },
           {
             "prop": "accent",
@@ -4298,7 +4815,11 @@
                 "presetsLabel": "Quick periods",
                 "fromLabel": "From",
                 "toLabel": "To",
-                "dayForms": ["day", "days", "days"],
+                "dayForms": [
+                  "day",
+                  "days",
+                  "days"
+                ],
                 "customText": " (custom period)",
                 "invalidText": "The period ends before it starts",
                 "presetText": {
@@ -4313,7 +4834,15 @@
             }
           }
         },
-        "cardControls": ["defaultPreset", "accent", "background"]
+        "cardControls": [
+          "defaultPreset",
+          "accent",
+          "background",
+          "today"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -4321,7 +4850,9 @@
       "type": "registry:component",
       "title": "Почасовое бронирование",
       "description": "Доступность переговорной по часам: интервал набирается двумя нажатиями — начало и конец, а занятые часы подписаны владельцем и не выбираются.",
-      "categories": ["calendar"],
+      "categories": [
+        "calendar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4333,7 +4864,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-calendar-028-*. Клиентский: начало, конец и текст ошибки живут в useState. Каждый час — <button> внутри списка: занятый час получает disabled и aria-label с именем владельца, поэтому недоступность объявляется, а не только красится. Логика набора интервала линейная: первое нажатие ставит начало, второе — конец, нажатие раньше начала перезапускает выбор. Перед фиксацией конца интервал проверяется на пересечение с чужой бронью циклом по часам, и при пересечении показывается отдельное сообщение вместо молчаливого игнорирования. Итог и ошибка живут в одном абзаце с aria-live и переключаются атрибутом data-bad. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней, а проп background возвращает плашку. Все подписи и сообщения приходят словарём text с подстановками {time}, {who}, {count} и {unit}; русские значения лежат в дефолтах.",
       "meta": {
-        "tags": ["calendar", "booking", "availability", "rooms"],
+        "tags": [
+          "calendar",
+          "booking",
+          "availability",
+          "rooms"
+        ],
         "ai": {
           "export": "Calendar028",
           "usage": "<Calendar028 openFrom={8} openTo={20} date=\"2026-04-15\" />",
@@ -4467,7 +5003,11 @@
               "props": {
                 "heading": "North meeting room",
                 "locale": "en-GB",
-                "hourForms": ["hour", "hours", "hours"],
+                "hourForms": [
+                  "hour",
+                  "hours",
+                  "hours"
+                ],
                 "text": {
                   "busyAria": "{time} busy: {who}",
                   "freeAria": "{time} free",
@@ -4499,7 +5039,16 @@
             }
           }
         },
-        "cardControls": ["openFrom", "openTo", "accent", "background"]
+        "cardControls": [
+          "openFrom",
+          "openTo",
+          "accent",
+          "background",
+          "heading"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -4507,7 +5056,9 @@
       "type": "registry:component",
       "title": "Чип фильтра по дате",
       "description": "Дата в строке фильтров как фишка рядом с остальными: значение показано текстом, сетка месяца открывается панелью поверх и закрывается сразу после выбора.",
-      "categories": ["calendar"],
+      "categories": [
+        "calendar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4519,7 +5070,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-calendar-029-*. Клиентский: значение, открытость панели и показываемый месяц живут в useState. Панель позиционируется абсолютно относительно обёртки [data-part=\"anchor\"] с position:relative, поэтому не требует ни портала, ни расчёта координат. Кнопка-фишка несёт aria-expanded и aria-controls, Escape ловится обработчиком на корне и закрывает панель, выбор дня закрывает её же. Кнопка сброса вынесена рядом с фишкой, а не вложена внутрь неё: интерактивный элемент внутри кнопки — невалидная разметка, которую ломает и клавиатура, и скринридер. Сетка строится на 42 ячейки от понедельника, дни соседних месяцев помечаются data-outside. Тема берётся из color-scheme окружения через light-dark(): подложки у строки фильтров по умолчанию нет, она лежит прямо на фоне страницы и темнеет вместе с ней, а проп background возвращает плашку. У самой панели подложка своя — --vibeui-calendar-029-panel: поповер обязан быть непрозрачным, иначе сетка месяца ляжет на текст под ней. Подписи кнопок сброса и перелистывания приходят пропами, русские значения лежат в дефолтах.",
       "meta": {
-        "tags": ["calendar", "filter", "chip", "compact"],
+        "tags": [
+          "calendar",
+          "filter",
+          "chip",
+          "compact"
+        ],
         "preview": {
           "width": "full"
         },
@@ -4649,12 +5205,20 @@
                 "clearLabel": "Clear the date filter",
                 "prevLabel": "Previous month",
                 "nextLabel": "Next month",
-                "neighbours": ["Status: in progress", "Author: anyone"]
+                "neighbours": [
+                  "Status: in progress",
+                  "Author: anyone"
+                ]
               }
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "accent",
+          "background",
+          "label",
+          "defaultValue"
+        ]
       }
     },
     {
@@ -4662,7 +5226,9 @@
       "type": "registry:component",
       "title": "Ограниченный диапазон",
       "description": "Диапазон с потолком в N дней: после выбора первой даты недоступные дни гаснут, а счётчик снизу показывает, сколько дней ещё осталось в лимите.",
-      "categories": ["calendar"],
+      "categories": [
+        "calendar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4674,7 +5240,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-calendar-030-*. Клиентский: обе границы диапазона живут в useState. Ограничение выражено не сообщением об ошибке, а состоянием сетки: пока выбрана только первая дата, функция blocked гасит дни раньше начала и дальше maxDays-1 через нативный disabled, поэтому запрет объявляется и скринридеру. Число строк сетки считается по Math.ceil((offset+дней)/7)*7, чтобы месяц не оставлял пустую шестую неделю. Полоса прогресса под сеткой заполняется переменной --vibeui-calendar-030-fill из отношения длины диапазона к лимиту. Итог склоняется через pluralize и объявляется через aria-live. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней, а проп background возвращает плашку. Подписи приходят словарём text с подстановками {max}, {count} и {unit}; подстановка возвращает узлы, поэтому числа остаются в <b>, а порядок слов задаёт перевод.",
       "meta": {
-        "tags": ["calendar", "range", "limit", "booking"],
+        "tags": [
+          "calendar",
+          "range",
+          "limit",
+          "booking"
+        ],
         "ai": {
           "export": "Calendar030",
           "usage": "<Calendar030 maxDays={14} month=\"2026-04\" />",
@@ -4796,7 +5367,11 @@
             "preview": {
               "props": {
                 "locale": "en-GB",
-                "dayForms": ["day", "days", "days"],
+                "dayForms": [
+                  "day",
+                  "days",
+                  "days"
+                ],
                 "text": {
                   "rule": "No more than {max} {unit} in a row",
                   "empty": "Pick the first day",
@@ -4808,7 +5383,15 @@
             }
           }
         },
-        "cardControls": ["maxDays", "accent", "background"]
+        "cardControls": [
+          "maxDays",
+          "accent",
+          "background",
+          "month"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     }
   ]

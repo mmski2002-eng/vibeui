@@ -6,7 +6,9 @@
       "type": "registry:component",
       "title": "Контекстное меню",
       "description": "Меню по правой кнопке: появляется там, где нажали, и закрывается выбором, Escape или уходом курсора.",
-      "categories": ["context-menu"],
+      "categories": [
+        "context-menu"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menu-002-*. Клиентский: \"use client\". Координаты берутся из события contextmenu, стандартное меню браузера отменяется preventDefault. Меню позиционируется fixed по точке нажатия. Область, на которой работает правая кнопка, — это <button>: она обозначена пунктиром и открывает то же меню по Enter, а Escape закрывает меню и возвращает на неё фокус. Тема берётся из color-scheme окружения через light-dark(): подложки у области по умолчанию нет, а поверхность самого меню остаётся непрозрачной, иначе сквозь него читался бы контент.",
       "meta": {
-        "tags": ["menu", "context", "right-click", "desktop"],
+        "tags": [
+          "menu",
+          "context",
+          "right-click",
+          "desktop"
+        ],
         "preview": {
           "width": "full"
         },
@@ -159,7 +166,12 @@
             }
           }
         },
-        "cardControls": ["background"]
+        "cardControls": [
+          "zoneTitle",
+          "hint",
+          "background",
+          "accent"
+        ]
       }
     },
     {
@@ -167,7 +179,9 @@
       "type": "registry:component",
       "title": "Контекстное меню на popover",
       "description": "Меню по правому клику на HTML popover, с кнопкой-дублёром: без неё меню недоступно тем, кто работает с клавиатуры.",
-      "categories": ["context-menu"],
+      "categories": [
+        "context-menu"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -179,7 +193,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contextmenu-001-*. Клиентский: \"use client\" ради координат курсора. Меню — popover, поэтому закрытие по Escape и клику мимо достаётся от браузера, а положение подставляется переменными --vibeui-contextmenu-001-x/y. Кнопка «Действия» открывает то же меню без мыши. Тема берётся из color-scheme окружения через light-dark(): подложки у области по умолчанию нет, а поверхность самого меню остаётся непрозрачной.",
       "meta": {
-        "tags": ["context-menu", "popover", "right-click", "a11y"],
+        "tags": [
+          "context-menu",
+          "popover",
+          "right-click",
+          "a11y"
+        ],
         "preview": {
           "width": "full"
         },
@@ -318,7 +337,12 @@
             }
           }
         },
-        "cardControls": ["background"]
+        "cardControls": [
+          "hint",
+          "actionLabel",
+          "background",
+          "accent"
+        ]
       }
     },
     {
@@ -326,7 +350,9 @@
       "type": "registry:component",
       "title": "Плитки файлов",
       "description": "Контекстное меню файла в плиточном списке: правый клик у курсора, кнопка «•••» на плитке и долгое нажатие для телефона — три входа в одно меню.",
-      "categories": ["context-menu"],
+      "categories": [
+        "context-menu"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -338,7 +364,12 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-contextmenu-002-*. Клиентский: координаты курсора и текущая плитка живут в useState. Меню — HTML popover, поэтому Escape и клик мимо достаются от браузера; координаты подставляются переменными --vibeui-contextmenu-002-x/y, потому что известны только в момент события. Долгое нажатие собрано на onPointerDown с проверкой pointerType и таймером в 500 мс, отменяется на onPointerUp и onPointerLeave. Плитка, к которой относится меню, подсвечивается через data-active и гасится на событии toggle попапа. Тема берётся из color-scheme окружения через light-dark(), подложки у карточки по умолчанию нет. В шапке меню стоит имя файла, ниже — действия и отделённое линией удаление.",
       "meta": {
-        "tags": ["contextmenu", "files", "popover", "touch"],
+        "tags": [
+          "contextmenu",
+          "files",
+          "popover",
+          "touch"
+        ],
         "preview": {
           "width": "full"
         },
@@ -480,7 +511,12 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "title",
+          "hint",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -488,7 +524,9 @@
       "type": "registry:component",
       "title": "Открыть с помощью",
       "description": "Контекстное меню файла с подменю «Открыть с помощью»: список программ спрятан на второй уровень, куда ведут наведение и стрелка вправо.",
-      "categories": ["context-menu"],
+      "categories": [
+        "context-menu"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -500,7 +538,12 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-contextmenu-003-*. Клиентский: раскрытие подменю и координаты курсора держит useState. Первый уровень — HTML popover у курсора через переменные x/y, второй — обычный абсолютный слой внутри него: вложенный popover=auto закрыл бы родителя. Родительский пункт помечен aria-haspopup=menu и aria-expanded, подменю — role=menu с aria-label. Стрелка вправо открывает подменю и уводит в него фокус, влево — закрывает и возвращает фокус на родителя. Кнопка «Действия» дублирует правый клик, иначе меню недоступно без мыши. Тема берётся из color-scheme окружения через light-dark(), подложки у карточки по умолчанию нет.",
       "meta": {
-        "tags": ["contextmenu", "submenu", "files", "keyboard"],
+        "tags": [
+          "contextmenu",
+          "submenu",
+          "files",
+          "keyboard"
+        ],
         "preview": {
           "width": "full"
         },
@@ -630,7 +673,12 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "fileName",
+          "submenuLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -638,7 +686,9 @@
       "type": "registry:component",
       "title": "Меню буфера обмена",
       "description": "Контекстное меню буфера обмена с настоящим состоянием: «вставить» выключено, пока буфер пуст, вырезанная карточка исчезает и возвращается вставкой.",
-      "categories": ["context-menu"],
+      "categories": [
+        "context-menu"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -650,7 +700,12 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-contextmenu-004-*. Клиентский: список карточек, содержимое буфера и текущая цель живут в useState. Меню — HTML popover у курсора через переменные x/y, вызывается правым кликом и кнопкой на карточке. Пункт «вставить» помечен aria-disabled при пустом буфере и остаётся видимым: спрятанный пункт не объясняет, почему действие недоступно. Вставка кладёт копию сразу после карточки, на которой вызвали меню, — буфер без места назначения бессмысленен. Содержимое буфера показано строкой с role=status под списком. Тема берётся из color-scheme окружения через light-dark(), подложки у карточки по умолчанию нет.",
       "meta": {
-        "tags": ["contextmenu", "clipboard", "state", "board"],
+        "tags": [
+          "contextmenu",
+          "clipboard",
+          "state",
+          "board"
+        ],
         "preview": {
           "width": "full"
         },
@@ -752,7 +807,11 @@
             "preview": {
               "props": {
                 "title": "Board",
-                "cards": ["Client brief", "Video script", "Shoot budget"],
+                "cards": [
+                  "Client brief",
+                  "Video script",
+                  "Shoot budget"
+                ],
                 "actionText": {
                   "cut": "Cut",
                   "copy": "Copy",
@@ -770,7 +829,11 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "title",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -778,7 +841,9 @@
       "type": "registry:component",
       "title": "Меню выделения",
       "description": "Контекстное меню выделенного текста: оно читает выделение в момент вызова и показывает его в шапке, поэтому «перевести» всегда с предметом.",
-      "categories": ["context-menu"],
+      "categories": [
+        "context-menu"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -790,7 +855,12 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-contextmenu-005-*. Клиентский: выделение и координаты курсора держит useState. Текст выделения берётся из window.getSelection() прямо в обработчике вызова — в рендере его ещё нет, а после закрытия меню оно уже сброшено. Меню — HTML popover у курсора через переменные x/y, с кнопкой-дублёром для клавиатуры и телефона. Пока ничего не выделено, пункты помечены aria-disabled, а шапка показывает причину. Цвет выделения задан правилом ::selection на самом абзаце, чтобы он совпадал с акцентом компонента. Тема берётся из color-scheme окружения через light-dark(), подложки у карточки по умолчанию нет.",
       "meta": {
-        "tags": ["contextmenu", "selection", "text", "popover"],
+        "tags": [
+          "contextmenu",
+          "selection",
+          "text",
+          "popover"
+        ],
         "preview": {
           "width": "full"
         },
@@ -902,7 +972,12 @@
               "props": {
                 "text": "Select any phrase in this paragraph and call the menu with the right button: the command will show exactly which text it is going to work with.",
                 "emptyHint": "Nothing selected",
-                "actions": ["Copy", "Search the web", "Translate", "Quote"],
+                "actions": [
+                  "Copy",
+                  "Search the web",
+                  "Translate",
+                  "Quote"
+                ],
                 "sectionLabel": "Text with a selection menu",
                 "hint": "right-click the paragraph",
                 "menuLabel": "Selection actions",
@@ -912,7 +987,12 @@
             }
           }
         },
-        "cardControls": ["background"]
+        "cardControls": [
+          "emptyHint",
+          "hint",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -920,7 +1000,9 @@
       "type": "registry:component",
       "title": "Меню строки таблицы",
       "description": "Контекстное меню строки таблицы: строка получает фокус и подсветку, а вызов работает и мышью, и клавишей меню, у которой нет координат курсора.",
-      "categories": ["context-menu"],
+      "categories": [
+        "context-menu"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -932,7 +1014,12 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-contextmenu-006-*. Клиентский: текущая строка и координаты держит useState. Строки получают tabIndex и aria-selected, подсветка живёт, пока открыт popover, и гаснет на событии toggle. Клавиша вызова меню и Shift+F10 приходят тем же событием contextmenu, но с нулевыми координатами — при них меню встаёт по левому нижнему краю самой строки, а не в углу экрана. Меню — HTML popover, поэтому Escape и клик мимо от браузера; в шапке имя строки, удаление отделено линией и покрашено текстом. Тема берётся из color-scheme окружения через light-dark(), подложки у таблицы по умолчанию нет.",
       "meta": {
-        "tags": ["contextmenu", "table", "row", "keyboard"],
+        "tags": [
+          "contextmenu",
+          "table",
+          "row",
+          "keyboard"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1076,7 +1163,11 @@
             }
           }
         },
-        "cardControls": ["background"]
+        "cardControls": [
+          "caption",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1084,7 +1175,9 @@
       "type": "registry:component",
       "title": "Переключение колонок",
       "description": "Контекстное меню шапки таблицы с чекбоксами видимости колонок: колонки действительно прячутся, а последнюю оставшуюся выключить нельзя.",
-      "categories": ["context-menu"],
+      "categories": [
+        "context-menu"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1096,7 +1189,12 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-contextmenu-007-*. Клиентский: набор видимых колонок держит useState, таблица рисуется из него, поэтому переключатель работает по-настоящему. Меню вызывается правым кликом по thead и кнопкой «Колонки» со счётчиком — на телефоне правого клика нет. Пункты размечены role=menuitemcheckbox с aria-checked, меню не закрывается по нажатию: колонки прячут пачкой. Последняя видимая колонка помечена aria-disabled и не выключается: таблица без колонок — пустой прямоугольник, из которого нечем вернуться. Порядок колонок при возвращении берётся из исходного списка, а не из порядка нажатий. Тема берётся из color-scheme окружения через light-dark(), подложки у таблицы по умолчанию нет.",
       "meta": {
-        "tags": ["contextmenu", "table", "columns", "checkbox"],
+        "tags": [
+          "contextmenu",
+          "table",
+          "columns",
+          "checkbox"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1198,16 +1296,33 @@
             "preview": {
               "props": {
                 "caption": "Week plan",
-                "columns": ["Task", "Status", "Owner", "Due"],
+                "columns": [
+                  "Task",
+                  "Status",
+                  "Owner",
+                  "Due"
+                ],
                 "cells": {
                   "Task": [
                     "Assemble the report",
                     "Update the price list",
                     "Check the payment"
                   ],
-                  "Status": ["In progress", "Done", "Waiting"],
-                  "Owner": ["Vera", "Igor", "Anya"],
-                  "Due": ["12.03", "14.03", "18.03"]
+                  "Status": [
+                    "In progress",
+                    "Done",
+                    "Waiting"
+                  ],
+                  "Owner": [
+                    "Vera",
+                    "Igor",
+                    "Anya"
+                  ],
+                  "Due": [
+                    "12.03",
+                    "14.03",
+                    "18.03"
+                  ]
                 },
                 "buttonText": "Columns: {count}",
                 "menuLabel": "Column visibility",
@@ -1217,7 +1332,11 @@
             }
           }
         },
-        "cardControls": ["background"]
+        "cardControls": [
+          "caption",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1225,7 +1344,9 @@
       "type": "registry:component",
       "title": "Подсказка правого клика",
       "description": "Контекстное меню с сочетаниями клавиш и пульсирующей подсказкой о правом клике, которая гаснет после первого удачного вызова.",
-      "categories": ["context-menu"],
+      "categories": [
+        "context-menu"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1237,7 +1358,12 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-contextmenu-008-*. Клиентский: признак «меню уже открывали», координаты курсора и таймер долгого нажатия живут в useState и useRef. Правый клик не виден на экране, поэтому у области стоит подсказка с анимацией; после первого вызова data-used на корне гасит анимацию и приглушает её. Сочетания разложены по отдельным kbd с рамкой снизу — меню заодно работает шпаргалкой. Долгое нажатие собрано на onPointerDown с проверкой pointerType и таймером 500 мс. Анимация выключается правилом prefers-reduced-motion. Тема берётся из color-scheme окружения через light-dark(), подложки у карточки по умолчанию нет.",
       "meta": {
-        "tags": ["contextmenu", "hint", "shortcuts", "touch"],
+        "tags": [
+          "contextmenu",
+          "hint",
+          "shortcuts",
+          "touch"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1367,7 +1493,11 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "hint",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1375,7 +1505,9 @@
       "type": "registry:component",
       "title": "Меню карточки файла",
       "description": "Меню на карточке файла с опасным пунктом внизу: собственный слой вместо HTML popover, зажатый в границах демонстрационной области, поэтому он не может выйти за карточку каталога.",
-      "categories": ["context-menu"],
+      "categories": [
+        "context-menu"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1387,7 +1519,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contextmenu-009-*. Клиентский: \"use client\" ради координат курсора и своего состояния открытия. Меню — не HTML popover, а обычный абсолютно спозиционированный слой внутри демонстрационной области с position:relative и overflow:hidden: координаты клика переводятся в систему отсчёта этой области и зажимаются её границами по известным размерам меню, поэтому оно физически не может выйти за карточку каталога. Открытие и закрытие компонент ведёт сам через useEffect: клик мимо и Escape закрывают меню, фокус возвращается на кнопку или карточку, которая его открыла. Тема берётся из color-scheme окружения через light-dark(), подложки у карточки по умолчанию нет.",
       "meta": {
-        "tags": ["contextmenu", "files", "danger", "a11y"],
+        "tags": [
+          "contextmenu",
+          "files",
+          "danger",
+          "a11y"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1519,7 +1656,11 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "fileName",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1527,7 +1668,9 @@
       "type": "registry:component",
       "title": "Меню форматирования",
       "description": "Меню форматирования выделенного текста с полужирным, курсивом, подчёркиванием и ссылкой: применённые метки собираются в список под абзацем, а меню не выходит за карточку каталога.",
-      "categories": ["context-menu"],
+      "categories": [
+        "context-menu"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1539,7 +1682,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contextmenu-010-*. Клиентский: \"use client\" ради window.getSelection() и своего состояния открытия. Выделение читается в обработчике вызова, а не в рендере: до события браузер не знает, что выбрал пользователь, а после закрытия меню оно уже сброшено. Меню — не HTML popover, а слой внутри демонстрационной области с position:relative и overflow:hidden; координаты клика переведены в систему отсчёта этой области и зажаты по известным размерам меню. Применённые форматы не меняют вёрстку абзаца, а добавляются меткой в список под ним — так виден результат действия без реального форматирования текста. Тема берётся из color-scheme окружения через light-dark(), подложки у карточки по умолчанию нет.",
       "meta": {
-        "tags": ["contextmenu", "selection", "formatting", "text"],
+        "tags": [
+          "contextmenu",
+          "selection",
+          "formatting",
+          "text"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1670,7 +1818,11 @@
             }
           }
         },
-        "cardControls": ["background"]
+        "cardControls": [
+          "emptyHint",
+          "accent",
+          "background"
+        ]
       }
     }
   ]

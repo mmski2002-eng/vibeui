@@ -55,7 +55,13 @@ const STYLES = `
 --vibeui-dashboard-023-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="dashboard-023"]{color-scheme:dark}
 [data-vibeui-block="dashboard-023"]{
+/* container-type отрывает ширину от содержимого: без нижней границы
+   блок схлопывается внутри flex-контейнера. */
+min-width:min(100%,16rem);
 box-sizing:border-box;overflow:hidden;
 background:var(--vibeui-dashboard-023-bg);
 color:var(--vibeui-dashboard-023-fg);

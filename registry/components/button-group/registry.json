@@ -6,7 +6,9 @@
       "type": "registry:component",
       "title": "Сегментированный фильтр",
       "description": "Сегментированный переключатель на настоящих radio: состояние держит форма, клиентского JS нет, а схлопнутые границы оставляют между сегментами ровно один пиксель.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-001-*. Серверный: хуков и обработчиков нет вовсе. Выбор держат radio внутри fieldset, поэтому стрелки, Home/End и объявление «выбрано 2 из 3» приходят от браузера. Input растянут на весь сегмент и прозрачен, вид рисует label. Границы схлопнуты через margin-inline-start:-1px, скругления заданы логическими свойствами только первому и последнему сегменту. Выбранный сегмент поднят z-index:1, сфокусированный — z-index:2, иначе сосед срезает акцентную рамку и обводку фокуса. Legend спрятан clip-path, а не display:none: иначе fieldset теряет доступное имя.",
       "meta": {
-        "tags": ["buttongroup", "segmented", "radio", "filter"],
+        "tags": [
+          "buttongroup",
+          "segmented",
+          "radio",
+          "filter"
+        ],
         "ai": {
           "export": "Buttongroup001",
           "usage": "<Buttongroup001\n  options={[\"Все\", \"Активные\", \"Архив\"]}\n  defaultValue=\"Активные\"\n  label=\"Показывать\"\n  name=\"status\"\n/>",
@@ -54,7 +61,11 @@
             "label": "Выбрано",
             "type": "select",
             "default": "Активные",
-            "options": ["Все", "Активные", "Архив"]
+            "options": [
+              "Все",
+              "Активные",
+              "Архив"
+            ]
           },
           {
             "prop": "label",
@@ -126,7 +137,11 @@
             "title": "Segmented Filter",
             "preview": {
               "props": {
-                "options": ["All", "Active", "Archived"],
+                "options": [
+                  "All",
+                  "Active",
+                  "Archived"
+                ],
                 "defaultValue": "Active",
                 "label": "Show"
               }
@@ -134,7 +149,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-001-* variables. It is a server component: there are no hooks and no handlers at all. The choice is held by radios inside a fieldset, so the arrows, Home/End and the \"2 of 3 selected\" announcement come from the browser. The input is stretched over the whole segment and is transparent, while the look is drawn by the label. The borders are collapsed through margin-inline-start:-1px, and the rounded corners are set with logical properties on the first and last segment only. The selected segment is raised to z-index:1 and the focused one to z-index:2, otherwise a neighbour clips the accent border and the focus ring. The legend is hidden with clip-path rather than display:none: otherwise the fieldset loses its accessible name."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "defaultValue",
+          "label",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "auto"
+        }
       }
     },
     {
@@ -142,7 +165,9 @@
       "type": "registry:component",
       "title": "Слитые действия",
       "description": "Группа связанных действий как одна деталь: рамка ровно одна — на контейнере, а разделители внутри рисуются левой границей соседей.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -154,7 +179,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-002-*. Серверный: хуков нет. Приём — единственная рамка на контейнере role=\"group\" и разделители через button + button {border-inline-start}: два соседних border дали бы линию в два пикселя. Скругления детей считаются как calc(radius - 1px), чтобы внутренний угол совпал с внешним. Кнопка с фокусом поднимается z-index:1, обводка ставится внутрь через outline-offset:-2px, иначе рамка контейнера её обрезает. Высота вынесена в --vibeui-buttongroup-002-height и переключается атрибутом data-size.",
       "meta": {
-        "tags": ["buttongroup", "toolbar", "actions", "attached"],
+        "tags": [
+          "buttongroup",
+          "toolbar",
+          "actions",
+          "attached"
+        ],
         "ai": {
           "export": "Buttongroup002",
           "usage": "<Buttongroup002\n  actions={[\"Скопировать\", \"Продублировать\", \"Экспорт\"]}\n  label=\"Действия над документом\"\n  size=\"regular\"\n/>",
@@ -190,7 +220,10 @@
             "label": "Размер",
             "type": "select",
             "default": "regular",
-            "options": ["compact", "regular"]
+            "options": [
+              "compact",
+              "regular"
+            ]
           },
           {
             "prop": "label",
@@ -261,14 +294,26 @@
             "title": "Attached Actions",
             "preview": {
               "props": {
-                "actions": ["Copy", "Duplicate", "Export"],
+                "actions": [
+                  "Copy",
+                  "Duplicate",
+                  "Export"
+                ],
                 "label": "Document actions"
               }
             },
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-002-* variables. It is a server component: there are no hooks. The technique is a single border on the role=\"group\" container and separators through button + button {border-inline-start}: two adjacent borders would give a two-pixel line. The children's radii are computed as calc(radius - 1px) so that the inner corner matches the outer one. The focused button is raised to z-index:1 and the ring is placed inside through outline-offset:-2px, otherwise the container border clips it. The height is moved into --vibeui-buttongroup-002-height and is switched by the data-size attribute."
           }
         },
-        "cardControls": ["size", "background"]
+        "cardControls": [
+          "size",
+          "label",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "auto"
+        }
       }
     },
     {
@@ -276,7 +321,9 @@
       "type": "registry:component",
       "title": "Кнопка сохранения с меню",
       "description": "Split-кнопка: частое действие нажимается сразу, редкие живут в меню на нативном popover — верхний слой, Esc и клик мимо достаются от браузера.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -288,7 +335,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-003-*. Серверный: состояние меню держит браузер через popover и popovertarget, клиентского JS нет. Позиционирование берётся из CSS anchor positioning внутри @supports (anchor-name), с position-try-fallbacks:flip-block; где anchor-positioning не поддержан, popover остаётся карточкой по центру экрана — это рабочий вид, а не поломка. Граница между двумя заливками одного цвета нарисована inset box-shadow, потому что рамка на стыке дала бы тёмную линию. Правило [data-part=\"menu\"]:not(:popover-open){display:none} прячет меню до открытия.",
       "meta": {
-        "tags": ["buttongroup", "split", "popover", "menu"],
+        "tags": [
+          "buttongroup",
+          "split",
+          "popover",
+          "menu"
+        ],
         "ai": {
           "export": "Buttongroup003",
           "usage": "<Buttongroup003\n  action=\"Сохранить\"\n  options={[{ label: \"Сохранить и закрыть\", hint: \"Вернуться к списку\" }]}\n  menuLabel=\"Другие способы сохранить\"\n  menuId=\"save-menu\"\n/>",
@@ -406,7 +458,14 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-003-* variables. It is a server component: the menu state is held by the browser through popover and popovertarget, there is no client JS. The positioning comes from CSS anchor positioning inside @supports (anchor-name), with position-try-fallbacks:flip-block; where anchor positioning is unsupported, the popover stays a card in the middle of the screen — that is a working view, not a breakage. The border between two fills of the same colour is drawn with an inset box-shadow, because a border at the joint would leave a dark line. The [data-part=\"menu\"]:not(:popover-open){display:none} rule hides the menu until it opens."
           }
         },
-        "cardControls": ["accent"]
+        "cardControls": [
+          "action",
+          "menuLabel",
+          "accent"
+        ],
+        "preview": {
+          "width": "auto"
+        }
       }
     },
     {
@@ -414,7 +473,9 @@
       "type": "registry:component",
       "title": "Панель редактора",
       "description": "Панель инструментов с roving tabindex: Tab заходит внутрь один раз, дальше по значкам ходят стрелки, Home и End — как требует паттерн toolbar.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -426,7 +487,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-004-*. Клиентский: useState хранит индекс активной кнопки, useRef держит панель, обработчик onKeyDown разбирает ArrowLeft/ArrowRight с переносом по кругу и Home/End. Активной кнопке ставится tabIndex=0, остальным -1 — это roving tabindex из паттерна toolbar WAI-ARIA. onFocus синхронизирует индекс, если фокус пришёл мышью. Значки — инлайновые SVG с stroke=\"currentColor\", разделитель между третьей и четвёртой кнопкой рисуется отдельным узлом. Подписи включаются пропсом showLabels: тогда aria-label снимается, чтобы имя не задваивалось.",
       "meta": {
-        "tags": ["buttongroup", "toolbar", "keyboard", "icons"],
+        "tags": [
+          "buttongroup",
+          "toolbar",
+          "keyboard",
+          "icons"
+        ],
         "ai": {
           "export": "Buttongroup004",
           "usage": "<Buttongroup004\n  tools={[{ id: \"bold\", label: \"Жирный\" }, { id: \"link\", label: \"Ссылка\" }]}\n  label=\"Форматирование\"\n  showLabels={false}\n/>",
@@ -564,7 +630,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-004-* variables. It is a client component: useState holds the index of the active button, useRef holds the panel, and the onKeyDown handler parses ArrowLeft/ArrowRight with wrap-around and Home/End. The active button gets tabIndex=0 and the rest -1 — that is the roving tabindex from the WAI-ARIA toolbar pattern. onFocus syncs the index when focus arrived by mouse. The icons are inline SVGs with stroke=\"currentColor\", and the separator between the third and the fourth button is drawn by a node of its own. The captions are turned on by the showLabels prop: aria-label is then removed so that the name is not doubled."
           }
         },
-        "cardControls": ["showLabels", "background"]
+        "cardControls": [
+          "showLabels",
+          "label",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "auto"
+        }
       }
     },
     {
@@ -572,7 +646,9 @@
       "type": "registry:component",
       "title": "Переключатель вида",
       "description": "Переключатель вида списка на кнопках-тумблерах: состояние объявлено через aria-pressed, а вид выбирается тем же атрибутом, так что разметка и стиль не расходятся.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -584,7 +660,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-005-*. Клиентский: useState хранит текущий вид, onChange отдаёт его наружу. Здесь сознательно не radio: значение не отправляется формой, оно меняет представление на месте — это набор кнопок-тумблеров с aria-pressed. Стиль нажатой кнопки выбирается селектором button[aria-pressed=\"true\"], поэтому доступное состояние и внешний вид не могут разойтись. Значки — инлайновые SVG на currentColor, у активной кнопки они перекрашиваются в акцент; активность несут ещё и подложка с тенью, а не только цвет. Группа — role=\"toolbar\" с roving tabindex: Tab останавливается на ней один раз, внутри вид переключают стрелками.",
       "meta": {
-        "tags": ["buttongroup", "toggle", "view", "aria-pressed"],
+        "tags": [
+          "buttongroup",
+          "toggle",
+          "view",
+          "aria-pressed"
+        ],
         "ai": {
           "export": "Buttongroup005",
           "usage": "<Buttongroup005\n  views={[{ id: \"list\", label: \"Список\" }, { id: \"grid\", label: \"Сетка\" }]}\n  defaultView=\"grid\"\n  label=\"Вид списка\"\n  onChange={(id) => setView(id)}\n/>",
@@ -620,7 +701,11 @@
             "label": "Вид",
             "type": "select",
             "default": "grid",
-            "options": ["list", "grid", "table"]
+            "options": [
+              "list",
+              "grid",
+              "table"
+            ]
           },
           {
             "prop": "label",
@@ -711,7 +796,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-005-* variables. It is a client component: useState holds the current view and onChange hands it outwards. Radios are deliberately not used here: the value is not submitted by a form, it changes the presentation in place — this is a set of toggle buttons with aria-pressed. The style of a pressed button is picked by the button[aria-pressed=\"true\"] selector, so the accessible state and the look cannot drift apart. The icons are inline SVGs on currentColor, and on the active button they are repainted into the accent; the active state is carried by a surface and a shadow as well, not by colour alone. The group is a role=\"toolbar\" with a roving tabindex: Tab stops on it once, and the view is switched inside with the arrows."
           }
         },
-        "cardControls": ["defaultView", "accent", "background"]
+        "cardControls": [
+          "defaultView",
+          "label",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "auto"
+        }
       }
     },
     {
@@ -719,7 +812,9 @@
       "type": "registry:component",
       "title": "Группа кнопок-иконок",
       "description": "Группа из одних значков, у которой имя есть у каждой кнопки: подпись лежит текстом для скринридера, а видимая подсказка всплывает по наведению и по фокусу.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -731,7 +826,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-006-*. Серверный: хуков нет. Имя кнопки — настоящий текст внутри неё, спрятанный clip-path:inset(50%): его читает скринридер и находит поиск по странице, в отличие от aria-label. Видимая подсказка — отдельный aria-hidden узел, иначе имя прочиталось бы дважды; показывается она и на :hover, и на :focus-visible. Границы схлопнуты через margin-inline-start:-1px, скругления заданы логическими свойствами крайним кнопкам, а форму переключает атрибут data-shape. При фокусе кнопка поднимается z-index:2, иначе сосед срезает обводку.",
       "meta": {
-        "tags": ["buttongroup", "icons", "tooltip", "a11y"],
+        "tags": [
+          "buttongroup",
+          "icons",
+          "tooltip",
+          "a11y"
+        ],
         "ai": {
           "export": "Buttongroup006",
           "usage": "<Buttongroup006\n  actions={[{ id: \"undo\", label: \"Отменить\" }, { id: \"copy\", label: \"Скопировать\" }]}\n  label=\"Быстрые действия\"\n  shape=\"square\"\n/>",
@@ -767,7 +867,10 @@
             "label": "Форма",
             "type": "select",
             "default": "square",
-            "options": ["square", "round"]
+            "options": [
+              "square",
+              "round"
+            ]
           },
           {
             "prop": "label",
@@ -862,7 +965,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-006-* variables. It is a server component: there are no hooks. The button name is real text inside it hidden with clip-path:inset(50%): a screen reader reads it and find-in-page reaches it, unlike aria-label. The visible tooltip is a separate aria-hidden node, otherwise the name would be read twice; it is shown both on :hover and on :focus-visible. The borders are collapsed through margin-inline-start:-1px, the rounded corners are set with logical properties on the edge buttons, and the shape is switched by the data-shape attribute. On focus a button is raised to z-index:2, otherwise a neighbour clips the ring."
           }
         },
-        "cardControls": ["shape", "background"]
+        "cardControls": [
+          "shape",
+          "label",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "auto"
+        }
       }
     },
     {
@@ -870,7 +981,9 @@
       "type": "registry:component",
       "title": "Вертикальные действия",
       "description": "Вертикальная группа для узкой колонки: кнопки во всю ширину, границы схлопнуты по вертикали, подпись слева, подсказка справа.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -882,7 +995,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-007-*. Серверный: хуков нет. Ширина считается от собственной: width:100% с max-width из --vibeui-buttongroup-007-width, значение приходит пропсом width в rem. Границы схлопнуты по вертикали через margin-block-start:-1px, скругления логическими свойствами достаются только первой и последней кнопке. Кнопка с фокусом поднимается z-index:2, потому что соседняя перекрывает её нижнюю границу. Подпись занимает всё свободное место (flex:1 1 auto; min-width:0), подсказка прижата к правому краю и набрана табличными цифрами.",
       "meta": {
-        "tags": ["buttongroup", "vertical", "sidebar", "actions"],
+        "tags": [
+          "buttongroup",
+          "vertical",
+          "sidebar",
+          "actions"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1015,7 +1133,12 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-007-* variables. It is a server component: there are no hooks. The width is derived from the component's own: width:100% with a max-width from --vibeui-buttongroup-007-width, and the value arrives through the width prop in rem. The borders are collapsed vertically through margin-block-start:-1px, and the rounded corners go through logical properties to the first and last button only. The focused button is raised to z-index:2, because the neighbouring one overlaps its bottom border. The caption takes all the free space (flex:1 1 auto; min-width:0), while the hint is pushed to the right edge and set in tabular figures."
           }
         },
-        "cardControls": ["width", "accent", "background"]
+        "cardControls": [
+          "width",
+          "label",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1023,7 +1146,9 @@
       "type": "registry:component",
       "title": "Группа листания",
       "description": "Пагинатор из трёх ячеек: назад, счётчик и вперёд в одной рамке, ширина счётчика зафиксирована, поэтому кнопки не прыгают при переходе через десяток.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1035,7 +1160,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-008-*. Серверный: хуков нет, номер страницы приходит пропсом и зажимается в диапазон 1..total. Корень — nav с aria-label, внутри две кнопки и неинтерактивная ячейка счётчика в той же рамке. Границы схлопнуты через margin-inline-start:-1px, скругления логическими свойствами у первой и последней ячейки, при фокусе кнопка поднимается z-index:2. Ширина счётчика зафиксирована min-width и font-variant-numeric:tabular-nums, поэтому «9 / 12» и «10 / 12» занимают одинаковое место. Дробь помечена aria-hidden, а рядом лежит текст «Страница 3 из 12» под clip-path.",
       "meta": {
-        "tags": ["buttongroup", "pagination", "nav", "stepper"],
+        "tags": [
+          "buttongroup",
+          "pagination",
+          "nav",
+          "stepper"
+        ],
         "ai": {
           "export": "Buttongroup008",
           "usage": "<Buttongroup008 page={3} total={12} label=\"Постраничная навигация\" />",
@@ -1158,7 +1288,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-008-* variables. It is a server component: there are no hooks, and the page number arrives as a prop and is clamped to the range 1..total. The root is a nav with an aria-label, and inside it there are two buttons and a non-interactive counter cell within the same border. The borders are collapsed through margin-inline-start:-1px, the rounded corners go through logical properties to the first and last cell, and on focus a button is raised to z-index:2. The counter width is pinned by min-width and font-variant-numeric:tabular-nums, so \"9 / 12\" and \"10 / 12\" take the same space. The fraction is marked aria-hidden, and next to it lies the text \"Page 3 of 12\" under clip-path."
           }
         },
-        "cardControls": ["page", "total", "background"]
+        "cardControls": [
+          "page",
+          "total",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "auto"
+        }
       }
     },
     {
@@ -1166,7 +1304,9 @@
       "type": "registry:component",
       "title": "Группа с переполнением",
       "description": "Группа действий, которая сама решает, сколько кнопок показать: порог берётся от собственной ширины через container query, лишнее уезжает под «Ещё».",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1178,7 +1318,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-009-*. Серверный: раскрытие держит details/summary, клиентского JS нет. Корень объявлен container-type:inline-size, а вся раскладка лежит на внутреннем [data-part=\"shell\"] — правило внутри @container действует на потомков контейнера, но не на сам контейнер. По умолчанию раскладка узкая: [data-part=\"extra\"] скрыты, «Ещё» показано; @container (min-width: 32rem) переворачивает это. Дублирования в доступном дереве нет: на широкой ширине details скрыт целиком, на узкой скрыты все extra. Лист меню позиционируется абсолютно относительно details.",
       "meta": {
-        "tags": ["buttongroup", "overflow", "container-query", "details"],
+        "tags": [
+          "buttongroup",
+          "overflow",
+          "container-query",
+          "details"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1291,7 +1436,11 @@
             "title": "Overflow Group",
             "preview": {
               "props": {
-                "actions": ["Preview", "Schedule", "Archive"],
+                "actions": [
+                  "Preview",
+                  "Schedule",
+                  "Archive"
+                ],
                 "label": "Draft actions",
                 "moreDescription": "{more}: hidden actions",
                 "primary": "Publish",
@@ -1301,7 +1450,12 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-009-* variables. It is a server component: the disclosure is held by details/summary, there is no client JS. The root is declared container-type:inline-size, while the whole layout lives on the inner [data-part=\"shell\"] — a rule inside @container applies to the container's descendants but not to the container itself. By default the layout is the narrow one: [data-part=\"extra\"] are hidden and \"More\" is shown; @container (min-width: 32rem) reverses that. There is no duplication in the accessibility tree: at the wide width the details is hidden entirely, at the narrow one every extra is hidden. The menu sheet is positioned absolutely relative to the details."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "primary",
+          "moreLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1309,7 +1463,9 @@
       "type": "registry:component",
       "title": "Выбор периода",
       "description": "Выбор периода отчёта, где подложка выбранного переезжает по индексу, а строка под группой сразу называет получившийся диапазон.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1321,7 +1477,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-010-*. Клиентский: useState хранит выбранный период, onChange отдаёт его наружу. Трек — grid из равных колонок (repeat(var(--vibeui-buttongroup-010-count),1fr)), подложка одна на всю группу: её ширина равна доле колонки, а смещение считается как translateX(index * 100%). Равные колонки здесь обязательны — на разной ширине сегментов смещение перестало бы попадать в кнопку. Состояние объявлено через aria-pressed, строка диапазона помечена aria-live=\"polite\": смена вида без слов не сообщает незрячему, что данные уже другие. Трек — role=\"toolbar\" с roving tabindex: Tab заходит в группу один раз, период выбирают стрелками.",
       "meta": {
-        "tags": ["buttongroup", "period", "indicator", "analytics"],
+        "tags": [
+          "buttongroup",
+          "period",
+          "indicator",
+          "analytics"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1361,7 +1522,12 @@
             "label": "Период",
             "type": "select",
             "default": "Неделя",
-            "options": ["День", "Неделя", "Месяц", "Год"]
+            "options": [
+              "День",
+              "Неделя",
+              "Месяц",
+              "Год"
+            ]
           },
           {
             "prop": "label",
@@ -1460,7 +1626,12 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-010-* variables. It is a client component: useState holds the selected period and onChange hands it outwards. The track is a grid of equal columns (repeat(var(--vibeui-buttongroup-010-count),1fr)), and there is a single surface for the whole group: its width equals one column's share and its offset is computed as translateX(index * 100%). Equal columns are mandatory here — with segments of different widths the offset would stop landing on the button. The state is declared through aria-pressed, and the range line is marked aria-live=\"polite\": a view change without words does not tell a blind user that the data is already different. The track is a role=\"toolbar\" with a roving tabindex: Tab enters the group once, and the period is chosen with the arrows."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "defaultPeriod",
+          "label",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1468,7 +1639,9 @@
       "type": "registry:component",
       "title": "Действия над записью",
       "description": "Действия над записью: обычные стоят одной сцепкой, а необратимое вынесено за неё отступом, своей рамкой и предупреждением через aria-describedby.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1480,7 +1653,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-011-*. Серверный: хуков нет. Внутри две зоны: сцепка безопасных действий со схлопнутыми границами (margin-inline-start:-1px, скругления только крайним) и отдельная опасная кнопка, отделённая gap:1.25rem. Разрыв — часть защиты от промаха, а не украшение. Предупреждение о необратимости лежит текстом под clip-path и связано с кнопкой через aria-describedby, поэтому читается вслух вместе с именем; цвет — только дополнительный канал. Значок корзины — инлайновый SVG на currentColor.",
       "meta": {
-        "tags": ["buttongroup", "destructive", "row-actions", "a11y"],
+        "tags": [
+          "buttongroup",
+          "destructive",
+          "row-actions",
+          "a11y"
+        ],
         "ai": {
           "export": "Buttongroup011",
           "usage": "<Buttongroup011\n  actions={[\"Правка\", \"Дублировать\"]}\n  danger=\"Удалить\"\n  warning=\"Действие необратимо: запись и её версии будут стёрты\"\n  label=\"Действия над записью\"\n/>",
@@ -1588,7 +1766,10 @@
             "title": "Record Actions",
             "preview": {
               "props": {
-                "actions": ["Edit", "Duplicate"],
+                "actions": [
+                  "Edit",
+                  "Duplicate"
+                ],
                 "warning": "This cannot be undone: the record and its versions will be erased",
                 "label": "Record actions",
                 "danger": "Delete"
@@ -1597,7 +1778,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-011-* variables. It is a server component: there are no hooks. There are two zones inside: a cluster of safe actions with collapsed borders (margin-inline-start:-1px, rounded corners on the edge ones only) and a separate dangerous button set apart by gap:1.25rem. The gap is part of the protection against a missed tap, not decoration. The warning about irreversibility lies as text under clip-path and is tied to the button through aria-describedby, so it is read aloud together with the name; colour is only an additional channel. The bin glyph is an inline SVG on currentColor."
           }
         },
-        "cardControls": ["background"]
+        "cardControls": [
+          "danger",
+          "label",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "auto"
+        }
       }
     },
     {
@@ -1605,7 +1794,9 @@
       "type": "registry:component",
       "title": "Полоса подвала формы",
       "description": "Нижняя панель формы на телефоне: две кнопки делят ширину поровну через flex:1 1 0, а снизу добавлен отступ на домашнюю полоску.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1617,7 +1808,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-012-*. Серверный: хуков нет. Равные доли держит flex:1 1 0 — именно ноль в основе, иначе длинная подпись раздувает свою долю; min-width:0 разрешает кнопке сжиматься меньше содержимого, а лишний текст обрезается ellipsis. Нижний отступ считается как calc(0.75rem + env(safe-area-inset-bottom,0px)), чтобы главная кнопка не оказалась под жестом системы. Приоритет несут цвет и порядок, а не ширина: главная кнопка не шире второстепенной. Раскладка от собственной ширины: width:100% с max-width:26rem.",
       "meta": {
-        "tags": ["buttongroup", "mobile", "form", "full-width"],
+        "tags": [
+          "buttongroup",
+          "mobile",
+          "form",
+          "full-width"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1737,7 +1933,12 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-012-* variables. It is a server component: there are no hooks. The equal shares are held by flex:1 1 0 — precisely the zero basis, otherwise a long caption inflates its own share; min-width:0 lets a button shrink below its content, and the excess text is cut with an ellipsis. The bottom padding is computed as calc(0.75rem + env(safe-area-inset-bottom,0px)) so that the primary button does not end up under the system gesture. The priority is carried by colour and order rather than by width: the primary button is no wider than the secondary one. The layout is derived from the component's own width: width:100% with max-width:26rem."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "primary",
+          "secondary",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1745,7 +1946,9 @@
       "type": "registry:component",
       "title": "Сегменты с иконкой и подписью",
       "description": "Сегменты со значком над подписью: значок отвечает за узнавание с расстояния, подпись — за точность, и они не делят одну строку.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1757,7 +1960,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-013-*. Серверный: состояние держат radio внутри fieldset, обработчиков нет. Трек — grid с grid-auto-columns:1fr, поэтому «Диаграмма» и «Лист» получают одинаковую колонку; сегмент выложен колонкой (flex-direction:column), значок сверху, подпись снизу. Границы схлопнуты через margin-inline-start:-1px, скругления логическими свойствами достаются только крайним сегментам. Выбранный сегмент поднят z-index:1, сфокусированный — z-index:2, иначе сосед срезает акцентную рамку и обводку. Значки — инлайновые SVG с stroke=\"currentColor\", пути лежат в объекте ICONS и выбираются по id. Legend спрятан clip-path, а не display:none: иначе fieldset теряет доступное имя.",
       "meta": {
-        "tags": ["buttongroup", "segmented", "icons", "radio"],
+        "tags": [
+          "buttongroup",
+          "segmented",
+          "icons",
+          "radio"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1797,7 +2005,11 @@
             "label": "Выбрано",
             "type": "select",
             "default": "grid",
-            "options": ["list", "grid", "chart"]
+            "options": [
+              "list",
+              "grid",
+              "chart"
+            ]
           },
           {
             "prop": "label",
@@ -1889,7 +2101,12 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-013-* variables. It is a server component: the state is held by radios inside a fieldset, there are no handlers. The track is a grid with grid-auto-columns:1fr, so \"Chart\" and \"Sheet\" get the same column; a segment is laid out as a column (flex-direction:column), with the icon on top and the caption below. The borders are collapsed through margin-inline-start:-1px, and the rounded corners go through logical properties to the edge segments only. The selected segment is raised to z-index:1 and the focused one to z-index:2, otherwise a neighbour clips the accent border and the ring. The icons are inline SVGs with stroke=\"currentColor\", their paths live in the ICONS object and are picked by id. The legend is hidden with clip-path rather than display:none: otherwise the fieldset loses its accessible name."
           }
         },
-        "cardControls": ["defaultValue", "accent", "background"]
+        "cardControls": [
+          "defaultValue",
+          "label",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1897,7 +2114,9 @@
       "type": "registry:component",
       "title": "Вкладки только с иконками",
       "description": "Выбор одного варианта голыми значками, где у каждого сегмента всё равно есть настоящее текстовое имя, а подсказка всплывает снизу.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1909,7 +2128,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-014-*. Серверный: хуков нет, выбор держат radio в fieldset. Имя сегмента — настоящий текст под clip-path:inset(50%): его читает скринридер и находит поиск по странице, в отличие от aria-label. Видимая подсказка — отдельный aria-hidden узел, показывается и на :hover, и на :focus-visible, уходит вниз (top:calc(100% + 0.5rem)), потому что группа обычно стоит в шапке и сверху места нет. Трек — flex с внутренним отступом и общей рамкой, сегменты не сцеплены границами, а разделены gap:0.1875rem. Выбранный сегмент заливается акцентом, сфокусированный поднимается z-index:2.",
       "meta": {
-        "tags": ["buttongroup", "icons", "tooltip", "segmented"],
+        "tags": [
+          "buttongroup",
+          "icons",
+          "tooltip",
+          "segmented"
+        ],
         "ai": {
           "export": "Buttongroup014",
           "usage": "<Buttongroup014\n  options={[{ id: \"day\", label: \"Сутки\" }, { id: \"week\", label: \"Неделя\" }]}\n  defaultValue=\"week\"\n  label=\"Масштаб шкалы\"\n  name=\"scale\"\n/>",
@@ -1946,7 +2170,11 @@
             "label": "Выбрано",
             "type": "select",
             "default": "week",
-            "options": ["day", "week", "month"]
+            "options": [
+              "day",
+              "week",
+              "month"
+            ]
           },
           {
             "prop": "label",
@@ -2038,7 +2266,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-014-* variables. It is a server component: there are no hooks, and the choice is held by radios in a fieldset. A segment name is real text under clip-path:inset(50%): a screen reader reads it and find-in-page reaches it, unlike aria-label. The visible tooltip is a separate aria-hidden node, shown both on :hover and on :focus-visible, and it drops downwards (top:calc(100% + 0.5rem)) because the group usually stands in a header where there is no room above. The track is a flex with inner padding and a shared border, and the segments are not chained by borders but separated by gap:0.1875rem. The selected segment is filled with the accent, and the focused one is raised to z-index:2."
           }
         },
-        "cardControls": ["defaultValue", "accent", "background"]
+        "cardControls": [
+          "defaultValue",
+          "label",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "auto"
+        }
       }
     },
     {
@@ -2046,7 +2282,9 @@
       "type": "registry:component",
       "title": "Счётчики на кнопках",
       "description": "Фильтр, который сразу отвечает «сколько там»: счётчик живёт внутри сегмента пилюлей с табличными цифрами и не двигает соседей.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2058,7 +2296,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-015-*. Серверный: хуков нет, выбор держат radio внутри fieldset. Счётчик — отдельный узел [data-part=\"count\"] с min-width:1.5rem и font-variant-numeric:tabular-nums, поэтому обновление 9 → 128 не съезжает раскладку. Рядом с числом лежит спрятанное clip-path слово-единица, иначе сегмент звучит как «Новые 12» без объяснения. Границы схлопнуты через margin-inline-start:-1px, скругления только крайним, выбранный сегмент поднят z-index:1, сфокусированный — z-index:2. У выбранного сегмента пилюля счётчика инвертируется: заливка акцентом, текст светлый.",
       "meta": {
-        "tags": ["buttongroup", "filter", "badge", "counter"],
+        "tags": [
+          "buttongroup",
+          "filter",
+          "badge",
+          "counter"
+        ],
         "ai": {
           "export": "Buttongroup015",
           "usage": "<Buttongroup015\n  options={[{ label: \"Все\", count: 128 }, { label: \"Новые\", count: 12 }]}\n  defaultValue=\"Новые\"\n  unit=\"заявок\"\n  name=\"queue\"\n/>",
@@ -2095,7 +2338,12 @@
             "label": "Выбрано",
             "type": "select",
             "default": "Новые",
-            "options": ["Все", "Новые", "В работе", "Готово"]
+            "options": [
+              "Все",
+              "Новые",
+              "В работе",
+              "Готово"
+            ]
           },
           {
             "prop": "unit",
@@ -2194,7 +2442,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-015-* variables. It is a server component: there are no hooks, and the choice is held by radios inside a fieldset. The counter is a separate [data-part=\"count\"] node with min-width:1.5rem and font-variant-numeric:tabular-nums, so an update from 9 to 128 does not shift the layout. Next to the number lies a unit word hidden with clip-path, otherwise the segment sounds like \"New 12\" with nothing to explain it. The borders are collapsed through margin-inline-start:-1px, the rounded corners go to the edge ones only, the selected segment is raised to z-index:1 and the focused one to z-index:2. On the selected segment the counter pill is inverted: an accent fill and light text."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "defaultValue",
+          "unit",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "auto"
+        }
       }
     },
     {
@@ -2202,7 +2458,9 @@
       "type": "registry:component",
       "title": "Заблокированный сегмент",
       "description": "Группа, где недоступный вариант объясняет себя: замок, полосатая заливка и причина, связанная с input через aria-describedby.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2214,7 +2472,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-016-*. Серверный: хуков нет, выбор держат radio внутри fieldset. Запертый вариант получает настоящий disabled — визуальная «серость» без него оставила бы сегмент кликабельным с клавиатуры. Причина лежит абзацем под группой и связана с недоступным input через aria-describedby, поэтому звучит вслух сразу после имени варианта. Недоступность помечена тремя каналами: бледный текст, значок замка и полосатая заливка на repeating-linear-gradient — одной прозрачности при слабом зрении мало. Границы схлопнуты, скругления только крайним, hover не срабатывает на запертом сегменте благодаря :not(:has(input:disabled)).",
       "meta": {
-        "tags": ["buttongroup", "disabled", "a11y", "explanation"],
+        "tags": [
+          "buttongroup",
+          "disabled",
+          "a11y",
+          "explanation"
+        ],
         "ai": {
           "export": "Buttongroup016",
           "usage": "<Buttongroup016\n  options={[{ label: \"Черновик\" }, { label: \"Опубликовано\", locked: true }]}\n  defaultValue=\"Черновик\"\n  reason=\"Публикацию открывает редактор.\"\n  reasonId=\"status-reason\"\n/>",
@@ -2251,7 +2514,11 @@
             "label": "Выбрано",
             "type": "select",
             "default": "На проверке",
-            "options": ["Черновик", "На проверке", "Опубликовано"]
+            "options": [
+              "Черновик",
+              "На проверке",
+              "Опубликовано"
+            ]
           },
           {
             "prop": "reason",
@@ -2344,7 +2611,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-016-* variables. It is a server component: there are no hooks, and the choice is held by radios inside a fieldset. The locked option gets a real disabled — visual \"greying\" without it would leave the segment clickable from the keyboard. The reason lies as a paragraph under the group and is tied to the unavailable input through aria-describedby, so it is spoken right after the option name. The unavailability is marked through three channels: pale text, a padlock glyph and a striped fill on a repeating-linear-gradient — opacity alone is not enough for low vision. The borders are collapsed, the rounded corners go to the edge ones only, and hover does not fire on a locked segment thanks to :not(:has(input:disabled))."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "defaultValue",
+          "reason",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "auto"
+        }
       }
     },
     {
@@ -2352,7 +2627,9 @@
       "type": "registry:component",
       "title": "Переключатель «да — нет»",
       "description": "Ответ «да / нет» парой сегментов с переезжающей подложкой: трек сам ловит через :has, какой radio отмечен, и клиентский JS не нужен.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2364,7 +2641,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-017-*. Серверный: подложка переезжает без JS — правило [data-part=\"track\"]:has([data-part=\"option\"]:nth-of-type(2) input:checked) сдвигает единственный thumb на 100% и меняет его цвет на «отказ». Пояснение под группой тоже переключается CSS: оба текста лежат в разметке, показан тот, чей radio отмечен. Здесь сознательно не switch: switch честен, когда «выключено» — это отсутствие действия, а в анкете оба ответа равнозначны и должны быть видны целиком. Legend оформлен видимым заголовком с float:left;width:100%;clear:both — без clear следующие flex-дети обтекали бы его.",
       "meta": {
-        "tags": ["buttongroup", "boolean", "css-only", "survey"],
+        "tags": [
+          "buttongroup",
+          "boolean",
+          "css-only",
+          "survey"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2403,7 +2685,10 @@
             "label": "Ответ",
             "type": "select",
             "default": "yes",
-            "options": ["yes", "no"]
+            "options": [
+              "yes",
+              "no"
+            ]
           },
           {
             "prop": "question",
@@ -2484,7 +2769,12 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-017-* variables. It is a server component: the surface moves without JS — the [data-part=\"track\"]:has([data-part=\"option\"]:nth-of-type(2) input:checked) rule shifts the single thumb by 100% and changes its colour to the \"no\" one. The explanation under the group is switched by CSS as well: both texts lie in the markup, and the one whose radio is checked is shown. Radios are deliberately used here instead of a switch: a switch is honest when \"off\" means the absence of an action, whereas in a survey both answers are equal and must be visible in full. The legend is styled as a visible heading with float:left;width:100%;clear:both — without the clear the following flex children would wrap around it."
           }
         },
-        "cardControls": ["defaultValue", "accent", "background"]
+        "cardControls": [
+          "defaultValue",
+          "question",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2492,7 +2782,9 @@
       "type": "registry:component",
       "title": "Переключатель из трёх состояний",
       "description": "Трёхпозиционный переключатель, где середина значит «как в проекте»: собран на паттерне radiogroup, стрелки переносят и фокус, и выбор.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2504,7 +2796,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-018-*. Клиентский: useState хранит выбранное значение, useRef держит трек, чтобы после стрелки перевести фокус на новую кнопку. Реализован паттерн radiogroup из WAI-ARIA: кнопки с role=\"radio\" и aria-checked, tabIndex=0 только у выбранной, стрелки в обе стороны с переносом по кругу — в radiogroup стрелка меняет выбор, а не только фокус, и это отличает её от toolbar. Подложка одна на группу: ширина равна трети трека, смещение считается как translateX(index * 100%), поэтому колонки обязаны быть равными (grid-template-columns:repeat(3,1fr)).",
       "meta": {
-        "tags": ["buttongroup", "tri-state", "radiogroup", "keyboard"],
+        "tags": [
+          "buttongroup",
+          "tri-state",
+          "radiogroup",
+          "keyboard"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2544,7 +2841,11 @@
             "label": "Позиция",
             "type": "select",
             "default": "inherit",
-            "options": ["on", "inherit", "off"]
+            "options": [
+              "on",
+              "inherit",
+              "off"
+            ]
           },
           {
             "prop": "label",
@@ -2637,7 +2938,12 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-018-* variables. It is a client component: useState holds the selected value and useRef holds the track so that focus can be moved to the new button after an arrow key. The WAI-ARIA radiogroup pattern is implemented: buttons with role=\"radio\" and aria-checked, tabIndex=0 only on the selected one, and arrows in both directions with wrap-around — in a radiogroup an arrow changes the selection, not just the focus, and that is what tells it apart from a toolbar. There is a single surface for the whole group: its width equals a third of the track and its offset is computed as translateX(index * 100%), which is why the columns have to be equal (grid-template-columns:repeat(3,1fr))."
           }
         },
-        "cardControls": ["defaultValue", "accent", "background"]
+        "cardControls": [
+          "defaultValue",
+          "label",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2645,7 +2951,9 @@
       "type": "registry:component",
       "title": "Всё и сброс",
       "description": "Множественный фильтр, где «Все» — это состояние пустого выбора, а сброс справа выключен, пока сбрасывать нечего.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2657,7 +2965,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-019-*. Клиентский: useState хранит массив выбранных значений, onChange отдаёт его наружу. Кнопка «Все» не имеет собственного флага — она подсвечена ровно тогда, когда selected.length === 0, и её нажатие очищает набор: так «все» не может одновременно быть выбранным с чем-то ещё. Сброс вынесен за сцепку и получает disabled при пустом выборе, чтобы состояние «изменено / не изменено» читалось без чтения фильтров. Итог объявляется через aria-live=\"polite\". Границы сцепки схлопнуты margin-inline-start:-1px, состояние — на aria-pressed, стиль выбирается тем же атрибутом.",
       "meta": {
-        "tags": ["buttongroup", "filter", "multi-select", "reset"],
+        "tags": [
+          "buttongroup",
+          "filter",
+          "multi-select",
+          "reset"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2770,7 +3083,12 @@
             "title": "All And Reset",
             "preview": {
               "props": {
-                "options": ["Design", "Engineering", "Analytics", "Support"],
+                "options": [
+                  "Design",
+                  "Engineering",
+                  "Analytics",
+                  "Support"
+                ],
                 "label": "Practices",
                 "allSelectedText": "Showing every practice",
                 "selectedText": "Practices selected: {count}",
@@ -2781,7 +3099,12 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-019-* variables. It is a client component: useState holds the array of selected values and onChange hands it outwards. The \"All\" button has no flag of its own — it is highlighted exactly when selected.length === 0, and pressing it clears the set: that way \"all\" cannot be selected together with something else. The reset is placed outside the cluster and gets disabled while the selection is empty, so that the \"changed / unchanged\" state reads without reading the filters. The summary is announced through aria-live=\"polite\". The cluster borders are collapsed with margin-inline-start:-1px, the state rests on aria-pressed, and the style is picked by the same attribute."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "allLabel",
+          "resetLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2789,7 +3112,9 @@
       "type": "registry:component",
       "title": "Выбор валюты",
       "description": "Выбор валюты, где разделители нарисованы просветами сетки: gap:1px поверх заливки цвета границы вместо отрицательных отступов.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2801,7 +3126,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-020-*. Серверный: выбор держат radio внутри fieldset. Приём — трек с background цвета границы и gap:1px: сквозь зазоры видно подложку, и линия между сегментами получается ровно одна, без margin:-1px и без вычитания радиусов. Приём переживает перенос: repeat(auto-fit,minmax(6rem,1fr)) раскладывает валюты в несколько рядов, и сетка сама рисует крест. overflow:hidden на треке обрезает углы сегментов по внешнему радиусу. Выбранный сегмент помечен inset box-shadow, а не border: рамка внутри сетки сместила бы содержимое на пиксель. Название валюты лежит текстом под clip-path — код «RUB» вслух звучит как три буквы.",
       "meta": {
-        "tags": ["buttongroup", "currency", "grid", "dividers"],
+        "tags": [
+          "buttongroup",
+          "currency",
+          "grid",
+          "dividers"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2840,7 +3170,12 @@
             "label": "Валюта",
             "type": "select",
             "default": "RUB",
-            "options": ["RUB", "USD", "EUR", "GBP"]
+            "options": [
+              "RUB",
+              "USD",
+              "EUR",
+              "GBP"
+            ]
           },
           {
             "prop": "label",
@@ -2939,7 +3274,12 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-020-* variables. It is a server component: the choice is held by radios inside a fieldset. The technique is a track with a background in the border colour and gap:1px: the track shows through the gaps, and the line between segments comes out as exactly one, with no margin:-1px and no radius subtraction. The technique survives wrapping: repeat(auto-fit,minmax(6rem,1fr)) lays the currencies out over several rows, and the grid draws the cross by itself. overflow:hidden on the track clips the segment corners to the outer radius. The selected segment is marked with an inset box-shadow rather than a border: a border inside a grid would shift the content by a pixel. The currency name lies as text under clip-path — the code \"RUB\" read aloud is just three letters."
           }
         },
-        "cardControls": ["defaultValue", "accent", "background"]
+        "cardControls": [
+          "defaultValue",
+          "label",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2947,7 +3287,9 @@
       "type": "registry:component",
       "title": "Строки языков",
       "description": "Выбор языка автонимами: у каждой строки свой lang и, где нужно, dir=\"rtl\", иначе арабский приедет чужим шрифтом и наизнанку.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2959,7 +3301,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-021-*. Серверный: выбор держат radio внутри fieldset. Каждая строка несёт атрибут lang, а для письма справа налево — dir=\"rtl\": без них браузер подставит шрифт и направление текущей страницы. Список вертикальный, потому что автонимы имеют разную длину и в равные колонки не ложатся; границы схлопнуты по вертикали через margin-block-start:-1px, скругления логическими свойствами достаются первой и последней строке. Отметка выбора — галочка на opacity, а не только заливка: язык выбирают в том числе те, кто не читает текущий язык интерфейса. Строка с фокусом поднимается z-index:2.",
       "meta": {
-        "tags": ["buttongroup", "language", "i18n", "vertical"],
+        "tags": [
+          "buttongroup",
+          "language",
+          "i18n",
+          "vertical"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2998,7 +3345,12 @@
             "label": "Язык",
             "type": "select",
             "default": "ru",
-            "options": ["ru", "en", "de", "ar"]
+            "options": [
+              "ru",
+              "en",
+              "de",
+              "ar"
+            ]
           },
           {
             "prop": "label",
@@ -3098,7 +3450,12 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-021-* variables. It is a server component: the choice is held by radios inside a fieldset. Every row carries a lang attribute, and for right-to-left writing a dir=\"rtl\": without them the browser substitutes the font and the direction of the current page. The list is vertical because autonyms differ in length and do not fit into equal columns; the borders are collapsed vertically through margin-block-start:-1px, and the rounded corners go through logical properties to the first and last row. The selection mark is a tick on opacity rather than a fill alone: a language is also chosen by people who cannot read the current interface language. The focused row is raised to z-index:2."
           }
         },
-        "cardControls": ["defaultValue", "accent", "background"]
+        "cardControls": [
+          "defaultValue",
+          "label",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -3106,7 +3463,9 @@
       "type": "registry:component",
       "title": "Ступени масштаба",
       "description": "Регулятор масштаба «минус — значение — плюс», где шаги идут по привычным числам, а средняя ячейка возвращает сто процентов.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3118,7 +3477,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-022-*. Клиентский: useState хранит текущее значение, шаг двигает индекс по массиву steps. Масштаб идёт не арифметическим шагом, а по списку привычных значений — равномерный шаг в пять процентов заставил бы щёлкать десяток раз. Средняя ячейка — кнопка сброса к defaultValue, у неё min-width:4rem и font-variant-numeric:tabular-nums, поэтому «75 %» и «100 %» занимают одно место. Рамка одна — на контейнере, разделители рисует button + button {border-inline-start}. Крайние значения гасят кнопку через disabled, обводка фокуса уводится внутрь outline-offset:-2px, иначе её срежет рамка контейнера.",
       "meta": {
-        "tags": ["buttongroup", "stepper", "zoom", "toolbar"],
+        "tags": [
+          "buttongroup",
+          "stepper",
+          "zoom",
+          "toolbar"
+        ],
         "ai": {
           "export": "Buttongroup022",
           "usage": "<Buttongroup022\n  steps={[50, 75, 100, 150, 200]}\n  defaultValue={100}\n  label=\"Масштаб\"\n  onChange={(zoom) => setZoom(zoom)}\n/>",
@@ -3237,7 +3601,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-022-* variables. It is a client component: useState holds the current value and a step moves the index along the steps array. The scale runs not by an arithmetic step but along a list of familiar values — an even step of five percent would take a dozen clicks. The middle cell is a reset button back to defaultValue; it has min-width:4rem and font-variant-numeric:tabular-nums, so \"75 %\" and \"100 %\" take the same space. There is a single border, on the container, and the separators are drawn by button + button {border-inline-start}. The ends of the range grey a button out through disabled, and the focus ring is pulled inside with outline-offset:-2px, otherwise the container border would clip it."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "defaultValue",
+          "label",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "auto"
+        }
       }
     },
     {
@@ -3245,7 +3617,9 @@
       "type": "registry:component",
       "title": "Выравнивание текста",
       "description": "Выравнивание текста, помеченное подчёркивающей полосой вместо заливки: полоса растёт из центра и не спорит с текстом под панелью.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3257,7 +3631,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-023-*. Серверный: выбор держат radio внутри fieldset. Выбранный сегмент помечен псевдоэлементом ::after — полосой на нижней границе панели, которая появляется через transform:scaleX(0) → scaleX(1) с transform-origin:center, поэтому переключение читается как движение, а не как вспышка. Заливки у активного сегмента нет сознательно: панель стоит над текстом, и цветной прямоугольник спорил бы с ним за внимание. Значки нарисованы «строками текста»: короткая и длинная линии прижаты к нужному краю. Имена вариантов лежат настоящим текстом под clip-path, а не в aria-label — их находит поиск по странице.",
       "meta": {
-        "tags": ["buttongroup", "editor", "align", "underline"],
+        "tags": [
+          "buttongroup",
+          "editor",
+          "align",
+          "underline"
+        ],
         "ai": {
           "export": "Buttongroup023",
           "usage": "<Buttongroup023\n  defaultValue=\"start\"\n  label=\"Выравнивание абзаца\"\n  name=\"align\"\n/>",
@@ -3294,7 +3673,12 @@
             "label": "Выравнивание",
             "type": "select",
             "default": "start",
-            "options": ["start", "center", "end", "justify"]
+            "options": [
+              "start",
+              "center",
+              "end",
+              "justify"
+            ]
           },
           {
             "prop": "label",
@@ -3378,7 +3762,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-023-* variables. It is a server component: the choice is held by radios inside a fieldset. The selected segment is marked with an ::after pseudo-element — a bar on the bottom border of the panel that appears through transform:scaleX(0) → scaleX(1) with transform-origin:center, so the switch reads as movement rather than as a flash. The active segment deliberately has no fill: the panel stands above the text, and a coloured rectangle would compete with it for attention. The icons are drawn as \"lines of text\": a short and a long line pushed to the required edge. The option names lie as real text under clip-path rather than in an aria-label — find-in-page reaches them."
           }
         },
-        "cardControls": ["defaultValue", "accent", "background"]
+        "cardControls": [
+          "defaultValue",
+          "label",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "auto"
+        }
       }
     },
     {
@@ -3386,7 +3778,9 @@
       "type": "registry:component",
       "title": "Начертания текста",
       "description": "Начертания текста множественным выбором на checkbox: буква нарисована тем начертанием, которое включает, и служит собственным образцом.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3398,7 +3792,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-024-*. Серверный: внутри checkbox, а не radio — начертания сочетаются, браузер сам объявит «флажок, установлен», и снять выбор можно повторным нажатием. Каждая буква получает data-glyph и рисуется своим начертанием: Ж полужирная, К курсивная, П подчёркнутая, З зачёркнутая — образец и есть подпись. Настоящее имя лежит рядом под clip-path, потому что одна буква ничего не скажет скринридеру. Границы схлопнуты через margin-inline-start:-1px, скругления только крайним, включённый тумблер заливается тёмным, сфокусированный поднимается z-index:2.",
       "meta": {
-        "tags": ["buttongroup", "editor", "checkbox", "typography"],
+        "tags": [
+          "buttongroup",
+          "editor",
+          "checkbox",
+          "typography"
+        ],
         "ai": {
           "export": "Buttongroup024",
           "usage": "<Buttongroup024\n  styles={[{ id: \"bold\", glyph: \"Ж\", label: \"Полужирный\" }]}\n  defaultValue={[\"bold\"]}\n  label=\"Начертание\"\n  name=\"style\"\n/>",
@@ -3534,7 +3933,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-024-* variables. It is a server component: there are checkboxes inside rather than radios — the styles combine, the browser itself announces \"checkbox, checked\", and a repeated press clears the selection. Every letter gets a data-glyph and is drawn in its own style: B is bold, I italic, U underlined, S struck through — the sample is the caption. The real name lies next to it under clip-path, because a single letter tells a screen reader nothing. The borders are collapsed through margin-inline-start:-1px, the rounded corners go to the edge ones only, an enabled toggle is filled dark, and the focused one is raised to z-index:2."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "name",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "auto"
+        }
       }
     },
     {
@@ -3542,7 +3949,9 @@
       "type": "registry:component",
       "title": "Масштаб карты",
       "description": "Плавающая колонка управления картой: зум со шкалой уровня и геолокация разнесены зазором, а не линией, чтобы палец не промахивался.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3554,7 +3963,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-025-*. Серверный: хуков нет, уровень приходит пропсом и зажимается в диапазон minLevel..maxLevel. Группа лежит поверх подложки, поэтому несёт собственную светлую заливку и двойную тень: без них значки растворяются в любом снимке карты. Внутри две сцепки — зум и «моё положение» — разделены gap:0.5rem: разный смысл нельзя ставить вплотную. Уровень показан вертикальной шкалой делений между «плюсом» и «минусом»; она сверстана flex-direction:column-reverse, чтобы первый тик рисовался снизу. Текст «Уровень приближения N из M» лежит под clip-path — шкала для скринридера не существует.",
       "meta": {
-        "tags": ["buttongroup", "map", "overlay", "vertical"],
+        "tags": [
+          "buttongroup",
+          "map",
+          "overlay",
+          "vertical"
+        ],
         "preview": {
           "width": "full"
         },
@@ -3668,7 +4082,11 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-025-* variables. It is a server component: there are no hooks, and the level arrives as a prop and is clamped to the range minLevel..maxLevel. The group lies over a backdrop, so it carries a light fill and a double shadow of its own: without them the glyphs dissolve into any map image. There are two clusters inside — the zoom and \"my location\" — separated by gap:0.5rem: different meanings must not be pressed together. The level is shown by a vertical scale of ticks between the \"plus\" and the \"minus\"; it is laid out with flex-direction:column-reverse so that the first tick is drawn at the bottom. The text \"Zoom level N of M\" lies under clip-path — a scale does not exist for a screen reader."
           }
         },
-        "cardControls": ["level", "accent"]
+        "cardControls": [
+          "level",
+          "accent",
+          "label"
+        ]
       }
     },
     {
@@ -3676,7 +4094,9 @@
       "type": "registry:component",
       "title": "Скорость воспроизведения",
       "description": "Скорость воспроизведения, где выбранный сегмент раздвигается и поясняет себя словом, а остальные ужимаются до множителя.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3688,7 +4108,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-026-*. Серверный: выбор держат radio внутри fieldset. Приём — анимация flex-grow, а не width: у выбранного сегмента доля растёт до 2.4, сумма долей всегда равна треку, поэтому группа не дрожит и не выезжает за рамку. Пояснение скрыто нулевой max-width с overflow:hidden, а не display:none — так его можно плавно раскрыть. Значения набраны табличными цифрами, все сегменты имеют flex:1 1 0 и min-width:0, иначе «1,5×» забрал бы себе больше «1×». Правило prefers-reduced-motion гасит и переезд, и раскрытие.",
       "meta": {
-        "tags": ["buttongroup", "player", "speed", "elastic"],
+        "tags": [
+          "buttongroup",
+          "player",
+          "speed",
+          "elastic"
+        ],
         "preview": {
           "width": "full"
         },
@@ -3727,7 +4152,12 @@
             "label": "Скорость",
             "type": "select",
             "default": "1×",
-            "options": ["0,5×", "1×", "1,5×", "2×"]
+            "options": [
+              "0,5×",
+              "1×",
+              "1,5×",
+              "2×"
+            ]
           },
           {
             "prop": "accent",
@@ -3823,7 +4253,12 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-026-* variables. It is a server component: the choice is held by radios inside a fieldset. The technique is animating flex-grow rather than width: the selected segment's share grows to 2.4, and the shares always add up to the track, so the group does not jitter and does not run outside its border. The caption is hidden by a zero max-width with overflow:hidden rather than display:none — that is what allows it to be revealed smoothly. The values are set in tabular figures, every segment has flex:1 1 0 and min-width:0, otherwise \"1.5×\" would claim more than \"1×\". The prefers-reduced-motion rule kills both the slide and the reveal."
           }
         },
-        "cardControls": ["defaultValue", "accent", "background"]
+        "cardControls": [
+          "defaultValue",
+          "accent",
+          "background",
+          "label"
+        ]
       }
     },
     {
@@ -3831,7 +4266,9 @@
       "type": "registry:component",
       "title": "Плотность таблицы",
       "description": "Плотность таблицы с живым образцом: выбранный radio меняет переменную высоты строки на корне, и три строки под группой перестраиваются без JS.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3843,7 +4280,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-027-*. Серверный: выбор держат radio внутри fieldset. Приём — переменная --vibeui-buttongroup-027-row объявлена в :where() с нулевой специфичностью, а правила вида [data-vibeui-block]:has([data-part=\"segment\"]:nth-of-type(2) input:checked) переопределяют её на корне; образец строк читает переменную и перестраивается сам. Значок сегмента — те же три полосы с тем же просветом, что и в образце: подпись, значок и результат говорят об одном. Образец помечен aria-hidden, потому что для скринридера он ничего не добавляет к названию плотности.",
       "meta": {
-        "tags": ["buttongroup", "density", "table", "css-only"],
+        "tags": [
+          "buttongroup",
+          "density",
+          "table",
+          "css-only"
+        ],
         "preview": {
           "width": "full"
         },
@@ -3883,7 +4325,11 @@
             "label": "Плотность",
             "type": "select",
             "default": "regular",
-            "options": ["compact", "regular", "roomy"]
+            "options": [
+              "compact",
+              "regular",
+              "roomy"
+            ]
           },
           {
             "prop": "accent",
@@ -3978,7 +4424,12 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-027-* variables. It is a server component: the choice is held by radios inside a fieldset. The technique is that the --vibeui-buttongroup-027-row variable is declared inside :where() at zero specificity, while rules of the form [data-vibeui-block]:has([data-part=\"segment\"]:nth-of-type(2) input:checked) override it on the root; the row sample reads the variable and rebuilds itself. The segment glyph is the same three bars with the same spacing as in the sample: the caption, the glyph and the result all speak about one thing. The sample is marked aria-hidden, because for a screen reader it adds nothing to the density name."
           }
         },
-        "cardControls": ["defaultValue", "accent", "background"]
+        "cardControls": [
+          "defaultValue",
+          "accent",
+          "background",
+          "regularLabel"
+        ]
       }
     },
     {
@@ -3986,7 +4437,9 @@
       "type": "registry:component",
       "title": "Направление сортировки",
       "description": "Направление сортировки, где стрелка не подменяется другим значком, а поворачивается на 180°: та же фигура наоборот читается точнее двух картинок.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3998,7 +4451,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-028-*. Серверный: выбор держат radio внутри fieldset, поворот описан CSS. Стрелка обёрнута в [data-part=\"arrow\"] и получает rotate:180deg на сегменте с data-dir=\"desc\" — анимация трогает обёртку, а не раскладку. Название поля стоит первой неинтерактивной ячейкой той же рамки: без него «по возрастанию» повисает в воздухе. Разделители внутри рисует [data-part=\"segment\"] + [data-part=\"segment\"] {border-inline-start}, рамка одна — на треке, а углы обрезает overflow:hidden. Строка-подсказка показывает пример порядка и переключается правилами :has, оба текста лежат в разметке.",
       "meta": {
-        "tags": ["buttongroup", "sort", "rotate", "table"],
+        "tags": [
+          "buttongroup",
+          "sort",
+          "rotate",
+          "table"
+        ],
         "ai": {
           "export": "Buttongroup028",
           "usage": "<Buttongroup028\n  field=\"Дата\"\n  defaultValue=\"desc\"\n  ascHint=\"Сначала старые\"\n  descHint=\"Сначала новые\"\n  name=\"order\"\n/>",
@@ -4035,7 +4493,10 @@
             "label": "Направление",
             "type": "select",
             "default": "desc",
-            "options": ["asc", "desc"]
+            "options": [
+              "asc",
+              "desc"
+            ]
           },
           {
             "prop": "accent",
@@ -4118,7 +4579,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-028-* variables. It is a server component: the choice is held by radios inside a fieldset, and the rotation is described in CSS. The arrow is wrapped in [data-part=\"arrow\"] and gets rotate:180deg on the segment with data-dir=\"desc\" — the animation touches the wrapper, not the layout. The field name stands as the first non-interactive cell of the same border: without it \"ascending\" hangs in the air. The inner separators are drawn by [data-part=\"segment\"] + [data-part=\"segment\"] {border-inline-start}, there is a single border on the track, and the corners are clipped by overflow:hidden. The hint line shows an example of the order and is switched by :has rules, with both texts lying in the markup."
           }
         },
-        "cardControls": ["defaultValue", "accent", "background"]
+        "cardControls": [
+          "defaultValue",
+          "accent",
+          "background",
+          "field"
+        ],
+        "preview": {
+          "width": "auto"
+        }
       }
     },
     {
@@ -4126,7 +4595,9 @@
       "type": "registry:component",
       "title": "Образцы темы",
       "description": "Выбор темы образцами интерфейса вместо солнца и луны: «системная» нарисована диагональным разрезом clip-path — половина светлая, половина тёмная.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4138,7 +4609,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-029-*. Серверный: выбор держат radio внутри fieldset. Каждый сегмент несёт миниатюру интерфейса: рамка, три полоски «текста» на абсолютных позициях и заливка. Тёмный образец меняет и фон, и цвет полосок; «системная» получает ::after с clip-path:polygon(100% 0,100% 100%,0 100%) — диагональ объясняет «как в системе» без слов. Образцы держат собственные цвета, не зависящие от темы страницы: иначе светлая миниатюра исчезла бы на светлом фоне. Сегменты не сцеплены, они стоят карточками в grid с gap; выбранный получает рамку и box-shadow в тот же цвет, чтобы линия не выглядела тоньше соседних.",
       "meta": {
-        "tags": ["buttongroup", "theme", "swatch", "settings"],
+        "tags": [
+          "buttongroup",
+          "theme",
+          "swatch",
+          "settings"
+        ],
         "preview": {
           "width": "full"
         },
@@ -4177,7 +4653,11 @@
             "label": "Тема",
             "type": "select",
             "default": "system",
-            "options": ["light", "dark", "system"]
+            "options": [
+              "light",
+              "dark",
+              "system"
+            ]
           },
           {
             "prop": "accent",
@@ -4257,7 +4737,12 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-029-* variables. It is a server component: the choice is held by radios inside a fieldset. Every segment carries an interface thumbnail: a frame, three bars of \"text\" at absolute positions and a fill. The dark swatch changes both the background and the bar colour; the \"system\" one gets an ::after with clip-path:polygon(100% 0,100% 100%,0 100%) — the diagonal explains \"same as the system\" without words. The swatches keep their own colours independent of the page theme: otherwise the light thumbnail would disappear on a light background. The segments are not chained together, they stand as cards in a grid with a gap; the selected one gets a border and a box-shadow in the same colour so that the line does not look thinner than its neighbours."
           }
         },
-        "cardControls": ["defaultValue", "accent", "background"]
+        "cardControls": [
+          "defaultValue",
+          "accent",
+          "background",
+          "label"
+        ]
       }
     },
     {
@@ -4265,7 +4750,9 @@
       "type": "registry:component",
       "title": "Шаг графика",
       "description": "Шаг графика ссылками, а не кнопками: работает средняя кнопка мыши, «открыть в новой вкладке» и кнопка «назад», а выбор переживает перезагрузку.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4277,7 +4764,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-030-*. Серверный: состояние живёт в адресе страницы, а не в React. Группа собрана из li со ссылками внутри nav с aria-label; текущий шаг помечен aria-current=\"page\", и стиль выбирается тем же атрибутом, поэтому подсветка не может разойтись с объявленным состоянием. Текущая ссылка остаётся ссылкой, а не превращается в span: иначе фокус на ней теряется при возврате из истории. Рамка одна — на списке, разделители рисует li + li {border-inline-start}, углы обрезает overflow:hidden. Под названием шага стоит число точек, набранное табличными цифрами.",
       "meta": {
-        "tags": ["buttongroup", "links", "chart", "aria-current"],
+        "tags": [
+          "buttongroup",
+          "links",
+          "chart",
+          "aria-current"
+        ],
         "ai": {
           "export": "Buttongroup030",
           "usage": "<Buttongroup030\n  steps={[{ label: \"День\", href: \"?step=day\", points: \"24 точки\" }]}\n  current=\"Неделя\"\n  label=\"Шаг графика\"\n/>",
@@ -4313,7 +4805,11 @@
             "label": "Текущий шаг",
             "type": "select",
             "default": "Неделя",
-            "options": ["День", "Неделя", "Месяц"]
+            "options": [
+              "День",
+              "Неделя",
+              "Месяц"
+            ]
           },
           {
             "prop": "accent",
@@ -4409,7 +4905,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-030-* variables. It is a server component: the state lives in the page address rather than in React. The group is assembled from li elements with links inside a nav with an aria-label; the current step is marked aria-current=\"page\", and the style is picked by the same attribute, so the highlight cannot drift from the declared state. The current link stays a link instead of turning into a span: otherwise focus on it is lost when coming back from history. There is a single border, on the list, the separators are drawn by li + li {border-inline-start}, and the corners are clipped by overflow:hidden. Under the step name stands the number of points, set in tabular figures."
           }
         },
-        "cardControls": ["current", "background"]
+        "cardControls": [
+          "current",
+          "accent",
+          "background",
+          "label"
+        ],
+        "preview": {
+          "width": "auto"
+        }
       }
     },
     {
@@ -4417,7 +4921,9 @@
       "type": "registry:component",
       "title": "Фильтр по точкам состояния",
       "description": "Фильтр статусов, где метка несёт два признака сразу: цвет и форму — кружок, кольцо и квадрат различаются и в чёрно-белой печати.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4429,7 +4935,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-031-*. Серверный: выбор множественный, внутри checkbox — статусы складываются, а не заменяют друг друга. Форма метки задаётся атрибутом data-shape: dot — круг с заливкой, ring — круг на inset box-shadow, square — скруглённый квадрат. Цвет приходит данными и подставляется инлайновой переменной --vibeui-buttongroup-031-mark: это тот случай, когда значение нельзя выразить классом. Границы сцепки схлопнуты через margin-inline-start:-1px, скругления только крайним, выбранный поднят z-index:1, сфокусированный — z-index:2.",
       "meta": {
-        "tags": ["buttongroup", "status", "filter", "a11y"],
+        "tags": [
+          "buttongroup",
+          "status",
+          "filter",
+          "a11y"
+        ],
         "ai": {
           "export": "Buttongroup031",
           "usage": "<Buttongroup031\n  statuses={[{ id: \"new\", label: \"Новые\", color: \"oklch(0.6 0.17 250)\", shape: \"dot\" }]}\n  defaultValue={[\"new\"]}\n  label=\"Статусы задач\"\n  name=\"status\"\n/>",
@@ -4563,7 +5074,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-031-* variables. It is a server component: the choice is multiple and there are checkboxes inside — the statuses add up rather than replace one another. The marker shape is set by the data-shape attribute: dot is a filled circle, ring is a circle on an inset box-shadow, square is a rounded square. The colour arrives in the data and is passed in through the inline --vibeui-buttongroup-031-mark variable: this is the case where a value cannot be expressed by a class. The cluster borders are collapsed through margin-inline-start:-1px, the rounded corners go to the edge ones only, the selected segment is raised to z-index:1 and the focused one to z-index:2."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "accent",
+          "background",
+          "label",
+          "name"
+        ],
+        "preview": {
+          "width": "auto"
+        }
       }
     },
     {
@@ -4571,7 +5090,9 @@
       "type": "registry:component",
       "title": "Занятый сегмент",
       "description": "Сцепка действий, где одна кнопка занята работой: подпись гаснет, кольцо ложится в ту же ячейку grid, и ширина группы не меняется.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4583,7 +5104,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-032-*. Серверный: занятость приходит пропсом busy, хуков нет. Кнопка выложена display:grid, подпись и кольцо занимают одну и ту же ячейку (grid-area:1 / 1), поэтому подмена текста на «Сохраняю…» не растягивает группу — меняется только прозрачность. Занятая кнопка получает aria-busy и disabled: disabled убирает повторное нажатие, aria-busy объясняет, что кнопка не сломана. Живая область role=\"status\" сообщает о работе словами — крутящееся кольцо незрячему не видно. Анимация вращения описана @keyframes и гасится правилом prefers-reduced-motion.",
       "meta": {
-        "tags": ["buttongroup", "loading", "aria-busy", "actions"],
+        "tags": [
+          "buttongroup",
+          "loading",
+          "aria-busy",
+          "actions"
+        ],
         "ai": {
           "export": "Buttongroup032",
           "usage": "<Buttongroup032\n  actions={[\"Сохранить\", \"Проверить\", \"Опубликовать\"]}\n  busy=\"Проверить\"\n  busyLabel=\"Идёт проверка\"\n  label=\"Действия над документом\"\n/>",
@@ -4619,7 +5145,11 @@
             "label": "Занятое действие",
             "type": "select",
             "default": "Проверить",
-            "options": ["Сохранить", "Проверить", "Опубликовать"]
+            "options": [
+              "Сохранить",
+              "Проверить",
+              "Опубликовать"
+            ]
           },
           {
             "prop": "accent",
@@ -4691,7 +5221,11 @@
             "title": "Busy Segment",
             "preview": {
               "props": {
-                "actions": ["Save", "Validate", "Publish"],
+                "actions": [
+                  "Save",
+                  "Validate",
+                  "Publish"
+                ],
                 "busy": "Validate",
                 "label": "Document actions",
                 "busyLabel": "Validation in progress, this takes a few seconds"
@@ -4700,7 +5234,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-032-* variables. It is a server component: the busy state arrives through the busy prop, there are no hooks. The button is laid out with display:grid, and the caption and the ring occupy the same cell (grid-area:1 / 1), so swapping the text for \"Saving…\" does not stretch the group — only the opacity changes. The busy button gets aria-busy and disabled: disabled removes the repeated press, aria-busy explains that the button is not broken. A role=\"status\" live region reports the work in words — a spinning ring is invisible to a blind user. The rotation animation is described by @keyframes and is killed by the prefers-reduced-motion rule."
           }
         },
-        "cardControls": ["busy", "accent", "background"]
+        "cardControls": [
+          "busy",
+          "accent",
+          "background",
+          "busyLabel"
+        ],
+        "preview": {
+          "width": "auto"
+        }
       }
     },
     {
@@ -4708,7 +5250,9 @@
       "type": "registry:component",
       "title": "Обязательный выбор",
       "description": "Обязательный выбор, который сам показывает ошибку: пока ни один вариант не отмечен, корень попадает под :not(:has(input:checked)) и группа краснеет.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4720,7 +5264,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-033-*. Серверный: ни один radio не отмечен заранее — иначе форма отправит значение, которого пользователь не выбирал. Состояние ошибки описано одним селектором [data-vibeui-block]:not(:has(input:checked)): он краснит рамки сегментов и раскрывает строку ошибки, и всё это без обработчиков. Ошибка связана с fieldset через aria-describedby и продублирована значком: цвет один её не сообщает. Legend видимый, с float:left;width:100%;clear:both — без clear следующие flex-дети обтекали бы его; звёздочка помечена aria-hidden, обязательность несут атрибуты required у input.",
       "meta": {
-        "tags": ["buttongroup", "validation", "required", "css-only"],
+        "tags": [
+          "buttongroup",
+          "validation",
+          "required",
+          "css-only"
+        ],
         "preview": {
           "width": "full"
         },
@@ -4831,7 +5380,11 @@
             "title": "Required Choice",
             "preview": {
               "props": {
-                "options": ["Cash", "Card", "Invoice"],
+                "options": [
+                  "Cash",
+                  "Card",
+                  "Invoice"
+                ],
                 "question": "Payment method",
                 "error": "Choose a payment method — the order cannot be placed without one"
               }
@@ -4839,7 +5392,12 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-033-* variables. It is a server component: no radio is checked in advance — otherwise the form would submit a value the user never chose. The error state is described by a single [data-vibeui-block]:not(:has(input:checked)) selector: it reddens the segment borders and reveals the error line, all without handlers. The error is tied to the fieldset through aria-describedby and duplicated by an icon: colour alone does not communicate it. The legend is visible, with float:left;width:100%;clear:both — without the clear the following flex children would wrap around it; the asterisk is marked aria-hidden, and the requirement is carried by the required attributes on the inputs."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "accent",
+          "background",
+          "question",
+          "error"
+        ]
       }
     },
     {
@@ -4847,7 +5405,9 @@
       "type": "registry:component",
       "title": "Группа в шапке карточки",
       "description": "Группа действий в шапке карточки, которая складывается по ширине самой карточки: порог берётся из container query, а не из ширины окна.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4859,7 +5419,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-034-*. Серверный: хуков нет. Корень объявлен container-type:inline-size, а раскладка лежит на внутреннем [data-part=\"shell\"] — правило внутри @container действует на потомков контейнера, но не на сам контейнер, и это ловушка, а не деталь. По умолчанию раскладка узкая: шапка в столбец, кнопки во всю ширину; @container (min-width: 30rem) переворачивает её в строку. Кнопки сцеплены margin-inline-start:-1px, скругления только крайним, главная выделена заливкой и стоит последней. Карточка несёт собственную светлую подложку, поэтому читается и на тёмном фоне витрины.",
       "meta": {
-        "tags": ["buttongroup", "card", "container-query", "header"],
+        "tags": [
+          "buttongroup",
+          "card",
+          "container-query",
+          "header"
+        ],
         "preview": {
           "width": "full"
         },
@@ -4971,7 +5536,10 @@
             "preview": {
               "props": {
                 "subtitle": "Updated 12 minutes ago",
-                "actions": ["Export", "Configure"],
+                "actions": [
+                  "Export",
+                  "Configure"
+                ],
                 "label": "Report actions",
                 "body": "128 orders this week for 1,240,000 ₽. The average order value is up 4% on last week.",
                 "title": "Sales report",
@@ -4981,7 +5549,12 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-034-* variables. It is a server component: there are no hooks. The root is declared container-type:inline-size, while the layout lives on the inner [data-part=\"shell\"] — a rule inside @container applies to the container's descendants but not to the container itself, and that is a trap rather than a detail. By default the layout is the narrow one: the header in a column, the buttons at full width; @container (min-width: 30rem) turns it into a row. The buttons are chained with margin-inline-start:-1px, the rounded corners go to the edge ones only, and the primary one is set apart by a fill and stands last. The card carries a light surface of its own, so it reads on a dark showcase background too."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "accent",
+          "background",
+          "title",
+          "primary"
+        ]
       }
     },
     {
@@ -4989,7 +5562,9 @@
       "type": "registry:component",
       "title": "Раскрывающиеся дополнения",
       "description": "Сцепка, которая раскрывает редкие действия вправо: details выложен flex-строкой, поэтому summary остаётся ячейкой группы, а не заголовком блока.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -5001,7 +5576,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-035-*. Серверный: раскрытие держит details/summary, клиентского JS нет — состояние, клавиатура и объявление «свёрнуто/развёрнуто» приходят от браузера. Приём — display:flex на самом details: тогда summary встаёт ячейкой сцепки, а раскрытые кнопки выстраиваются справа от него в общий ряд, а не блоком под ним. Маркер списка убран через list-style:none, ::marker и ::-webkit-details-marker. Пока details закрыт, скругление правого края отдаётся summary, при открытии — последней дополнительной кнопке. Стрелка поворачивается по [open].",
       "meta": {
-        "tags": ["buttongroup", "details", "progressive", "toolbar"],
+        "tags": [
+          "buttongroup",
+          "details",
+          "progressive",
+          "toolbar"
+        ],
         "ai": {
           "export": "Buttongroup035",
           "usage": "<Buttongroup035\n  actions={[\"Ответить\", \"Переслать\"]}\n  extra={[\"В архив\", \"Спам\"]}\n  moreLabel=\"Ещё\"\n  label=\"Действия над письмом\"\n/>",
@@ -5109,8 +5689,15 @@
             "title": "Expanding Extras",
             "preview": {
               "props": {
-                "actions": ["Reply", "Forward"],
-                "extra": ["Archive", "Spam", "Remind me"],
+                "actions": [
+                  "Reply",
+                  "Forward"
+                ],
+                "extra": [
+                  "Archive",
+                  "Spam",
+                  "Remind me"
+                ],
                 "moreLabel": "More",
                 "label": "Message actions"
               }
@@ -5118,7 +5705,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-035-* variables. It is a server component: the disclosure is held by details/summary, there is no client JS — the state, the keyboard and the \"collapsed/expanded\" announcement come from the browser. The technique is display:flex on the details itself: the summary then becomes a cell of the cluster, and the revealed buttons line up to the right of it in a shared row rather than as a block beneath it. The list marker is removed through list-style:none, ::marker and ::-webkit-details-marker. While the details is closed, the rounding of the right edge belongs to the summary; when open, it goes to the last extra button. The arrow rotates by [open]."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "accent",
+          "background",
+          "moreLabel",
+          "label"
+        ],
+        "preview": {
+          "width": "auto"
+        }
       }
     },
     {
@@ -5126,7 +5721,9 @@
       "type": "registry:component",
       "title": "Способы оплаты",
       "description": "Выбор способа оплаты карточками с настоящим видимым кружком radio: на шаге о деньгах сомнение «выбрал ли я» стоит дороже красоты.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -5138,7 +5735,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-036-*. Серверный: выбор держат radio внутри fieldset. В отличие от сегментированных групп, кружок выбора здесь не прячется, а рисуется: сам input лежит поверх карточки прозрачным слоем, а видимый кружок — span с inset box-shadow вместо внутренней точки. Карточки разложены grid с repeat(auto-fit,minmax(11rem,1fr)): на узкой ширине они переносятся, а не сжимаются до нечитаемого. Выбранная карточка получает и рамку, и box-shadow того же цвета, чтобы линия не выглядела тоньше соседних. Второй строкой у каждого способа стоит короткое пояснение.",
       "meta": {
-        "tags": ["buttongroup", "payment", "radio-cards", "checkout"],
+        "tags": [
+          "buttongroup",
+          "payment",
+          "radio-cards",
+          "checkout"
+        ],
         "preview": {
           "width": "full"
         },
@@ -5177,7 +5779,12 @@
             "label": "Способ",
             "type": "select",
             "default": "sbp",
-            "options": ["card", "sbp", "invoice", "later"]
+            "options": [
+              "card",
+              "sbp",
+              "invoice",
+              "later"
+            ]
           },
           {
             "prop": "accent",
@@ -5276,7 +5883,12 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-036-* variables. It is a server component: the choice is held by radios inside a fieldset. Unlike segmented groups, the selection dot is not hidden here but drawn: the input itself lies over the card as a transparent layer, while the visible dot is a span with an inset box-shadow in place of an inner dot. The cards are laid out in a grid with repeat(auto-fit,minmax(11rem,1fr)): at narrow widths they wrap instead of shrinking to illegibility. The selected card gets both a border and a box-shadow in the same colour so that the line does not look thinner than its neighbours. Every method carries a short explanation on the second line."
           }
         },
-        "cardControls": ["defaultValue", "accent", "background"]
+        "cardControls": [
+          "defaultValue",
+          "accent",
+          "background",
+          "label"
+        ]
       }
     },
     {
@@ -5284,7 +5896,9 @@
       "type": "registry:component",
       "title": "Файл или ссылка",
       "description": "Переключатель источника вложения: две сцепленные вкладки меняют панель под собой, и неактивная панель уходит и из потока, и из обхода Tab.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -5296,7 +5910,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-037-*. Серверный: переключение держат radio, панели показываются правилами [data-vibeui-block]:has([data-mode=\"file\"] input:checked) [data-panel=\"file\"]{display:block}. display:none выбран сознательно: скрытая панель вместе со своими полями честно уходит из доступного дерева и из обхода Tab, чего не даст visibility или прозрачность. Сцепка и панель склеены в одну карточку общей рамкой: у трека скруглены только верхние углы, у карточки — внешние, всё лишнее срезает overflow:hidden. Выбранная вкладка помечена inset box-shadow снизу, а не border, чтобы не сдвигать содержимое.",
       "meta": {
-        "tags": ["buttongroup", "tabs", "upload", "css-only"],
+        "tags": [
+          "buttongroup",
+          "tabs",
+          "upload",
+          "css-only"
+        ],
         "preview": {
           "width": "full"
         },
@@ -5336,7 +5955,10 @@
             "label": "Вкладка",
             "type": "select",
             "default": "file",
-            "options": ["file", "link"]
+            "options": [
+              "file",
+              "link"
+            ]
           },
           {
             "prop": "accent",
@@ -5441,7 +6063,14 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-037-* variables. It is a server component: the switching is held by radios, and the panels are shown by rules of the form [data-vibeui-block]:has([data-mode=\"file\"] input:checked) [data-panel=\"file\"]{display:block}. display:none is chosen deliberately: a hidden panel, together with its fields, honestly leaves the accessibility tree and the Tab order, which neither visibility nor opacity would give. The cluster and the panel are glued into one card by a shared border: the track has only its top corners rounded, the card has its outer ones, and everything excess is clipped by overflow:hidden. The selected tab is marked with an inset box-shadow at the bottom rather than a border, so that the content is not shifted."
           }
         },
-        "cardControls": ["defaultValue", "accent", "background"]
+        "cardControls": [
+          "defaultValue",
+          "accent",
+          "background",
+          "fileLabel",
+          "linkLabel",
+          "label"
+        ]
       }
     },
     {
@@ -5449,7 +6078,9 @@
       "type": "registry:component",
       "title": "Сохранить и закрыть",
       "description": "Две submit-кнопки с общим name и разными value: намерение различает браузер, и серверу не нужны ни скрытое поле, ни JS.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -5461,7 +6092,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-038-*. Серверный: обе кнопки — настоящие type=\"submit\" с одинаковым name и разными value, поэтому браузер отправит пару только той кнопки, которую нажали. Это единственная встроенная в HTML возможность различить «сохранить» и «сохранить и закрыть». Главная кнопка стоит первой по DOM: при Enter в поле формы отправляется первая submit-кнопка, и это должно быть безопасное действие. Обе кнопки одного цвета, шов между заливками нарисован inset box-shadow — рамка на стыке дала бы тёмную линию. Корень не form: компонент обязан вставляться внутрь чужой формы.",
       "meta": {
-        "tags": ["buttongroup", "form", "submit", "intent"],
+        "tags": [
+          "buttongroup",
+          "form",
+          "submit",
+          "intent"
+        ],
         "ai": {
           "export": "Buttongroup038",
           "usage": "<Buttongroup038\n  saveLabel=\"Сохранить\"\n  closeLabel=\"Сохранить и закрыть\"\n  intentName=\"intent\"\n  label=\"Завершение правки\"\n/>",
@@ -5587,7 +6223,16 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-038-* variables. It is a server component: both buttons are real type=\"submit\" ones with the same name and different values, so the browser submits the pair of only the button that was pressed. This is the only way built into HTML to tell \"save\" from \"save and close\" apart. The primary button comes first in the DOM: on Enter in a form field the first submit button is submitted, and that has to be the safe action. Both buttons are the same colour, and the seam between the fills is drawn with an inset box-shadow — a border at the joint would give a dark line. The root is not a form: the component has to be inserted inside somebody else's form."
           }
         },
-        "cardControls": ["accent"]
+        "cardControls": [
+          "accent",
+          "saveLabel",
+          "closeLabel",
+          "note",
+          "label"
+        ],
+        "preview": {
+          "width": "auto"
+        }
       }
     },
     {
@@ -5595,7 +6240,9 @@
       "type": "registry:component",
       "title": "Опасное действие с задержкой",
       "description": "Опасное действие с обратным отсчётом: кольцо на conic-gradient показывает оставшиеся секунды, а disabled действительно держит кнопку.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -5607,7 +6254,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-039-*. Клиентский: useState хранит число прошедших секунд, а остаток считается как delay минус прошедшее — тогда смена delay действует сразу и сбрасывать состояние эффектом не нужно; useEffect заводит setTimeout на секунду и снимает его при размонтировании. Кольцо нарисовано conic-gradient с маской radial-gradient — вырез в середине делает из круга кольцо без SVG; доля закраски приходит переменной --vibeui-buttongroup-039-progress. Атрибут disabled настоящий: кнопка не нажимается и не ловит Enter, а не просто выглядит бледной. Число секунд продублировано текстом и объявлено через role=\"status\", потому что кольцо для скринридера не существует. Защита рассчитана на инерцию нажатия, а не на злой умысел.",
       "meta": {
-        "tags": ["buttongroup", "destructive", "countdown", "conic-gradient"],
+        "tags": [
+          "buttongroup",
+          "destructive",
+          "countdown",
+          "conic-gradient"
+        ],
         "preview": {
           "width": "full"
         },
@@ -5753,7 +6405,14 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-039-* variables. It is a client component: useState holds the number of elapsed seconds, and the remainder is computed as delay minus the elapsed time — a change of delay then takes effect at once and the state does not have to be reset by an effect; useEffect starts a setTimeout for one second and clears it on unmount. The ring is drawn with a conic-gradient plus a radial-gradient mask — the cut-out in the middle turns the circle into a ring without SVG; the filled share arrives through the --vibeui-buttongroup-039-progress variable. The disabled attribute is real: the button cannot be pressed and does not catch Enter, rather than merely looking pale. The number of seconds is duplicated as text and announced through role=\"status\", because the ring does not exist for a screen reader. The protection is designed against the momentum of a press, not against ill intent."
           }
         },
-        "cardControls": ["delay", "danger", "background"]
+        "cardControls": [
+          "delay",
+          "danger",
+          "background",
+          "accent",
+          "dangerLabel",
+          "cancelLabel"
+        ]
       }
     },
     {
@@ -5761,7 +6420,9 @@
       "type": "registry:component",
       "title": "Полоса «поделиться»",
       "description": "Группа шеринга, где ссылка видна прямо в сцепке отдельной ячейкой: люди отправляют её глазами раньше, чем нажимают кнопку.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -5773,7 +6434,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-040-*. Серверный: хуков нет. Ячейка ссылки получает flex:1 1 auto с min-width:0 и text-overflow:ellipsis, а кнопки — flex:none: на узкой ширине сжимается текст, а не цели нажатия. Копирование выделено мягкой заливкой и подписью, остальные цели — квадратные ячейки со значками и aria-label. Рамка одна — на контейнере, разделители рисует border-inline-start у кнопок, углы обрезает overflow:hidden. Обводка фокуса уведена внутрь через outline-offset:-2px, иначе её срежет рамка контейнера.",
       "meta": {
-        "tags": ["buttongroup", "share", "copy", "truncate"],
+        "tags": [
+          "buttongroup",
+          "share",
+          "copy",
+          "truncate"
+        ],
         "preview": {
           "width": "full"
         },
@@ -5910,7 +6576,13 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-040-* variables. It is a server component: there are no hooks. The link cell gets flex:1 1 auto with min-width:0 and text-overflow:ellipsis, while the buttons get flex:none: at a narrow width the text shrinks, not the tap targets. Copy is set apart by a soft fill and a caption, and the remaining targets are square cells with glyphs and an aria-label. There is a single border, on the container, the separators are drawn by border-inline-start on the buttons, and the corners are clipped by overflow:hidden. The focus ring is pulled inside through outline-offset:-2px, otherwise the container border would clip it."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "accent",
+          "background",
+          "link",
+          "copyLabel",
+          "label"
+        ]
       }
     },
     {
@@ -5918,7 +6590,9 @@
       "type": "registry:component",
       "title": "Реакции эмодзи",
       "description": "Реакции со счётчиками как набор независимых тумблеров: эмодзи помечен aria-hidden, а имя реакции лежит текстом для скринридера.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -5930,7 +6604,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-041-*. Клиентский: useState хранит список собственных реакций, счётчик показывает базовое число плюс единицу, если реакция поставлена. Каждая пилюля — отдельный тумблер с aria-pressed, потому что реакции не исключают друг друга. Эмодзи помечен aria-hidden, рядом лежит имя реакции под clip-path: скринридер должен сказать «нравится, 12, нажато», а не зачитывать описание символа. Счётчик набран табличными цифрами и имеет минимальную ширину, иначе строка дёргается на каждом нажатии. Пилюли переносятся: реакций со временем становится больше.",
       "meta": {
-        "tags": ["buttongroup", "reactions", "toggle", "social"],
+        "tags": [
+          "buttongroup",
+          "reactions",
+          "toggle",
+          "social"
+        ],
         "preview": {
           "width": "full"
         },
@@ -6045,7 +6724,9 @@
               "props": {
                 "label": "Post reactions",
                 "addLabel": "Add a reaction",
-                "mine": ["like"],
+                "mine": [
+                  "like"
+                ],
                 "reactions": [
                   {
                     "emoji": "👍",
@@ -6073,7 +6754,12 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-041-* variables. It is a client component: useState holds the list of your own reactions, and the counter shows the base number plus one when a reaction has been given. Every pill is a separate toggle with aria-pressed, because reactions do not exclude each other. The emoji is marked aria-hidden and the reaction name lies next to it under clip-path: a screen reader has to say \"like, 12, pressed\" rather than read out the description of the symbol. The counter is set in tabular figures and has a minimum width, otherwise the row twitches on every press. The pills wrap: over time there are more reactions."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "accent",
+          "background",
+          "label",
+          "addLabel"
+        ]
       }
     },
     {
@@ -6081,7 +6767,9 @@
       "type": "registry:component",
       "title": "Пилюля голосования",
       "description": "Голосование вверх и вниз со счётом между кнопками: повторное нажатие отзывает собственный голос, чего пара radio дать не может.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -6093,7 +6781,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-042-*. Клиентский: useState хранит \"up\", \"down\" или null; взаимное исключение сделано в обработчике, потому что снять выбор у radio без третьей кнопки нельзя. Состояние объявлено через aria-pressed на каждой кнопке. Отданный голос помечен не только цветом: у значка появляется заливка (fill:currentColor), и это работает при дальтонизме. Счёт стоит между кнопками, набран табличными цифрами и имеет min-width, поэтому переход через ноль и появление минуса не двигают кнопки. Счёт объявлен aria-live=\"polite\": изменение цифры иначе остаётся незамеченным.",
       "meta": {
-        "tags": ["buttongroup", "vote", "toggle", "score"],
+        "tags": [
+          "buttongroup",
+          "vote",
+          "toggle",
+          "score"
+        ],
         "ai": {
           "export": "Buttongroup042",
           "usage": "<Buttongroup042\n  score={42}\n  upLabel=\"Полезный ответ\"\n  downLabel=\"Бесполезный ответ\"\n  onChange={(vote) => send(vote)}\n/>",
@@ -6231,7 +6924,17 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-042-* variables. It is a client component: useState holds \"up\", \"down\" or null; the mutual exclusion is done in the handler, because a radio cannot be unchecked without a third button. The state is declared through aria-pressed on each button. A cast vote is marked by more than colour: the glyph gains a fill (fill:currentColor), and that works for colour blindness. The score stands between the buttons, is set in tabular figures and has a min-width, so crossing zero and the appearance of a minus sign do not move the buttons. The score is announced with aria-live=\"polite\": a changing number would otherwise go unnoticed."
           }
         },
-        "cardControls": ["score", "accent", "background"]
+        "cardControls": [
+          "score",
+          "accent",
+          "background",
+          "upLabel",
+          "downLabel",
+          "label"
+        ],
+        "preview": {
+          "width": "auto"
+        }
       }
     },
     {
@@ -6239,7 +6942,9 @@
       "type": "registry:component",
       "title": "Навигация по записям",
       "description": "Навигация по записям, где переход к краю и переход на шаг различаются формой значка, а под сцепкой лежит тонкая полоса положения.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -6251,7 +6956,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-043-*. Серверный: индекс приходит пропсом и зажимается в диапазон 1..total. Стрелка с планкой означает «до упора», стрелка без планки — «на шаг»: разница читается формой, а не подписью. Крайние кнопки гасятся парами — на первой записи бессмысленны обе левые. Полоса положения под сцепкой построена на процентной ширине от индекса и помечена aria-hidden, потому что то же самое сказано текстом «Запись 12 из 340». Счётчик набран табличными цифрами и имеет min-width, иначе переход через сотню дёргает кнопки. Рамка одна на треке, разделители рисует общий селектор > * + *.",
       "meta": {
-        "tags": ["buttongroup", "navigation", "records", "progress"],
+        "tags": [
+          "buttongroup",
+          "navigation",
+          "records",
+          "progress"
+        ],
         "ai": {
           "export": "Buttongroup043",
           "usage": "<Buttongroup043 index={12} total={340} entity=\"Запись\" label=\"Навигация по записям\" />",
@@ -6399,7 +7109,17 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-043-* variables. It is a server component: the index arrives as a prop and is clamped to the range 1..total. An arrow with a bar means \"all the way\", an arrow without one means \"one step\": the difference reads from the shape rather than from a caption. The edge buttons are greyed out in pairs — on the first record both left ones are meaningless. The position bar under the cluster is built on a percentage width derived from the index and is marked aria-hidden, because the same thing is said by the text \"Record 12 of 340\". The counter is set in tabular figures and has a min-width, otherwise crossing a hundred jolts the buttons. There is a single border on the track, and the separators are drawn by the general > * + * selector."
           }
         },
-        "cardControls": ["index", "total", "accent", "background"]
+        "cardControls": [
+          "index",
+          "total",
+          "accent",
+          "background",
+          "entity",
+          "counterText"
+        ],
+        "preview": {
+          "width": "auto"
+        }
       }
     },
     {
@@ -6407,7 +7127,9 @@
       "type": "registry:component",
       "title": "Счётчик количества",
       "description": "Количество, которое можно и нащёлкать, и набрать: между кнопками стоит настоящий input[type=number], а значение зажимается по потере фокуса.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -6419,7 +7141,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-044-*. Клиентский: useState хранит строку ввода, а не число — иначе набрать «12» в поле с максимумом 20 было бы невозможно, «1» уже упёрлось бы в минимум. Зажатие в диапазон происходит по onBlur и по нажатию кнопок. Родные стрелки браузера убраны через appearance:textfield и ::-webkit-inner-spin-button: они дублируют кнопки и на шестнадцати пикселях в них не попасть. Единица измерения стоит внутри поля отдельным узлом, поэтому не мешает вводу. Обводка фокуса рисуется на ячейке поля через :has(input:focus-visible), потому что у самого input убран outline.",
       "meta": {
-        "tags": ["buttongroup", "stepper", "number", "input"],
+        "tags": [
+          "buttongroup",
+          "stepper",
+          "number",
+          "input"
+        ],
         "ai": {
           "export": "Buttongroup044",
           "usage": "<Buttongroup044\n  defaultValue={2}\n  min={1}\n  max={20}\n  unit=\"шт.\"\n  onChange={(quantity) => setQuantity(quantity)}\n/>",
@@ -6549,7 +7276,16 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-044-* variables. It is a client component: useState holds the input string rather than a number — otherwise typing \"12\" into a field with a maximum of 20 would be impossible, as \"1\" would already hit the minimum. The clamping to the range happens on onBlur and on a button press. The browser's native spinners are removed through appearance:textfield and ::-webkit-inner-spin-button: they duplicate the buttons and at sixteen pixels cannot be hit. The unit of measure stands inside the field as a separate node, so it does not interfere with typing. The focus ring is drawn on the field cell through :has(input:focus-visible), because the input's own outline is removed."
           }
         },
-        "cardControls": ["defaultValue", "accent", "background"]
+        "cardControls": [
+          "defaultValue",
+          "accent",
+          "background",
+          "unit",
+          "label"
+        ],
+        "preview": {
+          "width": "auto"
+        }
       }
     },
     {
@@ -6557,7 +7293,9 @@
       "type": "registry:component",
       "title": "Переключатель единиц",
       "description": "Переключатель единиц, показывающий пересчитанное значение рядом: оба числа лежат в разметке, а нужное выбирает CSS по отмеченному radio.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -6569,7 +7307,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-045-*. Серверный: пересчёт делается на стороне, отдающей страницу, а не в браузере — поэтому округления и локали не расходятся. Оба значения лежат в разметке, и правило [data-vibeui-block]:has([data-unit=\"metric\"] input:checked) [data-value=\"metric\"]{display:inline} показывает нужное. Значение набрано табличными цифрами и имеет min-width:4.25rem, поэтому «18 °C» и «64 °F» занимают одно место. Сцепка компактная и стоит рядом со значением, а не отдельным блоком: единица без числа бессмысленна.",
       "meta": {
-        "tags": ["buttongroup", "units", "readout", "css-only"],
+        "tags": [
+          "buttongroup",
+          "units",
+          "readout",
+          "css-only"
+        ],
         "ai": {
           "export": "Buttongroup045",
           "usage": "<Buttongroup045\n  metricValue=\"18 °C\"\n  imperialValue=\"64 °F\"\n  caption=\"средняя за неделю\"\n  defaultValue=\"metric\"\n/>",
@@ -6606,7 +7349,10 @@
             "label": "Система",
             "type": "select",
             "default": "metric",
-            "options": ["metric", "imperial"]
+            "options": [
+              "metric",
+              "imperial"
+            ]
           },
           {
             "prop": "accent",
@@ -6709,7 +7455,17 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-045-* variables. It is a server component: the conversion is done by the side that serves the page rather than in the browser — that is why the rounding and the locales do not drift apart. Both values lie in the markup, and the rule [data-vibeui-block]:has([data-unit=\"metric\"] input:checked) [data-value=\"metric\"]{display:inline} shows the right one. The value is set in tabular figures and has min-width:4.25rem, so \"18 °C\" and \"64 °F\" take the same space. The cluster is compact and stands next to the value rather than as a separate block: a unit without a number is meaningless."
           }
         },
-        "cardControls": ["defaultValue", "accent", "background"]
+        "cardControls": [
+          "defaultValue",
+          "accent",
+          "background",
+          "metricValue",
+          "imperialValue",
+          "caption"
+        ],
+        "preview": {
+          "width": "auto"
+        }
       }
     },
     {
@@ -6717,7 +7473,9 @@
       "type": "registry:component",
       "title": "Пресеты дат",
       "description": "Пресеты периода с конкретными датами под названием: «Последние 7 дней» и «6–12 мая» отвечают на разные вопросы, и вторая строка снимает поход в календарь.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -6729,7 +7487,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-046-*. Серверный: выбор держат radio внутри fieldset. Трек — grid с grid-auto-columns:1fr, поэтому строки диапазонов выстраиваются в общую линию, а сегменты остаются целями одного размера. Даты набраны табличными цифрами и не переносятся. Последний сегмент — «Свой период»: у него нет диапазона, и вместо него стоит значок календаря, а не пустая строка, иначе высота сегмента отличалась бы от соседей. Границы схлопнуты через margin-inline-start:-1px, скругления только крайним, выбранный поднят z-index:1, сфокусированный — z-index:2.",
       "meta": {
-        "tags": ["buttongroup", "period", "dates", "analytics"],
+        "tags": [
+          "buttongroup",
+          "period",
+          "dates",
+          "analytics"
+        ],
         "preview": {
           "width": "full"
         },
@@ -6769,7 +7532,12 @@
             "label": "Период",
             "type": "select",
             "default": "month",
-            "options": ["week", "month", "quarter", "custom"]
+            "options": [
+              "week",
+              "month",
+              "quarter",
+              "custom"
+            ]
           },
           {
             "prop": "accent",
@@ -6876,7 +7644,13 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-046-* variables. It is a server component: the choice is held by radios inside a fieldset. The track is a grid with grid-auto-columns:1fr, so the range lines form one common baseline and the segments stay targets of the same size. The dates are set in tabular figures and do not wrap. The last segment is \"Custom range\": it has no range, and in its place stands a calendar glyph rather than an empty line, otherwise the height of that segment would differ from its neighbours. The borders are collapsed through margin-inline-start:-1px, the rounded corners go to the edge ones only, the selected segment is raised to z-index:1 and the focused one to z-index:2."
           }
         },
-        "cardControls": ["defaultValue", "accent", "background"]
+        "cardControls": [
+          "defaultValue",
+          "accent",
+          "background",
+          "customLabel",
+          "label"
+        ]
       }
     },
     {
@@ -6884,7 +7658,9 @@
       "type": "registry:component",
       "title": "Чипы типов файлов",
       "description": "Фильтр по типу файла, где вместо значка стоит расширение текстом: три буквы читаются однозначно, а «лист с загнутым углом» одинаков у всех типов.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -6896,7 +7672,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-047-*. Серверный: выбор множественный, внутри checkbox. Цвет плашки приходит числом оттенка и подставляется инлайновой переменной --vibeui-buttongroup-047-hue, а сами цвета собираются формулой oklch(0.94 0.06 hue) и oklch(0.42 0.15 hue): палитра остаётся одной формулой, а не набором хардкодов, и контраст текста к фону держится на всех оттенках. Пилюли не сцеплены, они переносятся по строкам с gap — список расширений растёт, и жёсткая сцепка выехала бы за экран. Выбранная пилюля помечена рамкой и inset box-shadow того же цвета, чтобы линия выглядела одинаково толстой.",
       "meta": {
-        "tags": ["buttongroup", "files", "filter", "chips"],
+        "tags": [
+          "buttongroup",
+          "files",
+          "filter",
+          "chips"
+        ],
         "preview": {
           "width": "full"
         },
@@ -7047,7 +7828,12 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-047-* variables. It is a server component: the choice is multiple, with checkboxes inside. The plate colour arrives as a hue number and is passed in through the inline --vibeui-buttongroup-047-hue variable, while the colours themselves are assembled by the formulas oklch(0.94 0.06 hue) and oklch(0.42 0.15 hue): the palette stays a single formula rather than a set of hardcoded values, and the contrast of the text against the background holds at every hue. The chips are not chained together, they wrap across rows with a gap — the list of extensions grows, and a rigid cluster would run off the screen. The selected chip is marked with a border and an inset box-shadow in the same colour so that the line looks equally thick."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "accent",
+          "background",
+          "label",
+          "name"
+        ]
       }
     },
     {
@@ -7055,7 +7841,9 @@
       "type": "registry:component",
       "title": "Тип графика",
       "description": "Выбор вида графика, где каждый сегмент — маленький график своего типа: столбики из div, линия в SVG и доля на conic-gradient.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -7067,7 +7855,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-048-*. Серверный: выбор держат radio внутри fieldset. Три образца нарисованы тремя разными приёмами: столбики — flex с align-items:flex-end и процентными высотами, линия — polyline в SVG, доля — conic-gradient. Свести их к одному набору путей можно, но честнее рисовать каждую фигуру тем, чем она рисуется естественно. Цвет образцов вынесен в переменную --vibeui-buttongroup-048-glyph, и выбранный сегмент переопределяет её на акцент — одно правило перекрашивает все три образца сразу. Границы схлопнуты, скругления только крайним, фокус поднимает z-index:2.",
       "meta": {
-        "tags": ["buttongroup", "chart", "glyph", "radio"],
+        "tags": [
+          "buttongroup",
+          "chart",
+          "glyph",
+          "radio"
+        ],
         "preview": {
           "width": "full"
         },
@@ -7106,7 +7899,11 @@
             "label": "Вид",
             "type": "select",
             "default": "bars",
-            "options": ["bars", "line", "pie"]
+            "options": [
+              "bars",
+              "line",
+              "pie"
+            ]
           },
           {
             "prop": "accent",
@@ -7197,7 +7994,13 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-048-* variables. It is a server component: the choice is held by radios inside a fieldset. The three samples are drawn by three different techniques: the bars are a flex with align-items:flex-end and percentage heights, the line is a polyline in SVG, and the share is a conic-gradient. They could be reduced to a single set of paths, but it is more honest to draw each shape with what it is naturally drawn by. The sample colour is moved into the --vibeui-buttongroup-048-glyph variable, and the selected segment overrides it to the accent — one rule recolours all three samples at once. The borders are collapsed, the rounded corners go to the edge ones only, and focus raises z-index:2."
           }
         },
-        "cardControls": ["defaultValue", "accent", "background"]
+        "cardControls": [
+          "defaultValue",
+          "accent",
+          "background",
+          "label",
+          "lineLabel"
+        ]
       }
     },
     {
@@ -7205,7 +8008,9 @@
       "type": "registry:component",
       "title": "Выбор колонок",
       "description": "Выбор видимых колонок в details со счётчиком в шапке, где последнюю оставшуюся колонку снять нельзя — таблица без колонок это тупик.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -7217,7 +8022,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-049-*. Клиентский: useState хранит список видимых колонок, счётчик «4 из 6» в шапке пересчитывается из состояния. Раскрытие держит details/summary: состояние, клавиатура и объявление «свёрнуто/развёрнуто» приходят от браузера, и самодельного меню не нужно. Последний оставшийся флажок получает disabled и объяснение через title: молчащий элемент читается как поломка, а таблица без колонок — тупик, из которого мышью не выбраться. Панель позиционирована абсолютно относительно корня и лежит выше содержимого через z-index:5. Флажки настоящие, их цвет задан accent-color.",
       "meta": {
-        "tags": ["buttongroup", "columns", "details", "checkbox"],
+        "tags": [
+          "buttongroup",
+          "columns",
+          "details",
+          "checkbox"
+        ],
         "ai": {
           "export": "Buttongroup049",
           "usage": "<Buttongroup049\n  columns={[\"Название\", \"Статус\", \"Срок\"]}\n  hiddenColumns={[\"Срок\"]}\n  triggerLabel=\"Колонки\"\n  onChange={(visible) => setColumns(visible)}\n/>",
@@ -7361,7 +8171,10 @@
                   "Priority",
                   "Updated"
                 ],
-                "hiddenColumns": ["Priority", "Updated"],
+                "hiddenColumns": [
+                  "Priority",
+                  "Updated"
+                ],
                 "triggerLabel": "Columns",
                 "label": "Visible table columns",
                 "countText": "{visible} of {total}",
@@ -7371,7 +8184,17 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-049-* variables. It is a client component: useState holds the list of visible columns, and the \"4 of 6\" counter in the header is recomputed from that state. The disclosure is held by details/summary: the state, the keyboard and the \"collapsed/expanded\" announcement come from the browser, and a hand-rolled menu is not needed. The last remaining checkbox gets disabled and an explanation through title: a silent control reads as a breakage, and a table with no columns is a dead end there is no way out of with a mouse. The panel is positioned absolutely relative to the root and lies above the content through z-index:5. The checkboxes are real, and their colour is set with accent-color."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "accent",
+          "background",
+          "triggerLabel",
+          "countText",
+          "lastColumnHint",
+          "label"
+        ],
+        "preview": {
+          "width": "auto"
+        }
       }
     },
     {
@@ -7379,7 +8202,9 @@
       "type": "registry:component",
       "title": "Лестница ролей",
       "description": "Роли лестницей от старшей к младшей: выбор подсвечивает и сам сегмент, и все правее — так видно, что редактор умеет всё, что умеет читатель.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -7391,7 +8216,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-050-*. Серверный: выбор держат radio внутри fieldset. Вложенность прав показана соседним комбинатором: [data-part=\"step\"]:has(input:checked) ~ [data-part=\"step\"] заливает все младшие роли слабее, чем выбранную. Поэтому порядок сегментов не декоративный, а смысловой — перестановка сломает логику. Границы схлопнуты через margin-inline-start:-1px, скругления только крайним, выбранная роль поднята z-index:1, сфокусированная — z-index:2. Legend видимый, с float:left;width:100%;clear:both, иначе следующие grid-дети обтекали бы его.",
       "meta": {
-        "tags": ["buttongroup", "roles", "permissions", "sibling"],
+        "tags": [
+          "buttongroup",
+          "roles",
+          "permissions",
+          "sibling"
+        ],
         "preview": {
           "width": "full"
         },
@@ -7430,7 +8260,12 @@
             "label": "Роль",
             "type": "select",
             "default": "editor",
-            "options": ["owner", "admin", "editor", "viewer"]
+            "options": [
+              "owner",
+              "admin",
+              "editor",
+              "viewer"
+            ]
           },
           {
             "prop": "accent",
@@ -7541,7 +8376,13 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-050-* variables. It is a server component: the choice is held by radios inside a fieldset. The nesting of rights is shown with a sibling combinator: [data-part=\"step\"]:has(input:checked) ~ [data-part=\"step\"] fills all the lesser roles more weakly than the selected one. That is why the order of the segments is not decorative but meaningful — reordering them breaks the logic. The borders are collapsed through margin-inline-start:-1px, the rounded corners go to the edge ones only, the selected role is raised to z-index:1 and the focused one to z-index:2. The legend is visible, with float:left;width:100%;clear:both, otherwise the following grid children would wrap around it."
           }
         },
-        "cardControls": ["defaultValue", "accent", "background"]
+        "cardControls": [
+          "defaultValue",
+          "accent",
+          "background",
+          "hint",
+          "label"
+        ]
       }
     },
     {
@@ -7549,7 +8390,9 @@
       "type": "registry:component",
       "title": "Уровни приоритета",
       "description": "Приоритет лесенкой из столбиков: порядковую величину показывает высота, а не оттенок — красный и жёлтый не говорят, какой из них выше.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -7561,7 +8404,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-051-*. Серверный: выбор держат radio внутри fieldset. Значок — четыре полосы возрастающей высоты, из которых закрашены первые N: порядковая величина требует порядкового признака, а цвет остаётся вторым каналом. Оттенок приходит числом и подставляется инлайновой переменной --vibeui-buttongroup-051-hue, все цвета сегмента собираются из неё формулами oklch — заливка, рамка и текст выбранного уровня остаются согласованными на любом оттенке. Границы схлопнуты через margin-inline-start:-1px, сегменты равной ширины (flex:1 1 0), фокус поднимает z-index:2.",
       "meta": {
-        "tags": ["buttongroup", "priority", "scale", "a11y"],
+        "tags": [
+          "buttongroup",
+          "priority",
+          "scale",
+          "a11y"
+        ],
         "preview": {
           "width": "full"
         },
@@ -7601,7 +8449,12 @@
             "label": "Уровень",
             "type": "select",
             "default": "high",
-            "options": ["low", "normal", "high", "urgent"]
+            "options": [
+              "low",
+              "normal",
+              "high",
+              "urgent"
+            ]
           },
           {
             "prop": "accent",
@@ -7705,7 +8558,12 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-051-* variables. It is a server component: the choice is held by radios inside a fieldset. The glyph is four bars of rising height with the first N filled in: an ordinal value calls for an ordinal cue, and colour stays the second channel. The hue arrives as a number and is passed in through the inline --vibeui-buttongroup-051-hue variable, and all the segment colours are assembled from it by oklch formulas — the fill, the border and the text of the selected level stay in agreement at any hue. The borders are collapsed through margin-inline-start:-1px, the segments are of equal width (flex:1 1 0), and focus raises z-index:2."
           }
         },
-        "cardControls": ["defaultValue", "accent", "background"]
+        "cardControls": [
+          "defaultValue",
+          "accent",
+          "background",
+          "label"
+        ]
       }
     },
     {
@@ -7713,7 +8571,9 @@
       "type": "registry:component",
       "title": "Галочка на выбранном",
       "description": "Сегменты, у которых на выбранном значок сменяется галочкой: оба значка лежат в одной ячейке grid, поэтому подпись не сдвигается ни на пиксель.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -7725,7 +8585,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-052-*. Серверный: выбор держат radio внутри fieldset. Оба значка — исходный и галочка — лежат в [data-part=\"icons\"] на одной ячейке grid (grid-area:1 / 1), поэтому подмена не двигает подпись; переход сделан по opacity и scale, чтобы галочка приходила на место значка, а не вспыхивала рядом. Приём применим только там, где выбор действительно один: галочка — универсальный знак «сделано», и в множественном выборе она соврёт. Границы схлопнуты, скругления только крайним, фокус поднимает z-index:2.",
       "meta": {
-        "tags": ["buttongroup", "icons", "state", "segmented"],
+        "tags": [
+          "buttongroup",
+          "icons",
+          "state",
+          "segmented"
+        ],
         "ai": {
           "export": "Buttongroup052",
           "usage": "<Buttongroup052\n  options={[{ id: \"push\", label: \"Пуш\" }, { id: \"sms\", label: \"СМС\" }]}\n  defaultValue=\"push\"\n  label=\"Канал уведомлений\"\n  name=\"channel\"\n/>",
@@ -7761,7 +8626,11 @@
             "label": "Канал",
             "type": "select",
             "default": "push",
-            "options": ["email", "sms", "push"]
+            "options": [
+              "email",
+              "sms",
+              "push"
+            ]
           },
           {
             "prop": "accent",
@@ -7852,7 +8721,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-052-* variables. It is a server component: the choice is held by radios inside a fieldset. Both glyphs — the original one and the tick — lie in [data-part=\"icons\"] in the same grid cell (grid-area:1 / 1), so the replacement does not move the caption; the transition is made on opacity and scale so that the tick arrives in the icon's place rather than flashing beside it. The technique applies only where the choice really is single: a tick is the universal sign for \"done\", and in a multi-select it tells a lie. The borders are collapsed, the rounded corners go to the edge ones only, and focus raises z-index:2."
           }
         },
-        "cardControls": ["defaultValue", "accent", "background"]
+        "cardControls": [
+          "defaultValue",
+          "accent",
+          "background",
+          "label"
+        ],
+        "preview": {
+          "width": "auto"
+        }
       }
     },
     {
@@ -7860,7 +8737,9 @@
       "type": "registry:component",
       "title": "Действия во всю ширину",
       "description": "Панель действий во всю ширину телефона: равные доли через flex:1 1 0, значок над подписью и отступ на домашнюю полоску снизу.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -7872,7 +8751,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-053-*. Серверный: хуков нет. Кнопки делят ширину поровну через flex:1 1 0 — именно нулевая основа, иначе «Поделиться» заберёт себе больше «Чат»; min-width:0 разрешает кнопке сжиматься меньше содержимого. Значок стоит над подписью, потому что в строку они на девяноста пикселях не помещаются; подпись обрезается ellipsis, а не переносится, чтобы высота панели была одинаковой у всех кнопок. Нижний отступ равен env(safe-area-inset-bottom): панель обычно липнет к нижнему краю, где проходит системный жест. Разделители рисует button + button.",
       "meta": {
-        "tags": ["buttongroup", "mobile", "full-width", "actions"],
+        "tags": [
+          "buttongroup",
+          "mobile",
+          "full-width",
+          "actions"
+        ],
         "preview": {
           "width": "full"
         },
@@ -7998,7 +8882,11 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-053-* variables. It is a server component: there are no hooks. The buttons share the width equally through flex:1 1 0 — precisely the zero basis, otherwise \"Share\" would claim more than \"Chat\"; min-width:0 lets a button shrink below its content. The glyph stands above the caption, because at ninety pixels the two do not fit on one line; the caption is cut with an ellipsis rather than wrapped, so that the bar height is the same for every button. The bottom padding equals env(safe-area-inset-bottom): the bar usually sticks to the bottom edge, where the system gesture runs. The separators are drawn by button + button."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "accent",
+          "background",
+          "label"
+        ]
       }
     },
     {
@@ -8006,7 +8894,9 @@
       "type": "registry:component",
       "title": "Инструменты плотной строки",
       "description": "Очень плотная сцепка для строки таблицы: визуально 1.75rem, но цель для пальца растянута псевдоэлементом до 2.75rem за пределы рисунка.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -8018,7 +8908,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-054-*. Серверный: хуков нет. Приём — ::before, лежащий поверх кнопки и выходящий за неё: нажатие ловится за пределами рисунка, а раскладка не раздувается. Так решается конфликт «плотная панель против сорока четырёх пикселей на касание»: уменьшать надо рисунок, а не область нажатия. Кнопки перекрываются целями, поэтому зазор между ними не меньше 0.125rem, иначе цели съедят друг друга. Последняя кнопка отделена вертикальной линией: «ещё действия» не равнозначно правке и копированию. У кнопок нет подписей, поэтому у каждой есть aria-label.",
       "meta": {
-        "tags": ["buttongroup", "compact", "touch-target", "table"],
+        "tags": [
+          "buttongroup",
+          "compact",
+          "touch-target",
+          "table"
+        ],
         "ai": {
           "export": "Buttongroup054",
           "usage": "<Buttongroup054\n  tools={[{ id: \"edit\", label: \"Править\" }, { id: \"copy\", label: \"Дублировать\" }]}\n  label=\"Действия над строкой\"\n/>",
@@ -8139,7 +9034,14 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-054-* variables. It is a server component: there are no hooks. The technique is a ::before lying over the button and extending beyond it: a press is caught outside the drawing, while the layout is not inflated. That resolves the conflict of \"a dense bar versus forty-four pixels of touch\": it is the drawing that has to shrink, not the tap area. The buttons overlap by their targets, so the gap between them is no less than 0.125rem, otherwise the targets would eat one another. The last button is set apart by a vertical line: \"more actions\" is not on a par with editing and copying. The buttons have no captions, so each carries an aria-label."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "accent",
+          "background",
+          "label"
+        ],
+        "preview": {
+          "width": "auto"
+        }
       }
     },
     {
@@ -8147,7 +9049,9 @@
       "type": "registry:component",
       "title": "Панель с группами",
       "description": "Одна панель, разделённая на смысловые блоки: внутри блока кнопки вплотную, между блоками — линия и зазор, и каждый блок назван для скринридера.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -8159,7 +9063,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-055-*. Серверный: хуков нет. Близость сама сообщает родство: внутри [data-part=\"cluster\"] gap:0, между блоками — gap:0.5rem и разделитель. Деление существует не только для глаз: каждый блок объявлен своим role=\"group\" с aria-label, поэтому скринридер скажет «История, группа» перед первой кнопкой. Разделитель — отдельный span с aria-hidden, а не border у соседней кнопки: линия принадлежит промежутку, а не соседу, и при перестановке блоков ничего не ломается. У кнопок нет подписей, поэтому у каждой есть aria-label.",
       "meta": {
-        "tags": ["buttongroup", "toolbar", "grouping", "dividers"],
+        "tags": [
+          "buttongroup",
+          "toolbar",
+          "grouping",
+          "dividers"
+        ],
         "ai": {
           "export": "Buttongroup055",
           "usage": "<Buttongroup055\n  clusters={[{ title: \"История\", tools: [{ id: \"undo\", label: \"Отменить\" }] }]}\n  label=\"Панель редактора\"\n/>",
@@ -8307,7 +9216,14 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-055-* variables. It is a server component: there are no hooks. Proximity itself reports kinship: inside [data-part=\"cluster\"] the gap is 0, and between blocks there is gap:0.5rem plus a divider. The division exists not only for the eye: every block is declared as its own role=\"group\" with an aria-label, so a screen reader says \"History, group\" before the first button. The divider is a separate span with aria-hidden rather than a border on the neighbouring button: the line belongs to the gap, not to the neighbour, and nothing breaks when the blocks are reordered. The buttons have no captions, so each carries an aria-label."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "accent",
+          "background",
+          "label"
+        ],
+        "preview": {
+          "width": "auto"
+        }
       }
     },
     {
@@ -8315,7 +9231,9 @@
       "type": "registry:component",
       "title": "Подсказки у кнопок",
       "description": "Сегменты с подсказкой у каждого: имя якоря выдаётся только тому сегменту, на который навели или который в фокусе, — значит, якорь всегда ровно один.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -8327,7 +9245,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-056-*. Серверный: выбор держат radio внутри fieldset. Подсказку обычно позиционируют абсолютно внутри сегмента — и она обрезается первым же родителем с overflow. Здесь применено CSS anchor positioning: anchor-name объявлен в правиле :hover / :has(:focus-visible), поэтому в каждый момент якорь ровно один, и общий приём работает без уникальных имён на каждый сегмент. Всё завёрнуто в @supports (anchor-name: …): без поддержки подсказка остаётся абсолютно спозиционированной под сегментом, а не уезжает в угол экрана. Подсказка помечена aria-hidden — то же самое сказано подписью сегмента.",
       "meta": {
-        "tags": ["buttongroup", "tooltip", "anchor-positioning", "progressive"],
+        "tags": [
+          "buttongroup",
+          "tooltip",
+          "anchor-positioning",
+          "progressive"
+        ],
         "ai": {
           "export": "Buttongroup056",
           "usage": "<Buttongroup056\n  options={[{ label: \"Мои\", hint: \"Записи, где вы автор\" }]}\n  defaultValue=\"Мои\"\n  label=\"Область просмотра\"\n  name=\"scope\"\n/>",
@@ -8464,7 +9387,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-056-* variables. It is a server component: the choice is held by radios inside a fieldset. A hint is usually positioned absolutely inside the segment — and is then clipped by the very first ancestor with overflow. CSS anchor positioning is used here instead: anchor-name is declared in the :hover / :has(:focus-visible) rule, so at any moment there is exactly one anchor and the shared technique works without unique names per segment. Everything is wrapped in @supports (anchor-name: …): without support the hint stays absolutely positioned under the segment rather than running off into a corner of the screen. The hint is marked aria-hidden — the same thing is already said by the segment caption."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "accent",
+          "background",
+          "defaultValue",
+          "label"
+        ],
+        "preview": {
+          "width": "auto"
+        }
       }
     },
     {
@@ -8472,7 +9403,9 @@
       "type": "registry:component",
       "title": "Запоминаемый выбор",
       "description": "Группа кнопок, чей выбор честно отправляется формой: рядом лежит скрытый input, а значение продублировано на корне атрибутом data-value.",
-      "categories": ["button-group"],
+      "categories": [
+        "button-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -8484,7 +9417,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в переменных --vibeui-buttongroup-057-*. Клиентский: useState хранит выбранное значение. Кнопки с aria-pressed сами по себе ничего не отправляют, поэтому внутри группы лежит input[type=hidden] с тем же значением — форма собирает его через FormData так же, как обычное поле, и серверу не нужно ничего знать про кнопки. Значение продублировано на корне атрибутом data-value: его видно в инспекторе, по нему можно писать тесты и стили, не заглядывая в состояние React. Строка под группой показывает пару, которая уедет на сервер, — это способ поймать расхождение между видом и данными. Трек — role=\"toolbar\" с roving tabindex: Tab останавливается на группе один раз, значение переключают стрелками.",
       "meta": {
-        "tags": ["buttongroup", "form", "hidden-input", "state"],
+        "tags": [
+          "buttongroup",
+          "form",
+          "hidden-input",
+          "state"
+        ],
         "ai": {
           "export": "Buttongroup057",
           "usage": "<Buttongroup057\n  options={[\"Черновик\", \"На проверку\", \"Опубликовать\"]}\n  defaultValue=\"На проверку\"\n  name=\"status\"\n  onChange={(value) => track(value)}\n/>",
@@ -8608,7 +9546,11 @@
             "preview": {
               "props": {
                 "label": "What to do with the material",
-                "options": ["Draft", "In review", "Publish"],
+                "options": [
+                  "Draft",
+                  "In review",
+                  "Publish"
+                ],
                 "defaultValue": "In review",
                 "wireText": "The form will send {field}"
               }
@@ -8616,7 +9558,16 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-057-* variables. It is a client component: useState holds the selected value. Buttons with aria-pressed submit nothing on their own, so an input[type=hidden] with the same value lies inside the group — a form collects it through FormData exactly like an ordinary field, and the server does not have to know anything about the buttons. The value is duplicated on the root by the data-value attribute: it is visible in the inspector and tests and styles can be written against it without looking into React state. The line under the group shows the pair that will travel to the server — that is a way to catch a drift between the look and the data. The track is a role=\"toolbar\" with a roving tabindex: Tab stops on the group once, and the value is switched with the arrows."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "accent",
+          "background",
+          "defaultValue",
+          "name",
+          "wireText"
+        ],
+        "preview": {
+          "width": "auto"
+        }
       }
     }
   ]

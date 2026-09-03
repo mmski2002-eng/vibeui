@@ -6,7 +6,9 @@
       "type": "registry:component",
       "title": "Разделитель с подписью",
       "description": "Разделитель с подписью посередине: линия набрана сеткой из трёх колонок и работает на любой подложке.",
-      "categories": ["separator"],
+      "categories": [
+        "separator"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-separator-001-*. Серверный: хуков нет. Линия с подписью — грид из трёх колонок, поэтому не нужен приём с фоном под текстом и разделитель работает на любой подложке. Вертикальный вариант тянется по высоте соседей. Роль separator объявлена с aria-orientation.",
       "meta": {
-        "tags": ["separator", "divider", "layout", "a11y"],
+        "tags": [
+          "separator",
+          "divider",
+          "layout",
+          "a11y"
+        ],
         "preview": {
           "width": "full"
         },
@@ -62,7 +69,10 @@
             "label": "Направление",
             "type": "select",
             "default": "horizontal",
-            "options": ["horizontal", "vertical"]
+            "options": [
+              "horizontal",
+              "vertical"
+            ]
           },
           {
             "prop": "line",
@@ -121,7 +131,11 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-separator-001-* variables. Server-side: no hooks. The labelled line is a three-column grid, so the trick of putting a background behind the text is not needed and the separator works on any surface. The vertical variant stretches to the height of its neighbours. The separator role is declared with aria-orientation."
           }
         },
-        "cardControls": ["orientation", "line"]
+        "cardControls": [
+          "label",
+          "orientation",
+          "line"
+        ]
       }
     },
     {
@@ -129,7 +143,9 @@
       "type": "registry:component",
       "title": "Разделитель с пилюлей",
       "description": "Разделитель с подписью в пилюле, которая несёт собственный фон: приём с текстом цвета страницы ломается на градиенте, а пилюля работает на любой подложке.",
-      "categories": ["separator"],
+      "categories": [
+        "separator"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -141,7 +157,12 @@
       ],
       "docs": "Серверный компонент, хуков нет. Положение подписи задаётся числом колонок сетки: center — 1fr auto 1fr, start — auto 1fr, end — 1fr auto, поэтому линии всегда упираются в пилюлю без ручных отступов. Пилюля несёт свою заливку и рамку — популярный приём «закрасить текст цветом страницы» рассыпается на градиенте и на картинке, где подпись оказывается в прямоугольнике чужого цвета. У корня role=separator и aria-label с текстом подписи, так что граница слышна и названа. Пилюля светлая с тёмным текстом, поэтому подложка компоненту не нужна.",
       "meta": {
-        "tags": ["separator", "label", "divider", "pill"],
+        "tags": [
+          "separator",
+          "label",
+          "divider",
+          "pill"
+        ],
         "preview": {
           "width": "full"
         },
@@ -185,7 +206,11 @@
             "label": "Положение",
             "type": "select",
             "default": "center",
-            "options": ["start", "center", "end"]
+            "options": [
+              "start",
+              "center",
+              "end"
+            ]
           },
           {
             "prop": "line",
@@ -245,7 +270,11 @@
             "docs": "A server component, no hooks. The caption position is set by the number of grid columns: center — 1fr auto 1fr, start — auto 1fr, end — 1fr auto, so the lines always meet the pill without manual margins. The pill carries its own fill and border — the popular trick of painting the text with the page colour falls apart over a gradient or an image, where the caption ends up in a rectangle of a foreign colour. The root has role=separator and an aria-label with the caption text, so the boundary is both audible and named. The pill is light with dark text, so the component needs no surface under it."
           }
         },
-        "cardControls": ["align", "line"]
+        "cardControls": [
+          "label",
+          "align",
+          "line"
+        ]
       }
     },
     {
@@ -253,7 +282,9 @@
       "type": "registry:component",
       "title": "Вертикальные линии между показателями",
       "description": "Строка показателей с вертикальными разделителями: линия берёт высоту у соседей, а не задаёт её, поэтому строка не растёт от самой линии.",
-      "categories": ["separator"],
+      "categories": [
+        "separator"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -265,7 +296,12 @@
       ],
       "docs": "Серверный компонент, хуков нет. Ряд выровнен align-items:stretch, из-за чего разделитель шириной в один пиксель сам вытягивается до высоты самого высокого блока — задавать ему height вручную не нужно и вредно. Режим text ограничивает линию высотой строки значения: так делают в шапках, где полная линия выглядит как граница таблицы. Каждый разделитель помечен role=separator с aria-orientation=vertical, поэтому граница между показателями слышна. Промежуток вынесен в проп gap и подставляется переменной в пикселях. Подложки по умолчанию нет: палитра объявлена через light-dark(), поэтому строка следует теме окружения, а плашку под себя кладёт только заданный проп background.",
       "meta": {
-        "tags": ["separator", "vertical", "stats", "row"],
+        "tags": [
+          "separator",
+          "vertical",
+          "stats",
+          "row"
+        ],
         "ai": {
           "export": "Separator003",
           "usage": "<Separator003\n  items={[{ value: \"128\", caption: \"компонентов\" }, { value: \"24\", caption: \"категории\" }]}\n  gap={20}\n  dividerHeight=\"full\"\n/>",
@@ -308,7 +344,10 @@
             "label": "Высота линии",
             "type": "select",
             "default": "full",
-            "options": ["text", "full"]
+            "options": [
+              "text",
+              "full"
+            ]
           },
           {
             "prop": "background",
@@ -382,7 +421,14 @@
             "docs": "A server component, no hooks. The row is aligned with align-items:stretch, which makes the one-pixel rule stretch to the height of the tallest block by itself — setting its height by hand is unnecessary and harmful. The text mode limits the line to the height of the value line: this is what headers do, where a full-height line looks like a table border. Every rule is marked with role=separator and aria-orientation=vertical, so the boundary between the numbers is audible. The spacing is exposed as the gap prop and substituted through a variable in pixels. There is no background by default: the palette is declared through light-dark(), so the row follows the surrounding theme, and only a set background prop lays a panel under it."
           }
         },
-        "cardControls": ["dividerHeight", "gap", "background"]
+        "cardControls": [
+          "gap",
+          "dividerHeight",
+          "background"
+        ],
+        "preview": {
+          "width": "auto"
+        }
       }
     },
     {
@@ -390,7 +436,9 @@
       "type": "registry:component",
       "title": "Пунктирный разделитель",
       "description": "Пунктирный разделитель с управляемым рисунком: длина штриха и промежуток заданы числами, поэтому пунктир повторяем в разных местах макета.",
-      "categories": ["separator"],
+      "categories": [
+        "separator"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -402,7 +450,12 @@
       ],
       "docs": "Серверный компонент, хуков нет. border-style:dashed рисует штрих, длина которого зависит от браузера и от толщины границы, — одинакового пунктира в двух местах макета так не добиться. Здесь линия набрана repeating-linear-gradient, где длина штриха и промежуток вынесены в переменные --vibeui-separator-004-dash и --vibeui-separator-004-gap и подставляются из пропов в пикселях. Разделитель набран тегом hr со снятой рамкой, поэтому граница видна и скринридеру. Компонент показан в контексте двух строк раздела; подложки по умолчанию нет, палитра объявлена через light-dark() и следует теме окружения. Все подписи вынесены в пропы: above, below, doneText и шаблон dashText, где {dash} и {gap} подставляются числами.",
       "meta": {
-        "tags": ["separator", "dashed", "gradient", "divider"],
+        "tags": [
+          "separator",
+          "dashed",
+          "gradient",
+          "divider"
+        ],
         "preview": {
           "width": "full"
         },
@@ -513,7 +566,11 @@
             "docs": "A server component, no hooks. border-style:dashed draws a dash whose length depends on the browser and on the border thickness — the same dash pattern cannot be reproduced in two places of a layout that way. Here the line is built with repeating-linear-gradient, where the dash length and the gap are exposed as the --vibeui-separator-004-dash and --vibeui-separator-004-gap variables and substituted from props in pixels. The divider uses an hr tag with its border removed, so the boundary is visible to a screen reader as well. The component is shown in the context of two section rows; there is no background by default, the palette is declared through light-dark() and follows the surrounding theme. All captions are exposed as props: above, below, doneText and the dashText template, where {dash} and {gap} are substituted with numbers."
           }
         },
-        "cardControls": ["dash", "gap", "background"]
+        "cardControls": [
+          "dash",
+          "gap",
+          "background"
+        ]
       }
     },
     {
@@ -521,7 +578,9 @@
       "type": "registry:component",
       "title": "Разделитель с иконкой",
       "description": "Разделитель со знаком в кружке посередине линии: кружок несёт свою заливку, поэтому линия не просвечивает сквозь знак ни на светлом, ни на тёмном фоне.",
-      "categories": ["separator"],
+      "categories": [
+        "separator"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -533,7 +592,12 @@
       ],
       "docs": "Серверный компонент, хуков нет. Сетка из трёх колонок (1fr auto 1fr) держит кружок ровно по центру при любой ширине. Кружок несёт собственную заливку и рамку: без заливки линия проходит сквозь знак, а вырезать её маской пришлось бы под каждый фон отдельно. Знак декоративен и помечен aria-hidden — «✦» вслух ничего не сообщает; смысл границы несёт role=separator с aria-label. Тон переключается атрибутом data-tone и меняет три переменные разом. Заливка кружка объявлена через light-dark(): в тёмном окружении он темнеет вместе с фоном, поэтому отдельная подложка компоненту не нужна.",
       "meta": {
-        "tags": ["separator", "icon", "divider", "ornament"],
+        "tags": [
+          "separator",
+          "icon",
+          "divider",
+          "ornament"
+        ],
         "preview": {
           "width": "full"
         },
@@ -578,7 +642,10 @@
             "label": "Тон",
             "type": "select",
             "default": "neutral",
-            "options": ["neutral", "accent"]
+            "options": [
+              "neutral",
+              "accent"
+            ]
           },
           {
             "prop": "line",
@@ -639,7 +706,11 @@
             "docs": "A server component, no hooks. A three-column grid (1fr auto 1fr) keeps the disc exactly centred at any width. The disc carries its own fill and border: without the fill the line runs through the glyph, and cutting it out with a mask would have to be done separately for every background. The glyph is decorative and marked aria-hidden — \"✦\" announces nothing aloud; the meaning of the boundary is carried by role=separator with aria-label. The tone is switched by the data-tone attribute and changes three variables at once. The disc fill is declared through light-dark(): in a dark environment it darkens together with the background, so the component needs no surface of its own."
           }
         },
-        "cardControls": ["tone", "line"]
+        "cardControls": [
+          "glyph",
+          "tone",
+          "line"
+        ]
       }
     },
     {
@@ -647,7 +718,9 @@
       "type": "registry:component",
       "title": "Разделитель по шкале отступов",
       "description": "Разделитель с отступами по шкале: пять ступеней кратны одному шагу, поэтому две границы в разных частях страницы дышат одинаково.",
-      "categories": ["separator"],
+      "categories": [
+        "separator"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -659,7 +732,12 @@
       ],
       "docs": "Серверный компонент, хуков нет. Шкала отступов объявлена как кратные переменной --vibeui-separator-006-step, а ступени xs…xl переключаются атрибутом data-space — правится шкала одним числом, а не пятью значениями. Отступ живёт на самом разделителе, а не на соседних блоках: так соседи ничего не знают друг о друге и не схлопывают margin. Втяжка включается булевым пропом inset и задаётся отдельной переменной, чтобы линия отходила от краёв списка, как в системных таблицах. Подложки по умолчанию нет: палитра объявлена через light-dark(), список следует теме окружения, а плашку под себя кладёт только заданный проп background. Строки списка вынесены в проп rows.",
       "meta": {
-        "tags": ["separator", "spacing", "scale", "rhythm"],
+        "tags": [
+          "separator",
+          "spacing",
+          "scale",
+          "rhythm"
+        ],
         "preview": {
           "width": "full"
         },
@@ -698,7 +776,13 @@
             "label": "Ступень отступа",
             "type": "select",
             "default": "md",
-            "options": ["xs", "sm", "md", "lg", "xl"]
+            "options": [
+              "xs",
+              "sm",
+              "md",
+              "lg",
+              "xl"
+            ]
           },
           {
             "prop": "inset",
@@ -779,7 +863,11 @@
             "docs": "A server component, no hooks. The spacing scale is declared as multiples of the --vibeui-separator-006-step variable, and the xs…xl steps are switched by the data-space attribute — the scale is edited through one number rather than five values. The spacing lives on the divider itself rather than on the neighbouring blocks: that way the neighbours know nothing about each other and do not collapse their margins. The inset is turned on by the boolean inset prop and set by its own variable, so the line steps away from the edges of the list the way it does in system tables. There is no background by default: the palette is declared through light-dark(), the list follows the surrounding theme, and only a set background prop lays a panel under it. The list rows are exposed as the rows prop."
           }
         },
-        "cardControls": ["space", "inset", "background"]
+        "cardControls": [
+          "space",
+          "inset",
+          "background"
+        ]
       }
     }
   ]

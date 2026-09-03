@@ -38,7 +38,10 @@ const STYLES = `
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="table-007"]{color-scheme:dark}
 [data-vibeui-block="table-007"]{
-container-type:inline-size;width:100%;box-sizing:border-box;
+container-type:inline-size;width:100%;
+/* container-type отрывает ширину от содержимого: без нижней границы
+   блок схлопывается внутри flex-контейнера. */
+min-width:min(100%,16rem);box-sizing:border-box;
 font-family:var(--vibeui-table-007-font);color:var(--vibeui-table-007-fg);
 }
 /* Правила ширины живут на внутренней обёртке: сам контейнер себя не измеряет. */

@@ -44,7 +44,10 @@ container-type:inline-size;
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="alert-012"]{color-scheme:dark}
 [data-vibeui-block="alert-012"]{
 display:flex;flex-direction:column;gap:0.625rem;
-width:100%;box-sizing:border-box;
+width:100%;
+/* container-type отрывает ширину от содержимого: без нижней границы
+   блок схлопывается внутри flex-контейнера. */
+min-width:min(100%,16rem);box-sizing:border-box;
 padding:1rem 1.0625rem;
 border:1px solid var(--vibeui-alert-012-border);
 border-radius:var(--vibeui-alert-012-radius);

@@ -30,7 +30,10 @@ const STYLES = `
 }
 [data-vibeui-block="avatar-039"]{
 container-type:inline-size;
-display:block;width:100%;overflow:hidden;
+display:block;width:100%;
+/* container-type отрывает ширину от содержимого: без нижней границы
+   блок схлопывается внутри flex-контейнера. */
+min-width:min(100%,16rem);overflow:hidden;
 border-radius:1rem;border:1px solid var(--vibeui-avatar-039-border);
 background:var(--vibeui-avatar-039-surface);color:var(--vibeui-avatar-039-fg);
 font-family:var(--vibeui-avatar-039-font);

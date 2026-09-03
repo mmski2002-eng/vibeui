@@ -40,7 +40,10 @@ const STYLES = `
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="select-015"]{color-scheme:dark}
 [data-vibeui-block="select-015"]{
 display:flex;flex-direction:column;gap:0.5rem;
-width:100%;max-width:22rem;box-sizing:border-box;padding:0.875rem;
+width:100%;
+/* container-type отрывает ширину от содержимого: без нижней границы
+   блок схлопывается внутри flex-контейнера. */
+min-width:min(100%,16rem);max-width:22rem;box-sizing:border-box;padding:0.875rem;
 background:var(--vibeui-select-015-surface);
 border:1px solid var(--vibeui-select-015-surface-border);border-radius:0.875rem;
 font-family:var(--vibeui-select-015-font);color:var(--vibeui-select-015-fg);

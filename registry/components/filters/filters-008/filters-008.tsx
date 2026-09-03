@@ -43,7 +43,10 @@ container-type:inline-size;
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="filters-008"]{color-scheme:dark}
 /* Подложки по умолчанию нет: свёртка ложится на фон страницы. */
 [data-vibeui-block="filters-008"]{
-display:block;width:100%;max-width:30rem;box-sizing:border-box;padding:0.75rem;
+display:block;width:100%;
+/* container-type отрывает ширину от содержимого: без нижней границы
+   блок схлопывается внутри flex-контейнера. */
+min-width:min(100%,16rem);max-width:30rem;box-sizing:border-box;padding:0.75rem;
 background:var(--vibeui-filters-008-surface);
 border:1px solid var(--vibeui-filters-008-shell);border-radius:0.875rem;
 font-family:var(--vibeui-filters-008-font);color:var(--vibeui-filters-008-fg);

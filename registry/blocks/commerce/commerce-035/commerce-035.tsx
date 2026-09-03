@@ -61,7 +61,13 @@ const STYLES = `
 --vibeui-commerce-035-hand:ui-rounded,"Segoe UI",system-ui,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="commerce-035"]{color-scheme:dark}
 [data-vibeui-block="commerce-035"]{
+/* container-type отрывает ширину от содержимого: без нижней границы
+   блок схлопывается внутри flex-контейнера. */
+min-width:min(100%,16rem);
 box-sizing:border-box;background:var(--vibeui-commerce-035-bg);
 border-radius:var(--vibeui-commerce-035-radius);
 color:var(--vibeui-commerce-035-fg);font-family:var(--vibeui-commerce-035-sans);

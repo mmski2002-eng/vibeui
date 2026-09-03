@@ -6,7 +6,9 @@
       "type": "registry:component",
       "title": "Каскадный выбор",
       "description": "Каскадный выбор: уровень за уровнем на нативных списках, следующий уровень появляется только после выбора на текущем.",
-      "categories": ["cascader"],
+      "categories": [
+        "cascader"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cascader-001-*. Клиентский: \"use client\" ради пути выбора. Каждый уровень — нативный select, поэтому на телефоне открывается системный выбор, а клавиатура работает без своего кода. Уровни считаются из дерева по текущему пути, лишние отбрасываются при смене верхнего уровня. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней.",
       "meta": {
-        "tags": ["cascader", "select", "tree", "form"],
+        "tags": [
+          "cascader",
+          "select",
+          "tree",
+          "form"
+        ],
         "ai": {
           "export": "Cascader001",
           "usage": "<Cascader001 label=\"Раздел\" tree={[{ label: \"Компоненты\", children: [{ label: \"Формы\" }] }]} />",
@@ -207,7 +214,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-cascader-001-* variables. Client-side: \"use client\" for the sake of the chosen path. Every level is a native select, so a phone opens the system picker and the keyboard works without any code of our own. The levels are computed from the tree along the current path, and the extra ones are dropped when an upper level changes. The theme comes from the surrounding color-scheme through light-dark(): the component has no surface of its own by default, it sits directly on the page background and darkens with it."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "placeholderText",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -215,7 +230,9 @@
       "type": "registry:component",
       "title": "Колонки уровней",
       "description": "Каскадный выбор колонками: три уровня дерева стоят рядом, выбранный родитель остаётся подсвеченным слева, а пустая колонка держит место подсказкой.",
-      "categories": ["cascader"],
+      "categories": [
+        "cascader"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -227,7 +244,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cascader-002-*. Клиентский: путь выбора живёт в useState. Колонки считаются из дерева по текущему пути, но сетка всегда держит три слота — при коротком пути слот занимает подсказка, поэтому панель не меняет ширину на каждый клик. Выбор в колонке обрезает путь до её уровня, поэтому устаревшие правые колонки исчезают сами. Высота сетки фиксирована, прокрутка своя у каждой колонки: иначе длинный уровень растягивает всю панель. Тема берётся из color-scheme окружения через light-dark(): подложки у панели по умолчанию нет, она лежит прямо на фоне страницы и темнеет вместе с ней.",
       "meta": {
-        "tags": ["cascader", "columns", "tree", "select"],
+        "tags": [
+          "cascader",
+          "columns",
+          "tree",
+          "select"
+        ],
         "ai": {
           "export": "Cascader002",
           "usage": "<Cascader002 heading=\"Раздел каталога\" accent=\"#4f46e5\" />",
@@ -432,7 +454,14 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-cascader-002-* variables. Client-side: the chosen path lives in useState. The columns are computed from the tree along the current path, but the grid always keeps three slots — on a short path a slot is taken by a hint, so the panel does not change width on every click. A pick in a column trims the path to that column's level, so stale columns on the right disappear by themselves. The grid height is fixed and every column scrolls on its own: otherwise a long level stretches the whole panel. The theme comes from the surrounding color-scheme through light-dark(): the panel has no surface of its own by default, it sits directly on the page background and darkens with it."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "heading",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -440,7 +469,9 @@
       "type": "registry:component",
       "title": "Вложенное выпадающее меню",
       "description": "Каскад как вложенное меню: ветка раскрывается панелью вправо на нативном HTML popover, без единой строки клиентского JavaScript.",
-      "categories": ["cascader"],
+      "categories": [
+        "cascader"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -452,7 +483,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cascader-003-*. Серверный: хуков нет, открытием управляет браузер через popover и popovertarget. Кнопка третьего уровня лежит внутри панели второго, поэтому браузер считает попoveры вложенными и не гасит родителя при открытии потомка. Положение панели держит CSS anchor positioning: имя якоря нельзя собрать на лету, поэтому правила для 24 слотов генерируются заранее, а ветка получает номер слота при рендере. Без поддержки якорей панель открывается по центру экрана — некрасиво, но кликабельно. Тема берётся из color-scheme окружения через light-dark(): подложки у меню по умолчанию нет, панели несут свою поверхность и темнеют вместе со страницей.",
       "meta": {
-        "tags": ["cascader", "menu", "popover", "no-js"],
+        "tags": [
+          "cascader",
+          "menu",
+          "popover",
+          "no-js"
+        ],
         "ai": {
           "export": "Cascader003",
           "usage": "<Cascader003 id=\"workspace-cascader\" heading=\"Настройки рабочего пространства\" accent=\"#7c3aed\" />",
@@ -641,7 +677,14 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-cascader-003-* variables. Server-side: no hooks, the opening is driven by the browser through popover and popovertarget. The third-level button lies inside the second-level panel, so the browser treats the popovers as nested and does not dismiss the parent when a descendant opens. The panel position is held by CSS anchor positioning: an anchor name cannot be assembled on the fly, so the rules for 24 slots are generated in advance and a branch is given its slot number at render time. Without anchor support the panel opens in the centre of the screen — ugly, but clickable. The theme comes from the surrounding color-scheme through light-dark(): the menu has no surface of its own by default, the panels carry their own surface and darken together with the page."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "heading",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -649,7 +692,9 @@
       "type": "registry:component",
       "title": "Пошаговый выбор",
       "description": "Каскад для узкого экрана: на панели всегда один уровень, шапка со стрелкой «назад», а направление съезда списка подсказывает, куда шагнул пользователь.",
-      "categories": ["cascader"],
+      "categories": [
+        "cascader"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -661,7 +706,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cascader-004-*. Клиентский: путь, направление перехода и выбранный лист живут в useState. Список перемонтируется по key из пути, поэтому CSS-анимация проигрывается заново на каждом шаге, а имя keyframes переключается атрибутом data-direction — вперёд список приезжает справа, назад слева. Кнопка «назад» отключена на верхнем уровне: неактивная цель честнее исчезнувшей, потому что шапка не меняет высоту. Тема берётся из color-scheme окружения через light-dark(): подложки у карточки по умолчанию нет, она лежит прямо на фоне страницы и темнеет вместе с ней.",
       "meta": {
-        "tags": ["cascader", "mobile", "stepper", "drill-down"],
+        "tags": [
+          "cascader",
+          "mobile",
+          "stepper",
+          "drill-down"
+        ],
         "ai": {
           "export": "Cascader004",
           "usage": "<Cascader004 heading=\"Куда доставить\" accent=\"#0ea5a4\" />",
@@ -839,7 +889,14 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-cascader-004-* variables. Client-side: the path, the step direction and the chosen leaf live in useState. The list is remounted by a key built from the path, so the CSS animation replays on every step, and the keyframes name is switched by the data-direction attribute — going forward the list arrives from the right, going back from the left. The «back» button is disabled on the top level: a disabled target is more honest than a vanished one, because the header does not change height. The theme comes from the surrounding color-scheme through light-dark(): the card has no surface of its own by default, it sits directly on the page background and darkens with it."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "heading",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -847,7 +904,9 @@
       "type": "registry:component",
       "title": "Крошки категорий",
       "description": "Выбор категории товара, где навигацию ведут хлебные крошки: пройденный путь висит сверху и кликается, а текущий уровень открывается плитками в две колонки.",
-      "categories": ["cascader"],
+      "categories": [
+        "cascader"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -859,7 +918,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cascader-005-*. Клиентский: путь и выбранный лист живут в useState. Крошки собираются из корневой подписи и пути, клик по крошке режет путь до её индекса — вернуться на два шага можно одним нажатием, а не серией «назад». Плитки в две колонки дают место второй строке с числом подкатегорий, поэтому видно, раскроется узел или он конечный. Кнопка подтверждения печатает путь целиком: лист без ветки над ним неоднозначен. Тема берётся из color-scheme окружения через light-dark(): подложки у панели по умолчанию нет, она лежит прямо на фоне страницы и темнеет вместе с ней.",
       "meta": {
-        "tags": ["cascader", "breadcrumb", "category", "commerce"],
+        "tags": [
+          "cascader",
+          "breadcrumb",
+          "category",
+          "commerce"
+        ],
         "ai": {
           "export": "Cascader005",
           "usage": "<Cascader005 rootLabel=\"Все товары\" submitLabel=\"Выбрать категорию\" />",
@@ -1062,7 +1126,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-cascader-005-* variables. Client-side: the path and the chosen leaf live in useState. The breadcrumbs are assembled from the root caption and the path, and clicking a crumb trims the path to its index — going back two steps takes one press instead of a series of «back». Tiles in two columns leave room for a second line with the number of subcategories, so it is visible whether a node opens or is final. The confirm button prints the whole path: a leaf without the branch above it is ambiguous. The theme comes from the surrounding color-scheme through light-dark(): the panel has no surface of its own by default, it sits directly on the page background and darkens with it."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "rootLabel",
+          "submitLabel",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -1070,7 +1142,9 @@
       "type": "registry:component",
       "title": "Поиск по дереву",
       "description": "Каскад с поиском по всему дереву сразу: результат показывает полный путь до узла и подсвечивает совпавшую часть названия.",
-      "categories": ["cascader"],
+      "categories": [
+        "cascader"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1082,7 +1156,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cascader-006-*. Клиентский: запрос и выбранный результат живут в useState, плоский список листьев считается один раз через useMemo. Поиск смотрит и на путь, и на имя листа, поэтому «инфра» находит узлы внутри ветки «Инфраструктура». Совпадение подсвечивается через <mark>, а под именем идёт путь: без него два одинаковых «Общие настройки» из разных веток неразличимы. Пустой запрос показывает все листья, а не пустоту. Тема берётся из color-scheme окружения через light-dark(): подложки у панели по умолчанию нет, она лежит прямо на фоне страницы и темнеет вместе с ней.",
       "meta": {
-        "tags": ["cascader", "search", "tree", "filter"],
+        "tags": [
+          "cascader",
+          "search",
+          "tree",
+          "filter"
+        ],
         "ai": {
           "export": "Cascader006",
           "usage": "<Cascader006 label=\"Раздел настроек\" placeholder=\"Искать по всем уровням\" />",
@@ -1285,7 +1364,16 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-cascader-006-* variables. Client-side: the query and the chosen result live in useState, and the flat list of leaves is computed once through useMemo. The search looks at both the path and the leaf name, so «infra» finds nodes inside the «Infrastructure» branch. A match is highlighted through <mark>, and the path runs under the name: without it two identical «General settings» from different branches are indistinguishable. An empty query shows every leaf rather than emptiness. The theme comes from the surrounding color-scheme through light-dark(): the panel has no surface of its own by default, it sits directly on the page background and darkens with it."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "placeholder",
+          "defaultQuery",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -1293,7 +1381,9 @@
       "type": "registry:component",
       "title": "Отмеченные ветви",
       "description": "Каскад с множественным выбором: галочка на родителе включает всю ветку, частичный выбор показан третьим состоянием, а итог собран чипами внизу.",
-      "categories": ["cascader"],
+      "categories": [
+        "cascader"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1305,7 +1395,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cascader-007-*. Клиентский: список выбранных ключей «родитель → ребёнок» живёт в useState. Родительская галочка не хранит своего состояния — checked и indeterminate вычисляются из детей, поэтому рассинхронизация невозможна. Третье состояние ставится ref-колбэком: у input.indeterminate нет HTML-атрибута. Строки подсвечиваются через :has(input:focus-visible), поэтому фокус виден на всей строке, а не на самом чекбоксе. Тема берётся из color-scheme окружения через light-dark(): подложки у панели по умолчанию нет, она лежит прямо на фоне страницы и темнеет вместе с ней.",
       "meta": {
-        "tags": ["cascader", "multiselect", "checkbox", "tree"],
+        "tags": [
+          "cascader",
+          "multiselect",
+          "checkbox",
+          "tree"
+        ],
         "ai": {
           "export": "Cascader007",
           "usage": "<Cascader007 heading=\"Направления рассылки\" accent=\"#4338ca\" />",
@@ -1408,15 +1503,26 @@
                 "groups": [
                   {
                     "label": "Engineering",
-                    "children": ["Frontend", "Backend", "Mobile"]
+                    "children": [
+                      "Frontend",
+                      "Backend",
+                      "Mobile"
+                    ]
                   },
                   {
                     "label": "Design",
-                    "children": ["Product", "Graphic"]
+                    "children": [
+                      "Product",
+                      "Graphic"
+                    ]
                   },
                   {
                     "label": "Marketing",
-                    "children": ["Content", "Performance", "Partnerships"]
+                    "children": [
+                      "Content",
+                      "Performance",
+                      "Partnerships"
+                    ]
                   }
                 ]
               }
@@ -1424,7 +1530,14 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-cascader-007-* variables. Client-side: the list of selected «parent → child» keys lives in useState. A parent checkbox holds no state of its own — checked and indeterminate are computed from the children, so they cannot fall out of sync. The third state is set by a ref callback: input.indeterminate has no HTML attribute. Rows are highlighted through :has(input:focus-visible), so focus is visible on the whole row rather than on the checkbox itself. The theme comes from the surrounding color-scheme through light-dark(): the panel has no surface of its own by default, it sits directly on the page background and darkens with it."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "heading",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -1432,7 +1545,9 @@
       "type": "registry:component",
       "title": "Дерево на details",
       "description": "Дерево каскада на нативных details и radio: уровни раскрываются без JavaScript, а выбранная ветка подсвечивается по всей глубине через :has().",
-      "categories": ["cascader"],
+      "categories": [
+        "cascader"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1444,7 +1559,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cascader-008-*. Серверный: хуков нет, раскрытие уровней ведёт нативный details, выбор — radio с общим именем, поэтому дерево уходит обычной формой даже без JavaScript. Правило details:has(input:checked) > summary подсвечивает всю цепочку родителей: при свёрнутых уровнях иначе не видно, где стоит отметка. Заголовок сделан абзацем, а не legend: legend с float ломает поток соседних flex-детей. Тема берётся из color-scheme окружения через light-dark(): подложки у панели по умолчанию нет, она лежит прямо на фоне страницы и темнеет вместе с ней.",
       "meta": {
-        "tags": ["cascader", "details", "no-js", "form"],
+        "tags": [
+          "cascader",
+          "details",
+          "no-js",
+          "form"
+        ],
         "ai": {
           "export": "Cascader008",
           "usage": "<Cascader008 name=\"destination\" heading=\"Куда положить файл\" />",
@@ -1618,7 +1738,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-cascader-008-* variables. Server-side: no hooks, the levels are opened by a native details and the choice is made by radios sharing one name, so the tree submits as an ordinary form even without JavaScript. The rule details:has(input:checked) > summary highlights the whole chain of parents: with collapsed levels there is otherwise no way to see where the tick is. The heading is a paragraph rather than a legend: a floated legend breaks the flow of neighbouring flex children. The theme comes from the surrounding color-scheme through light-dark(): the panel has no surface of its own by default, it sits directly on the page background and darkens with it."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "name",
+          "heading",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -1626,7 +1754,9 @@
       "type": "registry:component",
       "title": "Выбор папки",
       "description": "Каскадный выбор папки для перемещения файла: целью может быть любой уровень, строка «наверх» ведёт назад, а папка-источник заблокирована.",
-      "categories": ["cascader"],
+      "categories": [
+        "cascader"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1638,7 +1768,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cascader-009-*. Клиентский: текущий путь живёт в useState. В отличие от обычного каскада целью здесь может быть промежуточный узел, поэтому кнопка действия активна на каждом шаге и всегда называет текущую папку. Возврат сделан отдельной строкой списка, а не крошкой: в файловых диалогах это привычный жест. Заблокированная папка остаётся видимой с подписью «источник» — исчезнувшая строка читается как потеря данных. Тема берётся из color-scheme окружения через light-dark(): подложки у панели по умолчанию нет, она лежит прямо на фоне страницы и темнеет вместе с ней.",
       "meta": {
-        "tags": ["cascader", "folders", "picker", "files"],
+        "tags": [
+          "cascader",
+          "folders",
+          "picker",
+          "files"
+        ],
         "ai": {
           "export": "Cascader009",
           "usage": "<Cascader009 fileName=\"отчёт-за-квартал.pdf\" actionLabel=\"Переместить в\" />",
@@ -1812,7 +1947,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-cascader-009-* variables. Client-side: the current path lives in useState. Unlike an ordinary cascader, the target here can be an intermediate node, so the action button is enabled at every step and always names the current folder. Going back is a separate list row rather than a crumb: in file dialogs that is the familiar gesture. A locked folder stays visible with the «source» caption — a vanished row reads as lost data. The theme comes from the surrounding color-scheme through light-dark(): the panel has no surface of its own by default, it sits directly on the page background and darkens with it."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "fileName",
+          "actionLabel",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -1820,7 +1963,9 @@
       "type": "registry:component",
       "title": "Оргструктура",
       "description": "Оргструктура каскадом из трёх горизонтальных лент: отдел, команда и человек лежат отдельными рядами пилюль, а выбранный человек уезжает в карточку.",
-      "categories": ["cascader"],
+      "categories": [
+        "cascader"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1832,7 +1977,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cascader-010-*. Клиентский: индексы выбранных отдела, команды и человека живут в useState. Уровни разложены горизонтальными лентами с прокруткой, поэтому каскад не требует высоты под три списка и читается слева направо. Смена ленты выше сбрасывает выбор ниже — иначе на экране остаётся человек из другой команды. Выбранный человек показан карточкой: в пилюлю не помещаются роль и путь до неё. Тема берётся из color-scheme окружения через light-dark(): подложки у панели по умолчанию нет, она лежит прямо на фоне страницы и темнеет вместе с ней.",
       "meta": {
-        "tags": ["cascader", "org-chart", "people", "chips"],
+        "tags": [
+          "cascader",
+          "org-chart",
+          "people",
+          "chips"
+        ],
         "ai": {
           "export": "Cascader010",
           "usage": "<Cascader010 heading=\"Кому назначить задачу\" accent=\"#a21caf\" />",
@@ -2019,7 +2169,14 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-cascader-010-* variables. Client-side: the indices of the chosen department, team and person live in useState. The levels are laid out as horizontal rails with scrolling, so the cascader needs no height for three lists and reads from left to right. Changing a rail above resets the selection below — otherwise a person from another team stays on screen. The chosen person is shown as a card: a pill has no room for the role and the path down to it. The theme comes from the surrounding color-scheme through light-dark(): the panel has no surface of its own by default, it sits directly on the page background and darkens with it."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "heading",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -2027,7 +2184,9 @@
       "type": "registry:component",
       "title": "Уровни со счётчиками",
       "description": "Каскад со счётчиками: у каждого узла стоит число записей и полоса его доли от текущего уровня, поэтому видно, какую ветку вообще стоит раскрывать.",
-      "categories": ["cascader"],
+      "categories": [
+        "cascader"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2039,7 +2198,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cascader-011-*. Клиентский: текущий путь живёт в useState. Доля считается от суммы текущего уровня, а не от глобального максимума: иначе на глубине все полосы схлопываются в ниточки. Ширина полосы передаётся локальной переменной --vibeui-cascader-011-share в inline-стиле — это динамическое значение, классом его не выразить. Строка выбирается только при наличии детей, лист помечен подписью «последний уровень». Тема берётся из color-scheme окружения через light-dark(): подложки у панели по умолчанию нет, она лежит прямо на фоне страницы и темнеет вместе с ней.",
       "meta": {
-        "tags": ["cascader", "counters", "analytics", "drill-down"],
+        "tags": [
+          "cascader",
+          "counters",
+          "analytics",
+          "drill-down"
+        ],
         "ai": {
           "export": "Cascader011",
           "usage": "<Cascader011 heading=\"Разбор обращений\" unit=\"обращений\" />",
@@ -2218,7 +2382,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-cascader-011-* variables. Client-side: the current path lives in useState. The share is measured against the total of the current level rather than a global maximum: deeper down every bar would otherwise collapse to a thread. The bar width is passed through the local --vibeui-cascader-011-share variable in an inline style — it is a dynamic value and cannot be expressed with a class. A row is selectable only when it has children, and a leaf is marked with the «final level» caption. The theme comes from the surrounding color-scheme through light-dark(): the panel has no surface of its own by default, it sits directly on the page background and darkens with it."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "heading",
+          "unit",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -2226,7 +2398,9 @@
       "type": "registry:component",
       "title": "Ленивая подгрузка уровня",
       "description": "Каскад с ленивой подгрузкой: следующий уровень приходит с задержкой, а на его месте стоят скелетоны той же высоты, что и будущие строки.",
-      "categories": ["cascader"],
+      "categories": [
+        "cascader"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2238,7 +2412,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cascader-012-*. Клиентский: выбранная ветка и лист живут в useState, а флаг загрузки выведен сравнением «что показано» с «что выбрано» — setState в теле эффекта не вызывается и лишнего рендера нет. Задержка эмулирует запрос через setTimeout в useEffect, таймер снимается в cleanup: без этого быстрые переключения перезаписывают друг друга и в списке оказывается ветка, которую уже никто не выбирал. Скелетон повторяет высоту будущей строки, поэтому панель не прыгает при приходе данных, а сам список помечен aria-busy — скринридер объявляет загрузку, а не молчит. Тема берётся из color-scheme окружения через light-dark(): подложки у панели по умолчанию нет, она лежит прямо на фоне страницы и темнеет вместе с ней, включая заливку скелетона.",
       "meta": {
-        "tags": ["cascader", "lazy", "loading", "skeleton"],
+        "tags": [
+          "cascader",
+          "lazy",
+          "loading",
+          "skeleton"
+        ],
         "ai": {
           "export": "Cascader012",
           "usage": "<Cascader012 heading=\"Регион и город\" delay={700} />",
@@ -2377,7 +2556,11 @@
                   },
                   {
                     "label": "Urals",
-                    "children": ["Yekaterinburg", "Chelyabinsk", "Perm"]
+                    "children": [
+                      "Yekaterinburg",
+                      "Chelyabinsk",
+                      "Perm"
+                    ]
                   },
                   {
                     "label": "Siberia",
@@ -2394,7 +2577,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-cascader-012-* variables. Client-side: the chosen branch and leaf live in useState, while the loading flag is derived by comparing «what is shown» with «what is chosen» — setState is never called in the body of the effect and there is no extra render. The delay emulates a request through setTimeout inside useEffect, and the timer is cleared in the cleanup: without that, fast switching overwrites itself and the list ends up holding a branch nobody is on any more. The skeleton repeats the height of the future row, so the panel does not jump when the data arrives, and the list itself is marked aria-busy — a screen reader announces the loading instead of staying silent. The theme comes from the surrounding color-scheme through light-dark(): the panel has no surface of its own by default, it sits directly on the page background and darkens with it, the skeleton fill included."
           }
         },
-        "cardControls": ["delay", "accent", "background"]
+        "cardControls": [
+          "delay",
+          "heading",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -2402,7 +2593,9 @@
       "type": "registry:component",
       "title": "Зоны доставки",
       "description": "Каскадный выбор региона доставки, где на конечном уровне сразу видны цена и срок: зоны сравнивают глазами, а не узнают стоимость на шаге оплаты.",
-      "categories": ["cascader"],
+      "categories": [
+        "cascader"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2414,7 +2607,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-cascader-013-*. Клиентский: регион и зона живут в useState. Раскладка — grid 9rem + 1fr, обе колонки прокручиваются независимо. Строка конечного уровня сделана вложенной grid-сеткой из трёх ячеек: название и цена в одну строку, срок доставки во вторую через grid-column: 1 / -1 — так цена всегда прижата вправо и выравнивается по столбцу. Смена региона обнуляет зону, поэтому в итоге не остаётся зоны из другого региона. Левая колонка помечена aria-expanded (раскрывает правую), правая — role=\"listbox\" с role=\"option\" на кнопках. Итог внизу объявляется через aria-live и повторяет и путь, и цену.",
       "meta": {
-        "tags": ["cascader", "delivery", "pricing", "checkout"],
+        "tags": [
+          "cascader",
+          "delivery",
+          "pricing",
+          "checkout"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2603,7 +2801,12 @@
             "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-cascader-013-* variables. Client-side: the region and the zone live in useState. The layout is a 9rem + 1fr grid and both columns scroll independently. A leaf row is a nested grid of three cells: the name and the price on one line, the lead time on the second through grid-column: 1 / -1 — that way the price is always pushed to the right and lines up in a column. Changing the region resets the zone, so no zone from another region survives in the result. The left column is marked aria-expanded (it expands the right one), and the right one is role=\"listbox\" with role=\"option\" on the buttons. The summary at the bottom is announced through aria-live and repeats both the path and the price."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "currency",
+          "defaultZone",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2611,7 +2814,9 @@
       "type": "registry:component",
       "title": "План счетов",
       "description": "Выбор счёта в плане счетов: код собирается сегмент за сегментом, невыбранные части показаны точками, а проводку нельзя повесить на группу счетов.",
-      "categories": ["cascader"],
+      "categories": [
+        "cascader"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2623,7 +2828,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-cascader-014-*. Клиентский: путь по дереву и выбранный код живут в useState. Дерево описано рекурсивным типом с полями code, name, children и archived; текущий уровень вычисляется проходом по path на каждом рендере, поэтому отдельного состояния «текущие узлы» нет и рассинхрона не бывает. Наверху стоит собранный код в моноширинном шрифте: незаполненные сегменты показаны точками через <i>, поэтому форма кода видна заранее. Хлебные крошки — кнопки, возвращающие путь до нужной глубины. Узлы с детьми открывают следующий уровень, листья выбираются и помечаются aria-current; архивные счета получают нативный disabled.",
       "meta": {
-        "tags": ["cascader", "accounting", "codes", "tree"],
+        "tags": [
+          "cascader",
+          "accounting",
+          "codes",
+          "tree"
+        ],
         "ai": {
           "export": "Cascader014",
           "usage": "<Cascader014 label=\"Счёт учёта\" defaultPath={[\"51\", \"01\"]} />",
@@ -2816,7 +3026,10 @@
                     ]
                   }
                 ],
-                "defaultPath": ["51", "01"],
+                "defaultPath": [
+                  "51",
+                  "01"
+                ],
                 "rootLabel": "Chart of accounts",
                 "listLabel": "Accounts at this level",
                 "archivedText": " · archived",
@@ -2827,7 +3040,14 @@
             "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-cascader-014-* variables. Client-side: the path through the tree and the chosen code live in useState. The tree is described by a recursive type with the fields code, name, children and archived; the current level is computed by walking path on every render, so there is no separate «current nodes» state and nothing can fall out of sync. At the top sits the assembled code in a monospace font: unfilled segments are shown as dots through <i>, so the shape of the code is visible in advance. The breadcrumbs are buttons that return the path to the required depth. Nodes with children open the next level, leaves are selectable and marked with aria-current, and archived accounts get a native disabled."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -2835,7 +3055,9 @@
       "type": "registry:component",
       "title": "Выбор рубрики",
       "description": "Рубрика объявления тремя нативными списками: каскад работает системным выбором на телефоне, а смена верхнего уровня сбрасывает нижние.",
-      "categories": ["cascader"],
+      "categories": [
+        "cascader"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2847,7 +3069,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-cascader-015-*. Клиентский: путь по дереву живёт одним массивом в useState. Каждый уровень — нативный <select> со своей <label>, корень — <fieldset> с <legend>, поэтому вся группа объявляется формой. Смена уровня режет путь по глубине (path.slice(0, depth)) и дописывает новое значение, поэтому нижние уровни сбрасываются автоматически, без ручной синхронизации. Уровень без вариантов не прячется, а получает disabled и подпись «уровень не нужен»: исчезающее поле сдвигает форму. Признак готовности учитывает, что у части категорий третьего уровня нет, — иначе кнопка публикации никогда бы не разблокировалась. Анимаций нет намеренно: нативный select рисует систему.",
       "meta": {
-        "tags": ["cascader", "select", "mobile", "classifieds"],
+        "tags": [
+          "cascader",
+          "select",
+          "mobile",
+          "classifieds"
+        ],
         "ai": {
           "export": "Cascader015",
           "usage": "<Cascader015 label=\"Рубрика объявления\" />",
@@ -3023,8 +3250,16 @@
                     ]
                   }
                 ],
-                "defaultPath": ["Vehicles", "Cars", "Used"],
-                "levelLabels": ["Section", "Category", "Sub-rubric"],
+                "defaultPath": [
+                  "Vehicles",
+                  "Cars",
+                  "Used"
+                ],
+                "levelLabels": [
+                  "Section",
+                  "Category",
+                  "Sub-rubric"
+                ],
                 "placeholderText": "not selected",
                 "emptyLevelText": "level not needed",
                 "readyText": "The ad will be filed under {path}",
@@ -3034,7 +3269,14 @@
             "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-cascader-015-* variables. Client-side: the path through the tree lives as a single array in useState. Every level is a native <select> with its own <label>, and the root is a <fieldset> with a <legend>, so the whole group is announced as a form. Changing a level trims the path by depth (path.slice(0, depth)) and appends the new value, so the lower levels reset automatically, without manual synchronisation. A level with no options is not hidden but gets disabled and the caption «level not needed»: a disappearing field shifts the form. The readiness flag accounts for the fact that some categories have no third level — otherwise the publish button would never unlock. There are deliberately no animations: a native select is drawn by the system."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -3042,7 +3284,9 @@
       "type": "registry:component",
       "title": "Выбор места",
       "description": "Выбор места «здание → этаж → комната», где каждый уровень оформлен по своей природе: вкладки, фишки и сетка плиток с вместимостью.",
-      "categories": ["cascader"],
+      "categories": [
+        "cascader"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3054,7 +3298,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-cascader-016-*. Клиентский: здание, этаж и комната живут в трёх useState, смена верхнего уровня обнуляет нижние. Уровни намеренно оформлены разными элементами: здания — role=\"tablist\" с aria-selected, этажи — кнопки-фишки с aria-pressed, комнаты — grid с auto-fill minmax(6.5rem, 1fr), который сам решает число колонок по ширине карточки, а не по ширине окна. Занятая комната получает нативный disabled и собственную подложку, вместимость подписана и продублирована в aria-label вместе со статусом. Итог внизу собирает полный путь и вместимость и объявляется через aria-live.",
       "meta": {
-        "tags": ["cascader", "rooms", "booking", "space"],
+        "tags": [
+          "cascader",
+          "rooms",
+          "booking",
+          "space"
+        ],
         "preview": {
           "width": "full"
         },
@@ -3245,7 +3494,11 @@
                   "floors": "Floors",
                   "rooms": "Rooms"
                 },
-                "seatsForms": ["seat", "seats", "seats"],
+                "seatsForms": [
+                  "seat",
+                  "seats",
+                  "seats"
+                ],
                 "busyText": "taken",
                 "emptyText": "No room selected"
               }
@@ -3253,7 +3506,12 @@
             "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-cascader-016-* variables. Client-side: the building, the floor and the room live in three useState hooks, and changing an upper level clears the lower ones. The levels are deliberately built from different elements: buildings are a role=\"tablist\" with aria-selected, floors are chip buttons with aria-pressed, and rooms are a grid with auto-fill minmax(6.5rem, 1fr) that decides the column count from the card's own width rather than from the window width. A busy room gets a native disabled and a surface of its own, and the capacity is captioned and duplicated in the aria-label together with the status. The summary at the bottom assembles the full path and the capacity and is announced through aria-live."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "defaultRoom",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -3261,7 +3519,9 @@
       "type": "registry:component",
       "title": "Выбор специальности",
       "description": "Выбор специальности врача: направление фишками, специальность списком с поиском, числом врачей и ближайшим приёмом; без свободных врачей выбрать нельзя.",
-      "categories": ["cascader"],
+      "categories": [
+        "cascader"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3273,7 +3533,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-cascader-017-*. Клиентский: направление, специальность и строка поиска живут в useState. Верхний уровень выведен фишками, потому что направлений всегда три-четыре, а нижний остался списком с фильтром: специальностей десятки, и колонка без поиска бесполезна. Фильтрация вынесена в useMemo и работает внутри выбранного направления, поэтому результаты не смешиваются между разделами. Специальность без врачей получает нативный disabled и объяснение «приём не ведётся» вместо исчезновения из списка. Поле поиска — type=\"search\" с собственным aria-label, в котором названо текущее направление.",
       "meta": {
-        "tags": ["cascader", "clinic", "booking", "search"],
+        "tags": [
+          "cascader",
+          "clinic",
+          "booking",
+          "search"
+        ],
         "ai": {
           "export": "Cascader017",
           "usage": "<Cascader017 defaultBranch=\"Взрослым\" label=\"Специальность врача\" />",
@@ -3447,7 +3712,11 @@
                 "listLabel": "Specialities: {branch}",
                 "emptyText": "Nothing found in this branch",
                 "noDoctorsText": "not seeing patients",
-                "doctorsForms": ["doctor", "doctors", "doctors"],
+                "doctorsForms": [
+                  "doctor",
+                  "doctors",
+                  "doctors"
+                ],
                 "nearestText": "nearest appointment {date}",
                 "footText": "Booking: {path}",
                 "footEmptyText": "No speciality selected"
@@ -3456,7 +3725,14 @@
             "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-cascader-017-* variables. Client-side: the branch, the speciality and the search string live in useState. The upper level is rendered as chips because there are always three or four branches, while the lower one stayed a list with a filter: specialities run into dozens and a column without search is useless. Filtering is moved into useMemo and works inside the selected branch, so results from different sections do not mix. A speciality with no doctors gets a native disabled and the explanation «not seeing patients» instead of disappearing from the list. The search field is a type=\"search\" with an aria-label of its own that names the current branch."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -3464,7 +3740,9 @@
       "type": "registry:component",
       "title": "Колонки с прилипанием",
       "description": "Каскадер узлов оборудования, где колонки уровней живут в полосе со scroll-snap: на узкой ширине они прокручиваются, а не ломаются в столбик.",
-      "categories": ["cascader"],
+      "categories": [
+        "cascader"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3476,7 +3754,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-cascader-018-*. Клиентский: путь по дереву живёт одним массивом в useState. Колонки не хранятся в состоянии, а собираются проходом по path на каждом рендере, поэтому выбор на верхнем уровне автоматически отсекает лишние колонки. Полоса колонок — flex с overflow-x и scroll-snap-type: x mandatory, каждая колонка фиксированной ширины 9.5rem со scroll-snap-align: start, поэтому на телефоне колонки листаются как страницы, а не сжимаются в нечитаемые полоски. Заголовок уровня прилипает через position: sticky. Статус узла показан точкой и продублирован словами в aria-label.",
       "meta": {
-        "tags": ["cascader", "equipment", "scroll-snap", "status"],
+        "tags": [
+          "cascader",
+          "equipment",
+          "scroll-snap",
+          "status"
+        ],
         "ai": {
           "export": "Cascader018",
           "usage": "<Cascader018 label=\"Узел оборудования\" />",
@@ -3660,8 +3943,15 @@
                     ]
                   }
                 ],
-                "defaultPath": ["Assembly shop", "Line A1"],
-                "levelLabels": ["Shop", "Line", "Node"],
+                "defaultPath": [
+                  "Assembly shop",
+                  "Line A1"
+                ],
+                "levelLabels": [
+                  "Shop",
+                  "Line",
+                  "Node"
+                ],
                 "levelFallback": "Level {n}",
                 "statusText": {
                   "ok": "running",
@@ -3674,7 +3964,14 @@
             "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-cascader-018-* variables. Client-side: the path through the tree lives as a single array in useState. The columns are not kept in state but assembled by walking path on every render, so a choice at an upper level cuts off the extra columns automatically. The column strip is a flex with overflow-x and scroll-snap-type: x mandatory, every column a fixed 9.5rem wide with scroll-snap-align: start, so on a phone the columns page like slides rather than squeezing into unreadable strips. The level heading sticks through position: sticky. A node's status is shown by a dot and duplicated in words in the aria-label."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -3682,7 +3979,9 @@
       "type": "registry:component",
       "title": "Поиск по коду",
       "description": "Выбор кода классификатора поиском: цифровой запрос ищет по началу кода, текстовый — по названию, а каждая найденная строка показывает свой путь в иерархии.",
-      "categories": ["cascader"],
+      "categories": [
+        "cascader"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3694,7 +3993,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-cascader-019-*. Клиентский: запрос и выбранный код живут в useState. Ключевое решение в useMemo: если запрос состоит только из цифр и точек, поиск идёт по началу кода (startsWith), а не по вхождению — иначе запрос «62» вытащит посторонний код вида 47.62; текстовый запрос ищется и в названии, и в пути. Каждая строка результата — grid из трёх ячеек: код моноширинным шрифтом, название и путь через grid-column, поэтому иерархия видна прямо в результатах и не требует отдельного дерева. Подсказка под полем связана через aria-describedby, список помечен role=\"listbox\", строки — role=\"option\".",
       "meta": {
-        "tags": ["cascader", "classifier", "code", "search"],
+        "tags": [
+          "cascader",
+          "classifier",
+          "code",
+          "search"
+        ],
         "preview": {
           "width": "full"
         },
@@ -3851,12 +4155,18 @@
                   {
                     "code": "47.91",
                     "name": "Retail sale by mail order or over the internet",
-                    "path": ["G Trade", "47 Retail trade"]
+                    "path": [
+                      "G Trade",
+                      "47 Retail trade"
+                    ]
                   },
                   {
                     "code": "47.99",
                     "name": "Other retail sale not in stores",
-                    "path": ["G Trade", "47 Retail trade"]
+                    "path": [
+                      "G Trade",
+                      "47 Retail trade"
+                    ]
                   },
                   {
                     "code": "70.22",
@@ -3877,7 +4187,12 @@
             "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-cascader-019-* variables. Client-side: the query and the chosen code live in useState. The key decision sits in useMemo: if the query consists only of digits and dots, the search matches the beginning of the code (startsWith) rather than any occurrence — otherwise the query «62» would drag in an unrelated code such as 47.62; a textual query is matched against both the name and the path. Every result row is a grid of three cells: the code in a monospace font, the name, and the path through grid-column, so the hierarchy is visible right in the results and needs no separate tree. The hint under the field is tied through aria-describedby, the list is marked role=\"listbox\" and the rows role=\"option\"."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "defaultCode",
+          "placeholder",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -3885,7 +4200,9 @@
       "type": "registry:component",
       "title": "Поле с полным путём",
       "description": "Каскадер, который после выбора держит в поле весь путь, а не последний уровень: длинный путь обрезается слева, поэтому конец всегда виден.",
-      "categories": ["cascader"],
+      "categories": [
+        "cascader"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3897,7 +4214,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-cascader-020-*. Клиентский: выбранный путь, открытость панели и курсор обхода дерева живут в отдельных useState — курсор специально отделён от результата, поэтому хождение по уровням не портит уже выбранное значение, пока не дойдёт до листа. Обрезка пути слева сделана CSS: у строки direction: rtl вместе с text-overflow: ellipsis переносит многоточие в начало, а unicode-bidi: plaintext оставляет сам текст в естественном порядке. Это подстраивается под реальную ширину поля, в отличие от обрезки по числу символов. Поле — кнопка с aria-expanded, aria-controls и title с полным путём; подпись связана через aria-labelledby.",
       "meta": {
-        "tags": ["cascader", "path", "truncation", "field"],
+        "tags": [
+          "cascader",
+          "path",
+          "truncation",
+          "field"
+        ],
         "ai": {
           "export": "Cascader020",
           "usage": "<Cascader020 separator=\" / \" label=\"Категория товара\" />",
@@ -4084,7 +4406,15 @@
             "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-cascader-020-* variables. Client-side: the chosen path, the panel's open state and the tree-browsing cursor live in separate useState hooks — the cursor is deliberately kept apart from the result, so walking the levels does not spoil the already chosen value until it reaches a leaf. Truncating the path on the left is done in CSS: direction: rtl on the line together with text-overflow: ellipsis moves the ellipsis to the beginning, while unicode-bidi: plaintext leaves the text itself in its natural order. That adapts to the real width of the field, unlike truncation by character count. The field is a button with aria-expanded, aria-controls and a title holding the full path; the caption is tied through aria-labelledby."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "separator",
+          "label",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     }
   ]

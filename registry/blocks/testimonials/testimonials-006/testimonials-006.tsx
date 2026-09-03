@@ -33,6 +33,9 @@ const STYLES = `
 container-type:inline-size;
 }
 [data-vibeui-block="testimonials-006"]{
+/* container-type отрывает ширину от содержимого: без нижней границы
+   блок схлопывается внутри flex-контейнера. */
+min-width:min(100%,16rem);
 display:block;background:var(--vibeui-testimonials-006-bg);color:var(--vibeui-testimonials-006-ink);
 font-family:var(--vibeui-testimonials-006-font);
 }

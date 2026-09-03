@@ -6,7 +6,9 @@
       "type": "registry:component",
       "title": "Карточки-переключатели",
       "description": "Выбор одного варианта карточками: кликабельна вся карточка, а не кружок в шестнадцать пикселей.",
-      "categories": ["radio-group"],
+      "categories": [
+        "radio-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-radio-001-*. Серверный: хуков нет, состояние держат радиокнопки. Группа собрана на fieldset с legend, поэтому вопрос объявляется перед вариантами. Легенда прижата float, иначе она садится на рамку fieldset и обрезается.",
       "meta": {
-        "tags": ["radio", "choice", "pricing", "form"],
+        "tags": [
+          "radio",
+          "choice",
+          "pricing",
+          "form"
+        ],
         "ai": {
           "export": "Radio001",
           "usage": "<Radio001 options={[{ value: \"year\", label: \"На год\", price: \"5 900 ₽\" }]} defaultValue=\"year\" />",
@@ -61,7 +68,11 @@
             "label": "Выбрано",
             "type": "select",
             "default": "year",
-            "options": ["month", "year", "team"]
+            "options": [
+              "month",
+              "year",
+              "team"
+            ]
           },
           {
             "prop": "accent",
@@ -151,7 +162,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-radio-001-* variables. Server-side: there are no hooks, the radio buttons hold the state. The group is built on a fieldset with a legend, so the question is announced before the options. The legend is pinned with float, otherwise it sits on the fieldset border and gets clipped."
           }
         },
-        "cardControls": ["defaultValue", "accent", "background"]
+        "cardControls": [
+          "legend",
+          "defaultValue",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -159,7 +178,9 @@
       "type": "registry:component",
       "title": "Простые переключатели",
       "description": "Самая простая радиогруппа: вопрос и варианты без карточек и рамок, а точка внутри кружка нарисована внутренней тенью, а не отдельным узлом.",
-      "categories": ["radio-group"],
+      "categories": [
+        "radio-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -171,7 +192,12 @@
       ],
       "docs": "Серверный компонент на fieldset с legend: скринридер объявляет вопрос перед вариантами. Кружок собран из appearance:none и рамки, отметка — радиальный градиент в фоне самого input'а, поэтому лишнего span не нужно и точка не съезжает при изменении размера шрифта. Легенда прижата float:left, список получает clear:both. Палитра в --vibeui-radio-002-* переведена на light-dark(): компонент следует color-scheme страницы, собственной подложки по умолчанию не выкладывает. Зависимостей нет.",
       "meta": {
-        "tags": ["radio", "group", "form", "minimal"],
+        "tags": [
+          "radio",
+          "group",
+          "form",
+          "minimal"
+        ],
         "preview": {
           "width": "full"
         },
@@ -285,14 +311,23 @@
             "preview": {
               "props": {
                 "legend": "How should we reach you",
-                "options": ["Email", "Phone call", "Instant message"],
+                "options": [
+                  "Email",
+                  "Phone call",
+                  "Instant message"
+                ],
                 "defaultValue": "Phone call"
               }
             },
             "docs": "A server component built on a fieldset with a legend: a screen reader announces the question before the options. The circle is made from appearance:none and a border, and the mark is a radial gradient in the input's own background, so no extra span is needed and the dot does not drift when the font size changes. The legend is pinned with float:left, the list gets clear:both. The --vibeui-radio-002-* palette is built on light-dark(): the component follows the page color-scheme and lays no surface of its own by default. There are no dependencies."
           }
         },
-        "cardControls": ["defaultValue", "accent", "background"]
+        "cardControls": [
+          "legend",
+          "defaultValue",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -300,7 +335,9 @@
       "type": "registry:component",
       "title": "Карточки выбора тарифа",
       "description": "Выбор тарифа плитками: цена крупно, список возможностей под ней, бейдж у популярного варианта и галочка в углу вместо кружка радио.",
-      "categories": ["radio-group"],
+      "categories": [
+        "radio-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -312,7 +349,12 @@
       ],
       "docs": "Серверный компонент на fieldset с legend. Радио спрятано clip-path'ом, но остаётся в потоке фокуса — оно держит клавиатуру, группировку и отправку формы, а роль отметки играет галочка в углу, переключаемая через :has(input:checked). Плитки разложены в grid с auto-fit, поэтому на узкой карточке каталога встают колонкой. Список возможностей собран из span'ов: содержимое label ограничено фразовым контентом и ul туда не помещается. Палитра в --vibeui-radio-003-*.",
       "meta": {
-        "tags": ["radio", "pricing", "cards", "plans"],
+        "tags": [
+          "radio",
+          "pricing",
+          "cards",
+          "plans"
+        ],
         "preview": {
           "width": "full"
         },
@@ -358,7 +400,11 @@
             "label": "Выбран тариф",
             "type": "select",
             "default": "pro",
-            "options": ["solo", "pro", "studio"]
+            "options": [
+              "solo",
+              "pro",
+              "studio"
+            ]
           },
           {
             "prop": "accent",
@@ -430,7 +476,10 @@
                     "name": "Solo",
                     "price": "$0",
                     "period": "forever",
-                    "features": ["3 projects", "7-day history"]
+                    "features": [
+                      "3 projects",
+                      "7-day history"
+                    ]
                   },
                   {
                     "value": "pro",
@@ -449,7 +498,10 @@
                     "name": "Studio",
                     "price": "$34",
                     "period": "per month",
-                    "features": ["Up to 20 members", "Shared billing"]
+                    "features": [
+                      "Up to 20 members",
+                      "Shared billing"
+                    ]
                   }
                 ]
               }
@@ -457,7 +509,12 @@
             "docs": "A server component built on a fieldset with a legend. The radio is hidden with clip-path but stays in the focus flow — it keeps the keyboard, the grouping and the form submission, while the role of the selection mark is played by a tick in the corner, toggled through :has(input:checked). The tiles are laid out in a grid with auto-fit, so on a narrow catalogue card they stack into a column. The feature list is assembled from spans: label content is limited to phrasing content and a ul does not belong there. The palette is in --vibeui-radio-003-*."
           }
         },
-        "cardControls": ["defaultValue", "accent", "background"]
+        "cardControls": [
+          "legend",
+          "defaultValue",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -465,7 +522,9 @@
       "type": "registry:component",
       "title": "Переключатели с пояснением",
       "description": "Радиогруппа с последствиями: под каждым вариантом стоит объяснение, справа короткая метка, а выбранная строка помечена цветной полосой слева.",
-      "categories": ["radio-group"],
+      "categories": [
+        "radio-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -477,7 +536,12 @@
       ],
       "docs": "Серверный компонент на fieldset с legend. Карточек нет: строки разделены inset-тенью соседнего правила, а выбранная получает заливку и полосу из псевдоэлемента — рамка вокруг разбила бы сплошной список. Отметка кружка нарисована радиальным градиентом в его фоне. Легенда прижата float:left, список получает clear:both. Палитра в --vibeui-radio-004-* переведена на light-dark(): компонент следует color-scheme страницы и подложки по умолчанию не выкладывает. Зависимостей нет.",
       "meta": {
-        "tags": ["radio", "description", "settings", "list"],
+        "tags": [
+          "radio",
+          "description",
+          "settings",
+          "list"
+        ],
         "preview": {
           "width": "full"
         },
@@ -523,7 +587,11 @@
             "label": "Выбрано",
             "type": "select",
             "default": "link",
-            "options": ["private", "link", "public"]
+            "options": [
+              "private",
+              "link",
+              "public"
+            ]
           },
           {
             "prop": "accent",
@@ -612,7 +680,12 @@
             "docs": "A server component built on a fieldset with a legend. There are no cards: the rows are separated by an inset shadow from an adjacent-sibling rule, and the selected one gets a fill and a bar from a pseudo-element — a frame around it would break the continuous list. The circle's mark is drawn with a radial gradient in its background. The legend is pinned with float:left, the list gets clear:both. The --vibeui-radio-004-* palette is built on light-dark(): the component follows the page color-scheme and lays no surface of its own by default. There are no dependencies."
           }
         },
-        "cardControls": ["defaultValue", "accent", "background"]
+        "cardControls": [
+          "legend",
+          "defaultValue",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -620,7 +693,9 @@
       "type": "registry:component",
       "title": "Сегментированный выбор",
       "description": "Горизонтальная радиогруппа сегментами: подложка выбранного не перерисовывается, а переезжает по кнопкам, и считает сдвиг чистый CSS через :has().",
-      "categories": ["radio-group"],
+      "categories": [
+        "radio-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -632,7 +707,12 @@
       ],
       "docs": "Серверный компонент: состояния в JS нет. Группа — grid с равными колонками по числу вариантов, поверх лежит одна плашка-индикатор шириной в колонку. Сдвиг задан правилами :has(label:nth-of-type(n) input:checked) — под каждый номер сегмента своё правило, поэтому поддерживается до пяти вариантов. Радио спрятано clip-path'ом, но остаётся доступным с клавиатуры: стрелки по-прежнему переключают группу. Палитра в --vibeui-radio-005-*.",
       "meta": {
-        "tags": ["radio", "segmented", "tabs", "css-only"],
+        "tags": [
+          "radio",
+          "segmented",
+          "tabs",
+          "css-only"
+        ],
         "preview": {
           "width": "full"
         },
@@ -678,7 +758,11 @@
             "label": "Выбран сегмент",
             "type": "select",
             "default": "Неделя",
-            "options": ["День", "Неделя", "Месяц"]
+            "options": [
+              "День",
+              "Неделя",
+              "Месяц"
+            ]
           },
           {
             "prop": "accent",
@@ -744,14 +828,23 @@
             "preview": {
               "props": {
                 "legend": "Report period",
-                "options": ["Day", "Week", "Month"],
+                "options": [
+                  "Day",
+                  "Week",
+                  "Month"
+                ],
                 "defaultValue": "Week"
               }
             },
             "docs": "A server component: there is no state in JS. The group is a grid with equal columns, one per option, and a single indicator pill one column wide lies on top of it. The shift is set by :has(label:nth-of-type(n) input:checked) rules — one rule per segment number, which is why up to five options are supported. The radio is hidden with clip-path but stays reachable from the keyboard: the arrow keys still switch the group. The palette is in --vibeui-radio-005-*."
           }
         },
-        "cardControls": ["defaultValue", "accent", "background"]
+        "cardControls": [
+          "legend",
+          "defaultValue",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -759,7 +852,9 @@
       "type": "registry:component",
       "title": "Плитки с иконками",
       "description": "Радиогруппа плитками с иконками: узнаваемая форма сканируется быстрее строки, а иконки нарисованы inline-SVG на currentColor, без иконочного пакета.",
-      "categories": ["radio-group"],
+      "categories": [
+        "radio-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -771,7 +866,12 @@
       ],
       "docs": "Серверный компонент на fieldset с legend. Плитки разложены в grid с auto-fit, поэтому на узкой карточке они перестраиваются сами. Иконки — inline-SVG с fill:none и stroke:currentColor: цвет плитки красит и рисунок, и подпись одним правилом. Радио спрятано clip-path'ом, но остаётся в потоке фокуса; выбранная плитка меняет рамку, фон и цвет через :has(input:checked). Палитра в --vibeui-radio-006-*.",
       "meta": {
-        "tags": ["radio", "icons", "tiles", "svg"],
+        "tags": [
+          "radio",
+          "icons",
+          "tiles",
+          "svg"
+        ],
         "preview": {
           "width": "full"
         },
@@ -817,7 +917,12 @@
             "label": "Выбрано",
             "type": "select",
             "default": "laptop",
-            "options": ["phone", "tablet", "laptop", "tv"]
+            "options": [
+              "phone",
+              "tablet",
+              "laptop",
+              "tv"
+            ]
           },
           {
             "prop": "accent",
@@ -910,7 +1015,12 @@
             "docs": "A server component built on a fieldset with a legend. The tiles are laid out in a grid with auto-fit, so on a narrow card they reflow on their own. The icons are inline SVG with fill:none and stroke:currentColor: the tile colour paints both the drawing and the caption through a single rule. The radio is hidden with clip-path but stays in the focus flow; the selected tile changes its border, background and colour through :has(input:checked). The palette is in --vibeui-radio-006-*."
           }
         },
-        "cardControls": ["defaultValue", "accent", "background"]
+        "cardControls": [
+          "legend",
+          "defaultValue",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -918,7 +1028,9 @@
       "type": "registry:component",
       "title": "Способ доставки",
       "description": "Выбор способа доставки: название и срок слева, цена отдельной колонкой справа с табличными цифрами, недоступный способ гаснет, но остаётся видимым.",
-      "categories": ["radio-group"],
+      "categories": [
+        "radio-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -930,7 +1042,12 @@
       ],
       "docs": "Серверный компонент на fieldset с legend. Цена вынесена в отдельную колонку с font-variant-numeric:tabular-nums, поэтому три строки сравниваются вертикально без чтения предложений. Бесплатная доставка подсвечена отдельной переменной, а недоступный способ помечен disabled на input'е и приглушён правилом :has(input:disabled). Отметка кружка нарисована радиальным градиентом в его фоне. Палитра в --vibeui-radio-007-* переведена на light-dark(): компонент следует color-scheme страницы и подложки по умолчанию не выкладывает.",
       "meta": {
-        "tags": ["radio", "delivery", "price", "checkout"],
+        "tags": [
+          "radio",
+          "delivery",
+          "price",
+          "checkout"
+        ],
         "preview": {
           "width": "full"
         },
@@ -977,7 +1094,11 @@
             "label": "Выбрано",
             "type": "select",
             "default": "courier",
-            "options": ["pickup", "courier", "express"]
+            "options": [
+              "pickup",
+              "courier",
+              "express"
+            ]
           },
           {
             "prop": "accent",
@@ -1080,7 +1201,12 @@
             "docs": "A server component built on a fieldset with a legend. The price is pulled into a column of its own with font-variant-numeric:tabular-nums, so three rows are compared vertically without reading the sentences. Free delivery is highlighted through a separate variable, and an unavailable method is marked disabled on the input and dimmed by a :has(input:disabled) rule. The circle's mark is drawn with a radial gradient in its background. The --vibeui-radio-007-* palette is built on light-dark(): the component follows the page color-scheme and lays no surface of its own by default."
           }
         },
-        "cardControls": ["defaultValue", "accent", "background"]
+        "cardControls": [
+          "legend",
+          "defaultValue",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1088,7 +1214,9 @@
       "type": "registry:component",
       "title": "Вариант «другое»",
       "description": "Радиогруппа с вариантом «другое»: поле для своего ответа стоит на месте всегда, но включается только после выбора последнего пункта.",
-      "categories": ["radio-group"],
+      "categories": [
+        "radio-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1100,7 +1228,12 @@
       ],
       "docs": "Клиентский компонент: useState хранит выбранный вариант и текст своего ответа. Поле не прячется, а выключается — исчезающее поле дёргает форму и скрывает саму возможность ответить словами; disabled заодно убирает его из обхода по Tab и не даёт отправить пустую строку. Счётчик символов появляется только при активном поле. Отметка кружка нарисована радиальным градиентом в его фоне. Палитра в --vibeui-radio-008-* переведена на light-dark(): компонент следует color-scheme страницы и подложки по умолчанию не выкладывает.",
       "meta": {
-        "tags": ["radio", "other", "form", "input"],
+        "tags": [
+          "radio",
+          "other",
+          "form",
+          "input"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1214,7 +1347,11 @@
             "preview": {
               "props": {
                 "legend": "How did you hear about us",
-                "options": ["Through friends", "Social media ad", "Web search"],
+                "options": [
+                  "Through friends",
+                  "Social media ad",
+                  "Web search"
+                ],
                 "otherLabel": "Other",
                 "placeholder": "Tell us in your own words",
                 "otherFieldLabel": "{label}: your own answer",
@@ -1224,7 +1361,12 @@
             "docs": "A client component: useState holds the selected option and the text of the custom answer. The field is not hidden but disabled — a vanishing field jolts the form and hides the very option of answering in words; disabled also takes it out of the Tab order and prevents an empty string from being submitted. The character counter appears only while the field is active. The circle's mark is drawn with a radial gradient in its background. The --vibeui-radio-008-* palette is built on light-dark(): the component follows the page color-scheme and lays no surface of its own by default."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "legend",
+          "placeholder",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1232,7 +1374,9 @@
       "type": "registry:component",
       "title": "Карточки пакетов",
       "description": "Выбор объёма упаковки карточками: сумма и цена за штуку в каждой, самый выгодный вариант помечен бейджем экономии в углу.",
-      "categories": ["radio-group"],
+      "categories": [
+        "radio-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1244,7 +1388,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-radio-009-*. Серверный: хуков нет, состояние держат радиокнопки. Радио остаётся видимым кружком слева от количества, а не спрятанным тиком, а самый выгодный набор отмечен бейджем в углу карточки.",
       "meta": {
-        "tags": ["radio", "pricing", "bundle", "form"],
+        "tags": [
+          "radio",
+          "pricing",
+          "bundle",
+          "form"
+        ],
         "ai": {
           "export": "Radio009",
           "usage": "<Radio009 bundles={[{ value: \"3\", qty: \"3 упаковки\", price: \"2 070 ₽\", perUnit: \"690 ₽ / шт\", save: \"-13%\" }]} defaultValue=\"3\" />",
@@ -1287,7 +1436,11 @@
             "label": "Выбран набор",
             "type": "select",
             "default": "3",
-            "options": ["1", "3", "6"]
+            "options": [
+              "1",
+              "3",
+              "6"
+            ]
           },
           {
             "prop": "accent",
@@ -1379,7 +1532,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-radio-009-* variables. Server-side: there are no hooks, the radio buttons hold the state. The radio stays a visible circle to the left of the quantity rather than a hidden tick, and the best-value pack is marked with a badge in the corner of the card."
           }
         },
-        "cardControls": ["defaultValue", "accent", "background"]
+        "cardControls": [
+          "legend",
+          "defaultValue",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -1387,7 +1548,9 @@
       "type": "registry:component",
       "title": "Переключатель вида",
       "description": "Сегментированный переключатель вида с иконками: каждый сегмент красится сам по себе через :has(), без общей подложки, которая переезжает между кнопками.",
-      "categories": ["radio-group"],
+      "categories": [
+        "radio-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1399,7 +1562,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-radio-010-*. Серверный: хуков нет, состояние держат радиокнопки. Иконки — inline-SVG с currentColor, без иконочного пакета. Каждый сегмент заливается независимо по :has(input:checked), поэтому раскладка не завязана на порядок и число вариантов.",
       "meta": {
-        "tags": ["radio", "segmented", "toggle", "form"],
+        "tags": [
+          "radio",
+          "segmented",
+          "toggle",
+          "form"
+        ],
         "ai": {
           "export": "Radio010",
           "usage": "<Radio010 options={[{ value: \"grid\", label: \"Плитки\", path: \"M4 4h7v7H4z\" }]} defaultValue=\"grid\" />",
@@ -1442,7 +1610,11 @@
             "label": "Выбран вид",
             "type": "select",
             "default": "grid",
-            "options": ["list", "grid", "table"]
+            "options": [
+              "list",
+              "grid",
+              "table"
+            ]
           },
           {
             "prop": "accent",
@@ -1529,7 +1701,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-radio-010-* variables. Server-side: there are no hooks, the radio buttons hold the state. The icons are inline SVG on currentColor, with no icon package. Every segment is filled independently through :has(input:checked), so the layout is not tied to the order or the number of options."
           }
         },
-        "cardControls": ["defaultValue", "accent", "background"]
+        "cardControls": [
+          "legend",
+          "defaultValue",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -1537,7 +1717,9 @@
       "type": "registry:component",
       "title": "Слот доставки",
       "description": "Выбор слота доставки, сгруппированного по дню: время и цена в каждой плашке, недоступный слот гаснет, но остаётся на месте.",
-      "categories": ["radio-group"],
+      "categories": [
+        "radio-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1549,7 +1731,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-radio-011-*. Серверный: хуков нет, состояние держат радиокнопки. Плоский массив слотов группируется по дню один раз при рендере обычной функцией — отдельная группировка не значит отдельные radio-группы, name у всех слотов общий.",
       "meta": {
-        "tags": ["radio", "delivery", "schedule", "form"],
+        "tags": [
+          "radio",
+          "delivery",
+          "schedule",
+          "form"
+        ],
         "ai": {
           "export": "Radio011",
           "usage": "<Radio011 slots={[{ value: \"today-1\", day: \"Сегодня\", time: \"18:00–20:00\", price: \"390 ₽\" }]} defaultValue=\"today-1\" />",
@@ -1593,7 +1780,12 @@
             "label": "Выбран слот",
             "type": "select",
             "default": "tomorrow-1",
-            "options": ["today-1", "today-2", "tomorrow-1", "later-1"]
+            "options": [
+              "today-1",
+              "today-2",
+              "tomorrow-1",
+              "later-1"
+            ]
           },
           {
             "prop": "accent",
@@ -1698,7 +1890,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-radio-011-* variables. Server-side: there are no hooks, the radio buttons hold the state. The flat array of slots is grouped by day once at render time by an ordinary function — separate grouping does not mean separate radio groups, the name is shared by every slot."
           }
         },
-        "cardControls": ["defaultValue", "accent", "background"]
+        "cardControls": [
+          "legend",
+          "defaultValue",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -1706,7 +1906,9 @@
       "type": "registry:component",
       "title": "Выбор цвета образцами",
       "description": "Выбор цвета образцами: кружок несёт сам цвет, выбранный отмечен двойным кольцом, значение цвета приходит инлайн-стилем как единственно оправданный случай.",
-      "categories": ["radio-group"],
+      "categories": [
+        "radio-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1718,7 +1920,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-radio-012-*. Серверный: хуков нет, состояние держат радиокнопки. Цвет образца передаётся инлайн-стилем: значение приходит из данных и не выражается заранее известным классом, это единственное оправданное исключение из правила про Tailwind-классы.",
       "meta": {
-        "tags": ["radio", "color", "swatch", "form"],
+        "tags": [
+          "radio",
+          "color",
+          "swatch",
+          "form"
+        ],
         "ai": {
           "export": "Radio012",
           "usage": "<Radio012 options={[{ value: \"blue\", label: \"Синий\", color: \"#2563eb\" }]} defaultValue=\"blue\" />",
@@ -1761,7 +1968,13 @@
             "label": "Выбран цвет",
             "type": "select",
             "default": "blue",
-            "options": ["black", "white", "blue", "olive", "terracotta"]
+            "options": [
+              "black",
+              "white",
+              "blue",
+              "olive",
+              "terracotta"
+            ]
           },
           {
             "prop": "accent",
@@ -1858,7 +2071,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-radio-012-* variables. Server-side: there are no hooks, the radio buttons hold the state. The swatch colour is passed as an inline style: the value comes from the data and cannot be expressed by a class known in advance, which is the one justified exception to the rule about Tailwind classes."
           }
         },
-        "cardControls": ["defaultValue", "accent", "background"]
+        "cardControls": [
+          "legend",
+          "defaultValue",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -1866,7 +2087,9 @@
       "type": "registry:component",
       "title": "Шкала оценки",
       "description": "Оценка по шкале от одного до пяти: пять кружков с цифрой в ряд и подписи полюсов под шкалой, без подписи у каждого деления.",
-      "categories": ["radio-group"],
+      "categories": [
+        "radio-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1878,7 +2101,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-radio-013-*. Серверный: хуков нет, состояние держат радиокнопки. Шкала фиксирована на пять делений: цифра внутри кружка и есть значение, а accessible-имя каждой кнопки уточнено через aria-label.",
       "meta": {
-        "tags": ["radio", "rating", "scale", "form"],
+        "tags": [
+          "radio",
+          "rating",
+          "scale",
+          "form"
+        ],
         "ai": {
           "export": "Radio013",
           "usage": "<Radio013 legend=\"Насколько вероятно, что вы порекомендуете нас?\" lowLabel=\"Маловероятно\" highLabel=\"Точно порекомендую\" defaultValue=\"5\" />",
@@ -1922,7 +2150,13 @@
             "label": "Выбрана оценка",
             "type": "select",
             "default": "4",
-            "options": ["1", "2", "3", "4", "5"]
+            "options": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5"
+            ]
           },
           {
             "prop": "accent",
@@ -1996,7 +2230,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-radio-013-* variables. Server-side: there are no hooks, the radio buttons hold the state. The scale is fixed at five marks: the digit inside the circle is the value itself, and every button's accessible name is refined through aria-label."
           }
         },
-        "cardControls": ["defaultValue", "accent", "background"]
+        "cardControls": [
+          "legend",
+          "defaultValue",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -2004,7 +2246,9 @@
       "type": "registry:component",
       "title": "Способ оплаты",
       "description": "Выбор способа оплаты списком: логотип-заглушка платёжной системы слева, название способа и дата списания под ним.",
-      "categories": ["radio-group"],
+      "categories": [
+        "radio-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2016,7 +2260,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-radio-014-*. Серверный: хуков нет, состояние держат радиокнопки. Логотип платёжной системы — заглушка (короткий код в рамке), а не векторная иконка; недоступный способ гаснет, но остаётся на месте.",
       "meta": {
-        "tags": ["radio", "payment", "checkout", "form"],
+        "tags": [
+          "radio",
+          "payment",
+          "checkout",
+          "form"
+        ],
         "ai": {
           "export": "Radio014",
           "usage": "<Radio014 methods={[{ value: \"visa\", brand: \"VISA\", name: \"Карта •••• 4412\", chargeDate: \"Спишется 5 сентября\" }]} defaultValue=\"visa\" />",
@@ -2059,7 +2308,12 @@
             "label": "Выбран способ",
             "type": "select",
             "default": "visa",
-            "options": ["visa", "mir", "sbp", "invoice"]
+            "options": [
+              "visa",
+              "mir",
+              "sbp",
+              "invoice"
+            ]
           },
           {
             "prop": "accent",
@@ -2156,7 +2410,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-radio-014-* variables. Server-side: there are no hooks, the radio buttons hold the state. The payment-system logo is a stand-in (a short code in a box) rather than a vector icon; an unavailable method dims but stays in place."
           }
         },
-        "cardControls": ["defaultValue", "accent", "background"]
+        "cardControls": [
+          "legend",
+          "defaultValue",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -2164,7 +2426,9 @@
       "type": "registry:component",
       "title": "Выбор темы миниатюрами",
       "description": "Выбор темы оформления миниатюрами: светлая, тёмная и системная — CSS-миниатюра шапки и строк контента вместо иконки или подписи.",
-      "categories": ["radio-group"],
+      "categories": [
+        "radio-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2176,7 +2440,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-radio-015-*. Серверный: хуков нет, состояние держат радиокнопки. Миниатюра нарисована в CSS — полоска шапки и две строки контента, у системной темы фон и элементы разделены пополам линейным градиентом.",
       "meta": {
-        "tags": ["radio", "theme", "appearance", "form"],
+        "tags": [
+          "radio",
+          "theme",
+          "appearance",
+          "form"
+        ],
         "ai": {
           "export": "Radio015",
           "usage": "<Radio015 defaultValue=\"dark\" />",
@@ -2218,7 +2487,11 @@
             "label": "Выбрана тема",
             "type": "select",
             "default": "system",
-            "options": ["light", "dark", "system"]
+            "options": [
+              "light",
+              "dark",
+              "system"
+            ]
           },
           {
             "prop": "accent",
@@ -2301,7 +2574,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-radio-015-* variables. Server-side: there are no hooks, the radio buttons hold the state. The thumbnail is drawn in CSS — a header bar and two content lines; on the system theme the background and the elements are split in half by a linear gradient."
           }
         },
-        "cardControls": ["defaultValue", "accent", "background"]
+        "cardControls": [
+          "legend",
+          "defaultValue",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -2309,7 +2590,9 @@
       "type": "registry:component",
       "title": "Сравнение тарифов",
       "description": "Выбор плана таблицей сравнения: рекомендованный вариант с меткой «Советуем» и общие строки возможностей с галочками по колонкам.",
-      "categories": ["radio-group"],
+      "categories": [
+        "radio-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2321,7 +2604,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-radio-016-*. Серверный: хуков нет, состояние держат радиокнопки. Таблица — одна CSS grid-сетка без вложенных строк: ширина колонок зависит от числа планов и передаётся инлайн-стилем на грид-контейнер, а ячейки шапки и тела идут одним списком, поэтому колонки совпадают без subgrid.",
       "meta": {
-        "tags": ["radio", "pricing", "comparison", "form"],
+        "tags": [
+          "radio",
+          "pricing",
+          "comparison",
+          "form"
+        ],
         "ai": {
           "export": "Radio016",
           "usage": "<Radio016 plans={[{ value: \"pro\", name: \"Расширенный\", price: \"1 590 ₽\", period: \"в месяц\", recommended: true }]} features={[{ label: \"Экспорт в PDF\", values: [false, true] }]} defaultValue=\"pro\" />",
@@ -2367,7 +2655,10 @@
             "label": "Выбран план",
             "type": "select",
             "default": "pro",
-            "options": ["basic", "pro"]
+            "options": [
+              "basic",
+              "pro"
+            ]
           },
           {
             "prop": "recommendedLabel",
@@ -2470,19 +2761,31 @@
                 "features": [
                   {
                     "label": "Up to 5 projects",
-                    "values": [true, true]
+                    "values": [
+                      true,
+                      true
+                    ]
                   },
                   {
                     "label": "Team collaboration",
-                    "values": [false, true]
+                    "values": [
+                      false,
+                      true
+                    ]
                   },
                   {
                     "label": "PDF export",
-                    "values": [false, true]
+                    "values": [
+                      false,
+                      true
+                    ]
                   },
                   {
                     "label": "Priority support",
-                    "values": [false, true]
+                    "values": [
+                      false,
+                      true
+                    ]
                   }
                 ]
               }
@@ -2490,7 +2793,16 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-radio-016-* variables. Server-side: there are no hooks, the radio buttons hold the state. The table is a single CSS grid with no nested rows: the column widths depend on the number of plans and are passed as an inline style on the grid container, while the header and body cells run as one list, so the columns line up without subgrid."
           }
         },
-        "cardControls": ["defaultValue", "accent", "background"]
+        "cardControls": [
+          "legend",
+          "defaultValue",
+          "recommendedLabel",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -2498,7 +2810,9 @@
       "type": "registry:component",
       "title": "Причина отмены",
       "description": "Причина отказа списком: готовые формулировки и вариант «другое» с textarea, включённым только после выбора последнего пункта.",
-      "categories": ["radio-group"],
+      "categories": [
+        "radio-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2510,7 +2824,12 @@
       ],
       "docs": "Клиентский компонент: useState хранит выбранную причину и текст своего ответа. Textarea не прячется, а выключается — исчезающее поле дёргает форму и скрывает саму возможность объяснить причину словами; disabled заодно убирает его из обхода по Tab. Счётчик символов появляется только при активном поле. Палитра в --vibeui-radio-017-*.",
       "meta": {
-        "tags": ["radio", "form", "feedback", "other"],
+        "tags": [
+          "radio",
+          "form",
+          "feedback",
+          "other"
+        ],
         "ai": {
           "export": "Radio017",
           "usage": "<Radio017 reasons={[\"Слишком дорого\", \"Редко пользуюсь\"]} defaultValue=\"Слишком дорого\" />",
@@ -2652,7 +2971,16 @@
             "docs": "A client component: useState holds the selected reason and the text of the custom answer. The textarea is not hidden but disabled — a vanishing field jolts the form and hides the very option of explaining the reason in words; disabled also takes it out of the Tab order. The character counter appears only while the field is active. The palette is in --vibeui-radio-017-*."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "legend",
+          "placeholder",
+          "otherLabel",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     }
   ]

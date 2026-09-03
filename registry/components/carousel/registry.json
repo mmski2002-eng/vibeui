@@ -6,7 +6,9 @@
       "type": "registry:component",
       "title": "Карусель с прилипанием",
       "description": "Карусель без единой строки JS: прокрутку держит scroll-snap, а точки внизу — обычные якорные ссылки на слайды.",
-      "categories": ["carousel"],
+      "categories": [
+        "carousel"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-carousel-001-*. Серверный компонент: useId нужен только для якорей. Лента прокручивается нативно со scroll-snap и scroll-behavior: smooth, точки — ссылки на id слайдов. Секция объявлена aria-roledescription=\"карусель\", слайды — aria-roledescription=\"слайд\" с номером в подписи.",
       "meta": {
-        "tags": ["carousel", "scroll-snap", "no-js", "gallery"],
+        "tags": [
+          "carousel",
+          "scroll-snap",
+          "no-js",
+          "gallery"
+        ],
         "preview": {
           "width": "full"
         },
@@ -162,7 +169,12 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "hint",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -170,7 +182,9 @@
       "type": "registry:component",
       "title": "Карточки с подглядыванием",
       "description": "Лента карточек, где следующая выглядывает за краем: обрезанная карточка — единственный честный сигнал, что список продолжается.",
-      "categories": ["carousel"],
+      "categories": [
+        "carousel"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -182,7 +196,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-carousel-002-*. Клиентский: \"use client\", ссылка на ленту через useRef. Стрелки вызывают scrollBy на 80% ширины кадра, а не на «одну карточку»: число карточек в кадре меняется от ширины. Ширина карточки задана процентами, поэтому следующая всегда выглядывает.",
       "meta": {
-        "tags": ["carousel", "cards", "scroll", "peek"],
+        "tags": [
+          "carousel",
+          "cards",
+          "scroll",
+          "peek"
+        ],
         "preview": {
           "width": "full"
         },
@@ -317,7 +336,11 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -325,7 +348,9 @@
       "type": "registry:component",
       "title": "Слайдер с миниатюрами",
       "description": "Слайдер с полосой миниатюр: она отвечает на вопрос «сколько ещё и что там», на который точки не отвечают.",
-      "categories": ["carousel"],
+      "categories": [
+        "carousel"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -337,7 +362,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-carousel-003-*. Клиентский: \"use client\". Слайды не удаляются из разметки, а прячутся атрибутом hidden, поэтому порядок чтения не рвётся. Активная миниатюра помечена aria-current и отличается непрозрачностью и обводкой. Оттенок сцены выводится из текущего слайда.",
       "meta": {
-        "tags": ["carousel", "slider", "thumbnails", "gallery"],
+        "tags": [
+          "carousel",
+          "slider",
+          "thumbnails",
+          "gallery"
+        ],
         "preview": {
           "width": "full"
         },
@@ -478,7 +508,12 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "counterText",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -486,7 +521,9 @@
       "type": "registry:component",
       "title": "Бегущая строка логотипов",
       "description": "Бегущая лента логотипов: список продублирован и сдвигается ровно на половину, поэтому шва между повторами не видно.",
-      "categories": ["carousel"],
+      "categories": [
+        "carousel"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -498,7 +535,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-carousel-004-*. Серверный: хуков нет. Список выводится дважды, вторая копия помечена aria-hidden, анимация сдвигает ленту на половину ширины — так повтор бесшовный. Края подтёрты mask-градиентом. При prefers-reduced-motion анимация выключается, а лента превращается в обычную прокрутку.",
       "meta": {
-        "tags": ["carousel", "marquee", "logos", "animation"],
+        "tags": [
+          "carousel",
+          "marquee",
+          "logos",
+          "animation"
+        ],
         "preview": {
           "width": "full"
         },
@@ -614,7 +656,11 @@
             }
           }
         },
-        "cardControls": ["duration", "background"]
+        "cardControls": [
+          "label",
+          "duration",
+          "background"
+        ]
       }
     },
     {
@@ -622,7 +668,9 @@
       "type": "registry:component",
       "title": "Слайдер отзывов",
       "description": "Отзывы по одному со стрелками на клавиатуре: высота держится по самому длинному, чтобы страница не дёргалась.",
-      "categories": ["carousel"],
+      "categories": [
+        "carousel"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -634,7 +682,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-carousel-005-*. Клиентский: \"use client\". Все отзывы лежат в одной ячейке грида, скрытые получают visibility: hidden — так высота считается по самому длинному и не прыгает. Стрелки влево-вправо листают, когда фокус внутри секции; область объявлена aria-live=\"polite\".",
       "meta": {
-        "tags": ["carousel", "reviews", "keyboard", "testimonials"],
+        "tags": [
+          "carousel",
+          "reviews",
+          "keyboard",
+          "testimonials"
+        ],
         "preview": {
           "width": "full"
         },
@@ -765,7 +818,11 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -773,7 +830,9 @@
       "type": "registry:component",
       "title": "Проигрыватель историй",
       "description": "Истории с полосками прогресса и паузой по наведению и фокусу: без паузы текст в них прочитать невозможно.",
-      "categories": ["carousel"],
+      "categories": [
+        "carousel"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -785,7 +844,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-carousel-006-*. Клиентский: \"use client\". Прогресс считается интервалом в 100 мс и хранится числом от 0 до 100; пауза живёт в ref, поэтому наведение не вызывает перерисовку. Половины кадра — кнопки «назад» и «вперёд» с именами. Оттенок фона берётся из текущей истории.",
       "meta": {
-        "tags": ["carousel", "stories", "autoplay", "progress"],
+        "tags": [
+          "carousel",
+          "stories",
+          "autoplay",
+          "progress"
+        ],
         "ai": {
           "export": "Carousel006",
           "usage": "<Carousel006 stories={stories} seconds={6} />",
@@ -910,7 +974,14 @@
             }
           }
         },
-        "cardControls": ["seconds"]
+        "cardControls": [
+          "seconds",
+          "label",
+          "hintText"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -918,7 +989,9 @@
       "type": "registry:component",
       "title": "Киноплёнка",
       "description": "Галерея-плёнка: в кадре сразу несколько снимков с подписями под ними — лента читается как обзор, а не как пролистывание.",
-      "categories": ["carousel"],
+      "categories": [
+        "carousel"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -930,7 +1003,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-carousel-007-*. Серверный: хуков нет. Корень объявлен контейнером, раскладка живёт на внутренней карточке: контейнерный запрос действует только на потомков. Кадр занимает треть ширины, в узкой колонке — половину. Привязка прокрутки мягкая (proximity), чтобы обзор не дёргался.",
       "meta": {
-        "tags": ["carousel", "gallery", "screenshots", "scroll"],
+        "tags": [
+          "carousel",
+          "gallery",
+          "screenshots",
+          "scroll"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1061,7 +1139,11 @@
             }
           }
         },
-        "cardControls": ["background"]
+        "cardControls": [
+          "label",
+          "hint",
+          "background"
+        ]
       }
     },
     {
@@ -1069,7 +1151,9 @@
       "type": "registry:component",
       "title": "Шаги знакомства",
       "description": "Карусель-онбординг: у неё есть конец — на последнем шаге кнопка меняет подпись, а пропустить можно с первого.",
-      "categories": ["carousel"],
+      "categories": [
+        "carousel"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1081,7 +1165,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-carousel-008-*. Клиентский: \"use client\". Шаги лежат в одной ячейке грида, скрытые получают visibility: hidden — высота держится по самому длинному. Область текста объявлена aria-live=\"polite\", точки описаны подписью «шаг N из M». Оттенок картинки меняется с шагом.",
       "meta": {
-        "tags": ["carousel", "onboarding", "steps", "wizard"],
+        "tags": [
+          "carousel",
+          "onboarding",
+          "steps",
+          "wizard"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1230,7 +1319,13 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "nextLabel",
+          "doneLabel",
+          "skipLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1238,7 +1333,9 @@
       "type": "registry:component",
       "title": "Точки-листалка",
       "description": "Карусель, где точки — настоящие кнопки с подписью «Слайд N из M»: по ряду ходят стрелки клавиатуры, а лента едет трансформацией, а не прокруткой.",
-      "categories": ["carousel"],
+      "categories": [
+        "carousel"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1250,7 +1347,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-carousel-009-*. Клиентский (\"use client\") — позицию держит useState. Лента сдвигается translateX от переменной --vibeui-carousel-009-index: позиция задаётся числом и не зависит от того, куда докрутили пальцем, поэтому точка и кадр не расходятся. Стрелки, Home и End обрабатываются на контейнере точек и переносят фокус на выбранную точку. Невидимые слайды помечены inert и aria-hidden — иначе Tab уходит за край кадра к недоступному содержимому.",
       "meta": {
-        "tags": ["carousel", "dots", "keyboard", "slider"],
+        "tags": [
+          "carousel",
+          "dots",
+          "keyboard",
+          "slider"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1385,7 +1487,11 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1393,7 +1499,9 @@
       "type": "registry:component",
       "title": "Полка товаров",
       "description": "Витрина товаров, где следующая карточка выглядывает за краем, а стрелки гаснут на концах ленты: отключённая стрелка отвечает «дальше пусто» до нажатия.",
-      "categories": ["carousel"],
+      "categories": [
+        "carousel"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1405,7 +1513,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-carousel-010-*. Клиентский (\"use client\") — состояние краёв считается на прокрутке. Лента остаётся нативной прокруткой со scroll-snap: палец и колесо работают сами. Шаг стрелки равен ширине карточки с зазором, поэтому лента останавливается ровно на карточке, а не в середине. Позиция краёв пересчитывается в обработчике onScroll и один раз после монтирования: кнопки отключаются атрибутом disabled, а не стилем, чтобы они выпадали из порядка обхода.",
       "meta": {
-        "tags": ["carousel", "products", "peek", "shop"],
+        "tags": [
+          "carousel",
+          "products",
+          "peek",
+          "shop"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1564,7 +1677,12 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "title",
+          "saleLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1572,7 +1690,9 @@
       "type": "registry:component",
       "title": "Автопрокрутка отзывов",
       "description": "Отзывы листаются сами, но замирают от любого намёка на интерес: наведения, фокуса внутри блока и нажатия на паузу, а при prefers-reduced-motion не запускаются вовсе.",
-      "categories": ["carousel"],
+      "categories": [
+        "carousel"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1584,7 +1704,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-carousel-011-*. Клиентский (\"use client\") — таймер живёт в useEffect и пересоздаётся на каждой смене отзыва. Пауза складывается из трёх источников: наведение и фокус ставят held, кнопка переключает playing. prefers-reduced-motion проверяется через matchMedia на монтировании и просто выключает показ: движение здесь действие, а не украшение, поэтому отменять его надо целиком. Высота цитаты зафиксирована min-height, чтобы страница не прыгала на смене.",
       "meta": {
-        "tags": ["carousel", "reviews", "autoplay", "pause"],
+        "tags": [
+          "carousel",
+          "reviews",
+          "autoplay",
+          "pause"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1729,7 +1854,12 @@
             }
           }
         },
-        "cardControls": ["interval", "accent", "background"]
+        "cardControls": [
+          "interval",
+          "label",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1737,7 +1867,9 @@
       "type": "registry:component",
       "title": "Ленты со счётчиком",
       "description": "Две встречные ленты логотипов с растворёнными краями: встречное движение читается как «список большой», а не как «карусель едет».",
-      "categories": ["carousel"],
+      "categories": [
+        "carousel"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1749,7 +1881,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-carousel-012-*. Серверный: хуков нет, движение целиком на CSS-анимации. Каждая лента продублирована в разметке и сдвигается ровно на половину ширины с учётом зазора, поэтому шва между повторами не видно; копия помечена aria-hidden, чтобы список не прочитался дважды. Края растворены mask-image. Анимация замирает и при наведении, и при фокусе внутри блока, а при prefers-reduced-motion ленты останавливаются и превращаются в обычную горизонтальную прокрутку.",
       "meta": {
-        "tags": ["carousel", "marquee", "logos", "infinite"],
+        "tags": [
+          "carousel",
+          "marquee",
+          "logos",
+          "infinite"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1875,7 +2012,11 @@
             }
           }
         },
-        "cardControls": ["duration", "background"]
+        "cardControls": [
+          "title",
+          "duration",
+          "background"
+        ]
       }
     },
     {
@@ -1883,7 +2024,9 @@
       "type": "registry:component",
       "title": "Центрирующиеся миниатюры",
       "description": "Галерея с полосой миниатюр, где выбранная сама доезжает до центра полосы, а по кадрам ходят стрелки клавиатуры.",
-      "categories": ["carousel"],
+      "categories": [
+        "carousel"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1895,7 +2038,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-carousel-013-*. Клиентский (\"use client\") — позицию держит useState. Миниатюр обычно больше, чем влезает в ширину, поэтому выбранная доводится до центра вызовом scrollIntoView({block:\"nearest\",inline:\"center\"}): block:\"nearest\" не даёт браузеру дёрнуть всю страницу. Миниатюры — настоящие кнопки с подписью «Кадр N», выбранная помечена aria-current и рамкой, а не только яркостью: приглушение соседей на маленьком экране почти незаметно.",
       "meta": {
-        "tags": ["carousel", "gallery", "thumbnails", "keyboard"],
+        "tags": [
+          "carousel",
+          "gallery",
+          "thumbnails",
+          "keyboard"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2052,7 +2200,12 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "hint",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2060,7 +2213,9 @@
       "type": "registry:component",
       "title": "Колода с якорями",
       "description": "Карусель без единой строки JS, но со стрелками: пара стрелок лежит внутри каждого слайда и ведёт на соседний якорь, поэтому текущая позиция компоненту не нужна.",
-      "categories": ["carousel"],
+      "categories": [
+        "carousel"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2072,7 +2227,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-carousel-014-*. Серверный: хуков нет вообще. Прокрутку и остановку держит scroll-snap-type:x mandatory со scroll-snap-stop:always, поэтому лента не проскакивает через слайд. Стрелки — обычные ссылки на идентификаторы соседних слайдов: браузер сам доезжает до нужного, а «предыдущий» и «следующий» известны на рендере. Идентификаторы собираются из пропа idPrefix, чтобы два блока на одной странице не перебили якоря друг друга.",
       "meta": {
-        "tags": ["carousel", "scroll-snap", "no-js", "anchors"],
+        "tags": [
+          "carousel",
+          "scroll-snap",
+          "no-js",
+          "anchors"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2232,7 +2392,13 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "idPrefix",
+          "hint",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2240,7 +2406,9 @@
       "type": "registry:component",
       "title": "Кадры с подписями",
       "description": "Карусель, где подпись равноправна кадру: figure с figcaption под снимком, а место под текст зарезервировано, чтобы блок не прыгал.",
-      "categories": ["carousel"],
+      "categories": [
+        "carousel"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2252,7 +2420,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-carousel-015-*. Клиентский (\"use client\") — позицию держит useState. Разметка построена на figure/figcaption, поэтому подпись остаётся подписью и для скринридера, и для поисковика. Текст стоит под кадром на светлой подложке: поверх снимка он читается только на тёмной картинке. Высота подписи зафиксирована min-height по самой длинной — иначе кнопки под ней подпрыгивают на каждом переключении. Кадр помечен role=\"img\" с подписью.",
       "meta": {
-        "tags": ["carousel", "caption", "figure", "gallery"],
+        "tags": [
+          "carousel",
+          "caption",
+          "figure",
+          "gallery"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2391,7 +2564,11 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2399,7 +2576,9 @@
       "type": "registry:component",
       "title": "Счётчик слайдов",
       "description": "Карусель со счётчиком вместо точек: «3 из 8» и полоса заполнения отвечают точнее ряда кружков, а стрелки гаснут на краях незацикленной ленты.",
-      "categories": ["carousel"],
+      "categories": [
+        "carousel"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2411,7 +2590,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-carousel-016-*. Клиентский (\"use client\") — позицию держит useState. Кадры лежат стопкой и меняются проявлением: ленте некуда ехать, потому что позиция передаётся счётчиком. Невидимые кадры помечены inert и aria-hidden, а видимость гасится не только opacity, но и visibility — иначе они остаются целями нажатия. Счётчик объявляется через role=\"status\", доля пройденного уезжает в CSS переменной --vibeui-carousel-016-progress.",
       "meta": {
-        "tags": ["carousel", "counter", "progress", "slider"],
+        "tags": [
+          "carousel",
+          "counter",
+          "progress",
+          "slider"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2578,7 +2762,12 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "counterText",
+          "accent",
+          "background"
+        ]
       }
     }
   ]

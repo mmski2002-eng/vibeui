@@ -65,7 +65,13 @@ const STYLES = `
 --vibeui-solutions-031-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="solutions-031"]{color-scheme:dark}
 [data-vibeui-block="solutions-031"]{
+/* container-type отрывает ширину от содержимого: без нижней границы
+   блок схлопывается внутри flex-контейнера. */
+min-width:min(100%,16rem);
 box-sizing:border-box;overflow:hidden;
 background:var(--vibeui-solutions-031-bg);
 border:1px solid var(--vibeui-solutions-031-border);border-radius:1rem;

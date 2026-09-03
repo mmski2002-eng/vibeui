@@ -6,7 +6,9 @@
       "type": "registry:component",
       "title": "Строчное уведомление",
       "description": "Встроенное уведомление, где тон несёт полоса слева и значок, а не заливка во всю ширину. Три сообщения подряд не превращают экран в светофор.",
-      "categories": ["alert"],
+      "categories": [
+        "alert"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-001-*. Четыре тона переключаются data-атрибутом и меняют одну переменную: цвет полосы слева и значка. Роль выбирается по тону: danger объявляется как alert (скринридер прерывает чтение), остальные — как status. В узкой колонке действие уходит под текст через @container, а не сжимает его.",
       "meta": {
-        "tags": ["alert", "notification", "inline", "status"],
+        "tags": [
+          "alert",
+          "notification",
+          "inline",
+          "status"
+        ],
         "preview": {
           "width": "full",
           "states": [
@@ -66,7 +73,12 @@
             "label": "Тон",
             "type": "select",
             "default": "warning",
-            "options": ["info", "success", "warning", "danger"]
+            "options": [
+              "info",
+              "success",
+              "warning",
+              "danger"
+            ]
           },
           {
             "prop": "title",
@@ -166,7 +178,13 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-alert-001-*. Four tones are switched by a data attribute and change a single variable: the colour of the bar on the left and of the glyph. The role is picked from the tone: danger is declared as alert (a screen reader interrupts its reading), the rest as status. In a narrow column the action moves below the text through @container instead of squeezing it."
           }
         },
-        "cardControls": ["tone", "background"]
+        "cardControls": [
+          "tone",
+          "title",
+          "description",
+          "action",
+          "background"
+        ]
       }
     },
     {
@@ -174,7 +192,9 @@
       "type": "registry:component",
       "title": "Заливное уведомление",
       "description": "Залитый тоном алерт — самый тяжёлый вес в наборе. Для единственного случая, когда сообщение нельзя пропустить: оплата не прошла, сервис лежит, данные вот-вот удалятся.",
-      "categories": ["alert"],
+      "categories": [
+        "alert"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -186,7 +206,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-002-*. Четыре тона переключаются data-атрибутом и меняют фон, цвет текста и приглушённый оттенок описания разом. Значок нарисован обводкой currentColor, поэтому на любой заливке остаётся читаемым без второго цвета. Роль выбирается по тону: danger объявляется как alert, остальные — как status. В узкой колонке действие переносится под текст через @container.",
       "meta": {
-        "tags": ["alert", "solid", "critical", "notification"],
+        "tags": [
+          "alert",
+          "solid",
+          "critical",
+          "notification"
+        ],
         "preview": {
           "width": "full",
           "states": [
@@ -233,7 +258,12 @@
             "label": "Тон",
             "type": "select",
             "default": "danger",
-            "options": ["info", "success", "warning", "danger"]
+            "options": [
+              "info",
+              "success",
+              "warning",
+              "danger"
+            ]
           },
           {
             "prop": "title",
@@ -323,7 +353,12 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-alert-002-*. Four tones are switched by a data attribute and change the background, the text colour and the muted shade of the description all at once. The glyph is outlined in currentColor, so it stays legible on any fill without a second colour. The role is picked from the tone: danger is declared as alert, the rest as status. In a narrow column the action wraps below the text through @container."
           }
         },
-        "cardControls": ["tone"]
+        "cardControls": [
+          "tone",
+          "title",
+          "description",
+          "action"
+        ]
       }
     },
     {
@@ -331,7 +366,9 @@
       "type": "registry:component",
       "title": "Уведомление у поля",
       "description": "Однострочное сообщение под полем формы: точка тона и фраза. Ни заголовка, ни описания — второй уровень текста в таком месте не читают.",
-      "categories": ["alert"],
+      "categories": [
+        "alert"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -343,7 +380,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-003-*. Это <p> с точкой тона: высота строки совпадает с подписью поля, поэтому появление сообщения не сдвигает раскладку формы. Точка выровнена по первой строке текста, а не по центру блока — при переносе на две строки центрирование увело бы её вниз. В тоне danger текст окрашивается целиком: ошибка поля должна читаться без сравнения с соседями.",
       "meta": {
-        "tags": ["alert", "form", "inline", "validation"],
+        "tags": [
+          "alert",
+          "form",
+          "inline",
+          "validation"
+        ],
         "preview": {
           "width": "full",
           "states": [
@@ -391,7 +433,12 @@
             "label": "Тон",
             "type": "select",
             "default": "danger",
-            "options": ["info", "success", "warning", "danger"]
+            "options": [
+              "info",
+              "success",
+              "warning",
+              "danger"
+            ]
           },
           {
             "prop": "message",
@@ -455,7 +502,10 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-alert-003-*. This is a <p> with a tone dot: its line height matches the field label, so the appearance of the message does not shift the form layout. The dot is aligned to the first line of the text rather than to the centre of the block — on a two-line message centring would drag it downward. In the danger tone the whole text is coloured: a field error has to read without comparing it to its neighbours."
           }
         },
-        "cardControls": ["tone"]
+        "cardControls": [
+          "tone",
+          "message"
+        ]
       }
     },
     {
@@ -463,7 +513,9 @@
       "type": "registry:component",
       "title": "Уведомление с выбором",
       "description": "Алерт, который требует решения здесь и сейчас: две кнопки под текстом. В опасном режиме подтверждение краснеет, но не становится главной кнопкой.",
-      "categories": ["alert"],
+      "categories": [
+        "alert"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -475,7 +527,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-004-*. Кнопки стоят под текстом, а не в строке заголовка: решение принимают, дочитав. Проп destructive перекрашивает значок, рамку и подтверждение в опасный тон и переводит роль в alertdialog. В узкой колонке кнопки растягиваются на всю ширину через @container.",
       "meta": {
-        "tags": ["alert", "confirm", "actions", "decision"],
+        "tags": [
+          "alert",
+          "confirm",
+          "actions",
+          "decision"
+        ],
         "preview": {
           "width": "full"
         },
@@ -617,7 +674,14 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-alert-004-*. The buttons stand under the text rather than in the heading row: the decision is taken once the reading is done. The destructive prop recolours the glyph, the border and the confirm button in the danger tone and switches the role to alertdialog. In a narrow column the buttons stretch to the full width through @container."
           }
         },
-        "cardControls": ["destructive", "accent", "background"]
+        "cardControls": [
+          "title",
+          "description",
+          "confirmLabel",
+          "destructive",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -625,7 +689,9 @@
       "type": "registry:component",
       "title": "Закрываемое уведомление",
       "description": "Закрываемое сообщение: крестик появляется только вместе с обработчиком, а «больше не показывать» стоит отдельной строкой — это разные решения.",
-      "categories": ["alert"],
+      "categories": [
+        "alert"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -637,7 +703,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-005-*. Тон живёт в вертикальной полосе слева, которая тянется на высоту блока. Крестик спозиционирован в правом верхнем углу, а не стоит в потоке: в потоке он тянул бы на себя первую строку текста. Строка footnote под описанием предназначена для «больше не показывать» — отдельного решения, которое нельзя прятать в тот же крестик.",
       "meta": {
-        "tags": ["alert", "dismiss", "notice", "tip"],
+        "tags": [
+          "alert",
+          "dismiss",
+          "notice",
+          "tip"
+        ],
         "preview": {
           "width": "full"
         },
@@ -679,7 +750,12 @@
             "label": "Тон",
             "type": "select",
             "default": "info",
-            "options": ["info", "success", "warning", "danger"]
+            "options": [
+              "info",
+              "success",
+              "warning",
+              "danger"
+            ]
           },
           {
             "prop": "title",
@@ -781,7 +857,13 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-alert-005-*. The tone lives in a vertical bar on the left that runs the height of the block. The cross is positioned in the top right corner rather than standing in the flow: in the flow it would pull the first line of the text toward itself. The footnote line under the description is meant for \"don't show again\" — a separate decision that must not be hidden in the same cross."
           }
         },
-        "cardControls": ["tone", "background"]
+        "cardControls": [
+          "tone",
+          "title",
+          "description",
+          "footnote",
+          "background"
+        ]
       }
     },
     {
@@ -789,7 +871,9 @@
       "type": "registry:component",
       "title": "Уведомление о новинке",
       "description": "Рассказ о новой возможности, а не сообщение о проблеме: слева сцена из плиток вместо значка статуса, тон спокойный.",
-      "categories": ["alert"],
+      "categories": [
+        "alert"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -801,7 +885,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-006-*. Слева не значок статуса, а маленькая сцена из трёх плиток — намёк на интерфейс, о котором идёт речь; она собрана позиционированными span'ами и не требует картинки. Подсветка угла — радиальный градиент в фоне. На узкой ширине действия переносятся под текст, на очень узкой сцена скрывается через @container.",
       "meta": {
-        "tags": ["alert", "feature", "announcement", "product"],
+        "tags": [
+          "alert",
+          "feature",
+          "announcement",
+          "product"
+        ],
         "preview": {
           "width": "full"
         },
@@ -946,7 +1035,14 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-alert-006-*. On the left there is no status glyph but a small scene of three tiles — a hint of the interface in question; it is assembled from positioned spans and needs no image. The corner glow is a radial gradient in the background. At a narrow width the actions wrap below the text, and at a very narrow one the scene is hidden through @container."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "badge",
+          "title",
+          "description",
+          "actionLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -954,7 +1050,9 @@
       "type": "registry:component",
       "title": "Уведомление с текстом",
       "description": "Уведомление о сообщении от человека: инициалы с оттенком из имени, текст до трёх строк и ответ. Уведомление показывает начало разговора, а не сам разговор.",
-      "categories": ["alert"],
+      "categories": [
+        "alert"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -966,7 +1064,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-007-*. Оттенок аватара считается из имени детерминированной функцией и подставляется в --vibeui-alert-007-hue: тот же приём, что в avatar-001, поэтому один человек всегда одного цвета. Текст сообщения обрезается тремя строками через -webkit-line-clamp. Время прижимается вправо через margin-left:auto и переносится в узкой колонке.",
       "meta": {
-        "tags": ["alert", "message", "notification", "avatar"],
+        "tags": [
+          "alert",
+          "message",
+          "notification",
+          "avatar"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1118,7 +1221,14 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-alert-007-*. The avatar hue is computed from the name by a deterministic function and substituted into --vibeui-alert-007-hue: the same technique as in avatar-001, so one person is always one colour. The message text is clamped to three lines through -webkit-line-clamp. The time is pushed right through margin-left:auto and wraps in a narrow column."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "name",
+          "role",
+          "message",
+          "time",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1126,7 +1236,9 @@
       "type": "registry:component",
       "title": "Уведомление с прогрессом",
       "description": "Алерт выполняющейся операции: шаг, процент и полоса, встроенная в нижнюю кромку блока. Неизвестная длительность честно показывается бегущим отрезком.",
-      "categories": ["alert"],
+      "categories": [
+        "alert"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1138,7 +1250,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-008-*. Полоса прогресса — абсолютно спозиционированная кромка блока, а не строка в потоке: сообщение остаётся плотным. Ширина заполнения приходит переменной --vibeui-alert-008-value. value={null} включает состояние неизвестной длительности: отрезок ходит по кромке, aria-valuenow не выставляется. Спиннер нарисован рамкой с одним окрашенным краем.",
       "meta": {
-        "tags": ["alert", "progress", "loading", "operation"],
+        "tags": [
+          "alert",
+          "progress",
+          "loading",
+          "operation"
+        ],
         "preview": {
           "width": "full",
           "states": [
@@ -1282,7 +1399,13 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-alert-008-*. The progress bar is an absolutely positioned edge of the block rather than a row in the flow: the message stays compact. The fill width arrives through the --vibeui-alert-008-value variable. value={null} turns on the unknown-duration state: a segment travels along the edge and aria-valuenow is not set. The spinner is drawn with a border that has one coloured edge."
           }
         },
-        "cardControls": ["value", "accent", "background"]
+        "cardControls": [
+          "title",
+          "step",
+          "value",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1290,7 +1413,9 @@
       "type": "registry:component",
       "title": "Уведомление с отсчётом",
       "description": "Срок, который заканчивается: остаток крупно, действие рядом, полоса под текстом сжимается к нулю. Три способа сказать одно и то же, потому что строку пропускают.",
-      "categories": ["alert"],
+      "categories": [
+        "alert"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1302,7 +1427,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-009-*. Отсчёт не считается внутри: строка остатка и доля прошедшего срока приходят пропами, потому что таймер в компоненте означал бы тикающий рендер на каждой странице. Полоса показывает остаток, а не пройденное — её ширина считается как 100 минус elapsed. Левая граница окрашена в тон, а не вся рамка.",
       "meta": {
-        "tags": ["alert", "trial", "countdown", "deadline"],
+        "tags": [
+          "alert",
+          "trial",
+          "countdown",
+          "deadline"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1448,7 +1578,14 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-alert-009-*. The countdown is not computed inside: the remainder string and the share of the period already gone arrive as props, because a timer inside the component would mean a ticking render on every page. The bar shows the remainder rather than what has passed — its width is computed as 100 minus elapsed. The left border is coloured in the tone rather than the whole frame."
           }
         },
-        "cardControls": ["elapsed", "accent", "background"]
+        "cardControls": [
+          "remaining",
+          "elapsed",
+          "title",
+          "actionLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1456,7 +1593,9 @@
       "type": "registry:component",
       "title": "Ошибки формы",
       "description": "Сводка ошибок формы над кнопкой отправки: число в заголовке и строки-ссылки на поля. В длинной форме искать поле глазами дороже, чем щёлкнуть.",
-      "categories": ["alert"],
+      "categories": [
+        "alert"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1468,7 +1607,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-010-*. Заголовок собирается сам из числа ошибок, если не передан явно. Каждая строка — подпись поля жирным и текст ошибки обычным: сначала «где», потом «что». При переданном href строка становится ссылкой на якорь поля. Роль alert выставлена всегда: сводка появляется в ответ на отправку и должна быть объявлена сразу.",
       "meta": {
-        "tags": ["alert", "form", "errors", "validation"],
+        "tags": [
+          "alert",
+          "form",
+          "errors",
+          "validation"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1582,7 +1726,10 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-alert-010-*. The heading builds itself from the error count unless it is passed explicitly. Each row is the field label in bold and the error text in the regular weight: first \"where\", then \"what\". When href is given the row becomes a link to the field's anchor. The alert role is always set: the summary appears in response to a submit and has to be announced at once."
           }
         },
-        "cardControls": ["background"]
+        "cardControls": [
+          "title",
+          "background"
+        ]
       }
     },
     {
@@ -1590,7 +1737,9 @@
       "type": "registry:component",
       "title": "Техническая ошибка",
       "description": "Ошибка, с которой пойдут в поддержку: человеческое объяснение сверху, технические подробности — в свёрнутом блоке под ним.",
-      "categories": ["alert"],
+      "categories": [
+        "alert"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1602,7 +1751,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-011-*. Подробности свёрнуты в нативный <details>, поэтому раскрытие не требует состояния и работает до гидратации. Сам текст лежит в тёмном моноширинном <pre> с горизонтальной прокруткой: его копируют целиком, а не читают. Идентификатор обращения показан моноширинным — по нему ищут в поддержке.",
       "meta": {
-        "tags": ["alert", "error", "support", "details"],
+        "tags": [
+          "alert",
+          "error",
+          "support",
+          "details"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1731,7 +1885,12 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-alert-011-*. The detail is collapsed into a native <details>, so disclosure needs no state and works before hydration. The text itself sits in a dark monospaced <pre> with horizontal scrolling: it is copied whole rather than read. The reference id is set monospaced — support searches by it."
           }
         },
-        "cardControls": ["background"]
+        "cardControls": [
+          "title",
+          "description",
+          "reference",
+          "background"
+        ]
       }
     },
     {
@@ -1739,7 +1898,9 @@
       "type": "registry:component",
       "title": "Уведомление об обновлении",
       "description": "Сообщение о доступном обновлении: номер версии в плашке, две-три строки изменений и кнопка. Без списка изменений кнопку жмут вслепую или не жмут вовсе.",
-      "categories": ["alert"],
+      "categories": [
+        "alert"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1751,7 +1912,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-012-*. Номер версии набран моноширинным в плашке: его сверяют символ за символом. Список изменений — обычный ul с точками на псевдоэлементах. Полный список уходит по ссылке, прижатой вправо через margin-left:auto; в узкой колонке она возвращается в поток.",
       "meta": {
-        "tags": ["alert", "update", "release", "changelog"],
+        "tags": [
+          "alert",
+          "update",
+          "release",
+          "changelog"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1890,7 +2056,13 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-alert-012-*. The version number is set monospaced in a pill: it is compared character by character. The change list is an ordinary ul with bullets on pseudo-elements. The full list goes behind a link pushed right through margin-left:auto; in a narrow column it returns into the flow."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "version",
+          "title",
+          "updateLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1898,7 +2070,9 @@
       "type": "registry:component",
       "title": "Запрос согласия",
       "description": "Запрос согласия на cookie, где отказ равен согласию по весу. Это не вежливость: кнопка «Отклонить» не может быть серее и мельче «Принять».",
-      "categories": ["alert"],
+      "categories": [
+        "alert"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1910,7 +2084,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-013-*. Кнопки согласия и отказа одного размера и одной высоты: разный вес здесь — тёмный приём, а не оформление. Настройка вынесена третьей тихой ссылкой, чтобы выбор из двух вариантов оставался очевидным. В узкой колонке блок складывается в столбик, кнопки растягиваются поровну через @container.",
       "meta": {
-        "tags": ["alert", "cookie", "consent", "privacy"],
+        "tags": [
+          "alert",
+          "cookie",
+          "consent",
+          "privacy"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2045,7 +2224,13 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-alert-013-*. The accept and reject buttons are the same size and the same height: a difference in weight here is a dark pattern, not styling. Settings is moved out as a third, quiet link so that the two-way choice stays obvious. In a narrow column the block folds into a stack and the buttons stretch to equal widths through @container."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "title",
+          "acceptLabel",
+          "rejectLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2053,7 +2238,9 @@
       "type": "registry:component",
       "title": "Уведомление о состоянии",
       "description": "Сводка состояния сервиса: точка пульсирует только когда что-то не так, и обязательно указано время последнего обновления.",
-      "categories": ["alert"],
+      "categories": [
+        "alert"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2065,7 +2252,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-014-*. Четыре состояния переключаются data-атрибутом и меняют одну переменную цвета. Пульс — псевдоэлемент точки с анимацией масштаба, и он включён только для нештатных состояний: ровное не должно моргать часами. Роль alert выставляется только при полном отказе.",
       "meta": {
-        "tags": ["alert", "status", "uptime", "incident"],
+        "tags": [
+          "alert",
+          "status",
+          "uptime",
+          "incident"
+        ],
         "preview": {
           "width": "full",
           "states": [
@@ -2114,7 +2306,12 @@
             "label": "Состояние",
             "type": "select",
             "default": "degraded",
-            "options": ["operational", "degraded", "down", "maintenance"]
+            "options": [
+              "operational",
+              "degraded",
+              "down",
+              "maintenance"
+            ]
           },
           {
             "prop": "title",
@@ -2205,7 +2402,12 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-alert-014-*. Four states are switched by a data attribute and change a single colour variable. The pulse is a pseudo-element of the dot with a scale animation, and it is enabled only for abnormal states: a steady one must not blink for hours. The alert role is set only on a full outage."
           }
         },
-        "cardControls": ["state", "background"]
+        "cardControls": [
+          "state",
+          "title",
+          "updated",
+          "background"
+        ]
       }
     },
     {
@@ -2213,7 +2415,9 @@
       "type": "registry:component",
       "title": "Уведомление о лимите",
       "description": "Лимит на исходе: полоса и счётчик считаются из одних данных, а цвет переключается сам на 80 и 100 процентах — исчерпанную квоту нельзя показать зелёной.",
-      "categories": ["alert"],
+      "categories": [
+        "alert"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2225,7 +2429,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-015-*. Доля считается из used и total, попадает в переменную --vibeui-alert-015-ratio и одновременно определяет уровень: до 80 процентов обычный тон, дальше предупреждающий, на 100 — опасный. Тона нет в пропах намеренно: он производная от данных, а не решение вызывающего кода.",
       "meta": {
-        "tags": ["alert", "quota", "limit", "billing"],
+        "tags": [
+          "alert",
+          "quota",
+          "limit",
+          "billing"
+        ],
         "preview": {
           "width": "full",
           "states": [
@@ -2395,7 +2604,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-alert-015-*. The ratio is computed from used and total, goes into the --vibeui-alert-015-ratio variable and at the same time determines the level: up to 80 per cent the ordinary tone, beyond that the warning one, at 100 the danger one. The tone is deliberately absent from the props: it is derived from the data rather than decided by the calling code."
           }
         },
-        "cardControls": ["used", "total", "accent", "background"]
+        "cardControls": [
+          "used",
+          "total",
+          "unit",
+          "counterLabel",
+          "actionLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2403,7 +2620,9 @@
       "type": "registry:component",
       "title": "Сгруппированные уведомления",
       "description": "Несколько сообщений в одной рамке вместо стопки отдельных: общий заголовок, одна кнопка «Очистить», хвост списка сворачивается в строку-счётчик.",
-      "categories": ["alert"],
+      "categories": [
+        "alert"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2415,7 +2634,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-016-*. Записи разделены линиями, а не отступами: общая рамка держит их как один объект. Тон каждой записи задаётся data-атрибутом и меняет только цвет точки. Хвост длиннее visible сворачивается в строку со счётчиком, поэтому блок не растёт бесконечно.",
       "meta": {
-        "tags": ["alert", "notifications", "list", "inbox"],
+        "tags": [
+          "alert",
+          "notifications",
+          "list",
+          "inbox"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2579,7 +2803,13 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-alert-016-*. The entries are separated by rules rather than gaps: a shared frame holds them as one object. The tone of each entry is set by a data attribute and changes only the colour of the dot. A tail longer than visible is folded into a row with a counter, so the block does not grow without end."
           }
         },
-        "cardControls": ["visible", "background"]
+        "cardControls": [
+          "title",
+          "visible",
+          "clearLabel",
+          "moreLabel",
+          "background"
+        ]
       }
     },
     {
@@ -2587,7 +2817,9 @@
       "type": "registry:component",
       "title": "Технические работы",
       "description": "Предупреждение о плановых работах: окно времени отдельной плашкой и список того, что будет недоступно. Тон нейтральный — работы это не авария.",
-      "categories": ["alert"],
+      "categories": [
+        "alert"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2599,7 +2831,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-017-*. Значок-календарь нарисован рамкой и двумя штрихами на псевдоэлементах: иконочная библиотека не нужна. Время работ вынесено в моноширинную плашку — его переписывают в календарь, поэтому оно не должно теряться в абзаце. Затронутые сервисы перечислены плашками, а не строкой через запятую.",
       "meta": {
-        "tags": ["alert", "maintenance", "schedule", "downtime"],
+        "tags": [
+          "alert",
+          "maintenance",
+          "schedule",
+          "downtime"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2730,14 +2967,24 @@
                 "title": "Scheduled maintenance this weekend",
                 "window": "14 March, 02:00–04:00 UTC",
                 "description": "We are upgrading storage. Published sites keep serving — only the dashboard goes offline.",
-                "affected": ["Publishing", "Media upload", "Export"],
+                "affected": [
+                  "Publishing",
+                  "Media upload",
+                  "Export"
+                ],
                 "detailsLabel": "What exactly changes"
               }
             },
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-alert-017-*. The calendar mark is drawn with a border and two strokes on pseudo-elements: no icon library is needed. The maintenance window is moved out into a monospaced pill — people copy it into a calendar, so it must not get lost in a paragraph. The affected services are listed as pills rather than as a comma-separated line."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "title",
+          "window",
+          "description",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2745,7 +2992,9 @@
       "type": "registry:component",
       "title": "Нет соединения",
       "description": "Полоса «нет соединения», которая следит за состоянием сама через события браузера. Сообщения «связь вернулась» здесь нет: о возврате говорит исчезновение полосы.",
-      "categories": ["alert"],
+      "categories": [
+        "alert"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2757,11 +3006,17 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-018-*. Состояние читается через useSyncExternalStore с подпиской на события online и offline: это штатный способ читать внешний источник, он не вызывает лишних рендеров и корректно ведёт себя при серверной отрисовке, где снимок всегда «связь есть». Пока связь есть, компонент возвращает null. Проп force показывает полосу принудительно — для витрины и отладки.",
       "meta": {
-        "tags": ["alert", "offline", "network", "status"],
+        "tags": [
+          "alert",
+          "offline",
+          "network",
+          "status"
+        ],
         "preview": {
           "props": {
             "force": true
-          }
+          },
+          "width": "auto"
         },
         "ai": {
           "export": "Alert018",
@@ -2863,7 +3118,11 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-alert-018-*. The state is read through useSyncExternalStore with a subscription to the online and offline events: this is the sanctioned way to read an external source, it causes no extra renders and behaves correctly under server rendering, where the snapshot is always \"online\". While the connection is up the component returns null. The force prop shows the bar unconditionally — for the showcase and for debugging."
           }
         },
-        "cardControls": ["force"]
+        "cardControls": [
+          "title",
+          "description",
+          "force"
+        ]
       }
     },
     {
@@ -2871,7 +3130,9 @@
       "type": "registry:component",
       "title": "Уведомление с инструкцией",
       "description": "Алерт с инструкцией: пронумерованные шаги вместо абзаца. Обычное сообщение говорит, что не так; это — что сделать.",
-      "categories": ["alert"],
+      "categories": [
+        "alert"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2883,7 +3144,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-019-*. Номера шагов рисуются счётчиком CSS, а не текстом в разметке: список нельзя рассинхронизировать, добавив пункт в середину. Подпись справа в шапке (срок, ответственный) скрывается в узкой колонке через @container, чтобы заголовок не сжимался.",
       "meta": {
-        "tags": ["alert", "instruction", "steps", "howto"],
+        "tags": [
+          "alert",
+          "instruction",
+          "steps",
+          "howto"
+        ],
         "preview": {
           "width": "full"
         },
@@ -3032,7 +3298,14 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-alert-019-*. The step numbers are drawn by a CSS counter rather than written as text in the markup: the list cannot fall out of sync when an item is inserted in the middle. The caption on the right of the header (a deadline, an owner) is hidden in a narrow column through @container so that the heading is not squeezed."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "title",
+          "description",
+          "meta",
+          "actionLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -3040,7 +3313,9 @@
       "type": "registry:component",
       "title": "Подтверждение словом",
       "description": "Подтверждение необратимого действия: перечень того, что исчезнет, и поле, куда нужно ввести название. Пауза, которая отделяет случайный клик от решения.",
-      "categories": ["alert"],
+      "categories": [
+        "alert"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3052,7 +3327,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-alert-020-*. Пока поле пустое, подтверждение недоступно — это делает правило `:has(input:placeholder-shown)`, то есть без единой строки JS. Точное совпадение проверяет атрибут pattern (значение экранируется) и, окончательно, вызывающий код на отправке формы: CSS сравнивать строки не умеет. Список потерь стоит выше поля намеренно — его должны прочитать до того, как начнут печатать.",
       "meta": {
-        "tags": ["alert", "confirm", "destructive", "danger"],
+        "tags": [
+          "alert",
+          "confirm",
+          "destructive",
+          "danger"
+        ],
         "preview": {
           "width": "full"
         },
@@ -3185,7 +3465,12 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-alert-020-*. While the field is empty the confirm button is unavailable — this is done by the `:has(input:placeholder-shown)` rule, that is, without a single line of JS. The exact match is checked by the pattern attribute (the value is escaped) and, finally, by the calling code on form submit: CSS cannot compare strings. The list of losses stands above the field deliberately — it has to be read before the typing starts."
           }
         },
-        "cardControls": ["background"]
+        "cardControls": [
+          "title",
+          "confirmWord",
+          "confirmLabel",
+          "background"
+        ]
       }
     }
   ]

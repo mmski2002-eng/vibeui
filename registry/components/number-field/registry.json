@@ -6,7 +6,9 @@
       "type": "registry:component",
       "title": "Счётчик числа",
       "description": "Число с кнопками, но с сохранённым ручным вводом: набрать сорок семь быстрее, чем нажать кнопку сорок семь раз.",
-      "categories": ["number-field"],
+      "categories": [
+        "number-field"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-number-001-*. Клиентский: \"use client\" ради кнопок. Значение хранится строкой, поэтому пустое поле в процессе ввода не превращается в ноль, а приводится к границам по blur. Кнопки на краях диапазона отключаются, а не молчат.",
       "meta": {
-        "tags": ["number", "stepper", "quantity", "form"],
+        "tags": [
+          "number",
+          "stepper",
+          "quantity",
+          "form"
+        ],
         "ai": {
           "export": "Number001",
           "usage": "<Number001 label=\"Количество мест\" min={1} max={20} defaultValue={4} />",
@@ -151,7 +158,16 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-number-001-* variables. Client-side: \"use client\" for the sake of the buttons. The value is stored as a string, so an in-progress empty field does not turn into zero; it is brought to the bounds on blur. At the edges of the range the buttons are disabled rather than staying silent."
           }
         },
-        "cardControls": ["defaultValue", "background"]
+        "cardControls": [
+          "label",
+          "defaultValue",
+          "unit",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -159,7 +175,9 @@
       "type": "registry:component",
       "title": "Счётчик упаковками",
       "description": "Счётчик заказа, который считает упаковками: шаг равен размеру упаковки, а под полем всегда видно, сколько это штук.",
-      "categories": ["number-field"],
+      "categories": [
+        "number-field"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -171,7 +189,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-number-002-*. Клиентский: \"use client\" нужен для кнопок и пересчёта. База хранится в упаковках, штуки считаются умножением на лету — два независимых состояния разошлись бы после первого ручного ввода. На минимуме кнопка «минус» меняет роль на удаление строки (data-role=\"remove\"), а нулевое состояние подписывается словами, а не цифрой 0.",
       "meta": {
-        "tags": ["number", "quantity", "cart", "stepper"],
+        "tags": [
+          "number",
+          "quantity",
+          "cart",
+          "stepper"
+        ],
         "ai": {
           "export": "Number002",
           "usage": "<Number002 label=\"Вода в бутылках\" pack={6} max={24} defaultPacks={2} />",
@@ -323,7 +346,17 @@
             "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-number-002-* variables. Client-side: \"use client\" is needed for the buttons and the recalculation. The base is stored in packs, the pieces are counted by multiplication on the fly — two independent states would drift apart after the first manual edit. At the minimum the \"minus\" button changes its role to removing the row (data-role=\"remove\"), and the zero state is captioned in words rather than with the digit 0."
           }
         },
-        "cardControls": ["pack", "defaultPacks", "background"]
+        "cardControls": [
+          "label",
+          "pack",
+          "defaultPacks",
+          "unit",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -331,7 +364,9 @@
       "type": "registry:component",
       "title": "Поле с единицей",
       "description": "Число и его единица в одной рамке: единица живёт в отдельной зоне за разделителем, поэтому видна и на пустом поле.",
-      "categories": ["number-field"],
+      "categories": [
+        "number-field"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -343,7 +378,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-number-003-*. Серверный: состояние не нужно, значение забирает форма по name. Единица сделана отдельным блоком с собственным фоном, а не плейсхолдером и не текстом рядом — плейсхолдер исчезает при вводе, а текст рядом отрывается от числа. Число выровнено вправо, вплотную к единице, поэтому «54 м²» читается как одна величина.",
       "meta": {
-        "tags": ["number", "unit", "measure", "form"],
+        "tags": [
+          "number",
+          "unit",
+          "measure",
+          "form"
+        ],
         "ai": {
           "export": "Number003",
           "usage": "<Number003 label=\"Площадь квартиры\" unit=\"м²\" defaultValue={54} min={10} max={400} />",
@@ -474,7 +514,16 @@
             "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-number-003-* variables. Server-side: no state is needed, the form collects the value by name. The unit is made a separate block with a background of its own rather than a placeholder or text alongside — a placeholder disappears on input, and text alongside drifts away from the number. The number is right-aligned, tight against the unit, so \"54 m²\" reads as a single quantity."
           }
         },
-        "cardControls": ["defaultValue", "background"]
+        "cardControls": [
+          "label",
+          "unit",
+          "defaultValue",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -482,7 +531,9 @@
       "type": "registry:component",
       "title": "Защита процента",
       "description": "Ввод процента, который не зажимает 150 до 100 молча: неверное число остаётся в поле, подсвечивается и объясняется словами.",
-      "categories": ["number-field"],
+      "categories": [
+        "number-field"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -494,7 +545,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-number-004-*. Клиентский: значение и признак ошибки живут в состоянии. Ввод хранится строкой, поэтому промежуточное пустое поле не превращается в ноль. Выход за 0–100 не исправляется автоматически: он помечается data-invalid на корне, aria-invalid на поле и текстом в области aria-live. Полоса под полем показывает долю площадью — процент так считывается быстрее цифры.",
       "meta": {
-        "tags": ["number", "percent", "validation", "form"],
+        "tags": [
+          "number",
+          "percent",
+          "validation",
+          "form"
+        ],
         "ai": {
           "export": "Number004",
           "usage": "<Number004 label=\"Доля скидки\" defaultValue={15} error=\"Процент бывает только от 0 до 100.\" />",
@@ -623,7 +679,16 @@
             "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-number-004-* variables. Client-side: the value and the error flag live in state. The input is stored as a string, so an in-progress empty field does not turn into zero. Going outside 0–100 is not corrected automatically: it is marked with data-invalid on the root, aria-invalid on the field and text in an aria-live region. The bar under the field shows the share as an area — a percent reads faster that way than as a digit."
           }
         },
-        "cardControls": ["defaultValue", "accent", "background"]
+        "cardControls": [
+          "label",
+          "defaultValue",
+          "error",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -631,7 +696,9 @@
       "type": "registry:component",
       "title": "Поле с переключением единиц",
       "description": "Вес с переключателем единиц, который пересчитывает число: 12.5 кг при щелчке становятся 27.6 фунта, а не остаются 12.5.",
-      "categories": ["number-field"],
+      "categories": [
+        "number-field"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -643,7 +710,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-number-005-*. Клиентский: единица и значение живут в состоянии. Внутри всегда хранятся килограммы, показанное число получается умножением — так щелчки туда-обратно не накапливают ошибку округления. Переключатель сделан двумя кнопками с aria-pressed, а не select'ом: вариантов два, и оба должны быть видны. Под полем всегда подписан эквивалент во второй единице.",
       "meta": {
-        "tags": ["number", "units", "converter", "weight"],
+        "tags": [
+          "number",
+          "units",
+          "converter",
+          "weight"
+        ],
         "ai": {
           "export": "Number005",
           "usage": "<Number005 label=\"Вес посылки\" defaultValue={12.5} defaultUnit=\"kg\" />",
@@ -691,7 +763,10 @@
             "label": "Единица",
             "type": "select",
             "default": "kg",
-            "options": ["kg", "lb"]
+            "options": [
+              "kg",
+              "lb"
+            ]
           },
           {
             "prop": "defaultValue",
@@ -787,7 +862,16 @@
             "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-number-005-* variables. Client-side: the unit and the value live in state. Kilograms are always what is stored inside, the displayed number is obtained by multiplication — that way toggling back and forth does not accumulate a rounding error. The switch is made of two buttons with aria-pressed rather than a select: there are two options and both have to be visible. The equivalent in the other unit is always captioned under the field."
           }
         },
-        "cardControls": ["defaultUnit", "defaultValue", "background"]
+        "cardControls": [
+          "label",
+          "defaultUnit",
+          "defaultValue",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -795,7 +879,9 @@
       "type": "registry:component",
       "title": "Кнопки прибавления",
       "description": "Число с кнопками-дозами: «+10» и «+50» прибавляют к текущему значению, а не задают его, поэтому сумма набирается за пару нажатий.",
-      "categories": ["number-field"],
+      "categories": [
+        "number-field"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -807,7 +893,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-number-006-*. Клиентский: значение в состоянии. Кнопки прибавляют дозу к текущему числу — это принципиально иной сценарий, чем готовые суммы, которые значение подменяют: из трёх доз складывается любое число без клавиатуры. Раз прибавление накапливается, рядом есть «сбросить» к исходному значению; на подходе к max кнопки выключаются, а не молча упираются.",
       "meta": {
-        "tags": ["number", "presets", "increment", "payment"],
+        "tags": [
+          "number",
+          "presets",
+          "increment",
+          "payment"
+        ],
         "ai": {
           "export": "Number006",
           "usage": "<Number006 label=\"Пополнить счёт\" steps={[10, 50, 100]} defaultValue={250} max={5000} />",
@@ -960,7 +1051,17 @@
             "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-number-006-* variables. Client-side: the value is in state. The buttons add a dose to the current number — that is a fundamentally different scenario from ready-made sums, which replace the value: three doses build any number without the keyboard. Since the addition accumulates, there is a \"reset\" to the starting value next to it; on the approach to max the buttons are disabled rather than silently bumping into it."
           }
         },
-        "cardControls": ["defaultValue", "max", "background"]
+        "cardControls": [
+          "label",
+          "max",
+          "defaultValue",
+          "unit",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -968,7 +1069,9 @@
       "type": "registry:component",
       "title": "Дробная оценка",
       "description": "Оценка числом с десятыми долями: звёзды дают пять делений, а рецензии живут в разнице между 8.4 и 8.6.",
-      "categories": ["number-field"],
+      "categories": [
+        "number-field"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -980,7 +1083,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-number-007-*. Клиентский: оценка в состоянии. Шаг 0.1 и приведение к десятым сделаны при вводе, поэтому стрелки клавиатуры дают ровно одну десятую. Тон берётся из значения через data-tone на корне и переопределение --vibeui-number-007-accent, поэтому цвет числа, обводки, вердикта и шкалы меняется одной переменной. Шкала из десяти делений закрашивается по правилу «половина деления».",
       "meta": {
-        "tags": ["number", "rating", "score", "review"],
+        "tags": [
+          "number",
+          "rating",
+          "score",
+          "review"
+        ],
         "ai": {
           "export": "Number007",
           "usage": "<Number007 label=\"Ваша оценка\" defaultValue={8.4} max={10} />",
@@ -1117,7 +1225,16 @@
             "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-number-007-* variables. Client-side: the score is in state. The 0.1 step and the rounding to tenths are done on input, so the keyboard arrows give exactly one tenth. The tone is taken from the value through data-tone on the root and an override of --vibeui-number-007-accent, so the colour of the number, the outline, the verdict and the meter changes through a single variable. The ten-notch meter is filled by a \"half a notch\" rule."
           }
         },
-        "cardControls": ["defaultValue", "accent", "background"]
+        "cardControls": [
+          "label",
+          "defaultValue",
+          "max",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -1125,7 +1242,9 @@
       "type": "registry:component",
       "title": "Большой шаг с Shift",
       "description": "Два шага на одних стрелках: обычная стрелка меняет число на сотню, Shift со стрелкой — на тысячу, и обе величины подписаны.",
-      "categories": ["number-field"],
+      "categories": [
+        "number-field"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1137,7 +1256,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-number-008-*. Клиентский: значение и признак зажатого Shift в состоянии. Обработчик стрелок отменяет событие через preventDefault — иначе браузер прибавит собственный step поверх нашего и число прыгнет дважды. Состояние Shift отслеживается по keydown и keyup и сбрасывается по blur, потому что отпускание клавиши вне поля до компонента не доходит. Величины шагов подписаны клавишами в <kbd>.",
       "meta": {
-        "tags": ["number", "keyboard", "shortcut", "step"],
+        "tags": [
+          "number",
+          "keyboard",
+          "shortcut",
+          "step"
+        ],
         "ai": {
           "export": "Number008",
           "usage": "<Number008 label=\"Лимит запросов\" step={100} bigStep={1000} defaultValue={2500} max={20000} />",
@@ -1277,7 +1401,16 @@
             "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-number-008-* variables. Client-side: the value and the held-Shift flag are in state. The arrow handler cancels the event through preventDefault — otherwise the browser adds its own step on top of ours and the number jumps twice. The Shift state is tracked through keydown and keyup and cleared on blur, because a key released outside the field never reaches the component. The step amounts are captioned with keys in <kbd>."
           }
         },
-        "cardControls": ["step", "bigStep", "accent", "background"]
+        "cardControls": [
+          "label",
+          "bigStep",
+          "step",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     }
   ]

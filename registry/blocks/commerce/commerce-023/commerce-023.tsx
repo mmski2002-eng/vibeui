@@ -60,7 +60,13 @@ const STYLES = `
 --vibeui-commerce-023-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="commerce-023"]{color-scheme:dark}
 [data-vibeui-block="commerce-023"]{
+/* container-type отрывает ширину от содержимого: без нижней границы
+   блок схлопывается внутри flex-контейнера. */
+min-width:min(100%,16rem);
 box-sizing:border-box;padding:1.25rem 1rem;
 background:var(--vibeui-commerce-023-bg);
 font-family:var(--vibeui-commerce-023-sans);color:var(--vibeui-commerce-023-fg);

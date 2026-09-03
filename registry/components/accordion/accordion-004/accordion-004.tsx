@@ -44,7 +44,10 @@ container-type:inline-size;
 }
 [data-vibeui-block="accordion-004"]{
 display:flex;flex-direction:column;
-width:100%;max-width:40rem;box-sizing:border-box;overflow:hidden;
+width:100%;
+/* container-type отрывает ширину от содержимого: без нижней границы
+   блок схлопывается внутри flex-контейнера. */
+min-width:min(100%,16rem);max-width:40rem;box-sizing:border-box;overflow:hidden;
 border:1px solid var(--vibeui-accordion-004-border);
 border-radius:var(--vibeui-accordion-004-radius);
 background:var(--vibeui-accordion-004-bg);

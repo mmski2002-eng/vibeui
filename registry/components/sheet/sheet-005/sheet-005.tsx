@@ -46,6 +46,9 @@ const STYLES = `
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="sheet-005"]{color-scheme:dark}
 [data-vibeui-block="sheet-005"]{
+/* container-type отрывает ширину от содержимого: без нижней границы
+   блок схлопывается внутри flex-контейнера. */
+min-width:min(100%,16rem);
 display:inline-block;font-family:var(--vibeui-sheet-005-font);color:var(--vibeui-sheet-005-fg);
 }
 [data-vibeui-block="sheet-005"] [data-part="trigger"]{

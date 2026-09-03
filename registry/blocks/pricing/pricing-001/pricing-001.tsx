@@ -65,6 +65,9 @@ const STYLES = `
 --vibeui-pricing-001-ring:color-mix(in oklab, var(--vibeui-pricing-001-accent) 70%, transparent);
 --vibeui-pricing-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="pricing-001"]{color-scheme:dark}
 [data-vibeui-block="pricing-001"]{container-type:inline-size}
 @container (min-width:48rem){
 [data-vibeui-block="pricing-001"] [data-part="frame"]{min-height:660px;padding-left:2.5rem;padding-right:2.5rem}

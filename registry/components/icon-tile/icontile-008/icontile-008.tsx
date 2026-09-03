@@ -63,6 +63,9 @@ const STYLES = `
    же ширины: без неё auto-fit при неопределённой ширине даёт одну колонку и
    сетка вытягивается в столбик. */
 [data-vibeui-block="icontile-008"]{
+/* container-type отрывает ширину от содержимого: без нижней границы
+   блок схлопывается внутри flex-контейнера. */
+min-width:min(100%,16rem);
 display:block;min-width:17rem;font-family:var(--vibeui-icontile-008-font);
 }
 [data-vibeui-block="icontile-008"] [data-part="grid"]{

@@ -101,7 +101,10 @@ container-type:inline-size;
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="icontile-016"]{color-scheme:dark}
 [data-vibeui-block="icontile-016"]{
 position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:0.625rem;
-box-sizing:border-box;width:100%;padding:0.875rem 1rem;
+box-sizing:border-box;width:100%;
+/* container-type отрывает ширину от содержимого: без нижней границы
+   блок схлопывается внутри flex-контейнера. */
+min-width:min(100%,16rem);padding:0.875rem 1rem;
 background:var(--vibeui-icontile-016-surface);
 border:1px solid var(--vibeui-icontile-016-border);border-radius:0.875rem;
 font:inherit;font-family:var(--vibeui-icontile-016-font);color:inherit;text-align:left;cursor:pointer;

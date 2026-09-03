@@ -36,6 +36,9 @@ const STYLES = `
 container-type:inline-size;
 }
 [data-vibeui-block="hero-014"]{
+/* container-type отрывает ширину от содержимого: без нижней границы
+   блок схлопывается внутри flex-контейнера. */
+min-width:min(100%,16rem);
 box-sizing:border-box;position:relative;overflow:hidden;
 background:
 radial-gradient(60% 50% at 85% 5%,color-mix(in oklab,var(--vibeui-hero-014-accent) 22%,transparent),transparent 70%),

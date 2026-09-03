@@ -6,7 +6,9 @@
       "type": "registry:component",
       "title": "Мультивыбор с галочками",
       "description": "Множественный выбор списком, а не фишками: выбранное остаётся на своём месте, список не закрывается после каждой галочки.",
-      "categories": ["autocomplete"],
+      "categories": [
+        "autocomplete"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-autocomplete-014-*. Выбор хранится массивом строк, порядок списка не меняется — выбранное не всплывает наверх, поэтому глаз не теряет позицию. Строка — настоящий label с input[type=checkbox]: клавиатура, состояние и объявление для скринридера приходят от браузера, а не имитируются ролями. Нажимается вся строка, а не сама галочка: попасть в квадрат 15px пальцем почти невозможно. Курсор ведут стрелки, переключает Enter — пробел занят набором в поле поиска. Счётчик выбранного помечен role=\"status\", поэтому изменение читается вслух. Раскладка подвала считается от ширины самой панели через container-query. Тема берётся из color-scheme через light-dark(), классовую тёмную тему компонент включает себе сам.",
       "meta": {
-        "tags": ["autocomplete", "multiselect", "checkbox", "filter"],
+        "tags": [
+          "autocomplete",
+          "multiselect",
+          "checkbox",
+          "filter"
+        ],
         "ai": {
           "export": "Autocomplete014",
           "usage": "<Autocomplete014 label=\"Направления\" options={skills} onChange={setSkills} />",
@@ -140,7 +147,10 @@
                   "Support",
                   "Marketing"
                 ],
-                "defaultValue": ["Frontend", "Analytics"],
+                "defaultValue": [
+                  "Frontend",
+                  "Analytics"
+                ],
                 "emptyLabel": "Nothing found",
                 "clearLabel": "Reset",
                 "countText": "{count} of {total} selected"
@@ -166,7 +176,9 @@
       "type": "registry:component",
       "title": "Поле со списком datalist",
       "description": "Подсказка на нативном datalist: список и фильтрацию отдаёт браузер, клиентского кода нет вообще.",
-      "categories": ["autocomplete"],
+      "categories": [
+        "autocomplete"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -178,7 +190,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-autocomplete-001-*. Поле связано с <datalist> через list и общий useId, подпись — через htmlFor, подсказка под полем — через aria-describedby. Стрелка нарисована двумя бордюрами, поэтому иконочный пакет не нужен. Серверный компонент: хуков состояния нет.",
       "meta": {
-        "tags": ["autocomplete", "datalist", "no-js", "form"],
+        "tags": [
+          "autocomplete",
+          "datalist",
+          "no-js",
+          "form"
+        ],
         "ai": {
           "export": "Autocomplete001",
           "usage": "<Autocomplete001\n  label=\"Город\"\n  options={[\"Москва\", \"Казань\"]}\n/>",
@@ -315,7 +332,16 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-autocomplete-001-* variables. The field is linked to the <datalist> through list and a shared useId, the label through htmlFor, and the hint under the field through aria-describedby. The arrow is drawn with two borders, so no icon package is needed. A server component: there are no state hooks."
           }
         },
-        "cardControls": ["label", "placeholder", "hint", "accent", "background"]
+        "cardControls": [
+          "label",
+          "placeholder",
+          "hint",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -323,7 +349,9 @@
       "type": "registry:component",
       "title": "Подсказки с клавиатуры",
       "description": "Свой список подсказок с полной клавиатурой и ролями ARIA: стрелки ведут курсор, а фокус остаётся в поле.",
-      "categories": ["autocomplete"],
+      "categories": [
+        "autocomplete"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -335,12 +363,22 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-autocomplete-002-*. Клиентский: \"use client\", состояние на useState. Поле объявлено role=\"combobox\" с aria-expanded, aria-controls и aria-activedescendant; список — role=\"listbox\", строки — role=\"option\". Выбор идёт на onMouseDown с preventDefault, иначе blur закроет список раньше клика. Список рендерится в потоке, без позиционируемого слоя.",
       "meta": {
-        "tags": ["autocomplete", "combobox", "keyboard", "a11y"],
+        "tags": [
+          "autocomplete",
+          "combobox",
+          "keyboard",
+          "a11y"
+        ],
         "preview": {
           "props": {
             "defaultOpen": true,
-            "options": ["Казань", "Калуга", "Краснодар"]
-          }
+            "options": [
+              "Казань",
+              "Калуга",
+              "Краснодар"
+            ]
+          },
+          "width": "full"
         },
         "ai": {
           "export": "Autocomplete002",
@@ -466,7 +504,11 @@
                 "placeholder": "Start typing",
                 "emptyLabel": "Nothing found",
                 "defaultOpen": true,
-                "options": ["Kazan", "Kaluga", "Krasnodar"]
+                "options": [
+                  "Kazan",
+                  "Kaluga",
+                  "Krasnodar"
+                ]
               }
             },
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-autocomplete-002-* variables. Client-side: \"use client\", state on useState. The field is declared role=\"combobox\" with aria-expanded, aria-controls and aria-activedescendant; the list is role=\"listbox\" and the rows are role=\"option\". Picking runs on onMouseDown with preventDefault, otherwise blur would close the list before the click. The list is rendered in flow, without a positioned layer."
@@ -486,7 +528,9 @@
       "type": "registry:component",
       "title": "Выбор тегов",
       "description": "Множественный выбор фишками: Backspace в пустом поле снимает последнюю, выбранное исчезает из списка.",
-      "categories": ["autocomplete"],
+      "categories": [
+        "autocomplete"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -498,7 +542,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-autocomplete-003-*. Клиентский: \"use client\". Фишки и поле лежат в одном flex-контейнере с flex-wrap, поэтому поле растёт по числу фишек, а не прячет их в скролл. Фокусное кольцо рисуется на контейнере через :focus-within. У каждого крестика своё aria-label с названием фишки. По достижении max поле блокируется.",
       "meta": {
-        "tags": ["autocomplete", "tags", "multiselect", "keyboard"],
+        "tags": [
+          "autocomplete",
+          "tags",
+          "multiselect",
+          "keyboard"
+        ],
         "ai": {
           "export": "Autocomplete003",
           "usage": "<Autocomplete003\n  label=\"Технологии\"\n  options={[\"React\", \"Vue\"]}\n  max={6}\n  onChange={(tags) => console.log(tags)}\n/>",
@@ -628,12 +677,26 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-autocomplete-003-* variables. Client-side: \"use client\". The chips and the field lie in one flex container with flex-wrap, so the field grows with the number of chips instead of hiding them in a scroll. The focus ring is drawn on the container through :focus-within. Every cross has its own aria-label with the chip name. Once max is reached the field is disabled."
           }
         },
-        "cardControls": ["label", "placeholder", "max", "accent", "background"],
+        "cardControls": [
+          "label",
+          "placeholder",
+          "max",
+          "accent",
+          "background"
+        ],
         "preview": {
           "props": {
-            "options": ["Next.js", "Tailwind", "Node.js"],
-            "defaultValue": ["React", "TypeScript"]
-          }
+            "options": [
+              "Next.js",
+              "Tailwind",
+              "Node.js"
+            ],
+            "defaultValue": [
+              "React",
+              "TypeScript"
+            ]
+          },
+          "width": "full"
         }
       }
     },
@@ -642,7 +705,9 @@
       "type": "registry:component",
       "title": "Командный поиск",
       "description": "Строка команд: поиск по всему приложению с группами разделов и подсказками горячих клавиш.",
-      "categories": ["autocomplete"],
+      "categories": [
+        "autocomplete"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -654,7 +719,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-autocomplete-004-*. Клиентский: \"use client\". Заголовки групп считаются до рендера из соседних элементов списка, поэтому во время отрисовки ничего не мутируется. Стрелки ходят по индексам команд и заголовки не задевают. Лупа нарисована кругом и псевдоэлементом, иконочного пакета нет.",
       "meta": {
-        "tags": ["autocomplete", "command", "search", "palette"],
+        "tags": [
+          "autocomplete",
+          "command",
+          "search",
+          "palette"
+        ],
         "ai": {
           "export": "Autocomplete004",
           "usage": "<Autocomplete004\n  commands={[{ label: \"Создать проект\", group: \"Действия\", hint: \"N\" }]}\n  onSelect={(label) => console.log(label)}\n/>",
@@ -836,7 +906,9 @@
       "type": "registry:component",
       "title": "Подсказки с сервера",
       "description": "Подсказки с сервера: пауза перед запросом, честное «ищем» и отброшенный ответ на устаревший запрос.",
-      "categories": ["autocomplete"],
+      "categories": [
+        "autocomplete"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -848,11 +920,17 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-autocomplete-005-*. Клиентский: \"use client\". Запрос откладывается на delay миллисекунд, таймер снимается в cleanup эффекта, флаг alive отбрасывает ответ отменённого запроса. Состояние ожидания объявлено через aria-busy на поле и role=\"status\" на строке снизу. Спиннер — бордюр с keyframes, погашен в prefers-reduced-motion.",
       "meta": {
-        "tags": ["autocomplete", "async", "debounce", "loading"],
+        "tags": [
+          "autocomplete",
+          "async",
+          "debounce",
+          "loading"
+        ],
         "preview": {
           "props": {
             "defaultQuery": "ка"
-          }
+          },
+          "width": "full"
         },
         "ai": {
           "export": "Autocomplete005",
@@ -1003,7 +1081,9 @@
       "type": "registry:component",
       "title": "Поиск по каталогу",
       "description": "Подсказка строкой-карточкой: название, артикул, цена и остаток — по одному названию товар не выбрать.",
-      "categories": ["autocomplete"],
+      "categories": [
+        "autocomplete"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1015,7 +1095,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-autocomplete-006-*. Клиентский: \"use client\". Строка списка — grid в две колонки и две строки: слева название и артикул, справа цена и остаток. Нулевой остаток красится отдельной переменной --vibeui-autocomplete-006-warn. Поиск идёт и по названию, и по артикулу.",
       "meta": {
-        "tags": ["autocomplete", "search", "catalog", "commerce"],
+        "tags": [
+          "autocomplete",
+          "search",
+          "catalog",
+          "commerce"
+        ],
         "ai": {
           "export": "Autocomplete006",
           "usage": "<Autocomplete006\n  items={[{ title: \"Кабель HDMI\", meta: \"Артикул 52-104\", price: \"2 450 ₽\", stock: 0 }]}\n  onSelect={(title) => console.log(title)}\n/>",
@@ -1209,7 +1294,9 @@
       "type": "registry:component",
       "title": "Недавние запросы",
       "description": "Пустое поле поиска показывает недавние запросы человека, а не пустоту: чаще всего он ищет то же, что вчера.",
-      "categories": ["autocomplete"],
+      "categories": [
+        "autocomplete"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1221,7 +1308,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-autocomplete-007-*. Клиентский: \"use client\". Панель под полем показывает один из двух списков: недавние при пустом запросе, подсказки при непустом. Заголовок панели меняется вместе со списком, aria-label списка — тоже. Выбранное поднимается в начало недавних, история обрезается до пяти. Часы у строки нарисованы кругом и псевдоэлементом.",
       "meta": {
-        "tags": ["autocomplete", "search", "history", "empty state"],
+        "tags": [
+          "autocomplete",
+          "search",
+          "history",
+          "empty state"
+        ],
         "ai": {
           "export": "Autocomplete007",
           "usage": "<Autocomplete007\n  suggestions={[\"фотоаппарат\"]}\n  defaultRecent={[\"наушники\"]}\n  onSelect={(value) => console.log(value)}\n/>",
@@ -1352,7 +1444,10 @@
                   "usb stick 256 gb",
                   "travel hair dryer"
                 ],
-                "defaultRecent": ["headphones", "30 l backpack"],
+                "defaultRecent": [
+                  "headphones",
+                  "30 l backpack"
+                ],
                 "panelText": {
                   "recent": "Recent searches",
                   "suggestions": "Suggestions",
@@ -1373,8 +1468,12 @@
         ],
         "preview": {
           "props": {
-            "defaultRecent": ["беспроводные наушники", "монитор 27"]
-          }
+            "defaultRecent": [
+              "беспроводные наушники",
+              "монитор 27"
+            ]
+          },
+          "width": "full"
         }
       }
     },
@@ -1383,7 +1482,9 @@
       "type": "registry:component",
       "title": "Домен почты",
       "description": "Почта дописывается прямо в поле: серый хвост домена за курсором принимается клавишей Tab.",
-      "categories": ["autocomplete"],
+      "categories": [
+        "autocomplete"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1395,7 +1496,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-autocomplete-008-*. Клиентский: \"use client\". Хвост рисует слой под полем: набранное в нём прозрачно (тег i), видна только подсказка. Слой и поле объявлены одним правилом, чтобы шрифт, отступы и высота строки совпадали до пикселя. Tab и стрелка вправо в конце строки принимают дописанное; слой помечен aria-hidden.",
       "meta": {
-        "tags": ["autocomplete", "email", "inline", "form"],
+        "tags": [
+          "autocomplete",
+          "email",
+          "inline",
+          "form"
+        ],
         "ai": {
           "export": "Autocomplete008",
           "usage": "<Autocomplete008\n  domains={[\"gmail.com\", \"yandex.ru\"]}\n  onChange={(value) => console.log(value)}\n/>",
@@ -1532,7 +1638,10 @@
           "idleHint",
           "accent",
           "background"
-        ]
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -1540,7 +1649,9 @@
       "type": "registry:component",
       "title": "Код страны",
       "description": "Телефон с выбором страны: поиск идёт и по названию, и по коду — половина людей ищет «+7», а не «Россия».",
-      "categories": ["autocomplete"],
+      "categories": [
+        "autocomplete"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1552,7 +1663,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-autocomplete-009-*. Клиентский: \"use client\". Кнопка страны объявлена с aria-expanded и aria-controls, её aria-label содержит название страны и код — по флагу скринридер ничего не скажет. Список — role=\"listbox\" со строками role=\"option\" и aria-selected. Флаги — эмодзи, спрайтов и картинок нет.",
       "meta": {
-        "tags": ["autocomplete", "phone", "country", "form"],
+        "tags": [
+          "autocomplete",
+          "phone",
+          "country",
+          "form"
+        ],
         "preview": {
           "props": {
             "defaultOpen": true,
@@ -1576,7 +1692,8 @@
                 "flag": "🇧🇾"
               }
             ]
-          }
+          },
+          "width": "full"
         },
         "ai": {
           "export": "Autocomplete009",
@@ -1630,7 +1747,16 @@
             "label": "Страна",
             "type": "select",
             "default": "RU",
-            "options": ["RU", "KZ", "BY", "AM", "GE", "RS", "TR", "AE"]
+            "options": [
+              "RU",
+              "KZ",
+              "BY",
+              "AM",
+              "GE",
+              "RS",
+              "TR",
+              "AE"
+            ]
           },
           {
             "prop": "accent",
@@ -1750,7 +1876,9 @@
       "type": "registry:component",
       "title": "Создание значения",
       "description": "Пустая выдача превращается в действие: последняя строка предлагает завести метку прямо здесь, не уходя в настройки.",
-      "categories": ["autocomplete"],
+      "categories": [
+        "autocomplete"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1762,7 +1890,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-autocomplete-010-*. Клиентский: \"use client\". Строка создания — часть списка, поэтому индекс активной строки считается по matches.length + 1 и до неё доезжают стрелки. Точное совпадение с существующей меткой убирает предложение создать. Плюс нарисован квадратом с двумя псевдоэлементами.",
       "meta": {
-        "tags": ["autocomplete", "create", "tags", "keyboard"],
+        "tags": [
+          "autocomplete",
+          "create",
+          "tags",
+          "keyboard"
+        ],
         "ai": {
           "export": "Autocomplete010",
           "usage": "<Autocomplete010\n  defaultOptions={[\"Срочно\", \"Баг\"]}\n  onChange={(options) => console.log(options)}\n/>",
@@ -1888,7 +2021,10 @@
                 "label": "Label",
                 "placeholder": "Find or create",
                 "defaultQuery": "refact",
-                "defaultOptions": ["Urgent", "Bug"],
+                "defaultOptions": [
+                  "Urgent",
+                  "Bug"
+                ],
                 "createLabel": "Create “{value}”",
                 "hintText": "Labels: {count}. Enter picks the highlighted row"
               }
@@ -1906,8 +2042,12 @@
         "preview": {
           "props": {
             "defaultQuery": "инфра",
-            "defaultOptions": ["Инфраструктура", "Интерфейс"]
-          }
+            "defaultOptions": [
+              "Инфраструктура",
+              "Интерфейс"
+            ]
+          },
+          "width": "full"
         }
       }
     },
@@ -1916,7 +2056,9 @@
       "type": "registry:component",
       "title": "Упоминание участника",
       "description": "Упоминания прямо в тексте: список коллег открывает собака перед словом, а не фокус в поле.",
-      "categories": ["autocomplete"],
+      "categories": [
+        "autocomplete"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1928,7 +2070,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-autocomplete-011-*. Клиентский: \"use client\". Токен упоминания вычисляется от последней собаки до курсора и обрывается на пробеле, поэтому список гаснет сам. Позиция курсора отслеживается на onChange, onKeyUp и onClick. Аватар — инициалы на оттенке, посчитанном из имени: сумма кодов символов по модулю 360 отдаётся в локальную переменную оттенка.",
       "meta": {
-        "tags": ["autocomplete", "mention", "textarea", "avatar"],
+        "tags": [
+          "autocomplete",
+          "mention",
+          "textarea",
+          "avatar"
+        ],
         "ai": {
           "export": "Autocomplete011",
           "usage": "<Autocomplete011\n  people={[{ name: \"Анна Петрова\", handle: \"anna\", role: \"дизайн\" }]}\n  onChange={(text) => console.log(text)}\n/>",
@@ -2114,7 +2261,9 @@
       "type": "registry:component",
       "title": "Подсказка в строке",
       "description": "Поле само дописывает совпадение и выделяет дописанное — как адресная строка браузера; следующая буква заменяет хвост.",
-      "categories": ["autocomplete"],
+      "categories": [
+        "autocomplete"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2126,7 +2275,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-autocomplete-012-*. Клиентский: \"use client\". Диапазон выделения кладётся в ref и применяется в эффекте после отрисовки: до неё в поле ещё старое значение. Удаление символов подсказку не включает, иначе стереть лишнее невозможно. Поле объявлено aria-autocomplete=\"inline\", цвет выделения задан через ::selection.",
       "meta": {
-        "tags": ["autocomplete", "inline", "typeahead", "keyboard"],
+        "tags": [
+          "autocomplete",
+          "inline",
+          "typeahead",
+          "keyboard"
+        ],
         "ai": {
           "export": "Autocomplete012",
           "usage": "<Autocomplete012\n  options={[\"docs.example.com\", \"status.example.com\"]}\n  onChange={(value) => console.log(value)}\n/>",
@@ -2265,7 +2419,8 @@
         "preview": {
           "props": {
             "defaultValue": "doc"
-          }
+          },
+          "width": "full"
         }
       }
     },
@@ -2274,7 +2429,9 @@
       "type": "registry:component",
       "title": "Отказ и повтор",
       "description": "Подсказки, которые честно признаются, что не пришли: отказ занимает место списка, называет себя словом и даёт кнопку повтора.",
-      "categories": ["autocomplete"],
+      "categories": [
+        "autocomplete"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2286,7 +2443,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-autocomplete-013-*. Запрос уходит в проп search и возвращает промис; отказ ловится catch и переводит компонент в состояние failed. Ответ на устаревший запрос отбрасывается по счётчику: без него медленный ответ перетирает свежий список. Отказ помечен role=\"alert\", поэтому скринридер читает его сразу, а не на следующем фокусе. Кнопка повтора возвращает фокус в поле: после удачной попытки набор продолжается там. Начальное состояние задаётся пропом defaultState — витрине нужно показать отказ, не делая запроса. Тема берётся из color-scheme через light-dark(), классовую тёмную тему компонент включает себе сам.",
       "meta": {
-        "tags": ["autocomplete", "async", "error", "retry"],
+        "tags": [
+          "autocomplete",
+          "async",
+          "error",
+          "retry"
+        ],
         "ai": {
           "export": "Autocomplete013",
           "usage": "<Autocomplete013 label=\"Город доставки\" search={fetchCities} />",
@@ -2331,7 +2493,10 @@
             "label": "Состояние",
             "type": "select",
             "default": "idle",
-            "options": ["idle", "failed"]
+            "options": [
+              "idle",
+              "failed"
+            ]
           },
           {
             "prop": "accent",
@@ -2419,7 +2584,8 @@
         "preview": {
           "props": {
             "defaultState": "failed"
-          }
+          },
+          "width": "full"
         }
       }
     },
@@ -2428,7 +2594,9 @@
       "type": "registry:component",
       "title": "Поиск с превью",
       "description": "Две панели: список слева, карточка выбранного справа. Превью следует за курсором, поэтому выбирать не приходится вслепую.",
-      "categories": ["autocomplete"],
+      "categories": [
+        "autocomplete"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2440,7 +2608,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-autocomplete-015-*. Курсор ведут стрелки, а превью привязано к нему, а не к наведению мыши: на клавиатуре мышь не двигается. Правая панель помечена aria-live=\"polite\" — иначе смена курсора остаётся немой для скринридера. Поле объявлено role=\"combobox\" с aria-activedescendant, фокус при этом остаётся в поле. Заголовок раздела печатается один раз на группу и считается заранее массивом: мутировать переменную во время рендера нельзя. Раскладка считается от ширины самой панели через container-query: до 26rem превью встаёт под список, а не жмёт оба столбца. Тема берётся из color-scheme через light-dark(), классовую тёмную тему компонент включает себе сам.",
       "meta": {
-        "tags": ["autocomplete", "search", "preview", "command"],
+        "tags": [
+          "autocomplete",
+          "search",
+          "preview",
+          "command"
+        ],
         "ai": {
           "export": "Autocomplete015",
           "usage": "<Autocomplete015 entries={results} onSelect={openEntry} />",

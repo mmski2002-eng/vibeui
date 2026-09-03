@@ -36,7 +36,10 @@ container-type:inline-size;
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="frame-015"]{color-scheme:dark}
 [data-vibeui-block="frame-015"]{
-display:block;margin:0;width:100%;max-width:30rem;box-sizing:border-box;
+display:block;margin:0;width:100%;
+/* container-type отрывает ширину от содержимого: без нижней границы
+   блок схлопывается внутри flex-контейнера. */
+min-width:min(100%,16rem);max-width:30rem;box-sizing:border-box;
 font-family:var(--vibeui-frame-015-font);color:var(--vibeui-frame-015-fg);
 }
 [data-vibeui-block="frame-015"] *{box-sizing:border-box}

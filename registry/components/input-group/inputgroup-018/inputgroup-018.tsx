@@ -97,7 +97,10 @@ container-type:inline-size;
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="inputgroup-018"]{color-scheme:dark}
 [data-vibeui-block="inputgroup-018"]{
 display:block;margin:0;padding:0.875rem;
-width:100%;max-width:26rem;box-sizing:border-box;
+width:100%;
+/* container-type отрывает ширину от содержимого: без нижней границы
+   блок схлопывается внутри flex-контейнера. */
+min-width:min(100%,16rem);max-width:26rem;box-sizing:border-box;
 background:var(--vibeui-inputgroup-018-surface);
 border:1px solid var(--vibeui-inputgroup-018-shell);border-radius:0.875rem;
 font-family:var(--vibeui-inputgroup-018-font);color:var(--vibeui-inputgroup-018-fg);

@@ -37,7 +37,10 @@ container-type:inline-size;
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="empty-019"]{color-scheme:dark}
 [data-vibeui-block="empty-019"]{
 display:flex;flex-direction:column;align-items:center;gap:0.5rem;
-width:100%;max-width:26rem;box-sizing:border-box;padding:2rem 1.25rem;
+width:100%;
+/* container-type отрывает ширину от содержимого: без нижней границы
+   блок схлопывается внутри flex-контейнера. */
+min-width:min(100%,16rem);max-width:26rem;box-sizing:border-box;padding:2rem 1.25rem;
 text-align:center;
 background:var(--vibeui-empty-019-bg);
 border:1.5px dashed var(--vibeui-empty-019-border);border-radius:1rem;

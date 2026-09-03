@@ -6,7 +6,9 @@
       "type": "registry:component",
       "title": "Растущее поле",
       "description": "Многострочное поле, которое растёт под текст до заданного числа строк, а дальше прокручивается. Высоту держит CSS, React-состояния нет.",
-      "categories": ["textarea"],
+      "categories": [
+        "textarea"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-textarea-001-*. Рост держится на приёме с grid: textarea и псевдоэлемент ::after с тем же текстом лежат в одной ячейке, высоту ячейки задаёт копия. Обработчик onInput только переписывает data-value обёртки — React-состояния нет, перерисовки дерева тоже. Потолок задаётся пропом maxRows через переменную --vibeui-textarea-001-max-rows.",
       "meta": {
-        "tags": ["textarea", "auto grow", "form", "multiline"],
+        "tags": [
+          "textarea",
+          "auto grow",
+          "form",
+          "multiline"
+        ],
         "ai": {
           "export": "Textarea001",
           "usage": "<Textarea001\n  id=\"brief\"\n  name=\"brief\"\n  label=\"Что нужно сделать\"\n  maxRows={12}\n/>",
@@ -176,7 +183,15 @@
         "preview": {
           "width": "full"
         },
-        "cardControls": ["maxRows", "disabled", "accent", "background"]
+        "cardControls": [
+          "label",
+          "hint",
+          "placeholder",
+          "maxRows",
+          "accent",
+          "disabled",
+          "background"
+        ]
       }
     },
     {
@@ -184,7 +199,9 @@
       "type": "registry:component",
       "title": "Поле с лимитом",
       "description": "Поле с ограничением, которое не обрезает текст молча: счётчик краснеет, а сокращать решает человек.",
-      "categories": ["textarea"],
+      "categories": [
+        "textarea"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -196,7 +213,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-textarea-002-*. Клиентский: \"use client\". Атрибут maxlength намеренно не используется: он молча запрещает ввод. Превышение выносится в data-over, поле помечается aria-invalid, счётчик объявлен role=\"status\" и связан с полем через aria-describedby.",
       "meta": {
-        "tags": ["input", "textarea", "limit", "counter"],
+        "tags": [
+          "input",
+          "textarea",
+          "limit",
+          "counter"
+        ],
         "ai": {
           "export": "Textarea002",
           "usage": "<Textarea002 limit={180} onChange={setText} />",
@@ -320,7 +342,15 @@
             }
           }
         },
-        "cardControls": ["limit", "accent", "background"]
+        "cardControls": [
+          "label",
+          "limit",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -328,7 +358,9 @@
       "type": "registry:component",
       "title": "Поле с автовысотой",
       "description": "Поле, которое растёт вместе с текстом: высоту считает сама раскладка по невидимой копии содержимого, без измерения scrollHeight и без дрожания.",
-      "categories": ["textarea"],
+      "categories": [
+        "textarea"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -340,7 +372,12 @@
       ],
       "docs": "Клиентский компонент: useState хранит текст, который дублируется в data-value на обёртке. Обёртка — grid, textarea и псевдоэлемент ::after с content:attr(data-value) занимают одну ячейку, поэтому высота ячейки всегда равна высоте текста. Копия скрыта visibility:hidden и наследует шрифт и межстрочный интервал — иначе высоты разойдутся. Прокрутка у поля отключена, изменение размера мышью тоже. Палитра в --vibeui-textarea-003-*.",
       "meta": {
-        "tags": ["textarea", "autogrow", "grid", "form"],
+        "tags": [
+          "textarea",
+          "autogrow",
+          "grid",
+          "form"
+        ],
         "preview": {
           "width": "full"
         },
@@ -464,7 +501,12 @@
             }
           }
         },
-        "cardControls": ["rows", "accent", "background"]
+        "cardControls": [
+          "rows",
+          "hint",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -472,7 +514,9 @@
       "type": "registry:component",
       "title": "Поле с панелью Markdown",
       "description": "Поле с панелью форматирования: кнопки оборачивают выделение символами markdown через setRangeText, поэтому история отмены браузера остаётся живой.",
-      "categories": ["textarea"],
+      "categories": [
+        "textarea"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -484,7 +528,12 @@
       ],
       "docs": "Клиентский компонент: useRef на textarea, useState на текст. Обёртка выделения сделана setRangeText, а не сборкой новой строки: только так браузер сохраняет собственную историю отмены и Ctrl+Z продолжает работать; после вставки выделение возвращается на место. Кнопка списка ставит префикс в начало текущей строки, найденной по последнему переводу строки. Панель объявлена role=\"toolbar\". Палитра в --vibeui-textarea-004-*.",
       "meta": {
-        "tags": ["textarea", "toolbar", "markdown", "editor"],
+        "tags": [
+          "textarea",
+          "toolbar",
+          "markdown",
+          "editor"
+        ],
         "preview": {
           "width": "full"
         },
@@ -611,12 +660,20 @@
                   "list": "Bulleted list"
                 },
                 "toolbarLabel": "Formatting",
-                "examples": ["**bold**", "_italic_"]
+                "examples": [
+                  "**bold**",
+                  "_italic_"
+                ]
               }
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "hint",
+          "placeholder",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -624,7 +681,9 @@
       "type": "registry:component",
       "title": "Поле с упоминаниями",
       "description": "Поле с упоминаниями по «@»: список коллег открывается, только когда символ стоит в начале слова, и выбор подставляет ник прямо в текст.",
-      "categories": ["textarea"],
+      "categories": [
+        "textarea"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -636,7 +695,12 @@
       ],
       "docs": "Клиентский компонент: useRef на поле, useState на текст и на текущий запрос после «@». Запрос ищется регулярным выражением по тексту до каретки и только в начале слова — иначе подсказка вылезала бы на каждом почтовом адресе. Вставка идёт через setRangeText, поэтому история отмены сохраняется, а каретка встаёт за ником. Кнопки списка гасят mousedown, чтобы поле не теряло фокус до клика. Палитра в --vibeui-textarea-005-*.",
       "meta": {
-        "tags": ["textarea", "mention", "autocomplete", "comment"],
+        "tags": [
+          "textarea",
+          "mention",
+          "autocomplete",
+          "comment"
+        ],
         "preview": {
           "width": "full"
         },
@@ -780,7 +844,12 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "placeholder",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -788,7 +857,9 @@
       "type": "registry:component",
       "title": "Поле с автосохранением",
       "description": "Поле с автосохранением черновика: запись уходит по паузе в наборе, а строка под полем показывает «есть правки», «сохранён» и время сохранения.",
-      "categories": ["textarea"],
+      "categories": [
+        "textarea"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -800,7 +871,12 @@
       ],
       "docs": "Клиентский компонент: useState на текст, фазу и время, useRef на таймер, useEffect снимает его при размонтировании. Пауза обязательна — сохранять на каждое нажатие значит слать запрос на каждую букву. Время собирается собственной функцией, а не toLocaleTimeString: локальный формат сервера и браузера различается и ломает гидрацию. Строка статуса объявлена role=\"status\" и держит минимальную высоту. Палитра в --vibeui-textarea-006-*.",
       "meta": {
-        "tags": ["textarea", "autosave", "draft", "status"],
+        "tags": [
+          "textarea",
+          "autosave",
+          "draft",
+          "status"
+        ],
         "preview": {
           "width": "full"
         },
@@ -928,7 +1004,12 @@
             }
           }
         },
-        "cardControls": ["delay", "accent", "background"]
+        "cardControls": [
+          "delay",
+          "label",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -936,7 +1017,9 @@
       "type": "registry:component",
       "title": "Поле со временем чтения",
       "description": "Поле для редактора: под текстом стоят слова, знаки и время чтения, а полоса показывает, далеко ли до целевого объёма.",
-      "categories": ["textarea"],
+      "categories": [
+        "textarea"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -948,7 +1031,12 @@
       ],
       "docs": "Клиентский компонент: useState хранит текст, из него считаются слова, минуты и доля от цели. Слова считаются разбиением по разделителям, а не подсчётом пробелов — иначе двойной пробел добавлял бы лишнее слово. Полоса объёма — обычный узел с шириной от CSS-переменной и ролью progressbar: <progress> пришлось бы перекрашивать тремя вендорными псевдоэлементами. Статистика связана с полем через aria-describedby. Палитра в --vibeui-textarea-007-*.",
       "meta": {
-        "tags": ["textarea", "counter", "reading-time", "editor"],
+        "tags": [
+          "textarea",
+          "counter",
+          "reading-time",
+          "editor"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1077,7 +1165,12 @@
             }
           }
         },
-        "cardControls": ["target", "wordsPerMinute", "accent", "background"]
+        "cardControls": [
+          "target",
+          "wordsPerMinute",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1085,7 +1178,9 @@
       "type": "registry:component",
       "title": "Поле только для чтения",
       "description": "Поле только для чтения с кнопкой копирования: текст можно выделить и прочитать, а при недоступном буфере обмена он просто выделяется целиком.",
-      "categories": ["textarea"],
+      "categories": [
+        "textarea"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1097,7 +1192,12 @@
       ],
       "docs": "Клиентский компонент: useRef на поле, useState на признак «скопировано». Поле помечено readOnly, а не disabled: выключенное поле нельзя выделить и прочитать скринридером, а здесь текст и есть содержимое. Копирование идёт через navigator.clipboard с запасным путём — без защищённого соединения API недоступен, и тогда текст выделяется целиком. Значок кнопки превращается в галочку правилом по data-copied на корне. Палитра в --vibeui-textarea-008-*.",
       "meta": {
-        "tags": ["textarea", "readonly", "clipboard", "snippet"],
+        "tags": [
+          "textarea",
+          "readonly",
+          "clipboard",
+          "snippet"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1218,7 +1318,12 @@
             }
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "copyText",
+          "hint",
+          "accent",
+          "background"
+        ]
       }
     }
   ]

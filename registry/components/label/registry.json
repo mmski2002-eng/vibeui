@@ -6,7 +6,9 @@
       "type": "registry:component",
       "title": "Отметка обязательного",
       "description": "Подпись обязательного поля: звёздочка со скрытой расшифровкой для скринридера и строка-объяснение, зачем поле нужно.",
-      "categories": ["label"],
+      "categories": [
+        "label"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-label-001-*. Серверный: из хуков только useId, состояния нет. Звёздочка помечена aria-hidden, а её смысл несёт визуально скрытый текст «, обязательное поле» — иначе скринридер произносит «звёздочка» и оставляет гадать. Строка-объяснение связана с полем через aria-describedby, поэтому читается сразу после имени поля, а не теряется. Поле получает нативный required: валидация браузера остаётся рабочей. Палитра построена на light-dark(): блок следует color-scheme окружения и по умолчанию не выкладывает под себя плашку — подложка появляется только пропом background, и тогда же выставляется color-scheme под её светлоту.",
       "meta": {
-        "tags": ["label", "form", "required", "a11y"],
+        "tags": [
+          "label",
+          "form",
+          "required",
+          "a11y"
+        ],
         "preview": {
           "width": "full"
         },
@@ -138,7 +145,12 @@
             "docs": "The component is self-contained: one file, no dependencies, a palette in local variables --vibeui-label-001-*. It is a server component: useId is the only hook, there is no state. The asterisk is marked aria-hidden, and its meaning is carried by the visually hidden text «, required field» — otherwise a screen reader says «asterisk» and leaves the rest to guesswork. The explanation line is tied to the field through aria-describedby, so it is read right after the field name instead of being lost. The field gets the native required: browser validation stays working. The palette is built on light-dark(): the block follows the surrounding color-scheme and by default lays no plate under itself — a surface appears only through the background prop, and color-scheme is set at the same time to match its lightness."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "hint",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -146,7 +158,9 @@
       "type": "registry:component",
       "title": "Подсказка во всплывашке",
       "description": "Подпись с кнопкой-вопросом рядом: длинное объяснение прячется в нативный popover и открывается без единой строчки скрипта.",
-      "categories": ["label"],
+      "categories": [
+        "label"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -158,7 +172,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-label-002-*. Серверный: из хуков только useId. Подсказка — нативный элемент с атрибутом popover=\"auto\", кнопка открывает его через popoverTarget: браузер сам даёт закрытие по Esc и по клику мимо, обработчиков нет. Позиция подсказки берётся из CSS anchor positioning под @supports (anchor-name: --a) с position-try-fallbacks; там, где anchor не поддержан, браузер ставит popover по центру экрана — некрасиво, но текст доступен. Кнопка — обычный <button> с aria-label, поэтому попадает в порядок обхода и открывается с клавиатуры. Палитра построена на light-dark(): блок следует color-scheme окружения, подложки по умолчанию нет, и она появляется только пропом background.",
       "meta": {
-        "tags": ["label", "popover", "hint", "no-js"],
+        "tags": [
+          "label",
+          "popover",
+          "hint",
+          "no-js"
+        ],
         "preview": {
           "width": "full"
         },
@@ -286,7 +305,13 @@
             "docs": "The component is self-contained: one file, no dependencies, a palette in local variables --vibeui-label-002-*. It is a server component: useId is the only hook. The hint is a native element with the popover=\"auto\" attribute, and the button opens it through popoverTarget: the browser itself provides dismissal by Esc and by a click outside, there are no handlers. The hint position comes from CSS anchor positioning under @supports (anchor-name: --a) with position-try-fallbacks; where anchor is unsupported the browser puts the popover in the middle of the screen — ugly, but the text is available. The button is a plain <button> with an aria-label, so it lands in the tab order and opens from the keyboard. The palette is built on light-dark(): the block follows the surrounding color-scheme, there is no surface by default, and it appears only through the background prop."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "question",
+          "answer",
+          "label",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -294,7 +319,9 @@
       "type": "registry:component",
       "title": "Метка «необязательно»",
       "description": "Подпись с пометкой «необязательно» на правом краю строки: помечено меньшинство полей, а не большинство со звёздочками.",
-      "categories": ["label"],
+      "categories": [
+        "label"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -306,7 +333,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-label-003-*. Серверный: из хуков только useId. Строка подписи — flex с justify-content:space-between и align-items:baseline: пометка прижата к правому краю, но сидит на одной базовой линии с подписью, хотя кегль у неё меньше. Пометка сделана обычным текстом в пилюле, а не иконкой и не цветом: признак «необязательно» обязан читаться и вслух, и в чёрно-белой печати. Поле — textarea с resize:vertical, чтобы длинный комментарий можно было раскрыть, не ломая ширину формы. Палитра построена на light-dark(): блок следует color-scheme окружения, подложки по умолчанию нет, и она появляется только пропом background.",
       "meta": {
-        "tags": ["label", "optional", "form", "layout"],
+        "tags": [
+          "label",
+          "optional",
+          "form",
+          "layout"
+        ],
         "preview": {
           "width": "full"
         },
@@ -423,7 +455,12 @@
             "docs": "The component is self-contained: one file, no dependencies, a palette in local variables --vibeui-label-003-*. It is a server component: useId is the only hook. The label row is a flex with justify-content:space-between and align-items:baseline: the tag is pushed to the right edge yet sits on the same baseline as the label even though its type size is smaller. The tag is made of plain text in a pill rather than an icon or a colour: the \"optional\" state has to be readable aloud and in black-and-white print. The field is a textarea with resize:vertical, so a long comment can be expanded without breaking the form width. The palette is built on light-dark(): the block follows the surrounding color-scheme, there is no surface by default, and it appears only through the background prop."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "optionalText",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -431,7 +468,9 @@
       "type": "registry:component",
       "title": "Подпись сбоку",
       "description": "Подпись слева от поля для плотной десктопной формы: колонка подписи фиксирована, а на узкой ширине блока подпись уходит наверх.",
-      "categories": ["label"],
+      "categories": [
+        "label"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -443,7 +482,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-label-004-*. Серверный: из хуков только useId. Корень объявлен container-type:inline-size, но сама раскладка лежит на внутренней оболочке [data-part=\"shell\"] — правило внутри @container не действует на сам контейнер, поэтому переключать grid на корне бессмысленно. Раскладка — grid-template-areas: в один столбец подпись/поле/пояснение идут стопкой, от 28rem собственной ширины подпись становится левой колонкой шириной --vibeui-label-004-label-width, а пояснение остаётся под полем во второй колонке. Подпись получает padding-top, чтобы сидеть на первой строке текста внутри поля, а не на его верхней рамке. Палитра построена на light-dark(): блок следует color-scheme окружения, подложки по умолчанию нет, и она появляется только пропом background.",
       "meta": {
-        "tags": ["label", "form", "container-query", "desktop"],
+        "tags": [
+          "label",
+          "form",
+          "container-query",
+          "desktop"
+        ],
         "preview": {
           "width": "full"
         },
@@ -560,7 +604,12 @@
             "docs": "The component is self-contained: one file, no dependencies, a palette in local variables --vibeui-label-004-*. It is a server component: useId is the only hook. The root is declared container-type:inline-size, but the layout itself lives on the inner [data-part=\"shell\"] shell — a rule inside @container does not apply to the container itself, so switching grid on the root is pointless. The layout is grid-template-areas: in a single column the label, the field and the hint stack up, and from 28rem of the block's own width the label becomes a left column of width --vibeui-label-004-label-width while the hint stays under the field in the second column. The label gets a padding-top so that it sits on the first line of text inside the field rather than on its top border. The palette is built on light-dark(): the block follows the surrounding color-scheme, there is no surface by default, and it appears only through the background prop."
           }
         },
-        "cardControls": ["labelWidth", "accent", "background"]
+        "cardControls": [
+          "label",
+          "labelWidth",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -568,7 +617,9 @@
       "type": "registry:component",
       "title": "Заголовок группы",
       "description": "Подпись группы полей на <legend> внутри <fieldset>: вопрос относится ко всем переключателям сразу и читается перед каждым.",
-      "categories": ["label"],
+      "categories": [
+        "label"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -580,7 +631,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-label-005-*. Серверный: из хуков только useId, состояние держат нативные радиокнопки одного name. Заголовок группы — <legend>, а не <label>: <label> подписывает одно поле, а вопрос относится ко всем вариантам, и озвучка повторяет legend перед каждым. У legend снята его особая раскладка внутри рамки приёмом float:left;width:100%; плата за это — обтекание, поэтому пояснение и оболочка вариантов получают clear:both. Отметка варианта подсвечивает всю строку через :has(input:checked), обводка фокуса ставится на строку через :has(input:focus-visible) — цель нажатия видна целиком. Палитра построена на light-dark(): блок следует color-scheme окружения, подложки по умолчанию нет, и она появляется только пропом background.",
       "meta": {
-        "tags": ["label", "fieldset", "legend", "radio"],
+        "tags": [
+          "label",
+          "fieldset",
+          "legend",
+          "radio"
+        ],
         "preview": {
           "width": "full"
         },
@@ -701,7 +757,12 @@
             "docs": "The component is self-contained: one file, no dependencies, a palette in local variables --vibeui-label-005-*. It is a server component: useId is the only hook, and the state is held by native radio buttons sharing one name. The group heading is a <legend>, not a <label>: a <label> names a single field, while the question applies to every option, and the announcement repeats the legend before each of them. The legend has its special layout inside the border removed by the float:left;width:100% technique; the price for that is the wrapping, so the hint and the option shell get clear:both. Selecting an option highlights the whole row through :has(input:checked), and the focus ring is placed on the row through :has(input:focus-visible) — the tap target is visible in full. The palette is built on light-dark(): the block follows the surrounding color-scheme, there is no surface by default, and it appears only through the background prop."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "legend",
+          "hint",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -709,7 +770,9 @@
       "type": "registry:component",
       "title": "Подпись со счётчиком",
       "description": "Подпись со счётчиком символов на правом краю строки: лимит виден до начала ввода, перебор подсвечивается и не обрезает вставленный текст.",
-      "categories": ["label"],
+      "categories": [
+        "label"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -721,7 +784,12 @@
       ],
       "docs": "Клиентский компонент: значение поля держит useState, из него считается остаток. Один файл, без зависимостей, палитра в локальных переменных --vibeui-label-006-*. Счётчик стоит в строке подписи, а не под полем: лимит виден раньше, чем человек начал печатать. Состояние счётчика выражено атрибутом data-state (ok/near/over), цвета висят на нём — отдельных классов нет. Жёсткого maxLength у поля нет намеренно: вставленный из буфера текст не обрезается молча, вместо этого поле получает aria-invalid, а счётчик краснеет. Цифры набраны табличными (font-variant-numeric:tabular-nums), поэтому правый край не дёргается при вводе. Живое сообщение включается только у границы: озвучивать каждый символ — шум, из-за которого выключают экранного диктора. Палитра построена на light-dark(): блок следует color-scheme окружения, подложки по умолчанию нет, и она появляется только пропом background.",
       "meta": {
-        "tags": ["label", "counter", "textarea", "limit"],
+        "tags": [
+          "label",
+          "counter",
+          "textarea",
+          "limit"
+        ],
         "preview": {
           "width": "full"
         },
@@ -842,7 +910,12 @@
             "docs": "A client component: the field value is held by useState, and the remaining count is computed from it. One file, no dependencies, a palette in local variables --vibeui-label-006-*. The counter stands in the label row rather than under the field: the limit is visible before a person has started typing. The counter state is expressed by the data-state attribute (ok/near/over), and the colours hang on it — there are no separate classes. The field deliberately has no hard maxLength: text pasted from the clipboard is not truncated silently, instead the field gets aria-invalid and the counter turns red. The figures are set in tabular numerals (font-variant-numeric:tabular-nums), so the right edge does not jitter while typing. The live message is turned on only near the limit: announcing every character is noise that makes people turn the screen reader off. The palette is built on light-dark(): the block follows the surrounding color-scheme, there is no surface by default, and it appears only through the background prop."
           }
         },
-        "cardControls": ["limit", "accent", "background"]
+        "cardControls": [
+          "label",
+          "limit",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -850,7 +923,9 @@
       "type": "registry:component",
       "title": "Подпись с ошибкой",
       "description": "Подпись с сообщением об ошибке между ней и полем: вся раскраска состояния висит на одном атрибуте aria-invalid.",
-      "categories": ["label"],
+      "categories": [
+        "label"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -862,7 +937,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-label-007-*. Серверный: из хуков только useId. Единственный источник состояния — aria-invalid у поля: подпись краснеет правилом :has(input[aria-invalid=\"true\"]), рамка и обводка фокуса — селектором по тому же атрибуту. Отдельного класса «error» нет, поэтому состояния не разъезжаются. Сообщение стоит между подписью и полем: на телефоне клавиатура закрывает низ экрана, и текст под полем не виден. К цвету добавлен нарисованный рамкой значок — цвет не должен быть единственным признаком ошибки. Сообщение связано с полем через aria-describedby. Палитра построена на light-dark(): блок следует color-scheme окружения, подложки по умолчанию нет, и она появляется только пропом background.",
       "meta": {
-        "tags": ["label", "error", "validation", "a11y"],
+        "tags": [
+          "label",
+          "error",
+          "validation",
+          "a11y"
+        ],
         "preview": {
           "width": "full"
         },
@@ -979,7 +1059,12 @@
             "docs": "The component is self-contained: one file, no dependencies, a palette in local variables --vibeui-label-007-*. It is a server component: useId is the only hook. The single source of state is the field's aria-invalid: the label turns red by the :has(input[aria-invalid=\"true\"]) rule, and the border and the focus ring by a selector on the same attribute. There is no separate \"error\" class, so the states cannot drift apart. The message stands between the label and the field: on a phone the keyboard covers the bottom of the screen and text under the field is not visible. An icon drawn with a border is added to the colour — colour must not be the only sign of an error. The message is tied to the field through aria-describedby. The palette is built on light-dark(): the block follows the surrounding color-scheme, there is no surface by default, and it appears only through the background prop."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "error",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -987,7 +1072,9 @@
       "type": "registry:component",
       "title": "Причина блокировки",
       "description": "Подпись выключенного поля с причиной запрета и ссылкой-выходом: поле readonly, а не disabled, поэтому остаётся доступным с клавиатуры.",
-      "categories": ["label"],
+      "categories": [
+        "label"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -999,7 +1086,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-label-008-*. Серверный: из хуков только useId, состояния нет. Ключевое решение — readOnly плюс aria-disabled вместо настоящего disabled: disabled выбрасывает поле из порядка обхода, и человек с клавиатуры до причины не доберётся, а readonly оставляет фокус и позволяет прочитать привязанный через aria-describedby текст. Замок нарисован средствами CSS: корпус — фон элемента, дужка — рамка псевдоэлемента, иконочный пакет ради одного значка не нужен. Рядом с причиной стоит ссылка, снимающая запрет, — без неё интерфейс превращается в тупик. Палитра построена на light-dark(): блок следует color-scheme окружения, подложки по умолчанию нет, и она появляется только пропом background.",
       "meta": {
-        "tags": ["label", "disabled", "readonly", "a11y"],
+        "tags": [
+          "label",
+          "disabled",
+          "readonly",
+          "a11y"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1128,7 +1220,13 @@
             "docs": "The component is self-contained: one file, no dependencies, a palette in local variables --vibeui-label-008-*. It is a server component: useId is the only hook, there is no state. The key decision is readOnly plus aria-disabled instead of a real disabled: disabled throws the field out of the tab order and a keyboard user never reaches the reason, while readonly keeps focus and lets the text tied through aria-describedby be read. The padlock is drawn by CSS means: the body is the element's background, the shackle is the border of a pseudo-element, and an icon package is not needed for a single glyph. Next to the reason there is a link that lifts the restriction — without it the interface turns into a dead end. The palette is built on light-dark(): the block follows the surrounding color-scheme, there is no surface by default, and it appears only through the background prop."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "reason",
+          "actionText",
+          "defaultValue",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1136,7 +1234,9 @@
       "type": "registry:component",
       "title": "Плашка обязательного",
       "description": "Подпись обязательного поля с читаемым текстовым бейджем «Обязательно» внутри самой подписи и пояснением под полем.",
-      "categories": ["label"],
+      "categories": [
+        "label"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1148,7 +1248,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-label-009-*. Серверный: из хуков только useId, состояния нет. Вместо звёздочки с расшифровкой для скринридера здесь читаемый бейдж «Обязательно», вложенный прямо в <label> — он звучит вместе с именем поля без отдельного skip-текста и aria-hidden. Пояснение стоит под полем и связано с ним через aria-describedby. Поле получает нативный required, валидация браузера остаётся рабочей. Палитра построена на light-dark(): блок следует color-scheme окружения, подложки по умолчанию нет, и она появляется только пропом background.",
       "meta": {
-        "tags": ["label", "form", "required", "a11y"],
+        "tags": [
+          "label",
+          "form",
+          "required",
+          "a11y"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1273,7 +1378,13 @@
             "docs": "The component is self-contained: one file, no dependencies, a palette in local variables --vibeui-label-009-*. It is a server component: useId is the only hook, there is no state. Instead of an asterisk with an expansion for a screen reader, there is a readable \"Required\" badge nested directly inside the <label> — it is spoken together with the field name without a separate skip text and aria-hidden. The explanation stands under the field and is tied to it through aria-describedby. The field gets the native required, so browser validation stays working. The palette is built on light-dark(): the block follows the surrounding color-scheme, there is no surface by default, and it appears only through the background prop."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "badge",
+          "hint",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1281,7 +1392,9 @@
       "type": "registry:component",
       "title": "Раскрытие в подписи",
       "description": "Подпись с разворачивающимся прямо в потоке формы пояснением на нативных <details>/<summary>: длинный ответ раздвигает соседние поля, а не всплывает поверх них.",
-      "categories": ["label"],
+      "categories": [
+        "label"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1293,7 +1406,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-label-010-*. Серверный: из хуков только useId, состояния нет — раскрытие держит нативный <details>. Кнопка-триггер — обычный <summary> с убранным системным маркером и своим шевроном на transform:rotate; aria-expanded браузер выставляет сам. Ответ связан с полем через aria-describedby независимо от состояния open. В отличие от всплывающей подсказки, длинный ответ раздвигает форму вниз, а не перекрывает соседние поля. Палитра построена на light-dark(): блок следует color-scheme окружения, подложки по умолчанию нет, и она появляется только пропом background.",
       "meta": {
-        "tags": ["label", "form", "disclosure", "a11y"],
+        "tags": [
+          "label",
+          "form",
+          "disclosure",
+          "a11y"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1418,7 +1536,13 @@
             "docs": "The component is self-contained: one file, no dependencies, a palette in local variables --vibeui-label-010-*. It is a server component: useId is the only hook, there is no state — the expansion is held by a native <details>. The trigger button is a plain <summary> with the system marker removed and a chevron of its own on transform:rotate; aria-expanded is set by the browser itself. The answer is tied to the field through aria-describedby regardless of the open state. Unlike a popover hint, a long answer pushes the form downwards instead of covering the neighbouring fields. The palette is built on light-dark(): the block follows the surrounding color-scheme, there is no surface by default, and it appears only through the background prop."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "toggleText",
+          "answer",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1426,7 +1550,9 @@
       "type": "registry:component",
       "title": "Счётчик отмеченных",
       "description": "Подпись группы чекбоксов со счётчиком выбранного в заголовке группы: «N из M выбрано» пересчитывается на каждый клик и дублируется в живом сообщении.",
-      "categories": ["label"],
+      "categories": [
+        "label"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1438,7 +1564,13 @@
       ],
       "docs": "Клиентский компонент: список выбранных значений держит useState, из него считается счётчик. Один файл, без зависимостей, палитра в локальных переменных --vibeui-label-011-*. У группы чекбоксов нет единственного поля, которое подписывает <label>, поэтому счётчик встроен в <legend> — общую подпись группы, а не в подпись одного из полей. <legend> получает раскладку через приём проекта (float:left;width:100%), а строка «текст + счётчик» внутри неё — обычный flex на вложенном <span>, без ограничений браузеров на flex-легенду. Отдельный визуально скрытый параграф с aria-live дублирует итог для скринридера, чтобы не пришлось переслушивать весь список чекбоксов после каждого клика. Палитра построена на light-dark(): блок следует color-scheme окружения, подложки по умолчанию нет, и она появляется только пропом background.",
       "meta": {
-        "tags": ["label", "form", "checkbox", "counter", "a11y"],
+        "tags": [
+          "label",
+          "form",
+          "checkbox",
+          "counter",
+          "a11y"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1523,7 +1655,11 @@
                   "Telegram bot",
                   "Phone call"
                 ],
-                "defaultValue": ["Email", "SMS", "In-app push"],
+                "defaultValue": [
+                  "Email",
+                  "SMS",
+                  "In-app push"
+                ],
                 "countText": "{checked} of {total} selected",
                 "liveText": "{checked} of {total} selected"
               }
@@ -1559,7 +1695,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "legend",
+          "countText",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1567,7 +1708,9 @@
       "type": "registry:component",
       "title": "Пометка необязательного",
       "description": "Подпись с пометкой «необязательно» как приглушённой частью той же фразы, без отдельного бейджа и подложки — только цвет и начертание.",
-      "categories": ["label"],
+      "categories": [
+        "label"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1579,7 +1722,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-label-012-*. Серверный: из хуков только useId, состояния нет. Пометка «необязательно» — не отдельный элемент с фоном и рамкой, а приглушённый текст внутри того же <label>, что и имя поля: подпись читается и звучит одной фразой, а не подписью плюс наклеенным ярлыком. Приглушение только цветом var(--vibeui-label-012-muted) и обычным начертанием на фоне полужирного имени поля. Палитра построена на light-dark(): блок следует color-scheme окружения, подложки по умолчанию нет, и она появляется только пропом background.",
       "meta": {
-        "tags": ["label", "form", "optional", "a11y"],
+        "tags": [
+          "label",
+          "form",
+          "optional",
+          "a11y"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1690,7 +1838,12 @@
             "docs": "The component is self-contained: one file, no dependencies, a palette in local variables --vibeui-label-012-*. It is a server component: useId is the only hook, there is no state. The \"optional\" note is not a separate element with a background and a border but muted text inside the same <label> as the field name: the label is read and spoken as one phrase rather than as a label plus a stuck-on tag. The muting is done only by the var(--vibeui-label-012-muted) colour and a regular weight against the bold field name. The palette is built on light-dark(): the block follows the surrounding color-scheme, there is no surface by default, and it appears only through the background prop."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "optionalText",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1698,7 +1851,9 @@
       "type": "registry:component",
       "title": "Ошибка группы",
       "description": "Подпись группы полей: заголовок группы в <legend> и одна общая ошибка под ним для обоих полей сразу, без дублирования на каждое из них.",
-      "categories": ["label"],
+      "categories": [
+        "label"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1710,7 +1865,13 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-label-013-*. Серверный: из хуков только useId, состояния нет. Пароль и подтверждение пароля — два поля, но ошибка «не совпадают» относится к обоим сразу, а не к одному из них: дублировать её под каждым полем — шум и повод гадать, какое поле неверно. Сообщение одно, стоит сразу под <legend> и связано через aria-describedby и с <fieldset> целиком, и с каждым полем по отдельности, поэтому звучит независимо от того, на каком из двух полей стоит фокус.",
       "meta": {
-        "tags": ["label", "form", "fieldset", "error", "a11y"],
+        "tags": [
+          "label",
+          "form",
+          "fieldset",
+          "error",
+          "a11y"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1844,7 +2005,14 @@
             "docs": "The component is self-contained: one file, no dependencies, a palette in local variables --vibeui-label-013-*. It is a server component: useId is the only hook, there is no state. A password and a password confirmation are two fields, but the \"do not match\" error belongs to both at once rather than to one of them: duplicating it under each field is noise and a reason to guess which field is actually wrong. There is a single message, it stands directly under the <legend> and is tied through aria-describedby both to the <fieldset> as a whole and to each field separately, so it is announced regardless of which of the two fields has focus."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "legend",
+          "error",
+          "firstLabel",
+          "secondLabel",
+          "accent",
+          "background"
+        ]
       }
     }
   ]

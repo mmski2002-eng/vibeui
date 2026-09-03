@@ -53,7 +53,10 @@ const STYLES = `
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="togglegroup-009"]{color-scheme:dark}
 [data-vibeui-block="togglegroup-009"]{
 box-sizing:border-box;display:flex;flex-direction:column;gap:0.75rem;
-width:100%;max-width:28rem;padding:0.875rem;
+width:100%;
+/* container-type отрывает ширину от содержимого: без нижней границы
+   блок схлопывается внутри flex-контейнера. */
+min-width:min(100%,16rem);max-width:28rem;padding:0.875rem;
 border:1px solid var(--vibeui-togglegroup-009-border);border-radius:0.875rem;
 background:var(--vibeui-togglegroup-009-bg);color:var(--vibeui-togglegroup-009-fg);
 font-family:var(--vibeui-togglegroup-009-font);

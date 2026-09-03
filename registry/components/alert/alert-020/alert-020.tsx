@@ -44,7 +44,10 @@ container-type:inline-size;
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="alert-020"]{color-scheme:dark}
 [data-vibeui-block="alert-020"]{
 display:flex;flex-direction:column;gap:0.75rem;
-width:100%;max-width:32rem;box-sizing:border-box;
+width:100%;
+/* container-type отрывает ширину от содержимого: без нижней границы
+   блок схлопывается внутри flex-контейнера. */
+min-width:min(100%,16rem);max-width:32rem;box-sizing:border-box;
 padding:1.0625rem 1.125rem;
 border:1px solid color-mix(in oklab,var(--vibeui-alert-020-danger) 35%,var(--vibeui-alert-020-border));
 border-radius:var(--vibeui-alert-020-radius);

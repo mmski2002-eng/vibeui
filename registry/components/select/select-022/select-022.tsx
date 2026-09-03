@@ -34,7 +34,10 @@ const STYLES = `
 /* width вместе с max-width: container-type отвязывает ширину от содержимого,
    и без явной ширины строка схлопывается в кадре, который центрирует
    содержимое флексом. */
-margin:0;width:100%;max-width:26rem;
+margin:0;width:100%;
+/* container-type отрывает ширину от содержимого: без нижней границы
+   блок схлопывается внутри flex-контейнера. */
+min-width:min(100%,16rem);max-width:26rem;
 font-family:var(--vibeui-select-022-font);font-size:0.9375rem;line-height:1.6;
 color:var(--vibeui-select-022-fg);
 container-type:inline-size;

@@ -72,8 +72,14 @@ const STYLES = `
 --vibeui-dashboard-077-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="dashboard-077"]{color-scheme:dark}
 [data-vibeui-block="dashboard-077"]{
 box-sizing:border-box;width:100%;
+/* container-type отрывает ширину от содержимого: без нижней границы
+   блок схлопывается внутри flex-контейнера. */
+min-width:min(100%,16rem);
 background:var(--vibeui-dashboard-077-bg);
 color:var(--vibeui-dashboard-077-fg);
 font-family:var(--vibeui-dashboard-077-sans);

@@ -42,6 +42,9 @@ const STYLES = `
 container-type:inline-size;
 }
 [data-vibeui-block="blog-004"]{
+/* container-type отрывает ширину от содержимого: без нижней границы
+   блок схлопывается внутри flex-контейнера. */
+min-width:min(100%,16rem);
 background:var(--vibeui-blog-004-bg);color:var(--vibeui-blog-004-fg);
 font-family:var(--vibeui-blog-004-sans);
 }

@@ -6,7 +6,9 @@
       "type": "registry:component",
       "title": "Нативный аккордеон",
       "description": "Аккордеон на нативных details и summary: раскрытие без единой строки JS, ни рамок, ни плашки — список живёт прямо на фоне страницы.",
-      "categories": ["accordion"],
+      "categories": [
+        "accordion"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-accordion-001-*. Раскрытие держат нативные <details>/<summary>, поэтому состояние работает до гидратации и не требует React. Взаимное исключение включается атрибутом name у details. Тема берётся из color-scheme окружения через light-dark(): фона у компонента по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней. Значок выбирается пропом marker и рисуется самим компонентом в боксе постоянного размера, поэтому текст начинается на одном месте при любой фигуре и картинка одинакова во всех браузерах. Отступы и кегль считаются от собственной ширины через @container.",
       "meta": {
-        "tags": ["accordion", "faq", "details", "no-js"],
+        "tags": [
+          "accordion",
+          "faq",
+          "details",
+          "no-js"
+        ],
         "preview": {
           "width": "full",
           "props": {
@@ -81,14 +88,24 @@
             "label": "Значок",
             "type": "select",
             "default": "chevron",
-            "options": ["chevron", "triangle", "square", "plus", "none"]
+            "options": [
+              "chevron",
+              "triangle",
+              "square",
+              "plus",
+              "none"
+            ]
           },
           {
             "prop": "divider",
             "label": "Разделители",
             "type": "select",
             "default": "line",
-            "options": ["line", "dashed", "none"]
+            "options": [
+              "line",
+              "dashed",
+              "none"
+            ]
           },
           {
             "prop": "defaultOpen",
@@ -192,9 +209,9 @@
         "cardControls": [
           "marker",
           "divider",
+          "defaultOpen",
           "accent",
-          "exclusive",
-          "defaultOpen"
+          "exclusive"
         ]
       }
     },
@@ -203,7 +220,9 @@
       "type": "registry:component",
       "title": "Аккордеон-карточки",
       "description": "Аккордеон из отдельных карточек: у каждого раздела своя рамка, а открытый отделяется от остальных подъёмом, кольцом или одной рамкой — на выбор.",
-      "categories": ["accordion"],
+      "categories": [
+        "accordion"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -215,7 +234,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-accordion-002-*. Раскрытие держат нативные <details>/<summary>, поэтому состояние работает до гидратации и не требует React. Разделы независимы: атрибута name здесь нет намеренно — в списке карточек взаимное закрытие читается как поломка. Заливки у карточек по умолчанию нет: они лежат на фоне страницы и держатся одной рамкой. Тема берётся из color-scheme окружения через light-dark(), и тёмная ветка не инверсия светлой: тень наружу на тёмном не видна, поэтому подъём там набирается свечением. Значок выбирается пропом marker и живёт в круглой лунке постоянного размера, поэтому смена фигуры не двигает заголовок. Отступы и кегль считаются от собственной ширины через @container.",
       "meta": {
-        "tags": ["accordion", "faq", "card", "no-js"],
+        "tags": [
+          "accordion",
+          "faq",
+          "card",
+          "no-js"
+        ],
         "preview": {
           "width": "full",
           "props": {
@@ -276,14 +300,24 @@
             "label": "Значок",
             "type": "select",
             "default": "chevron",
-            "options": ["chevron", "triangle", "square", "plus", "none"]
+            "options": [
+              "chevron",
+              "triangle",
+              "square",
+              "plus",
+              "none"
+            ]
           },
           {
             "prop": "elevation",
             "label": "Открытая карточка",
             "type": "select",
             "default": "lift",
-            "options": ["lift", "ring", "flat"]
+            "options": [
+              "lift",
+              "ring",
+              "flat"
+            ]
           },
           {
             "prop": "background",
@@ -385,9 +419,9 @@
         "cardControls": [
           "marker",
           "elevation",
-          "accent",
           "background",
-          "defaultOpen"
+          "defaultOpen",
+          "accent"
         ]
       }
     },
@@ -396,7 +430,9 @@
       "type": "registry:component",
       "title": "Аккордеон с подсветкой",
       "description": "Открытый вопрос лежит под пигментом find-in-page, слева стоит каретка: дизайн про то, что нативный details раскрывается поиском по странице.",
-      "categories": ["accordion"],
+      "categories": [
+        "accordion"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -408,7 +444,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-accordion-003-*. Раскрытие держат нативные <details>/<summary>, поэтому браузер сам открывает раздел, когда находит внутри текст поиском по странице, — ради этого свойства компонент и сделан. Открытый вопрос красится пигментом find-in-page, буквы под ним переводятся в тёмный, как это делает сам браузер; в тёмной теме пигмент не гасится. Подсветка лежит на одном узле с текстом (box-decoration-break: clone), поэтому переносы строк её не разрывают. Хрома нет вовсе: ни рамок, ни скруглений, ни фона строк — работают типографика и вертикальный ритм. Отступы и кегль считаются от собственной ширины через @container.",
       "meta": {
-        "tags": ["accordion", "faq", "details", "find-in-page"],
+        "tags": [
+          "accordion",
+          "faq",
+          "details",
+          "find-in-page"
+        ],
         "preview": {
           "width": "full",
           "props": {
@@ -476,7 +517,10 @@
             "label": "Каретка",
             "type": "select",
             "default": "bar",
-            "options": ["bar", "none"]
+            "options": [
+              "bar",
+              "none"
+            ]
           },
           {
             "prop": "accent",
@@ -590,7 +634,9 @@
       "type": "registry:component",
       "title": "Плотный аккордеон",
       "description": "Плотный аккордеон со значением в правой колонке: срок, объём или цена. Такой список читают по правому краю, вообще не раскрывая разделы.",
-      "categories": ["accordion"],
+      "categories": [
+        "accordion"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -602,7 +648,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-accordion-004-*. Раскрытие держат нативные <details>/<summary>, поэтому состояние работает до гидратации и не требует React. Заливки у списка нет: он держится рамкой и лежит на фоне страницы, а подсветка строк — открытой и чётных при zebra — сделана полупрозрачной, поэтому работает на любом фоне. Тема берётся из color-scheme окружения через light-dark(). Значения правой колонки набраны табличными цифрами и стоят в столбик. Отступы и кегль считаются от собственной ширины через @container.",
       "meta": {
-        "tags": ["accordion", "list", "dense", "no-js"],
+        "tags": [
+          "accordion",
+          "list",
+          "dense",
+          "no-js"
+        ],
         "preview": {
           "width": "full",
           "props": {
@@ -648,7 +699,13 @@
             "label": "Значок",
             "type": "select",
             "default": "chevron",
-            "options": ["chevron", "triangle", "square", "plus", "none"]
+            "options": [
+              "chevron",
+              "triangle",
+              "square",
+              "plus",
+              "none"
+            ]
           },
           {
             "prop": "zebra",
@@ -763,9 +820,9 @@
         "cardControls": [
           "marker",
           "zebra",
-          "accent",
           "background",
-          "defaultOpen"
+          "defaultOpen",
+          "accent"
         ]
       }
     },
@@ -774,7 +831,9 @@
       "type": "registry:component",
       "title": "Аккордеон с состояниями",
       "description": "Аккордеон, у разделов которого есть состояния: требующий внимания отмечен полосой и подписью, недоступный не раскрывается и сам объясняет причину.",
-      "categories": ["accordion"],
+      "categories": [
+        "accordion"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -786,7 +845,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-accordion-005-*. Недоступный раздел — не <details>, а статичный блок: раскрывать в нём нечего, и притворяться раскрывающимся он не должен. Раскрываемые разделы держат нативные <details>/<summary>. Заливки у карточек нет: они держатся рамкой и лежат на фоне страницы, а подсветка состояний сделана полупрозрачной и работает на любом фоне. Цвет внимания задаётся одним пропом warn: цвет подписи выводится из него же через color-mix, поэтому вторая настройка не нужна. Тема берётся из color-scheme окружения через light-dark(). Отступы и кегль считаются от собственной ширины через @container.",
       "meta": {
-        "tags": ["accordion", "status", "state", "no-js"],
+        "tags": [
+          "accordion",
+          "status",
+          "state",
+          "no-js"
+        ],
         "preview": {
           "width": "full",
           "props": {
@@ -834,14 +898,24 @@
             "label": "Значок",
             "type": "select",
             "default": "chevron",
-            "options": ["chevron", "triangle", "square", "plus", "none"]
+            "options": [
+              "chevron",
+              "triangle",
+              "square",
+              "plus",
+              "none"
+            ]
           },
           {
             "prop": "stripe",
             "label": "Отметка внимания",
             "type": "select",
             "default": "bar",
-            "options": ["bar", "ring", "none"]
+            "options": [
+              "bar",
+              "ring",
+              "none"
+            ]
           },
           {
             "prop": "warn",
@@ -951,7 +1025,13 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-accordion-005-*. A locked section is not a <details> but a static block: there is nothing in it to disclose, and it must not pretend to be disclosable. The disclosable sections are held by native <details>/<summary>. The cards have no fill: they are held by their border over the page background, and the state highlights are translucent and work on any background. The attention colour is set by a single warn prop: the label colour is derived from it through color-mix, so a second setting is not needed. The theme comes from the surrounding color-scheme through light-dark(). Padding and type size are computed from the component's own width through @container."
           }
         },
-        "cardControls": ["marker", "stripe", "warn", "accent", "defaultOpen"]
+        "cardControls": [
+          "marker",
+          "stripe",
+          "warn",
+          "defaultOpen",
+          "accent"
+        ]
       }
     },
     {
@@ -959,7 +1039,9 @@
       "type": "registry:component",
       "title": "Аккордеон-чеклист",
       "description": "Аккордеон-чеклист онбординга: нумерованные шаги, галочки у выполненных и прогресс, который считается из самих шагов. Раскрыт первый невыполненный.",
-      "categories": ["accordion"],
+      "categories": [
+        "accordion"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -971,7 +1053,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-accordion-006-*. Прогресс считается из самих шагов и не задаётся отдельным числом — разойтись со списком он не может. Раскрытие держат нативные <details>/<summary>. Заливки у чеклиста нет: он держится рамкой и лежит на фоне страницы, тема берётся из color-scheme окружения через light-dark(). Шапку можно свести к счётчику или убрать целиком пропом progress. Отступы и кегль считаются от собственной ширины через @container.",
       "meta": {
-        "tags": ["accordion", "checklist", "onboarding", "progress"],
+        "tags": [
+          "accordion",
+          "checklist",
+          "onboarding",
+          "progress"
+        ],
         "preview": {
           "width": "full",
           "props": {
@@ -1026,7 +1113,11 @@
             "label": "Шапка",
             "type": "select",
             "default": "bar",
-            "options": ["bar", "count", "none"]
+            "options": [
+              "bar",
+              "count",
+              "none"
+            ]
           },
           {
             "prop": "background",
@@ -1140,7 +1231,13 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-accordion-006-*. The progress is computed from the steps themselves rather than given as a separate number — it cannot drift out of sync with the list. Native <details>/<summary> hold the disclosure. The checklist has no fill: it is held by its border over the page background, and the theme comes from the surrounding color-scheme through light-dark(). The header can be reduced to the counter or removed entirely with the progress prop. Padding and type size are computed from the component's own width through @container."
           }
         },
-        "cardControls": ["progress", "accent", "background", "defaultOpen"]
+        "cardControls": [
+          "title",
+          "progress",
+          "background",
+          "defaultOpen",
+          "accent"
+        ]
       }
     },
     {
@@ -1148,7 +1245,9 @@
       "type": "registry:component",
       "title": "Аккордеон с метками",
       "description": "Аккордеон с плитками-метками и счётчиками: в списке из десяти разделов взгляд цепляется за плитку, а не перечитывает заголовки.",
-      "categories": ["accordion"],
+      "categories": [
+        "accordion"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1160,7 +1259,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-accordion-007-*. Плитка-метка — текст в квадрате, а не иконка из библиотеки: набор разделов у всех разный, а зависимость осталась бы навсегда. Раскрытие держат нативные <details>/<summary>. Заливки у списка нет: он держится рамкой и лежит на фоне страницы, тема берётся из color-scheme окружения через light-dark(). Значок раскрытия рисуется в боксе постоянного размера, поэтому счётчик справа не съезжает при смене фигуры. Отступы и кегль считаются от собственной ширины через @container.",
       "meta": {
-        "tags": ["accordion", "icons", "badges", "settings"],
+        "tags": [
+          "accordion",
+          "icons",
+          "badges",
+          "settings"
+        ],
         "preview": {
           "width": "full",
           "props": {
@@ -1231,7 +1335,13 @@
             "label": "Значок",
             "type": "select",
             "default": "chevron",
-            "options": ["chevron", "triangle", "square", "plus", "none"]
+            "options": [
+              "chevron",
+              "triangle",
+              "square",
+              "plus",
+              "none"
+            ]
           },
           {
             "prop": "badge",
@@ -1349,9 +1459,9 @@
         "cardControls": [
           "marker",
           "badge",
-          "accent",
           "background",
-          "defaultOpen"
+          "defaultOpen",
+          "accent"
         ]
       }
     },
@@ -1360,7 +1470,9 @@
       "type": "registry:component",
       "title": "Двухуровневый аккордеон",
       "description": "Двухуровневый аккордеон для справки: главы и статьи внутри них. Вложенность показана линией от заголовка главы, а не отступом.",
-      "categories": ["accordion"],
+      "categories": [
+        "accordion"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1372,7 +1484,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-accordion-008-*. Оба уровня — нативные <details>, поэтому поиск по странице раскрывает сразу и главу, и статью внутри неё. Вложенность показана линией от заголовка главы, а не отступом: отступ на третьем уровне съел бы ширину строки. Заливки нет, тема берётся из color-scheme окружения через light-dark(). Отступы и кегль считаются от собственной ширины через @container.",
       "meta": {
-        "tags": ["accordion", "nested", "docs", "help"],
+        "tags": [
+          "accordion",
+          "nested",
+          "docs",
+          "help"
+        ],
         "preview": {
           "width": "full",
           "props": {
@@ -1418,14 +1535,23 @@
             "label": "Значок",
             "type": "select",
             "default": "chevron",
-            "options": ["chevron", "triangle", "square", "plus", "none"]
+            "options": [
+              "chevron",
+              "triangle",
+              "square",
+              "plus",
+              "none"
+            ]
           },
           {
             "prop": "guide",
             "label": "Линия вложенности",
             "type": "select",
             "default": "line",
-            "options": ["line", "none"]
+            "options": [
+              "line",
+              "none"
+            ]
           },
           {
             "prop": "background",
@@ -1556,9 +1682,9 @@
         "cardControls": [
           "marker",
           "guide",
-          "accent",
           "background",
-          "defaultOpen"
+          "defaultOpen",
+          "accent"
         ]
       }
     },
@@ -1567,7 +1693,9 @@
       "type": "registry:component",
       "title": "Аккордеон-лента событий",
       "description": "Аккордеон-лента событий: слева линия с точками, справа раскрывающиеся записи. Так читают историю изменений — сначала по датам, потом вглубь одной записи.",
-      "categories": ["accordion"],
+      "categories": [
+        "accordion"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1579,7 +1707,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-accordion-009-*. Раскрытие держат нативные <details>/<summary>. Линия ленты обрывается на точке последней записи, а не уходит в пустоту. Заливки нет, тема берётся из color-scheme окружения через light-dark(); полой точке нужна заливка цветом страницы, и по умолчанию это системный Canvas, который сам следует color-scheme. Отступы и кегль считаются от собственной ширины через @container.",
       "meta": {
-        "tags": ["accordion", "timeline", "changelog", "history"],
+        "tags": [
+          "accordion",
+          "timeline",
+          "changelog",
+          "history"
+        ],
         "preview": {
           "width": "full",
           "props": {
@@ -1650,14 +1783,22 @@
             "label": "Точка",
             "type": "select",
             "default": "dot",
-            "options": ["dot", "ring", "none"]
+            "options": [
+              "dot",
+              "ring",
+              "none"
+            ]
           },
           {
             "prop": "rail",
             "label": "Линия",
             "type": "select",
             "default": "solid",
-            "options": ["solid", "dashed", "none"]
+            "options": [
+              "solid",
+              "dashed",
+              "none"
+            ]
           },
           {
             "prop": "background",
@@ -1769,9 +1910,9 @@
         "cardControls": [
           "marker",
           "rail",
-          "accent",
           "background",
-          "defaultOpen"
+          "defaultOpen",
+          "accent"
         ]
       }
     },
@@ -1780,7 +1921,9 @@
       "type": "registry:component",
       "title": "Аккордеон в две колонки",
       "description": "Аккордеон в две колонки: на широкой раскладке вопрос остаётся слева, а ответ раскрывается справа — глаз не теряет вопрос под длинным текстом.",
-      "categories": ["accordion"],
+      "categories": [
+        "accordion"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1792,7 +1935,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-accordion-010-*. Раскрытие держат нативные <details>/<summary>. Две колонки включает @container по ширине самого блока, а не окна: в узкой колонке он сам складывается в обычный список, где бы ни стоял. Фона нет, тема берётся из color-scheme окружения через light-dark(). Отступы и кегль считаются от собственной ширины.",
       "meta": {
-        "tags": ["accordion", "faq", "two column", "wide"],
+        "tags": [
+          "accordion",
+          "faq",
+          "two column",
+          "wide"
+        ],
         "preview": {
           "width": "full",
           "props": {
@@ -1852,7 +2000,13 @@
             "label": "Значок",
             "type": "select",
             "default": "chevron",
-            "options": ["chevron", "triangle", "square", "plus", "none"]
+            "options": [
+              "chevron",
+              "triangle",
+              "square",
+              "plus",
+              "none"
+            ]
           },
           {
             "prop": "numbered",
@@ -1959,9 +2113,9 @@
         "cardControls": [
           "marker",
           "numbered",
-          "accent",
           "background",
-          "defaultOpen"
+          "defaultOpen",
+          "accent"
         ]
       }
     },
@@ -1970,7 +2124,9 @@
       "type": "registry:component",
       "title": "Тёмный аккордеон",
       "description": "Тёмный аккордеон для тёмных секций: собственная тёмная палитра, а не инверсия светлой. Открытый раздел светится изнутри — тени на тёмном фоне не работают.",
-      "categories": ["accordion"],
+      "categories": [
+        "accordion"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1982,7 +2138,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-accordion-011-*. В отличие от остальных аккордеонов семейства он не следует color-scheme окружения: у него собственная тёмная палитра, и она не меняется. Светлый аккордеон на тёмной секции выглядит вырезанной наклейкой, поэтому здесь тёмный вариант, а не инверсия готового. Открытый раздел подсвечивается изнутри — тени на тёмном фоне не работают, и чем именно подсвечивать, решает проп glow. Раскрытие держат нативные <details>/<summary>, взаимное исключение — атрибут name. Отступы и кегль считаются от собственной ширины через @container.",
       "meta": {
-        "tags": ["accordion", "dark", "faq", "no-js"],
+        "tags": [
+          "accordion",
+          "dark",
+          "faq",
+          "no-js"
+        ],
         "preview": {
           "width": "full",
           "props": {
@@ -2043,14 +2204,24 @@
             "label": "Значок",
             "type": "select",
             "default": "chevron",
-            "options": ["chevron", "triangle", "square", "plus", "none"]
+            "options": [
+              "chevron",
+              "triangle",
+              "square",
+              "plus",
+              "none"
+            ]
           },
           {
             "prop": "glow",
             "label": "Подсветка",
             "type": "select",
             "default": "edge",
-            "options": ["edge", "ring", "none"]
+            "options": [
+              "edge",
+              "ring",
+              "none"
+            ]
           },
           {
             "prop": "accent",
@@ -2149,7 +2320,13 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-accordion-011-*. Unlike the rest of the family, it does not follow the surrounding color-scheme: it carries a dark palette of its own and that palette does not change. A light accordion on a dark section looks like a sticker cut out and pasted on, so this is a dark variant rather than an inversion of a finished one. The open section is lit from within — shadows do not work on a dark ground, and what exactly does the lighting is decided by the glow prop. Native <details>/<summary> hold the disclosure, and the name attribute holds the exclusivity. Padding and type size are computed from the component's own width through @container."
           }
         },
-        "cardControls": ["marker", "glow", "accent", "exclusive", "defaultOpen"]
+        "cardControls": [
+          "marker",
+          "glow",
+          "accent",
+          "defaultOpen",
+          "exclusive"
+        ]
       }
     },
     {
@@ -2157,7 +2334,9 @@
       "type": "registry:component",
       "title": "Аккордеон-диафрагма",
       "description": "Компонент — один кусок материала, и раскрытие пробивает в нём окно: ответ лежит в утопленном колодце, а маркер слева — уменьшенная модель этого выреза.",
-      "categories": ["accordion"],
+      "categories": [
+        "accordion"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2169,7 +2348,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-accordion-012-*. Раскрытие держат нативные <details>/<summary>, поэтому клавиатура, поиск по странице и состояние до гидратации работают без JS. Акцентного цвета у компонента нет: состояния различаются контрастом материала и света, поэтому обводка фокуса берёт цвет текста и уходит внутрь плашки. Тёмная ветка не инверсия светлой — на светлом вырез впускает свет и колодец светлее плашки, на тёмном колодец темнее, а кромку ловит блик сверху. Цвет материала задаётся пропом slab, а подсветка строки и линия между разделами выводятся из него смешиванием. Отступы и кегль считаются от собственной ширины через @container.",
       "meta": {
-        "tags": ["accordion", "faq", "details", "material"],
+        "tags": [
+          "accordion",
+          "faq",
+          "details",
+          "material"
+        ],
         "preview": {
           "width": "full",
           "props": {
@@ -2229,7 +2413,10 @@
             "label": "Вырез",
             "type": "select",
             "default": "sunken",
-            "options": ["sunken", "flat"]
+            "options": [
+              "sunken",
+              "flat"
+            ]
           },
           {
             "prop": "slab",
@@ -2252,7 +2439,12 @@
             "max": 5
           }
         ],
-        "cardControls": ["well", "slab", "exclusive", "defaultOpen"],
+        "cardControls": [
+          "well",
+          "slab",
+          "exclusive",
+          "defaultOpen"
+        ],
         "i18n": {
           "en": {
             "title": "Aperture Accordion",
@@ -2332,7 +2524,9 @@
       "type": "registry:component",
       "title": "Аккордеон-клавиатура",
       "description": "Раздел здесь — клавиша, и нажатой остаётся ровно одна: открытая уходит вниз, теряет нижнюю грань и садится в бед, а рамкой работает сам бед между клавишами.",
-      "categories": ["accordion"],
+      "categories": [
+        "accordion"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2344,7 +2538,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-accordion-013-*. Взаимное исключение держит атрибут name у details, и дизайн показывает именно его: нажатой остаётся одна клавиша. Ход задаётся пропом travel и живёт в переменной --vibeui-accordion-013-travel, от неё считаются и смещение, и нижняя грань, и внутренняя тень. Грань нарисована тенью, а не border: border прибавил бы строке высоту, и ход превратился бы в прыжок. Кольцо фокуса охватывает всю клавишу через :has(summary:focus-visible). Тёмная ветка переворачивает физику: тень под клавишей заменяется провалом темнее беда, а индикатор набирает свечение. Отступы и кегль считаются от собственной ширины через @container.",
       "meta": {
-        "tags": ["accordion", "faq", "details", "tactile"],
+        "tags": [
+          "accordion",
+          "faq",
+          "details",
+          "tactile"
+        ],
         "preview": {
           "width": "full",
           "props": {

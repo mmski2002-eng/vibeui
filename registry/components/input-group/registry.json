@@ -6,7 +6,9 @@
       "type": "registry:component",
       "title": "Слитая кнопка",
       "description": "Сцепка «поле и кнопка» с общей рамкой: подписка одним движением, Enter отправляет форму без обработчиков клавиш.",
-      "categories": ["input-group"],
+      "categories": [
+        "input-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-inputgroup-001-*. Серверный: состояния нет, обёртка — настоящий <form>, поэтому Enter в поле нажимает кнопку. Общая рамка собрана схлопыванием границ (margin-left:-1px у соседей), скругления оставлены только на концах сцепки, фокусный элемент поднимается z-index'ом. Идентификаторы поля и подсказки собираются из пропа name, чтобы обойтись без клиентского хука.",
       "meta": {
-        "tags": ["inputgroup", "form", "subscribe", "button"],
+        "tags": [
+          "inputgroup",
+          "form",
+          "subscribe",
+          "button"
+        ],
         "ai": {
           "export": "Inputgroup001",
           "usage": "<Inputgroup001\n  name=\"email\"\n  label=\"Письма о новых компонентах\"\n  action=\"Подписаться\"\n/>",
@@ -135,7 +142,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-001-* variables. Server-side: there is no state, and the wrapper is a real <form>, so Enter in the field presses the button. The shared frame is built by collapsing the borders (margin-left:-1px on the neighbours), the rounding is left only at the ends of the group, and the focused element is raised with z-index. The field and hint ids are assembled from the name prop so as to do without a client hook."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "action",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -143,7 +158,9 @@
       "type": "registry:component",
       "title": "Код страны",
       "description": "Код страны нативным списком слева и номер справа в одной рамке: ширина списка задана в ch, поэтому номер не прыгает при смене страны.",
-      "categories": ["input-group"],
+      "categories": [
+        "input-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -155,7 +172,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-inputgroup-002-*. Серверный: состояния нет. Слева нативный <select> с appearance:none и стрелкой из двух градиентов, справа поле телефона. Ширина select задана в ch, чтобы смена кода не двигала номер. Рамка собрана схлопыванием границ, фокус поднимается z-index'ом. Код и номер уходят двумя полями формы: `${name}-code` и name.",
       "meta": {
-        "tags": ["inputgroup", "phone", "select", "form"],
+        "tags": [
+          "inputgroup",
+          "phone",
+          "select",
+          "form"
+        ],
         "ai": {
           "export": "Inputgroup002",
           "usage": "<Inputgroup002\n  name=\"phone\"\n  label=\"Телефон для связи\"\n  countries={[{ code: \"+7\", title: \"Россия\" }]}\n/>",
@@ -290,7 +312,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-002-* variables. Server-side: there is no state. On the left there is a native <select> with appearance:none and an arrow made of two gradients, on the right the phone field. The select width is set in ch so that changing the code does not shift the number. The frame is built by collapsing the borders, and the focused element is raised with z-index. The code and the number are submitted as two form fields: `${name}-code` and name."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "accent",
+          "placeholder",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -298,7 +328,9 @@
       "type": "registry:component",
       "title": "Действия по краям",
       "description": "Сцепка с кнопками по обоим краям: слева перевыпуск ссылки, справа копирование, между ними поле только для чтения.",
-      "categories": ["input-group"],
+      "categories": [
+        "input-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -310,7 +342,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-inputgroup-003-*. Клиентский: \"use client\". Поле readonly, но это настоящий input — ссылку надо уметь выделить. Копирование идёт через navigator.clipboard, при отказе (нет https, нет разрешения) значение просто выделяется. Кнопки делят рамку с полем через схлопнутые границы, фокус поднимается z-index'ом. Новый код генерируется только по нажатию, не при рендере — иначе разметка сервера и клиента разойдётся.",
       "meta": {
-        "tags": ["inputgroup", "copy", "link", "actions"],
+        "tags": [
+          "inputgroup",
+          "copy",
+          "link",
+          "actions"
+        ],
         "ai": {
           "export": "Inputgroup003",
           "usage": "<Inputgroup003\n  label=\"Ссылка-приглашение\"\n  base=\"https://vibeui.ru/join/\"\n/>",
@@ -429,7 +466,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-003-* variables. Client-side: \"use client\". The field is readonly, but it is a real input — a link has to be selectable. Copying goes through navigator.clipboard, and on a refusal (no https, no permission) the value is simply selected. The buttons share the frame with the field through collapsed borders, and the focused element is raised with z-index. A new code is generated only on a press, never at render — otherwise the server and client markup would diverge."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "base",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -437,7 +482,9 @@
       "type": "registry:component",
       "title": "Валюта у поля",
       "description": "Сумма и валюта в одной рамке: число прижато вправо к самой границе с валютой, поэтому пара читается как одна строка.",
-      "categories": ["input-group"],
+      "categories": [
+        "input-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -449,7 +496,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-inputgroup-004-*. Серверный: состояния нет. Здесь другой приём сцепки: рамка живёт на группе, у input и select её нет, а внутренняя линия нарисована inset box-shadow — так толщина не удваивается при схлопывании. overflow:hidden обрезает подложки по радиусу. Число выровнено вправо, стрелки number-поля скрыты. Значение и валюта уходят двумя полями формы.",
       "meta": {
-        "tags": ["inputgroup", "currency", "amount", "select"],
+        "tags": [
+          "inputgroup",
+          "currency",
+          "amount",
+          "select"
+        ],
         "ai": {
           "export": "Inputgroup004",
           "usage": "<Inputgroup004\n  name=\"amount\"\n  label=\"Стоимость подписки\"\n  defaultValue={1290}\n/>",
@@ -558,7 +610,12 @@
             "preview": {
               "props": {
                 "label": "Subscription price",
-                "currencies": ["$", "€", "£", "₽"],
+                "currencies": [
+                  "$",
+                  "€",
+                  "£",
+                  "₽"
+                ],
                 "currencyLabel": "Currency",
                 "hint": "The currency is submitted as its own form field; conversion is the server's job."
               }
@@ -566,7 +623,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-004-* variables. Server-side: there is no state. The joining works differently here: the border lives on the group, the input and the select have none, and the inner line is drawn with an inset box-shadow — that way the thickness does not double on collapsing. overflow:hidden clips the surfaces to the border radius. The number is right-aligned and the number field's spinners are hidden. The value and the currency are submitted as two form fields."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "defaultValue",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -574,7 +639,9 @@
       "type": "registry:component",
       "title": "Поиск с областью",
       "description": "Поиск из трёх частей в одной сцепке: где искать, что искать и кнопка — порядок читается как фраза, а область уходит вместе с запросом.",
-      "categories": ["input-group"],
+      "categories": [
+        "input-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -586,7 +653,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-inputgroup-005-*. Серверный: состояния нет, обёртка — <form role=\"search\">, поэтому Enter отправляет запрос. Три элемента сцеплены схлопнутыми границами, скругление задано радиусом 999px и стоит только на концах — середина остаётся прямой. Область поиска уходит отдельным полем `${name}-scope`, поэтому ссылку на результат можно сохранить.",
       "meta": {
-        "tags": ["inputgroup", "search", "scope", "form"],
+        "tags": [
+          "inputgroup",
+          "search",
+          "scope",
+          "form"
+        ],
         "ai": {
           "export": "Inputgroup005",
           "usage": "<Inputgroup005\n  name=\"q\"\n  label=\"Поиск по базе знаний\"\n  scopes={[\"Везде\", \"В статьях\"]}\n/>",
@@ -721,7 +793,16 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-005-* variables. Server-side: there is no state, and the wrapper is a <form role=\"search\">, so Enter submits the query. The three elements are joined by collapsed borders, and the rounding is set by a 999px radius that stands only at the ends — the middle stays square. The search scope is submitted as its own `${name}-scope` field, so a link to the result can be saved."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "placeholder",
+          "action",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -729,7 +810,9 @@
       "type": "registry:component",
       "title": "Пара полей диапазона",
       "description": "Диапазон двумя полями в одной сцепке: «от» и «до» с нарисованным тире между ними, обёрнутые в fieldset с общей подписью.",
-      "categories": ["input-group"],
+      "categories": [
+        "input-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -741,7 +824,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-inputgroup-006-*. Серверный: состояния нет. Обёртка — fieldset с legend, потому что это одна величина из двух частей. legend во flex-контейнере ведёт себя как отдельный поток, поэтому у него float:left;width:100%, а следующему ребёнку задан clear:both. Тире — отдельный элемент сцепки с aria-hidden, а не текст внутри поля. Обе половины уходят полями `${name}-from` и `${name}-to`.",
       "meta": {
-        "tags": ["inputgroup", "range", "fieldset", "filter"],
+        "tags": [
+          "inputgroup",
+          "range",
+          "fieldset",
+          "filter"
+        ],
         "ai": {
           "export": "Inputgroup006",
           "usage": "<Inputgroup006\n  name=\"price\"\n  legend=\"Цена, ₽\"\n  from={1500}\n  to={9000}\n/>",
@@ -872,7 +960,16 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-006-* variables. Server-side: there is no state. The wrapper is a fieldset with a legend, because this is one value made of two parts. A legend inside a flex container behaves as a separate flow, so it carries float:left;width:100% and the next child is given clear:both. The dash is its own element of the group with aria-hidden rather than text inside a field. Both halves are submitted as the `${name}-from` and `${name}-to` fields."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "legend",
+          "from",
+          "to",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -880,7 +977,9 @@
       "type": "registry:component",
       "title": "Иконка и очистка",
       "description": "Сцепка со значком-приставкой слева и кнопкой очистки справа: кнопка появляется вместе с текстом и место под неё заранее не резервируется.",
-      "categories": ["input-group"],
+      "categories": [
+        "input-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -892,7 +991,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-inputgroup-007-*. Клиентский: \"use client\" ради состояния значения. Значок — неинтерактивный span с aria-hidden: по нему нечего нажимать. Кнопка очистки монтируется только при непустом значении и после нажатия возвращает фокус в поле. Все три части делят рамку через схлопнутые границы, фокусный элемент поднимается z-index'ом.",
       "meta": {
-        "tags": ["inputgroup", "clear", "icon", "input"],
+        "tags": [
+          "inputgroup",
+          "clear",
+          "icon",
+          "input"
+        ],
         "ai": {
           "export": "Inputgroup007",
           "usage": "<Inputgroup007\n  label=\"Кодовое слово поддержки\"\n  onChange={(value) => setWord(value)}\n/>",
@@ -1010,7 +1114,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-007-* variables. Client-side: \"use client\" for the sake of the value state. The icon is a non-interactive span with aria-hidden: there is nothing to press on it. The clear button is mounted only for a non-empty value and returns focus to the field after a press. All three parts share the frame through collapsed borders, and the focused element is raised with z-index."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "placeholder",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -1018,7 +1130,9 @@
       "type": "registry:component",
       "title": "Группа в столбик",
       "description": "Сцепка полной ширины, которая складывается в столбик на узком месте: схлопнутая граница переезжает с левой стороны на верхнюю вместе со скруглениями.",
-      "categories": ["input-group"],
+      "categories": [
+        "input-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1030,7 +1144,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-inputgroup-008-*. Серверный: состояния нет. Раскладка считается от собственной ширины блока через container-type:inline-size и @container (min-width: 30rem), а не от вьюпорта — тот же компонент в узкой колонке складывается так же, как на телефоне. Правила раскладки лежат на внутреннем [data-part=\"shell\"] и на группе: контейнерный запрос не действует на сам контейнер. В столбике margin-left:-1px меняется на margin-top:-1px, а боковые скругления — на верхние и нижние.",
       "meta": {
-        "tags": ["inputgroup", "responsive", "container", "form"],
+        "tags": [
+          "inputgroup",
+          "responsive",
+          "container",
+          "form"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1154,7 +1273,12 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-008-* variables. Server-side: there is no state. The layout is computed from the block's own width through container-type:inline-size and @container (min-width: 30rem) rather than from the viewport — the same component in a narrow column folds exactly as it does on a phone. The layout rules sit on the inner [data-part=\"shell\"] and on the group: a container query does not apply to the container itself. In the stacked layout margin-left:-1px becomes margin-top:-1px, and the side rounding becomes top and bottom rounding."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "action",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1162,7 +1286,9 @@
       "type": "registry:component",
       "title": "Ошибка группы",
       "description": "Ошибка на всей сцепке, а не на одной половине: логин без домена и домен без логина — одна и та же неправильная почта.",
-      "categories": ["input-group"],
+      "categories": [
+        "input-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1174,7 +1300,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-inputgroup-009-*. Серверный: состояние ошибки приходит пропом error. Красная граница ставится на всех детей группы, а кольцо — на саму группу, поэтому его не режет граница соседа. aria-invalid стоит на обоих контролах, aria-describedby у обоих указывает на одно сообщение с role=\"alert\". Между половинами неинтерактивная @ с aria-hidden.",
       "meta": {
-        "tags": ["inputgroup", "error", "validation", "a11y"],
+        "tags": [
+          "inputgroup",
+          "error",
+          "validation",
+          "a11y"
+        ],
         "ai": {
           "export": "Inputgroup009",
           "usage": "<Inputgroup009\n  name=\"corporate\"\n  label=\"Корпоративная почта\"\n  error=\"Такой почты нет в вашей организации.\"\n/>",
@@ -1284,7 +1415,11 @@
               "props": {
                 "label": "Corporate email",
                 "error": "No such address in your organisation — check the name and the domain.",
-                "domains": ["vibeui.ru", "vibeui.com", "team.local"],
+                "domains": [
+                  "vibeui.ru",
+                  "vibeui.com",
+                  "team.local"
+                ],
                 "domainLabel": "Domain",
                 "user": "anna.orlova",
                 "hint": "The name and the domain are submitted as two form fields."
@@ -1293,7 +1428,15 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-009-* variables. Server-side: the error state arrives through the error prop. The red border is set on every child of the group while the ring goes on the group itself, so it is not clipped by a neighbour's border. aria-invalid stands on both controls, and aria-describedby on both points at a single message with role=\"alert\". Between the halves sits a non-interactive @ with aria-hidden."
           }
         },
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "error",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -1301,7 +1444,9 @@
       "type": "registry:component",
       "title": "Префикс домена",
       "description": "Приставка домена слева и адрес страницы справа: приставку нельзя стереть, а сам адрес чистится прямо во время набора.",
-      "categories": ["input-group"],
+      "categories": [
+        "input-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1313,7 +1458,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-inputgroup-010-*. Клиентский: \"use client\" ради нормализации. Приставка — неинтерактивный span с user-select:none и aria-hidden, она сжимается многоточием и в форму не уходит. Значение чистится на каждый ввод: нижний регистр, пробелы и подчёркивания в дефис, лишние символы отбрасываются, повторные дефисы схлопываются, длина ограничена. Под сцепкой показан итоговый адрес и счётчик длины.",
       "meta": {
-        "tags": ["inputgroup", "slug", "prefix", "url"],
+        "tags": [
+          "inputgroup",
+          "slug",
+          "prefix",
+          "url"
+        ],
         "ai": {
           "export": "Inputgroup010",
           "usage": "<Inputgroup010\n  label=\"Адрес страницы\"\n  prefix=\"vibeui.ru/\"\n  onChange={(slug) => setSlug(slug)}\n/>",
@@ -1442,7 +1592,16 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-inputgroup-010-* variables. Client-side: \"use client\" for the sake of normalisation. The prefix is a non-interactive span with user-select:none and aria-hidden; it truncates with an ellipsis and is not submitted with the form. The value is cleaned on every keystroke: lower case, spaces and underscores turned into hyphens, stray characters dropped, repeated hyphens collapsed and the length capped. Under the group the resulting address and a length counter are shown."
           }
         },
-        "cardControls": ["limit", "accent", "background"]
+        "cardControls": [
+          "label",
+          "prefix",
+          "limit",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -1450,7 +1609,9 @@
       "type": "registry:component",
       "title": "Выбор валюты",
       "description": "Сумма и выбор валюты в одной рамке: символ слева обновляется вслед за кодом валюты, который выбран в select справа.",
-      "categories": ["input-group"],
+      "categories": [
+        "input-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1462,7 +1623,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-inputgroup-011-*. Клиентский: \"use client\" ради синхронизации символа с выбором валюты. Символ — неинтерактивный span с aria-hidden и user-select:none, он не участвует в форме и всегда отражает currencies.find(code). Все три части делят рамку через схлопнутые границы, фокусный элемент поднимается z-index'ом.",
       "meta": {
-        "tags": ["inputgroup", "currency", "amount", "select"],
+        "tags": [
+          "inputgroup",
+          "currency",
+          "amount",
+          "select"
+        ],
         "ai": {
           "export": "Inputgroup011",
           "usage": "<Inputgroup011\n  label=\"Сумма перевода\"\n  currencies={[\n    { code: \"RUB\", symbol: \"₽\" },\n    { code: \"USD\", symbol: \"$\" },\n  ]}\n/>",
@@ -1584,7 +1750,15 @@
             "default": ""
           }
         ],
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "defaultValue",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -1592,7 +1766,9 @@
       "type": "registry:component",
       "title": "Поиск с фильтром",
       "description": "Поиск с переключателем фильтра слева и очисткой текста справа: обе кнопки независимы и не трогают состояние друг друга.",
-      "categories": ["input-group"],
+      "categories": [
+        "input-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1604,7 +1780,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-inputgroup-012-*. Клиентский: \"use client\" ради состояния текста и переключателя фильтра. Кнопка фильтра слева — тумблер с aria-pressed и собственным акцентным цветом во включённом виде, кнопка очистки справа монтируется только при непустом значении и после нажатия возвращает фокус в поле. Части делят рамку через схлопнутые границы, фокусный элемент поднимается z-index'ом.",
       "meta": {
-        "tags": ["inputgroup", "search", "filter", "clear"],
+        "tags": [
+          "inputgroup",
+          "search",
+          "filter",
+          "clear"
+        ],
         "ai": {
           "export": "Inputgroup012",
           "usage": "<Inputgroup012\n  label=\"Поиск по заказам\"\n  onChange={(value) => setQuery(value)}\n  onFilterChange={(active) => setOnlyOpen(active)}\n/>",
@@ -1715,7 +1896,15 @@
             "default": ""
           }
         ],
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "placeholder",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -1723,7 +1912,9 @@
       "type": "registry:component",
       "title": "Копирование ссылки",
       "description": "Поле только для чтения со ссылкой и неподвижной подписью слева: единственная кнопка справа копирует значение и подтверждает это сменой иконки.",
-      "categories": ["input-group"],
+      "categories": [
+        "input-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1735,7 +1926,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-inputgroup-013-*. Клиентский: \"use client\" ради состояния копирования. Подпись слева — неинтерактивный span с user-select:none и aria-hidden, поле readonly, но остаётся настоящим input — значение можно выделить руками. Кнопка копирования пробует navigator.clipboard.writeText, при отказе выделяет текст поля вместо копирования, а на успех на 1.6 секунды меняет иконку и подпись на «Готово».",
       "meta": {
-        "tags": ["inputgroup", "copy", "link", "readonly"],
+        "tags": [
+          "inputgroup",
+          "copy",
+          "link",
+          "readonly"
+        ],
         "ai": {
           "export": "Inputgroup013",
           "usage": "<Inputgroup013\n  label=\"Ссылка на счёт\"\n  prefixLabel=\"Ссылка\"\n  defaultValue=\"https://vibeui.ru/invoice/8834-ff2a\"\n/>",
@@ -1824,7 +2020,13 @@
             "default": ""
           }
         ],
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -1832,7 +2034,9 @@
       "type": "registry:component",
       "title": "Счётчик с единицей",
       "description": "Число с единицей измерения и шаговыми кнопками по краям: одна и та же величина меняется кнопками, стрелками клавиатуры или прямым вводом.",
-      "categories": ["input-group"],
+      "categories": [
+        "input-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1844,7 +2048,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-inputgroup-014-*. Клиентский: \"use client\" ради общего состояния числа. Единица измерения — неинтерактивный span с aria-hidden внутри той же рамки, что и число. Шаговые кнопки и стрелки клавиатуры в поле меняют одно и то же состояние, значение всегда зажато между min и max через clamp(). На границе диапазона кнопка не исчезает, а получает disabled — предел виден, а не пропадает вместе с элементом.",
       "meta": {
-        "tags": ["inputgroup", "stepper", "unit", "number"],
+        "tags": [
+          "inputgroup",
+          "stepper",
+          "unit",
+          "number"
+        ],
         "ai": {
           "export": "Inputgroup014",
           "usage": "<Inputgroup014\n  label=\"Вес посылки\"\n  unit=\"кг\"\n  min={0}\n  max={30}\n  step={0.5}\n/>",
@@ -1956,7 +2165,15 @@
             "default": ""
           }
         ],
-        "cardControls": ["defaultValue", "step", "accent", "background"]
+        "cardControls": [
+          "defaultValue",
+          "step",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -1964,7 +2181,9 @@
       "type": "registry:component",
       "title": "Протокол и домен",
       "description": "Адрес сайта в одной сцепке: протокол и доменная зона выбираются из выпадающих списков по краям, имя домена — обычным текстом между ними.",
-      "categories": ["input-group"],
+      "categories": [
+        "input-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1976,7 +2195,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-inputgroup-015-*. Клиентский: \"use client\" ради состояния протокола, домена и зоны. Оба select нативные — клавиатура и системный список бесплатны. Итоговый адрес собирается из трёх частей и выводится под рамкой в блоке с aria-live, чтобы смена любого select была объявлена сразу.",
       "meta": {
-        "tags": ["inputgroup", "url", "domain", "select"],
+        "tags": [
+          "inputgroup",
+          "url",
+          "domain",
+          "select"
+        ],
         "ai": {
           "export": "Inputgroup015",
           "usage": "<Inputgroup015\n  label=\"Адрес сайта\"\n  protocols={[\"https://\", \"http://\"]}\n  zones={[\".ru\", \".com\", \".io\"]}\n  defaultValue=\"vibeui\"\n/>",
@@ -2041,7 +2265,12 @@
             "preview": {
               "props": {
                 "label": "Website address",
-                "zones": [".com", ".io", ".org", ".dev"],
+                "zones": [
+                  ".com",
+                  ".io",
+                  ".org",
+                  ".dev"
+                ],
                 "defaultValue": "vibeui",
                 "placeholder": "example",
                 "protocolLabel": "Protocol",
@@ -2067,7 +2296,13 @@
             "default": ""
           }
         ],
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -2075,7 +2310,9 @@
       "type": "registry:component",
       "title": "Генератор пароля",
       "description": "Поле пароля со генератором: кнопка «Создать» подставляет случайную строку, а индикатор ниже показывает длину результата и её достаточность.",
-      "categories": ["input-group"],
+      "categories": [
+        "input-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2087,7 +2324,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-inputgroup-016-*. Клиентский: \"use client\" ради состояния значения и индикатора. Поле текстовое (не password): сгенерированный пароль незачем прятать сразу после нажатия, а значение остаётся редактируемым вручную. Индикатор — только длина: до 8 символов предупреждение, от 12 — достаточно, полоса и подпись читаются через role=\"progressbar\" и aria-live.",
       "meta": {
-        "tags": ["inputgroup", "password", "generator", "security"],
+        "tags": [
+          "inputgroup",
+          "password",
+          "generator",
+          "security"
+        ],
         "ai": {
           "export": "Inputgroup016",
           "usage": "<Inputgroup016\n  label=\"Пароль\"\n  minLength={6}\n  maxLength={40}\n/>",
@@ -2182,7 +2424,13 @@
             "default": ""
           }
         ],
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -2190,7 +2438,9 @@
       "type": "registry:component",
       "title": "Выбор файла",
       "description": "Прикрепление файла в одной сцепке: слева подпись-кнопка со спрятанным настоящим file-input, справа поле показывает имя и размер выбранного файла.",
-      "categories": ["input-group"],
+      "categories": [
+        "input-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2202,7 +2452,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-inputgroup-017-*. Клиентский: \"use client\" ради состояния выбранного файла. Настоящий <input type=\"file\"> спрятан визуально (clip, не display:none) внутри своей же <label>, поэтому остаётся в таб-порядке и открывается клавиатурой. Соседнее поле только отображает имя и размер файла и не участвует в отправке формы.",
       "meta": {
-        "tags": ["inputgroup", "file", "upload", "attachment"],
+        "tags": [
+          "inputgroup",
+          "file",
+          "upload",
+          "attachment"
+        ],
         "ai": {
           "export": "Inputgroup017",
           "usage": "<Inputgroup017\n  label=\"Прикрепить файл\"\n  accept=\".pdf,.doc,.docx\"\n/>",
@@ -2294,7 +2549,13 @@
             "default": ""
           }
         ],
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -2302,7 +2563,9 @@
       "type": "registry:component",
       "title": "Промежуток дат",
       "description": "Диапазон дат в одной сцепке: поля «с» и «по» с тире между ними, вторая дата не может быть раньше первой, а раскладка складывается в столбик на узкой ширине контейнера.",
-      "categories": ["input-group"],
+      "categories": [
+        "input-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2314,7 +2577,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-inputgroup-018-*. Клиентский: \"use client\" ради состояния обеих дат и подсчёта числа ночей. Обёртка — fieldset с legend, потому что это одна величина из двух дат. Второе поле получает min от первого нативно, без ручной валидации. Раскладка считается от ширины самого блока через @container: столбик на узком месте, схлопнутая строка с тире — на широком.",
       "meta": {
-        "tags": ["inputgroup", "date", "range", "fieldset"],
+        "tags": [
+          "inputgroup",
+          "date",
+          "range",
+          "fieldset"
+        ],
         "ai": {
           "export": "Inputgroup018",
           "usage": "<Inputgroup018\n  legend=\"Период проживания\"\n  defaultFrom=\"2026-09-10\"\n  defaultTo=\"2026-09-14\"\n/>",
@@ -2408,7 +2676,13 @@
             "default": ""
           }
         ],
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -2416,7 +2690,9 @@
       "type": "registry:component",
       "title": "Живой поиск по области",
       "description": "Поиск с выбором области слева и живым результатом без кнопки отправки: смена select и ввод текста сужают один и тот же список сразу.",
-      "categories": ["input-group"],
+      "categories": [
+        "input-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2428,7 +2704,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-inputgroup-019-*. Клиентский: \"use client\" ради состояния области, запроса и очистки. Слева нативный select с областью поиска, справа поле с живым поиском без кнопки отправки — оба меняют один и тот же результат сразу. Кнопка очистки справа появляется только при непустом значении и возвращает фокус в поле, как в «Icon And Clear». Итоговое состояние озвучивается строкой с aria-live.",
       "meta": {
-        "tags": ["inputgroup", "search", "scope", "live"],
+        "tags": [
+          "inputgroup",
+          "search",
+          "scope",
+          "live"
+        ],
         "ai": {
           "export": "Inputgroup019",
           "usage": "<Inputgroup019\n  label=\"Поиск по каталогу\"\n  scopes={[\"Везде\", \"В названии\", \"В тексте\"]}\n  onChange={(value, scope) => runSearch(value, scope)}\n/>",
@@ -2503,7 +2784,11 @@
             "preview": {
               "props": {
                 "label": "Catalogue search",
-                "scopes": ["Everywhere", "In titles", "In text"],
+                "scopes": [
+                  "Everywhere",
+                  "In titles",
+                  "In text"
+                ],
                 "placeholder": "Type a query",
                 "scopeLabel": "Search scope",
                 "clearLabel": "Clear the field",
@@ -2529,7 +2814,13 @@
             "default": ""
           }
         ],
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -2537,7 +2828,9 @@
       "type": "registry:component",
       "title": "Добавление тегов списком",
       "description": "Черновик тега слева и кнопка «Добавить» справа: список добавленных тегов — отдельные чипы со своей кнопкой удаления, а не текст в поле.",
-      "categories": ["input-group"],
+      "categories": [
+        "input-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2549,7 +2842,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-inputgroup-020-*. Клиентский: \"use client\" ради состояния черновика и списка тегов. Кнопка «Добавить» и Enter в поле делают одно и то же — переносят черновик в список, если он не пуст, не дублирует существующий тег и лимит не исчерпан. Каждый тег — отдельный чип с кнопкой удаления и своим aria-label, значения на сервер уходят скрытыми полями `${name}[]`, а число тегов озвучивается строкой с aria-live.",
       "meta": {
-        "tags": ["inputgroup", "tags", "chips", "list"],
+        "tags": [
+          "inputgroup",
+          "tags",
+          "chips",
+          "list"
+        ],
         "ai": {
           "export": "Inputgroup020",
           "usage": "<Inputgroup020\n  name=\"tags\"\n  label=\"Теги материала\"\n  defaultTags={[\"React\", \"Next.js\"]}\n  max={8}\n/>",
@@ -2630,7 +2928,10 @@
               "props": {
                 "label": "Article tags",
                 "placeholder": "New tag",
-                "defaultTags": ["React", "Next.js"],
+                "defaultTags": [
+                  "React",
+                  "Next.js"
+                ],
                 "addLabel": "Add",
                 "listLabel": "Added tags",
                 "removeTemplate": "Remove the “{tag}” tag",
@@ -2670,7 +2971,14 @@
             "default": ""
           }
         ],
-        "cardControls": ["max", "accent", "background"]
+        "cardControls": [
+          "max",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -2678,7 +2986,9 @@
       "type": "registry:component",
       "title": "Страна списком",
       "description": "Телефон с раскрывающейся панелью выбора кода страны слева: триггер на <details> показывает флаг и код, а в панели видно ещё и название страны.",
-      "categories": ["input-group"],
+      "categories": [
+        "input-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2690,7 +3000,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-inputgroup-021-*. Клиентский: \"use client\" ради состояния выбранной страны и открытой панели. В отличие от «Country Prefix» с нативным select, здесь код выбирается панелью на <details>/<summary>: в триггере виден флаг и код, в списке — ещё и полное название страны. Escape и выбор пункта закрывают панель и возвращают фокус на триггер вручную. Код и номер уходят двумя полями формы: `${name}-code` и name.",
       "meta": {
-        "tags": ["inputgroup", "phone", "dropdown", "details"],
+        "tags": [
+          "inputgroup",
+          "phone",
+          "dropdown",
+          "details"
+        ],
         "ai": {
           "export": "Inputgroup021",
           "usage": "<Inputgroup021\n  name=\"phone\"\n  label=\"Телефон для связи\"\n  countries={[{ code: \"+7\", title: \"Россия\", flag: \"🇷🇺\" }]}\n/>",
@@ -2813,7 +3128,13 @@
             "default": ""
           }
         ],
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -2821,7 +3142,9 @@
       "type": "registry:component",
       "title": "Пояснение к полю",
       "description": "Поле с кнопкой-подсказкой справа: нажатие раскрывает пояснение прямо в потоке под рамкой, сдвигая соседние элементы вниз, а не перекрывая их.",
-      "categories": ["input-group"],
+      "categories": [
+        "input-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2833,7 +3156,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-inputgroup-022-*. Клиентский: \"use client\" ради состояния значения и открытой панели. Кнопка справа переключает aria-expanded и раскрывает панель пояснения через grid-template-rows (0fr → 1fr) — приём анимирует высоту без измерения пикселей в JS и без position:absolute поверх соседних элементов. aria-controls связывает кнопку с панелью, aria-describedby на поле включает и панель, и обычную подсказку.",
       "meta": {
-        "tags": ["inputgroup", "help", "explain", "toggle"],
+        "tags": [
+          "inputgroup",
+          "help",
+          "explain",
+          "toggle"
+        ],
         "ai": {
           "export": "Inputgroup022",
           "usage": "<Inputgroup022\n  label=\"Номер плательщика НДС\"\n  explanation=\"Код страны и от 9 до 12 цифр без пробелов.\"\n/>",
@@ -2932,7 +3260,13 @@
             "default": ""
           }
         ],
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -2940,7 +3274,9 @@
       "type": "registry:component",
       "title": "Быстрые суммы",
       "description": "Сумма с валютой и ряд кнопок быстрого выбора под полем: нажатие заменяет значение целиком, а активная кнопка подсвечена, пока сумма совпадает с ней.",
-      "categories": ["input-group"],
+      "categories": [
+        "input-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2952,7 +3288,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-inputgroup-023-*. Клиентский: \"use client\" ради общего состояния суммы. Кнопки-пресеты заменяют значение поля целиком, а не прибавляют к нему, и подсвечиваются через aria-pressed только при точном совпадении с текущей суммой — ручной ввод гасит подсветку без специального кода. Число выровнено вправо, у него отключены нативные стрелки number-поля.",
       "meta": {
-        "tags": ["inputgroup", "amount", "presets", "currency"],
+        "tags": [
+          "inputgroup",
+          "amount",
+          "presets",
+          "currency"
+        ],
         "ai": {
           "export": "Inputgroup023",
           "usage": "<Inputgroup023\n  label=\"Сумма пополнения\"\n  presets={[500, 1000, 5000]}\n  defaultValue={500}\n/>",
@@ -3026,7 +3367,11 @@
               "props": {
                 "label": "Top-up amount",
                 "currency": "$",
-                "presets": [50, 100, 500],
+                "presets": [
+                  50,
+                  100,
+                  500
+                ],
                 "defaultValue": 50,
                 "locale": "en-US",
                 "presetsLabel": "Quick amount",
@@ -3050,7 +3395,13 @@
             "default": ""
           }
         ],
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -3058,7 +3409,9 @@
       "type": "registry:component",
       "title": "Статус промокода",
       "description": "Поле промокода с кнопкой проверки и тремя видимыми статусами: идёт проверка, принят или отклонён — каждый со своим цветом, иконкой и текстом.",
-      "categories": ["input-group"],
+      "categories": [
+        "input-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3070,7 +3423,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-inputgroup-024-*. Клиентский: \"use client\" ради состояния кода и статуса проверки. Проверка имитируется таймером (setTimeout, очищается при размонтировании и при повторном запуске), поле блокируется на время проверки и остаётся заблокированным после принятия, а редактирование после отказа сбрасывает статус в исходный. Статус читается через role=\"status\" и различается не только текстом, но и цветом рамки и иконкой.",
       "meta": {
-        "tags": ["inputgroup", "promo", "status", "validation"],
+        "tags": [
+          "inputgroup",
+          "promo",
+          "status",
+          "validation"
+        ],
         "ai": {
           "export": "Inputgroup024",
           "usage": "<Inputgroup024\n  label=\"Промокод\"\n  validCodes={[\"VIBEUI10\", \"SALE2026\"]}\n/>",
@@ -3175,7 +3533,13 @@
             "default": ""
           }
         ],
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -3183,7 +3547,9 @@
       "type": "registry:component",
       "title": "Вставка из буфера",
       "description": "Поле с кнопкой «Вставить из буфера» справа: значение приходит через Clipboard API одним действием, статус ниже озвучивает результат.",
-      "categories": ["input-group"],
+      "categories": [
+        "input-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3195,7 +3561,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-inputgroup-025-*. Клиентский: \"use client\" ради состояния значения и статуса вставки. Кнопка справа читает буфер обмена через navigator.clipboard.readText() и подставляет текст в поле, возвращая фокус и ставя курсор в конец. Отказ доступа (нет разрешения, не HTTPS, старый браузер) переводит статус в denied вместо тихого молчания. Итоговое состояние озвучивается строкой с aria-live.",
       "meta": {
-        "tags": ["inputgroup", "clipboard", "paste", "status"],
+        "tags": [
+          "inputgroup",
+          "clipboard",
+          "paste",
+          "status"
+        ],
         "ai": {
           "export": "Inputgroup025",
           "usage": "<Inputgroup025\n  label=\"Ссылка на профиль\"\n  onChange={(value) => setValue(value)}\n/>",
@@ -3259,7 +3630,12 @@
               "usage": "<Inputgroup025\n  label=\"Profile link\"\n  onChange={(value) => setValue(value)}\n/>"
             },
             "title": "Clipboard Paste",
-            "tags": ["inputgroup", "clipboard", "paste", "status"],
+            "tags": [
+              "inputgroup",
+              "clipboard",
+              "paste",
+              "status"
+            ],
             "controls": {
               "label": {
                 "label": "Field label",
@@ -3318,7 +3694,15 @@
             "default": ""
           }
         ],
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "buttonLabel",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -3326,7 +3710,9 @@
       "type": "registry:component",
       "title": "История поиска",
       "description": "Поиск с историей запросов в выпадающем блоке под полем: список открывается по фокусу, Enter сохраняет запрос, клик по пункту подставляет его.",
-      "categories": ["input-group"],
+      "categories": [
+        "input-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3338,7 +3724,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-inputgroup-026-*. Клиентский: \"use client\" ради состояния запроса, истории и открытия панели. Панель истории открывается по фокусу поля и role=\"listbox\" под ним, пункт выбирается через onMouseDown с preventDefault — так клик не теряется из-за более раннего blur. Enter уводит текущий запрос в начало истории без дублей, Escape закрывает панель.",
       "meta": {
-        "tags": ["inputgroup", "search", "history", "dropdown"],
+        "tags": [
+          "inputgroup",
+          "search",
+          "history",
+          "dropdown"
+        ],
         "ai": {
           "export": "Inputgroup026",
           "usage": "<Inputgroup026\n  label=\"Поиск товаров\"\n  defaultHistory={[\"кроссовки\", \"куртка\"]}\n  onSubmit={(value) => runSearch(value)}\n/>",
@@ -3402,7 +3793,12 @@
               "usage": "<Inputgroup026\n  label=\"Search products\"\n  defaultHistory={[\"sneakers\", \"winter jacket\"]}\n  onSubmit={(value) => runSearch(value)}\n/>"
             },
             "title": "Search History",
-            "tags": ["inputgroup", "search", "history", "dropdown"],
+            "tags": [
+              "inputgroup",
+              "search",
+              "history",
+              "dropdown"
+            ],
             "controls": {
               "label": {
                 "label": "Field label",
@@ -3463,7 +3859,15 @@
             "default": ""
           }
         ],
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "maxHistory",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -3471,7 +3875,9 @@
       "type": "registry:component",
       "title": "Переключатель скидки",
       "description": "Числовое поле скидки с переключателем «₽ / %»: сегментированные кнопки меняют единицу измерения, верхняя граница подстраивается под процент.",
-      "categories": ["input-group"],
+      "categories": [
+        "input-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3483,7 +3889,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-inputgroup-027-*. Клиентский: \"use client\" ради состояния числа и единицы измерения. Переключатель «₽ / %» — сегментированная группа из двух кнопок с aria-pressed внутри общей рамки поля. Смена единицы не пересчитывает число, а лишь меняет его смысл и подпись hint; атрибут max у поля подстраивается только для процента, чтобы нельзя было ввести скидку больше 100%.",
       "meta": {
-        "tags": ["inputgroup", "number", "discount", "toggle"],
+        "tags": [
+          "inputgroup",
+          "number",
+          "discount",
+          "toggle"
+        ],
         "ai": {
           "export": "Inputgroup027",
           "usage": "<Inputgroup027\n  label=\"Размер скидки\"\n  defaultValue={15}\n  defaultUnit=\"percent\"\n  onChange={(value, unit) => setDiscount(value, unit)}\n/>",
@@ -3543,7 +3954,12 @@
               "usage": "<Inputgroup027\n  label=\"Discount amount\"\n  defaultValue={15}\n  defaultUnit=\"percent\"\n  onChange={(value, unit) => setDiscount(value, unit)}\n/>"
             },
             "title": "Discount Toggle",
-            "tags": ["inputgroup", "number", "discount", "toggle"],
+            "tags": [
+              "inputgroup",
+              "number",
+              "discount",
+              "toggle"
+            ],
             "controls": {
               "label": {
                 "label": "Field label",
@@ -3594,7 +4010,10 @@
             "label": "Единица",
             "type": "select",
             "default": "percent",
-            "options": ["percent", "currency"]
+            "options": [
+              "percent",
+              "currency"
+            ]
           },
           {
             "prop": "defaultValue",
@@ -3625,7 +4044,17 @@
             "default": ""
           }
         ],
-        "cardControls": ["defaultUnit", "defaultValue", "accent", "background"]
+        "cardControls": [
+          "label",
+          "defaultUnit",
+          "defaultValue",
+          "maxPercent",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -3633,7 +4062,9 @@
       "type": "registry:component",
       "title": "Город и адрес",
       "description": "Поле доставки с выбором города слева и адресом справа: город и улица уходят в onChange как два раздельных значения формы.",
-      "categories": ["input-group"],
+      "categories": [
+        "input-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3645,7 +4076,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-inputgroup-028-*. Клиентский: \"use client\" ради состояния города и адреса. Слева нативный select с городом, справа текстовое поле адреса — та же сборка из фиксированной и свободной частей, что и в «Scoped Search», но обе половины равнозначны: onChange всегда получает актуальные адрес и город вместе, а не только изменившуюся часть.",
       "meta": {
-        "tags": ["inputgroup", "address", "city", "delivery"],
+        "tags": [
+          "inputgroup",
+          "address",
+          "city",
+          "delivery"
+        ],
         "ai": {
           "export": "Inputgroup028",
           "usage": "<Inputgroup028\n  label=\"Адрес доставки\"\n  cities={[\"Москва\", \"Казань\"]}\n  onChange={(address, city) => setDelivery(address, city)}\n/>",
@@ -3707,7 +4143,12 @@
               "usage": "<Inputgroup028\n  label=\"Delivery address\"\n  cities={[\"Moscow\", \"Kazan\"]}\n  onChange={(address, city) => setDelivery(address, city)}\n/>"
             },
             "title": "City Address",
-            "tags": ["inputgroup", "address", "city", "delivery"],
+            "tags": [
+              "inputgroup",
+              "address",
+              "city",
+              "delivery"
+            ],
             "controls": {
               "label": {
                 "label": "Field label",
@@ -3767,7 +4208,15 @@
             "default": ""
           }
         ],
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "placeholder",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -3775,7 +4224,9 @@
       "type": "registry:component",
       "title": "Статус автосохранения",
       "description": "Поле с индикатором автосохранения: статус переключается на «Сохраняем…» при вводе и на «Сохранено» после паузы без отдельной кнопки.",
-      "categories": ["input-group"],
+      "categories": [
+        "input-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3787,7 +4238,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-inputgroup-029-*. Клиентский: \"use client\" ради состояния значения, статуса и debounce-таймера. Каждое изменение поля сразу переводит статус в editing и пересоздаёт setTimeout; статус переходит в saved и вызывает onSave только после паузы длиной delay без новых нажатий. Таймер чистится при размонтировании и при каждом новом изменении, иначе устаревший вызов onSave сработает после того, как поле уже не актуально.",
       "meta": {
-        "tags": ["inputgroup", "autosave", "status", "debounce"],
+        "tags": [
+          "inputgroup",
+          "autosave",
+          "status",
+          "debounce"
+        ],
         "ai": {
           "export": "Inputgroup029",
           "usage": "<Inputgroup029\n  label=\"Заметка к заказу\"\n  delay={900}\n  onSave={(value) => saveNote(value)}\n/>",
@@ -3847,7 +4303,12 @@
               "usage": "<Inputgroup029\n  label=\"Order note\"\n  delay={900}\n  onSave={(value) => saveNote(value)}\n/>"
             },
             "title": "Autosave Status",
-            "tags": ["inputgroup", "autosave", "status", "debounce"],
+            "tags": [
+              "inputgroup",
+              "autosave",
+              "status",
+              "debounce"
+            ],
             "controls": {
               "label": {
                 "label": "Field label",
@@ -3906,7 +4367,15 @@
             "default": ""
           }
         ],
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "delay",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -3914,7 +4383,9 @@
       "type": "registry:component",
       "title": "Очистить и применить",
       "description": "Поле с двумя кнопками справа — «Очистить» и «Применить»: черновик и применённое значение разделены, статус показывает, что реально принято.",
-      "categories": ["input-group"],
+      "categories": [
+        "input-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3926,7 +4397,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-inputgroup-030-*. Клиентский: \"use client\" ради состояния черновика и применённого значения. «Очистить» сразу обнуляет и черновик, и применённое значение; «Применить» переносит черновик в applied и выключается, пока они совпадают, — так видно, отличается ли напечатанное от реально принятого.",
       "meta": {
-        "tags": ["inputgroup", "filter", "apply", "clear"],
+        "tags": [
+          "inputgroup",
+          "filter",
+          "apply",
+          "clear"
+        ],
         "ai": {
           "export": "Inputgroup030",
           "usage": "<Inputgroup030\n  label=\"Фильтр по артикулу\"\n  onApply={(value) => applyFilter(value)}\n  onClear={() => clearFilter()}\n/>",
@@ -3986,7 +4462,12 @@
               "usage": "<Inputgroup030\n  label=\"SKU filter\"\n  onApply={(value) => applyFilter(value)}\n  onClear={() => clearFilter()}\n/>"
             },
             "title": "Clear Apply",
-            "tags": ["inputgroup", "filter", "apply", "clear"],
+            "tags": [
+              "inputgroup",
+              "filter",
+              "apply",
+              "clear"
+            ],
             "controls": {
               "label": {
                 "label": "Field label",
@@ -4053,7 +4534,16 @@
             "default": ""
           }
         ],
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "clearLabel",
+          "applyLabel",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -4061,7 +4551,9 @@
       "type": "registry:component",
       "title": "Счётчик обязательных",
       "description": "Поле с меткой обязательности у label и счётчиком символов слева от поля: оба ограничения видны рядом со значением, а не в разных углах.",
-      "categories": ["input-group"],
+      "categories": [
+        "input-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4073,7 +4565,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-inputgroup-031-*. Клиентский: \"use client\" ради состояния значения и подсчёта символов. Звёздочка и текст «обязательное» стоят рядом с label, а не заменяют друг друга — обязательность обозначена и значком, и словом. Счётчик — фиксированный сегмент слева от input внутри общей рамки, а не подпись под полем, и меняет цвет, когда остаток символов исчерпан.",
       "meta": {
-        "tags": ["inputgroup", "required", "counter", "validation"],
+        "tags": [
+          "inputgroup",
+          "required",
+          "counter",
+          "validation"
+        ],
         "ai": {
           "export": "Inputgroup031",
           "usage": "<Inputgroup031\n  label=\"Заголовок объявления\"\n  maxLength={60}\n  onChange={(value) => setTitle(value)}\n/>",
@@ -4135,7 +4632,12 @@
               "usage": "<Inputgroup031\n  label=\"Listing title\"\n  maxLength={60}\n  onChange={(value) => setTitle(value)}\n/>"
             },
             "title": "Required Counter",
-            "tags": ["inputgroup", "required", "counter", "validation"],
+            "tags": [
+              "inputgroup",
+              "required",
+              "counter",
+              "validation"
+            ],
             "controls": {
               "label": {
                 "label": "Field label",
@@ -4199,7 +4701,16 @@
             "default": ""
           }
         ],
-        "cardControls": ["required", "maxLength", "accent", "background"]
+        "cardControls": [
+          "label",
+          "maxLength",
+          "required",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -4207,7 +4718,9 @@
       "type": "registry:component",
       "title": "Сканирование устройством",
       "description": "Поле кода со сканированием и статусом устройства: точка рядом с меткой показывает, подключён ли сканер, кнопка запускает имитацию съёмки.",
-      "categories": ["input-group"],
+      "categories": [
+        "input-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4219,7 +4732,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-inputgroup-032-*. Клиентский: \"use client\" ради состояния значения и статуса сканирования. Индикатор подключения — точка и текст рядом с меткой, независимые от самого сканирования. Кнопка «Сканировать» недоступна без подключённого устройства; при клике имитирует съёмку таймером (setTimeout, очищается при размонтировании и повторном запуске), блокирует поле на время сканирования и заполняет его сгенерированным кодом.",
       "meta": {
-        "tags": ["inputgroup", "scan", "device", "status"],
+        "tags": [
+          "inputgroup",
+          "scan",
+          "device",
+          "status"
+        ],
         "ai": {
           "export": "Inputgroup032",
           "usage": "<Inputgroup032\n  label=\"Код товара\"\n  connected\n  onScan={(code) => setCode(code)}\n/>",
@@ -4281,7 +4799,12 @@
               "usage": "<Inputgroup032\n  label=\"Product code\"\n  connected\n  onScan={(code) => setCode(code)}\n/>"
             },
             "title": "Scan Device",
-            "tags": ["inputgroup", "scan", "device", "status"],
+            "tags": [
+              "inputgroup",
+              "scan",
+              "device",
+              "status"
+            ],
             "controls": {
               "label": {
                 "label": "Field label",
@@ -4357,7 +4880,16 @@
             "default": ""
           }
         ],
-        "cardControls": ["connected", "accent", "background"]
+        "cardControls": [
+          "label",
+          "connected",
+          "scanDelay",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -4365,7 +4897,9 @@
       "type": "registry:component",
       "title": "Единица длительности",
       "description": "Число и единица времени в одной сцепке: минуты, часы или дни выбираются нативным select, а итог складывается фразой под рамкой.",
-      "categories": ["input-group"],
+      "categories": [
+        "input-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4377,7 +4911,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-inputgroup-033-*. Клиентский: \"use client\" ради общего состояния числа и единицы. Единица — нативный select справа от числового поля, его смена не пересчитывает число: 30 минут при выборе «час» не становятся 30 часами, пересчёт остаётся на стороне вызывающего кода через onChange, у которого всегда есть обе части сразу. Итог собирается фразой под рамкой.",
       "meta": {
-        "tags": ["inputgroup", "duration", "unit", "select"],
+        "tags": [
+          "inputgroup",
+          "duration",
+          "unit",
+          "select"
+        ],
         "ai": {
           "export": "Inputgroup033",
           "usage": "<Inputgroup033\n  name=\"delay\"\n  label=\"Через сколько напомнить\"\n  defaultValue=\"30\"\n  defaultUnit=\"min\"\n/>",
@@ -4441,7 +4980,12 @@
               "usage": "<Inputgroup033\n  name=\"delay\"\n  label=\"Remind me in\"\n  defaultValue=\"30\"\n  defaultUnit=\"min\"\n/>"
             },
             "title": "Duration Unit",
-            "tags": ["inputgroup", "duration", "unit", "select"],
+            "tags": [
+              "inputgroup",
+              "duration",
+              "unit",
+              "select"
+            ],
             "controls": {
               "label": {
                 "label": "Field label",
@@ -4498,7 +5042,11 @@
             "label": "Единица",
             "type": "select",
             "default": "min",
-            "options": ["min", "hour", "day"]
+            "options": [
+              "min",
+              "hour",
+              "day"
+            ]
           },
           {
             "prop": "defaultValue",
@@ -4519,7 +5067,16 @@
             "default": ""
           }
         ],
-        "cardControls": ["defaultUnit", "accent", "background"]
+        "cardControls": [
+          "label",
+          "defaultUnit",
+          "defaultValue",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -4527,7 +5084,9 @@
       "type": "registry:component",
       "title": "Показ ключа",
       "description": "Поле API-ключа с системной маскировкой и кнопкой «Показать»: тип поля переключается между password и text, состояние явно объявлено через aria-pressed.",
-      "categories": ["input-group"],
+      "categories": [
+        "input-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4539,7 +5098,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-inputgroup-034-*. Клиентский: \"use client\" ради состояния значения и видимости. Маскировка системная — тип поля переключается между password и text, а не рисуется точками поверх текста, поэтому работают менеджеры паролей и автозаполнение. Кнопка справа объявляет своё состояние через aria-pressed, а не только меняет иконку. Показ не сохраняется между визитами.",
       "meta": {
-        "tags": ["inputgroup", "api-key", "reveal", "security"],
+        "tags": [
+          "inputgroup",
+          "api-key",
+          "reveal",
+          "security"
+        ],
         "ai": {
           "export": "Inputgroup034",
           "usage": "<Inputgroup034\n  name=\"apiKey\"\n  label=\"API-ключ\"\n  defaultValue=\"sk_live_4f8a2c9d1e3b7f6091ab\"\n/>",
@@ -4603,7 +5167,12 @@
               "usage": "<Inputgroup034\n  name=\"apiKey\"\n  label=\"API key\"\n  defaultValue=\"sk_live_4f8a2c9d1e3b7f6091ab\"\n/>"
             },
             "title": "Key Reveal",
-            "tags": ["inputgroup", "api-key", "reveal", "security"],
+            "tags": [
+              "inputgroup",
+              "api-key",
+              "reveal",
+              "security"
+            ],
             "controls": {
               "label": {
                 "label": "Field label",
@@ -4661,7 +5230,15 @@
             "default": ""
           }
         ],
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "defaultValue",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -4669,7 +5246,9 @@
       "type": "registry:component",
       "title": "Проверка ника",
       "description": "Поле имени с кнопкой «Проверить» и результатом занятости под рамкой: поле остаётся редактируемым, а правка сбрасывает старый результат.",
-      "categories": ["input-group"],
+      "categories": [
+        "input-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4681,7 +5260,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-inputgroup-035-*. Клиентский: \"use client\" ради состояния значения, статуса и таймера проверки. Проверка имитируется таймером (очищается при размонтировании и при повторном запуске), поле блокируется только на время самой проверки и остаётся редактируемым после любого результата — в отличие от сцепки с промокодом, здесь можно перепроверять сколько угодно раз. Любая правка значения сразу сбрасывает статус в idle: старый результат относится уже к другой строке.",
       "meta": {
-        "tags": ["inputgroup", "availability", "validation", "status"],
+        "tags": [
+          "inputgroup",
+          "availability",
+          "validation",
+          "status"
+        ],
         "ai": {
           "export": "Inputgroup035",
           "usage": "<Inputgroup035\n  name=\"handle\"\n  label=\"Имя пользователя\"\n  takenHandles={[\"admin\", \"support\"]}\n/>",
@@ -4743,7 +5327,12 @@
               "usage": "<Inputgroup035\n  name=\"handle\"\n  label=\"Username\"\n  takenHandles={[\"admin\", \"support\"]}\n/>"
             },
             "title": "Handle Check",
-            "tags": ["inputgroup", "availability", "validation", "status"],
+            "tags": [
+              "inputgroup",
+              "availability",
+              "validation",
+              "status"
+            ],
             "controls": {
               "label": {
                 "label": "Field label",
@@ -4817,7 +5406,16 @@
             "default": ""
           }
         ],
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "placeholder",
+          "checkDelay",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -4825,7 +5423,9 @@
       "type": "registry:component",
       "title": "Защита диапазона",
       "description": "Пара «от» и «до» с общей рамкой и живой проверкой порядка: «до» меньше «от» подсвечивает всю сцепку и выводит сообщение об ошибке.",
-      "categories": ["input-group"],
+      "categories": [
+        "input-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4837,7 +5437,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-inputgroup-036-*. Клиентский: \"use client\" ради состояния обеих половин и проверки порядка. У произвольных чисел нет нативного min/max, который сам не пустил бы ввести «до» меньше «от», поэтому проверка идёт в JS после каждого изменения любой половины. Ошибка красит всю группу через box-shadow на общей рамке, а не одну половину border'ом — «от» без «до» и «до» без «от» одинаково неполны.",
       "meta": {
-        "tags": ["inputgroup", "range", "validation", "fieldset"],
+        "tags": [
+          "inputgroup",
+          "range",
+          "validation",
+          "fieldset"
+        ],
         "ai": {
           "export": "Inputgroup036",
           "usage": "<Inputgroup036\n  name=\"age\"\n  legend=\"Возраст участников\"\n  defaultFrom={18}\n  defaultTo={65}\n/>",
@@ -4899,7 +5504,12 @@
               "usage": "<Inputgroup036\n  name=\"age\"\n  legend=\"Participant age\"\n  defaultFrom={18}\n  defaultTo={65}\n/>"
             },
             "title": "Range Guard",
-            "tags": ["inputgroup", "range", "validation", "fieldset"],
+            "tags": [
+              "inputgroup",
+              "range",
+              "validation",
+              "fieldset"
+            ],
             "controls": {
               "legend": {
                 "label": "Group label",
@@ -4968,7 +5578,16 @@
             "default": ""
           }
         ],
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "legend",
+          "defaultFrom",
+          "defaultTo",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -4976,7 +5595,9 @@
       "type": "registry:component",
       "title": "Шаблоны ответа",
       "description": "Поле быстрого ответа с поповером шаблонов справа: выбор пункта вставляет готовый текст целиком и возвращает фокус в поле для дописывания.",
-      "categories": ["input-group"],
+      "categories": [
+        "input-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4988,7 +5609,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-inputgroup-037-*. Клиентский: \"use client\" ради состояния значения и открытого поповера. Список шаблонов — не select, а собственный поповер с role=\"listbox\": пункт нужно не выбрать значением поля, а вставить в поле готовым текстом, оставив возможность дописать своими словами. Закрытие идёт по Escape, клику снаружи (через pointerdown на document) и по выбору пункта; после любого закрытия фокус возвращается в текстовое поле.",
       "meta": {
-        "tags": ["inputgroup", "template", "reply", "popover"],
+        "tags": [
+          "inputgroup",
+          "template",
+          "reply",
+          "popover"
+        ],
         "ai": {
           "export": "Inputgroup037",
           "usage": "<Inputgroup037\n  name=\"reply\"\n  label=\"Быстрый ответ\"\n  templates={[{ id: \"greeting\", title: \"Приветствие\", text: \"Здравствуйте!\" }]}\n/>",
@@ -5050,7 +5676,12 @@
               "usage": "<Inputgroup037\n  name=\"reply\"\n  label=\"Quick reply\"\n  templates={[{ id: \"greeting\", title: \"Greeting\", text: \"Hello!\" }]}\n/>"
             },
             "title": "Reply Templates",
-            "tags": ["inputgroup", "template", "reply", "popover"],
+            "tags": [
+              "inputgroup",
+              "template",
+              "reply",
+              "popover"
+            ],
             "controls": {
               "label": {
                 "label": "Field label",
@@ -5132,7 +5763,16 @@
             "default": ""
           }
         ],
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "placeholder",
+          "triggerText",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -5140,7 +5780,9 @@
       "type": "registry:component",
       "title": "Определение по геолокации",
       "description": "Поле адреса с кнопкой геолокации: Geolocation API подставляет координаты в текст, а статус различает отказ доступа и отсутствие поддержки.",
-      "categories": ["input-group"],
+      "categories": [
+        "input-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -5152,7 +5794,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-inputgroup-038-*. Клиентский: \"use client\" ради состояния значения и статуса определения. Браузер отдаёт координаты, а не готовый адрес — обратного геокодирования без стороннего сервиса нет, поэтому кнопка подставляет координаты как текст и явно предупреждает, что их нужно превратить в адрес самостоятельно. Отказ доступа и отсутствие Geolocation API — два разных статуса с разным текстом.",
       "meta": {
-        "tags": ["inputgroup", "geolocation", "address", "status"],
+        "tags": [
+          "inputgroup",
+          "geolocation",
+          "address",
+          "status"
+        ],
         "ai": {
           "export": "Inputgroup038",
           "usage": "<Inputgroup038\n  name=\"address\"\n  label=\"Адрес доставки\"\n  onLocate={(lat, lng) => lookupAddress(lat, lng)}\n/>",
@@ -5214,7 +5861,12 @@
               "usage": "<Inputgroup038\n  name=\"address\"\n  label=\"Delivery address\"\n  onLocate={(lat, lng) => lookupAddress(lat, lng)}\n/>"
             },
             "title": "Geo Locate",
-            "tags": ["inputgroup", "geolocation", "address", "status"],
+            "tags": [
+              "inputgroup",
+              "geolocation",
+              "address",
+              "status"
+            ],
             "controls": {
               "label": {
                 "label": "Field label",
@@ -5277,7 +5929,15 @@
             "default": ""
           }
         ],
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "placeholder",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -5285,7 +5945,9 @@
       "type": "registry:component",
       "title": "Чип файла",
       "description": "Прикрепление файла плашкой: имя и размер выбранного файла показаны рядом с кнопкой удаления, которая обнуляет и состояние, и сам file-input.",
-      "categories": ["input-group"],
+      "categories": [
+        "input-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -5297,7 +5959,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-inputgroup-039-*. Клиентский: \"use client\" ради состояния выбранного файла. Настоящий <input type=\"file\"> визуально скрыт (clip, не display:none) и связан с подписью-кнопкой через htmlFor, поэтому остаётся в таб-порядке. Выбранный файл выводится отдельной плашкой с иконкой, именем, размером (formatSize) и кнопкой удаления; удаление чистит и состояние React, и inputRef.current.value — без этого повторный выбор того же файла не вызвал бы onChange повторно.",
       "meta": {
-        "tags": ["inputgroup", "file", "upload", "remove"],
+        "tags": [
+          "inputgroup",
+          "file",
+          "upload",
+          "remove"
+        ],
         "ai": {
           "export": "Inputgroup039",
           "usage": "<Inputgroup039\n  name=\"attachment\"\n  label=\"Прикрепить файл\"\n  accept=\".pdf,.png,.jpg\"\n/>",
@@ -5359,7 +6026,12 @@
               "usage": "<Inputgroup039\n  name=\"attachment\"\n  label=\"Attach a file\"\n  accept=\".pdf,.png,.jpg\"\n/>"
             },
             "title": "File Chip",
-            "tags": ["inputgroup", "file", "upload", "remove"],
+            "tags": [
+              "inputgroup",
+              "file",
+              "upload",
+              "remove"
+            ],
             "controls": {
               "label": {
                 "label": "Field label",
@@ -5418,7 +6090,15 @@
             "default": ""
           }
         ],
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "triggerText",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     },
     {
@@ -5426,7 +6106,9 @@
       "type": "registry:component",
       "title": "Копирование команды",
       "description": "Команда установки со знаком $ слева и кнопкой копирования справа: приставка неинтерактивна, поле readonly, но выделяемо, при отказе буфера выделяется текст.",
-      "categories": ["input-group"],
+      "categories": [
+        "input-group"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -5438,7 +6120,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-inputgroup-040-*. Клиентский: \"use client\" ради состояния подтверждения копирования. Приставка «$» — неинтерактивный span с aria-hidden и user-select:none, знак терминала, а не часть значения. Поле readonly, но остаётся настоящим input и выделяется целиком по фокусу. Кнопка пробует navigator.clipboard.writeText со знаком и командой вместе, при отказе выделяет текст поля вместо тихой неудачи.",
       "meta": {
-        "tags": ["inputgroup", "command", "copy", "terminal"],
+        "tags": [
+          "inputgroup",
+          "command",
+          "copy",
+          "terminal"
+        ],
         "ai": {
           "export": "Inputgroup040",
           "usage": "<Inputgroup040\n  label=\"Команда установки\"\n  defaultValue=\"npm install vibeui-cli\"\n/>",
@@ -5500,7 +6187,12 @@
               "usage": "<Inputgroup040\n  label=\"Install command\"\n  defaultValue=\"npm install vibeui-cli\"\n/>"
             },
             "title": "Command Copy",
-            "tags": ["inputgroup", "command", "copy", "terminal"],
+            "tags": [
+              "inputgroup",
+              "command",
+              "copy",
+              "terminal"
+            ],
             "controls": {
               "label": {
                 "label": "Field label",
@@ -5568,7 +6260,16 @@
             "default": ""
           }
         ],
-        "cardControls": ["accent", "background"]
+        "cardControls": [
+          "label",
+          "defaultValue",
+          "prefix",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
       }
     }
   ]
