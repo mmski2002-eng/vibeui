@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Banner005Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Banner005Props = Omit<ComponentProps<"div">, "children"> & {
   /** Израсходовано и включено в тариф: полоса считается из этих двух чисел. */
   used?: number
   limit?: number
@@ -34,16 +31,19 @@ const STYLES = `
 :where([data-vibeui-block="banner-005"]){
 --vibeui-banner-005-bg:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
 --vibeui-banner-005-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
---vibeui-banner-005-muted:light-dark(oklch(0.54 0.014 265),oklch(0.72 0.01 265));
+--vibeui-banner-005-muted:color-mix(in oklab,var(--vibeui-banner-005-fg) 68%,transparent);
 --vibeui-banner-005-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
 --vibeui-banner-005-track:light-dark(oklch(0.93 0.006 265),oklch(0.33 0.012 265));
 --vibeui-banner-005-calm:light-dark(oklch(0.6 0.15 250),oklch(0.72 0.14 250));
 --vibeui-banner-005-tone:var(--vibeui-banner-005-calm);
---vibeui-banner-005-on-tone:light-dark(oklch(0.99 0.01 265),oklch(0.2 0.02 265));
+--vibeui-banner-005-on-tone:oklch(from var(--vibeui-banner-005-tone) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-banner-005-ratio:0;
 --vibeui-banner-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="banner-005"]{color-scheme:dark}
 [data-vibeui-block="banner-005"]{
 width:100%;box-sizing:border-box;
 font-family:var(--vibeui-banner-005-font);color:var(--vibeui-banner-005-fg);
@@ -63,7 +63,7 @@ background:color-mix(in oklab,var(--vibeui-banner-005-tone) 16%,transparent);
 color:var(--vibeui-banner-005-tone);
 font-size:0.6875rem;font-weight:700;letter-spacing:0.03em;text-transform:uppercase;
 }
-[data-vibeui-block="banner-005"] [data-part="counter"]{font-size:0.875rem;font-weight:640;font-variant-numeric:tabular-nums}
+[data-vibeui-block="banner-005"] [data-part="counter"]{font-size:0.9375rem;font-weight:640;font-variant-numeric:tabular-nums}
 [data-vibeui-block="banner-005"] [data-part="counter"] span{color:var(--vibeui-banner-005-muted);font-weight:500}
 /* Полоса считается из двух чисел: разметка не знает про проценты. */
 [data-vibeui-block="banner-005"] [data-part="track"]{
@@ -77,13 +77,13 @@ background:var(--vibeui-banner-005-tone);
 transition:width .3s ease,background-color .3s ease;
 }
 [data-vibeui-block="banner-005"] [data-part="note"]{
-grid-column:1 / -1;margin:0;font-size:0.8125rem;line-height:1.45;color:var(--vibeui-banner-005-muted);
+grid-column:1 / -1;margin:0;font-size:0.875rem;line-height:1.45;color:var(--vibeui-banner-005-muted);
 }
 [data-vibeui-block="banner-005"] [data-part="action"]{
 appearance:none;cursor:pointer;border:0;
 height:2.125rem;padding:0 0.9375rem;border-radius:0.625rem;
 background:var(--vibeui-banner-005-tone);color:var(--vibeui-banner-005-on-tone);
-font:inherit;font-size:0.8125rem;font-weight:650;white-space:nowrap;
+font:inherit;font-size:0.875rem;font-weight:650;white-space:nowrap;
 transition:filter .16s ease;
 }
 [data-vibeui-block="banner-005"] [data-part="action"]:hover{filter:brightness(1.08)}
@@ -92,14 +92,22 @@ transition:filter .16s ease;
 [data-vibeui-block="banner-005"] [data-part="shell"]{grid-template-columns:1fr}
 [data-vibeui-block="banner-005"] [data-part="action"]{width:100%}
 }
+@container (min-width: 32rem){
+[data-vibeui-block="banner-005"] [data-part="shell"]{padding:1.0625rem 1.125rem}
+[data-vibeui-block="banner-005"] [data-part="counter"]{font-size:1rem}
+[data-vibeui-block="banner-005"] [data-part="note"]{font-size:0.9375rem}
+[data-vibeui-block="banner-005"] [data-part="action"]{font-size:0.9375rem}
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="banner-005"] *{animation:none!important;transition:none!important}}
 `
 
 /** Пояснение под полосой: русские строки по умолчанию, проект ставит свои. */
 const NOTE_TEXT: Record<string, string> = {
   calm: "Лимит обновится первого числа. До этого момента остаток не переносится.",
+  /* У «почти исчерпан» свой текст: иначе это состояние отличалось бы от
+     спокойного только цветом полосы и до скринридера не доходило. */
   tight:
-    "Лимит обновится первого числа. До этого момента остаток не переносится.",
+    "Лимит почти исчерпан: осталось меньше десятой части. Обновится первого числа.",
   over: "Лимит исчерпан: новые запросы отклоняются до начала следующего периода.",
 }
 
@@ -174,6 +182,7 @@ export function Banner005({
       </style>
       <div
         {...props}
+        data-slot="banner"
         data-vibeui-block="banner-005"
         data-state={state}
         role="status"

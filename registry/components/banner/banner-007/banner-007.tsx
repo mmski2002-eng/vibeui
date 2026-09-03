@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Banner007Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Banner007Props = Omit<ComponentProps<"div">, "children"> & {
   title?: string
   /** Дата в человеческом виде: «14 сентября». */
   date?: string
@@ -29,20 +26,26 @@ const STYLES = `
 :where([data-vibeui-block="banner-007"]){
 --vibeui-banner-007-bg:light-dark(oklch(0.98 0.012 285),oklch(0.26 0.028 285));
 --vibeui-banner-007-fg:light-dark(oklch(0.26 0.04 285),oklch(0.93 0.018 285));
---vibeui-banner-007-muted:light-dark(oklch(0.48 0.04 285),oklch(0.73 0.025 285));
+--vibeui-banner-007-muted:color-mix(in oklab,var(--vibeui-banner-007-fg) 68%,transparent);
 --vibeui-banner-007-border:light-dark(oklch(0.88 0.03 285),oklch(0.4 0.03 285));
 --vibeui-banner-007-slot:light-dark(oklch(0.94 0.04 285),oklch(0.34 0.035 285));
 --vibeui-banner-007-accent:light-dark(oklch(0.5 0.14 290),oklch(0.79 0.13 290));
+/* Акцентом набрана дата на светлой панели: светлота ограничивается сверху,
+   иначе светлый акцент проекта растворяется в подложке. */
+--vibeui-banner-007-accent-ink:oklch(from var(--vibeui-banner-007-accent) min(l,0.62) c h);
 --vibeui-banner-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="banner-007"]{color-scheme:dark}
 [data-vibeui-block="banner-007"]{
 width:100%;box-sizing:border-box;
 font-family:var(--vibeui-banner-007-font);color:var(--vibeui-banner-007-fg);
 }
 [data-vibeui-block="banner-007"] [data-part="shell"]{
 display:flex;align-items:stretch;gap:0.9375rem;
-box-sizing:border-box;padding:0.875rem 1rem;
+box-sizing:border-box;padding:0.9375rem 1rem;
 border:1px solid var(--vibeui-banner-007-border);border-radius:1rem;
 background:var(--vibeui-banner-007-bg);
 }
@@ -59,12 +62,18 @@ font-size:0.9375rem;font-weight:700;letter-spacing:-0.01em;
 font-variant-numeric:tabular-nums;white-space:nowrap;
 }
 [data-vibeui-block="banner-007"] [data-part="text"]{display:flex;flex-direction:column;gap:0.1875rem;justify-content:center;min-width:0}
-[data-vibeui-block="banner-007"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650;line-height:1.35}
-[data-vibeui-block="banner-007"] [data-part="note"]{margin:0;font-size:0.8125rem;line-height:1.45;color:var(--vibeui-banner-007-muted)}
-[data-vibeui-block="banner-007"] [data-part="note"] b{color:var(--vibeui-banner-007-accent);font-weight:650}
+[data-vibeui-block="banner-007"] [data-part="title"]{margin:0;font-size:0.9375rem;font-weight:650;line-height:1.35}
+[data-vibeui-block="banner-007"] [data-part="note"]{margin:0;font-size:0.875rem;line-height:1.45;color:var(--vibeui-banner-007-muted)}
+[data-vibeui-block="banner-007"] [data-part="note"] b{color:var(--vibeui-banner-007-accent-ink);font-weight:650}
 @container (max-width: 26rem){
 [data-vibeui-block="banner-007"] [data-part="shell"]{flex-direction:column;gap:0.75rem}
 [data-vibeui-block="banner-007"] [data-part="slot"]{align-items:flex-start;text-align:left;width:100%}
+}
+@container (min-width: 32rem){
+[data-vibeui-block="banner-007"] [data-part="shell"]{padding:1.0625rem 1rem}
+[data-vibeui-block="banner-007"] [data-part="title"]{font-size:1rem}
+[data-vibeui-block="banner-007"] [data-part="range"]{font-size:1rem}
+[data-vibeui-block="banner-007"] [data-part="note"]{font-size:0.9375rem}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="banner-007"] *{animation:none!important;transition:none!important}}
 `
@@ -134,8 +143,9 @@ export function Banner007({
       </style>
       <div
         {...props}
+        data-slot="banner"
         data-vibeui-block="banner-007"
-        role="note"
+        role="region"
         aria-label={fill(labelTemplate, { title, date, from, to })}
         className={className}
         style={palette}

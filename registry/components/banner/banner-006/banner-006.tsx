@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Banner006Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Banner006Props = Omit<ComponentProps<"div">, "children"> & {
   message?: string
   /** Что происходит с несохранённым: без этой строки полоса бесполезна. */
   detail?: string
@@ -26,18 +23,24 @@ const STYLES = `
 :where([data-vibeui-block="banner-006"]){
 --vibeui-banner-006-bg:light-dark(oklch(0.25 0.012 265),oklch(0.31 0.014 265));
 --vibeui-banner-006-fg:light-dark(oklch(0.96 0.002 265),oklch(0.95 0.004 265));
---vibeui-banner-006-muted:light-dark(oklch(0.75 0.008 265),oklch(0.73 0.01 265));
+--vibeui-banner-006-muted:color-mix(in oklab,var(--vibeui-banner-006-fg) 68%,transparent);
 --vibeui-banner-006-tone:light-dark(oklch(0.78 0.13 75),oklch(0.82 0.12 75));
+/* Полоса всегда тёмная, а тоном красится индикатор связи: светлота
+   поднимается до читаемой, иначе тёмный тон проекта сливается с фоном. */
+--vibeui-banner-006-tone-ink:oklch(from var(--vibeui-banner-006-tone) max(l,0.72) c h);
 --vibeui-banner-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="banner-006"]{color-scheme:dark}
 [data-vibeui-block="banner-006"]{
 width:100%;box-sizing:border-box;
 font-family:var(--vibeui-banner-006-font);color:var(--vibeui-banner-006-fg);
 }
 [data-vibeui-block="banner-006"] [data-part="shell"]{
 display:flex;align-items:center;gap:0.875rem;flex-wrap:wrap;
-box-sizing:border-box;padding:0.75rem 1rem;
+box-sizing:border-box;padding:0.9375rem 1rem;
 border-radius:0.875rem;background:var(--vibeui-banner-006-bg);
 }
 /* Три чёрточки гаснут по очереди: оборванный сигнал читается без цвета. */
@@ -46,7 +49,7 @@ display:flex;align-items:flex-end;gap:0.125rem;flex:none;height:0.875rem;
 }
 [data-vibeui-block="banner-006"] [data-part="signal"] i{
 display:block;width:0.1875rem;border-radius:0.0625rem;
-background:var(--vibeui-banner-006-tone);
+background:var(--vibeui-banner-006-tone-ink);
 animation:vibeui-banner-006-fade 1.8s ease-in-out infinite;
 }
 [data-vibeui-block="banner-006"] [data-part="signal"] i:nth-child(1){height:0.375rem}
@@ -54,20 +57,26 @@ animation:vibeui-banner-006-fade 1.8s ease-in-out infinite;
 [data-vibeui-block="banner-006"] [data-part="signal"] i:nth-child(3){height:0.875rem;animation-delay:.4s;opacity:.35}
 @keyframes vibeui-banner-006-fade{0%,100%{opacity:1}50%{opacity:.25}}
 [data-vibeui-block="banner-006"] [data-part="text"]{display:flex;flex-direction:column;gap:0.125rem;flex:1 1 14rem;min-width:0}
-[data-vibeui-block="banner-006"] [data-part="message"]{font-size:0.875rem;font-weight:640;line-height:1.35}
-[data-vibeui-block="banner-006"] [data-part="detail"]{font-size:0.8125rem;line-height:1.45;color:var(--vibeui-banner-006-muted)}
+[data-vibeui-block="banner-006"] [data-part="message"]{font-size:0.9375rem;font-weight:640;line-height:1.35}
+[data-vibeui-block="banner-006"] [data-part="detail"]{font-size:0.875rem;line-height:1.45;color:var(--vibeui-banner-006-muted)}
 [data-vibeui-block="banner-006"] [data-part="retry"]{
 appearance:none;cursor:pointer;flex:none;
 height:2rem;padding:0 0.875rem;border-radius:0.5rem;
 border:1px solid oklch(1 0 0 / 26%);background:transparent;
 color:var(--vibeui-banner-006-fg);
-font:inherit;font-size:0.8125rem;font-weight:640;
+font:inherit;font-size:0.875rem;font-weight:640;
 transition:background-color .16s ease;
 }
 [data-vibeui-block="banner-006"] [data-part="retry"]:hover{background:oklch(1 0 0 / 12%)}
-[data-vibeui-block="banner-006"] [data-part="retry"]:focus-visible{outline:2px solid var(--vibeui-banner-006-tone);outline-offset:2px}
+[data-vibeui-block="banner-006"] [data-part="retry"]:focus-visible{outline:2px solid var(--vibeui-banner-006-tone-ink);outline-offset:2px}
 @container (max-width: 24rem){
 [data-vibeui-block="banner-006"] [data-part="retry"]{width:100%}
+}
+@container (min-width: 32rem){
+[data-vibeui-block="banner-006"] [data-part="shell"]{padding:1.0625rem 1rem}
+[data-vibeui-block="banner-006"] [data-part="message"]{font-size:1rem}
+[data-vibeui-block="banner-006"] [data-part="detail"]{font-size:0.9375rem}
+[data-vibeui-block="banner-006"] [data-part="retry"]{font-size:0.9375rem}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="banner-006"] *{animation:none!important;transition:none!important}}
 `
@@ -100,6 +109,7 @@ export function Banner006({
       </style>
       <div
         {...props}
+        data-slot="banner"
         data-vibeui-block="banner-006"
         role="status"
         aria-live="polite"

@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Banner004Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Banner004Props = Omit<ComponentProps<"div">, "children"> & {
   label?: string
   note?: string
   /** Окружение: попадает в текст и в подпись для скринридера. */
@@ -26,7 +23,7 @@ const STYLES = `
 :where([data-vibeui-block="banner-004"]){
 --vibeui-banner-004-bg:light-dark(oklch(0.97 0.05 95),oklch(0.29 0.045 90));
 --vibeui-banner-004-fg:light-dark(oklch(0.32 0.07 75),oklch(0.93 0.04 92));
---vibeui-banner-004-muted:light-dark(oklch(0.48 0.06 75),oklch(0.76 0.045 88));
+--vibeui-banner-004-muted:color-mix(in oklab,var(--vibeui-banner-004-fg) 68%,transparent);
 --vibeui-banner-004-stripe:light-dark(oklch(0.86 0.11 95),oklch(0.63 0.1 92));
 --vibeui-banner-004-border:light-dark(oklch(0.82 0.11 95),oklch(0.46 0.08 92));
 --vibeui-banner-004-chip:light-dark(oklch(1 0 0 / 55%),oklch(1 0 0 / 8%));
@@ -34,6 +31,9 @@ const STYLES = `
 --vibeui-banner-004-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="banner-004"]{color-scheme:dark}
 [data-vibeui-block="banner-004"]{
 width:100%;box-sizing:border-box;
 font-family:var(--vibeui-banner-004-font);color:var(--vibeui-banner-004-fg);
@@ -41,7 +41,7 @@ font-family:var(--vibeui-banner-004-font);color:var(--vibeui-banner-004-fg);
 [data-vibeui-block="banner-004"] [data-part="shell"]{
 display:flex;align-items:center;gap:0.75rem;
 box-sizing:border-box;
-padding:0.625rem 0.9375rem;
+padding:0.9375rem 0.9375rem;
 border:1px solid var(--vibeui-banner-004-border);
 border-radius:0.75rem;
 background:var(--vibeui-banner-004-bg);
@@ -61,7 +61,7 @@ font-size:0.75rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase
 white-space:nowrap;
 }
 [data-vibeui-block="banner-004"] [data-part="note"]{
-margin:0;min-width:0;font-size:0.8125rem;line-height:1.45;color:var(--vibeui-banner-004-muted);
+margin:0;min-width:0;font-size:0.9375rem;line-height:1.45;color:var(--vibeui-banner-004-muted);
 }
 [data-vibeui-block="banner-004"] [data-part="env"]{
 margin-left:auto;flex:none;
@@ -73,6 +73,10 @@ font-family:var(--vibeui-banner-004-mono);font-size:0.6875rem;font-weight:650;
 @container (max-width: 30rem){
 [data-vibeui-block="banner-004"] [data-part="tape"]{display:none}
 [data-vibeui-block="banner-004"] [data-part="env"]{display:none}
+}
+@container (min-width: 32rem){
+[data-vibeui-block="banner-004"] [data-part="shell"]{padding:1.0625rem 0.9375rem}
+[data-vibeui-block="banner-004"] [data-part="note"]{font-size:1rem}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="banner-004"] *{animation:none!important;transition:none!important}}
 `
@@ -135,8 +139,9 @@ export function Banner004({
       </style>
       <div
         {...props}
+        data-slot="banner"
         data-vibeui-block="banner-004"
-        role="note"
+        role="region"
         aria-label={accessibleName}
         className={className}
         style={palette}

@@ -1,9 +1,6 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties } from "react"
 
-export type Banner002Props = Omit<
-  ComponentPropsWithoutRef<"div">,
-  "children"
-> & {
+export type Banner002Props = Omit<ComponentProps<"div">, "children"> & {
   message?: string
   /** Номер новой версии: без него «обновитесь» звучит как реклама. */
   version?: string
@@ -24,22 +21,25 @@ const STYLES = `
 :where([data-vibeui-block="banner-002"]){
 --vibeui-banner-002-bg:light-dark(oklch(0.97 0.02 220),oklch(0.27 0.03 245));
 --vibeui-banner-002-fg:light-dark(oklch(0.27 0.05 240),oklch(0.93 0.015 240));
---vibeui-banner-002-muted:light-dark(oklch(0.48 0.05 240),oklch(0.73 0.025 240));
+--vibeui-banner-002-muted:color-mix(in oklab,var(--vibeui-banner-002-fg) 68%,transparent);
 --vibeui-banner-002-border:light-dark(oklch(0.86 0.05 230),oklch(0.41 0.04 240));
 --vibeui-banner-002-accent:light-dark(oklch(0.52 0.16 245),oklch(0.72 0.15 245));
 --vibeui-banner-002-chip:light-dark(oklch(1 0 0 / 65%),oklch(1 0 0 / 10%));
---vibeui-banner-002-on-accent:light-dark(oklch(0.99 0.01 245),oklch(0.2 0.03 245));
+--vibeui-banner-002-on-accent:oklch(from var(--vibeui-banner-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-banner-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-banner-002-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 container-type:inline-size;
 }
+/* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
+   next-themes и shadcn ставят класс .dark и его не объявляют. */
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="banner-002"]{color-scheme:dark}
 [data-vibeui-block="banner-002"]{
 width:100%;box-sizing:border-box;
 font-family:var(--vibeui-banner-002-font);color:var(--vibeui-banner-002-fg);
 }
 [data-vibeui-block="banner-002"] [data-part="shell"]{
 display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;
-box-sizing:border-box;padding:0.6875rem 1rem;
+box-sizing:border-box;padding:0.9375rem 1rem;
 border:1px solid var(--vibeui-banner-002-border);border-radius:0.875rem;
 background:var(--vibeui-banner-002-bg);
 }
@@ -58,7 +58,7 @@ animation:vibeui-banner-002-pulse 2.4s ease-out infinite;
 100%{opacity:0;transform:scale(1.5)}
 }
 [data-vibeui-block="banner-002"] [data-part="text"]{
-flex:1 1 14rem;min-width:0;margin:0;font-size:0.8125rem;line-height:1.45;
+flex:1 1 14rem;min-width:0;margin:0;font-size:0.9375rem;line-height:1.45;
 }
 [data-vibeui-block="banner-002"] [data-part="version"]{
 font-family:var(--vibeui-banner-002-mono);font-size:0.75rem;font-weight:600;
@@ -69,7 +69,7 @@ background:var(--vibeui-banner-002-chip);color:var(--vibeui-banner-002-muted);
 appearance:none;cursor:pointer;border:0;flex:none;
 height:1.9375rem;padding:0 0.8125rem;border-radius:0.5rem;
 background:var(--vibeui-banner-002-accent);color:var(--vibeui-banner-002-on-accent);
-font:inherit;font-size:0.8125rem;font-weight:650;
+font:inherit;font-size:0.875rem;font-weight:650;
 transition:filter .16s ease;
 }
 [data-vibeui-block="banner-002"] [data-part="action"]:hover{filter:brightness(1.08)}
@@ -77,6 +77,11 @@ transition:filter .16s ease;
 @container (max-width: 30rem){
 [data-vibeui-block="banner-002"] [data-part="shell"]{align-items:flex-start}
 [data-vibeui-block="banner-002"] [data-part="action"]{width:100%}
+}
+@container (min-width: 32rem){
+[data-vibeui-block="banner-002"] [data-part="shell"]{padding:1.0625rem 1rem}
+[data-vibeui-block="banner-002"] [data-part="text"]{font-size:1rem}
+[data-vibeui-block="banner-002"] [data-part="action"]{font-size:0.9375rem}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="banner-002"] *{animation:none!important;transition:none!important}}
 `
@@ -136,6 +141,7 @@ export function Banner002({
       </style>
       <div
         {...props}
+        data-slot="banner"
         data-vibeui-block="banner-002"
         role="status"
         aria-live="polite"
