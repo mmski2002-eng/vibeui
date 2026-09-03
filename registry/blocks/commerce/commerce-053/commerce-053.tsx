@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useId, useState } from "react"
 import type { CSSProperties } from "react"
 
 export type Commerce053Option = {
@@ -280,6 +280,9 @@ export function Commerce053({
   className,
   style,
 }: Commerce053Props) {
+  // Радиогруппа изолируется по экземпляру: имя фиксировано на id набора,
+  // и два блока на одной странице делили бы выбор без useId().
+  const uid = useId()
   const [picked, setPicked] = useState<Record<string, string>>(() =>
     Object.fromEntries(
       groups.map((group) => [group.id, group.options[0]?.value ?? ""]),
@@ -348,12 +351,12 @@ export function Commerce053({
                     <label
                       key={option.value}
                       data-part="option"
-                      htmlFor={`commerce-053-${group.id}-${option.value}`}
+                      htmlFor={`${uid}-${group.id}-${option.value}`}
                     >
                       <input
                         type="radio"
-                        id={`commerce-053-${group.id}-${option.value}`}
-                        name={`commerce-053-${group.id}`}
+                        id={`${uid}-${group.id}-${option.value}`}
+                        name={`${uid}-${group.id}`}
                         value={option.value}
                         checked={picked[group.id] === option.value}
                         onChange={() =>

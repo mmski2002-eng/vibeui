@@ -23,6 +23,10 @@ export type Rating001Props = Omit<
 //
 // Тема берётся из color-scheme окружения через light-dark(): компонент
 // темнеет вместе со страницей и не носит собственной тёмной темы.
+//
+// Радиокнопки лежат в собственной <form data-part="stars">: одинаковое имя
+// в двух блоках на одной странице иначе объединило бы их в одну группу, и
+// первый блок остался бы без отмеченной оценки.
 const STYLES = `
 :where([data-vibeui-block="rating-001"]){
 --vibeui-rating-001-bg:transparent;
@@ -60,6 +64,10 @@ padding:0 0.0625rem;border-radius:0.25rem;
 [data-vibeui-block="rating-001"] [data-part="stars"]:hover [data-part="star"]{color:var(--vibeui-rating-001-empty)}
 [data-vibeui-block="rating-001"] [data-part="stars"]:hover label:hover [data-part="star"],
 [data-vibeui-block="rating-001"] [data-part="stars"]:hover label:hover ~ label [data-part="star"]{color:var(--vibeui-rating-001-accent)}
+/* Та же подсветка на фокусе: без мыши превью работает клавиатурой. */
+[data-vibeui-block="rating-001"] [data-part="stars"]:focus-within [data-part="star"]{color:var(--vibeui-rating-001-empty)}
+[data-vibeui-block="rating-001"] [data-part="stars"]:focus-within label:has(input:focus-visible) [data-part="star"],
+[data-vibeui-block="rating-001"] [data-part="stars"]:focus-within label:has(input:focus-visible) ~ label [data-part="star"]{color:var(--vibeui-rating-001-accent)}
 [data-vibeui-block="rating-001"] input:focus-visible + [data-part="star"]{outline:2px solid var(--vibeui-rating-001-accent);outline-offset:1px}
 /* Подпись оценки тоже без JS: видна та строка, чей value отмечен. */
 [data-vibeui-block="rating-001"] [data-part="hint"]{display:none;margin:0;font-size:0.75rem;color:var(--vibeui-rating-001-muted)}
@@ -144,7 +152,7 @@ export function Rating001({
         style={palette}
       >
         <legend>{legend}</legend>
-        <div data-part="stars">
+        <form data-part="stars">
           {stars.map((value) => (
             <label
               key={value}
@@ -163,7 +171,7 @@ export function Rating001({
               </span>
             </label>
           ))}
-        </div>
+        </form>
         <div data-part="hints" aria-live="polite">
           {hints.map((hint, index) => (
             <p key={hint} data-part="hint" data-value={index + 1}>

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useId, useState } from "react"
 import type { CSSProperties } from "react"
 
 export type Commerce075Fund = {
@@ -189,6 +189,9 @@ export function Commerce075({
   className,
   style,
 }: Commerce075Props) {
+  // Радиогруппа изолируется по экземпляру: имя фиксировано, и два блока на
+  // одной странице делили бы выбор без useId().
+  const uid = useId()
   const [on, setOn] = useState(false)
   const [fund, setFund] = useState(funds[0]?.value ?? "")
 
@@ -252,12 +255,12 @@ export function Commerce075({
                   <label
                     key={entry.value}
                     data-part="fund"
-                    htmlFor={`commerce-075-${entry.value}`}
+                    htmlFor={`${uid}-${entry.value}`}
                   >
                     <input
                       type="radio"
-                      id={`commerce-075-${entry.value}`}
-                      name="commerce-075-fund"
+                      id={`${uid}-${entry.value}`}
+                      name={`${uid}-fund`}
                       checked={fund === entry.value}
                       onChange={() => setFund(entry.value)}
                     />

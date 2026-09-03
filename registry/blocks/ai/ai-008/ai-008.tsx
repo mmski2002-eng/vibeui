@@ -41,6 +41,10 @@ export type Ai008Props = {
 //
 // Колонки становятся рядом только на широком блоке: на узком два столбца
 // текста по 30 символов сравнивать невозможно.
+//
+// Радиогруппа лежит в собственной <form>: одинаковое имя в двух блоках на
+// одной странице иначе объединило бы их в одну группу, и первый блок
+// остался бы без отмеченного варианта.
 const STYLES = `
 :where([data-vibeui-block="ai-008"]){
 --vibeui-ai-008-bg:transparent;
@@ -246,7 +250,7 @@ export function Ai008({
 
           <fieldset>
             <legend>{legend}</legend>
-            <div data-part="grid">
+            <form data-part="grid">
               {variants.map((variant) => (
                 <label key={variant.id} data-part="option">
                   <span data-part="option-head">
@@ -277,7 +281,7 @@ export function Ai008({
                   </span>
                 </label>
               ))}
-            </div>
+            </form>
           </fieldset>
 
           <div data-part="foot">

@@ -62,6 +62,7 @@ box-sizing:border-box;background:var(--vibeui-commerce-061-bg);
 color:var(--vibeui-commerce-061-fg);font-family:var(--vibeui-commerce-061-sans);
 }
 [data-vibeui-block="commerce-061"] *{box-sizing:border-box}
+[data-vibeui-block="commerce-061"] form{display:contents}
 [data-vibeui-block="commerce-061"] [data-part="shell"]{max-width:48rem;margin:0 auto;padding:1.25rem 1rem 2rem}
 [data-vibeui-block="commerce-061"] [data-part="step"]{margin:0;font-size:0.75rem;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--vibeui-commerce-061-accent)}
 [data-vibeui-block="commerce-061"] h2{margin:0.375rem 0 0.375rem;font-size:1.375rem;font-weight:700;letter-spacing:-0.02em}
@@ -244,87 +245,93 @@ export function Commerce061({
           <h2>{title}</h2>
           <p data-part="lead">{lead}</p>
 
-          <fieldset>
-            <legend>{legend}</legend>
-            <div data-part="book">
-              {addresses.map((address, index) => (
-                <div key={address.value} data-part="card">
+          <form>
+            <fieldset>
+              <legend>{legend}</legend>
+              <div data-part="book">
+                {addresses.map((address, index) => (
+                  <div key={address.value} data-part="card">
+                    <input
+                      type="radio"
+                      id={`commerce-061-${address.value}`}
+                      name="commerce-061-address"
+                      defaultChecked={index === 0}
+                    />
+                    <label
+                      data-part="face"
+                      htmlFor={`commerce-061-${address.value}`}
+                    >
+                      <span data-part="dot" aria-hidden="true" />
+                      <span data-part="texts">
+                        <span data-part="row">
+                          <span data-part="label">{address.label}</span>
+                          {address.main ? (
+                            <span data-part="main">{mainLabel}</span>
+                          ) : null}
+                        </span>
+                        <span data-part="line">{address.line}</span>
+                        <span data-part="who">
+                          {address.recipient} · {address.phone}
+                        </span>
+                        {address.note ? (
+                          <span data-part="hint">{address.note}</span>
+                        ) : null}
+                      </span>
+                    </label>
+                    <button type="button" data-part="edit">
+                      {editLabel}
+                      <span data-part="sr"> — {address.label}</span>
+                    </button>
+                  </div>
+                ))}
+
+                <div data-part="card">
                   <input
                     type="radio"
-                    id={`commerce-061-${address.value}`}
+                    id="commerce-061-new"
                     name="commerce-061-address"
-                    defaultChecked={index === 0}
                   />
-                  <label
-                    data-part="face"
-                    htmlFor={`commerce-061-${address.value}`}
-                  >
+                  <label data-part="face" htmlFor="commerce-061-new">
                     <span data-part="dot" aria-hidden="true" />
                     <span data-part="texts">
                       <span data-part="row">
-                        <span data-part="label">{address.label}</span>
-                        {address.main ? (
-                          <span data-part="main">{mainLabel}</span>
-                        ) : null}
+                        <span data-part="label">{newLabel}</span>
                       </span>
-                      <span data-part="line">{address.line}</span>
-                      <span data-part="who">
-                        {address.recipient} · {address.phone}
+                      <span data-part="hint">{newHint}</span>
+                    </span>
+                  </label>
+                  <div data-part="form">
+                    <label data-part="field" htmlFor="commerce-061-city">
+                      <span>{fieldLabels.city ?? FIELD_LABEL.city}</span>
+                      <input id="commerce-061-city" name="city" type="text" />
+                    </label>
+                    <label data-part="field" htmlFor="commerce-061-street">
+                      <span>{fieldLabels.street ?? FIELD_LABEL.street}</span>
+                      <input
+                        id="commerce-061-street"
+                        name="street"
+                        type="text"
+                      />
+                    </label>
+                    <label data-part="field" htmlFor="commerce-061-name">
+                      <span>
+                        {fieldLabels.recipient ?? FIELD_LABEL.recipient}
                       </span>
-                      {address.note ? (
-                        <span data-part="hint">{address.note}</span>
-                      ) : null}
-                    </span>
-                  </label>
-                  <button type="button" data-part="edit">
-                    {editLabel}
-                    <span data-part="sr"> — {address.label}</span>
-                  </button>
-                </div>
-              ))}
-
-              <div data-part="card">
-                <input
-                  type="radio"
-                  id="commerce-061-new"
-                  name="commerce-061-address"
-                />
-                <label data-part="face" htmlFor="commerce-061-new">
-                  <span data-part="dot" aria-hidden="true" />
-                  <span data-part="texts">
-                    <span data-part="row">
-                      <span data-part="label">{newLabel}</span>
-                    </span>
-                    <span data-part="hint">{newHint}</span>
-                  </span>
-                </label>
-                <div data-part="form">
-                  <label data-part="field" htmlFor="commerce-061-city">
-                    <span>{fieldLabels.city ?? FIELD_LABEL.city}</span>
-                    <input id="commerce-061-city" name="city" type="text" />
-                  </label>
-                  <label data-part="field" htmlFor="commerce-061-street">
-                    <span>{fieldLabels.street ?? FIELD_LABEL.street}</span>
-                    <input id="commerce-061-street" name="street" type="text" />
-                  </label>
-                  <label data-part="field" htmlFor="commerce-061-name">
-                    <span>
-                      {fieldLabels.recipient ?? FIELD_LABEL.recipient}
-                    </span>
-                    <input
-                      id="commerce-061-name"
-                      name="recipient"
-                      type="text"
-                    />
-                  </label>
-                  <label data-part="field" htmlFor="commerce-061-phone">
-                    <span>{fieldLabels.phone ?? FIELD_LABEL.phone}</span>
-                    <input id="commerce-061-phone" name="phone" type="tel" />
-                  </label>
+                      <input
+                        id="commerce-061-name"
+                        name="recipient"
+                        type="text"
+                      />
+                    </label>
+                    <label data-part="field" htmlFor="commerce-061-phone">
+                      <span>{fieldLabels.phone ?? FIELD_LABEL.phone}</span>
+                      <input id="commerce-061-phone" name="phone" type="tel" />
+                    </label>
+                  </div>
                 </div>
               </div>
-            </div>
-          </fieldset>
+            </fieldset>
+          </form>
 
           <button type="button" data-part="go">
             {cta}

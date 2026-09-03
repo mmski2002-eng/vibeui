@@ -43,6 +43,10 @@ export type Ai011Props = {
 // объявляет изменение сам, и aria-live не нужен. Режим выбирается
 // радиогруппой — это взаимоисключающий выбор, и список сразу показывает
 // все варианты, а не прячет их в select.
+//
+// Радиогруппа лежит в собственной <form>: одинаковое имя в двух блоках на
+// одной странице иначе объединило бы их в одну группу, и первый блок
+// остался бы без отмеченного варианта.
 const STYLES = `
 :where([data-vibeui-block="ai-011"]){
 --vibeui-ai-011-bg:transparent;
@@ -277,7 +281,7 @@ export function Ai011({
 
           <fieldset>
             <legend>{modeLabel}</legend>
-            <div data-part="modes">
+            <form data-part="modes">
               {modes.map((mode, index) => (
                 <label key={mode} data-part="mode">
                   <input
@@ -289,7 +293,7 @@ export function Ai011({
                   {mode}
                 </label>
               ))}
-            </div>
+            </form>
           </fieldset>
 
           <div data-part="foot">

@@ -44,6 +44,10 @@ export type Datagrid027Props = Omit<ComponentProps<"section">, "children"> & {
 //
 // Тема берётся из color-scheme окружения через light-dark(): таблица темнеет
 // вместе со страницей и не носит собственной подложки.
+//
+// Радиогруппа лежит в собственной <form>: одинаковое имя в двух блоках на
+// одной странице иначе объединило бы их в одну группу, и первый блок
+// остался бы без отмеченного варианта.
 const STYLES = `
 :where([data-vibeui-block="datagrid-027"]){
 --vibeui-datagrid-027-bg:transparent;
@@ -79,6 +83,7 @@ display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;
 padding:0.75rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-027-border);
 }
 [data-vibeui-block="datagrid-027"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650;margin-inline-end:auto}
+[data-vibeui-block="datagrid-027"] [data-part="switch-form"]{display:contents}
 [data-vibeui-block="datagrid-027"] [data-part="switch"]{
 border:1px solid var(--vibeui-datagrid-027-border);border-radius:0.5rem;
 margin:0;padding:0.1875rem;display:flex;gap:0.1875rem;
@@ -261,21 +266,23 @@ export function Datagrid027({
       >
         <div data-part="bar">
           <h3 data-part="title">{heading}</h3>
-          <fieldset data-part="switch">
-            <legend>{densityLegend}</legend>
-            {MODES.map((item) => (
-              <label key={item.value}>
-                <input
-                  type="radio"
-                  name="vibeui-datagrid-027-density"
-                  value={item.value}
-                  checked={mode === item.value}
-                  onChange={() => setMode(item.value)}
-                />
-                {densityText[item.value] ?? DENSITY_TEXT[item.value]}
-              </label>
-            ))}
-          </fieldset>
+          <form data-part="switch-form">
+            <fieldset data-part="switch">
+              <legend>{densityLegend}</legend>
+              {MODES.map((item) => (
+                <label key={item.value}>
+                  <input
+                    type="radio"
+                    name="vibeui-datagrid-027-density"
+                    value={item.value}
+                    checked={mode === item.value}
+                    onChange={() => setMode(item.value)}
+                  />
+                  {densityText[item.value] ?? DENSITY_TEXT[item.value]}
+                </label>
+              ))}
+            </fieldset>
+          </form>
         </div>
         <div
           data-part="scroll"

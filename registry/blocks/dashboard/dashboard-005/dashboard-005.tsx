@@ -32,6 +32,10 @@ export type Dashboard005Props = {
 //
 // Тема берётся из color-scheme окружения через light-dark(): собственной
 // подложки у панели нет, остаётся только рамка.
+//
+// Радиогруппа лежит в собственной <form>: одинаковое имя в двух блоках на
+// одной странице иначе объединило бы их в одну группу, и первый блок
+// остался бы без отмеченного варианта.
 const STYLES = `
 :where([data-vibeui-block="dashboard-005"]){
 --vibeui-dashboard-005-bg:transparent;
@@ -102,6 +106,7 @@ border-bottom:1.5px solid var(--vibeui-dashboard-005-muted);
 transform:rotate(-45deg);transition:transform .14s ease;
 }
 [data-vibeui-block="dashboard-005"] details[open] [data-part="caret"]{transform:rotate(45deg)}
+[data-vibeui-block="dashboard-005"] details form{display:contents}
 [data-vibeui-block="dashboard-005"] [data-part="option"]{
 display:flex;align-items:center;gap:0.5rem;cursor:pointer;
 min-height:1.875rem;font-size:0.8125rem;
@@ -253,19 +258,21 @@ export function Dashboard005({
               {group.title}
               <span data-part="caret" aria-hidden="true" />
             </summary>
-            {group.options.map((option) => (
-              <label key={option.label} data-part="option">
-                <input
-                  type={group.kind === "radio" ? "radio" : "checkbox"}
-                  name={`vibeui-dashboard-005-${group.title}`}
-                  defaultChecked={option.on}
-                />
-                {option.label}
-                {option.count !== undefined ? (
-                  <span data-part="count">{option.count}</span>
-                ) : null}
-              </label>
-            ))}
+            <form>
+              {group.options.map((option) => (
+                <label key={option.label} data-part="option">
+                  <input
+                    type={group.kind === "radio" ? "radio" : "checkbox"}
+                    name={`vibeui-dashboard-005-${group.title}`}
+                    defaultChecked={option.on}
+                  />
+                  {option.label}
+                  {option.count !== undefined ? (
+                    <span data-part="count">{option.count}</span>
+                  ) : null}
+                </label>
+              ))}
+            </form>
           </details>
         ))}
       </section>

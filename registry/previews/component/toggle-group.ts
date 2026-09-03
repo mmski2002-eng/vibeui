@@ -21,6 +21,7 @@ import { Togglegroup013 } from "@/registry/components/toggle-group/togglegroup-0
 import { Togglegroup014 } from "@/registry/components/toggle-group/togglegroup-014/togglegroup-014"
 import { Togglegroup015 } from "@/registry/components/toggle-group/togglegroup-015/togglegroup-015"
 import { Togglegroup016 } from "@/registry/components/toggle-group/togglegroup-016/togglegroup-016"
+import { Togglegroup017 } from "@/registry/components/toggle-group/togglegroup-017/togglegroup-017"
 
 export const PREVIEWS = {
   "togglegroup-001": Togglegroup001,
@@ -39,4 +40,5 @@ export const PREVIEWS = {
   "togglegroup-014": Togglegroup014,
   "togglegroup-015": Togglegroup015,
   "togglegroup-016": Togglegroup016,
+  "togglegroup-017": Togglegroup017,
 } satisfies Record<string, ComponentType<PreviewProps>>

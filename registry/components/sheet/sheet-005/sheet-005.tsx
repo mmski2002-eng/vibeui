@@ -52,7 +52,8 @@ min-width:min(100%,16rem);
 display:inline-block;font-family:var(--vibeui-sheet-005-font);color:var(--vibeui-sheet-005-fg);
 }
 [data-vibeui-block="sheet-005"] [data-part="trigger"]{
-appearance:none;cursor:pointer;height:2.25rem;padding:0 0.875rem;
+appearance:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;
+min-height:2.25rem;padding:0.3125rem 0.875rem;
 border:1px solid var(--vibeui-sheet-005-border);border-radius:0.625rem;
 background:var(--vibeui-sheet-005-bg);color:inherit;
 font:inherit;font-size:0.8125rem;font-weight:600;
@@ -109,7 +110,8 @@ padding:0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom,0px));
 border-top:1px solid var(--vibeui-sheet-005-border);background:var(--vibeui-sheet-005-bg);
 }
 [data-vibeui-block="sheet-005"] [data-part="confirm"]{
-appearance:none;border:0;cursor:pointer;width:100%;height:2.75rem;border-radius:0.75rem;
+appearance:none;border:0;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;
+width:100%;min-height:2.75rem;padding:0.375rem 0;border-radius:0.75rem;
 background:var(--vibeui-sheet-005-accent);color:var(--vibeui-sheet-005-on-accent);
 font:inherit;font-size:0.9375rem;font-weight:650;
 }

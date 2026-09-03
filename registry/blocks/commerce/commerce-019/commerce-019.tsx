@@ -67,6 +67,7 @@ background:var(--vibeui-commerce-019-bg);
 font-family:var(--vibeui-commerce-019-sans);color:var(--vibeui-commerce-019-fg);
 }
 [data-vibeui-block="commerce-019"] *{box-sizing:border-box}
+[data-vibeui-block="commerce-019"] form{display:contents}
 [data-vibeui-block="commerce-019"] [data-part="shell"]{padding:1rem;max-width:38rem;margin:0 auto}
 [data-vibeui-block="commerce-019"] h2{margin:0 0 0.25rem;font-size:1.125rem;font-weight:700;letter-spacing:-0.02em}
 [data-vibeui-block="commerce-019"] [data-part="product"]{margin:0 0 0.875rem;font-size:0.8125rem;color:var(--vibeui-commerce-019-muted)}
@@ -206,57 +207,59 @@ export function Commerce019({
           <h2>{title}</h2>
           <p data-part="product">{product}</p>
 
-          <div data-part="picker">
-            <fieldset data-part="modes">
-              <legend data-part="vh">{modeLabel}</legend>
-              <label data-part="mode">
-                <span data-part="head">
-                  <input type="radio" name="commerce-019-mode" />
-                  {onceLabel}
-                </span>
-                <span data-part="cost">
-                  {once} <span data-part="per">{perText}</span>
-                </span>
-              </label>
-              <label data-part="mode">
-                <span data-part="head">
-                  <input
-                    type="radio"
-                    name="commerce-019-mode"
-                    id="commerce-019-sub"
-                    defaultChecked
-                  />
-                  {regularLabel}
-                </span>
-                <span data-part="cost">
-                  {regular} <span data-part="per">{perText}</span>
-                </span>
-                <span data-part="tag">
-                  {savingText.replace("{percent}", String(discount))}
-                </span>
-              </label>
-            </fieldset>
-
-            <div data-part="plan">
-              <p data-part="cap">{cadenceLabel}</p>
-              <fieldset data-part="periods">
-                <legend data-part="vh">{periodLabel}</legend>
-                {periods.map((period, index) => (
-                  <label key={period.value} data-part="period">
+          <form>
+            <div data-part="picker">
+              <fieldset data-part="modes">
+                <legend data-part="vh">{modeLabel}</legend>
+                <label data-part="mode">
+                  <span data-part="head">
+                    <input type="radio" name="commerce-019-mode" />
+                    {onceLabel}
+                  </span>
+                  <span data-part="cost">
+                    {once} <span data-part="per">{perText}</span>
+                  </span>
+                </label>
+                <label data-part="mode">
+                  <span data-part="head">
                     <input
                       type="radio"
-                      name="commerce-019-period"
-                      value={period.value}
-                      defaultChecked={index === 1}
+                      name="commerce-019-mode"
+                      id="commerce-019-sub"
+                      defaultChecked
                     />
-                    {period.label}
-                    <span data-part="hint">{period.hint}</span>
-                  </label>
-                ))}
+                    {regularLabel}
+                  </span>
+                  <span data-part="cost">
+                    {regular} <span data-part="per">{perText}</span>
+                  </span>
+                  <span data-part="tag">
+                    {savingText.replace("{percent}", String(discount))}
+                  </span>
+                </label>
               </fieldset>
-              <p data-part="first">{first}</p>
+
+              <div data-part="plan">
+                <p data-part="cap">{cadenceLabel}</p>
+                <fieldset data-part="periods">
+                  <legend data-part="vh">{periodLabel}</legend>
+                  {periods.map((period, index) => (
+                    <label key={period.value} data-part="period">
+                      <input
+                        type="radio"
+                        name="commerce-019-period"
+                        value={period.value}
+                        defaultChecked={index === 1}
+                      />
+                      {period.label}
+                      <span data-part="hint">{period.hint}</span>
+                    </label>
+                  ))}
+                </fieldset>
+                <p data-part="first">{first}</p>
+              </div>
             </div>
-          </div>
+          </form>
 
           <button type="button" data-part="go">
             {cta} · {regular}

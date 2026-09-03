@@ -68,6 +68,7 @@ font-family:var(--vibeui-commerce-021-sans);color:var(--vibeui-commerce-021-fg);
 [data-vibeui-block="commerce-021"] h2{margin:0 0 0.25rem;font-size:1.125rem;font-weight:700;letter-spacing:-0.02em}
 [data-vibeui-block="commerce-021"] [data-part="lead"]{margin:0 0 0.875rem;font-size:0.8125rem;color:var(--vibeui-commerce-021-muted);line-height:1.45}
 [data-vibeui-block="commerce-021"] fieldset{margin:0;padding:0;border:0}
+[data-vibeui-block="commerce-021"] form{display:contents}
 [data-vibeui-block="commerce-021"] [data-part="ways"]{display:flex;flex-direction:column;gap:0.5rem}
 [data-vibeui-block="commerce-021"] [data-part="way"]{
 display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:0.625rem;align-items:start;
@@ -225,57 +226,61 @@ export function Commerce021({
           <h2>{title}</h2>
           <p data-part="lead">{lead}</p>
 
-          <fieldset data-part="ways">
-            <legend data-part="vh">{wayLabel}</legend>
-            {ways.map((way, index) => (
-              <label key={way.value} data-part="way">
-                <input
-                  type="radio"
-                  name="commerce-021-way"
-                  value={way.value}
-                  id={index === 0 ? "commerce-021-courier" : undefined}
-                  defaultChecked={index === 0}
-                />
-                <span>
-                  <span data-part="name">
-                    {way.label}
-                    {way.mark ? <span data-part="mark">{way.mark}</span> : null}
+          <form>
+            <fieldset data-part="ways">
+              <legend data-part="vh">{wayLabel}</legend>
+              {ways.map((way, index) => (
+                <label key={way.value} data-part="way">
+                  <input
+                    type="radio"
+                    name="commerce-021-way"
+                    value={way.value}
+                    id={index === 0 ? "commerce-021-courier" : undefined}
+                    defaultChecked={index === 0}
+                  />
+                  <span>
+                    <span data-part="name">
+                      {way.label}
+                      {way.mark ? (
+                        <span data-part="mark">{way.mark}</span>
+                      ) : null}
+                    </span>
+                    <span data-part="when">{way.when}</span>
+                    {way.note ? <span data-part="note">{way.note}</span> : null}
                   </span>
-                  <span data-part="when">{way.when}</span>
-                  {way.note ? <span data-part="note">{way.note}</span> : null}
-                </span>
-                <span data-part="price">{way.price}</span>
-              </label>
-            ))}
+                  <span data-part="price">{way.price}</span>
+                </label>
+              ))}
 
-            <div data-part="when-box">
-              <fieldset>
-                <legend data-part="vh">{dayLabel}</legend>
-                <div data-part="days">
-                  {days.map((day, index) => (
-                    <label key={day.date} data-part="day">
-                      <input
-                        type="radio"
-                        name="commerce-021-day"
-                        value={day.date}
-                        defaultChecked={index === 0}
-                      />
-                      {day.date}
-                      <span>{day.day}</span>
-                    </label>
-                  ))}
-                </div>
-              </fieldset>
-              <p data-part="slot">
-                <label htmlFor="commerce-021-slot">{slotLabel}</label>
-                <select id="commerce-021-slot" defaultValue={slots[1]}>
-                  {slots.map((slot) => (
-                    <option key={slot}>{slot}</option>
-                  ))}
-                </select>
-              </p>
-            </div>
-          </fieldset>
+              <div data-part="when-box">
+                <fieldset>
+                  <legend data-part="vh">{dayLabel}</legend>
+                  <div data-part="days">
+                    {days.map((day, index) => (
+                      <label key={day.date} data-part="day">
+                        <input
+                          type="radio"
+                          name="commerce-021-day"
+                          value={day.date}
+                          defaultChecked={index === 0}
+                        />
+                        {day.date}
+                        <span>{day.day}</span>
+                      </label>
+                    ))}
+                  </div>
+                </fieldset>
+                <p data-part="slot">
+                  <label htmlFor="commerce-021-slot">{slotLabel}</label>
+                  <select id="commerce-021-slot" defaultValue={slots[1]}>
+                    {slots.map((slot) => (
+                      <option key={slot}>{slot}</option>
+                    ))}
+                  </select>
+                </p>
+              </div>
+            </fieldset>
+          </form>
 
           <button type="button" data-part="go">
             {cta}

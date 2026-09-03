@@ -222,31 +222,33 @@ export function Chart021({
           {scaleText.more ?? SCALE_TEXT.more}
         </p>
         <p data-part="unit">{fillTemplate(unitLabel, { unit, max })}</p>
-        <table data-part="data">
-          <caption>
-            {title}, {unit}
-          </caption>
-          <thead>
-            <tr>
-              <th scope="col">{rowHeader}</th>
-              {hours.map((hour) => (
-                <th key={hour} scope="col">
-                  {fillTemplate(hourLabel, { hour })}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {days.map((day, dayIndex) => (
-              <tr key={day}>
-                <th scope="row">{day}</th>
-                {hours.map((hour, hourIndex) => (
-                  <td key={hour}>{matrix[dayIndex]?.[hourIndex] ?? 0}</td>
+        <div data-part="data">
+          <table>
+            <caption>
+              {title}, {unit}
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">{rowHeader}</th>
+                {hours.map((hour) => (
+                  <th key={hour} scope="col">
+                    {fillTemplate(hourLabel, { hour })}
+                  </th>
                 ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {days.map((day, dayIndex) => (
+                <tr key={day}>
+                  <th scope="row">{day}</th>
+                  {hours.map((hour, hourIndex) => (
+                    <td key={hour}>{matrix[dayIndex]?.[hourIndex] ?? 0}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </figure>
     </>
   )

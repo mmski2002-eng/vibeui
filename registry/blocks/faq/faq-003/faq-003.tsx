@@ -32,6 +32,10 @@ export type Faq003Props = {
 //
 // Тема приходит из color-scheme окружения через light-dark(): подложки у
 // секции по умолчанию нет, она темнеет вместе со страницей.
+//
+// Радиогруппа лежит в собственной <form>: одинаковое имя в двух блоках на
+// одной странице иначе объединило бы их в одну группу, и первый блок
+// остался бы без отмеченного варианта.
 const STYLES = `
 :where([data-vibeui-block="faq-003"]){
 --vibeui-faq-003-bg:transparent;
@@ -266,7 +270,7 @@ export function Faq003({
         <div data-part="shell">
           <h2 data-part="title">{title}</h2>
           <p data-part="text">{description}</p>
-          <div data-part="deck">
+          <form data-part="deck">
             {groups.map((group, index) => (
               <input
                 key={group.label}
@@ -301,7 +305,7 @@ export function Faq003({
                 </div>
               ))}
             </div>
-          </div>
+          </form>
         </div>
       </section>
     </>

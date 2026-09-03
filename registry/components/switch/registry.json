@@ -1987,13 +1987,17 @@
                 "description": "Anyone with the link will be able to open the project without an invite.",
                 "question": "Grant link access? Anyone who has the link will be able to open the project.",
                 "confirmText": "Grant access",
-                "cancelText": "Cancel"
+                "cancelText": "Cancel",
+                "defaultOpen": true
               }
             }
           }
         },
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "defaultOpen": true
+          }
         },
         "cardControls": [
           "label",

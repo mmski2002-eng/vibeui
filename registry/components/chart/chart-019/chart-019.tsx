@@ -234,25 +234,27 @@ export function Chart019({
         <p data-part="unit">
           {fillTemplate(axesLabel, { x: xLabel, y: yLabel })}
         </p>
-        <table data-part="data">
-          <caption>{title}</caption>
-          <thead>
-            <tr>
-              <th scope="col">{rowHeader}</th>
-              <th scope="col">{xLabel}</th>
-              <th scope="col">{yLabel}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {dots.map((dot) => (
-              <tr key={dot.label}>
-                <th scope="row">{dot.label}</th>
-                <td>{dot.x}</td>
-                <td>{dot.y}</td>
+        <div data-part="data">
+          <table>
+            <caption>{title}</caption>
+            <thead>
+              <tr>
+                <th scope="col">{rowHeader}</th>
+                <th scope="col">{xLabel}</th>
+                <th scope="col">{yLabel}</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {dots.map((dot) => (
+                <tr key={dot.label}>
+                  <th scope="row">{dot.label}</th>
+                  <td>{dot.x}</td>
+                  <td>{dot.y}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </figure>
     </>
   )

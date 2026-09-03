@@ -131,4 +131,24 @@ export const PREVIEWS = {
       (module) => module.Chart025,
     ),
   ),
+  "chart-026": dynamic(() =>
+    import("@/registry/components/chart/chart-026/chart-026").then(
+      (module) => module.Chart026,
+    ),
+  ),
+  "chart-027": dynamic(() =>
+    import("@/registry/components/chart/chart-027/chart-027").then(
+      (module) => module.Chart027,
+    ),
+  ),
+  "chart-028": dynamic(() =>
+    import("@/registry/components/chart/chart-028/chart-028").then(
+      (module) => module.Chart028,
+    ),
+  ),
+  "chart-029": dynamic(() =>
+    import("@/registry/components/chart/chart-029/chart-029").then(
+      (module) => module.Chart029,
+    ),
+  ),
 } satisfies PreviewMap

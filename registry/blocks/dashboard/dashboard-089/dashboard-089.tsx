@@ -39,6 +39,10 @@ export type Dashboard089Props = {
 // Тема берётся из color-scheme окружения через light-dark(): блок темнеет
 // вместе со страницей и не носит собственной тёмной темы. Бренд-цвет — тот,
 // что выбран в панели, поэтому подпись на нём остаётся белой в обеих темах.
+//
+// Радиогруппа лежит в собственной <form>: одинаковое имя в двух блоках на
+// одной странице иначе объединило бы их в одну группу, и первый блок
+// остался бы без отмеченного варианта.
 const STYLES = `
 :where([data-vibeui-block="dashboard-089"]){
 --vibeui-dashboard-089-bg:transparent;
@@ -272,7 +276,7 @@ export function Dashboard089({
           <div data-part="panel">
             <div data-part="group">
               <h3>{text.colorTitle}</h3>
-              <fieldset data-part="swatches">
+              <form data-part="swatches">
                 {swatches.map((swatch) => (
                   <label key={swatch.name} data-part="swatch">
                     <input
@@ -287,7 +291,7 @@ export function Dashboard089({
                     {swatch.name}
                   </label>
                 ))}
-              </fieldset>
+              </form>
               <p data-part="warn">{text.colorWarn}</p>
             </div>
 

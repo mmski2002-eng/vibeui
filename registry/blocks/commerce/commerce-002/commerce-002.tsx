@@ -69,6 +69,7 @@ background:var(--vibeui-commerce-002-bg);
 font-family:var(--vibeui-commerce-002-sans);color:var(--vibeui-commerce-002-fg);
 }
 [data-vibeui-block="commerce-002"] *{box-sizing:border-box}
+[data-vibeui-block="commerce-002"] form{display:contents}
 [data-vibeui-block="commerce-002"] [data-part="layout"]{display:grid;grid-template-columns:1fr;gap:1rem}
 @container (min-width: 40rem){
 [data-vibeui-block="commerce-002"] [data-part="layout"]{grid-template-columns:1fr 1fr;align-items:start}
@@ -256,23 +257,25 @@ export function Commerce002({
             </p>
             <p data-part="summary">{summary}</p>
 
-            <fieldset>
-              <legend>{sizeLabel}</legend>
-              <div data-part="sizes">
-                {sizes.map((size) => (
-                  <label key={size.value}>
-                    <input
-                      type="radio"
-                      name="vibeui-commerce-002-size"
-                      value={size.value}
-                      disabled={size.available === false}
-                      defaultChecked={size.value === "m"}
-                    />
-                    <span data-part="size">{size.label}</span>
-                  </label>
-                ))}
-              </div>
-            </fieldset>
+            <form>
+              <fieldset>
+                <legend>{sizeLabel}</legend>
+                <div data-part="sizes">
+                  {sizes.map((size) => (
+                    <label key={size.value}>
+                      <input
+                        type="radio"
+                        name="vibeui-commerce-002-size"
+                        value={size.value}
+                        disabled={size.available === false}
+                        defaultChecked={size.value === "m"}
+                      />
+                      <span data-part="size">{size.label}</span>
+                    </label>
+                  ))}
+                </div>
+              </fieldset>
+            </form>
 
             <div data-part="actions">
               <button type="button" data-part="buy">

@@ -30,6 +30,10 @@ import { Chart022 } from "@/registry/components/chart/chart-022/chart-022"
 import { Chart023 } from "@/registry/components/chart/chart-023/chart-023"
 import { Chart024 } from "@/registry/components/chart/chart-024/chart-024"
 import { Chart025 } from "@/registry/components/chart/chart-025/chart-025"
+import { Chart026 } from "@/registry/components/chart/chart-026/chart-026"
+import { Chart027 } from "@/registry/components/chart/chart-027/chart-027"
+import { Chart028 } from "@/registry/components/chart/chart-028/chart-028"
+import { Chart029 } from "@/registry/components/chart/chart-029/chart-029"
 
 export const PREVIEWS = {
   "chart-001": Chart001,
@@ -57,4 +61,8 @@ export const PREVIEWS = {
   "chart-023": Chart023,
   "chart-024": Chart024,
   "chart-025": Chart025,
+  "chart-026": Chart026,
+  "chart-027": Chart027,
+  "chart-028": Chart028,
+  "chart-029": Chart029,
 } satisfies Record<string, ComponentType<PreviewProps>>

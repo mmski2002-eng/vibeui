@@ -70,6 +70,7 @@ box-sizing:border-box;background:var(--vibeui-commerce-074-bg);
 color:var(--vibeui-commerce-074-fg);font-family:var(--vibeui-commerce-074-sans);
 }
 [data-vibeui-block="commerce-074"] *{box-sizing:border-box}
+[data-vibeui-block="commerce-074"] form{display:contents}
 [data-vibeui-block="commerce-074"] [data-part="shell"]{max-width:60rem;margin:0 auto;padding:1.25rem 1rem 2rem;display:grid;gap:1.25rem;grid-template-columns:1fr}
 [data-vibeui-block="commerce-074"] [data-part="kicker"]{margin:0;font-size:0.75rem;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--vibeui-commerce-074-accent)}
 [data-vibeui-block="commerce-074"] h2{margin:0.375rem 0 0.5rem;font-size:clamp(1.25rem,4cqi,1.875rem);line-height:1.12;letter-spacing:-0.02em}
@@ -251,93 +252,95 @@ export function Commerce074({
             <h2>{title}</h2>
             <p data-part="lead">{lead}</p>
 
-            <fieldset>
-              <legend>{valueLegend}</legend>
-              <div data-part="values">
-                {values.map((entry, index) => (
-                  <label
-                    key={entry.value}
-                    data-part="opt"
-                    htmlFor={`commerce-074-value-${entry.value}`}
-                  >
-                    <input
-                      type="radio"
-                      id={`commerce-074-value-${entry.value}`}
-                      name="commerce-074-value"
-                      defaultChecked={index === 1}
-                    />
-                    <span data-part="vface">
-                      <span data-part="amount">{entry.amount}</span>
-                      <span data-part="vhint">{entry.hint}</span>
-                    </span>
-                  </label>
-                ))}
-              </div>
-            </fieldset>
-
-            <fieldset>
-              <legend>{designLegend}</legend>
-              <div data-part="designs">
-                {designs.map((design, index) => (
-                  <label
-                    key={design.value}
-                    data-part="opt"
-                    htmlFor={`commerce-074-design-${design.value}`}
-                  >
-                    <input
-                      type="radio"
-                      id={`commerce-074-design-${design.value}`}
-                      name="commerce-074-design"
-                      defaultChecked={index === 0}
-                    />
-                    <span
-                      data-part="dface"
-                      style={
-                        {
-                          "--vibeui-commerce-074-hue": design.hue,
-                        } as CSSProperties
-                      }
+            <form>
+              <fieldset>
+                <legend>{valueLegend}</legend>
+                <div data-part="values">
+                  {values.map((entry, index) => (
+                    <label
+                      key={entry.value}
+                      data-part="opt"
+                      htmlFor={`commerce-074-value-${entry.value}`}
                     >
-                      <span data-part="swatch" aria-hidden="true" />
-                      {design.label}
-                    </span>
-                  </label>
-                ))}
-              </div>
-            </fieldset>
+                      <input
+                        type="radio"
+                        id={`commerce-074-value-${entry.value}`}
+                        name="commerce-074-value"
+                        defaultChecked={index === 1}
+                      />
+                      <span data-part="vface">
+                        <span data-part="amount">{entry.amount}</span>
+                        <span data-part="vhint">{entry.hint}</span>
+                      </span>
+                    </label>
+                  ))}
+                </div>
+              </fieldset>
 
-            <fieldset>
-              <legend>{deliveryLegend}</legend>
-              <div data-part="fields">
-                <label data-part="field" htmlFor="commerce-074-to">
-                  <span>{toLabel}</span>
-                  <input
-                    id="commerce-074-to"
-                    name="to"
-                    type="email"
-                    placeholder={toPlaceholder}
-                  />
-                </label>
-                <label data-part="field" htmlFor="commerce-074-when">
-                  <span>{whenLabel}</span>
-                  <input id="commerce-074-when" name="when" type="date" />
-                </label>
-                <label
-                  data-part="field"
-                  data-wide="true"
-                  htmlFor="commerce-074-message"
-                >
-                  <span>{messageLabel}</span>
-                  <textarea
-                    id="commerce-074-message"
-                    name="message"
-                    rows={3}
-                    maxLength={200}
-                    placeholder={messagePlaceholder}
-                  />
-                </label>
-              </div>
-            </fieldset>
+              <fieldset>
+                <legend>{designLegend}</legend>
+                <div data-part="designs">
+                  {designs.map((design, index) => (
+                    <label
+                      key={design.value}
+                      data-part="opt"
+                      htmlFor={`commerce-074-design-${design.value}`}
+                    >
+                      <input
+                        type="radio"
+                        id={`commerce-074-design-${design.value}`}
+                        name="commerce-074-design"
+                        defaultChecked={index === 0}
+                      />
+                      <span
+                        data-part="dface"
+                        style={
+                          {
+                            "--vibeui-commerce-074-hue": design.hue,
+                          } as CSSProperties
+                        }
+                      >
+                        <span data-part="swatch" aria-hidden="true" />
+                        {design.label}
+                      </span>
+                    </label>
+                  ))}
+                </div>
+              </fieldset>
+
+              <fieldset>
+                <legend>{deliveryLegend}</legend>
+                <div data-part="fields">
+                  <label data-part="field" htmlFor="commerce-074-to">
+                    <span>{toLabel}</span>
+                    <input
+                      id="commerce-074-to"
+                      name="to"
+                      type="email"
+                      placeholder={toPlaceholder}
+                    />
+                  </label>
+                  <label data-part="field" htmlFor="commerce-074-when">
+                    <span>{whenLabel}</span>
+                    <input id="commerce-074-when" name="when" type="date" />
+                  </label>
+                  <label
+                    data-part="field"
+                    data-wide="true"
+                    htmlFor="commerce-074-message"
+                  >
+                    <span>{messageLabel}</span>
+                    <textarea
+                      id="commerce-074-message"
+                      name="message"
+                      rows={3}
+                      maxLength={200}
+                      placeholder={messagePlaceholder}
+                    />
+                  </label>
+                </div>
+              </fieldset>
+            </form>
           </div>
 
           <aside data-part="panel">

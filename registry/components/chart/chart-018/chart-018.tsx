@@ -259,20 +259,22 @@ export function Chart018({
           </li>
         </ul>
         <p data-part="unit">{fillTemplate(unitLabel, { unit })}</p>
-        <table data-part="data">
-          <caption>
-            {title}, {unit}
-          </caption>
-          <tbody>
-            {bars.map((bar) => (
-              <tr key={bar.step.label}>
-                <th scope="row">{bar.step.label}</th>
-                <td>{bar.step.value}</td>
-                <td>{fillTemplate(runningLabel, { total: bar.to })}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div data-part="data">
+          <table>
+            <caption>
+              {title}, {unit}
+            </caption>
+            <tbody>
+              {bars.map((bar) => (
+                <tr key={bar.step.label}>
+                  <th scope="row">{bar.step.label}</th>
+                  <td>{bar.step.value}</td>
+                  <td>{fillTemplate(runningLabel, { total: bar.to })}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </figure>
     </>
   )

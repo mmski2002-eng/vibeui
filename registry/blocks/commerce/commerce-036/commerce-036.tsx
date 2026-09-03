@@ -77,6 +77,7 @@ border-radius:var(--vibeui-commerce-036-radius);
 color:var(--vibeui-commerce-036-fg);font-family:var(--vibeui-commerce-036-sans);
 }
 [data-vibeui-block="commerce-036"] *{box-sizing:border-box}
+[data-vibeui-block="commerce-036"] form{display:contents}
 [data-vibeui-block="commerce-036"] [data-part="shell"]{max-width:52rem;margin:0 auto;padding:1.25rem 1rem}
 [data-vibeui-block="commerce-036"] h2{margin:0 0 0.25rem;font-size:1.1875rem;font-weight:700;letter-spacing:-0.02em}
 [data-vibeui-block="commerce-036"] [data-part="product"]{margin:0 0 1rem;font-size:0.875rem;color:var(--vibeui-commerce-036-muted)}
@@ -288,25 +289,27 @@ export function Commerce036({
 
           <div data-part="grid">
             <div>
-              <fieldset>
-                <legend>{periodsLegend}</legend>
-                <div data-part="periods">
-                  {periods.map((item) => (
-                    <label data-part="period" key={item.value}>
-                      <input
-                        type="radio"
-                        name="commerce-036-period"
-                        value={item.value}
-                        defaultChecked={item.value === period}
-                      />
-                      <span data-part="face">
-                        <b>{item.label}</b>
-                        <span>{item.discount}</span>
-                      </span>
-                    </label>
-                  ))}
-                </div>
-              </fieldset>
+              <form>
+                <fieldset>
+                  <legend>{periodsLegend}</legend>
+                  <div data-part="periods">
+                    {periods.map((item) => (
+                      <label data-part="period" key={item.value}>
+                        <input
+                          type="radio"
+                          name="commerce-036-period"
+                          value={item.value}
+                          defaultChecked={item.value === period}
+                        />
+                        <span data-part="face">
+                          <b>{item.label}</b>
+                          <span>{item.discount}</span>
+                        </span>
+                      </label>
+                    ))}
+                  </div>
+                </fieldset>
+              </form>
 
               <div data-part="cal">
                 <p data-part="month">{monthLabel}</p>

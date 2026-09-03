@@ -219,19 +219,21 @@ export function Chart010({
           })}
         </svg>
         <p data-part="unit">{fillTemplate(scaleLabel, { unit, top })}</p>
-        <table data-part="data">
-          <caption>
-            {title}, {unit}
-          </caption>
-          <tbody>
-            {columns.map((column) => (
-              <tr key={column.label}>
-                <th scope="row">{column.label}</th>
-                <td>{column.value}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div data-part="data">
+          <table>
+            <caption>
+              {title}, {unit}
+            </caption>
+            <tbody>
+              {columns.map((column) => (
+                <tr key={column.label}>
+                  <th scope="row">{column.label}</th>
+                  <td>{column.value}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </figure>
     </>
   )

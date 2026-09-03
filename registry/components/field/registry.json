@@ -1568,20 +1568,6 @@
             "maxLength": 40
           },
           {
-            "prop": "roleLabel",
-            "label": "Подпись роли",
-            "type": "text",
-            "default": "Роль в команде",
-            "maxLength": 40
-          },
-          {
-            "prop": "cityLabel",
-            "label": "Подпись города",
-            "type": "text",
-            "default": "Город",
-            "maxLength": 40
-          },
-          {
             "prop": "labelWidth",
             "label": "Ширина подписей",
             "type": "text",
@@ -1648,14 +1634,6 @@
                 "label": "Value",
                 "default": "Anna Kuznetsova"
               },
-              "roleLabel": {
-                "label": "Role label",
-                "default": "Team role"
-              },
-              "cityLabel": {
-                "label": "City label",
-                "default": "City"
-              },
               "labelWidth": {
                 "label": "Label column width",
                 "default": "9rem"
@@ -1687,6 +1665,11 @@
           }
         },
         "cardControls": [
+          "label",
+          "hint",
+          "defaultValue",
+          "labelWidth",
+          "accent",
           "background"
         ]
       }
@@ -1774,27 +1757,6 @@
             "maxLength": 90
           },
           {
-            "prop": "dayLabel",
-            "label": "Подпись дня",
-            "type": "text",
-            "default": "День",
-            "maxLength": 20
-          },
-          {
-            "prop": "monthLabel",
-            "label": "Подпись месяца",
-            "type": "text",
-            "default": "Месяц",
-            "maxLength": 20
-          },
-          {
-            "prop": "yearLabel",
-            "label": "Подпись года",
-            "type": "text",
-            "default": "Год",
-            "maxLength": 20
-          },
-          {
             "prop": "accent",
             "label": "Акцент",
             "type": "color",
@@ -1854,18 +1816,6 @@
                 "label": "Hint",
                 "default": "Used to confirm you are of age. Never shown publicly."
               },
-              "dayLabel": {
-                "label": "Day label",
-                "default": "Day"
-              },
-              "monthLabel": {
-                "label": "Month label",
-                "default": "Month"
-              },
-              "yearLabel": {
-                "label": "Year label",
-                "default": "Year"
-              },
               "accent": {
                 "label": "Accent"
               },
@@ -1903,6 +1853,10 @@
           }
         },
         "cardControls": [
+          "legend",
+          "error",
+          "hint",
+          "accent",
           "background"
         ]
       }

@@ -2732,6 +2732,174 @@
           "label"
         ]
       }
+    },
+    {
+      "name": "togglegroup-017",
+      "type": "registry:component",
+      "title": "Сегмент с бегунком",
+      "description": "Сегмент одиночного выбора, у которого выбранное состояние переезжает, а не перекрашивается: движение плашки показывает, откуда и куда ушёл выбор.",
+      "categories": [
+        "toggle-group"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "togglegroup-017/togglegroup-017.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/togglegroup-017.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-togglegroup-017-*. Клиентский: выбор держит useState. Плашка одна на всю группу и двигается translate'ом на долю ширины — анимация идёт на композиторе и не пересчитывает раскладку. Ширина сегмента задана как доля от числа кнопок через переменную --vibeui-togglegroup-017-count, а не измеряется скриптом, поэтому серверная разметка сразу приходит с плашкой на своём месте и она не прыгает при гидрации. Кнопки лежат над плашкой по z-index, цвет подписи переключается по aria-pressed. Стрелки водят фокус внутри группы, Home и End бросают на края. При prefers-reduced-motion переезд выключается, а выбор остаётся видимым по цвету подписи.",
+      "meta": {
+        "tags": [
+          "toggle-group",
+          "segmented",
+          "animation",
+          "filter"
+        ],
+        "ai": {
+          "export": "Togglegroup017",
+          "usage": "<Togglegroup017\n  label=\"Период\"\n  defaultValue=\"week\"\n  options={[{ value: \"day\", label: \"День\" }, { value: \"week\", label: \"Неделя\" }]}\n  onChange={(value) => console.log(value)}\n/>",
+          "summary": "Сегментированный переключатель, где плашка выбранного переезжает между кнопками. Один файл, ноль зависимостей, клавиатура стрелками.",
+          "preserve": [
+            "локальную палитру --vibeui-togglegroup-017-*: компонент обязан выглядеть одинаково в любом проекте",
+            "одну плашку на группу вместо перекраски кнопок — именно движение показывает переход выбора",
+            "ширину сегмента долей от числа кнопок: измерение скриптом заставило бы плашку прыгать при гидрации",
+            "aria-pressed на кнопках: без него состояние выбора не доходит до экранного диктора",
+            "хождение стрелками с Home и End — в группе из пяти кнопок Tab до дальней слишком долог",
+            "ветку prefers-reduced-motion: переезд выключается, а цвет подписи оставляет выбор видимым",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "варианты через options: value и label у каждого",
+            "начальный выбор через defaultValue и реакцию через onChange",
+            "заголовок группы через label и строку под ней через hintTemplate с плейсхолдером {label}",
+            "цвет плашки через accent — цвет подписи на ней считается сам",
+            "подложку компонента через background; пусто означает фон страницы",
+            "скорость переезда — значение .22s в transition плашки"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Разумный предел — от двух до пяти вариантов: дальше подписи в один ряд перестают помещаться, и нужен обычный список.",
+            "Компонент не хранит выбор вне себя: для внешнего управления снимите useState и передавайте value сверху.",
+            "Плашка позиционируется от рабочей области группы, поэтому её inset и padding группы обязаны совпадать.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Период",
+            "maxLength": 24
+          },
+          {
+            "prop": "defaultValue",
+            "label": "Выбрано",
+            "type": "select",
+            "default": "week",
+            "options": [
+              "day",
+              "week",
+              "month"
+            ]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Sliding Segmented Control",
+            "description": "A single-choice segmented control where the selected state travels rather than repaints: the thumb's movement shows where the choice came from and where it went.",
+            "docs": "One file, zero dependencies, the --vibeui-togglegroup-017-* palette. A client component: useState holds the choice. One thumb serves the whole group and moves by translate across a fraction of the width — the animation runs on the compositor and never reflows the layout. The segment width is a fraction of the button count through the --vibeui-togglegroup-017-count variable rather than measured by script, so the server markup already carries the thumb in place and it does not jump on hydration. The buttons sit above the thumb by z-index and the label colour switches on aria-pressed. Arrow keys move focus inside the group, Home and End jump to the edges. Under prefers-reduced-motion the travel is switched off while the label colour keeps the choice visible.",
+            "ai": {
+              "summary": "A segmented control where the thumb of the selected option travels between buttons. One file, zero dependencies, arrow-key navigation.",
+              "preserve": [
+                "the local --vibeui-togglegroup-017-* palette: the component must look the same in any project",
+                "one thumb for the group instead of repainting buttons — the movement is what shows the choice moving",
+                "the segment width as a fraction of the button count: measuring by script would make the thumb jump on hydration",
+                "aria-pressed on the buttons: without it the selected state never reaches a screen reader",
+                "arrow-key navigation with Home and End — in a group of five, tabbing to the far button takes too long",
+                "the prefers-reduced-motion branch: the travel is off while the label colour keeps the choice visible",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "the options through options: value and label on each",
+                "the initial choice through defaultValue and the reaction through onChange",
+                "the group heading through label and the line under it through hintTemplate with the {label} placeholder",
+                "the thumb colour through accent — the label colour on it is derived",
+                "the component surface through background; empty means the page background",
+                "the travel speed — the .22s value in the thumb's transition"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Two to five options is the sane range: past that the labels stop fitting in one row and a plain list serves better.",
+                "The component keeps the choice to itself: for external control drop useState and take the value from above.",
+                "The thumb is positioned against the group's working area, so its inset and the group's padding have to match.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Togglegroup017\n  label=\"Range\"\n  defaultValue=\"week\"\n  options={[{ value: \"day\", label: \"Day\" }, { value: \"week\", label: \"Week\" }]}\n  onChange={(value) => console.log(value)}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Heading",
+                "default": "Range"
+              },
+              "defaultValue": {
+                "label": "Selected"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "Range",
+                "hintTemplate": "Selected: {label}.",
+                "defaultValue": "week",
+                "options": [
+                  {
+                    "value": "day",
+                    "label": "Day"
+                  },
+                  {
+                    "value": "week",
+                    "label": "Week"
+                  },
+                  {
+                    "value": "month",
+                    "label": "Month"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "label",
+          "defaultValue",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "auto"
+        }
+      }
     }
   ]
 }

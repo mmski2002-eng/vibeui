@@ -68,6 +68,7 @@ box-sizing:border-box;background:var(--vibeui-commerce-056-bg);
 color:var(--vibeui-commerce-056-fg);font-family:var(--vibeui-commerce-056-sans);
 }
 [data-vibeui-block="commerce-056"] *{box-sizing:border-box}
+[data-vibeui-block="commerce-056"] form{display:contents}
 [data-vibeui-block="commerce-056"] [data-part="shell"]{max-width:60rem;margin:0 auto;padding:1.25rem 1rem 2rem}
 [data-vibeui-block="commerce-056"] [data-part="kind"]{margin:0;font-size:0.75rem;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--vibeui-commerce-056-accent)}
 [data-vibeui-block="commerce-056"] h2{margin:0.375rem 0 0.5rem;font-size:clamp(1.375rem,4.5cqi,2rem);line-height:1.1;letter-spacing:-0.025em}
@@ -257,30 +258,32 @@ export function Commerce056({
           <h2>{title}</h2>
           <p data-part="lead">{lead}</p>
 
-          <fieldset>
-            <legend>{legend}</legend>
-            <div data-part="picks">
-              {licenses.map((license, index) => (
-                <label
-                  key={license.value}
-                  data-part="pick"
-                  htmlFor={`commerce-056-${license.value}`}
-                >
-                  <input
-                    type="radio"
-                    id={`commerce-056-${license.value}`}
-                    name="commerce-056-license"
-                    defaultChecked={index === 0}
-                  />
-                  <span data-part="face">
-                    <span data-part="name">{license.label}</span>
-                    <span data-part="price">{license.price}</span>
-                    <span data-part="audience">{license.audience}</span>
-                  </span>
-                </label>
-              ))}
-            </div>
-          </fieldset>
+          <form>
+            <fieldset>
+              <legend>{legend}</legend>
+              <div data-part="picks">
+                {licenses.map((license, index) => (
+                  <label
+                    key={license.value}
+                    data-part="pick"
+                    htmlFor={`commerce-056-${license.value}`}
+                  >
+                    <input
+                      type="radio"
+                      id={`commerce-056-${license.value}`}
+                      name="commerce-056-license"
+                      defaultChecked={index === 0}
+                    />
+                    <span data-part="face">
+                      <span data-part="name">{license.label}</span>
+                      <span data-part="price">{license.price}</span>
+                      <span data-part="audience">{license.audience}</span>
+                    </span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+          </form>
 
           {licenses.map((license) => (
             <div

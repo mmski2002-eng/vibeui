@@ -66,6 +66,7 @@ box-sizing:border-box;background:var(--vibeui-commerce-057-bg);
 color:var(--vibeui-commerce-057-fg);font-family:var(--vibeui-commerce-057-sans);
 }
 [data-vibeui-block="commerce-057"] *{box-sizing:border-box}
+[data-vibeui-block="commerce-057"] form{display:contents}
 [data-vibeui-block="commerce-057"] [data-part="shell"]{max-width:58rem;margin:0 auto;padding:1.25rem 1rem 2rem;display:grid;gap:1.25rem;grid-template-columns:1fr}
 [data-vibeui-block="commerce-057"] [data-part="service"]{margin:0;font-size:0.75rem;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--vibeui-commerce-057-accent)}
 [data-vibeui-block="commerce-057"] h2{margin:0.375rem 0 0.5rem;font-size:clamp(1.25rem,4cqi,1.875rem);line-height:1.12;letter-spacing:-0.02em}
@@ -286,60 +287,62 @@ export function Commerce057({
               </li>
             </ul>
 
-            <fieldset>
-              <legend>{dayLegend}</legend>
-              <div data-part="days">
-                {days.map((day, index) => (
-                  <label
-                    key={day.value}
-                    data-part="day"
-                    htmlFor={`commerce-057-day-${day.value}`}
-                  >
-                    <input
-                      type="radio"
-                      id={`commerce-057-day-${day.value}`}
-                      name="commerce-057-day"
-                      defaultChecked={index === 0}
-                    />
-                    <span data-part="dface">
-                      <span data-part="weekday">{day.weekday}</span>
-                      <span data-part="date">{day.date}</span>
-                    </span>
-                  </label>
-                ))}
-              </div>
-            </fieldset>
-
-            <fieldset>
-              <legend>{timeLegend}</legend>
-              {days.map((day) => (
-                <div key={day.value} data-part="slots" data-for={day.value}>
-                  <div data-part="grid">
-                    {day.slots.map((slot) => (
-                      <label
-                        key={slot.at}
-                        data-part="slot"
-                        htmlFor={`commerce-057-slot-${day.value}-${slot.at}`}
-                      >
-                        <input
-                          type="radio"
-                          id={`commerce-057-slot-${day.value}-${slot.at}`}
-                          name="commerce-057-slot"
-                          disabled={slot.taken}
-                        />
-                        <span data-part="sface">
-                          {slot.at}
-                          {slot.taken ? (
-                            <span data-part="sr"> {takenSrLabel}</span>
-                          ) : null}
-                        </span>
-                      </label>
-                    ))}
-                  </div>
+            <form>
+              <fieldset>
+                <legend>{dayLegend}</legend>
+                <div data-part="days">
+                  {days.map((day, index) => (
+                    <label
+                      key={day.value}
+                      data-part="day"
+                      htmlFor={`commerce-057-day-${day.value}`}
+                    >
+                      <input
+                        type="radio"
+                        id={`commerce-057-day-${day.value}`}
+                        name="commerce-057-day"
+                        defaultChecked={index === 0}
+                      />
+                      <span data-part="dface">
+                        <span data-part="weekday">{day.weekday}</span>
+                        <span data-part="date">{day.date}</span>
+                      </span>
+                    </label>
+                  ))}
                 </div>
-              ))}
-              <p data-part="taken">{takenHint}</p>
-            </fieldset>
+              </fieldset>
+
+              <fieldset>
+                <legend>{timeLegend}</legend>
+                {days.map((day) => (
+                  <div key={day.value} data-part="slots" data-for={day.value}>
+                    <div data-part="grid">
+                      {day.slots.map((slot) => (
+                        <label
+                          key={slot.at}
+                          data-part="slot"
+                          htmlFor={`commerce-057-slot-${day.value}-${slot.at}`}
+                        >
+                          <input
+                            type="radio"
+                            id={`commerce-057-slot-${day.value}-${slot.at}`}
+                            name="commerce-057-slot"
+                            disabled={slot.taken}
+                          />
+                          <span data-part="sface">
+                            {slot.at}
+                            {slot.taken ? (
+                              <span data-part="sr"> {takenSrLabel}</span>
+                            ) : null}
+                          </span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+                <p data-part="taken">{takenHint}</p>
+              </fieldset>
+            </form>
           </div>
 
           <aside data-part="panel">

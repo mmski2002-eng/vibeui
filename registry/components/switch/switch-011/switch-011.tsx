@@ -1,6 +1,6 @@
 "use client"
 
-import { useId, useRef, useState } from "react"
+import { useEffect, useId, useRef, useState } from "react"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Switch011Props = Omit<
@@ -13,6 +13,8 @@ export type Switch011Props = Omit<
   question?: string
   confirmText?: string
   cancelText?: string
+  /** Открыть диалог подтверждения сразу и без модального режима: он остаётся внутри блока. */
+  defaultOpen?: boolean
   /** Пусто — подложки нет, карточка держится рамкой на фоне страницы. */
   background?: string
   accent?: string
@@ -72,7 +74,7 @@ transition:transform .18s cubic-bezier(.32,.72,0,1);
 /* Нативный <dialog> вместо встроенной панели: настоящая модальная ловушка
    фокуса и закрытие по Esc достаются даром, без ручной разметки. */
 [data-vibeui-block="switch-011"] [data-part="dialog"]{
-box-sizing:border-box;width:min(22rem,calc(100vw - 2rem));
+margin:auto;box-sizing:border-box;width:min(22rem,calc(100vw - 2rem));
 padding:1.125rem;border:1px solid var(--vibeui-switch-011-border);border-radius:0.875rem;
 background:var(--vibeui-switch-011-panel);color:var(--vibeui-switch-011-fg);
 font-family:var(--vibeui-switch-011-font);
@@ -104,6 +106,13 @@ background:var(--vibeui-switch-011-panel);color:inherit;
 }
 [data-vibeui-block="switch-011"] button:hover{filter:brightness(.96)}
 [data-vibeui-block="switch-011"] button:focus-visible{outline:2px solid var(--vibeui-switch-011-accent);outline-offset:2px}
+/* Немодальный показ: диалог остаётся внутри блока, а не уходит в верхний
+   слой поверх страницы. Так его показывают на витрине и в документации. */
+[data-vibeui-block="switch-011"]:has(dialog:not(:modal)[open]){
+display:block;position:relative;width:100%;min-height:22rem;
+}
+[data-vibeui-block="switch-011"] dialog:not(:modal){position:absolute;max-width:100%;max-height:100%;z-index:1}
+[data-vibeui-block="switch-011"]:has(dialog:not(:modal)[open]) [data-part="row"]{display:none}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="switch-011"] *{animation:none!important;transition:none!important}}
 `
 
@@ -140,6 +149,7 @@ export function Switch011({
   question = "Открыть доступ по ссылке? Проект смогут увидеть все, у кого она окажется.",
   confirmText = "Открыть доступ",
   cancelText = "Отмена",
+  defaultOpen = false,
   background = "",
   accent,
   className,
@@ -147,8 +157,28 @@ export function Switch011({
   ...props
 }: Switch011Props) {
   const id = useId()
-  const [checked, setChecked] = useState(false)
+  const [checked, setChecked] = useState(defaultOpen)
   const dialogRef = useRef<HTMLDialogElement>(null)
+
+  useEffect(() => {
+    if (!defaultOpen) {
+      return
+    }
+
+    const active = document.activeElement
+
+    // show() вместо showModal(): немодальный диалог живёт внутри своего блока
+    // и не уводит страницу в верхний слой. Витрине нужен именно такой.
+    dialogRef.current?.show()
+
+    // show() уводит фокус внутрь диалога. Для немодального показа это лишнее:
+    // страница не должна прыгать к панели просто потому, что та открыта.
+    if (active instanceof HTMLElement && active !== document.body) {
+      active.focus()
+    } else if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur()
+    }
+  }, [defaultOpen])
 
   const palette = {
     ...(accent ? { "--vibeui-switch-011-accent": accent } : null),

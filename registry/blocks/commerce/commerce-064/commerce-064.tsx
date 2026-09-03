@@ -68,6 +68,7 @@ box-sizing:border-box;background:var(--vibeui-commerce-064-bg);
 color:var(--vibeui-commerce-064-fg);font-family:var(--vibeui-commerce-064-sans);
 }
 [data-vibeui-block="commerce-064"] *{box-sizing:border-box}
+[data-vibeui-block="commerce-064"] form{display:contents}
 [data-vibeui-block="commerce-064"] [data-part="shell"]{max-width:44rem;margin:0 auto;padding:1.5rem 1rem 2rem}
 [data-vibeui-block="commerce-064"] [data-part="kicker"]{margin:0;font-size:0.6875rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--vibeui-commerce-064-accent)}
 [data-vibeui-block="commerce-064"] h2{margin:0.375rem 0 1rem;font-size:1.25rem;font-weight:700;letter-spacing:-0.02em}
@@ -259,30 +260,32 @@ export function Commerce064({
             </span>
           </div>
 
-          <fieldset>
-            <legend>{networkLegend}</legend>
-            <div data-part="nets">
-              {networks.map((network, index) => (
-                <div key={network.value} data-part="net">
-                  <input
-                    type="radio"
-                    id={`commerce-064-${network.value}`}
-                    name="commerce-064-network"
-                    defaultChecked={index === 0}
-                  />
-                  <label
-                    data-part="nface"
-                    htmlFor={`commerce-064-${network.value}`}
-                  >
-                    <span data-part="nname">{network.label}</span>
-                    <span data-part="nfee">
-                      {network.fee} · {network.time}
-                    </span>
-                  </label>
-                </div>
-              ))}
-            </div>
-          </fieldset>
+          <form>
+            <fieldset>
+              <legend>{networkLegend}</legend>
+              <div data-part="nets">
+                {networks.map((network, index) => (
+                  <div key={network.value} data-part="net">
+                    <input
+                      type="radio"
+                      id={`commerce-064-${network.value}`}
+                      name="commerce-064-network"
+                      defaultChecked={index === 0}
+                    />
+                    <label
+                      data-part="nface"
+                      htmlFor={`commerce-064-${network.value}`}
+                    >
+                      <span data-part="nname">{network.label}</span>
+                      <span data-part="nfee">
+                        {network.fee} · {network.time}
+                      </span>
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </fieldset>
+          </form>
 
           <div data-part="pay">
             <div data-part="qr" aria-hidden="true">

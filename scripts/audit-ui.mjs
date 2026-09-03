@@ -63,6 +63,20 @@ const CODE_RULES = [
           continue
         }
 
+        // Квадрат — это иконка или кнопка-значок: подписи внутри нет, и
+        // фиксированный размер там как раз обязателен.
+        const width = /[^-]width:\s*([\d.]+)rem/.exec(rule)
+        const height = /[^-]height:\s*([\d.]+)rem/.exec(rule)
+
+        if (
+          width &&
+          height &&
+          Math.abs(Number(width[1]) - Number(height[1])) <
+            Number(height[1]) * 0.25
+        ) {
+          continue
+        }
+
         if (/[^-]height:\s*\d/.test(rule) && !/min-height/.test(rule)) {
           return "у кнопки с настраиваемой подписью стоит height: длинный перевод вылезет за пределы"
         }
@@ -75,11 +89,22 @@ const CODE_RULES = [
     id: "hover-only",
     title: "элемент управления живёт только на наведении",
     check(source) {
-      if (!/opacity:\s*0;/.test(source)) {
+      // Прячется именно часть, а не блок в целом: opacity:0 на корне обычно
+      // означает управляемую видимость вроде кнопки «наверх», и к наведению
+      // отношения не имеет.
+      const hidden = new Set(
+        [...source.matchAll(/\[data-part="([a-z-]+)"\][^{]*\{[^}]*opacity:\s*0[;}]/g)].map(
+          (match) => match[1],
+        ),
+      )
+
+      if (hidden.size === 0) {
         return null
       }
 
-      const hoverShows = /:hover\s+(button|\[data-part)/.test(source)
+      const hoverShows = [...hidden].some((part) =>
+        new RegExp(`:hover[^{]*\\[data-part="${part}"\\]`).test(source),
+      )
 
       if (!hoverShows) {
         return null
@@ -88,8 +113,10 @@ const CODE_RULES = [
       // Ветка по фокусу закрывает вопрос не хуже @media (hover:none): тап по
       // фокусируемому триггеру даёт фокус, и подсказка появляется. Так живут
       // все tooltip и hover-card — для них наведение и есть суть компонента.
-      const focusShows = /:focus(-within|-visible)?\s+(button|\[data-part)/.test(
-        source,
+      const focusShows = [...hidden].some((part) =>
+        new RegExp(`:focus(-within|-visible)?[^{]*\\[data-part="${part}"\\]`).test(
+          source,
+        ),
       )
 
       if (focusShows) {

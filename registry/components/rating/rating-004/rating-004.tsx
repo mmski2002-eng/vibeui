@@ -24,6 +24,10 @@ export type Rating004Props = Omit<
 //
 // Тема берётся из color-scheme окружения через light-dark(): компонент
 // темнеет вместе со страницей и не носит собственной тёмной темы.
+//
+// Радиокнопки лежат в собственной <form data-part="faces">: одинаковое имя
+// в двух блоках на одной странице иначе объединило бы их в одну группу, и
+// первый блок остался бы без отмеченной оценки.
 const STYLES = `
 :where([data-vibeui-block="rating-004"]){
 --vibeui-rating-004-surface:transparent;
@@ -59,7 +63,8 @@ clear:both;display:flex;justify-content:space-between;gap:0.25rem;
 flex:1 1 0;display:grid;place-items:center;cursor:pointer;
 height:3rem;border-radius:0.625rem;
 }
-[data-vibeui-block="rating-004"] label:hover{background:var(--vibeui-rating-004-hover)}
+[data-vibeui-block="rating-004"] label:hover,
+[data-vibeui-block="rating-004"] label:focus-within{background:var(--vibeui-rating-004-hover)}
 [data-vibeui-block="rating-004"] [data-part="face"]{
 font-size:1.75rem;line-height:1;
 filter:grayscale(1);opacity:.45;
@@ -69,7 +74,9 @@ transition:filter .16s ease,opacity .16s ease,transform .16s ease;
 [data-vibeui-block="rating-004"] label:has(input:checked) [data-part="face"]{
 filter:none;opacity:1;transform:scale(1.2);
 }
-[data-vibeui-block="rating-004"] label:hover [data-part="face"]{filter:none;opacity:.8}
+[data-vibeui-block="rating-004"] label:hover [data-part="face"],
+/* Та же расцветка на фокусе: без мыши превью работает клавиатурой. */
+[data-vibeui-block="rating-004"] label:focus-within [data-part="face"]{filter:none;opacity:.8}
 [data-vibeui-block="rating-004"] label:has(input:focus-visible){outline:2px solid var(--vibeui-rating-004-accent);outline-offset:2px}
 /* Подпись без JS: видна та строка, чей value отмечен. */
 [data-vibeui-block="rating-004"] [data-part="captions"]{min-height:1.125rem}
@@ -155,7 +162,7 @@ export function Rating004({
         style={palette}
       >
         <legend>{legend}</legend>
-        <div data-part="faces">
+        <form data-part="faces">
           {faces.map((item, index) => (
             <label key={item.text} aria-label={item.text}>
               <input
@@ -169,7 +176,7 @@ export function Rating004({
               </span>
             </label>
           ))}
-        </div>
+        </form>
         <div data-part="captions" aria-live="polite">
           {faces.map((item, index) => (
             <p key={item.text} data-part="caption" data-value={index + 1}>

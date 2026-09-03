@@ -44,7 +44,8 @@ font-family:var(--vibeui-alertdialog-001-font);color:var(--vibeui-alertdialog-00
 }
 [data-vibeui-block="alertdialog-001"] *{box-sizing:border-box}
 [data-vibeui-block="alertdialog-001"] [data-part="open"]{
-appearance:none;cursor:pointer;height:2.25rem;padding:0 0.875rem;
+appearance:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;
+min-height:2.25rem;padding:0.3125rem 0.875rem;
 border:1px solid var(--vibeui-alertdialog-001-border);border-radius:0.625rem;
 background:var(--vibeui-alertdialog-001-bg);color:inherit;
 font:inherit;font-size:0.8125rem;font-weight:650;
@@ -69,7 +70,8 @@ display:flex;flex-direction:row-reverse;gap:0.5rem;
 }
 [data-vibeui-block="alertdialog-001"] button[data-part="confirm"],
 [data-vibeui-block="alertdialog-001"] button[data-part="cancel"]{
-flex:1 1 0;appearance:none;cursor:pointer;height:2.375rem;border-radius:0.625rem;
+flex:1 1 0;appearance:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;
+min-height:2.375rem;padding:0.3125rem 0;border-radius:0.625rem;
 font:inherit;font-size:0.8125rem;font-weight:650;
 }
 [data-vibeui-block="alertdialog-001"] [data-part="confirm"]{

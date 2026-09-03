@@ -52,6 +52,10 @@ export type Datagrid017Props = Omit<ComponentProps<"section">, "children"> & {
 //
 // Тема берётся из color-scheme окружения через light-dark(): сетка темнеет
 // вместе со страницей и не носит собственной подложки.
+//
+// Радиогруппа лежит в собственной <form>: одинаковое имя в двух блоках на
+// одной странице иначе объединило бы их в одну группу, и первый блок
+// остался бы без отмеченного варианта.
 const STYLES = `
 :where([data-vibeui-block="datagrid-017"]){
 --vibeui-datagrid-017-bg:transparent;
@@ -121,6 +125,7 @@ font-family:var(--vibeui-datagrid-017-font);box-shadow:0 24px 60px var(--vibeui-
 [data-vibeui-block="datagrid-017"] dialog::backdrop{background:var(--vibeui-datagrid-017-veil)}
 [data-vibeui-block="datagrid-017"] [data-part="dialog-title"]{margin:0 0 0.375rem;font-size:0.9375rem;font-weight:650}
 [data-vibeui-block="datagrid-017"] [data-part="dialog-text"]{margin:0 0 0.75rem;font-size:0.8125rem;color:var(--vibeui-datagrid-017-muted);line-height:1.45}
+[data-vibeui-block="datagrid-017"] [data-part="format-form"]{display:contents}
 [data-vibeui-block="datagrid-017"] [data-part="formats"]{border:0;margin:0 0 0.875rem;padding:0;display:flex;gap:0.5rem;flex-wrap:wrap}
 [data-vibeui-block="datagrid-017"] [data-part="formats"] legend{padding:0;margin-bottom:0.375rem;font-size:0.6875rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;color:var(--vibeui-datagrid-017-muted);float:left;width:100%}
 /* legend с float:left заставляет соседей обтекать — сбрасываем поток. */
@@ -401,21 +406,23 @@ export function Datagrid017({
                 ),
               )}
           </p>
-          <fieldset data-part="formats">
-            <legend>{formatsText}</legend>
-            {FORMATS.map((item) => (
-              <label key={item.value}>
-                <input
-                  type="radio"
-                  name="vibeui-datagrid-017-format"
-                  value={item.value}
-                  checked={format === item.value}
-                  onChange={() => setFormat(item.value)}
-                />
-                {item.label}
-              </label>
-            ))}
-          </fieldset>
+          <form data-part="format-form">
+            <fieldset data-part="formats">
+              <legend>{formatsText}</legend>
+              {FORMATS.map((item) => (
+                <label key={item.value}>
+                  <input
+                    type="radio"
+                    name="vibeui-datagrid-017-format"
+                    value={item.value}
+                    checked={format === item.value}
+                    onChange={() => setFormat(item.value)}
+                  />
+                  {item.label}
+                </label>
+              ))}
+            </fieldset>
+          </form>
           <div data-part="actions">
             <button
               type="button"

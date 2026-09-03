@@ -64,6 +64,7 @@ border-radius:var(--vibeui-commerce-033-radius);
 color:var(--vibeui-commerce-033-fg);font-family:var(--vibeui-commerce-033-sans);
 }
 [data-vibeui-block="commerce-033"] *{box-sizing:border-box}
+[data-vibeui-block="commerce-033"] form{display:contents}
 [data-vibeui-block="commerce-033"] [data-part="shell"]{max-width:44rem;margin:0 auto;padding:1.25rem 1rem}
 [data-vibeui-block="commerce-033"] h2{margin:0 0 0.25rem;font-size:1.1875rem;font-weight:700;letter-spacing:-0.02em}
 [data-vibeui-block="commerce-033"] [data-part="lead"]{margin:0 0 1rem;font-size:0.875rem;line-height:1.55;color:var(--vibeui-commerce-033-muted)}
@@ -246,32 +247,34 @@ export function Commerce033({
           <h2>{title}</h2>
           <p data-part="lead">{lead}</p>
 
-          <fieldset data-part="ways">
-            <legend hidden>{waysLegend}</legend>
-            <label data-part="way">
-              <input
-                type="radio"
-                name="commerce-033-way"
-                id="commerce-033-guest"
-                defaultChecked
-              />
-              <span data-part="face">
-                <b>{guestLabel}</b>
-                <span>{guestHint}</span>
-              </span>
-            </label>
-            <label data-part="way">
-              <input
-                type="radio"
-                name="commerce-033-way"
-                id="commerce-033-account"
-              />
-              <span data-part="face">
-                <b>{accountLabel}</b>
-                <span>{accountHint}</span>
-              </span>
-            </label>
-          </fieldset>
+          <form>
+            <fieldset data-part="ways">
+              <legend hidden>{waysLegend}</legend>
+              <label data-part="way">
+                <input
+                  type="radio"
+                  name="commerce-033-way"
+                  id="commerce-033-guest"
+                  defaultChecked
+                />
+                <span data-part="face">
+                  <b>{guestLabel}</b>
+                  <span>{guestHint}</span>
+                </span>
+              </label>
+              <label data-part="way">
+                <input
+                  type="radio"
+                  name="commerce-033-way"
+                  id="commerce-033-account"
+                />
+                <span data-part="face">
+                  <b>{accountLabel}</b>
+                  <span>{accountHint}</span>
+                </span>
+              </label>
+            </fieldset>
+          </form>
 
           <div data-part="guest">
             <div data-part="pane">

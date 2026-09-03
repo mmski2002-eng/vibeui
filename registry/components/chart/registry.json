@@ -4617,6 +4617,772 @@
           "width": "full"
         }
       }
+    },
+    {
+      "name": "chart-026",
+      "type": "registry:component",
+      "title": "Строки со спарклайнами",
+      "description": "Показатели строками, у каждой свой микрографик: числа отвечают «сколько сейчас», спарклайн — «как шло», и оба ответа читаются одним взглядом.",
+      "categories": [
+        "chart"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "chart-026/chart-026.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/chart-026.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-chart-026-*. Серверный. Каждая строка — grid из трёх колонок: имя, числа, микрографик. Спарклайн — SVG 68×22 с preserveAspectRatio=none, поэтому тянется по ширине колонки без пересчёта путей; ряд нормализуется по собственным минимуму и максимуму, а не по общей шкале — сравнивают форму, а не высоту. Цвет изменения выбирает prop riseIsGood: там, где рост означает потери (отток, время ответа), знак «плюс» должен быть красным. У́же 24rem раскладка ломается на две колонки, а спарклайн уходит под строку во всю ширину. Данные продублированы скрытой таблицей: SVG помечен aria-hidden.",
+      "meta": {
+        "tags": [
+          "chart",
+          "sparkline",
+          "metrics",
+          "dashboard"
+        ],
+        "ai": {
+          "export": "Chart026",
+          "usage": "<Chart026\n  title=\"Показатели за месяц\"\n  rows={[{ label: \"Выручка\", value: \"4,8 млн\", change: 12.4, series: [31, 34, 33, 38] }]}\n/>",
+          "summary": "Панель показателей: строка с именем, значением, изменением и микрографиком ряда. Один файл, ноль зависимостей, серверный рендер.",
+          "preserve": [
+            "локальную палитру --vibeui-chart-026-*: компонент обязан выглядеть одинаково в любом проекте",
+            "скрытую таблицу данных: SVG помечен aria-hidden, и без неё график недоступен экранному диктору",
+            "нормализацию каждого ряда по своим минимуму и максимуму — спарклайны сравнивают формой, а не высотой",
+            "prop riseIsGood: там, где рост означает потери, зелёный плюс вводит в заблуждение",
+            "перенос спарклайна под строку на узкой ширине — иначе имя показателя сжимается до пары букв",
+            "tabular-nums у значений и изменений: колонка цифр обязана стоять ровно",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "строки через rows: label, value, change и series у каждой",
+            "заголовок через title и подпись под таблицей через unitLabel с плейсхолдером {count}",
+            "направление «хорошего» через riseIsGood",
+            "цвет линии и заливки через accent",
+            "подложку компонента через background; пусто означает фон страницы",
+            "цвета роста и падения через переменные --vibeui-chart-026-good и --vibeui-chart-026-bad"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Значение value — строка, а не число: в него кладут уже отформатированную величину с единицей.",
+            "В ряду разумно держать 6–20 значений: на такой ширине больше не различить.",
+            "Изменение выводится с локальным разделителем через toLocaleString('ru-RU') — для другой локали замените её.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Показатели за месяц",
+            "maxLength": 32
+          },
+          {
+            "prop": "riseIsGood",
+            "label": "Рост — это хорошо",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Sparkline Rows",
+            "description": "Metrics as rows, each with its own micro chart: the numbers answer \"where it stands\", the sparkline answers \"how it got there\", and both read in one glance.",
+            "docs": "One file, zero dependencies, the --vibeui-chart-026-* palette. A server component. Every row is a three-column grid: name, figures, micro chart. The sparkline is a 68×22 SVG with preserveAspectRatio=none, so it stretches to the column without recomputing paths; each series is normalised against its own min and max rather than a shared scale — the shapes are compared, not the heights. The change colour follows the riseIsGood prop: where growth means loss (churn, response time), a plus sign has to be red. Below 24rem the layout drops to two columns and the sparkline moves under the row at full width. The data is mirrored in a hidden table: the SVG is aria-hidden.",
+            "ai": {
+              "summary": "A metrics panel: a row carrying the name, the value, the change and a micro chart of the series. One file, zero dependencies, server-rendered.",
+              "preserve": [
+                "the local --vibeui-chart-026-* palette: the component must look the same in any project",
+                "the hidden data table: the SVG is aria-hidden, and without it the chart is unreachable for a screen reader",
+                "normalising each series against its own min and max — sparklines compare shape, not height",
+                "the riseIsGood prop: where growth means loss, a green plus misleads",
+                "moving the sparkline under the row at narrow widths — otherwise the metric name shrinks to a couple of letters",
+                "tabular-nums on the values and changes: a column of digits has to line up",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "the rows through rows: label, value, change and series on each",
+                "the heading through title and the caption through unitLabel with the {count} placeholder",
+                "which direction counts as good through riseIsGood",
+                "the line and fill colour through accent",
+                "the component surface through background; empty means the page background",
+                "the rise and fall colours through the --vibeui-chart-026-good and --vibeui-chart-026-bad variables"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "value is a string, not a number: it carries an already formatted figure with its unit.",
+                "Keep 6–20 points in a series: more is indistinguishable at this width.",
+                "The change is printed with toLocaleString('ru-RU') — swap the locale for another one.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Chart026\n  title=\"Metrics this month\"\n  rows={[{ label: \"Revenue\", value: \"4.8M\", change: 12.4, series: [31, 34, 33, 38] }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Metrics this month"
+              },
+              "riseIsGood": {
+                "label": "Growth is good"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Metrics this month",
+                "unitLabel": "Metrics: {count}. The micro chart shows the last eight values of the series.",
+                "rows": [
+                  {
+                    "label": "Revenue",
+                    "value": "4.8M",
+                    "change": 12.4,
+                    "series": [
+                      31,
+                      34,
+                      33,
+                      38,
+                      41,
+                      39,
+                      44,
+                      48
+                    ]
+                  },
+                  {
+                    "label": "New customers",
+                    "value": "312",
+                    "change": 5.1,
+                    "series": [
+                      22,
+                      25,
+                      24,
+                      23,
+                      27,
+                      26,
+                      29,
+                      31
+                    ]
+                  },
+                  {
+                    "label": "Repeat orders",
+                    "value": "41%",
+                    "change": 2.6,
+                    "series": [
+                      33,
+                      34,
+                      36,
+                      35,
+                      38,
+                      37,
+                      40,
+                      41
+                    ]
+                  },
+                  {
+                    "label": "Average order",
+                    "value": "$168",
+                    "change": -3.2,
+                    "series": [
+                      19,
+                      21,
+                      20,
+                      18,
+                      17,
+                      18,
+                      16,
+                      15
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "title",
+          "riseIsGood",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
+      }
+    },
+    {
+      "name": "chart-027",
+      "type": "registry:component",
+      "title": "Паутина",
+      "description": "Радар сравнивает профиль целиком: форма многоугольника показывает, где просели относительно остального, а пунктирный контур держит эталон для сравнения.",
+      "categories": [
+        "chart"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "chart-027/chart-027.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/chart-027.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-chart-027-*. Серверный. Точки считаются тригонометрией от центра: первый луч смотрит вверх, дальше по часовой стрелке. Сетка — три концентрических многоугольника той же формы, что и данные, поэтому уровни читаются вдоль лучей. Подписи осей прижимаются по стороне: справа start, слева end, сверху и снизу middle — иначе левые подписи налезают на фигуру. Второй контур рисуется пунктиром и появляется, только если длина compare совпадает с числом осей. Значения задаются в процентах от края паутины: общая шкала обязательна, иначе форма ничего не значит. Данные продублированы скрытой таблицей, SVG помечен aria-hidden.",
+      "meta": {
+        "tags": [
+          "chart",
+          "radar",
+          "comparison",
+          "profile"
+        ],
+        "ai": {
+          "export": "Chart027",
+          "usage": "<Chart027\n  title=\"Профиль продукта\"\n  axes={[{ label: \"Скорость\", value: 82 }, { label: \"Цена\", value: 47 }]}\n  compare={[70, 70]}\n/>",
+          "summary": "Паутина: профиль показателей одной фигурой плюс пунктирный контур сравнения. Один файл, ноль зависимостей, серверный рендер.",
+          "preserve": [
+            "локальную палитру --vibeui-chart-027-*: компонент обязан выглядеть одинаково в любом проекте",
+            "скрытую таблицу данных: SVG помечен aria-hidden, и без неё график недоступен экранному диктору",
+            "общую шкалу 0…100 для всех осей — на разных шкалах форма многоугольника теряет смысл",
+            "контур сравнения: одиночная паутина почти всегда проигрывает обычным столбцам",
+            "прижим подписей по стороне луча — иначе левые подписи налезают на фигуру",
+            "заливку фигуры полупрозрачной: под ней должна оставаться видна сетка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "оси через axes: label и value от 0 до 100 у каждой",
+            "контур сравнения через compare — длина обязана совпадать с числом осей",
+            "подписи легенды через seriesLabel и compareLabel",
+            "заголовок через title и подпись под графиком через unitLabel с плейсхолдером {count}",
+            "цвет фигуры через accent",
+            "подложку компонента через background; пусто означает фон страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Разумный диапазон — от пяти до восьми осей: на трёх фигура вырождается в треугольник, после десяти подписи наезжают друг на друга.",
+            "Порядок осей влияет на форму: соседние по смыслу показатели ставьте рядом, иначе фигура выглядит рваной случайно.",
+            "Пустой массив compare убирает и контур, и вторую строку легенды, и колонку в таблице данных.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Профиль продукта",
+            "maxLength": 32
+          },
+          {
+            "prop": "seriesLabel",
+            "label": "Подпись контура",
+            "type": "text",
+            "default": "Наш продукт",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Radar Web",
+            "description": "A radar compares the whole profile: the polygon's shape shows where things sag relative to the rest, and the dashed outline keeps a benchmark alongside.",
+            "docs": "One file, zero dependencies, the --vibeui-chart-027-* palette. A server component. The points are trigonometry from the centre: the first spoke points up, the rest run clockwise. The web is three concentric polygons of the same shape as the data, so the levels read along the spokes. Axis labels anchor by side: start on the right, end on the left, middle top and bottom — otherwise the left-hand labels ride over the figure. The second outline is dashed and appears only when compare matches the number of axes. Values are percentages of the web's edge: a shared scale is mandatory, or the shape means nothing. The data is mirrored in a hidden table and the SVG is aria-hidden.",
+            "ai": {
+              "summary": "A radar web: the metric profile as one figure plus a dashed comparison outline. One file, zero dependencies, server-rendered.",
+              "preserve": [
+                "the local --vibeui-chart-027-* palette: the component must look the same in any project",
+                "the hidden data table: the SVG is aria-hidden, and without it the chart is unreachable for a screen reader",
+                "the shared 0…100 scale across axes — on mixed scales the polygon's shape loses meaning",
+                "the comparison outline: a lone radar almost always loses to plain bars",
+                "anchoring the labels by the side of their spoke — otherwise the left-hand ones ride over the figure",
+                "the semi-transparent fill: the web has to stay visible underneath",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "the axes through axes: label and a 0–100 value on each",
+                "the comparison outline through compare — its length has to match the number of axes",
+                "the legend captions through seriesLabel and compareLabel",
+                "the heading through title and the caption through unitLabel with the {count} placeholder",
+                "the figure colour through accent",
+                "the component surface through background; empty means the page background"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Five to eight axes is the sane range: three degenerates into a triangle, past ten the labels collide.",
+                "Axis order shapes the figure: put related metrics next to each other, or the outline looks ragged by accident.",
+                "An empty compare array removes the outline, the second legend row and the table column together.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Chart027\n  title=\"Product profile\"\n  axes={[{ label: \"Speed\", value: 82 }, { label: \"Price\", value: 47 }]}\n  compare={[70, 70]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Product profile"
+              },
+              "seriesLabel": {
+                "label": "Series caption",
+                "default": "Our product"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Product profile",
+                "seriesLabel": "Our product",
+                "compareLabel": "Market average",
+                "unitLabel": "Axes: {count}. Values are a share of the web's edge in percent.",
+                "axes": [
+                  {
+                    "label": "Speed",
+                    "value": 82
+                  },
+                  {
+                    "label": "Accuracy",
+                    "value": 64
+                  },
+                  {
+                    "label": "Reach",
+                    "value": 55
+                  },
+                  {
+                    "label": "Stability",
+                    "value": 88
+                  },
+                  {
+                    "label": "Price",
+                    "value": 47
+                  },
+                  {
+                    "label": "Support",
+                    "value": 71
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "title",
+          "seriesLabel",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
+      }
+    },
+    {
+      "name": "chart-028",
+      "type": "registry:component",
+      "title": "Столбцы и линия",
+      "description": "Две величины разной природы на одном поле: столбцы держат объём по левой шкале, линия — долю по правой, и вторая ось честно говорит, что единицы у них разные.",
+      "categories": [
+        "chart"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "chart-028/chart-028.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/chart-028.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-chart-028-*. Серверный. У столбцов и линии свои шкалы: верх каждой округляется вверх до круглого числа функцией ceilNice, поэтому подписи осей читаются, а не заканчиваются на 1137. Столбцы стоят от нуля — иначе их высоты нельзя сравнивать; линия идёт по центрам столбцов. Заливка столбцов бледнее линии через color-mix от акцента: объём здесь фон, а вопрос задаётся к доле. Левые подписи прижаты к концу строки, правые — к началу, чтобы обе колонки цифр стояли ровно. Данные продублированы скрытой таблицей, SVG помечен aria-hidden.",
+      "meta": {
+        "tags": [
+          "chart",
+          "combo",
+          "bar",
+          "line"
+        ],
+        "ai": {
+          "export": "Chart028",
+          "usage": "<Chart028\n  title=\"Заказы и конверсия\"\n  points={[{ label: \"Июл\", bar: 1140, line: 3.8 }]}\n  lineSuffix=\"%\"\n/>",
+          "summary": "Комбинированный график: столбцы объёма по левой шкале и линия доли по правой. Один файл, ноль зависимостей, серверный рендер.",
+          "preserve": [
+            "локальную палитру --vibeui-chart-028-*: компонент обязан выглядеть одинаково в любом проекте",
+            "скрытую таблицу данных: SVG помечен aria-hidden, и без неё график недоступен экранному диктору",
+            "вторую шкалу справа: без неё читатель сравнивает высоты, которые сравнивать нельзя",
+            "нулевое основание у столбцов — обрезанная снизу шкала врёт о разнице между ними",
+            "округление верха шкалы до круглого числа: подписи осей обязаны читаться",
+            "бледную заливку столбцов относительно линии — вопрос задаётся к доле, а объём тут фон",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "точки через points: label, bar и line у каждой",
+            "подписи шкал через barLabel и lineLabel, знак правой шкалы через lineSuffix",
+            "заголовок через title и подпись под графиком через unitLabel с плейсхолдерами {barLabel} и {lineLabel}",
+            "цвет линии через accent — заливка столбцов считается от него",
+            "подложку компонента через background; пусто означает фон страницы",
+            "цвет столбцов отдельно через переменную --vibeui-chart-028-bar"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Разумный диапазон — от четырёх до двенадцати точек: дальше столбцы становятся уже промежутка между ними.",
+            "Две оси уместны, только когда величины разной природы. Для двух однотипных рядов берите обычные столбцы: там сравнение честнее.",
+            "Числа правой шкалы печатаются через toLocaleString('ru-RU') — для другой локали замените её.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Заказы и конверсия",
+            "maxLength": 32
+          },
+          {
+            "prop": "lineLabel",
+            "label": "Подпись линии",
+            "type": "text",
+            "default": "Конверсия",
+            "maxLength": 24
+          },
+          {
+            "prop": "lineSuffix",
+            "label": "Знак правой шкалы",
+            "type": "text",
+            "default": "%",
+            "maxLength": 4
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Bars and Line",
+            "description": "Two quantities of different kinds on one field: bars hold the volume on the left scale, the line holds the share on the right, and the second axis says plainly that their units differ.",
+            "docs": "One file, zero dependencies, the --vibeui-chart-028-* palette. A server component. The bars and the line have their own scales: each top is rounded up to a round number by ceilNice, so the axis labels read instead of ending in 1137. The bars start at zero — otherwise their heights cannot be compared; the line runs through the bar centres. The bar fill is paler than the line via color-mix from the accent: the volume is background here and the question is asked of the share. Left labels anchor to the end of the line, right ones to the start, so both columns of digits line up. The data is mirrored in a hidden table and the SVG is aria-hidden.",
+            "ai": {
+              "summary": "A combo chart: volume bars on the left scale and a share line on the right. One file, zero dependencies, server-rendered.",
+              "preserve": [
+                "the local --vibeui-chart-028-* palette: the component must look the same in any project",
+                "the hidden data table: the SVG is aria-hidden, and without it the chart is unreachable for a screen reader",
+                "the second scale on the right: without it the reader compares heights that cannot be compared",
+                "the zero baseline on the bars — a truncated scale lies about the difference between them",
+                "rounding the scale top to a round number: axis labels have to be readable",
+                "the pale bar fill against the line — the question is asked of the share, the volume is background",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "the points through points: label, bar and line on each",
+                "the scale captions through barLabel and lineLabel, the right-hand sign through lineSuffix",
+                "the heading through title and the caption through unitLabel with the {barLabel} and {lineLabel} placeholders",
+                "the line colour through accent — the bar fill is derived from it",
+                "the component surface through background; empty means the page background",
+                "the bar colour separately through the --vibeui-chart-028-bar variable"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Four to twelve points is the sane range: past that the bars grow narrower than the gaps between them.",
+                "Two axes are justified only when the quantities differ in kind. For two series of the same kind use plain bars: the comparison is honest there.",
+                "The right-hand numbers print through toLocaleString('ru-RU') — swap the locale for another one.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Chart028\n  title=\"Orders and conversion\"\n  points={[{ label: \"Jul\", bar: 1140, line: 3.8 }]}\n  lineSuffix=\"%\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Orders and conversion"
+              },
+              "lineLabel": {
+                "label": "Line caption",
+                "default": "Conversion"
+              },
+              "lineSuffix": {
+                "label": "Right scale sign",
+                "default": "%"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Orders and conversion",
+                "barLabel": "Orders",
+                "lineLabel": "Conversion",
+                "unitLabel": "Bars are {barLabel} on the left scale, the line is {lineLabel} on the right.",
+                "points": [
+                  {
+                    "label": "Apr",
+                    "bar": 820,
+                    "line": 3.1
+                  },
+                  {
+                    "label": "May",
+                    "bar": 910,
+                    "line": 3.4
+                  },
+                  {
+                    "label": "Jun",
+                    "bar": 870,
+                    "line": 2.9
+                  },
+                  {
+                    "label": "Jul",
+                    "bar": 1140,
+                    "line": 3.8
+                  },
+                  {
+                    "label": "Aug",
+                    "bar": 1210,
+                    "line": 4.4
+                  },
+                  {
+                    "label": "Sep",
+                    "bar": 1080,
+                    "line": 4.1
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "title",
+          "lineLabel",
+          "lineSuffix",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
+      }
+    },
+    {
+      "name": "chart-029",
+      "type": "registry:component",
+      "title": "Лента активности",
+      "description": "Полгода одной лентой: клетка — день, столбец — неделя, и вопрос к ней не «сколько именно», а «где провалы и как долго держится серия».",
+      "categories": [
+        "chart"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "chart-029/chart-029.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/chart-029.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-chart-029-*. Серверный, без SVG: лента собрана на CSS Grid с grid-auto-flow:column, поэтому недели идут столбцами, а дни строками. Уровень задаётся числом 0…4, а не самим значением: пять ступеней различимы глазом, непрерывная шкала на клетке 12×12 — уже нет. Ступени строятся через color-mix от акцента, так что перекрасить график можно одной переменной. Лента прокручивается внутри себя (overflow-x:auto с overscroll-behavior:contain), а не растягивает страницу. Подписи месяцев и дней помечены aria-hidden; сводка вынесена в скрытую таблицу.",
+      "meta": {
+        "tags": [
+          "chart",
+          "heatmap",
+          "activity",
+          "calendar"
+        ],
+        "ai": {
+          "export": "Chart029",
+          "usage": "<Chart029\n  title=\"Активность за полгода\"\n  weeks={[[0, 1, 2, 3, 4, 1, 0]]}\n  months={[\"Март\", \"Апрель\"]}\n/>",
+          "summary": "Лента активности: год днями, где столбец — неделя, а насыщенность клетки — уровень от нуля до четырёх. Один файл, ноль зависимостей, без SVG.",
+          "preserve": [
+            "локальную палитру --vibeui-chart-029-*: компонент обязан выглядеть одинаково в любом проекте",
+            "пять ступеней уровня: непрерывная шкала на клетке такого размера неразличима",
+            "прокрутку ленты внутри себя — полгода клеток шире телефона, и растягивать страницу нельзя",
+            "ступени через color-mix от акцента: перекраска одной переменной обязана менять весь график",
+            "скрытую таблицу со сводкой: сами клетки помечены aria-hidden и диктору недоступны",
+            "квадратную клетку и зазор между ними — слипшиеся клетки перестают читаться как дни",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "ленту через weeks: массив недель по семь уровней 0…4 в каждой",
+            "подписи месяцев через months и дней через days — пустая строка в days прячет подпись",
+            "заголовок через title и подпись под лентой через unitLabel с плейсхолдером {count}",
+            "подписи шкалы через lessLabel и moreLabel",
+            "цвет заполненных клеток через accent, цвет пустых — через --vibeui-chart-029-empty, подложку компонента через background",
+            "размер клетки через переменную --vibeui-chart-029-cell"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Значение по умолчанию считается формулой, а не выписано числами: двести значений в исходнике нечитаемы. Свои данные передавайте через weeks.",
+            "Уровни ожидаются целыми от 0 до 4; всё, что вне диапазона, останется без стиля и покажется пустой клеткой.",
+            "Подписи месяцев раскладываются равными долями по ширине: если недель в месяцах разное число, они слегка разъедутся относительно клеток.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Активность за полгода",
+            "maxLength": 32
+          },
+          {
+            "prop": "lessLabel",
+            "label": "Подпись «реже»",
+            "type": "text",
+            "default": "реже",
+            "maxLength": 12
+          },
+          {
+            "prop": "moreLabel",
+            "label": "Подпись «чаще»",
+            "type": "text",
+            "default": "чаще",
+            "maxLength": 12
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Activity Ribbon",
+            "description": "Half a year as one ribbon: a cell is a day, a column is a week, and the question it answers is not \"how much exactly\" but \"where the gaps are and how long a streak holds\".",
+            "docs": "One file, zero dependencies, the --vibeui-chart-029-* palette. A server component with no SVG: the ribbon is a CSS Grid with grid-auto-flow:column, so weeks run as columns and days as rows. The level is a number 0…4 rather than the raw value: five steps are distinguishable by eye, a continuous scale on a 12×12 cell is not. The steps are built with color-mix from the accent, so one variable repaints the whole chart. The ribbon scrolls inside itself (overflow-x:auto with overscroll-behavior:contain) instead of stretching the page. The month and day captions are aria-hidden; the summary lives in a hidden table.",
+            "ai": {
+              "summary": "An activity ribbon: a year as days, where a column is a week and a cell's saturation is a level from zero to four. One file, zero dependencies, no SVG.",
+              "preserve": [
+                "the local --vibeui-chart-029-* palette: the component must look the same in any project",
+                "the five level steps: a continuous scale on a cell this size is indistinguishable",
+                "the ribbon scrolling inside itself — half a year of cells is wider than a phone, and the page must not stretch",
+                "the steps built with color-mix from the accent: repainting one variable has to change the whole chart",
+                "the hidden summary table: the cells themselves are aria-hidden and unreachable for a screen reader",
+                "the square cell and the gap between cells — cells that touch stop reading as separate days",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "the ribbon through weeks: an array of weeks with seven 0…4 levels each",
+                "the month captions through months and the day captions through days — an empty string in days hides one",
+                "the heading through title and the caption through unitLabel with the {count} placeholder",
+                "the scale captions through lessLabel and moreLabel",
+                "the filled cell colour through accent, the empty one through --vibeui-chart-029-empty, and the component surface through background",
+                "the cell size through the --vibeui-chart-029-cell variable"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The default ribbon is computed by a formula rather than written out: two hundred numbers in the source are unreadable. Pass your own data through weeks.",
+                "Levels are expected as integers from 0 to 4; anything outside that range stays unstyled and reads as an empty cell.",
+                "Month captions are laid out in equal shares of the width: if the months hold different numbers of weeks they drift slightly against the cells.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Chart029\n  title=\"Activity over six months\"\n  weeks={[[0, 1, 2, 3, 4, 1, 0]]}\n  months={[\"March\", \"April\"]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Activity over six months"
+              },
+              "lessLabel": {
+                "label": "\"Less\" caption",
+                "default": "less"
+              },
+              "moreLabel": {
+                "label": "\"More\" caption",
+                "default": "more"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Activity over six months",
+                "lessLabel": "less",
+                "moreLabel": "more",
+                "unitLabel": "Days in the ribbon: {count}. A cell's saturation is the activity level from zero to four.",
+                "months": [
+                  "March",
+                  "April",
+                  "May",
+                  "June",
+                  "July",
+                  "August",
+                  "September"
+                ],
+                "days": [
+                  "Mon",
+                  "",
+                  "Wed",
+                  "",
+                  "Fri",
+                  "",
+                  "Sun"
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "title",
+          "lessLabel",
+          "moreLabel",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
+      }
     }
   ]
 }

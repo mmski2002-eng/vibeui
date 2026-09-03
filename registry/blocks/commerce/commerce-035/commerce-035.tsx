@@ -73,6 +73,7 @@ border-radius:var(--vibeui-commerce-035-radius);
 color:var(--vibeui-commerce-035-fg);font-family:var(--vibeui-commerce-035-sans);
 }
 [data-vibeui-block="commerce-035"] *{box-sizing:border-box}
+[data-vibeui-block="commerce-035"] form{display:contents}
 [data-vibeui-block="commerce-035"] [data-part="shell"]{max-width:50rem;margin:0 auto;padding:1.25rem 1rem}
 [data-vibeui-block="commerce-035"] h2{margin:0 0 0.25rem;font-size:1.1875rem;font-weight:700;letter-spacing:-0.02em}
 [data-vibeui-block="commerce-035"] [data-part="lead"]{margin:0 0 1rem;font-size:0.875rem;line-height:1.55;color:var(--vibeui-commerce-035-muted)}
@@ -251,35 +252,37 @@ export function Commerce035({
           <h2>{title}</h2>
           <p data-part="lead">{lead}</p>
 
-          <fieldset>
-            <legend>{wrapsLegend}</legend>
-            <div data-part="wraps">
-              {wraps.map((wrap, index) => (
-                <label data-part="wrap" key={wrap.id}>
-                  <input
-                    type="radio"
-                    name="commerce-035-wrap"
-                    value={wrap.id}
-                    defaultChecked={index === 2}
-                  />
-                  <span data-part="face">
-                    <span
-                      data-part="box"
-                      aria-hidden="true"
-                      style={
-                        {
-                          "--vibeui-commerce-035-hue": wrap.hue,
-                          "--vibeui-commerce-035-ribbon": wrap.ribbon,
-                        } as CSSProperties
-                      }
+          <form>
+            <fieldset>
+              <legend>{wrapsLegend}</legend>
+              <div data-part="wraps">
+                {wraps.map((wrap, index) => (
+                  <label data-part="wrap" key={wrap.id}>
+                    <input
+                      type="radio"
+                      name="commerce-035-wrap"
+                      value={wrap.id}
+                      defaultChecked={index === 2}
                     />
-                    <span data-part="name">{wrap.label}</span>
-                    <span data-part="cost">{wrap.price}</span>
-                  </span>
-                </label>
-              ))}
-            </div>
-          </fieldset>
+                    <span data-part="face">
+                      <span
+                        data-part="box"
+                        aria-hidden="true"
+                        style={
+                          {
+                            "--vibeui-commerce-035-hue": wrap.hue,
+                            "--vibeui-commerce-035-ribbon": wrap.ribbon,
+                          } as CSSProperties
+                        }
+                      />
+                      <span data-part="name">{wrap.label}</span>
+                      <span data-part="cost">{wrap.price}</span>
+                    </span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+          </form>
 
           <div data-part="pane">
             <div>

@@ -76,6 +76,7 @@ border-radius:var(--vibeui-commerce-030-radius);
 color:var(--vibeui-commerce-030-fg);font-family:var(--vibeui-commerce-030-sans);
 }
 [data-vibeui-block="commerce-030"] *{box-sizing:border-box}
+[data-vibeui-block="commerce-030"] form{display:contents}
 [data-vibeui-block="commerce-030"] [data-part="shell"]{
 max-width:44rem;margin:0 auto;padding:1.25rem 1rem;
 border-radius:1.25rem;
@@ -257,26 +258,28 @@ export function Commerce030({
             <p data-part="price">{price}</p>
           </div>
 
-          <fieldset>
-            <legend>{sizesTitle}</legend>
-            <div data-part="sizes">
-              {sizes.map((size) => (
-                <label data-part="size" key={size.value}>
-                  <input
-                    type="radio"
-                    name="commerce-030-size"
-                    value={size.value}
-                    defaultChecked={size.value === "l"}
-                    disabled={size.available === false}
-                  />
-                  <span>
-                    {size.label}
-                    {size.left ? <small>{size.left}</small> : null}
-                  </span>
-                </label>
-              ))}
-            </div>
-          </fieldset>
+          <form>
+            <fieldset>
+              <legend>{sizesTitle}</legend>
+              <div data-part="sizes">
+                {sizes.map((size) => (
+                  <label data-part="size" key={size.value}>
+                    <input
+                      type="radio"
+                      name="commerce-030-size"
+                      value={size.value}
+                      defaultChecked={size.value === "l"}
+                      disabled={size.available === false}
+                    />
+                    <span>
+                      {size.label}
+                      {size.left ? <small>{size.left}</small> : null}
+                    </span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+          </form>
 
           <p data-part="hint">{hint}</p>
 

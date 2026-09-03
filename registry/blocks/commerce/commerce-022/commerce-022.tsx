@@ -80,6 +80,7 @@ font-family:var(--vibeui-commerce-022-sans);color:var(--vibeui-commerce-022-fg);
 [data-vibeui-block="commerce-022"] h2{margin:0;font-size:1.125rem;font-weight:700;letter-spacing:-0.02em}
 [data-vibeui-block="commerce-022"] [data-part="amount"]{margin-left:auto;font-size:1.25rem;font-weight:700;font-variant-numeric:tabular-nums}
 [data-vibeui-block="commerce-022"] fieldset{margin:0;padding:0;border:0}
+[data-vibeui-block="commerce-022"] form{display:contents}
 [data-vibeui-block="commerce-022"] [data-part="list"]{display:flex;flex-direction:column;gap:0.5rem}
 [data-vibeui-block="commerce-022"] [data-part="card"]{
 display:grid;grid-template-columns:auto 2.5rem minmax(0,1fr) auto;gap:0.625rem;align-items:center;
@@ -239,96 +240,114 @@ export function Commerce022({
             <span data-part="amount">{amount}</span>
           </div>
 
-          <fieldset data-part="list">
-            <legend data-part="vh">{payLabel}</legend>
+          <form>
+            <fieldset data-part="list">
+              <legend data-part="vh">{payLabel}</legend>
 
-            {cards.map((card, index) => (
-              <div
-                key={card.id}
-                data-part="card"
-                style={
-                  {
-                    "--vibeui-commerce-022-hue": card.hue ?? 262,
-                  } as CSSProperties
-                }
-              >
-                <label data-part="grab">
+              {cards.map((card, index) => (
+                <div
+                  key={card.id}
+                  data-part="card"
+                  style={
+                    {
+                      "--vibeui-commerce-022-hue": card.hue ?? 262,
+                    } as CSSProperties
+                  }
+                >
+                  <label data-part="grab">
+                    <input
+                      type="radio"
+                      name="commerce-022-pay"
+                      value={card.id}
+                      defaultChecked={index === 0}
+                    />
+                    <span data-part="plate" aria-hidden="true">
+                      {card.brand}
+                    </span>
+                    <span>
+                      <span data-part="num">•••• {card.last4}</span>
+                      <span data-part="sub">
+                        {card.bank ? `${card.bank} · ` : ""}
+                        {expiresText.replace("{date}", card.expires)}
+                      </span>
+                      {card.expiring ? (
+                        <span data-part="soon">{expiringText}</span>
+                      ) : null}
+                    </span>
+                  </label>
+                  <input
+                    data-part="cvc"
+                    type="text"
+                    inputMode="numeric"
+                    maxLength={3}
+                    aria-label={cvcText.replace("{last4}", card.last4)}
+                    placeholder="CVC"
+                  />
+                </div>
+              ))}
+
+              {extra.map((way) => (
+                <label key={way.value} data-part="card">
                   <input
                     type="radio"
                     name="commerce-022-pay"
-                    value={card.id}
-                    defaultChecked={index === 0}
+                    value={way.value}
                   />
                   <span data-part="plate" aria-hidden="true">
-                    {card.brand}
+                    QR
                   </span>
                   <span>
-                    <span data-part="num">•••• {card.last4}</span>
-                    <span data-part="sub">
-                      {card.bank ? `${card.bank} · ` : ""}
-                      {expiresText.replace("{date}", card.expires)}
-                    </span>
-                    {card.expiring ? (
-                      <span data-part="soon">{expiringText}</span>
-                    ) : null}
+                    <span data-part="num">{way.label}</span>
+                    <span data-part="sub">{way.hint}</span>
                   </span>
+                  <span />
                 </label>
-                <input
-                  data-part="cvc"
-                  type="text"
-                  inputMode="numeric"
-                  maxLength={3}
-                  aria-label={cvcText.replace("{last4}", card.last4)}
-                  placeholder="CVC"
-                />
-              </div>
-            ))}
+              ))}
 
-            {extra.map((way) => (
-              <label key={way.value} data-part="card">
-                <input type="radio" name="commerce-022-pay" value={way.value} />
+              <label data-part="card">
+                <input
+                  type="radio"
+                  name="commerce-022-pay"
+                  id="commerce-022-new"
+                />
                 <span data-part="plate" aria-hidden="true">
-                  QR
+                  +
                 </span>
                 <span>
-                  <span data-part="num">{way.label}</span>
-                  <span data-part="sub">{way.hint}</span>
+                  <span data-part="num">{newCardLabel}</span>
+                  <span data-part="sub">{newCardHint}</span>
                 </span>
                 <span />
               </label>
-            ))}
 
-            <label data-part="card">
-              <input
-                type="radio"
-                name="commerce-022-pay"
-                id="commerce-022-new"
-              />
-              <span data-part="plate" aria-hidden="true">
-                +
-              </span>
-              <span>
-                <span data-part="num">{newCardLabel}</span>
-                <span data-part="sub">{newCardHint}</span>
-              </span>
-              <span />
-            </label>
-
-            <div data-part="fresh">
-              <label data-part="field" htmlFor="commerce-022-pan">
-                {panLabel}
-                <input id="commerce-022-pan" type="text" inputMode="numeric" />
-              </label>
-              <label data-part="field" htmlFor="commerce-022-exp">
-                {expLabel}
-                <input id="commerce-022-exp" type="text" inputMode="numeric" />
-              </label>
-              <label data-part="field" htmlFor="commerce-022-code">
-                CVC
-                <input id="commerce-022-code" type="text" inputMode="numeric" />
-              </label>
-            </div>
-          </fieldset>
+              <div data-part="fresh">
+                <label data-part="field" htmlFor="commerce-022-pan">
+                  {panLabel}
+                  <input
+                    id="commerce-022-pan"
+                    type="text"
+                    inputMode="numeric"
+                  />
+                </label>
+                <label data-part="field" htmlFor="commerce-022-exp">
+                  {expLabel}
+                  <input
+                    id="commerce-022-exp"
+                    type="text"
+                    inputMode="numeric"
+                  />
+                </label>
+                <label data-part="field" htmlFor="commerce-022-code">
+                  CVC
+                  <input
+                    id="commerce-022-code"
+                    type="text"
+                    inputMode="numeric"
+                  />
+                </label>
+              </div>
+            </fieldset>
+          </form>
 
           <label data-part="remember">
             <input type="checkbox" defaultChecked />

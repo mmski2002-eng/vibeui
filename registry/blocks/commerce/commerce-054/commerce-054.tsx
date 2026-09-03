@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useId, useState } from "react"
 import type { CSSProperties } from "react"
 
 export type Commerce054Speed = {
@@ -242,6 +242,9 @@ export function Commerce054({
   className,
   style,
 }: Commerce054Props) {
+  // Радиогруппа изолируется по экземпляру: имя фиксировано, и два блока на
+  // одной странице делили бы выбор без useId().
+  const uid = useId()
   const [squares, setSquares] = useState(area)
   const [glass, setGlass] = useState(windows)
   const [speed, setSpeed] = useState(speeds[0]?.value ?? "plan")
@@ -341,12 +344,12 @@ export function Commerce054({
                   <label
                     key={entry.value}
                     data-part="speed"
-                    htmlFor={`commerce-054-speed-${entry.value}`}
+                    htmlFor={`${uid}-speed-${entry.value}`}
                   >
                     <input
                       type="radio"
-                      id={`commerce-054-speed-${entry.value}`}
-                      name="commerce-054-speed"
+                      id={`${uid}-speed-${entry.value}`}
+                      name={`${uid}-speed`}
                       value={entry.value}
                       checked={speed === entry.value}
                       onChange={() => setSpeed(entry.value)}

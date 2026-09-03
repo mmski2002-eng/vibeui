@@ -24,6 +24,11 @@ export type Radio001Props = Omit<
 // а не кружок в 16 пикселей: попасть в неё можно и пальцем, и мышью на ходу.
 // Группа собрана на fieldset с legend — так скринридер объявляет вопрос перед
 // вариантами. Легенда прижата float, иначе она садится на рамку и обрезается.
+//
+// Радиокнопки лежат в собственной <form data-part="options"> (display:contents,
+// чтобы не ломать flex-раскладку fieldset): одинаковое имя в двух блоках на
+// одной странице иначе объединило бы их в одну группу, и первый блок
+// остался бы без отмеченного варианта.
 const STYLES = `
 :where([data-vibeui-block="radio-001"]){
 --vibeui-radio-001-bg:transparent;
@@ -50,6 +55,7 @@ font-family:var(--vibeui-radio-001-font);color:var(--vibeui-radio-001-fg);
 float:left;width:100%;padding:0;margin-bottom:0.5rem;
 font-size:0.875rem;font-weight:650;
 }
+[data-vibeui-block="radio-001"] [data-part="options"]{display:contents}
 [data-vibeui-block="radio-001"] [data-part="option"]{
 position:relative;display:flex;align-items:flex-start;gap:0.625rem;
 padding:0.625rem 0.75rem;border-radius:0.625rem;cursor:pointer;
@@ -157,25 +163,29 @@ export function Radio001({
         style={palette}
       >
         <legend>{legend}</legend>
-        {options.map((option) => (
-          <label key={option.value} data-part="option">
-            <input
-              type="radio"
-              name={name}
-              value={option.value}
-              defaultChecked={option.value === defaultValue}
-            />
-            <span data-part="text">
-              <span data-part="label">
-                {option.label}
-                {option.price ? (
-                  <span data-part="price">{option.price}</span>
+        <form data-part="options">
+          {options.map((option) => (
+            <label key={option.value} data-part="option">
+              <input
+                type="radio"
+                name={name}
+                value={option.value}
+                defaultChecked={option.value === defaultValue}
+              />
+              <span data-part="text">
+                <span data-part="label">
+                  {option.label}
+                  {option.price ? (
+                    <span data-part="price">{option.price}</span>
+                  ) : null}
+                </span>
+                {option.hint ? (
+                  <span data-part="hint">{option.hint}</span>
                 ) : null}
               </span>
-              {option.hint ? <span data-part="hint">{option.hint}</span> : null}
-            </span>
-          </label>
-        ))}
+            </label>
+          ))}
+        </form>
       </fieldset>
     </>
   )

@@ -49,7 +49,12 @@ const STYLES = `
 --vibeui-features-001-ring:color-mix(in oklab, var(--vibeui-features-001-accent) 70%, transparent);
 --vibeui-features-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-[data-vibeui-block="features-001"]{container-type:inline-size}
+[data-vibeui-block="features-001"]{
+/* container-type отрывает ширину от содержимого: без нижней границы
+   блок схлопывается внутри flex-контейнера. */
+min-width:min(100%,16rem);
+container-type:inline-size;
+}
 @container (min-width:40rem){
 [data-vibeui-block="features-001"] [data-part="frame"]{min-height:620px;padding-left:2.5rem;padding-right:2.5rem}
 [data-vibeui-block="features-001"] [data-part="header"]{grid-template-columns:minmax(0,1fr) auto;align-items:end}

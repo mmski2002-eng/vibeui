@@ -24,6 +24,10 @@ export type Rating008Props = Omit<
 //
 // Тема берётся из color-scheme окружения через light-dark(): компонент
 // темнеет вместе со страницей и не носит собственной тёмной темы.
+//
+// Радиокнопки лежат в собственной <form data-part="scale">: одинаковое имя
+// в двух блоках на одной странице иначе объединило бы их в одну группу, и
+// первый блок остался бы без отмеченной оценки.
 const STYLES = `
 :where([data-vibeui-block="rating-008"]){
 --vibeui-rating-008-surface:transparent;
@@ -175,14 +179,14 @@ export function Rating008({
         style={palette}
       >
         <legend>{legend}</legend>
-        <div data-part="scale">
+        <form data-part="scale">
           {scores.map((score) => (
             <label key={score} data-zone={zoneOf(score)}>
               <input type="radio" name={name} value={score} />
               {score}
             </label>
           ))}
-        </div>
+        </form>
         <p data-part="anchors">
           <span>{lowAnchor}</span>
           <span>{highAnchor}</span>

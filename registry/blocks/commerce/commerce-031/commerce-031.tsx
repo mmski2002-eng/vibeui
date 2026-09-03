@@ -76,6 +76,7 @@ border-radius:var(--vibeui-commerce-031-radius);
 color:var(--vibeui-commerce-031-fg);font-family:var(--vibeui-commerce-031-sans);
 }
 [data-vibeui-block="commerce-031"] *{box-sizing:border-box}
+[data-vibeui-block="commerce-031"] form{display:contents}
 [data-vibeui-block="commerce-031"] [data-part="shell"]{max-width:56rem;margin:0 auto;padding:1.25rem 1rem}
 [data-vibeui-block="commerce-031"] h2{margin:0 0 0.25rem;font-size:1.1875rem;font-weight:700;letter-spacing:-0.02em}
 [data-vibeui-block="commerce-031"] [data-part="city"]{margin:0 0 1rem;font-size:0.8125rem;color:var(--vibeui-commerce-031-muted)}
@@ -294,32 +295,34 @@ export function Commerce031({
             {cityLabel} <b>{city}</b> · <a href="#city">{cityChangeText}</a>
           </p>
 
-          <fieldset data-part="ways">
-            <legend hidden>{waysLegend}</legend>
-            <label data-part="way">
-              <input
-                type="radio"
-                name="commerce-031-way"
-                id="commerce-031-courier"
-                defaultChecked
-              />
-              <span data-part="face">
-                <b>{courierLabel}</b>
-                <span>{courierHint}</span>
-              </span>
-            </label>
-            <label data-part="way">
-              <input
-                type="radio"
-                name="commerce-031-way"
-                id="commerce-031-pickup"
-              />
-              <span data-part="face">
-                <b>{pickupLabel}</b>
-                <span>{pickupHint}</span>
-              </span>
-            </label>
-          </fieldset>
+          <form>
+            <fieldset data-part="ways">
+              <legend hidden>{waysLegend}</legend>
+              <label data-part="way">
+                <input
+                  type="radio"
+                  name="commerce-031-way"
+                  id="commerce-031-courier"
+                  defaultChecked
+                />
+                <span data-part="face">
+                  <b>{courierLabel}</b>
+                  <span>{courierHint}</span>
+                </span>
+              </label>
+              <label data-part="way">
+                <input
+                  type="radio"
+                  name="commerce-031-way"
+                  id="commerce-031-pickup"
+                />
+                <span data-part="face">
+                  <b>{pickupLabel}</b>
+                  <span>{pickupHint}</span>
+                </span>
+              </label>
+            </fieldset>
+          </form>
 
           <div data-part="courier">
             <div data-part="pane">
@@ -378,29 +381,31 @@ export function Commerce031({
                 ))}
                 <p data-part="mapnote">{mapNote}</p>
               </div>
-              <ul>
-                {points.map((point, index) => (
-                  <li key={point.id}>
-                    <label data-part="point">
-                      <input
-                        type="radio"
-                        name="commerce-031-point"
-                        defaultChecked={index === 0}
-                      />
-                      <span data-part="card">
-                        <b>
-                          {index + 1}. {point.name}
-                        </b>
-                        <span data-part="addr">{point.address}</span>
-                        <span data-part="meta">
-                          <span>{point.hours}</span>
-                          <span data-part="eta">{point.eta}</span>
+              <form>
+                <ul>
+                  {points.map((point, index) => (
+                    <li key={point.id}>
+                      <label data-part="point">
+                        <input
+                          type="radio"
+                          name="commerce-031-point"
+                          defaultChecked={index === 0}
+                        />
+                        <span data-part="card">
+                          <b>
+                            {index + 1}. {point.name}
+                          </b>
+                          <span data-part="addr">{point.address}</span>
+                          <span data-part="meta">
+                            <span>{point.hours}</span>
+                            <span data-part="eta">{point.eta}</span>
+                          </span>
                         </span>
-                      </span>
-                    </label>
-                  </li>
-                ))}
-              </ul>
+                      </label>
+                    </li>
+                  ))}
+                </ul>
+              </form>
             </div>
           </div>
 

@@ -56,6 +56,10 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 // Радиокнопки настоящие: стрелки клавиатуры, фокус и объявление состояния
 // достаются от браузера, а не имитируются. Скидка подписана словами рядом с
 // переключателем, а не спрятана в подсказку.
+//
+// Радиогруппа лежит в собственной <form>: одинаковое имя в двух блоках на
+// одной странице иначе объединило бы их в одну группу, и первый блок
+// остался бы без отмеченного варианта.
 const STYLES = `
 :where([data-vibeui-block="pricing-003"]){
 --vibeui-pricing-003-bg:transparent;
@@ -225,19 +229,21 @@ export function Pricing003({
           <h2>{title}</h2>
           {lede ? <p data-part="lede">{lede}</p> : null}
 
-          <input
-            data-part="periodmonth"
-            id="vibeui-pricing-003-month"
-            type="radio"
-            name="vibeui-pricing-003-period"
-            defaultChecked
-          />
-          <input
-            data-part="periodyear"
-            id="vibeui-pricing-003-year"
-            type="radio"
-            name="vibeui-pricing-003-period"
-          />
+          <form>
+            <input
+              data-part="periodmonth"
+              id="vibeui-pricing-003-month"
+              type="radio"
+              name="vibeui-pricing-003-period"
+              defaultChecked
+            />
+            <input
+              data-part="periodyear"
+              id="vibeui-pricing-003-year"
+              type="radio"
+              name="vibeui-pricing-003-period"
+            />
+          </form>
 
           <div data-part="switch" role="group" aria-label={switchLabel}>
             <label

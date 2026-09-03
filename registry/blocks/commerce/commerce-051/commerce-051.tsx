@@ -58,6 +58,7 @@ box-sizing:border-box;background:var(--vibeui-commerce-051-bg);
 color:var(--vibeui-commerce-051-fg);font-family:var(--vibeui-commerce-051-sans);
 }
 [data-vibeui-block="commerce-051"] *{box-sizing:border-box}
+[data-vibeui-block="commerce-051"] form{display:contents}
 [data-vibeui-block="commerce-051"] [data-part="shell"]{max-width:66rem;margin:0 auto;padding:1.25rem 1rem 2rem}
 [data-vibeui-block="commerce-051"] [data-part="top"]{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:0.75rem;margin-bottom:1rem}
 [data-vibeui-block="commerce-051"] h2{margin:0;font-size:1.375rem;font-weight:700;letter-spacing:-0.02em}
@@ -226,25 +227,27 @@ export function Commerce051({
                 {foundText.replace("{count}", String(found))}
               </span>
             </h2>
-            <fieldset>
-              <legend>{viewLegend}</legend>
-              <div data-part="switch">
-                <input
-                  type="radio"
-                  name="commerce-051-view"
-                  id="commerce-051-grid"
-                  defaultChecked
-                />
-                <label htmlFor="commerce-051-grid">{gridLabel}</label>
-                <input
-                  type="radio"
-                  name="commerce-051-view"
-                  id="commerce-051-list"
-                  data-part="list-mode"
-                />
-                <label htmlFor="commerce-051-list">{listLabel}</label>
-              </div>
-            </fieldset>
+            <form>
+              <fieldset>
+                <legend>{viewLegend}</legend>
+                <div data-part="switch">
+                  <input
+                    type="radio"
+                    name="commerce-051-view"
+                    id="commerce-051-grid"
+                    defaultChecked
+                  />
+                  <label htmlFor="commerce-051-grid">{gridLabel}</label>
+                  <input
+                    type="radio"
+                    name="commerce-051-view"
+                    id="commerce-051-list"
+                    data-part="list-mode"
+                  />
+                  <label htmlFor="commerce-051-list">{listLabel}</label>
+                </div>
+              </fieldset>
+            </form>
           </div>
 
           <ul>

@@ -72,6 +72,7 @@ border-radius:var(--vibeui-commerce-034-radius);
 color:var(--vibeui-commerce-034-fg);font-family:var(--vibeui-commerce-034-sans);
 }
 [data-vibeui-block="commerce-034"] *{box-sizing:border-box}
+[data-vibeui-block="commerce-034"] form{display:contents}
 [data-vibeui-block="commerce-034"] [data-part="shell"]{max-width:52rem;margin:0 auto;padding:1.25rem 1rem}
 [data-vibeui-block="commerce-034"] h2{margin:0 0 0.25rem;font-size:1.1875rem;font-weight:700;letter-spacing:-0.02em}
 [data-vibeui-block="commerce-034"] [data-part="sum"]{margin:0 0 1rem;font-size:0.875rem;color:var(--vibeui-commerce-034-muted)}
@@ -256,44 +257,48 @@ export function Commerce034({
             {sumTail ?? ""}
           </p>
 
-          <fieldset>
-            <legend>{plansLegend}</legend>
-            <div data-part="plans">
-              {plans.map((plan) => {
-                const total = amount * (1 + plan.overpay)
+          <form>
+            <fieldset>
+              <legend>{plansLegend}</legend>
+              <div data-part="plans">
+                {plans.map((plan) => {
+                  const total = amount * (1 + plan.overpay)
 
-                return (
-                  <label data-part="plan" key={plan.id}>
-                    <input
-                      type="radio"
-                      name="commerce-034-plan"
-                      value={plan.id}
-                      defaultChecked={plan.id === chosen?.id}
-                    />
-                    <span data-part="face">
-                      <span data-part="label">{plan.label}</span>
-                      <span data-part="per">
-                        {money(total / plan.parts, currency, numberLocale)}
-                        {plan.parts > 1 ? <small> × {plan.parts}</small> : null}
+                  return (
+                    <label data-part="plan" key={plan.id}>
+                      <input
+                        type="radio"
+                        name="commerce-034-plan"
+                        value={plan.id}
+                        defaultChecked={plan.id === chosen?.id}
+                      />
+                      <span data-part="face">
+                        <span data-part="label">{plan.label}</span>
+                        <span data-part="per">
+                          {money(total / plan.parts, currency, numberLocale)}
+                          {plan.parts > 1 ? (
+                            <small> × {plan.parts}</small>
+                          ) : null}
+                        </span>
+                        <span
+                          data-part="over"
+                          data-cost={plan.overpay > 0 ? "yes" : "no"}
+                        >
+                          {plan.overpay > 0
+                            ? overpayText.replace(
+                                "{amount}",
+                                money(total - amount, currency, numberLocale),
+                              )
+                            : noOverpayText}
+                        </span>
+                        <span data-part="note">{plan.note}</span>
                       </span>
-                      <span
-                        data-part="over"
-                        data-cost={plan.overpay > 0 ? "yes" : "no"}
-                      >
-                        {plan.overpay > 0
-                          ? overpayText.replace(
-                              "{amount}",
-                              money(total - amount, currency, numberLocale),
-                            )
-                          : noOverpayText}
-                      </span>
-                      <span data-part="note">{plan.note}</span>
-                    </span>
-                  </label>
-                )
-              })}
-            </div>
-          </fieldset>
+                    </label>
+                  )
+                })}
+              </div>
+            </fieldset>
+          </form>
 
           <h3>{scheduleTitle}</h3>
           <ol>

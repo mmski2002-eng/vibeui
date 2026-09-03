@@ -67,6 +67,7 @@ font-family:var(--vibeui-commerce-013-sans);color:var(--vibeui-commerce-013-fg);
 [data-vibeui-block="commerce-013"] *{box-sizing:border-box}
 [data-vibeui-block="commerce-013"] [data-part="shell"]{padding:1rem;max-width:58rem;margin:0 auto}
 [data-vibeui-block="commerce-013"] h2{margin:0 0 0.75rem;font-size:1.25rem;font-weight:700;letter-spacing:-0.02em}
+[data-vibeui-block="commerce-013"] form{display:contents}
 [data-vibeui-block="commerce-013"] [data-part="tabs"]{display:flex;flex-wrap:wrap;gap:0.375rem;margin:0 0 0.875rem;padding:0;border:0}
 [data-vibeui-block="commerce-013"] [data-part="vh"]{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 [data-vibeui-block="commerce-013"] [data-part="tab"]{
@@ -227,19 +228,21 @@ export function Commerce013({
         <div data-part="shell">
           <h2>{title}</h2>
 
-          <fieldset data-part="tabs">
-            <legend data-part="vh">{filterLabel}</legend>
-            {tabs.map((tab, index) => (
-              <label key={tab} data-part="tab">
-                <input
-                  type="radio"
-                  name="commerce-013-tab"
-                  defaultChecked={index === 0}
-                />
-                {tab}
-              </label>
-            ))}
-          </fieldset>
+          <form>
+            <fieldset data-part="tabs">
+              <legend data-part="vh">{filterLabel}</legend>
+              {tabs.map((tab, index) => (
+                <label key={tab} data-part="tab">
+                  <input
+                    type="radio"
+                    name="commerce-013-tab"
+                    defaultChecked={index === 0}
+                  />
+                  {tab}
+                </label>
+              ))}
+            </fieldset>
+          </form>
 
           {orders.length === 0 ? (
             <p data-part="empty">{empty}</p>

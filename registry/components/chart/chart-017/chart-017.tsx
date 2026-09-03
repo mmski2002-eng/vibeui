@@ -193,24 +193,26 @@ export function Chart017({
           })}
         </ol>
         <p data-part="unit">{fillTemplate(unitLabel, { unit })}</p>
-        <table data-part="data">
-          <caption>
-            {title}, {unit}
-          </caption>
-          <tbody>
-            {steps.map((step) => (
-              <tr key={step.label}>
-                <th scope="row">{step.label}</th>
-                <td>{step.value}</td>
-                <td>
-                  {fillTemplate(shareLabel, {
-                    share: Math.round((step.value / first) * 100),
-                  })}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div data-part="data">
+          <table>
+            <caption>
+              {title}, {unit}
+            </caption>
+            <tbody>
+              {steps.map((step) => (
+                <tr key={step.label}>
+                  <th scope="row">{step.label}</th>
+                  <td>{step.value}</td>
+                  <td>
+                    {fillTemplate(shareLabel, {
+                      share: Math.round((step.value / first) * 100),
+                    })}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </figure>
     </>
   )

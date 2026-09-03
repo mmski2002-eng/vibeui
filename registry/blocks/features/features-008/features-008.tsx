@@ -33,6 +33,10 @@ export type Features008Props = {
 // вместе с контекстом и не выкладывает под себя плашку. Тёмная ветка — не
 // инверсия светлой: панель и полоса вкладок там светлее фона, рамки светлее
 // панели, а подпись активной вкладки на светлом акценте становится тёмной.
+//
+// Радиогруппа лежит в собственной <form>: одинаковое имя в двух блоках на
+// одной странице иначе объединило бы их в одну группу, и первый блок
+// остался бы без отмеченного варианта.
 const STYLES = `
 :where([data-vibeui-block="features-008"]){
 --vibeui-features-008-bg:transparent;
@@ -57,6 +61,7 @@ font-family:var(--vibeui-features-008-sans);
 }
 [data-vibeui-block="features-008"] *{box-sizing:border-box}
 [data-vibeui-block="features-008"] [data-part="shell"]{max-width:64rem;width:100%;margin:0 auto;padding:3.5rem 1.25rem}
+[data-vibeui-block="features-008"] [data-part="tabs"]{display:contents}
 [data-vibeui-block="features-008"] [data-part="eyebrow"]{
 margin:0 0 0.75rem;font-size:0.75rem;font-weight:650;letter-spacing:0.14em;text-transform:uppercase;
 color:var(--vibeui-features-008-accent);
@@ -227,6 +232,7 @@ export function Features008({
           {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}
           <h2>{title}</h2>
 
+          <form data-part="tabs">
           {visible.map((tab, index) => (
             <input
               key={tab.id}
@@ -285,6 +291,7 @@ export function Features008({
               </article>
             ))}
           </div>
+          </form>
         </div>
       </section>
     </>

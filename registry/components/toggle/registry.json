@@ -1121,20 +1121,6 @@
             "max": 200
           },
           {
-            "prop": "heading",
-            "label": "Заголовок образца",
-            "type": "text",
-            "default": "Размерная шкала",
-            "maxLength": 32
-          },
-          {
-            "prop": "valueText",
-            "label": "Строка масштаба",
-            "type": "text",
-            "default": "Масштаб {scale}%",
-            "maxLength": 24
-          },
-          {
             "prop": "text",
             "label": "Текст образца",
             "type": "text",
@@ -1201,14 +1187,6 @@
               "scale": {
                 "label": "Scale, %"
               },
-              "heading": {
-                "label": "Sample heading",
-                "default": "Type scale"
-              },
-              "valueText": {
-                "label": "Scale line",
-                "default": "Scale {scale}%"
-              },
               "text": {
                 "label": "Sample text",
                 "default": "The size changes through a single multiplier, so the heading, the paragraph and the spacing grow together."
@@ -1235,6 +1213,9 @@
           }
         },
         "cardControls": [
+          "label",
+          "scale",
+          "text",
           "defaultPressed",
           "accent",
           "background"

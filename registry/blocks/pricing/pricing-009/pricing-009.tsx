@@ -54,6 +54,10 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 // не «прыгает» после гидратации и видна даже при выключенном JavaScript.
 // Суммы прописаны вручную, а не пересчитаны по курсу: локальная цена всегда
 // округлена под рынок, а не получена умножением.
+//
+// Радиогруппа лежит в собственной <form>: одинаковое имя в двух блоках на
+// одной странице иначе объединило бы их в одну группу, и первый блок
+// остался бы без отмеченного варианта.
 const STYLES = `
 :where([data-vibeui-block="pricing-009"]){
 --vibeui-pricing-009-bg:transparent;
@@ -227,16 +231,18 @@ export function Pricing009({
         style={palette}
       >
         <div data-part="shell">
-          {CURRENCIES.map((currency, index) => (
-            <input
-              key={currency}
-              data-cur={currency}
-              id={`vibeui-pricing-009-${currency}`}
-              type="radio"
-              name="vibeui-pricing-009-currency"
-              defaultChecked={index === 0}
-            />
-          ))}
+          <form>
+            {CURRENCIES.map((currency, index) => (
+              <input
+                key={currency}
+                data-cur={currency}
+                id={`vibeui-pricing-009-${currency}`}
+                type="radio"
+                name="vibeui-pricing-009-currency"
+                defaultChecked={index === 0}
+              />
+            ))}
+          </form>
 
           <div data-part="head">
             <div>

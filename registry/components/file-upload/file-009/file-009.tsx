@@ -35,6 +35,10 @@ export type File009Props = Omit<
 // по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней.
 // Активная вкладка и поле адреса красятся отдельным токеном raise, поэтому
 // прозрачная подложка не съедает «поднятую» плитку.
+//
+// Радиогруппа лежит в собственной <form>: одинаковое имя в двух блоках на
+// одной странице иначе объединило бы их в одну группу, и первый блок
+// остался бы без отмеченного варианта.
 const STYLES = `
 :where([data-vibeui-block="file-009"]){
 --vibeui-file-009-surface:transparent;
@@ -193,7 +197,7 @@ export function File009({
       >
         <span data-part="title">{title}</span>
 
-        <div data-part="tabs" role="radiogroup" aria-label={groupLabel}>
+        <form data-part="tabs" role="radiogroup" aria-label={groupLabel}>
           <label data-part="tab">
             <input type="radio" name={name} data-choice="file" defaultChecked />
             {fileTab}
@@ -202,7 +206,7 @@ export function File009({
             <input type="radio" name={name} data-choice="link" />
             {linkTab}
           </label>
-        </div>
+        </form>
 
         <div data-panel="file">
           <label data-part="drop">

@@ -457,20 +457,6 @@
             "maxLength": 40
           },
           {
-            "prop": "progressText",
-            "label": "Строка набора",
-            "type": "text",
-            "default": "{typed} из {expected} цифр после {code}",
-            "maxLength": 60
-          },
-          {
-            "prop": "doneText",
-            "label": "Строка готовности",
-            "type": "text",
-            "default": "Готово: {expected} цифр после {code}",
-            "maxLength": 60
-          },
-          {
             "prop": "accent",
             "label": "Акцент",
             "type": "color",
@@ -532,14 +518,6 @@
                 "label": "Placeholder",
                 "default": "number without the country code"
               },
-              "progressText": {
-                "label": "Typing line",
-                "default": "{typed} of {expected} digits after {code}"
-              },
-              "doneText": {
-                "label": "Completed line",
-                "default": "Done: {expected} digits after {code}"
-              },
               "accent": {
                 "label": "Accent"
               },
@@ -560,6 +538,9 @@
         },
         "cardControls": [
           "expected",
+          "label",
+          "code",
+          "placeholder",
           "accent",
           "background"
         ]
@@ -1007,7 +988,7 @@
             "имя поля через label, текст ошибки через error, набранное значение через defaultValue и образец через example",
             "цвет обычного фокуса через accent",
             "цвета ошибки через переменные --vibeui-phoneinput-006-error и --vibeui-phoneinput-006-error-soft",
-            "подписи строк сравнения",
+            "подписи строк сравнения через typedLabel и expectedLabel",
             "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
           ],
           "notes": [
@@ -1048,20 +1029,6 @@
             "maxLength": 30
           },
           {
-            "prop": "typedLabel",
-            "label": "Подпись «набрано»",
-            "type": "text",
-            "default": "набрано",
-            "maxLength": 16
-          },
-          {
-            "prop": "expectedLabel",
-            "label": "Подпись «нужно»",
-            "type": "text",
-            "default": "нужно",
-            "maxLength": 16
-          },
-          {
             "prop": "accent",
             "label": "Акцент",
             "type": "color",
@@ -1094,7 +1061,7 @@
                 "the field name through label, the message through error, the typed value through defaultValue and the sample through example",
                 "the normal focus color through accent",
                 "the error colors through the --vibeui-phoneinput-006-error and --vibeui-phoneinput-006-error-soft variables",
-                "the captions of the comparison rows",
+                "the comparison row captions through typedLabel and expectedLabel",
                 "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
@@ -1123,14 +1090,6 @@
                 "label": "Sample",
                 "default": "+44 20 7123 4567"
               },
-              "typedLabel": {
-                "label": "\"Typed\" caption",
-                "default": "typed"
-              },
-              "expectedLabel": {
-                "label": "\"Expected\" caption",
-                "default": "expected"
-              },
               "accent": {
                 "label": "Accent"
               },
@@ -1151,6 +1110,10 @@
           }
         },
         "cardControls": [
+          "label",
+          "error",
+          "defaultValue",
+          "example",
           "accent",
           "background"
         ]

@@ -63,6 +63,7 @@ box-sizing:border-box;background:var(--vibeui-commerce-062-bg);
 color:var(--vibeui-commerce-062-fg);font-family:var(--vibeui-commerce-062-sans);
 }
 [data-vibeui-block="commerce-062"] *{box-sizing:border-box}
+[data-vibeui-block="commerce-062"] form{display:contents}
 [data-vibeui-block="commerce-062"] [data-part="shell"]{max-width:50rem;margin:0 auto;padding:1.25rem 1rem 2rem}
 [data-vibeui-block="commerce-062"] [data-part="step"]{margin:0;font-size:0.75rem;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--vibeui-commerce-062-accent)}
 [data-vibeui-block="commerce-062"] h2{margin:0.375rem 0 0.375rem;font-size:1.375rem;font-weight:700;letter-spacing:-0.02em}
@@ -251,52 +252,54 @@ export function Commerce062({
             </button>
           </div>
 
-          <fieldset>
-            <legend>{legend}</legend>
-            <div data-part="points">
-              {points.map((point, index) => (
-                <div key={point.value} data-part="point">
-                  <input
-                    type="radio"
-                    id={`commerce-062-${point.value}`}
-                    name="commerce-062-point"
-                    defaultChecked={index === 0}
-                  />
-                  <label
-                    data-part="face"
-                    htmlFor={`commerce-062-${point.value}`}
-                  >
-                    <span data-part="top">
-                      <span data-part="name">{point.name}</span>
-                      <span data-part="distance">{point.distance}</span>
-                    </span>
-                    <span data-part="address">{point.address}</span>
-                    <span data-part="facts">
-                      <span>{point.hours}</span>
-                      <span>
-                        {factLabels.price ?? FACT_LABEL.price}{" "}
-                        <strong>{point.price}</strong>
+          <form>
+            <fieldset>
+              <legend>{legend}</legend>
+              <div data-part="points">
+                {points.map((point, index) => (
+                  <div key={point.value} data-part="point">
+                    <input
+                      type="radio"
+                      id={`commerce-062-${point.value}`}
+                      name="commerce-062-point"
+                      defaultChecked={index === 0}
+                    />
+                    <label
+                      data-part="face"
+                      htmlFor={`commerce-062-${point.value}`}
+                    >
+                      <span data-part="top">
+                        <span data-part="name">{point.name}</span>
+                        <span data-part="distance">{point.distance}</span>
                       </span>
-                      <span>
-                        {factLabels.eta ?? FACT_LABEL.eta}{" "}
-                        <strong>{point.eta}</strong>
-                      </span>
-                    </span>
-                    <span data-part="perks">
-                      {point.perks.map((perk) => (
-                        <span key={perk} data-part="perk">
-                          {perk}
+                      <span data-part="address">{point.address}</span>
+                      <span data-part="facts">
+                        <span>{point.hours}</span>
+                        <span>
+                          {factLabels.price ?? FACT_LABEL.price}{" "}
+                          <strong>{point.price}</strong>
                         </span>
-                      ))}
-                    </span>
-                    {point.limit ? (
-                      <span data-part="limit">{point.limit}</span>
-                    ) : null}
-                  </label>
-                </div>
-              ))}
-            </div>
-          </fieldset>
+                        <span>
+                          {factLabels.eta ?? FACT_LABEL.eta}{" "}
+                          <strong>{point.eta}</strong>
+                        </span>
+                      </span>
+                      <span data-part="perks">
+                        {point.perks.map((perk) => (
+                          <span key={perk} data-part="perk">
+                            {perk}
+                          </span>
+                        ))}
+                      </span>
+                      {point.limit ? (
+                        <span data-part="limit">{point.limit}</span>
+                      ) : null}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </fieldset>
+          </form>
 
           <button type="button" data-part="go">
             {cta}

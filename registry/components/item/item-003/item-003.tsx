@@ -49,8 +49,8 @@ overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 }
 /* Кнопка не сжимается: её подпись важнее подробностей строки. */
 [data-vibeui-block="item-003"] [data-part="action"]{
-flex:none;appearance:none;cursor:pointer;
-height:1.875rem;padding:0 0.75rem;border-radius:0.5rem;
+flex:none;appearance:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;
+min-height:1.875rem;padding:0.25rem 0.75rem;border-radius:0.5rem;
 border:1px solid color-mix(in oklab,var(--vibeui-item-003-accent) 45%,transparent);
 background:color-mix(in oklab,var(--vibeui-item-003-accent) 10%,transparent);
 color:var(--vibeui-item-003-accent);

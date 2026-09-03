@@ -25,6 +25,10 @@ import { Chart022 } from "@/registry/components/chart/chart-022/chart-022"
 import { Chart023 } from "@/registry/components/chart/chart-023/chart-023"
 import { Chart024 } from "@/registry/components/chart/chart-024/chart-024"
 import { Chart025 } from "@/registry/components/chart/chart-025/chart-025"
+import { Chart026 } from "@/registry/components/chart/chart-026/chart-026"
+import { Chart027 } from "@/registry/components/chart/chart-027/chart-027"
+import { Chart028 } from "@/registry/components/chart/chart-028/chart-028"
+import { Chart029 } from "@/registry/components/chart/chart-029/chart-029"
 
 /** Seed прогона: с ним набор воспроизводится один в один. */
 export const SEED = 52594
@@ -280,5 +284,45 @@ export const CHECKS: LabCheck[] = [
     title: "Карта по часам",
     notes: ["Заголовок: Проверка", "Единица: Проверка", "Акцент: #6fd40e"],
     node: <Chart025 title="Проверка" unit="Проверка" accent="#6fd40e" />,
+  },
+  {
+    name: "chart-026",
+    title: "Строки со спарклайнами",
+    notes: ["Заголовок: Проверка", "Рост — это хорошо: false", "Акцент: #1f7a5c"],
+    node: <Chart026 title="Проверка" riseIsGood={false} accent="#1f7a5c" />,
+  },
+  {
+    name: "chart-027",
+    title: "Паутина",
+    notes: ["Заголовок: Черновик", "Подпись контура: Черновик", "Акцент: #7a3fd4"],
+    node: (
+      <Chart027 title="Черновик" seriesLabel="Черновик" accent="#7a3fd4" />
+    ),
+  },
+  {
+    name: "chart-028",
+    title: "Столбцы и линия",
+    notes: ["Заголовок: Проверка", "Подпись линии: Доля", "Знак: ‰"],
+    node: (
+      <Chart028
+        title="Проверка"
+        lineLabel="Доля"
+        lineSuffix="‰"
+        accent="#d4643f"
+      />
+    ),
+  },
+  {
+    name: "chart-029",
+    title: "Лента активности",
+    notes: ["Заголовок: Черновик", "Подписи шкалы: мало / много", "Акцент: #2f6df6"],
+    node: (
+      <Chart029
+        title="Черновик"
+        lessLabel="мало"
+        moreLabel="много"
+        accent="#2f6df6"
+      />
+    ),
   },
 ]

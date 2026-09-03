@@ -230,33 +230,35 @@ export function Chart015({
           ))}
         </ul>
         <p data-part="unit">{fillTemplate(unitLabel, { unit, max })}</p>
-        <table data-part="data">
-          <caption>
-            {title}, {unit}
-          </caption>
-          <thead>
-            <tr>
-              <th scope="col">{tableText.period ?? TABLE_TEXT.period}</th>
-              {series.map((name) => (
-                <th key={name} scope="col">
-                  {name}
-                </th>
-              ))}
-              <th scope="col">{tableText.total ?? TABLE_TEXT.total}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {periods.map((period, periodIndex) => (
-              <tr key={period.label}>
-                <th scope="row">{period.label}</th>
-                {period.values.map((value, seriesIndex) => (
-                  <td key={series[seriesIndex] ?? seriesIndex}>{value}</td>
+        <div data-part="data">
+          <table>
+            <caption>
+              {title}, {unit}
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">{tableText.period ?? TABLE_TEXT.period}</th>
+                {series.map((name) => (
+                  <th key={name} scope="col">
+                    {name}
+                  </th>
                 ))}
-                <td>{totals[periodIndex]}</td>
+                <th scope="col">{tableText.total ?? TABLE_TEXT.total}</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {periods.map((period, periodIndex) => (
+                <tr key={period.label}>
+                  <th scope="row">{period.label}</th>
+                  {period.values.map((value, seriesIndex) => (
+                    <td key={series[seriesIndex] ?? seriesIndex}>{value}</td>
+                  ))}
+                  <td>{totals[periodIndex]}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </figure>
     </>
   )

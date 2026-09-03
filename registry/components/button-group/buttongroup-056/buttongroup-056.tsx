@@ -101,7 +101,7 @@ opacity:0;translate:0 0.25rem;pointer-events:none;
 transition:opacity .14s ease,translate .14s ease;
 }
 [data-vibeui-block="buttongroup-056"] [data-part="segment"]:hover [data-part="tip"],
-[data-vibeui-block="buttongroup-056"] [data-part="segment"]:has(input:focus-visible) [data-part="tip"]{
+[data-vibeui-block="buttongroup-056"] [data-part="segment"]:focus-within [data-part="tip"]{
 opacity:1;translate:0 0;
 }
 /* Якорь выдаётся только активному сегменту: в каждый момент он ровно один. */

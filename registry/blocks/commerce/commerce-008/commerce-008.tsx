@@ -63,6 +63,7 @@ background:var(--vibeui-commerce-008-bg);
 font-family:var(--vibeui-commerce-008-sans);color:var(--vibeui-commerce-008-fg);
 }
 [data-vibeui-block="commerce-008"] *{box-sizing:border-box}
+[data-vibeui-block="commerce-008"] form{display:contents}
 [data-vibeui-block="commerce-008"] [data-part="shell"]{
 padding:1rem;max-width:72rem;margin:0 auto;display:grid;gap:1rem;grid-template-columns:1fr;align-items:start;
 }
@@ -221,81 +222,85 @@ export function Commerce008({
         aria-label={title}
       >
         <div data-part="shell">
-          <div data-part="gallery">
-            {frames.map((shot, index) => (
-              <input
-                key={shot}
-                data-part="pick"
-                type="radio"
-                name="commerce-008-shot"
-                id={`commerce-008-shot-${index + 1}`}
-                defaultChecked={index === 0}
-                aria-label={shot}
-              />
-            ))}
-            <div data-part="stage">
+          <form>
+            <div data-part="gallery">
               {frames.map((shot, index) => (
-                <span
+                <input
                   key={shot}
-                  data-slide={index + 1}
-                  style={
-                    {
-                      "--vibeui-commerce-008-hue": 240 + index * 40,
-                    } as CSSProperties
-                  }
-                >
-                  {shot}
-                </span>
-              ))}
-            </div>
-            <div data-part="thumbs">
-              {frames.map((shot, index) => (
-                <label
-                  key={shot}
-                  data-thumb={index + 1}
-                  htmlFor={`commerce-008-shot-${index + 1}`}
-                  title={shot}
-                  style={
-                    {
-                      "--vibeui-commerce-008-hue": 240 + index * 40,
-                    } as CSSProperties
-                  }
+                  data-part="pick"
+                  type="radio"
+                  name="commerce-008-shot"
+                  id={`commerce-008-shot-${index + 1}`}
+                  defaultChecked={index === 0}
+                  aria-label={shot}
                 />
               ))}
+              <div data-part="stage">
+                {frames.map((shot, index) => (
+                  <span
+                    key={shot}
+                    data-slide={index + 1}
+                    style={
+                      {
+                        "--vibeui-commerce-008-hue": 240 + index * 40,
+                      } as CSSProperties
+                    }
+                  >
+                    {shot}
+                  </span>
+                ))}
+              </div>
+              <div data-part="thumbs">
+                {frames.map((shot, index) => (
+                  <label
+                    key={shot}
+                    data-thumb={index + 1}
+                    htmlFor={`commerce-008-shot-${index + 1}`}
+                    title={shot}
+                    style={
+                      {
+                        "--vibeui-commerce-008-hue": 240 + index * 40,
+                      } as CSSProperties
+                    }
+                  />
+                ))}
+              </div>
             </div>
-          </div>
+          </form>
 
           <div>
             <p data-part="brand">{brand}</p>
             <h2>{title}</h2>
             <p data-part="price">{price}</p>
 
-            <fieldset>
-              <legend>{text.color}</legend>
-              <div data-part="swatches">
-                {variants.map((variant, index) => (
-                  <label key={variant.value} data-part="swatch">
-                    <input
-                      type="radio"
-                      name="commerce-008-variant"
-                      value={variant.value}
-                      defaultChecked={index === 0}
-                    />
-                    <span
-                      data-part="dot"
-                      aria-hidden="true"
-                      style={
-                        {
-                          "--vibeui-commerce-008-dot": variant.hue,
-                        } as CSSProperties
-                      }
-                    />
-                    {variant.label}
-                    {variant.note ? ` · ${variant.note}` : ""}
-                  </label>
-                ))}
-              </div>
-            </fieldset>
+            <form>
+              <fieldset>
+                <legend>{text.color}</legend>
+                <div data-part="swatches">
+                  {variants.map((variant, index) => (
+                    <label key={variant.value} data-part="swatch">
+                      <input
+                        type="radio"
+                        name="commerce-008-variant"
+                        value={variant.value}
+                        defaultChecked={index === 0}
+                      />
+                      <span
+                        data-part="dot"
+                        aria-hidden="true"
+                        style={
+                          {
+                            "--vibeui-commerce-008-dot": variant.hue,
+                          } as CSSProperties
+                        }
+                      />
+                      {variant.label}
+                      {variant.note ? ` · ${variant.note}` : ""}
+                    </label>
+                  ))}
+                </div>
+              </fieldset>
+            </form>
 
             <div data-part="row">
               <label htmlFor="commerce-008-count" data-part="brand">

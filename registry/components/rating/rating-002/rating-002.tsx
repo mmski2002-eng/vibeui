@@ -28,6 +28,10 @@ export type Rating002Props = Omit<
 //
 // Тема берётся из color-scheme окружения через light-dark(): компонент
 // темнеет вместе со страницей и не носит собственной тёмной темы.
+//
+// Радиокнопки лежат в собственной <form data-part="stars">: одинаковое имя
+// в двух блоках на одной странице иначе объединило бы их в одну группу, и
+// первый блок остался бы без отмеченной оценки.
 const STYLES = `
 :where([data-vibeui-block="rating-002"]){
 --vibeui-rating-002-surface:transparent;
@@ -182,7 +186,7 @@ export function Rating002({
         style={palette}
       >
         <legend>{legend}</legend>
-        <div data-part="stars">
+        <form data-part="stars">
           <span data-part="track" aria-hidden="true">
             ★★★★★
           </span>
@@ -208,7 +212,7 @@ export function Rating002({
               />
             </label>
           ))}
-        </div>
+        </form>
         <div data-part="values" aria-live="polite">
           {STEPS.map((step) => (
             <p key={step} data-part="value" data-value={step}>

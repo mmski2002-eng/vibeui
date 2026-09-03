@@ -72,6 +72,7 @@ box-sizing:border-box;background:var(--vibeui-commerce-060-bg);
 color:var(--vibeui-commerce-060-fg);font-family:var(--vibeui-commerce-060-sans);
 }
 [data-vibeui-block="commerce-060"] *{box-sizing:border-box}
+[data-vibeui-block="commerce-060"] form{display:contents}
 [data-vibeui-block="commerce-060"] [data-part="shell"]{max-width:62rem;margin:0 auto;padding:1.25rem 1rem 2rem}
 [data-vibeui-block="commerce-060"] h2{margin:0 0 0.375rem;font-size:1.375rem;font-weight:700;letter-spacing:-0.02em}
 [data-vibeui-block="commerce-060"] [data-part="lead"]{margin:0 0 1.25rem;max-width:56ch;font-size:0.875rem;line-height:1.55;color:var(--vibeui-commerce-060-muted)}
@@ -285,37 +286,39 @@ export function Commerce060({
             ))}
           </ul>
 
-          <fieldset>
-            <legend>{planLegend}</legend>
-            <div data-part="plans">
-              {plans.map((plan, index) => (
-                <label
-                  key={plan.value}
-                  data-part="plan"
-                  htmlFor={`commerce-060-plan-${plan.value}`}
-                >
-                  <input
-                    type="radio"
-                    id={`commerce-060-plan-${plan.value}`}
-                    name="commerce-060-plan"
-                    defaultChecked={index === 0}
-                  />
-                  <span data-part="face">
-                    <span data-part="plabel">{plan.label}</span>
-                    <span data-part="pdetail">{plan.detail}</span>
-                    <span data-part="prices">
-                      <span>
-                        {shippingLabel}: <strong>{plan.shipping}</strong>
-                      </span>
-                      <span>
-                        {totalLabel}: <strong>{plan.total}</strong>
+          <form>
+            <fieldset>
+              <legend>{planLegend}</legend>
+              <div data-part="plans">
+                {plans.map((plan, index) => (
+                  <label
+                    key={plan.value}
+                    data-part="plan"
+                    htmlFor={`commerce-060-plan-${plan.value}`}
+                  >
+                    <input
+                      type="radio"
+                      id={`commerce-060-plan-${plan.value}`}
+                      name="commerce-060-plan"
+                      defaultChecked={index === 0}
+                    />
+                    <span data-part="face">
+                      <span data-part="plabel">{plan.label}</span>
+                      <span data-part="pdetail">{plan.detail}</span>
+                      <span data-part="prices">
+                        <span>
+                          {shippingLabel}: <strong>{plan.shipping}</strong>
+                        </span>
+                        <span>
+                          {totalLabel}: <strong>{plan.total}</strong>
+                        </span>
                       </span>
                     </span>
-                  </span>
-                </label>
-              ))}
-            </div>
-          </fieldset>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+          </form>
 
           <button type="button" data-part="go">
             {cta}

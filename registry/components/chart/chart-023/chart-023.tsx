@@ -220,36 +220,38 @@ export function Chart023({
           })}
         </svg>
         <p data-part="unit">{fillTemplate(unitLabel, { unit })}</p>
-        <table data-part="data">
-          <caption>
-            {title}, {unit}
-          </caption>
-          <thead>
-            <tr>
-              <th scope="col">{tableText.stage ?? TABLE_TEXT.stage}</th>
-              <th scope="col">{tableText.count ?? TABLE_TEXT.count}</th>
-              <th scope="col">
-                {tableText.conversion ?? TABLE_TEXT.conversion}
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {stages.map((stage, index) => {
-              const previous = stages[index - 1]
-              const conversion = previous
-                ? `${Math.round((stage.value / previous.value) * 100)}%`
-                : "—"
+        <div data-part="data">
+          <table>
+            <caption>
+              {title}, {unit}
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">{tableText.stage ?? TABLE_TEXT.stage}</th>
+                <th scope="col">{tableText.count ?? TABLE_TEXT.count}</th>
+                <th scope="col">
+                  {tableText.conversion ?? TABLE_TEXT.conversion}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {stages.map((stage, index) => {
+                const previous = stages[index - 1]
+                const conversion = previous
+                  ? `${Math.round((stage.value / previous.value) * 100)}%`
+                  : "—"
 
-              return (
-                <tr key={stage.label}>
-                  <th scope="row">{stage.label}</th>
-                  <td>{stage.value}</td>
-                  <td>{conversion}</td>
-                </tr>
-              )
-            })}
-          </tbody>
-        </table>
+                return (
+                  <tr key={stage.label}>
+                    <th scope="row">{stage.label}</th>
+                    <td>{stage.value}</td>
+                    <td>{conversion}</td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        </div>
       </figure>
     </>
   )

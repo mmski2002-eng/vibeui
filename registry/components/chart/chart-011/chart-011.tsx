@@ -237,19 +237,21 @@ export function Chart011({
           ))}
         </svg>
         <p data-part="unit">{fillTemplate(unitLabel, { unit })}</p>
-        <table data-part="data">
-          <caption>
-            {title}, {unit}
-          </caption>
-          <tbody>
-            {points.map((point) => (
-              <tr key={point.label}>
-                <th scope="row">{point.label}</th>
-                <td>{point.value}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div data-part="data">
+          <table>
+            <caption>
+              {title}, {unit}
+            </caption>
+            <tbody>
+              {points.map((point) => (
+                <tr key={point.label}>
+                  <th scope="row">{point.label}</th>
+                  <td>{point.value}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </figure>
     </>
   )

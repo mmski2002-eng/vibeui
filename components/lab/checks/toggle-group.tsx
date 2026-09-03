@@ -16,6 +16,7 @@ import { Togglegroup013 } from "@/registry/components/toggle-group/togglegroup-0
 import { Togglegroup014 } from "@/registry/components/toggle-group/togglegroup-014/togglegroup-014"
 import { Togglegroup015 } from "@/registry/components/toggle-group/togglegroup-015/togglegroup-015"
 import { Togglegroup016 } from "@/registry/components/toggle-group/togglegroup-016/togglegroup-016"
+import { Togglegroup017 } from "@/registry/components/toggle-group/togglegroup-017/togglegroup-017"
 
 /** Seed прогона: с ним набор воспроизводится один в один. */
 export const SEED = 8027
@@ -229,6 +230,14 @@ export const CHECKS: LabCheck[] = [
         accent="#f5a933"
         label="Черновик"
       />
+    ),
+  },
+  {
+    name: "togglegroup-017",
+    title: "Сегмент с бегунком",
+    notes: ["Заголовок: Проверка", "Выбрано: month", "Акцент: #7a3fd4"],
+    node: (
+      <Togglegroup017 label="Проверка" defaultValue="month" accent="#7a3fd4" />
     ),
   },
 ]

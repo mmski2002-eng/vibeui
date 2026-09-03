@@ -70,6 +70,7 @@ font-family:var(--vibeui-commerce-025-sans);color:var(--vibeui-commerce-025-fg);
 }
 [data-vibeui-block="commerce-025"] *{box-sizing:border-box}
 [data-vibeui-block="commerce-025"] [data-part="shell"]{padding:1rem;max-width:20rem;margin:0 auto}
+[data-vibeui-block="commerce-025"] form{display:contents}
 @container (min-width: 24rem){
 [data-vibeui-block="commerce-025"] [data-part="shell"]{max-width:22rem}
 }
@@ -294,43 +295,45 @@ export function Commerce025({
             </div>
           </details>
 
-          {groups.map((group) => (
-            <details key={group.title} open={group.open}>
-              <summary>{group.title}</summary>
-              <div data-part="options">
-                {group.options.map((option, index) => (
-                  <label key={option.label} data-part="option">
-                    <input
-                      type={group.kind === "rate" ? "radio" : "checkbox"}
-                      name={
-                        group.kind === "rate"
-                          ? `commerce-025-${group.title}`
-                          : undefined
-                      }
-                      defaultChecked={
-                        group.kind === "rate" ? index === 0 : option.checked
-                      }
-                    />
-                    {group.kind === "color" ? (
-                      <span
-                        data-part="dot"
-                        aria-hidden="true"
-                        style={
-                          {
-                            "--vibeui-commerce-025-hue": option.hue ?? 262,
-                          } as CSSProperties
+          <form>
+            {groups.map((group) => (
+              <details key={group.title} open={group.open}>
+                <summary>{group.title}</summary>
+                <div data-part="options">
+                  {group.options.map((option, index) => (
+                    <label key={option.label} data-part="option">
+                      <input
+                        type={group.kind === "rate" ? "radio" : "checkbox"}
+                        name={
+                          group.kind === "rate"
+                            ? `commerce-025-${group.title}`
+                            : undefined
+                        }
+                        defaultChecked={
+                          group.kind === "rate" ? index === 0 : option.checked
                         }
                       />
-                    ) : null}
-                    {option.label}
-                    {option.count !== undefined ? (
-                      <span data-part="num">{option.count}</span>
-                    ) : null}
-                  </label>
-                ))}
-              </div>
-            </details>
-          ))}
+                      {group.kind === "color" ? (
+                        <span
+                          data-part="dot"
+                          aria-hidden="true"
+                          style={
+                            {
+                              "--vibeui-commerce-025-hue": option.hue ?? 262,
+                            } as CSSProperties
+                          }
+                        />
+                      ) : null}
+                      {option.label}
+                      {option.count !== undefined ? (
+                        <span data-part="num">{option.count}</span>
+                      ) : null}
+                    </label>
+                  ))}
+                </div>
+              </details>
+            ))}
+          </form>
 
           <button type="button" data-part="apply">
             {cta.replace("{count}", String(found))}
