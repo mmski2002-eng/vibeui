@@ -111,4 +111,19 @@ export const PREVIEWS = {
       (module) => module.Dropdown018,
     ),
   ),
+  "dropdown-019": dynamic(() =>
+    import("@/registry/components/dropdown-menu/dropdown-019/dropdown-019").then(
+      (module) => module.Dropdown019,
+    ),
+  ),
+  "dropdown-020": dynamic(() =>
+    import("@/registry/components/dropdown-menu/dropdown-020/dropdown-020").then(
+      (module) => module.Dropdown020,
+    ),
+  ),
+  "dropdown-021": dynamic(() =>
+    import("@/registry/components/dropdown-menu/dropdown-021/dropdown-021").then(
+      (module) => module.Dropdown021,
+    ),
+  ),
 } satisfies PreviewMap

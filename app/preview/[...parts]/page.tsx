@@ -7,7 +7,12 @@ import { getCatalogItem, getItemKind } from "@/registry/index"
 import { loadPreviewMap } from "@/registry/preview-loaders"
 
 function isItemKind(value: string): value is ItemKind {
-  return value === "block" || value === "component" || value === "template"
+  return (
+    value === "block" ||
+    value === "component" ||
+    value === "animation" ||
+    value === "template"
+  )
 }
 
 function queryString(params: { theme?: string; lang?: string }) {
@@ -78,7 +83,7 @@ export default async function PreviewPage({
     notFound()
   }
 
-  const centered = itemKind === "component"
+  const centered = itemKind !== "block"
 
   return (
     <div

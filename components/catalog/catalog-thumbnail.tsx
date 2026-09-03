@@ -46,7 +46,7 @@ export function CatalogThumbnail({
       slug={slug}
       kind={kind}
       category={category}
-      compact={kind === "component"}
+      compact={kind !== "block"}
       // Компоненту, которому нужна настоящая ширина строки, её надо дать:
       // во flex-кадре он иначе схлопывается по содержимому и врёт про дизайн.
       full={preview?.width === "full"}

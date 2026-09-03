@@ -30,6 +30,7 @@ const CHECK = process.argv.includes("--check")
 const TREES = [
   { root: "registry/blocks", kind: "block" },
   { root: "registry/components", kind: "component" },
+  { root: "registry/animations", kind: "animation" },
 ]
 
 const GENERATED_HEADER = `// Сгенерировано \`npm run indexes\` из registry/**/registry.json.

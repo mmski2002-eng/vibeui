@@ -3,10 +3,9 @@ import { ItemPage } from "@/components/pages/item-page"
 import { localizeItem } from "@/lib/localize"
 import {
   getCatalogItem,
-  getCatalogItems,
   getCategoryCards,
   getCategoryLabel,
-  getItemKind,
+  getItemsByKind,
 } from "@/registry/index"
 
 export const dynamicParams = false
@@ -20,7 +19,7 @@ export async function generateMetadata({
   const found = getCatalogItem(slug)
 
   if (!found) {
-    const category = getCategoryCards("component").find(
+    const category = getCategoryCards("animation").find(
       (entry) => entry.slug === slug,
     )
 
@@ -37,16 +36,14 @@ export async function generateMetadata({
 
 export function generateStaticParams() {
   return [
-    ...getCatalogItems()
-      .filter((item) => getItemKind(item.name) === "component")
-      .map((item) => ({ slug: item.name })),
-    ...getCategoryCards("component").map((category) => ({
+    ...getItemsByKind("animation").map((item) => ({ slug: item.name })),
+    ...getCategoryCards("animation").map((category) => ({
       slug: category.slug,
     })),
   ]
 }
 
-export default async function EnComponentDetailPage({
+export default async function EnAnimationDetailPage({
   params,
   searchParams,
 }: {
@@ -56,7 +53,7 @@ export default async function EnComponentDetailPage({
   const { slug } = await params
 
   if (!getCatalogItem(slug)) {
-    return <CategoryPage locale="en" kind="component" category={slug} />
+    return <CategoryPage locale="en" kind="animation" category={slug} />
   }
 
   return <ItemPage locale="en" slug={slug} query={await searchParams} />

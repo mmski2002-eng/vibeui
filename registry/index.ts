@@ -20,23 +20,49 @@ function categoryGroup(category: string | undefined): ItemGroup | undefined {
   return CATEGORIES.find((entry) => entry.slug === category)?.group
 }
 
-const ITEMS: CatalogEntry[] = SOURCES.flatMap((source) =>
-  (source.items as unknown as CatalogItem[])
-    .filter((item) => !item.meta?.internal)
-    .map((item) => {
-      const category = item.categories?.[0]
+const ALL_ITEMS: CatalogEntry[] = SOURCES.flatMap((source) =>
+  (source.items as unknown as CatalogItem[]).map((item) => {
+    const category = item.categories?.[0]
 
-      return {
-        item,
-        directory: source.directory,
-        kind: item.meta?.kind ?? source.kind,
-        category,
-        group: item.meta?.group ?? categoryGroup(category),
-      }
-    }),
+    return {
+      item,
+      directory: source.directory,
+      kind: item.meta?.kind ?? source.kind,
+      category,
+      group: item.meta?.group ?? categoryGroup(category),
+    }
+  }),
 )
 
-const BY_SLUG = new Map(ITEMS.map((entry) => [entry.item.name, entry]))
+// Витрина показывает только не-internal items: internal живут своей вкладкой
+// (например, «Анимации»), в общий каталог, счётчики и sidebar не попадают.
+const ITEMS: CatalogEntry[] = ALL_ITEMS.filter(
+  (entry) => !entry.item.meta?.internal,
+)
+
+// Прямой доступ по slug — по всем items, включая internal: их страница и
+// превью на своей вкладке должны работать, просто в списки каталога они не идут.
+const BY_SLUG = new Map(ALL_ITEMS.map((entry) => [entry.item.name, entry]))
+
+/**
+ * База URL каталога (браузер категорий) для типа: блоки, компоненты и
+ * анимации живут на разных маршрутах верхнего уровня.
+ */
+export function catalogBasePath(kind: ItemKind): string {
+  return kind === "block"
+    ? "/blocks"
+    : kind === "animation"
+      ? "/animations"
+      : "/components"
+}
+
+/**
+ * База URL страницы item'а. Каждый тип держит детали в своём разделе —
+ * блоки, компоненты и анимации независимы. Совпадает с catalogBasePath.
+ */
+export function itemBasePath(kind: ItemKind): string {
+  return catalogBasePath(kind)
+}
 
 export function getCatalogItems(): CatalogItem[] {
   return ITEMS.map((entry) => entry.item)

@@ -37,6 +37,7 @@ type Dictionary = {
   }
   components: { title: string; description: string; metaTitle: string }
   blocks: { title: string; description: string; metaTitle: string }
+  animations: { title: string; description: string; metaTitle: string }
   nav: { heading: string; all: string; filter: string }
   catalog: {
     filterCategories: string
@@ -139,6 +140,12 @@ const RU: Dictionary = {
     metaTitle: "Блоки",
     description:
       "Готовые секции лендинга целиком. Каждая ставится одной командой, не зависит от темы вашего проекта и приходит с инструкцией для ИИ-агента.",
+  },
+  animations: {
+    title: "Анимации",
+    metaTitle: "Анимации",
+    description:
+      "Анимированные компоненты, воссозданные в нашей концепции: один файл, ноль зависимостей, своя палитра. Каждый ставится одной командой и приходит с инструкцией для ИИ-агента.",
   },
   nav: { heading: "Каталог", all: "Всё", filter: "Фильтр каталога" },
   catalog: {
@@ -249,6 +256,12 @@ const EN: Dictionary = {
     metaTitle: "Blocks",
     description:
       "Whole landing page sections. Each one installs with a single command, carries its own palette instead of borrowing your theme, and ships with instructions your agent can follow.",
+  },
+  animations: {
+    title: "Animations",
+    metaTitle: "Animations",
+    description:
+      "Animated components recreated in our concept: one file, zero dependencies, their own palette. Each installs with a single command and ships with instructions your agent can follow.",
   },
   nav: { heading: "Catalog", all: "All", filter: "Filter the catalog" },
   catalog: {

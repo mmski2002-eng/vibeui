@@ -8,7 +8,7 @@ import {
   getRegistryItemUrl,
   getSiteBaseUrl,
 } from "@/lib/site"
-import { getCatalogItem, getItemKind } from "@/registry/index"
+import { getCatalogItem, getItemKind, itemBasePath } from "@/registry/index"
 
 /**
  * Инструкция для агента по короткой ссылке `/c/<name>`.
@@ -38,13 +38,15 @@ export async function GET(
 
   const item = localizeItem(found, locale)
   const siteUrl = getSiteBaseUrl()
-  const pagePath = locale === "en" ? "/en/components" : "/components"
+  const kind = getItemKind(item.name) ?? "block"
+  const base = itemBasePath(kind)
+  const pagePath = locale === "en" ? `/en${base}` : base
   const values = resolveControlValues(item, search)
 
   const brief = buildAgentBrief(item, {
     installCommand: getInstallCommand(item.name),
     registryUrl: getRegistryItemUrl(item.name),
-    kind: getItemKind(item.name) ?? "block",
+    kind,
     pageUrl: siteUrl ? `${siteUrl}${pagePath}/${item.name}` : null,
     fileUrl: getItemFileUrl(item.name),
     values,

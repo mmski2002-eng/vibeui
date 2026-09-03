@@ -3,9 +3,12 @@ import Link from "next/link"
 import { getDictionary, localePath, type Locale } from "@/lib/i18n"
 import { localizeItem } from "@/lib/localize"
 import {
+  catalogBasePath,
   getCatalogItem,
   getCatalogItems,
   getCategoryLabel,
+  getItemKind,
+  itemBasePath,
 } from "@/registry/index"
 
 const LINK =
@@ -34,6 +37,15 @@ export function CatalogItemNav({
     return null
   }
 
+  const kind = getItemKind(activeSlug) ?? "component"
+  const base = itemBasePath(kind)
+  const rootLabel =
+    kind === "block"
+      ? t.topbar.blocks
+      : kind === "animation"
+        ? t.topbar.animations
+        : t.components.title
+
   const items = getCatalogItems()
     .filter((item) => item.categories?.[0] === category)
     .map((item) => localizeItem(item, locale))
@@ -41,7 +53,7 @@ export function CatalogItemNav({
   return (
     <nav aria-label={t.nav.heading} className="space-y-4">
       <Link
-        href={localePath(locale, `/components/${category}`)}
+        href={localePath(locale, `${base}/${category}`)}
         className="text-shell-muted hover:text-shell-fg focus-visible:ring-shell-ring block rounded-sm px-3 text-xs font-medium tracking-wide uppercase transition-colors focus-visible:ring-2 focus-visible:outline-none"
       >
         {getCategoryLabel(category, locale)}
@@ -51,7 +63,7 @@ export function CatalogItemNav({
         {items.map((item) => (
           <li key={item.name}>
             <Link
-              href={localePath(locale, `/components/${item.name}`)}
+              href={localePath(locale, `${base}/${item.name}`)}
               aria-current={item.name === activeSlug ? "page" : undefined}
               className={
                 LINK +
@@ -67,10 +79,10 @@ export function CatalogItemNav({
       </ul>
 
       <Link
-        href={localePath(locale, "/components")}
+        href={localePath(locale, catalogBasePath(kind))}
         className={`${LINK}border-shell-border text-shell-muted hover:text-shell-fg hover:bg-shell-panel mt-1 border-t pt-3`}
       >
-        {t.nav.all} · {t.components.title}
+        {t.nav.all} · {rootLabel}
       </Link>
     </nav>
   )

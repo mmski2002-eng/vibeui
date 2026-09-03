@@ -57,7 +57,12 @@ type PromptCopy = {
 
 const RU: PromptCopy = {
   brief: {
-    noun: { block: "блок", component: "компонент", template: "шаблон" },
+    noun: {
+      block: "блок",
+      component: "компонент",
+      animation: "компонент",
+      template: "шаблон",
+    },
     install: (noun) =>
       `Установи ${noun} командой. Не пиши код сам и не пересоздавай его по описанию:`,
     noCommand: "Команда установки не сконфигурирована.",
@@ -73,6 +78,8 @@ const RU: PromptCopy = {
     preserve: "Сохрани как установлено:",
     placement: {
       component:
+        "Это inline-компонент: поставь его туда, куда просил пользователь, внутрь существующей разметки.",
+      animation:
         "Это inline-компонент: поставь его туда, куда просил пользователь, внутрь существующей разметки.",
       block:
         "Это полноширинная секция: поставь её прямым потомком разметки страницы, не внутрь карточки или сайдбара.",
@@ -120,6 +127,12 @@ const RU: PromptCopy = {
         "новую страницу, секцию или обёртку. Если на этом месте уже стоит похожий",
         "контрол — замени его, а не добавляй второй.",
       ],
+      animation: [
+        "Это мелкий inline-компонент. Поставь его ровно туда, куда просил",
+        "пользователь, внутрь существующей разметки. Не создавай ради него",
+        "новую страницу, секцию или обёртку. Если на этом месте уже стоит похожий",
+        "контрол — замени его, а не добавляй второй.",
+      ],
       block: [
         "Это полноширинная секция страницы. Поставь её прямым потомком",
         "разметки страницы, в том порядке, который назвал пользователь. Не",
@@ -151,7 +164,12 @@ const RU: PromptCopy = {
 
 const EN: PromptCopy = {
   brief: {
-    noun: { block: "section", component: "component", template: "page" },
+    noun: {
+      block: "section",
+      component: "component",
+      animation: "component",
+      template: "page",
+    },
     install: (noun) =>
       `Install this ${noun} with the command below. Do not write the code yourself and do not recreate it from the description:`,
     noCommand: "The install command is not configured.",
@@ -167,6 +185,8 @@ const EN: PromptCopy = {
     preserve: "Keep as installed:",
     placement: {
       component:
+        "This is an inline component: put it where the user asked, inside the existing markup.",
+      animation:
         "This is an inline component: put it where the user asked, inside the existing markup.",
       block:
         "This is a full-width section: place it as a direct child of the page layout, never inside a card or sidebar.",
@@ -210,6 +230,12 @@ const EN: PromptCopy = {
     whereHeading: "## 4. Where to place it",
     where: {
       component: [
+        "This is a small inline component. Put it exactly where the user asked,",
+        "inside the existing markup. Do not create a new page, section or",
+        "wrapper for it. If a similar control already sits in that spot,",
+        "replace it instead of adding a second one.",
+      ],
+      animation: [
         "This is a small inline component. Put it exactly where the user asked,",
         "inside the existing markup. Do not create a new page, section or",
         "wrapper for it. If a similar control already sits in that spot,",

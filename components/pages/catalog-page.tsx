@@ -4,9 +4,20 @@ import { CatalogChrome } from "@/components/catalog/catalog-chrome"
 import { CategoryGrid } from "@/components/catalog/catalog-grid"
 import { CatalogShell } from "@/components/catalog/catalog-shell"
 import { getDictionary, localePath, type Locale } from "@/lib/i18n"
-import { getCategoryCards, getItemsByKind } from "@/registry/index"
+import {
+  catalogBasePath,
+  getCategoryCards,
+  getItemsByKind,
+} from "@/registry/index"
+import type { ItemKind } from "@/registry/categories"
 
-export type CatalogVariant = "home" | "components" | "blocks"
+export type CatalogVariant = "home" | "components" | "blocks" | "animations"
+
+const VARIANT_KIND: Record<Exclude<CatalogVariant, "home">, ItemKind> = {
+  components: "component",
+  blocks: "block",
+  animations: "animation",
+}
 
 /**
  * Витрина верхнего уровня. Показывает не items, а категории: тысяча карточек
@@ -21,7 +32,7 @@ export function CatalogPage({
   variant: CatalogVariant
 }) {
   const t = getDictionary(locale)
-  const kind = variant === "blocks" ? "block" : "component"
+  const kind: ItemKind = variant === "home" ? "component" : VARIANT_KIND[variant]
   const items = getItemsByKind(kind)
   const categories = getCategoryCards(kind, locale)
 
@@ -48,12 +59,10 @@ export function CatalogPage({
     ) : (
       <div key="heading" className="border-shell-border mb-6 border-b pb-6">
         <h1 className="text-shell-fg text-2xl font-semibold tracking-tight sm:text-3xl">
-          {variant === "blocks" ? t.blocks.title : t.components.title}
+          {t[variant].title}
         </h1>
         <p className="text-shell-muted mt-3 max-w-2xl text-sm text-pretty sm:text-base">
-          {variant === "blocks"
-            ? t.blocks.description
-            : t.components.description}
+          {t[variant].description}
         </p>
       </div>
     )
@@ -71,7 +80,7 @@ export function CatalogPage({
         <CategoryGrid
           categories={categories}
           locale={locale}
-          base={kind === "block" ? "/blocks" : "/components"}
+          base={catalogBasePath(kind)}
         />
       </CatalogChrome>
     </CatalogShell>

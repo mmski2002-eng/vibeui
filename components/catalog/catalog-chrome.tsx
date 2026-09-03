@@ -7,6 +7,8 @@ import { useEffect, useRef, useState, type ReactNode } from "react"
 import { CatalogSearch } from "@/components/catalog/catalog-search"
 import { ScrollArea } from "@/components/catalog/scroll-area"
 import { getDictionary, localePath, type Locale } from "@/lib/i18n"
+import type { ItemKind } from "@/registry/categories"
+import { catalogBasePath } from "@/registry/index"
 
 export type NavCategory = {
   slug: string
@@ -47,7 +49,7 @@ export function CatalogChrome({
   children,
 }: {
   locale: Locale
-  kind: "component" | "block"
+  kind: ItemKind
   categories: NavCategory[]
   total: number
   /** slug открытой категории; `null` — витрина целиком */
@@ -110,7 +112,7 @@ export function CatalogChrome({
     window.history.replaceState(null, "", url)
   }, [query])
 
-  const base = kind === "block" ? "/blocks" : "/components"
+  const base = catalogBasePath(kind)
   const needle = filter.trim().toLowerCase()
   const visible = needle
     ? categories.filter((category) =>
@@ -118,7 +120,12 @@ export function CatalogChrome({
       )
     : categories
 
-  const allLabel = kind === "block" ? t.topbar.blocks : t.topbar.components
+  const allLabel =
+    kind === "block"
+      ? t.topbar.blocks
+      : kind === "animation"
+        ? t.topbar.animations
+        : t.topbar.components
 
   return (
     <>

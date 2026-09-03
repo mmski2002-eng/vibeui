@@ -26,6 +26,9 @@ import { Dropdown015 } from "@/registry/components/dropdown-menu/dropdown-015/dr
 import { Dropdown016 } from "@/registry/components/dropdown-menu/dropdown-016/dropdown-016"
 import { Dropdown017 } from "@/registry/components/dropdown-menu/dropdown-017/dropdown-017"
 import { Dropdown018 } from "@/registry/components/dropdown-menu/dropdown-018/dropdown-018"
+import { Dropdown019 } from "@/registry/components/dropdown-menu/dropdown-019/dropdown-019"
+import { Dropdown020 } from "@/registry/components/dropdown-menu/dropdown-020/dropdown-020"
+import { Dropdown021 } from "@/registry/components/dropdown-menu/dropdown-021/dropdown-021"
 
 export const PREVIEWS = {
   "dropdown-001": Dropdown001,
@@ -49,4 +52,7 @@ export const PREVIEWS = {
   "dropdown-016": Dropdown016,
   "dropdown-017": Dropdown017,
   "dropdown-018": Dropdown018,
+  "dropdown-019": Dropdown019,
+  "dropdown-020": Dropdown020,
+  "dropdown-021": Dropdown021,
 } satisfies Record<string, ComponentType<PreviewProps>>

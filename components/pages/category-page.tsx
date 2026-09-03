@@ -7,6 +7,7 @@ import { CatalogShell } from "@/components/catalog/catalog-shell"
 import { getDictionary, localePath, type Locale } from "@/lib/i18n"
 import type { ItemKind } from "@/registry/categories"
 import {
+  catalogBasePath,
   getCategoryCards,
   getCategoryLabel,
   getItemsByCategory,
@@ -34,7 +35,13 @@ export function CategoryPage({
 
   const t = getDictionary(locale)
   const categories = getCategoryCards(kind, locale)
-  const base = kind === "block" ? "/blocks" : "/components"
+  const base = catalogBasePath(kind)
+  const rootLabel =
+    kind === "block"
+      ? t.topbar.blocks
+      : kind === "animation"
+        ? t.topbar.animations
+        : t.topbar.components
   const label = getCategoryLabel(category, locale)
 
   const heading = (
@@ -46,7 +53,7 @@ export function CategoryPage({
               href={localePath(locale, base)}
               className="hover:text-shell-fg"
             >
-              {kind === "block" ? t.topbar.blocks : t.topbar.components}
+              {rootLabel}
             </Link>
           </li>
           <li aria-hidden="true">/</li>
@@ -67,7 +74,7 @@ export function CategoryPage({
     <CatalogShell locale={locale}>
       <CatalogChrome
         locale={locale}
-        kind={kind === "block" ? "block" : "component"}
+        kind={kind}
         categories={categories}
         total={getItemsByKind(kind).length}
         active={category}

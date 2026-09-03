@@ -263,6 +263,9 @@ export async function loadLazyPreviewMap(
         .PREVIEWS
     case "component/tree":
       return (await import("@/registry/previews-lazy/component/tree")).PREVIEWS
+    case "animation/activity":
+      return (await import("@/registry/previews-lazy/animation/activity"))
+        .PREVIEWS
     default:
       return null
   }

@@ -98,6 +98,7 @@ import toggleRegistry from "@/registry/components/toggle/registry.json"
 import toggleGroupRegistry from "@/registry/components/toggle-group/registry.json"
 import tooltipRegistry from "@/registry/components/tooltip/registry.json"
 import treeRegistry from "@/registry/components/tree/registry.json"
+import activityRegistry from "@/registry/animations/activity/registry.json"
 
 /**
  * Реестры, попадающие на сайт. Это и есть файловая база каталога: другого
@@ -583,6 +584,11 @@ export const SOURCES = [
     directory: "registry/components/tree",
     kind: "component",
     items: treeRegistry.items,
+  },
+  {
+    directory: "registry/animations/activity",
+    kind: "animation",
+    items: activityRegistry.items,
   },
 ] as const satisfies readonly {
   directory: string

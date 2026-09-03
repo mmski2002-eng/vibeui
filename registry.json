@@ -97,6 +97,7 @@
     "registry/components/toggle/registry.json",
     "registry/components/toggle-group/registry.json",
     "registry/components/tooltip/registry.json",
-    "registry/components/tree/registry.json"
+    "registry/components/tree/registry.json",
+    "registry/animations/activity/registry.json"
   ]
 }

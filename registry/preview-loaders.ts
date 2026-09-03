@@ -218,6 +218,8 @@ export async function loadPreviewMap(
       return (await import("@/registry/previews/component/tooltip")).PREVIEWS
     case "component/tree":
       return (await import("@/registry/previews/component/tree")).PREVIEWS
+    case "animation/activity":
+      return (await import("@/registry/previews/animation/activity")).PREVIEWS
     default:
       return null
   }

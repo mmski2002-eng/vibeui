@@ -1,5 +1,11 @@
-import { CatalogPage } from "@/components/pages/catalog-page"
+import { LandingPage } from "@/components/pages/landing-page"
+import { getDictionary } from "@/lib/i18n"
+
+export const metadata = {
+  title: "VibeUI",
+  description: getDictionary("ru").home.description,
+}
 
 export default function HomePage() {
-  return <CatalogPage locale="ru" variant="home" />
+  return <LandingPage locale="ru" />
 }

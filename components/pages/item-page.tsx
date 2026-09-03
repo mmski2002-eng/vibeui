@@ -17,7 +17,12 @@ import {
   getItemDocUrl,
   getRegistryItemUrl,
 } from "@/lib/site"
-import { getCatalogItem, getCategoryLabel, getItemKind } from "@/registry/index"
+import {
+  catalogBasePath,
+  getCatalogItem,
+  getCategoryLabel,
+  getItemKind,
+} from "@/registry/index"
 import { getBlockSource } from "@/registry/source.server"
 
 /**
@@ -77,13 +82,14 @@ export async function ItemPage({
             <ol className="text-shell-muted flex flex-wrap items-center gap-2 text-sm">
               <li>
                 <Link
-                  href={localePath(
-                    locale,
-                    kind === "block" ? "/blocks" : "/components",
-                  )}
+                  href={localePath(locale, catalogBasePath(kind))}
                   className="hover:text-shell-fg"
                 >
-                  {kind === "block" ? t.topbar.blocks : t.topbar.components}
+                  {kind === "block"
+                    ? t.topbar.blocks
+                    : kind === "animation"
+                      ? t.topbar.animations
+                      : t.topbar.components}
                 </Link>
               </li>
               {category ? (
@@ -134,7 +140,7 @@ export async function ItemPage({
             locale={locale}
             docUrl={docUrl}
             fullPrompt={aiPrompt}
-            compact={kind === "component"}
+            compact={kind !== "block"}
             initialTheme={initialTheme}
             initialValues={initialValues}
           />

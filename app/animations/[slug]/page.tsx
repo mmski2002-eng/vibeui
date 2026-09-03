@@ -3,16 +3,14 @@ import { ItemPage } from "@/components/pages/item-page"
 import { localizeItem } from "@/lib/localize"
 import {
   getCatalogItem,
-  getCatalogItems,
   getCategoryCards,
   getCategoryLabel,
-  getItemKind,
+  getItemsByKind,
 } from "@/registry/index"
 
 /**
- * Один сегмент на два вида страниц: item и категория. Разводятся по самому
- * слову — у item'ов всегда числовой суффикс (`button-001`), у категорий его
- * нет (`buttons`), поэтому пересечься они не могут.
+ * Один сегмент на два вида страниц анимаций: item и категория. Разводятся по
+ * слову — у item'ов числовой суффикс, у категорий его нет.
  */
 export const dynamicParams = false
 
@@ -25,7 +23,7 @@ export async function generateMetadata({
   const found = getCatalogItem(slug)
 
   if (!found) {
-    const category = getCategoryCards("component").find(
+    const category = getCategoryCards("animation").find(
       (entry) => entry.slug === slug,
     )
 
@@ -42,18 +40,14 @@ export async function generateMetadata({
 
 export function generateStaticParams() {
   return [
-    // Каждый тип держит детали в своём разделе: сюда идут только компоненты,
-    // блоки — на /blocks/[slug], анимации — на /animations/[slug].
-    ...getCatalogItems()
-      .filter((item) => getItemKind(item.name) === "component")
-      .map((item) => ({ slug: item.name })),
-    ...getCategoryCards("component").map((category) => ({
+    ...getItemsByKind("animation").map((item) => ({ slug: item.name })),
+    ...getCategoryCards("animation").map((category) => ({
       slug: category.slug,
     })),
   ]
 }
 
-export default async function ComponentDetailPage({
+export default async function AnimationDetailPage({
   params,
   searchParams,
 }: {
@@ -63,7 +57,7 @@ export default async function ComponentDetailPage({
   const { slug } = await params
 
   if (!getCatalogItem(slug)) {
-    return <CategoryPage locale="ru" kind="component" category={slug} />
+    return <CategoryPage locale="ru" kind="animation" category={slug} />
   }
 
   return <ItemPage locale="ru" slug={slug} query={await searchParams} />

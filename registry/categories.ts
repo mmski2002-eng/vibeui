@@ -14,6 +14,7 @@
 export const KINDS = [
   { slug: "block", label: "Блоки", plural: "блоков" },
   { slug: "component", label: "Компоненты", plural: "компонентов" },
+  { slug: "animation", label: "Анимации", plural: "анимаций" },
   { slug: "template", label: "Шаблоны", plural: "шаблонов" },
 ] as const
 
@@ -607,6 +608,14 @@ export const CATEGORIES = [
     slug: "tree",
     label: "Дерево",
     en: "Tree",
+    group: "data",
+  },
+  // Категории анимаций: живут в дереве registry/animations, свой kind, в
+  // каталог компонентов/блоков не попадают.
+  {
+    slug: "activity",
+    label: "Активность",
+    en: "Activity",
     group: "data",
   },
 ] as const satisfies readonly {
