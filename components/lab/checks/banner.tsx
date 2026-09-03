@@ -10,6 +10,10 @@ import { Banner007 } from "@/registry/components/banner/banner-007/banner-007"
 import { Banner008 } from "@/registry/components/banner/banner-008/banner-008"
 import { Banner009 } from "@/registry/components/banner/banner-009/banner-009"
 import { Banner010 } from "@/registry/components/banner/banner-010/banner-010"
+import { Banner011 } from "@/registry/components/banner/banner-011/banner-011"
+import { Banner012 } from "@/registry/components/banner/banner-012/banner-012"
+import { Banner013 } from "@/registry/components/banner/banner-013/banner-013"
+import { Banner014 } from "@/registry/components/banner/banner-014/banner-014"
 
 /** Seed прогона: с ним набор воспроизводится один в один. */
 export const SEED = 60513
@@ -168,6 +172,76 @@ export const CHECKS: LabCheck[] = [
         person="Тимур Аль"
         note="Журнал заполняется от его имени."
         exitLabel="Вернуться к себе"
+        accent="#d59a3a"
+      />
+    ),
+  },
+  {
+    name: "banner-011",
+    title: "Стопка баннеров",
+    notes: [
+      "Видимых полос: 2",
+      "Счётчик: Скрыто ещё {count}",
+      "Акцент: #7a4bd0",
+    ],
+    node: (
+      <Banner011
+        visible={2}
+        moreTemplate="Скрыто ещё {count}"
+        accent="#7a4bd0"
+      />
+    ),
+  },
+  {
+    name: "banner-012",
+    title: "Акция с отсчётом",
+    notes: [
+      "Текст: Два места по цене одного",
+      "Промокод: SPRING",
+      "Осталось, с: 95040",
+      "Акцент: #1f7a5c",
+    ],
+    node: (
+      <Banner012
+        message="Два места по цене одного"
+        code="SPRING"
+        seconds={95040}
+        accent="#1f7a5c"
+      />
+    ),
+  },
+  {
+    name: "banner-013",
+    title: "Согласие с категориями",
+    notes: [
+      "Заголовок: Данные и счётчики",
+      "Согласие: Разрешить всё",
+      "Отказ: Ничего лишнего",
+      "Акцент: #b4451f",
+    ],
+    node: (
+      <Banner013
+        title="Данные и счётчики"
+        acceptLabel="Разрешить всё"
+        rejectLabel="Ничего лишнего"
+        accent="#b4451f"
+      />
+    ),
+  },
+  {
+    name: "banner-014",
+    title: "Архивная версия",
+    notes: [
+      "Версия: ревизия 418",
+      "Пояснение: Правки после неё сюда не попали.",
+      "Переход: Открыть текущую",
+      "Акцент: #d59a3a",
+    ],
+    node: (
+      <Banner014
+        version="ревизия 418"
+        note="Правки после неё сюда не попали."
+        actionLabel="Открыть текущую"
         accent="#d59a3a"
       />
     ),

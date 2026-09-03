@@ -56,4 +56,24 @@ export const PREVIEWS = {
       (module) => module.Banner010,
     ),
   ),
+  "banner-011": dynamic(() =>
+    import("@/registry/components/banner/banner-011/banner-011").then(
+      (module) => module.Banner011,
+    ),
+  ),
+  "banner-012": dynamic(() =>
+    import("@/registry/components/banner/banner-012/banner-012").then(
+      (module) => module.Banner012,
+    ),
+  ),
+  "banner-013": dynamic(() =>
+    import("@/registry/components/banner/banner-013/banner-013").then(
+      (module) => module.Banner013,
+    ),
+  ),
+  "banner-014": dynamic(() =>
+    import("@/registry/components/banner/banner-014/banner-014").then(
+      (module) => module.Banner014,
+    ),
+  ),
 } satisfies PreviewMap

@@ -15,6 +15,10 @@ import { Banner007 } from "@/registry/components/banner/banner-007/banner-007"
 import { Banner008 } from "@/registry/components/banner/banner-008/banner-008"
 import { Banner009 } from "@/registry/components/banner/banner-009/banner-009"
 import { Banner010 } from "@/registry/components/banner/banner-010/banner-010"
+import { Banner011 } from "@/registry/components/banner/banner-011/banner-011"
+import { Banner012 } from "@/registry/components/banner/banner-012/banner-012"
+import { Banner013 } from "@/registry/components/banner/banner-013/banner-013"
+import { Banner014 } from "@/registry/components/banner/banner-014/banner-014"
 
 export const PREVIEWS = {
   "banner-001": Banner001,
@@ -27,4 +31,8 @@ export const PREVIEWS = {
   "banner-008": Banner008,
   "banner-009": Banner009,
   "banner-010": Banner010,
+  "banner-011": Banner011,
+  "banner-012": Banner012,
+  "banner-013": Banner013,
+  "banner-014": Banner014,
 } satisfies Record<string, ComponentType<PreviewProps>>
