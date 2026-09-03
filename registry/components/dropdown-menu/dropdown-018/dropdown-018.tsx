@@ -7,6 +7,11 @@ export type Dropdown018Props = Omit<
   ComponentProps<"div">,
   "children" | "onChange"
 > & {
+  /**
+   * Показать меню развёрнутым в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  open?: boolean
   placeholder?: string
   people?: string[]
   onChange?: (value: string) => void
@@ -127,6 +132,11 @@ color:var(--vibeui-dropdown-018-accent);opacity:0;
 [data-vibeui-block="dropdown-018"] [data-part="empty"]{
 padding:0.75rem 0.5rem;font-size:0.8125rem;color:var(--vibeui-dropdown-018-muted);text-align:center;
 }
+/* Развёрнутый режим: меню стоит в потоке под кнопкой, а не в верхнем слое. */
+[data-vibeui-block="dropdown-018"]:has([data-open="true"]){flex-wrap:wrap}
+[data-vibeui-block="dropdown-018"] [data-part="menu"][data-open="true"]{
+position:static;opacity:1;transform:none;margin-top:0.375rem;flex-basis:100%;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="dropdown-018"] *{animation:none!important;transition:none!important}}
 `
 
@@ -201,6 +211,7 @@ function stepFocus(list: HTMLElement | null, delta: number) {
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Dropdown018({
+  open = false,
   placeholder = "Поиск по имени",
   people = DEFAULT_PEOPLE,
   onChange,
@@ -221,7 +232,7 @@ export function Dropdown018({
   const search = useRef<HTMLInputElement>(null)
   const [query, setQuery] = useState("")
   const [picked, setPicked] = useState<string | null>(null)
-  const [open, setOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
 
   const shown = people.filter((person) =>
     person.toLowerCase().includes(query.trim().toLowerCase()),
@@ -267,7 +278,7 @@ export function Dropdown018({
           data-picked={picked !== null}
           popoverTarget={`${id}-menu`}
           aria-haspopup="menu"
-          aria-expanded={open}
+          aria-expanded={menuOpen}
           aria-label={
             picked ? changeLabelTemplate.replace("{name}", picked) : assignLabel
           }
@@ -277,12 +288,13 @@ export function Dropdown018({
         <div
           id={`${id}-menu`}
           ref={menu}
-          popover="auto"
+          popover={open ? undefined : "auto"}
+          data-open={open || undefined}
           role="menu"
           aria-label={assignLabel}
           data-part="menu"
           onToggle={(event) => {
-            setOpen(event.newState === "open")
+            setMenuOpen(event.newState === "open")
             setQuery("")
             requestAnimationFrame(() => {
               if (menu.current?.matches(":popover-open")) {

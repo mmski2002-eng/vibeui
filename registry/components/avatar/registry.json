@@ -2565,7 +2565,8 @@
                 "hint": "PNG or JPG up to 2 MB, square, at least 200 pixels",
                 "editLabel": "Upload a photo",
                 "removeLabel": "Remove photo",
-                "captureLabel": "Take a photo"
+                "captureLabel": "Take a photo",
+                "open": true
               }
             },
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-015-* variables. Client-side: \"use client\", with useState and useRef holding the selected action and a reference to the popover. The menu is a native HTML popover with popovertarget: closing on Escape and on an outside click comes from the browser rather than being written by hand. The positioning uses CSS anchor positioning under @supports (anchor-name: --a) with an ordinary absolute fallback. The edit button is scaled down and moved into the corner, and its accessible caption names the person — in a list of cards \"change photo\" without a name is useless. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
@@ -2580,7 +2581,8 @@
         ],
         "preview": {
           "props": {
-            "src": "/demo/avatars/anna-512.webp"
+            "src": "/demo/avatars/anna-512.webp",
+            "open": true
           },
           "width": "auto"
         }
@@ -4183,7 +4185,8 @@
                   "Settings",
                   "Appearance"
                 ],
-                "signOutLabel": "Sign out"
+                "signOutLabel": "Sign out",
+                "open": true
               }
             },
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-028-* variables. Server-side: there is no state at all — opening and closing are done by the native HTML popover through popovertarget, while Escape, an outside click and the top layer come from the browser. The positioning uses CSS anchor positioning under @supports (anchor-name: --a) with a fixed fallback. The menu header repeats the name and the e-mail: in products with several accounts it is the only place where you can see who you are signed in as. Sign-out is separated by a rule and painted in the danger colour. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
@@ -4198,7 +4201,8 @@
         ],
         "preview": {
           "props": {
-            "src": "/demo/avatars/anna-256.webp"
+            "src": "/demo/avatars/anna-256.webp",
+            "open": true
           },
           "width": "auto"
         }

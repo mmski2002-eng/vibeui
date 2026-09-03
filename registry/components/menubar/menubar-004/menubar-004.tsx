@@ -15,6 +15,11 @@ export type Menubar004Choice = {
 }
 
 export type Menubar004Props = {
+  /**
+   * Показать меню развёрнутым в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  open?: boolean
   toggles?: Menubar004Toggle[]
   choices?: Menubar004Choice[]
   defaultOn?: string[]
@@ -115,6 +120,14 @@ height:1px;margin:0.25rem 0.375rem;background:var(--vibeui-menubar-004-border);
 }
 [data-vibeui-block="menubar-004"] [data-part="state"]{
 margin-left:auto;padding-right:0.375rem;font-size:0.6875rem;color:var(--vibeui-menubar-004-muted);
+/* Строка состояния сжимается первой: на узкой панели она обязана уступить
+   место самим пунктам меню, а не выталкивать их за край. */
+min-inline-size:0;flex:0 1 auto;
+overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+/* Развёрнутый режим: меню стоит в потоке под своей кнопкой, а не в верхнем слое. */
+[data-vibeui-block="menubar-004"] [data-part="menu"][data-open="true"]{
+position:static;margin-block-start:0.375rem;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="menubar-004"] *{animation:none!important;transition:none!important}}
 `
@@ -158,6 +171,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Menubar004({
+  open = false,
   toggles = DEFAULT_TOGGLES,
   choices = DEFAULT_CHOICES,
   defaultOn = ["grid"],
@@ -225,7 +239,8 @@ export function Menubar004({
           <div
             id={`${group}-menu`}
             data-part="menu"
-            popover="auto"
+            popover={open ? undefined : "auto"}
+            data-open={open || undefined}
             role="menu"
             aria-label={triggerLabel}
           >

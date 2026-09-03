@@ -7,6 +7,11 @@ export type Dropdown005Props = Omit<
   ComponentProps<"div">,
   "children" | "onChange"
 > & {
+  /**
+   * Показать меню развёрнутым в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  open?: boolean
   trigger?: string
   value?: string
   themes?: string[]
@@ -116,6 +121,11 @@ color:var(--vibeui-dropdown-005-accent);opacity:0;
 }
 [data-vibeui-block="dropdown-005"] [data-part="item"][aria-checked="true"]{font-weight:600}
 [data-vibeui-block="dropdown-005"] [data-part="item"][aria-checked="true"] [data-part="tick"]{opacity:1}
+/* Развёрнутый режим: меню стоит в потоке под кнопкой, а не в верхнем слое. */
+[data-vibeui-block="dropdown-005"]:has([data-open="true"]){flex-wrap:wrap}
+[data-vibeui-block="dropdown-005"] [data-part="menu"][data-open="true"]{
+position:static;opacity:1;transform:none;margin-top:0.375rem;flex-basis:100%;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="dropdown-005"] *{animation:none!important;transition:none!important}}
 `
 
@@ -165,6 +175,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Dropdown005({
+  open = false,
   trigger = "Оформление",
   value = "Как в системе",
   themes = DEFAULT_THEMES,
@@ -240,7 +251,8 @@ export function Dropdown005({
         <div
           id={`${id}-menu`}
           ref={menu}
-          popover="auto"
+          popover={open ? undefined : "auto"}
+          data-open={open || undefined}
           role="menu"
           aria-label={trigger}
           data-part="menu"

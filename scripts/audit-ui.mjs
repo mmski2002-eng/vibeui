@@ -157,6 +157,19 @@ const CODE_RULES = [
     },
   },
   {
+    id: "popover-open",
+    title: "окно на popover не умеет открываться на витрине",
+    check(source) {
+      if (!/popover=|popoverTarget/.test(source)) {
+        return null
+      }
+
+      return /\bopen\?:|\bdefaultOpen\?:/.test(source)
+        ? null
+        : "popover без витринного режима: на карточке каталога от компонента видна одна кнопка"
+    },
+  },
+  {
     id: "dark-theme",
     title: "нет ветки тёмной темы по классу",
     check(source, name) {

@@ -203,6 +203,9 @@
           "site nav"
         ],
         "preview": {
+          "props": {
+            "open": true
+          },
           "width": "full"
         },
         "ai": {
@@ -306,6 +309,7 @@
             "title": "Column Navmenu",
             "preview": {
               "props": {
+                "open": true,
                 "label": "Main navigation",
                 "entries": [
                   {
@@ -416,6 +420,9 @@
           "marketing"
         ],
         "preview": {
+          "props": {
+            "open": true
+          },
           "width": "full"
         },
         "ai": {
@@ -543,6 +550,7 @@
             "title": "Promo Navmenu",
             "preview": {
               "props": {
+                "open": true,
                 "label": "Main navigation",
                 "entries": [
                   "Features",
@@ -782,6 +790,9 @@
           "icons"
         ],
         "preview": {
+          "props": {
+            "open": true
+          },
           "width": "full"
         },
         "ai": {
@@ -896,6 +907,7 @@
             "title": "Catalog Navmenu",
             "preview": {
               "props": {
+                "open": true,
                 "label": "Catalog",
                 "triggerLabel": "Catalog",
                 "footerLabel": "All categories",
@@ -975,6 +987,9 @@
           "no-js"
         ],
         "preview": {
+          "props": {
+            "open": true
+          },
           "width": "full"
         },
         "ai": {
@@ -1080,6 +1095,7 @@
             "title": "Preview Navmenu",
             "preview": {
               "props": {
+                "open": true,
                 "label": "Main navigation",
                 "triggerLabel": "Features",
                 "barLinks": [
@@ -1542,6 +1558,9 @@
           "form"
         ],
         "preview": {
+          "props": {
+            "open": true
+          },
           "width": "full"
         },
         "ai": {
@@ -1667,6 +1686,7 @@
             "title": "Search Navmenu",
             "preview": {
               "props": {
+                "open": true,
                 "label": "Main navigation",
                 "triggerLabel": "Search",
                 "placeholder": "Search the help centre",

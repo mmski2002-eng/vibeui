@@ -9,6 +9,11 @@ export type Navmenu004Tile = {
 
 export type Navmenu004Props = {
   tiles?: Navmenu004Tile[]
+  /**
+   * Показать панель развёрнутой в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  open?: boolean
   triggerLabel?: string
   footerLabel?: string
   /** Обычные ссылки полосы рядом с кнопкой каталога. */
@@ -120,6 +125,11 @@ font-weight:700;
 text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:0.3125rem;
 text-decoration-color:var(--vibeui-navmenu-004-accent);
 }
+/* Развёрнутый режим: панель стоит в потоке под полосой, а не в верхнем слое. */
+[data-vibeui-block="navmenu-004"] [data-part="panel"][data-open="true"]{
+width:100%;
+position:static;inset:auto;margin-top:0.5rem;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="navmenu-004"] *{animation:none!important;transition:none!important}}
 `
 
@@ -176,6 +186,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Navmenu004({
   tiles = DEFAULT_TILES,
+  open = false,
   triggerLabel = "Каталог",
   footerLabel = "Все категории",
   entries = ["Доставка", "Оплата"],
@@ -239,7 +250,8 @@ export function Navmenu004({
         <div
           id="vibeui-navmenu-004-panel"
           data-part="panel"
-          popover="auto"
+          popover={open ? undefined : "auto"}
+          data-open={open || undefined}
           aria-label={triggerLabel}
         >
           <ul data-part="tiles">

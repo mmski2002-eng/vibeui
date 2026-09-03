@@ -292,6 +292,7 @@
             "title": "App Menubar",
             "preview": {
               "props": {
+                "open": true,
                 "menubarLabel": "Application menu",
                 "menus": [
                   {
@@ -357,6 +358,9 @@
           "background"
         ],
         "preview": {
+          "props": {
+            "open": true
+          },
           "width": "full"
         }
       }
@@ -904,6 +908,7 @@
             "title": "Checkable Menubar",
             "preview": {
               "props": {
+                "open": true,
                 "menubarLabel": "Application menu",
                 "triggerLabel": "View",
                 "togglesTitle": "Show",
@@ -950,6 +955,9 @@
           "background"
         ],
         "preview": {
+          "props": {
+            "open": true
+          },
           "width": "full"
         }
       }
@@ -1556,6 +1564,9 @@
           "popover"
         ],
         "preview": {
+          "props": {
+            "open": true
+          },
           "width": "full"
         },
         "ai": {
@@ -1676,6 +1687,7 @@
             "title": "Menubar With Actions",
             "preview": {
               "props": {
+                "open": true,
                 "menubarLabel": "Application menu",
                 "userName": "Anna Krylova",
                 "notificationsLabel": "Notifications, {count} unread",

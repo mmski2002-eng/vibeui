@@ -15,6 +15,11 @@ export type Navbar008Props = {
   workspace?: string
   plan?: string
   tabs?: Navbar008Tab[]
+  /**
+   * Показать панель развёрнутой в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  open?: boolean
   notifications?: number
   userName?: string
   userEmail?: string
@@ -166,6 +171,10 @@ text-decoration:none;font-size:0.875rem;font-weight:520;
 [data-vibeui-block="navbar-008"] [data-part="tools"]{margin-left:0}
 [data-vibeui-block="navbar-008"] [data-part="user-name"]{display:inline}
 }
+/* Развёрнутый режим: панель встаёт в потоке под шапкой во всю её ширину. */
+[data-vibeui-navbar-008-menu][data-open="true"]{
+position:static;inset:auto;width:100%;margin:0.75rem 0 0;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="navbar-008"] *{animation:none!important;transition:none!important}}
 `
 
@@ -211,6 +220,7 @@ export function Navbar008({
   workspace = "Ателье Восход",
   plan = "Команда",
   tabs = DEFAULT_TABS,
+  open = false,
   notifications = 7,
   userName = "Марина К.",
   userEmail = "marina@voskhod.ru",
@@ -294,8 +304,9 @@ export function Navbar008({
         </div>
         <div
           id={id}
-          popover="auto"
+          popover={open ? undefined : "auto"}
           data-vibeui-navbar-008-menu=""
+          data-open={open || undefined}
           style={palette}
         >
           <p data-part="who">

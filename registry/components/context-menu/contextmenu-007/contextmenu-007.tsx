@@ -7,6 +7,11 @@ export type Contextmenu007Props = Omit<
   ComponentProps<"section">,
   "children"
 > & {
+  /**
+   * Показать меню развёрнутым в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  open?: boolean
   caption?: string
   columns?: string[]
   /** Ячейки по имени колонки: компонент несёт русские, проект подставляет свои. */
@@ -121,6 +126,10 @@ padding:0.375rem 0.5rem 0.1875rem;margin-top:0.3125rem;
 border-top:1px solid var(--vibeui-contextmenu-007-border);
 font-size:0.6875rem;color:var(--vibeui-contextmenu-007-muted);
 }
+/* Развёрнутый режим: меню стоит в потоке под таблицей, а не в верхнем слое. */
+[data-vibeui-block="contextmenu-007"] [data-part="menu"][data-open="true"]{
+position:static;margin-block-start:0.5rem;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="contextmenu-007"] *{animation:none!important;transition:none!important}}
 `
 
@@ -160,6 +169,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Contextmenu007({
+  open = false,
   caption = "План недели",
   columns = DEFAULT_COLUMNS,
   cells = DEFAULT_CELLS,
@@ -271,7 +281,8 @@ export function Contextmenu007({
         <div
           ref={menu}
           data-part="menu"
-          popover="auto"
+          popover={open ? undefined : "auto"}
+          data-open={open || undefined}
           role="menu"
           aria-label={menuLabel}
           onKeyDown={(event) => {

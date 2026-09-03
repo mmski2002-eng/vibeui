@@ -1,6 +1,11 @@
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Button032Props = Omit<ComponentProps<"button">, "children"> & {
+  /**
+   * Показать меню развёрнутым в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  open?: boolean
   /** Имя кнопки: подписи у неё нет, только три точки. */
   label?: string
   items?: string[]
@@ -91,6 +96,11 @@ position-try-fallbacks:flip-block;
 }
 [data-vibeui-menu="button-032"][data-align="start"]{position-area:block-end span-inline-start}
 }
+/* Развёрнутый режим: меню стоит в потоке под кнопкой, а не в верхнем слое. */
+[data-vibeui-wrap="button-032"]:has([data-open="true"]){display:flex;flex-direction:column;align-items:flex-start}
+[data-vibeui-menu="button-032"][data-open="true"]{
+position:static;opacity:1;transform:none;margin:0.375rem 0 0;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-menu="button-032"],[data-vibeui-menu="button-032"] *{animation:none!important;transition:none!important}}
 `
 
@@ -121,6 +131,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Button032({
+  open = false,
   label = "Ещё действия",
   items = ["Переименовать", "Дублировать", "Поделиться ссылкой"],
   dangerLabel = "Удалить",
@@ -149,48 +160,51 @@ export function Button032({
       <style href="vibeui-button-032" precedence="medium">
         {STYLES}
       </style>
-      <button
-        {...props}
-        type={type}
-        data-slot="button"
-        data-vibeui-block="button-032"
-        className={className}
-        style={palette}
-        aria-label={label}
-        popoverTarget={menuId}
-      >
-        <span data-part="dots" aria-hidden="true" />
-      </button>
-      {/* Список обычных кнопок, а не role="menu": роль меню требует
-          собственной навигации стрелками, а её без JS не сделать. */}
-      <div
-        id={menuId}
-        popover="auto"
-        data-vibeui-menu="button-032"
-        data-align={align}
-        style={palette}
-      >
-        {items.map((item) => (
-          <button
-            key={item}
-            type="button"
-            popoverTarget={menuId}
-            popoverTargetAction="hide"
-          >
-            {item}
-          </button>
-        ))}
-        {dangerLabel ? (
-          <button
-            type="button"
-            data-part="danger"
-            popoverTarget={menuId}
-            popoverTargetAction="hide"
-          >
-            {dangerLabel}
-          </button>
-        ) : null}
-      </div>
+      <span data-vibeui-wrap="button-032">
+        <button
+          {...props}
+          type={type}
+          data-slot="button"
+          data-vibeui-block="button-032"
+          className={className}
+          style={palette}
+          aria-label={label}
+          popoverTarget={menuId}
+        >
+          <span data-part="dots" aria-hidden="true" />
+        </button>
+        {/* Список обычных кнопок, а не role="menu": роль меню требует
+            собственной навигации стрелками, а её без JS не сделать. */}
+        <div
+          id={menuId}
+          popover={open ? undefined : "auto"}
+          data-open={open || undefined}
+          data-vibeui-menu="button-032"
+          data-align={align}
+          style={palette}
+        >
+          {items.map((item) => (
+            <button
+              key={item}
+              type="button"
+              popoverTarget={menuId}
+              popoverTargetAction="hide"
+            >
+              {item}
+            </button>
+          ))}
+          {dangerLabel ? (
+            <button
+              type="button"
+              data-part="danger"
+              popoverTarget={menuId}
+              popoverTargetAction="hide"
+            >
+              {dangerLabel}
+            </button>
+          ) : null}
+        </div>
+      </span>
     </>
   )
 }

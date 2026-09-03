@@ -115,6 +115,7 @@
             },
             "preview": {
               "props": {
+                "open": true,
                 "brand": "Flight",
                 "links": [
                   {
@@ -177,6 +178,9 @@
           "background"
         ],
         "preview": {
+          "props": {
+            "open": true
+          },
           "width": "full"
         }
       }
@@ -971,6 +975,9 @@
           "popover"
         ],
         "preview": {
+          "props": {
+            "open": true
+          },
           "width": "full"
         },
         "ai": {
@@ -1108,6 +1115,7 @@
             "title": "Locale Switch Navbar",
             "preview": {
               "props": {
+                "open": true,
                 "brand": "Landmark",
                 "navLabel": "Main navigation",
                 "localeLabel": "Site language: {locale}. Pick another",
@@ -1390,6 +1398,9 @@
           "account"
         ],
         "preview": {
+          "props": {
+            "open": true
+          },
           "width": "full"
         },
         "ai": {
@@ -1512,6 +1523,7 @@
             "title": "Workspace App Navbar",
             "preview": {
               "props": {
+                "open": true,
                 "workspace": "Sunrise Studio",
                 "workspaceInitials": "SS",
                 "plan": "Team",
@@ -2217,6 +2229,9 @@
           "popover"
         ],
         "preview": {
+          "props": {
+            "open": true
+          },
           "width": "full"
         },
         "ai": {
@@ -2347,6 +2362,7 @@
             "title": "Drawer Menu Navbar",
             "preview": {
               "props": {
+                "open": true,
                 "brand": "Clearview",
                 "tagline": "Family clinic",
                 "menuLabel": "Menu",

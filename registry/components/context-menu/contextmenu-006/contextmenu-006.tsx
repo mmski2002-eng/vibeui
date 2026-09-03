@@ -18,6 +18,11 @@ export type Contextmenu006Props = Omit<
   ComponentProps<"section">,
   "children"
 > & {
+  /**
+   * Показать меню развёрнутым в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  open?: boolean
   caption?: string
   /** Хвост подписи с подсказкой о вызове меню. */
   captionHint?: string
@@ -123,6 +128,10 @@ transition:background-color .14s ease;
 [data-vibeui-block="contextmenu-006"] [data-part="rule"]{
 height:1px;margin:0.3125rem 0.25rem;background:var(--vibeui-contextmenu-006-border);
 }
+/* Развёрнутый режим: меню стоит в потоке под таблицей, а не в верхнем слое. */
+[data-vibeui-block="contextmenu-006"] [data-part="menu"][data-open="true"]{
+position:static;margin-block-start:0.5rem;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="contextmenu-006"] *{animation:none!important;transition:none!important}}
 `
 
@@ -171,6 +180,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Contextmenu006({
+  open = false,
   caption = "Счета за март",
   captionHint = "правый клик по строке или Shift+F10",
   rows = DEFAULT_ROWS,
@@ -275,7 +285,8 @@ export function Contextmenu006({
         <div
           ref={menu}
           data-part="menu"
-          popover="auto"
+          popover={open ? undefined : "auto"}
+          data-open={open || undefined}
           role="menu"
           aria-label={target ? menuLabel.replace("{row}", target) : menuTitle}
           onToggle={() => {

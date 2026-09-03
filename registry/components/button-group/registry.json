@@ -452,7 +452,8 @@
                     "hint": "The original stays unchanged"
                   }
                 ],
-                "menuLabel": "Other ways to save"
+                "menuLabel": "Other ways to save",
+                "open": true
               }
             },
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the --vibeui-buttongroup-003-* variables. It is a server component: the menu state is held by the browser through popover and popovertarget, there is no client JS. The positioning comes from CSS anchor positioning inside @supports (anchor-name), with position-try-fallbacks:flip-block; where anchor positioning is unsupported, the popover stays a card in the middle of the screen — that is a working view, not a breakage. The border between two fills of the same colour is drawn with an inset box-shadow, because a border at the joint would leave a dark line. The [data-part=\"menu\"]:not(:popover-open){display:none} rule hides the menu until it opens."
@@ -464,6 +465,9 @@
           "accent"
         ],
         "preview": {
+          "props": {
+            "open": true
+          },
           "width": "auto"
         }
       }

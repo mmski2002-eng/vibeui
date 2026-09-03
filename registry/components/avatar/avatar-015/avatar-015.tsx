@@ -4,6 +4,11 @@ import { useRef, useState } from "react"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Avatar015Props = Omit<ComponentProps<"div">, "children"> & {
+  /**
+   * Показать меню развёрнутым в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  open?: boolean
   name?: string
   src?: string
   hint?: string
@@ -105,6 +110,12 @@ color:var(--vibeui-avatar-015-danger);
 [data-vibeui-block="avatar-015"] [data-part="face"]{overflow:hidden}
 [data-vibeui-block="avatar-015"] [data-part="face"] img{width:100%;height:100%;border-radius:inherit;object-fit:cover;display:block}
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="avatar-015"]{color-scheme:dark}
+/* Развёрнутый режим: меню стоит в потоке под кнопкой, а не в верхнем слое. */
+[data-vibeui-block="avatar-015"]:has([data-open="true"]){align-items:flex-start}
+[data-vibeui-block="avatar-015"] [data-part="slot"]:has([data-open="true"]){display:flex;flex-direction:column;align-items:flex-start}
+[data-vibeui-block="avatar-015"] [data-part="menu"][data-open="true"]{
+position:static;opacity:1;transform:none;margin-top:0.375rem;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="avatar-015"] *{animation:none!important;transition:none!important}}
 `
 
@@ -152,6 +163,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Avatar015({
+  open = false,
   background = "",
   name = "Анна Реброва",
   src,
@@ -208,7 +220,8 @@ export function Avatar015({
           <div
             id="vibeui-avatar-015-menu"
             data-part="menu"
-            popover="auto"
+            popover={open ? undefined : "auto"}
+            data-open={open || undefined}
             role="menu"
             ref={menu}
           >

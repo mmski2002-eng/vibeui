@@ -6,6 +6,11 @@ export type Cascader003Node = {
 }
 
 export type Cascader003Props = {
+  /**
+   * Показать панель развёрнутой в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  open?: boolean
   id?: string
   heading?: string
   tree?: Cascader003Node[]
@@ -120,6 +125,11 @@ position-try-fallbacks:flip-inline,flip-block;
 }
 }
 ${ANCHORS}
+/* Развёрнутый режим: панель стоит в потоке под веткой, а не в верхнем слое. */
+[data-vibeui-block="cascader-003"] [data-part="flyout"][data-open="true"]{
+display:block;position:static;top:auto;left:auto;translate:none;opacity:1;
+margin:0.25rem 0 0.25rem 1rem;
+}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="cascader-003"] *{animation:none!important;transition:none!important}
 [data-vibeui-block="cascader-003"] [data-part="flyout"]{transition:none!important}
@@ -193,6 +203,7 @@ const DEFAULT_TREE: Cascader003Node[] = [
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Cascader003({
+  open = false,
   id = "vibeui-cascader-003",
   heading = "Настройки рабочего пространства",
   tree = DEFAULT_TREE,
@@ -237,7 +248,8 @@ export function Cascader003({
             id={key}
             data-part="flyout"
             data-anchor={slot}
-            popover="auto"
+            popover={open ? undefined : "auto"}
+            data-open={open || undefined}
             aria-label={node.label}
           >
             {renderNodes(node.children, key)}

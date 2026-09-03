@@ -81,6 +81,38 @@ npm run item -- <категория> [префикс]   # npm run item -- inputs
 (подсказка) или через конфигуратор, на карточке не покажется. В устанавливаемый
 файл это не попадает и дефолты компонента не меняет.
 
+## Витринный режим у всего, что открывается
+
+Компонент, содержимое которого спрятано до нажатия — меню на HTML popover,
+модальное окно, панель, лист снизу, — на карточке каталога показывает **одну
+кнопку**. Человек листает витрину и видит ряд одинаковых кнопок вместо
+дизайна, за которым пришёл. Поэтому у каждого такого компонента есть prop
+`open` (у панелей на `<dialog>` — `defaultOpen`), который раскрывает
+содержимое **в потоке страницы**, а не в верхнем слое:
+
+```tsx
+popover={open ? undefined : "auto"}
+data-open={open || undefined}
+```
+
+```css
+/* Меню: кнопка остаётся, меню встаёт под ней. */
+[data-vibeui-block="имя"]:has([data-open="true"]){flex-direction:column;align-items:flex-start}
+[data-vibeui-имя-menu][data-open="true"]{position:static;opacity:1;transform:none;margin-block-start:0.375rem}
+
+/* Окно: кнопка прячется, окно занимает её место. */
+[data-vibeui-block="имя"]:has([data-open="true"]) [data-part="trigger"]{display:none}
+[data-vibeui-имя-window][data-open="true"]{position:static;inset:auto;margin:0;opacity:1;transform:none}
+```
+
+В этом режиме popover не используется, поэтому Esc и клик мимо не работают —
+он для витрины, скриншотов и отладки, а не для страницы пользователя. Сам
+prop в `meta.controls` не заводят: это не настройка компонента. В metadata
+достаточно `meta.preview.props: { "open": true }` и той же строки в
+`meta.i18n.en.preview.props`.
+
+`npm run audit` ловит и обратное — компонент с popover без такого режима.
+
 ## Ловушка контейнерных запросов
 
 `@container` применяется к **потомкам** контейнера, но не к самому контейнеру.

@@ -1122,6 +1122,390 @@
           "background"
         ]
       }
+    },
+    {
+      "name": "eventcalendar-006",
+      "type": "registry:component",
+      "title": "Выбор времени приёма",
+      "description": "Слоты времени сеткой по частям дня: занятые остаются на месте вычеркнутыми, поэтому сетка не перестраивается и видно, насколько день вообще занят.",
+      "categories": [
+        "event-calendar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "eventcalendar-006/eventcalendar-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/eventcalendar-006.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-eventcalendar-006-*. Серверный. Слоты — радиогруппа в собственной <form>: выбирают один вариант, а не выполняют команду, и две такие сетки на странице не сольются в одну группу по имени. Имя группы собрано из prop id, поэтому useId не нужен и компонент остаётся серверным. Занятый слот отключён, но не удалён: сетка, которая «дышит» при каждом обновлении, заставляет заново искать нужный час. Сама сетка — grid с auto-fill и минимальной шириной ячейки, поэтому одинаково переживает узкую колонку и широкую карточку. Слово «занято» уходит в скрытую подпись: перечёркивание диктору недоступно.",
+      "meta": {
+        "tags": [
+          "calendar",
+          "booking",
+          "time-slots",
+          "radio"
+        ],
+        "ai": {
+          "export": "Eventcalendar006",
+          "usage": "<Eventcalendar006\n  dateLabel=\"Четверг, 17 июля\"\n  selected=\"14:30\"\n  groups={[{ label: \"Утро\", slots: [{ time: \"09:00\", taken: true }, { time: \"09:30\" }] }]}\n/>",
+          "summary": "Выбор времени записи: слоты сеткой по частям дня, занятые вычеркнуты и не выбираются. Один файл, ноль зависимостей, серверный рендер.",
+          "preserve": [
+            "локальную палитру --vibeui-eventcalendar-006-*: компонент обязан выглядеть одинаково в любом проекте",
+            "занятые слоты на своих местах: исчезающие слоты перестраивают сетку и прячут, насколько день занят",
+            "радиогруппу в собственной форме — иначе две сетки на странице сольются в одну группу",
+            "скрытое слово «занято»: перечёркивание и пунктир экранному диктору недоступны",
+            "auto-fill в сетке: число колонок обязано считаться от ширины, а не задаваться числом"
+          ],
+          "adapt": [
+            "части дня и слоты через groups: label и массив slots с time и taken",
+            "выбранное время через selected, дату через dateLabel и заголовок через heading",
+            "подписи через summaryTemplate с {free} и {total}, takenLabel и zoneLabel",
+            "цвет выбранного слота через accent — цвет текста на нём считается сам",
+            "подложку компонента через background; пусто означает фон страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Часовой пояс строкой обязателен: без него время в записи неоднозначно.",
+            "Компонент не хранит выбор вне себя: для внешнего управления снимите defaultChecked и передавайте checked с onChange.",
+            "Дату здесь только показывают: сам выбор дня делает соседний календарь.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "heading",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Выберите время",
+            "maxLength": 24
+          },
+          {
+            "prop": "dateLabel",
+            "label": "Дата",
+            "type": "text",
+            "default": "Четверг, 17 июля",
+            "maxLength": 28
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Time Slot Picker",
+            "description": "Time slots in a grid by part of day: taken ones stay in place struck through, so the grid never reshuffles and it stays visible how busy the day is.",
+            "docs": "One file, zero dependencies, the --vibeui-eventcalendar-006-* palette. A server component. The slots are a radio group inside their own <form>: one option is picked rather than a command run, and two such grids on a page will not merge into one group by name. The group name is built from the id prop, so useId is unnecessary and the component stays server-side. A taken slot is disabled rather than removed: a grid that breathes on every update makes you hunt for the hour again. The grid itself is auto-fill with a minimum cell width, so it survives a narrow column and a wide card alike. The word \"taken\" goes into a hidden label: strike-through means nothing to a screen reader.",
+            "ai": {
+              "summary": "A booking time picker: slots in a grid by part of day, taken ones struck through and unselectable. One file, zero dependencies, server-rendered.",
+              "preserve": [
+                "the local --vibeui-eventcalendar-006-* palette: the component must look the same in any project",
+                "taken slots staying in place: disappearing slots reshuffle the grid and hide how busy the day is",
+                "the radio group inside its own form — otherwise two grids on a page merge into one",
+                "the hidden word \"taken\": strike-through and dashes are invisible to a screen reader",
+                "auto-fill in the grid: the column count has to follow the width rather than be fixed"
+              ],
+              "adapt": [
+                "the parts of day and slots through groups: label and a slots array of time and taken",
+                "the chosen time through selected, the date through dateLabel and the heading through heading",
+                "the captions through summaryTemplate with {free} and {total}, takenLabel and zoneLabel",
+                "the selected slot colour through accent — the text colour on it is derived",
+                "the component surface through background; empty means the page background"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The time zone line is mandatory: without it a booked time is ambiguous.",
+                "The component keeps the choice to itself: for external control drop defaultChecked and pass checked with onChange.",
+                "The date is only displayed here: picking the day belongs to the calendar next to it.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Eventcalendar006\n  dateLabel=\"Thursday, 17 July\"\n  selected=\"14:30\"\n  groups={[{ label: \"Morning\", slots: [{ time: \"09:00\", taken: true }, { time: \"09:30\" }] }]}\n/>"
+            },
+            "controls": {
+              "heading": {
+                "label": "Heading",
+                "default": "Pick a time"
+              },
+              "dateLabel": {
+                "label": "Date",
+                "default": "Thursday, 17 July"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "heading": "Pick a time",
+                "dateLabel": "Thursday, 17 July",
+                "summaryTemplate": "{free} of {total} slots free",
+                "takenLabel": "taken",
+                "zoneLabel": "Times in your local zone",
+                "selected": "14:30",
+                "groups": [
+                  {
+                    "label": "Morning",
+                    "slots": [
+                      {
+                        "time": "09:00",
+                        "taken": true
+                      },
+                      {
+                        "time": "09:30"
+                      },
+                      {
+                        "time": "10:00"
+                      },
+                      {
+                        "time": "10:30",
+                        "taken": true
+                      },
+                      {
+                        "time": "11:00"
+                      },
+                      {
+                        "time": "11:30"
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Afternoon",
+                    "slots": [
+                      {
+                        "time": "13:00"
+                      },
+                      {
+                        "time": "13:30",
+                        "taken": true
+                      },
+                      {
+                        "time": "14:00",
+                        "taken": true
+                      },
+                      {
+                        "time": "14:30"
+                      },
+                      {
+                        "time": "15:00"
+                      },
+                      {
+                        "time": "15:30"
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Evening",
+                    "slots": [
+                      {
+                        "time": "17:00"
+                      },
+                      {
+                        "time": "17:30"
+                      },
+                      {
+                        "time": "18:00",
+                        "taken": true
+                      },
+                      {
+                        "time": "18:30"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "heading",
+          "dateLabel",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "auto"
+        }
+      }
+    },
+    {
+      "name": "eventcalendar-007",
+      "type": "registry:component",
+      "title": "Месяц с точками занятости",
+      "description": "Месяц размером с боковую панель: событий в клетку не вписать, поэтому занятость дня показана точками — вопрос здесь не «что за встреча», а «в какие дни густо».",
+      "categories": [
+        "event-calendar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "eventcalendar-007/eventcalendar-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/eventcalendar-007.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-eventcalendar-007-*. Серверный. Сетка — семь колонок грида, месяц сдвигается пустыми клетками по prop offset. Клетка держит и число, и точки, а её высота задана содержимым, поэтому ряды не разъезжаются в днях без событий. Точек не больше трёх: четвёртая уже не считается взглядом, а точное число уходит в скрытую подпись для диктора. На выбранном дне точки перекрашиваются в цвет текста на акценте — иначе на заливке они исчезли бы. Сегодняшний день помечен рамкой, выбранный — заливкой и aria-pressed: два разных признака для двух разных состояний.",
+      "meta": {
+        "tags": [
+          "calendar",
+          "month",
+          "compact",
+          "sidebar"
+        ],
+        "ai": {
+          "export": "Eventcalendar007",
+          "usage": "<Eventcalendar007\n  month=\"Июль 2026\"\n  today={17}\n  selected={23}\n  load={{ \"3\": 1, \"23\": 5 }}\n/>",
+          "summary": "Компактный месяц: занятость дня показана точками, сегодня помечен рамкой, выбранный — заливкой. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-eventcalendar-007-*: компонент обязан выглядеть одинаково в любом проекте",
+            "предел в три точки: четвёртая уже не считается взглядом, а точное число живёт в подписи для диктора",
+            "перекраску точек на выбранном дне — на заливке акцента точки того же цвета исчезают",
+            "разные признаки для «сегодня» и «выбрано»: рамка и заливка отвечают за разные состояния",
+            "aria-pressed на числах: выбор дня иначе не доходит до экранного диктора"
+          ],
+          "adapt": [
+            "месяц через month, число дней через days и сдвиг первого числа через offset",
+            "занятость через load — объект «число месяца → сколько событий»",
+            "сегодняшний и выбранный день через today и selected",
+            "подписи через summaryTemplate с {events} и {days} и loadLabel с {count}",
+            "цвет точек и выбранного дня через accent; подложку — через background"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Компонент не считает календарь: число дней и сдвиг первого числа приходят снаружи, вместе с подписью месяца.",
+            "Ключи load — строки: это обычный объект, а не массив по индексам.",
+            "Дни остаются кнопками нормального размера: календарь, ужатый до нечитаемых цифр, экономит место за счёт того, ради чего он нужен.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "month",
+            "label": "Месяц",
+            "type": "text",
+            "default": "Июль 2026",
+            "maxLength": 20
+          },
+          {
+            "prop": "today",
+            "label": "Сегодня",
+            "type": "number",
+            "default": 17,
+            "min": 1,
+            "max": 31
+          },
+          {
+            "prop": "selected",
+            "label": "Выбранный день",
+            "type": "number",
+            "default": 23,
+            "min": 1,
+            "max": 31
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Month with Load Dots",
+            "description": "A month the size of a sidebar: events do not fit in a cell, so a day's load is shown as dots — the question here is not \"which meeting\" but \"which days are packed\".",
+            "docs": "One file, zero dependencies, the --vibeui-eventcalendar-007-* palette. A server component. The grid is seven columns, and the month is offset by blank cells through the offset prop. A cell holds both the number and the dots, and its height comes from content, so rows do not drift on days without events. There are never more than three dots: a fourth is no longer counted at a glance, and the exact number goes into a hidden label. On the selected day the dots switch to the on-accent colour — on the accent fill they would otherwise vanish. Today is marked by a border and the selection by a fill plus aria-pressed: two different signals for two different states.",
+            "ai": {
+              "summary": "A compact month: a day's load shown as dots, today marked by a border, the selection by a fill. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-eventcalendar-007-* palette: the component must look the same in any project",
+                "the three-dot cap: a fourth is no longer counted at a glance, and the exact number lives in the screen-reader label",
+                "recolouring the dots on the selected day — on the accent fill same-coloured dots disappear",
+                "different signals for \"today\" and \"selected\": border and fill answer different questions",
+                "aria-pressed on the numbers: otherwise the selected day never reaches a screen reader"
+              ],
+              "adapt": [
+                "the month through month, the day count through days and the first-day offset through offset",
+                "the load through load — an object of \"day number → event count\"",
+                "today and the selection through today and selected",
+                "the captions through summaryTemplate with {events} and {days} and loadLabel with {count}",
+                "the dot and selection colour through accent; the surface through background"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The component does no calendar arithmetic: the day count and first-day offset arrive from outside along with the month caption.",
+                "The load keys are strings: it is a plain object, not an array indexed by day.",
+                "The days stay buttons of a normal size: a calendar squeezed to unreadable digits saves space at the cost of what it is for.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Eventcalendar007\n  month=\"July 2026\"\n  today={17}\n  selected={23}\n  load={{ \"3\": 1, \"23\": 5 }}\n/>"
+            },
+            "controls": {
+              "month": {
+                "label": "Month",
+                "default": "July 2026"
+              },
+              "today": {
+                "label": "Today"
+              },
+              "selected": {
+                "label": "Selected day"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "month": "July 2026",
+                "weekdays": [
+                  "mon",
+                  "tue",
+                  "wed",
+                  "thu",
+                  "fri",
+                  "sat",
+                  "sun"
+                ],
+                "summaryTemplate": "{events} events across {days} days",
+                "loadLabel": "events: {count}"
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "month",
+          "today",
+          "selected",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "auto"
+        }
+      }
     }
   ]
 }

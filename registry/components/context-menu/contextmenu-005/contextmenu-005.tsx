@@ -7,6 +7,11 @@ export type Contextmenu005Props = Omit<
   ComponentProps<"section">,
   "children"
 > & {
+  /**
+   * Показать меню развёрнутым в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  open?: boolean
   text?: string
   emptyHint?: string
   /** Команды меню: компонент несёт русские, проект подставляет свои. */
@@ -110,6 +115,10 @@ transition:background-color .14s ease;
 flex:none;width:0.625rem;height:0.625rem;border-radius:9999px;
 background:color-mix(in oklab,var(--vibeui-contextmenu-005-accent) 60%,transparent);
 }
+/* Развёрнутый режим: меню стоит в потоке под областью, а не в верхнем слое. */
+[data-vibeui-block="contextmenu-005"] [data-part="menu"][data-open="true"]{
+position:static;margin-block-start:0.5rem;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="contextmenu-005"] *{animation:none!important;transition:none!important}}
 `
 
@@ -150,6 +159,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Contextmenu005({
+  open = false,
   text = DEFAULT_TEXT,
   emptyHint = "Ничего не выделено",
   actions = DEFAULT_ACTIONS,
@@ -247,7 +257,8 @@ export function Contextmenu005({
         <div
           ref={menu}
           data-part="menu"
-          popover="auto"
+          popover={open ? undefined : "auto"}
+          data-open={open || undefined}
           role="menu"
           aria-label={menuLabel}
           onKeyDown={(event) => {

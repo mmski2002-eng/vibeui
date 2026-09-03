@@ -6,6 +6,11 @@ export type Buttongroup003Option = {
 }
 
 export type Buttongroup003Props = Omit<ComponentProps<"div">, "children"> & {
+  /**
+   * Показать меню развёрнутым в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  open?: boolean
   action?: string
   options?: Buttongroup003Option[]
   menuLabel?: string
@@ -109,6 +114,11 @@ position-area:bottom span-left;margin-top:0.375rem;
 position-try-fallbacks:flip-block;
 }
 }
+/* Развёрнутый режим: меню стоит в потоке под кнопками, а не в верхнем слое. */
+[data-vibeui-block="buttongroup-003"]:has([data-open="true"]){flex-wrap:wrap}
+[data-vibeui-block="buttongroup-003"] [data-part="menu"][data-open="true"]{
+display:block;position:static;margin-top:0.375rem;width:100%;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="buttongroup-003"] *{animation:none!important;transition:none!important}}
 `
 
@@ -123,6 +133,7 @@ const DEFAULT_OPTIONS: Buttongroup003Option[] = [
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Buttongroup003({
+  open = false,
   action = "Сохранить",
   options = DEFAULT_OPTIONS,
   menuLabel = "Другие способы сохранить",
@@ -162,7 +173,13 @@ export function Buttongroup003({
         >
           <span data-part="caret" aria-hidden="true" />
         </button>
-        <div id={menuId} popover="auto" data-part="menu" aria-label={menuLabel}>
+        <div
+          id={menuId}
+          popover={open ? undefined : "auto"}
+          data-open={open || undefined}
+          data-part="menu"
+          aria-label={menuLabel}
+        >
           {options.map((option) => (
             <button key={option.label} type="button">
               {option.label}

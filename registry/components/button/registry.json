@@ -4914,7 +4914,8 @@
                   "Duplicate",
                   "Copy link"
                 ],
-                "dangerLabel": "Delete"
+                "dangerLabel": "Delete",
+                "open": true
               }
             },
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-032-* variables. Server component: no hooks, no JS at all. The layer is opened by the popover attribute and a popovertarget pair, and the entries close it through popovertargetaction=\"hide\". Positioning under the button is enabled inside @supports (anchor-name: --a); where anchor is unsupported the popover stays centred on the screen. The appearance is built on @starting-style with transition-behavior for display and overlay. The menu role is deliberately not set: it requires arrow-key navigation, which will not exist without JS."
@@ -4928,6 +4929,9 @@
           "background"
         ],
         "preview": {
+          "props": {
+            "open": true
+          },
           "width": "auto"
         }
       }

@@ -15,6 +15,11 @@ export type Navbar012Props = {
   brand?: string
   tagline?: string
   groups?: Navbar012Group[]
+  /**
+   * Показать панель развёрнутой в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  open?: boolean
   actionLabel?: string
   actionHref?: string
   callLabel?: string
@@ -138,6 +143,13 @@ font-weight:640;
 [data-vibeui-block="navbar-012"] [data-part="shell"]{padding:0.9375rem 2rem;gap:1.5rem}
 [data-vibeui-block="navbar-012"] [data-part="brand"] strong{font-size:1.25rem}
 }
+/* Развёрнутый режим: ящик встаёт в потоке под шапкой во всю её ширину,
+   а не уезжает справа во весь экран. */
+[data-vibeui-navbar-012-drawer][data-open="true"]{
+position:static;inset:auto;width:100%;height:auto;max-height:none;
+overflow-y:visible;margin:0.75rem 0 0;border-left:0;
+translate:none;
+}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="navbar-012"] *{animation:none!important;transition:none!important}
 [data-vibeui-navbar-012-drawer]{transition:none!important}
@@ -198,6 +210,7 @@ export function Navbar012({
   brand = "Ясная",
   tagline = "Семейная клиника",
   groups = DEFAULT_GROUPS,
+  open = false,
   actionLabel = "Записаться на приём",
   actionHref = "#appointment",
   callLabel = "+7 495 000-11-22",
@@ -251,8 +264,9 @@ export function Navbar012({
         </div>
         <nav
           id={id}
-          popover="auto"
+          popover={open ? undefined : "auto"}
           data-vibeui-navbar-012-drawer=""
+          data-open={open || undefined}
           style={palette}
           aria-label={drawerLabel}
         >

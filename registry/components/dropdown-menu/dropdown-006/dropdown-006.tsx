@@ -4,6 +4,11 @@ import { useId, useRef, useState } from "react"
 import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Dropdown006Props = Omit<ComponentProps<"div">, "children"> & {
+  /**
+   * Показать меню развёрнутым в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  open?: boolean
   trigger?: string
   side?: "right" | "left"
   submenuLabel?: string
@@ -110,6 +115,10 @@ box-shadow:0 18px 40px -22px oklch(0.2 0.03 260 / 45%);
 [data-vibeui-block="dropdown-006"] [data-part="rule"]{
 height:1px;margin:0.3125rem 0.25rem;background:var(--vibeui-dropdown-006-border);
 }
+/* Развёрнутый режим: меню стоит в потоке под кнопкой, а не в верхнем слое. */
+[data-vibeui-block="dropdown-006"] [data-part="menu"][data-open="true"]{
+position:static;opacity:1;transform:none;margin-top:0.375rem;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="dropdown-006"] *{animation:none!important;transition:none!important}}
 `
 
@@ -160,6 +169,7 @@ function stepFocus(scope: HTMLElement | null, delta: number) {
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Dropdown006({
+  open = false,
   trigger = "Письмо",
   side = "right",
   submenuLabel = "Переместить в",
@@ -177,17 +187,17 @@ export function Dropdown006({
   const menu = useRef<HTMLDivElement>(null)
   const parent = useRef<HTMLButtonElement>(null)
   const sub = useRef<HTMLDivElement>(null)
-  const [open, setOpen] = useState(false)
+  const [subOpen, setSubOpen] = useState(false)
 
   const enterSub = () => {
-    setOpen(true)
+    setSubOpen(true)
     requestAnimationFrame(() =>
       sub.current?.querySelector<HTMLElement>('[data-part="item"]')?.focus(),
     )
   }
 
   const leaveSub = () => {
-    setOpen(false)
+    setSubOpen(false)
     parent.current?.focus()
   }
 
@@ -245,11 +255,12 @@ export function Dropdown006({
         <div
           id={`${id}-menu`}
           ref={menu}
-          popover="auto"
+          popover={open ? undefined : "auto"}
+          data-open={open || undefined}
           role="menu"
           aria-label={trigger}
           data-part="menu"
-          onToggle={() => setOpen(false)}
+          onToggle={() => setSubOpen(false)}
           onKeyDown={(event: KeyboardEvent<HTMLDivElement>) => {
             if (event.key === "ArrowDown") {
               event.preventDefault()
@@ -274,8 +285,8 @@ export function Dropdown006({
           <div data-part="rule" role="separator" />
           <div
             data-part="nest"
-            onMouseEnter={() => setOpen(true)}
-            onMouseLeave={() => setOpen(false)}
+            onMouseEnter={() => setSubOpen(true)}
+            onMouseLeave={() => setSubOpen(false)}
           >
             <button
               type="button"
@@ -283,8 +294,8 @@ export function Dropdown006({
               role="menuitem"
               data-part="item"
               aria-haspopup="menu"
-              aria-expanded={open}
-              onClick={() => (open ? setOpen(false) : enterSub())}
+              aria-expanded={subOpen}
+              onClick={() => (subOpen ? setSubOpen(false) : enterSub())}
               onKeyDown={(event) => {
                 if (event.key === "ArrowRight") {
                   event.preventDefault()
@@ -295,7 +306,7 @@ export function Dropdown006({
               {submenuLabel}
               <span data-part="arrow" aria-hidden="true" />
             </button>
-            {open ? (
+            {subOpen ? (
               <div
                 ref={sub}
                 data-part="sub"
@@ -315,7 +326,7 @@ export function Dropdown006({
                     role="menuitem"
                     data-part="item"
                     onClick={() => {
-                      setOpen(false)
+                      setSubOpen(false)
                       menu.current?.hidePopover()
                     }}
                   >

@@ -1,6 +1,11 @@
 import type { CSSProperties } from "react"
 
 export type Pagination009Props = {
+  /**
+   * Показать панель развёрнутой в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  open?: boolean
   page?: number
   total?: number
   hrefOf?: (page: number) => string
@@ -94,6 +99,11 @@ text-decoration:none;color:inherit;font-size:0.875rem;font-variant-numeric:tabul
 [data-vibeui-block="pagination-009"] [data-part="num"][aria-current="page"]{
 background:var(--vibeui-pagination-009-accent);color:var(--vibeui-pagination-009-accent-fg);font-weight:650;
 }
+/* Развёрнутый режим: панель стоит в потоке под кнопками, а не в верхнем слое. */
+[data-vibeui-block="pagination-009"]:has([data-open="true"]){flex-wrap:wrap}
+[data-vibeui-block="pagination-009"] [data-part="sheet"][data-open="true"]{
+position:static;margin-top:0.375rem;width:100%;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="pagination-009"] *{animation:none!important;transition:none!important}}
 `
 
@@ -132,6 +142,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Один файл, ноль зависимостей, собственная палитра, клиентского JS нет.
  */
 export function Pagination009({
+  open = false,
   page = 3,
   total = 18,
   hrefOf = (value: number) => `?page=${value}`,
@@ -202,7 +213,8 @@ export function Pagination009({
         <div
           id="vibeui-pagination-009-sheet"
           data-part="sheet"
-          popover="auto"
+          popover={open ? undefined : "auto"}
+          data-open={open || undefined}
           aria-label={labelText.sheet ?? LABEL.sheet}
         >
           <ul data-part="grid">

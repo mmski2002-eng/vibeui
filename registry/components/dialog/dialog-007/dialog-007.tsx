@@ -8,6 +8,11 @@ export type Dialog007Action = {
 
 export type Dialog007Props = {
   id?: string
+  /**
+   * Показать окно раскрытым в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  open?: boolean
   trigger?: string
   title?: string
   description?: string
@@ -103,6 +108,14 @@ transition:opacity .18s ease,transform .18s ease,display .18s allow-discrete,ove
 }
 /* Popover страницу не блокирует: фон под окном иначе продолжает прокручиваться. */
 html:has([data-vibeui-dialog-007-sheet]:popover-open){overflow:hidden}
+/* Развёрнутый режим: окно стоит в потоке вместо кнопки, а не в верхнем слое.
+   Без него на карточке каталога от компонента видна одна кнопка. */
+[data-vibeui-block="dialog-007"]:has([data-open="true"]){display:block;width:100%}
+[data-vibeui-block="dialog-007"]:has([data-open="true"]) [data-part="trigger"]{display:none}
+[data-vibeui-dialog-007-sheet][data-open="true"]{
+position:static;inset:auto;margin:0;width:100%;max-width:22rem;
+translate:0 0;opacity:1;transform:none;
+}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="dialog-007"] *{animation:none!important;transition:none!important}
 [data-vibeui-dialog-007-sheet]{transition:none!important;translate:0 0;opacity:1;transform:none}
@@ -145,6 +158,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Dialog007({
   id = "vibeui-dialog-007",
+  open = false,
   trigger = "Действия",
   title = "Сайт студии",
   description = "Опубликован 12 марта",
@@ -183,8 +197,9 @@ export function Dialog007({
         </button>
         <div
           id={id}
-          popover="auto"
+          popover={open ? undefined : "auto"}
           data-vibeui-dialog-007-sheet=""
+          data-open={open || undefined}
           role="dialog"
           aria-labelledby={`${id}-title`}
           aria-describedby={description ? `${id}-description` : undefined}

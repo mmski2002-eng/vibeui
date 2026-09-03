@@ -7,6 +7,11 @@ export type Dropdown009Props = Omit<
   ComponentProps<"div">,
   "children" | "onChange"
 > & {
+  /**
+   * Показать меню развёрнутым в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  open?: boolean
   label?: string
   value?: string
   fields?: string[]
@@ -115,6 +120,11 @@ color:var(--vibeui-dropdown-009-accent);opacity:0;
 [data-vibeui-block="dropdown-009"] [data-part="rule"]{
 height:1px;margin:0.3125rem 0.25rem;background:var(--vibeui-dropdown-009-border);
 }
+/* Развёрнутый режим: меню стоит в потоке под кнопкой, а не в верхнем слое. */
+[data-vibeui-block="dropdown-009"]:has([data-open="true"]){flex-direction:column;align-items:flex-start}
+[data-vibeui-block="dropdown-009"] [data-part="menu"][data-open="true"]{
+position:static;opacity:1;transform:none;margin-top:0.375rem;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="dropdown-009"] *{animation:none!important;transition:none!important}}
 `
 
@@ -166,6 +176,7 @@ function stepFocus(menu: HTMLElement | null, delta: number) {
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Dropdown009({
+  open = false,
   label = "Сортировка",
   value = "Дата изменения",
   fields = DEFAULT_FIELDS,
@@ -265,7 +276,8 @@ export function Dropdown009({
         <div
           id={`${id}-menu`}
           ref={menu}
-          popover="auto"
+          popover={open ? undefined : "auto"}
+          data-open={open || undefined}
           role="menu"
           aria-label={label}
           data-part="menu"

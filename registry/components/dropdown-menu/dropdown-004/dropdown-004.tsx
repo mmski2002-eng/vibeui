@@ -4,6 +4,11 @@ import { useId, useRef, useState } from "react"
 import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Dropdown004Props = Omit<ComponentProps<"div">, "children"> & {
+  /**
+   * Показать меню развёрнутым в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  open?: boolean
   trigger?: string
   mark?: "check" | "dot"
   columns?: string[]
@@ -126,6 +131,10 @@ appearance:none;border:0;background:none;cursor:pointer;padding:0;
 font:inherit;font-size:0.75rem;font-weight:600;color:var(--vibeui-dropdown-004-accent);
 }
 [data-vibeui-block="dropdown-004"] [data-part="reset"]:focus-visible{outline:2px solid var(--vibeui-dropdown-004-accent);outline-offset:2px}
+/* Развёрнутый режим: меню стоит в потоке под кнопкой, а не в верхнем слое. */
+[data-vibeui-block="dropdown-004"] [data-part="menu"][data-open="true"]{
+position:static;opacity:1;transform:none;margin-top:0.375rem;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="dropdown-004"] *{animation:none!important;transition:none!important}}
 `
 
@@ -176,6 +185,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Dropdown004({
+  open = false,
   trigger = "Колонки",
   mark = "check",
   columns = DEFAULT_COLUMNS,
@@ -255,7 +265,8 @@ export function Dropdown004({
         <div
           id={`${id}-menu`}
           ref={menu}
-          popover="auto"
+          popover={open ? undefined : "auto"}
+          data-open={open || undefined}
           role="menu"
           aria-label={trigger}
           data-part="menu"

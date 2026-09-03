@@ -12,6 +12,11 @@ export type Dialog010Group = {
 
 export type Dialog010Props = {
   id?: string
+  /**
+   * Показать окно раскрытым в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  open?: boolean
   trigger?: string
   title?: string
   groups?: Dialog010Group[]
@@ -95,6 +100,14 @@ border:1px solid var(--vibeui-dialog-010-border,light-dark(oklch(0.88 0.006 265)
 [data-vibeui-dialog-010-window] :focus-visible{outline:2px solid var(--vibeui-dialog-010-accent,light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262)));outline-offset:2px}
 /* Popover страницу не блокирует: фон под окном иначе продолжает прокручиваться. */
 html:has([data-vibeui-dialog-010-window]:popover-open){overflow:hidden}
+/* Развёрнутый режим: окно стоит в потоке вместо кнопки, а не в верхнем слое.
+   Без него на карточке каталога от компонента видна одна кнопка. */
+[data-vibeui-block="dialog-010"]:has([data-open="true"]){display:block;width:100%}
+[data-vibeui-block="dialog-010"]:has([data-open="true"]) [data-part="trigger"]{display:none}
+[data-vibeui-dialog-010-window][data-open="true"]{
+position:static;inset:auto;margin:0;width:100%;max-width:30rem;
+opacity:1;transform:none;
+}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="dialog-010"] *{animation:none!important;transition:none!important}
 [data-vibeui-dialog-010-window]{transition:none!important;opacity:1;transform:none}
@@ -157,6 +170,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Dialog010({
   id = "vibeui-dialog-010",
+  open = false,
   trigger = "Горячие клавиши",
   title = "Горячие клавиши",
   groups = DEFAULT_GROUPS,
@@ -194,8 +208,9 @@ export function Dialog010({
         </button>
         <div
           id={id}
-          popover="auto"
+          popover={open ? undefined : "auto"}
           data-vibeui-dialog-010-window=""
+          data-open={open || undefined}
           role="dialog"
           aria-labelledby={`${id}-title`}
           style={palette}

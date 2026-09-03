@@ -8,6 +8,11 @@ export type Breadcrumb013Sibling = {
 }
 
 export type Breadcrumb013Props = Omit<ComponentProps<"nav">, "children"> & {
+  /**
+   * Показать меню развёрнутым в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  open?: boolean
   trail?: string[]
   current?: string
   siblings?: Breadcrumb013Sibling[]
@@ -126,6 +131,12 @@ position-area:bottom span-right;
 position-try-fallbacks:flip-block,flip-inline;
 }
 }
+/* Развёрнутый режим: меню стоит в потоке под кнопкой, а не в верхнем слое. */
+[data-vibeui-block="breadcrumb-013"] ol:has([data-open="true"]){align-items:flex-start}
+[data-vibeui-block="breadcrumb-013"] li:has([data-open="true"]){flex-direction:column;align-items:flex-start}
+[data-vibeui-block="breadcrumb-013"] [data-part="menu"][data-open="true"]{
+display:block;position:static;opacity:1;transform:none;margin:0.375rem 0 0;width:min(17rem,100%);
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="breadcrumb-013"] *{animation:none!important;transition:none!important}}
 `
 
@@ -166,6 +177,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Breadcrumb013({
+  open = false,
   trail = DEFAULT_TRAIL,
   current = "Настройки",
   siblings = DEFAULT_SIBLINGS,
@@ -226,7 +238,8 @@ export function Breadcrumb013({
             </button>
             <div
               id={menuId}
-              popover="auto"
+              popover={open ? undefined : "auto"}
+              data-open={open || undefined}
               data-part="menu"
               style={{ positionAnchor: anchorName } as CSSProperties}
             >

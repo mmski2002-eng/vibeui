@@ -11,6 +11,11 @@ export type Dropdown003Item = {
 }
 
 export type Dropdown003Props = Omit<ComponentProps<"div">, "children"> & {
+  /**
+   * Показать меню развёрнутым в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  open?: boolean
   trigger?: string
   keysLabel?: string
   items?: Dropdown003Item[]
@@ -102,6 +107,11 @@ color:var(--vibeui-dropdown-003-muted);letter-spacing:0.02em;
 [data-vibeui-block="dropdown-003"] [data-part="rule"]{
 height:1px;margin:0.3125rem 0.25rem;background:var(--vibeui-dropdown-003-border);
 }
+/* Развёрнутый режим: меню стоит в потоке под кнопкой, а не в верхнем слое. */
+[data-vibeui-block="dropdown-003"]:has([data-open="true"]){flex-wrap:wrap}
+[data-vibeui-block="dropdown-003"] [data-part="menu"][data-open="true"]{
+position:static;opacity:1;transform:none;margin-top:0.375rem;flex-basis:100%;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="dropdown-003"] *{animation:none!important;transition:none!important}}
 `
 
@@ -165,6 +175,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Dropdown003({
+  open = false,
   trigger = "Правка",
   keysLabel = "⌘K",
   items = DEFAULT_ITEMS,
@@ -234,7 +245,8 @@ export function Dropdown003({
         <div
           id={`${id}-menu`}
           ref={menu}
-          popover="auto"
+          popover={open ? undefined : "auto"}
+          data-open={open || undefined}
           role="menu"
           aria-label={trigger}
           data-part="menu"

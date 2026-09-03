@@ -2,6 +2,11 @@ import type { CSSProperties } from "react"
 
 export type Dialog011Props = {
   id?: string
+  /**
+   * Показать окно раскрытым в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  open?: boolean
   trigger?: string
   title?: string
   description?: string
@@ -91,6 +96,14 @@ border-radius:0.5rem;border:1px solid transparent;text-decoration:none;
 [data-vibeui-dialog-011-window] :focus-visible{outline:2px solid var(--vibeui-dialog-011-accent,light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262)));outline-offset:2px}
 /* Popover страницу не блокирует: фон под окном иначе продолжает прокручиваться. */
 html:has([data-vibeui-dialog-011-window]:popover-open){overflow:hidden}
+/* Развёрнутый режим: окно стоит в потоке вместо кнопки, а не в верхнем слое.
+   Без него на карточке каталога от компонента видна одна кнопка. */
+[data-vibeui-block="dialog-011"]:has([data-open="true"]){display:block;width:100%}
+[data-vibeui-block="dialog-011"]:has([data-open="true"]) [data-part="trigger"]{display:none}
+[data-vibeui-dialog-011-window][data-open="true"]{
+position:static;inset:auto;margin:0;width:100%;max-width:26rem;
+opacity:1;transform:none;
+}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="dialog-011"] *{animation:none!important;transition:none!important}
 [data-vibeui-dialog-011-window]{transition:none!important;opacity:1;transform:none}
@@ -126,6 +139,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Dialog011({
   id = "vibeui-dialog-011",
+  open = false,
   trigger = "Открыть превью",
   title = "Главная страница",
   description = "Черновик с изменениями от 12 марта. Опубликованная версия отличается блоком тарифов.",
@@ -165,8 +179,9 @@ export function Dialog011({
         </button>
         <div
           id={id}
-          popover="auto"
+          popover={open ? undefined : "auto"}
           data-vibeui-dialog-011-window=""
+          data-open={open || undefined}
           role="dialog"
           aria-labelledby={`${id}-title`}
           aria-describedby={description ? `${id}-description` : undefined}

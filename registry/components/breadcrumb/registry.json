@@ -1919,6 +1919,9 @@
           "no-js"
         ],
         "preview": {
+          "props": {
+            "open": true
+          },
           "width": "full"
         },
         "ai": {
@@ -2061,7 +2064,8 @@
                     "href": "#",
                     "hint": "Change log for 90 days"
                   }
-                ]
+                ],
+                "open": true
               }
             },
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-breadcrumb-013-* variables. Server component: useId is needed only for a unique popover id and a unique anchor-name, there is no client state. The menu is a native popover=\"auto\": the top layer, closing on Esc and on an outside click, and returning focus to the button come from the browser. The position is taken from CSS anchor positioning under @supports (anchor-name), with position-try-fallbacks for the flip; where anchor positioning is unsupported the popover stays a card centred on the screen — that is a working view, not a breakage. The current row of the menu is marked both with a background and with a marker stripe on the left, so that \"where am I\" reads by more than colour."

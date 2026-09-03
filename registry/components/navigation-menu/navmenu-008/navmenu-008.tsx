@@ -1,6 +1,11 @@
 import type { CSSProperties } from "react"
 
 export type Navmenu008Props = {
+  /**
+   * Показать панель развёрнутой в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  open?: boolean
   triggerLabel?: string
   placeholder?: string
   suggestions?: string[]
@@ -133,6 +138,11 @@ font-weight:700;
 text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:0.3125rem;
 text-decoration-color:var(--vibeui-navmenu-008-accent);
 }
+/* Развёрнутый режим: панель стоит в потоке под полосой, а не в верхнем слое. */
+[data-vibeui-block="navmenu-008"] [data-part="panel"][data-open="true"]{
+width:100%;
+position:static;inset:auto;margin-top:0.5rem;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="navmenu-008"] *{animation:none!important;transition:none!important}}
 `
 
@@ -174,6 +184,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Один файл, ноль зависимостей, собственная палитра, клиентского JS нет.
  */
 export function Navmenu008({
+  open = false,
   triggerLabel = "Поиск",
   placeholder = "Что ищем в справке?",
   suggestions = DEFAULT_SUGGESTIONS,
@@ -235,7 +246,8 @@ export function Navmenu008({
         <div
           id="vibeui-navmenu-008-panel"
           data-part="panel"
-          popover="auto"
+          popover={open ? undefined : "auto"}
+          data-open={open || undefined}
           aria-label={triggerLabel}
         >
           <form data-part="form" method="get" action="#" role="search">

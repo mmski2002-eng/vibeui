@@ -6,6 +6,11 @@ export type Menubar008Menu = {
 }
 
 export type Menubar008Props = {
+  /**
+   * Показать меню развёрнутым в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  open?: boolean
   menus?: Menubar008Menu[]
   userName?: string
   unread?: number
@@ -62,7 +67,9 @@ font-family:var(--vibeui-menubar-008-font);color:var(--vibeui-menubar-008-fg);
 }
 [data-vibeui-block="menubar-008"] [data-part="shell"]{
 box-sizing:border-box;padding:0.3125rem;
-display:flex;align-items:center;gap:0.125rem;
+/* Панель переносит строку: на узкой колонке ряд кнопок иначе вылезает за
+   край блока и тянет за собой горизонтальную прокрутку страницы. */
+display:flex;flex-wrap:wrap;align-items:center;gap:0.125rem;
 background:var(--vibeui-menubar-008-bg);
 border:1px solid var(--vibeui-menubar-008-border);border-radius:0.625rem;
 }
@@ -124,6 +131,14 @@ font:inherit;font-size:0.8125rem;color:inherit;text-align:left;
 padding:0.4375rem 0.5rem;border-bottom:1px solid var(--vibeui-menubar-008-border);
 margin-bottom:0.25rem;font-size:0.75rem;color:var(--vibeui-menubar-008-muted);
 }
+/* Развёрнутый режим: меню стоит в потоке под своей кнопкой, а не в верхнем слое.
+   Панель при этом переносит меню на новую строку, а само меню перестаёт
+   требовать своей минимальной ширины — иначе оно растягивает панель. */
+[data-vibeui-block="menubar-008"]:has([data-part="menu"][data-open="true"]){flex-wrap:wrap}
+[data-vibeui-block="menubar-008"] [data-part="menu"][data-open="true"]{
+position:static;margin-block-start:0.375rem;
+min-inline-size:0;max-inline-size:100%;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="menubar-008"] *{animation:none!important;transition:none!important}}
 `
 
@@ -168,6 +183,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Один файл, ноль зависимостей, собственная палитра, клиентского JS нет.
  */
 export function Menubar008({
+  open = false,
   menus = DEFAULT_MENUS,
   userName = "Анна Крылова",
   unread = 4,
@@ -217,6 +233,7 @@ export function Menubar008({
             const anchor = {
               "--vibeui-menubar-008-anchor": `--${id}`,
             } as CSSProperties
+            const isOpen = open && index === 0
 
             return (
               <span key={menu.label} data-part="slot" style={anchor}>
@@ -229,7 +246,13 @@ export function Menubar008({
                 >
                   {menu.label}
                 </button>
-                <div id={id} data-part="menu" popover="auto" role="menu">
+                <div
+                  id={id}
+                  data-part="menu"
+                  popover={isOpen ? undefined : "auto"}
+                  data-open={isOpen || undefined}
+                  role="menu"
+                >
                   {menu.items.map((item) => (
                     <button
                       key={item}

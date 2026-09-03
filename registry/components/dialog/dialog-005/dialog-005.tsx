@@ -4,6 +4,11 @@ export type Dialog005Tone = "success" | "danger"
 
 export type Dialog005Props = {
   id?: string
+  /**
+   * Показать окно раскрытым в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  open?: boolean
   trigger?: string
   tone?: Dialog005Tone
   title?: string
@@ -94,6 +99,14 @@ color:var(--vibeui-dialog-005-muted,light-dark(oklch(0.5 0.014 265),oklch(0.7 0.
 [data-vibeui-dialog-005-window] button:focus-visible{outline:2px solid var(--vibeui-dialog-005-tone,light-dark(oklch(0.58 0.15 152),oklch(0.72 0.14 152)));outline-offset:2px;border-radius:0.375rem}
 /* Popover страницу не блокирует: фон под окном иначе продолжает прокручиваться. */
 html:has([data-vibeui-dialog-005-window]:popover-open){overflow:hidden}
+/* Развёрнутый режим: окно стоит в потоке вместо кнопки, а не в верхнем слое.
+   Без него на карточке каталога от компонента видна одна кнопка. */
+[data-vibeui-block="dialog-005"]:has([data-open="true"]){display:block;width:100%}
+[data-vibeui-block="dialog-005"]:has([data-open="true"]) [data-part="trigger"]{display:none}
+[data-vibeui-dialog-005-window][data-open="true"]{
+position:static;inset:auto;margin:0;width:100%;max-width:24rem;
+opacity:1;transform:none;
+}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="dialog-005"] *{animation:none!important;transition:none!important}
 [data-vibeui-dialog-005-window]{transition:none!important;opacity:1;transform:none}
@@ -129,6 +142,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Dialog005({
   id = "vibeui-dialog-005",
+  open = false,
   trigger = "Показать результат",
   tone = "success",
   title = "Проект опубликован",
@@ -168,8 +182,9 @@ export function Dialog005({
         </button>
         <div
           id={id}
-          popover="auto"
+          popover={open ? undefined : "auto"}
           data-vibeui-dialog-005-window=""
+          data-open={open || undefined}
           role="dialog"
           aria-labelledby={`${id}-title`}
           aria-describedby={description ? `${id}-description` : undefined}

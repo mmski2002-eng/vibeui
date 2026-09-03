@@ -17,6 +17,11 @@ export type Contextmenu008Props = Omit<
   ComponentProps<"section">,
   "children"
 > & {
+  /**
+   * Показать меню развёрнутым в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  open?: boolean
   hint?: string
   items?: Contextmenu008Item[]
   /** Доступное имя блока для скринридера. */
@@ -133,6 +138,10 @@ background:var(--vibeui-contextmenu-008-hover);
 font-family:var(--vibeui-contextmenu-008-mono);font-size:0.625rem;
 color:var(--vibeui-contextmenu-008-muted);text-align:center;
 }
+/* Развёрнутый режим: меню стоит в потоке под областью, а не в верхнем слое. */
+[data-vibeui-block="contextmenu-008"] [data-part="menu"][data-open="true"]{
+position:static;margin-block-start:0.5rem;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="contextmenu-008"] *{animation:none!important;transition:none!important}}
 `
 
@@ -170,6 +179,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Contextmenu008({
+  open = false,
   hint = "Правый клик по холсту",
   items = DEFAULT_ITEMS,
   sectionLabel = "Холст с контекстным меню",
@@ -287,7 +297,8 @@ export function Contextmenu008({
         <div
           ref={menu}
           data-part="menu"
-          popover="auto"
+          popover={open ? undefined : "auto"}
+          data-open={open || undefined}
           role="menu"
           aria-label={menuLabel}
           onKeyDown={(event) => {

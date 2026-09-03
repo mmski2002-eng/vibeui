@@ -8,6 +8,11 @@ type Navbar001Link = {
 export type Navbar001Props = {
   brand?: string
   links?: Navbar001Link[]
+  /**
+   * Показать панель развёрнутой в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  open?: boolean
   actionLabel?: string
   actionHref?: string
   /** Подпись навигации для скринридера: компонент несёт русскую. */
@@ -129,6 +134,11 @@ color:var(--vibeui-navbar-001-accent-fg,light-dark(oklch(0.99 0 0),oklch(0.18 0.
 [data-vibeui-block="navbar-001"] [data-part="action"]{display:inline-flex}
 [data-vibeui-block="navbar-001"] [data-part="burger"]{display:none}
 }
+/* Развёрнутый режим: панель встаёт в потоке под шапкой во всю её ширину. */
+[data-vibeui-navbar-001-menu][data-open="true"]{
+position:static;inset:auto;width:100%;margin:0.75rem 0 0;
+opacity:1;transform:none;
+}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="navbar-001"] *{animation:none!important;transition:none!important}
 [data-vibeui-navbar-001-menu]{transition:none!important}
@@ -171,6 +181,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 export function Navbar001({
   brand = "Полёт",
   links = DEFAULT_LINKS,
+  open = false,
   actionLabel = "Начать бесплатно",
   actionHref = "#start",
   navLabel = "Основная навигация",
@@ -230,8 +241,9 @@ export function Navbar001({
         </div>
         <div
           id={id}
-          popover="auto"
+          popover={open ? undefined : "auto"}
           data-vibeui-navbar-001-menu=""
+          data-open={open || undefined}
           style={palette}
         >
           {links.map((link) => (

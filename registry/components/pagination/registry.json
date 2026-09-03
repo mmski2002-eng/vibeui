@@ -1450,7 +1450,8 @@
                   "next": "Next page",
                   "sheet": "All pages",
                   "of": "of {total}"
-                }
+                },
+                "open": true
               }
             }
           }
@@ -1462,6 +1463,9 @@
           "background"
         ],
         "preview": {
+          "props": {
+            "open": true
+          },
           "width": "full"
         }
       }

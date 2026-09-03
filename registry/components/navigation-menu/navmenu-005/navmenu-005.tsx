@@ -10,6 +10,11 @@ export type Navmenu005Entry = {
 
 export type Navmenu005Props = {
   entries?: Navmenu005Entry[]
+  /**
+   * Показать панель развёрнутой в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  open?: boolean
   triggerLabel?: string
   /** Обычные ссылки полосы рядом с кнопкой. */
   barLinks?: string[]
@@ -125,6 +130,14 @@ font-weight:700;
 text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:0.3125rem;
 text-decoration-color:var(--vibeui-navmenu-005-accent);
 }
+/* Развёрнутый режим: панель стоит в потоке под полосой, а не в верхнем слое.
+   Показывает состояние по умолчанию — то же первое превью, что видно без
+   наведения, потому что правило :not(:has(...)) выше не зависит от popover. */
+[data-vibeui-block="navmenu-005"] [data-part="panel"][data-open="true"]{
+width:100%;
+position:static;inset:auto;margin-top:0.5rem;
+display:grid;grid-template-columns:minmax(10rem,1fr) minmax(10rem,1fr);
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="navmenu-005"] *{animation:none!important;transition:none!important}}
 `
 
@@ -199,6 +212,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Navmenu005({
   entries = DEFAULT_ENTRIES,
+  open = false,
   triggerLabel = "Возможности",
   barLinks = ["Цены", "Блог"],
   label = "Основная навигация",
@@ -256,7 +270,8 @@ export function Navmenu005({
         <div
           id="vibeui-navmenu-005-panel"
           data-part="panel"
-          popover="auto"
+          popover={open ? undefined : "auto"}
+          data-open={open || undefined}
           aria-label={triggerLabel}
         >
           <ul data-part="list">

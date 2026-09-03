@@ -17,6 +17,11 @@ export type Contextmenu002Props = Omit<
   ComponentProps<"section">,
   "children" | "title"
 > & {
+  /**
+   * Показать меню развёрнутым в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  open?: boolean
   title?: string
   files?: string[]
   /** Подсказка в шапке: компонент несёт русскую, проект подставляет свою. */
@@ -134,6 +139,10 @@ transition:background-color .14s ease;
 [data-vibeui-block="contextmenu-002"] [data-part="rule"]{
 height:1px;margin:0.3125rem 0.25rem;background:var(--vibeui-contextmenu-002-border);
 }
+/* Развёрнутый режим: меню стоит в потоке под областью, а не в верхнем слое. */
+[data-vibeui-block="contextmenu-002"] [data-part="menu"][data-open="true"]{
+position:static;margin-block-start:0.5rem;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="contextmenu-002"] *{animation:none!important;transition:none!important}}
 `
 
@@ -177,6 +186,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Contextmenu002({
+  open = false,
   title = "Документы",
   files = DEFAULT_FILES,
   hint = "правый клик · «•••» · долгое нажатие",
@@ -305,7 +315,8 @@ export function Contextmenu002({
         <div
           ref={menu}
           data-part="menu"
-          popover="auto"
+          popover={open ? undefined : "auto"}
+          data-open={open || undefined}
           role="menu"
           aria-label={target ? moreLabel.replace("{file}", target) : menuLabel}
           onKeyDown={(event) => {

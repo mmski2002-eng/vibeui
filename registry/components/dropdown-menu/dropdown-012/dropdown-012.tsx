@@ -7,6 +7,11 @@ export type Dropdown012Props = Omit<
   ComponentProps<"section">,
   "children" | "title"
 > & {
+  /**
+   * Показать меню развёрнутым в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  open?: boolean
   title?: string
   actionLabel?: string
   rows?: string[]
@@ -129,6 +134,10 @@ transition:background-color .14s ease;
 [data-vibeui-block="dropdown-012"] [data-part="rule"]{
 height:1px;margin:0.3125rem 0.25rem;background:var(--vibeui-dropdown-012-border);
 }
+/* Развёрнутый режим: меню стоит в потоке под кнопкой, а не в верхнем слое. */
+[data-vibeui-block="dropdown-012"] [data-part="menu"][data-open="true"]{
+position:static;opacity:1;transform:none;margin-top:0.375rem;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="dropdown-012"] *{animation:none!important;transition:none!important}}
 `
 
@@ -201,6 +210,7 @@ function stepFocus(menu: HTMLElement | null, delta: number) {
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Dropdown012({
+  open = false,
   title = "Задачи спринта",
   actionLabel = "Действия",
   rows = DEFAULT_ROWS,
@@ -301,7 +311,8 @@ export function Dropdown012({
         <div
           id={`${id}-menu`}
           ref={menu}
-          popover="auto"
+          popover={open ? undefined : "auto"}
+          data-open={open || undefined}
           role="menu"
           aria-label={fill(menuLabelTemplate, { action: actionLabel, count })}
           data-part="menu"

@@ -179,6 +179,9 @@
           "no-js"
         ],
         "preview": {
+          "props": {
+            "open": true
+          },
           "width": "full"
         },
         "ai": {
@@ -299,7 +302,8 @@
               "props": {
                 "label": "Unit code",
                 "question": "Where to find the unit code",
-                "answer": "Four digits from the contract header, the «Unit» line. If the contract is not at hand, your manager knows the code."
+                "answer": "Four digits from the contract header, the «Unit» line. If the contract is not at hand, your manager knows the code.",
+                "open": true
               }
             },
             "docs": "The component is self-contained: one file, no dependencies, a palette in local variables --vibeui-label-002-*. It is a server component: useId is the only hook. The hint is a native element with the popover=\"auto\" attribute, and the button opens it through popoverTarget: the browser itself provides dismissal by Esc and by a click outside, there are no handlers. The hint position comes from CSS anchor positioning under @supports (anchor-name: --a) with position-try-fallbacks; where anchor is unsupported the browser puts the popover in the middle of the screen — ugly, but the text is available. The button is a plain <button> with an aria-label, so it lands in the tab order and opens from the keyboard. The palette is built on light-dark(): the block follows the surrounding color-scheme, there is no surface by default, and it appears only through the background prop."

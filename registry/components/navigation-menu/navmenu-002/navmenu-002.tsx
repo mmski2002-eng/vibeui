@@ -8,6 +8,11 @@ export type Navmenu002Link = {
 
 export type Navmenu002Props = {
   entries?: string[]
+  /**
+   * Показать панель развёрнутой в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  open?: boolean
   panelLabel?: string
   links?: Navmenu002Link[]
   promoTitle?: string
@@ -129,6 +134,12 @@ font-weight:700;
 text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:0.3125rem;
 text-decoration-color:var(--vibeui-navmenu-002-accent);
 }
+/* Развёрнутый режим: панель стоит в потоке под полосой, а не в верхнем слое. */
+[data-vibeui-block="navmenu-002"] [data-part="panel"][data-open="true"]{
+width:100%;
+position:static;inset:auto;margin-top:0.5rem;
+display:grid;grid-template-columns:minmax(10rem,1fr) minmax(11rem,1.1fr);
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="navmenu-002"] *{animation:none!important;transition:none!important}}
 `
 
@@ -168,6 +179,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Navmenu002({
   entries = ["Возможности", "Цены", "Блог"],
+  open = false,
   panelLabel = "Возможности",
   links = DEFAULT_LINKS,
   promoTitle = "Конструктор писем",
@@ -230,7 +242,8 @@ export function Navmenu002({
         <div
           id="vibeui-navmenu-002-panel"
           data-part="panel"
-          popover="auto"
+          popover={open ? undefined : "auto"}
+          data-open={open || undefined}
           aria-label={panelLabel}
         >
           <a data-part="promo" href="#">

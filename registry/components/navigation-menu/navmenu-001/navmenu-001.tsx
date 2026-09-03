@@ -19,6 +19,11 @@ export type Navmenu001Entry = {
 
 export type Navmenu001Props = {
   entries?: Navmenu001Entry[]
+  /**
+   * Показать панель развёрнутой в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  open?: boolean
   /** Подпись навигации для скринридера. */
   label?: string
   /** Подпись текущего раздела: он помечается aria-current. */
@@ -113,6 +118,12 @@ font-weight:700;
 text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:0.3125rem;
 text-decoration-color:var(--vibeui-navmenu-001-accent);
 }
+/* Развёрнутый режим: панель встаёт в потоке под полосой на всю ширину. */
+[data-vibeui-block="navmenu-001"] [data-part="bar"]:has([data-part="panel"][data-open="true"]){flex-wrap:wrap}
+[data-vibeui-block="navmenu-001"] [data-part="bar"] > span:has([data-part="panel"][data-open="true"]){flex:1 0 100%}
+[data-vibeui-block="navmenu-001"] [data-part="panel"][data-open="true"]{
+position:static;inset:auto;width:100%;margin-top:0.5rem;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="navmenu-001"] *{animation:none!important;transition:none!important}}
 `
 
@@ -184,6 +195,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Navmenu001({
   entries = DEFAULT_ENTRIES,
+  open = false,
   label = "Основная навигация",
   current = "Цены",
   background = "",
@@ -230,6 +242,8 @@ export function Navmenu001({
             }
 
             const id = `vibeui-navmenu-001-${index}`
+            const isOpen =
+              open && index === entries.findIndex((item) => item.columns)
 
             return (
               <span key={entry.label}>
@@ -245,7 +259,8 @@ export function Navmenu001({
                 <div
                   id={id}
                   data-part="panel"
-                  popover="auto"
+                  popover={isOpen ? undefined : "auto"}
+                  data-open={isOpen || undefined}
                   aria-label={entry.label}
                 >
                   <div data-part="columns">

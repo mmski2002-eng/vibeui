@@ -671,7 +671,8 @@
                       }
                     ]
                   }
-                ]
+                ],
+                "open": true
               }
             },
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-cascader-003-* variables. Server-side: no hooks, the opening is driven by the browser through popover and popovertarget. The third-level button lies inside the second-level panel, so the browser treats the popovers as nested and does not dismiss the parent when a descendant opens. The panel position is held by CSS anchor positioning: an anchor name cannot be assembled on the fly, so the rules for 24 slots are generated in advance and a branch is given its slot number at render time. Without anchor support the panel opens in the centre of the screen — ugly, but clickable. The theme comes from the surrounding color-scheme through light-dark(): the menu has no surface of its own by default, the panels carry their own surface and darken together with the page."
@@ -683,6 +684,9 @@
           "background"
         ],
         "preview": {
+          "props": {
+            "open": true
+          },
           "width": "full"
         }
       }

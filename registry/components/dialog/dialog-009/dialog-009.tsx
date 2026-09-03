@@ -9,6 +9,11 @@ export type Dialog009Step = {
 
 export type Dialog009Props = {
   id?: string
+  /**
+   * Показать окно раскрытым в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  open?: boolean
   trigger?: string
   steps?: [Dialog009Step, Dialog009Step]
   nextLabel?: string
@@ -107,6 +112,14 @@ background:var(--vibeui-dialog-009-accent,light-dark(oklch(0.55 0.2 262),oklch(0
 [data-vibeui-dialog-009-window] :focus-visible{outline:2px solid var(--vibeui-dialog-009-accent,light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262)));outline-offset:2px}
 /* Popover страницу не блокирует: фон под окном иначе продолжает прокручиваться. */
 html:has([data-vibeui-dialog-009-window]:popover-open){overflow:hidden}
+/* Развёрнутый режим: окно стоит в потоке вместо кнопки, а не в верхнем слое.
+   Без него на карточке каталога от компонента видна одна кнопка. */
+[data-vibeui-block="dialog-009"]:has([data-open="true"]){display:block;width:100%}
+[data-vibeui-block="dialog-009"]:has([data-open="true"]) [data-part="trigger"]{display:none}
+[data-vibeui-dialog-009-window][data-open="true"]{
+position:static;inset:auto;margin:0;width:100%;max-width:26rem;
+opacity:1;transform:none;
+}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="dialog-009"] *{animation:none!important;transition:none!important}
 [data-vibeui-dialog-009-window]{transition:none!important;opacity:1;transform:none}
@@ -157,6 +170,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Dialog009({
   id = "vibeui-dialog-009",
+  open = false,
   trigger = "Создать проект",
   steps = DEFAULT_STEPS,
   nextLabel = "Далее",
@@ -194,8 +208,9 @@ export function Dialog009({
         </button>
         <form
           id={id}
-          popover="auto"
+          popover={open ? undefined : "auto"}
           data-vibeui-dialog-009-window=""
+          data-open={open || undefined}
           role="dialog"
           aria-labelledby={`${id}-title-1`}
           style={palette}

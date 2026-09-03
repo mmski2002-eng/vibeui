@@ -7,6 +7,11 @@ export type Contextmenu003Props = Omit<
   ComponentProps<"section">,
   "children"
 > & {
+  /**
+   * Показать меню развёрнутым в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  open?: boolean
   fileName?: string
   submenuLabel?: string
   apps?: string[]
@@ -121,6 +126,10 @@ font-size:0.625rem;font-weight:700;color:var(--vibeui-contextmenu-003-muted);
 [data-vibeui-block="contextmenu-003"] [data-part="rule"]{
 height:1px;margin:0.3125rem 0.25rem;background:var(--vibeui-contextmenu-003-border);
 }
+/* Развёрнутый режим: меню стоит в потоке под областью, а не в верхнем слое. */
+[data-vibeui-block="contextmenu-003"] [data-part="menu"][data-open="true"]{
+position:static;margin-block-start:0.5rem;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="contextmenu-003"] *{animation:none!important;transition:none!important}}
 `
 
@@ -158,6 +167,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Contextmenu003({
+  open = false,
   fileName = "макет-главной.svg",
   submenuLabel = "Открыть с помощью",
   apps = DEFAULT_APPS,
@@ -176,7 +186,7 @@ export function Contextmenu003({
   const menu = useRef<HTMLDivElement>(null)
   const parent = useRef<HTMLButtonElement>(null)
   const sub = useRef<HTMLDivElement>(null)
-  const [open, setOpen] = useState(false)
+  const [subOpen, setSubOpen] = useState(false)
   const [spot, setSpot] = useState<{ x: string; y: string } | null>(null)
   const [done, setDone] = useState("")
 
@@ -189,7 +199,7 @@ export function Contextmenu003({
   }
 
   const enterSub = () => {
-    setOpen(true)
+    setSubOpen(true)
     requestAnimationFrame(() =>
       sub.current?.querySelector<HTMLElement>('[data-part="item"]')?.focus(),
     )
@@ -197,7 +207,7 @@ export function Contextmenu003({
 
   const choose = (label: string) => {
     setDone(doneText.replace("{file}", fileName).replace("{action}", label))
-    setOpen(false)
+    setSubOpen(false)
     menu.current?.hidePopover()
   }
 
@@ -260,10 +270,11 @@ export function Contextmenu003({
         <div
           ref={menu}
           data-part="menu"
-          popover="auto"
+          popover={open ? undefined : "auto"}
+          data-open={open || undefined}
           role="menu"
           aria-label={menuLabel.replace("{file}", fileName)}
-          onToggle={() => setOpen(false)}
+          onToggle={() => setSubOpen(false)}
           onKeyDown={(event) => {
             if (event.key !== "ArrowDown" && event.key !== "ArrowUp") {
               return
@@ -295,8 +306,8 @@ export function Contextmenu003({
           </button>
           <div
             data-part="nest"
-            onMouseEnter={() => setOpen(true)}
-            onMouseLeave={() => setOpen(false)}
+            onMouseEnter={() => setSubOpen(true)}
+            onMouseLeave={() => setSubOpen(false)}
           >
             <button
               type="button"
@@ -304,8 +315,8 @@ export function Contextmenu003({
               role="menuitem"
               data-part="item"
               aria-haspopup="menu"
-              aria-expanded={open}
-              onClick={() => (open ? setOpen(false) : enterSub())}
+              aria-expanded={subOpen}
+              onClick={() => (subOpen ? setSubOpen(false) : enterSub())}
               onKeyDown={(event) => {
                 if (event.key === "ArrowRight") {
                   event.preventDefault()
@@ -316,7 +327,7 @@ export function Contextmenu003({
               {submenuLabel}
               <span data-part="arrow" aria-hidden="true" />
             </button>
-            {open ? (
+            {subOpen ? (
               <div
                 ref={sub}
                 data-part="sub"
@@ -325,7 +336,7 @@ export function Contextmenu003({
                 onKeyDown={(event) => {
                   if (event.key === "ArrowLeft") {
                     event.preventDefault()
-                    setOpen(false)
+                    setSubOpen(false)
                     parent.current?.focus()
                   }
                 }}

@@ -7,6 +7,11 @@ export type Contextmenu004Props = Omit<
   ComponentProps<"section">,
   "children" | "title"
 > & {
+  /**
+   * Показать меню развёрнутым в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  open?: boolean
   title?: string
   cards?: string[]
   /** Подписи пунктов правки: компонент несёт русские, проект подставляет свои. */
@@ -123,6 +128,10 @@ color:var(--vibeui-contextmenu-004-muted);cursor:not-allowed;
 }
 [data-vibeui-block="contextmenu-004"] [data-part="item"][aria-disabled="true"]:hover{background:none}
 [data-vibeui-block="contextmenu-004"] [data-part="keys"]{font-size:0.6875rem;color:var(--vibeui-contextmenu-004-muted)}
+/* Развёрнутый режим: меню стоит в потоке под областью, а не в верхнем слое. */
+[data-vibeui-block="contextmenu-004"] [data-part="menu"][data-open="true"]{
+position:static;margin-block-start:0.5rem;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="contextmenu-004"] *{animation:none!important;transition:none!important}}
 `
 
@@ -161,6 +170,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Contextmenu004({
+  open = false,
   title = "Доска",
   cards = DEFAULT_CARDS,
   actionText = DEFAULT_ACTION_TEXT,
@@ -289,7 +299,8 @@ export function Contextmenu004({
         <div
           ref={menu}
           data-part="menu"
-          popover="auto"
+          popover={open ? undefined : "auto"}
+          data-open={open || undefined}
           role="menu"
           aria-label={target ? menuLabel.replace("{card}", target) : menuTitle}
           onKeyDown={(event) => {

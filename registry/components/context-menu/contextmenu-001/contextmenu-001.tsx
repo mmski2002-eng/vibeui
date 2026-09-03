@@ -10,6 +10,11 @@ export type Contextmenu001Item = {
 }
 
 export type Contextmenu001Props = Omit<ComponentProps<"div">, "children"> & {
+  /**
+   * Показать меню развёрнутым в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  open?: boolean
   items?: Contextmenu001Item[]
   hint?: string
   /** Подпись кнопки-дублёра: компонент несёт русскую, проект подставляет свою. */
@@ -80,6 +85,10 @@ font:inherit;font-size:0.8125rem;color:inherit;text-align:left;
 [data-vibeui-block="contextmenu-001"] [data-part="item"]:focus-visible{outline:2px solid var(--vibeui-contextmenu-001-accent);outline-offset:-2px}
 [data-vibeui-block="contextmenu-001"] [data-part="item"][data-danger="true"]{color:var(--vibeui-contextmenu-001-danger)}
 [data-vibeui-block="contextmenu-001"] [data-part="keys"]{font-size:0.75rem;color:var(--vibeui-contextmenu-001-muted)}
+/* Развёрнутый режим: меню стоит в потоке под областью, а не в верхнем слое. */
+[data-vibeui-block="contextmenu-001"] [data-part="menu"][data-open="true"]{
+position:static;margin-block-start:0.5rem;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="contextmenu-001"] *{animation:none!important;transition:none!important}}
 `
 
@@ -117,6 +126,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Contextmenu001({
+  open = false,
   items = DEFAULT_ITEMS,
   hint = "Правый клик по области — или кнопка ниже",
   actionLabel = "Действия",
@@ -181,7 +191,13 @@ export function Contextmenu001({
             {actionLabel}
           </button>
         </div>
-        <div data-part="menu" popover="auto" role="menu" ref={menu}>
+        <div
+          data-part="menu"
+          popover={open ? undefined : "auto"}
+          data-open={open || undefined}
+          role="menu"
+          ref={menu}
+        >
           {items.map((item) => (
             <button
               key={item.label}

@@ -4,6 +4,11 @@ import { useId, useRef, useState } from "react"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Dropdown013Props = Omit<ComponentProps<"div">, "children"> & {
+  /**
+   * Показать меню развёрнутым в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  open?: boolean
   name?: string
   email?: string
   role?: string
@@ -110,6 +115,10 @@ transition:background-color .14s ease;
 margin-top:0.3125rem;padding-top:0.3125rem;border-top:1px solid var(--vibeui-dropdown-013-border);
 }
 [data-vibeui-block="dropdown-013"] [data-part="exit"] [data-part="item"]{color:var(--vibeui-dropdown-013-danger)}
+/* Развёрнутый режим: меню стоит в потоке под кнопкой, а не в верхнем слое. */
+[data-vibeui-block="dropdown-013"] [data-part="menu"][data-open="true"]{
+position:static;opacity:1;transform:none;margin-top:0.375rem;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="dropdown-013"] *{animation:none!important;transition:none!important}}
 `
 
@@ -186,6 +195,7 @@ function stepFocus(menu: HTMLElement | null, delta: number) {
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Dropdown013({
+  open = false,
   name = "Марк Соколов",
   email = "mark@example.com",
   role = "Продуктовый дизайнер",
@@ -202,7 +212,7 @@ export function Dropdown013({
   const id = useId().replace(/:/g, "")
   const trigger = useRef<HTMLButtonElement>(null)
   const menu = useRef<HTMLDivElement>(null)
-  const [open, setOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
   const [copied, setCopied] = useState(false)
 
   const close = () => {
@@ -250,7 +260,7 @@ export function Dropdown013({
           data-part="trigger"
           popoverTarget={`${id}-menu`}
           aria-haspopup="menu"
-          aria-expanded={open}
+          aria-expanded={menuOpen}
           aria-label={triggerLabelTemplate.replace("{name}", name)}
           onKeyDown={(event) => {
             if (event.key === "ArrowDown") {
@@ -279,11 +289,12 @@ export function Dropdown013({
         <div
           id={`${id}-menu`}
           ref={menu}
-          popover="auto"
+          popover={open ? undefined : "auto"}
+          data-open={open || undefined}
           role="menu"
           aria-label={menuLabel}
           data-part="menu"
-          onToggle={(event) => setOpen(event.newState === "open")}
+          onToggle={(event) => setMenuOpen(event.newState === "open")}
           onKeyDown={(event) => {
             if (event.key === "ArrowDown") {
               event.preventDefault()

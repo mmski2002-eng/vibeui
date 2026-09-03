@@ -16,4 +16,19 @@ export const PREVIEWS = {
       (module) => module.Sparkline002,
     ),
   ),
+  "sparkline-003": dynamic(() =>
+    import("@/registry/components/sparkline/sparkline-003/sparkline-003").then(
+      (module) => module.Sparkline003,
+    ),
+  ),
+  "sparkline-004": dynamic(() =>
+    import("@/registry/components/sparkline/sparkline-004/sparkline-004").then(
+      (module) => module.Sparkline004,
+    ),
+  ),
+  "sparkline-005": dynamic(() =>
+    import("@/registry/components/sparkline/sparkline-005/sparkline-005").then(
+      (module) => module.Sparkline005,
+    ),
+  ),
 } satisfies PreviewMap

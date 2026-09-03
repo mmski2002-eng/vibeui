@@ -6,6 +6,11 @@ export type Menubar001Menu = {
 }
 
 export type Menubar001Props = Omit<ComponentProps<"div">, "children"> & {
+  /**
+   * Показать меню развёрнутым в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  open?: boolean
   menus?: Menubar001Menu[]
   /** Имя строки меню для скринридера. */
   menubarLabel?: string
@@ -82,6 +87,10 @@ font:inherit;font-size:0.8125rem;color:inherit;text-align:left;
 [data-vibeui-block="menubar-001"] [data-part="item"]:focus-visible{outline:2px solid var(--vibeui-menubar-001-accent);outline-offset:-2px}
 [data-vibeui-block="menubar-001"] [data-part="item"]:disabled{color:var(--vibeui-menubar-001-muted);cursor:default}
 [data-vibeui-block="menubar-001"] [data-part="keys"]{font-size:0.75rem;color:var(--vibeui-menubar-001-muted)}
+/* Развёрнутый режим: меню стоит в потоке под своей кнопкой, а не в верхнем слое. */
+[data-vibeui-block="menubar-001"] [data-part="menu"][data-open="true"]{
+position:static;margin-block-start:0.375rem;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="menubar-001"] *{animation:none!important;transition:none!important}}
 `
 
@@ -140,6 +149,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Menubar001({
+  open = false,
   menus = DEFAULT_MENUS,
   menubarLabel = "Меню приложения",
   group = "vibeui-menubar-001",
@@ -180,6 +190,7 @@ export function Menubar001({
           const anchor = {
             "--vibeui-menubar-001-anchor": `--${id}`,
           } as CSSProperties
+          const isOpen = open && index === 0
 
           return (
             <span key={menu.label} data-part="slot" style={anchor}>
@@ -191,7 +202,13 @@ export function Menubar001({
               >
                 {menu.label}
               </button>
-              <div id={id} data-part="menu" popover="auto" role="menu">
+              <div
+                id={id}
+                data-part="menu"
+                popover={isOpen ? undefined : "auto"}
+                data-open={isOpen || undefined}
+                role="menu"
+              >
                 {menu.items.map((item) => (
                   <button
                     key={item.label}

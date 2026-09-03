@@ -9,6 +9,11 @@ export type Dropdown002Section = {
 }
 
 export type Dropdown002Props = Omit<ComponentProps<"div">, "children"> & {
+  /**
+   * Показать меню развёрнутым в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  open?: boolean
   trigger?: string
   align?: "left" | "right"
   sections?: Dropdown002Section[]
@@ -107,6 +112,11 @@ transition:background-color .14s ease;
 }
 [data-vibeui-block="dropdown-002"] [data-part="item"]:hover{background:var(--vibeui-dropdown-002-hover)}
 [data-vibeui-block="dropdown-002"] [data-part="item"]:focus-visible{outline:2px solid var(--vibeui-dropdown-002-accent);outline-offset:-2px}
+/* Развёрнутый режим: меню стоит в потоке под кнопкой, а не в верхнем слое. */
+[data-vibeui-block="dropdown-002"]:has([data-open="true"]){flex-wrap:wrap}
+[data-vibeui-block="dropdown-002"] [data-part="menu"][data-open="true"]{
+position:static;opacity:1;transform:none;margin-top:0.375rem;flex-basis:100%;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="dropdown-002"] *{animation:none!important;transition:none!important}}
 `
 
@@ -160,6 +170,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Dropdown002({
+  open = false,
   trigger = "Действия",
   align = "right",
   sections = DEFAULT_SECTIONS,
@@ -242,7 +253,8 @@ export function Dropdown002({
         <div
           id={`${id}-menu`}
           ref={menu}
-          popover="auto"
+          popover={open ? undefined : "auto"}
+          data-open={open || undefined}
           role="menu"
           aria-label={trigger}
           data-part="menu"

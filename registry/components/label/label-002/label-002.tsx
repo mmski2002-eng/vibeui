@@ -2,6 +2,11 @@ import { useId } from "react"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Label002Props = Omit<ComponentProps<"div">, "children"> & {
+  /**
+   * Показать подсказку развёрнутой в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  open?: boolean
   label?: string
   question?: string
   answer?: string
@@ -91,6 +96,10 @@ transition:border-color .16s ease,box-shadow .16s ease;
 outline:none;border-color:var(--vibeui-label-002-accent);
 box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-label-002-accent) 22%,transparent);
 }
+/* Развёрнутый режим: подсказка стоит в потоке под подписью, а не в верхнем слое. */
+[data-vibeui-block="label-002"] [data-part="tip"][data-open="true"]{
+position:static;margin:0.375rem 0 0;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="label-002"] *{animation:none!important;transition:none!important}}
 `
 
@@ -121,6 +130,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * открывается без JS. Один файл, ноль зависимостей, собственная палитра.
  */
 export function Label002({
+  open = false,
   label = "Код подразделения",
   question = "Где взять код подразделения",
   answer = "Четыре цифры из шапки договора, строка «Подразделение». Если договора под рукой нет, код подскажет ваш менеджер.",
@@ -166,7 +176,12 @@ export function Label002({
             <span aria-hidden="true">?</span>
           </button>
         </div>
-        <div data-part="tip" id={tipId} popover="auto">
+        <div
+          data-part="tip"
+          id={tipId}
+          popover={open ? undefined : "auto"}
+          data-open={open || undefined}
+        >
           {answer}
         </div>
         <input id={id} type="text" name="unit" inputMode="numeric" />

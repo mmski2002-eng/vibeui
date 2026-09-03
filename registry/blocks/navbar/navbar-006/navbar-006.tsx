@@ -16,6 +16,11 @@ export type Navbar006Props = {
   brand?: string
   links?: Navbar006Link[]
   locales?: Navbar006Locale[]
+  /**
+   * Показать панель развёрнутой в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  open?: boolean
   currentLocale?: string
   actionLabel?: string
   actionHref?: string
@@ -135,6 +140,11 @@ text-decoration:none;font-size:0.875rem;font-weight:560;
 [data-vibeui-block="navbar-006"] [data-part="brand"]{margin-right:0}
 [data-vibeui-block="navbar-006"] [data-part="links"]{order:0;flex:1 1 auto;padding-top:0;border-top:0;overflow:visible}
 }
+/* Развёрнутый режим: панель встаёт в потоке под шапкой во всю её ширину. */
+[data-vibeui-navbar-006-locales][data-open="true"]{
+position:static;inset:auto;width:100%;margin:0.75rem 0 0;
+opacity:1;transform:none;
+}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="navbar-006"] *{animation:none!important;transition:none!important}
 [data-vibeui-navbar-006-locales]{transition:none!important}
@@ -182,6 +192,7 @@ export function Navbar006({
   brand = "Ориентир",
   links = DEFAULT_LINKS,
   locales = DEFAULT_LOCALES,
+  open = false,
   currentLocale = "RU",
   actionLabel = "Связаться",
   actionHref = "#contact",
@@ -240,8 +251,9 @@ export function Navbar006({
         </div>
         <div
           id={id}
-          popover="auto"
+          popover={open ? undefined : "auto"}
           data-vibeui-navbar-006-locales=""
+          data-open={open || undefined}
           style={palette}
         >
           {locales.map((locale) => (

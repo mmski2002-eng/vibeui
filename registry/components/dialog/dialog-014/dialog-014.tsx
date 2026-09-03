@@ -2,6 +2,11 @@ import type { CSSProperties } from "react"
 
 export type Dialog014Props = {
   id?: string
+  /**
+   * Показать окно раскрытым в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  open?: boolean
   trigger?: string
   title?: string
   description?: string
@@ -95,6 +100,14 @@ border-radius:0.5rem;border:1px solid transparent;
 [data-vibeui-dialog-014-window] :focus-visible{outline:2px solid var(--vibeui-dialog-014-accent,light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262)));outline-offset:2px}
 /* Popover страницу не блокирует: фон под окном иначе продолжает прокручиваться. */
 html:has([data-vibeui-dialog-014-window]:popover-open){overflow:hidden}
+/* Развёрнутый режим: окно стоит в потоке вместо кнопки, а не в верхнем слое.
+   Без него на карточке каталога от компонента видна одна кнопка. */
+[data-vibeui-block="dialog-014"]:has([data-open="true"]){display:block;width:100%}
+[data-vibeui-block="dialog-014"]:has([data-open="true"]) [data-part="trigger"]{display:none}
+[data-vibeui-dialog-014-window][data-open="true"]{
+position:static;inset:auto;margin:0;width:100%;max-width:25rem;
+opacity:1;transform:none;
+}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="dialog-014"] *{animation:none!important;transition:none!important}
 [data-vibeui-dialog-014-window]{transition:none!important;opacity:1;transform:none}
@@ -130,6 +143,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Dialog014({
   id = "vibeui-dialog-014",
+  open = false,
   trigger = "Показать окно сессии",
   title = "Сессия скоро закончится",
   description = "Мы выйдем из аккаунта через минуту бездействия. Несохранённые изменения останутся в черновике.",
@@ -169,8 +183,9 @@ export function Dialog014({
         </button>
         <div
           id={id}
-          popover="auto"
+          popover={open ? undefined : "auto"}
           data-vibeui-dialog-014-window=""
+          data-open={open || undefined}
           role="alertdialog"
           aria-labelledby={`${id}-title`}
           aria-describedby={`${id}-description`}
