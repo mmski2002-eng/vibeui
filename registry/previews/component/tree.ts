@@ -13,6 +13,8 @@ import { Tree005 } from "@/registry/components/tree/tree-005/tree-005"
 import { Tree006 } from "@/registry/components/tree/tree-006/tree-006"
 import { Tree007 } from "@/registry/components/tree/tree-007/tree-007"
 import { Tree008 } from "@/registry/components/tree/tree-008/tree-008"
+import { Tree009 } from "@/registry/components/tree/tree-009/tree-009"
+import { Tree010 } from "@/registry/components/tree/tree-010/tree-010"
 
 export const PREVIEWS = {
   "tree-001": Tree001,
@@ -23,4 +25,6 @@ export const PREVIEWS = {
   "tree-006": Tree006,
   "tree-007": Tree007,
   "tree-008": Tree008,
+  "tree-009": Tree009,
+  "tree-010": Tree010,
 } satisfies Record<string, ComponentType<PreviewProps>>

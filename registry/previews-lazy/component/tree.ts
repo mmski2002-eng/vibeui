@@ -46,4 +46,14 @@ export const PREVIEWS = {
       (module) => module.Tree008,
     ),
   ),
+  "tree-009": dynamic(() =>
+    import("@/registry/components/tree/tree-009/tree-009").then(
+      (module) => module.Tree009,
+    ),
+  ),
+  "tree-010": dynamic(() =>
+    import("@/registry/components/tree/tree-010/tree-010").then(
+      (module) => module.Tree010,
+    ),
+  ),
 } satisfies PreviewMap

@@ -1432,6 +1432,439 @@
           "background"
         ]
       }
+    },
+    {
+      "name": "gantt-008",
+      "type": "registry:component",
+      "title": "Сегодня и просрочка",
+      "description": "План со шкалой дней, где линия сегодняшнего дня проходит через все строки, а задача с прошедшим сроком помечается просроченной сама, из своих же дат.",
+      "categories": [
+        "gantt"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "gantt-008/gantt-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/gantt-008.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-gantt-008-*. Серверный. Полосы занимают колонки грида, поэтому длительность задаётся разметкой, а не пересчётом в проценты. Линия сегодняшнего дня — элемент на grid-row 1 / -1 в своей колонке: она проходит через все строки и не требует ни абсолютного позиционирования, ни измерений. Прошедшие ячейки притенены, поэтому граница «уже было» читается и там, где линия ушла за край прокрутки. Просрочка выводится из данных — задача не закрыта, а её последний день позади, — и помечается сразу тремя способами: цветом, штриховкой и словом на плашке. Колонка названий липкая: план читают по строкам. У каждой полосы есть скрытая расшифровка срока для экранного диктора.",
+      "meta": {
+        "tags": [
+          "gantt",
+          "timeline",
+          "deadline",
+          "status"
+        ],
+        "ai": {
+          "export": "Gantt008",
+          "usage": "<Gantt008\n  today={6}\n  days={[\"пн\", \"вт\", \"ср\"]}\n  tasks={[{ title: \"Вёрстка\", start: 1, span: 3, owner: \"Илья\" }]}\n/>",
+          "summary": "План спринта: линия сегодняшнего дня через все строки и автоматическая пометка просроченных задач. Один файл, ноль зависимостей, серверный рендер.",
+          "preserve": [
+            "локальную палитру --vibeui-gantt-008-*: компонент обязан выглядеть одинаково в любом проекте",
+            "вывод просрочки из дат, а не из отдельного флага — флаг разойдётся со сроками при первой правке",
+            "три признака просрочки сразу: цвет, штриховку и слово — одного цвета мало на печати и при дальтонизме",
+            "линию сегодняшнего дня на grid-row 1 / -1: так она проходит через все строки без единого измерения",
+            "притенение прошедших колонок — граница «уже было» нужна и тогда, когда линия ушла за край прокрутки",
+            "липкую колонку названий: при прокрутке вправо строка обязана оставаться подписанной",
+            "скрытую расшифровку срока у полосы: сама полоса для диктора — пустой элемент"
+          ],
+          "adapt": [
+            "шкалу через days и задачи через tasks: title, start, span, owner и done",
+            "сегодняшний день через today — это номер колонки, считая с единицы",
+            "подписи через todayLabel, lateLabel и summaryTemplate с плейсхолдерами {late} и {total}",
+            "цвет обычных полос через accent",
+            "цвета состояний через переменные --vibeui-gantt-008-done, -late и -today",
+            "подложку компонента через background; пусто означает фон страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Колонки задаются подписями, а не датами: компонент не считает календарь и не знает про выходные.",
+            "start и span — номера колонок, а не индексы: первая колонка это 1.",
+            "На узкой ширине план прокручивается внутри себя; колонка названий при этом остаётся на месте.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Спринт",
+            "maxLength": 24
+          },
+          {
+            "prop": "today",
+            "label": "Сегодня",
+            "type": "number",
+            "default": 6,
+            "min": 1,
+            "max": 10
+          },
+          {
+            "prop": "lateLabel",
+            "label": "Метка просрочки",
+            "type": "text",
+            "default": "просрочено",
+            "maxLength": 16
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Today and Overdue",
+            "description": "A day-scale plan where the today line runs through every row, and a task whose deadline has passed marks itself overdue from its own dates.",
+            "docs": "One file, zero dependencies, the --vibeui-gantt-008-* palette. A server component. Bars occupy grid columns, so duration is set by markup rather than converted to percentages. The today line is an element on grid-row 1 / -1 in its own column: it crosses every row without absolute positioning or measurement. Past cells are shaded, so the \"already happened\" boundary reads even when the line has scrolled out of view. Overdue is derived from the data — the task is not done and its last day is behind — and marked three ways at once: colour, hatching and a word on the pill. The name column is sticky: a plan is read by rows. Every bar carries a hidden date expansion for screen readers.",
+            "ai": {
+              "summary": "A sprint plan: a today line through every row and automatic marking of overdue tasks. One file, zero dependencies, server-rendered.",
+              "preserve": [
+                "the local --vibeui-gantt-008-* palette: the component must look the same in any project",
+                "deriving overdue from the dates rather than a separate flag — a flag drifts from the dates on the first edit",
+                "all three overdue signals: colour, hatching and the word — colour alone is not enough in print or under colour blindness",
+                "the today line on grid-row 1 / -1: that is what crosses every row without a single measurement",
+                "shading the past columns — the \"already happened\" boundary is needed even when the line has scrolled away",
+                "the sticky name column: scrolled right, a row still has to be labelled",
+                "the hidden date expansion on the bar: to a screen reader the bar itself is an empty element"
+              ],
+              "adapt": [
+                "the scale through days and the tasks through tasks: title, start, span, owner and done",
+                "today through today — a column number counting from one",
+                "the captions through todayLabel, lateLabel and summaryTemplate with the {late} and {total} placeholders",
+                "the ordinary bar colour through accent",
+                "the state colours through the --vibeui-gantt-008-done, -late and -today variables",
+                "the component surface through background; empty means the page background"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Columns are captions, not dates: the component does no calendar arithmetic and knows nothing about weekends.",
+                "start and span are column numbers, not indices: the first column is 1.",
+                "At narrow widths the plan scrolls inside itself while the name column stays put.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Gantt008\n  today={6}\n  days={[\"Mon\", \"Tue\", \"Wed\"]}\n  tasks={[{ title: \"Catalog markup\", start: 1, span: 3, owner: \"Ilya\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Sprint"
+              },
+              "today": {
+                "label": "Today"
+              },
+              "lateLabel": {
+                "label": "Overdue mark",
+                "default": "overdue"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Sprint",
+                "todayLabel": "Today",
+                "lateLabel": "overdue",
+                "summaryTemplate": "Overdue tasks: {late} of {total}.",
+                "days": [
+                  "Mon",
+                  "Tue",
+                  "Wed",
+                  "Thu",
+                  "Fri",
+                  "Mon",
+                  "Tue",
+                  "Wed",
+                  "Thu",
+                  "Fri"
+                ],
+                "tasks": [
+                  {
+                    "title": "Requirements",
+                    "start": 1,
+                    "span": 2,
+                    "owner": "Anna",
+                    "done": true
+                  },
+                  {
+                    "title": "Screen mockups",
+                    "start": 2,
+                    "span": 3,
+                    "owner": "Kim",
+                    "done": true
+                  },
+                  {
+                    "title": "Catalog markup",
+                    "start": 3,
+                    "span": 3,
+                    "owner": "Ilya"
+                  },
+                  {
+                    "title": "Search integration",
+                    "start": 5,
+                    "span": 3,
+                    "owner": "Dasha"
+                  },
+                  {
+                    "title": "Copy and translations",
+                    "start": 7,
+                    "span": 2,
+                    "owner": "Timur"
+                  },
+                  {
+                    "title": "Acceptance",
+                    "start": 9,
+                    "span": 2,
+                    "owner": "Anna"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "title",
+          "today",
+          "lateLabel",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
+      }
+    },
+    {
+      "name": "gantt-009",
+      "type": "registry:component",
+      "title": "План против факта",
+      "description": "План и факт одной строкой: тонкая полоса сверху — как собирались, толстая снизу — как вышло, а отклонение подписано у названия задачи.",
+      "categories": [
+        "gantt"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "gantt-009/gantt-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/gantt-009.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-gantt-009-*. Серверный. Обе полосы стоят в одной ячейке грида и разведены по вертикали через align-self: отдельные строки для плана и факта растянули бы таблицу вдвое и разорвали пару, которую как раз и сравнивают. План набран пунктирным градиентом, факт — сплошной заливкой: разница читается и в чёрно-белой печати. Отклонение считается по концу работы, а не по началу — сдвинутый старт ничего не значит, если задачу догнали, — и подписывается у названия, потому что на полосе в одну колонку места для числа нет. Знак отклонения задаёт цвет: отставание красным, опережение зелёным. Колонка названий липкая, у полосы факта есть скрытая расшифровка срока.",
+      "meta": {
+        "tags": [
+          "gantt",
+          "baseline",
+          "timeline",
+          "plan"
+        ],
+        "ai": {
+          "export": "Gantt009",
+          "usage": "<Gantt009\n  tasks={[{ title: \"Разработка\", planStart: 4, planSpan: 3, factStart: 5, factSpan: 3 }]}\n/>",
+          "summary": "Гант с базовым планом: тонкая полоса плана и толстая полоса факта в одной строке, отклонение подписано числом. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-gantt-009-*: компонент обязан выглядеть одинаково в любом проекте",
+            "обе полосы в одной строке: разнести план и факт по разным строкам — разорвать пару, которую сравнивают",
+            "разную толщину и заливку полос — разница обязана читаться и в чёрно-белой печати",
+            "счёт отклонения по концу работы: сдвинутый старт ничего не значит, если задачу догнали",
+            "подпись отклонения у названия, а не на полосе — в одну колонку число не помещается",
+            "липкую колонку названий: при прокрутке вправо строка обязана оставаться подписанной",
+            "скрытую расшифровку срока у полосы факта: сама полоса для диктора — пустой элемент"
+          ],
+          "adapt": [
+            "шкалу через columns и задачи через tasks: planStart, planSpan, factStart и factSpan",
+            "подписи легенды через planLabel и factLabel, заголовок плана через title",
+            "подпись отклонения через driftTemplate с плейсхолдером {days} — знак подставляется сам",
+            "строку про неначатые задачи через waitingTemplate с плейсхолдером {count}",
+            "цвет полосы факта через accent, цвета отклонений — через --vibeui-gantt-009-behind и -ahead",
+            "подложку компонента через background; пусто означает фон страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Задача без factStart считается неначатой: у неё рисуется только план, а в подвале растёт счётчик.",
+            "Колонки задаются подписями, а не датами: компонент не считает календарь.",
+            "planStart и factStart — номера колонок, а не индексы: первая колонка это 1.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "План и факт",
+            "maxLength": 24
+          },
+          {
+            "prop": "planLabel",
+            "label": "Подпись плана",
+            "type": "text",
+            "default": "План",
+            "maxLength": 16
+          },
+          {
+            "prop": "factLabel",
+            "label": "Подпись факта",
+            "type": "text",
+            "default": "Факт",
+            "maxLength": 16
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Plan Against Actual",
+            "description": "Plan and actual on one row: the thin bar above is how it was scheduled, the thick bar below is how it went, and the slip is spelled out next to the task name.",
+            "docs": "One file, zero dependencies, the --vibeui-gantt-009-* palette. A server component. Both bars sit in the same grid cell and are separated vertically with align-self: separate rows for plan and actual would double the table's height and break apart the very pair being compared. The plan is a dashed gradient, the actual a solid fill: the difference reads in black-and-white print too. The slip is measured at the end of the work rather than the start — a late start means nothing if the task caught up — and printed next to the name, because a one-column bar has no room for a number. The sign of the slip picks the colour: behind in red, ahead in green. The name column is sticky, and the actual bar carries a hidden date expansion.",
+            "ai": {
+              "summary": "A baseline Gantt: a thin plan bar and a thick actual bar on one row, with the slip printed as a number. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-gantt-009-* palette: the component must look the same in any project",
+                "both bars on one row: splitting plan and actual across rows breaks apart the pair being compared",
+                "the different weight and fill of the bars — the difference has to read in black-and-white print",
+                "measuring the slip at the end of the work: a late start means nothing if the task caught up",
+                "printing the slip by the name rather than on the bar — a number does not fit in one column",
+                "the sticky name column: scrolled right, a row still has to be labelled",
+                "the hidden date expansion on the actual bar: to a screen reader the bar itself is an empty element"
+              ],
+              "adapt": [
+                "the scale through columns and the tasks through tasks: planStart, planSpan, factStart and factSpan",
+                "the legend captions through planLabel and factLabel, and the plan heading through title",
+                "the slip caption through driftTemplate with the {days} placeholder — the sign is supplied",
+                "the not-started line through waitingTemplate with the {count} placeholder",
+                "the actual bar colour through accent, the slip colours through --vibeui-gantt-009-behind and -ahead",
+                "the component surface through background; empty means the page background"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "A task without factStart counts as not started: only its plan is drawn and the footer counter grows.",
+                "Columns are captions, not dates: the component does no calendar arithmetic.",
+                "planStart and factStart are column numbers, not indices: the first column is 1.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Gantt009\n  tasks={[{ title: \"Development\", planStart: 4, planSpan: 3, factStart: 5, factSpan: 3 }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Plan and actual"
+              },
+              "planLabel": {
+                "label": "Plan caption",
+                "default": "Plan"
+              },
+              "factLabel": {
+                "label": "Actual caption",
+                "default": "Actual"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Plan and actual",
+                "planLabel": "Plan",
+                "factLabel": "Actual",
+                "driftTemplate": "{days} vs plan",
+                "waitingTemplate": "Not started yet: {count}.",
+                "columns": [
+                  "wk 1",
+                  "wk 2",
+                  "wk 3",
+                  "wk 4",
+                  "wk 5",
+                  "wk 6",
+                  "wk 7",
+                  "wk 8"
+                ],
+                "tasks": [
+                  {
+                    "title": "Research",
+                    "planStart": 1,
+                    "planSpan": 2,
+                    "factStart": 1,
+                    "factSpan": 2
+                  },
+                  {
+                    "title": "Prototype",
+                    "planStart": 2,
+                    "planSpan": 2,
+                    "factStart": 2,
+                    "factSpan": 3
+                  },
+                  {
+                    "title": "Screen design",
+                    "planStart": 3,
+                    "planSpan": 2,
+                    "factStart": 4,
+                    "factSpan": 2
+                  },
+                  {
+                    "title": "Development",
+                    "planStart": 4,
+                    "planSpan": 3,
+                    "factStart": 5,
+                    "factSpan": 3
+                  },
+                  {
+                    "title": "Testing",
+                    "planStart": 6,
+                    "planSpan": 2,
+                    "factStart": 7,
+                    "factSpan": 1
+                  },
+                  {
+                    "title": "Launch",
+                    "planStart": 8,
+                    "planSpan": 1
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "title",
+          "planLabel",
+          "factLabel",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
+      }
     }
   ]
 }

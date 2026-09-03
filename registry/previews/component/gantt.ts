@@ -12,6 +12,8 @@ import { Gantt004 } from "@/registry/components/gantt/gantt-004/gantt-004"
 import { Gantt005 } from "@/registry/components/gantt/gantt-005/gantt-005"
 import { Gantt006 } from "@/registry/components/gantt/gantt-006/gantt-006"
 import { Gantt007 } from "@/registry/components/gantt/gantt-007/gantt-007"
+import { Gantt008 } from "@/registry/components/gantt/gantt-008/gantt-008"
+import { Gantt009 } from "@/registry/components/gantt/gantt-009/gantt-009"
 
 export const PREVIEWS = {
   "gantt-001": Gantt001,
@@ -21,4 +23,6 @@ export const PREVIEWS = {
   "gantt-005": Gantt005,
   "gantt-006": Gantt006,
   "gantt-007": Gantt007,
+  "gantt-008": Gantt008,
+  "gantt-009": Gantt009,
 } satisfies Record<string, ComponentType<PreviewProps>>

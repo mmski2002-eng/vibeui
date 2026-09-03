@@ -117,6 +117,12 @@ font-size:0.6875rem;font-weight:650;letter-spacing:0.06em;text-transform:upperca
 color:var(--vibeui-dropdown-021-muted,color-mix(in oklab,currentColor 60%,transparent));
 }
 [data-vibeui-dropdown-021-menu] [data-part="group"]{border:0;margin:0;padding:0;min-inline-size:0}
+/* Заголовок группы для диктора: на экране его роль играет [data-part="title"],
+   а класса из проекта у компонента быть не может. */
+[data-vibeui-dropdown-021-menu] [data-part="reader"]{
+position:absolute;inline-size:1px;block-size:1px;margin:-1px;padding:0;
+overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0;
+}
 [data-vibeui-dropdown-021-menu] [data-part="option"]{
 position:relative;display:flex;align-items:flex-start;gap:0.5625rem;
 padding:0.4375rem 0.5rem;border-radius:0.5rem;cursor:pointer;
@@ -276,9 +282,7 @@ export function Dropdown021({
           <p data-part="title">{title}</p>
           <form>
             <fieldset data-part="group">
-              <legend className="sr-only" hidden>
-                {title}
-              </legend>
+              <legend data-part="reader">{title}</legend>
               {statuses.map((entry) => (
                 <label
                   key={entry.value}

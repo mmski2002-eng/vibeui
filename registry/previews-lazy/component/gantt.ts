@@ -41,4 +41,14 @@ export const PREVIEWS = {
       (module) => module.Gantt007,
     ),
   ),
+  "gantt-008": dynamic(() =>
+    import("@/registry/components/gantt/gantt-008/gantt-008").then(
+      (module) => module.Gantt008,
+    ),
+  ),
+  "gantt-009": dynamic(() =>
+    import("@/registry/components/gantt/gantt-009/gantt-009").then(
+      (module) => module.Gantt009,
+    ),
+  ),
 } satisfies PreviewMap

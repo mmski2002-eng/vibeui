@@ -1561,6 +1561,367 @@
           "width": "full"
         }
       }
+    },
+    {
+      "name": "tree-009",
+      "type": "registry:component",
+      "title": "Оглавление с текущим разделом",
+      "description": "Оглавление, которое само знает, где читатель: ветка до текущего раздела раскрыта, сам раздел помечен полосой на направляющей, а предки подсвечены слабее.",
+      "categories": [
+        "tree"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tree-009/tree-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tree-009.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-tree-009-*. Серверный: раскрытие держит нативный details с вычисленным open, поэтому правильное состояние приходит с сервера, не мигает при гидратации и встроенный поиск браузера находит скрытые пункты. Ветка раскрывается по обходу holdsActive: у каждого узла спрашивают, лежит ли внутри него activeId. Текущий пункт помечен aria-current=page и полосой, которая стоит ровно на месте направляющей — минус-отступ равен её толщине, поэтому линия и отметка не разъезжаются. Предки текущего получают data-onpath и подсвечиваются слабее самого раздела. Дерево размечено role=tree с явным aria-level: из вложенности details скринридер глубину не выводит.",
+      "meta": {
+        "tags": [
+          "tree",
+          "navigation",
+          "docs",
+          "sidebar"
+        ],
+        "ai": {
+          "export": "Tree009",
+          "usage": "<Tree009\n  activeId=\"dark\"\n  nodes={[{ id: \"start\", name: \"Начало\", children: [{ id: \"dark\", name: \"Тёмная тема\", href: \"#\" }] }]}\n/>",
+          "summary": "Оглавление документации: ветка до текущего раздела раскрыта сама, текущий помечен полосой. Один файл, ноль зависимостей, серверный рендер.",
+          "preserve": [
+            "локальную палитру --vibeui-tree-009-*: компонент обязан выглядеть одинаково в любом проекте",
+            "вычисление open на сервере: раскрытие на клиенте мигало бы при гидратации",
+            "aria-current=page у текущего пункта — по одному цвету диктор место не определит",
+            "явный aria-level: из вложенности details глубину не выводят",
+            "полосу на месте направляющей: сдвиг на её толщину — единственное, что держит линию и отметку вместе",
+            "слабую подсветку предков: путь должен читаться, но не спорить с самим разделом",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "структуру через nodes: id, name, href и children у каждого узла",
+            "текущий раздел через activeId",
+            "заголовок над оглавлением через title и имя навигации через label",
+            "цвет отметки и фокуса через accent",
+            "подложку компонента через background; пусто означает фон страницы",
+            "толщину направляющей и её цвет через переменную --vibeui-tree-009-rail"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Компонент не следит за прокруткой: activeId приходит сверху, из маршрута или из наблюдателя за заголовками.",
+            "Идентификаторы обязаны быть уникальными во всём дереве: одинаковые раскроют сразу две ветки.",
+            "Details остаются управляемыми пользователем: читатель может свернуть текущую ветку, и это не сбрасывает activeId.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Документация",
+            "maxLength": 24
+          },
+          {
+            "prop": "activeId",
+            "label": "Текущий раздел",
+            "type": "select",
+            "default": "dark",
+            "options": [
+              "install",
+              "first",
+              "tokens",
+              "dark",
+              "build",
+              "faq"
+            ]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Table of Contents",
+            "description": "A table of contents that knows where the reader is: the branch down to the current section is open, the section itself is marked by a bar on the rail, and its ancestors are highlighted more faintly.",
+            "docs": "One file, zero dependencies, the --vibeui-tree-009-* palette. A server component: a native details with a computed open holds the disclosure, so the right state arrives from the server, never flickers on hydration, and the browser's own find-in-page reaches hidden entries. The branch opens through the holdsActive walk: every node is asked whether activeId lies inside it. The current entry carries aria-current=page and a bar placed exactly on the rail — the negative offset equals the rail's width, so the line and the mark never drift apart. Ancestors of the current entry get data-onpath and a fainter highlight. The tree is marked up as role=tree with explicit aria-level: a screen reader does not infer depth from nested details.",
+            "ai": {
+              "summary": "A docs table of contents: the branch to the current section opens itself and the current entry is marked by a bar. One file, zero dependencies, server-rendered.",
+              "preserve": [
+                "the local --vibeui-tree-009-* palette: the component must look the same in any project",
+                "computing open on the server: client-side disclosure would flicker on hydration",
+                "aria-current=page on the current entry — colour alone tells a screen reader nothing",
+                "the explicit aria-level: depth is not inferred from nested details",
+                "the bar sitting on the rail: the offset by the rail's width is the only thing keeping line and mark together",
+                "the fainter ancestor highlight: the path has to read without competing with the section itself",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "the structure through nodes: id, name, href and children on every node",
+                "the current section through activeId",
+                "the heading through title and the navigation name through label",
+                "the mark and focus colour through accent",
+                "the component surface through background; empty means the page background",
+                "the rail's colour and weight through the --vibeui-tree-009-rail variable"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The component does not watch scrolling: activeId comes from above — from the route or from a heading observer.",
+                "Ids have to be unique across the whole tree: duplicates open two branches at once.",
+                "The details stay under the reader's control: collapsing the current branch does not reset activeId.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tree009\n  activeId=\"dark\"\n  nodes={[{ id: \"start\", name: \"Getting started\", children: [{ id: \"dark\", name: \"Dark theme\", href: \"#\" }] }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Documentation"
+              },
+              "activeId": {
+                "label": "Current section"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Documentation",
+                "label": "Documentation sections",
+                "activeId": "dark",
+                "nodes": [
+                  {
+                    "id": "start",
+                    "name": "Getting started",
+                    "children": [
+                      {
+                        "id": "install",
+                        "name": "Installation",
+                        "href": "#"
+                      },
+                      {
+                        "id": "first",
+                        "name": "Your first component",
+                        "href": "#"
+                      },
+                      {
+                        "id": "theme",
+                        "name": "Theme and tokens",
+                        "children": [
+                          {
+                            "id": "tokens",
+                            "name": "Component variables",
+                            "href": "#"
+                          },
+                          {
+                            "id": "dark",
+                            "name": "Dark theme",
+                            "href": "#"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "registry",
+                    "name": "Registry",
+                    "children": [
+                      {
+                        "id": "format",
+                        "name": "The registry.json format",
+                        "href": "#"
+                      },
+                      {
+                        "id": "build",
+                        "name": "Building",
+                        "href": "#"
+                      },
+                      {
+                        "id": "publish",
+                        "name": "Publishing",
+                        "href": "#"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "faq",
+                    "name": "FAQ",
+                    "href": "#"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "title",
+          "activeId",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "auto"
+        }
+      }
+    },
+    {
+      "name": "tree-010",
+      "type": "registry:component",
+      "title": "Дерево изменений",
+      "description": "Дерево файлов, в котором видно, что менялось: у файла метка состояния буквой и цветом, у свёрнутой папки — счёт изменённых внутри неё.",
+      "categories": [
+        "tree"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tree-010/tree-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tree-010.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-tree-010-*. Серверный: раскрытие держит нативный details, поэтому дерево работает до гидратации. Состояние файла передаётся двумя способами сразу — буквой в метке и цветом: по одному цвету состояние не различить при дальтонизме, а экранному диктору достаётся только текст, поэтому рядом с буквой лежит скрытая расшифровка. Счёт на папке считается обходом tally по всей ветке, а не по первому уровню, поэтому свёрнутая папка честно говорит, есть ли внутри работа. Удалённый файл дополнительно перечёркнут. Имена файлов набраны моноширинным: в списке путей это единственный способ выровнять расширения. Дерево размечено role=tree с явным aria-level.",
+      "meta": {
+        "tags": [
+          "tree",
+          "files",
+          "status",
+          "diff"
+        ],
+        "ai": {
+          "export": "Tree010",
+          "usage": "<Tree010\n  nodes={[{ name: \"app\", open: true, children: [{ name: \"page.tsx\", status: \"modified\" }] }]}\n/>",
+          "summary": "Дерево файлов с состояниями: метка у файла, счёт изменённых у папки, свод под деревом. Один файл, ноль зависимостей, серверный рендер.",
+          "preserve": [
+            "локальную палитру --vibeui-tree-010-*: компонент обязан выглядеть одинаково в любом проекте",
+            "букву рядом с цветом: по одному цвету состояние не различить при дальтонизме",
+            "скрытую расшифровку состояния для диктора — буква «M» сама по себе ему ничего не говорит",
+            "счёт по всей ветке, а не по первому уровню: иначе свёрнутая папка врёт о работе внутри",
+            "перечёркнутое имя удалённого файла — второй признак поверх метки",
+            "явный aria-level: из вложенности details глубину не выводят",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "структуру через nodes: name, status, children и open у узлов",
+            "подписи состояний через statusText — они же читаются диктором",
+            "строку свода через summaryTemplate с плейсхолдерами {changed} и {total}",
+            "цвет счётчика и фокуса через accent",
+            "цвета состояний через переменные --vibeui-tree-010-added, -modified, -deleted и -untracked",
+            "подложку компонента через background; пусто означает фон страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Состояний ровно четыре: добавлен, изменён, удалён и не отслеживается. Пятое пришлось бы заводить и в типе, и в палитре.",
+            "Папка своего состояния не несёт: она всегда считает его по вложенным файлам.",
+            "Буквы меток заданы латиницей намеренно: это принятая в инструментах запись, а перевод сделал бы метку шире клетки.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Имя дерева",
+            "type": "text",
+            "default": "Изменения в ветке",
+            "maxLength": 28
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Change Tree",
+            "description": "A file tree that shows what changed: a file carries a status mark in both a letter and a colour, and a collapsed folder carries the count of changed files inside it.",
+            "docs": "One file, zero dependencies, the --vibeui-tree-010-* palette. A server component: a native details holds the disclosure, so the tree works before hydration. A file's status is carried two ways at once — a letter in the mark and a colour: colour alone is indistinguishable under colour blindness, and a screen reader only gets text, so a hidden expansion sits next to the letter. The folder count comes from the tally walk over the whole branch rather than the first level, so a collapsed folder honestly says whether there is work inside. A deleted file is struck through as well. File names are set in a monospaced face: in a list of paths that is the only way to line up extensions. The tree is marked up as role=tree with explicit aria-level.",
+            "ai": {
+              "summary": "A file tree with statuses: a mark on the file, a changed count on the folder, a summary underneath. One file, zero dependencies, server-rendered.",
+              "preserve": [
+                "the local --vibeui-tree-010-* palette: the component must look the same in any project",
+                "the letter alongside the colour: colour alone is indistinguishable under colour blindness",
+                "the hidden status expansion for a screen reader — an \"M\" on its own says nothing",
+                "counting over the whole branch rather than the first level: otherwise a collapsed folder lies about the work inside",
+                "the struck-through name of a deleted file — a second signal on top of the mark",
+                "the explicit aria-level: depth is not inferred from nested details",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "the structure through nodes: name, status, children and open on the nodes",
+                "the status captions through statusText — a screen reader reads the same strings",
+                "the summary line through summaryTemplate with the {changed} and {total} placeholders",
+                "the counter and focus colour through accent",
+                "the status colours through the --vibeui-tree-010-added, -modified, -deleted and -untracked variables",
+                "the component surface through background; empty means the page background"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "There are exactly four statuses: added, modified, deleted and untracked. A fifth would have to be added to the type and the palette alike.",
+                "A folder carries no status of its own: it always derives one from the files inside.",
+                "The mark letters are Latin on purpose: that is the notation the tools use, and translating them would push the mark wider than its cell.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tree010\n  nodes={[{ name: \"app\", open: true, children: [{ name: \"page.tsx\", status: \"modified\" }] }]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Tree name",
+                "default": "Changes on this branch"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "Changes on this branch",
+                "summaryTemplate": "Changed files: {changed} of {total}.",
+                "statusText": {
+                  "added": "added",
+                  "modified": "modified",
+                  "deleted": "deleted",
+                  "untracked": "untracked"
+                }
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "label",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "auto"
+        }
+      }
     }
   ]
 }

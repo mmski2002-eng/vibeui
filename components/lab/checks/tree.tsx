@@ -8,6 +8,8 @@ import { Tree005 } from "@/registry/components/tree/tree-005/tree-005"
 import { Tree006 } from "@/registry/components/tree/tree-006/tree-006"
 import { Tree007 } from "@/registry/components/tree/tree-007/tree-007"
 import { Tree008 } from "@/registry/components/tree/tree-008/tree-008"
+import { Tree009 } from "@/registry/components/tree/tree-009/tree-009"
+import { Tree010 } from "@/registry/components/tree/tree-010/tree-010"
 
 /** Seed прогона: с ним набор воспроизводится один в один. */
 export const SEED = 44675
@@ -112,5 +114,17 @@ export const CHECKS: LabCheck[] = [
     title: "Дерево с направляющими",
     notes: ["Подпись дерева: Проверка", "Направляющие: #9cb711"],
     node: <Tree008 label="Проверка" line="#9cb711" />,
+  },
+  {
+    name: "tree-009",
+    title: "Оглавление с текущим разделом",
+    notes: ["Заголовок: Проверка", "Текущий раздел: build", "Акцент: #2f6df6"],
+    node: <Tree009 title="Проверка" activeId="build" accent="#2f6df6" />,
+  },
+  {
+    name: "tree-010",
+    title: "Дерево изменений",
+    notes: ["Имя дерева: Черновик", "Акцент: #d4643f"],
+    node: <Tree010 label="Черновик" accent="#d4643f" />,
   },
 ]

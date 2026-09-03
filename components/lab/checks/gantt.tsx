@@ -7,6 +7,8 @@ import { Gantt004 } from "@/registry/components/gantt/gantt-004/gantt-004"
 import { Gantt005 } from "@/registry/components/gantt/gantt-005/gantt-005"
 import { Gantt006 } from "@/registry/components/gantt/gantt-006/gantt-006"
 import { Gantt007 } from "@/registry/components/gantt/gantt-007/gantt-007"
+import { Gantt008 } from "@/registry/components/gantt/gantt-008/gantt-008"
+import { Gantt009 } from "@/registry/components/gantt/gantt-009/gantt-009"
 
 /** Seed прогона: с ним набор воспроизводится один в один. */
 export const SEED = 52594
@@ -53,5 +55,31 @@ export const CHECKS: LabCheck[] = [
     title: "Критический путь",
     notes: ["Заголовок: Черновик", "Акцент: #92de12"],
     node: <Gantt007 heading="Черновик" accent="#92de12" />,
+  },
+  {
+    name: "gantt-008",
+    title: "Сегодня и просрочка",
+    notes: ["Заголовок: Проверка", "Сегодня: 8", "Метка просрочки: поздно"],
+    node: (
+      <Gantt008
+        title="Проверка"
+        today={8}
+        lateLabel="поздно"
+        accent="#c0416a"
+      />
+    ),
+  },
+  {
+    name: "gantt-009",
+    title: "План против факта",
+    notes: ["Заголовок: Черновик", "Подписи: Было / Стало"],
+    node: (
+      <Gantt009
+        title="Черновик"
+        planLabel="Было"
+        factLabel="Стало"
+        accent="#1f7a5c"
+      />
+    ),
   },
 ]
