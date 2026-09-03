@@ -14,6 +14,9 @@ import { Sidebar006 } from "@/registry/components/sidebar/sidebar-006/sidebar-00
 import { Sidebar007 } from "@/registry/components/sidebar/sidebar-007/sidebar-007"
 import { Sidebar008 } from "@/registry/components/sidebar/sidebar-008/sidebar-008"
 import { Sidebar009 } from "@/registry/components/sidebar/sidebar-009/sidebar-009"
+import { Sidebar010 } from "@/registry/components/sidebar/sidebar-010/sidebar-010"
+import { Sidebar011 } from "@/registry/components/sidebar/sidebar-011/sidebar-011"
+import { Sidebar012 } from "@/registry/components/sidebar/sidebar-012/sidebar-012"
 
 export const PREVIEWS = {
   "sidebar-001": Sidebar001,
@@ -25,4 +28,7 @@ export const PREVIEWS = {
   "sidebar-007": Sidebar007,
   "sidebar-008": Sidebar008,
   "sidebar-009": Sidebar009,
+  "sidebar-010": Sidebar010,
+  "sidebar-011": Sidebar011,
+  "sidebar-012": Sidebar012,
 } satisfies Record<string, ComponentType<PreviewProps>>

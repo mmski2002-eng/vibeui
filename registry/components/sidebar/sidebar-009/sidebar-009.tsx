@@ -12,6 +12,8 @@ export type Sidebar009Props = Omit<ComponentProps<"div">, "children"> & {
   items?: Sidebar009Item[]
   activeLabel?: string
   title?: string
+  /** Открыт ли ящик при первом показе: витрине и снимкам нужен открытый. */
+  defaultOpen?: boolean
   openLabel?: string
   /** Подпись кнопки закрытия ящика. */
   closeLabel?: string
@@ -88,7 +90,9 @@ opacity:0;visibility:hidden;transition:opacity .2s ease,visibility .2s ease;
 [data-vibeui-block="sidebar-009"] [data-part="drawer"]{
 position:absolute;inset:0 auto 0 0;z-index:2;
 display:flex;flex-direction:column;gap:0.625rem;
-width:12rem;box-sizing:border-box;padding:0.625rem;
+/* Не шире восьмидесяти процентов окна: на узком экране ящик обязан
+   оставлять полосу затемнения, по которой его закрывают. */
+width:min(12rem,80%);box-sizing:border-box;padding:0.625rem;
 background:var(--vibeui-sidebar-009-panel);
 border-right:1px solid var(--vibeui-sidebar-009-border);
 box-shadow:0 0 24px var(--vibeui-sidebar-009-shadow);
@@ -149,6 +153,7 @@ export function Sidebar009({
   items = DEFAULT_ITEMS,
   activeLabel = "Заказы",
   title = "Меню",
+  defaultOpen = false,
   openLabel = "Открыть меню",
   closeLabel = "Закрыть меню",
   brand = "Северный порт",
@@ -159,7 +164,7 @@ export function Sidebar009({
   style,
   ...props
 }: Sidebar009Props) {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(defaultOpen)
   const closeButton = useRef<HTMLButtonElement>(null)
   const burger = useRef<HTMLButtonElement>(null)
 

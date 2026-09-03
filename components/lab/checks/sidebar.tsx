@@ -9,6 +9,9 @@ import { Sidebar006 } from "@/registry/components/sidebar/sidebar-006/sidebar-00
 import { Sidebar007 } from "@/registry/components/sidebar/sidebar-007/sidebar-007"
 import { Sidebar008 } from "@/registry/components/sidebar/sidebar-008/sidebar-008"
 import { Sidebar009 } from "@/registry/components/sidebar/sidebar-009/sidebar-009"
+import { Sidebar010 } from "@/registry/components/sidebar/sidebar-010/sidebar-010"
+import { Sidebar011 } from "@/registry/components/sidebar/sidebar-011/sidebar-011"
+import { Sidebar012 } from "@/registry/components/sidebar/sidebar-012/sidebar-012"
 
 /** Seed прогона: с ним набор воспроизводится один в один. */
 export const SEED = 68432
@@ -83,5 +86,60 @@ export const CHECKS: LabCheck[] = [
     title: "Меню-шторка",
     notes: ["Заголовок ящика: 42", "Текущий пункт: Заказы", "Акцент: #c2c33d"],
     node: <Sidebar009 title="42" activeLabel="Заказы" accent="#c2c33d" />,
+  },
+  {
+    name: "sidebar-010",
+    title: "Закреплённые разделы",
+    notes: [
+      "Заголовок закреплённых: Наверху",
+      "Заголовок остальных: Прочее",
+      "Текущий раздел: reports",
+      "Акцент: #7c5cff",
+    ],
+    node: (
+      <Sidebar010
+        pinnedLabel="Наверху"
+        restLabel="Прочее"
+        activeId="reports"
+        accent="#7c5cff"
+      />
+    ),
+  },
+  {
+    name: "sidebar-011",
+    title: "Двухуровневое меню",
+    notes: [
+      "Открытый раздел: work",
+      "Текущий пункт: Согласования",
+      "Подпись полосы: Область",
+      "Акцент: #12a594",
+    ],
+    node: (
+      <Sidebar011
+        currentId="work"
+        activeLabel="Согласования"
+        railLabel="Область"
+        accent="#12a594"
+        group="lab-sidebar-011"
+      />
+    ),
+  },
+  {
+    name: "sidebar-012",
+    title: "Тариф в подвале меню",
+    notes: [
+      "Название тарифа: Тариф «Старт»",
+      "Израсходовано: 3200",
+      "Подпись кнопки: Расширить",
+      "Акцент: #d1495b",
+    ],
+    node: (
+      <Sidebar012
+        planName="Тариф «Старт»"
+        used={3200}
+        actionLabel="Расширить"
+        accent="#d1495b"
+      />
+    ),
   },
 ]

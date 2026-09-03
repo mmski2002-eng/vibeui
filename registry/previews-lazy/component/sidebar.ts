@@ -51,4 +51,19 @@ export const PREVIEWS = {
       (module) => module.Sidebar009,
     ),
   ),
+  "sidebar-010": dynamic(() =>
+    import("@/registry/components/sidebar/sidebar-010/sidebar-010").then(
+      (module) => module.Sidebar010,
+    ),
+  ),
+  "sidebar-011": dynamic(() =>
+    import("@/registry/components/sidebar/sidebar-011/sidebar-011").then(
+      (module) => module.Sidebar011,
+    ),
+  ),
+  "sidebar-012": dynamic(() =>
+    import("@/registry/components/sidebar/sidebar-012/sidebar-012").then(
+      (module) => module.Sidebar012,
+    ),
+  ),
 } satisfies PreviewMap

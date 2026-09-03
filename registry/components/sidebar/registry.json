@@ -6,7 +6,9 @@
       "type": "registry:component",
       "title": "Боковое меню приложения",
       "description": "Вертикальная навигация приложения: разделы, счётчики и текущий пункт, отмеченный полосой у края, а не только цветом текста.",
-      "categories": ["sidebar"],
+      "categories": [
+        "sidebar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sidebar-001-*. Разметка семантическая: <nav> с подписью, внутри разделы с заголовками и списки <ul>. Активный пункт определяется сравнением подписи с activeLabel и получает aria-current=\"page\", плотный фон и полосу через ::before. Счётчик — необязательное число справа с tabular-nums. Тема берётся из color-scheme окружения через light-dark(): подложки по умолчанию нет, компонент лежит на фоне страницы и темнеет вместе с ней, а проп background включает собственную подложку и сам подбирает ветку темы по её светлоте.",
       "meta": {
-        "tags": ["sidebar", "navigation", "app shell", "menu"],
+        "tags": [
+          "sidebar",
+          "navigation",
+          "app shell",
+          "menu"
+        ],
         "ai": {
           "export": "Sidebar001",
           "usage": "<Sidebar001\n  activeLabel=\"Страницы\"\n  sections={[\n    { title: \"Проект\", items: [{ label: \"Обзор\", href: \"/\" }, { label: \"Страницы\", href: \"/pages\", count: 12 }] },\n  ]}\n/>",
@@ -173,7 +180,11 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-sidebar-001-* variables. The markup is semantic: a <nav> with a label, holding sections with headings and <ul> lists. The active item is determined by comparing its label with activeLabel and gets aria-current=\"page\", a solid background and a bar through ::before. The count is an optional number on the right with tabular-nums. The theme comes from the surrounding color-scheme through light-dark(): there is no background by default, the component sits on the page background and darkens with it, while the background prop switches on a background of its own and picks the theme branch from its lightness."
           }
         },
-        "cardControls": ["activeLabel", "accent", "background"]
+        "cardControls": [
+          "activeLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -181,7 +192,9 @@
       "type": "registry:component",
       "title": "Сворачиваемое боковое меню",
       "description": "Сворачиваемая боковая навигация без JS: ширину меняет одна переменная, а подписи сжимаются, а не исчезают из разметки.",
-      "categories": ["sidebar"],
+      "categories": [
+        "sidebar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -193,7 +206,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sidebar-002-*. Серверный: хуков нет, состояние держит чекбокс. Свёрнутый вид получается сменой одной переменной ширины через :has(), а подписи сжимаются до нуля с overflow:hidden и остаются в дереве доступности. Тема берётся из color-scheme окружения через light-dark(): подложки по умолчанию нет, компонент лежит на фоне страницы и темнеет вместе с ней, а проп background включает собственную подложку и сам подбирает ветку темы по её светлоте.",
       "meta": {
-        "tags": ["sidebar", "collapse", "no-js", "navigation"],
+        "tags": [
+          "sidebar",
+          "collapse",
+          "no-js",
+          "navigation"
+        ],
         "ai": {
           "export": "Sidebar002",
           "usage": "<Sidebar002 items={[{ label: \"Компоненты\", count: 225 }]} activeLabel=\"Компоненты\" />",
@@ -238,7 +256,12 @@
             "label": "Активный",
             "type": "select",
             "default": "Компоненты",
-            "options": ["Обзор", "Компоненты", "Блоки", "Настройки"]
+            "options": [
+              "Обзор",
+              "Компоненты",
+              "Блоки",
+              "Настройки"
+            ]
           },
           {
             "prop": "accent",
@@ -335,7 +358,12 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-sidebar-002-* variables. Server-side: there are no hooks, the state is held by a checkbox. The collapsed view comes from changing a single width variable through :has(), while the labels shrink to zero with overflow:hidden and stay in the accessibility tree. The theme comes from the surrounding color-scheme through light-dark(): there is no background by default, the component sits on the page background and darkens with it, while the background prop switches on a background of its own and picks the theme branch from its lightness."
           }
         },
-        "cardControls": ["activeLabel", "accent", "background"]
+        "cardControls": [
+          "title",
+          "activeLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -343,7 +371,9 @@
       "type": "registry:component",
       "title": "Полоса иконок",
       "description": "Меню сворачивается в полосу иконок, а не исчезает: подписи схлопываются по ширине, оставаясь в разметке для скринридера и поиска по странице.",
-      "categories": ["sidebar"],
+      "categories": [
+        "sidebar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -355,7 +385,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-sidebar-003-*. Клиентский (\"use client\") — состояние сворачивания держит useState. Ширина колонки задана одной переменной --vibeui-sidebar-003-width, которую переопределяет правило на [data-collapsed=\"true\"]: всё остальное подстраивается само. Подписи не удаляются из DOM, а сжимаются max-width и opacity, поэтому доступное имя ссылки не теряется. Иконки — инлайновые пути SVG из props, иконочная библиотека не нужна. В свёрнутом виде у ссылок появляется title, а у кнопки — aria-expanded. Тема берётся из color-scheme окружения через light-dark(): подложки по умолчанию нет, компонент лежит на фоне страницы и темнеет вместе с ней, а проп background включает собственную подложку и сам подбирает ветку темы по её светлоте.",
       "meta": {
-        "tags": ["sidebar", "collapse", "icons", "navigation"],
+        "tags": [
+          "sidebar",
+          "collapse",
+          "icons",
+          "navigation"
+        ],
         "ai": {
           "export": "Sidebar003",
           "usage": "<Sidebar003\n  activeLabel=\"Задачи\"\n  items={[\n    { label: \"Обзор\", href: \"/\", icon: \"M2 8.5 8 3l6 5.5M4 8v5h8V8\" },\n    { label: \"Задачи\", href: \"/tasks\", icon: \"M3 4h10M3 8h10M3 12h6\" },\n  ]}\n/>",
@@ -393,7 +428,13 @@
             "label": "Текущий пункт",
             "type": "select",
             "default": "Задачи",
-            "options": ["Обзор", "Задачи", "Команда", "Отчёты", "Настройки"]
+            "options": [
+              "Обзор",
+              "Задачи",
+              "Команда",
+              "Отчёты",
+              "Настройки"
+            ]
           },
           {
             "prop": "accent",
@@ -494,7 +535,11 @@
             "docs": "The component is self-contained: one file, no dependencies, the palette in the local --vibeui-sidebar-003-* variables. Client-side (\"use client\") — the collapsed state is held by useState. The column width is set by a single variable, --vibeui-sidebar-003-width, which a rule on [data-collapsed=\"true\"] overrides: everything else adjusts on its own. The labels are not removed from the DOM, they are shrunk with max-width and opacity, so the accessible name of a link is not lost. The icons are inline SVG paths from props, no icon library is needed. While collapsed, the links get a title and the button gets aria-expanded. The theme comes from the surrounding color-scheme through light-dark(): there is no background by default, the component sits on the page background and darkens with it, while the background prop switches on a background of its own and picks the theme branch from its lightness."
           }
         },
-        "cardControls": ["activeLabel", "accent", "background"]
+        "cardControls": [
+          "activeLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -502,7 +547,9 @@
       "type": "registry:component",
       "title": "Меню с группами",
       "description": "Меню с разделами и подпунктами без единой строки JS: группы собраны на <details>, а группа с текущим пунктом открыта заранее.",
-      "categories": ["sidebar"],
+      "categories": [
+        "sidebar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -514,7 +561,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-sidebar-004-*. Серверный: хуков нет, состояние раскрытия держит браузер через <details>. Атрибут open вычисляется на рендере из того, лежит ли активный пункт внутри группы: меню не должно требовать клика, чтобы показать, где пользователь находится. Свёрнутая группа с активным потомком помечена точкой в summary — после закрытия раздела текущее место иначе пропадает из виду. Галка нарисована бордюрами псевдоэлемента, маркер details скрыт. Тема берётся из color-scheme окружения через light-dark(): подложки по умолчанию нет, компонент лежит на фоне страницы и темнеет вместе с ней, а проп background включает собственную подложку и сам подбирает ветку темы по её светлоте.",
       "meta": {
-        "tags": ["sidebar", "groups", "details", "navigation"],
+        "tags": [
+          "sidebar",
+          "groups",
+          "details",
+          "navigation"
+        ],
         "ai": {
           "export": "Sidebar004",
           "usage": "<Sidebar004\n  activeLabel=\"Возвраты\"\n  groups={[\n    { label: \"Каталог\", children: [{ label: \"Товары\", href: \"/goods\" }] },\n    { label: \"Продажи\", children: [{ label: \"Возвраты\", href: \"/returns\" }] },\n  ]}\n/>",
@@ -681,7 +733,11 @@
             "docs": "The component is self-contained: one file, no dependencies, the palette in the local --vibeui-sidebar-004-* variables. Server-side: there are no hooks, the browser holds the disclosure state through <details>. The open attribute is computed at render time from whether the active item lies inside the group: the menu must not need a click to show where the user is. A collapsed group with an active child is marked with a dot in its summary — otherwise the current place disappears from view once the section is closed. The chevron is drawn with the borders of a pseudo-element, the details marker is hidden. The theme comes from the surrounding color-scheme through light-dark(): there is no background by default, the component sits on the page background and darkens with it, while the background prop switches on a background of its own and picks the theme branch from its lightness."
           }
         },
-        "cardControls": ["activeLabel", "accent", "background"]
+        "cardControls": [
+          "activeLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -689,7 +745,9 @@
       "type": "registry:component",
       "title": "Меню с фильтром",
       "description": "Меню с поиском по собственным пунктам: совпавшая часть подписи подсвечена, число найденного объявляется через aria-live, Escape очищает запрос.",
-      "categories": ["sidebar"],
+      "categories": [
+        "sidebar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -701,7 +759,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-sidebar-005-*. Клиентский (\"use client\") — запрос держит useState, группировка результатов считается в useMemo. Фильтр простой: подстрока без учёта регистра; совпадение оборачивается в <mark>, потому что иначе непонятно, почему пункт остался в списке. Пустая выдача даёт текстовое объяснение, а не пустоту. Число найденного лежит в визуально скрытом абзаце с role=\"status\": «список стал короче» — событие, невидимое для скринридера. Тема берётся из color-scheme окружения через light-dark(): подложки по умолчанию нет, компонент лежит на фоне страницы и темнеет вместе с ней, а проп background включает собственную подложку и сам подбирает ветку темы по её светлоте.",
       "meta": {
-        "tags": ["sidebar", "search", "filter", "navigation"],
+        "tags": [
+          "sidebar",
+          "search",
+          "filter",
+          "navigation"
+        ],
         "ai": {
           "export": "Sidebar005",
           "usage": "<Sidebar005\n  placeholder=\"Поиск по меню\"\n  activeLabel=\"Ключи API\"\n  items={[\n    { label: \"Профиль\", href: \"/profile\", group: \"Аккаунт\" },\n    { label: \"Ключи API\", href: \"/keys\", group: \"Разработка\" },\n  ]}\n/>",
@@ -888,7 +951,12 @@
             "docs": "The component is self-contained: one file, no dependencies, the palette in the local --vibeui-sidebar-005-* variables. Client-side (\"use client\") — the query is held by useState, the grouping of the results is computed in useMemo. The filter is plain: a case-insensitive substring; the match is wrapped in <mark>, because otherwise there is no telling why an item stayed in the list. An empty result gives a text explanation rather than emptiness. The number of matches sits in a visually hidden paragraph with role=\"status\": \"the list got shorter\" is an event invisible to a screen reader. The theme comes from the surrounding color-scheme through light-dark(): there is no background by default, the component sits on the page background and darkens with it, while the background prop switches on a background of its own and picks the theme branch from its lightness."
           }
         },
-        "cardControls": ["activeLabel", "accent", "background"]
+        "cardControls": [
+          "placeholder",
+          "activeLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -896,7 +964,9 @@
       "type": "registry:component",
       "title": "Профиль в подвале меню",
       "description": "Меню с карточкой профиля внизу колонки: настройки и выход раскрываются вверх и не стоят в общем списке разделов.",
-      "categories": ["sidebar"],
+      "categories": [
+        "sidebar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -908,7 +978,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-sidebar-006-*. Серверный: хуков нет, меню профиля собрано на <details>, состояние держит браузер. Профиль прижат к низу распоркой flex:1, а не отступом: высота колонки бывает разной. Список меню позиционирован абсолютно и раскрывается вверх — внизу колонки места нет, а обрезанное меню бесполезно. Инициалы считаются из имени на рендере. Выход и настройки живут рядом с именем, поэтому их невозможно нажать по ошибке при выборе раздела. Тема берётся из color-scheme окружения через light-dark(): подложки по умолчанию нет, компонент лежит на фоне страницы и темнеет вместе с ней, а проп background включает собственную подложку и сам подбирает ветку темы по её светлоте.",
       "meta": {
-        "tags": ["sidebar", "profile", "account", "footer"],
+        "tags": [
+          "sidebar",
+          "profile",
+          "account",
+          "footer"
+        ],
         "ai": {
           "export": "Sidebar006",
           "usage": "<Sidebar006\n  userName=\"Ольга Дорн\"\n  userMeta=\"olga@studio.ru\"\n  activeLabel=\"Проекты\"\n  items={[{ label: \"Лента\", href: \"/\" }, { label: \"Проекты\", href: \"/projects\" }]}\n/>",
@@ -954,7 +1029,12 @@
             "label": "Текущий пункт",
             "type": "select",
             "default": "Проекты",
-            "options": ["Лента", "Проекты", "Задачи", "Файлы"]
+            "options": [
+              "Лента",
+              "Проекты",
+              "Задачи",
+              "Файлы"
+            ]
           },
           {
             "prop": "accent",
@@ -1066,7 +1146,12 @@
             "docs": "The component is self-contained: one file, no dependencies, the palette in the local --vibeui-sidebar-006-* variables. Server-side: there are no hooks, the profile menu is built on <details> and the browser holds the state. The profile is pushed to the bottom by a flex:1 spacer rather than a margin: the column height varies. The menu list is positioned absolutely and opens upwards — there is no room at the bottom of the column, and a clipped menu is useless. The initials are computed from the name at render time. Sign-out and settings live next to the name, so they cannot be pressed by mistake while choosing a section. The theme comes from the surrounding color-scheme through light-dark(): there is no background by default, the component sits on the page background and darkens with it, while the background prop switches on a background of its own and picks the theme branch from its lightness."
           }
         },
-        "cardControls": ["activeLabel", "accent", "background"]
+        "cardControls": [
+          "userName",
+          "activeLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1074,7 +1159,9 @@
       "type": "registry:component",
       "title": "Счётчики в меню",
       "description": "Счётчики в меню разного веса: серая цифра для обычного числа, залитая плашка для срочного и точка для «есть новое» без числа.",
-      "categories": ["sidebar"],
+      "categories": [
+        "sidebar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1086,7 +1173,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-sidebar-007-*. Серверный: хуков нет. Вес бейджа задаётся атрибутом data-tone на строке списка: один одинаковый бейдж на всё превращает меню в рябь из цифр, и срочное в ней теряется. Большие числа обрезаются до «99+» по пропу cap — точное значение всё равно не читают, а ширина колонки от него уезжает. Смысл числа продублирован визуально скрытым словом: «7» без пояснения скринридеру ничего не говорит. Тема берётся из color-scheme окружения через light-dark(): подложки по умолчанию нет, компонент лежит на фоне страницы и темнеет вместе с ней, а проп background включает собственную подложку и сам подбирает ветку темы по её светлоте.",
       "meta": {
-        "tags": ["sidebar", "badge", "counter", "navigation"],
+        "tags": [
+          "sidebar",
+          "badge",
+          "counter",
+          "navigation"
+        ],
         "ai": {
           "export": "Sidebar007",
           "usage": "<Sidebar007\n  cap={99}\n  activeLabel=\"Требуют ответа\"\n  items={[\n    { label: \"Входящие\", href: \"/inbox\", count: 128, tone: \"muted\" },\n    { label: \"Требуют ответа\", href: \"/todo\", count: 7, tone: \"alert\" },\n    { label: \"Обновления\", href: \"/news\", tone: \"new\" },\n  ]}\n/>",
@@ -1245,7 +1337,12 @@
             "docs": "The component is self-contained: one file, no dependencies, the palette in the local --vibeui-sidebar-007-* variables. Server-side: there are no hooks. The badge weight is set by the data-tone attribute on the list row: one and the same badge for everything turns the menu into a ripple of digits, and the urgent gets lost in it. Large numbers are capped at \"99+\" through the cap prop — the exact value is not read anyway, while the column width drifts with it. The meaning of the number is duplicated by a visually hidden word: \"7\" without an explanation tells a screen reader nothing. The theme comes from the surrounding color-scheme through light-dark(): there is no background by default, the component sits on the page background and darkens with it, while the background prop switches on a background of its own and picks the theme branch from its lightness."
           }
         },
-        "cardControls": ["activeLabel", "cap", "accent", "background"]
+        "cardControls": [
+          "cap",
+          "activeLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1253,7 +1350,9 @@
       "type": "registry:component",
       "title": "Переключатель пространств",
       "description": "Переключатель рабочего пространства над меню: он всегда показывает, где вы работаете, а текущее пространство в списке помечено галочкой.",
-      "categories": ["sidebar"],
+      "categories": [
+        "sidebar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1265,7 +1364,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-sidebar-008-*. Серверный: хуков нет, раскрытие держит <details>. Список пространств позиционирован абсолютно и лежит поверх меню: раскрытие не должно двигать разделы. Текущее пространство помечено галочкой из бордюров, а не только заливкой строки — заливку путают с наведением. Переключатель стоит над разделами, потому что одинаковые разделы в двух пространствах выглядят одинаково, и без подписи сверху правку легко внести не туда. Тема берётся из color-scheme окружения через light-dark(): подложки по умолчанию нет, компонент лежит на фоне страницы и темнеет вместе с ней, а проп background включает собственную подложку и сам подбирает ветку темы по её светлоте.",
       "meta": {
-        "tags": ["sidebar", "workspace", "switcher", "details"],
+        "tags": [
+          "sidebar",
+          "workspace",
+          "switcher",
+          "details"
+        ],
         "ai": {
           "export": "Sidebar008",
           "usage": "<Sidebar008\n  current=\"Студия Восход\"\n  spaces={[\n    { name: \"Студия Восход\", plan: \"Команда · 8 человек\", href: \"/w/voskhod\" },\n    { name: \"Личное\", plan: \"Бесплатный\", href: \"/w/personal\" },\n  ]}\n  activeLabel=\"Проекты\"\n/>",
@@ -1304,14 +1408,23 @@
             "label": "Текущее пространство",
             "type": "select",
             "default": "Студия Восход",
-            "options": ["Студия Восход", "Личное", "Клиент: Северный порт"]
+            "options": [
+              "Студия Восход",
+              "Личное",
+              "Клиент: Северный порт"
+            ]
           },
           {
             "prop": "activeLabel",
             "label": "Текущий пункт",
             "type": "select",
             "default": "Проекты",
-            "options": ["Дашборд", "Проекты", "Счета", "Участники"]
+            "options": [
+              "Дашборд",
+              "Проекты",
+              "Счета",
+              "Участники"
+            ]
           },
           {
             "prop": "accent",
@@ -1426,7 +1539,12 @@
             "docs": "The component is self-contained: one file, no dependencies, the palette in the local --vibeui-sidebar-008-* variables. Server-side: there are no hooks, <details> holds the disclosure. The workspace list is positioned absolutely and lies over the menu: opening must not move the sections. The current workspace is marked with a check mark made of borders rather than by the row fill alone — a fill is mistaken for hover. The switcher stands above the sections, because identical sections in two workspaces look identical, and without a label on top an edit easily lands in the wrong place. The theme comes from the surrounding color-scheme through light-dark(): there is no background by default, the component sits on the page background and darkens with it, while the background prop switches on a background of its own and picks the theme branch from its lightness."
           }
         },
-        "cardControls": ["current", "accent", "background"]
+        "cardControls": [
+          "current",
+          "activeLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1434,7 +1552,9 @@
       "type": "registry:component",
       "title": "Меню-шторка",
       "description": "Мобильное меню-ящик: выезжает слева, затемняет содержимое и закрывается нажатием по затемнению, Escape или крестиком.",
-      "categories": ["sidebar"],
+      "categories": [
+        "sidebar"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1446,7 +1566,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-sidebar-009-*. Клиентский (\"use client\") — состояние ящика держит useState. Затемнение это кнопка с aria-hidden и tabIndex −1: оно ловит нажатие мимо панели, но не попадает в порядок обхода. Закрытый ящик помечен inert, поэтому таб не проваливается в невидимые ссылки; при открытии фокус уезжает на крестик, а при закрытии возвращается на кнопку-бургер. Escape ловится на корне блока. Ящик позиционирован внутри блока, а не относительно окна: демонстрация не захватывает страницу. Тема берётся из color-scheme окружения через light-dark(): подложки по умолчанию нет, компонент лежит на фоне страницы и темнеет вместе с ней, а проп background включает собственную подложку и сам подбирает ветку темы по её светлоте.",
       "meta": {
-        "tags": ["sidebar", "drawer", "mobile", "overlay"],
+        "tags": [
+          "sidebar",
+          "drawer",
+          "mobile",
+          "overlay"
+        ],
         "ai": {
           "export": "Sidebar009",
           "usage": "<Sidebar009\n  title=\"Меню\"\n  activeLabel=\"Заказы\"\n  items={[{ label: \"Каталог\", href: \"/catalog\" }, { label: \"Заказы\", href: \"/orders\" }]}\n/>",
@@ -1469,7 +1594,8 @@
             "ширину панели в правиле width у [data-part=\"drawer\"]",
             "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
             "brand и pageText — название в шапке и текст страницы под ящиком",
-            "openLabel и closeLabel — подписи кнопок открытия и закрытия"
+            "openLabel и closeLabel — подписи кнопок открытия и закрытия",
+            "стартовое состояние ящика через defaultOpen"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
@@ -1536,7 +1662,8 @@
                 "the panel width in the width rule of [data-part=\"drawer\"]",
                 "background — the component background; empty means no background, taking the page colour",
                 "brand and pageText — the name in the bar and the page text under the drawer",
-                "openLabel and closeLabel — the labels of the open and close buttons"
+                "openLabel and closeLabel — the labels of the open and close buttons",
+                "the drawer start state through defaultOpen"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
@@ -1595,13 +1722,601 @@
                     "label": "Support",
                     "href": "#"
                   }
-                ]
+                ],
+                "defaultOpen": true
               }
             },
             "docs": "The component is self-contained: one file, no dependencies, the palette in the local --vibeui-sidebar-009-* variables. Client-side (\"use client\") — the drawer state is held by useState. The scrim is a button with aria-hidden and tabIndex −1: it catches a press outside the panel but stays out of the tab order. The closed drawer is marked inert, so Tab does not fall into invisible links; on opening, focus moves to the close button, and on closing it returns to the burger. Escape is caught on the root of the block. The drawer is positioned inside the block rather than relative to the window: the demo does not take over the page. The theme comes from the surrounding color-scheme through light-dark(): there is no background by default, the component sits on the page background and darkens with it, while the background prop switches on a background of its own and picks the theme branch from its lightness."
           }
         },
-        "cardControls": ["activeLabel", "accent", "background"]
+        "cardControls": [
+          "title",
+          "activeLabel",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "props": {
+            "defaultOpen": true
+          }
+        }
+      }
+    },
+    {
+      "name": "sidebar-010",
+      "type": "registry:component",
+      "title": "Закреплённые разделы",
+      "description": "Меню, где частое отделено от редкого: закреплённые разделы стоят наверху отдельной группой.",
+      "categories": [
+        "sidebar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sidebar-010/sidebar-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sidebar-010.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sidebar-010-*. Клиентский: список закреплённого живёт в состоянии. Кнопка закрепления видна всегда, а не по наведению, и несёт aria-pressed; порядок внутри групп исходный, поэтому закрепление меняет группу, но не перетасовывает список. Пустая группа не исчезает, а объясняет, откуда берутся закреплённые.",
+      "meta": {
+        "tags": [
+          "sidebar",
+          "pinned",
+          "favorites",
+          "navigation"
+        ],
+        "ai": {
+          "export": "Sidebar010",
+          "usage": "<Sidebar010 items={sections} activeId=\"today\" />",
+          "summary": "Боковое меню с закреплёнными разделами наверху: кнопка закрепления у каждого пункта, видна всегда, пустая группа объясняет себя.",
+          "preserve": [
+            "локальную палитру --vibeui-sidebar-010-* и не подменять её токенами вашей темы",
+            "видимую кнопку закрепления: спрятанная за наведение, на телефоне она не существует",
+            "aria-pressed у кнопки — состояние должно читаться, а не угадываться по цвету",
+            "исходный порядок внутри групп: пункт не должен убегать из-под курсора",
+            "объяснение в пустой группе вместо пустого места",
+            "aria-current у текущего пункта",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "состав разделов и стартовый набор закреплённого через items",
+            "текущий раздел через activeId",
+            "подписи групп через pinnedLabel и restLabel",
+            "подписи кнопок через pinTemplate и unpinTemplate",
+            "accent — цвет отметки текущего пункта",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Закрепление живёт в памяти вкладки: чтобы оно пережило перезагрузку, сохраняйте список на своей стороне и передавайте обратно через items.",
+            "Ссылки ведут на #: подставьте свои адреса или замените на Link вашего роутера.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "pinnedLabel",
+            "label": "Заголовок закреплённых",
+            "type": "text",
+            "default": "Закреплённые",
+            "maxLength": 20
+          },
+          {
+            "prop": "restLabel",
+            "label": "Заголовок остальных",
+            "type": "text",
+            "default": "Все разделы",
+            "maxLength": 20
+          },
+          {
+            "prop": "activeId",
+            "label": "Текущий раздел",
+            "type": "select",
+            "default": "today",
+            "options": [
+              "inbox",
+              "today",
+              "projects",
+              "reports",
+              "invoices",
+              "team",
+              "settings"
+            ]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Pinned Sections",
+            "description": "A menu that separates the frequent from the rare: pinned sections sit at the top in their own group.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-sidebar-010-* variables. Client component: the pinned list lives in state. The pin button is always visible rather than hover-revealed and carries aria-pressed; the order inside a group is the original one, so pinning changes the group without reshuffling the list. An empty group does not vanish — it explains where pinned items come from.",
+            "ai": {
+              "summary": "A sidebar with pinned sections on top: every row has an always-visible pin button, and the empty group explains itself.",
+              "preserve": [
+                "the local --vibeui-sidebar-010-* palette — do not swap it for your theme tokens",
+                "the always-visible pin button: hidden behind hover it does not exist on a phone",
+                "aria-pressed on the button — the state must be readable, not guessed from colour",
+                "the original order inside groups: a row must not run away from under the cursor",
+                "the explanation in the empty group instead of blank space",
+                "aria-current on the current item",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the set of sections and the initial pinned state through items",
+                "the current section through activeId",
+                "the group captions through pinnedLabel and restLabel",
+                "the button captions through pinTemplate and unpinTemplate",
+                "accent — the colour of the current-item mark",
+                "background — the component surface; empty means no surface, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Pinning lives in the tab's memory: to survive a reload, persist the list on your side and pass it back through items.",
+                "The links point at #: substitute your own or swap them for your router's Link.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Sidebar010 items={sections} activeId=\"today\" />"
+            },
+            "controls": {
+              "pinnedLabel": {
+                "label": "Pinned caption",
+                "default": "Pinned"
+              },
+              "restLabel": {
+                "label": "Rest caption",
+                "default": "All sections"
+              },
+              "activeId": {
+                "label": "Current section"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "pinnedLabel": "Pinned",
+                "restLabel": "All sections",
+                "emptyText": "Pin a section with the button on the right — it moves up here.",
+                "items": [
+                  {
+                    "id": "inbox",
+                    "label": "Inbox",
+                    "pinned": true
+                  },
+                  {
+                    "id": "today",
+                    "label": "Today",
+                    "pinned": true
+                  },
+                  {
+                    "id": "projects",
+                    "label": "Projects"
+                  },
+                  {
+                    "id": "reports",
+                    "label": "Reports"
+                  },
+                  {
+                    "id": "invoices",
+                    "label": "Invoices"
+                  },
+                  {
+                    "id": "team",
+                    "label": "Team"
+                  },
+                  {
+                    "id": "settings",
+                    "label": "Settings"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "preview": {
+          "width": "auto"
+        },
+        "cardControls": [
+          "pinnedLabel",
+          "restLabel",
+          "activeId",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "sidebar-011",
+      "type": "registry:component",
+      "title": "Двухуровневое меню",
+      "description": "Полоса разделов слева и пункты выбранного справа: два уровня навигации рядом, без клиентского состояния.",
+      "categories": [
+        "sidebar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sidebar-011/sidebar-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sidebar-011.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sidebar-011-*. Серверный: выбор раздела держат радиокнопки, панель показывает :has() по отмеченной. Правила показа собираются из идентификаторов разделов и вставляются вторым тегом style с ключом по набору разделов. Радиогруппа лежит в собственной form, поэтому два блока на странице не мешают друг другу, а панели остаются в разметке ради поиска по странице.",
+      "meta": {
+        "tags": [
+          "sidebar",
+          "two-level",
+          "rail",
+          "no-js"
+        ],
+        "ai": {
+          "export": "Sidebar011",
+          "usage": "<Sidebar011 sections={sections} currentId=\"shop\" />",
+          "summary": "Двухуровневое боковое меню: узкая полоса разделов и список пунктов выбранного. Переключение на радиокнопках, без JS.",
+          "preserve": [
+            "локальную палитру --vibeui-sidebar-011-* и не подменять её токенами вашей темы",
+            "переключение на радиокнопках: оба уровня обязаны работать до гидратации и без JS",
+            "радиогруппу внутри form — иначе два блока на странице попадут в одну группу",
+            "все панели в разметке: поиск по странице должен находить пункт закрытого раздела",
+            "подпись под значком раздела: две буквы без подписи опознаются не всеми",
+            "aria-current у текущего пункта",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "состав разделов и их пунктов через sections",
+            "открытый раздел через currentId и текущий пункт через activeLabel",
+            "значки разделов — две буквы в short",
+            "имя радиогруппы через group",
+            "accent — цвет отметки выбранного раздела",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Идентификаторы разделов попадают в CSS-селекторы: держите их простыми, без пробелов и кавычек.",
+            "Несколько блоков с разными наборами разделов: задайте каждому свой group, иначе выбор в одном собьёт другой.",
+            "Ссылки ведут на #: подставьте свои адреса или замените на Link вашего роутера.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "currentId",
+            "label": "Открытый раздел",
+            "type": "select",
+            "default": "shop",
+            "options": [
+              "work",
+              "shop",
+              "team"
+            ]
+          },
+          {
+            "prop": "activeLabel",
+            "label": "Текущий пункт",
+            "type": "text",
+            "default": "Заказы",
+            "maxLength": 20
+          },
+          {
+            "prop": "railLabel",
+            "label": "Подпись полосы",
+            "type": "text",
+            "default": "Разделы",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Two-Level Menu",
+            "description": "A rail of sections on the left and the items of the chosen one on the right: two levels side by side, with no client state.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-sidebar-011-* variables. Server component: the section choice is held by radio buttons and the pane is shown by :has() on the checked one. The display rules are assembled from the section ids and injected as a second style tag keyed by the set of sections. The radio group sits in its own form, so two blocks on a page do not disturb each other, and the panes stay in the markup for find-in-page.",
+            "ai": {
+              "summary": "A two-level sidebar: a narrow rail of sections and the item list of the chosen one. Radio-driven switching, no JS.",
+              "preserve": [
+                "the local --vibeui-sidebar-011-* palette — do not swap it for your theme tokens",
+                "radio-driven switching: both levels have to work before hydration and without JS",
+                "the radio group inside a form — otherwise two blocks on a page land in one group",
+                "all panes in the markup: find-in-page must reach an item of a closed section",
+                "the caption under a section mark: two letters alone are not read by everyone",
+                "aria-current on the current item",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the sections and their items through sections",
+                "the open section through currentId and the current item through activeLabel",
+                "the section marks — the two letters in short",
+                "the radio group name through group",
+                "accent — the colour of the chosen section mark",
+                "background — the component surface; empty means no surface, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Section ids end up inside CSS selectors: keep them simple, without spaces or quotes.",
+                "Several blocks with different section sets: give each its own group, otherwise a choice in one resets the other.",
+                "The links point at #: substitute your own or swap them for your router's Link.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Sidebar011 sections={sections} currentId=\"shop\" />"
+            },
+            "controls": {
+              "currentId": {
+                "label": "Open section"
+              },
+              "activeLabel": {
+                "label": "Current item",
+                "default": "Orders"
+              },
+              "railLabel": {
+                "label": "Rail caption",
+                "default": "Sections"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "activeLabel": "Orders",
+                "railLabel": "Sections",
+                "sections": [
+                  {
+                    "id": "work",
+                    "label": "Work",
+                    "short": "WK",
+                    "items": [
+                      "Inbox",
+                      "Tasks",
+                      "Approvals",
+                      "Archive"
+                    ]
+                  },
+                  {
+                    "id": "shop",
+                    "label": "Shop",
+                    "short": "SH",
+                    "items": [
+                      "Orders",
+                      "Catalogue",
+                      "Promo codes",
+                      "Returns"
+                    ]
+                  },
+                  {
+                    "id": "team",
+                    "label": "People",
+                    "short": "PL",
+                    "items": [
+                      "Members",
+                      "Roles",
+                      "Invites"
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "preview": {
+          "width": "auto"
+        },
+        "cardControls": [
+          "currentId",
+          "activeLabel",
+          "railLabel",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "sidebar-012",
+      "type": "registry:component",
+      "title": "Тариф в подвале меню",
+      "description": "Карточка тарифа внизу колонки: расход показан полосой и числом, у порога полоса перекрашивается.",
+      "categories": [
+        "sidebar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sidebar-012/sidebar-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sidebar-012.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sidebar-012-*. Серверный. Карточка прижата к низу через margin-top:auto, доля считается из used и limit и округляется до процента; на восьмидесяти процентах и выше полоса переходит на тревожный цвет. Полоса несёт role=progressbar со значением и подписью, поэтому расход читается и без цвета.",
+      "meta": {
+        "tags": [
+          "sidebar",
+          "plan",
+          "usage",
+          "upgrade"
+        ],
+        "ai": {
+          "export": "Sidebar012",
+          "usage": "<Sidebar012 planName=\"Тариф «Команда»\" used={8600} limit={10000} />",
+          "summary": "Боковое меню с карточкой тарифа внизу: доля расхода полосой и числом, перекраска у порога и кнопка повышения тарифа рядом.",
+          "preserve": [
+            "локальную палитру --vibeui-sidebar-012-* и не подменять её токенами вашей темы",
+            "число рядом с полосой: полоса даёт оценку, число — точность",
+            "перекраску у порога: «почти кончилось» и «полно места» на глаз различаются плохо",
+            "role=progressbar с подписью — расход должен читаться и без цвета",
+            "карточку внизу колонки: место под меню всё равно пустует, а счётчик ищут внизу",
+            "спокойный вид кнопки: это подсказка, а не требование",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "разделы меню через items и текущий через activeLabel",
+            "название тарифа planName, used и limit",
+            "текст расхода через usageTemplate",
+            "подпись и адрес кнопки",
+            "accent — цвет полосы и кнопки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Порог перекраски — восемьдесят процентов. Другой порог меняется в одном сравнении в коде.",
+            "Числа форматируются под русскую локаль. Для другой локали передайте готовые строки в usageTemplate или поправьте вызов toLocaleString.",
+            "Ссылки ведут на #: подставьте свои адреса или замените на Link вашего роутера.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "planName",
+            "label": "Название тарифа",
+            "type": "text",
+            "default": "Тариф «Команда»",
+            "maxLength": 24
+          },
+          {
+            "prop": "used",
+            "label": "Израсходовано",
+            "type": "number",
+            "default": 8600,
+            "min": 0,
+            "max": 10000,
+            "step": 100
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Подпись кнопки",
+            "type": "text",
+            "default": "Повысить тариф",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Plan Card In Footer",
+            "description": "A plan card at the bottom of the column: usage shown as a bar and a number, with the bar recolouring near the limit.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-sidebar-012-* variables. Server component. The card is pushed down with margin-top:auto, the share is computed from used and limit and rounded to a percent; at eighty percent and above the bar switches to the alarm colour. The bar carries role=progressbar with a value and a label, so usage reads without colour too.",
+            "ai": {
+              "summary": "A sidebar with a plan card at the bottom: usage as a bar and a number, recolouring near the limit and an upgrade button beside it.",
+              "preserve": [
+                "the local --vibeui-sidebar-012-* palette — do not swap it for your theme tokens",
+                "the number next to the bar: the bar gives the estimate, the number gives precision",
+                "the recolouring near the limit: «almost out» and «plenty left» look alike otherwise",
+                "role=progressbar with a label — usage must read without colour",
+                "the card at the bottom of the column: the space under a menu is idle anyway, and that is where a meter is looked for",
+                "the calm look of the button: it is a hint, not a demand",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the menu items through items and the current one through activeLabel",
+                "the plan name planName, used and limit",
+                "the usage text through usageTemplate",
+                "the button caption and href",
+                "accent — the colour of the bar and the button",
+                "background — the component surface; empty means no surface, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The recolour threshold is eighty percent. A different threshold is one comparison in the code.",
+                "Numbers are formatted for the Russian locale. For another locale pass ready strings through usageTemplate or adjust the toLocaleString call.",
+                "The links point at #: substitute your own or swap them for your router's Link.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Sidebar012 planName=\"Team plan\" used={8600} limit={10000} />"
+            },
+            "controls": {
+              "planName": {
+                "label": "Plan name",
+                "default": "Team plan"
+              },
+              "used": {
+                "label": "Used"
+              },
+              "actionLabel": {
+                "label": "Button caption",
+                "default": "Upgrade plan"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "planName": "Team plan",
+                "actionLabel": "Upgrade plan",
+                "usageTemplate": "{used} of {limit} requests this month",
+                "items": [
+                  "Overview",
+                  "Projects",
+                  "Tasks",
+                  "Reports",
+                  "Settings"
+                ],
+                "activeLabel": "Projects"
+              }
+            }
+          }
+        },
+        "preview": {
+          "width": "auto"
+        },
+        "cardControls": [
+          "planName",
+          "used",
+          "actionLabel",
+          "accent",
+          "background"
+        ]
       }
     }
   ]
