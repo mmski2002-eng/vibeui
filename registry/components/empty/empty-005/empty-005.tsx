@@ -78,7 +78,8 @@ border-color:transparent;background:var(--vibeui-empty-005-accent);color:var(--v
 [data-vibeui-block="empty-005"] [data-part="step"]:not([data-current="true"]) [data-part="name"]{color:var(--vibeui-empty-005-muted)}
 [data-vibeui-block="empty-005"] [data-part="action"]{
 appearance:none;border:0;cursor:pointer;width:100%;
-height:2.625rem;border-radius:0.75rem;
+display:inline-flex;align-items:center;justify-content:center;
+min-height:2.625rem;padding:0.375rem 1rem;border-radius:0.75rem;
 background:var(--vibeui-empty-005-accent);color:var(--vibeui-empty-005-accent-fg);
 font:inherit;font-size:0.9375rem;font-weight:650;
 }

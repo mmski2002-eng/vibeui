@@ -81,7 +81,8 @@ transition:width .3s cubic-bezier(.32,.72,0,1),background-color .2s ease;
 }
 [data-vibeui-block="alert-015"] [data-part="description"]{font-size:0.8125rem;line-height:1.5;color:var(--vibeui-alert-015-muted)}
 [data-vibeui-block="alert-015"] [data-part="action"]{
-flex:none;display:inline-flex;align-items:center;height:2rem;padding:0 0.9375rem;
+flex:none;display:inline-flex;align-items:center;justify-content:center;
+min-height:2rem;padding:0.25rem 0.9375rem;
 border-radius:0.5rem;text-decoration:none;
 background:var(--vibeui-alert-015-accent);color:var(--vibeui-alert-015-accent-fg);
 font-size:0.8125rem;font-weight:600;

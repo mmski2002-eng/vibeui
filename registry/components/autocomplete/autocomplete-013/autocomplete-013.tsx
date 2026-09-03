@@ -90,7 +90,8 @@ font-size:0.8125rem;color:var(--vibeui-autocomplete-013-danger);
 }
 [data-vibeui-block="autocomplete-013"] [data-part="retry"]{
 flex:none;appearance:none;cursor:pointer;
-height:1.75rem;padding:0 0.625rem;border-radius:0.5rem;
+display:inline-flex;align-items:center;justify-content:center;
+min-height:1.75rem;padding:0.25rem 0.625rem;border-radius:0.5rem;
 border:1px solid var(--vibeui-autocomplete-013-border);
 background:transparent;color:var(--vibeui-autocomplete-013-fg);
 font:inherit;font-size:0.75rem;font-weight:600;

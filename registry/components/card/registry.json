@@ -643,13 +643,6 @@
             "maxLength": 20
           },
           {
-            "prop": "oldPrice",
-            "label": "Старая цена",
-            "type": "text",
-            "default": "6 900 ₽",
-            "maxLength": 16
-          },
-          {
             "prop": "rating",
             "label": "Рейтинг",
             "type": "number",
@@ -720,10 +713,6 @@
                 "label": "Button",
                 "default": "Add to cart"
               },
-              "oldPrice": {
-                "label": "Old price",
-                "default": "$85"
-              },
               "rating": {
                 "label": "Rating"
               },
@@ -748,6 +737,10 @@
           }
         },
         "cardControls": [
+          "title",
+          "price",
+          "badge",
+          "actionLabel",
           "rating",
           "accent",
           "background"

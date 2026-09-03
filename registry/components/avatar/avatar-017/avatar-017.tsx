@@ -68,7 +68,9 @@ margin:0;font-size:0.6875rem;color:var(--vibeui-avatar-017-muted);
 }
 [data-vibeui-block="avatar-017"] [data-part="action"]{
 position:relative;z-index:1;flex:none;
-appearance:none;cursor:pointer;height:1.875rem;padding:0 0.625rem;
+appearance:none;cursor:pointer;
+display:inline-flex;align-items:center;justify-content:center;
+min-height:1.875rem;padding:0.3125rem 0.625rem;
 border:1px solid var(--vibeui-avatar-017-border);border-radius:0.5rem;
 background:var(--vibeui-avatar-017-bg);color:inherit;
 font:inherit;font-size:0.75rem;font-weight:650;

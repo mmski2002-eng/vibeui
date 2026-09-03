@@ -82,7 +82,8 @@ box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-popover-009-accent) 16%,tra
 [data-vibeui-block="popover-009"] [data-part="cancel"],
 [data-vibeui-block="popover-009"] [data-part="save"]{
 appearance:none;cursor:pointer;
-height:2rem;padding:0 0.8125rem;border-radius:0.5rem;
+display:inline-flex;align-items:center;justify-content:center;
+min-height:2rem;padding:0.25rem 0.8125rem;border-radius:0.5rem;
 font:inherit;font-size:0.8125rem;font-weight:650;
 }
 [data-vibeui-block="popover-009"] [data-part="cancel"]{

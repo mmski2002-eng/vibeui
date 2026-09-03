@@ -304,7 +304,7 @@ export function Datagrid026({
             {deltaToggleText}
           </label>
         </div>
-        <div
+        <form
           data-part="scroll"
           role="region"
           aria-label={scrollLabel}
@@ -330,7 +330,7 @@ export function Datagrid026({
               {others.map((row) => renderRow(row, false))}
             </tbody>
           </table>
-        </div>
+        </form>
       </section>
     </>
   )

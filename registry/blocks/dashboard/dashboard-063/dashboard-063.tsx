@@ -292,7 +292,7 @@ export function Dashboard063({
             </ul>
           </div>
 
-          <div data-part="col">
+          <form data-part="col">
             <h3>{peopleTitle}</h3>
             <ul data-part="people">
               {people.map((person) => {
@@ -332,7 +332,7 @@ export function Dashboard063({
                 )
               })}
             </ul>
-          </div>
+          </form>
 
           <div data-part="foot">
             <button type="button" data-part="assign">

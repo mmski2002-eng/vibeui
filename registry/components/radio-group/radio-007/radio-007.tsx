@@ -203,7 +203,7 @@ export function Radio007({
         style={palette}
       >
         <legend>{legend}</legend>
-        <div data-part="list">
+        <form data-part="list">
           {methods.map((method) => (
             <label key={method.value} data-part="method">
               <input
@@ -222,7 +222,7 @@ export function Radio007({
               </span>
             </label>
           ))}
-        </div>
+        </form>
         <p data-part="total">
           <span>{footnote}</span>
           <span>{stepLabel}</span>

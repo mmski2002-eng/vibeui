@@ -154,6 +154,11 @@ border-bottom:0;border-right:1px solid var(--vibeui-ai-004-border);grid-row:1 / 
 }
 [data-vibeui-block="ai-004"] [data-part="thread"]{max-height:26rem}
 }
+/* Без мыши наведения не бывает: на телефоне кнопки видны сразу, иначе
+   действие там просто не существует. */
+@media (hover:none){
+[data-vibeui-block="ai-004"] [data-part="tools"]{opacity:1}
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="ai-004"] *{animation:none!important;transition:none!important}}
 `
 

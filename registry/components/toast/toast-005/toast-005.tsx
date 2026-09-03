@@ -65,7 +65,8 @@ font-size:0.8125rem;font-weight:800;line-height:1;
 [data-vibeui-block="toast-005"] [data-part="row"]{display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;margin-top:0.125rem}
 [data-vibeui-block="toast-005"] [data-part="retry"]{
 appearance:none;cursor:pointer;border:0;
-height:1.875rem;padding:0 0.75rem;border-radius:0.5rem;
+display:inline-flex;align-items:center;justify-content:center;
+min-height:1.875rem;padding:0.25rem 0.75rem;border-radius:0.5rem;
 background:var(--vibeui-toast-005-tone);color:var(--vibeui-toast-005-on-tone);
 font:inherit;font-size:0.8125rem;font-weight:650;
 transition:filter .16s ease;

@@ -27,6 +27,9 @@ export type Buttongroup050Props = Omit<
 // порядок сегментов не декоративный, а смысловой: перестановка сломает
 // логику. Младшие сегменты залиты слабее старшего: включённое право и
 // выбранная роль не должны выглядеть одинаково.
+// Радиогруппа лежит в собственной <form>: одинаковое имя в двух блоках на
+// одной странице иначе объединило бы их в одну группу, и первый блок
+// остался бы без отмеченного варианта.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-050"]){
 --vibeui-buttongroup-050-surface:transparent;
@@ -182,7 +185,7 @@ export function Buttongroup050({
         style={palette}
       >
         <legend>{label}</legend>
-        <div data-part="track">
+        <form data-part="track">
           {roles.map((role) => (
             <label key={role.id} data-part="step">
               <input
@@ -195,7 +198,7 @@ export function Buttongroup050({
               <span data-part="scope">{role.scope}</span>
             </label>
           ))}
-        </div>
+        </form>
         <p data-part="hint">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M12 8h.01M11 12h1v5h1M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18" />

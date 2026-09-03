@@ -67,7 +67,8 @@ top:anchor(bottom);left:anchor(left);margin-top:0.5rem;
 [data-vibeui-block="popover-001"] [data-part="text"]{margin:0 0 0.625rem;font-size:0.8125rem;line-height:1.45;color:var(--vibeui-popover-001-muted)}
 [data-vibeui-block="popover-001"] [data-part="action"]{
 appearance:none;cursor:pointer;
-height:2rem;padding:0 0.75rem;border:0;border-radius:0.5rem;
+display:inline-flex;align-items:center;justify-content:center;
+min-height:2rem;padding:0.25rem 0.75rem;border:0;border-radius:0.5rem;
 background:var(--vibeui-popover-001-accent);color:var(--vibeui-popover-001-on-accent);
 font:inherit;font-size:0.8125rem;font-weight:650;
 }

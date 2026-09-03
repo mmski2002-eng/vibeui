@@ -80,7 +80,7 @@ transition:color .16s ease,background-color .16s ease;
 }
 [data-vibeui-block="navbar-001"] [data-part="links"] a:hover{color:var(--vibeui-navbar-001-ink);background:color-mix(in oklab,var(--vibeui-navbar-001-border) 45%,transparent)}
 [data-vibeui-block="navbar-001"] [data-part="action"]{
-display:none;align-items:center;height:2.25rem;padding:0 1rem;flex:none;
+display:none;align-items:center;min-height:2.25rem;padding:0.25rem 1rem;flex:none;
 border-radius:0.5rem;
 background:var(--vibeui-navbar-001-accent);color:var(--vibeui-navbar-001-accent-fg);
 text-decoration:none;font-size:0.875rem;font-weight:600;

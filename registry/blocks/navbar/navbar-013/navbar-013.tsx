@@ -101,7 +101,7 @@ transition:transform .18s ease;
 [data-vibeui-block="navbar-013"] [data-part="sections"] a[aria-current="page"]::after{transform:scaleX(1)}
 [data-vibeui-block="navbar-013"] [data-part="sections"] a[aria-current="page"]{color:var(--vibeui-navbar-013-accent)}
 [data-vibeui-block="navbar-013"] [data-part="action"]{
-display:inline-flex;align-items:center;height:2.375rem;padding:0 1.0625rem;margin-left:auto;flex:none;
+display:inline-flex;align-items:center;min-height:2.375rem;padding:0.25rem 1.0625rem;margin-left:auto;flex:none;
 border-radius:0.5rem;background:var(--vibeui-navbar-013-accent);color:var(--vibeui-navbar-013-accent-fg);
 text-decoration:none;font-size:0.875rem;font-weight:620;white-space:nowrap;
 }

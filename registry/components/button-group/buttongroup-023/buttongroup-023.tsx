@@ -21,6 +21,9 @@ export type Buttongroup023Props = Omit<
 // и длинная линии прижаты к нужному краю, и по силуэту видно результат.
 // Имена вариантов лежат настоящим текстом под clip-path — их находит поиск
 // по странице, в отличие от aria-label.
+// Радиогруппа лежит в собственной <form>: одинаковое имя в двух блоках на
+// одной странице иначе объединило бы их в одну группу, и первый блок
+// остался бы без отмеченного варианта.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-023"]){
 --vibeui-buttongroup-023-surface:transparent;
@@ -160,7 +163,7 @@ export function Buttongroup023({
         style={palette}
       >
         <legend>{label}</legend>
-        <div data-part="track">
+        <form data-part="track">
           {ALIGNMENTS.map((alignment) => (
             <label key={alignment.id} data-part="segment">
               <input
@@ -177,7 +180,7 @@ export function Buttongroup023({
               </span>
             </label>
           ))}
-        </div>
+        </form>
       </fieldset>
     </>
   )

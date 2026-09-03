@@ -21,6 +21,9 @@ export type Buttongroup033Props = Omit<
 // раскрывается. Как только вариант выбран, всё возвращается в норму, и для
 // этого не нужен ни один обработчик. Ошибка связана с полем через
 // aria-describedby и продублирована значком: цвет один её не сообщает.
+// Радиогруппа лежит в собственной <form>: одинаковое имя в двух блоках на
+// одной странице иначе объединило бы их в одну группу, и первый блок
+// остался бы без отмеченного варианта.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-033"]){
 --vibeui-buttongroup-033-surface:transparent;
@@ -173,14 +176,14 @@ export function Buttongroup033({
             *
           </span>
         </legend>
-        <div data-part="track">
+        <form data-part="track">
           {options.map((option) => (
             <label key={option} data-part="segment">
               <input type="radio" name={name} value={option} required />
               <span>{option}</span>
             </label>
           ))}
-        </div>
+        </form>
         <p data-part="error" id={errorId}>
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M12 4v10M12 18h.01" />

@@ -73,7 +73,7 @@ transition:color .16s ease;
 }
 [data-vibeui-block="navbar-004"] [data-part="links"] a:hover{color:var(--vibeui-navbar-004-ink)}
 [data-vibeui-block="navbar-004"] [data-part="action"]{
-display:inline-flex;align-items:center;height:2.375rem;padding:0 1.125rem;margin-left:auto;flex:none;
+display:inline-flex;align-items:center;min-height:2.375rem;padding:0.25rem 1.125rem;margin-left:auto;flex:none;
 border-radius:999px;background:var(--vibeui-navbar-004-accent);color:var(--vibeui-navbar-004-accent-fg);
 text-decoration:none;font-size:0.875rem;font-weight:650;white-space:nowrap;
 }

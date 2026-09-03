@@ -126,7 +126,9 @@ color:var(--vibeui-auth-026-accent);font:inherit;font-size:0.75rem;font-weight:6
 }
 [data-vibeui-block="auth-026"] [data-part="change"]:focus-visible{outline:2px solid var(--vibeui-auth-026-accent);outline-offset:2px;border-radius:0.25rem}
 [data-vibeui-block="auth-026"] [data-part="submit"]{
-width:100%;appearance:none;cursor:pointer;height:2.75rem;
+width:100%;appearance:none;cursor:pointer;
+display:inline-flex;align-items:center;justify-content:center;
+min-height:2.75rem;padding:0.375rem 1rem;
 border:0;border-radius:0.75rem;
 background:var(--vibeui-auth-026-accent);color:var(--vibeui-auth-026-on-accent);
 font:inherit;font-size:0.875rem;font-weight:650;

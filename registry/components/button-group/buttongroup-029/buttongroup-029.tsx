@@ -21,6 +21,9 @@ export type Buttongroup029Props = Omit<
 // светлая, другая тёмная, и это честно объясняет «как в системе» без слов.
 // Образцы держат собственные цвета, не зависящие от темы страницы: иначе
 // светлая миниатюра исчезла бы на светлом фоне.
+// Радиогруппа лежит в собственной <form>: одинаковое имя в двух блоках на
+// одной странице иначе объединило бы их в одну группу, и первый блок
+// остался бы без отмеченного варианта.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-029"]){
 --vibeui-buttongroup-029-surface:transparent;
@@ -166,7 +169,7 @@ export function Buttongroup029({
         style={palette}
       >
         <legend>{label}</legend>
-        <div data-part="track">
+        <form data-part="track">
           {options.map((option) => (
             <label key={option.id} data-part="option">
               <input
@@ -187,7 +190,7 @@ export function Buttongroup029({
               <span>{option.label}</span>
             </label>
           ))}
-        </div>
+        </form>
       </fieldset>
     </>
   )

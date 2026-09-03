@@ -87,7 +87,8 @@ font:inherit;font-size:0.8125rem;
 [data-vibeui-block="popover-002"] select:focus-visible{outline:2px solid var(--vibeui-popover-002-accent);outline-offset:1px}
 [data-vibeui-block="popover-002"] [data-part="submit"]{
 appearance:none;cursor:pointer;border:0;
-height:2.125rem;border-radius:0.5rem;
+display:inline-flex;align-items:center;justify-content:center;
+min-height:2.125rem;padding:0.25rem 0.75rem;border-radius:0.5rem;
 background:var(--vibeui-popover-002-accent);color:var(--vibeui-popover-002-on-accent);
 font:inherit;font-size:0.8125rem;font-weight:650;
 }

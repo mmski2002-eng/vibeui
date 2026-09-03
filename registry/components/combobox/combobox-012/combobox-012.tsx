@@ -90,8 +90,8 @@ color:var(--vibeui-combobox-012-muted);
 }
 [data-vibeui-block="combobox-012"] [data-part="row"]{display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap}
 [data-vibeui-block="combobox-012"] [data-part="submit"]{
-appearance:none;border:0;cursor:pointer;
-height:2.25rem;padding:0 1rem;border-radius:var(--vibeui-combobox-012-radius);
+appearance:none;border:0;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;
+min-height:2.25rem;padding:0.25rem 1rem;border-radius:var(--vibeui-combobox-012-radius);
 background:var(--vibeui-combobox-012-accent);color:var(--vibeui-combobox-012-onaccent);
 font:inherit;font-size:0.8125rem;font-weight:650;
 transition:filter .16s ease;

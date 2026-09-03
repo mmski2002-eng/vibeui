@@ -79,7 +79,8 @@ box-shadow:0 0.75rem 2rem var(--vibeui-auth-021-shadow);
 }
 [data-vibeui-block="auth-021"] [data-part="head"]{display:flex;gap:0.75rem;margin-bottom:0.875rem}
 [data-vibeui-block="auth-021"] [data-part="glyph"]{
-flex:none;display:inline-flex;align-items:center;justify-content:center;
+flex:none;
+display:inline-flex;align-items:center;justify-content:center;
 width:2.25rem;height:2.25rem;border-radius:0.625rem;
 background:var(--vibeui-auth-021-tint);color:var(--vibeui-auth-021-accent);
 font-size:1rem;font-weight:700;line-height:1;
@@ -105,7 +106,9 @@ background:var(--vibeui-auth-021-card);color:inherit;font:inherit;font-size:0.87
 [data-vibeui-block="auth-021"] [data-part="actions"]{display:flex;flex-direction:column;gap:0.5rem}
 [data-vibeui-block="auth-021"] [data-part="confirm"],
 [data-vibeui-block="auth-021"] [data-part="cancel"]{
-appearance:none;cursor:pointer;height:2.625rem;padding:0 1rem;
+appearance:none;cursor:pointer;
+display:inline-flex;align-items:center;justify-content:center;
+min-height:2.625rem;padding:0.375rem 1rem;
 border-radius:0.625rem;font:inherit;font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="auth-021"] [data-part="confirm"]{border:0;background:var(--vibeui-auth-021-accent);color:var(--vibeui-auth-021-on-accent)}

@@ -89,6 +89,11 @@ transition:opacity .14s ease;
 }
 [data-vibeui-block="buttongroup-006"] button:hover [data-part="tip"],
 [data-vibeui-block="buttongroup-006"] button:focus-visible [data-part="tip"]{opacity:1}
+/* Без мыши наведения не бывает: на телефоне подписи видны сразу, иначе
+   значение значков там просто не существует. */
+@media (hover:none){
+[data-vibeui-block="buttongroup-006"] [data-part="tip"]{opacity:1}
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="buttongroup-006"] *{animation:none!important;transition:none!important}}
 `
 

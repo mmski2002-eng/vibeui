@@ -1,6 +1,6 @@
 "use client"
 
-import { useId, useRef, useState } from "react"
+import { useEffect, useId, useRef, useState } from "react"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Alertdialog006Props = Omit<
@@ -18,6 +18,8 @@ export type Alertdialog006Props = Omit<
   close?: string
   /** Строка рядом с кольцом ожидания. */
   waitText?: string
+  /** Открыть панель сразу и без модального режима: она остаётся внутри блока. */
+  defaultOpen?: boolean
   accent?: string
   /** Подложка окна и кнопки открытия. Пусто — штатная палитра. */
   background?: string
@@ -92,7 +94,14 @@ border:1px solid var(--vibeui-alertdialog-006-border);background:var(--vibeui-al
 [data-vibeui-block="alertdialog-006"] [data-part="cancel"]:disabled{opacity:.5;cursor:default}
 [data-vibeui-block="alertdialog-006"] dialog button:focus-visible{outline:2px solid var(--vibeui-alertdialog-006-accent);outline-offset:2px}
 /* showModal() делает фон inert, но не запрещает прокрутку страницы. */
-html:has([data-vibeui-block="alertdialog-006"] dialog[open]){overflow:hidden}
+html:has([data-vibeui-block="alertdialog-006"] dialog[open]:modal){overflow:hidden}
+/* Немодальный показ: панель остаётся внутри блока, а не уходит в верхний
+   слой поверх страницы. Так её показывают на витрине и в документации. */
+[data-vibeui-block="alertdialog-006"]:has(dialog:not(:modal)[open]){
+display:block;position:relative;width:100%;min-height:22rem;
+}
+[data-vibeui-block="alertdialog-006"] dialog:not(:modal){position:absolute;max-width:100%;max-height:100%;z-index:1}
+[data-vibeui-block="alertdialog-006"]:has(dialog:not(:modal)[open]) [data-part="open"]{display:none}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="alertdialog-006"] [data-part="ring"]{animation:none;border-top-color:var(--vibeui-alertdialog-006-border);opacity:.6}
 [data-vibeui-block="alertdialog-006"] *{transition:none!important}
@@ -138,6 +147,7 @@ export function Alertdialog006({
   cancel = "Отменить",
   close = "Закрыть",
   waitText = "Отзываем ключ…",
+  defaultOpen = false,
   accent,
   background = "",
   className,
@@ -147,6 +157,26 @@ export function Alertdialog006({
   const box = useRef<HTMLDialogElement>(null)
   const uid = useId()
   const [state, setState] = useState<State>("ask")
+
+  useEffect(() => {
+    if (!defaultOpen) {
+      return
+    }
+
+    const active = document.activeElement
+
+    // show() вместо showModal(): немодальная панель живёт внутри своего блока
+    // и не уводит страницу в верхний слой. Витрине нужна именно такая.
+    box.current?.show()
+
+    // show() уводит фокус внутрь панели. Для немодального показа это лишнее:
+    // страница не должна прыгать к панели просто потому, что та открыта.
+    if (active instanceof HTMLElement && active !== document.body) {
+      active.focus()
+    } else if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur()
+    }
+  }, [defaultOpen])
 
   const palette = {
     ...(accent ? { "--vibeui-alertdialog-006-accent": accent } : null),

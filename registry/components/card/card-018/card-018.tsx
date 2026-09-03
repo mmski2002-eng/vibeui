@@ -97,7 +97,8 @@ color:var(--vibeui-card-018-accent);
 }
 [data-vibeui-block="card-018"] [data-part="action"]{
 appearance:none;cursor:pointer;margin-top:auto;
-height:2.375rem;border-radius:0.625rem;border:1px solid var(--vibeui-card-018-border);
+display:inline-flex;align-items:center;justify-content:center;
+min-height:2.375rem;padding:0.3125rem 0.875rem;border-radius:0.625rem;border:1px solid var(--vibeui-card-018-border);
 background:var(--vibeui-card-018-surface);color:var(--vibeui-card-018-fg);
 font:inherit;font-size:0.875rem;font-weight:650;
 transition:background-color .16s ease,border-color .16s ease;

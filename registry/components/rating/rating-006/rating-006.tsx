@@ -89,7 +89,8 @@ margin:0;font-size:0.6875rem;color:var(--vibeui-rating-006-muted);font-variant-n
 }
 [data-vibeui-block="rating-006"] [data-part="submit"]{
 appearance:none;border:0;cursor:pointer;
-height:2.5rem;border-radius:0.625rem;
+display:inline-flex;align-items:center;justify-content:center;
+min-height:2.5rem;padding:0.25rem 0.875rem;border-radius:0.625rem;
 background:var(--vibeui-rating-006-accent);color:var(--vibeui-rating-006-on);
 font:inherit;font-size:0.8125rem;font-weight:650;
 transition:opacity .14s ease;

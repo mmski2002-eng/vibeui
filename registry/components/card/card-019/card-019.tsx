@@ -74,7 +74,7 @@ color:var(--vibeui-card-019-muted);text-wrap:pretty;
 [data-vibeui-block="card-019"] [data-part="action"]{
 appearance:none;cursor:pointer;margin-top:0.625rem;
 display:inline-flex;align-items:center;gap:0.4375rem;
-height:2.375rem;padding:0 1.125rem;border-radius:0.625rem;border:0;
+min-height:2.375rem;padding:0.3125rem 1.125rem;border-radius:0.625rem;border:0;
 background:var(--vibeui-card-019-accent);color:var(--vibeui-card-019-on-accent);
 font:inherit;font-size:0.875rem;font-weight:650;
 transition:background-color .16s ease;

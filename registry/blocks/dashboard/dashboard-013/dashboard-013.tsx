@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 import type { CSSProperties } from "react"
 
 export type Dashboard013Props = {
@@ -13,6 +13,8 @@ export type Dashboard013Props = {
   secondary?: string
   closeLabel?: string
   historyLabel?: string
+  /** Открыть панель сразу и без модального режима: она остаётся внутри блока. */
+  defaultOpen?: boolean
   accent?: string
   /** Подложка панели; пусто — цвет из палитры блока. */
   background?: string
@@ -106,6 +108,13 @@ font:inherit;font-size:0.8125rem;font-weight:650;
 [data-vibeui-block="dashboard-013"] [data-part="secondary"]{
 border:1px solid var(--vibeui-dashboard-013-border);background:none;color:inherit;
 }
+/* Немодальный показ: панель остаётся внутри блока, а не уходит в верхний
+   слой поверх страницы. Так её показывают на витрине и в документации. */
+[data-vibeui-block="dashboard-013"]:has(dialog:not(:modal)[open]){
+display:block;position:relative;width:100%;min-height:26rem;
+}
+[data-vibeui-block="dashboard-013"] dialog:not(:modal){position:absolute;max-width:100%;max-height:100%;z-index:1}
+[data-vibeui-block="dashboard-013"]:has(dialog:not(:modal)[open]) [data-part="open"]{display:none}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="dashboard-013"] dialog{transition:none;opacity:1;translate:0 0}
 [data-vibeui-block="dashboard-013"] *{animation:none!important}
@@ -161,12 +170,33 @@ export function Dashboard013({
   secondary = "Скачать PDF",
   closeLabel = "Закрыть",
   historyLabel = "История",
+  defaultOpen = false,
   accent,
   background = "",
   className,
   style,
 }: Dashboard013Props) {
   const panel = useRef<HTMLDialogElement>(null)
+
+  useEffect(() => {
+    if (!defaultOpen) {
+      return
+    }
+
+    const active = document.activeElement
+
+    // show() вместо showModal(): немодальная панель живёт внутри своего блока
+    // и не уводит страницу в верхний слой. Витрине нужна именно такая.
+    panel.current?.show()
+
+    // show() уводит фокус внутрь панели. Для немодального показа это лишнее:
+    // страница не должна прыгать к панели просто потому, что та открыта.
+    if (active instanceof HTMLElement && active !== document.body) {
+      active.focus()
+    } else if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur()
+    }
+  }, [defaultOpen])
 
   const palette = {
     ...(accent ? { "--vibeui-dashboard-013-accent": accent } : null),

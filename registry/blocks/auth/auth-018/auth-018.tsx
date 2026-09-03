@@ -93,7 +93,8 @@ border-bottom:1px solid var(--vibeui-auth-018-border);
 [data-vibeui-block="auth-018"] [data-part="banner"]{padding:1rem 2rem}
 }
 [data-vibeui-block="auth-018"] [data-part="logo"]{
-flex:none;display:inline-flex;align-items:center;justify-content:center;
+flex:none;
+display:inline-flex;align-items:center;justify-content:center;
 width:2.125rem;height:2.125rem;border-radius:0.625rem;
 background:var(--vibeui-auth-018-accent);color:var(--vibeui-auth-018-on-accent);
 font-size:0.8125rem;font-weight:700;
@@ -123,7 +124,9 @@ font-size:0.875rem;font-weight:600;color:var(--vibeui-auth-018-muted);
 [data-vibeui-block="auth-018"] [data-part="hint"]{margin:0.3125rem 0 0;font-size:0.75rem;line-height:1.45;color:var(--vibeui-auth-018-muted)}
 [data-vibeui-block="auth-018"] [data-part="hint"] a{color:var(--vibeui-auth-018-accent);font-weight:600}
 [data-vibeui-block="auth-018"] [data-part="submit"]{
-width:100%;margin-top:0.25rem;appearance:none;cursor:pointer;height:2.75rem;
+width:100%;margin-top:0.25rem;appearance:none;cursor:pointer;
+display:inline-flex;align-items:center;justify-content:center;
+min-height:2.75rem;padding:0.375rem 1rem;
 border:0;border-radius:0.625rem;
 background:var(--vibeui-auth-018-accent);color:var(--vibeui-auth-018-on-accent);
 font:inherit;font-size:0.875rem;font-weight:650;

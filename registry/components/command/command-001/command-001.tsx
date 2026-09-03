@@ -1,6 +1,6 @@
 "use client"
 
-import { useId, useRef, useState } from "react"
+import { useEffect, useId, useRef, useState } from "react"
 import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Command001Command = {
@@ -15,6 +15,8 @@ export type Command001Props = Omit<ComponentProps<"div">, "children"> & {
   triggerLabel?: string
   /** Ответ на пустой поиск: компонент несёт русский, проект подставляет свой. */
   emptyText?: string
+  /** Открыть панель сразу и без модального режима: она остаётся внутри блока. */
+  defaultOpen?: boolean
   /** Подложка кнопки и модалки. Пусто — цвет по умолчанию из палитры. */
   background?: string
   accent?: string
@@ -89,6 +91,13 @@ font:inherit;font-size:0.875rem;color:inherit;text-align:left;
 [data-vibeui-block="command-001"] [data-part="row"][data-active="true"]{background:var(--vibeui-command-001-active)}
 [data-vibeui-block="command-001"] [data-part="row"] span{font-size:0.75rem;color:var(--vibeui-command-001-muted)}
 [data-vibeui-block="command-001"] [data-part="empty"]{padding:1.25rem 0.875rem;font-size:0.875rem;color:var(--vibeui-command-001-muted)}
+/* Немодальный показ: панель остаётся внутри блока, а не уходит в верхний
+   слой поверх страницы. Так её показывают на витрине и в документации. */
+[data-vibeui-block="command-001"]:has(dialog:not(:modal)[open]){
+display:block;position:relative;width:100%;min-height:22rem;
+}
+[data-vibeui-block="command-001"] dialog:not(:modal){position:absolute;max-width:100%;max-height:100%;z-index:1}
+[data-vibeui-block="command-001"]:has(dialog:not(:modal)[open]) [data-part="open"]{display:none}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="command-001"] *{animation:none!important;transition:none!important}}
 `
 
@@ -133,6 +142,7 @@ export function Command001({
   placeholder = "Команда или переход…",
   triggerLabel = "Поиск команды",
   emptyText = "Ничего не нашлось. Проверьте формулировку.",
+  defaultOpen = false,
   background = "",
   accent,
   className,
@@ -140,6 +150,27 @@ export function Command001({
   ...props
 }: Command001Props) {
   const dialog = useRef<HTMLDialogElement>(null)
+
+  useEffect(() => {
+    if (!defaultOpen) {
+      return
+    }
+
+    const active = document.activeElement
+
+    // show() вместо showModal(): немодальная панель живёт внутри своего блока
+    // и не уводит страницу в верхний слой. Витрине нужна именно такая.
+    dialog.current?.show()
+
+    // show() уводит фокус внутрь панели. Для немодального показа это лишнее:
+    // страница не должна прыгать к панели просто потому, что та открыта.
+    if (active instanceof HTMLElement && active !== document.body) {
+      active.focus()
+    } else if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur()
+    }
+  }, [defaultOpen])
+
   const [query, setQuery] = useState("")
   const [active, setActive] = useState(0)
   const listId = useId()

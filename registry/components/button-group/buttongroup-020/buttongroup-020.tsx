@@ -25,6 +25,9 @@ export type Buttongroup020Props = Omit<
 // и без вычитания радиусов. Приём переживает перенос строки: auto-fit
 // раскладывает валюты в несколько рядов, и сетка сама рисует крест.
 // overflow:hidden на треке обрезает углы сегментов по внешнему радиусу.
+// Радиогруппа лежит в собственной <form>: одинаковое имя в двух блоках на
+// одной странице иначе объединило бы их в одну группу, и первый блок
+// остался бы без отмеченного варианта.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-020"]){
 --vibeui-buttongroup-020-surface:light-dark(oklch(1 0 0),oklch(0.24 0.01 265));
@@ -162,7 +165,7 @@ export function Buttongroup020({
         style={palette}
       >
         <legend>{label}</legend>
-        <div data-part="track">
+        <form data-part="track">
           {currencies.map((currency) => (
             <label key={currency.code} data-part="segment">
               <input
@@ -178,7 +181,7 @@ export function Buttongroup020({
               <span data-part="name">, {currency.name}</span>
             </label>
           ))}
-        </div>
+        </form>
       </fieldset>
     </>
   )

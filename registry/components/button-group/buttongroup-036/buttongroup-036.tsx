@@ -26,6 +26,9 @@ export type Buttongroup036Props = Omit<
 // прозрачным слоем, а видимый кружок собран из span с внутренней точкой на
 // box-shadow. Карточки — grid с auto-fit: на узкой ширине они переносятся,
 // а не сжимаются до нечитаемого.
+// Радиогруппа лежит в собственной <form>: одинаковое имя в двух блоках на
+// одной странице иначе объединило бы их в одну группу, и первый блок
+// остался бы без отмеченного варианта.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-036"]){
 --vibeui-buttongroup-036-surface:transparent;
@@ -170,7 +173,7 @@ export function Buttongroup036({
         style={palette}
       >
         <legend>{label}</legend>
-        <div data-part="track">
+        <form data-part="track">
           {methods.map((method) => (
             <label key={method.id} data-part="card">
               <input
@@ -186,7 +189,7 @@ export function Buttongroup036({
               </span>
             </label>
           ))}
-        </div>
+        </form>
       </fieldset>
     </>
   )

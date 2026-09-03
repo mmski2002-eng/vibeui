@@ -99,7 +99,7 @@ background:linear-gradient(currentColor,currentColor) center/100% 1.5px no-repea
 opacity:.75;
 }
 [data-vibeui-block="navbar-006"] [data-part="action"]{
-flex:none;display:inline-flex;align-items:center;height:2.25rem;padding:0 1rem;
+flex:none;display:inline-flex;align-items:center;min-height:2.25rem;padding:0.25rem 1rem;
 border-radius:0.625rem;background:var(--vibeui-navbar-006-accent);color:var(--vibeui-navbar-006-accent-fg);
 text-decoration:none;font-size:0.875rem;font-weight:620;white-space:nowrap;
 }

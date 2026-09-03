@@ -341,7 +341,7 @@ export function Dashboard037({
 
           <fieldset>
             <legend>{queueLabel}</legend>
-            <div data-part="queue">
+            <form data-part="queue">
               {requests.map((request) => (
                 <label
                   key={request.code}
@@ -376,7 +376,7 @@ export function Dashboard037({
                   </span>
                 </label>
               ))}
-            </div>
+            </form>
           </fieldset>
 
           <div data-part="panel">

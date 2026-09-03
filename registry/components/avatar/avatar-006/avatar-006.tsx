@@ -67,6 +67,11 @@ position:absolute;width:1px;height:1px;opacity:0;
 [data-vibeui-block="avatar-006"] [data-part="name"]{font-size:0.9375rem;font-weight:600;line-height:1.2}
 [data-vibeui-block="avatar-006"] [data-part="hint"]{font-size:0.75rem;line-height:1.4;color:var(--vibeui-avatar-006-muted)}
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="avatar-006"]{color-scheme:dark}
+/* Без мыши наведения не бывает: на телефоне подпись видна сразу, иначе
+   выбор фотографии там просто не существует. */
+@media (hover:none){
+[data-vibeui-block="avatar-006"] [data-part="veil"]{opacity:1}
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="avatar-006"] *{animation:none!important;transition:none!important}}
 `
 

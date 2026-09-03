@@ -82,7 +82,7 @@ color:var(--vibeui-dialog-011-muted,light-dark(oklch(0.5 0.014 265),oklch(0.7 0.
 [data-vibeui-dialog-011-window] [data-part="close"],
 [data-vibeui-dialog-011-window] [data-part="primary"]{
 cursor:pointer;font:inherit;font-size:0.875rem;font-weight:600;
-display:inline-flex;align-items:center;height:2.25rem;padding:0 1rem;
+display:inline-flex;align-items:center;min-height:2.25rem;padding:0.3125rem 1rem;
 border-radius:0.5rem;border:1px solid transparent;text-decoration:none;
 }
 [data-vibeui-dialog-011-window] [data-part="close"]{background:transparent;color:inherit;border-color:var(--vibeui-dialog-011-border,light-dark(oklch(0.89 0.006 265),oklch(0.38 0.012 265)))}

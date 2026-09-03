@@ -27,6 +27,9 @@ export type Buttongroup016Props = Omit<
 // поэтому звучит вслух сразу после имени варианта. Заперт сегмент честным
 // атрибутом disabled: визуальная «серость» без него оставляет вариант
 // кликабельным для клавиатуры.
+// Радиогруппа лежит в собственной <form>: одинаковое имя в двух блоках на
+// одной странице иначе объединило бы их в одну группу, и первый блок
+// остался бы без отмеченного варианта.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-016"]){
 --vibeui-buttongroup-016-surface:transparent;
@@ -182,7 +185,7 @@ export function Buttongroup016({
         style={palette}
       >
         <legend>{label}</legend>
-        <div data-part="track">
+        <form data-part="track">
           {options.map((option) => (
             <label key={option.label} data-part="segment">
               <input
@@ -201,7 +204,7 @@ export function Buttongroup016({
               <span>{option.label}</span>
             </label>
           ))}
-        </div>
+        </form>
         <p data-part="reason" id={reasonId}>
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d={LOCK} />

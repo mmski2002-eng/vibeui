@@ -111,7 +111,9 @@ color:var(--vibeui-auth-007-accent);font:inherit;font-size:0.75rem;font-weight:6
 [data-vibeui-block="auth-007"] [data-part="keep"]{display:flex;align-items:center;gap:0.5rem;margin:0.25rem 0 1rem;font-size:0.8125rem}
 [data-vibeui-block="auth-007"] [data-part="keep"] input{width:1rem;height:1rem;accent-color:var(--vibeui-auth-007-accent)}
 [data-vibeui-block="auth-007"] [data-part="submit"]{
-width:100%;appearance:none;cursor:pointer;height:2.625rem;
+width:100%;appearance:none;cursor:pointer;
+display:inline-flex;align-items:center;justify-content:center;
+min-height:2.625rem;padding:0.375rem 1rem;
 border:0;border-radius:0.625rem;
 background:var(--vibeui-auth-007-accent);color:var(--vibeui-auth-007-on-accent);
 font:inherit;font-size:0.875rem;font-weight:650;

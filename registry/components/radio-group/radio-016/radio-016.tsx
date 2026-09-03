@@ -216,7 +216,7 @@ export function Radio016({
         style={palette}
       >
         <legend>{legend}</legend>
-        <div data-part="grid" style={gridStyle}>
+        <form data-part="grid" style={gridStyle}>
           <div data-part="cell" data-role="corner">
             {cornerLabel}
           </div>
@@ -274,7 +274,7 @@ export function Radio016({
               ))}
             </Fragment>
           ))}
-        </div>
+        </form>
       </fieldset>
     </>
   )

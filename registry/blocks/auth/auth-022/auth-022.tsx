@@ -109,7 +109,8 @@ border:1px solid var(--vibeui-auth-022-border);
 font-size:0.8125rem;font-weight:600;
 }
 [data-vibeui-block="auth-022"] [data-part="face"]{
-flex:none;display:inline-flex;align-items:center;justify-content:center;
+flex:none;
+display:inline-flex;align-items:center;justify-content:center;
 width:1.75rem;height:1.75rem;border-radius:9999px;
 background:var(--vibeui-auth-022-accent);color:var(--vibeui-auth-022-on-accent);
 font-size:0.6875rem;font-weight:700;
@@ -124,7 +125,9 @@ background:var(--vibeui-auth-022-card);color:inherit;font:inherit;font-size:0.87
 [data-vibeui-block="auth-022"] [data-part="actions"]{display:flex;flex-direction:column;gap:0.5rem}
 [data-vibeui-block="auth-022"] [data-part="submit"],
 [data-vibeui-block="auth-022"] [data-part="leave"]{
-flex:1;appearance:none;cursor:pointer;height:2.625rem;padding:0 1rem;
+flex:1;appearance:none;cursor:pointer;
+display:inline-flex;align-items:center;justify-content:center;
+min-height:2.625rem;padding:0.375rem 1rem;
 border-radius:0.625rem;font:inherit;font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="auth-022"] [data-part="submit"]{border:0;background:var(--vibeui-auth-022-accent);color:var(--vibeui-auth-022-on-accent)}

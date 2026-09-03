@@ -36,7 +36,7 @@ const STYLES = `
 [data-vibeui-block="button-015"]{
 appearance:none;cursor:pointer;
 display:inline-flex;align-items:center;gap:0.4375rem;
-height:2.25rem;padding:0 0.875rem;box-sizing:border-box;
+min-height:2.25rem;padding:0.25rem 0.875rem;box-sizing:border-box;
 border:1px solid var(--vibeui-button-015-border);border-radius:0.625rem;
 background:var(--vibeui-button-015-bg);color:var(--vibeui-button-015-fg);
 font-family:var(--vibeui-button-015-font);font-size:0.8125rem;font-weight:600;line-height:1;

@@ -77,7 +77,8 @@ width:calc((100 - var(--vibeui-alert-009-elapsed,0)) * 1%);
 transition:width .3s cubic-bezier(.32,.72,0,1);
 }
 [data-vibeui-block="alert-009"] [data-part="action"]{
-flex:none;display:inline-flex;align-items:center;height:2rem;padding:0 0.875rem;
+flex:none;display:inline-flex;align-items:center;justify-content:center;
+min-height:2rem;padding:0.25rem 0.875rem;
 border-radius:0.5rem;text-decoration:none;
 background:var(--vibeui-alert-009-accent);color:var(--vibeui-alert-009-accent-fg);
 font-size:0.8125rem;font-weight:650;

@@ -84,7 +84,8 @@ position:relative;display:flex;flex-wrap:wrap;align-items:center;justify-content
 gap:0.75rem;margin-top:0.625rem;
 }
 [data-vibeui-block="cta-001"] [data-part="primary"]{
-display:inline-flex;align-items:center;height:2.75rem;padding:0 1.375rem;
+display:inline-flex;align-items:center;justify-content:center;
+min-height:2.75rem;padding:0.25rem 1.375rem;
 border-radius:0.625rem;
 background:var(--vibeui-cta-001-accent);color:var(--vibeui-cta-001-accent-fg);
 text-decoration:none;font-size:0.9375rem;font-weight:650;

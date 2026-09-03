@@ -28,6 +28,9 @@ export type Buttongroup027Props = Omit<
 // переменную на корне через :has, поэтому образец перестраивается без единой
 // строки JS. Значок каждого сегмента — те же три полосы с тем же просветом,
 // что и в образце: подпись, образец и значок говорят об одном.
+// Радиогруппа лежит в собственной <form>: одинаковое имя в двух блоках на
+// одной странице иначе объединило бы их в одну группу, и первый блок
+// остался бы без отмеченного варианта.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-027"]){
 --vibeui-buttongroup-027-surface:transparent;
@@ -200,7 +203,7 @@ export function Buttongroup027({
         style={palette}
       >
         <legend>{label}</legend>
-        <div data-part="track">
+        <form data-part="track">
           {options.map((option) => (
             <label key={option.id} data-part="segment">
               <input
@@ -221,7 +224,7 @@ export function Buttongroup027({
               <span>{option.label}</span>
             </label>
           ))}
-        </div>
+        </form>
         <div data-part="sample" aria-hidden="true">
           {sample.map((row) => (
             <div key={row.title} data-part="line">

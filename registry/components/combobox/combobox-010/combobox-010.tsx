@@ -94,8 +94,8 @@ width:1rem;height:1rem;border-radius:999px;font-size:0.7rem;
 background:var(--vibeui-combobox-010-danger);color:var(--vibeui-combobox-010-ondanger);
 }
 [data-vibeui-block="combobox-010"] [data-part="submit"]{
-appearance:none;border:0;cursor:pointer;align-self:flex-start;
-height:2.25rem;padding:0 1rem;border-radius:var(--vibeui-combobox-010-radius);
+appearance:none;border:0;cursor:pointer;align-self:flex-start;display:inline-flex;align-items:center;justify-content:center;
+min-height:2.25rem;padding:0.25rem 1rem;border-radius:var(--vibeui-combobox-010-radius);
 background:var(--vibeui-combobox-010-accent);color:var(--vibeui-combobox-010-onaccent);
 font:inherit;font-size:0.8125rem;font-weight:650;
 transition:filter .16s ease;

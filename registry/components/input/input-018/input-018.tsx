@@ -83,8 +83,8 @@ font-variant-numeric:tabular-nums;
 [data-vibeui-block="input-018"] input:focus{outline:none}
 [data-vibeui-block="input-018"] input::placeholder{text-transform:none;letter-spacing:normal}
 [data-vibeui-block="input-018"] [data-part="copy"]{
-flex:none;appearance:none;cursor:pointer;
-height:1.75rem;padding:0 0.5rem;border-radius:0.4375rem;border:1px solid var(--vibeui-input-018-border);
+flex:none;appearance:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;
+min-height:1.75rem;padding:0.25rem 0.5rem;border-radius:0.4375rem;border:1px solid var(--vibeui-input-018-border);
 background:var(--vibeui-input-018-surface);color:var(--vibeui-input-018-muted);
 font:inherit;font-size:0.6875rem;font-weight:650;
 transition:border-color .16s ease,color .16s ease;

@@ -33,7 +33,12 @@ container-type:inline-size;
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="aspect-005"]{color-scheme:dark}
-[data-vibeui-block="aspect-005"]{display:block;width:100%;box-sizing:border-box}
+[data-vibeui-block="aspect-005"]{
+display:block;width:100%;
+/* container-type отрывает ширину от содержимого: без нижней границы
+   блок схлопывается внутри flex-контейнера. */
+min-width:min(100%,16rem);box-sizing:border-box;
+}
 /* Раскладка живёт на внутренней рамке, а не на корне: контейнерный запрос
    применяется к потомкам контейнера, но не к нему самому. */
 [data-vibeui-block="aspect-005"] [data-part="frame"]{
@@ -59,7 +64,7 @@ margin:0;font-size:clamp(0.8125rem,1.5cqi,1rem);line-height:1.5;color:var(--vibe
 }
 [data-vibeui-block="aspect-005"] [data-part="action"]{
 align-self:flex-start;margin-top:0.5rem;
-display:inline-flex;align-items:center;height:2.25rem;padding:0 1rem;
+display:inline-flex;align-items:center;min-height:2.25rem;padding:0.3125rem 1rem;
 border-radius:0.5rem;text-decoration:none;
 background:var(--vibeui-aspect-005-accent);color:oklch(0.18 0.02 195);
 font-size:0.875rem;font-weight:650;

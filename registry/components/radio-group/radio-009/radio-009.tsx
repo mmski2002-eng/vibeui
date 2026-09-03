@@ -181,7 +181,7 @@ export function Radio009({
         style={palette}
       >
         <legend>{legend}</legend>
-        <div data-part="grid">
+        <form data-part="grid">
           {bundles.map((bundle) => (
             <label key={bundle.value} data-part="bundle">
               <input
@@ -196,7 +196,7 @@ export function Radio009({
               <span data-part="unit">{bundle.perUnit}</span>
             </label>
           ))}
-        </div>
+        </form>
       </fieldset>
     </>
   )

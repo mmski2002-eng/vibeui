@@ -117,7 +117,9 @@ background:var(--vibeui-commerce-064-panel);font-family:var(--vibeui-commerce-06
 line-height:1.5;word-break:break-all;user-select:all;
 }
 [data-vibeui-block="commerce-064"] [data-part="copy"]{
-appearance:none;cursor:pointer;margin-top:0.5rem;height:2.25rem;padding:0 1rem;border-radius:0.625rem;
+appearance:none;cursor:pointer;margin-top:0.5rem;border-radius:0.625rem;
+display:inline-flex;align-items:center;justify-content:center;
+min-height:2.25rem;padding:0.25rem 1rem;
 border:1px solid var(--vibeui-commerce-064-border);background:transparent;color:inherit;font:inherit;font-size:0.8125rem;font-weight:650;
 }
 [data-vibeui-block="commerce-064"] [data-part="copy"]:focus-visible,

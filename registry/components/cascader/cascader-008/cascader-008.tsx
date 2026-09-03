@@ -26,6 +26,10 @@ export type Cascader008Props = {
 // обычную форму и отправить POST'ом. Выбранная ветка подсвечивается по всей
 // глубине через :has(input:checked): без этого при свёрнутых уровнях
 // непонятно, где именно стоит отметка.
+//
+// Радиогруппа лежит в собственной <form>: одинаковое имя в двух блоках на
+// одной странице иначе объединило бы их в одну группу, и первый блок
+// остался бы без отмеченного варианта.
 const STYLES = `
 :where([data-vibeui-block="cascader-008"]){
 --vibeui-cascader-008-bg:transparent;
@@ -237,10 +241,10 @@ export function Cascader008({
         className={className}
         style={palette}
       >
-        <fieldset data-part="set">
+        <form data-part="set">
           <p data-part="legend">{heading}</p>
           {renderNodes(tree, [])}
-        </fieldset>
+        </form>
         <p data-part="hint">{hintText}</p>
       </div>
     </>

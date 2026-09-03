@@ -189,7 +189,7 @@ export function Radio011({
         style={palette}
       >
         <legend>{legend}</legend>
-        <div data-part="days">
+        <form data-part="days">
           {groupByDay(slots).map((group) => (
             <div key={group.day} data-part="day">
               <span data-part="day-title">{group.day}</span>
@@ -210,7 +210,7 @@ export function Radio011({
               ))}
             </div>
           ))}
-        </div>
+        </form>
       </fieldset>
     </>
   )

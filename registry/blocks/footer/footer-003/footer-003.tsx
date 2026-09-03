@@ -87,7 +87,8 @@ box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-footer-003-accent) 20%,tran
 }
 [data-vibeui-block="footer-003"] [data-part="submit"]{
 appearance:none;cursor:pointer;border:0;
-height:2.75rem;padding:0 1.25rem;border-radius:0.6875rem;
+display:inline-flex;align-items:center;justify-content:center;
+min-height:2.75rem;padding:0.25rem 1.25rem;border-radius:0.6875rem;
 background:var(--vibeui-footer-003-accent);color:var(--vibeui-footer-003-accent-fg);
 font:inherit;font-size:0.9375rem;font-weight:640;white-space:nowrap;
 transition:background-color .16s ease;

@@ -81,7 +81,7 @@ display:flex;flex-wrap:wrap;justify-content:center;gap:0.5rem;
 [data-vibeui-block="avatar-036"] [data-part="reset"]{
 appearance:none;cursor:pointer;
 display:inline-flex;align-items:center;justify-content:center;
-height:2.25rem;padding:0 0.875rem;border-radius:0.625rem;
+min-height:2.25rem;padding:0.3125rem 0.875rem;border-radius:0.625rem;
 font-family:inherit;font-size:0.875rem;font-weight:600;line-height:1;
 }
 [data-vibeui-block="avatar-036"] [data-part="pick"]{

@@ -98,7 +98,9 @@ margin:0.625rem 0 1rem;font-size:0.75rem;line-height:1.4;color:var(--vibeui-auth
 }
 [data-vibeui-block="auth-012"] [data-part="attempts"][data-low="true"]{color:var(--vibeui-auth-012-warn);font-weight:600}
 [data-vibeui-block="auth-012"] [data-part="submit"]{
-width:100%;appearance:none;cursor:pointer;height:2.75rem;
+width:100%;appearance:none;cursor:pointer;
+display:inline-flex;align-items:center;justify-content:center;
+min-height:2.75rem;padding:0.375rem 1rem;
 border:0;border-radius:0.75rem;
 background:var(--vibeui-auth-012-accent);color:var(--vibeui-auth-012-on-accent);
 font:inherit;font-size:0.875rem;font-weight:650;

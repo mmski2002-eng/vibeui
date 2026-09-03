@@ -28,6 +28,9 @@ export type Buttongroup046Props = Omit<
 // сегменты равной ширины (grid 1fr), поэтому строки диапазонов выстраиваются
 // в общую линию. Последний сегмент — «Свой период»: у него нет диапазона,
 // и вместо него стоит значок календаря, а не пустая строка.
+// Радиогруппа лежит в собственной <form>: одинаковое имя в двух блоках на
+// одной странице иначе объединило бы их в одну группу, и первый блок
+// остался бы без отмеченного варианта.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-046"]){
 --vibeui-buttongroup-046-surface:transparent;
@@ -174,7 +177,7 @@ export function Buttongroup046({
         style={palette}
       >
         <legend>{label}</legend>
-        <div data-part="track">
+        <form data-part="track">
           {periods.map((period) => (
             <label key={period.id} data-part="segment">
               <input
@@ -199,7 +202,7 @@ export function Buttongroup046({
               <path d="M4 6h16v14H4zM4 10h16M9 3v4M15 3v4" />
             </svg>
           </label>
-        </div>
+        </form>
       </fieldset>
     </>
   )

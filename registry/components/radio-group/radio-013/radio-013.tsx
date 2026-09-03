@@ -141,7 +141,7 @@ export function Radio013({
         style={palette}
       >
         <legend>{legend}</legend>
-        <div data-part="scale">
+        <form data-part="scale">
           {SCALE.map((value) => (
             <label key={value} data-part="option">
               <input
@@ -158,7 +158,7 @@ export function Radio013({
               </span>
             </label>
           ))}
-        </div>
+        </form>
         <div data-part="edges">
           <span>{lowLabel}</span>
           <span>{highLabel}</span>

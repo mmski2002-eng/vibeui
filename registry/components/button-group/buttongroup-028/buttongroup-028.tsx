@@ -25,6 +25,9 @@ export type Buttongroup028Props = Omit<
 // псевдоэлемента-обёртки стрелки, поэтому анимация не трогает раскладку.
 // Название поля стоит первой, неинтерактивной ячейкой той же рамки: без
 // него «по возрастанию» повисает в воздухе.
+// Радиогруппа лежит в собственной <form>: одинаковое имя в двух блоках на
+// одной странице иначе объединило бы их в одну группу, и первый блок
+// остался бы без отмеченного варианта.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-028"]){
 --vibeui-buttongroup-028-surface:transparent;
@@ -173,7 +176,7 @@ export function Buttongroup028({
         style={palette}
       >
         <legend>{legendTemplate.replace("{field}", field)}</legend>
-        <div data-part="track">
+        <form data-part="track">
           <span data-part="field">{field}</span>
           <label data-part="segment" data-dir="asc">
             <input
@@ -203,7 +206,7 @@ export function Buttongroup028({
             </span>
             {descLabel}
           </label>
-        </div>
+        </form>
         <p data-part="hint">
           <span data-when="asc">{ascHint}</span>
           <span data-when="desc">{descHint}</span>

@@ -122,7 +122,7 @@ color:var(--vibeui-navbar-003-muted);text-decoration:none;font-size:0.875rem;fon
 }
 [data-vibeui-block="navbar-003"] [data-part="plain"]:hover{color:var(--vibeui-navbar-003-ink)}
 [data-vibeui-block="navbar-003"] [data-part="action"]{
-display:inline-flex;align-items:center;height:2.25rem;padding:0 1rem;margin-left:auto;flex:none;
+display:inline-flex;align-items:center;min-height:2.25rem;padding:0.25rem 1rem;margin-left:auto;flex:none;
 border-radius:0.625rem;background:var(--vibeui-navbar-003-accent);color:var(--vibeui-navbar-003-accent-fg);
 text-decoration:none;font-size:0.875rem;font-weight:620;
 }

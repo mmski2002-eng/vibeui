@@ -82,7 +82,8 @@ box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-cta-003-accent) 20%,transpa
 }
 [data-vibeui-block="cta-003"] [data-part="submit"]{
 appearance:none;cursor:pointer;border:0;
-height:3rem;padding:0 1.5rem;border-radius:0.75rem;
+display:inline-flex;align-items:center;justify-content:center;
+min-height:3rem;padding:0.25rem 1.5rem;border-radius:0.75rem;
 background:var(--vibeui-cta-003-accent);color:var(--vibeui-cta-003-accent-fg);
 font:inherit;font-size:1rem;font-weight:640;white-space:nowrap;
 transition:background-color .18s ease;

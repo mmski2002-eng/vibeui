@@ -78,7 +78,8 @@ font-size:0.6875rem;font-weight:650;letter-spacing:0.02em;
 [data-vibeui-block="alert-006"] [data-part="description"]{font-size:0.8125rem;line-height:1.55;color:var(--vibeui-alert-006-muted);max-width:56ch}
 [data-vibeui-block="alert-006"] [data-part="actions"]{display:flex;align-items:center;gap:0.75rem;flex:none}
 [data-vibeui-block="alert-006"] [data-part="action"]{
-display:inline-flex;align-items:center;height:2rem;padding:0 0.875rem;
+display:inline-flex;align-items:center;justify-content:center;
+min-height:2rem;padding:0.25rem 0.875rem;
 border-radius:0.5rem;text-decoration:none;
 background:var(--vibeui-alert-006-accent);color:var(--vibeui-alert-006-accent-fg);
 font-size:0.8125rem;font-weight:600;

@@ -124,7 +124,9 @@ box-shadow:inset 0 0 0 1px var(--vibeui-commerce-023-border);
 }
 [data-vibeui-block="commerce-023"] [data-part="fiscal"]{margin:0;font-size:0.625rem;line-height:1.5;color:var(--vibeui-commerce-023-muted);font-family:var(--vibeui-commerce-023-mono)}
 [data-vibeui-block="commerce-023"] [data-part="save"]{
-display:block;width:100%;margin-top:0.75rem;appearance:none;cursor:pointer;height:2.375rem;border-radius:0.625rem;
+display:flex;align-items:center;justify-content:center;
+width:100%;margin-top:0.75rem;appearance:none;cursor:pointer;
+min-height:2.375rem;padding:0.25rem 0.875rem;border-radius:0.625rem;
 border:1px solid var(--vibeui-commerce-023-border);background:var(--vibeui-commerce-023-paper);
 color:inherit;font:inherit;font-size:0.8125rem;font-weight:650;
 }

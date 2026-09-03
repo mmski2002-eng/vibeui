@@ -3641,14 +3641,16 @@
             "заголовки колонок через columnText, подписи pickLabel и scrollLabel",
             "список договоров через rows",
             "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
-            "акцентный цвет через accent"
+            "акцентный цвет через accent",
+            "открытие без модального режима через defaultOpen"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Компонент ничего не скачивает: соберите файл и отдайте его сами, здесь только подтверждение.",
             "Оценка размера считается по числу строк и формату — под свои данные поправьте константы FORMATS.",
             "Кнопка выгрузки заблокирована при пустом выборе: это защита от диалога, который нечем наполнить.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "defaultOpen открывает панель методом show(): она остаётся внутри блока и не блокирует страницу. Обычный сценарий — showModal() по нажатию, и тогда работают backdrop, Escape и ловушка фокуса."
           ]
         },
         "controls": [
@@ -3706,14 +3708,16 @@
                 "the column headings through columnText and the pickLabel and scrollLabel captions",
                 "the contract list through rows",
                 "background — the component surface; empty means no surface, taking the page colour",
-                "the accent color through accent"
+                "the accent color through accent",
+                "opening without the modal mode through defaultOpen"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The component downloads nothing: build the file and hand it over yourself, this is only the confirmation.",
                 "The size estimate comes from the row count and the format — adjust the FORMATS constants for your data.",
                 "The export button is disabled on an empty selection: that guards against a dialog with nothing to fill it.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "defaultOpen opens the panel with show(): it stays inside the block and does not block the page. The usual path is showModal() on click, which brings the backdrop, Escape and the focus trap."
               ],
               "usage": "<Datagrid017\n  caption=\"Tick the rows to export\"\n  exportLabel=\"Save to file\"\n/>"
             },

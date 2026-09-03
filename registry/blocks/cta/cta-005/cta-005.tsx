@@ -75,7 +75,8 @@ box-shadow:inset 0 0 0 1.5px var(--vibeui-cta-005-accent);
 }
 [data-vibeui-block="cta-005"] [data-part="actions"]{display:flex;flex-wrap:wrap;align-items:center;gap:0.875rem;margin-top:1.75rem}
 [data-vibeui-block="cta-005"] [data-part="action"]{
-display:inline-flex;align-items:center;height:2.875rem;padding:0 1.375rem;border-radius:0.75rem;
+display:inline-flex;align-items:center;justify-content:center;
+min-height:2.875rem;padding:0.25rem 1.375rem;border-radius:0.75rem;
 background:var(--vibeui-cta-005-accent);color:var(--vibeui-cta-005-accent-fg);
 text-decoration:none;font-size:0.9375rem;font-weight:660;
 transition:background-color .18s ease;

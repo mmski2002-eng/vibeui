@@ -51,6 +51,12 @@ opacity:0;transition:max-width .18s ease,opacity .14s ease;
 [data-vibeui-block="button-014"]:focus-visible [data-part="label"]{max-width:12rem;opacity:1}
 [data-vibeui-block="button-014"]:hover,
 [data-vibeui-block="button-014"]:focus-visible{padding:0 1.125rem}
+/* Без мыши наведения не бывает: на телефоне подпись видна сразу, иначе
+   назначение кнопки там просто не существует. */
+@media (hover:none){
+[data-vibeui-block="button-014"] [data-part="label"]{max-width:12rem;opacity:1}
+[data-vibeui-block="button-014"]{padding:0 1.125rem}
+}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="button-014"] *{animation:none!important;transition:none!important}
 [data-vibeui-block="button-014"]{transition:none!important}

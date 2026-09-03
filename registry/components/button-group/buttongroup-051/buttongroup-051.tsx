@@ -27,6 +27,9 @@ export type Buttongroup051Props = Omit<
 // Столбики нарисованы флексом с align-items:flex-end, высота задаётся в
 // процентах от общей высоты значка, поэтому шкалу можно продлить данными,
 // не трогая CSS.
+// Радиогруппа лежит в собственной <form>: одинаковое имя в двух блоках на
+// одной странице иначе объединило бы их в одну группу, и первый блок
+// остался бы без отмеченного варианта.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-051"]){
 --vibeui-buttongroup-051-surface:transparent;
@@ -171,7 +174,7 @@ export function Buttongroup051({
         style={palette}
       >
         <legend>{label}</legend>
-        <div data-part="track">
+        <form data-part="track">
           {levels.map((level) => (
             <label
               key={level.id}
@@ -194,7 +197,7 @@ export function Buttongroup051({
               <span>{level.label}</span>
             </label>
           ))}
-        </div>
+        </form>
       </fieldset>
     </>
   )

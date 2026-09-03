@@ -25,6 +25,9 @@ export type Buttongroup052Props = Omit<
 // значка, а не вспыхивает рядом. Приём стоит применять только там, где выбор
 // действительно один: галочка — универсальный знак «сделано», и в
 // множественном выборе она соврёт.
+// Радиогруппа лежит в собственной <form>: одинаковое имя в двух блоках на
+// одной странице иначе объединило бы их в одну группу, и первый блок
+// остался бы без отмеченного варианта.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-052"]){
 --vibeui-buttongroup-052-surface:transparent;
@@ -171,7 +174,7 @@ export function Buttongroup052({
         style={palette}
       >
         <legend>{label}</legend>
-        <div data-part="track">
+        <form data-part="track">
           {options.map((option) => (
             <label key={option.id} data-part="segment">
               <input
@@ -191,7 +194,7 @@ export function Buttongroup052({
               <span>{option.label}</span>
             </label>
           ))}
-        </div>
+        </form>
       </fieldset>
     </>
   )

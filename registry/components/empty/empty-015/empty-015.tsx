@@ -68,7 +68,8 @@ margin:0;font-size:0.75rem;line-height:1.4;color:var(--vibeui-empty-015-muted);
 }
 [data-vibeui-block="empty-015"] [data-part="retry"]{
 flex:none;appearance:none;cursor:pointer;
-height:2rem;padding:0 0.75rem;border-radius:0.625rem;
+display:inline-flex;align-items:center;justify-content:center;
+min-height:2rem;padding:0.25rem 0.75rem;border-radius:0.625rem;
 border:1px solid var(--vibeui-empty-015-border);
 background:var(--vibeui-empty-015-control);color:var(--vibeui-empty-015-fg);
 font:inherit;font-size:0.75rem;font-weight:650;

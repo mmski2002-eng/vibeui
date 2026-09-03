@@ -44,7 +44,7 @@ display:inline-flex;font-family:var(--vibeui-dialog-001-font);
 [data-vibeui-block="dialog-001"] [data-part="cancel"]{
 appearance:none;cursor:pointer;font:inherit;font-size:0.875rem;font-weight:500;
 display:inline-flex;align-items:center;justify-content:center;
-height:2.25rem;padding:0 0.9375rem;border-radius:0.5rem;border:1px solid transparent;
+min-height:2.25rem;padding:0.3125rem 0.9375rem;border-radius:0.5rem;border:1px solid transparent;
 transition:background-color .16s ease,border-color .16s ease,color .16s ease;
 }
 [data-vibeui-block="dialog-001"] [data-part="trigger"],

@@ -89,7 +89,9 @@ border:solid var(--vibeui-auth-001-on-accent);border-width:0 2px 2px 0;transform
 }
 /* Главное действие занимает всю ширину: на этом экране оно одно. */
 [data-vibeui-block="auth-001"] [data-part="submit"]{
-width:100%;appearance:none;cursor:pointer;height:2.625rem;
+width:100%;appearance:none;cursor:pointer;
+display:inline-flex;align-items:center;justify-content:center;
+min-height:2.625rem;padding:0.375rem 1rem;
 border:0;border-radius:0.625rem;
 background:var(--vibeui-auth-001-accent);color:var(--vibeui-auth-001-on-accent);
 font:inherit;font-size:0.875rem;font-weight:650;

@@ -91,7 +91,8 @@ transition:border-color .16s ease,background-color .16s ease;
 [data-vibeui-block="auth-008"] [data-part="provider"]:hover{border-color:var(--vibeui-auth-008-accent);background:var(--vibeui-auth-008-accent-wash)}
 [data-vibeui-block="auth-008"] [data-part="provider"]:focus-visible{outline:2px solid var(--vibeui-auth-008-accent);outline-offset:2px}
 [data-vibeui-block="auth-008"] [data-part="mark"]{
-flex:none;display:inline-flex;align-items:center;justify-content:center;
+flex:none;
+display:inline-flex;align-items:center;justify-content:center;
 width:1.5rem;height:1.5rem;border-radius:0.5rem;
 background:var(--vibeui-auth-008-chip);font-size:0.75rem;font-weight:700;
 }
@@ -117,7 +118,9 @@ background:var(--vibeui-auth-008-card);color:inherit;font:inherit;font-size:0.87
 }
 [data-vibeui-block="auth-008"] input:focus-visible{outline:2px solid var(--vibeui-auth-008-accent);outline-offset:1px;border-color:var(--vibeui-auth-008-accent)}
 [data-vibeui-block="auth-008"] [data-part="submit"]{
-width:100%;appearance:none;cursor:pointer;height:2.625rem;
+width:100%;appearance:none;cursor:pointer;
+display:inline-flex;align-items:center;justify-content:center;
+min-height:2.625rem;padding:0.375rem 1rem;
 border:0;border-radius:0.625rem;
 background:var(--vibeui-auth-008-accent);color:var(--vibeui-auth-008-on-accent);
 font:inherit;font-size:0.875rem;font-weight:650;

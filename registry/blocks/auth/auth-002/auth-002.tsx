@@ -121,7 +121,9 @@ background:var(--vibeui-auth-002-good);color:var(--vibeui-auth-002-on-accent);bo
 }
 [data-vibeui-block="auth-002"] [data-ok="true"]{color:var(--vibeui-auth-002-fg)}
 [data-vibeui-block="auth-002"] [data-part="submit"]{
-width:100%;margin-top:0.875rem;appearance:none;cursor:pointer;height:2.625rem;
+width:100%;margin-top:0.875rem;appearance:none;cursor:pointer;
+display:inline-flex;align-items:center;justify-content:center;
+min-height:2.625rem;padding:0.375rem 1rem;
 border:0;border-radius:0.625rem;
 background:var(--vibeui-auth-002-accent);color:var(--vibeui-auth-002-on-accent);
 font:inherit;font-size:0.875rem;font-weight:650;

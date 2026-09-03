@@ -2362,7 +2362,10 @@
           "details"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "defaultOpen": true
+          }
         },
         "ai": {
           "export": "Dashboard013",
@@ -2383,14 +2386,16 @@
             "подписи primary, secondary, closeLabel и historyLabel",
             "ширину панели",
             "акцент через проп accent",
-            "background — подложка панели; пусто означает «цвет из палитры блока»"
+            "background — подложка панели; пусто означает «цвет из палитры блока»",
+            "открытие без модального режима через defaultOpen"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Панель модальная: фон под ней недоступен — для параллельной работы возьмите обычную колонку.",
             "На узком экране панель занимает почти весь экран: это ожидаемо, но проверьте длинные списки.",
             "Данные приходят пропами: загрузка по требованию за вызывающим кодом.",
-            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом.",
+            "defaultOpen открывает панель методом show(): она остаётся внутри блока и не блокирует страницу. Обычный сценарий — showModal() по нажатию, и тогда работают backdrop, Escape и ловушка фокуса."
           ]
         },
         "controls": [
@@ -2441,14 +2446,16 @@
                 "the primary, secondary, closeLabel and historyLabel captions",
                 "the panel width",
                 "the accent through the accent prop",
-                "background — the panel surface; empty means the colour from the block palette"
+                "background — the panel surface; empty means the colour from the block palette",
+                "opening without the modal mode through defaultOpen"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The panel is modal: the page behind is inert — for parallel work use a plain column.",
                 "On a narrow screen it covers nearly everything: expected, but check long lists.",
                 "Data arrives as props: on-demand loading belongs to the caller.",
-                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file.",
+                "defaultOpen opens the panel with show(): it stays inside the block and does not block the page. The usual path is showModal() on click, which brings the backdrop, Escape and the focus trap."
               ],
               "usage": "<Dashboard013 title=\"Invoice 300\" facts={[{ label: \"Amount\", value: \"$240\" }]} />"
             },
@@ -2509,7 +2516,8 @@
                 "primary": "Send again",
                 "secondary": "Download PDF",
                 "closeLabel": "Close",
-                "historyLabel": "History"
+                "historyLabel": "History",
+                "defaultOpen": true
               }
             },
             "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-dashboard-013-* variables. Client-side: \"use client\" for opening the panel. The panel is pinned to the right edge through margin rather than transform, so scrolling inside it does not break. The appearance is animated with @starting-style and transition-behavior allow-discrete. The palette is built on light-dark(): the block follows the surrounding color-scheme, and the panel surface can be set by the background prop."

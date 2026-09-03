@@ -88,7 +88,9 @@ border:1px solid var(--vibeui-commerce-020-border);border-radius:0.625rem;backgr
 }
 [data-vibeui-block="commerce-020"] input:focus-visible{outline:2px solid var(--vibeui-commerce-020-accent);outline-offset:1px}
 [data-vibeui-block="commerce-020"] [data-part="apply"]{
-appearance:none;border:0;cursor:pointer;height:2.5rem;padding:0 1rem;border-radius:0.625rem;
+appearance:none;border:0;cursor:pointer;border-radius:0.625rem;
+display:inline-flex;align-items:center;justify-content:center;
+min-height:2.5rem;padding:0.25rem 1rem;
 background:var(--vibeui-commerce-020-fg);color:var(--vibeui-commerce-020-paper);font:inherit;font-size:0.8125rem;font-weight:650;
 }
 [data-vibeui-block="commerce-020"] [data-part="apply"]:disabled{opacity:.4;cursor:not-allowed}

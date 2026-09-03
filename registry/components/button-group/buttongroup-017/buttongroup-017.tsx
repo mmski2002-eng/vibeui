@@ -22,6 +22,9 @@ export type Buttongroup017Props = Omit<
 // Подложка переезжает без JS: трек ловит через :has, какой из двух radio
 // отмечен, и сдвигает единственный thumb. Пояснение под группой тоже
 // меняется правилами CSS — оба текста лежат в разметке, показан один.
+// Радиогруппа лежит в собственной <form>: одинаковое имя в двух блоках на
+// одной странице иначе объединило бы их в одну группу, и первый блок
+// остался бы без отмеченного варианта.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-017"]){
 --vibeui-buttongroup-017-surface:transparent;
@@ -163,7 +166,7 @@ export function Buttongroup017({
         style={palette}
       >
         <legend>{question}</legend>
-        <div data-part="track">
+        <form data-part="track">
           <span data-part="thumb" aria-hidden="true" />
           <label data-part="option">
             <input
@@ -183,7 +186,7 @@ export function Buttongroup017({
             />
             {noLabel}
           </label>
-        </div>
+        </form>
         <p data-part="hint">
           <span data-when="yes">{yesHint}</span>
           <span data-when="no">{noHint}</span>

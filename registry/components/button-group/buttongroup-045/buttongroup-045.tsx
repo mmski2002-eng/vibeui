@@ -25,6 +25,9 @@ export type Buttongroup045Props = Omit<
 // табличными цифрами и имеет фиксированную минимальную ширину: «18 °C» и
 // «64 °F» занимают одно место, и группа не дёргается при переключении.
 // Сама сцепка компактная, потому что стоит рядом со значением, а не отдельно.
+// Радиогруппа лежит в собственной <form>: одинаковое имя в двух блоках на
+// одной странице иначе объединило бы их в одну группу, и первый блок
+// остался бы без отмеченного варианта.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-045"]){
 --vibeui-buttongroup-045-surface:transparent;
@@ -170,7 +173,7 @@ export function Buttongroup045({
           </span>
           <span data-part="caption">{caption}</span>
         </p>
-        <div data-part="track">
+        <form data-part="track">
           <label data-part="unit" data-unit="metric">
             <input
               type="radio"
@@ -189,7 +192,7 @@ export function Buttongroup045({
             />
             {imperialLabel}
           </label>
-        </div>
+        </form>
       </fieldset>
     </>
   )

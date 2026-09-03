@@ -90,7 +90,8 @@ outline:2px solid var(--vibeui-empty-016-accent);outline-offset:2px;
 }
 [data-vibeui-block="empty-016"] [data-part="action"]{
 appearance:none;border:0;cursor:pointer;margin-top:0.5rem;
-height:2.5rem;padding:0 1.125rem;border-radius:0.75rem;
+display:inline-flex;align-items:center;justify-content:center;
+min-height:2.5rem;padding:0.375rem 1.125rem;border-radius:0.75rem;
 background:var(--vibeui-empty-016-accent);color:var(--vibeui-empty-016-on-accent);
 font:inherit;font-size:0.875rem;font-weight:650;
 }

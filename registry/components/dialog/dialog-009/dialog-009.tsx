@@ -25,7 +25,9 @@ export type Dialog009Props = {
 // скрытые radio, а видимость экранов переключает :has(#…:checked) — поэтому
 // «Далее» и «Назад» это обычные подписи к radio, а не обработчики. Точки
 // прогресса сверху показывают, где человек находится: мастер без индикатора
-// ощущается бесконечным.
+// ощущается бесконечным. Обёртка — <form>, а не <div>: у radio одинаковое
+// имя, и без формы два блока на одной странице слились бы в одну группу —
+// шаг соседнего мастера сбрасывал бы этот.
 const STYLES = `
 :where([data-vibeui-block="dialog-009"]){
 --vibeui-dialog-009-fg:light-dark(oklch(0.22 0.016 265),oklch(0.94 0.005 265));
@@ -87,7 +89,7 @@ box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-dialog-009-accent,light-dar
 [data-vibeui-dialog-009-window] [data-part="nav"],
 [data-vibeui-dialog-009-window] [data-part="submit"]{
 cursor:pointer;font:inherit;font-size:0.875rem;font-weight:600;
-display:inline-flex;align-items:center;height:2.25rem;padding:0 1rem;
+display:inline-flex;align-items:center;min-height:2.25rem;padding:0.3125rem 1rem;
 border-radius:0.5rem;border:1px solid transparent;
 }
 [data-vibeui-dialog-009-window] [data-part="nav"][data-kind="next"],
@@ -190,7 +192,7 @@ export function Dialog009({
         <button data-part="trigger" type="button" popoverTarget={id}>
           {trigger}
         </button>
-        <div
+        <form
           id={id}
           popover="auto"
           data-vibeui-dialog-009-window=""
@@ -263,7 +265,7 @@ export function Dialog009({
               </div>
             </div>
           ))}
-        </div>
+        </form>
       </div>
     </>
   )

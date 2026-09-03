@@ -25,6 +25,9 @@ export type Buttongroup026Props = Omit<
 // ширин всегда равна треку и группа не дрожит. Пояснение скрыто не
 // display:none, а нулевой шириной с overflow:hidden — так его можно плавно
 // раскрыть, и оно остаётся в доступном дереве только у выбранного варианта.
+// Радиогруппа лежит в собственной <form>: одинаковое имя в двух блоках на
+// одной странице иначе объединило бы их в одну группу, и первый блок
+// остался бы без отмеченного варианта.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-026"]){
 --vibeui-buttongroup-026-bg:transparent;
@@ -160,7 +163,7 @@ export function Buttongroup026({
         style={palette}
       >
         <legend>{label}</legend>
-        <div data-part="track">
+        <form data-part="track">
           {speeds.map((speed) => (
             <label key={speed.value} data-part="segment">
               <input
@@ -173,7 +176,7 @@ export function Buttongroup026({
               <span data-part="note">{speed.note}</span>
             </label>
           ))}
-        </div>
+        </form>
       </fieldset>
     </>
   )

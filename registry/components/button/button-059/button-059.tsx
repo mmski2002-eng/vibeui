@@ -51,7 +51,7 @@ border-color:var(--vibeui-button-059-accent);
 [data-vibeui-block="button-059"] [data-part="submit"]{
 appearance:none;border:0;cursor:pointer;box-sizing:border-box;
 display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;
-width:100%;height:2.5rem;border-radius:0.625rem;
+width:100%;min-height:2.5rem;padding:0.25rem 0.875rem;border-radius:0.625rem;
 background:var(--vibeui-button-059-accent);color:var(--vibeui-button-059-accent-fg);
 font:inherit;font-size:0.875rem;font-weight:650;line-height:1;
 transition:background-color .16s ease,opacity .16s ease;

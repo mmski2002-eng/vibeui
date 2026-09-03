@@ -60,7 +60,9 @@ width:0.4375rem;height:0.4375rem;border-radius:9999px;background:var(--vibeui-em
 }
 [data-vibeui-block="empty-018"] [data-part="action"]{
 appearance:none;border:1px solid var(--vibeui-empty-018-border);cursor:pointer;
-margin-top:0.375rem;height:2.5rem;padding:0 1.125rem;border-radius:0.75rem;
+margin-top:0.375rem;
+display:inline-flex;align-items:center;justify-content:center;
+min-height:2.5rem;padding:0.375rem 1.125rem;border-radius:0.75rem;
 background:transparent;color:var(--vibeui-empty-018-fg);
 font:inherit;font-size:0.875rem;font-weight:650;
 }

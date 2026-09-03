@@ -15,6 +15,8 @@ export type Alertdialog004Props = Omit<
   cancel?: string
   /** Подпись кнопки во время паузы: {action} — действие, {seconds} — остаток. */
   countdownText?: string
+  /** Открыть панель сразу и без модального режима: она остаётся внутри блока. */
+  defaultOpen?: boolean
   danger?: string
   /** Подложка окна. Пусто — штатная палитра. */
   background?: string
@@ -86,7 +88,14 @@ border:1px solid var(--vibeui-alertdialog-004-border);background:var(--vibeui-al
 }
 [data-vibeui-block="alertdialog-004"] dialog button:focus-visible{outline:2px solid var(--vibeui-alertdialog-004-danger);outline-offset:2px}
 /* showModal() делает фон inert, но не запрещает прокрутку страницы. */
-html:has([data-vibeui-block="alertdialog-004"] dialog[open]){overflow:hidden}
+html:has([data-vibeui-block="alertdialog-004"] dialog[open]:modal){overflow:hidden}
+/* Немодальный показ: панель остаётся внутри блока, а не уходит в верхний
+   слой поверх страницы. Так её показывают на витрине и в документации. */
+[data-vibeui-block="alertdialog-004"]:has(dialog:not(:modal)[open]){
+display:block;position:relative;width:100%;min-height:22rem;
+}
+[data-vibeui-block="alertdialog-004"] dialog:not(:modal){position:absolute;max-width:100%;max-height:100%;z-index:1}
+[data-vibeui-block="alertdialog-004"]:has(dialog:not(:modal)[open]) [data-part="open"]{display:none}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="alertdialog-004"] [data-part="fill"]{transition:none}
 [data-vibeui-block="alertdialog-004"] *{animation:none!important}
@@ -127,6 +136,7 @@ export function Alertdialog004({
   confirm = "Стереть",
   cancel = "Отменить",
   countdownText = "{action} через {seconds}",
+  defaultOpen = false,
   danger,
   background = "",
   className,
@@ -135,8 +145,28 @@ export function Alertdialog004({
 }: Alertdialog004Props) {
   const box = useRef<HTMLDialogElement>(null)
   const uid = useId()
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(defaultOpen)
   const [left, setLeft] = useState(seconds)
+
+  useEffect(() => {
+    if (!defaultOpen) {
+      return
+    }
+
+    const active = document.activeElement
+
+    // show() вместо showModal(): немодальная панель живёт внутри своего блока
+    // и не уводит страницу в верхний слой. Витрине нужна именно такая.
+    box.current?.show()
+
+    // show() уводит фокус внутрь панели. Для немодального показа это лишнее:
+    // страница не должна прыгать к панели просто потому, что та открыта.
+    if (active instanceof HTMLElement && active !== document.body) {
+      active.focus()
+    } else if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur()
+    }
+  }, [defaultOpen])
 
   // Таймер снимается при закрытии: иначе кнопка «включится» в невидимом окне.
   useEffect(() => {

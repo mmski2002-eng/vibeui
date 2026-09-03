@@ -253,7 +253,7 @@ export function Dashboard034({
 
           <fieldset>
             <legend>{pickLabel}</legend>
-            <div data-part="cards">
+            <form data-part="cards">
               {templates.map((template) => (
                 <label key={template.name} data-part="card">
                   <input
@@ -271,7 +271,7 @@ export function Dashboard034({
                   <span data-part="blocks">{template.blocks}</span>
                 </label>
               ))}
-            </div>
+            </form>
           </fieldset>
 
           <div data-part="actions">

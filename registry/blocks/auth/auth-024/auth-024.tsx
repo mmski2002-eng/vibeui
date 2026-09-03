@@ -102,7 +102,8 @@ box-shadow:inset 0 0 0 1px var(--vibeui-auth-024-accent);
 [data-vibeui-block="auth-024"] [data-part="goal"]:has(input:disabled){opacity:.5;cursor:not-allowed}
 [data-vibeui-block="auth-024"] [data-part="goal"] input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
 [data-vibeui-block="auth-024"] [data-part="glyph"]{
-flex:none;display:inline-flex;align-items:center;justify-content:center;
+flex:none;
+display:inline-flex;align-items:center;justify-content:center;
 width:2.25rem;height:2.25rem;border-radius:0.625rem;
 background:var(--vibeui-auth-024-soft);font-size:1rem;line-height:1;
 }
@@ -110,7 +111,8 @@ background:var(--vibeui-auth-024-soft);font-size:1rem;line-height:1;
 [data-vibeui-block="auth-024"] [data-part="gtitle"]{display:block;font-size:0.875rem;font-weight:650}
 [data-vibeui-block="auth-024"] [data-part="gtext"]{display:block;margin-top:0.1875rem;font-size:0.75rem;line-height:1.45;color:var(--vibeui-auth-024-muted)}
 [data-vibeui-block="auth-024"] [data-part="tick"]{
-flex:none;align-self:flex-start;display:inline-flex;align-items:center;justify-content:center;
+flex:none;align-self:flex-start;
+display:inline-flex;align-items:center;justify-content:center;
 width:1.25rem;height:1.25rem;border-radius:9999px;margin-left:auto;
 border:1px solid var(--vibeui-auth-024-border);font-size:0.6875rem;color:transparent;
 }
@@ -120,7 +122,9 @@ background:var(--vibeui-auth-024-accent);border-color:var(--vibeui-auth-024-acce
 [data-vibeui-block="auth-024"] [data-part="foot"]{display:flex;flex-direction:column;gap:0.75rem}
 [data-vibeui-block="auth-024"] [data-part="count"]{margin:0;font-size:0.8125rem;color:var(--vibeui-auth-024-muted)}
 [data-vibeui-block="auth-024"] [data-part="submit"]{
-width:100%;appearance:none;cursor:pointer;height:2.75rem;padding:0 1.25rem;
+width:100%;appearance:none;cursor:pointer;
+display:inline-flex;align-items:center;justify-content:center;
+min-height:2.75rem;padding:0.375rem 1.25rem;
 border:0;border-radius:0.75rem;
 background:var(--vibeui-auth-024-accent);color:var(--vibeui-auth-024-on-accent);
 font:inherit;font-size:0.875rem;font-weight:650;

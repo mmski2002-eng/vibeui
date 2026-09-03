@@ -31,7 +31,12 @@ container-type:inline-size;
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="aspect-006"]{color-scheme:dark}
-[data-vibeui-block="aspect-006"]{display:block;width:100%;box-sizing:border-box;font-family:var(--vibeui-aspect-006-font)}
+[data-vibeui-block="aspect-006"]{
+display:block;width:100%;
+/* container-type отрывает ширину от содержимого: без нижней границы
+   блок схлопывается внутри flex-контейнера. */
+min-width:min(100%,16rem);box-sizing:border-box;font-family:var(--vibeui-aspect-006-font);
+}
 /* Соотношение держит сетка целиком, а не каждая плитка отдельно. */
 /* Раскладка живёт на внутренней рамке, а не на корне: контейнерный запрос
    применяется к потомкам контейнера, но не к нему самому. */

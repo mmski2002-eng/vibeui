@@ -150,7 +150,7 @@ export function Radio005({
         style={palette}
       >
         <legend>{legend}</legend>
-        <div data-part="group">
+        <form data-part="group">
           <span data-part="indicator" aria-hidden="true" />
           {options.map((option) => (
             <label key={option} data-part="seg">
@@ -163,7 +163,7 @@ export function Radio005({
               <span>{option}</span>
             </label>
           ))}
-        </div>
+        </form>
       </fieldset>
     </>
   )

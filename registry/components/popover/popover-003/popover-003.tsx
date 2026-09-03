@@ -74,7 +74,8 @@ top:anchor(bottom);left:anchor(center);translate:-50% 0;margin-top:0.5rem;
 [data-vibeui-block="popover-003"] [data-part="cancel"],
 [data-vibeui-block="popover-003"] [data-part="confirm"]{
 appearance:none;cursor:pointer;
-height:2rem;padding:0 0.8125rem;border-radius:0.5rem;
+display:inline-flex;align-items:center;justify-content:center;
+min-height:2rem;padding:0.25rem 0.8125rem;border-radius:0.5rem;
 font:inherit;font-size:0.8125rem;font-weight:650;
 }
 [data-vibeui-block="popover-003"] [data-part="cancel"]{

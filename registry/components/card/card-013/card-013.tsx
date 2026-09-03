@@ -80,7 +80,8 @@ margin:0;font-size:0.75rem;color:var(--vibeui-card-013-muted);
 }
 [data-vibeui-block="card-013"] [data-part="action"]{
 appearance:none;cursor:pointer;flex:none;
-height:2rem;padding:0 0.875rem;border-radius:0.5rem;
+display:inline-flex;align-items:center;justify-content:center;
+min-height:2rem;padding:0.3125rem 0.875rem;border-radius:0.5rem;
 border:1px solid color-mix(in oklab,var(--vibeui-card-013-accent) 35%,var(--vibeui-card-013-border));
 background:color-mix(in oklab,var(--vibeui-card-013-accent) 10%,var(--vibeui-card-013-surface));
 color:color-mix(in oklab,var(--vibeui-card-013-accent) 75%,var(--vibeui-card-013-ink));

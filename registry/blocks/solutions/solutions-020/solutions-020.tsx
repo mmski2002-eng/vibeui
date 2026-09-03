@@ -50,6 +50,10 @@ export type Solutions020Props = {
 // полем: два несогласованных числа рано или поздно разойдутся, а сравнивают
 // объекты именно по нему. Вместо фотографии — блок с районом и метро: подборка
 // без картинок честнее подборки с заглушками.
+//
+// Радиогруппа лежит в собственной <form>: одинаковое имя в двух блоках на
+// одной странице иначе объединило бы их в одну группу, и первый блок
+// остался бы без отмеченного варианта.
 const STYLES = `
 :where([data-vibeui-block="solutions-020"]){
 --vibeui-solutions-020-bg:transparent;
@@ -300,19 +304,21 @@ export function Solutions020({
           <p data-part="found">{found}</p>
         </header>
 
-        <fieldset>
-          <legend>{filterLegend}</legend>
-          {filters.map((filter) => (
-            <label data-part="chip" key={filter}>
-              <input
-                type="radio"
-                name="vibeui-solutions-020-rooms"
-                defaultChecked={filter === activeFilter}
-              />
-              <span>{filter}</span>
-            </label>
-          ))}
-        </fieldset>
+        <form>
+          <fieldset>
+            <legend>{filterLegend}</legend>
+            {filters.map((filter) => (
+              <label data-part="chip" key={filter}>
+                <input
+                  type="radio"
+                  name="vibeui-solutions-020-rooms"
+                  defaultChecked={filter === activeFilter}
+                />
+                <span>{filter}</span>
+              </label>
+            ))}
+          </fieldset>
+        </form>
 
         <ul>
           {listings.map((listing) => (

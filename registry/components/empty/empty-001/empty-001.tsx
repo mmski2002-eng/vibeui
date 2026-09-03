@@ -70,7 +70,7 @@ margin:0;max-width:32ch;font-size:0.875rem;line-height:1.55;color:var(--vibeui-e
 }
 [data-vibeui-block="empty-001"] [data-part="action"]{
 appearance:none;border:0;cursor:pointer;margin-top:0.75rem;
-display:inline-flex;align-items:center;height:2.25rem;padding:0 1rem;
+display:inline-flex;align-items:center;min-height:2.25rem;padding:0.3125rem 1rem;
 border-radius:0.5rem;font:inherit;font-size:0.875rem;font-weight:500;
 background:var(--vibeui-empty-001-accent);color:var(--vibeui-empty-001-accent-fg);
 transition:background-color .16s ease;

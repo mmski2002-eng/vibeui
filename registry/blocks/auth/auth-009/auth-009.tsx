@@ -104,7 +104,9 @@ background:var(--vibeui-auth-009-well);
 [data-vibeui-block="auth-009"] summary:focus-visible{outline:2px solid var(--vibeui-auth-009-accent);outline-offset:2px;border-radius:0.25rem}
 [data-vibeui-block="auth-009"] details p{margin:0.5rem 0 0;font-size:0.75rem;line-height:1.55;color:var(--vibeui-auth-009-muted)}
 [data-vibeui-block="auth-009"] [data-part="submit"]{
-width:100%;appearance:none;cursor:pointer;height:2.625rem;
+width:100%;appearance:none;cursor:pointer;
+display:inline-flex;align-items:center;justify-content:center;
+min-height:2.625rem;padding:0.375rem 1rem;
 border:0;border-radius:0.625rem;
 background:var(--vibeui-auth-009-accent);color:var(--vibeui-auth-009-on-accent);
 font:inherit;font-size:0.875rem;font-weight:650;

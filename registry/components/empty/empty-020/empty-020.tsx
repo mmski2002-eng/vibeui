@@ -76,7 +76,8 @@ outline:2px solid var(--vibeui-empty-020-accent);outline-offset:1px;
 }
 [data-vibeui-block="empty-020"] [data-part="submit"]{
 appearance:none;border:0;cursor:pointer;flex:none;
-height:2.625rem;padding:0 1.125rem;border-radius:0.75rem;
+display:inline-flex;align-items:center;justify-content:center;
+min-height:2.625rem;padding:0.375rem 1.125rem;border-radius:0.75rem;
 background:var(--vibeui-empty-020-accent);color:var(--vibeui-empty-020-on-accent);
 font:inherit;font-size:0.875rem;font-weight:650;
 }

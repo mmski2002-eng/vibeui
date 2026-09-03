@@ -57,7 +57,7 @@ white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
 [data-vibeui-block="button-023"] [data-part="action"]{
 flex:none;display:inline-flex;align-items:center;gap:0.375rem;
-height:2rem;padding:0 0.625rem;border-radius:0.4375rem;
+min-height:2rem;padding:0.25rem 0.625rem;border-radius:0.4375rem;
 background:color-mix(in oklab,var(--vibeui-button-023-accent) 10%,transparent);
 color:var(--vibeui-button-023-accent);
 font-size:0.75rem;font-weight:650;

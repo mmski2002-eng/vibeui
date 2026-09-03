@@ -180,7 +180,8 @@
                 ],
                 "triggerLabel": "Search commands",
                 "placeholder": "Command or jump to…",
-                "emptyText": "Nothing found. Try different wording."
+                "emptyText": "Nothing found. Try different wording.",
+                "defaultOpen": true
               }
             },
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-command-001-* variables. Client-side: \"use client\" for the sake of search and the arrow keys. The modal is opened with the showModal() method, so the focus trap and closing on Escape work by themselves. The arrows walk the visible order of the rows rather than the source array: after grouping it is a different one."
@@ -194,7 +195,10 @@
           "background"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "defaultOpen": true
+          }
         }
       }
     },

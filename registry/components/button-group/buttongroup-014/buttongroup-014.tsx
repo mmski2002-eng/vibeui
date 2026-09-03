@@ -24,6 +24,9 @@ export type Buttongroup014Props = Omit<
 // Подсказка уходит вниз, а не вверх: группа такого вида обычно стоит в
 // шапке, и вверху для неё места нет. Показ и по :hover, и по :focus-visible —
 // с клавиатуры значки иначе неразличимы.
+// Радиогруппа лежит в собственной <form>: одинаковое имя в двух блоках на
+// одной странице иначе объединило бы их в одну группу, и первый блок
+// остался бы без отмеченного варианта.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-014"]){
 --vibeui-buttongroup-014-surface:transparent;
@@ -104,6 +107,11 @@ transition:opacity .14s ease,translate .14s ease;
 [data-vibeui-block="buttongroup-014"] [data-part="segment"]:has(input:focus-visible) [data-part="tip"]{
 opacity:1;translate:-50% 0;
 }
+/* Без мыши наведения не бывает: на телефоне подписи видны сразу, иначе
+   значение значков там просто не существует. */
+@media (hover:none){
+[data-vibeui-block="buttongroup-014"] [data-part="tip"]{opacity:1;translate:-50% 0}
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="buttongroup-014"] *{animation:none!important;transition:none!important}}
 `
 
@@ -180,7 +188,7 @@ export function Buttongroup014({
         style={palette}
       >
         <legend>{label}</legend>
-        <div data-part="track">
+        <form data-part="track">
           {options.map((option) => (
             <label key={option.id} data-part="segment">
               <input
@@ -198,7 +206,7 @@ export function Buttongroup014({
               </span>
             </label>
           ))}
-        </div>
+        </form>
       </fieldset>
     </>
   )

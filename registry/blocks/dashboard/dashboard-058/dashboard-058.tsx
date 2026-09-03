@@ -282,7 +282,7 @@ export function Dashboard058({
                 <p data-part="reason">{group.reason}</p>
               </div>
 
-              <div data-part="scroll">
+              <form data-part="scroll">
                 <table>
                   <thead>
                     <tr>
@@ -323,7 +323,7 @@ export function Dashboard058({
                     ))}
                   </tbody>
                 </table>
-              </div>
+              </form>
 
               <div data-part="actions">
                 <button type="button" data-part="merge">

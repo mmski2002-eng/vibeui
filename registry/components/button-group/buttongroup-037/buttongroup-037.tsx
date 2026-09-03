@@ -24,6 +24,9 @@ export type Buttongroup037Props = Omit<
 // скрытая панель вместе со своими полями честно уходит из доступного дерева
 // и из обхода Tab. Панель и сцепка склеены в одну карточку: у сцепки скруглены
 // только верхние углы, у панели — только нижние, и общая рамка не разрывается.
+// Радиогруппа лежит в собственной <form>: одинаковое имя в двух блоках на
+// одной странице иначе объединило бы их в одну группу, и первый блок
+// остался бы без отмеченного варианта.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-037"]){
 --vibeui-buttongroup-037-surface:transparent;
@@ -188,7 +191,7 @@ export function Buttongroup037({
         style={palette}
       >
         <legend>{label}</legend>
-        <div data-part="track">
+        <form data-part="track">
           <label data-part="segment" data-mode="file">
             <input
               type="radio"
@@ -213,7 +216,7 @@ export function Buttongroup037({
             </svg>
             {linkLabel}
           </label>
-        </div>
+        </form>
         <div data-part="panel" data-panel="file">
           <label data-part="drop">
             <input type="file" name={`${name}-file`} />

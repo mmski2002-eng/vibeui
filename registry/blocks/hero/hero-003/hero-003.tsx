@@ -58,7 +58,12 @@ const STYLES = `
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="hero-003"]{color-scheme:dark}
-[data-vibeui-block="hero-003"]{container-type:inline-size}
+[data-vibeui-block="hero-003"]{
+/* container-type отрывает ширину от содержимого: без нижней границы
+   блок схлопывается внутри flex-контейнера. */
+min-width:min(100%,16rem);
+container-type:inline-size;
+}
 [data-vibeui-block="hero-003"] [data-part="hatch"]{position:absolute;inset:0;pointer-events:none;background-image:repeating-linear-gradient(135deg,var(--vibeui-hero-003-border) 0 1px,transparent 1px 11px);opacity:.32;-webkit-mask-image:radial-gradient(70% 60% at 50% 45%,transparent,black);mask-image:radial-gradient(70% 60% at 50% 45%,transparent,black)}
 [data-vibeui-block="hero-003"] [data-part="pattern"]{background-image:repeating-linear-gradient(135deg,var(--vibeui-hero-003-border) 0 1px,transparent 1px 10px)}
 [data-vibeui-block="hero-003"] [data-part="lead"]{grid-area:lead}

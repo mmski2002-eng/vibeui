@@ -77,7 +77,8 @@ overflow-wrap:anywhere;
 }
 [data-vibeui-block="popover-010"] [data-part="action"]{
 appearance:none;cursor:pointer;width:100%;
-height:2rem;border-radius:0.5rem;border:1px solid var(--vibeui-popover-010-border);
+display:inline-flex;align-items:center;justify-content:center;
+min-height:2rem;padding:0.25rem 0.75rem;border-radius:0.5rem;border:1px solid var(--vibeui-popover-010-border);
 background:var(--vibeui-popover-010-surface);color:inherit;
 font:inherit;font-size:0.8125rem;font-weight:650;
 }

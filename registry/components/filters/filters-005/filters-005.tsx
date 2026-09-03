@@ -20,6 +20,10 @@ export type Filters005Props = Omit<
 // они стоят первыми, а пара дат появляется только под пунктом «свой период».
 // Раскрытие держит селектор :has по отмеченной радиокнопке — состояния нет,
 // компонент серверный, и пустые поля дат не уезжают в форму без надобности.
+//
+// Радиогруппа лежит в собственной <form>: одинаковое имя в двух блоках на
+// одной странице иначе объединило бы их в одну группу, и первый блок
+// остался бы без отмеченного варианта.
 const STYLES = `
 :where([data-vibeui-block="filters-005"]){
 --vibeui-filters-005-surface:transparent;
@@ -170,7 +174,7 @@ export function Filters005({
       >
         <fieldset>
           <legend>{title}</legend>
-          <div data-part="list">
+          <form data-part="list">
             {presets.map((preset, index) => (
               <label key={preset}>
                 <input
@@ -191,7 +195,7 @@ export function Filters005({
               />
               {customLabel}
             </label>
-          </div>
+          </form>
 
           <div data-part="custom">
             <span data-part="cell">

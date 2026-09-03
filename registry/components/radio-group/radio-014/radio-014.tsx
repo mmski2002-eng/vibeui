@@ -187,7 +187,7 @@ export function Radio014({
         style={palette}
       >
         <legend>{legend}</legend>
-        <div data-part="list">
+        <form data-part="list">
           {methods.map((method) => (
             <label key={method.value} data-part="method">
               <input
@@ -206,7 +206,7 @@ export function Radio014({
               </span>
             </label>
           ))}
-        </div>
+        </form>
       </fieldset>
     </>
   )

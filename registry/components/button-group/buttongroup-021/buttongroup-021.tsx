@@ -26,6 +26,9 @@ export type Buttongroup021Props = Omit<
 // вертикальный, потому что автонимы имеют разную длину и в равные колонки
 // не ложатся. Отметка выбора — галочка, а не только заливка: язык выбирают
 // в том числе те, кто не читает текущий язык интерфейса.
+// Радиогруппа лежит в собственной <form>: одинаковое имя в двух блоках на
+// одной странице иначе объединило бы их в одну группу, и первый блок
+// остался бы без отмеченного варианта.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-021"]){
 --vibeui-buttongroup-021-surface:transparent;
@@ -181,7 +184,7 @@ export function Buttongroup021({
         style={palette}
       >
         <legend>{label}</legend>
-        <div data-part="track">
+        <form data-part="track">
           {languages.map((language) => (
             <label key={language.tag} data-part="row">
               <input
@@ -208,7 +211,7 @@ export function Buttongroup021({
               </svg>
             </label>
           ))}
-        </div>
+        </form>
       </fieldset>
     </>
   )

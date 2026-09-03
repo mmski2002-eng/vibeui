@@ -77,7 +77,7 @@ margin:0.125rem 0 0;color:var(--vibeui-avatar-039-muted);font-size:0.875rem;line
 [data-vibeui-block="avatar-039"] [data-part="action"]{
 appearance:none;border:0;cursor:pointer;align-self:flex-start;
 display:inline-flex;align-items:center;justify-content:center;
-height:2.25rem;padding:0 1rem;border-radius:0.625rem;
+min-height:2.25rem;padding:0.3125rem 1rem;border-radius:0.625rem;
 background:var(--vibeui-avatar-039-accent);color:oklch(0.99 0.003 265);
 font-family:inherit;font-size:0.875rem;font-weight:600;line-height:1;
 }

@@ -82,7 +82,8 @@ font-size:0.6875rem;font-weight:650;color:var(--vibeui-alert-019-accent);
 }
 [data-vibeui-block="alert-019"] [data-part="action"]{
 align-self:flex-start;
-display:inline-flex;align-items:center;height:2rem;padding:0 0.9375rem;
+display:inline-flex;align-items:center;justify-content:center;
+min-height:2rem;padding:0.25rem 0.9375rem;
 border-radius:0.5rem;text-decoration:none;
 background:var(--vibeui-alert-019-accent);color:var(--vibeui-alert-019-accent-fg);
 font-size:0.8125rem;font-weight:600;

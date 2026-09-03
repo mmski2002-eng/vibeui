@@ -73,7 +73,7 @@ transition-delay:calc(var(--vibeui-button-037-index) * 45ms);
 [data-vibeui-block="button-037"] [data-part="action"]{
 appearance:none;cursor:pointer;white-space:nowrap;
 display:inline-flex;align-items:center;gap:0.5rem;
-height:2.25rem;padding:0 0.875rem;border-radius:9999px;
+min-height:2.25rem;padding:0.25rem 0.875rem;border-radius:9999px;
 border:1px solid var(--vibeui-button-037-border);
 background:var(--vibeui-button-037-surface);color:var(--vibeui-button-037-ink);
 font:inherit;font-size:0.8125rem;font-weight:600;line-height:1;

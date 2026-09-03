@@ -82,7 +82,8 @@ display:block;margin-top:0.375rem;color:var(--vibeui-cta-004-muted);font-size:0.
 }
 [data-vibeui-block="cta-004"] [data-part="actions"]{display:flex;flex-wrap:wrap;align-items:center;gap:1rem}
 [data-vibeui-block="cta-004"] [data-part="action"]{
-display:inline-flex;align-items:center;height:3rem;padding:0 1.5rem;border-radius:999px;
+display:inline-flex;align-items:center;justify-content:center;
+min-height:3rem;padding:0.25rem 1.5rem;border-radius:999px;
 background:var(--vibeui-cta-004-button);color:var(--vibeui-cta-004-button-fg);
 text-decoration:none;font-size:1rem;font-weight:660;
 transition:transform .18s ease,box-shadow .18s ease;

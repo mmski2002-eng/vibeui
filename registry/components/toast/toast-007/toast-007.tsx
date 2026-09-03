@@ -76,7 +76,8 @@ grid-column:2 / span 2;display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:0.625re
 [data-vibeui-block="toast-007"] [data-part="primary"],
 [data-vibeui-block="toast-007"] [data-part="secondary"]{
 appearance:none;cursor:pointer;
-height:1.9375rem;padding:0 0.75rem;border-radius:0.5rem;
+display:inline-flex;align-items:center;justify-content:center;
+min-height:1.9375rem;padding:0.25rem 0.75rem;border-radius:0.5rem;
 font:inherit;font-size:0.8125rem;font-weight:640;
 transition:background-color .16s ease,color .16s ease;
 }

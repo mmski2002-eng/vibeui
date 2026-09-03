@@ -382,14 +382,14 @@ export function Dashboard092({
 
           <fieldset>
             <legend>{text.reasonLegend}</legend>
-            <div data-part="reasons">
+            <form data-part="reasons">
               {reasons.map((reason) => (
                 <label key={reason} data-part="reason">
                   <input type="radio" name="dashboard-092-reason" />
                   {reason}
                 </label>
               ))}
-            </div>
+            </form>
             <p data-part="optional">{text.optionalNote}</p>
           </fieldset>
 

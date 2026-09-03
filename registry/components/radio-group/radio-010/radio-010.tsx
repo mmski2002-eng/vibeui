@@ -162,7 +162,7 @@ export function Radio010({
         style={palette}
       >
         <legend>{legend}</legend>
-        <div data-part="rail">
+        <form data-part="rail">
           {options.map((option) => (
             <label key={option.value} data-part="seg">
               <input
@@ -184,7 +184,7 @@ export function Radio010({
               <span data-part="name">{option.label}</span>
             </label>
           ))}
-        </div>
+        </form>
       </fieldset>
     </>
   )

@@ -69,7 +69,9 @@ background:var(--vibeui-auth-003-bg);color:inherit;font:inherit;font-size:0.875r
 }
 [data-vibeui-block="auth-003"] input:focus-visible{outline:2px solid var(--vibeui-auth-003-accent);outline-offset:1px;border-color:var(--vibeui-auth-003-accent)}
 [data-vibeui-block="auth-003"] [data-part="submit"]{
-width:100%;appearance:none;cursor:pointer;height:2.625rem;
+width:100%;appearance:none;cursor:pointer;
+display:inline-flex;align-items:center;justify-content:center;
+min-height:2.625rem;padding:0.375rem 1rem;
 border:0;border-radius:0.625rem;
 background:var(--vibeui-auth-003-accent);color:var(--vibeui-auth-003-on-accent);
 font:inherit;font-size:0.875rem;font-weight:650;

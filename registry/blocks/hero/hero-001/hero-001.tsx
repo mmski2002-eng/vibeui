@@ -46,7 +46,12 @@ const STYLES = `
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="hero-001"]{color-scheme:dark}
-[data-vibeui-block="hero-001"]{container-type:inline-size}
+[data-vibeui-block="hero-001"]{
+/* container-type отрывает ширину от содержимого: без нижней границы
+   блок схлопывается внутри flex-контейнера. */
+min-width:min(100%,16rem);
+container-type:inline-size;
+}
 @container (min-width:40rem){
 [data-vibeui-block="hero-001"] [data-part="frame"]{padding-left:2.5rem;padding-right:2.5rem}
 [data-vibeui-block="hero-001"] [data-part="actions"]{width:auto;flex-direction:row}

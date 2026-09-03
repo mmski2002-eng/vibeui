@@ -73,7 +73,7 @@ display:flex;flex-direction:column;gap:0.625rem;margin-top:1.75rem;
 [data-vibeui-block="cta-002"] [data-part="primary"],
 [data-vibeui-block="cta-002"] [data-part="secondary"]{
 display:inline-flex;align-items:center;justify-content:center;
-height:3rem;padding:0 1.5rem;border-radius:0.875rem;
+min-height:3rem;padding:0.25rem 1.5rem;border-radius:0.875rem;
 text-decoration:none;font-size:1rem;font-weight:640;
 transition:background-color .18s ease,border-color .18s ease,transform .18s ease;
 }

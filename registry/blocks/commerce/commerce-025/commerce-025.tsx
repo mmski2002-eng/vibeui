@@ -125,7 +125,8 @@ font-variant-numeric:tabular-nums;
 [data-vibeui-block="commerce-025"] [data-part="dash"]{color:var(--vibeui-commerce-025-muted)}
 [data-vibeui-block="commerce-025"] [data-part="apply"]{
 position:sticky;bottom:0;width:100%;margin-top:0.875rem;appearance:none;border:0;cursor:pointer;
-height:2.5rem;border-radius:0.75rem;
+display:flex;align-items:center;justify-content:center;
+min-height:2.5rem;padding:0.25rem 0.875rem;border-radius:0.75rem;
 background:var(--vibeui-commerce-025-accent);color:var(--vibeui-commerce-025-on-accent);font:inherit;font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="commerce-025"] [data-part="apply"]:focus-visible{outline:2px solid var(--vibeui-commerce-025-accent);outline-offset:2px}

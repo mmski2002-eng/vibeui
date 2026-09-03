@@ -3561,6 +3561,527 @@
           "width": "auto"
         }
       }
+    },
+    {
+      "name": "dropdown-019",
+      "type": "registry:component",
+      "title": "Раздвоенная кнопка",
+      "description": "Раздвоенная кнопка: слева обычное действие в одно нажатие, справа отдельная зона со стрелкой — она открывает варианты того же действия.",
+      "categories": [
+        "dropdown-menu"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "dropdown-019/dropdown-019.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/dropdown-019.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-dropdown-019-*. Серверный: открытие держит HTML popover, положение — CSS anchor positioning под @supports, JS не нужен. Две половины лежат в одной рамке, но остаются двумя кнопками: у каждой свой фокус и своя подсказка, поэтому с клавиатуры видно, куда ведёт Enter. Шов между ними — border-inline-start цветом currentColor через color-mix. Меню выравнивается по правому краю (position-area: bottom span-left), потому что стрелка стоит справа и список должен уходить внутрь макета. Высоту половин набирает содержимое: у кнопок min-height и вертикальный padding, иначе длинный перевод подписи вылез бы за пределы. Правая колонка — сочетания клавиш с tabular-nums.",
+      "meta": {
+        "tags": [
+          "menu",
+          "dropdown",
+          "split-button",
+          "actions"
+        ],
+        "ai": {
+          "export": "Dropdown019",
+          "usage": "<Dropdown019\n  action=\"Сохранить\"\n  items={[{ label: \"Сохранить как…\", keys: \"⌘⇧S\" }]}\n/>",
+          "summary": "Раздвоенная кнопка: основное действие слева, варианты того же действия за стрелкой справа. Один файл, ноль зависимостей, без JS.",
+          "preserve": [
+            "локальную палитру --vibeui-dropdown-019-*: компонент обязан выглядеть одинаково в любом проекте",
+            "две отдельные кнопки внутри одной рамки: слить их в одну — потерять и фокус, и подсказку правой половины",
+            "шов между половинами: без него не видно, что нажатий здесь два",
+            "min-height вместо height у обеих половин — длинная подпись действия обязана переносить строку, а не обрезаться",
+            "выравнивание меню по правому краю кнопки: стрелка стоит справа, и список должен уходить внутрь макета",
+            "aria-label у правой половины: одна стрелка без подписи ничего не говорит экранному диктору",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "подпись основного действия через action",
+            "список вариантов через items: label, keys и href у каждого",
+            "цвет заливки кнопки через accent — цвет текста на ней считается сам",
+            "подложку компонента через background; пусто означает фон страницы",
+            "режим витрины через open: меню встаёт в поток под кнопкой",
+            "идентификатор popover через id, если на странице несколько таких кнопок"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "При open меню перестаёт быть popover: Escape и клик мимо не работают, это режим витрины и скриншотов.",
+            "Без поддержки anchor positioning меню откроется по центру экрана — работает, но некрасиво.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "action",
+            "label": "Действие",
+            "type": "text",
+            "default": "Сохранить",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Split Button",
+            "description": "A split button: the plain action on the left in a single click, and a separate arrow zone on the right that opens variants of the same action.",
+            "docs": "One file, zero dependencies, the --vibeui-dropdown-019-* palette. A server component: the HTML popover holds the open state and CSS anchor positioning inside @supports places it, so no JS is needed. The two halves sit in one frame but stay two buttons: each has its own focus and its own label, so from the keyboard it is clear where Enter leads. The seam between them is a border-inline-start in currentColor through color-mix. The menu aligns to the right edge (position-area: bottom span-left) because the arrow sits on the right and the list has to fall inside the layout. The halves take their height from content: min-height plus vertical padding, otherwise a long translated label would spill out. The right column carries keyboard shortcuts in tabular-nums.",
+            "ai": {
+              "summary": "A split button: the main action on the left, variants of the same action behind the arrow on the right. One file, zero dependencies, no JS.",
+              "preserve": [
+                "the local --vibeui-dropdown-019-* palette: the component must look the same in any project",
+                "the two separate buttons inside one frame: merging them loses both the focus and the label of the right half",
+                "the seam between the halves: without it there is no sign that there are two targets here",
+                "min-height instead of height on both halves — a long action label has to wrap, not be clipped",
+                "the menu aligning to the right edge of the button: the arrow is on the right, so the list has to fall inside the layout",
+                "the aria-label on the right half: a bare arrow tells a screen reader nothing",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "the main action label through action",
+                "the variant list through items: label, keys and href on each",
+                "the button fill through accent — the text colour on it is derived",
+                "the component surface through background; empty means the page background",
+                "the showcase mode through open: the menu moves into the flow under the button",
+                "the popover id through id when the page carries several such buttons"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "With open the menu stops being a popover: Escape and outside clicks do not work, this is the showcase and screenshot mode.",
+                "Without anchor positioning support the menu opens in the middle of the screen — it works, but it is ugly.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Dropdown019\n  action=\"Save\"\n  items={[{ label: \"Save as…\", keys: \"⌘⇧S\" }]}\n/>"
+            },
+            "controls": {
+              "action": {
+                "label": "Action",
+                "default": "Save"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "action": "Save",
+                "items": [
+                  {
+                    "label": "Save as…",
+                    "keys": "⌘⇧S",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Save a copy",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Save and close",
+                    "keys": "⌘⏎",
+                    "href": "#"
+                  }
+                ],
+                "open": true
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "action",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "props": {
+            "open": true
+          },
+          "width": "full"
+        }
+      }
+    },
+    {
+      "name": "dropdown-020",
+      "type": "registry:component",
+      "title": "Меню, которое становится листом",
+      "description": "Одно меню в двух раскладках: на широком экране список у кнопки, на узком тот же список приезжает снизу на всю ширину, с крупными зонами нажатия и заголовком.",
+      "categories": [
+        "dropdown-menu"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "dropdown-020/dropdown-020.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/dropdown-020.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-dropdown-020-*. Серверный: раскладку переключает @media по ширине, а не JS — разметка одна, состояние одно. На широком экране это popover с anchor positioning; на ширине до 30rem у того же popover меняются inset, ширина и радиусы, и он превращается в лист снизу: ручка-полоска, заголовок раздела, пункты высотой 2.875rem с разделительными линиями. Нижний отступ листа учитывает env(safe-area-inset-bottom). Высота листа ограничена 80svb со своей прокруткой. Ручка и заголовок на широком экране скрыты через display:none.",
+      "meta": {
+        "tags": [
+          "menu",
+          "dropdown",
+          "responsive",
+          "action-sheet"
+        ],
+        "ai": {
+          "export": "Dropdown020",
+          "usage": "<Dropdown020\n  trigger=\"Действия\"\n  title=\"Файл\"\n  items={[{ label: \"Переименовать\" }]}\n/>",
+          "summary": "Меню, которое на узком экране превращается в лист снизу: тот же список, крупные зоны нажатия, заголовок. Один файл, ноль зависимостей, без JS.",
+          "preserve": [
+            "локальную палитру --vibeui-dropdown-020-*: компонент обязан выглядеть одинаково в любом проекте",
+            "переключение раскладки через @media, а не через JS: разметка и состояние обязаны остаться одними",
+            "увеличенные пункты на узком экране — палец крупнее курсора, 2.875rem это нижняя граница",
+            "env(safe-area-inset-bottom) в нижнем отступе листа: без него пункты уедут под системную полосу",
+            "ограничение высоты листа 80svb со своей прокруткой — длинный список обязан прокручиваться, а не выходить за экран",
+            "ручку-полоску и заголовок на узком экране: без них лист не читается как лист",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "подпись кнопки через trigger и заголовок листа через title",
+            "список через items: label, hint, href и danger у каждого пункта",
+            "порог переключения раскладки — значение 30rem в @media",
+            "цвет фокуса и рамки через accent",
+            "подложку компонента через background; пусто означает фон страницы",
+            "режим витрины через open: меню встаёт в поток под кнопкой"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Порог считается по ширине окна, а не контейнера: внутри узкой колонки на широком экране останется обычное меню.",
+            "При open меню перестаёт быть popover: Escape и клик мимо не работают, это режим витрины и скриншотов.",
+            "Лист не перетаскивается пальцем: жест потребовал бы JS, а компонент обязан оставаться серверным.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "trigger",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Действия",
+            "maxLength": 24
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок листа",
+            "type": "text",
+            "default": "Файл",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Menu That Becomes a Sheet",
+            "description": "One menu in two layouts: a list by the button on a wide screen, and on a narrow one the same list slides up from the bottom full width, with large tap targets and a heading.",
+            "docs": "One file, zero dependencies, the --vibeui-dropdown-020-* palette. A server component: @media switches the layout by width rather than JS — one markup, one state. On a wide screen it is a popover with anchor positioning; below 30rem the same popover changes its inset, width and radii and turns into a bottom sheet: a grip bar, a section heading, items 2.875rem tall with divider lines. The sheet's bottom padding accounts for env(safe-area-inset-bottom). Its height is capped at 80svb with its own scrolling. The grip and heading are hidden with display:none on a wide screen.",
+            "ai": {
+              "summary": "A menu that turns into a bottom sheet on a narrow screen: the same list, large tap targets, a heading. One file, zero dependencies, no JS.",
+              "preserve": [
+                "the local --vibeui-dropdown-020-* palette: the component must look the same in any project",
+                "switching layouts through @media rather than JS: the markup and the state have to stay single",
+                "the enlarged items on a narrow screen — a finger is bigger than a cursor, 2.875rem is the floor",
+                "env(safe-area-inset-bottom) in the sheet's bottom padding: without it the items slide under the system bar",
+                "the 80svb height cap with its own scrolling — a long list has to scroll rather than run off the screen",
+                "the grip bar and the heading on a narrow screen: without them the sheet does not read as a sheet",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "the button label through trigger and the sheet heading through title",
+                "the list through items: label, hint, href and danger on each entry",
+                "the layout threshold — the 30rem value in the @media rule",
+                "the focus and border colour through accent",
+                "the component surface through background; empty means the page background",
+                "the showcase mode through open: the menu moves into the flow under the button"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The threshold reads the window width, not the container: inside a narrow column on a wide screen the plain menu stays.",
+                "With open the menu stops being a popover: Escape and outside clicks do not work, this is the showcase and screenshot mode.",
+                "The sheet cannot be dragged with a finger: the gesture would need JS, and the component has to stay a server component.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Dropdown020\n  trigger=\"Actions\"\n  title=\"File\"\n  items={[{ label: \"Rename\" }]}\n/>"
+            },
+            "controls": {
+              "trigger": {
+                "label": "Button",
+                "default": "Actions"
+              },
+              "title": {
+                "label": "Sheet heading",
+                "default": "File"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "trigger": "Actions",
+                "title": "File",
+                "items": [
+                  {
+                    "label": "Share access",
+                    "hint": "A link for anyone holding the code",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Rename",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Duplicate",
+                    "hint": "The copy lands in the same folder",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Move to archive",
+                    "href": "#"
+                  },
+                  {
+                    "label": "Delete",
+                    "hint": "Stays in the bin for 30 days",
+                    "href": "#",
+                    "danger": true
+                  }
+                ],
+                "open": true
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "trigger",
+          "title",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "props": {
+            "open": true
+          },
+          "width": "full"
+        }
+      }
+    },
+    {
+      "name": "dropdown-021",
+      "type": "registry:component",
+      "title": "Меню присутствия",
+      "description": "Меню статуса: точка на аватаре повторяет выбранный статус, поэтому состояние видно и с закрытым меню, а сам список — радиогруппа с пояснением у каждого варианта.",
+      "categories": [
+        "dropdown-menu"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "dropdown-021/dropdown-021.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/dropdown-021.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, палитра --vibeui-dropdown-021-*. Серверный: открытие держит HTML popover, положение — CSS anchor positioning под @supports. Оттенок точки задаётся переменной --vibeui-dropdown-021-hue из hue выбранного статуса, поэтому одна точка обслуживает все варианты. Список — радиогруппа в собственной <form>: радиокнопки объединяются по владельцу формы и имени, и без формы два таких меню на странице слились бы в одну группу. Имя группы собирается из prop id, чтобы не тянуть useId и остаться серверным компонентом. Сами input скрыты, но остаются в потоке фокуса: обводку рисует подпись через :has(input:focus-visible), а галочку — :has(input:checked).",
+      "meta": {
+        "tags": [
+          "menu",
+          "dropdown",
+          "status",
+          "presence"
+        ],
+        "ai": {
+          "export": "Dropdown021",
+          "usage": "<Dropdown021\n  name=\"Женя Осипов\"\n  status=\"busy\"\n  until=\"«Не беспокоить» снимется в 18:00\"\n/>",
+          "summary": "Меню присутствия: точка на аватаре повторяет выбранный статус, список статусов — радиогруппа с пояснениями. Один файл, ноль зависимостей, без JS.",
+          "preserve": [
+            "локальную палитру --vibeui-dropdown-021-*: компонент обязан выглядеть одинаково в любом проекте",
+            "точку на аватаре: она единственная показывает статус, пока меню закрыто",
+            "радиогруппу внутри собственной <form> — без неё два таких меню на странице сольются в одну группу",
+            "имя группы, собранное из id: оно обязано быть своим у каждого экземпляра",
+            "скрытые, но фокусируемые input: обводку и галочку рисует подпись через :has(), а не сам элемент",
+            "цветную точку у каждого варианта: подпись без неё теряет половину смысла",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "имя через name — из него же берутся инициалы",
+            "список статусов через statuses: value, label, hint и hue у каждого",
+            "выбранный статус через status и заголовок списка через title",
+            "нижнюю строку через until; пустая строка убирает её вместе с разделителем",
+            "цвет фокуса и подложки аватара через accent",
+            "подложку компонента через background; пусто означает фон страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Компонент не хранит статус вне себя: для внешнего управления снимите defaultChecked и передавайте checked с onChange.",
+            "Оттенки заданы в градусах OKLCH: 145 — зелёный, 85 — жёлтый, 25 — красный, 250 — синий.",
+            "При open меню перестаёт быть popover: Escape и клик мимо не работают, это режим витрины и скриншотов.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "name",
+            "label": "Имя",
+            "type": "text",
+            "default": "Женя Осипов",
+            "maxLength": 28
+          },
+          {
+            "prop": "status",
+            "label": "Статус",
+            "type": "select",
+            "default": "busy",
+            "options": [
+              "online",
+              "busy",
+              "dnd",
+              "away"
+            ]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Presence Menu",
+            "description": "A status menu: the dot on the avatar mirrors the chosen status, so the state stays visible with the menu closed, and the list itself is a radio group with a note under every option.",
+            "docs": "One file, zero dependencies, the --vibeui-dropdown-021-* palette. A server component: the HTML popover holds the open state and CSS anchor positioning inside @supports places it. The dot's hue comes from the --vibeui-dropdown-021-hue variable set from the chosen status, so one dot serves every option. The list is a radio group inside its own <form>: radio buttons group by form owner and name, and without the form two such menus on a page would merge into one group. The group name is built from the id prop to avoid useId and stay a server component. The inputs themselves are hidden but stay in the focus order: the label draws the outline through :has(input:focus-visible) and the tick through :has(input:checked).",
+            "ai": {
+              "summary": "A presence menu: the dot on the avatar mirrors the chosen status, the status list is a radio group with notes. One file, zero dependencies, no JS.",
+              "preserve": [
+                "the local --vibeui-dropdown-021-* palette: the component must look the same in any project",
+                "the dot on the avatar: it is the only thing showing the status while the menu is closed",
+                "the radio group inside its own <form> — without it two such menus on a page merge into one group",
+                "the group name built from the id: it has to be unique per instance",
+                "the hidden but focusable inputs: the label draws the outline and the tick through :has(), not the control itself",
+                "the coloured dot on every option: the label alone loses half of the meaning",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "the name through name — the initials come from it too",
+                "the status list through statuses: value, label, hint and hue on each",
+                "the chosen status through status and the list heading through title",
+                "the bottom line through until; an empty string removes it along with the divider",
+                "the focus and avatar background colour through accent",
+                "the component surface through background; empty means the page background"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The component keeps the status to itself: for external control drop defaultChecked and pass checked with onChange.",
+                "The hues are OKLCH degrees: 145 is green, 85 is amber, 25 is red, 250 is blue.",
+                "With open the menu stops being a popover: Escape and outside clicks do not work, this is the showcase and screenshot mode.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Dropdown021\n  name=\"Zhenya Osipov\"\n  status=\"busy\"\n  until=\"Do not disturb lifts at 18:00\"\n/>"
+            },
+            "controls": {
+              "name": {
+                "label": "Name",
+                "default": "Zhenya Osipov"
+              },
+              "status": {
+                "label": "Status"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "name": "Zhenya Osipov",
+                "title": "Status",
+                "status": "busy",
+                "until": "Do not disturb lifts at 18:00",
+                "statuses": [
+                  {
+                    "value": "online",
+                    "label": "Available",
+                    "hint": "I answer right away",
+                    "hue": 145
+                  },
+                  {
+                    "value": "busy",
+                    "label": "Busy",
+                    "hint": "Write, I will get back",
+                    "hue": 85
+                  },
+                  {
+                    "value": "dnd",
+                    "label": "Do not disturb",
+                    "hint": "Notifications are off",
+                    "hue": 25
+                  },
+                  {
+                    "value": "away",
+                    "label": "Away",
+                    "hint": "Back in half an hour",
+                    "hue": 250
+                  }
+                ],
+                "open": true
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "name",
+          "status",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "props": {
+            "open": true
+          },
+          "width": "full"
+        }
+      }
     }
   ]
 }

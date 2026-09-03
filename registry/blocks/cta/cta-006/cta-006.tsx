@@ -85,7 +85,8 @@ display:grid;gap:0.875rem;margin:0;padding:1.25rem 0 0;border-top:1px solid var(
 [data-vibeui-block="cta-006"] [data-part="terms"] dd{margin:0.1875rem 0 0;color:var(--vibeui-cta-006-muted);font-size:0.875rem;line-height:1.5}
 [data-vibeui-block="cta-006"] [data-part="actions"]{display:flex;flex-wrap:wrap;align-items:center;gap:0.875rem}
 [data-vibeui-block="cta-006"] [data-part="action"]{
-display:inline-flex;align-items:center;height:3rem;padding:0 1.5rem;border-radius:0.875rem;
+display:inline-flex;align-items:center;justify-content:center;
+min-height:3rem;padding:0.25rem 1.5rem;border-radius:0.875rem;
 background:var(--vibeui-cta-006-accent);color:var(--vibeui-cta-006-accent-fg);
 text-decoration:none;font-size:1rem;font-weight:650;
 transition:background-color .18s ease;

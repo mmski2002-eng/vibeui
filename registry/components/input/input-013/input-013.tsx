@@ -80,8 +80,8 @@ text-transform:uppercase;
 [data-vibeui-block="input-013"] input:focus{outline:none}
 [data-vibeui-block="input-013"] input::placeholder{font-weight:400;letter-spacing:0.02em}
 [data-vibeui-block="input-013"] [data-part="apply"]{
-appearance:none;flex:none;cursor:pointer;
-height:2.5rem;padding:0 0.875rem;border:0;border-radius:0.75rem;
+appearance:none;flex:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;
+min-height:2.5rem;padding:0.25rem 0.875rem;border:0;border-radius:0.75rem;
 background:var(--vibeui-input-013-accent);color:var(--vibeui-input-013-on-accent);
 font:inherit;font-size:0.8125rem;font-weight:650;
 transition:opacity .16s ease,filter .16s ease;

@@ -71,7 +71,8 @@ font-family:var(--vibeui-empty-012-mono);font-size:0.75rem;font-weight:600;color
 }
 [data-vibeui-block="empty-012"] [data-part="action"]{
 appearance:none;border:0;cursor:pointer;margin-top:0.5rem;
-height:2.5rem;padding:0 1.125rem;border-radius:0.75rem;
+display:inline-flex;align-items:center;justify-content:center;
+min-height:2.5rem;padding:0.375rem 1.125rem;border-radius:0.75rem;
 background:var(--vibeui-empty-012-fg);color:var(--vibeui-empty-012-action-fg);
 font:inherit;font-size:0.875rem;font-weight:650;
 }

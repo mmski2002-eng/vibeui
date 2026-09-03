@@ -66,7 +66,9 @@ margin:0;font-size:0.9375rem;font-weight:700;font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="avatar-019"] dt{font-size:0.625rem;color:var(--vibeui-avatar-019-muted)}
 [data-vibeui-block="avatar-019"] [data-part="action"]{
-width:100%;appearance:none;cursor:pointer;height:2.125rem;
+width:100%;appearance:none;cursor:pointer;
+display:inline-flex;align-items:center;justify-content:center;
+min-height:2.125rem;padding:0.3125rem 0.875rem;
 border:0;border-radius:0.625rem;
 background:var(--vibeui-avatar-019-accent);color:oklch(1 0 0);
 font:inherit;font-size:0.8125rem;font-weight:650;

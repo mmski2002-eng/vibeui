@@ -91,7 +91,8 @@ margin:0.75rem 0 1rem;font-size:1.375rem;font-weight:700;line-height:1.2;letter-
 [data-vibeui-block="auth-005"] ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0.625rem}
 [data-vibeui-block="auth-005"] li{display:flex;gap:0.5rem;font-size:0.8125rem;line-height:1.45}
 [data-vibeui-block="auth-005"] [data-part="mark"]{
-flex:none;display:inline-flex;align-items:center;justify-content:center;
+flex:none;
+display:inline-flex;align-items:center;justify-content:center;
 width:1.125rem;height:1.125rem;margin-top:0.0625rem;border-radius:9999px;
 background:oklch(1 0 0 / 16%);font-size:0.625rem;line-height:1;
 }
@@ -115,7 +116,9 @@ background:var(--vibeui-auth-005-bg);color:inherit;font:inherit;font-size:0.875r
 }
 [data-vibeui-block="auth-005"] input:focus-visible{outline:2px solid var(--vibeui-auth-005-accent);outline-offset:1px;border-color:var(--vibeui-auth-005-accent)}
 [data-vibeui-block="auth-005"] [data-part="submit"]{
-width:100%;margin-top:0.25rem;appearance:none;cursor:pointer;height:2.625rem;
+width:100%;margin-top:0.25rem;appearance:none;cursor:pointer;
+display:inline-flex;align-items:center;justify-content:center;
+min-height:2.625rem;padding:0.375rem 1rem;
 border:0;border-radius:0.625rem;
 background:var(--vibeui-auth-005-accent);color:var(--vibeui-auth-005-on-accent);
 font:inherit;font-size:0.875rem;font-weight:650;

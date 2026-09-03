@@ -56,7 +56,8 @@ margin:0;max-width:30ch;font-size:0.8125rem;line-height:1.5;color:var(--vibeui-e
 }
 [data-vibeui-block="empty-014"] [data-part="action"]{
 appearance:none;border:0;cursor:pointer;width:100%;margin-top:0.375rem;
-height:2.625rem;padding:0 1.125rem;border-radius:0.75rem;
+display:inline-flex;align-items:center;justify-content:center;
+min-height:2.625rem;padding:0.375rem 1.125rem;border-radius:0.75rem;
 background:var(--vibeui-empty-014-accent);color:var(--vibeui-empty-014-on-accent);
 font:inherit;font-size:0.9375rem;font-weight:650;
 }

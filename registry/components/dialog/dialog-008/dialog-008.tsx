@@ -83,7 +83,7 @@ box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-dialog-008-accent,light-dar
 }
 [data-vibeui-dialog-008-window] [data-part="copy"]{
 appearance:none;cursor:pointer;font:inherit;font-size:0.8125rem;font-weight:600;flex:none;
-display:inline-flex;align-items:center;height:2.375rem;padding:0 0.875rem;
+display:inline-flex;align-items:center;min-height:2.375rem;padding:0.3125rem 0.875rem;
 border:0;border-radius:0.5rem;
 background:var(--vibeui-dialog-008-accent,light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262)));color:light-dark(oklch(1 0 0),oklch(0.17 0.02 265));
 }

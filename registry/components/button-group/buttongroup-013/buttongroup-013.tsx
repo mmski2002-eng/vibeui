@@ -24,6 +24,9 @@ export type Buttongroup013Props = Omit<
 // (grid с 1fr), иначе «Диаграмма» растянула бы свою колонку вдвое против
 // «Лист». Границы схлопнуты, скругления только у крайних, фокусный сегмент
 // поднимается z-index — иначе обводку срезает соседняя рамка.
+// Радиогруппа лежит в собственной <form>: одинаковое имя в двух блоках на
+// одной странице иначе объединило бы их в одну группу, и первый блок
+// остался бы без отмеченного варианта.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-013"]){
 --vibeui-buttongroup-013-surface:transparent;
@@ -166,7 +169,7 @@ export function Buttongroup013({
         style={palette}
       >
         <legend>{label}</legend>
-        <div data-part="track">
+        <form data-part="track">
           {options.map((option) => (
             <label key={option.id} data-part="segment">
               <input
@@ -181,7 +184,7 @@ export function Buttongroup013({
               <span>{option.label}</span>
             </label>
           ))}
-        </div>
+        </form>
       </fieldset>
     </>
   )

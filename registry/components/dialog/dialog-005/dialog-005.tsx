@@ -79,7 +79,7 @@ font-size:0.8125rem;
 }
 [data-vibeui-dialog-005-window] [data-part="actions"]{display:flex;flex-direction:column;gap:0.5rem;margin-top:1.25rem}
 [data-vibeui-dialog-005-window] [data-part="primary"]{
-display:inline-flex;align-items:center;justify-content:center;height:2.375rem;
+display:inline-flex;align-items:center;justify-content:center;min-height:2.375rem;padding:0.3125rem 0.875rem;
 border-radius:0.5rem;text-decoration:none;
 background:var(--vibeui-dialog-005-tone,light-dark(oklch(0.58 0.15 152),oklch(0.72 0.14 152)));color:light-dark(oklch(1 0 0),oklch(0.17 0.02 265));
 font-size:0.875rem;font-weight:600;

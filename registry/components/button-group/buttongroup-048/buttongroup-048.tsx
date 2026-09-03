@@ -21,6 +21,9 @@ export type Buttongroup048Props = Omit<
 // потому что три разные фигуры честнее рисовать по-разному, чем сводить к
 // одному набору путей. Образцы серые в покое и окрашиваются в акцент у
 // выбранного, поэтому активный сегмент читается формой и цветом сразу.
+// Радиогруппа лежит в собственной <form>: одинаковое имя в двух блоках на
+// одной странице иначе объединило бы их в одну группу, и первый блок
+// остался бы без отмеченного варианта.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-048"]){
 --vibeui-buttongroup-048-surface:transparent;
@@ -172,7 +175,7 @@ export function Buttongroup048({
         style={palette}
       >
         <legend>{label}</legend>
-        <div data-part="track">
+        <form data-part="track">
           <label data-part="segment">
             <input
               type="radio"
@@ -209,7 +212,7 @@ export function Buttongroup048({
             <span data-part="pie" aria-hidden="true" />
             <span>{pieLabel}</span>
           </label>
-        </div>
+        </form>
       </fieldset>
     </>
   )

@@ -24,6 +24,9 @@ export type Buttongroup015Props = Omit<
 // фиксированная минимальная ширина, поэтому обновление 9 → 128 не съезжает
 // раскладку. Число сопровождается спрятанным словом («записей»), иначе
 // вслух сегмент звучит как «Новые 12» без объяснения, что это за 12.
+// Радиогруппа лежит в собственной <form>: одинаковое имя в двух блоках на
+// одной странице иначе объединило бы их в одну группу, и первый блок
+// остался бы без отмеченного варианта.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-015"]){
 --vibeui-buttongroup-015-surface:transparent;
@@ -174,7 +177,7 @@ export function Buttongroup015({
         style={palette}
       >
         <legend>{label}</legend>
-        <div data-part="track">
+        <form data-part="track">
           {options.map((option) => (
             <label key={option.label} data-part="segment">
               <input
@@ -190,7 +193,7 @@ export function Buttongroup015({
               </span>
             </label>
           ))}
-        </div>
+        </form>
       </fieldset>
     </>
   )

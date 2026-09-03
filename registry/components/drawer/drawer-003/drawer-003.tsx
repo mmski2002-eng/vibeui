@@ -124,7 +124,9 @@ padding:0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom,0px));
 border-top:1px solid var(--vibeui-drawer-003-border);
 }
 [data-vibeui-block="drawer-003"] [data-part="apply"]{
-appearance:none;border:0;cursor:pointer;width:100%;height:2.75rem;border-radius:0.75rem;
+appearance:none;border:0;cursor:pointer;width:100%;
+display:inline-flex;align-items:center;justify-content:center;
+min-height:2.75rem;padding:0.25rem 0.875rem;border-radius:0.75rem;
 background:var(--vibeui-drawer-003-accent);color:var(--vibeui-drawer-003-on-accent);
 font:inherit;font-size:0.9375rem;font-weight:650;
 }

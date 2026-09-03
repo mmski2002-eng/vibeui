@@ -87,7 +87,8 @@ font-variant-numeric:tabular-nums;
 /* Кнопка называет результат: «Применить» не говорит, во что это обойдётся. */
 [data-vibeui-block="filters-009"] [data-part="apply"]{
 appearance:none;cursor:pointer;width:100%;
-height:2.375rem;border:0;border-radius:0.625rem;
+display:inline-flex;align-items:center;justify-content:center;
+min-height:2.375rem;padding:0.25rem 0.75rem;border:0;border-radius:0.625rem;
 background:var(--vibeui-filters-009-accent);color:var(--vibeui-filters-009-on-accent);
 font:inherit;font-size:0.8125rem;font-weight:700;
 font-variant-numeric:tabular-nums;

@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Datagrid017Row = {
@@ -39,6 +39,8 @@ export type Datagrid017Props = Omit<ComponentProps<"section">, "children"> & {
   confirmText?: string
   /** Пусто — подложки нет, сетка лежит прямо на фоне страницы. */
   background?: string
+  /** Открыть панель сразу и без модального режима: она остаётся внутри блока. */
+  defaultOpen?: boolean
   accent?: string
 }
 
@@ -137,6 +139,13 @@ border-color:transparent;background:var(--vibeui-datagrid-017-accent);color:var(
 }
 [data-vibeui-block="datagrid-017"] [data-part="cancel"]:focus-visible,
 [data-vibeui-block="datagrid-017"] [data-part="confirm"]:focus-visible{outline:2px solid var(--vibeui-datagrid-017-accent);outline-offset:2px}
+/* Немодальный показ: панель остаётся внутри блока, а не уходит в верхний
+   слой поверх страницы. Так её показывают на витрине и в документации. */
+[data-vibeui-block="datagrid-017"]:has(dialog:not(:modal)[open]){
+display:block;position:relative;width:100%;min-height:22rem;
+}
+[data-vibeui-block="datagrid-017"] dialog:not(:modal){position:absolute;max-width:100%;max-height:100%;z-index:1}
+[data-vibeui-block="datagrid-017"]:has(dialog:not(:modal)[open]) [data-part="go"]{display:none}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="datagrid-017"] *{animation:none!important;transition:none!important}}
 `
 
@@ -234,6 +243,7 @@ export function Datagrid017({
   cancelText = "Отмена",
   confirmText = "Выгрузить",
   background = "",
+  defaultOpen = false,
   accent,
   className,
   style,
@@ -243,6 +253,26 @@ export function Datagrid017({
   const [format, setFormat] = useState("csv")
   const [done, setDone] = useState("")
   const dialogRef = useRef<HTMLDialogElement>(null)
+
+  useEffect(() => {
+    if (!defaultOpen) {
+      return
+    }
+
+    const active = document.activeElement
+
+    // show() вместо showModal(): немодальная панель живёт внутри своего блока
+    // и не уводит страницу в верхний слой. Витрине нужна именно такая.
+    dialogRef.current?.show()
+
+    // show() уводит фокус внутрь панели. Для немодального показа это лишнее:
+    // страница не должна прыгать к панели просто потому, что та открыта.
+    if (active instanceof HTMLElement && active !== document.body) {
+      active.focus()
+    } else if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur()
+    }
+  }, [defaultOpen])
 
   const selected = rows.filter((row) => picked.includes(row.id))
   const size = FORMATS.find((item) => item.value === format)?.bytes ?? 0
