@@ -1,6 +1,6 @@
 "use client"
 
-import { useId, useRef } from "react"
+import { useEffect, useId, useRef } from "react"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Sheet006Props = Omit<
@@ -16,6 +16,8 @@ export type Sheet006Props = Omit<
   /** Что озвучить вместо знака опасности: сам знак — фигура, её не прочитать. */
   warningLabel?: string
   /** Опасный цвет: знак, кнопка подтверждения и маркеры списка. */
+  /** Открыть лист сразу и без модального режима: он остаётся внутри блока. */
+  defaultOpen?: boolean
   danger?: string
   /** Подложка листа и кнопки открытия. Пусто — штатная палитра. */
   background?: string
@@ -124,6 +126,13 @@ border-color:transparent;background:var(--vibeui-sheet-006-danger);color:var(--v
 [data-vibeui-block="sheet-006"] [data-part="text"]{font-size:0.9375rem}
 [data-vibeui-block="sheet-006"] [data-part="list"]{font-size:0.9375rem;padding:0.75rem 1rem}
 }
+/* Немодальный показ: лист остаётся внутри блока, а не уходит в верхний
+   слой поверх страницы. Так его показывают на витрине и в документации. */
+[data-vibeui-block="sheet-006"]:has(dialog:not(:modal)[open]){
+display:block;position:relative;width:100%;min-height:22rem;
+}
+[data-vibeui-block="sheet-006"] dialog:not(:modal){position:absolute;max-height:100%;z-index:1}
+[data-vibeui-block="sheet-006"]:has(dialog:not(:modal)[open]) [data-part="trigger"]{display:none}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="sheet-006"] *{animation:none!important;transition:none!important}
 [data-vibeui-block="sheet-006"] dialog{translate:0 0}
@@ -170,6 +179,7 @@ export function Sheet006({
   confirmLabel = "Удалить навсегда",
   cancelLabel = "Не удалять",
   warningLabel = "Внимание",
+  defaultOpen = false,
   danger,
   background = "",
   className,
@@ -177,6 +187,26 @@ export function Sheet006({
   ...props
 }: Sheet006Props) {
   const sheet = useRef<HTMLDialogElement>(null)
+
+  // show() вместо showModal(): немодальный лист живёт внутри своего блока и
+  // не уводит страницу в верхний слой. Витрине нужен именно такой.
+  useEffect(() => {
+    if (!defaultOpen) {
+      return
+    }
+
+    const active = document.activeElement
+
+    sheet.current?.show()
+
+    // show() уводит фокус внутрь листа. Для немодального показа это лишнее:
+    // страница не должна прыгать к панели просто потому, что та открыта.
+    if (active instanceof HTMLElement && active !== document.body) {
+      active.focus()
+    } else if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur()
+    }
+  }, [defaultOpen])
   const heading = useId()
 
   const palette = {

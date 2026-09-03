@@ -6,7 +6,9 @@
       "type": "registry:component",
       "title": "Нижний лист",
       "description": "Лист снизу на нативном dialog: за верхним краем видно страницу — это и отличает лист от полноэкранного окна.",
-      "categories": ["sheet"],
+      "categories": [
+        "sheet"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sheet-001-*. Клиентский: \"use client\" — нужен ref для showModal и close. Высота ограничена min(28rem, 85dvh), нижний отступ учитывает env(safe-area-inset-bottom). Выезд снизу сделан переходом translate с @starting-style. Сводка выложена словарём dl. Тема берётся из color-scheme окружения через light-dark(): лист темнеет вместе со страницей и не носит собственной тёмной темы. Подложку листа и кнопки открытия переопределяет проп background; при заданном фоне на корне выставляется color-scheme, посчитанный по его светлоте.",
       "meta": {
-        "tags": ["sheet", "mobile", "dialog", "checkout"],
+        "tags": [
+          "sheet",
+          "mobile",
+          "dialog",
+          "checkout"
+        ],
         "ai": {
           "export": "Sheet001",
           "usage": "<Sheet001 triggerLabel=\"Показать заказ\" rows={rows} primaryLabel=\"Оформить\" />",
@@ -38,14 +45,16 @@
             "primaryLabel и closeLabel — главное действие и отказ",
             "максимальную высоту листа",
             "акцент через проп accent",
-            "background — подложка листа и кнопки открытия; пусто оставляет штатную палитру"
+            "background — подложка листа и кнопки открытия; пусто оставляет штатную палитру",
+            "открытие без модального режима через defaultOpen"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Жест перетаскивания не реализован: ручка обещает его, добавьте обработчик, если нужно закрытие свайпом.",
             "На десктопе лист снизу неуместен: там уместнее диалог или боковая панель.",
             "Сводка — не место для длинных списков: прокрутка внутри листа неудобна.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "defaultOpen открывает лист методом show(): он остаётся внутри блока и не блокирует страницу. Обычный сценарий — showModal() по нажатию, и тогда работают backdrop, Escape и ловушка фокуса."
           ]
         },
         "controls": [
@@ -103,14 +112,16 @@
                 "primaryLabel and closeLabel — the main action and the refusal",
                 "the sheet's max height",
                 "the accent through the accent prop",
-                "background — the surface of the sheet and the opener; empty keeps the built-in palette"
+                "background — the surface of the sheet and the opener; empty keeps the built-in palette",
+                "opening without the modal mode through defaultOpen"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Drag-to-dismiss is not implemented: the grabber promises it, add a handler if you need it.",
                 "A bottom sheet is wrong on desktop: use a dialog or a side panel there.",
                 "The summary is not for long lists: scrolling inside a sheet is awkward.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "defaultOpen opens the sheet with show(): it stays inside the block and does not block the page. The usual path is showModal() on click, which brings the backdrop, Escape and the focus trap."
               ],
               "usage": "<Sheet001 triggerLabel=\"Show order\" rows={rows} primaryLabel=\"Checkout\" />"
             },
@@ -158,13 +169,26 @@
                   }
                 ],
                 "primaryLabel": "Checkout",
-                "closeLabel": "Close"
+                "closeLabel": "Close",
+                "defaultOpen": true
               }
             },
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-sheet-001-*. A client component: \"use client\" — a ref is needed for showModal and close. The height is capped at min(28rem, 85dvh), and the bottom padding accounts for env(safe-area-inset-bottom). The slide up from the bottom is a translate transition with @starting-style. The summary is laid out as a dl. The theme comes from the surrounding color-scheme through light-dark(): the sheet darkens along with the page and does not ship a dark theme of its own. The background prop overrides the surface of the sheet and the opener; with a background set, the root gets a color-scheme computed from its lightness."
           }
         },
-        "cardControls": ["background"]
+        "cardControls": [
+          "triggerLabel",
+          "title",
+          "primaryLabel",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "props": {
+            "defaultOpen": true
+          },
+          "width": "full"
+        }
       }
     },
     {
@@ -172,7 +196,9 @@
       "type": "registry:component",
       "title": "Лист настроек",
       "description": "Лист настроек справа, висящий карточкой с отступом от края: тумблеры применяются сразу, кнопки «Сохранить» здесь нет — у настроек-переключателей подтверждение только мешает.",
-      "categories": ["sheet"],
+      "categories": [
+        "sheet"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -184,7 +210,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sheet-002-*. Клиентский: \"use client\" — ref для showModal и close. Лист отстоит от края окна на 0.625rem, поэтому inset задан явно и margin:0 не даёт dialog прилипнуть к углу. Тумблер собран на input[type=checkbox] с appearance:none и role=\"switch\": состояние читается скринридером само. Прокручивается только средняя область. Тема берётся из color-scheme окружения через light-dark(): лист темнеет вместе со страницей и не носит собственной тёмной темы. Подложку листа и кнопки открытия переопределяет проп background; при заданном фоне на корне выставляется color-scheme, посчитанный по его светлоте.",
       "meta": {
-        "tags": ["sheet", "settings", "switch", "dialog"],
+        "tags": [
+          "sheet",
+          "settings",
+          "switch",
+          "dialog"
+        ],
         "ai": {
           "export": "Sheet002",
           "usage": "<Sheet002 triggerLabel=\"Настройки\" title=\"Настройки\" groups={groups} />",
@@ -206,14 +237,16 @@
             "ширину листа: 23rem хватает на подпись с пояснением в две строки",
             "сторону выезда и величину отступа от края",
             "акцент через проп accent — заливка включённого тумблера и обводка фокуса",
-            "background — подложка листа и кнопки открытия; пусто оставляет штатную палитру"
+            "background — подложка листа и кнопки открытия; пусто оставляет штатную палитру",
+            "открытие без модального режима через defaultOpen"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Состояние тумблеров не поднимается наружу: навесьте onChange, если настройки должны сохраняться.",
             "Настройку с последствиями (удаление, оплата) тумблером не делают: для неё нужен диалог с подтверждением.",
             "Больше двух групп в листе не читается — остальное выносите на страницу настроек.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "defaultOpen открывает лист методом show(): он остаётся внутри блока и не блокирует страницу. Обычный сценарий — showModal() по нажатию, и тогда работают backdrop, Escape и ловушка фокуса."
           ]
         },
         "controls": [
@@ -266,14 +299,16 @@
                 "the sheet width: 23rem fits a label with a two-line explanation",
                 "the side it slides from and the size of the inset",
                 "the accent through the accent prop — it fills a switched-on toggle and draws the focus ring",
-                "background — the surface of the sheet and the opener; empty keeps the built-in palette"
+                "background — the surface of the sheet and the opener; empty keeps the built-in palette",
+                "opening without the modal mode through defaultOpen"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Switch state is not lifted out: attach onChange when the settings have to persist.",
                 "A setting with consequences (deleting, paying) is not a switch: that needs a confirmation dialog.",
                 "More than two groups stops being readable — move the rest to a settings page.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "defaultOpen opens the sheet with show(): it stays inside the block and does not block the page. The usual path is showModal() on click, which brings the backdrop, Escape and the focus trap."
               ],
               "usage": "<Sheet002 triggerLabel=\"Settings\" title=\"Settings\" groups={groups} />"
             },
@@ -333,13 +368,25 @@
                       }
                     ]
                   }
-                ]
+                ],
+                "defaultOpen": true
               }
             },
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-sheet-002-*. A client component: \"use client\" — a ref for showModal and close. The sheet stands 0.625rem away from the window edge, which is why inset is set explicitly and margin:0 keeps the dialog from sticking to the corner. The switch is built on an input[type=checkbox] with appearance:none and role=\"switch\": the state is read out by a screen reader on its own. Only the middle area scrolls. The theme comes from the surrounding color-scheme through light-dark(): the sheet darkens along with the page and does not ship a dark theme of its own. The background prop overrides the surface of the sheet and the opener; with a background set, the root gets a color-scheme computed from its lightness."
           }
         },
-        "cardControls": ["background"]
+        "cardControls": [
+          "triggerLabel",
+          "title",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "props": {
+            "defaultOpen": true
+          },
+          "width": "full"
+        }
       }
     },
     {
@@ -347,7 +394,9 @@
       "type": "registry:component",
       "title": "Лист с вкладками",
       "description": "Лист с разделами внутри: переключатель собран на группе радиокнопок, поэтому стрелки, Home и End работают от браузера, а не от самописной логики вкладок.",
-      "categories": ["sheet"],
+      "categories": [
+        "sheet"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -359,7 +408,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sheet-003-*. Клиентский: \"use client\", useState держит активный раздел, useId — имя группы радиокнопок, useRef — showModal и close. Сегментированный переключатель — fieldset с радиокнопками, спрятанными clip-path; активная вкладка подсвечивается через :has(input:checked). Высота листа зафиксирована, поэтому смена раздела не дёргает страницу. Тема берётся из color-scheme окружения через light-dark(): лист темнеет вместе со страницей и не носит собственной тёмной темы. Подложку листа и кнопки открытия переопределяет проп background; при заданном фоне на корне выставляется color-scheme, посчитанный по его светлоте.",
       "meta": {
-        "tags": ["sheet", "tabs", "radiogroup", "dialog"],
+        "tags": [
+          "sheet",
+          "tabs",
+          "radiogroup",
+          "dialog"
+        ],
         "ai": {
           "export": "Sheet003",
           "usage": "<Sheet003 triggerLabel=\"Показатели проекта\" tabs={tabs} />",
@@ -381,14 +435,16 @@
             "число разделов: сегменты делят ширину поровну",
             "высоту листа и содержимое раздела — вместо таблицы может быть что угодно",
             "акцент через проп accent — заливка нижней кнопки и обводка фокуса",
-            "background — подложка листа и кнопки открытия; пусто оставляет штатную палитру"
+            "background — подложка листа и кнопки открытия; пусто оставляет штатную палитру",
+            "открытие без модального режима через defaultOpen"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Больше четырёх разделов в сегменте не помещаются: делайте прокручиваемую полосу вкладок.",
             "Раздел не запоминается между открытиями: лист всегда открывается на первом.",
             "Это не ARIA-вкладки: если вам нужен именно паттерн tablist, его придётся собрать отдельно.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "defaultOpen открывает лист методом show(): он остаётся внутри блока и не блокирует страницу. Обычный сценарий — showModal() по нажатию, и тогда работают backdrop, Escape и ловушка фокуса."
           ]
         },
         "controls": [
@@ -441,14 +497,16 @@
                 "the number of sections: the segments split the width evenly",
                 "the sheet height and the section content — anything can replace the table",
                 "the accent through the accent prop — it fills the bottom button and draws the focus ring",
-                "background — the surface of the sheet and the opener; empty keeps the built-in palette"
+                "background — the surface of the sheet and the opener; empty keeps the built-in palette",
+                "opening without the modal mode through defaultOpen"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "More than four sections will not fit the segment: use a scrollable tab strip instead.",
                 "The section is not remembered between openings: the sheet always opens on the first one.",
                 "These are not ARIA tabs: if you need the tablist pattern proper, build it separately.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "defaultOpen opens the sheet with show(): it stays inside the block and does not block the page. The usual path is showModal() on click, which brings the backdrop, Escape and the focus trap."
               ],
               "usage": "<Sheet003 triggerLabel=\"Project metrics\" tabs={tabs} />"
             },
@@ -539,13 +597,25 @@
                       }
                     ]
                   }
-                ]
+                ],
+                "defaultOpen": true
               }
             },
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-sheet-003-*. A client component: \"use client\", useState holds the active section, useId the name of the radio group, useRef showModal and close. The segmented switcher is a fieldset with radio buttons hidden by clip-path; the active tab is highlighted through :has(input:checked). The sheet height is fixed, so switching sections does not jolt the page. The theme comes from the surrounding color-scheme through light-dark(): the sheet darkens along with the page and does not ship a dark theme of its own. The background prop overrides the surface of the sheet and the opener; with a background set, the root gets a color-scheme computed from its lightness."
           }
         },
-        "cardControls": ["background"]
+        "cardControls": [
+          "title",
+          "triggerLabel",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "props": {
+            "defaultOpen": true
+          },
+          "width": "full"
+        }
       }
     },
     {
@@ -553,7 +623,9 @@
       "type": "registry:component",
       "title": "Лист файла",
       "description": "Лист предпросмотра файла: сначала крупная область самого документа, и только потом размер, дата и автор — файл узнают глазами, а не по строке свойств.",
-      "categories": ["sheet"],
+      "categories": [
+        "sheet"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -565,7 +637,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sheet-004-*. Клиентский: \"use client\" — ref для showModal и close. Область предпросмотра нарисована двумя градиентами, расширение вычисляется из имени файла, поэтому компонент не тащит ни картинок, ни иконочного шрифта. Факты выложены сеткой auto-fit, имя файла переносится по overflow-wrap:anywhere. Тема берётся из color-scheme окружения через light-dark(): лист темнеет вместе со страницей и не носит собственной тёмной темы. Подложку листа и кнопки открытия переопределяет проп background; при заданном фоне на корне выставляется color-scheme, посчитанный по его светлоте.",
       "meta": {
-        "tags": ["sheet", "file", "preview", "download"],
+        "tags": [
+          "sheet",
+          "file",
+          "preview",
+          "download"
+        ],
         "ai": {
           "export": "Sheet004",
           "usage": "<Sheet004\n  fileName=\"Договор-подряда-2024.pdf\"\n  fileKind=\"Документ PDF · загружен 12 марта\"\n  facts={facts}\n/>",
@@ -587,14 +664,16 @@
             "высоту области предпросмотра и её градиент",
             "действия внизу: сюда же обычно добавляют «Поделиться» и «Удалить»",
             "акцент через проп accent — заливка кнопки скачивания и подсветка области предпросмотра",
-            "background — подложка листа и кнопки открытия; пусто оставляет штатную палитру"
+            "background — подложка листа и кнопки открытия; пусто оставляет штатную палитру",
+            "открытие без модального режима через defaultOpen"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Настоящего предпросмотра здесь нет: подставьте img или canvas вместо градиента, когда файл можно показать.",
             "Скачивание не реализовано — кнопка ждёт обработчика или ссылки с атрибутом download.",
             "Для галереи из нескольких файлов нужен переход между ними: лист показывает ровно один.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "defaultOpen открывает лист методом show(): он остаётся внутри блока и не блокирует страницу. Обычный сценарий — showModal() по нажатию, и тогда работают backdrop, Escape и ловушка фокуса."
           ]
         },
         "controls": [
@@ -647,14 +726,16 @@
                 "the height of the preview area and its gradient",
                 "the bottom actions: Share and Delete usually join them here",
                 "the accent through the accent prop — it fills the download button and tints the preview area",
-                "background — the surface of the sheet and the opener; empty keeps the built-in palette"
+                "background — the surface of the sheet and the opener; empty keeps the built-in palette",
+                "opening without the modal mode through defaultOpen"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "There is no real preview: swap the gradient for an img or canvas when the file can be shown.",
                 "Downloading is not wired — the button awaits a handler or a link with the download attribute.",
                 "A gallery of several files needs navigation between them: this sheet shows exactly one.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "defaultOpen opens the sheet with show(): it stays inside the block and does not block the page. The usual path is showModal() on click, which brings the backdrop, Escape and the focus trap."
               ],
               "usage": "<Sheet004\n  fileName=\"Contract-2024.pdf\"\n  fileKind=\"PDF document · uploaded 12 March\"\n  facts={facts}\n/>"
             },
@@ -700,13 +781,25 @@
                 ],
                 "downloadLabel": "Download",
                 "closeLabel": "Close",
-                "extensionFallback": "file"
+                "extensionFallback": "file",
+                "defaultOpen": true
               }
             },
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-sheet-004-*. A client component: \"use client\" — a ref for showModal and close. The preview area is drawn with two gradients and the extension is derived from the file name, so the component carries neither images nor an icon font. The facts are laid out in an auto-fit grid, and the file name wraps through overflow-wrap:anywhere. The theme comes from the surrounding color-scheme through light-dark(): the sheet darkens along with the page and does not ship a dark theme of its own. The background prop overrides the surface of the sheet and the opener; with a background set, the root gets a color-scheme computed from its lightness."
           }
         },
-        "cardControls": ["background"]
+        "cardControls": [
+          "fileName",
+          "downloadLabel",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "props": {
+            "defaultOpen": true
+          },
+          "width": "full"
+        }
       }
     },
     {
@@ -714,7 +807,9 @@
       "type": "registry:component",
       "title": "Лист выбора",
       "description": "Лист выбора из длинного списка: выпадающий список на сотню строк на телефоне неработоспособен, поэтому выбор переезжает в лист с поиском и подтверждением внизу.",
-      "categories": ["sheet"],
+      "categories": [
+        "sheet"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -726,7 +821,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sheet-005-*. Клиентский: \"use client\", useState держит строку поиска и выбранное значение, useId — имя группы радиокнопок, useRef — showModal и close. Фильтрация идёт по подстроке в нижнем регистре. Поиск и подтверждение вынесены из прокручиваемой области, список — fieldset с радиокнопками. Тема берётся из color-scheme окружения через light-dark(): лист темнеет вместе со страницей и не носит собственной тёмной темы. Подложку листа и кнопки открытия переопределяет проп background; при заданном фоне на корне выставляется color-scheme, посчитанный по его светлоте.",
       "meta": {
-        "tags": ["sheet", "picker", "search", "mobile"],
+        "tags": [
+          "sheet",
+          "picker",
+          "search",
+          "mobile"
+        ],
         "ai": {
           "export": "Sheet005",
           "usage": "<Sheet005\n  triggerLabel=\"Выбрать регион\"\n  title=\"Регион доставки\"\n  options={options}\n/>",
@@ -748,14 +848,16 @@
             "правило фильтрации: сейчас это поиск подстроки без учёта регистра",
             "высоту листа: сейчас 32rem или 90% высоты экрана",
             "акцент через проп accent — заливка кнопки подтверждения и точка выбранного варианта",
-            "background — подложка листа и кнопки открытия; пусто оставляет штатную палитру"
+            "background — подложка листа и кнопки открытия; пусто оставляет штатную палитру",
+            "открытие без модального режима через defaultOpen"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Выбранное значение не уходит наружу: поднимите его в обработчике кнопки подтверждения.",
             "Список в тысячу строк потребует виртуализации — здесь рисуются все найденные строки.",
             "Для выбора нескольких значений замените радиокнопки флажками и подпись кнопки на счётчик.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "defaultOpen открывает лист методом show(): он остаётся внутри блока и не блокирует страницу. Обычный сценарий — showModal() по нажатию, и тогда работают backdrop, Escape и ловушка фокуса."
           ]
         },
         "controls": [
@@ -808,14 +910,16 @@
                 "the filter rule: a case-insensitive substring match today",
                 "the sheet height: 32rem or 90% of the screen right now",
                 "the accent through the accent prop — it fills the confirm button and the selected radio dot",
-                "background — the surface of the sheet and the opener; empty keeps the built-in palette"
+                "background — the surface of the sheet and the opener; empty keeps the built-in palette",
+                "opening without the modal mode through defaultOpen"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The chosen value is not lifted out: read it in the confirm handler.",
                 "A thousand-row list needs virtualisation — every matching row is rendered here.",
                 "For multiple selection swap radios for checkboxes and put a counter on the button.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "defaultOpen opens the sheet with show(): it stays inside the block and does not block the page. The usual path is showModal() on click, which brings the backdrop, Escape and the focus trap."
               ],
               "usage": "<Sheet005\n  triggerLabel=\"Choose a region\"\n  title=\"Delivery region\"\n  options={options}\n/>"
             },
@@ -859,13 +963,25 @@
                   "North Yorkshire",
                   "Somerset",
                   "West Midlands"
-                ]
+                ],
+                "defaultOpen": true
               }
             },
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-sheet-005-*. A client component: \"use client\", useState holds the search string and the selected value, useId the name of the radio group, useRef showModal and close. Filtering is a lowercase substring match. Search and confirm are lifted out of the scrolling area, and the list is a fieldset with radio buttons. The theme comes from the surrounding color-scheme through light-dark(): the sheet darkens along with the page and does not ship a dark theme of its own. The background prop overrides the surface of the sheet and the opener; with a background set, the root gets a color-scheme computed from its lightness."
           }
         },
-        "cardControls": ["background"]
+        "cardControls": [
+          "title",
+          "searchLabel",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "props": {
+            "defaultOpen": true
+          },
+          "width": "full"
+        }
       }
     },
     {
@@ -873,7 +989,9 @@
       "type": "registry:component",
       "title": "Лист подтверждения",
       "description": "Подтверждение опасного действия на телефоне: вопрос приезжает снизу, последствия перечислены списком, а фокус при открытии стоит на отказе.",
-      "categories": ["sheet"],
+      "categories": [
+        "sheet"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -885,7 +1003,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sheet-006-*. Клиентский: \"use client\" — ref для showModal, дальше работает форма method=\"dialog\": обе кнопки закрывают лист сами и возвращают своё value. Заголовок связан с dialog через aria-labelledby и useId. Знак опасности нарисован псевдоэлементами, кнопки уложены в столбик и имеют высоту 3rem. Тема берётся из color-scheme окружения через light-dark(): лист темнеет вместе со страницей и не носит собственной тёмной темы. Подложку листа и кнопки открытия переопределяет проп background; при заданном фоне на корне выставляется color-scheme, посчитанный по его светлоте.",
       "meta": {
-        "tags": ["sheet", "confirm", "destructive", "mobile"],
+        "tags": [
+          "sheet",
+          "confirm",
+          "destructive",
+          "mobile"
+        ],
         "ai": {
           "export": "Sheet006",
           "usage": "<Sheet006\n  title=\"Удалить проект «Витрина»?\"\n  consequences={consequences}\n  confirmLabel=\"Удалить навсегда\"\n/>",
@@ -907,14 +1030,16 @@
             "triggerLabel — подпись кнопки, открывающей лист",
             "тон: опасный красный можно заменить нейтральным, если действие обратимо",
             "danger — опасный цвет: знак, маркеры последствий и кнопка подтверждения",
-            "background — подложка листа и кнопки открытия; пусто оставляет штатную палитру"
+            "background — подложка листа и кнопки открытия; пусто оставляет штатную палитру",
+            "открытие без модального режима через defaultOpen"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Подтверждение оправдано только для необратимого: для отменяемого действия честнее тост с отменой.",
             "Компонент не выполняет действие: значение нажатой кнопки читайте в обработчике close.",
             "Слово «Удалить» в подписи лучше названия объекта: «Да» и «ОК» не говорят, что произойдёт.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "defaultOpen открывает лист методом show(): он остаётся внутри блока и не блокирует страницу. Обычный сценарий — showModal() по нажатию, и тогда работают backdrop, Escape и ловушка фокуса."
           ]
         },
         "controls": [
@@ -967,14 +1092,16 @@
                 "triggerLabel — the wording of the button that opens the sheet",
                 "the tone: the dangerous red can go neutral when the action is reversible",
                 "danger — the destructive colour: the mark, the consequence bullets and the confirm button",
-                "background — the surface of the sheet and the opener; empty keeps the built-in palette"
+                "background — the surface of the sheet and the opener; empty keeps the built-in palette",
+                "opening without the modal mode through defaultOpen"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Confirmation only earns its place for the irreversible: for undoable work a toast with undo is honester.",
                 "The component performs nothing: read the pressed button's value in the close handler.",
                 "The verb beats the object name in the label: \"Yes\" and \"OK\" do not say what will happen.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "defaultOpen opens the sheet with show(): it stays inside the block and does not block the page. The usual path is showModal() on click, which brings the backdrop, Escape and the focus trap."
               ],
               "usage": "<Sheet006\n  title=\"Delete project Vitrina?\"\n  consequences={consequences}\n  confirmLabel=\"Delete forever\"\n/>"
             },
@@ -1007,13 +1134,25 @@
                 ],
                 "confirmLabel": "Delete forever",
                 "cancelLabel": "Keep it",
-                "warningLabel": "Warning"
+                "warningLabel": "Warning",
+                "defaultOpen": true
               }
             },
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-sheet-006-*. A client component: \"use client\" — a ref for showModal, after which the method=\"dialog\" form does the work: both buttons close the sheet themselves and return their value. The heading is tied to the dialog through aria-labelledby and useId. The danger mark is drawn with pseudo-elements, and the buttons are stacked in a column at a height of 3rem. The theme comes from the surrounding color-scheme through light-dark(): the sheet darkens along with the page and does not ship a dark theme of its own. The background prop overrides the surface of the sheet and the opener; with a background set, the root gets a color-scheme computed from its lightness."
           }
         },
-        "cardControls": ["danger", "background"]
+        "cardControls": [
+          "title",
+          "confirmLabel",
+          "danger",
+          "background"
+        ],
+        "preview": {
+          "props": {
+            "defaultOpen": true
+          },
+          "width": "full"
+        }
       }
     },
     {
@@ -1021,7 +1160,9 @@
       "type": "registry:component",
       "title": "Вложенный лист",
       "description": "Лист с двумя уровнями вместо второго окна поверх первого: уровни лежат в одной дорожке и сдвигаются вбок, поэтому переход читается как «вглубь».",
-      "categories": ["sheet"],
+      "categories": [
+        "sheet"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1033,7 +1174,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sheet-007-*. Клиентский: \"use client\", useState держит открытый раздел, useRef — showModal и close. Оба уровня лежат в дорожке шириной 200% и сдвигаются через translate по data-level; неактивный уровень помечен inert, поэтому его кнопки выпадают из Tab-порядка. Стрелка и шеврон нарисованы бордюрами повёрнутого квадрата. Тема берётся из color-scheme окружения через light-dark(): лист темнеет вместе со страницей и не носит собственной тёмной темы. Подложку листа и кнопки открытия переопределяет проп background; при заданном фоне на корне выставляется color-scheme, посчитанный по его светлоте.",
       "meta": {
-        "tags": ["sheet", "nested", "navigation", "mobile"],
+        "tags": [
+          "sheet",
+          "nested",
+          "navigation",
+          "mobile"
+        ],
         "ai": {
           "export": "Sheet007",
           "usage": "<Sheet007\n  triggerLabel=\"Настройки приложения\"\n  title=\"Настройки\"\n  sections={sections}\n/>",
@@ -1055,14 +1201,16 @@
             "высоту листа: сейчас 26rem или 82% высоты экрана",
             "содержимое второго уровня — вместо радиокнопок может быть форма",
             "акцент через проп accent — точка выбранного варианта и обводка фокуса",
-            "background — подложка листа и кнопки открытия; пусто оставляет штатную палитру"
+            "background — подложка листа и кнопки открытия; пусто оставляет штатную палитру",
+            "открытие без модального режима через defaultOpen"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Третьего уровня нет и не предполагается: дорожка рассчитана на два, глубже нужна страница.",
             "Выбор во втором уровне не поднимается наружу — навесьте onChange, если он должен сохраняться.",
             "Фокус при переходе на уровень не переносится: добавьте перевод фокуса на заголовок, если это важно.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "defaultOpen открывает лист методом show(): он остаётся внутри блока и не блокирует страницу. Обычный сценарий — showModal() по нажатию, и тогда работают backdrop, Escape и ловушка фокуса."
           ]
         },
         "controls": [
@@ -1115,14 +1263,16 @@
                 "the sheet height: 26rem or 82% of the screen right now",
                 "the second level's content — a form can replace the radio buttons",
                 "the accent through the accent prop — the selected radio dot and the focus ring",
-                "background — the surface of the sheet and the opener; empty keeps the built-in palette"
+                "background — the surface of the sheet and the opener; empty keeps the built-in palette",
+                "opening without the modal mode through defaultOpen"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "There is no third level and none is planned: the track holds two, deeper needs a page.",
                 "The second-level choice is not lifted out — attach onChange when it has to persist.",
                 "Focus does not move when you go a level deeper: move it to the heading if that matters.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "defaultOpen opens the sheet with show(): it stays inside the block and does not block the page. The usual path is showModal() on click, which brings the backdrop, Escape and the focus trap."
               ],
               "usage": "<Sheet007\n  triggerLabel=\"App settings\"\n  title=\"Settings\"\n  sections={sections}\n/>"
             },
@@ -1153,12 +1303,20 @@
                   {
                     "label": "Interface language",
                     "hint": "English",
-                    "options": ["English", "Русский", "Қазақша"]
+                    "options": [
+                      "English",
+                      "Русский",
+                      "Қазақша"
+                    ]
                   },
                   {
                     "label": "Appearance",
                     "hint": "Match the system",
-                    "options": ["Match the system", "Light", "Dark"]
+                    "options": [
+                      "Match the system",
+                      "Light",
+                      "Dark"
+                    ]
                   },
                   {
                     "label": "Time zone",
@@ -1169,13 +1327,25 @@
                       "New York, UTC−5"
                     ]
                   }
-                ]
+                ],
+                "defaultOpen": true
               }
             },
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-sheet-007-*. A client component: \"use client\", useState holds the open section, useRef showModal and close. Both levels sit in a track 200% wide and are shifted with translate by data-level; the inactive level is marked inert, so its buttons drop out of the Tab order. The arrow and the chevron are drawn with the borders of a rotated square. The theme comes from the surrounding color-scheme through light-dark(): the sheet darkens along with the page and does not ship a dark theme of its own. The background prop overrides the surface of the sheet and the opener; with a background set, the root gets a color-scheme computed from its lightness."
           }
         },
-        "cardControls": ["background"]
+        "cardControls": [
+          "title",
+          "triggerLabel",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "props": {
+            "defaultOpen": true
+          },
+          "width": "full"
+        }
       }
     },
     {
@@ -1183,7 +1353,9 @@
       "type": "registry:component",
       "title": "Лист действий",
       "description": "Лист действий снизу: крупные цели у нижнего края и отдельная кнопка отмены — закрыть должно быть так же легко, как открыть.",
-      "categories": ["sheet"],
+      "categories": [
+        "sheet"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1195,7 +1367,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menu-007-*. Клиентский: \"use client\". Нижний отступ учитывает env(safe-area-inset-bottom), высота пункта 2.75rem — цель под большой палец. У пунктов есть пояснения второй строкой, опасное действие красится текстом, отмена вынесена отдельной кнопкой во всю ширину. Тема берётся из color-scheme окружения через light-dark(): лист темнеет вместе со страницей и не носит собственной тёмной темы. Подложку листа и кнопки открытия переопределяет проп background; при заданном фоне на корне выставляется color-scheme, посчитанный по его светлоте.",
       "meta": {
-        "tags": ["menu", "sheet", "mobile", "actions"],
+        "tags": [
+          "menu",
+          "sheet",
+          "mobile",
+          "actions"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1333,7 +1510,613 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-menu-007-*. A client component: \"use client\". The bottom padding accounts for env(safe-area-inset-bottom), and the item height of 2.75rem is a target for a thumb. The items carry explanations on a second line, the destructive action is coloured in the text, and cancel is a separate full-width button. The theme comes from the surrounding color-scheme through light-dark(): the sheet darkens along with the page and does not ship a dark theme of its own. The background prop overrides the surface of the sheet and the opener; with a background set, the root gets a color-scheme computed from its lightness."
           }
         },
-        "cardControls": ["background"]
+        "cardControls": [
+          "title",
+          "cancelLabel",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "sheet-008",
+      "type": "registry:component",
+      "title": "Лист правки записи",
+      "description": "Форма правки в листе справа: подвал с кнопками прижат к низу и не уезжает вместе с прокруткой.",
+      "categories": [
+        "sheet"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sheet-008/sheet-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sheet-008.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sheet-008-*. Клиентский: открытие через нативный dialog. Форма занимает всю высоту листа, тело прокручивается, подвал прижат границей. Закрытие сделано на form method=\"dialog\", поэтому обработчик отправки не нужен; у кнопки отмены стоит formNoValidate, иначе незаполненные обязательные поля не дали бы отменить правку.",
+      "meta": {
+        "tags": [
+          "sheet",
+          "form",
+          "edit",
+          "drawer"
+        ],
+        "ai": {
+          "export": "Sheet008",
+          "usage": "<Sheet008 title=\"Задача\" fields={fields} />",
+          "summary": "Лист правки записи справа: поля с обязательными пометками, прокручиваемое тело и прижатый подвал с «Сохранить» и «Отмена».",
+          "preserve": [
+            "локальную палитру --vibeui-sheet-008-* и не подменять её токенами вашей темы",
+            "нативный dialog: backdrop, Escape и ловушка фокуса приходят от браузера",
+            "прижатый подвал: на длинной форме кнопки не должны уезжать с прокруткой",
+            "пояснение про звёздочку рядом с формой, а не только саму звёздочку",
+            "formNoValidate у отмены — иначе из формы с пустыми полями не выйти",
+            "связь label и поля через htmlFor: подпись обязана переводить фокус в поле",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "набор полей и их значения через fields, заголовок через title",
+            "подписи кнопок через saveLabel и cancelLabel",
+            "текст про обязательные поля через requiredNote",
+            "открытие без модального режима через defaultOpen",
+            "accent — цвет главной кнопки и фокуса",
+            "background — подложка листа; пусто означает штатную палитру"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "defaultOpen открывает лист методом show(): он остаётся внутри блока и не блокирует страницу. Обычный сценарий — showModal() по нажатию, и тогда работают backdrop, Escape и ловушка фокуса.",
+            "Форма не отправляет данные: method=\"dialog\" только закрывает лист. Сохранение подключается обработчиком submit с проверкой event.submitter.value.",
+            "Поля неуправляемые, значения приходят через defaultValue. Для управляемой формы держите состояние на своей стороне.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Задача",
+            "maxLength": 20
+          },
+          {
+            "prop": "triggerLabel",
+            "label": "Подпись кнопки",
+            "type": "text",
+            "default": "Изменить задачу",
+            "maxLength": 20
+          },
+          {
+            "prop": "saveLabel",
+            "label": "Подпись сохранения",
+            "type": "text",
+            "default": "Сохранить",
+            "maxLength": 16
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Record Edit Sheet",
+            "description": "An edit form in a right-hand sheet: the footer with the buttons is pinned and never scrolls away.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-sheet-008-* variables. Client component: opening goes through the native dialog. The form fills the sheet height, the body scrolls and the footer is pinned by a border. Closing rides on form method=\"dialog\", so no submit handler is needed; the cancel button carries formNoValidate, otherwise unfilled required fields would trap the user inside the form.",
+            "ai": {
+              "summary": "A right-hand record edit sheet: fields with required marks, a scrolling body and a pinned footer with Save and Cancel.",
+              "preserve": [
+                "the local --vibeui-sheet-008-* palette — do not swap it for your theme tokens",
+                "the native dialog: backdrop, Escape and the focus trap come from the browser",
+                "the pinned footer: on a long form the buttons must not scroll away",
+                "the sentence explaining the asterisk, not just the asterisk itself",
+                "formNoValidate on cancel — without it there is no way out of a form with empty fields",
+                "the label-to-field link through htmlFor: a caption must move focus into its field",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "the fields and their values through fields, the heading through title",
+                "the button captions through saveLabel and cancelLabel",
+                "the required-fields sentence through requiredNote",
+                "opening without the modal mode through defaultOpen",
+                "accent — the colour of the primary button and the focus ring",
+                "background — the sheet surface; empty means the built-in palette"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "defaultOpen opens the sheet with show(): it stays inside the block and does not block the page. The usual path is showModal() on click, which brings the backdrop, Escape and the focus trap.",
+                "The form submits nothing: method=\"dialog\" only closes the sheet. Wire saving through a submit handler that checks event.submitter.value.",
+                "The fields are uncontrolled and take defaultValue. For a controlled form keep the state on your side.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Sheet008 title=\"Task\" fields={fields} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Task"
+              },
+              "triggerLabel": {
+                "label": "Trigger caption",
+                "default": "Edit task"
+              },
+              "saveLabel": {
+                "label": "Save caption",
+                "default": "Save"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "defaultOpen": true,
+                "title": "Task",
+                "triggerLabel": "Edit task",
+                "saveLabel": "Save",
+                "cancelLabel": "Cancel",
+                "requiredNote": "Fields marked with an asterisk are required.",
+                "fields": [
+                  {
+                    "name": "title",
+                    "label": "Title",
+                    "value": "Refresh the catalogue photos",
+                    "required": true
+                  },
+                  {
+                    "name": "owner",
+                    "label": "Owner",
+                    "kind": "select",
+                    "value": "Olga Dorn",
+                    "options": [
+                      "Olga Dorn",
+                      "Peter Ivanov",
+                      "Maria Gurova"
+                    ],
+                    "required": true
+                  },
+                  {
+                    "name": "due",
+                    "label": "Due",
+                    "kind": "date",
+                    "value": "2026-09-18"
+                  },
+                  {
+                    "name": "note",
+                    "label": "Note",
+                    "kind": "area",
+                    "value": "The old shoot does not match the background.",
+                    "hint": "Visible to everyone on the project."
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "preview": {
+          "width": "full",
+          "props": {
+            "defaultOpen": true
+          }
+        },
+        "cardControls": [
+          "title",
+          "triggerLabel",
+          "saveLabel",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "sheet-009",
+      "type": "registry:component",
+      "title": "Лист фильтров",
+      "description": "Фильтры каталога в листе: счётчик найденного стоит в кнопке применения, сброс — в шапке.",
+      "categories": [
+        "sheet"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sheet-009/sheet-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sheet-009.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sheet-009-*. Клиентский: отмеченное живёт в состоянии. Группы собраны на fieldset с legend, поэтому связь галочки и раздела приходит от разметки; число рядом с каждой галочкой показывает объём ветки, а счётчик выбранного объявляется через aria-live.",
+      "meta": {
+        "tags": [
+          "sheet",
+          "filters",
+          "catalog",
+          "mobile"
+        ],
+        "ai": {
+          "export": "Sheet009",
+          "usage": "<Sheet009 groups={groups} found={91} />",
+          "summary": "Лист фильтров: счётчик найденного в самой кнопке применения, сброс в шапке, число у каждой галочки.",
+          "preserve": [
+            "локальную палитру --vibeui-sheet-009-* и не подменять её токенами вашей темы",
+            "счётчик найденного в кнопке: он отвечает на вопрос «что будет, если нажать», там, где нажимают",
+            "сброс в шапке, а не в конце списка — до низа никто не докручивает",
+            "числа у галочек: пустую ветку выбирать незачем, и это видно заранее",
+            "fieldset с legend вместо заголовка-абзаца: связь группы и галочек приходит от разметки",
+            "aria-live у счётчика выбранного — изменение числа невидимо для скринридера",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "состав групп и вариантов через groups, заголовок через title",
+            "число найденного через found и текст кнопки через applyTemplate",
+            "подписи сброса и счётчика через resetLabel и chosenTemplate",
+            "открытие без модального режима через defaultOpen",
+            "accent — цвет кнопки, галочек и фокуса",
+            "background — подложка листа; пусто означает штатную палитру"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "defaultOpen открывает лист методом show(): он остаётся внутри блока и не блокирует страницу. Обычный сценарий — showModal() по нажатию, и тогда работают backdrop, Escape и ловушка фокуса.",
+            "found приходит пропсом и не считается внутри: настоящее число знает только ваш поиск. Пересчитывайте его при каждом изменении набора.",
+            "Отмеченное живёт в памяти вкладки. Чтобы фильтры пережили переход, держите их в адресе страницы или в своём состоянии.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Подбор товаров",
+            "maxLength": 22
+          },
+          {
+            "prop": "found",
+            "label": "Найдено",
+            "type": "number",
+            "default": 91,
+            "min": 0,
+            "max": 999,
+            "step": 1
+          },
+          {
+            "prop": "resetLabel",
+            "label": "Подпись сброса",
+            "type": "text",
+            "default": "Сбросить",
+            "maxLength": 16
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Filters Sheet",
+            "description": "Catalogue filters in a sheet: the result count sits inside the apply button and the reset lives in the header.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-sheet-009-* variables. Client component: the chosen values live in state. The groups are built on fieldset with legend, so the tie between a checkbox and its group comes from the markup; the number next to each checkbox shows the size of that branch, and the chosen counter is announced through aria-live.",
+            "ai": {
+              "summary": "A filters sheet: the result count inside the apply button, the reset in the header and a number next to every checkbox.",
+              "preserve": [
+                "the local --vibeui-sheet-009-* palette — do not swap it for your theme tokens",
+                "the result count inside the button: it answers «what happens if I press» right where the pressing happens",
+                "the reset in the header rather than at the end of the list — nobody scrolls that far",
+                "the numbers next to checkboxes: an empty branch is not worth choosing, and that shows up front",
+                "fieldset with legend instead of a paragraph heading: the group tie comes from the markup",
+                "aria-live on the chosen counter — a changing number is invisible to a screen reader",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "the groups and options through groups, the heading through title",
+                "the result count through found and the button text through applyTemplate",
+                "the reset and counter captions through resetLabel and chosenTemplate",
+                "opening without the modal mode through defaultOpen",
+                "accent — the colour of the button, the checkboxes and the focus ring",
+                "background — the sheet surface; empty means the built-in palette"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "defaultOpen opens the sheet with show(): it stays inside the block and does not block the page. The usual path is showModal() on click, which brings the backdrop, Escape and the focus trap.",
+                "found arrives as a prop and is not computed inside: only your search knows the real number. Recompute it on every change of the set.",
+                "The chosen values live in the tab's memory. To survive navigation keep them in the URL or in your own state.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Sheet009 groups={groups} found={91} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Narrow the search"
+              },
+              "found": {
+                "label": "Found"
+              },
+              "resetLabel": {
+                "label": "Reset caption",
+                "default": "Reset"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "defaultOpen": true,
+                "title": "Narrow the search",
+                "triggerLabel": "Filters",
+                "applyTemplate": "Show {count}",
+                "resetLabel": "Reset",
+                "chosenTemplate": "Chosen: {count}",
+                "groups": [
+                  {
+                    "name": "brand",
+                    "label": "Maker",
+                    "options": [
+                      {
+                        "value": "nord",
+                        "label": "Nord",
+                        "count": 48
+                      },
+                      {
+                        "value": "vega",
+                        "label": "Vega",
+                        "count": 31
+                      },
+                      {
+                        "value": "kompas",
+                        "label": "Kompas",
+                        "count": 12
+                      }
+                    ]
+                  },
+                  {
+                    "name": "status",
+                    "label": "Availability",
+                    "options": [
+                      {
+                        "value": "now",
+                        "label": "In stock today",
+                        "count": 64
+                      },
+                      {
+                        "value": "order",
+                        "label": "To order",
+                        "count": 27
+                      }
+                    ]
+                  },
+                  {
+                    "name": "extra",
+                    "label": "Extras",
+                    "options": [
+                      {
+                        "value": "sale",
+                        "label": "On sale",
+                        "count": 18
+                      },
+                      {
+                        "value": "new",
+                        "label": "New arrivals",
+                        "count": 9
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "preview": {
+          "width": "full",
+          "props": {
+            "defaultOpen": true
+          }
+        },
+        "cardControls": [
+          "title",
+          "found",
+          "resetLabel",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "sheet-010",
+      "type": "registry:component",
+      "title": "Лист с двумя остановками",
+      "description": "Лист, который разворачивается на полную высоту: остановку переключает ручка-кнопка, а не только жест.",
+      "categories": [
+        "sheet"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sheet-010/sheet-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sheet-010.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sheet-010-*. Клиентский. Высота листа задана переменной, поэтому переключение остановки не пересобирает разметку и не сбрасывает прокрутку внутри. Ручка — настоящая кнопка с aria-expanded: то же движение, что и перетаскивание, доступно с клавиатуры и читается скринридером.",
+      "meta": {
+        "tags": [
+          "sheet",
+          "snap",
+          "expand",
+          "mobile"
+        ],
+        "ai": {
+          "export": "Sheet010",
+          "usage": "<Sheet010 title=\"Доставка завтра\" details={details} />",
+          "summary": "Лист с двумя остановками: короткая часть видна сразу, ручка-кнопка разворачивает лист на полную высоту. Клавиатура работает наравне с пальцем.",
+          "preserve": [
+            "локальную палитру --vibeui-sheet-010-* и не подменять её токенами вашей темы",
+            "ручку как настоящую кнопку с aria-expanded: перетаскивание недоступно с клавиатуры",
+            "высоту через переменную: пересборка разметки сбросила бы прокрутку внутри листа",
+            "подробности в разметке на обеих остановках — до них добирается прокрутка, а не только разворот",
+            "нативный dialog: backdrop, Escape и ловушка фокуса приходят от браузера",
+            "видимую страницу за верхним краем на первой остановке — этим лист отличается от окна",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "заголовок title, подзаголовок subtitle и текст сводки",
+            "список подробностей через details",
+            "подписи ручки через expandLabel и collapseLabel",
+            "стартовую остановку через fullByDefault и открытие через defaultOpen",
+            "accent — цвет ручки при наведении и фокуса",
+            "background — подложка листа; пусто означает штатную палитру"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "defaultOpen открывает лист методом show(): он остаётся внутри блока и не блокирует страницу. Обычный сценарий — showModal() по нажатию, и тогда работают backdrop, Escape и ловушка фокуса.",
+            "Остановок две: 14rem и 26rem. Другие значения меняются в переменной --vibeui-sheet-010-stop и в правиле для data-full.",
+            "Перетаскивания здесь нет намеренно: жест пришлось бы дублировать кнопкой, а кнопка работает и без него.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Доставка завтра",
+            "maxLength": 22
+          },
+          {
+            "prop": "subtitle",
+            "label": "Подзаголовок",
+            "type": "text",
+            "default": "Заказ 4821 · Северный порт",
+            "maxLength": 28
+          },
+          {
+            "prop": "fullByDefault",
+            "label": "Сразу развёрнут",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Sheet With Two Stops",
+            "description": "A sheet that expands to full height: the stop is switched by a handle button, not by a gesture alone.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-sheet-010-* variables. Client component. The sheet height is a variable, so switching the stop neither rebuilds the markup nor resets the inner scroll. The handle is a real button with aria-expanded: the same move as dragging is available from the keyboard and is announced by a screen reader.",
+            "ai": {
+              "summary": "A sheet with two stops: the short part shows first and a handle button expands it to full height. The keyboard works on par with a finger.",
+              "preserve": [
+                "the local --vibeui-sheet-010-* palette — do not swap it for your theme tokens",
+                "the handle as a real button with aria-expanded: dragging is unavailable from a keyboard",
+                "the height as a variable: rebuilding the markup would reset the scroll inside the sheet",
+                "the details in the markup at both stops — scrolling reaches them without expanding",
+                "the native dialog: backdrop, Escape and the focus trap come from the browser",
+                "the page visible above the top edge at the first stop — that is what separates a sheet from a window",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "the title, the subtitle and the summary text",
+                "the details list through details",
+                "the handle captions through expandLabel and collapseLabel",
+                "the starting stop through fullByDefault and opening through defaultOpen",
+                "accent — the handle hover colour and the focus ring",
+                "background — the sheet surface; empty means the built-in palette"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "defaultOpen opens the sheet with show(): it stays inside the block and does not block the page. The usual path is showModal() on click, which brings the backdrop, Escape and the focus trap.",
+                "There are two stops: 14rem and 26rem. Other values live in the --vibeui-sheet-010-stop variable and in the data-full rule.",
+                "Dragging is deliberately absent: the gesture would need a button duplicate anyway, and the button works without it.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Sheet010 title=\"Delivery tomorrow\" details={details} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Delivery tomorrow"
+              },
+              "subtitle": {
+                "label": "Subtitle",
+                "default": "Order 4821 · Northern Port"
+              },
+              "fullByDefault": {
+                "label": "Start expanded"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "defaultOpen": true,
+                "title": "Delivery tomorrow",
+                "subtitle": "Order 4821 · Northern Port",
+                "triggerLabel": "Delivery",
+                "summary": "The courier brings the order on 12 March. The address and the time can be changed until the evening.",
+                "expandLabel": "Expand the sheet",
+                "collapseLabel": "Collapse the sheet",
+                "closeLabel": "Close",
+                "details": [
+                  "The courier arrives between 14:00 and 18:00 — the exact time comes in the morning.",
+                  "Card payment on delivery. The courier does not take cash.",
+                  "Rescheduling is possible until 23:00 the day before, after that the order goes back to the warehouse."
+                ]
+              }
+            }
+          }
+        },
+        "preview": {
+          "width": "full",
+          "props": {
+            "defaultOpen": true
+          }
+        },
+        "cardControls": [
+          "title",
+          "subtitle",
+          "fullByDefault",
+          "accent",
+          "background"
+        ]
       }
     }
   ]

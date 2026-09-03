@@ -1,6 +1,6 @@
 "use client"
 
-import { useId, useRef, useState } from "react"
+import { useEffect, useId, useRef, useState } from "react"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Sheet003Tab = {
@@ -19,6 +19,8 @@ export type Sheet003Props = Omit<
   tabsLabel?: string
   /** Подпись кнопки закрытия: русская по умолчанию. */
   closeLabel?: string
+  /** Открыть лист сразу и без модального режима: он остаётся внутри блока. */
+  defaultOpen?: boolean
   accent?: string
   /** Подложка листа и кнопки открытия. Пусто — штатная палитра. */
   background?: string
@@ -120,6 +122,13 @@ font:inherit;font-size:0.9375rem;font-weight:650;
 [data-vibeui-block="sheet-003"] [data-part="body"]{padding:1.0625rem 1rem}
 [data-vibeui-block="sheet-003"] [data-part="tab"]{font-size:0.875rem}
 }
+/* Немодальный показ: лист остаётся внутри блока, а не уходит в верхний
+   слой поверх страницы. Так его показывают на витрине и в документации. */
+[data-vibeui-block="sheet-003"]:has(dialog:not(:modal)[open]){
+display:block;position:relative;width:100%;min-height:24rem;
+}
+[data-vibeui-block="sheet-003"] dialog:not(:modal){position:absolute;max-height:100%;z-index:1}
+[data-vibeui-block="sheet-003"]:has(dialog:not(:modal)[open]) [data-part="trigger"]{display:none}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="sheet-003"] *{animation:none!important;transition:none!important}
 [data-vibeui-block="sheet-003"] dialog{translate:0 0}
@@ -188,6 +197,7 @@ export function Sheet003({
   tabs = DEFAULT_TABS,
   tabsLabel = "Раздел",
   closeLabel = "Закрыть",
+  defaultOpen = false,
   accent,
   background = "",
   className,
@@ -195,6 +205,26 @@ export function Sheet003({
   ...props
 }: Sheet003Props) {
   const sheet = useRef<HTMLDialogElement>(null)
+
+  // show() вместо showModal(): немодальный лист живёт внутри своего блока и
+  // не уводит страницу в верхний слой. Витрине нужен именно такой.
+  useEffect(() => {
+    if (!defaultOpen) {
+      return
+    }
+
+    const active = document.activeElement
+
+    sheet.current?.show()
+
+    // show() уводит фокус внутрь листа. Для немодального показа это лишнее:
+    // страница не должна прыгать к панели просто потому, что та открыта.
+    if (active instanceof HTMLElement && active !== document.body) {
+      active.focus()
+    } else if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur()
+    }
+  }, [defaultOpen])
   const group = useId()
   const [active, setActive] = useState(0)
 

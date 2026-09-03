@@ -1,6 +1,6 @@
 "use client"
 
-import { useId, useRef, useState } from "react"
+import { useEffect, useId, useRef, useState } from "react"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Sheet007Section = {
@@ -20,6 +20,8 @@ export type Sheet007Props = Omit<
   backLabel?: string
   /** Имя кнопки закрытия для скринридера: русское по умолчанию. */
   closeLabel?: string
+  /** Открыть лист сразу и без модального режима: он остаётся внутри блока. */
+  defaultOpen?: boolean
   accent?: string
   /** Подложка листа и кнопки открытия. Пусто — штатная палитра. */
   background?: string
@@ -146,6 +148,13 @@ content:"";position:absolute;inset:0.1875rem;border-radius:9999px;background:var
 [data-vibeui-block="sheet-007"] [data-part="option"]{font-size:1rem;padding:0.875rem 0}
 [data-vibeui-block="sheet-007"] [data-part="row"]{padding:0.875rem 0}
 }
+/* Немодальный показ: лист остаётся внутри блока, а не уходит в верхний
+   слой поверх страницы. Так его показывают на витрине и в документации. */
+[data-vibeui-block="sheet-007"]:has(dialog:not(:modal)[open]){
+display:block;position:relative;width:100%;min-height:24rem;
+}
+[data-vibeui-block="sheet-007"] dialog:not(:modal){position:absolute;max-height:100%;z-index:1}
+[data-vibeui-block="sheet-007"]:has(dialog:not(:modal)[open]) [data-part="trigger"]{display:none}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="sheet-007"] *{animation:none!important;transition:none!important}
 [data-vibeui-block="sheet-007"] dialog{translate:0 0}
@@ -202,6 +211,7 @@ export function Sheet007({
   sections = DEFAULT_SECTIONS,
   backLabel = "Назад к списку настроек",
   closeLabel = "Закрыть настройки",
+  defaultOpen = false,
   accent,
   background = "",
   className,
@@ -209,6 +219,26 @@ export function Sheet007({
   ...props
 }: Sheet007Props) {
   const sheet = useRef<HTMLDialogElement>(null)
+
+  // show() вместо showModal(): немодальный лист живёт внутри своего блока и
+  // не уводит страницу в верхний слой. Витрине нужен именно такой.
+  useEffect(() => {
+    if (!defaultOpen) {
+      return
+    }
+
+    const active = document.activeElement
+
+    sheet.current?.show()
+
+    // show() уводит фокус внутрь листа. Для немодального показа это лишнее:
+    // страница не должна прыгать к панели просто потому, что та открыта.
+    if (active instanceof HTMLElement && active !== document.body) {
+      active.focus()
+    } else if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur()
+    }
+  }, [defaultOpen])
   const [openedSection, setOpenedSection] = useState<number | null>(null)
   // Имя радиогруппы уникально на экземпляр: с постоянным именем два листа на
   // странице делили бы одну группу и гасили выбор друг друга.

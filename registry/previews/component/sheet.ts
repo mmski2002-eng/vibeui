@@ -13,6 +13,9 @@ import { Sheet005 } from "@/registry/components/sheet/sheet-005/sheet-005"
 import { Sheet006 } from "@/registry/components/sheet/sheet-006/sheet-006"
 import { Sheet007 } from "@/registry/components/sheet/sheet-007/sheet-007"
 import { Menu007 } from "@/registry/components/sheet/menu-007/menu-007"
+import { Sheet008 } from "@/registry/components/sheet/sheet-008/sheet-008"
+import { Sheet009 } from "@/registry/components/sheet/sheet-009/sheet-009"
+import { Sheet010 } from "@/registry/components/sheet/sheet-010/sheet-010"
 
 export const PREVIEWS = {
   "sheet-001": Sheet001,
@@ -23,4 +26,7 @@ export const PREVIEWS = {
   "sheet-006": Sheet006,
   "sheet-007": Sheet007,
   "menu-007": Menu007,
+  "sheet-008": Sheet008,
+  "sheet-009": Sheet009,
+  "sheet-010": Sheet010,
 } satisfies Record<string, ComponentType<PreviewProps>>

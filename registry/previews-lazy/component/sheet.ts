@@ -46,4 +46,19 @@ export const PREVIEWS = {
       (module) => module.Menu007,
     ),
   ),
+  "sheet-008": dynamic(() =>
+    import("@/registry/components/sheet/sheet-008/sheet-008").then(
+      (module) => module.Sheet008,
+    ),
+  ),
+  "sheet-009": dynamic(() =>
+    import("@/registry/components/sheet/sheet-009/sheet-009").then(
+      (module) => module.Sheet009,
+    ),
+  ),
+  "sheet-010": dynamic(() =>
+    import("@/registry/components/sheet/sheet-010/sheet-010").then(
+      (module) => module.Sheet010,
+    ),
+  ),
 } satisfies PreviewMap

@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Sheet004Props = Omit<
@@ -16,6 +16,8 @@ export type Sheet004Props = Omit<
   closeLabel?: string
   /** Что написать на плашке, если у имени нет расширения. */
   extensionFallback?: string
+  /** Открыть лист сразу и без модального режима: он остаётся внутри блока. */
+  defaultOpen?: boolean
   accent?: string
   /** Подложка листа и кнопки открытия. Пусто — штатная палитра. */
   background?: string
@@ -120,6 +122,13 @@ flex:1;border-color:transparent;background:var(--vibeui-sheet-004-accent);color:
 [data-vibeui-block="sheet-004"] dd{font-size:0.9375rem}
 [data-vibeui-block="sheet-004"] [data-part="body"]{padding-top:1.0625rem}
 }
+/* Немодальный показ: лист остаётся внутри блока, а не уходит в верхний
+   слой поверх страницы. Так его показывают на витрине и в документации. */
+[data-vibeui-block="sheet-004"]:has(dialog:not(:modal)[open]){
+display:block;position:relative;width:100%;min-height:24rem;
+}
+[data-vibeui-block="sheet-004"] dialog:not(:modal){position:absolute;max-height:100%;z-index:1}
+[data-vibeui-block="sheet-004"]:has(dialog:not(:modal)[open]) [data-part="trigger"]{display:none}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="sheet-004"] *{animation:none!important;transition:none!important}
 [data-vibeui-block="sheet-004"] dialog{translate:0 0}
@@ -172,6 +181,7 @@ export function Sheet004({
   downloadLabel = "Скачать",
   closeLabel = "Закрыть",
   extensionFallback = "файл",
+  defaultOpen = false,
   accent,
   background = "",
   className,
@@ -179,6 +189,26 @@ export function Sheet004({
   ...props
 }: Sheet004Props) {
   const sheet = useRef<HTMLDialogElement>(null)
+
+  // show() вместо showModal(): немодальный лист живёт внутри своего блока и
+  // не уводит страницу в верхний слой. Витрине нужен именно такой.
+  useEffect(() => {
+    if (!defaultOpen) {
+      return
+    }
+
+    const active = document.activeElement
+
+    sheet.current?.show()
+
+    // show() уводит фокус внутрь листа. Для немодального показа это лишнее:
+    // страница не должна прыгать к панели просто потому, что та открыта.
+    if (active instanceof HTMLElement && active !== document.body) {
+      active.focus()
+    } else if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur()
+    }
+  }, [defaultOpen])
 
   const palette = {
     ...(accent ? { "--vibeui-sheet-004-accent": accent } : null),

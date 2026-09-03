@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Sheet002Group = {
@@ -17,6 +17,8 @@ export type Sheet002Props = Omit<
   groups?: Sheet002Group[]
   /** Имя кнопки закрытия для скринридера: русское по умолчанию. */
   closeLabel?: string
+  /** Открыть лист сразу и без модального режима: он остаётся внутри блока. */
+  defaultOpen?: boolean
   accent?: string
   /** Подложка листа и кнопки открытия. Пусто — штатная палитра. */
   background?: string
@@ -122,6 +124,13 @@ transition:translate .16s ease;
 [data-vibeui-block="sheet-002"] [data-part="row"] input:checked{background:var(--vibeui-sheet-002-accent)}
 [data-vibeui-block="sheet-002"] [data-part="row"] input:checked::after{translate:0.9375rem 0}
 [data-vibeui-block="sheet-002"] [data-part="row"] input:focus-visible{outline:2px solid var(--vibeui-sheet-002-accent);outline-offset:2px}
+/* Немодальный показ: лист остаётся внутри блока, а не уходит в верхний
+   слой поверх страницы. Так его показывают на витрине и в документации. */
+[data-vibeui-block="sheet-002"]:has(dialog:not(:modal)[open]){
+display:block;position:relative;width:100%;min-height:22rem;
+}
+[data-vibeui-block="sheet-002"] dialog:not(:modal){position:absolute;max-height:100%;z-index:1}
+[data-vibeui-block="sheet-002"]:has(dialog:not(:modal)[open]) [data-part="trigger"]{display:none}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="sheet-002"] *{animation:none!important;transition:none!important}
 [data-vibeui-block="sheet-002"] dialog{translate:0 0}
@@ -185,6 +194,7 @@ export function Sheet002({
   title = "Настройки",
   groups = DEFAULT_GROUPS,
   closeLabel = "Закрыть настройки",
+  defaultOpen = false,
   accent,
   background = "",
   className,
@@ -192,6 +202,26 @@ export function Sheet002({
   ...props
 }: Sheet002Props) {
   const sheet = useRef<HTMLDialogElement>(null)
+
+  // show() вместо showModal(): немодальный лист живёт внутри своего блока и
+  // не уводит страницу в верхний слой. Витрине нужен именно такой.
+  useEffect(() => {
+    if (!defaultOpen) {
+      return
+    }
+
+    const active = document.activeElement
+
+    sheet.current?.show()
+
+    // show() уводит фокус внутрь листа. Для немодального показа это лишнее:
+    // страница не должна прыгать к панели просто потому, что та открыта.
+    if (active instanceof HTMLElement && active !== document.body) {
+      active.focus()
+    } else if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur()
+    }
+  }, [defaultOpen])
 
   const palette = {
     ...(accent ? { "--vibeui-sheet-002-accent": accent } : null),
