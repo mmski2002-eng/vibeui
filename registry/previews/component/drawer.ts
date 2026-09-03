@@ -13,6 +13,9 @@ import { Drawer005 } from "@/registry/components/drawer/drawer-005/drawer-005"
 import { Drawer006 } from "@/registry/components/drawer/drawer-006/drawer-006"
 import { Drawer007 } from "@/registry/components/drawer/drawer-007/drawer-007"
 import { Drawer008 } from "@/registry/components/drawer/drawer-008/drawer-008"
+import { Drawer009 } from "@/registry/components/drawer/drawer-009/drawer-009"
+import { Drawer010 } from "@/registry/components/drawer/drawer-010/drawer-010"
+import { Drawer011 } from "@/registry/components/drawer/drawer-011/drawer-011"
 
 export const PREVIEWS = {
   "drawer-001": Drawer001,
@@ -23,4 +26,7 @@ export const PREVIEWS = {
   "drawer-006": Drawer006,
   "drawer-007": Drawer007,
   "drawer-008": Drawer008,
+  "drawer-009": Drawer009,
+  "drawer-010": Drawer010,
+  "drawer-011": Drawer011,
 } satisfies Record<string, ComponentType<PreviewProps>>

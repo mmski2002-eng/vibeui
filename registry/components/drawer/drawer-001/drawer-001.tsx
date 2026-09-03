@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Drawer001Props = Omit<
@@ -17,6 +17,8 @@ export type Drawer001Props = Omit<
   closeLabel?: string
   /** Пусто — подложки нет, триггер лежит прямо на фоне страницы. */
   background?: string
+  /** Открыть шторку сразу и без модального режима: она остаётся внутри блока. */
+  defaultOpen?: boolean
   accent?: string
 }
 
@@ -102,6 +104,13 @@ background:transparent;color:inherit;font:inherit;font-size:0.875rem;font-weight
 [data-vibeui-block="drawer-001"] [data-part="foot"] button[data-primary="true"]{
 border-color:transparent;background:var(--vibeui-drawer-001-accent);color:var(--vibeui-drawer-001-on-accent);
 }
+/* Немодальный показ: шторка остаётся внутри блока, а не уходит в верхний
+   слой поверх страницы. Так её показывают на витрине и в документации. */
+[data-vibeui-block="drawer-001"]:has(dialog:not(:modal)[open]){
+display:block;position:relative;width:100%;min-height:24rem;
+}
+[data-vibeui-block="drawer-001"] dialog:not(:modal){position:absolute;max-width:100%;max-height:100%;z-index:1}
+[data-vibeui-block="drawer-001"]:has(dialog:not(:modal)[open]) [data-part="trigger"]{display:none}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="drawer-001"] dialog{transition:none!important;translate:0 0}
 }
@@ -141,12 +150,33 @@ export function Drawer001({
   cancelLabel = "Отмена",
   closeLabel = "Закрыть панель",
   background = "",
+  defaultOpen = false,
   accent,
   className,
   style,
   ...props
 }: Drawer001Props) {
   const panel = useRef<HTMLDialogElement>(null)
+
+  useEffect(() => {
+    if (!defaultOpen) {
+      return
+    }
+
+    const active = document.activeElement
+
+    // show() вместо showModal(): немодальная шторка живёт внутри своего блока
+    // и не уводит страницу в верхний слой. Витрине нужна именно такая.
+    panel.current?.show()
+
+    // show() уводит фокус внутрь панели. Для немодального показа это лишнее:
+    // страница не должна прыгать к шторке просто потому, что та открыта.
+    if (active instanceof HTMLElement && active !== document.body) {
+      active.focus()
+    } else if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur()
+    }
+  }, [defaultOpen])
 
   const palette = {
     ...(accent ? { "--vibeui-drawer-001-accent": accent } : null),

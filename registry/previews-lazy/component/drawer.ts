@@ -46,4 +46,19 @@ export const PREVIEWS = {
       (module) => module.Drawer008,
     ),
   ),
+  "drawer-009": dynamic(() =>
+    import("@/registry/components/drawer/drawer-009/drawer-009").then(
+      (module) => module.Drawer009,
+    ),
+  ),
+  "drawer-010": dynamic(() =>
+    import("@/registry/components/drawer/drawer-010/drawer-010").then(
+      (module) => module.Drawer010,
+    ),
+  ),
+  "drawer-011": dynamic(() =>
+    import("@/registry/components/drawer/drawer-011/drawer-011").then(
+      (module) => module.Drawer011,
+    ),
+  ),
 } satisfies PreviewMap

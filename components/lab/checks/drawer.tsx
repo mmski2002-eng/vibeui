@@ -8,6 +8,9 @@ import { Drawer005 } from "@/registry/components/drawer/drawer-005/drawer-005"
 import { Drawer006 } from "@/registry/components/drawer/drawer-006/drawer-006"
 import { Drawer007 } from "@/registry/components/drawer/drawer-007/drawer-007"
 import { Drawer008 } from "@/registry/components/drawer/drawer-008/drawer-008"
+import { Drawer009 } from "@/registry/components/drawer/drawer-009/drawer-009"
+import { Drawer010 } from "@/registry/components/drawer/drawer-010/drawer-010"
+import { Drawer011 } from "@/registry/components/drawer/drawer-011/drawer-011"
 
 /** Seed прогона: с ним набор воспроизводится один в один. */
 export const SEED = 60513
@@ -24,8 +27,7 @@ export const CHECKS: LabCheck[] = [
       "Акцент: #140747",
     ],
     node: (
-      <Drawer001
-        triggerLabel="Смена"
+      <Drawer001 defaultOpen         triggerLabel="Смена"
         title="Что дальше"
         primaryLabel="Черновик"
         cancelLabel="Смена"
@@ -43,8 +45,7 @@ export const CHECKS: LabCheck[] = [
       "Акцент: #3a0ad7",
     ],
     node: (
-      <Drawer002
-        triggerLabel="Что дальше"
+      <Drawer002 defaultOpen         triggerLabel="Что дальше"
         title="Что дальше"
         cancelLabel="Проверка"
         accent="#3a0ad7"
@@ -61,8 +62,7 @@ export const CHECKS: LabCheck[] = [
       "Акцент: #ef2254",
     ],
     node: (
-      <Drawer003
-        title="Смена"
+      <Drawer003 defaultOpen         title="Смена"
         applyLabel="Смена"
         resetLabel="Смена"
         accent="#ef2254"
@@ -79,8 +79,7 @@ export const CHECKS: LabCheck[] = [
       "Акцент: #ea8b34",
     ],
     node: (
-      <Drawer004
-        title="Смена"
+      <Drawer004 defaultOpen         title="Смена"
         status="Подпись: тест"
         historyLabel="Проверка"
         accent="#ea8b34"
@@ -97,8 +96,7 @@ export const CHECKS: LabCheck[] = [
       "Акцент: #3ca143",
     ],
     node: (
-      <Drawer005
-        title="Подпись: тест"
+      <Drawer005 defaultOpen         title="Подпись: тест"
         delivery={2298}
         currency="42"
         accent="#3ca143"
@@ -115,8 +113,7 @@ export const CHECKS: LabCheck[] = [
       "Акцент: #8ec4f3",
     ],
     node: (
-      <Drawer006
-        title="Смена"
+      <Drawer006 defaultOpen         title="Смена"
         warning="Проверка"
         saveLabel="Смена"
         accent="#8ec4f3"
@@ -133,8 +130,7 @@ export const CHECKS: LabCheck[] = [
       "Акцент: #7c9fc1",
     ],
     node: (
-      <Drawer007
-        title="Проверка"
+      <Drawer007 defaultOpen         title="Проверка"
         acceptLabel="Смена"
         agreeLabel="Подпись: тест"
         accent="#7c9fc1"
@@ -151,11 +147,51 @@ export const CHECKS: LabCheck[] = [
       "Акцент: #cf7c43",
     ],
     node: (
-      <Drawer008
-        title="Подпись: тест"
+      <Drawer008 defaultOpen         title="Подпись: тест"
         finishLabel="Смена"
         nextLabel="Смена"
         accent="#cf7c43"
+      />
+    ),
+  },
+  {
+    name: "drawer-009",
+    title: "Шторка с вкладками",
+    notes: ["Заголовок: Договор 118", "Открытый раздел: history", "Акцент: #2a9d8f"],
+    node: (
+      <Drawer009
+        defaultOpen
+        title="Договор 118"
+        subtitle="Активен · 3 марта"
+        currentId="history"
+        accent="#2a9d8f"
+      />
+    ),
+  },
+  {
+    name: "drawer-010",
+    title: "Выбор из списка",
+    notes: ["Заголовок: Плательщик", "Подсказка поиска: Кого ищем", "Акцент: #9d4edd"],
+    node: (
+      <Drawer010
+        defaultOpen
+        title="Плательщик"
+        placeholder="Кого ищем"
+        confirmLabel="Готово"
+        accent="#9d4edd"
+      />
+    ),
+  },
+  {
+    name: "drawer-011",
+    title: "Изменяемая ширина",
+    notes: ["Заголовок: Инспектор", "Ширина, rem: 22", "Акцент: #e07a5f"],
+    node: (
+      <Drawer011
+        defaultOpen
+        title="Инспектор"
+        defaultWidth={22}
+        accent="#e07a5f"
       />
     ),
   },
