@@ -43,7 +43,7 @@ const STYLES = `
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="togglegroup-007"]{color-scheme:dark}
 [data-vibeui-block="togglegroup-007"]{
 box-sizing:border-box;display:inline-flex;align-items:center;gap:0.375rem;
-max-width:100%;padding:0.3125rem;
+max-width:100%;overflow-x:auto;padding:0.3125rem;
 border:1px solid var(--vibeui-togglegroup-007-border);border-radius:0.75rem;
 background:var(--vibeui-togglegroup-007-bg);color:var(--vibeui-togglegroup-007-fg);
 font-family:var(--vibeui-togglegroup-007-font);

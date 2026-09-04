@@ -32,6 +32,7 @@ const STYLES = `
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="buttongroup-002"]{color-scheme:dark}
 [data-vibeui-block="buttongroup-002"]{
 box-sizing:border-box;display:inline-flex;isolation:isolate;
+max-inline-size:100%;overflow-x:auto;
 border:1px solid var(--vibeui-buttongroup-002-border);
 border-radius:var(--vibeui-buttongroup-002-radius);
 background:var(--vibeui-buttongroup-002-surface);

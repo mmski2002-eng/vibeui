@@ -65,6 +65,13 @@ transition:opacity .15s ease,translate .15s ease,visibility .15s;
 }
 [data-vibeui-block="hovercard-002"] [data-part="host"]:hover [data-part="card"],
 [data-vibeui-block="hovercard-002"] [data-part="host"]:focus-within [data-part="card"]{opacity:1;visibility:visible;translate:0 0}
+/* На узком экране якорь — не узкая ссылка в строке, а весь блок: иначе
+   карточка шириной 17rem вылезает за правый край страницы. */
+@media (max-width:32rem){
+[data-vibeui-block="hovercard-002"]{position:relative}
+[data-vibeui-block="hovercard-002"] [data-part="host"]{position:static}
+[data-vibeui-block="hovercard-002"] [data-part="card"]{left:0;right:0;width:auto}
+}
 /* Обложка вместо скриншота: градиент по оттенку домена и его первая буква. */
 [data-vibeui-block="hovercard-002"] [data-part="cover"]{
 display:flex;align-items:center;justify-content:center;

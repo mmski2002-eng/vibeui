@@ -31,8 +31,10 @@ const STYLES = `
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="pagination-001"]{color-scheme:dark}
 [data-vibeui-block="pagination-001"]{font-family:var(--vibeui-pagination-001-font)}
+/* flex-wrap: номера — ссылки минимум 2.25rem каждая, на 320px их не всегда
+   вмещает одна строка. Перенос не даёт странице скроллиться. */
 [data-vibeui-block="pagination-001"] ul{
-display:flex;align-items:center;gap:0.25rem;margin:0;padding:0;list-style:none;
+display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:0.25rem;margin:0;padding:0;list-style:none;
 }
 [data-vibeui-block="pagination-001"] a,
 [data-vibeui-block="pagination-001"] [data-part="gap"]{

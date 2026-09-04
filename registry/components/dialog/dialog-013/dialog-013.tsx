@@ -70,7 +70,7 @@ transition:opacity .18s ease,transform .18s ease,display .18s allow-discrete,ove
 [data-vibeui-dialog-013-window]::backdrop{background:oklch(0.18 0.02 265 / 45%)}
 [data-vibeui-dialog-013-window] [data-part="title"]{margin:0 0 0.25rem;font-size:1.0625rem;font-weight:620;line-height:1.35}
 [data-vibeui-dialog-013-window] [data-part="description"]{margin:0 0 1rem;font-size:0.8125rem;line-height:1.5;color:var(--vibeui-dialog-013-muted,light-dark(oklch(0.5 0.014 265),oklch(0.7 0.012 265)))}
-[data-vibeui-dialog-013-window] [data-part="scale"]{display:flex;gap:0.375rem}
+[data-vibeui-dialog-013-window] [data-part="scale"]{display:flex;flex-wrap:wrap;gap:0.375rem}
 /* Оценка словами, а не звёздами: «тройка» ничего не значит без подписи. */
 [data-vibeui-dialog-013-window] [data-part="grade"]{
 flex:1 1 0;display:flex;align-items:center;justify-content:center;

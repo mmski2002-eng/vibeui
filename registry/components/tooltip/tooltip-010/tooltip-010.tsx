@@ -73,12 +73,21 @@ background:var(--vibeui-tooltip-010-chip);
 font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
 font-size:0.6875rem;font-weight:600;letter-spacing:0.02em;
 }
-/* На узкой странице подсказка в одну строку не помещается между пунктом и
-   краем экрана: переносим подпись и сжимаем ширину, чтобы не толкать
-   горизонтальный скролл. На широком экране это правило не действует. */
+/* Между пунктом и краем экрана на 320px всего ~2rem — подсказке справа
+   не хватает места ни при какой ширине. На узком экране она переезжает
+   под пункт, где место есть. На широком экране это правило не действует. */
 @media (max-width:32rem){
 [data-vibeui-block="tooltip-010"] [data-part="tip"]{
-flex-wrap:wrap;max-width:5.5rem;overflow-wrap:anywhere;gap:0.25rem 0.5rem;
+left:0;top:calc(100% + 0.375rem);
+flex-wrap:wrap;max-width:100%;overflow-wrap:anywhere;gap:0.25rem 0.5rem;
+transform:translateY(-0.25rem);
+}
+[data-vibeui-block="tooltip-010"] [data-part="tip"]::before{
+left:0.75rem;top:-0.1875rem;margin-top:0;
+}
+[data-vibeui-block="tooltip-010"] [data-part="row"]:hover [data-part="tip"],
+[data-vibeui-block="tooltip-010"] [data-part="row"]:focus-within [data-part="tip"]{
+transform:translateY(0);
 }
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="tooltip-010"] *{animation:none!important;transition:none!important}}

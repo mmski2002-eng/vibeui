@@ -91,6 +91,7 @@ stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke;
 display:flex;justify-content:space-between;margin:0.25rem 0 0.875rem;
 font-size:0.6875rem;color:var(--vibeui-solutions-001-muted);
 }
+[data-vibeui-block="solutions-001"] [data-part="tablewrap"]{overflow-x:auto}
 [data-vibeui-block="solutions-001"] table{width:100%;border-collapse:collapse;font-size:0.8125rem}
 [data-vibeui-block="solutions-001"] th,
 [data-vibeui-block="solutions-001"] td{
@@ -262,58 +263,60 @@ export function Solutions001({
           ))}
         </p>
 
-        <table>
-          <thead>
-            <tr>
-              <th scope="col">
-                {columnText.source ?? DEFAULT_COLUMN_TEXT.source}
-              </th>
-              <th scope="col" data-align="end">
-                {columnText.visits ?? DEFAULT_COLUMN_TEXT.visits}
-              </th>
-              <th scope="col" data-align="end">
-                {columnText.share ?? DEFAULT_COLUMN_TEXT.share}
-              </th>
-              <th scope="col" data-align="end">
-                {columnText.trend ?? DEFAULT_COLUMN_TEXT.trend}
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((row) => (
-              <tr key={row.source}>
-                <td>{row.source}</td>
-                <td data-align="end">{row.visits}</td>
-                <td
-                  data-part="share"
-                  data-align="end"
-                  style={
-                    {
-                      "--vibeui-solutions-001-fill": `${row.share}%`,
-                    } as CSSProperties
-                  }
-                >
-                  {row.share} %
+        <div data-part="tablewrap">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">
+                  {columnText.source ?? DEFAULT_COLUMN_TEXT.source}
+                </th>
+                <th scope="col" data-align="end">
+                  {columnText.visits ?? DEFAULT_COLUMN_TEXT.visits}
+                </th>
+                <th scope="col" data-align="end">
+                  {columnText.share ?? DEFAULT_COLUMN_TEXT.share}
+                </th>
+                <th scope="col" data-align="end">
+                  {columnText.trend ?? DEFAULT_COLUMN_TEXT.trend}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((row) => (
+                <tr key={row.source}>
+                  <td>{row.source}</td>
+                  <td data-align="end">{row.visits}</td>
+                  <td
+                    data-part="share"
+                    data-align="end"
+                    style={
+                      {
+                        "--vibeui-solutions-001-fill": `${row.share}%`,
+                      } as CSSProperties
+                    }
+                  >
+                    {row.share} %
+                  </td>
+                  <td data-align="end" data-trend={row.trend ?? "flat"}>
+                    {row.delta}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+            <tfoot>
+              <tr>
+                <td>{totalRowText.label ?? DEFAULT_TOTAL_ROW_TEXT.label}</td>
+                <td data-align="end">{total}</td>
+                <td data-align="end">
+                  {totalRowText.share ?? DEFAULT_TOTAL_ROW_TEXT.share}
                 </td>
-                <td data-align="end" data-trend={row.trend ?? "flat"}>
-                  {row.delta}
+                <td data-align="end" data-trend="up">
+                  {totalRowText.delta ?? DEFAULT_TOTAL_ROW_TEXT.delta}
                 </td>
               </tr>
-            ))}
-          </tbody>
-          <tfoot>
-            <tr>
-              <td>{totalRowText.label ?? DEFAULT_TOTAL_ROW_TEXT.label}</td>
-              <td data-align="end">{total}</td>
-              <td data-align="end">
-                {totalRowText.share ?? DEFAULT_TOTAL_ROW_TEXT.share}
-              </td>
-              <td data-align="end" data-trend="up">
-                {totalRowText.delta ?? DEFAULT_TOTAL_ROW_TEXT.delta}
-              </td>
-            </tr>
-          </tfoot>
-        </table>
+            </tfoot>
+          </table>
+        </div>
       </section>
     </>
   )

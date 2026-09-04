@@ -50,7 +50,7 @@ const STYLES = `
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="sortable-007"]{color-scheme:dark}
 [data-vibeui-block="sortable-007"]{
-position:relative;display:grid;gap:0.625rem;
+position:relative;display:grid;grid-template-columns:minmax(0,1fr);gap:0.625rem;
 width:100%;max-width:22rem;box-sizing:border-box;padding:0.875rem;
 background:var(--vibeui-sortable-007-bg);
 border:1px solid var(--vibeui-sortable-007-border);border-radius:0.875rem;

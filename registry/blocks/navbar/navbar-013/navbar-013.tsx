@@ -73,7 +73,7 @@ transition:color .16s ease;
 }
 [data-vibeui-block="navbar-013"] [data-part="top-inner"] a:hover{color:var(--vibeui-navbar-013-ink)}
 [data-vibeui-block="navbar-013"] [data-part="main"]{
-display:flex;align-items:center;gap:1rem;
+display:flex;align-items:center;flex-wrap:wrap;gap:1rem;
 max-width:82rem;margin:0 auto;padding:0.875rem 1rem;
 }
 [data-vibeui-block="navbar-013"] [data-part="brand"]{

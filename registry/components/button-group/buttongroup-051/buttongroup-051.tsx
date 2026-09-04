@@ -46,7 +46,7 @@ const STYLES = `
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="buttongroup-051"]{color-scheme:dark}
 [data-vibeui-block="buttongroup-051"]{
-box-sizing:border-box;display:block;width:100%;max-width:26rem;
+box-sizing:border-box;display:block;width:100%;max-width:26rem;min-inline-size:0;
 margin:0;padding:0;border:0;
 font-family:var(--vibeui-buttongroup-051-font);
 }
@@ -55,7 +55,7 @@ font-family:var(--vibeui-buttongroup-051-font);
 position:absolute;width:1px;height:1px;padding:0;margin:-1px;
 overflow:hidden;clip-path:inset(50%);white-space:nowrap;
 }
-[data-vibeui-block="buttongroup-051"] [data-part="track"]{display:flex;isolation:isolate}
+[data-vibeui-block="buttongroup-051"] [data-part="track"]{display:flex;isolation:isolate;max-inline-size:100%}
 [data-vibeui-block="buttongroup-051"] [data-part="level"]{
 position:relative;z-index:0;flex:1 1 0;min-width:0;
 display:inline-flex;align-items:center;justify-content:center;gap:0.4375rem;
@@ -65,6 +65,11 @@ background:var(--vibeui-buttongroup-051-surface);
 color:var(--vibeui-buttongroup-051-muted);
 font-size:0.8125rem;font-weight:650;line-height:1;white-space:nowrap;cursor:pointer;
 transition:background-color .16s ease,color .16s ease,border-color .16s ease;
+}
+/* Подпись — единственная часть сегмента, способная не влезть: у неё, а не
+   у всего сегмента, отдаём лишний текст многоточию. */
+[data-vibeui-block="buttongroup-051"] [data-part="level"] [data-part="label"]{
+min-width:0;overflow:hidden;text-overflow:ellipsis;
 }
 [data-vibeui-block="buttongroup-051"] [data-part="level"]:first-child{
 margin-inline-start:0;
@@ -194,7 +199,7 @@ export function Buttongroup051({
                   <i key={step} data-on={step <= level.bars} />
                 ))}
               </span>
-              <span>{level.label}</span>
+              <span data-part="label">{level.label}</span>
             </label>
           ))}
         </form>

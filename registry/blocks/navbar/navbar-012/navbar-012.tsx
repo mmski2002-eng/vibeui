@@ -68,7 +68,7 @@ border-bottom:1px solid var(--vibeui-navbar-012-border);
 font-family:var(--vibeui-navbar-012-font);
 }
 [data-vibeui-block="navbar-012"] [data-part="shell"]{
-display:flex;align-items:center;gap:0.75rem;
+display:flex;align-items:center;flex-wrap:wrap;gap:0.75rem;
 max-width:80rem;margin:0 auto;padding:0.75rem 1rem;
 }
 [data-vibeui-block="navbar-012"] [data-part="brand"]{
@@ -78,7 +78,8 @@ color:inherit;text-decoration:none;
 [data-vibeui-block="navbar-012"] [data-part="brand"] strong{font-size:1.0625rem;font-weight:730;letter-spacing:-0.03em}
 [data-vibeui-block="navbar-012"] [data-part="tagline"]{color:var(--vibeui-navbar-012-muted);font-size:0.6875rem;letter-spacing:0.04em;text-transform:uppercase}
 [data-vibeui-block="navbar-012"] [data-part="call"]{
-margin-left:auto;color:var(--vibeui-navbar-012-ink);text-decoration:none;
+order:3;flex:1 1 100%;
+color:var(--vibeui-navbar-012-ink);text-decoration:none;
 font-size:0.9375rem;font-weight:640;white-space:nowrap;
 }
 [data-vibeui-block="navbar-012"] [data-part="burger"]{
@@ -142,6 +143,7 @@ font-weight:640;
 @container (min-width: 44rem){
 [data-vibeui-block="navbar-012"] [data-part="shell"]{padding:0.9375rem 2rem;gap:1.5rem}
 [data-vibeui-block="navbar-012"] [data-part="brand"] strong{font-size:1.25rem}
+[data-vibeui-block="navbar-012"] [data-part="call"]{order:0;flex:none;margin-left:auto}
 }
 /* Развёрнутый режим: ящик встаёт в потоке под шапкой во всю её ширину,
    а не уезжает справа во весь экран. */

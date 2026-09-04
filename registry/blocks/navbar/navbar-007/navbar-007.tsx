@@ -52,7 +52,7 @@ border-bottom:1px solid var(--vibeui-navbar-007-border);
 font-family:var(--vibeui-navbar-007-font);
 }
 [data-vibeui-block="navbar-007"] [data-part="shell"]{
-display:flex;align-items:center;gap:1rem;
+display:flex;align-items:center;flex-wrap:wrap;gap:1rem;
 max-width:80rem;margin:0 auto;padding:0.75rem 1rem;
 }
 [data-vibeui-block="navbar-007"] [data-part="brand"]{

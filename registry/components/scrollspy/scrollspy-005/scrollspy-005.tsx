@@ -177,7 +177,9 @@ export function Scrollspy005({
           )[0]
         if (visible) setActive(visible.target.id)
       },
-      { root, rootMargin: "-2.5rem 0px -65% 0px", threshold: 0 },
+      // rootMargin понимает только px и %: rem бросает SyntaxError и обрывает
+      // эффект, поэтому высота панели (2.5rem) переведена в пиксели вручную.
+      { root, rootMargin: "-40px 0px -65% 0px", threshold: 0 },
     )
 
     root

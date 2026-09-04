@@ -45,6 +45,7 @@ const STYLES = `
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="buttongroup-028"]{color-scheme:dark}
 [data-vibeui-block="buttongroup-028"]{
 box-sizing:border-box;display:inline-block;
+max-inline-size:100%;min-inline-size:0;
 margin:0;padding:0;border:0;
 font-family:var(--vibeui-buttongroup-028-font);
 }
@@ -55,10 +56,10 @@ overflow:hidden;clip-path:inset(50%);white-space:nowrap;
 }
 [data-vibeui-block="buttongroup-028"] [data-part="track"]{
 display:flex;align-items:stretch;isolation:isolate;
+max-inline-size:100%;overflow-x:auto;
 border:1px solid var(--vibeui-buttongroup-028-border);
 border-radius:var(--vibeui-buttongroup-028-radius);
 background:var(--vibeui-buttongroup-028-surface);
-overflow:hidden;
 }
 [data-vibeui-block="buttongroup-028"] [data-part="field"]{
 display:inline-flex;align-items:center;

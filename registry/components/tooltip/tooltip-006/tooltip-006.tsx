@@ -35,7 +35,9 @@ border:1px solid var(--vibeui-tooltip-006-border);border-radius:1rem;
 background:var(--vibeui-tooltip-006-bg);color:var(--vibeui-tooltip-006-fg);
 font-family:var(--vibeui-tooltip-006-font);
 }
-[data-vibeui-block="tooltip-006"] [data-part="row"]{display:flex;justify-content:space-between;gap:0.5rem}
+/* flex-wrap: три кнопки с nowrap-подписями не сжимаются меньше своего
+   текста — на 320px это шире экрана. Перенос не даёт странице скроллиться. */
+[data-vibeui-block="tooltip-006"] [data-part="row"]{display:flex;flex-wrap:wrap;justify-content:space-between;gap:0.5rem}
 [data-vibeui-block="tooltip-006"] [data-part="item"]{position:relative;display:inline-flex}
 [data-vibeui-block="tooltip-006"] [data-part="button"]{
 appearance:none;cursor:pointer;

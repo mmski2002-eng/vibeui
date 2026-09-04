@@ -39,12 +39,16 @@ const STYLES = `
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="navmenu-003"]{color-scheme:dark}
 [data-vibeui-block="navmenu-003"]{
 box-sizing:border-box;width:100%;max-width:32rem;padding:0.375rem;
-display:flex;align-items:center;gap:0.125rem;
+display:flex;align-items:center;flex-wrap:wrap;gap:0.125rem;
 background:var(--vibeui-navmenu-003-bg);color:var(--vibeui-navmenu-003-fg);
 border:1px solid var(--vibeui-navmenu-003-border);border-radius:0.75rem;
 font-family:var(--vibeui-navmenu-003-font);
 }
 [data-vibeui-block="navmenu-003"] [data-part="slot"]{position:relative}
+/* Закрытый столбик всё равно абсолютно позиционирован: браузер не всегда
+   убирает его из потока ширины страницы, раз он выходит за пределы clip
+   у <details>. display:none снимает вопрос однозначно. */
+[data-vibeui-block="navmenu-003"] [data-part="slot"]:not([open]) [data-part="menu"]{display:none}
 [data-vibeui-block="navmenu-003"] [data-part="trigger"],
 [data-vibeui-block="navmenu-003"] [data-part="plain"]{
 list-style:none;cursor:pointer;text-decoration:none;color:inherit;

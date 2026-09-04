@@ -39,18 +39,26 @@ const STYLES = `
 --vibeui-table-002-yes:light-dark(oklch(0.58 0.15 152),oklch(0.76 0.14 152));
 --vibeui-table-002-radius:0.75rem;
 --vibeui-table-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="table-002"]{color-scheme:dark}
 [data-vibeui-block="table-002"]{
-width:100%;box-sizing:border-box;overflow-x:auto;
+width:100%;min-width:min(100%,16rem);box-sizing:border-box;overflow-x:auto;
 border:1px solid var(--vibeui-table-002-border);
 border-radius:var(--vibeui-table-002-radius);
 background:var(--vibeui-table-002-bg);color:var(--vibeui-table-002-fg);
 font-family:var(--vibeui-table-002-font);
 }
-[data-vibeui-block="table-002"] table{width:100%;border-collapse:separate;border-spacing:0;font-size:0.875rem}
+/* table-layout:auto считает ширины колонок по nowrap-содержимому и не
+   признаёт border-box контейнера: на узком экране это раздвигает страницу
+   мимо overflow-x:auto обёртки. Fixed держит таблицу в её ширине, auto
+   возвращается, когда контейнеру хватает места под исходные пропорции. */
+[data-vibeui-block="table-002"] table{width:100%;table-layout:fixed;border-collapse:separate;border-spacing:0;font-size:0.875rem}
+@container (min-width: 28rem){
+[data-vibeui-block="table-002"] table{table-layout:auto}
+}
 [data-vibeui-block="table-002"] th,
 [data-vibeui-block="table-002"] td{
 padding:0.6875rem 0.875rem;border-bottom:1px solid var(--vibeui-table-002-border);

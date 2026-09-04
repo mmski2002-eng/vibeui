@@ -86,7 +86,9 @@ gap:0.5rem;margin-bottom:1rem;
 [data-vibeui-block="dashboard-001"] [data-part="metrics"]{
 display:grid;grid-template-columns:1fr;gap:0.75rem;margin-bottom:0.75rem;
 }
-[data-vibeui-block="dashboard-001"] [data-part="grid"]{display:grid;grid-template-columns:1fr;gap:0.75rem}
+/* minmax(0,1fr), а не просто 1fr: у грид-колонки авто-минимум равен
+   min-content потомков, и карточка с таблицей раздвигала бы страницу. */
+[data-vibeui-block="dashboard-001"] [data-part="grid"]{display:grid;grid-template-columns:minmax(0,1fr);gap:0.75rem}
 /* Сетка считается от ширины блока: панель живёт и в узкой колонке. */
 @container (min-width: 34rem){
 [data-vibeui-block="dashboard-001"] [data-part="metrics"]{grid-template-columns:repeat(3,1fr)}
@@ -126,6 +128,7 @@ vector-effect:non-scaling-stroke;
 display:flex;justify-content:space-between;margin:0.25rem 0 0;
 font-size:0.6875rem;color:var(--vibeui-dashboard-001-muted);
 }
+[data-vibeui-block="dashboard-001"] [data-part="tablewrap"]{overflow-x:auto}
 [data-vibeui-block="dashboard-001"] table{width:100%;border-collapse:collapse;font-size:0.8125rem}
 [data-vibeui-block="dashboard-001"] th,
 [data-vibeui-block="dashboard-001"] td{
@@ -309,40 +312,42 @@ export function Dashboard001({
 
           <article data-part="card">
             <p data-part="label">{sourcesTitle}</p>
-            <table>
-              <thead>
-                <tr>
-                  <th scope="col">
-                    {columnText.source ?? DEFAULT_COLUMNS.source}
-                  </th>
-                  <th scope="col" data-align="end">
-                    {columnText.visits ?? DEFAULT_COLUMNS.visits}
-                  </th>
-                  <th scope="col" data-align="end">
-                    {columnText.share ?? DEFAULT_COLUMNS.share}
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {rows.map((row) => (
-                  <tr key={row.source}>
-                    <td>{row.source}</td>
-                    <td data-align="end">{row.visits}</td>
-                    <td
-                      data-part="share"
-                      data-align="end"
-                      style={
-                        {
-                          "--vibeui-dashboard-001-fill": `${row.share}%`,
-                        } as CSSProperties
-                      }
-                    >
-                      {fill(shareText, { share: String(row.share) })}
-                    </td>
+            <div data-part="tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">
+                      {columnText.source ?? DEFAULT_COLUMNS.source}
+                    </th>
+                    <th scope="col" data-align="end">
+                      {columnText.visits ?? DEFAULT_COLUMNS.visits}
+                    </th>
+                    <th scope="col" data-align="end">
+                      {columnText.share ?? DEFAULT_COLUMNS.share}
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {rows.map((row) => (
+                    <tr key={row.source}>
+                      <td>{row.source}</td>
+                      <td data-align="end">{row.visits}</td>
+                      <td
+                        data-part="share"
+                        data-align="end"
+                        style={
+                          {
+                            "--vibeui-dashboard-001-fill": `${row.share}%`,
+                          } as CSSProperties
+                        }
+                      >
+                        {fill(shareText, { share: String(row.share) })}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </article>
         </div>
       </section>

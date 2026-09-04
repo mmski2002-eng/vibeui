@@ -60,7 +60,7 @@ const STYLES = `
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="radio-016"]{color-scheme:dark}
 [data-vibeui-block="radio-016"]{
 display:flex;flex-direction:column;
-width:100%;max-width:26rem;box-sizing:border-box;
+width:100%;max-width:26rem;min-inline-size:0;box-sizing:border-box;
 margin:0;padding:0.5rem 0.875rem 0.875rem;
 background:var(--vibeui-radio-016-bg);
 border:1px solid var(--vibeui-radio-016-border);border-radius:0.875rem;
@@ -70,7 +70,7 @@ font-family:var(--vibeui-radio-016-font);color:var(--vibeui-radio-016-fg);
 float:left;width:100%;padding:0;margin:0.375rem 0 0.625rem;
 font-size:0.8125rem;font-weight:650;
 }
-[data-vibeui-block="radio-016"] [data-part="grid"]{clear:both;display:grid;row-gap:0}
+[data-vibeui-block="radio-016"] [data-part="grid"]{clear:both;display:grid;row-gap:0;max-inline-size:100%;overflow-x:auto}
 [data-vibeui-block="radio-016"] [data-part="cell"]{
 box-sizing:border-box;display:flex;align-items:center;
 padding:0.5rem 0.375rem;font-size:0.75rem;

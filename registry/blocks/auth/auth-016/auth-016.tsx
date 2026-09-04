@@ -105,7 +105,9 @@ border:1px solid var(--vibeui-auth-016-border);border-radius:0.625rem;
 background:var(--vibeui-auth-016-card);color:inherit;font:inherit;font-size:0.8125rem;
 }
 [data-vibeui-block="auth-016"] [data-part="search"]:focus-visible{outline:2px solid var(--vibeui-auth-016-accent);outline-offset:1px;border-color:var(--vibeui-auth-016-accent)}
-[data-vibeui-block="auth-016"] fieldset{border:0;margin:0;padding:0}
+/* У fieldset браузерный минимум по ширине содержимого: без min-width:0 он
+   не сжимается вместе с карточкой и раздвигает страницу на узких экранах. */
+[data-vibeui-block="auth-016"] fieldset{border:0;margin:0;padding:0;min-width:0}
 [data-vibeui-block="auth-016"] legend{padding:0;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--vibeui-auth-016-muted)}
 [data-vibeui-block="auth-016"] [data-part="list"]{
 display:flex;flex-direction:column;gap:0.375rem;

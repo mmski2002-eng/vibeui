@@ -96,12 +96,15 @@ background:transparent;color:var(--vibeui-drawer-009-muted);font:inherit;
 }
 [data-vibeui-block="drawer-009"] [data-part="close"]:hover{background:var(--vibeui-drawer-009-hover);color:var(--vibeui-drawer-009-fg)}
 [data-vibeui-block="drawer-009"] [data-part="tabs"]{
+/* Ряд вкладок прокручивается внутри себя: переносить его нельзя — вкладки
+   держит общая подчёркивающая линия, — а на узком экране он не помещается. */
 display:flex;gap:0.25rem;padding:0 1rem;
+overflow-x:auto;scrollbar-width:none;
 background:var(--vibeui-drawer-009-head);
 border-bottom:1px solid var(--vibeui-drawer-009-border);
 }
 [data-vibeui-block="drawer-009"] [data-part="tab"]{
-appearance:none;border:0;cursor:pointer;
+appearance:none;border:0;cursor:pointer;flex:none;white-space:nowrap;
 display:inline-flex;align-items:center;gap:0.375rem;
 padding:0.4375rem 0.5rem;margin-bottom:-1px;
 border-bottom:2px solid transparent;background:transparent;

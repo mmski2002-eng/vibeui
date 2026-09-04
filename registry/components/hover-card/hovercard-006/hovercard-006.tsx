@@ -70,6 +70,13 @@ transition:opacity .15s ease,translate .15s ease,visibility .15s;
 }
 [data-vibeui-block="hovercard-006"] [data-part="host"]:hover [data-part="card"],
 [data-vibeui-block="hovercard-006"] [data-part="host"]:focus-within [data-part="card"]{opacity:1;visibility:visible;translate:0 0}
+/* На узком экране якорь — не узкое название встречи в строке, а весь блок:
+   иначе карточка шириной 18.5rem вылезает за правый край страницы. */
+@media (max-width:32rem){
+[data-vibeui-block="hovercard-006"]{position:relative}
+[data-vibeui-block="hovercard-006"] [data-part="host"]{position:static}
+[data-vibeui-block="hovercard-006"] [data-part="card"]{left:0;right:0;width:auto}
+}
 /* Отрывной листок календаря: форму узнают быстрее, чем читают дату строкой. */
 [data-vibeui-block="hovercard-006"] [data-part="sheet"]{
 grid-row:1 / span 3;overflow:hidden;

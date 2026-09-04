@@ -57,6 +57,14 @@ transition:opacity .14s ease,translate .14s ease,visibility .14s;
 [data-vibeui-block="hovercard-001"]:focus-within [data-part="card"]{
 opacity:1;visibility:visible;translate:0 0;
 }
+/* На узком экране якорь — сама узкая ссылка-упоминание, поэтому карточка
+   шириной 15rem, прижатая левым краем к ней, вылезает за правый край
+   страницы. Центрируем карточку под триггером вместо прижатия к краю. */
+@media (max-width:32rem){
+[data-vibeui-block="hovercard-001"] [data-part="card"]{left:50%;translate:-50% -0.25rem}
+[data-vibeui-block="hovercard-001"]:hover [data-part="card"],
+[data-vibeui-block="hovercard-001"]:focus-within [data-part="card"]{translate:-50% 0}
+}
 [data-vibeui-block="hovercard-001"] [data-part="head"]{display:flex;align-items:center;gap:0.5rem}
 [data-vibeui-block="hovercard-001"] [data-part="face"]{
 display:flex;align-items:center;justify-content:center;flex:none;

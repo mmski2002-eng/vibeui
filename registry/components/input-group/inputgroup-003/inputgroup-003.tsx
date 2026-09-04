@@ -57,7 +57,7 @@ font-family:var(--vibeui-inputgroup-003-font);color:var(--vibeui-inputgroup-003-
 }
 [data-vibeui-block="inputgroup-003"] *{box-sizing:border-box}
 [data-vibeui-block="inputgroup-003"] label{font-size:0.8125rem;font-weight:600}
-[data-vibeui-block="inputgroup-003"] [data-part="group"]{display:flex;align-items:stretch}
+[data-vibeui-block="inputgroup-003"] [data-part="group"]{display:flex;align-items:stretch;max-inline-size:100%;overflow-x:auto}
 [data-vibeui-block="inputgroup-003"] [data-part="group"] > *{
 position:relative;height:2.75rem;
 border:1px solid var(--vibeui-inputgroup-003-border);

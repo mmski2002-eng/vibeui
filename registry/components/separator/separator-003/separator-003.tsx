@@ -58,6 +58,13 @@ flex:none;width:1px;background:var(--vibeui-separator-003-line);
 [data-vibeui-block="separator-003"][data-height="text"] [data-part="rule"]{
 align-self:flex-start;height:1.375rem;
 }
+/* Подписи — одно длинное слово без пробелов, nowrap держит его целиком:
+   на 320px три таких слова с разделителями шире экрана. overflow-wrap
+   позволяет подписи перенестись и сжать блок до ширины страницы. */
+@media (max-width:32rem){
+[data-vibeui-block="separator-003"]{max-width:100%}
+[data-vibeui-block="separator-003"] [data-part="caption"]{white-space:normal;overflow-wrap:anywhere}
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="separator-003"] *{animation:none!important;transition:none!important}}
 `
 

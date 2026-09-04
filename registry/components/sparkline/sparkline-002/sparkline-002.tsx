@@ -8,7 +8,7 @@ export type Sparkline002Row = {
 }
 
 export type Sparkline002Props = Omit<
-  ComponentProps<"table">,
+  ComponentProps<"div">,
   "children" | "title"
 > & {
   caption?: string
@@ -45,12 +45,13 @@ const STYLES = `
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="sparkline-002"]{color-scheme:dark}
 [data-vibeui-block="sparkline-002"]{
-width:100%;max-width:32rem;box-sizing:border-box;border-collapse:collapse;
+width:100%;max-width:32rem;box-sizing:border-box;overflow-x:auto;
 background:var(--vibeui-sparkline-002-bg);
 border:1px solid var(--vibeui-sparkline-002-border);border-radius:0.875rem;
 color:var(--vibeui-sparkline-002-fg);font-family:var(--vibeui-sparkline-002-font);
-font-size:0.8125rem;overflow:hidden;
+font-size:0.8125rem;
 }
+[data-vibeui-block="sparkline-002"] table{width:100%;border-collapse:collapse}
 [data-vibeui-block="sparkline-002"] caption{
 padding:0.75rem 0.875rem 0.5rem;text-align:left;font-size:0.875rem;font-weight:650;
 color:var(--vibeui-sparkline-002-fg);
@@ -210,60 +211,62 @@ export function Sparkline002({
       <style href="vibeui-sparkline-002" precedence="medium">
         {STYLES}
       </style>
-      <table
+      <div
         {...props}
         data-slot="sparkline"
         data-vibeui-block="sparkline-002"
         className={className}
         style={palette}
       >
-        <caption>
-          {caption}
-          <span>{note.replace("{period}", period)}</span>
-        </caption>
-        <thead>
-          <tr>
-            <th scope="col">{headings.metric ?? HEADINGS.metric}</th>
-            <th scope="col">{headings.value ?? HEADINGS.value}</th>
-            <th scope="col">{headings.trend ?? HEADINGS.trend}</th>
-            <th scope="col">{headings.change ?? HEADINGS.change}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((row) => {
-            const trend =
-              row.delta > FLAT ? "up" : row.delta < -FLAT ? "down" : "flat"
-            const point = lastPoint(row.values)
+        <table>
+          <caption>
+            {caption}
+            <span>{note.replace("{period}", period)}</span>
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">{headings.metric ?? HEADINGS.metric}</th>
+              <th scope="col">{headings.value ?? HEADINGS.value}</th>
+              <th scope="col">{headings.trend ?? HEADINGS.trend}</th>
+              <th scope="col">{headings.change ?? HEADINGS.change}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((row) => {
+              const trend =
+                row.delta > FLAT ? "up" : row.delta < -FLAT ? "down" : "flat"
+              const point = lastPoint(row.values)
 
-            return (
-              <tr key={row.label} data-trend={trend}>
-                <th scope="row">{row.label}</th>
-                <td data-part="value">{row.value}</td>
-                <td data-part="spark">
-                  <svg
-                    viewBox="0 0 100 24"
-                    preserveAspectRatio="none"
-                    aria-hidden="true"
-                    focusable="false"
-                  >
-                    <path data-part="line" d={pathFor(row.values)} />
-                    <circle
-                      data-part="last"
-                      cx={point.x - 1.5}
-                      cy={point.y}
-                      r={2}
-                    />
-                  </svg>
-                </td>
-                <td data-part="delta" data-trend={trend}>
-                  {row.delta > 0 ? "+" : ""}
-                  {row.delta} %
-                </td>
-              </tr>
-            )
-          })}
-        </tbody>
-      </table>
+              return (
+                <tr key={row.label} data-trend={trend}>
+                  <th scope="row">{row.label}</th>
+                  <td data-part="value">{row.value}</td>
+                  <td data-part="spark">
+                    <svg
+                      viewBox="0 0 100 24"
+                      preserveAspectRatio="none"
+                      aria-hidden="true"
+                      focusable="false"
+                    >
+                      <path data-part="line" d={pathFor(row.values)} />
+                      <circle
+                        data-part="last"
+                        cx={point.x - 1.5}
+                        cy={point.y}
+                        r={2}
+                      />
+                    </svg>
+                  </td>
+                  <td data-part="delta" data-trend={trend}>
+                    {row.delta > 0 ? "+" : ""}
+                    {row.delta} %
+                  </td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+      </div>
     </>
   )
 }

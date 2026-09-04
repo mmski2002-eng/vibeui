@@ -87,7 +87,7 @@ box-shadow:0 24px 48px -24px var(--vibeui-navmenu-002-shadow);
 }
 /* Раскладка только для открытой панели: display на элементе с popover
    перебивает display:none из стилей браузера, и панель видна всегда. */
-[data-vibeui-block="navmenu-002"] [data-part="panel"]:popover-open{display:grid;grid-template-columns:minmax(10rem,1fr) minmax(11rem,1.1fr);}
+[data-vibeui-block="navmenu-002"] [data-part="panel"]:popover-open{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);}
 @supports (anchor-name: --a){
 [data-vibeui-block="navmenu-002"] [data-part="panel"]{
 position-anchor:--vibeui-navmenu-002-bar;
@@ -138,7 +138,7 @@ text-decoration-color:var(--vibeui-navmenu-002-accent);
 [data-vibeui-block="navmenu-002"] [data-part="panel"][data-open="true"]{
 width:100%;
 position:static;inset:auto;margin-top:0.5rem;
-display:grid;grid-template-columns:minmax(10rem,1fr) minmax(11rem,1.1fr);
+display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="navmenu-002"] *{animation:none!important;transition:none!important}}
 `

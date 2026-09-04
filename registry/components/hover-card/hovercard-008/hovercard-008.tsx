@@ -85,6 +85,14 @@ transition:opacity .15s ease,translate .15s ease,visibility .15s;
 }
 [data-vibeui-block="hovercard-008"] [data-part="host"]:hover [data-part="card"],
 [data-vibeui-block="hovercard-008"] [data-part="host"]:focus-within [data-part="card"]{opacity:1;visibility:visible;translate:0 0}
+/* max-width:calc(100vw - 2rem) не спасает: 100vw не учитывает вертикальный
+   скроллбар и сам якорь (пилюля) стоит не у левого края экрана. На узком
+   экране якорем становится весь блок — так карточка гарантированно не
+   вылезает за его границы, а не только за границы вьюпорта. */
+@media (max-width:32rem){
+[data-vibeui-block="hovercard-008"] [data-part="host"]{position:static}
+[data-vibeui-block="hovercard-008"] [data-part="card"]{left:0;right:0;width:auto;max-width:none}
+}
 [data-vibeui-block="hovercard-008"] [data-part="head"]{display:flex;align-items:baseline;justify-content:space-between;gap:0.5rem}
 [data-vibeui-block="hovercard-008"] [data-part="path"]{font-size:0.9375rem;line-height:1.25;letter-spacing:-0.01em}
 [data-vibeui-block="hovercard-008"] [data-part="owner"]{color:var(--vibeui-hovercard-008-muted);font-weight:450}

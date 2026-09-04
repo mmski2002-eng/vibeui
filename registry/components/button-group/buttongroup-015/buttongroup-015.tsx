@@ -45,6 +45,7 @@ const STYLES = `
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="buttongroup-015"]{color-scheme:dark}
 [data-vibeui-block="buttongroup-015"]{
 box-sizing:border-box;display:inline-block;
+max-inline-size:100%;min-inline-size:0;
 margin:0;padding:0;border:0;
 font-family:var(--vibeui-buttongroup-015-font);
 }
@@ -53,7 +54,7 @@ font-family:var(--vibeui-buttongroup-015-font);
 position:absolute;width:1px;height:1px;padding:0;margin:-1px;
 overflow:hidden;clip-path:inset(50%);white-space:nowrap;
 }
-[data-vibeui-block="buttongroup-015"] [data-part="track"]{display:flex;isolation:isolate}
+[data-vibeui-block="buttongroup-015"] [data-part="track"]{display:flex;isolation:isolate;max-inline-size:100%;overflow-x:auto}
 [data-vibeui-block="buttongroup-015"] [data-part="segment"]{
 position:relative;z-index:0;
 display:inline-flex;align-items:center;gap:0.5rem;

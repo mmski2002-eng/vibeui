@@ -71,7 +71,7 @@ font-size:0.625rem;font-weight:800;text-decoration:none;
    отменил бы браузерный display:none и справка висела бы поверх текста. */
 [data-vibeui-block="popover-006"] [data-part="card"]{
 position:fixed;margin:0;padding:0.875rem;
-width:min(18rem,100vw - 2rem);box-sizing:border-box;
+width:min(18rem,calc(100% - 2rem));box-sizing:border-box;
 border:1px solid var(--vibeui-popover-006-border);border-radius:0.875rem;
 background:var(--vibeui-popover-006-bg);color:inherit;
 box-shadow:0 24px 52px -30px var(--vibeui-popover-006-shadow);

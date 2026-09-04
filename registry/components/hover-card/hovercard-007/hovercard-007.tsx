@@ -82,6 +82,13 @@ transition:opacity .14s ease 0s,translate .14s ease 0s,visibility .14s 0s;
 opacity:1;visibility:visible;translate:0 0;
 transition-delay:var(--vibeui-hovercard-007-delay);
 }
+/* На узком экране якорь — не узкая ссылка в строке, а весь блок: иначе
+   карточка шириной 17rem вылезает за правый край страницы. */
+@media (max-width:32rem){
+[data-vibeui-block="hovercard-007"]{position:relative}
+[data-vibeui-block="hovercard-007"] [data-part="host"]{position:static}
+[data-vibeui-block="hovercard-007"] [data-part="card"]{left:0;right:0;width:auto}
+}
 [data-vibeui-block="hovercard-007"] [data-part="title"]{font-size:0.875rem;font-weight:660;line-height:1.3}
 [data-vibeui-block="hovercard-007"] [data-part="text"]{display:block;margin:0;font-size:0.8125rem;line-height:1.5;color:var(--vibeui-hovercard-007-muted)}
 [data-vibeui-block="hovercard-007"] [data-part="hint"]{
