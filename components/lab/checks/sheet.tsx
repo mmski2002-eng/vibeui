@@ -10,7 +10,6 @@ import { Sheet007 } from "@/registry/components/sheet/sheet-007/sheet-007"
 import { Sheet008 } from "@/registry/components/sheet/sheet-008/sheet-008"
 import { Sheet009 } from "@/registry/components/sheet/sheet-009/sheet-009"
 import { Sheet010 } from "@/registry/components/sheet/sheet-010/sheet-010"
-import { Menu007 } from "@/registry/components/sheet/menu-007/menu-007"
 
 /** Seed прогона: с ним набор воспроизводится один в один. */
 export const SEED = 52594
@@ -90,12 +89,6 @@ export const CHECKS: LabCheck[] = [
     node: (
       <Sheet007 defaultOpen title="Проверка" triggerLabel="Что дальше" accent="#0fbb47" />
     ),
-  },
-  {
-    name: "menu-007",
-    title: "Лист действий",
-    notes: ["Объект: Проверка", "Отмена: Черновик", "Акцент: #948bac"],
-    node: <Menu007 title="Проверка" cancelLabel="Черновик" accent="#948bac" />,
   },
   {
     name: "sheet-008",

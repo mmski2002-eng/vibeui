@@ -6,9 +6,7 @@
       "type": "registry:component",
       "title": "Нижний лист",
       "description": "Лист снизу на нативном dialog: за верхним краем видно страницу — это и отличает лист от полноэкранного окна.",
-      "categories": [
-        "sheet"
-      ],
+      "categories": ["sheet"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sheet-001-*. Клиентский: \"use client\" — нужен ref для showModal и close. Высота ограничена min(28rem, 85dvh), нижний отступ учитывает env(safe-area-inset-bottom). Выезд снизу сделан переходом translate с @starting-style. Сводка выложена словарём dl. Тема берётся из color-scheme окружения через light-dark(): лист темнеет вместе со страницей и не носит собственной тёмной темы. Подложку листа и кнопки открытия переопределяет проп background; при заданном фоне на корне выставляется color-scheme, посчитанный по его светлоте.",
       "meta": {
-        "tags": [
-          "sheet",
-          "mobile",
-          "dialog",
-          "checkout"
-        ],
+        "tags": ["sheet", "mobile", "dialog", "checkout"],
         "ai": {
           "export": "Sheet001",
           "usage": "<Sheet001 triggerLabel=\"Показать заказ\" rows={rows} primaryLabel=\"Оформить\" />",
@@ -196,9 +189,7 @@
       "type": "registry:component",
       "title": "Лист настроек",
       "description": "Лист настроек справа, висящий карточкой с отступом от края: тумблеры применяются сразу, кнопки «Сохранить» здесь нет — у настроек-переключателей подтверждение только мешает.",
-      "categories": [
-        "sheet"
-      ],
+      "categories": ["sheet"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -210,12 +201,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sheet-002-*. Клиентский: \"use client\" — ref для showModal и close. Лист отстоит от края окна на 0.625rem, поэтому inset задан явно и margin:0 не даёт dialog прилипнуть к углу. Тумблер собран на input[type=checkbox] с appearance:none и role=\"switch\": состояние читается скринридером само. Прокручивается только средняя область. Тема берётся из color-scheme окружения через light-dark(): лист темнеет вместе со страницей и не носит собственной тёмной темы. Подложку листа и кнопки открытия переопределяет проп background; при заданном фоне на корне выставляется color-scheme, посчитанный по его светлоте.",
       "meta": {
-        "tags": [
-          "sheet",
-          "settings",
-          "switch",
-          "dialog"
-        ],
+        "tags": ["sheet", "settings", "switch", "dialog"],
         "ai": {
           "export": "Sheet002",
           "usage": "<Sheet002 triggerLabel=\"Настройки\" title=\"Настройки\" groups={groups} />",
@@ -375,12 +361,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-sheet-002-*. A client component: \"use client\" — a ref for showModal and close. The sheet stands 0.625rem away from the window edge, which is why inset is set explicitly and margin:0 keeps the dialog from sticking to the corner. The switch is built on an input[type=checkbox] with appearance:none and role=\"switch\": the state is read out by a screen reader on its own. Only the middle area scrolls. The theme comes from the surrounding color-scheme through light-dark(): the sheet darkens along with the page and does not ship a dark theme of its own. The background prop overrides the surface of the sheet and the opener; with a background set, the root gets a color-scheme computed from its lightness."
           }
         },
-        "cardControls": [
-          "triggerLabel",
-          "title",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["triggerLabel", "title", "accent", "background"],
         "preview": {
           "props": {
             "defaultOpen": true
@@ -394,9 +375,7 @@
       "type": "registry:component",
       "title": "Лист с вкладками",
       "description": "Лист с разделами внутри: переключатель собран на группе радиокнопок, поэтому стрелки, Home и End работают от браузера, а не от самописной логики вкладок.",
-      "categories": [
-        "sheet"
-      ],
+      "categories": ["sheet"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -408,12 +387,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sheet-003-*. Клиентский: \"use client\", useState держит активный раздел, useId — имя группы радиокнопок, useRef — showModal и close. Сегментированный переключатель — fieldset с радиокнопками, спрятанными clip-path; активная вкладка подсвечивается через :has(input:checked). Высота листа зафиксирована, поэтому смена раздела не дёргает страницу. Тема берётся из color-scheme окружения через light-dark(): лист темнеет вместе со страницей и не носит собственной тёмной темы. Подложку листа и кнопки открытия переопределяет проп background; при заданном фоне на корне выставляется color-scheme, посчитанный по его светлоте.",
       "meta": {
-        "tags": [
-          "sheet",
-          "tabs",
-          "radiogroup",
-          "dialog"
-        ],
+        "tags": ["sheet", "tabs", "radiogroup", "dialog"],
         "ai": {
           "export": "Sheet003",
           "usage": "<Sheet003 triggerLabel=\"Показатели проекта\" tabs={tabs} />",
@@ -604,12 +578,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-sheet-003-*. A client component: \"use client\", useState holds the active section, useId the name of the radio group, useRef showModal and close. The segmented switcher is a fieldset with radio buttons hidden by clip-path; the active tab is highlighted through :has(input:checked). The sheet height is fixed, so switching sections does not jolt the page. The theme comes from the surrounding color-scheme through light-dark(): the sheet darkens along with the page and does not ship a dark theme of its own. The background prop overrides the surface of the sheet and the opener; with a background set, the root gets a color-scheme computed from its lightness."
           }
         },
-        "cardControls": [
-          "title",
-          "triggerLabel",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["title", "triggerLabel", "accent", "background"],
         "preview": {
           "props": {
             "defaultOpen": true
@@ -623,9 +592,7 @@
       "type": "registry:component",
       "title": "Лист файла",
       "description": "Лист предпросмотра файла: сначала крупная область самого документа, и только потом размер, дата и автор — файл узнают глазами, а не по строке свойств.",
-      "categories": [
-        "sheet"
-      ],
+      "categories": ["sheet"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -637,12 +604,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sheet-004-*. Клиентский: \"use client\" — ref для showModal и close. Область предпросмотра нарисована двумя градиентами, расширение вычисляется из имени файла, поэтому компонент не тащит ни картинок, ни иконочного шрифта. Факты выложены сеткой auto-fit, имя файла переносится по overflow-wrap:anywhere. Тема берётся из color-scheme окружения через light-dark(): лист темнеет вместе со страницей и не носит собственной тёмной темы. Подложку листа и кнопки открытия переопределяет проп background; при заданном фоне на корне выставляется color-scheme, посчитанный по его светлоте.",
       "meta": {
-        "tags": [
-          "sheet",
-          "file",
-          "preview",
-          "download"
-        ],
+        "tags": ["sheet", "file", "preview", "download"],
         "ai": {
           "export": "Sheet004",
           "usage": "<Sheet004\n  fileName=\"Договор-подряда-2024.pdf\"\n  fileKind=\"Документ PDF · загружен 12 марта\"\n  facts={facts}\n/>",
@@ -788,12 +750,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-sheet-004-*. A client component: \"use client\" — a ref for showModal and close. The preview area is drawn with two gradients and the extension is derived from the file name, so the component carries neither images nor an icon font. The facts are laid out in an auto-fit grid, and the file name wraps through overflow-wrap:anywhere. The theme comes from the surrounding color-scheme through light-dark(): the sheet darkens along with the page and does not ship a dark theme of its own. The background prop overrides the surface of the sheet and the opener; with a background set, the root gets a color-scheme computed from its lightness."
           }
         },
-        "cardControls": [
-          "fileName",
-          "downloadLabel",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["fileName", "downloadLabel", "accent", "background"],
         "preview": {
           "props": {
             "defaultOpen": true
@@ -807,9 +764,7 @@
       "type": "registry:component",
       "title": "Лист выбора",
       "description": "Лист выбора из длинного списка: выпадающий список на сотню строк на телефоне неработоспособен, поэтому выбор переезжает в лист с поиском и подтверждением внизу.",
-      "categories": [
-        "sheet"
-      ],
+      "categories": ["sheet"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -821,12 +776,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sheet-005-*. Клиентский: \"use client\", useState держит строку поиска и выбранное значение, useId — имя группы радиокнопок, useRef — showModal и close. Фильтрация идёт по подстроке в нижнем регистре. Поиск и подтверждение вынесены из прокручиваемой области, список — fieldset с радиокнопками. Тема берётся из color-scheme окружения через light-dark(): лист темнеет вместе со страницей и не носит собственной тёмной темы. Подложку листа и кнопки открытия переопределяет проп background; при заданном фоне на корне выставляется color-scheme, посчитанный по его светлоте.",
       "meta": {
-        "tags": [
-          "sheet",
-          "picker",
-          "search",
-          "mobile"
-        ],
+        "tags": ["sheet", "picker", "search", "mobile"],
         "ai": {
           "export": "Sheet005",
           "usage": "<Sheet005\n  triggerLabel=\"Выбрать регион\"\n  title=\"Регион доставки\"\n  options={options}\n/>",
@@ -970,12 +920,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-sheet-005-*. A client component: \"use client\", useState holds the search string and the selected value, useId the name of the radio group, useRef showModal and close. Filtering is a lowercase substring match. Search and confirm are lifted out of the scrolling area, and the list is a fieldset with radio buttons. The theme comes from the surrounding color-scheme through light-dark(): the sheet darkens along with the page and does not ship a dark theme of its own. The background prop overrides the surface of the sheet and the opener; with a background set, the root gets a color-scheme computed from its lightness."
           }
         },
-        "cardControls": [
-          "title",
-          "searchLabel",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["title", "searchLabel", "accent", "background"],
         "preview": {
           "props": {
             "defaultOpen": true
@@ -989,9 +934,7 @@
       "type": "registry:component",
       "title": "Лист подтверждения",
       "description": "Подтверждение опасного действия на телефоне: вопрос приезжает снизу, последствия перечислены списком, а фокус при открытии стоит на отказе.",
-      "categories": [
-        "sheet"
-      ],
+      "categories": ["sheet"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1003,12 +946,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sheet-006-*. Клиентский: \"use client\" — ref для showModal, дальше работает форма method=\"dialog\": обе кнопки закрывают лист сами и возвращают своё value. Заголовок связан с dialog через aria-labelledby и useId. Знак опасности нарисован псевдоэлементами, кнопки уложены в столбик и имеют высоту 3rem. Тема берётся из color-scheme окружения через light-dark(): лист темнеет вместе со страницей и не носит собственной тёмной темы. Подложку листа и кнопки открытия переопределяет проп background; при заданном фоне на корне выставляется color-scheme, посчитанный по его светлоте.",
       "meta": {
-        "tags": [
-          "sheet",
-          "confirm",
-          "destructive",
-          "mobile"
-        ],
+        "tags": ["sheet", "confirm", "destructive", "mobile"],
         "ai": {
           "export": "Sheet006",
           "usage": "<Sheet006\n  title=\"Удалить проект «Витрина»?\"\n  consequences={consequences}\n  confirmLabel=\"Удалить навсегда\"\n/>",
@@ -1141,12 +1079,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-sheet-006-*. A client component: \"use client\" — a ref for showModal, after which the method=\"dialog\" form does the work: both buttons close the sheet themselves and return their value. The heading is tied to the dialog through aria-labelledby and useId. The danger mark is drawn with pseudo-elements, and the buttons are stacked in a column at a height of 3rem. The theme comes from the surrounding color-scheme through light-dark(): the sheet darkens along with the page and does not ship a dark theme of its own. The background prop overrides the surface of the sheet and the opener; with a background set, the root gets a color-scheme computed from its lightness."
           }
         },
-        "cardControls": [
-          "title",
-          "confirmLabel",
-          "danger",
-          "background"
-        ],
+        "cardControls": ["title", "confirmLabel", "danger", "background"],
         "preview": {
           "props": {
             "defaultOpen": true
@@ -1160,9 +1093,7 @@
       "type": "registry:component",
       "title": "Вложенный лист",
       "description": "Лист с двумя уровнями вместо второго окна поверх первого: уровни лежат в одной дорожке и сдвигаются вбок, поэтому переход читается как «вглубь».",
-      "categories": [
-        "sheet"
-      ],
+      "categories": ["sheet"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1174,12 +1105,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sheet-007-*. Клиентский: \"use client\", useState держит открытый раздел, useRef — showModal и close. Оба уровня лежат в дорожке шириной 200% и сдвигаются через translate по data-level; неактивный уровень помечен inert, поэтому его кнопки выпадают из Tab-порядка. Стрелка и шеврон нарисованы бордюрами повёрнутого квадрата. Тема берётся из color-scheme окружения через light-dark(): лист темнеет вместе со страницей и не носит собственной тёмной темы. Подложку листа и кнопки открытия переопределяет проп background; при заданном фоне на корне выставляется color-scheme, посчитанный по его светлоте.",
       "meta": {
-        "tags": [
-          "sheet",
-          "nested",
-          "navigation",
-          "mobile"
-        ],
+        "tags": ["sheet", "nested", "navigation", "mobile"],
         "ai": {
           "export": "Sheet007",
           "usage": "<Sheet007\n  triggerLabel=\"Настройки приложения\"\n  title=\"Настройки\"\n  sections={sections}\n/>",
@@ -1303,20 +1229,12 @@
                   {
                     "label": "Interface language",
                     "hint": "English",
-                    "options": [
-                      "English",
-                      "Русский",
-                      "Қазақша"
-                    ]
+                    "options": ["English", "Русский", "Қазақша"]
                   },
                   {
                     "label": "Appearance",
                     "hint": "Match the system",
-                    "options": [
-                      "Match the system",
-                      "Light",
-                      "Dark"
-                    ]
+                    "options": ["Match the system", "Light", "Dark"]
                   },
                   {
                     "label": "Time zone",
@@ -1334,12 +1252,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-sheet-007-*. A client component: \"use client\", useState holds the open section, useRef showModal and close. Both levels sit in a track 200% wide and are shifted with translate by data-level; the inactive level is marked inert, so its buttons drop out of the Tab order. The arrow and the chevron are drawn with the borders of a rotated square. The theme comes from the surrounding color-scheme through light-dark(): the sheet darkens along with the page and does not ship a dark theme of its own. The background prop overrides the surface of the sheet and the opener; with a background set, the root gets a color-scheme computed from its lightness."
           }
         },
-        "cardControls": [
-          "title",
-          "triggerLabel",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["title", "triggerLabel", "accent", "background"],
         "preview": {
           "props": {
             "defaultOpen": true
@@ -1349,183 +1262,11 @@
       }
     },
     {
-      "name": "menu-007",
-      "type": "registry:component",
-      "title": "Лист действий",
-      "description": "Лист действий снизу: крупные цели у нижнего края и отдельная кнопка отмены — закрыть должно быть так же легко, как открыть.",
-      "categories": [
-        "sheet"
-      ],
-      "dependencies": [],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "menu-007/menu-007.tsx",
-          "type": "registry:component",
-          "target": "@components/vibeui/menu-007.tsx"
-        }
-      ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menu-007-*. Клиентский: \"use client\". Нижний отступ учитывает env(safe-area-inset-bottom), высота пункта 2.75rem — цель под большой палец. У пунктов есть пояснения второй строкой, опасное действие красится текстом, отмена вынесена отдельной кнопкой во всю ширину. Тема берётся из color-scheme окружения через light-dark(): лист темнеет вместе со страницей и не носит собственной тёмной темы. Подложку листа и кнопки открытия переопределяет проп background; при заданном фоне на корне выставляется color-scheme, посчитанный по его светлоте.",
-      "meta": {
-        "tags": [
-          "menu",
-          "sheet",
-          "mobile",
-          "actions"
-        ],
-        "preview": {
-          "width": "full"
-        },
-        "ai": {
-          "export": "Menu007",
-          "usage": "<Menu007 title=\"Проект «Каталог»\" actions={actions} />",
-          "summary": "Лист действий для телефона: заголовок с именем объекта, крупные пункты с пояснениями и отдельная отмена. Ноль зависимостей, один файл.",
-          "preserve": [
-            "локальную палитру --vibeui-menu-007-* и не подменять её токенами вашей темы",
-            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
-            "непрозрачную подложку листа: он лежит поверх содержимого экрана и обязан его перекрывать, прозрачной она быть не может",
-            "высоту пунктов 2.75rem: до нижнего края дотягивается только большой палец",
-            "отдельную крупную отмену — закрыть должно быть так же легко, как открыть",
-            "env(safe-area-inset-bottom): иначе лист уезжает под системную черту",
-            "имя объекта в заголовке: «удалить» без имени — источник ошибок",
-            "пояснение у опасного действия: что именно случится"
-          ],
-          "adapt": [
-            "массив actions и их пояснения",
-            "title — что за объект",
-            "cancelLabel и triggerLabel — подписи отмены и кнопки, снова открывающей лист",
-            "акцент через проп accent",
-            "background — подложка листа и кнопки открытия; пусто оставляет штатную палитру"
-          ],
-          "notes": [
-            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
-            "Позиционирование не входит в компонент: прижимает лист к низу вызывающий код.",
-            "Больше пяти действий в листе не помещается: остальное — на отдельном экране.",
-            "Опасное действие в листе стоит подтверждать отдельно: одно нажатие пальцем слишком легко.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
-          ]
-        },
-        "controls": [
-          {
-            "prop": "title",
-            "label": "Объект",
-            "type": "text",
-            "default": "Проект «Каталог»",
-            "maxLength": 30
-          },
-          {
-            "prop": "cancelLabel",
-            "label": "Отмена",
-            "type": "text",
-            "default": "Отмена",
-            "maxLength": 20
-          },
-          {
-            "prop": "accent",
-            "label": "Акцент",
-            "type": "color",
-            "default": ""
-          },
-          {
-            "prop": "background",
-            "label": "Фон",
-            "type": "color",
-            "default": ""
-          }
-        ],
-        "i18n": {
-          "en": {
-            "description": "A bottom action sheet: large targets near the bottom edge and a separate cancel — closing must be as easy as opening.",
-            "ai": {
-              "summary": "A phone action sheet: a header naming the object, large items with explanations and a separate cancel button. Zero dependencies, one file.",
-              "preserve": [
-                "the local --vibeui-menu-007-* palette — do not swap it for your theme tokens",
-                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
-                "the opaque sheet surface: it sits above the screen content and has to cover it, so it cannot be transparent",
-                "the 2.75rem item height: only a thumb reaches the bottom edge",
-                "the separate large cancel — closing must be as easy as opening",
-                "env(safe-area-inset-bottom): otherwise the sheet slides under the home bar",
-                "the object's name in the header: \"delete\" without a name causes mistakes",
-                "the explanation on the destructive action: what exactly happens"
-              ],
-              "adapt": [
-                "the actions array and their explanations",
-                "title — what the object is",
-                "cancelLabel and triggerLabel — the cancel wording and the button that reopens the sheet",
-                "the accent through the accent prop",
-                "background — the surface of the sheet and the opener; empty keeps the built-in palette"
-              ],
-              "notes": [
-                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
-                "Positioning is not part of the component: pinning it to the bottom is the caller's job.",
-                "More than five actions do not fit: the rest belong on their own screen.",
-                "A destructive action here deserves its own confirmation: one thumb tap is too easy.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
-              ],
-              "usage": "<Menu007 title=\"The Catalog project\" actions={actions} />"
-            },
-            "controls": {
-              "title": {
-                "label": "Object",
-                "default": "The Catalog project"
-              },
-              "cancelLabel": {
-                "label": "Cancel",
-                "default": "Cancel"
-              },
-              "accent": {
-                "label": "Accent"
-              },
-              "background": {
-                "label": "Background"
-              }
-            },
-            "title": "Action Sheet",
-            "preview": {
-              "props": {
-                "title": "The Catalog project",
-                "triggerLabel": "Actions",
-                "cancelLabel": "Cancel",
-                "actions": [
-                  {
-                    "label": "Share",
-                    "hint": "A view-only link"
-                  },
-                  {
-                    "label": "Duplicate",
-                    "hint": "The copy appears next to it"
-                  },
-                  {
-                    "label": "Move to archive"
-                  },
-                  {
-                    "label": "Delete",
-                    "hint": "This cannot be undone",
-                    "danger": true
-                  }
-                ],
-                "dangerLabel": "destructive action"
-              }
-            },
-            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-menu-007-*. A client component: \"use client\". The bottom padding accounts for env(safe-area-inset-bottom), and the item height of 2.75rem is a target for a thumb. The items carry explanations on a second line, the destructive action is coloured in the text, and cancel is a separate full-width button. The theme comes from the surrounding color-scheme through light-dark(): the sheet darkens along with the page and does not ship a dark theme of its own. The background prop overrides the surface of the sheet and the opener; with a background set, the root gets a color-scheme computed from its lightness."
-          }
-        },
-        "cardControls": [
-          "title",
-          "cancelLabel",
-          "accent",
-          "background"
-        ]
-      }
-    },
-    {
       "name": "sheet-008",
       "type": "registry:component",
       "title": "Лист правки записи",
       "description": "Форма правки в листе справа: подвал с кнопками прижат к низу и не уезжает вместе с прокруткой.",
-      "categories": [
-        "sheet"
-      ],
+      "categories": ["sheet"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1537,12 +1278,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sheet-008-*. Клиентский: открытие через нативный dialog. Форма занимает всю высоту листа, тело прокручивается, подвал прижат границей. Закрытие сделано на form method=\"dialog\", поэтому обработчик отправки не нужен; у кнопки отмены стоит formNoValidate, иначе незаполненные обязательные поля не дали бы отменить правку.",
       "meta": {
-        "tags": [
-          "sheet",
-          "form",
-          "edit",
-          "drawer"
-        ],
+        "tags": ["sheet", "form", "edit", "drawer"],
         "ai": {
           "export": "Sheet008",
           "usage": "<Sheet008 title=\"Задача\" fields={fields} />",
@@ -1680,11 +1416,7 @@
                     "label": "Owner",
                     "kind": "select",
                     "value": "Olga Dorn",
-                    "options": [
-                      "Olga Dorn",
-                      "Peter Ivanov",
-                      "Maria Gurova"
-                    ],
+                    "options": ["Olga Dorn", "Peter Ivanov", "Maria Gurova"],
                     "required": true
                   },
                   {
@@ -1725,9 +1457,7 @@
       "type": "registry:component",
       "title": "Лист фильтров",
       "description": "Фильтры каталога в листе: счётчик найденного стоит в кнопке применения, сброс — в шапке.",
-      "categories": [
-        "sheet"
-      ],
+      "categories": ["sheet"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1739,12 +1469,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sheet-009-*. Клиентский: отмеченное живёт в состоянии. Группы собраны на fieldset с legend, поэтому связь галочки и раздела приходит от разметки; число рядом с каждой галочкой показывает объём ветки, а счётчик выбранного объявляется через aria-live.",
       "meta": {
-        "tags": [
-          "sheet",
-          "filters",
-          "catalog",
-          "mobile"
-        ],
+        "tags": ["sheet", "filters", "catalog", "mobile"],
         "ai": {
           "export": "Sheet009",
           "usage": "<Sheet009 groups={groups} found={91} />",
@@ -1936,13 +1661,7 @@
             "defaultOpen": true
           }
         },
-        "cardControls": [
-          "title",
-          "found",
-          "resetLabel",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "found", "resetLabel", "accent", "background"]
       }
     },
     {
@@ -1950,9 +1669,7 @@
       "type": "registry:component",
       "title": "Лист с двумя остановками",
       "description": "Лист, который разворачивается на полную высоту: остановку переключает ручка-кнопка, а не только жест.",
-      "categories": [
-        "sheet"
-      ],
+      "categories": ["sheet"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1964,12 +1681,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sheet-010-*. Клиентский. Высота листа задана переменной, поэтому переключение остановки не пересобирает разметку и не сбрасывает прокрутку внутри. Ручка — настоящая кнопка с aria-expanded: то же движение, что и перетаскивание, доступно с клавиатуры и читается скринридером.",
       "meta": {
-        "tags": [
-          "sheet",
-          "snap",
-          "expand",
-          "mobile"
-        ],
+        "tags": ["sheet", "snap", "expand", "mobile"],
         "ai": {
           "export": "Sheet010",
           "usage": "<Sheet010 title=\"Доставка завтра\" details={details} />",

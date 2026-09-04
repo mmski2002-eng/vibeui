@@ -63,4 +63,7 @@ export const PREVIEWS = {
   "ai-019": dynamic(() =>
     import("@/registry/blocks/ai/ai-019/ai-019").then((module) => module.Ai019),
   ),
+  "ai-020": dynamic(() =>
+    import("@/registry/blocks/ai/ai-020/ai-020").then((module) => module.Ai020),
+  ),
 } satisfies PreviewMap

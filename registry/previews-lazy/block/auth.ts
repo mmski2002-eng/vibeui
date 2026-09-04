@@ -151,4 +151,9 @@ export const PREVIEWS = {
       (module) => module.Auth029,
     ),
   ),
+  "auth-030": dynamic(() =>
+    import("@/registry/blocks/auth/auth-030/auth-030").then(
+      (module) => module.Auth030,
+    ),
+  ),
 } satisfies PreviewMap

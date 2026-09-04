@@ -56,4 +56,14 @@ export const PREVIEWS = {
       (module) => module.Command010,
     ),
   ),
+  "command-011": dynamic(() =>
+    import("@/registry/components/command/command-011/command-011").then(
+      (module) => module.Command011,
+    ),
+  ),
+  "command-012": dynamic(() =>
+    import("@/registry/components/command/command-012/command-012").then(
+      (module) => module.Command012,
+    ),
+  ),
 } satisfies PreviewMap

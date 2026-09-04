@@ -24,6 +24,7 @@ import { Ai016 } from "@/registry/blocks/ai/ai-016/ai-016"
 import { Ai017 } from "@/registry/blocks/ai/ai-017/ai-017"
 import { Ai018 } from "@/registry/blocks/ai/ai-018/ai-018"
 import { Ai019 } from "@/registry/blocks/ai/ai-019/ai-019"
+import { Ai020 } from "@/registry/blocks/ai/ai-020/ai-020"
 
 export const PREVIEWS = {
   "ai-001": Ai001,
@@ -45,4 +46,5 @@ export const PREVIEWS = {
   "ai-017": Ai017,
   "ai-018": Ai018,
   "ai-019": Ai019,
+  "ai-020": Ai020,
 } satisfies Record<string, ComponentType<PreviewProps>>

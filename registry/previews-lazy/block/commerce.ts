@@ -401,4 +401,14 @@ export const PREVIEWS = {
       (module) => module.Commerce079,
     ),
   ),
+  "commerce-080": dynamic(() =>
+    import("@/registry/blocks/commerce/commerce-080/commerce-080").then(
+      (module) => module.Commerce080,
+    ),
+  ),
+  "commerce-081": dynamic(() =>
+    import("@/registry/blocks/commerce/commerce-081/commerce-081").then(
+      (module) => module.Commerce081,
+    ),
+  ),
 } satisfies PreviewMap

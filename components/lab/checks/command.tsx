@@ -10,6 +10,8 @@ import { Command007 } from "@/registry/components/command/command-007/command-00
 import { Command008 } from "@/registry/components/command/command-008/command-008"
 import { Command009 } from "@/registry/components/command/command-009/command-009"
 import { Command010 } from "@/registry/components/command/command-010/command-010"
+import { Command011 } from "@/registry/components/command/command-011/command-011"
+import { Command012 } from "@/registry/components/command/command-012/command-012"
 
 /** Seed прогона: с ним набор воспроизводится один в один. */
 export const SEED = 68432
@@ -160,6 +162,42 @@ export const CHECKS: LabCheck[] = [
         placeholder="Подпись: тест"
         emptyText="Проверка"
         accent="#02f302"
+      />
+    ),
+  },
+  {
+    name: "command-011",
+    title: "Ошибка загрузки и повтор",
+    notes: [
+      "Подсказка: Что дальше",
+      "Текст отказа: Подпись: тест",
+      "Кнопка повтора: Ня",
+      "Акцент: #b25ce0",
+    ],
+    node: (
+      <Command011
+        placeholder="Что дальше"
+        failedText="Подпись: тест"
+        retryLabel="Ня"
+        accent="#b25ce0"
+      />
+    ),
+  },
+  {
+    name: "command-012",
+    title: "Множественный выбор",
+    notes: [
+      "Подсказка: Проверка",
+      "Кнопка применения: Смена",
+      "Строка счётчика: Подпись: тест",
+      "Акцент: #4fb8c9",
+    ],
+    node: (
+      <Command012
+        placeholder="Проверка"
+        applyLabel="Смена"
+        countText="Подпись: тест"
+        accent="#4fb8c9"
       />
     ),
   },

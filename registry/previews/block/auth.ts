@@ -34,6 +34,7 @@ import { Auth026 } from "@/registry/blocks/auth/auth-026/auth-026"
 import { Auth027 } from "@/registry/blocks/auth/auth-027/auth-027"
 import { Auth028 } from "@/registry/blocks/auth/auth-028/auth-028"
 import { Auth029 } from "@/registry/blocks/auth/auth-029/auth-029"
+import { Auth030 } from "@/registry/blocks/auth/auth-030/auth-030"
 
 export const PREVIEWS = {
   "auth-001": Auth001,
@@ -65,4 +66,5 @@ export const PREVIEWS = {
   "auth-027": Auth027,
   "auth-028": Auth028,
   "auth-029": Auth029,
+  "auth-030": Auth030,
 } satisfies Record<string, ComponentType<PreviewProps>>

@@ -41,11 +41,6 @@ export const PREVIEWS = {
       (module) => module.Sheet007,
     ),
   ),
-  "menu-007": dynamic(() =>
-    import("@/registry/components/sheet/menu-007/menu-007").then(
-      (module) => module.Menu007,
-    ),
-  ),
   "sheet-008": dynamic(() =>
     import("@/registry/components/sheet/sheet-008/sheet-008").then(
       (module) => module.Sheet008,

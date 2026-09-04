@@ -15,6 +15,8 @@ import { Command007 } from "@/registry/components/command/command-007/command-00
 import { Command008 } from "@/registry/components/command/command-008/command-008"
 import { Command009 } from "@/registry/components/command/command-009/command-009"
 import { Command010 } from "@/registry/components/command/command-010/command-010"
+import { Command011 } from "@/registry/components/command/command-011/command-011"
+import { Command012 } from "@/registry/components/command/command-012/command-012"
 
 export const PREVIEWS = {
   "command-001": Command001,
@@ -27,4 +29,6 @@ export const PREVIEWS = {
   "command-008": Command008,
   "command-009": Command009,
   "command-010": Command010,
+  "command-011": Command011,
+  "command-012": Command012,
 } satisfies Record<string, ComponentType<PreviewProps>>

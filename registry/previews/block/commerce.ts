@@ -84,6 +84,8 @@ import { Commerce076 } from "@/registry/blocks/commerce/commerce-076/commerce-07
 import { Commerce077 } from "@/registry/blocks/commerce/commerce-077/commerce-077"
 import { Commerce078 } from "@/registry/blocks/commerce/commerce-078/commerce-078"
 import { Commerce079 } from "@/registry/blocks/commerce/commerce-079/commerce-079"
+import { Commerce080 } from "@/registry/blocks/commerce/commerce-080/commerce-080"
+import { Commerce081 } from "@/registry/blocks/commerce/commerce-081/commerce-081"
 
 export const PREVIEWS = {
   "commerce-001": Commerce001,
@@ -165,4 +167,6 @@ export const PREVIEWS = {
   "commerce-077": Commerce077,
   "commerce-078": Commerce078,
   "commerce-079": Commerce079,
+  "commerce-080": Commerce080,
+  "commerce-081": Commerce081,
 } satisfies Record<string, ComponentType<PreviewProps>>
