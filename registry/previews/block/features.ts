@@ -20,6 +20,7 @@ import { Features012 } from "@/registry/blocks/features/features-012/features-01
 import { Features013 } from "@/registry/blocks/features/features-013/features-013"
 import { Features014 } from "@/registry/blocks/features/features-014/features-014"
 import { Features015 } from "@/registry/blocks/features/features-015/features-015"
+import { Features016 } from "@/registry/blocks/features/features-016/features-016"
 
 export const PREVIEWS = {
   "features-001": Features001,
@@ -37,4 +38,5 @@ export const PREVIEWS = {
   "features-013": Features013,
   "features-014": Features014,
   "features-015": Features015,
+  "features-016": Features016,
 } satisfies Record<string, ComponentType<PreviewProps>>

@@ -20,6 +20,7 @@ import { Pagination012 } from "@/registry/components/pagination/pagination-012/p
 import { Pagination013 } from "@/registry/components/pagination/pagination-013/pagination-013"
 import { Pagination014 } from "@/registry/components/pagination/pagination-014/pagination-014"
 import { Pagination015 } from "@/registry/components/pagination/pagination-015/pagination-015"
+import { Pagination016 } from "@/registry/components/pagination/pagination-016/pagination-016"
 
 export const PREVIEWS = {
   "pagination-001": Pagination001,
@@ -37,4 +38,5 @@ export const PREVIEWS = {
   "pagination-013": Pagination013,
   "pagination-014": Pagination014,
   "pagination-015": Pagination015,
+  "pagination-016": Pagination016,
 } satisfies Record<string, ComponentType<PreviewProps>>

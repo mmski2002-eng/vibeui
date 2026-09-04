@@ -6,11 +6,6 @@ import dynamic from "next/dynamic"
 import type { PreviewMap } from "@/registry/preview-types"
 
 export const PREVIEWS = {
-  "menu-002": dynamic(() =>
-    import("@/registry/components/context-menu/menu-002/menu-002").then(
-      (module) => module.Menu002,
-    ),
-  ),
   "contextmenu-001": dynamic(() =>
     import("@/registry/components/context-menu/contextmenu-001/contextmenu-001").then(
       (module) => module.Contextmenu001,

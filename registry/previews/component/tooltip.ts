@@ -21,6 +21,7 @@ import { Tooltip013 } from "@/registry/components/tooltip/tooltip-013/tooltip-01
 import { Tooltip014 } from "@/registry/components/tooltip/tooltip-014/tooltip-014"
 import { Tooltip015 } from "@/registry/components/tooltip/tooltip-015/tooltip-015"
 import { Tooltip016 } from "@/registry/components/tooltip/tooltip-016/tooltip-016"
+import { Tooltip017 } from "@/registry/components/tooltip/tooltip-017/tooltip-017"
 
 export const PREVIEWS = {
   "tooltip-001": Tooltip001,
@@ -39,4 +40,5 @@ export const PREVIEWS = {
   "tooltip-014": Tooltip014,
   "tooltip-015": Tooltip015,
   "tooltip-016": Tooltip016,
+  "tooltip-017": Tooltip017,
 } satisfies Record<string, ComponentType<PreviewProps>>

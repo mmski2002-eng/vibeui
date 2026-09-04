@@ -1,25 +1,17 @@
 import type { LabCheck } from "@/components/lab/check-types"
 
-import { Menu006 } from "@/registry/components/navigation-menu/menu-006/menu-006"
 import { Navmenu001 } from "@/registry/components/navigation-menu/navmenu-001/navmenu-001"
 import { Navmenu002 } from "@/registry/components/navigation-menu/navmenu-002/navmenu-002"
 import { Navmenu003 } from "@/registry/components/navigation-menu/navmenu-003/navmenu-003"
 import { Navmenu004 } from "@/registry/components/navigation-menu/navmenu-004/navmenu-004"
 import { Navmenu005 } from "@/registry/components/navigation-menu/navmenu-005/navmenu-005"
 import { Navmenu006 } from "@/registry/components/navigation-menu/navmenu-006/navmenu-006"
-import { Navmenu007 } from "@/registry/components/navigation-menu/navmenu-007/navmenu-007"
 import { Navmenu008 } from "@/registry/components/navigation-menu/navmenu-008/navmenu-008"
 
 /** Seed прогона: с ним набор воспроизводится один в один. */
 export const SEED = 31784
 
 export const CHECKS: LabCheck[] = [
-  {
-    name: "menu-006",
-    title: "Мега-меню",
-    notes: ["Подпись раздела: Проверка", "Акцент: #6fd963"],
-    node: <Menu006 label="Проверка" accent="#6fd963" />,
-  },
   {
     name: "navmenu-001",
     title: "Меню в колонки",
@@ -83,24 +75,6 @@ export const CHECKS: LabCheck[] = [
         actionLabel="Подпись: тест"
         burgerLabel="Ок"
         accent="#a6cb38"
-      />
-    ),
-  },
-  {
-    name: "navmenu-007",
-    title: "Меню с брендом",
-    notes: [
-      "Название: Подпись: тест",
-      "Кнопка: Смена",
-      "Вторичная ссылка: Что дальше",
-      "Акцент: #87f550",
-    ],
-    node: (
-      <Navmenu007
-        brand="Подпись: тест"
-        actionLabel="Смена"
-        secondaryLabel="Что дальше"
-        accent="#87f550"
       />
     ),
   },

@@ -16,6 +16,7 @@ import { Tooltip013 } from "@/registry/components/tooltip/tooltip-013/tooltip-01
 import { Tooltip014 } from "@/registry/components/tooltip/tooltip-014/tooltip-014"
 import { Tooltip015 } from "@/registry/components/tooltip/tooltip-015/tooltip-015"
 import { Tooltip016 } from "@/registry/components/tooltip/tooltip-016/tooltip-016"
+import { Tooltip017 } from "@/registry/components/tooltip/tooltip-017/tooltip-017"
 
 /** Seed прогона: с ним набор воспроизводится один в один. */
 export const SEED = 68432
@@ -132,5 +133,11 @@ export const CHECKS: LabCheck[] = [
     title: "Подсказка по фокусу",
     notes: ["Подпись поля: Подпись: тест", "Инструкция: Что дальше"],
     node: <Tooltip016 label="Подпись: тест" hint="Что дальше" />,
+  },
+  {
+    name: "tooltip-017",
+    title: "Подсказка усечённого текста",
+    notes: ["Пояснение: Черновик"],
+    node: <Tooltip017 note="Черновик" />,
   },
 ]

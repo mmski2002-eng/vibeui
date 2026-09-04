@@ -17,6 +17,8 @@ import { Radio014 } from "@/registry/components/radio-group/radio-014/radio-014"
 import { Radio015 } from "@/registry/components/radio-group/radio-015/radio-015"
 import { Radio016 } from "@/registry/components/radio-group/radio-016/radio-016"
 import { Radio017 } from "@/registry/components/radio-group/radio-017/radio-017"
+import { Radio018 } from "@/registry/components/radio-group/radio-018/radio-018"
+import { Radio019 } from "@/registry/components/radio-group/radio-019/radio-019"
 
 /** Seed прогона: с ним набор воспроизводится один в один. */
 export const SEED = 108
@@ -173,5 +175,17 @@ export const CHECKS: LabCheck[] = [
         accent="#548725"
       />
     ),
+  },
+  {
+    name: "radio-018",
+    title: "Ошибка радиогруппы",
+    notes: ["Вопрос: Проверка", "Текст ошибки: Что дальше", "Акцент: #1f8fd4"],
+    node: <Radio018 legend="Проверка" error="Что дальше" accent="#1f8fd4" />,
+  },
+  {
+    name: "radio-019",
+    title: "Заблокированная радиогруппа",
+    notes: ["Заголовок: Смена", "Текущая роль: admin", "Акцент: #b23a6c"],
+    node: <Radio019 legend="Смена" value="admin" accent="#b23a6c" />,
   },
 ]

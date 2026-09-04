@@ -6,9 +6,7 @@
       "type": "registry:component",
       "title": "Постраничная навигация ссылками",
       "description": "Постраничная навигация обычными ссылками: страницу можно открыть в новой вкладке, скопировать и найти в истории. Окно номеров вокруг текущей.",
-      "categories": [
-        "pagination"
-      ],
+      "categories": ["pagination"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-pagination-001-*. Номера — обычные <a>, адрес собирает функция hrefOf, по умолчанию `?page=N`. Окно вокруг текущей страницы считает windowOf: первая, последняя, соседи и разрывы между ними. Текущая страница помечена aria-current=\"page\". Края не исчезают на первой и последней странице, а гасятся через aria-disabled, поэтому ряд не прыгает.",
       "meta": {
-        "tags": [
-          "pagination",
-          "navigation",
-          "links",
-          "list"
-        ],
+        "tags": ["pagination", "navigation", "links", "list"],
         "ai": {
           "export": "Pagination001",
           "usage": "<Pagination001\n  page={4}\n  total={12}\n  hrefOf={(page) => `/blog?page=${page}`}\n/>",
@@ -147,12 +140,7 @@
             }
           }
         },
-        "cardControls": [
-          "page",
-          "total",
-          "siblings",
-          "accent"
-        ],
+        "cardControls": ["page", "total", "siblings", "accent"],
         "preview": {
           "width": "full"
         }
@@ -163,9 +151,7 @@
       "type": "registry:component",
       "title": "Навигация курсором",
       "description": "Курсорная навигация: диапазон строк вместо номеров страниц — он остаётся верным, когда данные меняются на ходу.",
-      "categories": [
-        "pagination"
-      ],
+      "categories": ["pagination"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -177,12 +163,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-pagination-002-*. Серверный: хуков нет, границы считаются из пропсов. Край списка помечен aria-disabled на ссылке: кнопка остаётся на месте, но не работает, поэтому строка навигации не прыгает. Числа набраны табличными цифрами.",
       "meta": {
-        "tags": [
-          "pagination",
-          "cursor",
-          "list",
-          "range"
-        ],
+        "tags": ["pagination", "cursor", "list", "range"],
         "preview": {
           "width": "full"
         },
@@ -317,13 +298,7 @@
             }
           }
         },
-        "cardControls": [
-          "from",
-          "perPage",
-          "total",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["from", "perPage", "total", "accent", "background"]
       }
     },
     {
@@ -331,9 +306,7 @@
       "type": "registry:component",
       "title": "Многоточие с переходом",
       "description": "Пагинация со свёрткой середины, где «…» не подпись, а кнопка: она перепрыгивает через пропущенный кусок сразу на пять страниц.",
-      "categories": [
-        "pagination"
-      ],
+      "categories": ["pagination"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -345,12 +318,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-pagination-003-*. Клиентский: \"use client\" ради состояния текущей страницы. Окно номеров считает функция windowOf: первая, последняя, соседи и разрывы между ними; разрыв помечен нулём, и на его месте рисуется кнопка прыжка. Многоточие превращается в стрелку по :hover и :focus-visible. Текущая страница помечена aria-current=\"page\", числа набраны табличными цифрами.",
       "meta": {
-        "tags": [
-          "pagination",
-          "ellipsis",
-          "jump",
-          "list"
-        ],
+        "tags": ["pagination", "ellipsis", "jump", "list"],
         "preview": {
           "width": "full"
         },
@@ -503,9 +471,7 @@
       "type": "registry:component",
       "title": "Назад-вперёд со счётчиком",
       "description": "Самая скромная пагинация: две ссылки и счётчик между ними. Номеров нет намеренно — их незачем показывать в ленте, которую читают подряд.",
-      "categories": [
-        "pagination"
-      ],
+      "categories": ["pagination"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -517,12 +483,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-pagination-004-*. Серверный: хуков нет, границы считаются из пропсов page и total. Адрес соседней страницы собирает функция hrefOf, по умолчанию `?page=N`. Край списка помечен aria-disabled и гасится, а не исчезает, поэтому ряд не прыгает. Счётчик занимает всё свободное место и набран табличными цифрами, стрелки нарисованы бордюрами и поворачиваются по data-dir.",
       "meta": {
-        "tags": [
-          "pagination",
-          "prev-next",
-          "links",
-          "minimal"
-        ],
+        "tags": ["pagination", "prev-next", "links", "minimal"],
         "ai": {
           "export": "Pagination004",
           "usage": "<Pagination004 page={4} total={12} hrefOf={(page) => `/blog?page=${page}`} />",
@@ -646,12 +607,7 @@
             }
           }
         },
-        "cardControls": [
-          "page",
-          "total",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["page", "total", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -662,9 +618,7 @@
       "type": "registry:component",
       "title": "«Показать ещё» с прогрессом",
       "description": "«Показать ещё» вместо страниц: полоса прогресса и счётчик «12 из 84» отвечают на главный вопрос длинного списка — сколько осталось.",
-      "categories": [
-        "pagination"
-      ],
+      "categories": ["pagination"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -676,12 +630,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-pagination-005-*. Клиентский: \"use client\" ради счётчика показанного. Ширина заливки приходит переменной --vibeui-pagination-005-progress, посчитанной из отношения показанного к общему. Полоса помечена role=\"progressbar\" с aria-valuenow, aria-valuemin и aria-valuemax, а сообщение о догрузке живёт в области aria-live=\"polite\". Когда показано всё, кнопка заменяется строкой о конце списка.",
       "meta": {
-        "tags": [
-          "pagination",
-          "load more",
-          "progress",
-          "list"
-        ],
+        "tags": ["pagination", "load more", "progress", "list"],
         "ai": {
           "export": "Pagination005",
           "usage": "<Pagination005 total={84} perPage={12} label=\"Показать ещё {count}\" />",
@@ -832,9 +781,7 @@
       "type": "registry:component",
       "title": "Маяк бесконечной ленты",
       "description": "Бесконечная лента, у которой всё-таки есть кнопка: маячок догрузки — живая кнопка, до неё доезжают табуляцией и жмут с клавиатуры.",
-      "categories": [
-        "pagination"
-      ],
+      "categories": ["pagination"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -846,12 +793,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-pagination-006-*. Клиентский: \"use client\" ради IntersectionObserver и состояния ленты. Наблюдатель ограничен своей областью прокрутки через root, а маячком служит сама кнопка «Загрузить ещё», поэтому догрузка работает и прокруткой, и с клавиатуры. Итог объявляется в области aria-live=\"polite\". Кнопка «Наверх» возвращает область прокрутки в начало.",
       "meta": {
-        "tags": [
-          "pagination",
-          "infinite",
-          "observer",
-          "a11y"
-        ],
+        "tags": ["pagination", "infinite", "observer", "a11y"],
         "ai": {
           "export": "Pagination006",
           "usage": "<Pagination006 total={60} batch={10} height=\"13rem\" />",
@@ -974,12 +916,7 @@
             }
           }
         },
-        "cardControls": [
-          "total",
-          "batch",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["total", "batch", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -990,9 +927,7 @@
       "type": "registry:component",
       "title": "Навигация с размером страницы",
       "description": "Пагинация таблицы с выбором размера страницы: при смене размера первая видимая строка остаётся на месте, а не сбрасывается в начало.",
-      "categories": [
-        "pagination"
-      ],
+      "categories": ["pagination"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1004,12 +939,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-pagination-007-*. Клиентский: \"use client\" ради страницы и размера. При смене размера номер страницы пересчитывается от номера первой видимой строки, поэтому позиция в списке сохраняется. Стрелка у <select> нарисована двумя линейными градиентами, чтобы не тянуть иконку. В узком блоке контейнерный запрос переносит выбор размера на свою строку через order.",
       "meta": {
-        "tags": [
-          "pagination",
-          "page size",
-          "table",
-          "select"
-        ],
+        "tags": ["pagination", "page size", "table", "select"],
         "preview": {
           "width": "full"
         },
@@ -1137,12 +1067,7 @@
             }
           }
         },
-        "cardControls": [
-          "total",
-          "defaultPerPage",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["total", "defaultPerPage", "accent", "background"]
       }
     },
     {
@@ -1150,9 +1075,7 @@
       "type": "registry:component",
       "title": "Переход к странице",
       "description": "Пагинация с полем перехода: номер вводится и отправляется формой, а неверное значение не молчит, а объясняет допустимый диапазон.",
-      "categories": [
-        "pagination"
-      ],
+      "categories": ["pagination"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1164,12 +1087,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-pagination-008-*. Клиентский: \"use client\" ради страницы и черновика ввода. Поле перехода лежит в настоящей <form>, поэтому Enter отправляет её без отдельного обработчика клавиши. Неверный номер помечает поле через aria-invalid и показывает сообщение с role=\"alert\", связанное с полем через aria-describedby; то же место в спокойном состоянии занимает подсказка об общем числе страниц.",
       "meta": {
-        "tags": [
-          "pagination",
-          "jump",
-          "form",
-          "validation"
-        ],
+        "tags": ["pagination", "jump", "form", "validation"],
         "preview": {
           "width": "full"
         },
@@ -1299,12 +1217,7 @@
             }
           }
         },
-        "cardControls": [
-          "total",
-          "defaultPage",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["total", "defaultPage", "accent", "background"]
       }
     },
     {
@@ -1312,9 +1225,7 @@
       "type": "registry:component",
       "title": "Навигация миниатюрами",
       "description": "Пагинация для телефона: три крупные цели вместо ряда номеров, а полный список страниц открывается сеткой в popover.",
-      "categories": [
-        "pagination"
-      ],
+      "categories": ["pagination"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1326,12 +1237,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-pagination-009-*. Серверный: хуков нет, все номера — обычные ссылки. Цели по 2.75rem — нижняя граница для касания пальцем. Сетка страниц лежит в popover=\"auto\" с якорем на самой панели, поэтому закрытие по Escape и по касанию мимо достаётся от браузера. Текущая страница помечена aria-current=\"page\", края гасятся через aria-disabled.",
       "meta": {
-        "tags": [
-          "pagination",
-          "mobile",
-          "touch",
-          "popover"
-        ],
+        "tags": ["pagination", "mobile", "touch", "popover"],
         "ai": {
           "export": "Pagination009",
           "usage": "<Pagination009 page={3} total={18} hrefOf={(page) => `/catalog?page=${page}`} />",
@@ -1456,12 +1362,7 @@
             }
           }
         },
-        "cardControls": [
-          "page",
-          "total",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["page", "total", "accent", "background"],
         "preview": {
           "props": {
             "open": true
@@ -1475,9 +1376,7 @@
       "type": "registry:component",
       "title": "Ползунок с многоточием",
       "description": "Пагинация с многоточием для сотен страниц: клик по «…» открывает ползунок по скрытому диапазону, а число под ним меняется вживую, пока курсор или палец двигают ручку.",
-      "categories": [
-        "pagination"
-      ],
+      "categories": ["pagination"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1489,12 +1388,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-pagination-010-*. Клиентский: \"use client\" ради страницы и открытого разрыва. Окно номеров вокруг текущей страницы считает windowOf, а каждый разрыв несёт границы скрытого диапазона. Клик по «…» заменяет её на <input type=\"range\"> с этими границами и кнопкой «Перейти»: значение меняется вживую в <output>, а переход подтверждается явно, чтобы работать одинаково с мышью и с клавиатуры (Enter подтверждает, Escape закрывает).",
       "meta": {
-        "tags": [
-          "pagination",
-          "ellipsis",
-          "scrubber",
-          "range"
-        ],
+        "tags": ["pagination", "ellipsis", "scrubber", "range"],
         "ai": {
           "export": "Pagination010",
           "usage": "<Pagination010 page={53} total={240} siblings={1} />",
@@ -1622,13 +1516,7 @@
             }
           }
         },
-        "cardControls": [
-          "page",
-          "total",
-          "siblings",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["page", "total", "siblings", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -1639,9 +1527,7 @@
       "type": "registry:component",
       "title": "«Показать ещё» с кольцом",
       "description": "«Показать ещё» без полосы прогресса: доля показанного заполняет кольцо самой кнопки, число внутри называет следующую порцию, а счётчик снизу сообщает «60 из 240».",
-      "categories": [
-        "pagination"
-      ],
+      "categories": ["pagination"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1653,12 +1539,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-pagination-011-*. Клиентский: \"use client\" ради счётчика показанного. Кольцо — это conic-gradient на самой кнопке, доля вычисляется в проценте и передаётся через CSS-переменную --vibeui-pagination-011-percent, как ширина полосы в других вариантах «показать ещё». Внутренний круг того же цвета, что фон карточки, вырезает кольцо визуально. Дочитанный список отключает кнопку и меняет содержимое на галочку, а счётчик снизу остаётся источником текста для aria-live.",
       "meta": {
-        "tags": [
-          "pagination",
-          "load more",
-          "progress",
-          "ring"
-        ],
+        "tags": ["pagination", "load more", "progress", "ring"],
         "ai": {
           "export": "Pagination011",
           "usage": "<Pagination011 total={240} batch={60} defaultShown={60} />",
@@ -1802,9 +1683,7 @@
       "type": "registry:component",
       "title": "Автоподгрузка при прокрутке",
       "description": "Бесконечная лента без кнопки на виду: подгрузка запускается прокруткой до низа, во время запроса внизу пульсируют точки, а спрятанная фокусируемая кнопка остаётся запасным способом для клавиатуры.",
-      "categories": [
-        "pagination"
-      ],
+      "categories": ["pagination"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1816,12 +1695,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-pagination-012-*. Клиентский: \"use client\" ради состояния подгрузки. onScroll на области ленты считает расстояние до низа и запускает setTimeout, имитирующий сетевой запрос, — на время ожидания внизу пульсируют три точки, а текст рядом уходит в aria-live. Кнопки на виду нет, но она не исчезла: визуально скрытая (clip), она становится видимой и рабочей по фокусу — клавиатура и скринридер получают тот же результат, что и прокрутка.",
       "meta": {
-        "tags": [
-          "pagination",
-          "infinite",
-          "scroll",
-          "loader"
-        ],
+        "tags": ["pagination", "infinite", "scroll", "loader"],
         "ai": {
           "export": "Pagination012",
           "usage": "<Pagination012 total={90} batch={15} height=\"13rem\" />",
@@ -1936,12 +1810,7 @@
             }
           }
         },
-        "cardControls": [
-          "total",
-          "batch",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["total", "batch", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -1952,9 +1821,7 @@
       "type": "registry:component",
       "title": "Переключатель размера страницы",
       "description": "Пагинация таблицы, где размер страницы — группа кнопок рядом с номерами, а не спрятанный выпадающий список: текущий выбор виден без клика, а место в списке сохраняется при смене размера.",
-      "categories": [
-        "pagination"
-      ],
+      "categories": ["pagination"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1966,12 +1833,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-pagination-013-*. Клиентский: \"use client\" ради страницы и размера страницы. Номера считает windowOf — тот же приём, что и в других вариантах с окном вокруг текущей страницы. Размер переключает role=\"group\" из кнопок с aria-pressed, а не <select>: выбор виден сразу, без раскрытия списка. changeSize пересчитывает номер страницы от текущей первой видимой строки, чтобы смена размера не отбрасывала на первую страницу.",
       "meta": {
-        "tags": [
-          "pagination",
-          "page size",
-          "table",
-          "toggle"
-        ],
+        "tags": ["pagination", "page size", "table", "toggle"],
         "ai": {
           "export": "Pagination013",
           "usage": "<Pagination013 total={326} defaultPerPage={25} sizes={[10, 25, 50, 100]} />",
@@ -2109,9 +1971,7 @@
       "type": "registry:component",
       "title": "Сворачиваемая навигация",
       "description": "Одна пагинация на широкий и узкий контейнер: ряд номеров сам уступает место паре стрелок и счётчику «страница из страниц», когда компоненту достаётся мало места — по ширине блока, а не окна.",
-      "categories": [
-        "pagination"
-      ],
+      "categories": ["pagination"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2123,12 +1983,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-pagination-014-*. Клиентский: \"use client\" ради текущей страницы. Корень объявляет container-type: inline-size вне @container — правило внутри контейнерного запроса не может целиться в сам блок, поэтому свойство ставится на верхнеуровневый селектор. Ниже порога @container ряд номеров (data-part=\"numbers\") прячется через display:none, а счётчик (data-part=\"compact\") занимает его место; оба элемента используют одни и те же кнопки «назад»/«вперёд».",
       "meta": {
-        "tags": [
-          "pagination",
-          "responsive",
-          "container",
-          "compact"
-        ],
+        "tags": ["pagination", "responsive", "container", "compact"],
         "ai": {
           "export": "Pagination014",
           "usage": "<Pagination014 page={4} total={48} siblings={1} />",
@@ -2249,13 +2104,7 @@
             }
           }
         },
-        "cardControls": [
-          "page",
-          "total",
-          "siblings",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["page", "total", "siblings", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -2266,9 +2115,7 @@
       "type": "registry:component",
       "title": "Правка номера страницы",
       "description": "Пагинация без отдельного поля перехода: сам номер страницы становится инпутом по клику или Enter, Enter подтверждает и проверяет диапазон, а Escape отменяет правку без следа в раскладке.",
-      "categories": [
-        "pagination"
-      ],
+      "categories": ["pagination"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2280,12 +2127,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-pagination-015-*. Клиентский: \"use client\" ради страницы, режима правки и черновика ввода. Номер страницы обычно — <button>; клик или Enter на нём вызывает startEdit и подменяет его на <input>, который получает фокус и выделение через useEffect. Enter вызывает finishEdit(true) с проверкой диапазона и сообщением через role=\"alert\", Escape и потеря фокуса — finishEdit(false), откатывающий правку без изменения страницы.",
       "meta": {
-        "tags": [
-          "pagination",
-          "jump",
-          "inline edit",
-          "form"
-        ],
+        "tags": ["pagination", "jump", "inline edit", "form"],
         "ai": {
           "export": "Pagination015",
           "usage": "<Pagination015 page={12} total={48} />",
@@ -2396,15 +2238,140 @@
             }
           }
         },
-        "cardControls": [
-          "page",
-          "total",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["page", "total", "accent", "background"],
         "preview": {
           "width": "full"
         }
+      }
+    },
+    {
+      "name": "pagination-016",
+      "type": "registry:component",
+      "title": "Список страниц выбором",
+      "description": "Переход к странице выбором из нативного select со списком всех номеров: неверного значения не бывает, поле ввода и проверка диапазона не нужны.",
+      "categories": ["pagination"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "pagination-016/pagination-016.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/pagination-016.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-pagination-016-*. Клиентский: \"use client\" ради текущей страницы. Номер страницы выбирается из нативного <select> со списком всех страниц — в отличие от pagination-008 здесь нет ни текстового поля, ни отправки формы, ни проверки диапазона: список содержит только существующие номера. Select приносит клавиатуру, поиск по первой цифре и мобильный барабан выбора без дополнительного кода. Стрелки по краям выключаются через disabled на первой и последней странице.",
+      "meta": {
+        "tags": ["pagination", "select", "jump", "native"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Pagination016",
+          "usage": "<Pagination016 total={64} defaultPage={12} label=\"Страница\" />",
+          "summary": "Пагинация с переходом через нативный select: стрелки по краям и список всех страниц посередине вместо текстового поля. Выбор всегда корректен, потому что список не содержит несуществующих номеров. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-pagination-016-* и не подменять её токенами вашей темы (bg-input, border-input и подобными)",
+            "нативный <select> вместо текстового поля: только он приносит клавиатуру, поиск по цифре и мобильный барабан выбора без единой строчки кода под это",
+            "<label>, связанный с select через htmlFor/id, а не только видимый текст рядом — иначе у поля нет доступного имени",
+            "список страниц как options со значениями от 1 до total: возможность выбрать несуществующий номер нужно исключать самим списком, а не проверкой после",
+            "aria-current=\"page\" на select: без него скринридер не отличает элемент, отвечающий за текущую страницу, от обычного поля",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "total и defaultPage — количество страниц и начальную",
+            "label — подпись поля выбора",
+            "акцент через проп accent — цвет колец фокуса",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи через labelText — стрелки «назад»/«вперёд» и текст «из {total}»",
+            "navLabel — подпись всей навигации для aria-label"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Компонент клиентский: текущая страница живёт внутри как состояние.",
+            "Список из сотен option — это по-прежнему один нативный select, браузер справляется с ним без просадок; для тысяч страниц уместнее пагинация с текстовым полем (pagination-008) или ползунком (pagination-010).",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "total",
+            "label": "Всего страниц",
+            "type": "number",
+            "default": 64,
+            "min": 1,
+            "max": 999
+          },
+          {
+            "prop": "defaultPage",
+            "label": "Страница",
+            "type": "number",
+            "default": 12,
+            "min": 1,
+            "max": 64
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Jump to a page by picking it from a native select listing every page number: an invalid value cannot happen, so no input field or range check is needed.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-pagination-016-* variables. Client component: \"use client\" for the current page. The page number is picked from a native <select> listing every page — unlike pagination-008 there is no text field, no form submit and no range check: the list only ever contains existing numbers. The select brings keyboard control, jump-to-digit search and a mobile picker wheel with no extra code. The edge arrows disable themselves on the first and last page.",
+            "ai": {
+              "summary": "Pagination with a native-select jump: arrows on the edges and a list of every page in the middle instead of a text field. The choice is always valid because the list never contains a nonexistent number. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-pagination-016-* palette — do not swap it for your theme tokens (bg-input, border-input and the like)",
+                "the native <select> instead of a text field — only it brings keyboard control, jump-to-digit search and a mobile picker wheel for free",
+                "the <label> linked to the select through htmlFor/id, not just visible text nearby — otherwise the field has no accessible name",
+                "the page list as options valued 1 through total: ruling out a nonexistent page has to come from the list itself, not from a check afterwards",
+                "aria-current=\"page\" on the select — without it a screen reader cannot tell the element that carries the current page from an ordinary field",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "total and defaultPage — the page count and the starting page",
+                "label — the caption of the select field",
+                "the accent through the accent prop — it colours the focus rings",
+                "background — the component background; empty means no background, taking the page colour",
+                "the labels through labelText — the back/forward arrows and the \"of {total}\" text",
+                "navLabel — the caption of the whole navigation for aria-label"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The component is a client one: the current page lives inside it as state.",
+                "A list of hundreds of options is still one native select and browsers handle it without trouble; for thousands of pages a text-field jump (pagination-008) or a slider (pagination-010) fits better.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Pagination016 total={64} defaultPage={12} label=\"Page\" />"
+            },
+            "controls": {
+              "total": {
+                "label": "Total pages"
+              },
+              "defaultPage": {
+                "label": "Page"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Page List Select"
+          }
+        },
+        "cardControls": ["total", "defaultPage", "accent", "background"]
       }
     }
   ]

@@ -81,4 +81,9 @@ export const PREVIEWS = {
       (module) => module.Pagination015,
     ),
   ),
+  "pagination-016": dynamic(() =>
+    import("@/registry/components/pagination/pagination-016/pagination-016").then(
+      (module) => module.Pagination016,
+    ),
+  ),
 } satisfies PreviewMap

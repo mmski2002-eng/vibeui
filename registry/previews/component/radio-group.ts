@@ -22,6 +22,8 @@ import { Radio014 } from "@/registry/components/radio-group/radio-014/radio-014"
 import { Radio015 } from "@/registry/components/radio-group/radio-015/radio-015"
 import { Radio016 } from "@/registry/components/radio-group/radio-016/radio-016"
 import { Radio017 } from "@/registry/components/radio-group/radio-017/radio-017"
+import { Radio018 } from "@/registry/components/radio-group/radio-018/radio-018"
+import { Radio019 } from "@/registry/components/radio-group/radio-019/radio-019"
 
 export const PREVIEWS = {
   "radio-001": Radio001,
@@ -41,4 +43,6 @@ export const PREVIEWS = {
   "radio-015": Radio015,
   "radio-016": Radio016,
   "radio-017": Radio017,
+  "radio-018": Radio018,
+  "radio-019": Radio019,
 } satisfies Record<string, ComponentType<PreviewProps>>

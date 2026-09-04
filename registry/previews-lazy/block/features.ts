@@ -81,4 +81,9 @@ export const PREVIEWS = {
       (module) => module.Features015,
     ),
   ),
+  "features-016": dynamic(() =>
+    import("@/registry/blocks/features/features-016/features-016").then(
+      (module) => module.Features016,
+    ),
+  ),
 } satisfies PreviewMap

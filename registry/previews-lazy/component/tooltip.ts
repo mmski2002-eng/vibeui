@@ -86,4 +86,9 @@ export const PREVIEWS = {
       (module) => module.Tooltip016,
     ),
   ),
+  "tooltip-017": dynamic(() =>
+    import("@/registry/components/tooltip/tooltip-017/tooltip-017").then(
+      (module) => module.Tooltip017,
+    ),
+  ),
 } satisfies PreviewMap

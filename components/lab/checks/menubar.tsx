@@ -1,6 +1,5 @@
 import type { LabCheck } from "@/components/lab/check-types"
 
-import { Menu003 } from "@/registry/components/menubar/menu-003/menu-003"
 import { Menubar001 } from "@/registry/components/menubar/menubar-001/menubar-001"
 import { Menubar002 } from "@/registry/components/menubar/menubar-002/menubar-002"
 import { Menubar003 } from "@/registry/components/menubar/menubar-003/menubar-003"
@@ -14,12 +13,6 @@ import { Menubar008 } from "@/registry/components/menubar/menubar-008/menubar-00
 export const SEED = 68432
 
 export const CHECKS: LabCheck[] = [
-  {
-    name: "menu-003",
-    title: "Строка меню",
-    notes: ["Акцент: #37326f", "Подсказка: Что дальше"],
-    node: <Menu003 accent="#37326f" hint="Что дальше" />,
-  },
   {
     name: "menubar-001",
     title: "Строка меню приложения",

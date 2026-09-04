@@ -6,9 +6,7 @@
       "type": "registry:component",
       "title": "Подсказка с клавиатуры",
       "description": "Подсказка, которая открывается и по наведению, и по фокусу с клавиатуры. Второе обычно забывают, и подсказка остаётся недоступной половине пользователей.",
-      "categories": [
-        "tooltip"
-      ],
+      "categories": ["tooltip"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tooltip-001-*. Появление держат :hover и :focus-within у обёртки, поэтому JS не нужен и компонент остаётся серверным. Хвостик — повёрнутый квадрат того же цвета. Подсказка помечена role=\"tooltip\" и имеет id: свяжите с ним триггер через aria-describedby. Без переданного children рисуется кнопка-заглушка — она нужна только для превью.",
       "meta": {
-        "tags": [
-          "tooltip",
-          "hint",
-          "accessibility",
-          "no-js"
-        ],
+        "tags": ["tooltip", "hint", "accessibility", "no-js"],
         "preview": {
           "props": {
             "open": true
@@ -87,10 +80,7 @@
             "label": "Сторона",
             "type": "select",
             "default": "top",
-            "options": [
-              "top",
-              "bottom"
-            ]
+            "options": ["top", "bottom"]
           },
           {
             "prop": "open",
@@ -164,12 +154,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-tooltip-001-*. The appearance rests on :hover and :focus-within of the wrapper, so no JS is needed and the component stays a server one. The tail is a rotated square in the same colour. The bubble is marked role=\"tooltip\" and has an id: link the trigger to it through aria-describedby. With no children passed, a placeholder button is drawn — it exists only for the preview."
           }
         },
-        "cardControls": [
-          "tip",
-          "side",
-          "open",
-          "background"
-        ]
+        "cardControls": ["tip", "side", "open", "background"]
       }
     },
     {
@@ -177,9 +162,7 @@
       "type": "registry:component",
       "title": "Своя против нативной",
       "description": "Сравнение на одном экране: слева кнопка с нативным title, справа своя подсказка — со стрелкой, мгновенная и доступная с клавиатуры.",
-      "categories": [
-        "tooltip"
-      ],
+      "categories": ["tooltip"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -191,12 +174,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tooltip-002-*. Серверный: обе подсказки держатся на :hover и :focus-within, JS не нужен. Левая ячейка намеренно оставлена нативной — атрибут title показывает системную подсказку через секунду с лишним, без стрелки и без реакции на Tab. Правая собрана вручную: хвостик — повёрнутый квадрат того же цвета, открытие продублировано фокусом, связь с кнопкой объявлена через aria-describedby.",
       "meta": {
-        "tags": [
-          "tooltip",
-          "comparison",
-          "accessibility",
-          "native"
-        ],
+        "tags": ["tooltip", "comparison", "accessibility", "native"],
         "preview": {
           "width": "full"
         },
@@ -318,12 +296,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-tooltip-002-*. It is a server component: both tooltips rest on :hover and :focus-within, no JS is needed. The left cell is deliberately left native — the title attribute shows the system tooltip after a second or so, with no arrow and no reaction to Tab. The right one is assembled by hand: the tail is a rotated square in the same colour, the opening is duplicated by focus, and the link to the button is declared through aria-describedby."
           }
         },
-        "cardControls": [
-          "tip",
-          "nativeLabel",
-          "customLabel",
-          "background"
-        ]
+        "cardControls": ["tip", "nativeLabel", "customLabel", "background"]
       }
     },
     {
@@ -331,9 +304,7 @@
       "type": "registry:component",
       "title": "Подсказка с сочетанием",
       "description": "Подсказка, которая заодно учит горячей клавише: название действия слева, сочетание клавишами справа — она становится справочником, а не повтором подписи.",
-      "categories": [
-        "tooltip"
-      ],
+      "categories": ["tooltip"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -345,12 +316,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tooltip-003-*. Серверный: открытие держится на :hover и :focus-within. Клавиши нарисованы тегами <kbd> с полупрозрачной заливкой, а не текстом «Ctrl+K»: так их видно как клавиши. На кнопке стоит aria-keyshortcuts, поэтому сочетание доступно и без наведения, а группе клавиш дана словесная подпись через aria-label — иначе скринридер прочитает набор букв.",
       "meta": {
-        "tags": [
-          "tooltip",
-          "shortcut",
-          "kbd",
-          "toolbar"
-        ],
+        "tags": ["tooltip", "shortcut", "kbd", "toolbar"],
         "ai": {
           "export": "Tooltip003",
           "usage": "<Tooltip003 tip=\"Открыть поиск\" keys={[\"Ctrl\", \"K\"]} />",
@@ -451,20 +417,13 @@
               "props": {
                 "tip": "Open search",
                 "triggerLabel": "Search",
-                "keys": [
-                  "Ctrl",
-                  "K"
-                ]
+                "keys": ["Ctrl", "K"]
               }
             },
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-tooltip-003-*. It is a server component: the opening rests on :hover and :focus-within. The keys are drawn with <kbd> tags and a semi-transparent fill rather than as the text \"Ctrl+K\": that is what makes them look like keys. The button carries aria-keyshortcuts, so the combination is available without hovering, and the key group is given a spoken label through aria-label — otherwise a screen reader reads out a run of letters."
           }
         },
-        "cardControls": [
-          "tip",
-          "triggerLabel",
-          "background"
-        ],
+        "cardControls": ["tip", "triggerLabel", "background"],
         "preview": {
           "width": "auto"
         }
@@ -475,9 +434,7 @@
       "type": "registry:component",
       "title": "Панель иконок",
       "description": "Панель иконок, где подсказка служит единственной подписью: у каждой кнопки своя доступная метка, а видимая подсказка привязана к своей ячейке.",
-      "categories": [
-        "tooltip"
-      ],
+      "categories": ["tooltip"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -489,12 +446,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tooltip-004-*. Серверный: открытие держится на :hover и :focus-within, но не у панели, а у ячейки — иначе наведение на панель раскрыло бы все подсказки разом. Панель объявлена role=\"toolbar\", у каждой кнопки есть aria-label, а видимая подсказка помечена aria-hidden, чтобы имя не читалось дважды. Сторона всплытия переключается пропом side.",
       "meta": {
-        "tags": [
-          "tooltip",
-          "toolbar",
-          "icon",
-          "label"
-        ],
+        "tags": ["tooltip", "toolbar", "icon", "label"],
         "ai": {
           "export": "Tooltip004",
           "usage": "<Tooltip004\n  side=\"top\"\n  actions={[{ glyph: \"↩\", label: \"Отменить действие\" }]}\n/>",
@@ -530,10 +482,7 @@
             "label": "Сторона",
             "type": "select",
             "default": "top",
-            "options": [
-              "top",
-              "bottom"
-            ]
+            "options": ["top", "bottom"]
           },
           {
             "prop": "background",
@@ -608,10 +557,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-tooltip-004-*. It is a server component: the opening rests on :hover and :focus-within of the cell rather than of the panel — otherwise hovering the panel would open every tooltip at once. The panel is declared role=\"toolbar\", every button has an aria-label, and the visible tooltip is marked aria-hidden so that the name is not read twice. The side it opens on is switched by the side prop."
           }
         },
-        "cardControls": [
-          "side",
-          "background"
-        ],
+        "cardControls": ["side", "background"],
         "preview": {
           "width": "auto"
         }
@@ -622,9 +568,7 @@
       "type": "registry:component",
       "title": "Подсказка с переносом",
       "description": "Подсказка для длинного объяснения: ограниченная ширина, выключка по левому краю и перенос по словам — строка на 400 пикселей не читается.",
-      "categories": [
-        "tooltip"
-      ],
+      "categories": ["tooltip"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -636,12 +580,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tooltip-005-*. Серверный: открытие держится на :hover и :focus-within. Предельная ширина живёт в переменной --vibeui-tooltip-005-width и дополнительно ограничена шириной окна, поэтому у края экрана подсказка сжимается, а не уезжает. Перенос собран из white-space:normal, overflow-wrap:anywhere и text-wrap:pretty — последняя строка не остаётся из одного слова. Триггер несёт собственную светлую подложку.",
       "meta": {
-        "tags": [
-          "tooltip",
-          "long text",
-          "wrapping",
-          "help"
-        ],
+        "tags": ["tooltip", "long text", "wrapping", "help"],
         "ai": {
           "export": "Tooltip005",
           "usage": "<Tooltip005\n  label=\"Как считается остаток\"\n  tip=\"Остаток — это оплаченный объём минус израсходованный.\"\n  tipWidth=\"17rem\"\n/>",
@@ -746,11 +685,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-tooltip-005-*. It is a server component: the opening rests on :hover and :focus-within. The maximum width lives in the --vibeui-tooltip-005-width variable and is additionally capped by the viewport width, so near the edge of the screen the tooltip shrinks instead of running off. The wrapping is assembled from white-space:normal, overflow-wrap:anywhere and text-wrap:pretty — the last line is never left with a single word. The trigger carries a light surface of its own."
           }
         },
-        "cardControls": [
-          "label",
-          "tipWidth",
-          "background"
-        ],
+        "cardControls": ["label", "tipWidth", "background"],
         "preview": {
           "width": "auto"
         }
@@ -761,9 +696,7 @@
       "type": "registry:component",
       "title": "Переворот у края",
       "description": "Подсказка, которая не вылезает за край: у крайних кнопок она прижимается к своей стороне, а стрелка съезжает к триггеру, чтобы связь не потерялась.",
-      "categories": [
-        "tooltip"
-      ],
+      "categories": ["tooltip"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -775,12 +708,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tooltip-006-*. Серверный: выравнивание объявлено атрибутом data-align на ячейке, и три правила задают left:0, центр и right:0. Хвостик позиционируется отдельно для каждого варианта, поэтому при переносе подсказки он остаётся под кнопкой. В демонстрации три кнопки расставлены по краям и центру области — так переворот виден без изменения размера окна.",
       "meta": {
-        "tags": [
-          "tooltip",
-          "flip",
-          "arrow",
-          "edge"
-        ],
+        "tags": ["tooltip", "flip", "arrow", "edge"],
         "preview": {
           "width": "full"
         },
@@ -872,21 +800,14 @@
             "preview": {
               "props": {
                 "tip": "Export to CSV",
-                "labels": [
-                  "At the left edge",
-                  "Centred",
-                  "At the right edge"
-                ],
+                "labels": ["At the left edge", "Centred", "At the right edge"],
                 "note": "Hover the outer buttons: the tooltip hugs its own side and the arrow slides to the button — nothing leaves the area."
               }
             },
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-tooltip-006-*. It is a server component: the alignment is declared by the data-align attribute on the cell, and three rules set left:0, the centre and right:0. The tail is positioned separately for each variant, so when the tooltip shifts it stays under the button. In the demonstration three buttons are placed at the edges and the centre of the area — that way the flip is visible without resizing the window."
           }
         },
-        "cardControls": [
-          "tip",
-          "background"
-        ]
+        "cardControls": ["tip", "background"]
       }
     },
     {
@@ -894,9 +815,7 @@
       "type": "registry:component",
       "title": "Подсказка к полю",
       "description": "Подсказка у поля ввода, привязанная к фокусу, а не к наведению: требования к паролю нужны в момент набора, а курсор мыши в этот момент не при делах.",
-      "categories": [
-        "tooltip"
-      ],
+      "categories": ["tooltip"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -908,12 +827,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tooltip-007-*. Серверный: подсказка раскрывается правилом :focus-within у обёртки поля, поэтому обработчики не нужны. Она объявлена aria-describedby у input и помечена role=\"note\", то есть читается вслух вместе с полем. Подсказка выведена из потока абсолютным позиционированием: появление не сдвигает форму. Обёртка растянута на ширину поля, поэтому подсказка совпадает с ним по краям.",
       "meta": {
-        "tags": [
-          "tooltip",
-          "form",
-          "focus",
-          "hint"
-        ],
+        "tags": ["tooltip", "form", "focus", "hint"],
         "preview": {
           "width": "full"
         },
@@ -1023,11 +937,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-tooltip-007-*. It is a server component: the hint opens by the :focus-within rule on the field wrapper, so no handlers are needed. It is declared as the input's aria-describedby and marked role=\"note\", so it is read aloud together with the field. The hint is taken out of the flow by absolute positioning: its appearance does not shift the form. The wrapper is stretched to the field width, so the hint lines up with its edges."
           }
         },
-        "cardControls": [
-          "label",
-          "hint",
-          "background"
-        ]
+        "cardControls": ["label", "hint", "background"]
       }
     },
     {
@@ -1035,9 +945,7 @@
       "type": "registry:component",
       "title": "Подчёркнутый термин",
       "description": "Объяснение термина прямо в тексте: слово подчёркнуто пунктиром и остаётся в строке, а подсказка выезжает поверх и ничего не сдвигает.",
-      "categories": [
-        "tooltip"
-      ],
+      "categories": ["tooltip"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1049,12 +957,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tooltip-008-*. Серверный: открытие держится на :hover и :focus-visible самого слова. Термин остаётся строчным элементом с tabIndex=0 — не кнопка и не ссылка, поэтому набор текста не рвётся, но фокус с клавиатуры на нём есть. Подсказка набрана гротеском внутри серифного абзаца: так она читается как выноска, а не как часть текста. Подчёркивание пунктиром сделано свойством text-decoration, а не рамкой.",
       "meta": {
-        "tags": [
-          "tooltip",
-          "glossary",
-          "inline",
-          "typography"
-        ],
+        "tags": ["tooltip", "glossary", "inline", "typography"],
         "preview": {
           "width": "full"
         },
@@ -1163,11 +1066,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-tooltip-008-*. It is a server component: the opening rests on :hover and :focus-visible of the word itself. The term stays an inline element with tabIndex=0 — not a button and not a link, so the setting is not broken, yet it can be reached by keyboard focus. The tooltip is set in a sans-serif face inside a serif paragraph: that is what makes it read as an aside rather than part of the text. The dotted rule is made with the text-decoration property rather than a border."
           }
         },
-        "cardControls": [
-          "term",
-          "definition",
-          "background"
-        ]
+        "cardControls": ["term", "definition", "background"]
       }
     },
     {
@@ -1175,9 +1074,7 @@
       "type": "registry:component",
       "title": "Подсказка с задержкой",
       "description": "Подсказка появляется с задержкой, а прячется мгновенно: пролёт курсора по строке кнопок не устраивает мигание подсказок.",
-      "categories": [
-        "tooltip"
-      ],
+      "categories": ["tooltip"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1189,12 +1086,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tooltip-009-*. Серверный: задержка стоит только в правиле открытого состояния через transition-delay, а базовое правило обнуляет её — поэтому появление ждёт, а исчезновение происходит сразу. Величина задержки живёт в --vibeui-tooltip-009-delay и приходит пропом delay, так что таймеры на JS не нужны. Подсказки привязаны к своим ячейкам, поэтому наведение на соседа не раскрывает всю строку.",
       "meta": {
-        "tags": [
-          "tooltip",
-          "delay",
-          "hover intent",
-          "row"
-        ],
+        "tags": ["tooltip", "delay", "hover intent", "row"],
         "preview": {
           "width": "full"
         },
@@ -1297,22 +1189,14 @@
             "preview": {
               "props": {
                 "tip": "Acts on the selected row",
-                "labels": [
-                  "Copy",
-                  "Duplicate",
-                  "Archive"
-                ],
+                "labels": ["Copy", "Duplicate", "Archive"],
                 "note": "The opening delay is {delay} s. Sweep the pointer along the row: the tips never flicker, because hiding has no delay."
               }
             },
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-tooltip-009-*. It is a server component: the delay sits only in the open-state rule through transition-delay, while the base rule zeroes it — that is why the appearance waits and the disappearance happens at once. The delay length lives in --vibeui-tooltip-009-delay and arrives through the delay prop, so JS timers are not needed. The tooltips are bound to their own cells, so hovering a neighbour does not open the whole row."
           }
         },
-        "cardControls": [
-          "delay",
-          "tip",
-          "background"
-        ]
+        "cardControls": ["delay", "tip", "background"]
       }
     },
     {
@@ -1320,9 +1204,7 @@
       "type": "registry:component",
       "title": "Горячая клавиша в меню",
       "description": "Меню иконок-кнопок, где подсказка на пункте несёт встроенный чип горячей клавиши — один компактный ярлык, а не ряд отдельных клавиш рядом с подписью.",
-      "categories": [
-        "tooltip"
-      ],
+      "categories": ["tooltip"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1334,12 +1216,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tooltip-010-*. Серверный: подсказка держится на :hover и :focus-within у пункта, а не у всей панели. Пункт меню уже показывает подпись действия текстом, поэтому подсказка не повторяет её — она несёт только чип сочетания клавиш в моноширинном начертании. Подсказка раскрывается вправо от пункта, а не вверх, потому что меню собрано вертикальным списком.",
       "meta": {
-        "tags": [
-          "tooltip",
-          "shortcut",
-          "menu",
-          "chip"
-        ],
+        "tags": ["tooltip", "shortcut", "menu", "chip"],
         "ai": {
           "export": "Tooltip010",
           "usage": "<Tooltip010\n  items={[{ glyph: \"↩\", label: \"Отменить\", shortcut: \"⌘Z\" }]}\n/>",
@@ -1450,10 +1327,7 @@
             "default": ""
           }
         ],
-        "cardControls": [
-          "shortcutLabel",
-          "background"
-        ],
+        "cardControls": ["shortcutLabel", "background"],
         "preview": {
           "width": "full"
         }
@@ -1464,9 +1338,7 @@
       "type": "registry:component",
       "title": "Задержка при наведении",
       "description": "Сетка статус-точек мониторинга: подсказка ждёт долю секунды перед появлением, но прячется мгновенно — пробег курсором по сетке не устраивает мигание.",
-      "categories": [
-        "tooltip"
-      ],
+      "categories": ["tooltip"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1478,12 +1350,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tooltip-011-*. Серверный: задержка стоит только в правиле открытого состояния через transition-delay, а базовое правило обнуляет её — появление ждёт, исчезновение происходит сразу. Величина задержки живёт в --vibeui-tooltip-011-delay и приходит пропом delay. Цвет точки задаётся атрибутом data-status на ячейке через промежуточную переменную, поэтому палитра статусов настраивается в одном месте.",
       "meta": {
-        "tags": [
-          "tooltip",
-          "delay",
-          "monitoring",
-          "grid"
-        ],
+        "tags": ["tooltip", "delay", "monitoring", "grid"],
         "preview": {
           "width": "full"
         },
@@ -1586,10 +1453,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-tooltip-011-*. It is a server component: the delay sits only in the open-state rule through transition-delay, while the base rule zeroes it — the appearance waits, the disappearance happens at once. The delay length lives in --vibeui-tooltip-011-delay and arrives through the delay prop. The dot colour is set by the data-status attribute on the cell through an intermediate variable, so the status palette is configured in one place."
           }
         },
-        "cardControls": [
-          "delay",
-          "background"
-        ]
+        "cardControls": ["delay", "background"]
       }
     },
     {
@@ -1597,9 +1461,7 @@
       "type": "registry:component",
       "title": "Пузырь с вопросом",
       "description": "Круглая иконка-вопрос без подписи рядом: подсказка внутри всегда держит две строки — жирный заголовок и обычное пояснение под ним, а не сплошной абзац.",
-      "categories": [
-        "tooltip"
-      ],
+      "categories": ["tooltip"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1611,12 +1473,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tooltip-012-*. Серверный: открытие держится на :hover и :focus-within. Подсказка сознательно узкая — переменная --vibeui-tooltip-012-width задаёт около тринадцати с половиной rem, поэтому пояснение переносится само, а заголовок и текст разведены как два отдельных блока flex-column, а не одной строкой через <br>.",
       "meta": {
-        "tags": [
-          "tooltip",
-          "help",
-          "icon",
-          "typography"
-        ],
+        "tags": ["tooltip", "help", "icon", "typography"],
         "ai": {
           "export": "Tooltip012",
           "usage": "<Tooltip012\n  heading=\"Пробный период\"\n  detail=\"14 дней с полным доступом, карта не нужна.\"\n/>",
@@ -1720,11 +1577,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-tooltip-012-*. It is a server component: the opening rests on :hover and :focus-within. The tooltip is deliberately narrow — the --vibeui-tooltip-012-width variable sets about thirteen and a half rem, so the explanation wraps on its own, and the heading and the text are separated as two distinct flex-column blocks rather than one line broken by <br>."
           }
         },
-        "cardControls": [
-          "heading",
-          "detail",
-          "background"
-        ],
+        "cardControls": ["heading", "detail", "background"],
         "preview": {
           "width": "auto"
         }
@@ -1735,9 +1588,7 @@
       "type": "registry:component",
       "title": "Смена стороны",
       "description": "Подсказка переключает сторону всплытия по месту на экране: у верхнего края раскрывается вниз, у нижнего — вверх, а стрелка каждый раз указывает на триггер.",
-      "categories": [
-        "tooltip"
-      ],
+      "categories": ["tooltip"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1749,12 +1600,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tooltip-013-*. Серверный: сторона объявлена атрибутом data-side на ячейке, и два правила задают top и bottom вместе со сдвигом хвостика. В отличие от переключения по горизонтали, здесь меняется вертикальная сторона всплытия — пункт у верхнего края раскрывает подсказку вниз, у нижнего — вверх, и хвостик остаётся на своей грани.",
       "meta": {
-        "tags": [
-          "tooltip",
-          "flip",
-          "arrow",
-          "vertical"
-        ],
+        "tags": ["tooltip", "flip", "arrow", "vertical"],
         "preview": {
           "width": "full"
         },
@@ -1846,20 +1692,14 @@
             "preview": {
               "props": {
                 "tip": "Add to bookmarks",
-                "labels": [
-                  "Near the top",
-                  "Near the bottom"
-                ],
+                "labels": ["Near the top", "Near the bottom"],
                 "note": "The top item opens its tooltip downward and the bottom one upward: the side is set by data-side, not by measuring the free space."
               }
             },
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-tooltip-013-*. It is a server component: the side is declared by the data-side attribute on the cell, and two rules set top and bottom together with the tail offset. Unlike switching along the horizontal, here the vertical side of the opening changes — an item near the top edge opens its tooltip downwards, one near the bottom opens it upwards, and the tail stays on its own edge."
           }
         },
-        "cardControls": [
-          "tip",
-          "background"
-        ]
+        "cardControls": ["tip", "background"]
       }
     },
     {
@@ -1867,9 +1707,7 @@
       "type": "registry:component",
       "title": "Причина недоступности",
       "description": "Подсказка на визуально отключённой кнопке: aria-disabled вместо disabled оставляет её доступной наведению и фокусу, а подсказка объясняет, чего не хватает.",
-      "categories": [
-        "tooltip"
-      ],
+      "categories": ["tooltip"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1881,12 +1719,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tooltip-014-*. Серверный: кнопка помечена aria-disabled=\"true\" вместо атрибута disabled, поэтому остаётся в очереди табуляции и получает наведение — настоящий disabled не принимает ни то, ни другое, и подсказка на нём никогда не появится. Курсор not-allowed и приглушённый цвет сообщают состояние визуально, значок замка дублирует его для сканирования взглядом.",
       "meta": {
-        "tags": [
-          "tooltip",
-          "disabled",
-          "button",
-          "accessibility"
-        ],
+        "tags": ["tooltip", "disabled", "button", "accessibility"],
         "ai": {
           "export": "Tooltip014",
           "usage": "<Tooltip014\n  label=\"Опубликовать\"\n  reason=\"Сначала заполните обязательные поля.\"\n/>",
@@ -1988,11 +1821,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-tooltip-014-*. It is a server component: the button is marked aria-disabled=\"true\" instead of the disabled attribute, so it stays in the tab order and receives hover — a real disabled accepts neither, and a tooltip on it would never appear. The not-allowed cursor and the dimmed colour report the state visually, and the lock glyph duplicates it for scanning by eye."
           }
         },
-        "cardControls": [
-          "label",
-          "reason",
-          "showLock"
-        ],
+        "cardControls": ["label", "reason", "showLock"],
         "preview": {
           "width": "auto"
         }
@@ -2003,9 +1832,7 @@
       "type": "registry:component",
       "title": "Карточка предпросмотра",
       "description": "Подсказка-карточка с миниатюрой изображения: ссылка на файл сама по себе ничего не показывает, а наведение и фокус раскрывают картинку-превью и подпись.",
-      "categories": [
-        "tooltip"
-      ],
+      "categories": ["tooltip"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2017,12 +1844,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tooltip-015-*. Серверный: открытие держится на :hover и :focus-within. Подсказка — это непрозрачная карточка с картинкой сверху и подписью снизу, а не полупрозрачный пузырь: у изображения нет собственного фона, и текст под ним должен оставаться читаемым. Заглушка по умолчанию — инлайновая SVG-картинка через data:URI, поэтому проп src принимает и обычный URL без переноса файлов рядом с компонентом.",
       "meta": {
-        "tags": [
-          "tooltip",
-          "preview",
-          "image",
-          "card"
-        ],
+        "tags": ["tooltip", "preview", "image", "card"],
         "ai": {
           "export": "Tooltip015",
           "usage": "<Tooltip015\n  label=\"обложка_релиза.png\"\n  caption=\"1600×1000 · добавлено сегодня\"\n  src=\"/covers/release.png\"\n/>",
@@ -2127,11 +1949,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-tooltip-015-*. It is a server component: the opening rests on :hover and :focus-within. The tooltip is an opaque card with an image on top and a caption below rather than a semi-transparent bubble: the image has no background of its own, and the text under it has to stay readable. The default placeholder is an inline SVG image through a data: URI, so the src prop also accepts a plain URL without carrying files next to the component."
           }
         },
-        "cardControls": [
-          "label",
-          "caption",
-          "accent"
-        ],
+        "cardControls": ["label", "caption", "accent"],
         "preview": {
           "width": "auto"
         }
@@ -2142,9 +1960,7 @@
       "type": "registry:component",
       "title": "Подсказка по фокусу",
       "description": "Подсказка-инструкция у поля формы, раскрывающаяся именно по фокусу с клавиатуры: клик мышью по select её не показывает, а переход табом — показывает.",
-      "categories": [
-        "tooltip"
-      ],
+      "categories": ["tooltip"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2156,12 +1972,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tooltip-016-*. Серверный: подсказка привязана к :focus-visible самого select через общий соседний селектор (~), а не к :focus-within обёртки. Браузер помечает фокус select как «видимый» только когда до него дошли клавиатурой — клик мышью такую пометку не ставит, поэтому подсказка раскрывается исключительно при обходе табом. Для текстового поля этот приём не сработает: у текстовых input фокус всегда «видимый».",
       "meta": {
-        "tags": [
-          "tooltip",
-          "form",
-          "focus-visible",
-          "keyboard"
-        ],
+        "tags": ["tooltip", "form", "focus-visible", "keyboard"],
         "preview": {
           "width": "full"
         },
@@ -2265,22 +2076,132 @@
               "props": {
                 "label": "Time format",
                 "hint": "Applies to every report and notification in the account. The change takes effect on your next sign-in.",
-                "options": [
-                  "HH:MM, 24-hour",
-                  "HH:MM AM/PM",
-                  "Hours only"
-                ],
+                "options": ["HH:MM, 24-hour", "HH:MM AM/PM", "Hours only"],
                 "note": "The hint appears when the field takes keyboard focus — Tab. A mouse click never opens it."
               }
             },
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-tooltip-016-*. It is a server component: the hint is bound to :focus-visible of the select itself through the general sibling selector (~) rather than to :focus-within of the wrapper. The browser marks focus on a select as \"visible\" only when it was reached by keyboard — a mouse click sets no such mark, so the hint opens exclusively while tabbing. For a text field this technique will not work: on text inputs focus is always \"visible\"."
           }
         },
-        "cardControls": [
-          "label",
-          "hint",
-          "background"
-        ]
+        "cardControls": ["label", "hint", "background"]
+      }
+    },
+    {
+      "name": "tooltip-017",
+      "type": "registry:component",
+      "title": "Подсказка усечённого текста",
+      "description": "Список строк с усечённым многоточием именем: наведение и фокус табом показывают полный текст в подсказке — обрезка вёрсткой не теряет содержимое.",
+      "categories": ["tooltip"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tooltip-017/tooltip-017.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tooltip-017.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tooltip-017-*. Строка получает tabIndex={0}, потому что усечённый текст сам по себе не фокусируется ни мышью, ни клавиатурой — без этого атрибута подсказка была бы доступна только курсору. Появление держат :hover и :focus-within у обёртки строки, поэтому JS не нужен и компонент остаётся серверным. Подсказка помечена role=\"tooltip\" и связана с ячейкой через aria-describedby, а её ширина равна ширине строки (width:100% относительно [data-part=\"item\"]), а не вьюпорта — иначе почти полноширинная строка на узком экране раздвинула бы страницу.",
+      "meta": {
+        "tags": ["tooltip", "truncate", "ellipsis", "overflow"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Tooltip017",
+          "usage": "<Tooltip017\n  items={[\"годовой_отчёт_финальная_версия.xlsx\", \"макет.fig\"]}\n/>",
+          "summary": "Список строк с усечённым многоточием текстом: подсказка по наведению и по фокусу табом показывает имя целиком. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-tooltip-017-* и не подменять её токенами вашей темы",
+            "tabIndex={0} на усечённой строке — иначе с клавиатуры до неё не дойти вовсе",
+            "aria-describedby, связывающий строку и подсказку независимо от её видимости",
+            "ширину подсказки, равную ширине строки (width:100% у [data-part=\"tip\"]), а не вьюпорта — при почти полноширинной строке вьюпорт-относительная ширина раздвигает страницу на узком экране",
+            "показ подсказки на :hover и :focus-within — оба способа обязательны, а не один из них",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "моноширинный шрифт у имени и подсказки — так символы совпадают один к одному, и обрезка выглядит предсказуемо"
+          ],
+          "adapt": [
+            "список имён через items — каждому автоматически достаётся своя подсказка",
+            "пояснение под списком через note",
+            "подложку компонента через background — пусто означает «без подложки», по цвету страницы",
+            "цвет ячеек и границ через переменные --vibeui-tooltip-017-face и --vibeui-tooltip-017-border",
+            "ширину усечения через max-width у [data-part=\"cell\"] в вашем CSS, если 18rem не подходит"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Компонент не читает реальную ширину ячейки: усечение — это CSS text-overflow, а не измерение через JS, поэтому оно остаётся серверным.",
+            "Идентификаторы подсказок строятся из индекса элемента — при динамическом списке используйте устойчивый key и не переставляйте items местами без причины.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "note",
+            "label": "Пояснение",
+            "type": "text",
+            "default": "Имя обрезано по ширине ячейки. Наведите курсор или перейдите табом, чтобы увидеть его целиком.",
+            "maxLength": 140
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Truncated Text Tooltip",
+            "description": "A list of rows truncated with an ellipsis: hovering or tabbing to a row reveals its full text in a tooltip — the layout's truncation never loses the content.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-tooltip-017-*. The row gets tabIndex={0} because truncated text is not focusable on its own, by mouse or keyboard — without that attribute the tooltip would only be reachable by a cursor. Appearance is held by :hover and :focus-within on the row wrapper, so no JS is needed and the component stays a server component. The tooltip is marked role=\"tooltip\" and tied to the cell through aria-describedby, and its width matches the row (width:100% of [data-part=\"item\"]) rather than the viewport, so a nearly full-width row never widens the page on a narrow screen.",
+            "ai": {
+              "summary": "A list of rows truncated with an ellipsis: hovering or tabbing to a row shows its full name in a tooltip. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-tooltip-017-* palette — do not swap it for your theme tokens",
+                "tabIndex={0} on the truncated row — without it there is no way to reach it by keyboard at all",
+                "aria-describedby tying the row to the tooltip regardless of its visibility",
+                "the tooltip width matching the row via width:100% on [data-part=\"tip\"], not the viewport — a viewport-relative width widens the page on a narrow screen once the row is nearly full width",
+                "showing the tooltip on both :hover and :focus-within — both are required, not just one of them",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the monospace font on the name and the tooltip — characters line up one to one, so the truncation reads predictably"
+              ],
+              "adapt": [
+                "the list of names through items — each one gets its own tooltip automatically",
+                "the caption under the list through note",
+                "the component background through background — empty means no background, taking the page colour",
+                "the cell and border colours through the --vibeui-tooltip-017-face and --vibeui-tooltip-017-border variables",
+                "the truncation width via max-width on [data-part=\"cell\"] in your CSS, if 18rem does not fit"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The component never reads the cell's real width: the truncation is CSS text-overflow, not a JS measurement, which is why it stays a server component.",
+                "Tooltip ids are built from the item's index — with a dynamic list use a stable key and avoid reordering items without reason.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tooltip017\n  items={[\"annual_report_final_version.xlsx\", \"mockup.fig\"]}\n/>"
+            },
+            "controls": {
+              "note": {
+                "label": "Caption",
+                "default": "The name is cut off by the cell width. Hover or tab to it to see it in full."
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "items": [
+                  "annual_sales_report_final_version.xlsx",
+                  "homepage_mockup_v3.fig",
+                  "presentation.pdf"
+                ],
+                "note": "The name is cut off by the cell width. Hover or tab to it to see it in full."
+              }
+            }
+          }
+        },
+        "cardControls": ["note", "background"]
       }
     }
   ]

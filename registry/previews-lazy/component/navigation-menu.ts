@@ -6,11 +6,6 @@ import dynamic from "next/dynamic"
 import type { PreviewMap } from "@/registry/preview-types"
 
 export const PREVIEWS = {
-  "menu-006": dynamic(() =>
-    import("@/registry/components/navigation-menu/menu-006/menu-006").then(
-      (module) => module.Menu006,
-    ),
-  ),
   "navmenu-001": dynamic(() =>
     import("@/registry/components/navigation-menu/navmenu-001/navmenu-001").then(
       (module) => module.Navmenu001,
@@ -39,11 +34,6 @@ export const PREVIEWS = {
   "navmenu-006": dynamic(() =>
     import("@/registry/components/navigation-menu/navmenu-006/navmenu-006").then(
       (module) => module.Navmenu006,
-    ),
-  ),
-  "navmenu-007": dynamic(() =>
-    import("@/registry/components/navigation-menu/navmenu-007/navmenu-007").then(
-      (module) => module.Navmenu007,
     ),
   ),
   "navmenu-008": dynamic(() =>

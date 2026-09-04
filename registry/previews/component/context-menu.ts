@@ -5,7 +5,6 @@ import type { ComponentType } from "react"
 
 import type { PreviewProps } from "@/registry/preview-types"
 
-import { Menu002 } from "@/registry/components/context-menu/menu-002/menu-002"
 import { Contextmenu001 } from "@/registry/components/context-menu/contextmenu-001/contextmenu-001"
 import { Contextmenu002 } from "@/registry/components/context-menu/contextmenu-002/contextmenu-002"
 import { Contextmenu003 } from "@/registry/components/context-menu/contextmenu-003/contextmenu-003"
@@ -18,7 +17,6 @@ import { Contextmenu009 } from "@/registry/components/context-menu/contextmenu-0
 import { Contextmenu010 } from "@/registry/components/context-menu/contextmenu-010/contextmenu-010"
 
 export const PREVIEWS = {
-  "menu-002": Menu002,
   "contextmenu-001": Contextmenu001,
   "contextmenu-002": Contextmenu002,
   "contextmenu-003": Contextmenu003,

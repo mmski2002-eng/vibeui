@@ -5,7 +5,6 @@ import type { ComponentType } from "react"
 
 import type { PreviewProps } from "@/registry/preview-types"
 
-import { Menu003 } from "@/registry/components/menubar/menu-003/menu-003"
 import { Menubar001 } from "@/registry/components/menubar/menubar-001/menubar-001"
 import { Menubar002 } from "@/registry/components/menubar/menubar-002/menubar-002"
 import { Menubar003 } from "@/registry/components/menubar/menubar-003/menubar-003"
@@ -16,7 +15,6 @@ import { Menubar007 } from "@/registry/components/menubar/menubar-007/menubar-00
 import { Menubar008 } from "@/registry/components/menubar/menubar-008/menubar-008"
 
 export const PREVIEWS = {
-  "menu-003": Menu003,
   "menubar-001": Menubar001,
   "menubar-002": Menubar002,
   "menubar-003": Menubar003,

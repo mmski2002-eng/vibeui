@@ -15,6 +15,7 @@ import { Pagination012 } from "@/registry/components/pagination/pagination-012/p
 import { Pagination013 } from "@/registry/components/pagination/pagination-013/pagination-013"
 import { Pagination014 } from "@/registry/components/pagination/pagination-014/pagination-014"
 import { Pagination015 } from "@/registry/components/pagination/pagination-015/pagination-015"
+import { Pagination016 } from "@/registry/components/pagination/pagination-016/pagination-016"
 
 /** Seed прогона: с ним набор воспроизводится один в один. */
 export const SEED = 92189
@@ -159,5 +160,11 @@ export const CHECKS: LabCheck[] = [
     title: "Правка номера страницы",
     notes: ["Страница: 40", "Всего: 485", "Акцент: #1d739a"],
     node: <Pagination015 page={40} total={485} accent="#1d739a" />,
+  },
+  {
+    name: "pagination-016",
+    title: "Список страниц выбором",
+    notes: ["Страница: 22", "Всего страниц: 90", "Акцент: #ea7c1d"],
+    node: <Pagination016 total={90} defaultPage={22} accent="#ea7c1d" />,
   },
 ]
