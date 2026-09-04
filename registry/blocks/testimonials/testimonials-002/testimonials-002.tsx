@@ -57,6 +57,9 @@ font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;fo
 }
 [data-vibeui-block="testimonials-002"] [data-part="grid"]{display:grid;gap:1rem}
 [data-vibeui-block="testimonials-002"] [data-part="card"]{
+/* Элемент грида не сжимается меньше содержимого без явного нуля: на узком
+   экране карточка вылезала за край блока. */
+min-inline-size:0;
 display:flex;flex-direction:column;gap:1.25rem;margin:0;
 padding:1.5rem;border:1px solid var(--vibeui-testimonials-002-border);border-radius:1.125rem;
 background:var(--vibeui-testimonials-002-card);
