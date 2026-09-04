@@ -56,4 +56,9 @@ export const PREVIEWS = {
       (module) => module.Otp010,
     ),
   ),
+  "otp-011": dynamic(() =>
+    import("@/registry/components/input-otp/otp-011/otp-011").then(
+      (module) => module.Otp011,
+    ),
+  ),
 } satisfies PreviewMap

@@ -20,6 +20,7 @@ import { Table017 } from "@/registry/components/table/table-017/table-017"
 import { Table018 } from "@/registry/components/table/table-018/table-018"
 import { Table019 } from "@/registry/components/table/table-019/table-019"
 import { Table020 } from "@/registry/components/table/table-020/table-020"
+import { Table021 } from "@/registry/components/table/table-021/table-021"
 
 /** Seed прогона: с ним набор воспроизводится один в один. */
 export const SEED = 52594
@@ -228,5 +229,11 @@ export const CHECKS: LabCheck[] = [
         accent="#2ef754"
       />
     ),
+  },
+  {
+    name: "table-021",
+    title: "Слитые категории",
+    notes: ["Подпись: Смена", "Валюта: Ок", "Акцент: #3fae7c"],
+    node: <Table021 caption="Смена" currency="Ок" accent="#3fae7c" />,
   },
 ]

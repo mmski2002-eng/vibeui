@@ -11,19 +11,9 @@ export const PREVIEWS = {
       (module) => module.Select001,
     ),
   ),
-  "select-002": dynamic(() =>
-    import("@/registry/components/select/select-002/select-002").then(
-      (module) => module.Select002,
-    ),
-  ),
   "select-003": dynamic(() =>
     import("@/registry/components/select/select-003/select-003").then(
       (module) => module.Select003,
-    ),
-  ),
-  "select-004": dynamic(() =>
-    import("@/registry/components/select/select-004/select-004").then(
-      (module) => module.Select004,
     ),
   ),
   "select-005": dynamic(() =>
@@ -44,11 +34,6 @@ export const PREVIEWS = {
   "select-008": dynamic(() =>
     import("@/registry/components/select/select-008/select-008").then(
       (module) => module.Select008,
-    ),
-  ),
-  "select-009": dynamic(() =>
-    import("@/registry/components/select/select-009/select-009").then(
-      (module) => module.Select009,
     ),
   ),
   "select-010": dynamic(() =>

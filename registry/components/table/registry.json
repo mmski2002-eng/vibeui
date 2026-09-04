@@ -6,9 +6,7 @@
       "type": "registry:component",
       "title": "Таблица данных",
       "description": "Таблица данных с липкой шапкой и прокруткой внутри рамки. Числовые колонки идут вправо моноширинными цифрами, поэтому разряды стоят под разрядами.",
-      "categories": [
-        "table"
-      ],
+      "categories": ["table"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-table-001-*. Прокрутка живёт в обёртке, а не на странице: таблица не ломает раскладку на узком экране. Шапка липнет к верху обёртки через position:sticky. Числовые колонки помечаются флагом numeric в описании колонок и получают выравнивание вправо и tabular-nums. Плотный режим меняет одну переменную отступа.",
       "meta": {
-        "tags": [
-          "table",
-          "data",
-          "sticky header",
-          "numbers"
-        ],
+        "tags": ["table", "data", "sticky header", "numbers"],
         "preview": {
           "width": "full"
         },
@@ -196,12 +189,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-table-001-*. Scrolling lives in the wrapper rather than on the page: the table does not break the layout on a narrow screen. The header sticks to the top of the wrapper through position:sticky. Numeric columns are marked with the numeric flag in the column description and get right alignment and tabular-nums. The dense mode changes a single spacing variable."
           }
         },
-        "cardControls": [
-          "caption",
-          "dense",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["caption", "dense", "accent", "background"]
       }
     },
     {
@@ -209,9 +197,7 @@
       "type": "registry:component",
       "title": "Таблица сравнения",
       "description": "Таблица сравнения вариантов: первая колонка липнет при прокрутке вправо, а выбранный вариант подсвечен целиком, а не только в заголовке.",
-      "categories": [
-        "table"
-      ],
+      "categories": ["table"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -223,12 +209,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-table-002-*. Первая колонка держится на position:sticky с левым краем и тенью-границей. Значение ячейки — либо строка, либо булево: булево превращается в галочку или прочерк, рядом с которыми лежит слово для скринридера. Подсветка колонки ставится data-атрибутом на ячейки всех строк, а не только шапки.",
       "meta": {
-        "tags": [
-          "comparison",
-          "table",
-          "pricing",
-          "features"
-        ],
+        "tags": ["comparison", "table", "pricing", "features"],
         "preview": {
           "width": "full"
         },
@@ -352,51 +333,27 @@
                   "yes": "yes",
                   "no": "no"
                 },
-                "options": [
-                  "Start",
-                  "Team",
-                  "Studio"
-                ],
+                "options": ["Start", "Team", "Studio"],
                 "rows": [
                   {
                     "label": "Projects",
-                    "values": [
-                      "1",
-                      "10",
-                      "Unlimited"
-                    ]
+                    "values": ["1", "10", "Unlimited"]
                   },
                   {
                     "label": "Custom domain",
-                    "values": [
-                      false,
-                      true,
-                      true
-                    ]
+                    "values": [false, true, true]
                   },
                   {
                     "label": "Collaboration",
-                    "values": [
-                      false,
-                      true,
-                      true
-                    ]
+                    "values": [false, true, true]
                   },
                   {
                     "label": "Publish history",
-                    "values": [
-                      "7 days",
-                      "90 days",
-                      "Forever"
-                    ]
+                    "values": ["7 days", "90 days", "Forever"]
                   },
                   {
                     "label": "Support",
-                    "values": [
-                      "Email",
-                      "Email",
-                      "Chat within an hour"
-                    ]
+                    "values": ["Email", "Email", "Chat within an hour"]
                   }
                 ]
               }
@@ -404,12 +361,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-table-002-*. The first column is held by position:sticky against the left edge with a shadow border. A cell value is either a string or a boolean: a boolean turns into a check or a dash, with a word beside it for a screen reader. The column highlight is set by a data attribute on the cells of every row, not on the header alone."
           }
         },
-        "cardControls": [
-          "highlight",
-          "accent",
-          "featureLabel",
-          "background"
-        ]
+        "cardControls": ["highlight", "accent", "featureLabel", "background"]
       }
     },
     {
@@ -417,9 +369,7 @@
       "type": "registry:component",
       "title": "Таблица счёта",
       "description": "Таблица позиций со счётом: итог считается из строк и липнет к низу, поэтому сумма видна и на середине длинного списка.",
-      "categories": [
-        "table"
-      ],
+      "categories": ["table"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -431,12 +381,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-table-003-*. Итог и налог считаются из массива строк прямо в компоненте — отдельного пропа «сумма» нет, поэтому разойтись с позициями они не могут. Строка итога лежит в <tfoot> и липнет к низу обёртки. Суммы форматируются локальной функцией: пробел как разделитель тысяч, запятая в дробной части, символ валюты пропом — Intl не используется, чтобы не зависеть от локали проекта.",
       "meta": {
-        "tags": [
-          "invoice",
-          "table",
-          "total",
-          "money"
-        ],
+        "tags": ["invoice", "table", "total", "money"],
         "preview": {
           "width": "full"
         },
@@ -616,9 +561,7 @@
       "type": "registry:component",
       "title": "Таблица с сортировкой",
       "description": "Сортировка по колонке: заголовок — кнопка, направление объявлено через aria-sort и нарисовано стрелкой в разметке.",
-      "categories": [
-        "table"
-      ],
+      "categories": ["table"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -630,12 +573,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-table-004-*. Клиентский: \"use client\" ради сортировки. Заголовок колонки — кнопка, состояние объявлено атрибутом aria-sort на ячейке. Числа сравниваются вычитанием, строки — localeCompare с русской локалью, поэтому «ё» встаёт на своё место.",
       "meta": {
-        "tags": [
-          "table",
-          "sort",
-          "data",
-          "a11y"
-        ],
+        "tags": ["table", "sort", "data", "a11y"],
         "preview": {
           "width": "full"
         },
@@ -782,11 +720,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-table-004-*. A client component: \"use client\" for the sake of sorting. A column heading is a button, and the state is declared with the aria-sort attribute on the cell. Numbers are compared by subtraction, strings by localeCompare with the Russian locale, so \"ё\" lands in its proper place."
           }
         },
-        "cardControls": [
-          "caption",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["caption", "accent", "background"]
       }
     },
     {
@@ -794,9 +728,7 @@
       "type": "registry:component",
       "title": "Таблица с выделением",
       "description": "Выбор строк с панелью действий: флажок шапки знает промежуточное состояние, которое задаётся только из кода.",
-      "categories": [
-        "table"
-      ],
+      "categories": ["table"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -808,12 +740,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-table-005-*. Клиентский: \"use client\" ради выбора. Свойство indeterminate у флажка шапки выставляется через ref: атрибута для него в HTML нет. Панель действий занимает место подписи, поэтому не перекрывает первую строку.",
       "meta": {
-        "tags": [
-          "table",
-          "selection",
-          "bulk",
-          "checkbox"
-        ],
+        "tags": ["table", "selection", "bulk", "checkbox"],
         "preview": {
           "width": "full"
         },
@@ -959,11 +886,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-table-005-*. A client component: \"use client\" for the sake of selection. The indeterminate property of the header checkbox is set through a ref: HTML has no attribute for it. The bulk bar takes the place of the caption, so it does not cover the first row."
           }
         },
-        "cardControls": [
-          "caption",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["caption", "accent", "background"]
       }
     },
     {
@@ -971,9 +894,7 @@
       "type": "registry:component",
       "title": "Раскрывающиеся строки",
       "description": "Строка раскрывает подробности без JS: состояние держит чекбокс, а детали лежат в отдельной строке на всю ширину.",
-      "categories": [
-        "table"
-      ],
+      "categories": ["table"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -985,12 +906,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-table-006-*. Серверный: хуков нет, состояние держит чекбокс. Строка деталей — отдельный <tr> с colspan, поэтому она занимает всю ширину и не ломает колонки; показывается селектором :has() по отмеченному чекбоксу соседней строки.",
       "meta": {
-        "tags": [
-          "table",
-          "details",
-          "no-js",
-          "expand"
-        ],
+        "tags": ["table", "details", "no-js", "expand"],
         "preview": {
           "width": "full"
         },
@@ -1147,11 +1063,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-table-006-*. A server component: no hooks, the state is held by a checkbox. The details row is a separate <tr> with colspan, so it takes the full width and does not break the columns; it is shown by a :has() selector matching the checked checkbox of the neighbouring row."
           }
         },
-        "cardControls": [
-          "caption",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["caption", "accent", "background"]
       }
     },
     {
@@ -1159,9 +1071,7 @@
       "type": "registry:component",
       "title": "Адаптивная таблица",
       "description": "В узкой колонке таблица становится списком карточек: подписи колонок дублируются в data-label и выводятся через ::before.",
-      "categories": [
-        "table"
-      ],
+      "categories": ["table"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1173,12 +1083,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-table-007-*. Серверный: хуков нет. Ширину меряет контейнерный запрос, поэтому таблица перестраивается и в узкой колонке на широком экране. Правила перестроения живут на внутренней обёртке: элемент с container-type не может отвечать на собственный запрос.",
       "meta": {
-        "tags": [
-          "table",
-          "responsive",
-          "container",
-          "mobile"
-        ],
+        "tags": ["table", "responsive", "container", "mobile"],
         "preview": {
           "width": "full"
         },
@@ -1312,11 +1217,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-table-007-*. A server component: no hooks. The width is measured by a container query, so the table also rebuilds inside a narrow column on a wide screen. The rebuild rules live on the inner wrapper: an element with container-type cannot answer its own query."
           }
         },
-        "cardControls": [
-          "caption",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["caption", "accent", "background"]
       }
     },
     {
@@ -1324,9 +1225,7 @@
       "type": "registry:component",
       "title": "Таблица логов",
       "description": "Плотная таблица логов: моноширинные колонки выравнивают адреса, а код ответа помечен точкой, а не только цветом.",
-      "categories": [
-        "table"
-      ],
+      "categories": ["table"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1338,12 +1237,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-table-008-*. Серверный: хуков нет. Тело таблицы набрано моноширинным шрифтом с табличными цифрами, поэтому адреса и коды выравниваются в столбик. Тон строки считается из кода ответа функцией, а не приходит пропом.",
       "meta": {
-        "tags": [
-          "table",
-          "logs",
-          "mono",
-          "status"
-        ],
+        "tags": ["table", "logs", "mono", "status"],
         "preview": {
           "width": "full"
         },
@@ -1497,11 +1391,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-table-008-*. A server component: no hooks. The table body is set in a monospaced font with tabular figures, so addresses and codes line up in a column. The row tone is computed from the response code by a function rather than arriving as a prop."
           }
         },
-        "cardControls": [
-          "caption",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["caption", "accent", "background"]
       }
     },
     {
@@ -1509,9 +1399,7 @@
       "type": "registry:component",
       "title": "Состояния таблицы",
       "description": "Таблица до данных: ожидание полосами и пустое состояние с действием, при этом шапка остаётся на месте.",
-      "categories": [
-        "table"
-      ],
+      "categories": ["table"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1523,12 +1411,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-table-009-*. Серверный: хуков нет, состояние приходит пропом. При ожидании таблица помечена aria-busy, а ширины полос заданы правилами по номеру колонки, чтобы не городить инлайновые стили. При prefers-reduced-motion пульсация выключается.",
       "meta": {
-        "tags": [
-          "table",
-          "skeleton",
-          "empty",
-          "state"
-        ],
+        "tags": ["table", "skeleton", "empty", "state"],
         "preview": {
           "width": "full"
         },
@@ -1568,10 +1451,7 @@
             "label": "Состояние",
             "type": "select",
             "default": "loading",
-            "options": [
-              "loading",
-              "empty"
-            ]
+            "options": ["loading", "empty"]
           },
           {
             "prop": "emptyTitle",
@@ -1655,12 +1535,7 @@
             "preview": {
               "props": {
                 "caption": "March invoices",
-                "columns": [
-                  "Invoice",
-                  "Customer",
-                  "Status",
-                  "Amount"
-                ],
+                "columns": ["Invoice", "Customer", "Status", "Amount"],
                 "emptyTitle": "No invoices yet",
                 "emptyText": "Issued invoices will show up here. You can create the first one right now.",
                 "actionLabel": "Issue an invoice"
@@ -1669,13 +1544,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-table-009-*. A server component: no hooks, the state arrives through a prop. While loading, the table is marked aria-busy, and the bar widths are set by rules keyed to the column number, so no inline styles are needed. Under prefers-reduced-motion the pulse is switched off."
           }
         },
-        "cardControls": [
-          "state",
-          "emptyTitle",
-          "rows",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["state", "emptyTitle", "rows", "accent", "background"]
       }
     },
     {
@@ -1683,9 +1552,7 @@
       "type": "registry:component",
       "title": "Таблица долей",
       "description": "Таблица долей: полоса рисуется фоном ячейки, а сама доля считается от суммы строк, поэтому итог всегда сходится.",
-      "categories": [
-        "table"
-      ],
+      "categories": ["table"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1697,12 +1564,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-table-010-*. Серверный: хуков нет. Полоса — линейный градиент в фоне ячейки: ни лишнего элемента, ни библиотеки графиков. Доля вычисляется от суммы визитов, итоговая строка выводит эту же сумму.",
       "meta": {
-        "tags": [
-          "table",
-          "share",
-          "bars",
-          "analytics"
-        ],
+        "tags": ["table", "share", "bars", "analytics"],
         "preview": {
           "width": "full"
         },
@@ -1843,11 +1705,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-table-010-*. A server component: no hooks. The bar is a linear gradient in the cell background: no extra element and no chart library. The share is computed from the sum of the visits, and the total row prints that same sum."
           }
         },
-        "cardControls": [
-          "caption",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["caption", "accent", "background"]
       }
     },
     {
@@ -1855,9 +1713,7 @@
       "type": "registry:component",
       "title": "Матрица тарифов",
       "description": "Матрица сравнения тарифов: строки — возможности, колонки — планы, а ответ «есть» или «нет» несут и галочка, и скрытое слово для озвучки.",
-      "categories": [
-        "table"
-      ],
+      "categories": ["table"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1869,12 +1725,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в переменных --vibeui-table-011-*. Серверный: хуков нет. Возможности — заголовки строк (th scope=\"row\"), тарифы — заголовки колонок (th scope=\"col\"), поэтому ячейка с галочкой озвучивается парой «возможность — тариф», а не одиноким символом. Значки ✓ и — закрыты aria-hidden, рядом лежит визуально скрытое слово «есть»/«нет»: значок и цвет не остаются единственными носителями смысла. Рекомендованная колонка помечается data-featured и подкрашивается через color-mix от акцента, отдельной палитры для неё нет. Таблица широкая, поэтому лежит в обёртке role=\"region\" с tabindex=0 и видимым фокусом: иначе горизонтальную прокрутку не достать с клавиатуры.",
       "meta": {
-        "tags": [
-          "table",
-          "pricing",
-          "comparison",
-          "accessibility"
-        ],
+        "tags": ["table", "pricing", "comparison", "accessibility"],
         "preview": {
           "width": "full"
         },
@@ -1914,11 +1765,7 @@
             "label": "Тариф с подсветкой",
             "type": "select",
             "default": "Команда",
-            "options": [
-              "Старт",
-              "Команда",
-              "Бизнес"
-            ]
+            "options": ["Старт", "Команда", "Бизнес"]
           },
           {
             "prop": "caption",
@@ -2016,51 +1863,27 @@
                 "features": [
                   {
                     "title": "Projects",
-                    "values": [
-                      "3",
-                      "50",
-                      "unlimited"
-                    ]
+                    "values": ["3", "50", "unlimited"]
                   },
                   {
                     "title": "Collaboration",
-                    "values": [
-                      false,
-                      true,
-                      true
-                    ]
+                    "values": [false, true, true]
                   },
                   {
                     "title": "Version history",
-                    "values": [
-                      false,
-                      true,
-                      true
-                    ]
+                    "values": [false, true, true]
                   },
                   {
                     "title": "Custom domain",
-                    "values": [
-                      false,
-                      true,
-                      true
-                    ]
+                    "values": [false, true, true]
                   },
                   {
                     "title": "Single sign-on",
-                    "values": [
-                      false,
-                      false,
-                      true
-                    ]
+                    "values": [false, false, true]
                   },
                   {
                     "title": "Phone support",
-                    "values": [
-                      false,
-                      false,
-                      true
-                    ]
+                    "values": [false, false, true]
                   }
                 ]
               }
@@ -2068,12 +1891,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its palette in the --vibeui-table-011-* variables. A server component: no hooks. The features are row headers (th scope=\"row\") and the plans are column headers (th scope=\"col\"), so a cell with a check mark is announced as the pair \"feature — plan\" rather than as a lone symbol. The ✓ and — glyphs are covered by aria-hidden, and a visually hidden \"yes\"/\"no\" word sits beside them: the glyph and the colour do not stay the only carriers of meaning. The recommended column is marked data-featured and tinted through color-mix from the accent; it has no palette of its own. The table is wide, so it sits in a role=\"region\" wrapper with tabindex=0 and a visible focus: otherwise the horizontal scrolling cannot be reached from the keyboard."
           }
         },
-        "cardControls": [
-          "featured",
-          "caption",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["featured", "caption", "accent", "background"]
       }
     },
     {
@@ -2081,9 +1899,7 @@
       "type": "registry:component",
       "title": "Итоги сметы",
       "description": "Смета с раскрытым расчётом: позиции сверху, а подытог, налог и сумма к оплате стоят отдельными строками в tfoot, а не сворачиваются в одно число.",
-      "categories": [
-        "table"
-      ],
+      "categories": ["table"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2095,12 +1911,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в переменных --vibeui-table-012-*. Серверный: считает подытог и налог прямо при рендере, состояния нет. Позиции лежат в tbody, расчёт — в tfoot, и каждая его подпись оформлена как th scope=\"row\" с colSpan, поэтому число всегда озвучивается вместе со словом. Суммы печатает своя функция money(): разряды разделены узким неразрывным пробелом, а не Intl, потому что вывод Intl зависит от локали среды и различался бы между сервером и клиентом. Числовые колонки получают font-variant-numeric:tabular-nums и white-space:nowrap: разряды выстраиваются, сумма не рвётся переносом.",
       "meta": {
-        "tags": [
-          "table",
-          "invoice",
-          "totals",
-          "finance"
-        ],
+        "tags": ["table", "invoice", "totals", "finance"],
         "preview": {
           "width": "full"
         },
@@ -2257,12 +2068,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its palette in the --vibeui-table-012-* variables. A server component: it computes the subtotal and the tax at render time, and there is no state. The line items sit in tbody and the arithmetic in tfoot, where every label is marked up as th scope=\"row\" with colSpan, so a number is always announced together with its word. Amounts are printed by a local money() function: the digit groups are separated by a narrow no-break space rather than by Intl, because Intl output depends on the environment locale and would differ between server and client. Numeric columns get font-variant-numeric:tabular-nums and white-space:nowrap: the digit groups line up and an amount does not break across lines."
           }
         },
-        "cardControls": [
-          "taxRate",
-          "caption",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["taxRate", "caption", "accent", "background"]
       }
     },
     {
@@ -2270,9 +2076,7 @@
       "type": "registry:component",
       "title": "Расписание недели",
       "description": "Недельное расписание сеткой: время — заголовки строк, дни — заголовки колонок, поэтому встреча всегда читается парой «среда, 14:00».",
-      "categories": [
-        "table"
-      ],
+      "categories": ["table"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2284,12 +2088,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в переменных --vibeui-table-013-*. Серверный: хуков нет. Двумерная таблица: th scope=\"col\" у дней и th scope=\"row\" у времени — только так ячейка получает обе координаты в озвучке. Колонки не сжимаются (min-width), а вся сетка лежит в обёртке role=\"region\" с tabindex=0: широкое расписание уезжает в горизонтальную прокрутку, доступную с клавиатуры. Видимый заголовок вынесен в шапку блока, а caption спрятан визуально, чтобы не дублировать текст, но остаться именем таблицы. Цвет события задаётся data-tone через одну переменную --vibeui-table-013-tone, поэтому новый оттенок — это одна строка CSS.",
       "meta": {
-        "tags": [
-          "table",
-          "schedule",
-          "calendar",
-          "grid"
-        ],
+        "tags": ["table", "schedule", "calendar", "grid"],
         "preview": {
           "width": "full"
         },
@@ -2329,13 +2128,7 @@
             "label": "День с подсветкой",
             "type": "select",
             "default": "Ср",
-            "options": [
-              "Пн",
-              "Вт",
-              "Ср",
-              "Чт",
-              "Пт"
-            ]
+            "options": ["Пн", "Вт", "Ср", "Чт", "Пт"]
           },
           {
             "prop": "caption",
@@ -2411,13 +2204,7 @@
                 "timeLabel": "Time",
                 "todayLabel": "— today",
                 "today": "Wed",
-                "days": [
-                  "Mon",
-                  "Tue",
-                  "Wed",
-                  "Thu",
-                  "Fri"
-                ],
+                "days": ["Mon", "Tue", "Wed", "Thu", "Fri"],
                 "slots": [
                   {
                     "time": "09:00",
@@ -2504,12 +2291,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its palette in the --vibeui-table-013-* variables. A server component: no hooks. A two-dimensional table: th scope=\"col\" on the days and th scope=\"row\" on the times — only that gives a cell both coordinates when announced. The columns do not shrink (min-width), and the whole grid sits in a role=\"region\" wrapper with tabindex=0: a wide schedule moves into horizontal scrolling that is reachable from the keyboard. The visible heading is lifted into the block header while the caption is hidden visually, so the text is not duplicated but the table keeps its name. The event colour is set by data-tone through a single --vibeui-table-013-tone variable, so a new shade is one line of CSS."
           }
         },
-        "cardControls": [
-          "today",
-          "caption",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["today", "caption", "accent", "background"]
       }
     },
     {
@@ -2517,9 +2299,7 @@
       "type": "registry:component",
       "title": "Сгруппированная шапка",
       "description": "Таблица с двухэтажной шапкой: верхний ряд объединяет колонки по годам через colspan, нижний называет колонки внутри года, а первая ячейка склеена rowspan.",
-      "categories": [
-        "table"
-      ],
+      "categories": ["table"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2531,12 +2311,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в переменных --vibeui-table-014-*. Серверный: хуков нет. Верхние ячейки шапки объявлены как th scope=\"colgroup\" с colSpan — без colgroup скринридер не свяжет число с годом, и две колонки «План» станут неразличимы. Первая ячейка получает rowSpan={2} и остаётся th scope=\"col\". Плоский список колонок собирается из групп через flatMap, поэтому тело таблицы рисуется одним проходом и порядок ячеек не может разойтись с шапкой. Граница между группами рисуется data-edge, а не nth-child: правило переживает добавление колонки.",
       "meta": {
-        "tags": [
-          "table",
-          "header",
-          "colspan",
-          "report"
-        ],
+        "tags": ["table", "header", "colspan", "report"],
         "preview": {
           "width": "full"
         },
@@ -2652,55 +2427,29 @@
                 "groups": [
                   {
                     "title": "2024",
-                    "columns": [
-                      "Plan",
-                      "Actual"
-                    ]
+                    "columns": ["Plan", "Actual"]
                   },
                   {
                     "title": "2025",
-                    "columns": [
-                      "Plan",
-                      "Actual"
-                    ]
+                    "columns": ["Plan", "Actual"]
                   }
                 ],
                 "rows": [
                   {
                     "title": "North-West",
-                    "values": [
-                      "12.0",
-                      "11.4",
-                      "13.5",
-                      "14.2"
-                    ]
+                    "values": ["12.0", "11.4", "13.5", "14.2"]
                   },
                   {
                     "title": "Central",
-                    "values": [
-                      "28.4",
-                      "30.1",
-                      "32.0",
-                      "31.6"
-                    ]
+                    "values": ["28.4", "30.1", "32.0", "31.6"]
                   },
                   {
                     "title": "Urals",
-                    "values": [
-                      "9.8",
-                      "9.1",
-                      "10.4",
-                      "10.9"
-                    ]
+                    "values": ["9.8", "9.1", "10.4", "10.9"]
                   },
                   {
                     "title": "Siberia",
-                    "values": [
-                      "7.2",
-                      "7.7",
-                      "8.1",
-                      "8.0"
-                    ]
+                    "values": ["7.2", "7.7", "8.1", "8.0"]
                   }
                 ]
               }
@@ -2708,12 +2457,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its palette in the --vibeui-table-014-* variables. A server component: no hooks. The upper header cells are declared as th scope=\"colgroup\" with colSpan — without colgroup a screen reader will not tie a number to its year, and the two \"Plan\" columns become indistinguishable. The first cell gets rowSpan={2} and stays a th scope=\"col\". The flat column list is assembled from the groups with flatMap, so the table body is drawn in a single pass and the cell order cannot drift from the header. The boundary between groups is drawn with data-edge rather than nth-child: the rule survives adding a column."
           }
         },
-        "cardControls": [
-          "leadTitle",
-          "caption",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["leadTitle", "caption", "accent", "background"]
       }
     },
     {
@@ -2721,9 +2465,7 @@
       "type": "registry:component",
       "title": "Таблица со сносками",
       "description": "Таблица со сносками: маркер в строке — настоящая якорная ссылка на пункт под таблицей, у пункта есть возврат, а ячейка связана с пояснением через aria-describedby.",
-      "categories": [
-        "table"
-      ],
+      "categories": ["table"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2735,12 +2477,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в переменных --vibeui-table-015-*. Серверный: хуков нет. Сноски лежат в ol под таблицей, у каждого пункта свой id, маркер в строке — ссылка на этот id со своим id для обратного перехода. Плюс к переходу заголовок строки несёт aria-describedby: скринридер прочитает пояснение сразу, не уводя пользователя из таблицы. Все id строятся от idPrefix, поэтому два экземпляра на одной странице не делят якоря. Маркер остаётся полноценной целью нажатия: у ссылки есть padding и видимый фокус, вопреки мелкому кеглю sup.",
       "meta": {
-        "tags": [
-          "table",
-          "footnote",
-          "anchor",
-          "accessibility"
-        ],
+        "tags": ["table", "footnote", "anchor", "accessibility"],
         "preview": {
           "width": "full"
         },
@@ -2922,9 +2659,7 @@
       "type": "registry:component",
       "title": "Выровненные числа",
       "description": "Числовая таблица, где запятые стоят в одну вертикаль: каждая ячейка — сетка из знака, целой и дробной части, а минус висит слева и не сдвигает цифры.",
-      "categories": [
-        "table"
-      ],
+      "categories": ["table"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2936,12 +2671,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в переменных --vibeui-table-016-*. Серверный: суммы считаются при рендере, состояния нет. Число разбивается функцией split() на знак, целую и дробную часть, а разметка кладёт их в grid из трёх колонок 0.75ch / 1fr / auto — границы колонок общие для всех строк, поэтому запятые выстраиваются, а висящий минус не сдвигает разряды. Минус — типографский знак «−» (U+2212), а не дефис: он и шире, и читается как минус. Отрицательное значение подкрашено, но смысл несёт сам знак, а не цвет. Разряды разделены узким неразрывным пробелом, шрифт — tabular-nums.",
       "meta": {
-        "tags": [
-          "table",
-          "numbers",
-          "alignment",
-          "finance"
-        ],
+        "tags": ["table", "numbers", "alignment", "finance"],
         "preview": {
           "width": "full"
         },
@@ -3079,51 +2809,27 @@
                 "caption": "Cash movement this month, k",
                 "leadTitle": "Line item",
                 "totalLabel": "Total",
-                "columns": [
-                  "Plan",
-                  "Actual",
-                  "Variance"
-                ],
+                "columns": ["Plan", "Actual", "Variance"],
                 "rows": [
                   {
                     "title": "Subscriptions",
-                    "values": [
-                      1240.5,
-                      1310.25,
-                      69.75
-                    ]
+                    "values": [1240.5, 1310.25, 69.75]
                   },
                   {
                     "title": "One-off sales",
-                    "values": [
-                      420,
-                      388.4,
-                      -31.6
-                    ]
+                    "values": [420, 388.4, -31.6]
                   },
                   {
                     "title": "Partner payouts",
-                    "values": [
-                      -96.3,
-                      -128.75,
-                      -32.45
-                    ]
+                    "values": [-96.3, -128.75, -32.45]
                   },
                   {
                     "title": "Refunds",
-                    "values": [
-                      -18,
-                      -7.5,
-                      10.5
-                    ]
+                    "values": [-18, -7.5, 10.5]
                   },
                   {
                     "title": "Other",
-                    "values": [
-                      64.2,
-                      64.2,
-                      0
-                    ]
+                    "values": [64.2, 64.2, 0]
                   }
                 ]
               }
@@ -3146,9 +2852,7 @@
       "type": "registry:component",
       "title": "Переход в карточки",
       "description": "Таблица, которая на узкой ширине разворачивается не столбиком строк, а сеткой карточек: первая ячейка становится шапкой карточки, остальные — парами «подпись / значение».",
-      "categories": [
-        "table"
-      ],
+      "categories": ["table"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3160,12 +2864,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в переменных --vibeui-table-017-*. Серверный: хуков нет. Ширину меряет контейнерный запрос, а не медиазапрос: таблица может стоять в узкой колонке на широком экране. Все правила узкой раскладки висят на потомках [data-part=\"shell\"], потому что @container не действует на сам контейнер. Ниже 34rem tbody становится grid с auto-fill, поэтому на планшете помещаются две карточки в ряд, а на телефоне одна. Подписи колонок лежат в разметке рядом со значением и просто скрыты на широкой ширине — вторая вёрстка списком не нужна, разметка остаётся одной таблицей.",
       "meta": {
-        "tags": [
-          "table",
-          "responsive",
-          "cards",
-          "container-query"
-        ],
+        "tags": ["table", "responsive", "cards", "container-query"],
         "preview": {
           "width": "full"
         },
@@ -3346,9 +3045,7 @@
       "type": "registry:component",
       "title": "Полоса состояния у строки",
       "description": "Таблица состояний, где статус строки виден с левого края: цветная кромка рисуется inset-тенью, а рядом стоит подпись словом — цвет не единственный носитель смысла.",
-      "categories": [
-        "table"
-      ],
+      "categories": ["table"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3360,12 +3057,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в переменных --vibeui-table-018-*. Серверный: хуков нет. Кромка сделана box-shadow:inset, а не border-left: при border-collapse границы ячеек схлопываются и левая полоса пропадает. Цвет статуса задаётся один раз переменной --vibeui-table-018-edge на строке, и от неё же красятся точка и рамка чипа — добавить статус значит дописать одну строку CSS. Каждый статус подписан словом из таблицы LABELS, поэтому строка читается при дальтонизме и в чёрно-белой печати. Плотность строк переключается data-density через переменную отступа, а не второй копией правил.",
       "meta": {
-        "tags": [
-          "table",
-          "status",
-          "monitoring",
-          "accessibility"
-        ],
+        "tags": ["table", "status", "monitoring", "accessibility"],
         "preview": {
           "width": "full"
         },
@@ -3405,10 +3097,7 @@
             "label": "Плотность",
             "type": "select",
             "default": "comfortable",
-            "options": [
-              "comfortable",
-              "compact"
-            ]
+            "options": ["comfortable", "compact"]
           },
           {
             "prop": "caption",
@@ -3536,12 +3225,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its palette in the --vibeui-table-018-* variables. A server component: no hooks. The rail is made with box-shadow:inset rather than border-left: under border-collapse the cell borders collapse and the left stripe disappears. The status colour is set once by the --vibeui-table-018-edge variable on the row, and the dot and the chip border are coloured from it too — adding a status means adding one line of CSS. Every status is labelled with a word from the LABELS table, so the row reads under colour blindness and in black-and-white print. The row density is switched by data-density through a spacing variable rather than by a second copy of the rules."
           }
         },
-        "cardControls": [
-          "density",
-          "caption",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["density", "caption", "accent", "background"]
       }
     },
     {
@@ -3549,9 +3233,7 @@
       "type": "registry:component",
       "title": "Итоги с долями",
       "description": "Таблица с итоговой строкой снизу, которая задаёт масштаб: доля каждой строки считается от итога и рисуется полоской прямо в ячейке рядом с числом.",
-      "categories": [
-        "table"
-      ],
+      "categories": ["table"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3563,12 +3245,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в переменных --vibeui-table-019-*. Серверный: итог и доли считаются при рендере. Итог лежит в tfoot и отбит двойной линией — принятый в отчётах знак «ниже сумма». Доля печатается числом и дублируется полоской: ширина заливки приходит инлайновой переменной --vibeui-table-019-fill, потому что это динамическое значение, которое нельзя выразить классом. Полоска закрыта aria-hidden, смысл несёт текст рядом. Подпись итога дополнительно объясняет, что именно просуммировано и в каких единицах: «итого» без единиц — самая частая ошибка отчётных таблиц.",
       "meta": {
-        "tags": [
-          "table",
-          "totals",
-          "share",
-          "report"
-        ],
+        "tags": ["table", "totals", "share", "report"],
         "preview": {
           "width": "full"
         },
@@ -3747,9 +3424,7 @@
       "type": "registry:component",
       "title": "Подпись единиц",
       "description": "Таблица, у которой заголовок — настоящий caption: в нём же объяснены единицы, округление и дата среза, а единица каждой колонки вынесена отдельной строкой шапки.",
-      "categories": [
-        "table"
-      ],
+      "categories": ["table"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3761,12 +3436,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в переменных --vibeui-table-020-*. Серверный: хуков нет. Заголовок и пояснение лежат внутри caption, поэтому скринридер объявляет условия чтения до первой ячейки, а не после — абзац над таблицей такого не даёт. caption-side:top задан явно: в печати браузеры любят унести подпись вниз. Единица измерения печатается в шапке отдельной строкой, а сокращения раскрыты через abbr с title и пунктирным подчёркиванием, которое не притворяется ссылкой. Числовые колонки идут с tabular-nums, значения выровнены по правому краю.",
       "meta": {
-        "tags": [
-          "table",
-          "caption",
-          "units",
-          "report"
-        ],
+        "tags": ["table", "caption", "units", "report"],
         "preview": {
           "width": "full"
         },
@@ -3915,39 +3585,19 @@
                 "rows": [
                   {
                     "title": "Forest Street store",
-                    "values": [
-                      "1,284",
-                      "612",
-                      "2,098",
-                      "+0.4"
-                    ]
+                    "values": ["1,284", "612", "2,098", "+0.4"]
                   },
                   {
                     "title": "Riverside store",
-                    "values": [
-                      "948",
-                      "471",
-                      "2,013",
-                      "−0.2"
-                    ]
+                    "values": ["948", "471", "2,013", "−0.2"]
                   },
                   {
                     "title": "South pickup point",
-                    "values": [
-                      "402",
-                      "388",
-                      "1,036",
-                      "+0.1"
-                    ]
+                    "values": ["402", "388", "1,036", "+0.1"]
                   },
                   {
                     "title": "Online storefront",
-                    "values": [
-                      "3,116",
-                      "1,940",
-                      "1,606",
-                      "+1.2"
-                    ]
+                    "values": ["3,116", "1,940", "1,606", "+1.2"]
                   }
                 ]
               }
@@ -3955,13 +3605,178 @@
             "docs": "The component is self-contained: one file, no dependencies, its palette in the --vibeui-table-020-* variables. A server component: no hooks. The heading and the note sit inside the caption, so a screen reader announces the reading rules before the first cell rather than after it — a paragraph above the table gives nothing of the kind. caption-side:top is set explicitly: in print browsers like to move the caption to the bottom. The unit of measurement is printed in the header on its own line, and the abbreviations are expanded through abbr with a title and a dotted underline that does not pretend to be a link. The numeric columns come with tabular-nums, and the values are right-aligned."
           }
         },
-        "cardControls": [
-          "caption",
-          "leadTitle",
-          "note",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["caption", "leadTitle", "note", "accent", "background"]
+      }
+    },
+    {
+      "name": "table-021",
+      "type": "registry:component",
+      "title": "Слитые категории",
+      "description": "Таблица позиций по категориям: название категории склеено rowspan на всю группу вместо повтора в каждой строке, а между категориями проходит более плотная граница.",
+      "categories": ["table"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "table-021/table-021.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/table-021.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-table-021-*. Серверный: хуков нет. Категория выражена одной ячейкой th со scope=\"rowgroup\" и rowSpan на число позиций группы, а не повторяется в каждой строке. Итог считается из всех позиций всех категорий и лежит в tfoot.",
+      "meta": {
+        "tags": ["table", "groups", "rowspan", "report"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Table021",
+          "usage": "<Table021\n  caption=\"Склад по категориям\"\n  groups={[{ category: \"Электроника\", items: [{ title: \"Наушники Air\", quantity: 12, price: 4200 }] }]}\n/>",
+          "summary": "Таблица позиций, сгруппированных по категории: название категории занимает одну ячейку на всю группу через rowspan, итог по всем позициям — в tfoot. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-table-021-* и не подменять её токенами вашей темы (bg-muted, border-border и подобными)",
+            "rowspan на ячейке категории вместе со scope=\"rowgroup\": заголовок относится сразу к нескольким строкам, а не к одной",
+            "утолщённую верхнюю границу у первой строки группы (data-edge=\"group\"): без неё соседние категории сливаются на глаз",
+            "подсчёт итога из всех позиций, а не отдельным пропом: сумма и позиции обязаны быть одним источником",
+            "прокрутку в обёртке, а не на странице: широкая таблица не должна ломать раскладку на телефоне",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "массив groups: категория и её позиции с количеством и ценой",
+            "caption — подпись таблицы",
+            "currency — знак валюты в ценах и в итоге",
+            "columnText — заголовки колонок",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Группа с пустым items ломает rowspan: не передавайте категории без позиций.",
+            "Позиции внутри категории не сортируются: порядок в items — это порядок строк в таблице.",
+            "Итог в tfoot — сумма цены на количество по всем позициям всех категорий, а не только по видимым в прокрутке.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "caption",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Склад по категориям",
+            "maxLength": 40
+          },
+          {
+            "prop": "currency",
+            "label": "Валюта",
+            "type": "text",
+            "default": "₽",
+            "maxLength": 4
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A table of items grouped by category: the category name is merged with rowspan across the whole group instead of repeating on every row, with a heavier rule between categories.",
+            "ai": {
+              "summary": "A table of items grouped by category: the category name takes one cell across the whole group through rowspan, and the total across every item sits in tfoot. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-table-021-* palette — do not swap it for your theme tokens (bg-muted, border-border and the like)",
+                "rowspan on the category cell together with scope=\"rowgroup\": the header belongs to several rows at once, not one",
+                "the heavier top rule on a group's first row (data-edge=\"group\") — without it neighbouring categories blend together",
+                "computing the total from every item rather than taking it as a prop: the sum and the items must have one source",
+                "scrolling in the wrapper rather than on the page: a wide table must not break the layout on a phone",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the groups array: a category and its items with quantity and price",
+                "caption — the table caption",
+                "currency — the currency symbol in the prices and the total",
+                "columnText — the column headings",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "A group with an empty items array breaks the rowspan: never pass a category without items.",
+                "Items inside a category are not sorted: the order in items is the row order in the table.",
+                "The tfoot total is the sum of price times quantity across every item in every category, not only the ones in view.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Table021\n  caption=\"Warehouse by category\"\n  groups={[{ category: \"Electronics\", items: [{ title: \"Air headphones\", quantity: 12, price: 42 }] }]}\n/>"
+            },
+            "controls": {
+              "caption": {
+                "label": "Caption",
+                "default": "Warehouse by category"
+              },
+              "currency": {
+                "label": "Currency",
+                "default": "$"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Merged Categories",
+            "preview": {
+              "props": {
+                "caption": "Warehouse by category",
+                "currency": "$",
+                "columnText": {
+                  "category": "Category",
+                  "title": "Item",
+                  "quantity": "Qty",
+                  "price": "Price"
+                },
+                "groups": [
+                  {
+                    "category": "Electronics",
+                    "items": [
+                      {
+                        "title": "Air headphones",
+                        "quantity": 12,
+                        "price": 42
+                      },
+                      { "title": "Wave speaker", "quantity": 6, "price": 31 },
+                      { "title": "USB-C cable", "quantity": 40, "price": 3.5 }
+                    ]
+                  },
+                  {
+                    "category": "Furniture",
+                    "items": [
+                      { "title": "Loft chair", "quantity": 8, "price": 68 },
+                      { "title": "Nord desk", "quantity": 3, "price": 154 }
+                    ]
+                  },
+                  {
+                    "category": "Stationery",
+                    "items": [
+                      { "title": "A5 notebook", "quantity": 25, "price": 2.2 }
+                    ]
+                  }
+                ]
+              }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-table-021-*. A server component: no hooks. The category is expressed as a single th with scope=\"rowgroup\" and a rowSpan across the group's item count, rather than repeating on every row. The total is computed from every item in every category and sits in tfoot."
+          }
+        },
+        "cardControls": ["caption", "currency", "accent", "background"]
       }
     }
   ]

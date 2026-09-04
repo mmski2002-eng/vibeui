@@ -16,6 +16,7 @@ import { Field008 } from "@/registry/components/field/field-008/field-008"
 import { Field009 } from "@/registry/components/field/field-009/field-009"
 import { Field010 } from "@/registry/components/field/field-010/field-010"
 import { Field011 } from "@/registry/components/field/field-011/field-011"
+import { Field012 } from "@/registry/components/field/field-012/field-012"
 
 export const PREVIEWS = {
   "field-001": Field001,
@@ -29,4 +30,5 @@ export const PREVIEWS = {
   "field-009": Field009,
   "field-010": Field010,
   "field-011": Field011,
+  "field-012": Field012,
 } satisfies Record<string, ComponentType<PreviewProps>>

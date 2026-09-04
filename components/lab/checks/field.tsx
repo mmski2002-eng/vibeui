@@ -11,6 +11,7 @@ import { Field008 } from "@/registry/components/field/field-008/field-008"
 import { Field009 } from "@/registry/components/field/field-009/field-009"
 import { Field010 } from "@/registry/components/field/field-010/field-010"
 import { Field011 } from "@/registry/components/field/field-011/field-011"
+import { Field012 } from "@/registry/components/field/field-012/field-012"
 
 /** Seed прогона: с ним набор воспроизводится один в один. */
 export const SEED = 52594
@@ -243,6 +244,24 @@ export const CHECKS: LabCheck[] = [
         defaultValue="Подпись: тест"
         delay={3805}
         accent="#90bf33"
+      />
+    ),
+  },
+  {
+    name: "field-012",
+    title: "Поле без вставки",
+    notes: [
+      "Подпись: Проверка",
+      "Пояснение: Проверка",
+      "Текст отказа: Смена",
+      "Акцент: #4f8ff7",
+    ],
+    node: (
+      <Field012
+        label="Проверка"
+        hint="Проверка"
+        blockedText="Смена"
+        accent="#4f8ff7"
       />
     ),
   },

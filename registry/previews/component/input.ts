@@ -25,7 +25,6 @@ import { Input017 } from "@/registry/components/input/input-017/input-017"
 import { Input018 } from "@/registry/components/input/input-018/input-018"
 import { Input019 } from "@/registry/components/input/input-019/input-019"
 import { Input020 } from "@/registry/components/input/input-020/input-020"
-import { Input021 } from "@/registry/components/input/input-021/input-021"
 import { Input022 } from "@/registry/components/input/input-022/input-022"
 import { Input023 } from "@/registry/components/input/input-023/input-023"
 import { Input024 } from "@/registry/components/input/input-024/input-024"
@@ -36,6 +35,7 @@ import { Input028 } from "@/registry/components/input/input-028/input-028"
 import { Input029 } from "@/registry/components/input/input-029/input-029"
 import { Input030 } from "@/registry/components/input/input-030/input-030"
 import { Input031 } from "@/registry/components/input/input-031/input-031"
+import { Input032 } from "@/registry/components/input/input-032/input-032"
 
 export const PREVIEWS = {
   "input-001": Input001,
@@ -58,7 +58,6 @@ export const PREVIEWS = {
   "input-018": Input018,
   "input-019": Input019,
   "input-020": Input020,
-  "input-021": Input021,
   "input-022": Input022,
   "input-023": Input023,
   "input-024": Input024,
@@ -69,4 +68,5 @@ export const PREVIEWS = {
   "input-029": Input029,
   "input-030": Input030,
   "input-031": Input031,
+  "input-032": Input032,
 } satisfies Record<string, ComponentType<PreviewProps>>

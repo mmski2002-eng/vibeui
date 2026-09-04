@@ -6,14 +6,11 @@ import type { ComponentType } from "react"
 import type { PreviewProps } from "@/registry/preview-types"
 
 import { Select001 } from "@/registry/components/select/select-001/select-001"
-import { Select002 } from "@/registry/components/select/select-002/select-002"
 import { Select003 } from "@/registry/components/select/select-003/select-003"
-import { Select004 } from "@/registry/components/select/select-004/select-004"
 import { Select005 } from "@/registry/components/select/select-005/select-005"
 import { Select006 } from "@/registry/components/select/select-006/select-006"
 import { Select007 } from "@/registry/components/select/select-007/select-007"
 import { Select008 } from "@/registry/components/select/select-008/select-008"
-import { Select009 } from "@/registry/components/select/select-009/select-009"
 import { Select010 } from "@/registry/components/select/select-010/select-010"
 import { Select011 } from "@/registry/components/select/select-011/select-011"
 import { Select012 } from "@/registry/components/select/select-012/select-012"
@@ -41,14 +38,11 @@ import { Select033 } from "@/registry/components/select/select-033/select-033"
 
 export const PREVIEWS = {
   "select-001": Select001,
-  "select-002": Select002,
   "select-003": Select003,
-  "select-004": Select004,
   "select-005": Select005,
   "select-006": Select006,
   "select-007": Select007,
   "select-008": Select008,
-  "select-009": Select009,
   "select-010": Select010,
   "select-011": Select011,
   "select-012": Select012,

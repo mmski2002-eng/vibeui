@@ -35,6 +35,7 @@ import { Datagrid027 } from "@/registry/components/data-grid/datagrid-027/datagr
 import { Datagrid028 } from "@/registry/components/data-grid/datagrid-028/datagrid-028"
 import { Datagrid030 } from "@/registry/components/data-grid/datagrid-030/datagrid-030"
 import { Datagrid029 } from "@/registry/components/data-grid/datagrid-029/datagrid-029"
+import { Datagrid031 } from "@/registry/components/data-grid/datagrid-031/datagrid-031"
 
 export const PREVIEWS = {
   "datagrid-001": Datagrid001,
@@ -67,4 +68,5 @@ export const PREVIEWS = {
   "datagrid-028": Datagrid028,
   "datagrid-030": Datagrid030,
   "datagrid-029": Datagrid029,
+  "datagrid-031": Datagrid031,
 } satisfies Record<string, ComponentType<PreviewProps>>

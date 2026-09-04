@@ -111,11 +111,6 @@ export const PREVIEWS = {
       (module) => module.Combobox021,
     ),
   ),
-  "combobox-022": dynamic(() =>
-    import("@/registry/components/combobox/combobox-022/combobox-022").then(
-      (module) => module.Combobox022,
-    ),
-  ),
   "combobox-023": dynamic(() =>
     import("@/registry/components/combobox/combobox-023/combobox-023").then(
       (module) => module.Combobox023,

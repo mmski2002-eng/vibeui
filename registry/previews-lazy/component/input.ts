@@ -106,11 +106,6 @@ export const PREVIEWS = {
       (module) => module.Input020,
     ),
   ),
-  "input-021": dynamic(() =>
-    import("@/registry/components/input/input-021/input-021").then(
-      (module) => module.Input021,
-    ),
-  ),
   "input-022": dynamic(() =>
     import("@/registry/components/input/input-022/input-022").then(
       (module) => module.Input022,
@@ -159,6 +154,11 @@ export const PREVIEWS = {
   "input-031": dynamic(() =>
     import("@/registry/components/input/input-031/input-031").then(
       (module) => module.Input031,
+    ),
+  ),
+  "input-032": dynamic(() =>
+    import("@/registry/components/input/input-032/input-032").then(
+      (module) => module.Input032,
     ),
   ),
 } satisfies PreviewMap

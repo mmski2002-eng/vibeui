@@ -21,7 +21,6 @@ import { Combobox018 } from "@/registry/components/combobox/combobox-018/combobo
 import { Combobox019 } from "@/registry/components/combobox/combobox-019/combobox-019"
 import { Combobox020 } from "@/registry/components/combobox/combobox-020/combobox-020"
 import { Combobox021 } from "@/registry/components/combobox/combobox-021/combobox-021"
-import { Combobox022 } from "@/registry/components/combobox/combobox-022/combobox-022"
 import { Combobox023 } from "@/registry/components/combobox/combobox-023/combobox-023"
 import { Combobox024 } from "@/registry/components/combobox/combobox-024/combobox-024"
 import { Combobox025 } from "@/registry/components/combobox/combobox-025/combobox-025"
@@ -270,12 +269,6 @@ export const CHECKS: LabCheck[] = [
         accent="#48bc38"
       />
     ),
-  },
-  {
-    name: "combobox-022",
-    title: "Разделитель недавних",
-    notes: ["Сколько недавних: 2", "Метка строки: Черновик", "Акцент: #987df4"],
-    node: <Combobox022 recentLimit={2} recentTag="Черновик" accent="#987df4" />,
   },
   {
     name: "combobox-023",

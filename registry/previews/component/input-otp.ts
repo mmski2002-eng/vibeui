@@ -15,6 +15,7 @@ import { Otp007 } from "@/registry/components/input-otp/otp-007/otp-007"
 import { Otp008 } from "@/registry/components/input-otp/otp-008/otp-008"
 import { Otp009 } from "@/registry/components/input-otp/otp-009/otp-009"
 import { Otp010 } from "@/registry/components/input-otp/otp-010/otp-010"
+import { Otp011 } from "@/registry/components/input-otp/otp-011/otp-011"
 
 export const PREVIEWS = {
   "otp-001": Otp001,
@@ -27,4 +28,5 @@ export const PREVIEWS = {
   "otp-008": Otp008,
   "otp-009": Otp009,
   "otp-010": Otp010,
+  "otp-011": Otp011,
 } satisfies Record<string, ComponentType<PreviewProps>>

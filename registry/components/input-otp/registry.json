@@ -6,9 +6,7 @@
       "type": "registry:component",
       "title": "Поле одноразового кода",
       "description": "Код из СМС по клеткам: вставка целиком раскладывается сама, а Backspace на пустой клетке уводит назад.",
-      "categories": [
-        "input-otp"
-      ],
+      "categories": ["input-otp"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-otp-001-*. Клиентский: \"use client\". Клетки — массив ref, ввод цифры переводит фокус вперёд, Backspace на пустой клетке — назад, стрелки ходят по клеткам. Вставка перехватывается на любой клетке и раскладывается целиком. У первой клетки autocomplete=\"one-time-code\".",
       "meta": {
-        "tags": [
-          "input",
-          "otp",
-          "code",
-          "auth"
-        ],
+        "tags": ["input", "otp", "code", "auth"],
         "ai": {
           "export": "Otp001",
           "usage": "<Otp001 length={6} onChange={(code) => verify(code)} />",
@@ -154,13 +147,7 @@
             }
           }
         },
-        "cardControls": [
-          "length",
-          "label",
-          "hint",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["length", "label", "hint", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -171,9 +158,7 @@
       "type": "registry:component",
       "title": "Одна каретка",
       "description": "Клеток шесть, а поле одно: прозрачный input лежит поверх ячеек, поэтому вставка, автопереход и системная подстановка кода работают сами.",
-      "categories": [
-        "input-otp"
-      ],
+      "categories": ["input-otp"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -185,12 +170,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-otp-002-*. Клиентский: \"use client\". Настоящий input растянут по всей сцепке (position:absolute; inset:0), полностью прозрачен и принимает щелчки, а ячейки — это отрисовка его значения с pointer-events:none. Такой приём отдаёт браузеру вставку, автопереход, Backspace, стрелки и отмену. Каретка нарисована отдельным элементом, потому что у прозрачного поля её не видно.",
       "meta": {
-        "tags": [
-          "otp",
-          "code",
-          "auth",
-          "input"
-        ],
+        "tags": ["otp", "code", "auth", "input"],
         "ai": {
           "export": "Otp002",
           "usage": "<Otp002 length={6} onChange={(code) => verify(code)} />",
@@ -305,12 +285,7 @@
             }
           }
         },
-        "cardControls": [
-          "label",
-          "length",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "length", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -321,9 +296,7 @@
       "type": "registry:component",
       "title": "Таймер повтора",
       "description": "Код с повторной отправкой: пока идёт отсчёт, кнопка выключена, а остаток времени виден полосой и читается вслух словами.",
-      "categories": [
-        "input-otp"
-      ],
+      "categories": ["input-otp"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -335,12 +308,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-otp-003-*. Клиентский: \"use client\". Отсчёт ведётся от отметки времени (Date.now() + seconds*1000), а не сложением секунд по тикам: в свёрнутой вкладке таймеры тормозят и счёт по тикам врёт. Повторная отправка увеличивает счётчик round, от него перезапускается эффект. Ширина полосы — единственное инлайновое значение, потому что она вычисляется. Клетки — массив ref с автопереходом и вставкой.",
       "meta": {
-        "tags": [
-          "otp",
-          "timer",
-          "resend",
-          "auth"
-        ],
+        "tags": ["otp", "timer", "resend", "auth"],
         "ai": {
           "export": "Otp003",
           "usage": "<Otp003 seconds={45} onChange={(code) => verify(code)} />",
@@ -471,13 +439,7 @@
             }
           }
         },
-        "cardControls": [
-          "label",
-          "seconds",
-          "length",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "seconds", "length", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -488,9 +450,7 @@
       "type": "registry:component",
       "title": "Встряска при ошибке",
       "description": "Неверный код оформлен всерьёз: короткая встряска, красная рамка, счётчик оставшихся попыток и возврат фокуса на первую клетку.",
-      "categories": [
-        "input-otp"
-      ],
+      "categories": ["input-otp"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -502,12 +462,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-otp-004-*. Клиентский: \"use client\". Встряска перезапускается сменой имени анимации: два одинаковых набора кадров чередуются по счётчику ошибок, поэтому вторая подряд ошибка тоже тряхнёт поле, а клетки не размонтируются и фокус не теряется. Правило prefers-reduced-motion гасит анимацию целиком — смысл несут цвет и текст. Сообщение объявляется через aria-live=\"assertive\".",
       "meta": {
-        "tags": [
-          "otp",
-          "error",
-          "motion",
-          "auth"
-        ],
+        "tags": ["otp", "error", "motion", "auth"],
         "ai": {
           "export": "Otp004",
           "usage": "<Otp004 expected=\"482913\" attempts={3} onSubmit={(code) => enter(code)} />",
@@ -656,9 +611,7 @@
       "type": "registry:component",
       "title": "Код по группам",
       "description": "Код группами через дефис: внутри группы клетки сцеплены общей рамкой, а дефис нарисован — набирать его не нужно.",
-      "categories": [
-        "input-otp"
-      ],
+      "categories": ["input-otp"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -670,12 +623,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-otp-005-*. Клиентский: \"use client\". Группы задаются массивом длин, поэтому «3-3», «2-2-2» и «4-4» — один и тот же компонент. Внутри группы клетки сцеплены схлопнутыми границами, скругления только на концах группы, фокусная клетка поднимается z-index'ом. Дефис — отдельный элемент с aria-hidden. Вставка перехватывается на любой клетке и раскладывается по всем группам сразу.",
       "meta": {
-        "tags": [
-          "otp",
-          "code",
-          "groups",
-          "auth"
-        ],
+        "tags": ["otp", "code", "groups", "auth"],
         "ai": {
           "export": "Otp005",
           "usage": "<Otp005 groups={[3, 3]} onChange={(code) => verify(code)} />",
@@ -793,12 +741,7 @@
             }
           }
         },
-        "cardControls": [
-          "label",
-          "hint",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "hint", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -809,9 +752,7 @@
       "type": "registry:component",
       "title": "Скрытая строка",
       "description": "Код одной строкой без клеток: моноширинная разрядка, подложка из точек под всю длину и кнопка показа скрытых цифр.",
-      "categories": [
-        "input-otp"
-      ],
+      "categories": ["input-otp"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -823,12 +764,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-otp-006-*. Клиентский: \"use client\". Это обычный input с моноширинным шрифтом и letter-spacing, а место под недобранные цифры держит абсолютно спозиционированная подложка из точек с pointer-events:none — поэтому строка не растёт по мере набора и не двигает кнопку показа. Тип поля переключается между password и text, состояние кнопки объявляется через aria-pressed.",
       "meta": {
-        "tags": [
-          "otp",
-          "mask",
-          "single",
-          "auth"
-        ],
+        "tags": ["otp", "mask", "single", "auth"],
         "ai": {
           "export": "Otp006",
           "usage": "<Otp006 length={6} onChange={(code) => verify(code)} />",
@@ -949,12 +885,7 @@
             }
           }
         },
-        "cardControls": [
-          "label",
-          "length",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "length", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -965,9 +896,7 @@
       "type": "registry:component",
       "title": "Автоотправка",
       "description": "Кнопки подтверждения нет: последняя цифра сама запускает проверку, а клетки блокируются и показывают полосу ожидания.",
-      "categories": [
-        "input-otp"
-      ],
+      "categories": ["input-otp"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -979,12 +908,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-otp-007-*. Клиентский: \"use client\". Ввод и вставка идут через один шаг push, и отправка запускается именно там: код можно дособрать вводом, вставкой или правкой средней клетки, и все пути обязаны привести к одному действию. На время проверки клетки disabled — это же и защита от повторной отправки, — поверх идёт полоса, состояние объявляется через aria-live. После успеха доступна кнопка «Ввести заново»: без неё поле осталось бы заблокированным навсегда.",
       "meta": {
-        "tags": [
-          "otp",
-          "autosubmit",
-          "auth",
-          "state"
-        ],
+        "tags": ["otp", "autosubmit", "auth", "state"],
         "ai": {
           "export": "Otp007",
           "usage": "<Otp007 length={6} onSubmit={(code) => enter(code)} />",
@@ -1107,12 +1031,7 @@
             }
           }
         },
-        "cardControls": [
-          "label",
-          "length",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "length", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -1123,9 +1042,7 @@
       "type": "registry:component",
       "title": "Проверка кода",
       "description": "Пауза между последней цифрой и ответом названа: поля запираются, подпись говорит «проверяем», ответ приходит туда же.",
-      "categories": [
-        "input-otp"
-      ],
+      "categories": ["input-otp"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1137,12 +1054,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-otp-008-*. Клиентский. Проверка запускается сама на последней цифре и держит поля запертыми, пока идёт; ответ приходит в ту же строку и объявляется через aria-live. Ошибка не стирает введённое — правится одна цифра, а не весь код. Кружок ожидания вращается только во время проверки и замирает при выключенном движении.",
       "meta": {
-        "tags": [
-          "otp",
-          "verify",
-          "loading",
-          "feedback"
-        ],
+        "tags": ["otp", "verify", "loading", "feedback"],
         "ai": {
           "export": "Otp008",
           "usage": "<Otp008 correctCode=\"482913\" checkDelay={1200} />",
@@ -1292,9 +1204,7 @@
       "type": "registry:component",
       "title": "Буквенно-цифровой код",
       "description": "Код приглашения из букв и цифр: похожие знаки приводятся сами, регистр повышается, дефис нарисован.",
-      "categories": [
-        "input-otp"
-      ],
+      "categories": ["input-otp"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1306,12 +1216,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-otp-009-*. Клиентский. Алфавит исключает знаки, которые путают при диктовке: «I» и «L» неотличимы от единицы, «O» от ноля, «U» от «V». Введённые исключённые знаки не отвергаются, а приводятся к тому, что человек имел в виду. Регистр повышается разметкой и разбором, разделитель между группами нарисован и в буфер не попадает.",
       "meta": {
-        "tags": [
-          "otp",
-          "alphanumeric",
-          "invite",
-          "code"
-        ],
+        "tags": ["otp", "alphanumeric", "invite", "code"],
         "ai": {
           "export": "Otp009",
           "usage": "<Otp009 groupSize={4} groups={2} />",
@@ -1445,13 +1350,7 @@
         "preview": {
           "width": "full"
         },
-        "cardControls": [
-          "title",
-          "groupSize",
-          "groups",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "groupSize", "groups", "accent", "background"]
       }
     },
     {
@@ -1459,9 +1358,7 @@
       "type": "registry:component",
       "title": "Срок действия кода",
       "description": "Код с видимым сроком: остаток показан полосой и цифрами, истёкший код запирает поля и предлагает новый.",
-      "categories": [
-        "input-otp"
-      ],
+      "categories": ["input-otp"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1473,12 +1370,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-otp-010-*. Клиентский. Остаток идёт полосой и цифрами: полоса даёт мгновенную оценку, цифры — точность. За полминуты до конца оба перекрашиваются. По истечении поля запираются, а на месте таймера встаёт кнопка нового кода. Бегущие секунды намеренно не объявляются вслух — озвучивается только истечение.",
       "meta": {
-        "tags": [
-          "otp",
-          "expiry",
-          "timer",
-          "code"
-        ],
+        "tags": ["otp", "expiry", "timer", "code"],
         "ai": {
           "export": "Otp010",
           "usage": "<Otp010 seconds={150} length={6} />",
@@ -1617,6 +1509,148 @@
           "accent",
           "background"
         ]
+      }
+    },
+    {
+      "name": "otp-011",
+      "type": "registry:component",
+      "title": "Маска после ввода",
+      "description": "Код подтверждения, как в системных полях телефона: только что введённая цифра видна долю секунды и сама превращается в точку.",
+      "categories": ["input-otp"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "otp-011/otp-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/otp-011.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-otp-011-*. Клиентский: \"use client\". Каждая клетка — это input с прозрачным текстом и caret-color, поверх которого лежит отдельный слой data-part=\"face\": он показывает саму цифру или точку. Ввод запускает у клетки свой setTimeout на revealMs — маска ставится независимо для каждой клетки, поэтому быстрый набор не гасит соседние цифры одновременно. Вставка целиком раскладывается по клеткам и запускает таймер для каждой заполненной клетки. Backspace на пустой клетке уводит назад и сразу гасит маску предыдущей. Настоящее значение всегда лежит в value input — автозаполнение, формы и screen reader работают с обычным полем, а не с декоративным слоем.",
+      "meta": {
+        "tags": ["input", "otp", "code", "auth", "mask"],
+        "ai": {
+          "export": "Otp011",
+          "usage": "<Otp011 length={6} revealMs={700} onChange={(code) => verify(code)} />",
+          "summary": "Поле кода подтверждения, где введённая цифра на миг видна и сама скрывается за точкой — привычное поведение системных SMS-полей. Своя палитра, ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-otp-011-* и не подменять её токенами вашей темы",
+            "раздельный таймер маски на каждую клетку — общий таймер погасил бы все цифры разом при быстром наборе",
+            "прозрачный текст и caret-color у input и отдельный слой face над ним — значение и отображение не должны совпадать",
+            "вставку целиком с раскладкой по клеткам и запуском маски для каждой из них",
+            "Backspace на пустой клетке, уводящий назад — иначе стереть набранное нельзя",
+            "autoComplete=\"one-time-code\" на первой клетке и inputMode=\"numeric\" на всех",
+            "очистку таймеров в useEffect при размонтировании — иначе setState прилетит на удалённый компонент"
+          ],
+          "adapt": [
+            "длительность показа цифры через revealMs — быстрее для опытных пользователей, дольше для доступности",
+            "число клеток через length",
+            "текст label и hint",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "подписи клеток для screen reader через digitLabel"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "revealMs короче 400 мс делает вспышку цифры незаметной, длиннее 1500 мс — маскировка перестаёт ощущаться мгновенной.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
+            "Слой face стоит с aria-hidden — его значение дублирует то, что реально хранит input."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Код из СМС",
+            "maxLength": 30
+          },
+          {
+            "prop": "length",
+            "label": "Число клеток",
+            "type": "number",
+            "default": 6,
+            "min": 4,
+            "max": 8
+          },
+          {
+            "prop": "revealMs",
+            "label": "Показ цифры, мс",
+            "type": "number",
+            "default": 700,
+            "min": 200,
+            "max": 2000,
+            "step": 100
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A confirmation code like phone system fields: the digit you just typed is visible for a fraction of a second, then turns into a dot on its own.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-otp-011-*. Client component: \"use client\". Each box is an input with transparent text and caret-color, with a separate data-part=\"face\" layer on top showing the digit or a dot. Typing starts a per-box setTimeout of revealMs — the mask is scheduled independently for each box, so fast typing does not blank neighbouring digits at once. A full paste is split across the boxes and starts a timer for every filled one. Backspace on an empty box moves back and clears the previous box mask right away. The real value always lives in the input value — autofill, forms and screen readers work with an ordinary field, not with the decorative layer.",
+            "ai": {
+              "summary": "A confirmation code field where the typed digit is visible for a moment and then hides behind a dot on its own — the familiar behaviour of system SMS fields. Its own palette, zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-otp-011-* palette — do not swap it for your theme tokens",
+                "a separate mask timer per box — a shared timer would blank every digit at once on fast typing",
+                "transparent text and caret-color on the input plus a separate face layer above it — the value and what is shown must not be the same node",
+                "pasting the whole code across the boxes and starting the mask timer for each of them",
+                "Backspace on an empty box moving back — otherwise clearing what was typed is impossible",
+                "autoComplete=\"one-time-code\" on the first box and inputMode=\"numeric\" on every one",
+                "clearing the timers in useEffect on unmount — otherwise setState lands on a removed component"
+              ],
+              "adapt": [
+                "how long a digit stays visible through revealMs — faster for experienced users, longer for accessibility",
+                "the number of boxes through length",
+                "the label and hint copy",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour",
+                "the screen-reader box captions through digitLabel"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "revealMs under 400ms makes the flash unnoticeable, over 1500ms the masking stops feeling instant.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
+                "The face layer carries aria-hidden — its value only mirrors what the input already holds."
+              ],
+              "usage": "<Otp011 length={6} revealMs={700} onChange={(code) => verify(code)} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "SMS code"
+              },
+              "length": {
+                "label": "Boxes"
+              },
+              "revealMs": {
+                "label": "Digit shown, ms"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Mask After Type"
+          }
+        },
+        "cardControls": ["label", "length", "revealMs", "accent", "background"],
+        "preview": {
+          "width": "full"
+        }
       }
     }
   ]

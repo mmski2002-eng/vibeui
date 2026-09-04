@@ -156,4 +156,9 @@ export const PREVIEWS = {
       (module) => module.Datagrid029,
     ),
   ),
+  "datagrid-031": dynamic(() =>
+    import("@/registry/components/data-grid/datagrid-031/datagrid-031").then(
+      (module) => module.Datagrid031,
+    ),
+  ),
 } satisfies PreviewMap

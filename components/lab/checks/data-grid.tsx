@@ -30,6 +30,7 @@ import { Datagrid027 } from "@/registry/components/data-grid/datagrid-027/datagr
 import { Datagrid028 } from "@/registry/components/data-grid/datagrid-028/datagrid-028"
 import { Datagrid030 } from "@/registry/components/data-grid/datagrid-030/datagrid-030"
 import { Datagrid029 } from "@/registry/components/data-grid/datagrid-029/datagrid-029"
+import { Datagrid031 } from "@/registry/components/data-grid/datagrid-031/datagrid-031"
 
 /** Seed прогона: с ним набор воспроизводится один в один. */
 export const SEED = 84270
@@ -315,6 +316,18 @@ export const CHECKS: LabCheck[] = [
         errorCode="Подпись: тест"
         accent="#1642ab"
       />
+    ),
+  },
+  {
+    name: "datagrid-031",
+    title: "Замороженный угол",
+    notes: [
+      "Заголовок: Проверка",
+      "Первая колонка: Черновик",
+      "Акцент: #4c8f3b",
+    ],
+    node: (
+      <Datagrid031 heading="Проверка" leadLabel="Черновик" accent="#4c8f3b" />
     ),
   },
 ]

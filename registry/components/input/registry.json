@@ -6,9 +6,7 @@
       "type": "registry:component",
       "title": "Поле с плавающей подписью",
       "description": "Текстовое поле, у которого подпись уезжает внутрь рамки при вводе. Подпись видна всегда, отдельной строки над полем не нужно. Состояния подсказки и ошибки встроены.",
-      "categories": [
-        "input"
-      ],
+      "categories": ["input"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-input-001-*. Плавающая подпись держится на CSS-селекторе :placeholder-shown, поэтому JS не нужен и компонент остаётся серверным. Внутри — нативный <input>, принимающий любые его пропсы. Ошибка задаётся строкой в error: она включает data-invalid, aria-invalid и role=\"alert\" у примечания.",
       "meta": {
-        "tags": [
-          "input",
-          "text field",
-          "form",
-          "floating label"
-        ],
+        "tags": ["input", "text field", "form", "floating label"],
         "ai": {
           "export": "Input001",
           "usage": "<Input001\n  id=\"email\"\n  name=\"email\"\n  type=\"email\"\n  label=\"Рабочая почта\"\n  hint=\"Не публикуем и не передаём третьим лицам.\"\n/>",
@@ -84,10 +77,7 @@
             "label": "Размер",
             "type": "select",
             "default": "md",
-            "options": [
-              "md",
-              "lg"
-            ]
+            "options": ["md", "lg"]
           },
           {
             "prop": "accent",
@@ -196,9 +186,7 @@
       "type": "registry:component",
       "title": "Группа полей",
       "description": "Поле с неизменяемой приставкой и окончанием внутри одной рамки: домен, протокол, единица измерения. Фокус подсвечивает группу целиком, а не только середину.",
-      "categories": [
-        "input"
-      ],
+      "categories": ["input"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -210,12 +198,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-input-002-*. Приставка и окончание — обычные span'ы внутри рамки, поле растягивается между ними на flex. Подсветка группы держится на :focus-within, выключенное состояние — на :has(input:disabled), поэтому JS не нужен и компонент остаётся серверным. Внутри нативный <input>, принимающий любые его пропсы.",
       "meta": {
-        "tags": [
-          "input",
-          "input group",
-          "prefix",
-          "form"
-        ],
+        "tags": ["input", "input group", "prefix", "form"],
         "ai": {
           "export": "Input002",
           "usage": "<Input002\n  id=\"slug\"\n  name=\"slug\"\n  label=\"Адрес страницы\"\n  prefix=\"vibeui.ru/\"\n  placeholder=\"portfolio\"\n/>",
@@ -385,9 +368,7 @@
       "type": "registry:component",
       "title": "Поле пароля",
       "description": "Пароль с показом и оценкой словами: полоска без подписи не отвечает, что именно надо исправить.",
-      "categories": [
-        "input"
-      ],
+      "categories": ["input"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -399,12 +380,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-input-003-*. Клиентский: \"use client\". Оценка считается по длине и разнообразию символов и даёт три ступени; уровень выносится в data-score, по нему красятся полоски. Кнопка показа объявлена aria-pressed и меняет тип поля, подпись связана через aria-describedby.",
       "meta": {
-        "tags": [
-          "input",
-          "password",
-          "form",
-          "security"
-        ],
+        "tags": ["input", "password", "form", "security"],
         "ai": {
           "export": "Input003",
           "usage": "<Input003 label=\"Пароль\" onChange={setPassword} />",
@@ -533,12 +509,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-003-*. A client component: \"use client\". The score is computed from the length and the variety of characters and yields three steps; the level is lifted into data-score, and the bars are coloured from it. The reveal button is declared aria-pressed and changes the field type, and the caption is tied through aria-describedby."
           }
         },
-        "cardControls": [
-          "label",
-          "placeholder",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "placeholder", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -549,9 +520,7 @@
       "type": "registry:component",
       "title": "Поле поиска",
       "description": "Поле поиска с очисткой: крестик появляется только с текстом, а после очистки фокус возвращается в поле.",
-      "categories": [
-        "input"
-      ],
+      "categories": ["input"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -563,12 +532,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-input-004-*. Клиентский: \"use client\". Штатный крестик у input type=\"search\" скрыт, вместо него своя кнопка с именем; после очистки фокус программно возвращается в поле. Лупа и крестик нарисованы бордюрами, подсказка клавиши стоит справа.",
       "meta": {
-        "tags": [
-          "input",
-          "search",
-          "clear",
-          "shortcut"
-        ],
+        "tags": ["input", "search", "clear", "shortcut"],
         "ai": {
           "export": "Input004",
           "usage": "<Input004 label=\"Поиск\" shortcut=\"/\" onChange={setQuery} />",
@@ -694,12 +658,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-004-*. A client component: \"use client\". The built-in cross of input type=\"search\" is hidden and replaced by a button of its own with a name; after clearing, the focus is returned to the field programmatically. The magnifier and the cross are drawn with borders, and the shortcut hint sits on the right."
           }
         },
-        "cardControls": [
-          "label",
-          "shortcut",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "shortcut", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -710,9 +669,7 @@
       "type": "registry:component",
       "title": "Поле телефона",
       "description": "Телефон с маской от цифр: вставка из буфера в любом формате не ломает поле, а стирание не застревает на скобке.",
-      "categories": [
-        "input"
-      ],
+      "categories": ["input"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -724,12 +681,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-input-005-*. Клиентский: \"use client\". В состоянии живут только цифры, скобки и дефисы дорисовываются функцией форматирования — поэтому любой формат вставки даёт один результат. Код страны вынесен из поля отдельным элементом, чтобы его не стирали.",
       "meta": {
-        "tags": [
-          "input",
-          "phone",
-          "mask",
-          "form"
-        ],
+        "tags": ["input", "phone", "mask", "form"],
         "ai": {
           "export": "Input005",
           "usage": "<Input005 prefix=\"+7\" onChange={(digits) => setPhone(digits)} />",
@@ -859,13 +811,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-005-*. A client component: \"use client\". Only the digits live in state, and the brackets and hyphens are drawn in by a formatting function — which is why a paste in any format gives one result. The country code is lifted out of the field into a separate element so it does not get erased."
           }
         },
-        "cardControls": [
-          "label",
-          "prefix",
-          "hint",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "prefix", "hint", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -876,9 +822,7 @@
       "type": "registry:component",
       "title": "Защита от опечатки в почте",
       "description": "Поле почты с двойной проверкой: сначала формат адреса, потом домен — «gmial.com» ловится и исправляется одной кнопкой.",
-      "categories": [
-        "input"
-      ],
+      "categories": ["input"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -890,12 +834,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-input-006-*. Клиентский: \"use client\". Формат проверяется регулярным выражением по уходу из поля (состояние checked), домен сравнивается с частыми через расстояние Дамерау — Левенштейна: перестановка соседних букв считается одной правкой, поэтому «gmial» находится как опечатка «gmail». Исправление предлагается настоящей кнопкой, которая подставляет адрес целиком. Состояние живёт на внутреннем [data-part=\"body\"], от него красится рамка и значок.",
       "meta": {
-        "tags": [
-          "input",
-          "email",
-          "validation",
-          "form"
-        ],
+        "tags": ["input", "email", "validation", "form"],
         "ai": {
           "export": "Input006",
           "usage": "<Input006\n  label=\"Рабочая почта\"\n  defaultValue=\"anna.orlova@gmial.com\"\n  onChange={(value) => setEmail(value)}\n/>",
@@ -1020,12 +959,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-006-*. A client component: \"use client\". The shape is checked with a regular expression on leaving the field (the checked state), and the domain is compared against the common ones by Damerau–Levenshtein distance: swapping two neighbouring letters counts as one edit, so \"gmial\" is found as a typo for \"gmail\". The fix is offered as a real button that substitutes the whole address. The state lives on the inner [data-part=\"body\"], and the border and the glyph are coloured from it."
           }
         },
-        "cardControls": [
-          "label",
-          "defaultValue",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "defaultValue", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -1036,9 +970,7 @@
       "type": "registry:component",
       "title": "Автоподстановка протокола",
       "description": "Поле адреса сайта, которое само дописывает https:// по уходу из фокуса и показывает разбор ссылки на схему, домен и путь.",
-      "categories": [
-        "input"
-      ],
+      "categories": ["input"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1050,12 +982,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-input-007-*. Клиентский: \"use client\". Схема добавляется в onBlur, а не при вводе — иначе она мешает набирать. Разбор сделан регулярным выражением, а не конструктором URL: URL бросает исключение на половине промежуточных состояний набора, а показывать что-то осмысленное поле обязано на каждом символе. Ошибкой считается домен без точки.",
       "meta": {
-        "tags": [
-          "input",
-          "url",
-          "link",
-          "form"
-        ],
+        "tags": ["input", "url", "link", "form"],
         "ai": {
           "export": "Input007",
           "usage": "<Input007\n  label=\"Ссылка на сайт\"\n  scheme=\"https\"\n  onChange={(url) => setLink(url)}\n/>",
@@ -1100,10 +1027,7 @@
             "label": "Схема",
             "type": "select",
             "default": "https",
-            "options": [
-              "https",
-              "http"
-            ]
+            "options": ["https", "http"]
           },
           {
             "prop": "accent",
@@ -1181,12 +1105,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-007-*. A client component: \"use client\". The scheme is appended in onBlur rather than while typing — otherwise it gets in the way of entry. The parsing is done with a regular expression rather than the URL constructor: URL throws on half the intermediate states of typing, and the field has to show something meaningful on every character. A domain without a dot is treated as an error."
           }
         },
-        "cardControls": [
-          "label",
-          "scheme",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "scheme", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -1197,9 +1116,7 @@
       "type": "registry:component",
       "title": "Маска карты",
       "description": "Номер карты с маской по четвёркам, определением платёжной системы по первым цифрам и проверкой Луна перед отправкой.",
-      "categories": [
-        "input"
-      ],
+      "categories": ["input"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1211,12 +1128,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-input-008-*. Клиентский: \"use client\". В состоянии живут только цифры, пробелы дорисовываются функцией группировки — вставка в любом формате даёт один результат. Платёжная система определяется по префиксу и подписывается словом, а не логотипом: логотипы нельзя раздавать в registry. Луна считается только на полных шестнадцати цифрах. Рядом стоят срок и код: карту без них не принимают.",
       "meta": {
-        "tags": [
-          "input",
-          "card",
-          "payment",
-          "mask"
-        ],
+        "tags": ["input", "card", "payment", "mask"],
         "ai": {
           "export": "Input008",
           "usage": "<Input008\n  label=\"Номер карты\"\n  onChange={(digits) => setCard(digits)}\n/>",
@@ -1347,12 +1259,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-008-*. A client component: \"use client\". Only the digits live in state, and the spaces are drawn in by a grouping function — a paste in any format gives one result. The payment scheme is detected by prefix and named in words rather than a logo: logos cannot be distributed in a registry. Luhn is computed only on a full sixteen digits. The expiry and the code stand beside it: a card is not accepted without them."
           }
         },
-        "cardControls": [
-          "label",
-          "defaultValue",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "defaultValue", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -1363,9 +1270,7 @@
       "type": "registry:component",
       "title": "Поиск по горячей клавише",
       "description": "Поиск с подсказкой сочетания клавиш, которое действительно работает: клавиша уводит фокус в поле, Escape очищает его.",
-      "categories": [
-        "input"
-      ],
+      "categories": ["input"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1377,12 +1282,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-input-009-*. Клиентский: \"use client\". Сочетание вешается на document в useEffect и снимается при размонтировании. Модификатор (⌘ или Ctrl) читается через useSyncExternalStore: серверный снимок возвращает Ctrl, поэтому разметка сервера и первого клиентского рендера совпадает, а после гидратации на маке появляется ⌘. Значок клавиши — <kbd>, он уступает место кнопке очистки, когда в поле есть текст.",
       "meta": {
-        "tags": [
-          "input",
-          "search",
-          "shortcut",
-          "keyboard"
-        ],
+        "tags": ["input", "search", "shortcut", "keyboard"],
         "ai": {
           "export": "Input009",
           "usage": "<Input009\n  placeholder=\"Поиск по компонентам\"\n  shortcut=\"K\"\n  onChange={(value) => setQuery(value)}\n/>",
@@ -1504,12 +1404,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-009-*. A client component: \"use client\". The shortcut is attached to document in a useEffect and removed on unmount. The modifier (⌘ or Ctrl) is read through useSyncExternalStore: the server snapshot returns Ctrl, so the server markup and the first client render agree, and after hydration ⌘ appears on a Mac. The key glyph is a <kbd>, and it gives way to the clear button when the field holds text."
           }
         },
-        "cardControls": [
-          "placeholder",
-          "shortcut",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["placeholder", "shortcut", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -1520,9 +1415,7 @@
       "type": "registry:component",
       "title": "Единица списком",
       "description": "Число с выпадающим выбором единицы в одной рамке: у каждой единицы есть пояснение словом, а под полем видно значение в базовых единицах.",
-      "categories": [
-        "input"
-      ],
+      "categories": ["input"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1534,12 +1427,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-input-010-*. Клиентский: \"use client\". Список — своя кнопка с role=\"listbox\" и кнопками role=\"option\": в нативный <option> нельзя положить пояснение. Список позиционируется от рамки (position:relative на ней), закрывается по Escape и по уходу фокуса из рамки, фокус возвращается на кнопку. Число при смене единицы не пересчитывается, пересчёт показан отдельной строкой.",
       "meta": {
-        "tags": [
-          "input",
-          "unit",
-          "number",
-          "listbox"
-        ],
+        "tags": ["input", "unit", "number", "listbox"],
         "ai": {
           "export": "Input010",
           "usage": "<Input010\n  label=\"Время жизни ссылки\"\n  defaultValue={30}\n  onChange={(value, unit) => save(value, unit)}\n/>",
@@ -1678,12 +1566,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-010-*. A client component: \"use client\". The list is a button of its own with role=\"listbox\" and buttons with role=\"option\": an explanation cannot be put inside a native <option>. The list is positioned from the border (position:relative on it), closes on Escape and when the focus leaves the frame, and the focus returns to the button. The number is not recomputed when the unit changes; the conversion is shown on a separate line."
           }
         },
-        "cardControls": [
-          "label",
-          "defaultValue",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "defaultValue", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -1694,9 +1577,7 @@
       "type": "registry:component",
       "title": "Правила пароля",
       "description": "Пароль с сегментной шкалой и списком требований: видно не только «слабо», но и что именно осталось исправить.",
-      "categories": [
-        "input"
-      ],
+      "categories": ["input"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1708,12 +1589,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-input-011-*. Клиентский: \"use client\". Оценка считается от числа выполненных правил, поэтому шкала и список никогда не расходятся. Сегментов ровно столько же, сколько правил. Тон (weak/fair/good) выставляется на корне data-атрибутом, от него красятся и сегменты, и вердикт, и выполненные строки списка.",
       "meta": {
-        "tags": [
-          "input",
-          "password",
-          "strength",
-          "checklist"
-        ],
+        "tags": ["input", "password", "strength", "checklist"],
         "ai": {
           "export": "Input011",
           "usage": "<Input011\n  label=\"Придумайте пароль\"\n  minLength={12}\n  onChange={(value) => setPassword(value)}\n/>",
@@ -1852,12 +1728,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-011-*. A client component: \"use client\". The score is computed from the number of satisfied rules, so the meter and the list never disagree. There are exactly as many segments as there are rules. The tone (weak/fair/good) is set on the root by a data attribute, and the segments, the verdict and the satisfied rows of the list are all coloured from it."
           }
         },
-        "cardControls": [
-          "label",
-          "minLength",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "minLength", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -1868,9 +1739,7 @@
       "type": "registry:component",
       "title": "Подсказки из истории",
       "description": "Поле с автоподстановкой из истории ввода: подсказку можно выбрать стрелками, а можно забыть крестиком — история остаётся управляемой.",
-      "categories": [
-        "input"
-      ],
+      "categories": ["input"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1882,12 +1751,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-input-012-*. Клиентский: \"use client\". Поле объявлено role=\"combobox\" с aria-expanded и aria-controls, список — role=\"listbox\" с кнопками role=\"option\". Стрелки ходят по подсказкам, Enter подставляет активную, Escape закрывает список, не стирая набранное. Список закрывается по уходу фокуса из обёртки (onBlur с проверкой relatedTarget). Совпадение подсвечивается тегом <mark>.",
       "meta": {
-        "tags": [
-          "input",
-          "autocomplete",
-          "history",
-          "combobox"
-        ],
+        "tags": ["input", "autocomplete", "history", "combobox"],
         "ai": {
           "export": "Input012",
           "usage": "<Input012\n  label=\"Адрес доставки\"\n  history={[\"Москва, Тверская 12\"]}\n  onChange={(value) => setAddress(value)}\n/>",
@@ -2007,11 +1871,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-012-*. A client component: \"use client\". The field is declared role=\"combobox\" with aria-expanded and aria-controls, and the list is a role=\"listbox\" with buttons role=\"option\". The arrows walk the suggestions, Enter substitutes the active one, and Escape closes the list without erasing what has been typed. The list closes when the focus leaves the wrapper (onBlur with a relatedTarget check). The match is highlighted with the <mark> tag."
           }
         },
-        "cardControls": [
-          "label",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -2022,9 +1882,7 @@
       "type": "registry:component",
       "title": "Промокод",
       "description": "Поле промокода с тремя состояниями: ввод, ожидание ответа и применённый код, который уже нельзя править — только снять.",
-      "categories": [
-        "input"
-      ],
+      "categories": ["input"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2036,12 +1894,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-input-013-*. Клиентский: \"use client\". Три состояния имеют разную разметку: форма с полем и кнопкой, та же форма с выключенной кнопкой на время проверки и плашка применённого кода с кнопкой «Снять». Обёртка — настоящий <form>, поэтому Enter отправляет без обработчиков клавиш. Ввод приводится к верхнему регистру в состоянии, а не только в CSS.",
       "meta": {
-        "tags": [
-          "input",
-          "promo",
-          "checkout",
-          "state"
-        ],
+        "tags": ["input", "promo", "checkout", "state"],
         "ai": {
           "export": "Input013",
           "usage": "<Input013\n  label=\"Промокод\"\n  codes={{ VIBE10: 10 }}\n  onApply={(code, percent) => applyDiscount(code, percent)}\n/>",
@@ -2167,12 +2020,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-013-*. A client component: \"use client\". The three states have different markup: a form with a field and a button, the same form with the button disabled while the check runs, and a chip with the applied code and a \"Remove\" button. The wrapper is a real <form>, so Enter submits without any key handlers. The input is uppercased in state, not only in CSS."
           }
         },
-        "cardControls": [
-          "label",
-          "placeholder",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "placeholder", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -2183,9 +2031,7 @@
       "type": "registry:component",
       "title": "Проверка ника",
       "description": "Имя пользователя с проверкой занятости и готовыми свободными вариантами: занятое имя не просто отвергается, взамен предлагаются три работающих.",
-      "categories": [
-        "input"
-      ],
+      "categories": ["input"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2197,12 +2043,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-input-014-*. Клиентский: \"use client\". Ввод нормализуется на лету: нижний регистр, пробелы в подчёркивание, лишние символы отбрасываются. Ответ о занятости хранится вместе с именем, к которому относится, а видимое состояние выводится из него: пока ответ не про то имя, что в поле, показывается «проверяем» — расхождение невозможно по построению. Запрос идёт через паузу в 600 мс с очисткой таймера. Приставка @ вынесена из поля отдельным span.",
       "meta": {
-        "tags": [
-          "input",
-          "username",
-          "availability",
-          "suggest"
-        ],
+        "tags": ["input", "username", "availability", "suggest"],
         "ai": {
           "export": "Input014",
           "usage": "<Input014\n  label=\"Имя пользователя\"\n  taken={[\"anna\", \"design\"]}\n  onChange={(handle) => setHandle(handle)}\n/>",
@@ -2325,12 +2166,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-014-*. A client component: \"use client\". The input is normalised as you type: lowercase, spaces into underscores, extra characters dropped. The availability answer is stored together with the name it describes, and the visible state is derived from it: while the answer is not about the name in the field, \"checking\" is shown — a mismatch is impossible by construction. The request goes after a 600 ms pause with the timer cleared. The @ prefix is lifted out of the field as a separate span."
           }
         },
-        "cardControls": [
-          "label",
-          "placeholder",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "placeholder", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -2341,9 +2177,7 @@
       "type": "registry:component",
       "title": "Разряды на лету",
       "description": "Сумма с разделителями разрядов прямо во время набора: курсор остаётся на месте, а под полем сумма продублирована коротко.",
-      "categories": [
-        "input"
-      ],
+      "categories": ["input"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2355,12 +2189,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-input-015-*. Клиентский: \"use client\". В состоянии живут только цифры. Главная механика — восстановление позиции курсора: считается число цифр слева от него, после форматирования курсор ставится после того же их количества, а не на прежний индекс. Пробел между разрядами неразрывный, иначе строка переносится посередине числа. Превышение лимита красит рамку и меняет подпись.",
       "meta": {
-        "tags": [
-          "input",
-          "amount",
-          "format",
-          "money"
-        ],
+        "tags": ["input", "amount", "format", "money"],
         "ai": {
           "export": "Input015",
           "usage": "<Input015\n  label=\"Сумма перевода\"\n  suffix=\"₽\"\n  max={300000}\n  onChange={(amount) => setAmount(amount)}\n/>",
@@ -2498,13 +2327,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-015-*. A client component: \"use client\". Only the digits live in state. The main mechanism is restoring the caret position: the number of digits to its left is counted, and after formatting the caret is placed after that same number of digits rather than at the previous index. The space between digit groups is non-breaking, otherwise the line wraps in the middle of the number. Going over the limit colours the border and changes the caption."
           }
         },
-        "cardControls": [
-          "label",
-          "suffix",
-          "max",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "suffix", "max", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -2515,9 +2338,7 @@
       "type": "registry:component",
       "title": "Генератор пароля",
       "description": "Пароль с генерацией случайной строки по кнопке, копированием в буфер и оценкой в битах энтропии словами вместо цветной полоски надёжности.",
-      "categories": [
-        "input"
-      ],
+      "categories": ["input"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2529,12 +2350,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-input-016-*. Клиентский: \"use client\". Генерация берёт по одному символу из каждого класса (строчные, заглавные, цифры, символы), добирает остаток из общего набора через crypto.getRandomValues (запасной вариант — Math.random) и перетасовывает результат Фишером — Йетсом. Оценка вместо полоски выведена в битах энтропии: length умножить на log2 размера использованного алфавита.",
       "meta": {
-        "tags": [
-          "input",
-          "password",
-          "generator",
-          "security"
-        ],
+        "tags": ["input", "password", "generator", "security"],
         "ai": {
           "export": "Input016",
           "usage": "<Input016\n  label=\"Пароль от аккаунта\"\n  length={16}\n  onChange={(value) => setPassword(value)}\n/>",
@@ -2693,9 +2509,7 @@
       "type": "registry:component",
       "title": "Поиск с сервера",
       "description": "Поле поиска с честным состоянием загрузки: лупа уступает место вращающемуся кольцу на время ожидания, а счётчик результатов появляется только после паузы, как от настоящего запроса.",
-      "categories": [
-        "input"
-      ],
+      "categories": ["input"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2707,12 +2521,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-input-017-*. Клиентский: \"use client\". Смена значения переводит статус в \"loading\" сразу, а в \"done\" — только через setTimeout 450 мс, имитируя сетевую задержку; эффект отменяет таймер при следующем изменении. Значок лупы и кольцо загрузки занимают одно и то же место в разметке, чтобы взгляд не искал новую точку. Счётчик результатов — детерминированная демонстрационная хеш-функция, не настоящий поиск.",
       "meta": {
-        "tags": [
-          "input",
-          "search",
-          "loading",
-          "async"
-        ],
+        "tags": ["input", "search", "loading", "async"],
         "ai": {
           "export": "Input017",
           "usage": "<Input017\n  label=\"Поиск по заказам\"\n  onChange={(value) => search(value)}\n/>",
@@ -2834,12 +2643,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-017-*. A client component: \"use client\". A change of value switches the status to \"loading\" at once, and to \"done\" only after a setTimeout of 450 ms, imitating network latency; the effect cancels the timer on the next change. The magnifier glyph and the loading ring occupy the same spot in the markup, so the eye does not hunt for a new place. The results counter is a deterministic demonstration hash function, not a real search."
           }
         },
-        "cardControls": [
-          "label",
-          "placeholder",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "placeholder", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -2850,9 +2654,7 @@
       "type": "registry:component",
       "title": "Поле IBAN",
       "description": "Номер банковского счёта IBAN с маской по четвёркам, определением страны по первым буквам и проверкой по остатку от деления на 97 перед отправкой.",
-      "categories": [
-        "input"
-      ],
+      "categories": ["input"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2864,12 +2666,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-input-018-*. Клиентский: \"use client\". В состоянии живёт значение без пробелов в верхнем регистре, группировка по четыре символа дорисовывается функцией форматирования. Страна читается по первым двум буквам из небольшого словаря и подписывается словом. Контрольная проверка — остаток от деления на 97 (ISO 7064): первые четыре символа переносятся в конец, буквы переводятся в числа (A=10…Z=35), остаток считается по кускам по семь цифр, чтобы не упереться в предел Number.",
       "meta": {
-        "tags": [
-          "input",
-          "iban",
-          "bank",
-          "mask"
-        ],
+        "tags": ["input", "iban", "bank", "mask"],
         "ai": {
           "export": "Input018",
           "usage": "<Input018\n  label=\"Номер счёта\"\n  onChange={(value) => setIban(value)}\n/>",
@@ -3002,12 +2799,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-018-*. A client component: \"use client\". The state holds the value without spaces in uppercase, and the grouping by four characters is drawn in by a formatting function. The country is read from the first two letters out of a small dictionary and named in words. The checksum is the remainder modulo 97 (ISO 7064): the first four characters are moved to the end, the letters are turned into numbers (A=10…Z=35), and the remainder is computed in chunks of seven digits so as not to hit the Number limit."
           }
         },
-        "cardControls": [
-          "label",
-          "defaultValue",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "defaultValue", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -3018,9 +2810,7 @@
       "type": "registry:component",
       "title": "Поле с мягким лимитом",
       "description": "Текстовое поле со счётчиком символов и мягким лимитом: превышение только предупреждает и красит поле, печатать не прерывает, а жёсткий предел стоит дальше и уже не пускает.",
-      "categories": [
-        "input"
-      ],
+      "categories": ["input"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3032,12 +2822,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-input-019-*. Клиентский: \"use client\". Счётчик, полоска заполнения и цвет выведены из одной и той же длины значения через data-tone на корне, поэтому расхождения между ними невозможны по построению. Жёсткий предел hardLimit задан через maxLength у самого input и физически не даёт напечатать больше; мягкий softLimit только меняет тон и текст подсказки.",
       "meta": {
-        "tags": [
-          "input",
-          "counter",
-          "limit",
-          "form"
-        ],
+        "tags": ["input", "counter", "limit", "form"],
         "ai": {
           "export": "Input019",
           "usage": "<Input019\n  label=\"Заголовок объявления\"\n  softLimit={60}\n  hardLimit={80}\n  onChange={(value) => setTitle(value)}\n/>",
@@ -3207,9 +2992,7 @@
       "type": "registry:component",
       "title": "Проверка адреса пространства",
       "description": "Адрес рабочего пространства с проверкой занятости: бейдж «занято / свободно» у подписи и живое превью итоговой ссылки под полем.",
-      "categories": [
-        "input"
-      ],
+      "categories": ["input"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3221,12 +3004,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-input-020-*. Клиентский: \"use client\". Ответ о занятости хранится вместе со слагом, к которому он относится, а видимое состояние выводится из него — расхождение невозможно по построению. Запрос идёт через паузу в 550 мс с очисткой таймера. Приставка prefix вынесена из поля отдельным span с aria-hidden, а полный адрес зеркалится в примечании под полем через aria-describedby.",
       "meta": {
-        "tags": [
-          "input",
-          "slug",
-          "availability",
-          "workspace"
-        ],
+        "tags": ["input", "slug", "availability", "workspace"],
         "ai": {
           "export": "Input020",
           "usage": "<Input020\n  label=\"Адрес команды\"\n  prefix=\"vibeui.ru/team/\"\n  taken={[\"acme\", \"studio\"]}\n  onChange={(slug) => setSlug(slug)}\n/>",
@@ -3375,171 +3153,11 @@
       }
     },
     {
-      "name": "input-021",
-      "type": "registry:component",
-      "title": "Маска ключа купона",
-      "description": "Код купона-ключа с автоматическими дефисами по четвёркам символов и тремя состояниями: ввод, ожидание ответа и применённый код, который снимают, а не редактируют.",
-      "categories": [
-        "input"
-      ],
-      "dependencies": [],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "input-021/input-021.tsx",
-          "type": "registry:component",
-          "target": "@components/vibeui/input-021.tsx"
-        }
-      ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-input-021-*. Клиентский: \"use client\". В состоянии живёт только канонический текст без дефисов, дефисы дорисовываются функцией group() по четыре символа — вставка в любом формате даёт один результат. Три состояния имеют разную разметку: форма с полем и кнопкой, та же форма с выключенной кнопкой на время проверки и плашка применённого кода с кнопкой «Снять». Обёртка — настоящий <form>, поэтому Enter отправляет без обработчиков клавиш.",
-      "meta": {
-        "tags": [
-          "input",
-          "coupon",
-          "checkout",
-          "mask"
-        ],
-        "ai": {
-          "export": "Input021",
-          "usage": "<Input021\n  label=\"Код купона\"\n  codes={{ VIBE2026SALE: 20 }}\n  onApply={(code, percent) => applyDiscount(code, percent)}\n/>",
-          "summary": "Поле кода купона-ключа: дефисы по четвёркам символов поверх канонического текста, три состояния — ввод, проверка, применён — и плашка с кнопкой «Снять». Ноль зависимостей, один файл, своя палитра.",
-          "preserve": [
-            "локальную палитру --vibeui-input-021-* и не подменять её токенами вашей темы",
-            "хранение канонического текста без дефисов: дефисы — это отображение, а не значение",
-            "три отдельных состояния: применённый код — не поле ввода, его нельзя редактировать",
-            "форму как обёртку: Enter обязан применять код без обработчиков клавиш",
-            "выключенную кнопку на пустом поле и на время проверки: двойная отправка ключа портит корзину",
-            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
-            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
-          ],
-          "adapt": [
-            "текст label и словарь codes",
-            "формулировки сообщений об ошибке и об успехе",
-            "обработчик onApply — вместо демонстрационной задержки поставьте запрос",
-            "акцент через проп accent",
-            "подписи интерфейса: placeholder, applyText, checkingText, removeText, appliedText и словарь noteText",
-            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
-          ],
-          "notes": [
-            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
-            "Словарь кодов на клиенте — только для демонстрации состояний: настоящую проверку делает сервер.",
-            "Маска рассчитана на двенадцать символов в трёх группах: другой длины ключ потребует поправить group() и normalize().",
-            "Не складывайте купоны молча: если их несколько, покажите это явно.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
-          ]
-        },
-        "controls": [
-          {
-            "prop": "label",
-            "label": "Подпись",
-            "type": "text",
-            "default": "Код купона",
-            "maxLength": 24
-          },
-          {
-            "prop": "placeholder",
-            "label": "Подсказка в поле",
-            "type": "text",
-            "default": "VIBE-2026-SALE",
-            "maxLength": 24
-          },
-          {
-            "prop": "accent",
-            "label": "Акцент",
-            "type": "color",
-            "default": ""
-          },
-          {
-            "prop": "background",
-            "label": "Подложка",
-            "type": "color",
-            "default": ""
-          }
-        ],
-        "i18n": {
-          "en": {
-            "description": "A key-style coupon code with automatic hyphens every four characters and three states: entry, checking, and an applied code that is removed rather than edited.",
-            "ai": {
-              "summary": "A coupon-key field: hyphens grouped every four characters over the canonical text, three states — entry, checking, applied — and an applied chip with a remove button. Zero dependencies, one file, its own palette.",
-              "preserve": [
-                "the local --vibeui-input-021-* palette — do not swap it for your theme tokens",
-                "storing the canonical text without hyphens: the hyphens are presentation, not the value",
-                "the three separate states: an applied code is not an input, it cannot be edited",
-                "the form wrapper: Enter must apply the code without any key handlers",
-                "the button disabled on an empty field and while checking: a double submit corrupts the cart",
-                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
-                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
-              ],
-              "adapt": [
-                "the label copy and the codes dictionary",
-                "the wording of the error and success messages",
-                "the onApply handler — replace the demo delay with a request",
-                "the accent through the accent prop",
-                "the interface copy: placeholder, applyText, checkingText, removeText, appliedText and the noteText dictionary",
-                "background — the component background; empty means no background, taking the page colour"
-              ],
-              "notes": [
-                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
-                "The client-side codes dictionary only demonstrates the states: real validation belongs on the server.",
-                "The mask assumes twelve characters in three groups: a different length needs group() and normalize() adjusted.",
-                "Do not stack coupons silently: if several can apply, say so.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
-              ],
-              "usage": "<Input021\n  label=\"Coupon code\"\n  codes={{ VIBE2026SALE: 20 }}\n  onApply={(code, percent) => applyDiscount(code, percent)}\n/>"
-            },
-            "controls": {
-              "label": {
-                "label": "Label",
-                "default": "Coupon code"
-              },
-              "placeholder": {
-                "label": "Field hint",
-                "default": "VIBE-2026-SALE"
-              },
-              "accent": {
-                "label": "Accent"
-              },
-              "background": {
-                "label": "Background"
-              }
-            },
-            "title": "Coupon Key Mask",
-            "preview": {
-              "props": {
-                "label": "Coupon code",
-                "applyText": "Apply",
-                "checkingText": "Checking…",
-                "removeText": "Remove",
-                "appliedText": "{percent}% off is already in the order total",
-                "noteText": {
-                  "idle": "Twelve characters; the hyphens appear on their own. Case does not matter.",
-                  "bad": "No such key, or it has already been used.",
-                  "done": "You can remove this code and enter another — they do not stack."
-                }
-              }
-            },
-            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-021-*. A client component: \"use client\". The state holds only the canonical text without hyphens, and the hyphens are drawn in by the group() function every four characters — a paste in any format gives one result. The three states have different markup: a form with a field and a button, the same form with the button disabled while the check runs, and a chip with the applied code and a \"Remove\" button. The wrapper is a real <form>, so Enter submits without any key handlers."
-          }
-        },
-        "cardControls": [
-          "label",
-          "placeholder",
-          "accent",
-          "background"
-        ],
-        "preview": {
-          "width": "full"
-        }
-      }
-    },
-    {
       "name": "input-022",
       "type": "registry:component",
       "title": "Переключатель единиц веса",
       "description": "Поле веса или роста с переключателем единиц из двух кнопок: при смене кг на фунты (или обратно) число пересчитывается, а не остаётся прежним.",
-      "categories": [
-        "input"
-      ],
+      "categories": ["input"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3551,12 +3169,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-input-022-*. Клиентский: \"use client\". Единица переключается двумя кнопками с aria-pressed внутри role=\"group\", а не списком: для двух вариантов список — лишний уровень взаимодействия. При переключении число пересчитывается по множителю factor и округляется до одной десятой, а строка под полем показывает эквивалент во второй единице.",
       "meta": {
-        "tags": [
-          "input",
-          "unit",
-          "weight",
-          "toggle"
-        ],
+        "tags": ["input", "unit", "weight", "toggle"],
         "ai": {
           "export": "Input022",
           "usage": "<Input022\n  label=\"Вес\"\n  unitA=\"кг\"\n  unitB=\"фунты\"\n  factor={2.20462}\n  onChange={(value, unit) => save(value, unit)}\n/>",
@@ -3716,9 +3329,7 @@
       "type": "registry:component",
       "title": "История отправленных значений",
       "description": "Поле с историей отправленных значений: запись сохраняется в localStorage по Enter, список открывается стрелкой вниз и показывает последние значения целиком, без фильтра по набранному тексту.",
-      "categories": [
-        "input"
-      ],
+      "categories": ["input"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3730,12 +3341,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-input-023-*. Клиентский: \"use client\". История читается из localStorage ленивым инициализатором useState, а не в эффекте: на сервере window нет, поэтому чтение уходит в ветку typeof window, а на видимую часть первого рендера это не влияет — список раскрывается только по действию пользователя. Запись добавляется по Enter и хранится с дедупликацией — повторное значение поднимается наверх. Список открывается только по ArrowDown и не фильтруется по набранному тексту, поле объявлено role=\"combobox\" с aria-expanded и aria-controls.",
       "meta": {
-        "tags": [
-          "input",
-          "history",
-          "localStorage",
-          "combobox"
-        ],
+        "tags": ["input", "history", "localStorage", "combobox"],
         "ai": {
           "export": "Input023",
           "usage": "<Input023\n  label=\"Тема письма\"\n  storageKey=\"support-subject\"\n  onChange={(value) => setSubject(value)}\n/>",
@@ -3855,12 +3461,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-023-*. A client component: \"use client\". The history is read from localStorage in a useState lazy initializer rather than in an effect: there is no window on the server, so the read goes behind a typeof window branch, and this does not affect the visible part of the first render — the list only opens on a user action. An entry is added on Enter and stored with deduplication — a repeated value moves to the top. The list opens only on ArrowDown and is not filtered by the typed text, and the field is declared role=\"combobox\" with aria-expanded and aria-controls."
           }
         },
-        "cardControls": [
-          "label",
-          "placeholder",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "placeholder", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -3871,9 +3472,7 @@
       "type": "registry:component",
       "title": "Дополнение домена по Tab",
       "description": "Поле email с подсказкой домена: после @ серым текстом дописывается остаток популярного домена (gmail.com, yandex.ru и другие), Tab принимает подсказку вместо перехода к следующему полю.",
-      "categories": [
-        "input"
-      ],
+      "categories": ["input"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3885,12 +3484,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-input-024-*. Клиентский: \"use client\". Подсказка — не отдельный текст, а буквальное продолжение введённого слова: под настоящим input лежит невидимый двойник с тем же шрифтом, где typed-часть скрыта (visibility:hidden), а suffix показан приглушённым цветом — так буквы совпадают по ширине без замеров. Tab перехватывается через preventDefault только когда подсказка есть, иначе ведёт себя как обычно.",
       "meta": {
-        "tags": [
-          "input",
-          "email",
-          "autocomplete",
-          "keyboard"
-        ],
+        "tags": ["input", "email", "autocomplete", "keyboard"],
         "ai": {
           "export": "Input024",
           "usage": "<Input024\n  label=\"Рабочая почта\"\n  domains={[\"acme.ru\", \"gmail.com\"]}\n  onChange={(value) => setEmail(value)}\n/>",
@@ -4001,12 +3595,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-024-*. A client component: \"use client\". The hint is not separate text but a literal continuation of the typed word: under the real input lies an invisible twin in the same font where the typed part is hidden (visibility:hidden) and the suffix is shown in a muted colour — that is how the letters match in width without measuring. Tab is intercepted with preventDefault only when a hint exists, otherwise it behaves as usual."
           }
         },
-        "cardControls": [
-          "label",
-          "defaultValue",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "defaultValue", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -4017,9 +3606,7 @@
       "type": "registry:component",
       "title": "Проверка ИНН",
       "description": "Поле ИНН с проверкой контрольной суммы по формуле ФНС: тип (10 цифр для юрлица или 12 для физлица/ИП) определяется по длине, а сходимость проверяется на каждый введённый символ.",
-      "categories": [
-        "input"
-      ],
+      "categories": ["input"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4031,12 +3618,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-input-025-*. Клиентский: \"use client\". Контрольная сумма считается по официальной формуле ФНС отдельно для 10 и 12 цифр — у каждой длины свой набор весовых коэффициентов, вычисление идёт по массиву цифр, а не строковой арифметикой. Бейдж рядом с подписью показывает тип (юрлицо/физлицо) по длине ввода, галочка или крестик в рамке дублируют состояние визуально.",
       "meta": {
-        "tags": [
-          "input",
-          "inn",
-          "checksum",
-          "validation"
-        ],
+        "tags": ["input", "inn", "checksum", "validation"],
         "ai": {
           "export": "Input025",
           "usage": "<Input025\n  label=\"ИНН контрагента\"\n  onChange={(value) => setInn(value)}\n/>",
@@ -4155,12 +3737,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-025-*. A client component: \"use client\". The checksum is computed by the official formula of the Russian tax service separately for 10 and 12 digits — each length has its own set of weight coefficients, and the computation runs over an array of digits rather than string arithmetic. The badge next to the label shows the type (company or individual) from the input length, and a check or a cross inside the frame doubles the state visually."
           }
         },
-        "cardControls": [
-          "label",
-          "defaultValue",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "defaultValue", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -4171,9 +3748,7 @@
       "type": "registry:component",
       "title": "Время по четверти часа",
       "description": "Поле времени с шагом 15 минут: ручной ввод округляется до ближайшего шага, а под полем лежат чипы с частыми значениями для выбора в один клик.",
-      "categories": [
-        "input"
-      ],
+      "categories": ["input"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4185,12 +3760,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-input-026-*. Клиентский: \"use client\". Нативный <input type=\"time\"> получает step={900} (15 минут в секундах) для стрелок браузера, но ручной ввод с клавиатуры этот атрибут не соблюдает — поэтому на onChange значение всегда довдится функцией snap() до ближайших 15 минут через целочисленное деление, с переносом через полночь. Чипы под полем — те же частые значения одним кликом, aria-pressed отмечает совпадающий с value.",
       "meta": {
-        "tags": [
-          "input",
-          "time",
-          "step",
-          "quick-pick"
-        ],
+        "tags": ["input", "time", "step", "quick-pick"],
         "ai": {
           "export": "Input026",
           "usage": "<Input026\n  label=\"Время звонка\"\n  quick={[\"10:00\", \"14:00\", \"17:00\"]}\n  onChange={(value) => setTime(value)}\n/>",
@@ -4300,12 +3870,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-026-*. A client component: \"use client\". The native <input type=\"time\"> gets step={900} (15 minutes in seconds) for the browser's arrows, but manual keyboard entry does not honour that attribute — which is why on onChange the value is always brought to the nearest 15 minutes by the snap() function through integer division, wrapping around midnight. The chips under the field are the same common values in one click, and aria-pressed marks the one matching value."
           }
         },
-        "cardControls": [
-          "label",
-          "defaultValue",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "defaultValue", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -4316,9 +3881,7 @@
       "type": "registry:component",
       "title": "Поле цвета в hex",
       "description": "Текстовое поле hex-цвета с превью-квадратом: пока значение неполное или не hex, квадрат остаётся клетчатым, а как только hex сходится — заливается получившимся цветом.",
-      "categories": [
-        "input"
-      ],
+      "categories": ["input"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4330,12 +3893,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-input-027-*. Клиентский: \"use client\". Ввод принимает три или шесть шестнадцатеричных знаков без решётки — она вынесена в отдельный span перед input. Трёхзначный hex разворачивается функцией expand() в шестизначный для превью (стандартное правило CSS-сокращений). Пока длина не три и не шесть, превью остаётся клетчатым CSS-градиентом (визуальное «нет цвета»), а не гаснет молча.",
       "meta": {
-        "tags": [
-          "input",
-          "color",
-          "hex",
-          "preview"
-        ],
+        "tags": ["input", "color", "hex", "preview"],
         "ai": {
           "export": "Input027",
           "usage": "<Input027\n  label=\"Цвет бренда\"\n  defaultValue=\"2E6ADB\"\n  onChange={(hex) => setColor(hex)}\n/>",
@@ -4448,12 +4006,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-027-*. A client component: \"use client\". The field accepts three or six hexadecimal characters without the hash — it is lifted into a separate span before the input. A three-digit hex is expanded by the expand() function into a six-digit one for the preview (the standard CSS shorthand rule). While the length is neither three nor six, the preview stays a checkered CSS gradient (a visual \"no colour\") rather than going dark in silence."
           }
         },
-        "cardControls": [
-          "label",
-          "defaultValue",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "defaultValue", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -4464,9 +4017,7 @@
       "type": "registry:component",
       "title": "Причина блокировки поля",
       "description": "Readonly-поле с замком в рамке и объяснением причины блокировки под полем, связанным с ним через aria-describedby, плюс необязательная кнопка действия в обход неё.",
-      "categories": [
-        "input"
-      ],
+      "categories": ["input"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4478,12 +4029,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-input-028-*. Клиентский: \"use client\" (нужен для обработчика onRequestChange). Поле readOnly с aria-readonly=\"true\", пунктирная рамка на месте обычного акцента — визуальный сигнал «не редактируется», отдельный от цвета текста. Причина блокировки — не placeholder и не title, а видимый текст под полем, связанный с input через aria-describedby. Кнопка действия рендерится только если передан onRequestChange — иначе куда вести клик, непонятно.",
       "meta": {
-        "tags": [
-          "input",
-          "readonly",
-          "locked",
-          "explanation"
-        ],
+        "tags": ["input", "readonly", "locked", "explanation"],
         "ai": {
           "export": "Input028",
           "usage": "<Input028\n  label=\"Email для входа\"\n  defaultValue=\"owner@acme.ru\"\n  reason=\"Подтверждён при регистрации — изменить может поддержка.\"\n  onRequestChange={() => openSupportChat()}\n/>",
@@ -4620,9 +4166,7 @@
       "type": "registry:component",
       "title": "Голосовой ввод",
       "description": "Текстовое поле с голосовым вводом через Web Speech API: кнопка микрофона запускает запись, распознанный текст дописывается к введённому, а при отсутствии поддержки браузером кнопка недоступна с объяснением.",
-      "categories": [
-        "input"
-      ],
+      "categories": ["input"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4634,12 +4178,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-input-029-*. Клиентский: \"use client\". Голосовой ввод — встроенный в браузер Web Speech API (window.SpeechRecognition / webkitSpeechRecognition), а не npm-пакет: конструктор ищется через локальный тип SpeechRecognitionLike без any. Поддержка проверяется в useEffect после монтирования (на сервере window нет), поэтому первый рендер и на сервере, и на клиенте совпадают, а кнопка становится активной только после проверки. Распознанный текст дописывается к текущему значению через пробел, не заменяет его.",
       "meta": {
-        "tags": [
-          "input",
-          "voice",
-          "speech",
-          "microphone"
-        ],
+        "tags": ["input", "voice", "speech", "microphone"],
         "ai": {
           "export": "Input029",
           "usage": "<Input029\n  label=\"Комментарий к заказу\"\n  onChange={(value) => setComment(value)}\n/>",
@@ -4763,12 +4302,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-029-*. A client component: \"use client\". Voice input uses the browser's built-in Web Speech API (window.SpeechRecognition / webkitSpeechRecognition) rather than an npm package: the constructor is looked up through a local SpeechRecognitionLike type without any. Support is checked in a useEffect after mounting (there is no window on the server), so the first render agrees on server and client alike, and the button only becomes active after the check. The recognised text is appended to the current value with a space rather than replacing it."
           }
         },
-        "cardControls": [
-          "label",
-          "placeholder",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "placeholder", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -4779,9 +4313,7 @@
       "type": "registry:component",
       "title": "Подсказка адреса снизу",
       "description": "Поле адреса с подсказками под полем: список сужается на каждый введённый символ по совпадению подстроки, а совпавший кусок в каждом варианте подсвечен жирным.",
-      "categories": [
-        "input"
-      ],
+      "categories": ["input"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4793,12 +4325,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-input-030-*. Клиентский: \"use client\". Список фильтруется через useMemo по подстроке (регистронезависимо), показывается от двух введённых символов и ограничен пятью вариантами. Совпавший фрагмент подсвечивается функцией highlight(), которая режет строку на три части и оборачивает середину в <b>. Клавиатура: стрелки вверх/вниз двигают активный пункт, Enter применяет, Escape закрывает — как в input-023, но список открыт всё время набора, а не только по ArrowDown.",
       "meta": {
-        "tags": [
-          "input",
-          "address",
-          "autocomplete",
-          "combobox"
-        ],
+        "tags": ["input", "address", "autocomplete", "combobox"],
         "ai": {
           "export": "Input030",
           "usage": "<Input030\n  label=\"Адрес доставки\"\n  addresses={[\"г. Москва, ул. Ленина, д. 1\"]}\n  onChange={(value) => setAddress(value)}\n/>",
@@ -4919,12 +4446,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-030-*. A client component: \"use client\". The list is filtered through useMemo by substring (case-insensitively), is shown from two typed characters on and is capped at five options. The matched fragment is highlighted by the highlight() function, which cuts the string into three parts and wraps the middle in a <b>. Keyboard: the up and down arrows move the active item, Enter applies it, Escape closes — as in input-023, but the list stays open for the whole of typing rather than only on ArrowDown."
           }
         },
-        "cardControls": [
-          "label",
-          "placeholder",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "placeholder", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -4935,9 +4457,7 @@
       "type": "registry:component",
       "title": "Ошибка обязательного поля",
       "description": "Обязательное поле со звёздочкой у подписи (и скрытым текстом для скринридера) и текстом ошибки под ним: ошибка появляется после потери фокуса пустым полем, а не на каждый введённый символ.",
-      "categories": [
-        "input"
-      ],
+      "categories": ["input"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4949,12 +4469,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-input-031-*. Клиентский: \"use client\" (состояние touched). Звёздочка помечена aria-hidden, а рядом лежит визуально скрытый (clip-path, не display:none) span «, обязательное поле» для скринридера — так подпись целиком читается как «Имя получателя, обязательное поле». Ошибка условна на touched && пусто: до первой потери фокуса поле не подсвечивается, aria-describedby указывает на текст ошибки только когда он показан, role=\"alert\" на p с ошибкой обеспечивает объявление при появлении.",
       "meta": {
-        "tags": [
-          "input",
-          "required",
-          "validation",
-          "error"
-        ],
+        "tags": ["input", "required", "validation", "error"],
         "ai": {
           "export": "Input031",
           "usage": "<Input031\n  label=\"Имя получателя\"\n  errorText=\"Укажите, как к вам обращаться.\"\n  onChange={(value) => setName(value)}\n/>",
@@ -5086,6 +4601,158 @@
         "preview": {
           "width": "full"
         }
+      }
+    },
+    {
+      "name": "input-032",
+      "type": "registry:component",
+      "title": "Предупреждение о Caps Lock",
+      "description": "Пароль с предупреждением о включённом Caps Lock: подсказка появляется, пока клавиша нажата и поле в фокусе, и гаснет вместе с любым из двух условий.",
+      "categories": ["input"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "input-032/input-032.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/input-032.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-input-032-*. Клиентский: \"use client\" (состояние фокуса и Caps Lock). Проп типизирован через ComponentProps<\"input\">, и {...props} идёт прямо на <input> — так name, required и обработчики доходят до поля в чужом проекте. getModifierState(\"CapsLock\") читается и на onKeyUp, и на onKeyDown: в части браузеров модификатор виден только по одному из двух событий на первый символ. Предупреждение гаснет на blur и на выключение клавиши, aria-describedby указывает на него только когда оно показано.",
+      "meta": {
+        "tags": ["input", "password", "caps-lock", "accessibility"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Input032",
+          "usage": "<Input032\n  label=\"Пароль\"\n  name=\"password\"\n  onChange={(event) => setPassword(event.target.value)}\n/>",
+          "summary": "Пароль с предупреждением о Caps Lock: подсказка появляется в фокусе, пока клавиша включена, и пропадает вместе с ней или с уходом фокуса. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-input-032-* и не подменять её токенами вашей темы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "getModifierState(\"CapsLock\") сразу на onKeyUp и на onKeyDown — иначе на первый символ после фокуса состояние в части браузеров не отследить",
+            "сброс предупреждения на blur — оставшееся предупреждение после уход из поля бессмысленно и путает",
+            "aria-describedby, указывающий на предупреждение только когда оно показано — не константный id в никуда",
+            "{...props} на самом <input>, а не на обёртке: иначе name, required и обработчики теряются в чужом проекте",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы"
+          ],
+          "adapt": [
+            "текст label, placeholder и warnText под свою формулировку",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки»",
+            "обработчики onFocus, onBlur, onKeyUp, onKeyDown и onChange — компонент добавляет свою логику, не глушит переданные",
+            "ширину и внешние отступы через className"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Caps Lock проверяется через getModifierState на событии клавиатуры: сразу после автозаполнения браузером или до первого нажатия состояние неизвестно.",
+            "Компонент не хранит и не проверяет значение пароля — это обычный неконтролируемый input, value ведёт вызывающий код через value или defaultValue из ...props.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Пароль",
+            "maxLength": 30
+          },
+          {
+            "prop": "placeholder",
+            "label": "Плейсхолдер",
+            "type": "text",
+            "default": "Не короче восьми символов",
+            "maxLength": 40
+          },
+          {
+            "prop": "warnText",
+            "label": "Текст предупреждения",
+            "type": "text",
+            "default": "Включён Caps Lock — буквы наберутся в другом регистре.",
+            "maxLength": 80
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A password field with a Caps Lock warning: the note appears while the key is on and the field is focused, and clears with either condition.",
+            "ai": {
+              "summary": "A password field with a Caps Lock warning: the note appears on focus while the key is on and disappears with it or with the focus. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-input-032-* palette — do not swap it for your theme tokens",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "getModifierState(\"CapsLock\") on both onKeyUp and onKeyDown — some browsers only expose the modifier on one of the two for the first character",
+                "clearing the warning on blur — a warning that outlives the field leaving focus is pointless and confusing",
+                "aria-describedby pointing at the warning only while it is shown — not a constant id pointing at nothing",
+                "{...props} on the <input> itself, not on the wrapper: otherwise name, required and handlers get lost in another project",
+                "the transparent background by default — the component sits on the page background"
+              ],
+              "adapt": [
+                "the label, placeholder and warnText copy for your own wording",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background",
+                "the onFocus, onBlur, onKeyUp, onKeyDown and onChange handlers — the component adds its own logic without silencing yours",
+                "width and outer spacing through className"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Caps Lock is read through getModifierState on a keyboard event: right after browser autofill, or before the first keystroke, the state is unknown.",
+                "The component stores and validates nothing about the password — it is a plain uncontrolled input, and value stays with the calling code through value or defaultValue in ...props.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Input032\n  label=\"Password\"\n  name=\"password\"\n  onChange={(event) => setPassword(event.target.value)}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Password"
+              },
+              "placeholder": {
+                "label": "Placeholder",
+                "default": "At least eight characters"
+              },
+              "warnText": {
+                "label": "Warning text",
+                "default": "Caps Lock is on — letters will type in the other case."
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Caps Lock Warning",
+            "preview": {
+              "props": {
+                "label": "Password",
+                "placeholder": "At least eight characters",
+                "warnText": "Caps Lock is on — letters will type in the other case."
+              }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-032-*. A client component: \"use client\" (focus and Caps Lock state). The prop type is ComponentProps<\"input\">, and {...props} lands right on the <input> — so name, required and handlers reach the field in another project. getModifierState(\"CapsLock\") is read on both onKeyUp and onKeyDown: some browsers only expose the modifier through one of the two on the first character. The warning clears on blur and on the key turning off, and aria-describedby points at it only while it is shown."
+          }
+        },
+        "cardControls": [
+          "label",
+          "placeholder",
+          "warnText",
+          "accent",
+          "background"
+        ]
       }
     }
   ]

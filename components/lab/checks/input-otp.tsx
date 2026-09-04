@@ -10,6 +10,7 @@ import { Otp007 } from "@/registry/components/input-otp/otp-007/otp-007"
 import { Otp008 } from "@/registry/components/input-otp/otp-008/otp-008"
 import { Otp009 } from "@/registry/components/input-otp/otp-009/otp-009"
 import { Otp010 } from "@/registry/components/input-otp/otp-010/otp-010"
+import { Otp011 } from "@/registry/components/input-otp/otp-011/otp-011"
 
 /** Seed прогона: с ним набор воспроизводится один в один. */
 export const SEED = 84270
@@ -131,6 +132,19 @@ export const CHECKS: LabCheck[] = [
         renewLabel="Ещё раз"
         accent="#457b9d"
       />
+    ),
+  },
+  {
+    name: "otp-011",
+    title: "Маска после ввода",
+    notes: [
+      "Подпись: Что дальше",
+      "Цифр: 5",
+      "Показ цифры: 500 мс",
+      "Акцент: #d62828",
+    ],
+    node: (
+      <Otp011 label="Что дальше" length={5} revealMs={500} accent="#d62828" />
     ),
   },
 ]

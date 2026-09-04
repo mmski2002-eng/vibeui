@@ -25,6 +25,7 @@ import { Table017 } from "@/registry/components/table/table-017/table-017"
 import { Table018 } from "@/registry/components/table/table-018/table-018"
 import { Table019 } from "@/registry/components/table/table-019/table-019"
 import { Table020 } from "@/registry/components/table/table-020/table-020"
+import { Table021 } from "@/registry/components/table/table-021/table-021"
 
 export const PREVIEWS = {
   "table-001": Table001,
@@ -47,4 +48,5 @@ export const PREVIEWS = {
   "table-018": Table018,
   "table-019": Table019,
   "table-020": Table020,
+  "table-021": Table021,
 } satisfies Record<string, ComponentType<PreviewProps>>

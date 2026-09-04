@@ -20,7 +20,6 @@ import { Input017 } from "@/registry/components/input/input-017/input-017"
 import { Input018 } from "@/registry/components/input/input-018/input-018"
 import { Input019 } from "@/registry/components/input/input-019/input-019"
 import { Input020 } from "@/registry/components/input/input-020/input-020"
-import { Input021 } from "@/registry/components/input/input-021/input-021"
 import { Input022 } from "@/registry/components/input/input-022/input-022"
 import { Input023 } from "@/registry/components/input/input-023/input-023"
 import { Input024 } from "@/registry/components/input/input-024/input-024"
@@ -31,6 +30,7 @@ import { Input028 } from "@/registry/components/input/input-028/input-028"
 import { Input029 } from "@/registry/components/input/input-029/input-029"
 import { Input030 } from "@/registry/components/input/input-030/input-030"
 import { Input031 } from "@/registry/components/input/input-031/input-031"
+import { Input032 } from "@/registry/components/input/input-032/input-032"
 
 /** Seed прогона: с ним набор воспроизводится один в один. */
 export const SEED = 52594
@@ -275,18 +275,6 @@ export const CHECKS: LabCheck[] = [
     ),
   },
   {
-    name: "input-021",
-    title: "Маска ключа купона",
-    notes: [
-      "Подпись: Подпись: тест",
-      "Подсказка в поле: Смена",
-      "Акцент: #951a1d",
-    ],
-    node: (
-      <Input021 label="Подпись: тест" placeholder="Смена" accent="#951a1d" />
-    ),
-  },
-  {
     name: "input-022",
     title: "Переключатель единиц веса",
     notes: [
@@ -401,6 +389,24 @@ export const CHECKS: LabCheck[] = [
         placeholder="Что дальше"
         errorText="Смена"
         accent="#d091f7"
+      />
+    ),
+  },
+  {
+    name: "input-032",
+    title: "Предупреждение о Caps Lock",
+    notes: [
+      "Подпись: Проверка",
+      "Плейсхолдер: Проверка",
+      "Текст предупреждения: Смена",
+      "Акцент: #4f8ff7",
+    ],
+    node: (
+      <Input032
+        label="Проверка"
+        placeholder="Проверка"
+        warnText="Смена"
+        accent="#4f8ff7"
       />
     ),
   },

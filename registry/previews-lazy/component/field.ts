@@ -61,4 +61,9 @@ export const PREVIEWS = {
       (module) => module.Field011,
     ),
   ),
+  "field-012": dynamic(() =>
+    import("@/registry/components/field/field-012/field-012").then(
+      (module) => module.Field012,
+    ),
+  ),
 } satisfies PreviewMap

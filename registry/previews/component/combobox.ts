@@ -26,7 +26,6 @@ import { Combobox018 } from "@/registry/components/combobox/combobox-018/combobo
 import { Combobox019 } from "@/registry/components/combobox/combobox-019/combobox-019"
 import { Combobox020 } from "@/registry/components/combobox/combobox-020/combobox-020"
 import { Combobox021 } from "@/registry/components/combobox/combobox-021/combobox-021"
-import { Combobox022 } from "@/registry/components/combobox/combobox-022/combobox-022"
 import { Combobox023 } from "@/registry/components/combobox/combobox-023/combobox-023"
 import { Combobox024 } from "@/registry/components/combobox/combobox-024/combobox-024"
 import { Combobox025 } from "@/registry/components/combobox/combobox-025/combobox-025"
@@ -56,7 +55,6 @@ export const PREVIEWS = {
   "combobox-019": Combobox019,
   "combobox-020": Combobox020,
   "combobox-021": Combobox021,
-  "combobox-022": Combobox022,
   "combobox-023": Combobox023,
   "combobox-024": Combobox024,
   "combobox-025": Combobox025,

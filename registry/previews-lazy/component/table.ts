@@ -106,4 +106,9 @@ export const PREVIEWS = {
       (module) => module.Table020,
     ),
   ),
+  "table-021": dynamic(() =>
+    import("@/registry/components/table/table-021/table-021").then(
+      (module) => module.Table021,
+    ),
+  ),
 } satisfies PreviewMap

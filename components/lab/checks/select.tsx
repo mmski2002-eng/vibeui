@@ -1,14 +1,11 @@
 import type { LabCheck } from "@/components/lab/check-types"
 
 import { Select001 } from "@/registry/components/select/select-001/select-001"
-import { Select002 } from "@/registry/components/select/select-002/select-002"
 import { Select003 } from "@/registry/components/select/select-003/select-003"
-import { Select004 } from "@/registry/components/select/select-004/select-004"
 import { Select005 } from "@/registry/components/select/select-005/select-005"
 import { Select006 } from "@/registry/components/select/select-006/select-006"
 import { Select007 } from "@/registry/components/select/select-007/select-007"
 import { Select008 } from "@/registry/components/select/select-008/select-008"
-import { Select009 } from "@/registry/components/select/select-009/select-009"
 import { Select010 } from "@/registry/components/select/select-010/select-010"
 import { Select011 } from "@/registry/components/select/select-011/select-011"
 import { Select012 } from "@/registry/components/select/select-012/select-012"
@@ -59,34 +56,10 @@ export const CHECKS: LabCheck[] = [
     ),
   },
   {
-    name: "select-002",
-    title: "Нативный список с группами",
-    notes: [
-      "Подпись: Что дальше",
-      "Подсказка: Что дальше",
-      "Заглушка: Что дальше",
-      "Акцент: #7daa3a",
-    ],
-    node: (
-      <Select002
-        label="Что дальше"
-        hint="Что дальше"
-        placeholder="Что дальше"
-        accent="#7daa3a"
-      />
-    ),
-  },
-  {
     name: "select-003",
     title: "Список с иконкой",
     notes: ["Подпись: Черновик", "Значение: cash", "Акцент: #062812"],
     node: <Select003 label="Черновик" defaultValue="cash" accent="#062812" />,
-  },
-  {
-    name: "select-004",
-    title: "Список с множественным выбором",
-    notes: ["Высота списка: 5", "Подсказка: Черновик", "Акцент: #2254d6"],
-    node: <Select004 rows={5} hint="Черновик" accent="#2254d6" />,
   },
   {
     name: "select-005",
@@ -147,12 +120,6 @@ export const CHECKS: LabCheck[] = [
         accent="#107b7b"
       />
     ),
-  },
-  {
-    name: "select-009",
-    title: "Обязательный список",
-    notes: ["Заглушка: Проверка", "Подсказка: Черновик", "Акцент: #80ac12"],
-    node: <Select009 placeholder="Проверка" hint="Черновик" accent="#80ac12" />,
   },
   {
     name: "select-010",
