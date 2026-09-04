@@ -17,6 +17,7 @@ import { Spinner009 } from "@/registry/components/spinner/spinner-009/spinner-00
 import { Spinner010 } from "@/registry/components/spinner/spinner-010/spinner-010"
 import { Spinner011 } from "@/registry/components/spinner/spinner-011/spinner-011"
 import { Spinner012 } from "@/registry/components/spinner/spinner-012/spinner-012"
+import { Spinner013 } from "@/registry/components/spinner/spinner-013/spinner-013"
 
 export const PREVIEWS = {
   "spinner-001": Spinner001,
@@ -31,4 +32,5 @@ export const PREVIEWS = {
   "spinner-010": Spinner010,
   "spinner-011": Spinner011,
   "spinner-012": Spinner012,
+  "spinner-013": Spinner013,
 } satisfies Record<string, ComponentType<PreviewProps>>

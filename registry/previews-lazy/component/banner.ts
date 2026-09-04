@@ -76,4 +76,9 @@ export const PREVIEWS = {
       (module) => module.Banner014,
     ),
   ),
+  "banner-015": dynamic(() =>
+    import("@/registry/components/banner/banner-015/banner-015").then(
+      (module) => module.Banner015,
+    ),
+  ),
 } satisfies PreviewMap

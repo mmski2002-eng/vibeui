@@ -111,4 +111,9 @@ export const PREVIEWS = {
       (module) => module.Card021,
     ),
   ),
+  "card-022": dynamic(() =>
+    import("@/registry/components/card/card-022/card-022").then(
+      (module) => module.Card022,
+    ),
+  ),
 } satisfies PreviewMap

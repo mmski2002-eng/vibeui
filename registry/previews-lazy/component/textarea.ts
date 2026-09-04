@@ -16,11 +16,6 @@ export const PREVIEWS = {
       (module) => module.Textarea002,
     ),
   ),
-  "textarea-003": dynamic(() =>
-    import("@/registry/components/textarea/textarea-003/textarea-003").then(
-      (module) => module.Textarea003,
-    ),
-  ),
   "textarea-004": dynamic(() =>
     import("@/registry/components/textarea/textarea-004/textarea-004").then(
       (module) => module.Textarea004,

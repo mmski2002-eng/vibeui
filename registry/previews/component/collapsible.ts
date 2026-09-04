@@ -11,7 +11,6 @@ import { Collapsible003 } from "@/registry/components/collapsible/collapsible-00
 import { Collapsible004 } from "@/registry/components/collapsible/collapsible-004/collapsible-004"
 import { Collapsible005 } from "@/registry/components/collapsible/collapsible-005/collapsible-005"
 import { Collapsible006 } from "@/registry/components/collapsible/collapsible-006/collapsible-006"
-import { Collapsible007 } from "@/registry/components/collapsible/collapsible-007/collapsible-007"
 import { Collapsible008 } from "@/registry/components/collapsible/collapsible-008/collapsible-008"
 import { Collapsible009 } from "@/registry/components/collapsible/collapsible-009/collapsible-009"
 import { Collapsible010 } from "@/registry/components/collapsible/collapsible-010/collapsible-010"
@@ -23,7 +22,6 @@ export const PREVIEWS = {
   "collapsible-004": Collapsible004,
   "collapsible-005": Collapsible005,
   "collapsible-006": Collapsible006,
-  "collapsible-007": Collapsible007,
   "collapsible-008": Collapsible008,
   "collapsible-009": Collapsible009,
   "collapsible-010": Collapsible010,

@@ -18,6 +18,7 @@ import { Accordion010 } from "@/registry/components/accordion/accordion-010/acco
 import { Accordion011 } from "@/registry/components/accordion/accordion-011/accordion-011"
 import { Accordion012 } from "@/registry/components/accordion/accordion-012/accordion-012"
 import { Accordion013 } from "@/registry/components/accordion/accordion-013/accordion-013"
+import { Accordion014 } from "@/registry/components/accordion/accordion-014/accordion-014"
 
 export const PREVIEWS = {
   "accordion-001": Accordion001,
@@ -33,4 +34,5 @@ export const PREVIEWS = {
   "accordion-011": Accordion011,
   "accordion-012": Accordion012,
   "accordion-013": Accordion013,
+  "accordion-014": Accordion014,
 } satisfies Record<string, ComponentType<PreviewProps>>

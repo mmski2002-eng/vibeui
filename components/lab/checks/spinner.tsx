@@ -12,6 +12,7 @@ import { Spinner009 } from "@/registry/components/spinner/spinner-009/spinner-00
 import { Spinner010 } from "@/registry/components/spinner/spinner-010/spinner-010"
 import { Spinner011 } from "@/registry/components/spinner/spinner-011/spinner-011"
 import { Spinner012 } from "@/registry/components/spinner/spinner-012/spinner-012"
+import { Spinner013 } from "@/registry/components/spinner/spinner-013/spinner-013"
 
 /** Seed прогона: с ним набор воспроизводится один в один. */
 export const SEED = 68432
@@ -139,5 +140,11 @@ export const CHECKS: LabCheck[] = [
     title: "Сообщение по этапам",
     notes: ["Подпись для скринридера: Что дальше", "Длительность круга, с: 6"],
     node: <Spinner012 label="Что дальше" speed={6} />,
+  },
+  {
+    name: "spinner-013",
+    title: "Полоса перехода страницы",
+    notes: ["Подпись для скринридера: Черновик", "Толщина, px: 5"],
+    node: <Spinner013 label="Черновик" height={5} />,
   },
 ]

@@ -1983,6 +1983,163 @@
         },
         "cardControls": ["title", "accent", "background"]
       }
+    },
+    {
+      "name": "timeline-013",
+      "type": "registry:component",
+      "title": "Двусторонние вехи",
+      "description": "Вертикальная лента вех по обе стороны от общего ствола: нечётные слева, чётные справа. На узкой ширине обе стороны сходятся в один столбец у левого края, без горизонтальной прокрутки.",
+      "categories": ["timeline"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "timeline-013/timeline-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/timeline-013.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-timeline-013-*. Серверный: хуков нет. Ствол — псевдоэлемент списка (ol::before), а не бордюр каждой вехи. На узком контейнере li — grid из двух колонок (узел, карточка), все карточки у правого края ствола. От 30rem ширины контейнера ствол уходит в центр, li переключается на три колонки, и карточки расходятся по чётности: nth-child(odd) — влево от ствола с выравниванием текста по правому краю, nth-child(even) — вправо с выравниванием по левому. Переключение — на container-type самого блока, а не на медиа-запросе видового окна, поэтому раскладка следует ширине родителя.",
+      "meta": {
+        "tags": ["timeline", "milestones", "history", "vertical"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Timeline013",
+          "usage": "<Timeline013\n  title=\"История компании\"\n  points={[\n    { date: \"Март 2019\", dateTime: \"2019-03\", title: \"Основание компании\", text: \"Три человека и первый клиент\" },\n    { date: \"Октябрь 2020\", dateTime: \"2020-10\", title: \"Первый офис\" },\n  ]}\n/>",
+          "summary": "Вертикальная лента вех по обе стороны от общего ствола: нечётные слева, чётные справа. На узкой ширине обе стороны сходятся в один столбец. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-timeline-013-* и не подменять её токенами вашей темы",
+            "чередование сторон по чётности позиции в points — вехи не выбирают сторону сами",
+            "container-type на корне и переключение раскладки по ширине контейнера, а не видового окна",
+            "ствол ровно на середине узкого столбца и ровно по центру широкой раскладки",
+            "дату в <time dateTime>, а не голой строкой",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя лишнюю плашку"
+          ],
+          "adapt": [
+            "заголовок через title",
+            "вехи через points: date, dateTime, title и необязательный text",
+            "цвет акцента через accent",
+            "порог переключения на две стороны в контейнерном запросе (min-width: 30rem)",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Сторона вехи не настраивается по отдельности: чётность считается по позиции в массиве points.",
+            "Больше семи-восьми вех делает ствол слишком длинным для одного экрана.",
+            "Подписи вех короткие: длинный текст растягивает карточку и сдвигает соседние узлы по стволу.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "История компании",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["title", "accent", "background"],
+        "i18n": {
+          "en": {
+            "title": "Two-Sided Milestones",
+            "description": "A vertical milestone ribbon on both sides of a shared trunk: odd entries on the left, even ones on the right. At a narrow width both sides collapse into one column against the left edge, with no horizontal scrolling.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the local --vibeui-timeline-013-* variables. Server component: no hooks. The trunk is the list's pseudo-element (ol::before), not a border on each milestone. In a narrow container, li is a two-column grid (node, card), and every card sits by the right edge of the trunk. From a 30rem container width the trunk moves to the centre, li switches to three columns, and cards split by parity: nth-child(odd) goes left of the trunk with right-aligned text, nth-child(even) goes right with left-aligned text. The switch runs on the block's own container-type rather than a viewport media query, so the layout follows the parent's width.",
+            "ai": {
+              "summary": "A vertical milestone ribbon on both sides of a shared trunk: odd entries on the left, even ones on the right. At a narrow width both sides collapse into one column. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-timeline-013-* palette; do not swap it for your theme tokens",
+                "the side alternating by the position parity in points; milestones do not pick their own side",
+                "container-type on the root and switching the layout by container width, not the viewport",
+                "the trunk centred exactly on the narrow single column and exactly in the middle of the two-sided layout",
+                "the date inside <time dateTime> rather than a bare string",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default; the component sits on the page background instead of laying an extra panel under itself"
+              ],
+              "adapt": [
+                "the heading through title",
+                "the milestones through points: date, dateTime, title and the optional text",
+                "the accent colour through accent",
+                "the two-sided switch threshold in the container query (min-width: 30rem)",
+                "background — the component surface; empty means no surface, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html; otherwise light-dark() always returns the light branch.",
+                "A milestone side is not configurable on its own: parity is taken from its position in the points array.",
+                "More than seven or eight milestones makes the trunk too long for one screen.",
+                "Keep milestone captions short: long text stretches the card and shifts the neighbouring trunk nodes.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Timeline013\n  title=\"Company history\"\n  points={[\n    { date: \"March 2019\", dateTime: \"2019-03\", title: \"Company founded\", text: \"Three people and one client\" },\n    { date: \"October 2020\", dateTime: \"2020-10\", title: \"First office\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Company history"
+              },
+              "accent": {
+                "label": "Accent",
+                "default": ""
+              },
+              "background": {
+                "label": "Surface"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Company history",
+                "points": [
+                  {
+                    "date": "March 2019",
+                    "dateTime": "2019-03",
+                    "title": "Company founded",
+                    "text": "Three people and one client"
+                  },
+                  {
+                    "date": "October 2020",
+                    "dateTime": "2020-10",
+                    "title": "First office",
+                    "text": "Moved out of a coworking space"
+                  },
+                  {
+                    "date": "May 2022",
+                    "dateTime": "2022-05",
+                    "title": "New market entry",
+                    "text": "Office opened in Almaty"
+                  },
+                  {
+                    "date": "January 2024",
+                    "dateTime": "2024-01",
+                    "title": "Hundredth hire",
+                    "text": "Engineering headcount tripled"
+                  },
+                  {
+                    "date": "February 2026",
+                    "dateTime": "2026-02",
+                    "title": "International launch",
+                    "text": "Product available in six countries"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

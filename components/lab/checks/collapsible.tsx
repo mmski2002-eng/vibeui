@@ -6,7 +6,6 @@ import { Collapsible003 } from "@/registry/components/collapsible/collapsible-00
 import { Collapsible004 } from "@/registry/components/collapsible/collapsible-004/collapsible-004"
 import { Collapsible005 } from "@/registry/components/collapsible/collapsible-005/collapsible-005"
 import { Collapsible006 } from "@/registry/components/collapsible/collapsible-006/collapsible-006"
-import { Collapsible007 } from "@/registry/components/collapsible/collapsible-007/collapsible-007"
 import { Collapsible008 } from "@/registry/components/collapsible/collapsible-008/collapsible-008"
 import { Collapsible009 } from "@/registry/components/collapsible/collapsible-009/collapsible-009"
 import { Collapsible010 } from "@/registry/components/collapsible/collapsible-010/collapsible-010"
@@ -52,18 +51,6 @@ export const CHECKS: LabCheck[] = [
     title: "Счётчик скрытого",
     notes: ["Видно имён: 5", "Заголовок: Проверка", "Акцент: #3ef600"],
     node: <Collapsible006 visible={5} title="Проверка" accent="#3ef600" />,
-  },
-  {
-    name: "collapsible-007",
-    title: "Полоса иконок",
-    notes: ["Название: Проверка", "Свёрнута сразу: true", "Акцент: #3c66eb"],
-    node: (
-      <Collapsible007
-        title="Проверка"
-        defaultCollapsed={true}
-        accent="#3c66eb"
-      />
-    ),
   },
   {
     name: "collapsible-008",

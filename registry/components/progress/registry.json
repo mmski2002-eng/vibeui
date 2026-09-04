@@ -6,9 +6,7 @@
       "type": "registry:component",
       "title": "Прогресс с подписью",
       "description": "Индикатор выполнения с подписью и честным состоянием неизвестной длительности: если процент неизвестен, компонент его не выдумывает.",
-      "categories": [
-        "progress"
-      ],
+      "categories": ["progress"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-progress-001-*. Заполнение считается из переменной --vibeui-progress-001-value, поэтому ширина полосы задаётся числом, а не строкой со знаком процента. value={null} включает состояние неизвестной длительности: отрезок ходит по дорожке анимацией, aria-valuenow не выставляется. Значение зажимается в диапазон 0–100.",
       "meta": {
-        "tags": [
-          "progress",
-          "loading",
-          "indicator",
-          "status"
-        ],
+        "tags": ["progress", "loading", "indicator", "status"],
         "preview": {
           "width": "full",
           "states": [
@@ -95,10 +88,7 @@
             "label": "Размер",
             "type": "select",
             "default": "md",
-            "options": [
-              "sm",
-              "md"
-            ]
+            "options": ["sm", "md"]
           },
           {
             "prop": "accent",
@@ -177,13 +167,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-progress-001-*. The fill is computed from the --vibeui-progress-001-value variable, so the width of the bar is set by a number and not by a string with a percent sign. value={null} turns on the unknown-duration state: a segment travels along the track by animation and aria-valuenow is not set. The value is clamped to the 0–100 range."
           }
         },
-        "cardControls": [
-          "value",
-          "label",
-          "size",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["value", "label", "size", "accent", "background"]
       }
     },
     {
@@ -191,9 +175,7 @@
       "type": "registry:component",
       "title": "Полоса из сегментов",
       "description": "Прогресс конвейера этапами: дорожка разрезана на сегменты с зазорами, поэтому видно не «примерно шестьдесят процентов», а сколько этапов закрыто и какой идёт сейчас.",
-      "categories": [
-        "progress"
-      ],
+      "categories": ["progress"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -205,12 +187,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-progress-002-*. Серверный: хуков нет, состояние приходит пропсами. Дорожка — flex из равных сегментов с зазором 0.25rem: граница этапа задана разрывом, а не другим цветом, поэтому она видна и в монохроме. Текущий сегмент залит анимированным двухцветным градиентом через background-position — движение не трогает раскладку. Подписи этапов лежат вторым flex-рядом с теми же долями, поэтому колонки подписей совпадают с сегментами. role=\"progressbar\" объявлен на дорожке со шкалой в этапах, а не в процентах, и aria-valuetext называет текущий этап словами.",
       "meta": {
-        "tags": [
-          "progress",
-          "steps",
-          "pipeline",
-          "display"
-        ],
+        "tags": ["progress", "steps", "pipeline", "display"],
         "ai": {
           "export": "Progress002",
           "usage": "<Progress002\n  label=\"Пайплайн релиза\"\n  steps={[\"Очередь\", \"Сборка\", \"Тесты\", \"Ревью\", \"Выкладка\"]}\n  current={2}\n/>",
@@ -319,25 +296,14 @@
             "preview": {
               "props": {
                 "label": "Release pipeline",
-                "steps": [
-                  "Queued",
-                  "Build",
-                  "Tests",
-                  "Review",
-                  "Deploy"
-                ],
+                "steps": ["Queued", "Build", "Tests", "Review", "Deploy"],
                 "stageText": "{step}: stage {current} of {total}"
               }
             },
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-progress-002-*. A server component: no hooks, the state arrives through props. The track is a flex of equal segments with a 0.25rem gap: a stage boundary is drawn by the gap rather than by another colour, so it stays visible in monochrome. The current segment is filled with an animated two-colour gradient through background-position — the motion does not touch layout. The stage captions sit in a second flex row with the same shares, so the caption columns line up with the segments. role=\"progressbar\" is declared on the track with a scale in stages rather than percent, and aria-valuetext names the current stage in words."
           }
         },
-        "cardControls": [
-          "current",
-          "label",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["current", "label", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -348,9 +314,7 @@
       "type": "registry:component",
       "title": "Кольцо цели с делениями",
       "description": "Кольцевая шкала с делениями и засечкой цели: видно и сколько сделано, и сколько было обещано, поэтому перевыполнение читается сразу, без сравнения двух чисел.",
-      "categories": [
-        "progress"
-      ],
+      "categories": ["progress"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -362,12 +326,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-progress-003-*. Серверный: хуков нет. Дуга — conic-gradient, вырезанный радиальной маской, поэтому кольцо остаётся одним элементом без svg и без круга-заглушки в центре. Деления — второй слой, repeating-conic-gradient цвета подложки поверх дуги под той же маской: риски «прорезаны» в кольце, а не нарисованы отдельными элементами. Засечка цели — абсолютный слой, повёрнутый на target × 3.6deg, поэтому положение считается прямо из процента. Число лежит поверх кольца, а не внутри маскированного элемента: маска вырезала бы и цифры. role=\"progressbar\" с aria-valuetext, который называет и факт, и цель.",
       "meta": {
-        "tags": [
-          "progress",
-          "ring",
-          "goal",
-          "display"
-        ],
+        "tags": ["progress", "ring", "goal", "display"],
         "ai": {
           "export": "Progress003",
           "usage": "<Progress003 value={72} target={85} label=\"План квартала\" unit=\"выполнено\" />",
@@ -532,9 +491,7 @@
       "type": "registry:component",
       "title": "Строка скорости загрузки",
       "description": "Строка загрузки файла, которая отвечает не «сколько процентов», а «сколько ещё ждать»: объём, скорость и остаток считаются из трёх чисел и не могут разойтись между собой.",
-      "categories": [
-        "progress"
-      ],
+      "categories": ["progress"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -546,12 +503,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-progress-004-*. Серверный: хуков нет, форматирование байтов и остатка — чистые функции. Проценты, «7 МБ из 12 МБ» и «осталось 5 с» выводятся из loaded, total и speed, поэтому подписи согласованы по построению. Значок файла — плитка с срезанным углом на clip-path и расширением текстом, отдельной иконки не нужно. Дорожка растёт шириной от переменной значения с transition, а не пересобирает раскладку. Цифры моноширинные: при обычных числа дёргаются на каждом обновлении.",
       "meta": {
-        "tags": [
-          "progress",
-          "upload",
-          "file",
-          "display"
-        ],
+        "tags": ["progress", "upload", "file", "display"],
         "ai": {
           "export": "Progress004",
           "usage": "<Progress004\n  fileName=\"quarterly-report-2026.pdf\"\n  loaded={7340032}\n  total={12582912}\n  speed={1048576}\n/>",
@@ -659,12 +611,7 @@
             "title": "Upload Speed Row",
             "preview": {
               "props": {
-                "units": [
-                  "B",
-                  "KB",
-                  "MB",
-                  "GB"
-                ],
+                "units": ["B", "KB", "MB", "GB"],
                 "text": {
                   "almostDone": "almost done",
                   "secondsLeft": "{seconds}s left",
@@ -679,12 +626,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-progress-004-*. A server component: no hooks, and the byte and remainder formatting are pure functions. The percentage, \"7 MB of 12 MB\" and \"5 s left\" are derived from loaded, total and speed, so the captions agree by construction. The file mark is a tile with a cut corner on clip-path and the extension as text, so no separate icon is needed. The track grows in width from the value variable with a transition rather than rebuilding the layout. The figures are tabular: with proportional ones the numbers jitter on every update."
           }
         },
-        "cardControls": [
-          "fileName",
-          "speed",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["fileName", "speed", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -695,9 +637,7 @@
       "type": "registry:component",
       "title": "Полосы по категориям",
       "description": "Расход по категориям столбиком полос с общей шкалой: все дорожки нормированы на одну ёмкость, поэтому длины сравнимы между собой, а не каждая сама себе сто процентов.",
-      "categories": [
-        "progress"
-      ],
+      "categories": ["progress"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -709,12 +649,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-progress-005-*. Серверный: хуков нет. Каждая строка — grid из двух колонок (имя и число) плюс дорожка на всю ширину: числа выстраиваются в колонку без табличной разметки. Доля считается от capacity, а не от суммы строк, поэтому свободное место остаётся видимым. Оттенок строки берётся хешем из её имени — новая категория получает свой цвет сама, таблицы соответствий нет; hue передаётся строке инлайновой переменной --vibeui-progress-005-hue и подставляется в oklch. У каждой дорожки собственный role=\"progressbar\" со шкалой в единицах ёмкости и aria-valuetext словами.",
       "meta": {
-        "tags": [
-          "progress",
-          "storage",
-          "breakdown",
-          "display"
-        ],
+        "tags": ["progress", "storage", "breakdown", "display"],
         "ai": {
           "export": "Progress005",
           "usage": "<Progress005\n  rows={[\n    { label: \"Видео\", value: 148 },\n    { label: \"Фотографии\", value: 96 },\n  ]}\n  capacity={512}\n  unit=\"ГБ\"\n/>",
@@ -842,11 +777,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-progress-005-*. A server component: no hooks. Each row is a grid of two columns (the name and the number) plus a track across the full width: the numbers line up in a column without table markup. The share is computed against capacity rather than against the sum of the rows, so free space stays visible. The row hue is taken from a hash of its name — a new category gets its own colour by itself and there is no lookup table; the hue is passed to the row through the inline --vibeui-progress-005-hue variable and substituted into oklch. Every track has its own role=\"progressbar\" with a scale in capacity units and an aria-valuetext in words."
           }
         },
-        "cardControls": [
-          "capacity",
-          "unit",
-          "background"
-        ],
+        "cardControls": ["capacity", "unit", "background"],
         "preview": {
           "width": "full"
         }
@@ -857,9 +788,7 @@
       "type": "registry:component",
       "title": "Полоса с порогом",
       "description": "Полоса с порогом, нарисованным прямо на дорожке: пока расход ниже — она спокойная, выше — меняет цвет, получает штриховку и роняет предупреждение в role=\"status\".",
-      "categories": [
-        "progress"
-      ],
+      "categories": ["progress"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -871,12 +800,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-progress-006-*. Серверный: хуков нет, состояние превышения выводится сравнением value и threshold. Засечка порога — абсолютный элемент внутри дорожки на left от переменной, поэтому она стоит там же, где заканчивается план, а не в подписи сбоку. Превышение помечено атрибутом data-over на корне: он переключает и цвет заливки, и штриховку repeating-linear-gradient, и показ блока предупреждения. Штриховка нужна, потому что «стало красным» не читается без цвета. Предупреждение объявлено role=\"status\" и скрыто атрибутом hidden, а не удалено из разметки: живая область должна существовать до того, как в ней появится текст.",
       "meta": {
-        "tags": [
-          "progress",
-          "threshold",
-          "quota",
-          "display"
-        ],
+        "tags": ["progress", "threshold", "quota", "display"],
         "ai": {
           "export": "Progress006",
           "usage": "<Progress006 value={118} threshold={100} limit={140} label=\"Расход API-квоты\" />",
@@ -1007,13 +931,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-progress-006-*. A server component: no hooks, and the exceeded state is derived by comparing value and threshold. The threshold notch is an absolute element inside the track positioned by left from a variable, so it stands exactly where the plan ends rather than in a caption beside it. The overflow is marked with the data-over attribute on the root: it switches the fill colour, the repeating-linear-gradient hatching and the display of the warning block. The hatching is needed because \"it turned red\" does not read without colour. The warning is declared role=\"status\" and hidden with the hidden attribute rather than removed from the markup: a live region has to exist before text appears in it."
           }
         },
-        "cardControls": [
-          "value",
-          "threshold",
-          "label",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["value", "threshold", "label", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -1024,9 +942,7 @@
       "type": "registry:component",
       "title": "Полосатый индикатор задачи",
       "description": "Неопределённый прогресс без выдуманной доли: дорожка залита бегущей штриховкой во всю ширину, а вместо процентов показан счётчик уже сделанной работы.",
-      "categories": [
-        "progress"
-      ],
+      "categories": ["progress"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1038,12 +954,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-progress-007-*. Серверный: хуков нет. Движение задано анимацией background-position по repeating-linear-gradient, поэтому дорожка остаётся одним элементом без бегунка внутри и без пересчёта раскладки на каждом кадре. У role=\"progressbar\" сознательно нет aria-valuenow: как только атрибут появляется, скринридер называет процент, которого никто не считал; вместо него стоит aria-valuetext про неизвестную длительность. Точка-маячок в заголовке пульсирует прозрачностью и остаётся признаком работы, когда дорожка не попала в поле зрения. При запрете движения штриховка снимается и дорожка становится ровной заливкой.",
       "meta": {
-        "tags": [
-          "progress",
-          "indeterminate",
-          "loading",
-          "display"
-        ],
+        "tags": ["progress", "indeterminate", "loading", "display"],
         "ai": {
           "export": "Progress007",
           "usage": "<Progress007\n  label=\"Индексируем архив\"\n  processed={12480}\n  unit=\"документов\"\n  elapsed=\"идёт 3 мин\"\n/>",
@@ -1204,9 +1115,7 @@
       "type": "registry:component",
       "title": "Прогресс по именованным шагам",
       "description": "Прогресс, где главный ответ дан словами: крупная строка называет текущий шаг и следующий за ним, а вехи на непрерывной дорожке служат картой пути.",
-      "categories": [
-        "progress"
-      ],
+      "categories": ["progress"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1218,12 +1127,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-progress-008-*. Серверный: хуков нет. Дорожка нарисована двумя псевдоэлементами контейнера: ::before — серая линия на всю ширину, ::after — заливка до текущей вехи по переменной значения; вехи лежат поверх обычными span'ами в flex с распором. Кольцо цвета подложки у вехи задано border, поэтому линия под ней не просвечивает. Доля считается как index / (total − 1): заливка приходит ровно в центр текущей вехи, а не «примерно туда». role=\"progressbar\" объявлен в шагах, aria-valuetext повторяет строку «Шаг 3 из 5: Проверка данных».",
       "meta": {
-        "tags": [
-          "progress",
-          "steps",
-          "wizard",
-          "display"
-        ],
+        "tags": ["progress", "steps", "wizard", "display"],
         "ai": {
           "export": "Progress008",
           "usage": "<Progress008\n  title=\"Импорт справочника\"\n  steps={[\"Загрузка файла\", \"Разбор колонок\", \"Проверка данных\"]}\n  current={2}\n/>",
@@ -1350,12 +1254,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-progress-008-*. A server component: no hooks. The track is drawn with two pseudo-elements of the container: ::before is a grey line across the full width, ::after is the fill up to the current milestone from the value variable; the milestones sit above it as ordinary spans in a flex with space between. The surface-coloured ring around a milestone is set with border, so the line underneath does not show through. The share is computed as index / (total − 1): the fill arrives exactly at the centre of the current milestone rather than \"somewhere near it\". role=\"progressbar\" is declared in steps, and aria-valuetext repeats the line \"Step 3 of 5: Checking the data\"."
           }
         },
-        "cardControls": [
-          "current",
-          "title",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["current", "title", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -1366,9 +1265,7 @@
       "type": "registry:component",
       "title": "Бегущая подпись значения",
       "description": "Полоса, у которой число едет над концом заливки: глазу не нужно связывать разнесённые подпись и дорожку, а clamp не даёт пузырьку вылезти за края у нуля и ста процентов.",
-      "categories": [
-        "progress"
-      ],
+      "categories": ["progress"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1380,12 +1277,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-progress-009-*. Серверный: хуков нет. Пузырёк позиционируется абсолютно по left от переменной значения и центрируется translateX(−50%); crop у краёв снимает clamp с границами в 1.5rem, поэтому у нуля и ста процентов он остаётся внутри карточки. Хвостик пузырька — псевдоэлемент с треугольником на бордюрах, отдельной картинки не нужно. Число в пузырьке помечено aria-hidden: его уже сообщает aria-valuenow дорожки, и без этого скринридер прочитал бы значение дважды.",
       "meta": {
-        "tags": [
-          "progress",
-          "bar",
-          "label",
-          "display"
-        ],
+        "tags": ["progress", "bar", "label", "display"],
         "ai": {
           "export": "Progress009",
           "usage": "<Progress009\n  value={68}\n  label=\"Профиль заполнен\"\n  caption=\"Осталось добавить телефон и фотографию\"\n/>",
@@ -1509,13 +1401,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-progress-009-*. A server component: no hooks. The bubble is positioned absolutely by left from the value variable and centred with translateX(−50%); at the edges a clamp with 1.5rem bounds removes the crop, so at zero and at a hundred percent it stays inside the card. The bubble's tail is a pseudo-element with a triangle made of borders, so no separate image is needed. The number in the bubble is marked aria-hidden: it is already announced by the track's aria-valuenow, and without this a screen reader would read the value twice."
           }
         },
-        "cardControls": [
-          "value",
-          "caption",
-          "label",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["value", "caption", "label", "accent", "background"],
         "preview": {
           "width": "full"
         }

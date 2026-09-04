@@ -126,4 +126,9 @@ export const PREVIEWS = {
       (module) => module.Toast024,
     ),
   ),
+  "toast-025": dynamic(() =>
+    import("@/registry/components/toast/toast-025/toast-025").then(
+      (module) => module.Toast025,
+    ),
+  ),
 } satisfies PreviewMap

@@ -24,6 +24,7 @@ import { Frame016 } from "@/registry/components/frame/frame-016/frame-016"
 import { Frame017 } from "@/registry/components/frame/frame-017/frame-017"
 import { Frame018 } from "@/registry/components/frame/frame-018/frame-018"
 import { Frame019 } from "@/registry/components/frame/frame-019/frame-019"
+import { Frame020 } from "@/registry/components/frame/frame-020/frame-020"
 
 export const PREVIEWS = {
   "frame-001": Frame001,
@@ -45,4 +46,5 @@ export const PREVIEWS = {
   "frame-017": Frame017,
   "frame-018": Frame018,
   "frame-019": Frame019,
+  "frame-020": Frame020,
 } satisfies Record<string, ComponentType<PreviewProps>>

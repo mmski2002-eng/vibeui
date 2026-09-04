@@ -14,6 +14,7 @@ import { Switch011 } from "@/registry/components/switch/switch-011/switch-011"
 import { Switch012 } from "@/registry/components/switch/switch-012/switch-012"
 import { Switch013 } from "@/registry/components/switch/switch-013/switch-013"
 import { Switch014 } from "@/registry/components/switch/switch-014/switch-014"
+import { Switch015 } from "@/registry/components/switch/switch-015/switch-015"
 
 /** Seed прогона: с ним набор воспроизводится один в один. */
 export const SEED = 60513
@@ -284,6 +285,14 @@ export const CHECKS: LabCheck[] = [
         defaultChecked={false}
         accent="#1dc105"
       />
+    ),
+  },
+  {
+    name: "switch-015",
+    title: "Матрица каналов уведомлений",
+    notes: ["Заголовок: Черновик", "Подпись строк: Проверка", "Акцент: #6a05ec"],
+    node: (
+      <Switch015 title="Черновик" rowsLabel="Проверка" accent="#6a05ec" />
     ),
   },
 ]

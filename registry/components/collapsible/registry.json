@@ -6,9 +6,7 @@
       "type": "registry:component",
       "title": "Нативное раскрытие",
       "description": "Базовая свёртка на нативном details: состояние живёт в разметке, клиентского кода нет, раскрытие работает до гидратации.",
-      "categories": [
-        "collapsible"
-      ],
+      "categories": ["collapsible"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-collapsible-001-*. Серверный: хуков нет, корень блока — сам элемент details. Системный маркер снят через list-style:none и ::-webkit-details-marker, вместо него нарисован значок из двух граней квадрата, поворот привязан к селектору [open]. Подсказка справа прижата margin-left:auto, поэтому при её отсутствии значок берёт auto на себя через :only-child.",
       "meta": {
-        "tags": [
-          "collapsible",
-          "details",
-          "no-js",
-          "disclosure"
-        ],
+        "tags": ["collapsible", "details", "no-js", "disclosure"],
         "preview": {
           "width": "full"
         },
@@ -142,12 +135,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-collapsible-001-*. It is a server component: there are no hooks, and the root of the block is the details element itself. The system marker is removed through list-style:none and ::-webkit-details-marker, and in its place a glyph built from two edges of a square is drawn, with the rotation tied to the [open] selector. The trailing hint is pushed right by margin-left:auto, so when there is no hint the glyph takes the auto for itself through :only-child."
           }
         },
-        "cardControls": [
-          "title",
-          "hint",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "hint", "accent", "background"]
       }
     },
     {
@@ -155,9 +143,7 @@
       "type": "registry:component",
       "title": "Анимация высоты",
       "description": "Свёртка с плавной анимацией высоты: обёртка-грид едет от 0fr к 1fr, поэтому высота содержимого не нужна заранее.",
-      "categories": [
-        "collapsible"
-      ],
+      "categories": ["collapsible"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -169,12 +155,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-collapsible-002-*. Клиентский: \"use client\" ради useState и aria-expanded. Анимация высоты сделана гридом: обёртка [data-part=\"wrap\"] переключает grid-template-rows с 0fr на 1fr, внутренний слой держит overflow:hidden и min-height:0 — без него строка грида не сжимается ниже содержимого. Скрытая часть помечена атрибутом inert, поэтому в свёрнутом виде её содержимое выпадает из табуляции.",
       "meta": {
-        "tags": [
-          "collapsible",
-          "animation",
-          "grid",
-          "disclosure"
-        ],
+        "tags": ["collapsible", "animation", "grid", "disclosure"],
         "preview": {
           "width": "full"
         },
@@ -290,12 +271,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-collapsible-002-*. It is a client component: \"use client\" for useState and aria-expanded. The height animation is done with grid: the [data-part=\"wrap\"] wrapper switches grid-template-rows from 0fr to 1fr, and the inner layer keeps overflow:hidden and min-height:0 — without it the grid row will not shrink below its content. The collapsed part is marked with the inert attribute, so while collapsed its content drops out of the tab order."
           }
         },
-        "cardControls": [
-          "title",
-          "defaultOpen",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "defaultOpen", "accent", "background"]
       }
     },
     {
@@ -303,9 +279,7 @@
       "type": "registry:component",
       "title": "Читать дальше",
       "description": "Свёртка длинного текста: обрез по числу строк, градиент вместо резкой границы и кнопка «Показать ещё».",
-      "categories": [
-        "collapsible"
-      ],
+      "categories": ["collapsible"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -317,12 +291,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-collapsible-003-*. Клиентский: \"use client\" ради useState. Обрез сделан связкой display:-webkit-box, -webkit-box-orient:vertical и -webkit-line-clamp, где число строк приходит переменной --vibeui-collapsible-003-lines из пропса lines — поэтому граница всегда совпадает с базовой линией строки. Градиент лежит в ::after контейнера обреза и уходит в ту же переменную фона, что и вся карточка. Кнопка связана с абзацем через aria-controls и несёт aria-expanded.",
       "meta": {
-        "tags": [
-          "collapsible",
-          "read-more",
-          "line-clamp",
-          "text"
-        ],
+        "tags": ["collapsible", "read-more", "line-clamp", "text"],
         "preview": {
           "width": "full"
         },
@@ -442,12 +411,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-collapsible-003-*. It is a client component: \"use client\" for useState. The clamp is made by the pairing of display:-webkit-box, -webkit-box-orient:vertical and -webkit-line-clamp, where the number of lines arrives through the --vibeui-collapsible-003-lines variable from the lines prop — that is why the boundary always lands on a line baseline. The gradient lives in the ::after of the clamp container and ends in the same background variable as the whole card. The button is linked to the paragraph through aria-controls and carries aria-expanded."
           }
         },
-        "cardControls": [
-          "lines",
-          "title",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["lines", "title", "accent", "background"]
       }
     },
     {
@@ -455,9 +419,7 @@
       "type": "registry:component",
       "title": "Свёрнутый лог",
       "description": "Свёрнутый вывод сборки: итог по строкам и ошибкам виден в заголовке, а сам лог разворачивается только при разборе.",
-      "categories": [
-        "collapsible"
-      ],
+      "categories": ["collapsible"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -469,12 +431,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-collapsible-004-*. Серверный: хуков нет, корень — details. Количество ошибок считается из массива lines по полю level и попадает в summary, поэтому разворачивать блок ради подсчёта не нужно. Номера строк рисует счётчик CSS через counter-reset и li::before: в разметке их нет, и копия лога остаётся чистой. Поверхность тёмная, лог моноширинный, уровни различаются цветом строки.",
       "meta": {
-        "tags": [
-          "collapsible",
-          "log",
-          "details",
-          "counter"
-        ],
+        "tags": ["collapsible", "log", "details", "counter"],
         "preview": {
           "width": "full"
         },
@@ -594,10 +551,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-collapsible-004-*. It is a server component: there are no hooks, and the root is details. The number of errors is computed from the lines array by its level field and lands in summary, so the block does not have to be expanded just to count them. The line numbers are drawn by a CSS counter through counter-reset and li::before: they are not in the markup, and a copy of the log stays clean. The surface is dark, the log is monospaced, and the levels are told apart by line colour."
           }
         },
-        "cardControls": [
-          "title",
-          "accent"
-        ]
+        "cardControls": ["title", "accent"]
       }
     },
     {
@@ -605,9 +559,7 @@
       "type": "registry:component",
       "title": "Взаимоисключающие шаги",
       "description": "Группа свёрток, где открыт ровно один шаг: взаимное исключение держит атрибут name у details, без React-состояния.",
-      "categories": [
-        "collapsible"
-      ],
+      "categories": ["collapsible"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -619,12 +571,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-collapsible-005-*. Серверный: хуков нет. Общий атрибут name на всех details превращает их в радиогруппу — открытым остаётся только один, и состояние не дублируется в React. Номер шага рисует CSS-счётчик на summary::before, поэтому перестановка массива steps сразу меняет нумерацию. Открытый шаг подсвечивается заливкой кружка через селектор details[open].",
       "meta": {
-        "tags": [
-          "collapsible",
-          "steps",
-          "exclusive",
-          "no-js"
-        ],
+        "tags": ["collapsible", "steps", "exclusive", "no-js"],
         "preview": {
           "width": "full"
         },
@@ -742,11 +689,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-collapsible-005-*. It is a server component: there are no hooks. A shared name attribute on all the details turns them into a radio group — only one stays open, and the state is not duplicated in React. The step number is drawn by a CSS counter on summary::before, so reordering the steps array changes the numbering right away. The open step is highlighted by the circle fill through the details[open] selector."
           }
         },
-        "cardControls": [
-          "groupName",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["groupName", "accent", "background"]
       }
     },
     {
@@ -754,9 +697,7 @@
       "type": "registry:component",
       "title": "Счётчик скрытого",
       "description": "Свёртка со счётчиком скрытого: первые участники видны в заголовке, остальные прячутся за кружком «+N».",
-      "categories": [
-        "collapsible"
-      ],
+      "categories": ["collapsible"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -768,12 +709,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-collapsible-006-*. Серверный: хуков нет, корень — details. Массив people делится пропсом visible на видимую и скрытую части, размер скрытой части и есть подпись кружка «+N». Стек аватаров собран отрицательным margin-left и рамкой цвета фона, инициалы вычисляются из имени, поэтому картинки не нужны. Кружок счётчика в раскрытом состоянии меняет цвет через селектор [open].",
       "meta": {
-        "tags": [
-          "collapsible",
-          "avatars",
-          "counter",
-          "details"
-        ],
+        "tags": ["collapsible", "avatars", "counter", "details"],
         "preview": {
           "width": "full"
         },
@@ -901,180 +837,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-collapsible-006-*. It is a server component: there are no hooks, and the root is details. The people array is split by the visible prop into a shown and a hidden part, and the size of the hidden part is exactly the «+N» circle label. The avatar stack is assembled with a negative margin-left and a background-coloured ring, and the initials are computed from the name, so no pictures are needed. In the expanded state the counter circle changes colour through the [open] selector."
           }
         },
-        "cardControls": [
-          "visible",
-          "title",
-          "accent",
-          "background"
-        ]
-      }
-    },
-    {
-      "name": "collapsible-007",
-      "type": "registry:component",
-      "title": "Полоса иконок",
-      "description": "Боковая панель, сворачивающаяся не в ноль, а в узкую полосу иконок: навигация остаётся доступной в обоих состояниях.",
-      "categories": [
-        "collapsible"
-      ],
-      "dependencies": [],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "collapsible-007/collapsible-007.tsx",
-          "type": "registry:component",
-          "target": "@components/vibeui/collapsible-007.tsx"
-        }
-      ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-collapsible-007-*. Клиентский: \"use client\" ради useState. Ширина панели едет по переменной --vibeui-collapsible-007-width, которую переопределяет селектор [data-collapsed=\"true\"] — переход описан одним свойством. Подписи не размонтируются, а схлопываются нулевой шириной с overflow:hidden, поэтому доступное имя кнопки сохраняется и порядок табуляции не меняется. В свёрнутом виде подпись дублируется в title кнопки.",
-      "meta": {
-        "tags": [
-          "collapsible",
-          "sidebar",
-          "rail",
-          "navigation"
-        ],
-        "preview": {
-          "width": "full"
-        },
-        "ai": {
-          "export": "Collapsible007",
-          "usage": "<Collapsible007 title=\"VibeUI\" items={[{ label: \"Каталог\", glyph: \"▦\" }]} />",
-          "summary": "Панель со сворачиванием в полосу иконок: ширина анимируется одной переменной, подписи схлопываются, но остаются в DOM ради доступных имён. Ноль зависимостей, один файл.",
-          "preserve": [
-            "локальную палитру --vibeui-collapsible-007-* и не подменять её токенами вашей темы",
-            "подписи в DOM в свёрнутом виде: их удаление лишает кнопки доступного имени",
-            "переход по одной переменной ширины — так анимация не рассыпается на несколько свойств",
-            "aria-expanded у кнопки переключения: она сообщает состояние всей панели",
-            "видимую иконку в свёрнутом виде — панель, схлопнутая в ноль, лишает навигации",
-            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
-            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
-          ],
-          "adapt": [
-            "название через проп title",
-            "массив items с подписями и глифами",
-            "стартовое состояние через проп defaultCollapsed",
-            "ширину полосы и акцент через проп accent",
-            "подписи переключателя через пропы expandLabel и collapseLabel",
-            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
-          ],
-          "notes": [
-            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
-            "Глифы здесь текстовые: подставьте свои SVG-иконки, если нужен единый стиль и толщина линий.",
-            "aria-current=\"page\" проставлен первому пункту как пример — связывайте его со своим роутером.",
-            "Свёрнутая панель опирается на title кнопки: полноценный тултип с клавиатурной поддержкой добавляется отдельно.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
-          ]
-        },
-        "controls": [
-          {
-            "prop": "title",
-            "label": "Название",
-            "type": "text",
-            "default": "VibeUI",
-            "maxLength": 20
-          },
-          {
-            "prop": "defaultCollapsed",
-            "label": "Свёрнута сразу",
-            "type": "boolean",
-            "default": false
-          },
-          {
-            "prop": "accent",
-            "label": "Акцент",
-            "type": "color",
-            "default": ""
-          },
-          {
-            "prop": "background",
-            "label": "Фон",
-            "type": "color",
-            "default": ""
-          }
-        ],
-        "i18n": {
-          "en": {
-            "description": "A sidebar that collapses into a narrow icon rail rather than to zero, so navigation stays reachable in both states.",
-            "ai": {
-              "summary": "A sidebar collapsing to an icon rail: the width animates through a single variable and labels shrink away but stay in the DOM for accessible names. Zero dependencies, one file.",
-              "preserve": [
-                "the local --vibeui-collapsible-007-* palette — do not swap it for your theme tokens",
-                "keeping labels in the DOM while collapsed: removing them strips the buttons of accessible names",
-                "the single width variable driving the transition — otherwise the animation splits across properties",
-                "aria-expanded on the toggle: it reports the state of the whole panel",
-                "a visible icon while collapsed — a panel shrunk to zero takes navigation away",
-                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
-                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
-              ],
-              "adapt": [
-                "the product name through the title prop",
-                "the items array with labels and glyphs",
-                "the initial state through the defaultCollapsed prop",
-                "the rail width and the accent through the accent prop",
-                "the toggle labels through the expandLabel and collapseLabel props",
-                "background — the component background; empty means no background, taking the page colour"
-              ],
-              "notes": [
-                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
-                "The glyphs are plain text: swap in your own SVG icons if you need consistent stroke weights.",
-                "aria-current=\"page\" sits on the first item as an example — wire it to your router.",
-                "The collapsed rail relies on the button title: a real keyboard-accessible tooltip is a separate addition.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
-              ],
-              "usage": "<Collapsible007 title=\"VibeUI\" items={[{ label: \"Catalog\", glyph: \"▦\" }]} />"
-            },
-            "controls": {
-              "title": {
-                "label": "Product name",
-                "default": "VibeUI"
-              },
-              "defaultCollapsed": {
-                "label": "Collapsed by default"
-              },
-              "accent": {
-                "label": "Accent"
-              },
-              "background": {
-                "label": "Background"
-              }
-            },
-            "title": "Icon Rail",
-            "preview": {
-              "props": {
-                "title": "VibeUI",
-                "items": [
-                  {
-                    "label": "Catalog",
-                    "glyph": "▦"
-                  },
-                  {
-                    "label": "Components",
-                    "glyph": "◍",
-                    "badge": "24"
-                  },
-                  {
-                    "label": "Registry",
-                    "glyph": "⌗"
-                  },
-                  {
-                    "label": "Settings",
-                    "glyph": "⚙"
-                  }
-                ],
-                "expandLabel": "Expand the panel",
-                "collapseLabel": "Collapse the panel"
-              }
-            },
-            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-collapsible-007-*. It is a client component: \"use client\" for useState. The panel width rides on the --vibeui-collapsible-007-width variable, which the [data-collapsed=\"true\"] selector overrides — the transition is described by a single property. The labels are not unmounted but collapse to zero width with overflow:hidden, so the accessible name of a button is preserved and the tab order does not change. While collapsed, the label is duplicated in the button's title."
-          }
-        },
-        "cardControls": [
-          "title",
-          "defaultCollapsed",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["visible", "title", "accent", "background"]
       }
     },
     {
@@ -1082,9 +845,7 @@
       "type": "registry:component",
       "title": "Изменённые настройки",
       "description": "Свёртка настроек с признаком «изменено»: число отличий от значений по умолчанию видно в заголовке до раскрытия.",
-      "categories": [
-        "collapsible"
-      ],
+      "categories": ["collapsible"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1096,12 +857,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-collapsible-008-*. Серверный: хуков нет, корень — details. Количество изменённых параметров считается из массива settings по флагу changed и выводится плашкой в summary; при нуле плашка меняет текст и приглушается через атрибут data-clean. Строки собраны на dl/dt/dd — это описания значений, а не таблица; изменённая строка получает точку в dt::before, подложку и жирное моноширинное значение.",
       "meta": {
-        "tags": [
-          "collapsible",
-          "settings",
-          "diff",
-          "details"
-        ],
+        "tags": ["collapsible", "settings", "diff", "details"],
         "preview": {
           "width": "full"
         },
@@ -1231,11 +987,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-collapsible-008-*. It is a server component: there are no hooks, and the root is details. The number of changed parameters is computed from the settings array by the changed flag and shown as a badge in summary; at zero the badge changes its text and is muted through the data-clean attribute. The rows are built on dl/dt/dd — these are descriptions of values, not a table; a changed row gets a dot in dt::before, a fill and a bold monospaced value."
           }
         },
-        "cardControls": [
-          "title",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "accent", "background"]
       }
     },
     {
@@ -1243,9 +995,7 @@
       "type": "registry:component",
       "title": "Состояние в разметке",
       "description": "История версий, где раскрытый раздел объявлен атрибутом open прямо в разметке: сервер отдаёт нужный раздел уже открытым.",
-      "categories": [
-        "collapsible"
-      ],
+      "categories": ["collapsible"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1257,12 +1007,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-collapsible-009-*. Серверный: хуков нет, флаг open каждого релиза уходит прямо в атрибут details. Это не «начальное значение стейта», а само состояние: до гидратации ничего не мигает, печать и поиск по странице видят содержимое. Подпись переключателя меняется без React — в разметке лежат два узла data-when, а показывает нужный селектор details[open].",
       "meta": {
-        "tags": [
-          "collapsible",
-          "changelog",
-          "ssr",
-          "no-js"
-        ],
+        "tags": ["collapsible", "changelog", "ssr", "no-js"],
         "preview": {
           "width": "full"
         },
@@ -1386,11 +1131,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-collapsible-009-*. It is a server component: there are no hooks, and the open flag of each release goes straight into the details attribute. This is not an «initial state value» but the state itself: nothing flashes before hydration, and printing and find-in-page see the content. The toggle caption changes without React — two data-when nodes sit in the markup and the details[open] selector shows the right one."
           }
         },
-        "cardControls": [
-          "title",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "accent", "background"]
       }
     },
     {
@@ -1398,9 +1139,7 @@
       "type": "registry:component",
       "title": "Липкие заголовки",
       "description": "Свёртки внутри карточки с прокруткой: заголовок раздела липнет к верху и не уезжает, пока не придёт следующий.",
-      "categories": [
-        "collapsible"
-      ],
+      "categories": ["collapsible"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1412,12 +1151,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-collapsible-010-*. Серверный: хуков нет. Прокрутка ограничена контейнером [data-part=\"scroll\"] с max-height и overscroll-behavior:contain, а summary внутри него получает position:sticky и top:0 — прилипание работает только потому, что скролл-контейнер свой, а не окно. Общее число элементов считается из массива sections и выводится в шапке карточки.",
       "meta": {
-        "tags": [
-          "collapsible",
-          "sticky",
-          "scroll",
-          "sections"
-        ],
+        "tags": ["collapsible", "sticky", "scroll", "sections"],
         "preview": {
           "width": "full"
         },
@@ -1555,11 +1289,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-collapsible-010-*. It is a server component: there are no hooks. Scrolling is confined to the [data-part=\"scroll\"] container with max-height and overscroll-behavior:contain, while the summary inside it gets position:sticky and top:0 — the pinning works only because the scroll container is its own rather than the window. The total number of items is computed from the sections array and printed in the card header."
           }
         },
-        "cardControls": [
-          "title",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "accent", "background"]
       }
     }
   ]

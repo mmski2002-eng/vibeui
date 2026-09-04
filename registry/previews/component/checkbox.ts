@@ -27,6 +27,7 @@ import { Checkbox019 } from "@/registry/components/checkbox/checkbox-019/checkbo
 import { Checkbox020 } from "@/registry/components/checkbox/checkbox-020/checkbox-020"
 import { Checkbox021 } from "@/registry/components/checkbox/checkbox-021/checkbox-021"
 import { Checkbox022 } from "@/registry/components/checkbox/checkbox-022/checkbox-022"
+import { Checkbox023 } from "@/registry/components/checkbox/checkbox-023/checkbox-023"
 
 export const PREVIEWS = {
   "checkbox-001": Checkbox001,
@@ -51,4 +52,5 @@ export const PREVIEWS = {
   "checkbox-020": Checkbox020,
   "checkbox-021": Checkbox021,
   "checkbox-022": Checkbox022,
+  "checkbox-023": Checkbox023,
 } satisfies Record<string, ComponentType<PreviewProps>>

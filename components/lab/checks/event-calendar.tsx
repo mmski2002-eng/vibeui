@@ -5,8 +5,6 @@ import { Eventcalendar002 } from "@/registry/components/event-calendar/eventcale
 import { Eventcalendar003 } from "@/registry/components/event-calendar/eventcalendar-003/eventcalendar-003"
 import { Eventcalendar004 } from "@/registry/components/event-calendar/eventcalendar-004/eventcalendar-004"
 import { Eventcalendar005 } from "@/registry/components/event-calendar/eventcalendar-005/eventcalendar-005"
-import { Eventcalendar006 } from "@/registry/components/event-calendar/eventcalendar-006/eventcalendar-006"
-import { Eventcalendar007 } from "@/registry/components/event-calendar/eventcalendar-007/eventcalendar-007"
 
 /** Seed прогона: с ним набор воспроизводится один в один. */
 export const SEED = 23865
@@ -53,30 +51,5 @@ export const CHECKS: LabCheck[] = [
     title: "Легенда источников",
     notes: ["Заголовок: Смена", "Недель в сетке: 5", "Акцент: #72e67f"],
     node: <Eventcalendar005 heading="Смена" weeks={5} accent="#72e67f" />,
-  },
-  {
-    name: "eventcalendar-006",
-    title: "Выбор времени приёма",
-    notes: ["Заголовок: Проверка", "Дата: Черновик", "Акцент: #1f7a5c"],
-    node: (
-      <Eventcalendar006
-        heading="Проверка"
-        dateLabel="Черновик"
-        accent="#1f7a5c"
-      />
-    ),
-  },
-  {
-    name: "eventcalendar-007",
-    title: "Месяц с точками занятости",
-    notes: ["Месяц: Проверка", "Сегодня: 5", "Выбранный день: 12"],
-    node: (
-      <Eventcalendar007
-        month="Проверка"
-        today={5}
-        selected={12}
-        accent="#7a3fd4"
-      />
-    ),
   },
 ]

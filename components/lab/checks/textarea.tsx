@@ -2,7 +2,6 @@ import type { LabCheck } from "@/components/lab/check-types"
 
 import { Textarea001 } from "@/registry/components/textarea/textarea-001/textarea-001"
 import { Textarea002 } from "@/registry/components/textarea/textarea-002/textarea-002"
-import { Textarea003 } from "@/registry/components/textarea/textarea-003/textarea-003"
 import { Textarea004 } from "@/registry/components/textarea/textarea-004/textarea-004"
 import { Textarea005 } from "@/registry/components/textarea/textarea-005/textarea-005"
 import { Textarea006 } from "@/registry/components/textarea/textarea-006/textarea-006"
@@ -40,12 +39,6 @@ export const CHECKS: LabCheck[] = [
     title: "Поле с лимитом",
     notes: ["Подпись: Смена", "Предел: 438", "Акцент: #c0de7d"],
     node: <Textarea002 label="Смена" limit={438} accent="#c0de7d" />,
-  },
-  {
-    name: "textarea-003",
-    title: "Поле с автовысотой",
-    notes: ["Стартовая высота: 2", "Подпись: Подпись: тест", "Акцент: #169cfe"],
-    node: <Textarea003 rows={2} hint="Подпись: тест" accent="#169cfe" />,
   },
   {
     name: "textarea-004",

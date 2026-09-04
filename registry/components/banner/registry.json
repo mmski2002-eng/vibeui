@@ -2186,6 +2186,154 @@
           "width": "full"
         }
       }
+    },
+    {
+      "name": "banner-015",
+      "type": "registry:component",
+      "title": "Баннер установки приложения",
+      "description": "Полоса-приглашение поставить приложение: значок, имя и что оно делает — не рекламная фраза «установите нас», а карточка самого приложения.",
+      "categories": ["banner"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "banner-015/banner-015.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/banner-015.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-banner-015-*. Значок — картинка с провалом на первую букву названия, если iconSrc не задан или не загрузился (тот же приём, что в toast-015 у аватара). Кнопка закрытия появляется только когда передан onDismiss: полосе, которую нечем закрыть, крестик не нужен. На узкой ширине текст и кнопки уходят на отдельные строки через @container.",
+      "meta": {
+        "tags": ["banner", "pwa", "install", "app"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Banner015",
+          "usage": "<Banner015\n  appName=\"VibeUI\"\n  tagline=\"Работает офлайн и открывается с домашнего экрана\"\n  iconSrc=\"/icons/app-icon.png\"\n  onInstall={promptInstall}\n  onDismiss={hideBanner}\n/>",
+          "summary": "Полоса-приглашение установить приложение: квадратный значок с провалом на первую букву названия, имя приложения, короткое описание того, что оно делает, кнопка «Установить» и крестик. На узкой ширине текст и кнопки переносятся на отдельные строки. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-banner-015-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
+            "значок с провалом на первую букву названия при отсутствующей или битой ссылке — иначе приглашение выглядит обезличенным квадратом",
+            "кнопку закрытия только вместе с обработчиком onDismiss: полосе, которую нечем закрыть, крестик не нужен",
+            "@container-запрос с переносом текста и кнопок на отдельные строки: без него на узкой ширине содержимое сжимается в нечитаемый столбик",
+            "aria-label у крестика и role=\"region\" с именем приложения на корневом блоке — иначе полоса не объявлена скринридеру как единый смысловой блок",
+            "блок <style> внутри компонента — в нём вся палитра и раскладка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "appName и tagline — имя приложения и что оно умеет",
+            "iconSrc — ссылка на значок приложения; пусто означает заглушку первой буквой",
+            "installLabel — подпись кнопки установки",
+            "обработчики onInstall и onDismiss — сам компонент не запускает установку и не прячет себя",
+            "accent — цвет кнопки «Установить»",
+            "background — подложка полосы; пусто означает штатную палитру"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Компонент не проверяет, установлено ли уже приложение, и не вызывает системный диалог установки сам — это делает обработчик onInstall на стороне вызывающего кода (beforeinstallprompt на Android, инструкция «Поделиться» на iOS).",
+            "Компонент не показывает и не прячет себя сам: решение не показывать повторно после закрытия — задача вызывающего кода.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "appName",
+            "label": "Название",
+            "type": "text",
+            "default": "VibeUI",
+            "maxLength": 30
+          },
+          {
+            "prop": "tagline",
+            "label": "Описание",
+            "type": "text",
+            "default": "Работает офлайн и открывается с домашнего экрана",
+            "maxLength": 70
+          },
+          {
+            "prop": "installLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Установить",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "appName",
+          "tagline",
+          "installLabel",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "description": "An install-the-app invitation bar: an icon, a name and what it does — not an ad-like \"install us\" line, but the app's own card.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local --vibeui-banner-015-* variables. The icon is an image falling back to the app name's first letter when iconSrc is unset or fails to load (the same trick as the avatar in toast-015). The close button appears only when onDismiss is passed: a bar with nothing to close it with does not need a cross. On a narrow width the text and buttons move to their own lines via @container.",
+            "ai": {
+              "summary": "An install-the-app invitation bar: a square icon falling back to the app name's first letter, the app name, a short description of what it does, an \"Install\" button and a close cross. On a narrow width the text and buttons wrap onto separate lines. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-banner-015-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the icon falling back to the app name's first letter on a missing or broken link — otherwise the invitation reads as an anonymous square",
+                "the close button appearing only together with the onDismiss handler — a bar with nothing to close it with does not need a cross",
+                "the @container query wrapping the text and buttons onto separate lines — without it the content squeezes into an unreadable column on a narrow width",
+                "the aria-label on the close cross and role=\"region\" with the app name on the root block — otherwise the bar is not announced to a screen reader as one meaningful block",
+                "the <style> block inside the component — it carries the whole palette and layout",
+                "light-dark() in the palette: the component must follow the surrounding color-scheme, not carry its own dark theme"
+              ],
+              "adapt": [
+                "appName and tagline — the app's name and what it does",
+                "iconSrc — the app icon link; empty means the letter placeholder",
+                "installLabel — the install button's caption",
+                "the onInstall and onDismiss handlers — the component itself does not trigger installation or hide itself",
+                "accent — the \"Install\" button's color",
+                "background — the bar's backing; empty means the stock palette"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the host project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The component does not check whether the app is already installed and does not trigger the system install prompt itself — that is the onInstall handler's job on the caller's side (beforeinstallprompt on Android, the Share-sheet instructions on iOS).",
+                "The component does not show or hide itself: deciding not to show it again after dismissal is the caller's job.",
+                "Do not move the CSS variables into globals.css: the component must stay a single file."
+              ],
+              "usage": "<Banner015\n  appName=\"VibeUI\"\n  tagline=\"Works offline and opens from the home screen\"\n  iconSrc=\"/icons/app-icon.png\"\n  onInstall={promptInstall}\n  onDismiss={hideBanner}\n/>"
+            },
+            "controls": {
+              "appName": {
+                "label": "Name",
+                "default": "VibeUI"
+              },
+              "tagline": {
+                "label": "Description",
+                "default": "Works offline and opens from the home screen"
+              },
+              "installLabel": {
+                "label": "Button",
+                "default": "Install"
+              },
+              "accent": {
+                "label": "Accent",
+                "default": ""
+              },
+              "background": {
+                "label": "Background",
+                "default": ""
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

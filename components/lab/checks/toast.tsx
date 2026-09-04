@@ -24,6 +24,7 @@ import { Toast021 } from "@/registry/components/toast/toast-021/toast-021"
 import { Toast022 } from "@/registry/components/toast/toast-022/toast-022"
 import { Toast023 } from "@/registry/components/toast/toast-023/toast-023"
 import { Toast024 } from "@/registry/components/toast/toast-024/toast-024"
+import { Toast025 } from "@/registry/components/toast/toast-025/toast-025"
 
 /** Seed прогона: с ним набор воспроизводится один в один. */
 export const SEED = 52594
@@ -504,6 +505,24 @@ export const CHECKS: LabCheck[] = [
         stepMs={700}
         expandLabel="Подробности"
         tone="#7c5cff"
+      />
+    ),
+  },
+  {
+    name: "toast-025",
+    title: "Товар добавлен в корзину",
+    notes: [
+      "Название: Смена",
+      "Цена: Что дальше",
+      "Количество: 3",
+      "Акцент: #4c8f6b",
+    ],
+    node: (
+      <Toast025
+        itemName="Смена"
+        price="Что дальше"
+        quantity={3}
+        accent="#4c8f6b"
       />
     ),
   },

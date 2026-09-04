@@ -19,6 +19,7 @@ import { Switch011 } from "@/registry/components/switch/switch-011/switch-011"
 import { Switch012 } from "@/registry/components/switch/switch-012/switch-012"
 import { Switch013 } from "@/registry/components/switch/switch-013/switch-013"
 import { Switch014 } from "@/registry/components/switch/switch-014/switch-014"
+import { Switch015 } from "@/registry/components/switch/switch-015/switch-015"
 
 export const PREVIEWS = {
   "switch-001": Switch001,
@@ -35,4 +36,5 @@ export const PREVIEWS = {
   "switch-012": Switch012,
   "switch-013": Switch013,
   "switch-014": Switch014,
+  "switch-015": Switch015,
 } satisfies Record<string, ComponentType<PreviewProps>>

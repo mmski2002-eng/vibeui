@@ -13,6 +13,7 @@ import { Accordion010 } from "@/registry/components/accordion/accordion-010/acco
 import { Accordion011 } from "@/registry/components/accordion/accordion-011/accordion-011"
 import { Accordion012 } from "@/registry/components/accordion/accordion-012/accordion-012"
 import { Accordion013 } from "@/registry/components/accordion/accordion-013/accordion-013"
+import { Accordion014 } from "@/registry/components/accordion/accordion-014/accordion-014"
 
 /** Seed прогона: с ним набор воспроизводится один в один. */
 export const SEED = 84270
@@ -303,6 +304,34 @@ export const CHECKS: LabCheck[] = [
         exclusive={false}
         defaultOpen={2}
         group="lab-accordion-013-dark"
+      />
+    ),
+  },
+  {
+    name: "accordion-014",
+    title: "Аккордеон с постоянными ссылками",
+    notes: [
+      "Значок: none",
+      "Открыт раздел: 1",
+      "Акцент: #1c7fd6",
+      "Один раздел: false",
+    ],
+    node: (
+      <Accordion014
+        marker="none"
+        defaultOpen={1}
+        accent="#1c7fd6"
+        exclusive={false}
+        group="lab-accordion-014-light"
+      />
+    ),
+    nodeDark: (
+      <Accordion014
+        marker="none"
+        defaultOpen={1}
+        accent="#1c7fd6"
+        exclusive={false}
+        group="lab-accordion-014-dark"
       />
     ),
   },

@@ -21,6 +21,7 @@ import { Card018 } from "@/registry/components/card/card-018/card-018"
 import { Card019 } from "@/registry/components/card/card-019/card-019"
 import { Card020 } from "@/registry/components/card/card-020/card-020"
 import { Card021 } from "@/registry/components/card/card-021/card-021"
+import { Card022 } from "@/registry/components/card/card-022/card-022"
 
 /** Seed прогона: с ним набор воспроизводится один в один. */
 export const SEED = 44675
@@ -347,6 +348,26 @@ export const CHECKS: LabCheck[] = [
     ],
     node: (
       <Card021 rows={2} avatar={true} label="Что дальше" accent="#d1ec64" />
+    ),
+  },
+  {
+    name: "card-022",
+    title: "Карточка события",
+    notes: [
+      "Заголовок: Подпись: тест",
+      "День: 24",
+      "Время: 20:15",
+      "Место: Смена",
+      "Акцент: #2f7d5c",
+    ],
+    node: (
+      <Card022
+        title="Подпись: тест"
+        dateDay="24"
+        time="20:15"
+        location="Смена"
+        accent="#2f7d5c"
+      />
     ),
   },
 ]

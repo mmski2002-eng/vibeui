@@ -12,6 +12,7 @@ import { Timeline009 } from "@/registry/components/timeline/timeline-009/timelin
 import { Timeline010 } from "@/registry/components/timeline/timeline-010/timeline-010"
 import { Timeline011 } from "@/registry/components/timeline/timeline-011/timeline-011"
 import { Timeline012 } from "@/registry/components/timeline/timeline-012/timeline-012"
+import { Timeline013 } from "@/registry/components/timeline/timeline-013/timeline-013"
 
 /** Seed прогона: с ним набор воспроизводится один в один. */
 export const SEED = 76351
@@ -108,5 +109,11 @@ export const CHECKS: LabCheck[] = [
     title: "Сводка за день",
     notes: ["Заголовок: Черновик", "Акцент: #fff51a"],
     node: <Timeline012 title="Черновик" accent="#fff51a" />,
+  },
+  {
+    name: "timeline-013",
+    title: "Двусторонние вехи",
+    notes: ["Заголовок: Черновик", "Акцент: #2fb8a6"],
+    node: <Timeline013 title="Черновик" accent="#2fb8a6" />,
   },
 ]

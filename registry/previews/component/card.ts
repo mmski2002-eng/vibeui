@@ -26,6 +26,7 @@ import { Card018 } from "@/registry/components/card/card-018/card-018"
 import { Card019 } from "@/registry/components/card/card-019/card-019"
 import { Card020 } from "@/registry/components/card/card-020/card-020"
 import { Card021 } from "@/registry/components/card/card-021/card-021"
+import { Card022 } from "@/registry/components/card/card-022/card-022"
 
 export const PREVIEWS = {
   "card-001": Card001,
@@ -49,4 +50,5 @@ export const PREVIEWS = {
   "card-019": Card019,
   "card-020": Card020,
   "card-021": Card021,
+  "card-022": Card022,
 } satisfies Record<string, ComponentType<PreviewProps>>

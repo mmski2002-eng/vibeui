@@ -101,4 +101,9 @@ export const PREVIEWS = {
       (module) => module.Frame019,
     ),
   ),
+  "frame-020": dynamic(() =>
+    import("@/registry/components/frame/frame-020/frame-020").then(
+      (module) => module.Frame020,
+    ),
+  ),
 } satisfies PreviewMap

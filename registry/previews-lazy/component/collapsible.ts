@@ -36,11 +36,6 @@ export const PREVIEWS = {
       (module) => module.Collapsible006,
     ),
   ),
-  "collapsible-007": dynamic(() =>
-    import("@/registry/components/collapsible/collapsible-007/collapsible-007").then(
-      (module) => module.Collapsible007,
-    ),
-  ),
   "collapsible-008": dynamic(() =>
     import("@/registry/components/collapsible/collapsible-008/collapsible-008").then(
       (module) => module.Collapsible008,

@@ -19,6 +19,7 @@ import { Frame016 } from "@/registry/components/frame/frame-016/frame-016"
 import { Frame017 } from "@/registry/components/frame/frame-017/frame-017"
 import { Frame018 } from "@/registry/components/frame/frame-018/frame-018"
 import { Frame019 } from "@/registry/components/frame/frame-019/frame-019"
+import { Frame020 } from "@/registry/components/frame/frame-020/frame-020"
 
 /** Seed прогона: с ним набор воспроизводится один в один. */
 export const SEED = 52594
@@ -279,5 +280,17 @@ export const CHECKS: LabCheck[] = [
       "Акцент: #f75473",
     ],
     node: <Frame019 caption="Подпись: тест" stub="Смена" accent="#f75473" />,
+  },
+  {
+    name: "frame-020",
+    title: "Экран монитора",
+    notes: [
+      "Подпись под кадром: Подпись: тест",
+      "Тон корпуса: graphite",
+      "Текст пустого экрана: Смена",
+    ],
+    node: (
+      <Frame020 caption="Подпись: тест" tone="graphite" stubText="Смена" />
+    ),
   },
 ]

@@ -31,14 +31,4 @@ export const PREVIEWS = {
       (module) => module.Eventcalendar005,
     ),
   ),
-  "eventcalendar-006": dynamic(() =>
-    import("@/registry/components/event-calendar/eventcalendar-006/eventcalendar-006").then(
-      (module) => module.Eventcalendar006,
-    ),
-  ),
-  "eventcalendar-007": dynamic(() =>
-    import("@/registry/components/event-calendar/eventcalendar-007/eventcalendar-007").then(
-      (module) => module.Eventcalendar007,
-    ),
-  ),
 } satisfies PreviewMap

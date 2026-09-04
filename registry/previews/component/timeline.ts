@@ -17,6 +17,7 @@ import { Timeline009 } from "@/registry/components/timeline/timeline-009/timelin
 import { Timeline010 } from "@/registry/components/timeline/timeline-010/timeline-010"
 import { Timeline011 } from "@/registry/components/timeline/timeline-011/timeline-011"
 import { Timeline012 } from "@/registry/components/timeline/timeline-012/timeline-012"
+import { Timeline013 } from "@/registry/components/timeline/timeline-013/timeline-013"
 
 export const PREVIEWS = {
   "timeline-001": Timeline001,
@@ -31,4 +32,5 @@ export const PREVIEWS = {
   "timeline-010": Timeline010,
   "timeline-011": Timeline011,
   "timeline-012": Timeline012,
+  "timeline-013": Timeline013,
 } satisfies Record<string, ComponentType<PreviewProps>>

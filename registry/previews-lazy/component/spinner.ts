@@ -66,4 +66,9 @@ export const PREVIEWS = {
       (module) => module.Spinner012,
     ),
   ),
+  "spinner-013": dynamic(() =>
+    import("@/registry/components/spinner/spinner-013/spinner-013").then(
+      (module) => module.Spinner013,
+    ),
+  ),
 } satisfies PreviewMap

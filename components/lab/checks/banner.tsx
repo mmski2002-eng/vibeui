@@ -14,6 +14,7 @@ import { Banner011 } from "@/registry/components/banner/banner-011/banner-011"
 import { Banner012 } from "@/registry/components/banner/banner-012/banner-012"
 import { Banner013 } from "@/registry/components/banner/banner-013/banner-013"
 import { Banner014 } from "@/registry/components/banner/banner-014/banner-014"
+import { Banner015 } from "@/registry/components/banner/banner-015/banner-015"
 
 /** Seed прогона: с ним набор воспроизводится один в один. */
 export const SEED = 60513
@@ -243,6 +244,24 @@ export const CHECKS: LabCheck[] = [
         note="Правки после неё сюда не попали."
         actionLabel="Открыть текущую"
         accent="#d59a3a"
+      />
+    ),
+  },
+  {
+    name: "banner-015",
+    title: "Баннер установки приложения",
+    notes: [
+      "Название: Смена",
+      "Описание: Что дальше",
+      "Кнопка: Черновик",
+      "Акцент: #2f6f9e",
+    ],
+    node: (
+      <Banner015
+        appName="Смена"
+        tagline="Что дальше"
+        installLabel="Черновик"
+        accent="#2f6f9e"
       />
     ),
   },

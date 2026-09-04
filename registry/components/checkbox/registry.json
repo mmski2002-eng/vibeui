@@ -6,9 +6,7 @@
       "type": "registry:component",
       "title": "Строка с флажком",
       "description": "Чекбокс, у которого мишень — вся строка с подписью и пояснением, а не квадратик в углу. Галка нарисована на CSS, состояние держит нативный input.",
-      "categories": [
-        "checkbox"
-      ],
+      "categories": ["checkbox"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-001-*. Корень — <label>, поэтому кликается вся строка вместе с пояснением. Внутри нативный input[type=checkbox] с appearance:none: состояние, клавиатура и участие в форме остаются нативными. Галка — две грани квадрата, повёрнутые на 45°, и она вырастает из нуля при отметке; иконочная библиотека не нужна. Отрицательные margin компенсируют внутренние отступы строки, чтобы компонент не сдвигался относительно соседей.",
       "meta": {
-        "tags": [
-          "checkbox",
-          "form",
-          "settings",
-          "toggle"
-        ],
+        "tags": ["checkbox", "form", "settings", "toggle"],
         "ai": {
           "export": "Checkbox001",
           "usage": "<Checkbox001\n  name=\"reports\"\n  defaultChecked\n  label=\"Присылать отчёты\"\n  description=\"Раз в неделю, коротким письмом.\"\n/>",
@@ -194,9 +187,7 @@
       "type": "registry:component",
       "title": "Флажки выбора",
       "description": "Множественный выбор карточками: вся карточка — цель нажатия, а не квадратик в 16 пикселей.",
-      "categories": [
-        "checkbox"
-      ],
+      "categories": ["checkbox"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -208,12 +199,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-002-*. Клиентский: \"use client\". Внутри настоящие input type=\"checkbox\", растянутые на карточку и прозрачные; отмеченное состояние стилизуется через :has(input:checked). Группа обёрнута в fieldset с legend, счётчик выбранного стоит под списком.",
       "meta": {
-        "tags": [
-          "checkbox",
-          "cards",
-          "multiselect",
-          "form"
-        ],
+        "tags": ["checkbox", "cards", "multiselect", "form"],
         "preview": {
           "width": "full"
         },
@@ -342,11 +328,7 @@
             }
           }
         },
-        "cardControls": [
-          "legend",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["legend", "accent", "background"]
       }
     },
     {
@@ -354,9 +336,7 @@
       "type": "registry:component",
       "title": "Родительский флажок",
       "description": "Родительский чекбокс с промежуточным состоянием: когда отмечена часть детей, он показывает черту, а не пустоту.",
-      "categories": [
-        "checkbox"
-      ],
+      "categories": ["checkbox"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -368,12 +348,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-003-*. Клиентский: \"use client\". Свойство indeterminate живёт только в DOM и не задаётся атрибутом, поэтому его ставит эффект по ссылке на узел. Галочка и черта нарисованы псевдоэлементами и различаются формой, а не только цветом.",
       "meta": {
-        "tags": [
-          "checkbox",
-          "indeterminate",
-          "group",
-          "tree"
-        ],
+        "tags": ["checkbox", "indeterminate", "group", "tree"],
         "ai": {
           "export": "Checkbox003",
           "usage": "<Checkbox003 items={items} defaultValue={[\"Каталог\"]} onChange={setValue} />",
@@ -484,19 +459,12 @@
                   "Agent instructions",
                   "Dark theme"
                 ],
-                "defaultValue": [
-                  "Component catalogue",
-                  "Dark theme"
-                ]
+                "defaultValue": ["Component catalogue", "Dark theme"]
               }
             }
           }
         },
-        "cardControls": [
-          "legend",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["legend", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -507,9 +475,7 @@
       "type": "registry:component",
       "title": "Список фильтров",
       "description": "Список фильтров с числом находок: ноль не прячется, а выключается — исчезнувший фильтр читается как отсутствующий.",
-      "categories": [
-        "checkbox"
-      ],
+      "categories": ["checkbox"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -521,12 +487,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-004-*. Клиентский: \"use client\". Строка — сетка из чекбокса, подписи и числа; числа выровнены по правому краю табличными цифрами. Пустые фильтры остаются в списке с атрибутом disabled. Внизу считается, сколько найдётся по выбранным, и стоит сброс.",
       "meta": {
-        "tags": [
-          "checkbox",
-          "filters",
-          "counts",
-          "catalog"
-        ],
+        "tags": ["checkbox", "filters", "counts", "catalog"],
         "ai": {
           "export": "Checkbox004",
           "usage": "<Checkbox004 filters={[{ label: \"Кнопки\", count: 20 }]} onChange={setFilters} />",
@@ -654,18 +615,12 @@
                     "disabled": true
                   }
                 ],
-                "defaultValue": [
-                  "Buttons"
-                ]
+                "defaultValue": ["Buttons"]
               }
             }
           }
         },
-        "cardControls": [
-          "legend",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["legend", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -676,9 +631,7 @@
       "type": "registry:component",
       "title": "Флажок согласия",
       "description": "Согласие с условиями: галочка никогда не проставлена заранее, а ссылка на документ остаётся отдельной целью.",
-      "categories": [
-        "checkbox"
-      ],
+      "categories": ["checkbox"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -690,12 +643,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-005-*. Клиентский: \"use client\". Состояние ошибки появляется только после первого касания, поле помечается aria-invalid и связывается с текстом ошибки через aria-describedby, сообщение объявлено role=\"alert\". Клик по ссылке останавливает всплытие, чтобы не переключить галочку.",
       "meta": {
-        "tags": [
-          "checkbox",
-          "consent",
-          "legal",
-          "validation"
-        ],
+        "tags": ["checkbox", "consent", "legal", "validation"],
         "ai": {
           "export": "Checkbox005",
           "usage": "<Checkbox005 linkLabel=\"условия обработки данных\" linkHref=\"/terms\" />",
@@ -822,13 +770,7 @@
             }
           }
         },
-        "cardControls": [
-          "text",
-          "linkLabel",
-          "error",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["text", "linkLabel", "error", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -839,9 +781,7 @@
       "type": "registry:component",
       "title": "Выделение строк",
       "description": "Выбор строк таблицы: полоса действий появляется только с выбором и всегда называет число выбранного.",
-      "categories": [
-        "checkbox"
-      ],
+      "categories": ["checkbox"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -853,12 +793,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-006-*. Клиентский: \"use client\". Заголовочный чекбокс получает indeterminate через эффект и подписан «выбрать все строки на странице». Выбранные строки подсвечиваются через :has(input:checked). Полоса действий объявлена role=\"status\", поэтому число выбранного проговаривается.",
       "meta": {
-        "tags": [
-          "checkbox",
-          "table",
-          "selection",
-          "bulk"
-        ],
+        "tags": ["checkbox", "table", "selection", "bulk"],
         "preview": {
           "width": "full"
         },
@@ -984,18 +919,12 @@
                     "meta": "£620"
                   }
                 ],
-                "defaultValue": [
-                  "1",
-                  "3"
-                ]
+                "defaultValue": ["1", "3"]
               }
             }
           }
         },
-        "cardControls": [
-          "accent",
-          "background"
-        ]
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1003,9 +932,7 @@
       "type": "registry:component",
       "title": "Чеклист",
       "description": "Чеклист с зачёркиванием: выполненное остаётся на своём месте — список, переставляющий строки под курсором, невозможно заполнять.",
-      "categories": [
-        "checkbox"
-      ],
+      "categories": ["checkbox"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1017,12 +944,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-007-*. Клиентский: \"use client\". Отметка круглая, а не квадратная: это задача, а не поле формы. Зачёркивание включается через :has(input:checked) на строке, порядок строк не меняется. В шапке стоит счётчик выполненного.",
       "meta": {
-        "tags": [
-          "checkbox",
-          "checklist",
-          "tasks",
-          "progress"
-        ],
+        "tags": ["checkbox", "checklist", "tasks", "progress"],
         "ai": {
           "export": "Checkbox007",
           "usage": "<Checkbox007 tasks={tasks} defaultDone={[\"1\"]} onChange={setDone} />",
@@ -1146,18 +1068,12 @@
                     "due": "Fri"
                   }
                 ],
-                "defaultDone": [
-                  "1"
-                ]
+                "defaultDone": ["1"]
               }
             }
           }
         },
-        "cardControls": [
-          "title",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["title", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -1168,9 +1084,7 @@
       "type": "registry:component",
       "title": "Флажок для пальца",
       "description": "Крупный чекбокс для телефона: квадрат 1.5rem и строка 2.75rem — цель, в которую попадают пальцем без прицеливания.",
-      "categories": [
-        "checkbox"
-      ],
+      "categories": ["checkbox"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1182,12 +1096,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-008-*. Клиентский: \"use client\". Отметка нарисована через appearance: none и псевдоэлемент, размер задан в rem и масштабируется с настройками системы. Подсказка связана с полем через aria-describedby, выключенное состояние гасит всю строку.",
       "meta": {
-        "tags": [
-          "checkbox",
-          "mobile",
-          "touch",
-          "form"
-        ],
+        "tags": ["checkbox", "mobile", "touch", "form"],
         "preview": {
           "width": "full",
           "states": [
@@ -1344,9 +1253,7 @@
     {
       "name": "checkbox-009",
       "type": "registry:component",
-      "categories": [
-        "checkbox"
-      ],
+      "categories": ["checkbox"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1360,12 +1267,7 @@
       "description": "Настройки с пояснением под каждой подписью: изменённые строки помечаются точкой, а черновик применяется кнопкой «Сохранить».",
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-009-*. Клиентский: \"use client\". Держит два набора значений — сохранённый и черновик; их разница даёт точку у изменённой строки и число несохранённого в подвале. Строка — grid из квадрата, подписи с бейджем и пояснения; квадрат занимает обе строки сетки через grid-row: 1 / span 2. Счётчик несохранённого объявлен role=\"status\".",
       "meta": {
-        "tags": [
-          "checkbox",
-          "settings",
-          "draft",
-          "form"
-        ],
+        "tags": ["checkbox", "settings", "draft", "form"],
         "ai": {
           "export": "Checkbox009",
           "usage": "<Checkbox009\n  title=\"Уведомления\"\n  options={options}\n  defaultValue={[\"digest\"]}\n  onChange={setValue}\n/>",
@@ -1489,9 +1391,7 @@
                     "description": "Every production deploy with its result and time."
                   }
                 ],
-                "defaultValue": [
-                  "digest"
-                ]
+                "defaultValue": ["digest"]
               }
             }
           }
@@ -1499,19 +1399,13 @@
         "preview": {
           "width": "full"
         },
-        "cardControls": [
-          "title",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "accent", "background"]
       }
     },
     {
       "name": "checkbox-010",
       "type": "registry:component",
-      "categories": [
-        "checkbox"
-      ],
+      "categories": ["checkbox"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1525,12 +1419,7 @@
       "description": "Карточки-чекбоксы с ценой: выбор рисуется вложенной рамкой, поэтому карточка не дёргается, а суммы складываются в итог под списком.",
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-010-*. Клиентский: \"use client\". Настоящий input спрятан визуально (clip-path: inset(50%)), состояние карточки берётся через :has(input:checked). Выбор показан box-shadow inset в два пикселя вместо смены border — геометрия карточки не меняется и соседи не съезжают. Группа обёрнута в fieldset с legend, у legend стоит float и clear:both у карточек.",
       "meta": {
-        "tags": [
-          "checkbox",
-          "cards",
-          "pricing",
-          "multiselect"
-        ],
+        "tags": ["checkbox", "cards", "pricing", "multiselect"],
         "ai": {
           "export": "Checkbox010",
           "usage": "<Checkbox010\n  legend=\"Дополнения к тарифу\"\n  addons={addons}\n  currency=\"₽/мес\"\n  onChange={setExtras}\n/>",
@@ -1668,9 +1557,7 @@
                     "price": 9
                   }
                 ],
-                "defaultValue": [
-                  "backup"
-                ]
+                "defaultValue": ["backup"]
               }
             }
           }
@@ -1678,20 +1565,13 @@
         "preview": {
           "width": "full"
         },
-        "cardControls": [
-          "legend",
-          "currency",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["legend", "currency", "accent", "background"]
       }
     },
     {
       "name": "checkbox-011",
       "type": "registry:component",
-      "categories": [
-        "checkbox"
-      ],
+      "categories": ["checkbox"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1705,12 +1585,7 @@
       "description": "Панель «выбрать всё» над списком: промежуточное состояние, число выбранного и инверсия выбора одной кнопкой.",
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-011-*. Клиентский: \"use client\". Заголовочный чекбокс получает indeterminate эффектом по ссылке на узел — атрибутом это свойство не задаётся. Промежуточное состояние нарисовано чертой через ::after, отмеченное — галочкой из двух граней. Панель отделена от списка фоном и рамкой, счётчик объявлен role=\"status\".",
       "meta": {
-        "tags": [
-          "checkbox",
-          "indeterminate",
-          "toolbar",
-          "selection"
-        ],
+        "tags": ["checkbox", "indeterminate", "toolbar", "selection"],
         "ai": {
           "export": "Checkbox011",
           "usage": "<Checkbox011\n  title=\"Документы\"\n  items={items}\n  defaultValue={[\"Счёт за март\"]}\n  onChange={setValue}\n/>",
@@ -1823,9 +1698,7 @@
                   "June invoice",
                   "July invoice"
                 ],
-                "defaultValue": [
-                  "March invoice"
-                ]
+                "defaultValue": ["March invoice"]
               }
             }
           }
@@ -1833,19 +1706,13 @@
         "preview": {
           "width": "full"
         },
-        "cardControls": [
-          "title",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "accent", "background"]
       }
     },
     {
       "name": "checkbox-012",
       "type": "registry:component",
-      "categories": [
-        "checkbox"
-      ],
+      "categories": ["checkbox"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1859,12 +1726,7 @@
       "description": "Группа с потолком выбора: на лимите оставшиеся пункты выключаются, а полоса и счётчик заранее показывают, сколько ещё можно отметить.",
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-012-*. Клиентский: \"use client\". Достигнутый лимит ставит disabled только невыбранным пунктам, поэтому снять галочку можно всегда. Полоса заполнения — span с шириной в процентах (динамическое значение, класса для него нет). Текст под списком объясняет запрет словами, счётчик объявлен role=\"status\".",
       "meta": {
-        "tags": [
-          "checkbox",
-          "limit",
-          "survey",
-          "group"
-        ],
+        "tags": ["checkbox", "limit", "survey", "group"],
         "ai": {
           "export": "Checkbox012",
           "usage": "<Checkbox012\n  legend=\"Что для вас важнее всего\"\n  limit={3}\n  options={options}\n  onChange={setValue}\n/>",
@@ -1989,9 +1851,7 @@
                   "Reliability",
                   "Looks"
                 ],
-                "defaultValue": [
-                  "Price"
-                ]
+                "defaultValue": ["Price"]
               }
             }
           }
@@ -1999,20 +1859,13 @@
         "preview": {
           "width": "full"
         },
-        "cardControls": [
-          "legend",
-          "limit",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["legend", "limit", "accent", "background"]
       }
     },
     {
       "name": "checkbox-013",
       "type": "registry:component",
-      "categories": [
-        "checkbox"
-      ],
+      "categories": ["checkbox"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2026,12 +1879,7 @@
       "description": "Обязательная галочка как ворота формы: кнопка отправки выключена, пока условие не принято, и рядом написано, почему именно.",
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-013-*. Клиентский: \"use client\". Корень — form с onSubmit и preventDefault: отправка ничего не шлёт, а переводит блок в состояние «готово». У обязательного поля стоит нативный required и звёздочка на самой строке, у необязательного — подпись «необязательно». Причина выключенной кнопки показана текстом под ней. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней; проп background возвращает плашку.",
       "meta": {
-        "tags": [
-          "checkbox",
-          "consent",
-          "form",
-          "validation"
-        ],
+        "tags": ["checkbox", "consent", "form", "validation"],
         "ai": {
           "export": "Checkbox013",
           "usage": "<Checkbox013\n  title=\"Подтверждение заказа\"\n  terms=\"Я принимаю условия оферты\"\n  onConfirm={submitOrder}\n/>",
@@ -2160,20 +2008,13 @@
         "preview": {
           "width": "full"
         },
-        "cardControls": [
-          "terms",
-          "submitLabel",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["terms", "submitLabel", "accent", "background"]
       }
     },
     {
       "name": "checkbox-014",
       "type": "registry:component",
-      "categories": [
-        "checkbox"
-      ],
+      "categories": ["checkbox"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2187,12 +2028,7 @@
       "description": "Список задач, где выполненное уезжает в свёрнутый блок «Готово»: активный список остаётся коротким, а сделанное никуда не пропадает.",
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-014-*. Клиентский: \"use client\". Задачи делятся на два списка по состоянию, выполненные лежат в нативном <details> — сворачивание работает без JS и доступно с клавиатуры. Сверху полоса прогресса: span с шириной в процентах и role=\"progressbar\" с aria-valuenow. Маркер <summary> убран, стрелка нарисована псевдоэлементом. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней; проп background возвращает плашку.",
       "meta": {
-        "tags": [
-          "checkbox",
-          "tasks",
-          "progress",
-          "details"
-        ],
+        "tags": ["checkbox", "tasks", "progress", "details"],
         "ai": {
           "export": "Checkbox014",
           "usage": "<Checkbox014\n  title=\"Запуск раздела\"\n  tasks={tasks}\n  defaultDone={[\"1\"]}\n  onChange={setDone}\n/>",
@@ -2327,19 +2163,13 @@
         "preview": {
           "width": "full"
         },
-        "cardControls": [
-          "title",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "accent", "background"]
       }
     },
     {
       "name": "checkbox-015",
       "type": "registry:component",
-      "categories": [
-        "checkbox"
-      ],
+      "categories": ["checkbox"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2353,12 +2183,7 @@
       "description": "Ошибка у всей группы, а не у строки: «отметьте хотя бы одно» показано рамкой, знаком и объяснением, что именно сделать.",
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-015-*. Клиентский: \"use client\". Ошибка живёт на fieldset: он получает data-invalid, aria-invalid и aria-describedby с идентификатором из useId. Сообщение объявлено role=\"alert\" и состоит из знака «!» кружком и двух строк — что не так и что сделать. Состояние ошибки пересчитывается при отправке и снимается сразу после первой отметки. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней; проп background возвращает плашку.",
       "meta": {
-        "tags": [
-          "checkbox",
-          "validation",
-          "error",
-          "fieldset"
-        ],
+        "tags": ["checkbox", "validation", "error", "fieldset"],
         "ai": {
           "export": "Checkbox015",
           "usage": "<Checkbox015\n  legend=\"Чем занимается ваша команда\"\n  options={options}\n  onSubmitValue={save}\n/>",
@@ -2509,9 +2334,7 @@
     {
       "name": "checkbox-016",
       "type": "registry:component",
-      "categories": [
-        "checkbox"
-      ],
+      "categories": ["checkbox"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2525,12 +2348,7 @@
       "description": "Длинный список чекбоксов с поиском по пунктам: отмеченные закреплены сверху и не исчезают при фильтрации.",
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-016-*. Клиентский: \"use client\". Поиск фильтрует только неотмеченные пункты; выбранные всегда идут первой группой, поэтому фильтр не выглядит сбросом выбора. Список прокручивается внутри себя (max-height + overscroll-behavior: contain), поле поиска и счётчик остаются на месте. Заголовки групп скрыты от скринридера как декоративные. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней; проп background возвращает плашку.",
       "meta": {
-        "tags": [
-          "checkbox",
-          "search",
-          "list",
-          "filter"
-        ],
+        "tags": ["checkbox", "search", "list", "filter"],
         "ai": {
           "export": "Checkbox016",
           "usage": "<Checkbox016\n  label=\"Страны доставки\"\n  options={countries}\n  defaultValue={[\"Грузия\"]}\n  onChange={setValue}\n/>",
@@ -2661,9 +2479,7 @@
                   "Spain",
                   "Turkey"
                 ],
-                "defaultValue": [
-                  "Georgia"
-                ],
+                "defaultValue": ["Georgia"],
                 "pickedLabel": "Selected",
                 "restLabel": "The rest",
                 "emptyText": "Nothing found",
@@ -2675,20 +2491,13 @@
         "preview": {
           "width": "full"
         },
-        "cardControls": [
-          "label",
-          "placeholder",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["label", "placeholder", "accent", "background"]
       }
     },
     {
       "name": "checkbox-017",
       "type": "registry:component",
-      "categories": [
-        "checkbox"
-      ],
+      "categories": ["checkbox"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2702,12 +2511,7 @@
       "description": "Таблица, где выбор ставится диапазоном: клик с Shift отмечает всё от прошлой отметки до текущей, а подсказка про жест написана явно.",
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-017-*. Клиентский: \"use client\". Логика диапазона висит на onClick (там доступен shiftKey), onChange оставлен пустым, чтобы React не ругался на управляемый input. Якорь — индекс последней одиночной отметки. Чекбокс шапки получает indeterminate эффектом, выбранные строки подсвечиваются через tr:has(input:checked), таблица завёрнута в контейнер с overflow-x. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней; проп background возвращает плашку.",
       "meta": {
-        "tags": [
-          "checkbox",
-          "table",
-          "range",
-          "shift"
-        ],
+        "tags": ["checkbox", "table", "range", "shift"],
         "ai": {
           "export": "Checkbox017",
           "usage": "<Checkbox017\n  caption=\"Участники проекта\"\n  rows={rows}\n  onChange={setSelected}\n/>",
@@ -2861,19 +2665,13 @@
         "preview": {
           "width": "full"
         },
-        "cardControls": [
-          "caption",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["caption", "accent", "background"]
       }
     },
     {
       "name": "checkbox-018",
       "type": "registry:component",
-      "categories": [
-        "checkbox"
-      ],
+      "categories": ["checkbox"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2887,12 +2685,7 @@
       "description": "Чекбоксы, у которых вместо галочки фигура по смыслу отметки: звезда, флажок и молния вырезаны через clip-path.",
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-018-*. Клиентский: \"use client\". Настоящий input спрятан визуально (clip-path: inset(50%)), карточка реагирует через :has(input:checked). Иконки — квадраты с фоном, обрезанные clip-path: polygon по атрибуту data-shape, поэтому иконочная библиотека не нужна и цвет наследуется из палитры. Невыбранная фигура показана приглушённой, а не пустой рамкой. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней; проп background возвращает плашку.",
       "meta": {
-        "tags": [
-          "checkbox",
-          "icons",
-          "clip-path",
-          "toggle"
-        ],
+        "tags": ["checkbox", "icons", "clip-path", "toggle"],
         "ai": {
           "export": "Checkbox018",
           "usage": "<Checkbox018\n  legend=\"Отметки для карточки\"\n  options={marks}\n  defaultValue={[\"favorite\"]}\n  onChange={setMarks}\n/>",
@@ -3012,9 +2805,7 @@
                     "shape": "bolt"
                   }
                 ],
-                "defaultValue": [
-                  "favorite"
-                ],
+                "defaultValue": ["favorite"],
                 "emptyText": "No marks yet",
                 "countText": "Marks: {count} of {total}"
               }
@@ -3024,19 +2815,13 @@
         "preview": {
           "width": "full"
         },
-        "cardControls": [
-          "legend",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["legend", "accent", "background"]
       }
     },
     {
       "name": "checkbox-019",
       "type": "registry:component",
-      "categories": [
-        "checkbox"
-      ],
+      "categories": ["checkbox"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3050,12 +2835,7 @@
       "description": "Компактный ряд фильтров-таблеток с переносом: настоящие чекбоксы со спрятанным input, галочка у отмеченных и сброс.",
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-019-*. Клиентский: \"use client\". Таблетка — label со спрятанным input (clip-path: inset(50%)), состояние берётся через :has(input:checked). Галочка появляется анимацией ширины, а не opacity, поэтому невыбранная таблетка не резервирует пустое место. Группа обёрнута в fieldset с legend, кнопка сброса выключена при пустом выборе. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней; проп background возвращает плашку.",
       "meta": {
-        "tags": [
-          "checkbox",
-          "chips",
-          "filters",
-          "compact"
-        ],
+        "tags": ["checkbox", "chips", "filters", "compact"],
         "ai": {
           "export": "Checkbox019",
           "usage": "<Checkbox019\n  legend=\"Быстрые фильтры\"\n  options={filters}\n  defaultValue={[\"В наличии\"]}\n  onChange={setFilters}\n/>",
@@ -3166,9 +2946,7 @@
                   "With delivery",
                   "Rated 4+"
                 ],
-                "defaultValue": [
-                  "In stock"
-                ],
+                "defaultValue": ["In stock"],
                 "resetLabel": "Reset",
                 "emptyText": "No filters selected",
                 "countText": "Filters selected: {count}"
@@ -3179,19 +2957,13 @@
         "preview": {
           "width": "full"
         },
-        "cardControls": [
-          "legend",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["legend", "accent", "background"]
       }
     },
     {
       "name": "checkbox-020",
       "type": "registry:component",
-      "categories": [
-        "checkbox"
-      ],
+      "categories": ["checkbox"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3205,12 +2977,7 @@
       "description": "Согласие с длинным документом: текст лежит в прокручиваемой рамке, а галочка включается только после того, как его долистали до конца.",
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-020-*. Клиентский: \"use client\". Обработчик onScroll сравнивает scrollTop + clientHeight со scrollHeight с запасом в восемь пикселей и разблокирует чекбокс. Рамка текста получает tabIndex и role=\"region\" с именем, чтобы её можно было листать с клавиатуры. Градиентная тень у нижнего края показывает продолжение и гаснет по data-read на корне. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней; проп background возвращает плашку.",
       "meta": {
-        "tags": [
-          "checkbox",
-          "legal",
-          "scroll",
-          "consent"
-        ],
+        "tags": ["checkbox", "legal", "scroll", "consent"],
         "ai": {
           "export": "Checkbox020",
           "usage": "<Checkbox020\n  title=\"Пользовательское соглашение\"\n  paragraphs={paragraphs}\n  onChange={setAccepted}\n/>",
@@ -3342,20 +3109,13 @@
         "preview": {
           "width": "full"
         },
-        "cardControls": [
-          "title",
-          "label",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "label", "accent", "background"]
       }
     },
     {
       "name": "checkbox-021",
       "type": "registry:component",
-      "categories": [
-        "checkbox"
-      ],
+      "categories": ["checkbox"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3369,12 +3129,7 @@
       "description": "Дерево чекбоксов с наследованием: ветка переключает все свои листья разом, а её собственное состояние вычисляется из них.",
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-021-*. Клиентский: \"use client\". Состояние хранится только для листьев; ветка считает своё через список потомков, поэтому дерево работает на любой глубине. indeterminate выставляется эффектом в каждой строке. Ветки лежат в <details> со скрытым маркером, клик по галочке внутри <summary> останавливает всплытие, иначе он сворачивал бы ветку. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней; проп background возвращает плашку.",
       "meta": {
-        "tags": [
-          "checkbox",
-          "tree",
-          "permissions",
-          "indeterminate"
-        ],
+        "tags": ["checkbox", "tree", "permissions", "indeterminate"],
         "ai": {
           "export": "Checkbox021",
           "usage": "<Checkbox021\n  title=\"Права доступа\"\n  nodes={nodes}\n  defaultValue={[\"pages-read\"]}\n  onChange={setRights}\n/>",
@@ -3529,10 +3284,7 @@
                     ]
                   }
                 ],
-                "defaultValue": [
-                  "pages-read",
-                  "media-read"
-                ],
+                "defaultValue": ["pages-read", "media-read"],
                 "countText": "Granted: {count} of {total}"
               }
             }
@@ -3541,19 +3293,13 @@
         "preview": {
           "width": "full"
         },
-        "cardControls": [
-          "title",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "accent", "background"]
       }
     },
     {
       "name": "checkbox-022",
       "type": "registry:component",
-      "categories": [
-        "checkbox"
-      ],
+      "categories": ["checkbox"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3567,12 +3313,7 @@
       "description": "Настройки, часть которых только для чтения: у заблокированной строки замок, приглушённый фон и причина прямо под подписью.",
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-022-*. Клиентский: \"use client\". Заблокированная строка помечена readOnly и aria-disabled, а не disabled: она остаётся в порядке табуляции и доступна скринридеру. Причина связана с полем через aria-describedby с идентификатором из useId. Замок нарисован корпусом и дужкой из ::before, поэтому иконочная библиотека не нужна. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней; проп background возвращает плашку.",
       "meta": {
-        "tags": [
-          "checkbox",
-          "readonly",
-          "policy",
-          "settings"
-        ],
+        "tags": ["checkbox", "readonly", "policy", "settings"],
         "ai": {
           "export": "Checkbox022",
           "usage": "<Checkbox022\n  legend=\"Безопасность аккаунта\"\n  options={options}\n  onChange={setValue}\n/>",
@@ -3707,9 +3448,196 @@
                     "label": "Weekly sign-in report"
                   }
                 ],
+                "defaultValue": ["2fa", "session"]
+              }
+            }
+          }
+        },
+        "preview": {
+          "width": "full"
+        },
+        "cardControls": ["legend", "footnote", "accent", "background"]
+      }
+    },
+    {
+      "name": "checkbox-023",
+      "type": "registry:component",
+      "title": "Матрица прав доступа",
+      "description": "Таблица прав: строки — ресурсы, столбцы — действия, а чекбокс в шапке столбца включает действие сразу для всех ресурсов.",
+      "categories": ["checkbox"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "checkbox-023/checkbox-023.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/checkbox-023.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-checkbox-023-*. Клиентский: \"use client\". Разметка — семантическая <table>: <th scope=\"row\"> называет ресурс, <th scope=\"col\"> с чекбоксом называет действие и управляет всем столбцом сразу. indeterminate у мастера столбца выставляется эффектом при каждом изменении value, потому что React не прокидывает это DOM-свойство через пропы. Ключ ячейки — \"rowId:colId\", поэтому value можно сериализовать в массив строк как есть. На узких экранах таблица получает собственный горизонтальный скролл через обёртку с overflow-x, а не раздвигает страницу. Тема берётся из color-scheme окружения через light-dark().",
+      "meta": {
+        "tags": ["checkbox", "matrix", "permissions", "table", "indeterminate"],
+        "ai": {
+          "export": "Checkbox023",
+          "usage": "<Checkbox023\n  title=\"Права доступа\"\n  rows={rows}\n  columns={columns}\n  defaultValue={[\"pages:view\"]}\n  onChange={setRights}\n/>",
+          "summary": "Матрица прав доступа: строки — ресурсы, столбцы — действия, ячейка на их пересечении — обычный чекбокс. Чекбокс в шапке столбца включает действие для всех ресурсов и показывает черту при частичном выборе. Таблица держит горизонтальный скролл сама, счётчик внизу. Ноль зависимостей, один файл, клиентский компонент.",
+          "preserve": [
+            "локальную палитру --vibeui-checkbox-023-* и не подменять её токенами вашей темы",
+            "семантическую <table> с <th scope=\"row\"> и <th scope=\"col\">: связь ресурса и действия должна доставаться screen reader'у из разметки, а не из визуального выравнивания",
+            "ключ ячейки вида \"rowId:colId\": по нему value однозначно сериализуется в массив строк",
+            "установку indeterminate у мастера столбца эффектом на каждое изменение value: DOM-свойство не задаётся атрибутом",
+            "обёртку таблицы со собственным overflow-x: на узких экранах должна скроллиться таблица, а не страница",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "rows и columns — любой набор ресурсов и действий, не только права доступа",
+            "title и rowsLabel — заголовок блока и подпись угловой ячейки",
+            "стартовый defaultValue из ключей \"rowId:colId\"",
+            "обработчик onChange и акцент через проп accent",
+            "columnAllText — скрытая подпись мастера столбца с подстановкой {label}",
+            "countText — счётчик внизу с подстановками {count} и {total}",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Мастер столбца не хранит своё состояние — оно каждый раз вычисляется из value, поэтому расхождений со строками не бывает.",
+            "Идентификаторы строк и столбцов должны быть уникальными в своих списках, иначе ключи ячеек начнут совпадать.",
+            "Для одного действия на все ресурсы матрица избыточна — там достаточно checkbox-011.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Права доступа",
+            "maxLength": 24
+          },
+          {
+            "prop": "rowsLabel",
+            "label": "Подпись строк",
+            "type": "text",
+            "default": "Ресурс",
+            "maxLength": 16
+          },
+          {
+            "prop": "countText",
+            "label": "Счётчик",
+            "type": "text",
+            "default": "Отмечено {count} из {total}",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A permissions table: rows are resources, columns are actions, and the checkbox in a column header turns the action on for every resource at once.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-checkbox-023-* variables. A client component: \"use client\". The markup is a semantic <table>: <th scope=\"row\"> names the resource, and a <th scope=\"col\"> with a checkbox names the action and drives the whole column. The column master's indeterminate is set through an effect on every value change, because React does not pass that DOM property through props. A cell key is \"rowId:colId\", so value serialises to a plain string array as is. On narrow screens the table gets its own horizontal scroll through a wrapper with overflow-x instead of widening the page. The theme comes from the surrounding color-scheme through light-dark().",
+            "ai": {
+              "summary": "A permission matrix: rows are resources, columns are actions, and a cell at their intersection is a plain checkbox. The checkbox in a column header turns the action on for every resource and shows a dash on a partial pick. The table scrolls itself, with a counter below. Zero dependencies, one file, a client component.",
+              "preserve": [
+                "the local --vibeui-checkbox-023-* palette — do not swap it for your theme tokens",
+                "the semantic <table> with <th scope=\"row\"> and <th scope=\"col\">: the link between a resource and an action has to reach the screen reader from markup, not visual alignment",
+                "the \"rowId:colId\" cell key: value serialises to a string array from it unambiguously",
+                "setting the column master's indeterminate through an effect on every value change: the DOM property cannot be written as an attribute",
+                "the table wrapper with its own overflow-x: on narrow screens the table must scroll, not the page",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent surface by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "rows and columns — any set of resources and actions, not only permissions",
+                "title and rowsLabel — the block heading and the corner-cell caption",
+                "the initial defaultValue built from \"rowId:colId\" keys",
+                "the onChange handler and the accent through the accent prop",
+                "columnAllText — the hidden caption of the column master, with the {label} placeholder",
+                "countText — the counter below, with the {count} and {total} placeholders",
+                "background — the component surface; empty means no surface, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The column master keeps no state of its own — it is recomputed from value every time, so it can never drift from the rows.",
+                "Row and column identifiers must be unique within their own lists, or cell keys start colliding.",
+                "For a single action across all resources a matrix is overkill — checkbox-011 is enough.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Checkbox023\n  title=\"Permissions\"\n  rows={rows}\n  columns={columns}\n  defaultValue={[\"pages:view\"]}\n  onChange={setRights}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Permissions"
+              },
+              "rowsLabel": {
+                "label": "Rows caption",
+                "default": "Resource"
+              },
+              "countText": {
+                "label": "Counter",
+                "default": "{count} of {total} checked"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
+              }
+            },
+            "title": "Permission Matrix",
+            "preview": {
+              "props": {
+                "title": "Permissions",
+                "rowsLabel": "Resource",
+                "countText": "{count} of {total} checked",
+                "rows": [
+                  {
+                    "id": "pages",
+                    "label": "Pages"
+                  },
+                  {
+                    "id": "media",
+                    "label": "Media"
+                  },
+                  {
+                    "id": "team",
+                    "label": "Team"
+                  },
+                  {
+                    "id": "billing",
+                    "label": "Billing"
+                  }
+                ],
+                "columns": [
+                  {
+                    "id": "view",
+                    "label": "View"
+                  },
+                  {
+                    "id": "edit",
+                    "label": "Edit"
+                  },
+                  {
+                    "id": "delete",
+                    "label": "Delete"
+                  }
+                ],
                 "defaultValue": [
-                  "2fa",
-                  "session"
+                  "pages:view",
+                  "pages:edit",
+                  "media:view",
+                  "team:view"
                 ]
               }
             }
@@ -3719,8 +3647,9 @@
           "width": "full"
         },
         "cardControls": [
-          "legend",
-          "footnote",
+          "title",
+          "rowsLabel",
+          "countText",
           "accent",
           "background"
         ]

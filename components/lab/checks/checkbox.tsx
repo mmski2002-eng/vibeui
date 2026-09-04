@@ -22,6 +22,7 @@ import { Checkbox019 } from "@/registry/components/checkbox/checkbox-019/checkbo
 import { Checkbox020 } from "@/registry/components/checkbox/checkbox-020/checkbox-020"
 import { Checkbox021 } from "@/registry/components/checkbox/checkbox-021/checkbox-021"
 import { Checkbox022 } from "@/registry/components/checkbox/checkbox-022/checkbox-022"
+import { Checkbox023 } from "@/registry/components/checkbox/checkbox-023/checkbox-023"
 
 /** Seed прогона: с ним набор воспроизводится один в один. */
 export const SEED = 76351
@@ -243,6 +244,14 @@ export const CHECKS: LabCheck[] = [
         footnote="Подпись: тест"
         accent="#3d8ffa"
       />
+    ),
+  },
+  {
+    name: "checkbox-023",
+    title: "Матрица прав доступа",
+    notes: ["Заголовок: Черновик", "Подпись строк: Проверка", "Акцент: #05c8ec"],
+    node: (
+      <Checkbox023 title="Черновик" rowsLabel="Проверка" accent="#05c8ec" />
     ),
   },
 ]

@@ -6,9 +6,7 @@
       "type": "registry:component",
       "title": "Индикатор с подписью",
       "description": "Ожидание с обязательной подписью: кольцо само по себе не сообщает ни что происходит, ни сколько ждать.",
-      "categories": [
-        "spinner"
-      ],
+      "categories": ["spinner"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-spinner-001-*. Серверный: хуков нет. Кольцо собрано из бордюра с окрашенной верхней гранью, размер задаётся одной переменной. Блок объявлен role=\"status\" с aria-live. При prefers-reduced-motion вращение заменяется пульсацией прозрачности. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента нет по умолчанию — он лежит на фоне страницы и темнеет вместе с ней, а плашку включает проп background.",
       "meta": {
-        "tags": [
-          "spinner",
-          "loading",
-          "status",
-          "a11y"
-        ],
+        "tags": ["spinner", "loading", "status", "a11y"],
         "ai": {
           "export": "Spinner001",
           "usage": "<Spinner001 label=\"Собираем каталог\" hint=\"Меньше минуты\" size=\"md\" />",
@@ -75,11 +68,7 @@
             "label": "Размер",
             "type": "select",
             "default": "md",
-            "options": [
-              "sm",
-              "md",
-              "lg"
-            ]
+            "options": ["sm", "md", "lg"]
           },
           {
             "prop": "accent",
@@ -154,13 +143,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-spinner-001-* variables. Server-side: there are no hooks. The ring is assembled from a border with a coloured top edge, the size is set by a single variable. The block is declared role=\"status\" with aria-live. Under prefers-reduced-motion the rotation is replaced by an opacity pulse. The theme comes from the surrounding color-scheme through light-dark(): the component has no background by default — it sits on the page background and darkens with it, while the background prop switches on a panel."
           }
         },
-        "cardControls": [
-          "label",
-          "hint",
-          "size",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "hint", "size", "accent", "background"],
         "preview": {
           "width": "auto"
         }
@@ -171,9 +154,7 @@
       "type": "registry:component",
       "title": "Волна из точек",
       "description": "Ожидание тремя точками вместо кольца: точки занимают меньше высоты и встают в строку рядом с текстом, не раздвигая её.",
-      "categories": [
-        "spinner"
-      ],
+      "categories": ["spinner"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -185,12 +166,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Волна собрана задержками, посчитанными от одной переменной --vibeui-spinner-002-speed через calc, поэтому темп меняется одним числом, а не тремя правками анимации. Точки декоративны и помечены aria-hidden, состояние объявлено role=status с aria-live=polite на корне — иначе скринридер молчит о том, что идёт работа. При prefers-reduced-motion анимация выключается, но точки замирают разной яркостью: сообщение «идёт работа» остаётся, мигание исчезает. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента нет по умолчанию — он лежит на фоне страницы и темнеет вместе с ней, а плашку включает проп background.",
       "meta": {
-        "tags": [
-          "spinner",
-          "dots",
-          "loading",
-          "status"
-        ],
+        "tags": ["spinner", "dots", "loading", "status"],
         "ai": {
           "export": "Spinner002",
           "usage": "<Spinner002 label=\"Собираем каталог\" speed={1.2} />",
@@ -294,11 +270,7 @@
             "docs": "A server component, there are no hooks. The wave is built from delays computed off a single variable, --vibeui-spinner-002-speed, through calc, so the tempo changes through one number rather than three animation edits. The dots are decorative and marked aria-hidden, the state is declared with role=status and aria-live=polite on the root — otherwise a screen reader stays silent about the work in progress. Under prefers-reduced-motion the animation is switched off, but the dots freeze at different opacities: the \"work in progress\" message remains, the blinking disappears. The theme comes from the surrounding color-scheme through light-dark(): the component has no background by default — it sits on the page background and darkens with it, while the background prop switches on a panel."
           }
         },
-        "cardControls": [
-          "label",
-          "speed",
-          "background"
-        ],
+        "cardControls": ["label", "speed", "background"],
         "preview": {
           "width": "auto"
         }
@@ -309,9 +281,7 @@
       "type": "registry:component",
       "title": "Неопределённый прогресс",
       "description": "Полоса неопределённого прогресса без aria-valuenow: как только атрибут появляется, скринридер называет процент, которого никто не считал.",
-      "categories": [
-        "spinner"
-      ],
+      "categories": ["spinner"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -323,12 +293,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Дорожка помечена role=progressbar с aria-busy и без aria-valuenow — это и есть корректное объявление неопределённого прогресса; выдуманный процент хуже его отсутствия. Отрезок ездит по дорожке анимацией transform, а не изменением left или width: браузер не пересчитывает раскладку на каждом кадре, и полоса не греет процессор в длинном списке. Толщина вынесена в проп height и подставляется переменной в пикселях. При prefers-reduced-motion отрезок занимает дорожку целиком и медленно дышит. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента нет по умолчанию — он лежит на фоне страницы и темнеет вместе с ней, а плашку включает проп background.",
       "meta": {
-        "tags": [
-          "spinner",
-          "progress",
-          "indeterminate",
-          "bar"
-        ],
+        "tags": ["spinner", "progress", "indeterminate", "bar"],
         "preview": {
           "width": "full"
         },
@@ -447,12 +412,7 @@
             "docs": "A server component, there are no hooks. The track is marked role=progressbar with aria-busy and without aria-valuenow — that is the correct way to declare indeterminate progress; an invented percentage is worse than none. The beam travels along the track with a transform animation rather than by changing left or width: the browser does not recalculate layout on every frame, and the bar does not heat the CPU inside a long list. The thickness is exposed through the height prop and fed into a variable in pixels. Under prefers-reduced-motion the beam fills the whole track and breathes slowly. The theme comes from the surrounding color-scheme through light-dark(): the component has no background by default — it sits on the page background and darkens with it, while the background prop switches on a panel."
           }
         },
-        "cardControls": [
-          "label",
-          "hint",
-          "height",
-          "background"
-        ]
+        "cardControls": ["label", "hint", "height", "background"]
       }
     },
     {
@@ -460,9 +420,7 @@
       "type": "registry:component",
       "title": "Кольцо с процентами",
       "description": "Кольцо прогресса с числом внутри: дуга нарисована conic-gradient и вырезана маской, поэтому кольцо остаётся одним элементом без svg и круга-заглушки.",
-      "categories": [
-        "spinner"
-      ],
+      "categories": ["spinner"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -474,12 +432,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Дуга — conic-gradient, из которого радиальная маска вырезает середину: так кольцо остаётся одним элементом, без svg и без второго круга, закрывающего центр. Число лежит поверх кольца отдельным узлом, а не внутри маскированного элемента, иначе маска вырезала бы и цифры. Значение зажимается в 0–100 внутри компонента и объявляется через role=progressbar с aria-valuenow, valuemin и valuemax. Цифры моноширинные: при обычных ширина «11 %» и «88 %» разная, и подпись дёргается на каждом обновлении. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента нет по умолчанию — он лежит на фоне страницы и темнеет вместе с ней, а плашку включает проп background.",
       "meta": {
-        "tags": [
-          "spinner",
-          "progress",
-          "ring",
-          "percent"
-        ],
+        "tags": ["spinner", "progress", "ring", "percent"],
         "ai": {
           "export": "Spinner004",
           "usage": "<Spinner004 value={68} label=\"Загружаем компоненты\" size=\"md\" />",
@@ -530,11 +483,7 @@
             "label": "Размер",
             "type": "select",
             "default": "md",
-            "options": [
-              "sm",
-              "md",
-              "lg"
-            ]
+            "options": ["sm", "md", "lg"]
           },
           {
             "prop": "hintTemplate",
@@ -628,9 +577,7 @@
       "type": "registry:component",
       "title": "Блокирующая подложка",
       "description": "Наложение поверх блока, которое действительно блокирует: содержимое помечено inert, поэтому под плёнкой не остаётся кликабельных кнопок и достижимых табом полей.",
-      "categories": [
-        "spinner"
-      ],
+      "categories": ["spinner"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -642,12 +589,7 @@
       ],
       "docs": "Серверный компонент, хуков нет: состояние приходит пропом busy. Полупрозрачная плёнка сама по себе ничего не запрещает — под ней остаются рабочие кнопки и поля, до которых доходит таб. Здесь содержимое получает атрибут inert, который убирает его и из фокуса, и из дерева доступности, а на область ставится aria-busy, чтобы скринридер сообщил о работе. Плёнка залита собственным полупрозрачным токеном --vibeui-spinner-005-veil плюс backdrop-filter: она приглушает содержимое, но не прячет его целиком, и пользователь видит, что именно сохраняется. При prefers-reduced-motion кольцо не крутится, а дышит. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента нет по умолчанию — он лежит на фоне страницы и темнеет вместе с ней, а плашку включает проп background.",
       "meta": {
-        "tags": [
-          "spinner",
-          "overlay",
-          "busy",
-          "inert"
-        ],
+        "tags": ["spinner", "overlay", "busy", "inert"],
         "preview": {
           "width": "full"
         },
@@ -761,21 +703,13 @@
               "props": {
                 "label": "Saving changes",
                 "sampleTitle": "Team profile",
-                "sampleFields": [
-                  "Name",
-                  "Domain"
-                ]
+                "sampleFields": ["Name", "Domain"]
               }
             },
             "docs": "A server component, there are no hooks: the state arrives through the busy prop. A translucent veil forbids nothing on its own — working buttons and fields remain beneath it, and Tab reaches them. Here the content gets the inert attribute, which removes it both from focus and from the accessibility tree, while aria-busy is set on the region so that a screen reader reports the work. The veil is filled with its own translucent token, --vibeui-spinner-005-veil, plus a backdrop-filter: it mutes the content without hiding it entirely, and the user can see exactly what is being saved. Under prefers-reduced-motion the ring breathes instead of spinning. The theme comes from the surrounding color-scheme through light-dark(): the component has no background by default — it sits on the page background and darkens with it, while the background prop switches on a panel."
           }
         },
-        "cardControls": [
-          "label",
-          "busy",
-          "sampleTitle",
-          "background"
-        ]
+        "cardControls": ["label", "busy", "sampleTitle", "background"]
       }
     },
     {
@@ -783,9 +717,7 @@
       "type": "registry:component",
       "title": "Пульсирующий скелетон",
       "description": "Скелетон карточки на пульсации прозрачности, а не на бегущем блике: пульс отдаётся композитору и почти ничего не стоит в списке из двадцати заглушек.",
-      "categories": [
-        "spinner"
-      ],
+      "categories": ["spinner"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -797,12 +729,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Бегущий блик — это анимация большого градиента, и на списке заглушек он заметно греет процессор; пульсация прозрачности анимирует только opacity, что браузер отдаёт композитору. Заглушка повторяет метрику будущей карточки: та же высота строк, те же промежутки и та же пропорция картинки, поэтому при подстановке данных ничего не прыгает. Строки получают небольшие задержки, чтобы карточка не мигала одним куском. Для скринридера это одно сообщение role=status с именем, а не двадцать серых прямоугольников. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента нет по умолчанию — он лежит на фоне страницы и темнеет вместе с ней, а плашку включает проп background.",
       "meta": {
-        "tags": [
-          "spinner",
-          "skeleton",
-          "pulse",
-          "placeholder"
-        ],
+        "tags": ["spinner", "skeleton", "pulse", "placeholder"],
         "preview": {
           "width": "full"
         },
@@ -919,12 +846,7 @@
             "docs": "A server component, there are no hooks. A sweeping shine is an animation of a large gradient, and across a list of placeholders it noticeably heats the CPU; an opacity pulse animates opacity alone, which the browser hands to the compositor. The placeholder repeats the metrics of the future card: the same line heights, the same gaps and the same image proportion, so nothing jumps once the data is substituted. The lines get small delays so that the card does not blink as a single slab. For a screen reader this is one role=status message with a name, not twenty grey rectangles. The theme comes from the surrounding color-scheme through light-dark(): the component has no background by default — it sits on the page background and darkens with it, while the background prop switches on a panel."
           }
         },
-        "cardControls": [
-          "lines",
-          "media",
-          "label",
-          "background"
-        ]
+        "cardControls": ["lines", "media", "label", "background"]
       }
     },
     {
@@ -932,9 +854,7 @@
       "type": "registry:component",
       "title": "Догоняющие точки",
       "description": "Индикатор набора сообщения: три точки в чат-пузыре подсвечиваются по очереди, а не волной, и читаются как «печатает», а не как абстрактная загрузка.",
-      "categories": [
-        "spinner"
-      ],
+      "categories": ["spinner"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -946,12 +866,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Форма — чат-пузырь с хвостиком-псевдоэлементом, внутри три точки. В отличие от волны точек, здесь очерёдность строгая: animation-timing-function steps(1,end) переключает яркость точки скачком, а не плавно, и в любой момент ярка ровно одна точка — так подсветка читается как «идёт набор», а не как общая загрузка. Задержки посчитаны от одной переменной --vibeui-spinner-007-speed, поэтому темп меняется одним числом. Блок объявлен role=\"status\" с aria-live, точки декоративны и помечены aria-hidden. При prefers-reduced-motion точки замирают разной яркостью. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента нет по умолчанию — он лежит на фоне страницы и темнеет вместе с ней, а плашку включает проп background.",
       "meta": {
-        "tags": [
-          "spinner",
-          "dots",
-          "typing",
-          "status"
-        ],
+        "tags": ["spinner", "dots", "typing", "status"],
         "ai": {
           "export": "Spinner007",
           "usage": "<Spinner007 label=\"Собеседник печатает\" speed={1.05} />",
@@ -1057,11 +972,7 @@
             "docs": "A server component, there are no hooks. The shape is a chat bubble with a pseudo-element tail and three dots inside. Unlike the wave of dots, the order here is strict: animation-timing-function steps(1,end) switches a dot's brightness in a jump rather than smoothly, and at any moment exactly one dot is lit — that is what makes the highlight read as \"typing\" rather than as general loading. The delays are computed off a single variable, --vibeui-spinner-007-speed, so the tempo changes through one number. The block is declared role=\"status\" with aria-live, the dots are decorative and marked aria-hidden. Under prefers-reduced-motion the dots freeze at different opacities. The theme comes from the surrounding color-scheme through light-dark(): the component has no background by default — it sits on the page background and darkens with it, while the background prop switches on a panel."
           }
         },
-        "cardControls": [
-          "label",
-          "speed",
-          "background"
-        ],
+        "cardControls": ["label", "speed", "background"],
         "preview": {
           "width": "auto"
         }
@@ -1072,9 +983,7 @@
       "type": "registry:component",
       "title": "Полосатая полоса загрузки",
       "description": "Полоса неопределённого прогресса из движущихся диагональных полос: вся дорожка — единый закрашенный конвейер на background-position, без отдельного бегунка.",
-      "categories": [
-        "spinner"
-      ],
+      "categories": ["spinner"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1086,12 +995,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. В отличие от дорожки с уезжающим сегментом, здесь вся полоса залита repeating-linear-gradient и целиком едет через background-position — «полосатый конвейер», один элемент вместо дорожки и бегунка. Дорожка помечена role=\"progressbar\" с aria-busy и без aria-valuenow: выдуманный процент хуже его отсутствия. При prefers-reduced-motion узор замирает на месте — полосы видны, движение исчезает. Толщина вынесена в проп height. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента нет по умолчанию — он лежит на фоне страницы и темнеет вместе с ней, а плашку включает проп background.",
       "meta": {
-        "tags": [
-          "spinner",
-          "progress",
-          "indeterminate",
-          "bar"
-        ],
+        "tags": ["spinner", "progress", "indeterminate", "bar"],
         "preview": {
           "width": "full"
         },
@@ -1212,12 +1116,7 @@
             "docs": "A server component, there are no hooks. Unlike the track with a beam running along it, here the whole bar is filled with a repeating-linear-gradient and travels as a whole through background-position — a \"striped conveyor\", one element instead of a track and a slider. The track is marked role=\"progressbar\" with aria-busy and without aria-valuenow: an invented percentage is worse than none. Under prefers-reduced-motion the pattern freezes in place — the stripes stay visible, the movement disappears. The thickness is exposed through the height prop. The theme comes from the surrounding color-scheme through light-dark(): the component has no background by default — it sits on the page background and darkens with it, while the background prop switches on a panel."
           }
         },
-        "cardControls": [
-          "label",
-          "hint",
-          "height",
-          "background"
-        ]
+        "cardControls": ["label", "hint", "height", "background"]
       }
     },
     {
@@ -1225,9 +1124,7 @@
       "type": "registry:component",
       "title": "Кнопка с блокировкой отправки",
       "description": "Кнопка со спиннером, которая блокирует повторное нажатие: подпись не меняется, но кнопка отключается на время работы, а скрытая область объявляет статус.",
-      "categories": [
-        "spinner"
-      ],
+      "categories": ["spinner"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1239,12 +1136,7 @@
       ],
       "docs": "Клиентский компонент: состояние pending хранится в useState, таймер снятия блокировки очищается в useEffect при размонтировании. По клику кнопка получает disabled, aria-disabled и aria-busy, рядом с видимой подписью появляются три подпрыгивающие точки — повторный клик во время работы игнорируется. Видимый текст кнопки не меняется, чтобы не дёргать раскладку; статус объявляет отдельная визуально скрытая область с role=\"status\" и aria-live=\"polite\". При prefers-reduced-motion точки замирают разной яркостью. Заливки у кнопки нет по замыслу: контур ложится прямо на фон страницы, поэтому пропа background у неё не появилось. Тема берётся из color-scheme окружения через light-dark() — на тёмном фоне акцент светлее.",
       "meta": {
-        "tags": [
-          "spinner",
-          "button",
-          "loading",
-          "double-submit"
-        ],
+        "tags": ["spinner", "button", "loading", "double-submit"],
         "ai": {
           "export": "Spinner009",
           "usage": "<Spinner009 label=\"Сохранить настройки\" pendingDuration={1600} />",
@@ -1362,12 +1254,7 @@
             "docs": "A client component: the pending state is kept in useState, and the timer that lifts the block is cleared in useEffect on unmount. On click the button gets disabled, aria-disabled and aria-busy, three bouncing dots appear next to the visible label — a repeat click during the work is ignored. The visible button text does not change, so that the layout is not jolted; the status is announced by a separate visually hidden region with role=\"status\" and aria-live=\"polite\". Under prefers-reduced-motion the dots freeze at different opacities. The button has no fill by design: the outline sits straight on the page background, which is why it never gained a background prop. The theme comes from the surrounding color-scheme through light-dark() — on a dark background the accent is lighter."
           }
         },
-        "cardControls": [
-          "label",
-          "pendingLabel",
-          "pendingDuration",
-          "accent"
-        ],
+        "cardControls": ["label", "pendingLabel", "pendingDuration", "accent"],
         "preview": {
           "width": "auto"
         }
@@ -1378,9 +1265,7 @@
       "type": "registry:component",
       "title": "Строка с бликом",
       "description": "Заглушка строки таблицы с бегущим бликом: один накладной градиент едет поверх неподвижных ячеек через transform, вместо пульсации целой строки.",
-      "categories": [
-        "spinner"
-      ],
+      "categories": ["spinner"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1392,12 +1277,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. В отличие от карточки на пульсации прозрачности, здесь заглушка — строка таблицы, и по ней едет один накладной элемент с линейным градиентом через transform: translateX, не пересчитывая раскладку ячеек под собой. Аватар и ячейки строки статичны и лишь очерчивают будущую метрику ряда. Для скринридера это одно сообщение role=\"status\" с aria-label, а не пять серых прямоугольников. При prefers-reduced-motion блик замирает статичным пятном по центру. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента нет по умолчанию — он лежит на фоне страницы и темнеет вместе с ней, а плашку включает проп background.",
       "meta": {
-        "tags": [
-          "spinner",
-          "skeleton",
-          "shimmer",
-          "table"
-        ],
+        "tags": ["spinner", "skeleton", "shimmer", "table"],
         "preview": {
           "width": "full"
         },
@@ -1504,11 +1384,7 @@
             "docs": "A server component, there are no hooks. Unlike the card built on an opacity pulse, the placeholder here is a table row, and a single overlay element with a linear gradient travels across it through transform: translateX, without recalculating the layout of the cells beneath. The avatar and the row cells are static and merely outline the future metrics of the row. For a screen reader this is one role=\"status\" message with an aria-label, not five grey rectangles. Under prefers-reduced-motion the shine freezes as a static patch in the centre. The theme comes from the surrounding color-scheme through light-dark(): the component has no background by default — it sits on the page background and darkens with it, while the background prop switches on a panel."
           }
         },
-        "cardControls": [
-          "columns",
-          "label",
-          "background"
-        ]
+        "cardControls": ["columns", "label", "background"]
       }
     },
     {
@@ -1516,9 +1392,7 @@
       "type": "registry:component",
       "title": "Сегментный циферблат",
       "description": "Круговой индикатор процента из отдельных делений-«тиков», как измерительный прибор, а не гладкая заливка дуги — осознанная альтернатива conic-gradient.",
-      "categories": [
-        "spinner"
-      ],
+      "categories": ["spinner"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1530,12 +1404,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. В отличие от кольца на conic-gradient, здесь циферблат собран из отдельных делений: каждое — короткая палочка, повёрнутая на свой угол через transform-origin в центре круга и inline-стиль rotate(), посчитанный в компоненте. Количество закрашенных делений считается от доли value. Число лежит поверх циферблата отдельным узлом. Значение зажимается в 0–100 и объявляется через role=\"progressbar\" с aria-valuenow, valuemin и valuemax. Цифры моноширинные, чтобы подпись не дёргалась при обновлении. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента нет по умолчанию — он лежит на фоне страницы и темнеет вместе с ней, а плашку включает проп background.",
       "meta": {
-        "tags": [
-          "spinner",
-          "progress",
-          "dial",
-          "percent"
-        ],
+        "tags": ["spinner", "progress", "dial", "percent"],
         "ai": {
           "export": "Spinner011",
           "usage": "<Spinner011 value={42} label=\"Обрабатываем видео\" segments={24} />",
@@ -1594,11 +1463,7 @@
             "label": "Размер",
             "type": "select",
             "default": "md",
-            "options": [
-              "sm",
-              "md",
-              "lg"
-            ]
+            "options": ["sm", "md", "lg"]
           },
           {
             "prop": "hintTemplate",
@@ -1696,9 +1561,7 @@
       "type": "registry:component",
       "title": "Сообщение по этапам",
       "description": "Индикатор с текстом стадии: три сообщения о ходе работы перетекают одно в другое по кругу через animation-delay, без единой строчки клиентского JS.",
-      "categories": [
-        "spinner"
-      ],
+      "categories": ["spinner"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1710,12 +1573,7 @@
       ],
       "docs": "Серверный компонент, хуков нет. Три строки стадии наложены друг на друга абсолютным позиционированием и по очереди становятся видимыми через animation-delay, посчитанный от одной переменной --vibeui-spinner-012-speed — тот же приём, что и в очереди точек, только на тексте. Смена стадий декоративна и помечена aria-hidden: без состояния скринридеру нечего внятно объявлять на каждый кадр CSS-анимации, поэтому доступное имя — статичная подпись через aria-label на корневом role=\"status\". При prefers-reduced-motion видна только первая стадия, кольцо рядом с текстом дышит вместо вращения. Тема берётся из color-scheme окружения через light-dark(): подложки у компонента нет по умолчанию — он лежит на фоне страницы и темнеет вместе с ней, а плашку включает проп background.",
       "meta": {
-        "tags": [
-          "spinner",
-          "stages",
-          "status",
-          "loading"
-        ],
+        "tags": ["spinner", "stages", "status", "loading"],
         "ai": {
           "export": "Spinner012",
           "usage": "<Spinner012 label=\"Идёт многоэтапная загрузка\" stages={[\"Готовим данные…\", \"Собираем результат…\", \"Почти готово\"]} />",
@@ -1828,13 +1686,153 @@
             "docs": "A server component, there are no hooks. The three stage lines are stacked on top of one another with absolute positioning and become visible in turn through an animation-delay computed off a single variable, --vibeui-spinner-012-speed — the same technique as in the queue of dots, only applied to text. The stage cycling is decorative and marked aria-hidden: without state there is nothing a screen reader could meaningfully announce on every frame of a CSS animation, so the accessible name is a static caption through aria-label on the root role=\"status\". Under prefers-reduced-motion only the first stage is visible, and the ring beside the text breathes instead of spinning. The theme comes from the surrounding color-scheme through light-dark(): the component has no background by default — it sits on the page background and darkens with it, while the background prop switches on a panel."
           }
         },
-        "cardControls": [
-          "label",
-          "speed",
-          "background"
-        ],
+        "cardControls": ["label", "speed", "background"],
         "preview": {
           "width": "auto"
+        }
+      }
+    },
+    {
+      "name": "spinner-013",
+      "type": "registry:component",
+      "title": "Полоса перехода страницы",
+      "description": "Тонкая полоса вверху вьюпорта для смены страницы: рывки и притормаживание перед концом говорят «почти готово» без выдуманного процента, а pointer-events:none не крадёт клики с контента под собой.",
+      "categories": ["spinner"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "spinner-013/spinner-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/spinner-013.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-spinner-013-*. Серверный: хуков нет, active управляет рендером снаружи. Полоса стоит position:fixed у верхнего края вьюпорта с максимальным z-index и pointer-events:none, поэтому не перекрывает клики по содержимому под собой. Видимого текста у полосы нет — role=\"status\" с невидимой aria-live-подписью announcит переход ассистивным технологиям в момент появления блока в DOM. Заполнение — не процент, а декоративная имитация разгона с замедлением перед концом: для перехода между страницами точная доля никому не известна. При prefers-reduced-motion бег сменяется дыханием прозрачности на статичной ширине. Тема берётся из color-scheme окружения через light-dark(). Дорожка прозрачна по умолчанию — проп background добавляет ей заметный цвет.",
+      "meta": {
+        "tags": ["spinner", "loading", "route", "progress"],
+        "ai": {
+          "export": "Spinner013",
+          "usage": "<Spinner013 active={isNavigating} />",
+          "summary": "Тонкая полоса перехода между страницами, приклеенная к верху вьюпорта: разгоняется рывками и притормаживает перед концом, не показывая выдуманный процент. Проп active монтирует и размонтирует полосу, pointer-events:none не мешает кликам по странице. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-spinner-013-* и не подменять её токенами вашей темы",
+            "position:fixed у верхнего края вьюпорта и максимальный z-index — полоса обязана быть поверх всего",
+            "pointer-events:none — полоса не должна перехватывать клики по контенту под собой",
+            "отсутствие процента: имитация разгона с замедлением, а не число, которое для перехода никто не считает",
+            "role=\"status\" с невидимой aria-live-подписью вместо видимого текста",
+            "дыхание прозрачности вместо бега при prefers-reduced-motion",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения",
+            "прозрачную дорожку по умолчанию — плашку включает только проп background"
+          ],
+          "adapt": [
+            "active — монтируйте true на старте перехода и false по его завершении из состояния своего роутера",
+            "label — невидимая подпись для скринридера",
+            "height — толщину полосы",
+            "акцент через проп accent",
+            "background — цвет дорожки под отрезком; пусто означает «прозрачная»"
+          ],
+          "notes": [
+            "Компонент не знает о вашем роутере: переключать active на старте и конце перехода — работа приложения, а не этого файла.",
+            "Не держите active=true дольше самого перехода: бесконечная полоса читается как зависшая загрузка, а не как индикатор процесса.",
+            "Не ставьте вторую полосу того же назначения на страницу — две одновременные полосы перехода путают, какая из них актуальна.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "active",
+            "label": "Активна",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "label",
+            "label": "Подпись для скринридера",
+            "type": "text",
+            "default": "Переход на новую страницу",
+            "maxLength": 40
+          },
+          {
+            "prop": "height",
+            "label": "Толщина, px",
+            "type": "number",
+            "default": 3,
+            "min": 1,
+            "max": 6
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Дорожка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A thin bar at the top of the viewport for page transitions: jolts and a slowdown before the end say \"almost there\" without a made-up percent, and pointer-events:none never steals clicks from the content beneath it.",
+            "ai": {
+              "summary": "A thin page-transition bar pinned to the top of the viewport: it accelerates in jolts and slows before the end instead of showing a made-up percent. The active prop mounts and unmounts the bar, and pointer-events:none keeps it out of the way of clicks. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-spinner-013-* palette — do not swap it for your theme tokens",
+                "position:fixed at the top edge of the viewport with a maximum z-index — the bar has to sit above everything",
+                "pointer-events:none — the bar must never intercept clicks on the content beneath it",
+                "the absence of a percent: a decelerating jolt animation instead of a number nobody is actually counting for a page transition",
+                "role=\"status\" with an invisible aria-live label instead of visible text",
+                "opacity breathing instead of running under prefers-reduced-motion",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme",
+                "the transparent track by default — only the background prop switches on a visible panel"
+              ],
+              "adapt": [
+                "active — mount it true when a transition starts and false when it ends, driven by your router state",
+                "label — the invisible label for screen readers",
+                "height — the bar thickness",
+                "the accent through the accent prop",
+                "background — the colour of the track beneath the bar; empty means transparent"
+              ],
+              "notes": [
+                "The component knows nothing about your router: flipping active at the start and end of a transition is your app job, not this file's.",
+                "Do not keep active=true past the actual transition: an endless bar reads as a stuck load, not an in-progress one.",
+                "Do not add a second bar for the same purpose on one page: two simultaneous transition bars make it unclear which one is current.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Spinner013 active={isNavigating} />"
+            },
+            "controls": {
+              "active": {
+                "label": "Active"
+              },
+              "label": {
+                "label": "Screen-reader label",
+                "default": "Loading a new page"
+              },
+              "height": {
+                "label": "Thickness, px"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Track"
+              }
+            },
+            "title": "Page Transition Bar",
+            "preview": {
+              "props": {
+                "label": "Loading a new page"
+              }
+            },
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-spinner-013-* variables. Server-side: there are no hooks, active drives rendering from outside. The bar sits position:fixed at the top edge of the viewport with a maximum z-index and pointer-events:none, so it never covers clicks on the content beneath it. The bar carries no visible text — role=\"status\" with an invisible aria-live label announces the transition to assistive technology the moment the block mounts. The fill is not a percent but a decorative deceleration: for a page transition nobody actually knows the true share done. Under prefers-reduced-motion the run is replaced by an opacity breath at a fixed width. The theme comes from the surrounding color-scheme through light-dark(). The track is transparent by default — the background prop gives it a visible colour."
+          }
+        },
+        "cardControls": ["active", "label", "height", "accent", "background"],
+        "preview": {
+          "width": "full"
         }
       }
     }

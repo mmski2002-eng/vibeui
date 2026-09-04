@@ -116,4 +116,9 @@ export const PREVIEWS = {
       (module) => module.Checkbox022,
     ),
   ),
+  "checkbox-023": dynamic(() =>
+    import("@/registry/components/checkbox/checkbox-023/checkbox-023").then(
+      (module) => module.Checkbox023,
+    ),
+  ),
 } satisfies PreviewMap
