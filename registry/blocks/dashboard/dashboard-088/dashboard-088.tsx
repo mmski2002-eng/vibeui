@@ -91,6 +91,9 @@ float:left;width:100%;clear:both;padding:0;margin-bottom:0.5rem;
 font-size:0.6875rem;font-weight:750;text-transform:uppercase;letter-spacing:0.06em;
 color:var(--vibeui-dashboard-088-muted);
 }
+/* Без clear следующий элемент садится рядом со 100%-шириным float легенды и
+   схлопывается до нулевой ширины — его содержимое переполняет страницу. */
+[data-vibeui-block="dashboard-088"] fieldset > *{clear:both}
 [data-vibeui-block="dashboard-088"] [data-part="fields"]{display:grid;grid-template-columns:1fr;gap:0.625rem}
 [data-vibeui-block="dashboard-088"] [data-part="field"]{display:flex;flex-direction:column;gap:0.1875rem}
 [data-vibeui-block="dashboard-088"] [data-part="field"] > span{font-size:0.75rem;font-weight:700}

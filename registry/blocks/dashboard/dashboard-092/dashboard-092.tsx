@@ -138,6 +138,9 @@ float:left;width:100%;clear:both;padding:0;margin-bottom:0.4375rem;
 font-size:0.6875rem;font-weight:750;text-transform:uppercase;letter-spacing:0.06em;
 color:var(--vibeui-dashboard-092-muted);
 }
+/* Без clear следующий элемент садится рядом со 100%-шириным float легенды и
+   схлопывается до нулевой ширины — его содержимое переполняет страницу. */
+[data-vibeui-block="dashboard-092"] fieldset > *{clear:both}
 [data-vibeui-block="dashboard-092"] [data-part="reasons"]{display:flex;flex-wrap:wrap;gap:0.375rem}
 [data-vibeui-block="dashboard-092"] [data-part="reason"]{
 display:inline-flex;align-items:center;gap:0.375rem;cursor:pointer;

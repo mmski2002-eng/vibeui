@@ -141,9 +141,12 @@ border-color:transparent;background:var(--vibeui-drawer-004-accent);color:var(--
 }
 [data-vibeui-block="drawer-004"] [data-part="foot"] button:focus-visible{outline:2px solid var(--vibeui-drawer-004-accent);outline-offset:2px}
 /* Немодальный показ: шторка остаётся внутри блока, а не уходит в верхний
-   слой поверх страницы. Так её показывают на витрине и в документации. */
+   слой поверх страницы. Так её показывают на витрине и в документации.
+   overflow:hidden держит въезжающий translate внутри блока: без него на
+   малой ширине шторка на миг проезжает за правый край страницы и дёргает
+   горизонтальный скролл, пока не встанет на место. */
 [data-vibeui-block="drawer-004"]:has(dialog:not(:modal)[open]){
-display:block;position:relative;width:100%;min-height:24rem;
+display:block;position:relative;width:100%;min-height:24rem;overflow:hidden;
 }
 [data-vibeui-block="drawer-004"] dialog:not(:modal){position:absolute;max-width:100%;max-height:100%;z-index:1}
 [data-vibeui-block="drawer-004"]:has(dialog:not(:modal)[open]) [data-part="trigger"]{display:none}

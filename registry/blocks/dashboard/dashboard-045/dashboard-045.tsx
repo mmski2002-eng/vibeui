@@ -126,6 +126,9 @@ display:block;height:100%;border-radius:9999px;background:var(--vibeui-dashboard
 background:var(--vibeui-dashboard-045-card);
 border:1px solid var(--vibeui-dashboard-045-border);border-radius:0.875rem;padding:0.875rem;
 align-self:start;
+/* Грид-ячейка иначе наследует авто-минимум своего содержимого: широкая
+   таблица внутри раздвигает всю колонку шире экрана вместо прокрутки внутри. */
+min-width:0;
 }
 [data-vibeui-block="dashboard-045"] h3{margin:0 0 0.625rem;font-size:0.875rem;font-weight:750}
 [data-vibeui-block="dashboard-045"] [data-part="plan"]{

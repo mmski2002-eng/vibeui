@@ -125,11 +125,18 @@ transition:translate .16s ease;
 [data-vibeui-block="sheet-002"] [data-part="row"] input:checked::after{translate:0.9375rem 0}
 [data-vibeui-block="sheet-002"] [data-part="row"] input:focus-visible{outline:2px solid var(--vibeui-sheet-002-accent);outline-offset:2px}
 /* Немодальный показ: лист остаётся внутри блока, а не уходит в верхний
-   слой поверх страницы. Так его показывают на витрине и в документации. */
+   слой поверх страницы. Так его показывают на витрине и в документации.
+   overflow:hidden держит въезжающий translate внутри блока: без него на
+   малой ширине лист на миг проезжает за правый край страницы и дёргает
+   горизонтальный скролл, пока не встанет на место. */
 [data-vibeui-block="sheet-002"]:has(dialog:not(:modal)[open]){
-display:block;position:relative;width:100%;min-height:22rem;
+display:block;position:relative;width:100%;min-height:22rem;overflow:hidden;
 }
-[data-vibeui-block="sheet-002"] dialog:not(:modal){position:absolute;max-height:100%;z-index:1}
+/* Ширина считается от блока (100%), а не от 100vw: иначе на узком блоке
+   с чужими отступами лист вылезает за его левый край. */
+[data-vibeui-block="sheet-002"] dialog:not(:modal){
+position:absolute;width:min(23rem,calc(100% - 1.25rem));max-height:100%;z-index:1;
+}
 [data-vibeui-block="sheet-002"]:has(dialog:not(:modal)[open]) [data-part="trigger"]{display:none}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="sheet-002"] *{animation:none!important;transition:none!important}

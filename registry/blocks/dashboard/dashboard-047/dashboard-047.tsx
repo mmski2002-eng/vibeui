@@ -135,7 +135,7 @@ grid-column:1;font-size:0.6875rem;line-height:1.45;color:var(--vibeui-dashboard-
 }
 /* Точки попыток: израсходованные закрашены, оставшиеся пустые. */
 [data-vibeui-block="dashboard-047"] [data-part="tries"]{
-grid-column:2;grid-row:1/3;display:flex;align-items:center;gap:0.5rem;white-space:nowrap;
+grid-column:2;grid-row:1/3;display:flex;align-items:center;gap:0.5rem;
 }
 [data-vibeui-block="dashboard-047"] [data-part="dots"]{display:flex;gap:0.1875rem}
 [data-vibeui-block="dashboard-047"] [data-part="dot"]{

@@ -63,18 +63,21 @@ border-radius:0.125rem;
 }
 [data-vibeui-block="hovercard-004"] [data-part="link"]:hover{border-bottom-color:var(--vibeui-hovercard-004-accent)}
 [data-vibeui-block="hovercard-004"] [data-part="link"]:focus-visible{outline:2px solid var(--vibeui-hovercard-004-accent);outline-offset:2px}
+/* Карточка центрирована по ссылке, а не прижата к её левому краю: сама
+   ссылка может стоять где угодно в строке, и левый край карточки на узкой
+   странице легко уводит её за правый край. */
 [data-vibeui-block="hovercard-004"] [data-part="card"]{
-position:absolute;left:0;top:calc(100% + 0.5rem);z-index:20;
+position:absolute;left:50%;top:calc(100% + 0.5rem);z-index:20;
 display:flex;flex-direction:column;gap:0.4375rem;
-width:18rem;box-sizing:border-box;padding:0.875rem;
+width:18rem;max-width:calc(100vw - 2rem);box-sizing:border-box;padding:0.875rem;
 border:1px solid var(--vibeui-hovercard-004-border);border-radius:0.875rem;
 background:var(--vibeui-hovercard-004-card);
 box-shadow:0 22px 46px -28px oklch(0.2 0.02 265 / 55%);
-opacity:0;visibility:hidden;translate:0 -0.25rem;
+opacity:0;visibility:hidden;translate:-50% -0.25rem;
 transition:opacity .15s ease,translate .15s ease,visibility .15s;
 }
 [data-vibeui-block="hovercard-004"] [data-part="host"]:hover [data-part="card"],
-[data-vibeui-block="hovercard-004"] [data-part="host"]:focus-within [data-part="card"]{opacity:1;visibility:visible;translate:0 0}
+[data-vibeui-block="hovercard-004"] [data-part="host"]:focus-within [data-part="card"]{opacity:1;visibility:visible;translate:-50% 0}
 /* Владелец тонкий, имя жирное: пара читается как одно целое. */
 [data-vibeui-block="hovercard-004"] [data-part="path"]{font-size:0.9375rem;line-height:1.25;letter-spacing:-0.01em}
 [data-vibeui-block="hovercard-004"] [data-part="owner"]{color:var(--vibeui-hovercard-004-muted);font-weight:450}

@@ -47,7 +47,8 @@ background:transparent;color:inherit;font:inherit;font-size:0.8125rem;text-align
 /* Подсказка выезжает вправо от пункта, чип с клавишей — внутри неё же. */
 [data-vibeui-block="tooltip-010"] [data-part="tip"]{
 position:absolute;left:calc(100% + 0.5rem);top:50%;z-index:20;
-display:flex;align-items:center;gap:0.5rem;width:max-content;
+display:flex;align-items:center;gap:0.5rem;
+width:max-content;
 padding:0.375rem 0.4375rem 0.375rem 0.625rem;border-radius:0.5rem;
 /* Обе ветки --tip тёмные — плашка подсказки тёмная всегда, поэтому подпись светлая без light-dark(). */
 background:var(--vibeui-tooltip-010-tip);color:oklch(0.98 0.002 265);
@@ -71,6 +72,14 @@ flex:none;padding:0.09375rem 0.375rem;border-radius:0.3125rem;
 background:var(--vibeui-tooltip-010-chip);
 font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
 font-size:0.6875rem;font-weight:600;letter-spacing:0.02em;
+}
+/* На узкой странице подсказка в одну строку не помещается между пунктом и
+   краем экрана: переносим подпись и сжимаем ширину, чтобы не толкать
+   горизонтальный скролл. На широком экране это правило не действует. */
+@media (max-width:32rem){
+[data-vibeui-block="tooltip-010"] [data-part="tip"]{
+flex-wrap:wrap;max-width:5.5rem;overflow-wrap:anywhere;gap:0.25rem 0.5rem;
+}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="tooltip-010"] *{animation:none!important;transition:none!important}}
 `

@@ -77,6 +77,9 @@ display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;g
 [data-vibeui-block="solutions-015"] [data-part="day"]{margin:0;font-size:0.75rem;color:var(--vibeui-solutions-015-muted)}
 [data-vibeui-block="solutions-015"] [data-part="list"]{display:grid;gap:0.625rem}
 [data-vibeui-block="solutions-015"] [data-part="route"]{
+/* grid-элемент по умолчанию не сжимается меньше content (min-width:auto);
+   без сброса лента остановок распирает страницу вместо своей прокрутки. */
+min-inline-size:0;
 padding:0.75rem 0.875rem;border-radius:0.875rem;
 background:var(--vibeui-solutions-015-panel);
 border:1px solid var(--vibeui-solutions-015-border);

@@ -58,20 +58,23 @@ text-decoration:underline dotted currentColor;text-underline-offset:0.22em;
 border-radius:0.1875rem;
 }
 [data-vibeui-block="hovercard-005"] [data-part="term"]:focus-visible{outline:2px solid var(--vibeui-hovercard-005-accent);outline-offset:2px}
+/* Карточка центрирована по сокращению, а не прижата к его левому краю:
+   короткое слово может стоять где угодно в строке, и левый край карточки на
+   узкой странице легко уводит её за правый край. */
 [data-vibeui-block="hovercard-005"] [data-part="card"]{
-position:absolute;left:0;top:calc(100% + 0.5rem);z-index:20;
+position:absolute;left:50%;top:calc(100% + 0.5rem);z-index:20;
 display:flex;flex-direction:column;gap:0.375rem;
-width:19rem;box-sizing:border-box;padding:0.875rem;
+width:19rem;max-width:calc(100vw - 2rem);box-sizing:border-box;padding:0.875rem;
 border:1px solid var(--vibeui-hovercard-005-border);
 border-left:3px solid var(--vibeui-hovercard-005-accent);
 border-radius:0.75rem;
 background:var(--vibeui-hovercard-005-card);
 box-shadow:0 22px 46px -28px oklch(0.25 0.03 60 / 55%);
-opacity:0;visibility:hidden;translate:0 -0.25rem;
+opacity:0;visibility:hidden;translate:-50% -0.25rem;
 transition:opacity .15s ease,translate .15s ease,visibility .15s;
 }
 [data-vibeui-block="hovercard-005"] [data-part="host"]:hover [data-part="card"],
-[data-vibeui-block="hovercard-005"] [data-part="host"]:focus-within [data-part="card"]{opacity:1;visibility:visible;translate:0 0}
+[data-vibeui-block="hovercard-005"] [data-part="host"]:focus-within [data-part="card"]{opacity:1;visibility:visible;translate:-50% 0}
 [data-vibeui-block="hovercard-005"] [data-part="head"]{display:flex;align-items:baseline;gap:0.5rem;flex-wrap:wrap}
 [data-vibeui-block="hovercard-005"] [data-part="full"]{font-size:0.875rem;font-weight:680;line-height:1.3}
 [data-vibeui-block="hovercard-005"] [data-part="category"]{

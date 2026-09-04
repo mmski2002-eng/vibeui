@@ -58,7 +58,10 @@ font-family:var(--vibeui-table-011-font);color:var(--vibeui-table-011-fg);
 background:var(--vibeui-table-011-bg);
 border:1px solid var(--vibeui-table-011-border);border-radius:1rem;overflow:hidden;
 }
-[data-vibeui-block="table-011"] [data-part="scroll"]{overflow-x:auto}
+/* position:relative — контейнер для скрытых от глаз, но не от скринридера,
+   подписей внутри (position:absolute): без своего контейнера их статическая
+   позиция считается от viewport и вылезает за пределы прокрутки на странице. */
+[data-vibeui-block="table-011"] [data-part="scroll"]{position:relative;overflow-x:auto}
 [data-vibeui-block="table-011"] [data-part="scroll"]:focus-visible{
 outline:2px solid var(--vibeui-table-011-accent);outline-offset:-2px;
 }

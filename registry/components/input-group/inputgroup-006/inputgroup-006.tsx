@@ -41,6 +41,9 @@ const STYLES = `
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="inputgroup-006"]{color-scheme:dark}
 [data-vibeui-block="inputgroup-006"]{
+/* УА-стиль браузера даёт fieldset { min-width: min-content } — без сброса
+   рамка не сжимается меньше текста подсказки и распирает страницу. */
+min-inline-size:0;
 display:flex;flex-direction:column;gap:0.5rem;
 width:100%;max-width:21rem;box-sizing:border-box;
 margin:0;padding:0.875rem;

@@ -33,9 +33,13 @@ background:var(--vibeui-tooltip-008-bg);color:var(--vibeui-tooltip-008-fg);
 font-family:var(--vibeui-tooltip-008-font);font-size:1rem;line-height:1.65;
 text-wrap:pretty;
 }
-/* Термин остаётся словом в строке: не кнопка, не ссылка, набор не рвётся. */
+/* Термин остаётся словом в строке: не кнопка, не ссылка, набор не рвётся.
+   white-space:nowrap держит термин одним куском: если он не помещается,
+   переносится целиком, а не посередине. Иначе подсказка, центрированная по
+   термину, считает ширину по объединению двух половин на разных строках и
+   на узкой странице уезжает за край. */
 [data-vibeui-block="tooltip-008"] [data-part="term"]{
-position:relative;
+position:relative;white-space:nowrap;
 color:var(--vibeui-tooltip-008-mark);font-weight:600;cursor:help;
 text-decoration:underline dotted currentColor;
 text-underline-offset:0.22em;text-decoration-thickness:from-font;
@@ -44,7 +48,7 @@ border-radius:0.1875rem;
 [data-vibeui-block="tooltip-008"] [data-part="term"]:focus-visible{outline:2px solid var(--vibeui-tooltip-008-mark);outline-offset:2px}
 [data-vibeui-block="tooltip-008"] [data-part="tip"]{
 position:absolute;bottom:calc(100% + 0.45em);left:50%;z-index:20;
-width:16rem;max-width:70vw;box-sizing:border-box;
+width:16rem;max-width:70vw;box-sizing:border-box;white-space:normal;
 padding:0.5rem 0.6875rem;border-radius:0.5rem;
 /* Обе ветки --tip тёмные — плашка подсказки тёмная всегда, поэтому подпись светлая без light-dark(). */
 background:var(--vibeui-tooltip-008-tip);color:oklch(0.97 0.002 265);

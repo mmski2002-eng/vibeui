@@ -51,7 +51,13 @@ font-family:var(--vibeui-buttongroup-019-font);
 [data-vibeui-block="buttongroup-019"] [data-part="row"]{
 display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;
 }
-[data-vibeui-block="buttongroup-019"] [data-part="track"]{display:flex;isolation:isolate}
+/* Пилюли не сжимаются (white-space:nowrap): на узкой ширине сцепка
+   прокручивается сама вместо того, чтобы раздвигать страницу. Flex-элемент
+   по умолчанию не сжимается меньше content (min-width:auto) — без сброса
+   overflow-x не сработал бы. */
+[data-vibeui-block="buttongroup-019"] [data-part="track"]{
+display:flex;isolation:isolate;min-inline-size:0;max-inline-size:100%;overflow-x:auto;
+}
 [data-vibeui-block="buttongroup-019"] [data-part="chip"]{
 appearance:none;cursor:pointer;font:inherit;
 position:relative;z-index:0;

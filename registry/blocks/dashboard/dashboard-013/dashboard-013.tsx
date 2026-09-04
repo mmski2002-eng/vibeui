@@ -109,9 +109,11 @@ font:inherit;font-size:0.8125rem;font-weight:650;
 border:1px solid var(--vibeui-dashboard-013-border);background:none;color:inherit;
 }
 /* Немодальный показ: панель остаётся внутри блока, а не уходит в верхний
-   слой поверх страницы. Так её показывают на витрине и в документации. */
+   слой поверх страницы. Так её показывают на витрине и в документации.
+   overflow-x:hidden — иначе появление панели translate'ом на 1.5rem вправо
+   от прижатого к краю положения на миг раздвигает страницу по горизонтали. */
 [data-vibeui-block="dashboard-013"]:has(dialog:not(:modal)[open]){
-display:block;position:relative;width:100%;min-height:26rem;
+display:block;position:relative;width:100%;min-height:26rem;overflow-x:hidden;
 }
 [data-vibeui-block="dashboard-013"] dialog:not(:modal){position:absolute;max-width:100%;max-height:100%;z-index:1}
 [data-vibeui-block="dashboard-013"]:has(dialog:not(:modal)[open]) [data-part="open"]{display:none}

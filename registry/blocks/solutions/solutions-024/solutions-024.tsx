@@ -133,6 +133,9 @@ font-size:0.6875rem;line-height:1.45;color:var(--vibeui-solutions-024-muted);
 margin:1rem 0 0.5rem;font-size:0.625rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;
 color:var(--vibeui-solutions-024-muted);
 }
+/* Колонка «when» не переносится (white-space:nowrap) — на узком экране
+   таблица должна прокручиваться сама, а не раздвигать страницу. */
+[data-vibeui-block="solutions-024"] [data-part="scroll"]{max-inline-size:100%;overflow-x:auto}
 [data-vibeui-block="solutions-024"] table{width:100%;border-collapse:collapse;font-size:0.8125rem}
 [data-vibeui-block="solutions-024"] th,
 [data-vibeui-block="solutions-024"] td{
@@ -351,34 +354,36 @@ export function Solutions024({
         <p data-part="overlap">{overlapNote}</p>
 
         <h3>{recentTitle}</h3>
-        <table>
-          <thead>
-            <tr>
-              {["email", "segment", "source", "joined"].map((column) => (
-                <th scope="col" key={column}>
-                  {columnText[column] ?? DEFAULT_COLUMN_TEXT[column]}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {subscribers.map((subscriber) => (
-              <tr key={subscriber.email}>
-                <td>
-                  <span data-part="email">{subscriber.email}</span>
-                  {subscriber.confirmed === false ? (
-                    <span data-part="pending">{pendingLabel}</span>
-                  ) : null}
-                </td>
-                <td>
-                  <span data-part="tag">{subscriber.segment}</span>
-                </td>
-                <td>{subscriber.source}</td>
-                <td data-part="when">{subscriber.joined}</td>
+        <div data-part="scroll">
+          <table>
+            <thead>
+              <tr>
+                {["email", "segment", "source", "joined"].map((column) => (
+                  <th scope="col" key={column}>
+                    {columnText[column] ?? DEFAULT_COLUMN_TEXT[column]}
+                  </th>
+                ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {subscribers.map((subscriber) => (
+                <tr key={subscriber.email}>
+                  <td>
+                    <span data-part="email">{subscriber.email}</span>
+                    {subscriber.confirmed === false ? (
+                      <span data-part="pending">{pendingLabel}</span>
+                    ) : null}
+                  </td>
+                  <td>
+                    <span data-part="tag">{subscriber.segment}</span>
+                  </td>
+                  <td>{subscriber.source}</td>
+                  <td data-part="when">{subscriber.joined}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </section>
     </>
   )

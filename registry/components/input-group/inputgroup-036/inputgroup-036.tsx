@@ -60,7 +60,9 @@ border:1px solid var(--vibeui-inputgroup-036-shell);border-radius:0.875rem;
 font-family:var(--vibeui-inputgroup-036-font);color:var(--vibeui-inputgroup-036-fg);
 }
 [data-vibeui-block="inputgroup-036"] *{box-sizing:border-box}
-[data-vibeui-block="inputgroup-036"] fieldset{margin:0;padding:0;border:0;display:flex;flex-direction:column;gap:0.4375rem}
+/* УА-стиль браузера даёт fieldset { min-width: min-content } — без сброса
+   сцепка не сжимается меньше содержимого и распирает страницу. */
+[data-vibeui-block="inputgroup-036"] fieldset{min-inline-size:0;margin:0;padding:0;border:0;display:flex;flex-direction:column;gap:0.4375rem}
 [data-vibeui-block="inputgroup-036"] legend{padding:0;font-size:0.8125rem;font-weight:600;float:left;width:100%}
 [data-vibeui-block="inputgroup-036"] [data-part="group"]{
 display:flex;align-items:stretch;clear:both;

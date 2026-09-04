@@ -92,6 +92,9 @@ width:var(--vibeui-solutions-003-width,100%);
 }
 [data-vibeui-block="solutions-003"] [data-part="sum"]{font-weight:650;font-variant-numeric:tabular-nums}
 [data-vibeui-block="solutions-003"] [data-part="count"]{color:var(--vibeui-solutions-003-muted);font-variant-numeric:tabular-nums}
+/* Строки таблицы не переносятся (white-space:nowrap) — на узком экране
+   таблица должна прокручиваться сама, а не раздвигать страницу. */
+[data-vibeui-block="solutions-003"] [data-part="scroll"]{max-inline-size:100%;overflow-x:auto}
 [data-vibeui-block="solutions-003"] table{width:100%;border-collapse:collapse;font-size:0.8125rem}
 [data-vibeui-block="solutions-003"] th,
 [data-vibeui-block="solutions-003"] td{
@@ -254,40 +257,42 @@ export function Solutions003({
           ))}
         </ol>
 
-        <table>
-          <thead>
-            <tr>
-              <th scope="col">
-                {columnText.company ?? DEFAULT_COLUMN_TEXT.company}
-              </th>
-              <th scope="col">
-                {columnText.stage ?? DEFAULT_COLUMN_TEXT.stage}
-              </th>
-              <th scope="col">{columnText.age ?? DEFAULT_COLUMN_TEXT.age}</th>
-              <th scope="col" data-align="end">
-                {columnText.amount ?? DEFAULT_COLUMN_TEXT.amount}
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {deals.map((deal) => (
-              <tr key={deal.company} data-tone={deal.tone ?? "cold"}>
-                <td>
-                  {deal.company}
-                  <span data-part="contact">{deal.contact}</span>
-                </td>
-                <td>{deal.stage}</td>
-                <td>
-                  <span data-part="age">
-                    <span data-part="dot" aria-hidden="true" />
-                    {deal.age}
-                  </span>
-                </td>
-                <td data-align="end">{deal.amount}</td>
+        <div data-part="scroll">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">
+                  {columnText.company ?? DEFAULT_COLUMN_TEXT.company}
+                </th>
+                <th scope="col">
+                  {columnText.stage ?? DEFAULT_COLUMN_TEXT.stage}
+                </th>
+                <th scope="col">{columnText.age ?? DEFAULT_COLUMN_TEXT.age}</th>
+                <th scope="col" data-align="end">
+                  {columnText.amount ?? DEFAULT_COLUMN_TEXT.amount}
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {deals.map((deal) => (
+                <tr key={deal.company} data-tone={deal.tone ?? "cold"}>
+                  <td>
+                    {deal.company}
+                    <span data-part="contact">{deal.contact}</span>
+                  </td>
+                  <td>{deal.stage}</td>
+                  <td>
+                    <span data-part="age">
+                      <span data-part="dot" aria-hidden="true" />
+                      {deal.age}
+                    </span>
+                  </td>
+                  <td data-align="end">{deal.amount}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </section>
     </>
   )
