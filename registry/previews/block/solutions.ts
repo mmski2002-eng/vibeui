@@ -38,7 +38,6 @@ import { Solutions030 } from "@/registry/blocks/solutions/solutions-030/solution
 import { Solutions031 } from "@/registry/blocks/solutions/solutions-031/solutions-031"
 import { Solutions032 } from "@/registry/blocks/solutions/solutions-032/solutions-032"
 import { Solutions033 } from "@/registry/blocks/solutions/solutions-033/solutions-033"
-import { Solutions034 } from "@/registry/blocks/solutions/solutions-034/solutions-034"
 import { Solutions035 } from "@/registry/blocks/solutions/solutions-035/solutions-035"
 import { Solutions036 } from "@/registry/blocks/solutions/solutions-036/solutions-036"
 import { Solutions037 } from "@/registry/blocks/solutions/solutions-037/solutions-037"
@@ -95,7 +94,6 @@ export const PREVIEWS = {
   "solutions-031": Solutions031,
   "solutions-032": Solutions032,
   "solutions-033": Solutions033,
-  "solutions-034": Solutions034,
   "solutions-035": Solutions035,
   "solutions-036": Solutions036,
   "solutions-037": Solutions037,

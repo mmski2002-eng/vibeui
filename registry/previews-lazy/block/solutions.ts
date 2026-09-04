@@ -171,11 +171,6 @@ export const PREVIEWS = {
       (module) => module.Solutions033,
     ),
   ),
-  "solutions-034": dynamic(() =>
-    import("@/registry/blocks/solutions/solutions-034/solutions-034").then(
-      (module) => module.Solutions034,
-    ),
-  ),
   "solutions-035": dynamic(() =>
     import("@/registry/blocks/solutions/solutions-035/solutions-035").then(
       (module) => module.Solutions035,

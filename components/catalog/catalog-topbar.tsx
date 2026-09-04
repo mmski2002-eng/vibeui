@@ -14,8 +14,8 @@ export function CatalogTopbar({
 
   return (
     <header className="border-shell-border bg-shell sticky top-0 z-30 border-b">
-      <div className="mx-auto flex h-14 w-full max-w-[1440px] items-center justify-between gap-4 px-4 lg:px-6">
-        <div className="flex min-w-0 items-center gap-3">
+      <div className="mx-auto flex w-full max-w-[1440px] flex-wrap items-center justify-between gap-x-4 gap-y-1 px-4 py-2 sm:h-14 sm:flex-nowrap sm:py-0 lg:px-6">
+        <div className="flex min-w-0 shrink-0 items-center gap-3">
           <Link
             href={localePath(locale, "/")}
             className="text-shell-fg focus-visible:ring-shell-ring rounded-sm text-base font-semibold tracking-tight focus-visible:ring-2 focus-visible:outline-none"
@@ -27,16 +27,19 @@ export function CatalogTopbar({
           </span>
         </div>
 
-        <nav className="text-shell-muted flex items-center gap-4 text-sm">
+        {/* На телефоне ссылки переезжают на вторую строку: в один ряд с
+            логотипом и выбором языка им остаётся сотня пикселей, и там от них
+            видны одни обрубки. Полосу прокрутки прячем — ряд короткий. */}
+        <nav className="text-shell-muted order-last flex w-full min-w-0 [scrollbar-width:none] items-center justify-start gap-3 overflow-x-auto pb-0.5 text-sm sm:order-none sm:w-auto sm:flex-1 sm:justify-end sm:gap-4 sm:pb-0 [&::-webkit-scrollbar]:hidden">
           <Link
             href={localePath(locale, "/components")}
-            className="hover:text-shell-fg focus-visible:ring-shell-ring rounded-sm transition-colors focus-visible:ring-2 focus-visible:outline-none"
+            className="hover:text-shell-fg focus-visible:ring-shell-ring shrink-0 rounded-sm whitespace-nowrap transition-colors focus-visible:ring-2 focus-visible:outline-none"
           >
             {t.topbar.components}
           </Link>
           <Link
             href={localePath(locale, "/blocks")}
-            className="hover:text-shell-fg focus-visible:ring-shell-ring rounded-sm transition-colors focus-visible:ring-2 focus-visible:outline-none"
+            className="hover:text-shell-fg focus-visible:ring-shell-ring shrink-0 rounded-sm whitespace-nowrap transition-colors focus-visible:ring-2 focus-visible:outline-none"
           >
             {t.topbar.blocks}
           </Link>
@@ -44,18 +47,23 @@ export function CatalogTopbar({
               без языковой пары, поэтому ссылка без префикса локали. */}
           <Link
             href="/lab"
-            className="hover:text-shell-fg focus-visible:ring-shell-ring rounded-sm transition-colors focus-visible:ring-2 focus-visible:outline-none"
+            className="hover:text-shell-fg focus-visible:ring-shell-ring hidden shrink-0 rounded-sm whitespace-nowrap transition-colors focus-visible:ring-2 focus-visible:outline-none sm:inline"
           >
             {t.topbar.lab}
           </Link>
           <Link
             href="/animations"
-            className="hover:text-shell-fg focus-visible:ring-shell-ring rounded-sm transition-colors focus-visible:ring-2 focus-visible:outline-none"
+            className="hover:text-shell-fg focus-visible:ring-shell-ring shrink-0 rounded-sm whitespace-nowrap transition-colors focus-visible:ring-2 focus-visible:outline-none"
           >
             {t.topbar.animations}
           </Link>
-          <LocaleSwitch locale={locale} />
         </nav>
+
+        {/* Выбор языка стоит вне прокручиваемого ряда: на телефоне он
+            уезжал бы за край вместе со ссылками, а язык нужен сразу. */}
+        <div className="shrink-0">
+          <LocaleSwitch locale={locale} />
+        </div>
       </div>
     </header>
   )
