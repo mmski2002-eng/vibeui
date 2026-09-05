@@ -98,7 +98,60 @@ import toggleRegistry from "@/registry/components/toggle/registry.json"
 import toggleGroupRegistry from "@/registry/components/toggle-group/registry.json"
 import tooltipRegistry from "@/registry/components/tooltip/registry.json"
 import treeRegistry from "@/registry/components/tree/registry.json"
+import heroAnimationRegistry from "@/registry/animations/hero/registry.json"
+import navbarAnimationRegistry from "@/registry/animations/navbar/registry.json"
+import featuresAnimationRegistry from "@/registry/animations/features/registry.json"
+import pricingAnimationRegistry from "@/registry/animations/pricing/registry.json"
+import testimonialsAnimationRegistry from "@/registry/animations/testimonials/registry.json"
+import faqAnimationRegistry from "@/registry/animations/faq/registry.json"
+import ctaAnimationRegistry from "@/registry/animations/cta/registry.json"
+import footerAnimationRegistry from "@/registry/animations/footer/registry.json"
+import aiAnimationRegistry from "@/registry/animations/ai/registry.json"
+import dashboardAnimationRegistry from "@/registry/animations/dashboard/registry.json"
+import authAnimationRegistry from "@/registry/animations/auth/registry.json"
+import blogAnimationRegistry from "@/registry/animations/blog/registry.json"
+import contactAnimationRegistry from "@/registry/animations/contact/registry.json"
+import avatarAnimationRegistry from "@/registry/animations/avatar/registry.json"
+import calendarAnimationRegistry from "@/registry/animations/calendar/registry.json"
+import chartAnimationRegistry from "@/registry/animations/chart/registry.json"
+import codeBlockAnimationRegistry from "@/registry/animations/code-block/registry.json"
+import emptyAnimationRegistry from "@/registry/animations/empty/registry.json"
+import kanbanAnimationRegistry from "@/registry/animations/kanban/registry.json"
+import kbdAnimationRegistry from "@/registry/animations/kbd/registry.json"
+import tableAnimationRegistry from "@/registry/animations/table/registry.json"
+import timelineAnimationRegistry from "@/registry/animations/timeline/registry.json"
 import activityRegistry from "@/registry/animations/activity/registry.json"
+import apiRegistry from "@/registry/animations/api/registry.json"
+import brandingRegistry from "@/registry/animations/branding/registry.json"
+import browserRegistry from "@/registry/animations/browser/registry.json"
+import chatRegistry from "@/registry/animations/chat/registry.json"
+import connectionsRegistry from "@/registry/animations/connections/registry.json"
+import devicesRegistry from "@/registry/animations/devices/registry.json"
+import emailRegistry from "@/registry/animations/email/registry.json"
+import filesRegistry from "@/registry/animations/files/registry.json"
+import geoRegistry from "@/registry/animations/geo/registry.json"
+import gitRegistry from "@/registry/animations/git/registry.json"
+import imagesRegistry from "@/registry/animations/images/registry.json"
+import integrationsRegistry from "@/registry/animations/integrations/registry.json"
+import mediaRegistry from "@/registry/animations/media/registry.json"
+import metricsRegistry from "@/registry/animations/metrics/registry.json"
+import notificationsRegistry from "@/registry/animations/notifications/registry.json"
+import paymentsRegistry from "@/registry/animations/payments/registry.json"
+import searchRegistry from "@/registry/animations/search/registry.json"
+import securityRegistry from "@/registry/animations/security/registry.json"
+import statusRegistry from "@/registry/animations/status/registry.json"
+import checklistRegistry from "@/registry/animations/checklist/registry.json"
+import bentoRegistry from "@/registry/animations/bento/registry.json"
+import blogPostRegistry from "@/registry/animations/blog-post/registry.json"
+import commentsRegistry from "@/registry/animations/comments/registry.json"
+import errorRegistry from "@/registry/animations/error/registry.json"
+import logosRegistry from "@/registry/animations/logos/registry.json"
+import newsletterRegistry from "@/registry/animations/newsletter/registry.json"
+import processRegistry from "@/registry/animations/process/registry.json"
+import statsRegistry from "@/registry/animations/stats/registry.json"
+import teamRegistry from "@/registry/animations/team/registry.json"
+import maintenanceRegistry from "@/registry/animations/maintenance/registry.json"
+import notFoundRegistry from "@/registry/animations/not-found/registry.json"
 
 /**
  * Реестры, попадающие на сайт. Это и есть файловая база каталога: другого
@@ -586,9 +639,274 @@ export const SOURCES = [
     items: treeRegistry.items,
   },
   {
+    directory: "registry/animations/hero",
+    kind: "animation",
+    items: heroAnimationRegistry.items,
+  },
+  {
+    directory: "registry/animations/navbar",
+    kind: "animation",
+    items: navbarAnimationRegistry.items,
+  },
+  {
+    directory: "registry/animations/features",
+    kind: "animation",
+    items: featuresAnimationRegistry.items,
+  },
+  {
+    directory: "registry/animations/pricing",
+    kind: "animation",
+    items: pricingAnimationRegistry.items,
+  },
+  {
+    directory: "registry/animations/testimonials",
+    kind: "animation",
+    items: testimonialsAnimationRegistry.items,
+  },
+  {
+    directory: "registry/animations/faq",
+    kind: "animation",
+    items: faqAnimationRegistry.items,
+  },
+  {
+    directory: "registry/animations/cta",
+    kind: "animation",
+    items: ctaAnimationRegistry.items,
+  },
+  {
+    directory: "registry/animations/footer",
+    kind: "animation",
+    items: footerAnimationRegistry.items,
+  },
+  {
+    directory: "registry/animations/ai",
+    kind: "animation",
+    items: aiAnimationRegistry.items,
+  },
+  {
+    directory: "registry/animations/dashboard",
+    kind: "animation",
+    items: dashboardAnimationRegistry.items,
+  },
+  {
+    directory: "registry/animations/auth",
+    kind: "animation",
+    items: authAnimationRegistry.items,
+  },
+  {
+    directory: "registry/animations/blog",
+    kind: "animation",
+    items: blogAnimationRegistry.items,
+  },
+  {
+    directory: "registry/animations/contact",
+    kind: "animation",
+    items: contactAnimationRegistry.items,
+  },
+  {
+    directory: "registry/animations/avatar",
+    kind: "animation",
+    items: avatarAnimationRegistry.items,
+  },
+  {
+    directory: "registry/animations/calendar",
+    kind: "animation",
+    items: calendarAnimationRegistry.items,
+  },
+  {
+    directory: "registry/animations/chart",
+    kind: "animation",
+    items: chartAnimationRegistry.items,
+  },
+  {
+    directory: "registry/animations/code-block",
+    kind: "animation",
+    items: codeBlockAnimationRegistry.items,
+  },
+  {
+    directory: "registry/animations/empty",
+    kind: "animation",
+    items: emptyAnimationRegistry.items,
+  },
+  {
+    directory: "registry/animations/kanban",
+    kind: "animation",
+    items: kanbanAnimationRegistry.items,
+  },
+  {
+    directory: "registry/animations/kbd",
+    kind: "animation",
+    items: kbdAnimationRegistry.items,
+  },
+  {
+    directory: "registry/animations/table",
+    kind: "animation",
+    items: tableAnimationRegistry.items,
+  },
+  {
+    directory: "registry/animations/timeline",
+    kind: "animation",
+    items: timelineAnimationRegistry.items,
+  },
+  {
     directory: "registry/animations/activity",
     kind: "animation",
     items: activityRegistry.items,
+  },
+  {
+    directory: "registry/animations/api",
+    kind: "animation",
+    items: apiRegistry.items,
+  },
+  {
+    directory: "registry/animations/branding",
+    kind: "animation",
+    items: brandingRegistry.items,
+  },
+  {
+    directory: "registry/animations/browser",
+    kind: "animation",
+    items: browserRegistry.items,
+  },
+  {
+    directory: "registry/animations/chat",
+    kind: "animation",
+    items: chatRegistry.items,
+  },
+  {
+    directory: "registry/animations/connections",
+    kind: "animation",
+    items: connectionsRegistry.items,
+  },
+  {
+    directory: "registry/animations/devices",
+    kind: "animation",
+    items: devicesRegistry.items,
+  },
+  {
+    directory: "registry/animations/email",
+    kind: "animation",
+    items: emailRegistry.items,
+  },
+  {
+    directory: "registry/animations/files",
+    kind: "animation",
+    items: filesRegistry.items,
+  },
+  {
+    directory: "registry/animations/geo",
+    kind: "animation",
+    items: geoRegistry.items,
+  },
+  {
+    directory: "registry/animations/git",
+    kind: "animation",
+    items: gitRegistry.items,
+  },
+  {
+    directory: "registry/animations/images",
+    kind: "animation",
+    items: imagesRegistry.items,
+  },
+  {
+    directory: "registry/animations/integrations",
+    kind: "animation",
+    items: integrationsRegistry.items,
+  },
+  {
+    directory: "registry/animations/media",
+    kind: "animation",
+    items: mediaRegistry.items,
+  },
+  {
+    directory: "registry/animations/metrics",
+    kind: "animation",
+    items: metricsRegistry.items,
+  },
+  {
+    directory: "registry/animations/notifications",
+    kind: "animation",
+    items: notificationsRegistry.items,
+  },
+  {
+    directory: "registry/animations/payments",
+    kind: "animation",
+    items: paymentsRegistry.items,
+  },
+  {
+    directory: "registry/animations/search",
+    kind: "animation",
+    items: searchRegistry.items,
+  },
+  {
+    directory: "registry/animations/security",
+    kind: "animation",
+    items: securityRegistry.items,
+  },
+  {
+    directory: "registry/animations/status",
+    kind: "animation",
+    items: statusRegistry.items,
+  },
+  {
+    directory: "registry/animations/checklist",
+    kind: "animation",
+    items: checklistRegistry.items,
+  },
+  {
+    directory: "registry/animations/bento",
+    kind: "animation",
+    items: bentoRegistry.items,
+  },
+  {
+    directory: "registry/animations/blog-post",
+    kind: "animation",
+    items: blogPostRegistry.items,
+  },
+  {
+    directory: "registry/animations/comments",
+    kind: "animation",
+    items: commentsRegistry.items,
+  },
+  {
+    directory: "registry/animations/error",
+    kind: "animation",
+    items: errorRegistry.items,
+  },
+  {
+    directory: "registry/animations/logos",
+    kind: "animation",
+    items: logosRegistry.items,
+  },
+  {
+    directory: "registry/animations/newsletter",
+    kind: "animation",
+    items: newsletterRegistry.items,
+  },
+  {
+    directory: "registry/animations/process",
+    kind: "animation",
+    items: processRegistry.items,
+  },
+  {
+    directory: "registry/animations/stats",
+    kind: "animation",
+    items: statsRegistry.items,
+  },
+  {
+    directory: "registry/animations/team",
+    kind: "animation",
+    items: teamRegistry.items,
+  },
+  {
+    directory: "registry/animations/maintenance",
+    kind: "animation",
+    items: maintenanceRegistry.items,
+  },
+  {
+    directory: "registry/animations/not-found",
+    kind: "animation",
+    items: notFoundRegistry.items,
   },
 ] as const satisfies readonly {
   directory: string
