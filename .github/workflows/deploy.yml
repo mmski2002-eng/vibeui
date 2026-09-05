@@ -17,6 +17,10 @@ env:
   DEPLOY_HOST: 216.173.70.241
   DEPLOY_USER: root
   REGISTRY_BASE_URL: https://vibeui.ru/r
+  # Каталог дорос до ~1770 items: проверка типов в `next build` (и отдельный
+  # typecheck) упирается в дефолтный ~2 ГБ heap Node 20 и падает с OOM.
+  # Runner ubuntu-latest несёт 16 ГБ — поднимаем потолок кучи.
+  NODE_OPTIONS: --max-old-space-size=8192
 
 jobs:
   deploy:

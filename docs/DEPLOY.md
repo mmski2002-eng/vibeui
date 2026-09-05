@@ -225,6 +225,28 @@ runner-е тот же build идёт около двух минут.
 во время сборки, поэтому `typecheck` в workflow стоит **после** `build`:
 на чистом checkout он иначе падает на `app/layout.tsx`.
 
+### Инцидент 2026-09-05: OOM на проверке типов (heap Node)
+
+Деплой падал на шаге `npm run build`, exit 1. Симптом в логе runner-а:
+`next build` компилировался успешно (~84 с), затем на `Running TypeScript`
+куча Node упиралась в дефолтный ~2 ГБ и падала:
+`FATAL ERROR: Ineffective mark-compacts near heap limit — JavaScript heap
+out of memory`, следом `Failed to type check`. Node на runner-е — 20.x.
+
+Причина — рост каталога: проверка типов ~1770 items (плюс отдельный
+`typecheck`) перешагнула дефолтный потолок кучи Node 20. Локально не
+воспроизводилось: node 24 экономнее и с прогретым кэшем укладывается в 2 ГБ.
+
+Лечение — потолок кучи задан в `env` workflow:
+`NODE_OPTIONS: --max-old-space-size=8192` (runner `ubuntu-latest` несёт 16 ГБ).
+Покрывает и `next build`, и отдельный шаг `typecheck`.
+
+Это временная мера, а не решение: при дальнейшем росте каталога память
+вернётся как стена. Корневое решение — уйти от полного SSG всех items
+(`dynamicParams=false` на всех item-маршрутах × 2 локали × 3 kind) к
+on-demand рендеру item-страниц. Подробности и очередь — в
+[ROADMAP-TO-MATURITY.md](ROADMAP-TO-MATURITY.md), Этап 7.
+
 Откат — переключить симлинк на предыдущий релиз и рестартнуть; пересборка
 для этого не нужна:
 
