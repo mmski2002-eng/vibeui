@@ -192,6 +192,15 @@ function total(volume: number, base: number, tiers: Pricing006Tier[]) {
   return Math.round(sum)
 }
 
+function safeLocale(value: string, fallback: string) {
+  try {
+    Intl.NumberFormat.supportedLocalesOf(value)
+    return value
+  } catch {
+    return fallback
+  }
+}
+
 /** Калькулятор цены по объёму: ползунок, ступенчатый тариф и живой итог. */
 export function Pricing006({
   eyebrow = "Калькулятор",
@@ -219,10 +228,14 @@ export function Pricing006({
 }: Pricing006Props) {
   const id = useId()
   const [volume, setVolume] = useState(defaultVolume)
-  const numberFormat = useMemo(() => new Intl.NumberFormat(locale), [locale])
+  const safeLocaleValue = safeLocale(locale, "ru-RU")
+  const numberFormat = useMemo(
+    () => new Intl.NumberFormat(safeLocaleValue),
+    [safeLocaleValue],
+  )
   const moneyFormat = useMemo(
-    () => new Intl.NumberFormat(locale, { maximumFractionDigits: 0 }),
-    [locale],
+    () => new Intl.NumberFormat(safeLocaleValue, { maximumFractionDigits: 0 }),
+    [safeLocaleValue],
   )
 
   const palette = {
@@ -289,7 +302,7 @@ export function Pricing006({
                     </span>
                     <span>
                       {fill(perUnitText, {
-                        price: tier.perUnit.toLocaleString(locale),
+                        price: tier.perUnit.toLocaleString(safeLocaleValue),
                         unit: unitOne,
                       })}
                     </span>
