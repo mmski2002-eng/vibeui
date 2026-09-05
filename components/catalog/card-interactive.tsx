@@ -324,10 +324,12 @@ export function CardInteractive({
         )}
       </div>
 
-      {/* На узком экране подпись уходит на свою строку: рядом с двумя
-          кнопками действий от неё оставалось «Карточ…», и понять, что за
-          компонент, было нельзя. */}
-      <div className="flex flex-col gap-1.5 px-2 py-1.5 sm:flex-row sm:items-center sm:gap-3">
+      {/* Подпись всегда на своей строке, не в ряд с кнопками: `sm:` — это
+          брейкпоинт вьюпорта, а карточка в двухколоночной сетке каталога
+          узкая уже на десктопе. В ряд с кнопками длинные имена обрезались
+          многоточием («Список с пояснениями (Described Sele…») — а имя
+          для агента и есть смысл карточки. */}
+      <div className="flex flex-col gap-1.5 px-2 py-1.5">
         <h3 className="text-shell-muted flex min-w-0 flex-1 items-center gap-1.5 truncate text-xs">
           <Link
             href={`${itemUrl}?${itemParams}`}
