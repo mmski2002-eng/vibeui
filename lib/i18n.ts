@@ -118,7 +118,7 @@ const RU: Dictionary = {
 
       return `${count} элементов`
     },
-    lab: "Рабочая область",
+    lab: "Страница для тестов",
     animations: "Анимации",
   },
   home: {
@@ -234,7 +234,7 @@ const EN: Dictionary = {
     components: "Components",
     blocks: "Blocks",
     items: (count) => `${count} items`,
-    lab: "Workspace",
+    lab: "Test page",
     animations: "Animations",
   },
   home: {
