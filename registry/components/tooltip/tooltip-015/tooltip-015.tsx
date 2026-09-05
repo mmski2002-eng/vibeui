@@ -6,6 +6,8 @@ export type Tooltip015Props = Omit<ComponentProps<"span">, "children"> & {
   /** data: или обычный URL картинки-превью. */
   src?: string
   alt?: string
+  /** Показать карточку-превью принудительно: онбординг, отладка, витрина. */
+  open?: boolean
   /** Цвет ссылки и обводки фокуса. Пусто — цвет компонента. */
   accent?: string
 }
@@ -75,6 +77,14 @@ font-size:0.75rem;line-height:1.4;color:var(--vibeui-tooltip-015-muted);
 [data-vibeui-block="tooltip-015"]:focus-within [data-part="tip"]{
 opacity:1;transform:translateY(0);
 }
+/* Витринный режим: карточка-превью раскрыта без наведения — иначе на
+   миниатюре каталога видна только строка-ссылка. Карточка высокая, над
+   ссылкой ей не хватает места в кадре витрины, поэтому она встаёт в поток
+   под ссылкой и кадр честно считает её высоту. */
+[data-vibeui-block="tooltip-015"][data-open="true"]{flex-direction:column;align-items:flex-start;gap:0.625rem}
+[data-vibeui-block="tooltip-015"][data-open="true"] [data-part="tip"]{
+opacity:1;position:static;transform:none;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="tooltip-015"] *{animation:none!important;transition:none!important}}
 `
 
@@ -87,6 +97,7 @@ export function Tooltip015({
   caption = "1600×1000 · добавлено сегодня",
   src = DEFAULT_PREVIEW,
   alt = "Миниатюра превью изображения",
+  open = false,
   accent = "",
   className,
   style,
@@ -111,6 +122,7 @@ export function Tooltip015({
         {...props}
         data-slot="tooltip"
         data-vibeui-block="tooltip-015"
+        data-open={open || undefined}
         className={className}
         style={palette}
       >

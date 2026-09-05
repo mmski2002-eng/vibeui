@@ -29,6 +29,8 @@ const STYLES = `
 --vibeui-frame-012-muted:color-mix(in oklab,var(--vibeui-frame-012-fg) 68%,transparent);
 --vibeui-frame-012-border:light-dark(oklch(0.89 0.006 265),oklch(0.4 0.011 265));
 --vibeui-frame-012-accent:light-dark(oklch(0.55 0.03 265),oklch(0.76 0.03 265));
+--vibeui-frame-012-accent-warm:light-dark(oklch(0.58 0.17 262),oklch(0.72 0.15 262));
+--vibeui-frame-012-soft:light-dark(oklch(0.965 0.004 265),oklch(0.32 0.01 265));
 --vibeui-frame-012-radius:0.875rem;
 --vibeui-frame-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -66,10 +68,44 @@ border:1px solid var(--vibeui-frame-012-border);
 font-size:0.6875rem;font-weight:600;color:var(--vibeui-frame-012-fg);
 }
 [data-vibeui-block="frame-012"] [data-part="pane"]:last-child [data-part="label"]{left:auto;right:0.625rem}
-[data-vibeui-block="frame-012"] [data-part="stub"]{
-display:grid;place-items:center;height:100%;padding:1rem;
-text-align:center;font-size:0.8125rem;color:var(--vibeui-frame-012-muted);
+/* Обе половины рисуют один и тот же макет, но «до» — блёклый и тесный, а
+   «после» — цветной и с воздухом. Разница должна читаться на миниатюре без
+   картинок; подпись под макетом остаётся и называет половину словами. */
+[data-vibeui-block="frame-012"] [data-part="pane"] [data-part="stub"]{
+display:flex;flex-direction:column;justify-content:center;gap:0.5rem;
+height:100%;padding:2rem 0.875rem 0.875rem;
+text-align:left;font-size:0.6875rem;color:var(--vibeui-frame-012-muted);
 }
+[data-vibeui-block="frame-012"] [data-part="mock"]{
+display:flex;flex-direction:column;gap:0.375rem;
+padding:0.5rem;border-radius:0.5rem;
+background:var(--vibeui-frame-012-soft);
+}
+[data-vibeui-block="frame-012"] [data-part="mock-head"]{
+display:block;height:0.5625rem;width:70%;border-radius:9999px;
+background:color-mix(in oklab,var(--vibeui-frame-012-fg) 45%,transparent);
+}
+[data-vibeui-block="frame-012"] [data-part="mock-line"]{
+display:block;height:0.3125rem;border-radius:9999px;
+background:color-mix(in oklab,var(--vibeui-frame-012-fg) 18%,transparent);
+}
+[data-vibeui-block="frame-012"] [data-part="mock-line"] + [data-part="mock-line"]{width:62%}
+[data-vibeui-block="frame-012"] [data-part="mock-cta"]{
+display:block;width:3.5rem;height:0.875rem;border-radius:0.3125rem;
+background:color-mix(in oklab,var(--vibeui-frame-012-fg) 25%,transparent);
+}
+/* «После»: тот же макет, но с акцентом и просторнее — приём виден без слов. */
+[data-vibeui-block="frame-012"] [data-part="stub"][data-tone="after"] [data-part="mock"]{
+gap:0.5rem;padding:0.625rem;
+background:linear-gradient(140deg,color-mix(in oklab,var(--vibeui-frame-012-accent-warm) 16%,transparent),var(--vibeui-frame-012-soft));
+}
+[data-vibeui-block="frame-012"] [data-part="stub"][data-tone="after"] [data-part="mock-head"]{
+background:var(--vibeui-frame-012-accent-warm);
+}
+[data-vibeui-block="frame-012"] [data-part="stub"][data-tone="after"] [data-part="mock-cta"]{
+background:var(--vibeui-frame-012-accent-warm);
+}
+[data-vibeui-block="frame-012"] [data-part="stub-text"]{font-size:0.6875rem}
 [data-vibeui-block="frame-012"] [data-part="handle"]{
 position:absolute;top:50%;left:50%;z-index:3;
 display:grid;place-items:center;
@@ -157,11 +193,31 @@ export function Frame012({
         <div data-part="shell">
           <div data-part="pane">
             <span data-part="label">{beforeLabel}</span>
-            {before ?? <div data-part="stub">{beforeStub}</div>}
+            {before ?? (
+              <div data-part="stub" data-tone="before">
+                <span data-part="mock" aria-hidden="true">
+                  <span data-part="mock-head" />
+                  <span data-part="mock-line" />
+                  <span data-part="mock-line" />
+                  <span data-part="mock-cta" />
+                </span>
+                <span data-part="stub-text">{beforeStub}</span>
+              </div>
+            )}
           </div>
           <div data-part="pane">
             <span data-part="label">{afterLabel}</span>
-            {after ?? <div data-part="stub">{afterStub}</div>}
+            {after ?? (
+              <div data-part="stub" data-tone="after">
+                <span data-part="mock" aria-hidden="true">
+                  <span data-part="mock-head" />
+                  <span data-part="mock-line" />
+                  <span data-part="mock-line" />
+                  <span data-part="mock-cta" />
+                </span>
+                <span data-part="stub-text">{afterStub}</span>
+              </div>
+            )}
           </div>
           <span data-part="handle" aria-hidden="true">
             ⟷

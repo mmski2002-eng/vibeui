@@ -2823,6 +2823,326 @@
         },
         "cardControls": ["eyebrow", "title", "accent", "background"]
       }
+    },
+    {
+      "name": "features-017",
+      "type": "registry:block",
+      "title": "Bento-сетка возможностей",
+      "description": "Возможности плитками разного размера: крупная плитка держит главную мысль и нарисованную схему страницы, четыре мелкие добавляют по одному факту — число каталога, команду установки, список того, что внутри, и абзац про инструкцию для агента.",
+      "categories": ["features"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "features-017/features-017.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/features-017.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-features-017-* построена на light-dark(): подложки по умолчанию нет, секция лежит на фоне страницы, плитка в тёмном контексте светлее фона; строка :where(.dark,[data-theme=\"dark\"]) … {color-scheme:dark} нужна потому, что next-themes и shadcn переключают класс, а не color-scheme. Сетка строится container-запросами от ширины блока: один столбец, два от 40rem и четыре от 64rem, где крупная плитка занимает два столбца и две строки через grid-column/grid-row: span 2 по атрибуту data-tile=\"lead\". Схема страницы внутри крупной плитки нарисована разметкой: полосы и прямоугольники на color-mix из акцента, ширины заданы атрибутом data-len, а не inline-стилями. Команда установки лежит в <code> с overflow-x:auto, поэтому длинная строка прокручивается внутри плитки, а не разъезжает секцию. Число набрано tabular-nums. Каждая плитка объявляет min-width:0, иначе grid-элемент не сжимается.",
+      "meta": {
+        "tags": ["features", "bento", "grid", "tiles", "saas", "section"],
+        "ai": {
+          "export": "Features017",
+          "usage": "<Features017 title=\"Библиотека, из которой страница собирается за вечер\" metricValue=\"1 657\" />",
+          "summary": "Bento-сетка возможностей: шапка с надзаголовком, заголовком и подзаголовком, под ней пять плиток разного размера — крупная с главной мыслью и схемой страницы, плитка с числом, плитка с командой установки, плитка со списком и плитка про инструкцию для агента. Один файл, ноль зависимостей.",
+          "preserve": [
+            "разницу размеров плиток: в bento именно размер задаёт иерархию, а сетка из пяти одинаковых квадратов — это уже обычная сетка",
+            "ровно одну крупную плитку: две главные мысли в одном кадре не читаются",
+            "осмысленное содержимое каждой плитки: пустой квадрат-заглушка ломает жанр, плитку без факта убирают, а не заполняют",
+            "схему страницы внутри крупной плитки как разметку, а не картинку: она рисуется полосами на color-mix из акцента и переживает смену акцента",
+            "ширины полос через атрибут data-len, а не inline-стилями: правило остаётся в CSS блока",
+            "min-width:0 у плиток и overflow-x:auto у <code>: без них длинная команда разъезжает сетку",
+            "строку :where(.dark,[data-theme=\"dark\"]) … {color-scheme:dark}: без неё блок останется светлым на тёмной странице проекта на shadcn",
+            "локальную палитру --vibeui-features-017-* и container-запросы на 40rem и 64rem: раскладка считается от ширины блока, а не окна"
+          ],
+          "adapt": [
+            "тексты шапки: eyebrow, title и lede",
+            "содержимое крупной плитки: leadTitle и leadText",
+            "факты мелких плиток: metricValue и metricLabel, commandTitle, command и commandNote, checksTitle и список checks, aiTitle и aiText",
+            "акцентный цвет через проп accent — от него считаются схема, плитка команды и число",
+            "внешние отступы через className и точечные переопределения через style"
+          ],
+          "notes": [
+            "Плитки заданы разметкой, а не массивом: набор из пяти — часть композиции, шестая плитка сломает раскладку на четыре столбца.",
+            "Список checks обрезается до четырёх пунктов: пятый не покажется.",
+            "Команда в <code> — обычный текст, подсветки синтаксиса нет и она не нужна.",
+            "Схема в крупной плитке помечена aria-hidden: скринридеру она ничего не сообщает, весь смысл лежит в тексте плитки.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "preview": {
+          "width": "full"
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Библиотека, из которой страница собирается за вечер",
+            "maxLength": 70
+          },
+          {
+            "prop": "metricValue",
+            "label": "Число на плитке",
+            "type": "text",
+            "default": "1 657",
+            "maxLength": 12
+          },
+          {
+            "prop": "command",
+            "label": "Команда установки",
+            "type": "text",
+            "default": "npx shadcn@latest add features-017",
+            "maxLength": 60
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Bento Features Grid",
+            "description": "Features as tiles of different sizes: the large tile carries the main idea and a drawn page sketch, while four small ones each add a single fact — the catalog number, the install command, what is inside and the instruction for the agent.",
+            "docs": "A server component, one file, zero dependencies. The --vibeui-features-017-* palette is built on light-dark(): there is no backdrop by default, the section sits on the page background and in a dark context the tile is lighter than the background; the :where(.dark,[data-theme=\"dark\"]) … {color-scheme:dark} rule is there because next-themes and shadcn switch a class rather than color-scheme. The grid is built by container queries against the block width: one column, two from 40rem and four from 64rem, where the large tile takes two columns and two rows through grid-column/grid-row: span 2 keyed on data-tile=\"lead\". The page sketch inside the large tile is drawn in markup: bars and rectangles on color-mix from the accent, with widths set through the data-len attribute rather than inline styles. The install command lives in a <code> with overflow-x:auto, so a long string scrolls inside the tile instead of stretching the section. The number is set in tabular-nums. Every tile declares min-width:0, otherwise a grid item refuses to shrink.",
+            "ai": {
+              "summary": "A bento features grid: a header with eyebrow, headline and subhead, and below it five tiles of different sizes — a large one with the main idea and a page sketch, a number tile, an install-command tile, a checklist tile and a tile about the agent instruction. One file, zero dependencies.",
+              "preserve": [
+                "the difference in tile sizes: in bento the size is the hierarchy, and five equal squares are just a plain grid",
+                "exactly one large tile: two main ideas in one frame cancel each other out",
+                "meaningful content in every tile: an empty placeholder square breaks the genre — a tile with nothing to say gets removed, not filled",
+                "the page sketch inside the large tile as markup rather than an image: it is drawn with bars on color-mix from the accent and survives an accent change",
+                "the bar widths through the data-len attribute rather than inline styles: the rule stays in the block CSS",
+                "min-width:0 on the tiles and overflow-x:auto on the <code>: without them a long command stretches the grid",
+                "the :where(.dark,[data-theme=\"dark\"]) … {color-scheme:dark} rule: without it the block stays light on a dark shadcn page",
+                "the local --vibeui-features-017-* palette and the container queries at 40rem and 64rem: the layout is measured against the block, not the window"
+              ],
+              "adapt": [
+                "the header copy: eyebrow, title and lede",
+                "the large tile: leadTitle and leadText",
+                "the facts in the small tiles: metricValue and metricLabel, commandTitle, command and commandNote, checksTitle and the checks list, aiTitle and aiText",
+                "the accent colour through the accent prop — the sketch, the command tile and the number all derive from it",
+                "outer spacing through className and pinpoint overrides through style"
+              ],
+              "notes": [
+                "The tiles are written into the markup rather than mapped from an array: the set of five is part of the composition, and a sixth tile breaks the four-column layout.",
+                "The checks list is trimmed to four entries: a fifth one will not render.",
+                "The command in <code> is plain text — there is no syntax highlighting and none is needed.",
+                "The sketch in the large tile is aria-hidden: it tells a screen reader nothing, and the whole meaning lives in the tile copy.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file."
+              ],
+              "usage": "<Features017 title=\"A library a page gets built from in one evening\" metricValue=\"1,657\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Headline",
+                "default": "A library a page gets built from in one evening"
+              },
+              "metricValue": {
+                "label": "Tile number",
+                "default": "1,657"
+              },
+              "command": {
+                "label": "Install command",
+                "default": "npx shadcn@latest add features-017"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "How it works",
+                "title": "A library a page gets built from in one evening",
+                "lede": "Each tile answers a different version of «what do I actually get». The size of a tile tells you what matters here.",
+                "leadTitle": "Ready-made sections instead of building from scratch",
+                "leadText": "The hero, the features, the pricing, the testimonials and the footer are already built and already agree with each other. You pick a composition rather than redrawing one for every project.",
+                "metricValue": "1,657",
+                "metricLabel": "sections and components in the catalog",
+                "commandTitle": "Installed with one command",
+                "command": "npx shadcn@latest add features-017",
+                "commandNote": "The file stays in your repository.",
+                "checksTitle": "What is inside",
+                "checks": [
+                  "One file per section",
+                  "Its own palette inside the block",
+                  "Layout measured against the block"
+                ],
+                "aiTitle": "Instruction for the agent",
+                "aiText": "The agent gets the list of what must not break and does not rebuild the section its own way."
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "metricValue", "command", "accent"]
+      }
+    },
+    {
+      "name": "features-018",
+      "type": "registry:block",
+      "title": "Светлая секция возможностей",
+      "description": "Светлая секция на бумажном фоне: шапка с заголовком и ссылкой стоит слева, а четыре возможности идут строками справа — крупная контурная иконка, название и объяснение, строки разделены волосяными линиями.",
+      "categories": ["features"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "features-018/features-018.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/features-018.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-features-018-* задана явными значениями oklch, без light-dark(): светлота — содержание блока, поэтому на тёмной странице секция остаётся бумажным листом. По той же причине на корне объявлен color-scheme:light, иначе браузер рисовал бы фокусные кольца и выделение текста по тёмной ветке поверх светлого фона. Иконки набраны руками — один SVG-путь на пункт в объекте PATHS, обводка currentColor, никакой иконочной библиотеки. Шапка и список стоят в одной grid: один столбец до 48rem, дальше container-запрос разводит их на 20rem и остаток, а на 68rem шапка расширяется и иконки вырастают до 3.5rem. Строки списка разделены border-top, у первой он снят, поэтому разделитель не висит над списком. Цвет задан каждой текстовой части отдельно: иначе заголовок на светлой карточке пришёл бы белым со страницы-хозяина.",
+      "meta": {
+        "tags": ["features", "light", "icons", "list", "paper", "section"],
+        "ai": {
+          "export": "Features018",
+          "usage": "<Features018 title=\"Четыре вещи, ради которых команды переезжают\" />",
+          "summary": "Светлая секция возможностей: слева надзаголовок, заголовок, подзаголовок и ссылка на полный список, справа четыре пункта строками — контурная иконка, название и объяснение, разделённые волосяными линиями. Один файл, ноль зависимостей.",
+          "preserve": [
+            "светлую палитру: блок задуман бумажным листом и не переключается на тёмную ветку — не переводите его переменные на light-dark()",
+            "строку color-scheme:light на корне: без неё браузер нарисует фокусные кольца и выделение текста по тёмной ветке поверх светлого фона",
+            "иконки как inline-пути внутри файла: иконочная библиотека утащит за собой зависимость и сломает обещание «один файл»",
+            "обводку иконок через currentColor: она обязана следовать за акцентом, а не быть залита фиксированным цветом",
+            "строки вместо карточек: четыре пункта в сетке карточек читаются как прайс, а списком — как перечисление",
+            "снятый border-top у первой строки: иначе разделитель висит над списком без пары",
+            "цвет, заданный каждой текстовой части: без этого заголовок наследует цвет страницы-хозяина и белеет на светлом фоне",
+            "локальную палитру --vibeui-features-018-* и container-запросы на 48rem и 68rem: раскладка считается от ширины блока, а не окна"
+          ],
+          "adapt": [
+            "тексты шапки: eyebrow, title и lede",
+            "ссылку на полный список: linkLabel и адрес linkHref",
+            "список items: иконка icon из четырёх заготовленных, название title и описание description",
+            "акцентный цвет через проп accent — от него зависят надзаголовок, подложка иконки и ссылка",
+            "внешние отступы через className и точечные переопределения через style"
+          ],
+          "notes": [
+            "Поле icon принимает одно из четырёх значений: comment, history, link, code. Нужен пятый рисунок — добавьте путь в объект PATHS и значение в тип.",
+            "Список обрезается до четырёх пунктов: пятый не покажется, и это осознанно — на пяти строках шапка слева перестаёт держать колонку.",
+            "Иконки помечены aria-hidden: смысл лежит в заголовке и описании, скринридер не должен читать декор.",
+            "Блок не читает тему проекта: на тёмной странице он останется светлым — это осознанное решение, а не недосмотр.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "preview": {
+          "width": "full"
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Четыре вещи, ради которых команды переезжают",
+            "maxLength": 70
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Возможности",
+            "maxLength": 40
+          },
+          {
+            "prop": "linkLabel",
+            "label": "Ссылка",
+            "type": "text",
+            "default": "Полный список возможностей",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Light Features Section",
+            "description": "A light section on paper: the header with the headline and a link stands on the left, while four features run as rows on the right — a large outline icon, a name and an explanation, separated by hairline rules.",
+            "docs": "A server component, one file, zero dependencies. The --vibeui-features-018-* palette is written out in explicit oklch values rather than light-dark(): lightness is the content of the block, so on a dark page the section stays a sheet of paper. For the same reason color-scheme:light is declared on the root — otherwise the browser would paint focus rings and text selection from the dark branch on top of a light background. The icons are drawn by hand — one SVG path per entry in the PATHS object, stroked with currentColor, no icon library. The header and the list share one grid: a single column up to 48rem, beyond which a container query splits them into 20rem plus the remainder, and at 68rem the header widens while the icons grow to 3.5rem. The list rows are separated by border-top with the first one cleared, so no rule hangs above the list. Every text part sets its own colour: otherwise the heading would inherit the host page colour and go white on a light card.",
+            "ai": {
+              "summary": "A light features section: an eyebrow, headline, subhead and a link to the full list on the left; four rows on the right — an outline icon, a name and an explanation, separated by hairline rules. One file, zero dependencies.",
+              "preserve": [
+                "the light palette: the block is meant to be a sheet of paper and never flips to a dark branch — do not move its variables onto light-dark()",
+                "the color-scheme:light declaration on the root: without it the browser paints focus rings and text selection from the dark branch on a light background",
+                "the icons as inline paths inside the file: an icon library drags in a dependency and breaks the one-file promise",
+                "the currentColor stroke on the icons: it has to follow the accent rather than be filled with a fixed colour",
+                "rows instead of cards: four points in a card grid read as a pricing table, while a list reads as an enumeration",
+                "the cleared border-top on the first row: otherwise a rule hangs above the list with nothing to separate",
+                "the colour set on every text part: without it the heading inherits the host page colour and goes white on a light background",
+                "the local --vibeui-features-018-* palette and the container queries at 48rem and 68rem: the layout is measured against the block, not the window"
+              ],
+              "adapt": [
+                "the header copy: eyebrow, title and lede",
+                "the link to the full list: linkLabel and the linkHref destination",
+                "the items list: the icon from the four supplied drawings, the title and the description",
+                "the accent colour through the accent prop — the eyebrow, the icon plate and the link all derive from it",
+                "outer spacing through className and pinpoint overrides through style"
+              ],
+              "notes": [
+                "The icon field accepts one of four values: comment, history, link, code. For a fifth drawing add a path to the PATHS object and a value to the type.",
+                "The list is trimmed to four entries: a fifth one will not render, and that is deliberate — past five rows the left header stops holding its column.",
+                "The icons are aria-hidden: the meaning lives in the title and the description, and a screen reader should not read decoration.",
+                "The block does not read the project theme: on a dark page it stays light — a deliberate decision, not an oversight.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file."
+              ],
+              "usage": "<Features018 title=\"Four things teams move for\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Headline",
+                "default": "Four things teams move for"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Capabilities"
+              },
+              "linkLabel": {
+                "label": "Link",
+                "default": "See every capability"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Capabilities",
+                "title": "Four things teams move for",
+                "lede": "Everything else is detail. These four cover the road from the first sketch to the hand-off to engineering.",
+                "linkLabel": "See every capability",
+                "items": [
+                  {
+                    "icon": "comment",
+                    "title": "Notes pinned to the artwork",
+                    "description": "A comment lives on the element rather than in a thread: open the file and you can see what to redo and who asked."
+                  },
+                  {
+                    "icon": "history",
+                    "title": "A history of every edit",
+                    "description": "A version is kept on every change, so going back to yesterday takes two clicks instead of a restore from backup."
+                  },
+                  {
+                    "icon": "link",
+                    "title": "Access through a single link",
+                    "description": "Clients view and comment without signing up, while editing stays with the people on your team."
+                  },
+                  {
+                    "icon": "code",
+                    "title": "Sizes and colours for engineering",
+                    "description": "Spacing, type sizes and tokens are read straight off the artwork — nobody has to ask for them in chat."
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "eyebrow", "linkLabel", "accent"]
+      }
     }
   ]
 }

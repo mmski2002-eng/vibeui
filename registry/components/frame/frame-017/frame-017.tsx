@@ -58,14 +58,30 @@ border-radius:calc(var(--vibeui-frame-017-radius) - 0.375rem);
 }
 [data-vibeui-block="frame-017"] [data-part="field"] > *{display:block;width:100%;height:100%}
 [data-vibeui-block="frame-017"] img{display:block;width:100%;height:100%;object-fit:cover}
-[data-vibeui-block="frame-017"] [data-part="stub"]{
-display:flex;flex-direction:column;justify-content:center;gap:0.5rem;
-height:100%;padding:1.5rem 1.75rem;
+/* Слайд по умолчанию — текст слева и график справа: у презентации на
+   миниатюре должно быть содержимое, а не две серые полосы посреди поля. */
+[data-vibeui-block="frame-017"] [data-part="field"] [data-part="stub"]{
+display:flex;align-items:center;gap:1.25rem;
+height:100%;padding:1.25rem 1.5rem;
+}
+[data-vibeui-block="frame-017"] [data-part="stub-text"]{
+display:flex;flex-direction:column;gap:0.5rem;flex:1 1 auto;min-width:0;
 }
 [data-vibeui-block="frame-017"] [data-part="stub-title"]{margin:0;font-size:1.125rem;font-weight:700}
-[data-vibeui-block="frame-017"] [data-part="stub-line"]{height:0.5rem;border-radius:9999px;background:var(--vibeui-frame-017-line)}
+[data-vibeui-block="frame-017"] [data-part="stub-line"]{display:block;height:0.5rem;border-radius:9999px;background:var(--vibeui-frame-017-line)}
 [data-vibeui-block="frame-017"] [data-part="stub-line"]:nth-of-type(2){width:78%}
-[data-vibeui-block="frame-017"] [data-part="stub-line"]:nth-of-type(3){width:56%}
+[data-vibeui-block="frame-017"] [data-part="stub-chart"]{
+display:flex;align-items:flex-end;gap:0.375rem;flex:none;
+width:40%;max-width:9rem;height:60%;min-height:3rem;
+}
+[data-vibeui-block="frame-017"] [data-part="stub-chart"] i{
+display:block;flex:1 1 0;border-radius:0.1875rem 0.1875rem 0 0;
+background:color-mix(in oklab,var(--vibeui-frame-017-dot-active) 40%,transparent);
+}
+[data-vibeui-block="frame-017"] [data-part="stub-chart"] i:nth-child(1){height:44%}
+[data-vibeui-block="frame-017"] [data-part="stub-chart"] i:nth-child(2){height:68%}
+[data-vibeui-block="frame-017"] [data-part="stub-chart"] i:nth-child(3){height:56%}
+[data-vibeui-block="frame-017"] [data-part="stub-chart"] i:nth-child(4){height:100%;background:var(--vibeui-frame-017-dot-active)}
 [data-vibeui-block="frame-017"] [data-part="bar"]{
 display:flex;align-items:center;justify-content:space-between;gap:0.75rem;
 padding:0.75rem 0.875rem 0.375rem;
@@ -86,7 +102,7 @@ padding:0.375rem 0.875rem 0.875rem;
 font-size:0.75rem;line-height:1.4;color:var(--vibeui-frame-017-muted);
 }
 @container (max-width: 22rem){
-[data-vibeui-block="frame-017"] [data-part="stub"]{padding:1rem 1.125rem}
+[data-vibeui-block="frame-017"] [data-part="field"] [data-part="stub"]{padding:0.875rem 1rem;gap:0.75rem}
 [data-vibeui-block="frame-017"] [data-part="stub-title"]{font-size:0.9375rem}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="frame-017"] *{animation:none!important;transition:none!important}}
@@ -160,9 +176,17 @@ export function Frame017({
             <div data-part="field">
               {children ?? (
                 <div data-part="stub">
-                  <p data-part="stub-title">{stubTitle}</p>
-                  <span data-part="stub-line" />
-                  <span data-part="stub-line" />
+                  <div data-part="stub-text">
+                    <p data-part="stub-title">{stubTitle}</p>
+                    <span data-part="stub-line" aria-hidden="true" />
+                    <span data-part="stub-line" aria-hidden="true" />
+                  </div>
+                  <div data-part="stub-chart" aria-hidden="true">
+                    <i />
+                    <i />
+                    <i />
+                    <i />
+                  </div>
                 </div>
               )}
             </div>

@@ -3,6 +3,11 @@
 import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Hovercard004Props = Omit<ComponentProps<"div">, "children"> & {
+  /**
+   * Показать карточку раскрытой прямо в потоке: витрина, скриншот, отладка.
+   * Ссылка владелец/имя остаётся на месте, карточка встаёт под ней.
+   */
+  open?: boolean
   owner?: string
   repo?: string
   about?: string
@@ -95,6 +100,14 @@ box-shadow:inset 0 0 0 1px oklch(0 0 0 / 10%);
 }
 [data-vibeui-block="hovercard-004"] [data-part="stat"]{display:inline-flex;align-items:center;gap:0.25rem;font-variant-numeric:tabular-nums}
 [data-vibeui-block="hovercard-004"] [data-part="stat"] b{color:var(--vibeui-hovercard-004-fg);font-weight:650}
+/* Витринный режим: карточка стоит в потоке под ссылкой, а не поверх текста —
+   иначе на миниатюре каталога от компонента видна одна строка. Обёртка
+   становится блоком, чтобы карточка не разрывала строку по вертикали. */
+[data-vibeui-block="hovercard-004"][data-open="true"] [data-part="host"]{display:block}
+[data-vibeui-block="hovercard-004"][data-open="true"] [data-part="card"]{
+position:static;opacity:1;visibility:visible;translate:0;
+margin-top:0.5rem;max-width:100%;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="hovercard-004"] *{animation:none!important;transition:none!important}}
 `
 
@@ -135,6 +148,7 @@ function closeOnEscape(event: KeyboardEvent<HTMLElement>) {
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Hovercard004({
+  open = false,
   owner = "vibeui",
   repo = "registry",
   about = "Каталог самодостаточных React-компонентов: один файл, своя палитра, ноль зависимостей.",
@@ -174,6 +188,7 @@ export function Hovercard004({
         data-slot="hover-card"
         onKeyDown={closeOnEscape}
         data-vibeui-block="hovercard-004"
+        data-open={open || undefined}
         className={className}
         style={palette}
       >

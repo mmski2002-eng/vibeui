@@ -21,8 +21,8 @@ export type Gantt001Props = Omit<ComponentProps<"div">, "children"> & {
 
 // Идея компонента: план работ полосами по неделям. Полоса занимает колонки
 // грида от начала до конца, поэтому длительность задаётся разметкой, а не
-// пересчётом в проценты. Названия задач стоят в первой колонке и не уезжают
-// при прокрутке вправо: план читают по строкам, а не по датам. Состояние
+// пересчётом в проценты. Недели сжимаются вместе с блоком, а не уезжают в
+// горизонтальную прокрутку: план читают целиком, а не по кускам. Состояние
 // различается заливкой и рамкой одновременно — на печати и при дальтонизме
 // одного цвета мало. Сроки продублированы текстом внутри строки.
 //
@@ -47,7 +47,7 @@ const STYLES = `
 width:100%;
 /* container-type отрывает ширину от содержимого: без нижней границы
    блок схлопывается внутри flex-контейнера. */
-min-width:min(100%,16rem);box-sizing:border-box;overflow-x:auto;
+min-width:min(100%,16rem);box-sizing:border-box;
 background:var(--vibeui-gantt-001-bg);
 border:1px solid var(--vibeui-gantt-001-border);border-radius:1rem;
 font-family:var(--vibeui-gantt-001-font);color:var(--vibeui-gantt-001-fg);
@@ -59,13 +59,20 @@ container-type:inline-size;
 @container (min-width:32rem){
 [data-vibeui-block="gantt-001"] h3{font-size:1rem;padding:0.875rem 1rem}
 }
+/* Недели сжимаются вместе с блоком: план на витрине виден целиком, без
+   горизонтальной прокрутки. Колонка названий получает свою ширину только
+   тогда, когда блоку хватает места. */
 [data-vibeui-block="gantt-001"] [data-part="grid"]{
 display:grid;
-grid-template-columns:10rem repeat(var(--vibeui-gantt-001-weeks,6),minmax(3.5rem,1fr));
-min-width:30rem;
+grid-template-columns:6.5rem repeat(var(--vibeui-gantt-001-weeks,6),minmax(0,1fr));
+}
+@container (min-width:30rem){
+[data-vibeui-block="gantt-001"] [data-part="grid"]{
+grid-template-columns:10rem repeat(var(--vibeui-gantt-001-weeks,6),minmax(0,1fr));
+}
 }
 [data-vibeui-block="gantt-001"] [data-part="week"]{
-padding:0.375rem 0.5rem;text-align:center;
+padding:0.375rem 0.25rem;text-align:center;
 border-top:1px solid var(--vibeui-gantt-001-border);
 border-bottom:1px solid var(--vibeui-gantt-001-border);
 font-size:0.6875rem;color:var(--vibeui-gantt-001-muted);
@@ -87,13 +94,20 @@ min-height:2.25rem;
 }
 /* Полоса занимает колонки грида: длительность задаётся разметкой, не процентом. */
 [data-vibeui-block="gantt-001"] [data-part="bar"]{
-align-self:center;margin:0.25rem;padding:0.1875rem 0.5rem;
-border-radius:9999px;
+align-self:center;margin:0.25rem;padding:0.1875rem 0.375rem;
+/* Полоса без подписи обязана остаться полосой: без нижней границы высоты
+   от неё останется линия в один padding. */
+min-height:1.25rem;border-radius:9999px;
 background:color-mix(in oklab,var(--vibeui-gantt-001-accent) 16%,transparent);
 border:1px solid var(--vibeui-gantt-001-accent);
 color:var(--vibeui-gantt-001-fg);
 font-size:0.625rem;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 font-variant-numeric:tabular-nums;
+}
+/* В узком блоке на срок внутри полосы места нет: лучше полоса без подписи,
+   чем подпись, обрезанная на полуслове. Даты остаются в шапке недель. */
+@container (max-width:23rem){
+[data-vibeui-block="gantt-001"] [data-part="range"]{display:none}
 }
 [data-vibeui-block="gantt-001"] [data-tone="plan"]{
 background:color-mix(in oklab,var(--vibeui-gantt-001-muted) 12%,transparent);
@@ -238,9 +252,13 @@ export function Gantt001({
                 } as CSSProperties
               }
             >
-              {rangeText
-                .replace("{from}", weeks[task.start - 1] ?? "")
-                .replace("{to}", weeks[task.start + task.span - 2] ?? "")}
+              {task.span > 1 ? (
+                <span data-part="range">
+                  {rangeText
+                    .replace("{from}", weeks[task.start - 1] ?? "")
+                    .replace("{to}", weeks[task.start + task.span - 2] ?? "")}
+                </span>
+              ) : null}
             </span>
           ))}
         </div>

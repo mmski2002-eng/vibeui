@@ -5,6 +5,8 @@ export type Tooltip010Props = Omit<ComponentProps<"div">, "children"> & {
   items?: { glyph: string; label: string; shortcut: string }[]
   /** Подпись перед чипом сочетания. */
   shortcutLabel?: string
+  /** Показать подсказку второго пункта принудительно: онбординг, отладка, витрина. */
+  open?: boolean
   /** Пусто — подложки нет, панель лежит прямо на фоне страницы. */
   background?: string
 }
@@ -65,6 +67,16 @@ background:inherit;transform:rotate(45deg);
 [data-vibeui-block="tooltip-010"] [data-part="row"]:hover [data-part="tip"],
 [data-vibeui-block="tooltip-010"] [data-part="row"]:focus-within [data-part="tip"]{
 opacity:1;transform:translate(0,-50%);
+}
+/* Витринный режим: раскрыта ровно одна подсказка второго пункта. Справа от
+   меню места нет — в узком кадре витрины плашка ушла бы за край, поэтому она
+   встаёт под своим пунктом, как на узком экране. */
+[data-vibeui-block="tooltip-010"][data-open="true"] [data-part="row"]:nth-of-type(2) [data-part="tip"]{
+opacity:1;left:0;top:calc(100% + 0.375rem);transform:none;
+max-width:100%;flex-wrap:wrap;gap:0.25rem 0.5rem;overflow-wrap:anywhere;
+}
+[data-vibeui-block="tooltip-010"][data-open="true"] [data-part="row"]:nth-of-type(2) [data-part="tip"]::before{
+left:0.75rem;top:-0.1875rem;margin-top:0;
 }
 /* Чип сочетания — одна строка целиком, а не клавиша за клавишей. */
 [data-vibeui-block="tooltip-010"] [data-part="chip"]{
@@ -128,6 +140,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 export function Tooltip010({
   items = DEFAULT_ITEMS,
   shortcutLabel = "Сочетание клавиш",
+  open = false,
   background = "",
   className,
   style,
@@ -152,6 +165,7 @@ export function Tooltip010({
         {...props}
         data-slot="tooltip"
         data-vibeui-block="tooltip-010"
+        data-open={open || undefined}
         className={className}
         style={palette}
       >

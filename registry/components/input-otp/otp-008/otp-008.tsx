@@ -14,6 +14,10 @@ export type Otp008Props = Omit<ComponentProps<"div">, "children" | "title"> & {
   errorText?: string
   /** Сколько миллисекунд «проверять»: имитация ответа сервера. */
   checkDelay?: number
+  /** Начальный код в клетках: витрине нужны заполненные клетки, а не пустые. */
+  defaultCode?: string
+  /** Начальное состояние: витрина показывает ответ проверки сразу. */
+  defaultState?: "idle" | "checking" | "ok" | "error"
   accent?: string
   /** Пусто — штатная палитра. */
   background?: string
@@ -133,6 +137,8 @@ export function Otp008({
   okText = "Код принят",
   errorText = "Код не подошёл. Проверьте последние цифры.",
   checkDelay = 1200,
+  defaultCode = "",
+  defaultState = "idle",
   accent,
   background = "",
   className,
@@ -140,10 +146,10 @@ export function Otp008({
   ...props
 }: Otp008Props) {
   const [digits, setDigits] = useState<string[]>(() =>
-    Array.from({ length }, () => ""),
+    Array.from({ length }, (_, index) => defaultCode[index] ?? ""),
   )
   const [state, setState] = useState<"idle" | "checking" | "ok" | "error">(
-    "idle",
+    defaultState,
   )
   const cells = useRef<(HTMLInputElement | null)[]>([])
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null)

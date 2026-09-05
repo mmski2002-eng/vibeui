@@ -11,6 +11,10 @@ export type Otp002Props = Omit<
   length?: number
   hint?: string
   onChange?: (code: string) => void
+  /** Начальный код в ячейках: витрине нужен вид наполовину введённого кода. */
+  defaultCode?: string
+  /** Каретка стоит в текущей ячейке, пока поле не получило настоящий фокус. */
+  defaultFocused?: boolean
   /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
   background?: string
   accent?: string
@@ -134,6 +138,8 @@ export function Otp002({
   length = 6,
   hint = "Вставьте код целиком — он разложится по ячейкам сам.",
   onChange,
+  defaultCode = "",
+  defaultFocused = false,
   background = "",
   accent,
   className,
@@ -142,8 +148,10 @@ export function Otp002({
 }: Otp002Props) {
   const id = useId()
   const size = Math.max(4, Math.min(8, length))
-  const [code, setCode] = useState("")
-  const [focused, setFocused] = useState(false)
+  const [code, setCode] = useState(() =>
+    defaultCode.replace(/\D/g, "").slice(0, size),
+  )
+  const [focused, setFocused] = useState(defaultFocused)
   const field = useRef<HTMLInputElement | null>(null)
 
   const palette = {

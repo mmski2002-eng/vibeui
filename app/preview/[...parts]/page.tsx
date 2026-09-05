@@ -76,12 +76,17 @@ export default async function PreviewPage({
   }
 
   const props = localizeItem(item, locale).meta?.preview?.props
-  const previews = await loadPreviewMap(itemKind, category)
-  const Block = previews?.[slug]
+  // Категория отдаёт карту загрузчиков, а не готовых компонентов: превью
+  // рендерит один item, и статический импорт всей категории тянул бы за ним
+  // десятки соседних компонентов.
+  const loaders = await loadPreviewMap(itemKind, category)
+  const load = loaders?.[slug]
 
-  if (!Block) {
+  if (!load) {
     notFound()
   }
+
+  const Block = await load()
 
   const centered = itemKind !== "block"
 

@@ -8,6 +8,8 @@ export type Tooltip007Props = Omit<ComponentProps<"div">, "children"> & {
   name?: string
   /** Строка под полем: чем открывается подсказка. */
   note?: string
+  /** Показать подсказку принудительно: онбординг, отладка, витрина. */
+  open?: boolean
   /** Пусто — подложки нет, карточка лежит прямо на фоне страницы. */
   background?: string
 }
@@ -71,6 +73,11 @@ width:0.5rem;height:0.5rem;background:inherit;transform:rotate(45deg);
 [data-vibeui-block="tooltip-007"] [data-part="field"]:focus-within [data-part="hint"]{
 opacity:1;visibility:visible;translate:0 0;
 }
+/* Витринный режим: подсказка раскрыта без фокуса — миниатюра каталога и
+   скриншот показывают, о чём компонент. Плашка абсолютная, поле не съезжает. */
+[data-vibeui-block="tooltip-007"][data-open="true"] [data-part="hint"]{
+opacity:1;visibility:visible;translate:0 0;
+}
 [data-vibeui-block="tooltip-007"] [data-part="foot"]{
 margin:0;font-size:0.75rem;line-height:1.45;color:var(--vibeui-tooltip-007-muted);
 }
@@ -109,6 +116,7 @@ export function Tooltip007({
   placeholder = "••••••••••••",
   name = "password",
   note = "Подсказка появляется, когда поле получает фокус.",
+  open = false,
   background = "",
   className,
   style,
@@ -133,6 +141,7 @@ export function Tooltip007({
         {...props}
         data-slot="tooltip"
         data-vibeui-block="tooltip-007"
+        data-open={open || undefined}
         className={className}
         style={palette}
       >

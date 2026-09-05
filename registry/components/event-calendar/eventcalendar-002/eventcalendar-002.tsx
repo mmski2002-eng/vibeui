@@ -56,10 +56,15 @@ const STYLES = `
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="eventcalendar-002"]{color-scheme:dark}
 [data-vibeui-block="eventcalendar-002"]{
 width:100%;max-width:52rem;box-sizing:border-box;padding:1rem;
+/* container-type отрывает ширину от содержимого: без нижней границы
+   блок схлопнется внутри flex-контейнера. */
+min-width:min(100%,16rem);
 background:var(--vibeui-eventcalendar-002-bg);
 border:1px solid var(--vibeui-eventcalendar-002-border);border-radius:1rem;
 color:var(--vibeui-eventcalendar-002-fg);
 font-family:var(--vibeui-eventcalendar-002-font);
+/* Плотность недели считается от собственной ширины блока, а не от окна. */
+container-type:inline-size;
 }
 [data-vibeui-block="eventcalendar-002"] *{box-sizing:border-box}
 [data-vibeui-block="eventcalendar-002"] [data-part="head"]{
@@ -79,7 +84,10 @@ border:1px solid var(--vibeui-eventcalendar-002-line);
 [data-vibeui-block="eventcalendar-002"] [data-part="scroll"]:focus-visible{
 outline:2px solid var(--vibeui-eventcalendar-002-accent);outline-offset:2px;
 }
-[data-vibeui-block="eventcalendar-002"] [data-part="shell"]{min-width:38rem}
+/* min() вместо min-width:38rem: желаемая ширина недели остаётся, но никогда
+   не перерастает блок — на витрине прокрутить полотно нельзя, и уехавшие
+   за край дни просто пропадают. */
+[data-vibeui-block="eventcalendar-002"] [data-part="shell"]{min-width:min(100%,38rem)}
 [data-vibeui-block="eventcalendar-002"] [data-part="row"]{
 display:grid;grid-template-columns:2.75rem repeat(var(--vibeui-eventcalendar-002-days,7),minmax(0,1fr));
 }
@@ -161,6 +169,26 @@ border:1px solid var(--vibeui-eventcalendar-002-away);
 font-size:0.5625rem;line-height:1.3;
 white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
+/* Узкая неделя: колонка часов и поля отдают место дням, время события
+   уходит (оно есть в подписи диапазона у широкого блока), а название
+   переносится по буквам — обрезанное на полуслове читается хуже. */
+@container (max-width:34rem){
+[data-vibeui-block="eventcalendar-002"] [data-part="corner"]{padding:0.25rem 0.125rem}
+[data-vibeui-block="eventcalendar-002"] [data-part="row"]{
+grid-template-columns:1.75rem repeat(var(--vibeui-eventcalendar-002-days,7),minmax(0,1fr));
+}
+[data-vibeui-block="eventcalendar-002"] [data-part="daylabel"]{padding:0.25rem 0.125rem}
+[data-vibeui-block="eventcalendar-002"] [data-part="hour"]{padding-right:0.1875rem}
+[data-vibeui-block="eventcalendar-002"] [data-part="allslot"]{padding:0.125rem}
+[data-vibeui-block="eventcalendar-002"] [data-part="chip"]{
+white-space:normal;overflow-wrap:anywhere;padding:0 0.125rem;font-size:0.5rem;
+}
+[data-vibeui-block="eventcalendar-002"] [data-part="event"]{
+left:0.0625rem;right:0.0625rem;padding:0.0625rem 0.1875rem;
+border-left-width:2px;font-size:0.5rem;line-height:1.15;overflow-wrap:anywhere;
+}
+[data-vibeui-block="eventcalendar-002"] [data-part="event"] time{display:none}
+}
 [data-vibeui-block="eventcalendar-002"] [data-part="now"]{
 position:absolute;left:0;right:0;height:0;
 border-top:2px solid var(--vibeui-eventcalendar-002-now);
@@ -175,19 +203,21 @@ background:var(--vibeui-eventcalendar-002-now);
 
 const DAY = 86400000
 
+// Подписи короткие намеренно: колонка дня узкая, и длинное название в ней
+// переносится по буквам — короткое целиком читается лучше обрывка.
 const DEFAULT_EVENTS: Eventcalendar002Event[] = [
-  { day: 0, title: "Отпуск Веры" },
-  { day: 0, from: "09:00", to: "09:30", title: "Планёрка" },
-  { day: 0, from: "11:00", to: "12:30", title: "Дизайн-ревью" },
-  { day: 1, from: "10:15", to: "11:45", title: "Интервью", tone: "focus" },
+  { day: 0, title: "Отпуск" },
+  { day: 0, from: "09:00", to: "09:30", title: "Стендап" },
+  { day: 0, from: "11:00", to: "12:30", title: "Ревью" },
+  { day: 1, from: "10:15", to: "11:45", title: "Найм", tone: "focus" },
   { day: 1, from: "15:00", to: "16:00", title: "Клиент" },
-  { day: 2, from: "09:30", to: "12:00", title: "Фокус-блок", tone: "focus" },
-  { day: 2, from: "14:00", to: "14:45", title: "1:1 с Кимом" },
-  { day: 3, title: "Учебный день" },
+  { day: 2, from: "09:30", to: "12:00", title: "Фокус", tone: "focus" },
+  { day: 2, from: "14:00", to: "14:45", title: "1:1 Ким" },
+  { day: 3, title: "Учёба" },
   { day: 3, from: "13:00", to: "17:00", title: "Воркшоп", tone: "away" },
-  { day: 4, from: "09:00", to: "10:00", title: "Спринт-обзор" },
+  { day: 4, from: "09:00", to: "10:00", title: "Обзор" },
   { day: 4, from: "16:30", to: "18:00", title: "Ретро" },
-  { day: 5, from: "11:00", to: "12:00", title: "Уборка бэклога", tone: "away" },
+  { day: 5, from: "11:00", to: "12:00", title: "Бэклог", tone: "away" },
 ]
 
 function minutes(value: string) {

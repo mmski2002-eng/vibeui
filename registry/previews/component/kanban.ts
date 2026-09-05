@@ -1,24 +1,21 @@
 // Сгенерировано `npm run indexes` из registry/**/registry.json.
 // Не править руками: правки затрёт следующая сборка.
 
-import type { ComponentType } from "react"
-
-import type { PreviewProps } from "@/registry/preview-types"
-
-import { Kanban001 } from "@/registry/components/kanban/kanban-001/kanban-001"
-import { Kanban002 } from "@/registry/components/kanban/kanban-002/kanban-002"
-import { Kanban003 } from "@/registry/components/kanban/kanban-003/kanban-003"
-import { Kanban004 } from "@/registry/components/kanban/kanban-004/kanban-004"
-import { Kanban005 } from "@/registry/components/kanban/kanban-005/kanban-005"
-import { Kanban006 } from "@/registry/components/kanban/kanban-006/kanban-006"
-import { Kanban007 } from "@/registry/components/kanban/kanban-007/kanban-007"
+import type { PreviewLoaderMap } from "@/registry/preview-types"
 
 export const PREVIEWS = {
-  "kanban-001": Kanban001,
-  "kanban-002": Kanban002,
-  "kanban-003": Kanban003,
-  "kanban-004": Kanban004,
-  "kanban-005": Kanban005,
-  "kanban-006": Kanban006,
-  "kanban-007": Kanban007,
-} satisfies Record<string, ComponentType<PreviewProps>>
+  "kanban-001": () =>
+    import("@/registry/components/kanban/kanban-001/kanban-001").then((module) => module.Kanban001),
+  "kanban-002": () =>
+    import("@/registry/components/kanban/kanban-002/kanban-002").then((module) => module.Kanban002),
+  "kanban-003": () =>
+    import("@/registry/components/kanban/kanban-003/kanban-003").then((module) => module.Kanban003),
+  "kanban-004": () =>
+    import("@/registry/components/kanban/kanban-004/kanban-004").then((module) => module.Kanban004),
+  "kanban-005": () =>
+    import("@/registry/components/kanban/kanban-005/kanban-005").then((module) => module.Kanban005),
+  "kanban-006": () =>
+    import("@/registry/components/kanban/kanban-006/kanban-006").then((module) => module.Kanban006),
+  "kanban-007": () =>
+    import("@/registry/components/kanban/kanban-007/kanban-007").then((module) => module.Kanban007),
+} satisfies PreviewLoaderMap

@@ -4,6 +4,8 @@ export type Tooltip017Props = Omit<ComponentProps<"div">, "children"> & {
   /** Полные имена файлов: то, что не поместилось, покажет подсказка. */
   items?: string[]
   note?: string
+  /** Показать подсказку второй строки принудительно: онбординг, отладка, витрина. */
+  open?: boolean
   /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
   background?: string
 }
@@ -75,6 +77,12 @@ background:inherit;transform:rotate(45deg);
 [data-vibeui-block="tooltip-017"] [data-part="item"]:focus-within [data-part="tip"]{
 opacity:1;transform:translateY(0);
 }
+/* Витринный режим: раскрыта ровно одна подсказка — три сразу легли бы одна
+   на другую. Вторая строка выбрана потому, что её плашка встаёт над первой
+   и остаётся внутри уже проверенной ширины компонента. */
+[data-vibeui-block="tooltip-017"][data-open="true"] [data-part="item"]:nth-of-type(2) [data-part="tip"]{
+opacity:1;transform:translateY(0);
+}
 [data-vibeui-block="tooltip-017"] [data-part="note"]{
 margin:0;font-size:0.75rem;line-height:1.5;color:var(--vibeui-tooltip-017-muted);
 }
@@ -116,6 +124,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Tooltip017({
   items = DEFAULT_ITEMS,
+  open = false,
   note = "Имя обрезано по ширине ячейки. Наведите курсор или перейдите табом, чтобы увидеть его целиком.",
   background = "",
   className,
@@ -141,6 +150,7 @@ export function Tooltip017({
         {...props}
         data-slot="tooltip"
         data-vibeui-block="tooltip-017"
+        data-open={open || undefined}
         className={className}
         style={palette}
       >

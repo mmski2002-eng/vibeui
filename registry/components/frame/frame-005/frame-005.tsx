@@ -22,6 +22,7 @@ const STYLES = `
 --vibeui-frame-005-fg:light-dark(oklch(0.23 0.014 265),oklch(0.93 0.005 265));
 --vibeui-frame-005-muted:color-mix(in oklab,var(--vibeui-frame-005-fg) 68%,transparent);
 --vibeui-frame-005-soft:light-dark(oklch(0.96 0.004 265),oklch(0.33 0.008 265));
+--vibeui-frame-005-accent:light-dark(oklch(0.55 0.16 262),oklch(0.72 0.15 262));
 --vibeui-frame-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -55,14 +56,47 @@ border-radius:0.375rem;
 }
 [data-vibeui-block="frame-005"] [data-part="screen"] > *{display:block;width:100%}
 [data-vibeui-block="frame-005"] img{display:block;width:100%;height:100%;object-fit:cover}
-[data-vibeui-block="frame-005"] [data-part="stub"]{
+/* Пустой экран рисует условную панель: три показателя и столбиковый график.
+   Шесть серых ячеек читались бы как незагрузившийся скриншот. */
+[data-vibeui-block="frame-005"] [data-part="screen"] [data-part="stub"]{
 display:flex;flex-direction:column;gap:0.5rem;height:100%;padding:0.875rem 1rem;
 }
 [data-vibeui-block="frame-005"] [data-part="stub-title"]{margin:0;font-size:0.875rem;font-weight:700}
 [data-vibeui-block="frame-005"] [data-part="grid"]{
-display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem;flex:1 1 auto;
+display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem;flex:none;
 }
-[data-vibeui-block="frame-005"] [data-part="cell"]{border-radius:0.5rem;background:var(--vibeui-frame-005-soft)}
+[data-vibeui-block="frame-005"] [data-part="cell"]{
+display:flex;flex-direction:column;gap:0.3125rem;
+padding:0.4375rem 0.5rem;border-radius:0.5rem;
+background:var(--vibeui-frame-005-soft);
+border-left:2px solid var(--vibeui-frame-005-accent);
+}
+[data-vibeui-block="frame-005"] [data-part="cell"] span{
+display:block;height:0.5rem;width:55%;border-radius:9999px;
+background:var(--vibeui-frame-005-accent);
+}
+[data-vibeui-block="frame-005"] [data-part="cell"] i{
+display:block;height:0.3125rem;width:80%;border-radius:9999px;
+background:color-mix(in oklab,var(--vibeui-frame-005-fg) 20%,transparent);
+}
+[data-vibeui-block="frame-005"] [data-part="cell"]:nth-child(2){--vibeui-frame-005-accent:light-dark(oklch(0.6 0.15 160),oklch(0.74 0.14 160))}
+[data-vibeui-block="frame-005"] [data-part="cell"]:nth-child(3){--vibeui-frame-005-accent:light-dark(oklch(0.68 0.15 60),oklch(0.8 0.13 60))}
+/* График столбиками: высота задана в CSS, поэтому график не требует данных. */
+[data-vibeui-block="frame-005"] [data-part="chart"]{
+display:flex;align-items:flex-end;gap:0.375rem;
+flex:1 1 auto;min-height:3rem;padding:0.5rem;border-radius:0.5rem;
+background:var(--vibeui-frame-005-soft);
+}
+[data-vibeui-block="frame-005"] [data-part="chart"] i{
+display:block;flex:1 1 0;border-radius:0.1875rem 0.1875rem 0 0;
+background:color-mix(in oklab,var(--vibeui-frame-005-accent) 45%,transparent);
+}
+[data-vibeui-block="frame-005"] [data-part="chart"] i:nth-child(1){height:38%}
+[data-vibeui-block="frame-005"] [data-part="chart"] i:nth-child(2){height:62%}
+[data-vibeui-block="frame-005"] [data-part="chart"] i:nth-child(3){height:48%}
+[data-vibeui-block="frame-005"] [data-part="chart"] i:nth-child(4){height:82%}
+[data-vibeui-block="frame-005"] [data-part="chart"] i:nth-child(5){height:70%}
+[data-vibeui-block="frame-005"] [data-part="chart"] i:nth-child(6){height:100%;background:var(--vibeui-frame-005-accent)}
 /* Трапеция из clip-path: основание сужается книзу без единой картинки. */
 [data-vibeui-block="frame-005"] [data-part="base"]{
 width:108%;max-width:none;height:0.75rem;
@@ -145,12 +179,20 @@ export function Frame005({
               <div data-part="stub">
                 <p data-part="stub-title">{title}</p>
                 <div data-part="grid" aria-hidden="true">
-                  <span data-part="cell" />
-                  <span data-part="cell" />
-                  <span data-part="cell" />
-                  <span data-part="cell" />
-                  <span data-part="cell" />
-                  <span data-part="cell" />
+                  {[0, 1, 2].map((cell) => (
+                    <span data-part="cell" key={cell}>
+                      <span />
+                      <i />
+                    </span>
+                  ))}
+                </div>
+                <div data-part="chart" aria-hidden="true">
+                  <i />
+                  <i />
+                  <i />
+                  <i />
+                  <i />
+                  <i />
                 </div>
               </div>
             )}

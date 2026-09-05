@@ -1707,7 +1707,7 @@
           "target": "@components/vibeui/spinner-013.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-spinner-013-*. Серверный: хуков нет, active управляет рендером снаружи. Полоса стоит position:fixed у верхнего края вьюпорта с максимальным z-index и pointer-events:none, поэтому не перекрывает клики по содержимому под собой. Видимого текста у полосы нет — role=\"status\" с невидимой aria-live-подписью announcит переход ассистивным технологиям в момент появления блока в DOM. Заполнение — не процент, а декоративная имитация разгона с замедлением перед концом: для перехода между страницами точная доля никому не известна. При prefers-reduced-motion бег сменяется дыханием прозрачности на статичной ширине. Тема берётся из color-scheme окружения через light-dark(). Дорожка прозрачна по умолчанию — проп background добавляет ей заметный цвет.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-spinner-013-*. Серверный: хуков нет, active управляет рендером снаружи. Полоса стоит position:fixed у верхнего края вьюпорта с максимальным z-index и pointer-events:none, поэтому не перекрывает клики по содержимому под собой. Видимого текста у полосы нет — role=\"status\" с невидимой aria-live-подписью announcит переход ассистивным технологиям в момент появления блока в DOM. Заполнение — не процент, а декоративная имитация разгона с замедлением перед концом: для перехода между страницами точная доля никому не известна. При prefers-reduced-motion бег сменяется дыханием прозрачности на статичной ширине. Тема берётся из color-scheme окружения через light-dark(). Дорожка прозрачна по умолчанию — проп background добавляет ей заметный цвет. Витринный проп inline переводит полосу из fixed в поток своего контейнера: он нужен карточке каталога и скриншотам, в приложении полоса остаётся поверх страницы.",
       "meta": {
         "tags": ["spinner", "loading", "route", "progress"],
         "ai": {
@@ -1827,12 +1827,15 @@
                 "label": "Loading a new page"
               }
             },
-            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-spinner-013-* variables. Server-side: there are no hooks, active drives rendering from outside. The bar sits position:fixed at the top edge of the viewport with a maximum z-index and pointer-events:none, so it never covers clicks on the content beneath it. The bar carries no visible text — role=\"status\" with an invisible aria-live label announces the transition to assistive technology the moment the block mounts. The fill is not a percent but a decorative deceleration: for a page transition nobody actually knows the true share done. Under prefers-reduced-motion the run is replaced by an opacity breath at a fixed width. The theme comes from the surrounding color-scheme through light-dark(). The track is transparent by default — the background prop gives it a visible colour."
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-spinner-013-* variables. Server-side: there are no hooks, active drives rendering from outside. The bar sits position:fixed at the top edge of the viewport with a maximum z-index and pointer-events:none, so it never covers clicks on the content beneath it. The bar carries no visible text — role=\"status\" with an invisible aria-live label announces the transition to assistive technology the moment the block mounts. The fill is not a percent but a decorative deceleration: for a page transition nobody actually knows the true share done. Under prefers-reduced-motion the run is replaced by an opacity breath at a fixed width. The theme comes from the surrounding color-scheme through light-dark(). The track is transparent by default — the background prop gives it a visible colour. The showcase-only inline prop moves the bar from fixed into the flow of its own container: it is meant for the catalog card and screenshots, while in an app the bar stays above the page."
           }
         },
         "cardControls": ["active", "label", "height", "accent", "background"],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "inline": true
+          }
         }
       }
     }

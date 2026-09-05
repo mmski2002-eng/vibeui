@@ -3,6 +3,11 @@
 import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Hovercard006Props = Omit<ComponentProps<"div">, "children"> & {
+  /**
+   * Показать карточку события раскрытой прямо в потоке: витрина, скриншот,
+   * отладка. Название встречи остаётся на месте, карточка встаёт под ним.
+   */
+  open?: boolean
   title?: string
   day?: string
   month?: string
@@ -112,6 +117,14 @@ font-size:0.625rem;font-weight:700;
 [data-vibeui-block="hovercard-006"] [data-part="rest"]{
 margin-left:0.75rem;font-size:0.75rem;color:var(--vibeui-hovercard-006-muted);
 }
+/* Витринный режим: карточка стоит в потоке под названием, а не поверх текста —
+   иначе на миниатюре каталога от компонента видна одна строка. Обёртка
+   становится блоком, чтобы карточка не разрывала строку по вертикали. */
+[data-vibeui-block="hovercard-006"][data-open="true"] [data-part="host"]{display:block}
+[data-vibeui-block="hovercard-006"][data-open="true"] [data-part="card"]{
+position:static;opacity:1;visibility:visible;translate:0;
+margin-top:0.5rem;max-width:100%;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="hovercard-006"] *{animation:none!important;transition:none!important}}
 `
 
@@ -162,6 +175,7 @@ function closeOnEscape(event: KeyboardEvent<HTMLElement>) {
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Hovercard006({
+  open = false,
   title = "Разбор макетов каталога",
   day = "14",
   month = "сен",
@@ -200,6 +214,7 @@ export function Hovercard006({
         data-slot="hover-card"
         onKeyDown={closeOnEscape}
         data-vibeui-block="hovercard-006"
+        data-open={open || undefined}
         className={className}
         style={palette}
       >

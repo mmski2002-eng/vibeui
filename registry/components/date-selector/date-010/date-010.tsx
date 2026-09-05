@@ -17,6 +17,11 @@ export type Date010Props = Omit<ComponentProps<"div">, "children"> & {
   fromLabel?: string
   toLabel?: string
   presets?: Date010Preset[]
+  /** Стартовый диапазон в формате ГГГГ-ММ-ДД. Пусто — поля пустые. */
+  defaultFrom?: string
+  defaultTo?: string
+  /** id подсвеченного пресета на старте. */
+  defaultPreset?: string
   /** Подпись длительности. {days} подставляется. */
   lengthTemplate?: string
   hint?: string
@@ -146,6 +151,9 @@ export function Date010({
   fromLabel = "С",
   toLabel = "По",
   presets = DEFAULT_PRESETS,
+  defaultFrom = "",
+  defaultTo = "",
+  defaultPreset = "",
   lengthTemplate = "Выбрано дней: {days}",
   hint = "Кнопки считают даты от сегодняшнего дня.",
   accent,
@@ -155,9 +163,9 @@ export function Date010({
   ...props
 }: Date010Props) {
   const id = useId().replace(/:/g, "")
-  const [from, setFrom] = useState("")
-  const [to, setTo] = useState("")
-  const [chosen, setChosen] = useState("")
+  const [from, setFrom] = useState(defaultFrom)
+  const [to, setTo] = useState(defaultTo)
+  const [chosen, setChosen] = useState(defaultPreset)
 
   // Даты пресета считаются в момент нажатия, а не при отрисовке: вычислить
   // «сегодня» на сервере и на клиенте — верный способ разойтись на сутки.

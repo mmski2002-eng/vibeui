@@ -1,72 +1,69 @@
 // Сгенерировано `npm run indexes` из registry/**/registry.json.
 // Не править руками: правки затрёт следующая сборка.
 
-import type { ComponentType } from "react"
-
-import type { PreviewProps } from "@/registry/preview-types"
-
-import { Datagrid001 } from "@/registry/components/data-grid/datagrid-001/datagrid-001"
-import { Datagrid002 } from "@/registry/components/data-grid/datagrid-002/datagrid-002"
-import { Datagrid003 } from "@/registry/components/data-grid/datagrid-003/datagrid-003"
-import { Datagrid004 } from "@/registry/components/data-grid/datagrid-004/datagrid-004"
-import { Datagrid005 } from "@/registry/components/data-grid/datagrid-005/datagrid-005"
-import { Datagrid006 } from "@/registry/components/data-grid/datagrid-006/datagrid-006"
-import { Datagrid007 } from "@/registry/components/data-grid/datagrid-007/datagrid-007"
-import { Datagrid008 } from "@/registry/components/data-grid/datagrid-008/datagrid-008"
-import { Datagrid009 } from "@/registry/components/data-grid/datagrid-009/datagrid-009"
-import { Datagrid010 } from "@/registry/components/data-grid/datagrid-010/datagrid-010"
-import { Datagrid011 } from "@/registry/components/data-grid/datagrid-011/datagrid-011"
-import { Datagrid012 } from "@/registry/components/data-grid/datagrid-012/datagrid-012"
-import { Datagrid013 } from "@/registry/components/data-grid/datagrid-013/datagrid-013"
-import { Datagrid014 } from "@/registry/components/data-grid/datagrid-014/datagrid-014"
-import { Datagrid015 } from "@/registry/components/data-grid/datagrid-015/datagrid-015"
-import { Datagrid016 } from "@/registry/components/data-grid/datagrid-016/datagrid-016"
-import { Datagrid017 } from "@/registry/components/data-grid/datagrid-017/datagrid-017"
-import { Datagrid018 } from "@/registry/components/data-grid/datagrid-018/datagrid-018"
-import { Datagrid019 } from "@/registry/components/data-grid/datagrid-019/datagrid-019"
-import { Datagrid020 } from "@/registry/components/data-grid/datagrid-020/datagrid-020"
-import { Datagrid021 } from "@/registry/components/data-grid/datagrid-021/datagrid-021"
-import { Datagrid022 } from "@/registry/components/data-grid/datagrid-022/datagrid-022"
-import { Datagrid023 } from "@/registry/components/data-grid/datagrid-023/datagrid-023"
-import { Datagrid024 } from "@/registry/components/data-grid/datagrid-024/datagrid-024"
-import { Datagrid025 } from "@/registry/components/data-grid/datagrid-025/datagrid-025"
-import { Datagrid026 } from "@/registry/components/data-grid/datagrid-026/datagrid-026"
-import { Datagrid027 } from "@/registry/components/data-grid/datagrid-027/datagrid-027"
-import { Datagrid028 } from "@/registry/components/data-grid/datagrid-028/datagrid-028"
-import { Datagrid030 } from "@/registry/components/data-grid/datagrid-030/datagrid-030"
-import { Datagrid029 } from "@/registry/components/data-grid/datagrid-029/datagrid-029"
-import { Datagrid031 } from "@/registry/components/data-grid/datagrid-031/datagrid-031"
+import type { PreviewLoaderMap } from "@/registry/preview-types"
 
 export const PREVIEWS = {
-  "datagrid-001": Datagrid001,
-  "datagrid-002": Datagrid002,
-  "datagrid-003": Datagrid003,
-  "datagrid-004": Datagrid004,
-  "datagrid-005": Datagrid005,
-  "datagrid-006": Datagrid006,
-  "datagrid-007": Datagrid007,
-  "datagrid-008": Datagrid008,
-  "datagrid-009": Datagrid009,
-  "datagrid-010": Datagrid010,
-  "datagrid-011": Datagrid011,
-  "datagrid-012": Datagrid012,
-  "datagrid-013": Datagrid013,
-  "datagrid-014": Datagrid014,
-  "datagrid-015": Datagrid015,
-  "datagrid-016": Datagrid016,
-  "datagrid-017": Datagrid017,
-  "datagrid-018": Datagrid018,
-  "datagrid-019": Datagrid019,
-  "datagrid-020": Datagrid020,
-  "datagrid-021": Datagrid021,
-  "datagrid-022": Datagrid022,
-  "datagrid-023": Datagrid023,
-  "datagrid-024": Datagrid024,
-  "datagrid-025": Datagrid025,
-  "datagrid-026": Datagrid026,
-  "datagrid-027": Datagrid027,
-  "datagrid-028": Datagrid028,
-  "datagrid-030": Datagrid030,
-  "datagrid-029": Datagrid029,
-  "datagrid-031": Datagrid031,
-} satisfies Record<string, ComponentType<PreviewProps>>
+  "datagrid-001": () =>
+    import("@/registry/components/data-grid/datagrid-001/datagrid-001").then((module) => module.Datagrid001),
+  "datagrid-002": () =>
+    import("@/registry/components/data-grid/datagrid-002/datagrid-002").then((module) => module.Datagrid002),
+  "datagrid-003": () =>
+    import("@/registry/components/data-grid/datagrid-003/datagrid-003").then((module) => module.Datagrid003),
+  "datagrid-004": () =>
+    import("@/registry/components/data-grid/datagrid-004/datagrid-004").then((module) => module.Datagrid004),
+  "datagrid-005": () =>
+    import("@/registry/components/data-grid/datagrid-005/datagrid-005").then((module) => module.Datagrid005),
+  "datagrid-006": () =>
+    import("@/registry/components/data-grid/datagrid-006/datagrid-006").then((module) => module.Datagrid006),
+  "datagrid-007": () =>
+    import("@/registry/components/data-grid/datagrid-007/datagrid-007").then((module) => module.Datagrid007),
+  "datagrid-008": () =>
+    import("@/registry/components/data-grid/datagrid-008/datagrid-008").then((module) => module.Datagrid008),
+  "datagrid-009": () =>
+    import("@/registry/components/data-grid/datagrid-009/datagrid-009").then((module) => module.Datagrid009),
+  "datagrid-010": () =>
+    import("@/registry/components/data-grid/datagrid-010/datagrid-010").then((module) => module.Datagrid010),
+  "datagrid-011": () =>
+    import("@/registry/components/data-grid/datagrid-011/datagrid-011").then((module) => module.Datagrid011),
+  "datagrid-012": () =>
+    import("@/registry/components/data-grid/datagrid-012/datagrid-012").then((module) => module.Datagrid012),
+  "datagrid-013": () =>
+    import("@/registry/components/data-grid/datagrid-013/datagrid-013").then((module) => module.Datagrid013),
+  "datagrid-014": () =>
+    import("@/registry/components/data-grid/datagrid-014/datagrid-014").then((module) => module.Datagrid014),
+  "datagrid-015": () =>
+    import("@/registry/components/data-grid/datagrid-015/datagrid-015").then((module) => module.Datagrid015),
+  "datagrid-016": () =>
+    import("@/registry/components/data-grid/datagrid-016/datagrid-016").then((module) => module.Datagrid016),
+  "datagrid-017": () =>
+    import("@/registry/components/data-grid/datagrid-017/datagrid-017").then((module) => module.Datagrid017),
+  "datagrid-018": () =>
+    import("@/registry/components/data-grid/datagrid-018/datagrid-018").then((module) => module.Datagrid018),
+  "datagrid-019": () =>
+    import("@/registry/components/data-grid/datagrid-019/datagrid-019").then((module) => module.Datagrid019),
+  "datagrid-020": () =>
+    import("@/registry/components/data-grid/datagrid-020/datagrid-020").then((module) => module.Datagrid020),
+  "datagrid-021": () =>
+    import("@/registry/components/data-grid/datagrid-021/datagrid-021").then((module) => module.Datagrid021),
+  "datagrid-022": () =>
+    import("@/registry/components/data-grid/datagrid-022/datagrid-022").then((module) => module.Datagrid022),
+  "datagrid-023": () =>
+    import("@/registry/components/data-grid/datagrid-023/datagrid-023").then((module) => module.Datagrid023),
+  "datagrid-024": () =>
+    import("@/registry/components/data-grid/datagrid-024/datagrid-024").then((module) => module.Datagrid024),
+  "datagrid-025": () =>
+    import("@/registry/components/data-grid/datagrid-025/datagrid-025").then((module) => module.Datagrid025),
+  "datagrid-026": () =>
+    import("@/registry/components/data-grid/datagrid-026/datagrid-026").then((module) => module.Datagrid026),
+  "datagrid-027": () =>
+    import("@/registry/components/data-grid/datagrid-027/datagrid-027").then((module) => module.Datagrid027),
+  "datagrid-028": () =>
+    import("@/registry/components/data-grid/datagrid-028/datagrid-028").then((module) => module.Datagrid028),
+  "datagrid-030": () =>
+    import("@/registry/components/data-grid/datagrid-030/datagrid-030").then((module) => module.Datagrid030),
+  "datagrid-029": () =>
+    import("@/registry/components/data-grid/datagrid-029/datagrid-029").then((module) => module.Datagrid029),
+  "datagrid-031": () =>
+    import("@/registry/components/data-grid/datagrid-031/datagrid-031").then((module) => module.Datagrid031),
+} satisfies PreviewLoaderMap

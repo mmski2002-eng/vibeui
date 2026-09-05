@@ -23,6 +23,10 @@ const STYLES = `
 --vibeui-aspect-001-bg:transparent;
 --vibeui-aspect-001-fg:light-dark(oklch(0.5 0.014 265),oklch(0.72 0.012 265));
 --vibeui-aspect-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-aspect-001-sky:light-dark(oklch(0.9 0.06 245),oklch(0.34 0.05 262));
+--vibeui-aspect-001-hill:light-dark(oklch(0.74 0.09 190),oklch(0.44 0.07 195));
+--vibeui-aspect-001-sun:light-dark(oklch(0.9 0.12 85),oklch(0.78 0.13 80));
+--vibeui-aspect-001-chip:light-dark(oklch(1 0 0 / 0.85),oklch(0.2 0.014 265 / 0.8));
 --vibeui-aspect-001-radius:0.75rem;
 --vibeui-aspect-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -43,17 +47,28 @@ font-family:var(--vibeui-aspect-001-font);
 [data-vibeui-block="aspect-001"] > iframe{
 display:block;width:100%;height:100%;border:0;object-fit:cover;
 }
+/* Пустая рамка рисует условный снимок, а не штриховку: по миниатюре должно
+   быть понятно, что сюда встаёт картинка, и какую долю кадра она займёт. */
 [data-vibeui-block="aspect-001"] [data-part="label"]{
-position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-gap:0.5rem;color:var(--vibeui-aspect-001-fg);font-size:0.8125rem;
+position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;
+padding:0.5rem;color:var(--vibeui-aspect-001-fg);font-size:0.8125rem;
+background:linear-gradient(180deg,var(--vibeui-aspect-001-sky),color-mix(in oklab,var(--vibeui-aspect-001-sky) 45%,transparent));
 }
-/* Диагональная штриховка: пустая рамка не должна выглядеть сломанной. */
-[data-vibeui-block="aspect-001"] [data-part="label"]::before{
-content:"";position:absolute;inset:0;pointer-events:none;
-background-image:repeating-linear-gradient(135deg,var(--vibeui-aspect-001-border) 0 1px,transparent 1px 10px);
-opacity:.5;
+[data-vibeui-block="aspect-001"] [data-part="sun"]{
+position:absolute;left:22%;top:24%;width:12%;aspect-ratio:1 / 1;
+border-radius:9999px;background:var(--vibeui-aspect-001-sun);
 }
-[data-vibeui-block="aspect-001"] [data-part="label"] span{position:relative;font-variant-numeric:tabular-nums}
+/* Холмы — треугольники на clip-path: снимок нарисован кадром, без файлов. */
+[data-vibeui-block="aspect-001"] [data-part="hill"]{
+position:absolute;inset:auto 0 0;height:52%;
+background:var(--vibeui-aspect-001-hill);
+clip-path:polygon(0 100%,26% 24%,52% 74%,74% 38%,100% 100%);
+}
+[data-vibeui-block="aspect-001"] [data-part="ratio"]{
+position:relative;padding:0.0625rem 0.4375rem;border-radius:0.3125rem;
+background:var(--vibeui-aspect-001-chip);
+font-variant-numeric:tabular-nums;font-weight:650;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="aspect-001"] *{animation:none!important;transition:none!important}}
 `
 
@@ -117,7 +132,9 @@ export function Aspect001({
       >
         {children ?? (
           <span data-part="label" aria-hidden="true">
-            <span>{label}</span>
+            <span data-part="sun" />
+            <span data-part="hill" />
+            <span data-part="ratio">{label}</span>
           </span>
         )}
       </div>

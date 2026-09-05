@@ -57,9 +57,20 @@ background:var(--vibeui-frame-015-poster);
 [data-vibeui-block="frame-015"] [data-part="poster"]{position:absolute;inset:0}
 [data-vibeui-block="frame-015"] [data-part="poster"] > *{display:block;width:100%;height:100%}
 [data-vibeui-block="frame-015"] img{display:block;width:100%;height:100%;object-fit:cover}
-[data-vibeui-block="frame-015"] [data-part="stub"]{
-display:grid;place-items:center;height:100%;padding:1rem;
-text-align:center;font-size:0.8125rem;color:color-mix(in oklab,var(--vibeui-frame-015-light) 70%,transparent);
+/* Обложка по умолчанию — нарисованный градиентный постер, а не серое поле
+   с надписью: плеер без обложки читается как ошибка загрузки. Название
+   кадра ушло в aria-label: поверх постера уже стоит заголовок ролика. */
+[data-vibeui-block="frame-015"] [data-part="poster"] [data-part="stub"]{
+position:relative;overflow:hidden;height:100%;
+background:
+radial-gradient(60% 80% at 24% 22%,oklch(0.62 0.18 300),transparent 65%),
+radial-gradient(55% 70% at 82% 30%,oklch(0.68 0.16 35),transparent 62%),
+linear-gradient(150deg,oklch(0.34 0.09 285),var(--vibeui-frame-015-poster));
+}
+[data-vibeui-block="frame-015"] [data-part="wave"]{
+position:absolute;inset:auto 0 0;height:46%;
+background:color-mix(in oklab,var(--vibeui-frame-015-poster) 55%,transparent);
+clip-path:polygon(0 42%,18% 22%,38% 52%,58% 18%,78% 46%,100% 26%,100% 100%,0 100%);
 }
 [data-vibeui-block="frame-015"] [data-part="scrim"]{
 position:absolute;inset:0 0 0 0;
@@ -177,7 +188,11 @@ export function Frame015({
         <div data-part="shell">
           <div data-part="stage">
             <div data-part="poster">
-              {children ?? <div data-part="stub">{posterStub}</div>}
+              {children ?? (
+                <div data-part="stub" role="img" aria-label={posterStub}>
+                  <span data-part="wave" />
+                </div>
+              )}
             </div>
             <div data-part="scrim" aria-hidden="true" />
             <span data-part="play" aria-hidden="true">

@@ -15,6 +15,12 @@ export type Date002Props = Omit<
   name?: string
   /** Подпись кнопки календаря: компонент несёт русскую, проект подставляет свою. */
   openLabel?: string
+  /**
+   * Показать кнопку нажатой: витрина, скриншот, отладка. Системный календарь
+   * рисует браузер, и на карточке каталога его не видно — от компонента там
+   * остаётся поле с иконкой рядом. Отметка показывает, что кнопка живая.
+   */
+  active?: boolean
   /** Пусто — подложки нет, поле лежит прямо на фоне страницы. */
   background?: string
   accent?: string
@@ -73,7 +79,11 @@ background:var(--vibeui-date-002-surface);color:var(--vibeui-date-002-accent);
 display:grid;place-items:center;
 transition:background-color .14s ease,border-color .14s ease;
 }
-[data-vibeui-block="date-002"] button:hover{background:var(--vibeui-date-002-soft);border-color:var(--vibeui-date-002-accent)}
+[data-vibeui-block="date-002"] button:hover,
+[data-vibeui-block="date-002"] button[data-active="true"]{background:var(--vibeui-date-002-soft);border-color:var(--vibeui-date-002-accent)}
+/* Витринная отметка: кнопка показана нажатой, потому что системный календарь
+   рисует браузер и на скриншоте его нет. */
+[data-vibeui-block="date-002"] button[data-active="true"]{box-shadow:inset 0 0 0 1px var(--vibeui-date-002-accent)}
 [data-vibeui-block="date-002"] button:focus-visible{outline:2px solid var(--vibeui-date-002-accent);outline-offset:2px}
 [data-vibeui-block="date-002"] svg{width:1.25rem;height:1.25rem;display:block}
 [data-vibeui-block="date-002"] [data-part="hint"]{
@@ -117,6 +127,7 @@ export function Date002({
   max = "2026-12-31",
   name = "visit-date",
   openLabel = "Открыть календарь",
+  active = false,
   background = "",
   accent,
   className,
@@ -172,7 +183,12 @@ export function Date002({
             max={max}
             aria-describedby={hint ? `${id}-hint` : undefined}
           />
-          <button type="button" onClick={openCalendar} aria-label={openLabel}>
+          <button
+            type="button"
+            onClick={openCalendar}
+            aria-label={openLabel}
+            data-active={active || undefined}
+          >
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <rect
                 x="3"

@@ -14,6 +14,8 @@ export type Tabs010Props = {
   accent?: string
   /** Подпись группы вкладок для скринридера. */
   groupLabel?: string
+  /** Пояснение под панелью. Пусто — строки нет. */
+  hint?: string
   className?: string
   style?: CSSProperties
 }
@@ -80,6 +82,11 @@ display:none;padding-top:0.875rem;font-size:0.875rem;line-height:1.6;
 color:var(--vibeui-tabs-010-muted);
 }
 [data-vibeui-block="tabs-010"] [data-part="panel"] h3{margin:0 0 0.25rem;font-size:0.9375rem;color:var(--vibeui-tabs-010-fg)}
+[data-vibeui-block="tabs-010"] [data-part="hint"]{
+margin:0.75rem 0 0;padding-top:0.625rem;
+border-top:1px dashed var(--vibeui-tabs-010-border);
+font-size:0.75rem;line-height:1.4;color:var(--vibeui-tabs-010-muted);
+}
 [data-vibeui-block="tabs-010"]:has(input[data-index="0"]:checked) [data-part="panel"][data-index="0"]{display:block}
 [data-vibeui-block="tabs-010"]:has(input[data-index="1"]:checked) [data-part="panel"][data-index="1"]{display:block}
 [data-vibeui-block="tabs-010"]:has(input[data-index="2"]:checked) [data-part="panel"][data-index="2"]{display:block}
@@ -144,6 +151,7 @@ export function Tabs010({
   background = "",
   accent,
   groupLabel = "Условия",
+  hint = "",
   className,
   style,
   ...props
@@ -193,6 +201,7 @@ export function Tabs010({
             {tab.text}
           </div>
         ))}
+        {hint ? <p data-part="hint">{hint}</p> : null}
       </div>
     </>
   )

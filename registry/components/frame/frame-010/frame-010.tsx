@@ -23,6 +23,7 @@ const STYLES = `
 --vibeui-frame-010-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.005 265));
 --vibeui-frame-010-muted:color-mix(in oklab,var(--vibeui-frame-010-fg) 68%,transparent);
 --vibeui-frame-010-border:light-dark(oklch(0.9 0.006 265),oklch(0.42 0.011 265));
+--vibeui-frame-010-accent:light-dark(oklch(0.55 0.16 262),oklch(0.72 0.15 262));
 --vibeui-frame-010-radius:0.75rem;
 --vibeui-frame-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -64,11 +65,65 @@ top:42%;left:12%;width:62%;aspect-ratio:16 / 10;
 transform:rotate(-3deg);z-index:3;
 box-shadow:0 1rem 2rem oklch(0 0 0 / 0.16);
 }
-[data-vibeui-block="frame-010"] [data-part="stub"]{
-display:grid;place-items:center;width:100%;height:100%;
-padding:0.75rem;text-align:center;
-font-size:0.75rem;color:var(--vibeui-frame-010-muted);
+/* Каждый кадр коллажа несёт свою сцену: снимок, график и страница. Три
+   одинаковых серых поля с номерами не объясняли бы, зачем коллаж нужен. */
+[data-vibeui-block="frame-010"] [data-part="card"] [data-part="stub"]{
+position:relative;overflow:hidden;
+display:flex;flex-direction:column;justify-content:flex-end;gap:0.375rem;
+width:100%;height:100%;padding:0.5rem;
 }
+[data-vibeui-block="frame-010"] [data-part="label"]{
+align-self:flex-start;position:relative;
+padding:0.0625rem 0.375rem;border-radius:0.3125rem;
+background:color-mix(in oklab,var(--vibeui-frame-010-bg) 82%,transparent);
+font-size:0.625rem;font-weight:650;color:var(--vibeui-frame-010-fg);
+}
+[data-vibeui-block="frame-010"] [data-part="stub"][data-scene="photo"]{
+background:linear-gradient(180deg,oklch(0.7 0.13 265),oklch(0.82 0.12 45));
+}
+[data-vibeui-block="frame-010"] [data-part="sun"]{
+position:absolute;left:22%;top:20%;width:26%;aspect-ratio:1 / 1;
+border-radius:9999px;background:oklch(0.94 0.11 85);
+}
+[data-vibeui-block="frame-010"] [data-part="peak"]{
+position:absolute;inset:auto 0 0;height:46%;
+background:oklch(0.42 0.06 285);
+clip-path:polygon(0 100%,32% 26%,58% 72%,78% 40%,100% 100%);
+}
+[data-vibeui-block="frame-010"] [data-part="stub"][data-scene="chart"]{
+background:linear-gradient(180deg,color-mix(in oklab,var(--vibeui-frame-010-accent) 12%,transparent),transparent);
+}
+[data-vibeui-block="frame-010"] [data-part="bars"]{
+display:flex;align-items:flex-end;gap:0.25rem;flex:1 1 auto;min-height:0;
+}
+[data-vibeui-block="frame-010"] [data-part="bars"] i{
+display:block;flex:1 1 0;border-radius:0.125rem 0.125rem 0 0;
+background:color-mix(in oklab,var(--vibeui-frame-010-accent) 55%,transparent);
+}
+[data-vibeui-block="frame-010"] [data-part="bars"] i:nth-child(2){height:70%}
+[data-vibeui-block="frame-010"] [data-part="bars"] i:nth-child(1){height:44%}
+[data-vibeui-block="frame-010"] [data-part="bars"] i:nth-child(3){height:56%}
+[data-vibeui-block="frame-010"] [data-part="bars"] i:nth-child(4){height:96%;background:var(--vibeui-frame-010-accent)}
+[data-vibeui-block="frame-010"] [data-part="topbar"]{
+display:flex;align-items:center;gap:0.3125rem;
+padding-bottom:0.375rem;border-bottom:1px solid var(--vibeui-frame-010-border);
+}
+[data-vibeui-block="frame-010"] [data-part="topbar"] i{
+display:block;width:0.75rem;height:0.75rem;border-radius:0.25rem;
+background:var(--vibeui-frame-010-accent);
+}
+[data-vibeui-block="frame-010"] [data-part="topbar"] i:last-child{
+width:2.5rem;height:0.375rem;border-radius:9999px;
+background:color-mix(in oklab,var(--vibeui-frame-010-fg) 20%,transparent);
+}
+[data-vibeui-block="frame-010"] [data-part="lines"]{
+display:flex;flex-direction:column;gap:0.3125rem;flex:1 1 auto;
+}
+[data-vibeui-block="frame-010"] [data-part="lines"] i{
+display:block;height:0.375rem;border-radius:9999px;
+background:color-mix(in oklab,var(--vibeui-frame-010-fg) 16%,transparent);
+}
+[data-vibeui-block="frame-010"] [data-part="lines"] i:last-child{width:58%}
 [data-vibeui-block="frame-010"] figcaption{
 margin-top:0.75rem;font-size:0.75rem;line-height:1.4;
 color:var(--vibeui-frame-010-muted);text-align:center;
@@ -143,17 +198,46 @@ export function Frame010({
         <div data-part="stage">
           <div data-part="card" data-role="back">
             {back ?? (
-              <div data-part="stub">{stubText.replace("{index}", "1")}</div>
+              <div data-part="stub" data-scene="photo">
+                <span data-part="sun" aria-hidden="true" />
+                <span data-part="peak" aria-hidden="true" />
+                <span data-part="label">
+                  {stubText.replace("{index}", "1")}
+                </span>
+              </div>
             )}
           </div>
           <div data-part="card" data-role="middle">
             {middle ?? (
-              <div data-part="stub">{stubText.replace("{index}", "2")}</div>
+              <div data-part="stub" data-scene="chart">
+                <span data-part="bars" aria-hidden="true">
+                  <i />
+                  <i />
+                  <i />
+                  <i />
+                </span>
+                <span data-part="label">
+                  {stubText.replace("{index}", "2")}
+                </span>
+              </div>
             )}
           </div>
           <div data-part="card" data-role="front">
             {front ?? (
-              <div data-part="stub">{stubText.replace("{index}", "3")}</div>
+              <div data-part="stub" data-scene="page">
+                <span data-part="topbar" aria-hidden="true">
+                  <i />
+                  <i />
+                </span>
+                <span data-part="lines" aria-hidden="true">
+                  <i />
+                  <i />
+                  <i />
+                </span>
+                <span data-part="label">
+                  {stubText.replace("{index}", "3")}
+                </span>
+              </div>
             )}
           </div>
         </div>

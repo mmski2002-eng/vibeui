@@ -2161,6 +2161,379 @@
           }
         }
       }
+    },
+    {
+      "name": "command-013",
+      "type": "registry:component",
+      "title": "Строка «спросить ИИ»",
+      "description": "Палитра, где первой строкой всегда стоит вопрос к ассистенту введённым текстом, а ниже идут обычные совпадения.",
+      "categories": ["command"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "command-013/command-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/command-013.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-command-013-*. Клиентский: \"use client\". Строка ассистента не участвует в фильтрации и занимает нулевой индекс в клавиатурной нумерации, поэтому Enter сразу после ввода уходит к модели, а стрелка вниз опускает выбор к точным совпадениям. Договор combobox и listbox написан руками: поле — combobox с aria-controls и aria-activedescendant, список — listbox, строки — option. Список раскрыт всегда, скрывать его за кнопкой компонент не умеет.",
+      "meta": {
+        "tags": ["command", "palette", "ai", "search", "assistant"],
+        "ai": {
+          "export": "Command013",
+          "usage": "<Command013 entries={results} askLabel=\"Спросить ИИ\" />",
+          "summary": "Командная палитра с ассистентом: первой строкой всегда «Спросить ИИ: введённый текст» со своей иконкой, ниже — обычные совпадения. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-command-013-* и не подменять её токенами вашей темы",
+            "строку ассистента вне фильтра: она обязана оставаться там, где совпадений нет, — это и есть повод спросить модель",
+            "её активной по умолчанию: Enter сразу после ввода уходит к ассистенту",
+            "отдельную иконку и часть data-part=\"ask\" — это другой род действия, чем переход по каталогу",
+            "введённый текст внутри строки ассистента: видно, что именно уйдёт в запрос",
+            "договор combobox и listbox: aria-controls, aria-activedescendant и role=option, фокус остаётся в поле",
+            "подсветку одну на клавиатуру и мышь: две разные читаются как две позиции",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "entries — обычные результаты, у каждого label и приписка hint",
+            "askLabel — приставка строки ассистента перед введённым текстом",
+            "askIdleText — вид этой строки, пока запрос пуст",
+            "placeholder, label и listLabel — подписи поля и списка",
+            "emptyText — строка вместо списка, когда совпадений нет",
+            "hintText и doneText — подвал панели до и после запуска",
+            "accent — цвет заливки иконки ассистента и подсветки строк",
+            "background — подложка панели; пусто означает цвет по умолчанию из палитры"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Панель встроена в страницу: модальное открытие по ⌘K, ловушку фокуса и затемнение добавляет приложение.",
+            "Запуск только помечает выбранное в подвале: обращение к модели и потоковый ответ — забота приложения.",
+            "Фильтр ищет подстроку в названии. Нечёткий поиск и ранжирование ставятся снаружи — компонент только рисует то, что ему передали.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "placeholder",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Команда, документ или вопрос…",
+            "maxLength": 40
+          },
+          {
+            "prop": "askLabel",
+            "label": "Строка ИИ",
+            "type": "text",
+            "default": "Спросить ИИ",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Ask AI Row",
+            "description": "A palette whose first row always offers to ask the assistant with the typed text, with the ordinary matches below it.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-command-013-* variables. A client component: \"use client\". The assistant row is excluded from filtering and holds index zero in the keyboard order, so Enter right after typing goes to the model while Arrow Down moves the selection down to the exact matches. The combobox and listbox contract is written by hand: the input is a combobox with aria-controls and aria-activedescendant, the list is a listbox and the rows are options. The list is always open — the component does not hide it behind a button.",
+            "ai": {
+              "summary": "A command palette with an assistant: the first row is always \"Ask AI: typed text\" with its own icon, ordinary matches follow below. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-command-013-* palette — do not swap it for your theme tokens",
+                "the assistant row outside the filter: it has to stay exactly where there are no matches — that is when asking the model makes sense",
+                "it being active by default: Enter right after typing goes to the assistant",
+                "the separate icon and the data-part=\"ask\" part — this is a different kind of action than navigating the catalogue",
+                "the typed text inside the assistant row: it has to be visible what exactly will be asked",
+                "the combobox and listbox contract: aria-controls, aria-activedescendant and role=option, with focus staying in the input",
+                "one highlight for the keyboard and the mouse: two different ones read as two positions",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "entries — the ordinary results, each with a label and a hint",
+                "askLabel — the prefix of the assistant row before the typed text",
+                "askIdleText — how that row reads while the query is empty",
+                "placeholder, label and listLabel — the input and list captions",
+                "emptyText — the line instead of the list when nothing matches",
+                "hintText and doneText — the footer before and after a run",
+                "accent — the colour of the assistant icon fill and of the row highlight",
+                "background — the panel background; empty means the default palette colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The panel is embedded in the page: opening it modally on ⌘K, the focus trap and the backdrop are added by the app.",
+                "Running only marks the choice in the footer: talking to the model and streaming the answer are the app's job.",
+                "The filter looks for a substring in the label. Fuzzy search and ranking belong outside — the component only draws what it is handed.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Command013 entries={results} askLabel=\"Ask AI\" />"
+            },
+            "controls": {
+              "placeholder": {
+                "label": "Placeholder",
+                "default": "Command, document or question…"
+              },
+              "askLabel": {
+                "label": "AI row",
+                "default": "Ask AI"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "Command palette with an assistant",
+                "listLabel": "Results",
+                "placeholder": "Command, document or question…",
+                "askLabel": "Ask AI",
+                "askIdleText": "Ask AI about anything",
+                "emptyText": "No exact matches — ask the assistant.",
+                "hintText": "↑↓ select · Enter run · Esc clear",
+                "doneText": "Ran: {command}",
+                "entries": [
+                  {
+                    "label": "Create a document",
+                    "hint": "Action"
+                  },
+                  {
+                    "label": "Invite to the team",
+                    "hint": "Action"
+                  },
+                  {
+                    "label": "Quarterly report",
+                    "hint": "Document"
+                  },
+                  {
+                    "label": "Notification settings",
+                    "hint": "Settings"
+                  },
+                  {
+                    "label": "Maria Kovaleva",
+                    "hint": "Person"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": ["placeholder", "askLabel", "accent", "background"],
+        "preview": {
+          "width": "full"
+        }
+      }
+    },
+    {
+      "name": "command-014",
+      "type": "registry:component",
+      "title": "Палитра с вкладками",
+      "description": "Палитра, где результаты разложены по вкладкам с числом совпадений: видно, где искать дальше, ещё до переключения.",
+      "categories": ["command"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "command-014/command-014.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/command-014.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-command-014-*. Клиентский: \"use client\". Счётчики считаются по запросу до фильтра по вкладке — иначе у всех вкладок, кроме открытой, стоял бы нуль. Ряд вкладок — настоящий tablist с roving tabindex: фокусируема только выбранная, Tab проносит фокус мимо ряда целиком, стрелки влево и вправо переключают вкладку и переносят фокус вручную. Стрелки вверх и вниз ходят по строкам, не уводя фокус из поля: договор combobox и listbox написан руками. Список раскрыт всегда.",
+      "meta": {
+        "tags": ["command", "palette", "tabs", "filter", "search"],
+        "ai": {
+          "export": "Command014",
+          "usage": "<Command014 entries={results} tabs={tabs} />",
+          "summary": "Командная палитра с рядом вкладок-фильтров по роду результата: у каждой вкладки счётчик совпадений по текущему запросу, ниже — отфильтрованный список. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-command-014-* и не подменять её токенами вашей темы",
+            "счётчики, посчитанные по запросу до фильтра по вкладке: иначе у всех вкладок, кроме открытой, стоял бы нуль",
+            "разведение клавиш по осям: вверх-вниз по строкам, влево-вправо по вкладкам",
+            "roving tabindex у вкладок: Tab обязан проносить фокус мимо ряда целиком, а не по вкладке за нажатие",
+            "ручной перенос фокуса при переключении стрелками — соседняя вкладка в момент нажатия ещё не фокусируема",
+            "role=tablist и aria-controls на список: вкладки управляют одним и тем же списком",
+            "значок рода у каждой строки: без него после фильтра «Всё» типы неразличимы",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "tabs — набор вкладок; пустой id означает «Всё» и не фильтрует",
+            "entries — результаты; поле type связывает строку с вкладкой",
+            "placeholder, label и listLabel — подписи поля и списка",
+            "emptyText — строка вместо списка, когда выбранная вкладка пуста",
+            "hintText и doneText — подвал панели до и после открытия",
+            "accent — цвет выбранной вкладки, счётчика на ней и подсветки строк",
+            "background — подложка панели; пусто означает цвет по умолчанию из палитры"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Панель встроена в страницу: модальное открытие по ⌘K, ловушку фокуса и затемнение добавляет приложение.",
+            "Значки нарисованы путями в самом файле: набор иконок сюда не тянется, иначе компонент перестанет быть самодостаточным.",
+            "На сервере, где счётчики приходят вместе с ответом, передавайте их готовыми: локальный подсчёт верен только для полного набора результатов на клиенте.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "placeholder",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Поиск по рабочему пространству…",
+            "maxLength": 40
+          },
+          {
+            "prop": "emptyText",
+            "label": "Пустая вкладка",
+            "type": "text",
+            "default": "В этой вкладке ничего нет. Загляните в соседнюю — число рядом с ней подскажет, куда.",
+            "maxLength": 120
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Palette With Tabs",
+            "description": "A palette where results are split across tabs with a match count on each: you see where to look next before switching.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-command-014-* variables. A client component: \"use client\". The counts are computed from the query before the tab filter — otherwise every tab but the open one would read zero. The tab row is a real tablist with roving tabindex: only the selected tab is focusable, Tab carries focus past the whole row, and Left and Right switch the tab and move focus by hand. Up and Down walk the rows without taking focus out of the input: the combobox and listbox contract is written by hand. The list is always open.",
+            "ai": {
+              "summary": "A command palette with a row of tab filters by result kind: each tab carries a match count for the current query, with the filtered list below. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-command-014-* palette — do not swap it for your theme tokens",
+                "counts computed from the query before the tab filter: otherwise every tab but the open one would read zero",
+                "splitting the keys by axis: up and down for rows, left and right for tabs",
+                "roving tabindex on the tabs: Tab has to carry focus past the whole row, not one tab per press",
+                "moving focus by hand when switching with arrows — the neighbouring tab is not yet focusable at the moment of the press",
+                "role=tablist and aria-controls on the list: the tabs drive one and the same list",
+                "a kind icon on every row: without it the types are indistinguishable under the \"All\" filter",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "tabs — the set of tabs; an empty id means \"All\" and filters nothing",
+                "entries — the results; the type field ties a row to a tab",
+                "placeholder, label and listLabel — the input and list captions",
+                "emptyText — the line instead of the list when the selected tab is empty",
+                "hintText and doneText — the footer before and after opening a result",
+                "accent — the colour of the selected tab, its counter and the row highlight",
+                "background — the panel background; empty means the default palette colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The panel is embedded in the page: opening it modally on ⌘K, the focus trap and the backdrop are added by the app.",
+                "The icons are drawn as paths inside the file: no icon set is pulled in, otherwise the component would stop being self-contained.",
+                "When the server returns counts along with the results, pass them in ready-made: counting locally is only correct for a complete result set on the client.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Command014 entries={results} tabs={tabs} />"
+            },
+            "controls": {
+              "placeholder": {
+                "label": "Placeholder",
+                "default": "Search the workspace…"
+              },
+              "emptyText": {
+                "label": "Empty tab",
+                "default": "Nothing in this tab. Try a neighbouring one — the number next to it says where."
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "Search with filters",
+                "listLabel": "Results",
+                "placeholder": "Search the workspace…",
+                "emptyText": "Nothing in this tab. Try a neighbouring one — the number next to it says where.",
+                "hintText": "↑↓ rows · ←→ tabs · Enter open",
+                "doneText": "Opened: {command}",
+                "tabs": [
+                  {
+                    "id": "",
+                    "label": "All"
+                  },
+                  {
+                    "id": "page",
+                    "label": "Pages"
+                  },
+                  {
+                    "id": "person",
+                    "label": "People"
+                  },
+                  {
+                    "id": "file",
+                    "label": "Files"
+                  }
+                ],
+                "entries": [
+                  {
+                    "label": "Release roadmap",
+                    "type": "page",
+                    "hint": "Product"
+                  },
+                  {
+                    "label": "On-call policy",
+                    "type": "page",
+                    "hint": "Support"
+                  },
+                  {
+                    "label": "Weekly review",
+                    "type": "page",
+                    "hint": "Team"
+                  },
+                  {
+                    "label": "Maria Kovaleva",
+                    "type": "person",
+                    "hint": "Design"
+                  },
+                  {
+                    "label": "Artem Sokolov",
+                    "type": "person",
+                    "hint": "Engineering"
+                  },
+                  {
+                    "label": "budget-2025.xlsx",
+                    "type": "file",
+                    "hint": "84 KB"
+                  },
+                  {
+                    "label": "home-mockup.fig",
+                    "type": "file",
+                    "hint": "2.3 MB"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": ["placeholder", "emptyText", "accent", "background"],
+        "preview": {
+          "width": "full"
+        }
+      }
     }
   ]
 }

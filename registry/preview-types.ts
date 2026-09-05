@@ -8,3 +8,13 @@ export type PreviewMap = Record<string, ComponentType<PreviewProps>>
 export type PreviewMapModule = {
   PREVIEWS: PreviewMap
 }
+
+/**
+ * Карта slug -> загрузчик компонента. Серверному рендеру превью нужен
+ * из категории один item, а статические импорты тянули за собой всю
+ * категорию — до девяноста компонентов ради одного.
+ */
+export type PreviewLoaderMap = Record<
+  string,
+  () => Promise<ComponentType<PreviewProps>>
+>

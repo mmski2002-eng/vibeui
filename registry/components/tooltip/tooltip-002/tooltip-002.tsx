@@ -11,6 +11,8 @@ export type Tooltip002Props = Omit<ComponentProps<"div">, "title"> & {
   customCaption?: string
   /** Вывод под обеими ячейками. */
   note?: string
+  /** Показать собственную подсказку принудительно: онбординг, отладка, витрина. */
+  open?: boolean
   /** Пусто — подложки нет, карточка лежит прямо на фоне страницы. */
   background?: string
 }
@@ -80,6 +82,12 @@ background:inherit;transform:rotate(45deg);
 [data-vibeui-block="tooltip-002"] [data-part="own"]:focus-within [data-part="tip"]{
 opacity:1;transform:translate(-50%,0);
 }
+/* Витринный режим: подсказка раскрыта без наведения — миниатюра каталога и
+   скриншот показывают, о чём компонент. Плашка абсолютная, поэтому раскладка
+   ячеек не меняется. */
+[data-vibeui-block="tooltip-002"][data-open="true"] [data-part="tip"]{
+opacity:1;transform:translate(-50%,0);
+}
 [data-vibeui-block="tooltip-002"] [data-part="note"]{
 grid-column:1 / -1;margin:0;
 font-size:0.75rem;line-height:1.5;color:var(--vibeui-tooltip-002-muted);
@@ -120,6 +128,7 @@ export function Tooltip002({
   nativeCaption = "задержка ~1 с, стиль системы",
   customCaption = "сразу, со стрелкой, по фокусу",
   note = "Нативная подсказка не появляется по Tab и не читается на телефоне. Своя открывается и по наведению, и по фокусу — и выглядит одинаково во всех системах.",
+  open = false,
   background = "",
   className,
   style,
@@ -144,6 +153,7 @@ export function Tooltip002({
         {...props}
         data-slot="tooltip"
         data-vibeui-block="tooltip-002"
+        data-open={open || undefined}
         className={className}
         style={palette}
       >

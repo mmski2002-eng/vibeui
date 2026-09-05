@@ -4,6 +4,11 @@ import { useId } from "react"
 import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Hovercard001Props = Omit<ComponentProps<"span">, "children"> & {
+  /**
+   * Показать карточку раскрытой прямо в потоке: витрина, скриншот, отладка.
+   * Упоминание остаётся на месте, карточка встаёт под ним и никуда не всплывает.
+   */
+  open?: boolean
   name?: string
   handle?: string
   about?: string
@@ -78,6 +83,12 @@ font-size:0.75rem;font-weight:700;
 [data-vibeui-block="hovercard-001"] [data-part="about"]{margin:0;font-size:0.8125rem;line-height:1.4;color:var(--vibeui-hovercard-001-muted)}
 [data-vibeui-block="hovercard-001"] [data-part="stats"]{display:flex;gap:0.75rem;font-size:0.75rem;color:var(--vibeui-hovercard-001-muted)}
 [data-vibeui-block="hovercard-001"] [data-part="stats"] b{color:var(--vibeui-hovercard-001-fg);font-weight:650;font-variant-numeric:tabular-nums}
+/* Витринный режим: карточка стоит в потоке под упоминанием, а не поверх
+   текста — иначе на миниатюре каталога от компонента видно одно упоминание. */
+[data-vibeui-block="hovercard-001"][data-open="true"] [data-part="card"]{
+position:static;opacity:1;visibility:visible;translate:0;
+margin-top:0.5rem;max-width:100%;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="hovercard-001"] *{animation:none!important;transition:none!important}}
 `
 
@@ -142,6 +153,7 @@ function closeOnEscape(event: KeyboardEvent<HTMLElement>) {
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Hovercard001({
+  open = false,
   name = "Мария Гурова",
   handle = "@masha",
   about = "Ведёт каталог и дизайн-систему, собирает интерфейсы без лишних слов.",
@@ -175,6 +187,7 @@ export function Hovercard001({
         data-slot="hover-card"
         onKeyDown={closeOnEscape}
         data-vibeui-block="hovercard-001"
+        data-open={open || undefined}
         className={className}
         style={palette}
       >

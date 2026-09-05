@@ -6,6 +6,8 @@ export type Tooltip006Props = Omit<ComponentProps<"div">, "children"> & {
   labels?: string[]
   /** Пояснение под рядом кнопок. */
   note?: string
+  /** Показать подсказку левой кнопки принудительно: онбординг, отладка, витрина. */
+  open?: boolean
   /** Пусто — подложки нет, карточка лежит прямо на фоне страницы. */
   background?: string
 }
@@ -70,6 +72,10 @@ background:inherit;transform:rotate(45deg);
 [data-vibeui-block="tooltip-006"] [data-part="item"][data-align="end"] [data-part="tip"]::after{right:1rem}
 [data-vibeui-block="tooltip-006"] [data-part="item"]:hover [data-part="tip"],
 [data-vibeui-block="tooltip-006"] [data-part="item"]:focus-within [data-part="tip"]{opacity:1;translate:0 0}
+/* Витринный режим: раскрыта ровно одна подсказка — три сразу перекрыли бы
+   друг друга. Левая прижата к своей стороне, поэтому за край не выходит
+   ни на какой ширине. */
+[data-vibeui-block="tooltip-006"][data-open="true"] [data-part="item"][data-align="start"] [data-part="tip"]{opacity:1;translate:0 0}
 [data-vibeui-block="tooltip-006"] [data-part="note"]{
 margin:0;font-size:0.75rem;line-height:1.5;color:var(--vibeui-tooltip-006-muted);
 }
@@ -109,6 +115,7 @@ export function Tooltip006({
   tip = "Экспорт в CSV",
   labels = DEFAULT_LABELS,
   note = "Наведите на крайние кнопки: подсказка прижимается к своей стороне, а стрелка съезжает к кнопке — за границу области ничего не выходит.",
+  open = false,
   background = "",
   className,
   style,
@@ -133,6 +140,7 @@ export function Tooltip006({
         {...props}
         data-slot="tooltip"
         data-vibeui-block="tooltip-006"
+        data-open={open || undefined}
         className={className}
         style={palette}
       >

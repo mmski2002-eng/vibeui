@@ -273,7 +273,6 @@ export function Autocomplete014({
           id={`${id}-list`}
           data-part="list"
           aria-label={label}
-          aria-multiselectable="true"
         >
           {matches.map((option, index) => (
             <li

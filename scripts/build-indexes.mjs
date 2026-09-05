@@ -6,7 +6,6 @@ import {
   writeFileSync,
 } from "node:fs"
 import path from "node:path"
-import prettier from "prettier"
 
 /**
  * Генерация индексов каталога из файловой системы.
@@ -163,72 +162,6 @@ function collectPreviews(registries) {
   )
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function renderPreviews(previews) {
-  const imports = previews
-    .map(
-      (preview) => `import { ${preview.symbol} } from "${preview.modulePath}"`,
-    )
-    .join("\n")
-
-  const entries = previews
-    .map((preview) => `  "${preview.slug}": ${preview.symbol},`)
-    .join("\n")
-
-  return `${GENERATED_HEADER}
-import type { ComponentType } from "react"
-
-${imports}
-
-/**
- * Карта slug -> React-компонент. Из неё рендерятся и миниатюра каталога,
- * и \`/preview/[slug]\` — тот же файл, который получает пользователь.
- *
- * Файл называется previews.ts, а не components.ts, чтобы не конфликтовать
- * с директорией registry/components/ (мелкие компоненты).
- */
-export const CATALOG_PREVIEWS: Record<string, ComponentType> = {
-${entries}
-}
-`
-}
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function renderLazyPreviews(previews) {
-  const entries = previews
-    .map(
-      (preview) => `  "${preview.slug}": dynamic(() =>
-    import("${preview.modulePath}").then((module) => module.${preview.symbol}),
-  ),`,
-    )
-    .join("\n")
-
-  return `${GENERATED_HEADER}
-import dynamic from "next/dynamic"
-import type { ComponentType } from "react"
-
-/**
- * Ленивая карта превью для конфигуратора. Отличается от \`previews.ts\` двумя
- * вещами: компоненты грузятся отдельными чанками по требованию и принимают
- * произвольные пропсы.
- *
- * Зачем отдельная карта: статическая нужна серверному рендеру миниатюр и
- * не должна тащить \`next/dynamic\`, а эта грузится только когда пользователь
- * действительно открыл настройку — витрина остаётся без клиентского JS
- * компонентов (см. docs/CONTROLS.md).
- *
- * Пропсы типизированы как \`Record<string, unknown>\`: значения приходят из
- * контролов самого item'а, то есть по построению совпадают с его API.
- * Проверить это статически нельзя — карта индексируется по slug.
- */
-export type PreviewProps = Record<string, unknown>
-
-export const LAZY_PREVIEWS = {
-${entries}
-} as unknown as Record<string, ComponentType<PreviewProps>>
-`
-}
-
 function renderPreviewTypes() {
   return `${GENERATED_HEADER}
 import type { ComponentType } from "react"
@@ -238,6 +171,16 @@ export type PreviewMap = Record<string, ComponentType<PreviewProps>>
 export type PreviewMapModule = {
   PREVIEWS: PreviewMap
 }
+
+/**
+ * Карта slug -> загрузчик компонента. Серверному рендеру превью нужен
+ * из категории один item, а статические импорты тянули за собой всю
+ * категорию — до девяноста компонентов ради одного.
+ */
+export type PreviewLoaderMap = Record<
+  string,
+  () => Promise<ComponentType<PreviewProps>>
+>
 `
 }
 
@@ -246,26 +189,19 @@ function renderCategoryPreviews(registry) {
     .filter((item) => !item.meta?.internal)
     .map((item) => previewOf(registry, item))
 
-  const imports = previews
+  const entries = previews
     .map(
-      (preview) => `import { ${preview.symbol} } from "${preview.modulePath}"`,
+      (preview) => `  "${preview.slug}": () =>
+    import("${preview.modulePath}").then((module) => module.${preview.symbol}),`,
     )
     .join("\n")
 
-  const entries = previews
-    .map((preview) => `  "${preview.slug}": ${preview.symbol},`)
-    .join("\n")
-
   return `${GENERATED_HEADER}
-import type { ComponentType } from "react"
-
-import type { PreviewProps } from "@/registry/preview-types"
-
-${imports}
+import type { PreviewLoaderMap } from "@/registry/preview-types"
 
 export const PREVIEWS = {
 ${entries}
-} satisfies Record<string, ComponentType<PreviewProps>>
+} satisfies PreviewLoaderMap
 `
 }
 
@@ -304,32 +240,22 @@ function renderPreviewLoaders(registries, lazy) {
     .join("\n")
 
   const functionName = lazy ? "loadLazyPreviewMap" : "loadPreviewMap"
+  const mapType = lazy ? "PreviewMap" : "PreviewLoaderMap"
 
   return `${GENERATED_HEADER}
 import type { ItemKind } from "@/registry/categories"
-import type { PreviewMap } from "@/registry/preview-types"
+import type { ${mapType} } from "@/registry/preview-types"
 
 export async function ${functionName}(
   kind: ItemKind,
   category: string,
-): Promise<PreviewMap | null> {
+): Promise<${mapType} | null> {
   switch (\`\${kind}/\${category}\`) {
 ${cases}
     default:
       return null
   }
 }
-`
-}
-
-function renderLegacyPreviews(lazy) {
-  const exported = lazy ? "loadLazyPreviewMap" : "loadPreviewMap"
-  const targetModule = lazy
-    ? "@/registry/preview-loaders-lazy"
-    : "@/registry/preview-loaders"
-
-  return `${GENERATED_HEADER}
-export { ${exported} } from "${targetModule}"
 `
 }
 
@@ -408,12 +334,12 @@ function renderRootRegistry(registries) {
 async function emit(relativePath, contents) {
   const target = path.join(ROOT, relativePath)
   mkdirSync(path.dirname(target), { recursive: true })
-  const options = await prettier.resolveConfig(target)
-  const formatted = await prettier.format(contents, {
-    ...options,
-    filepath: target,
-  })
   const existing = existsSync(target) ? readFileSync(target, "utf8") : null
+
+  // Prettier здесь не нужен: сгенерированные файлы перечислены в
+  // .prettierignore, а форматировать машинный вывод при каждом прогоне —
+  // почти десять секунд на две сотни файлов, то есть десятая часть сборки.
+  const formatted = contents
 
   if (existing === formatted) {
     return false
@@ -440,8 +366,6 @@ const changed = [
     "registry/preview-loaders-lazy.ts",
     renderPreviewLoaders(registries, true),
   ),
-  await emit("registry/previews.ts", renderLegacyPreviews()),
-  await emit("registry/previews.lazy.ts", renderLegacyPreviews(true)),
   ...(await Promise.all(
     registries.map((registry) =>
       emit(

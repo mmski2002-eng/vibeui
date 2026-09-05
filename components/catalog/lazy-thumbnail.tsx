@@ -39,6 +39,7 @@ export function LazyThumbnail({
   full,
   props,
   states,
+  aspect,
 }: {
   slug: string
   kind: ItemKind
@@ -47,11 +48,13 @@ export function LazyThumbnail({
   full: boolean
   props?: Record<string, unknown>
   states?: Record<string, unknown>[]
+  aspect?: string
 }) {
   const frameRef = useRef<HTMLDivElement>(null)
   const [visible, setVisible] = useState(false)
-  const [Preview, setPreview] =
-    useState<ComponentType<PreviewProps> | null>(null)
+  const [Preview, setPreview] = useState<ComponentType<PreviewProps> | null>(
+    null,
+  )
 
   useEffect(() => {
     const frame = frameRef.current
@@ -133,10 +136,19 @@ export function LazyThumbnail({
   return (
     // Кадр 16/9 равен пропорции секции в 1280×720, поэтому блок заполняет его
     // без полос и обрезки. Подложка следует переключателю темы на карточке.
+    //
+    // Низкий блок (шапка сайта — одна строка на всю ширину) просит свою
+    // пропорцию через `meta.preview.aspect`: в кадре 16/9 он занял бы десятую
+    // часть высоты, и на витрине от него осталась бы полоска в пустоте.
     <div
       ref={frameRef}
-      className="bg-preview-surface @container relative aspect-[16/9] w-full overflow-hidden"
-      style={{ "--thumbnail-width": `${SECTION_WIDTH}px` } as CSSProperties}
+      className="bg-preview-surface @container relative w-full overflow-hidden"
+      style={
+        {
+          "--thumbnail-width": `${SECTION_WIDTH}px`,
+          aspectRatio: aspect ?? "16 / 9",
+        } as CSSProperties
+      }
     >
       <div className="block-thumbnail-frame">
         <div className="block-thumbnail-scale preview-fade">{content}</div>

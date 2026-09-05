@@ -2769,6 +2769,391 @@
           "background"
         ]
       }
+    },
+    {
+      "name": "carousel-017",
+      "type": "registry:component",
+      "title": "Галерея с лайтбоксом",
+      "description": "Лента миниатюр, по клику кадр открывается крупно поверх страницы: стрелки, счётчик «3 из 12», а ловушка фокуса и Escape достаются от нативного dialog.",
+      "categories": [
+        "carousel"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "carousel-017/carousel-017.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/carousel-017.tsx"
+        }
+      ],
+      "docs": "Клиентский компонент: номер открытого кадра лежит в useState, окно — нативный <dialog>, открываемый через showModal(). Один файл, без зависимостей, палитра в локальных переменных --vibeui-carousel-017-*. Кадры не картинки: каждый снимок описан тоном в градусах и рисуется градиентом через переменную --vibeui-carousel-017-hue, поэтому у item'а нет ни изображений, ни сетевых запросов. Модальный режим даёт ловушку фокуса, закрытие по Escape и затемнение фона бесплатно; правило html:has(dialog[open]:modal){overflow:hidden} добирает то, чего браузер не делает, — блокировку прокрутки страницы. Стрелки внутри окна листают по кругу, ArrowLeft и ArrowRight делают то же с клавиатуры, счётчик собирается из шаблона counter. Проп defaultOpen открывает окно немодально через show(): оно остаётся внутри блока и попадает в кадр витрины.",
+      "meta": {
+        "tags": [
+          "gallery",
+          "lightbox",
+          "dialog",
+          "carousel",
+          "client"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "defaultOpen": true
+          }
+        },
+        "ai": {
+          "export": "Carousel017",
+          "usage": "<Carousel017\n  label=\"Съёмка маршрута\"\n  shots={[{ title: \"Рассвет над фьордом\", hue: 250 }]}\n/>",
+          "summary": "Галерея из ленты миниатюр и лайтбокса на нативном dialog: стрелки, счётчик кадров, кадры нарисованы градиентами. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-carousel-017-* и не подменять её токенами вашей темы",
+            "нативный <dialog> и showModal(): ловушка фокуса, Escape и затемнение фона написаны браузером и в своей реализации чинятся месяцами",
+            "правило html:has(dialog[open]:modal){overflow:hidden} — showModal() делает фон inert, но прокрутку страницы не запрещает",
+            "счётчик кадров: без «3 из 12» человек не знает, сколько ещё смотреть, и закрывает галерею на середине",
+            "стрелки на ArrowLeft и ArrowRight внутри окна — в галерее это первое, что пробуют с клавиатуры",
+            "aria-label у каждой миниатюры: кнопка без подписи в списке ссылок звучит как «кнопка, кнопка, кнопка»",
+            "прокрутку ленты внутри блока (overflow-x на самой ленте), чтобы галерея не тянула страницу вбок"
+          ],
+          "adapt": [
+            "заголовок галереи через label и набор кадров через shots",
+            "шаблон счётчика counter с подстановками {n} и {total}",
+            "пропорции крупного кадра через ratio: 4:3, 16:9 или 1:1",
+            "подписи кнопок: prevLabel, nextLabel и closeLabel",
+            "цвет обводки выбранной миниатюры через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Кадры рисуются градиентом по тону hue. Настоящие снимки подставляются вместо фона [data-part=\"thumb\"] и [data-part=\"stage\"] — разметка при этом не меняется.",
+            "Проп defaultOpen — режим витрины: окно открывается немодально и живёт внутри блока. На странице пользователя его не ставят, иначе окно не закроется по Escape.",
+            "Показ кадра во всю страницу здесь не делается специально: dialog шириной с колонку читается лучше, чем растянутый градиент.",
+            "Ссылку на конкретный кадр компонент не хранит: если галерея должна открываться по адресу, номер кадра поднимают в маршрут.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Съёмка маршрута",
+            "maxLength": 40
+          },
+          {
+            "prop": "counter",
+            "label": "Счётчик",
+            "type": "text",
+            "default": "{n} из {total}",
+            "maxLength": 40
+          },
+          {
+            "prop": "ratio",
+            "label": "Пропорции",
+            "type": "select",
+            "options": [
+              "4:3",
+              "16:9",
+              "1:1"
+            ],
+            "default": "4:3"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "label",
+          "counter",
+          "ratio",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Gallery With Lightbox",
+            "description": "A strip of thumbnails where a click opens the shot large above the page: arrows, a \"3 of 12\" counter, and the focus trap and Escape inherited from the native dialog.",
+            "docs": "A client component: the index of the open shot lives in useState and the window is a native <dialog> opened through showModal(). One file, no dependencies, the palette in the local --vibeui-carousel-017-* variables. The shots are not images: every one is described by a hue in degrees and painted with a gradient through the --vibeui-carousel-017-hue variable, so the item carries neither pictures nor network requests. The modal mode gives the focus trap, Escape and the dimmed backdrop for free; the html:has(dialog[open]:modal){overflow:hidden} rule adds what the browser does not do — locking the page scroll. The arrows inside the window cycle through the shots, ArrowLeft and ArrowRight do the same from the keyboard, and the counter is assembled from the counter template. The defaultOpen prop opens the window non-modally through show(): it stays inside the block and lands in the showcase frame.",
+            "ai": {
+              "summary": "A gallery made of a thumbnail strip and a lightbox on the native dialog: arrows, a shot counter, and frames painted with gradients. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-carousel-017-* palette — do not swap it for your theme tokens",
+                "the native <dialog> and showModal(): the focus trap, Escape and the dimmed backdrop are written by the browser and take months to fix in a hand-rolled one",
+                "the html:has(dialog[open]:modal){overflow:hidden} rule — showModal() makes the background inert but does not stop the page from scrolling",
+                "the shot counter: without \"3 of 12\" a person does not know how much is left and closes the gallery halfway",
+                "the arrows on ArrowLeft and ArrowRight inside the window — in a gallery that is the first thing tried on a keyboard",
+                "the aria-label on every thumbnail: an unlabelled button in a list reads as \"button, button, button\"",
+                "keeping the strip scroll inside the block (overflow-x on the strip itself) so the gallery does not drag the page sideways"
+              ],
+              "adapt": [
+                "the gallery heading through label and the set of frames through shots",
+                "the counter template counter with the {n} and {total} placeholders",
+                "the proportions of the large frame through ratio: 4:3, 16:9 or 1:1",
+                "the button captions: prevLabel, nextLabel and closeLabel",
+                "the colour of the selected thumbnail outline through accent",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The frames are painted with a gradient from the hue value. Real photographs go in place of the [data-part=\"thumb\"] and [data-part=\"stage\"] backgrounds — the markup does not change.",
+                "The defaultOpen prop is the showcase mode: the window opens non-modally and lives inside the block. Do not ship it on a user-facing page, or the window will not close on Escape.",
+                "A full-page view is deliberately not implemented: a dialog as wide as the column reads better than a stretched gradient.",
+                "The component keeps no link to a particular shot: if the gallery has to open from a URL, lift the shot index into the route.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Carousel017\n  label=\"Route shoot\"\n  shots={[{ title: \"Dawn over the fjord\", hue: 250 }]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Heading",
+                "default": "Route shoot"
+              },
+              "counter": {
+                "label": "Counter",
+                "default": "{n} of {total}"
+              },
+              "ratio": {
+                "label": "Ratio"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "defaultOpen": true,
+                "label": "Route shoot",
+                "counter": "{n} of {total}",
+                "prevLabel": "Previous shot",
+                "nextLabel": "Next shot",
+                "closeLabel": "Close",
+                "shots": [
+                  {
+                    "title": "Dawn over the fjord",
+                    "hue": 250
+                  },
+                  {
+                    "title": "Terrace by the water",
+                    "hue": 196
+                  },
+                  {
+                    "title": "Pines in the fog",
+                    "hue": 156
+                  },
+                  {
+                    "title": "A field in July",
+                    "hue": 104
+                  },
+                  {
+                    "title": "Sand slope",
+                    "hue": 64
+                  },
+                  {
+                    "title": "Sunset on the highway",
+                    "hue": 32
+                  },
+                  {
+                    "title": "Night block",
+                    "hue": 300
+                  },
+                  {
+                    "title": "Shop window in the rain",
+                    "hue": 274
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "carousel-018",
+      "type": "registry:component",
+      "title": "Слайдер с растворением",
+      "description": "Кадры сменяются растворением, а не сдвигом: слайды лежат стопкой в одной ячейке грида, снизу точки-пейджер, подпись живёт вместе с кадром.",
+      "categories": [
+        "carousel"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "carousel-018/carousel-018.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/carousel-018.tsx"
+        }
+      ],
+      "docs": "Клиентский компонент: номер текущего слайда лежит в useState, переключают его точки-пейджер. Один файл, без зависимостей, палитра в локальных переменных --vibeui-carousel-018-*. Слайды не едут лентой: они лежат в одной ячейке грида (grid-area:1/1) и меняются прозрачностью, поэтому кадр не дёргается и высота держится сама. Кадры рисуются градиентами по тону --vibeui-carousel-018-hue, картинок в item'е нет. Каждая точка — настоящая кнопка с подписью-названием слайда и aria-current, вокруг видимого кружка есть невидимое поле нажатия в 24 пикселя; по ряду ходят стрелки, Home и End. Подпись слайда стоит в aria-live=\"polite\" и переключается вместе с кадром, а её место задаётся пропом captionPlace: поверх кадра со шторкой-градиентом или отдельной строкой под ним.",
+      "meta": {
+        "tags": [
+          "carousel",
+          "fade",
+          "hero",
+          "pager",
+          "client"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Carousel018",
+          "usage": "<Carousel018\n  slides={[{ title: \"Летняя коллекция\", text: \"Двадцать четыре модели.\", hue: 22 }]}\n  captionPlace=\"over\"\n/>",
+          "summary": "Слайдер, где кадры растворяются друг в друге: стопка слайдов в одной ячейке грида, точки-пейджер с клавиатурой, подпись слайда. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-carousel-018-* и не подменять её токенами вашей темы",
+            "стопку слайдов в одной ячейке грида: без неё высота блока прыгает на каждой смене кадра",
+            "смену прозрачностью вместо сдвига — в этом вся разница с лентой: hero меняет настроение, а не показывает список",
+            "поле нажатия у точки: видимый кружок в 8 пикселей пальцем не берётся, кнопка вокруг него — 24",
+            "aria-current на текущей точке и aria-hidden на невидимых слайдах, иначе скринридер читает все кадры разом",
+            "подпись в aria-live=\"polite\": смена кадра без звука проходит мимо человека, который не видит картинку",
+            "правило prefers-reduced-motion: растворение — это анимация, и её просят отключать"
+          ],
+          "adapt": [
+            "набор кадров через slides: заголовок, текст и тон hue у каждого",
+            "пропорции кадра через ratio: 16:9, 4:3 или 21:9",
+            "место подписи через captionPlace: поверх кадра или строкой под ним",
+            "подпись ряда точек через dotsLabel и подпись всей карусели через label",
+            "цвет активной точки через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Кадры рисуются градиентом по тону hue. Настоящие снимки подставляются вместо фона [data-part=\"slide\"] — разметка при этом не меняется.",
+            "Автопрокрутки здесь нет намеренно: hero-обложку листает человек, а самоходную карусель приходится догонять.",
+            "Длительность растворения задаётся переменной --vibeui-carousel-018-fade и меняется одной строкой.",
+            "Подпись поверх кадра читается за счёт шторки-градиента: без неё белый текст тонет на светлом снимке.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "ratio",
+            "label": "Пропорции",
+            "type": "select",
+            "options": [
+              "16:9",
+              "4:3",
+              "21:9"
+            ],
+            "default": "16:9"
+          },
+          {
+            "prop": "captionPlace",
+            "label": "Подпись",
+            "type": "select",
+            "options": [
+              "over",
+              "under"
+            ],
+            "default": "over"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "ratio",
+          "captionPlace",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Cross-Fade Slider",
+            "description": "Frames change by dissolving instead of sliding: the slides sit stacked in one grid cell, dots page through them, and the caption travels with the frame.",
+            "docs": "A client component: the index of the current slide lives in useState and the pager dots switch it. One file, no dependencies, the palette in the local --vibeui-carousel-018-* variables. The slides do not travel as a strip: they sit in one grid cell (grid-area:1/1) and change opacity, so the frame does not jump and the height holds itself. The frames are painted with gradients from the --vibeui-carousel-018-hue tone; there are no images in the item. Every dot is a real button with the slide title as its label and aria-current, and around the visible 8-pixel circle there is an invisible 24-pixel hit area; arrows, Home and End walk the row. The slide caption sits in an aria-live=\"polite\" region and switches with the frame, while its place is set by the captionPlace prop: over the frame behind a gradient scrim, or as a separate line below it.",
+            "ai": {
+              "summary": "A slider whose frames dissolve into one another: a stack of slides in a single grid cell, keyboard-driven pager dots and a slide caption. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-carousel-018-* palette — do not swap it for your theme tokens",
+                "the stack of slides in one grid cell: without it the block height jumps on every change",
+                "the change by opacity rather than by sliding — that is the whole difference from a strip: a hero changes mood, it does not show a list",
+                "the hit area around a dot: an 8-pixel circle is not reachable with a finger, the button around it is 24",
+                "aria-current on the active dot and aria-hidden on the invisible slides, otherwise a screen reader announces every frame at once",
+                "the caption in an aria-live=\"polite\" region: a silent frame change passes by a person who does not see the picture",
+                "the prefers-reduced-motion rule: dissolving is an animation, and people ask for it to be switched off"
+              ],
+              "adapt": [
+                "the set of frames through slides: a title, a text and a hue for each",
+                "the frame proportions through ratio: 16:9, 4:3 or 21:9",
+                "the caption placement through captionPlace: over the frame or as a line below it",
+                "the dot row label through dotsLabel and the carousel label through label",
+                "the active dot colour through accent",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The frames are painted with a gradient from the hue value. Real photographs go in place of the [data-part=\"slide\"] background — the markup does not change.",
+                "There is deliberately no autoplay: a hero cover is paged by a person, while a self-running carousel has to be chased.",
+                "The dissolve duration is set by the --vibeui-carousel-018-fade variable and changes in one line.",
+                "The caption over the frame stays readable thanks to the gradient scrim: without it white text drowns on a light shot.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Carousel018\n  slides={[{ title: \"Summer collection\", text: \"Twenty four models.\", hue: 22 }]}\n  captionPlace=\"over\"\n/>"
+            },
+            "controls": {
+              "ratio": {
+                "label": "Ratio"
+              },
+              "captionPlace": {
+                "label": "Caption"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "Section covers",
+                "dotsLabel": "Choose a slide",
+                "slides": [
+                  {
+                    "title": "Summer collection",
+                    "text": "Twenty four models, sewn in small batches.",
+                    "hue": 22
+                  },
+                  {
+                    "title": "Northern routes",
+                    "text": "Weekend trips four hours away from the city.",
+                    "hue": 232
+                  },
+                  {
+                    "title": "Subscription season",
+                    "text": "The first month is open, after that you leave in one click.",
+                    "hue": 152
+                  },
+                  {
+                    "title": "Workshop diary",
+                    "text": "Every Friday we show what came out of the week.",
+                    "hue": 300
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

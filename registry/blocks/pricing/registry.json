@@ -3173,6 +3173,9 @@
           "cards"
         ],
         "preview": {
+          "props": {
+            "layout": "swipe"
+          },
           "width": "full"
         },
         "ai": {

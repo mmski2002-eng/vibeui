@@ -7,78 +7,48 @@ import type { PreviewMap } from "@/registry/preview-types"
 
 export const PREVIEWS = {
   "banner-001": dynamic(() =>
-    import("@/registry/components/banner/banner-001/banner-001").then(
-      (module) => module.Banner001,
-    ),
+    import("@/registry/components/banner/banner-001/banner-001").then((module) => module.Banner001),
   ),
   "banner-002": dynamic(() =>
-    import("@/registry/components/banner/banner-002/banner-002").then(
-      (module) => module.Banner002,
-    ),
+    import("@/registry/components/banner/banner-002/banner-002").then((module) => module.Banner002),
   ),
   "banner-003": dynamic(() =>
-    import("@/registry/components/banner/banner-003/banner-003").then(
-      (module) => module.Banner003,
-    ),
+    import("@/registry/components/banner/banner-003/banner-003").then((module) => module.Banner003),
   ),
   "banner-004": dynamic(() =>
-    import("@/registry/components/banner/banner-004/banner-004").then(
-      (module) => module.Banner004,
-    ),
+    import("@/registry/components/banner/banner-004/banner-004").then((module) => module.Banner004),
   ),
   "banner-005": dynamic(() =>
-    import("@/registry/components/banner/banner-005/banner-005").then(
-      (module) => module.Banner005,
-    ),
+    import("@/registry/components/banner/banner-005/banner-005").then((module) => module.Banner005),
   ),
   "banner-006": dynamic(() =>
-    import("@/registry/components/banner/banner-006/banner-006").then(
-      (module) => module.Banner006,
-    ),
+    import("@/registry/components/banner/banner-006/banner-006").then((module) => module.Banner006),
   ),
   "banner-007": dynamic(() =>
-    import("@/registry/components/banner/banner-007/banner-007").then(
-      (module) => module.Banner007,
-    ),
+    import("@/registry/components/banner/banner-007/banner-007").then((module) => module.Banner007),
   ),
   "banner-008": dynamic(() =>
-    import("@/registry/components/banner/banner-008/banner-008").then(
-      (module) => module.Banner008,
-    ),
+    import("@/registry/components/banner/banner-008/banner-008").then((module) => module.Banner008),
   ),
   "banner-009": dynamic(() =>
-    import("@/registry/components/banner/banner-009/banner-009").then(
-      (module) => module.Banner009,
-    ),
+    import("@/registry/components/banner/banner-009/banner-009").then((module) => module.Banner009),
   ),
   "banner-010": dynamic(() =>
-    import("@/registry/components/banner/banner-010/banner-010").then(
-      (module) => module.Banner010,
-    ),
+    import("@/registry/components/banner/banner-010/banner-010").then((module) => module.Banner010),
   ),
   "banner-011": dynamic(() =>
-    import("@/registry/components/banner/banner-011/banner-011").then(
-      (module) => module.Banner011,
-    ),
+    import("@/registry/components/banner/banner-011/banner-011").then((module) => module.Banner011),
   ),
   "banner-012": dynamic(() =>
-    import("@/registry/components/banner/banner-012/banner-012").then(
-      (module) => module.Banner012,
-    ),
+    import("@/registry/components/banner/banner-012/banner-012").then((module) => module.Banner012),
   ),
   "banner-013": dynamic(() =>
-    import("@/registry/components/banner/banner-013/banner-013").then(
-      (module) => module.Banner013,
-    ),
+    import("@/registry/components/banner/banner-013/banner-013").then((module) => module.Banner013),
   ),
   "banner-014": dynamic(() =>
-    import("@/registry/components/banner/banner-014/banner-014").then(
-      (module) => module.Banner014,
-    ),
+    import("@/registry/components/banner/banner-014/banner-014").then((module) => module.Banner014),
   ),
   "banner-015": dynamic(() =>
-    import("@/registry/components/banner/banner-015/banner-015").then(
-      (module) => module.Banner015,
-    ),
+    import("@/registry/components/banner/banner-015/banner-015").then((module) => module.Banner015),
   ),
 } satisfies PreviewMap

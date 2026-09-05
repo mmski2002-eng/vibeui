@@ -23,6 +23,10 @@ const STYLES = `
 --vibeui-frame-008-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.005 265));
 --vibeui-frame-008-muted:color-mix(in oklab,var(--vibeui-frame-008-fg) 68%,transparent);
 --vibeui-frame-008-camera:light-dark(oklch(0.4 0.01 265),oklch(0.16 0.008 265));
+--vibeui-frame-008-app:light-dark(oklch(0.99 0.002 265),oklch(0.24 0.01 265));
+--vibeui-frame-008-panel:light-dark(oklch(0.96 0.004 265),oklch(0.3 0.01 265));
+--vibeui-frame-008-line:light-dark(oklch(0.91 0.005 265),oklch(0.38 0.011 265));
+--vibeui-frame-008-accent:light-dark(oklch(0.55 0.16 262),oklch(0.72 0.15 262));
 --vibeui-frame-008-radius:1.5rem;
 --vibeui-frame-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -67,11 +71,65 @@ width:4rem;height:0.25rem;border-radius:9999px;
 background:var(--vibeui-frame-008-muted);opacity:0.35;
 transform:translateX(-50%);
 }
-[data-vibeui-block="frame-008"] [data-part="stub"]{
-display:grid;place-items:center;gap:0.5rem;
-width:100%;height:100%;padding:1.25rem;text-align:center;
-font-size:0.8125rem;color:var(--vibeui-frame-008-muted);
+/* Пустой экран рисует условное приложение: боковая полоса, шапка и плитки.
+   Подпись stubText остаётся — она называет кадр, но больше не заменяет
+   собой содержимое. */
+[data-vibeui-block="frame-008"] [data-part="screen"] [data-part="stub"]{
+display:flex;width:100%;height:100%;padding:0;text-align:left;
+background:var(--vibeui-frame-008-app);
 }
+[data-vibeui-block="frame-008"] [data-part="rail"]{
+display:flex;flex-direction:column;align-items:center;gap:0.5rem;
+flex:none;width:2.25rem;padding:0.625rem 0;
+background:var(--vibeui-frame-008-panel);
+border-right:1px solid var(--vibeui-frame-008-line);
+}
+[data-vibeui-block="frame-008"] [data-part="rail"] i{
+display:block;width:1rem;height:1rem;border-radius:0.3125rem;
+background:color-mix(in oklab,var(--vibeui-frame-008-fg) 16%,transparent);
+}
+[data-vibeui-block="frame-008"] [data-part="rail"] i:first-child{background:var(--vibeui-frame-008-accent)}
+[data-vibeui-block="frame-008"] [data-part="main"]{
+display:flex;flex-direction:column;gap:0.5rem;flex:1 1 auto;min-width:0;padding:0.625rem 0.75rem;
+}
+[data-vibeui-block="frame-008"] [data-part="stub-title"]{
+margin:0;font-size:0.8125rem;font-weight:700;color:var(--vibeui-frame-008-fg);
+}
+[data-vibeui-block="frame-008"] [data-part="tiles"]{
+display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem;flex:none;
+}
+[data-vibeui-block="frame-008"] [data-part="tile"]{
+display:flex;flex-direction:column;gap:0.3125rem;
+padding:0.4375rem 0.5rem;border-radius:0.5rem;
+background:var(--vibeui-frame-008-panel);
+border:1px solid var(--vibeui-frame-008-line);
+}
+[data-vibeui-block="frame-008"] [data-part="tile"] span{
+display:block;height:0.5rem;width:60%;border-radius:9999px;
+background:var(--vibeui-frame-008-accent);
+}
+[data-vibeui-block="frame-008"] [data-part="tile"] i{
+display:block;height:0.3125rem;width:85%;border-radius:9999px;
+background:color-mix(in oklab,var(--vibeui-frame-008-fg) 20%,transparent);
+}
+[data-vibeui-block="frame-008"] [data-part="tile"]:nth-child(2){--vibeui-frame-008-accent:light-dark(oklch(0.6 0.15 160),oklch(0.74 0.14 160))}
+[data-vibeui-block="frame-008"] [data-part="tile"]:nth-child(3){--vibeui-frame-008-accent:light-dark(oklch(0.68 0.15 60),oklch(0.8 0.13 60))}
+[data-vibeui-block="frame-008"] [data-part="chart"]{
+display:flex;align-items:flex-end;gap:0.375rem;
+flex:1 1 auto;min-height:3rem;padding:0.5rem;border-radius:0.5rem;
+background:var(--vibeui-frame-008-panel);
+border:1px solid var(--vibeui-frame-008-line);
+}
+[data-vibeui-block="frame-008"] [data-part="chart"] i{
+display:block;flex:1 1 0;border-radius:0.1875rem 0.1875rem 0 0;
+background:color-mix(in oklab,var(--vibeui-frame-008-accent) 45%,transparent);
+}
+[data-vibeui-block="frame-008"] [data-part="chart"] i:nth-child(1){height:42%}
+[data-vibeui-block="frame-008"] [data-part="chart"] i:nth-child(2){height:66%}
+[data-vibeui-block="frame-008"] [data-part="chart"] i:nth-child(3){height:52%}
+[data-vibeui-block="frame-008"] [data-part="chart"] i:nth-child(4){height:88%}
+[data-vibeui-block="frame-008"] [data-part="chart"] i:nth-child(5){height:74%}
+[data-vibeui-block="frame-008"] [data-part="chart"] i:nth-child(6){height:100%;background:var(--vibeui-frame-008-accent)}
 [data-vibeui-block="frame-008"] figcaption{
 margin-top:0.625rem;font-size:0.75rem;line-height:1.4;
 color:var(--vibeui-frame-008-muted);text-align:center;
@@ -143,7 +201,35 @@ export function Frame008({
         <div data-part="body">
           <span data-part="camera" aria-hidden="true" />
           <div data-part="screen">
-            {children ?? <div data-part="stub">{stubText}</div>}
+            {children ?? (
+              <div data-part="stub">
+                <div data-part="rail" aria-hidden="true">
+                  <i />
+                  <i />
+                  <i />
+                  <i />
+                </div>
+                <div data-part="main">
+                  <p data-part="stub-title">{stubText}</p>
+                  <div data-part="tiles" aria-hidden="true">
+                    {[0, 1, 2].map((tile) => (
+                      <span data-part="tile" key={tile}>
+                        <span />
+                        <i />
+                      </span>
+                    ))}
+                  </div>
+                  <div data-part="chart" aria-hidden="true">
+                    <i />
+                    <i />
+                    <i />
+                    <i />
+                    <i />
+                    <i />
+                  </div>
+                </div>
+              </div>
+            )}
             <span data-part="home" aria-hidden="true" />
           </div>
         </div>

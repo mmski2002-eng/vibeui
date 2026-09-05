@@ -1495,6 +1495,226 @@
           "width": "full"
         }
       }
+    },
+    {
+      "name": "phoneinput-009",
+      "type": "registry:component",
+      "title": "Страна с поиском",
+      "description": "Телефон, где страна выбирается в списке с поиском: строка фильтрует по названию и коду, а выбранная страна задаёт маску номера.",
+      "categories": [
+        "phone-input"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "phoneinput-009/phoneinput-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/phoneinput-009.tsx"
+        }
+      ],
+      "docs": "Клиентский компонент: страна, строка поиска и голые цифры номера лежат в useState. Один файл, без зависимостей, палитра в локальных переменных --vibeui-phoneinput-009-*. Выбор страны — не нативный select, а свой listbox: кнопка с флагом и кодом открывает панель, в панели поле поиска и список ролью listbox с option. Поиск фильтрует по названию и по коду, стрелки вверх-вниз двигают активную строку по находкам, Enter выбирает, Escape закрывает и возвращает фокус на кнопку; активная строка объявлена через aria-activedescendant, а не переносом фокуса. Панель закрывается по уходу фокуса из блока: onBlur сверяет relatedTarget с содержимым блока. Флаг — эмодзи, поэтому картинок и иконочных библиотек нет. Маска живёт в описании страны: ввод нормализуется до цифр, поэтому вставленное из буфера «+7 (999) 123-45-67» превращается в тот же номер, что и набранное руками. Проп open разворачивает список в потоке — это режим витрины и скриншотов.",
+      "meta": {
+        "tags": [
+          "phone",
+          "country",
+          "search",
+          "listbox",
+          "client"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "open": true
+          }
+        },
+        "ai": {
+          "export": "Phoneinput009",
+          "usage": "<Phoneinput009\n  label=\"Телефон\"\n  countries={[{ flag: \"🇷🇺\", code: \"+7\", name: \"Россия\", mask: \"### ###-##-##\" }]}\n/>",
+          "summary": "Поле телефона с выбором страны через список с поиском: фильтр по названию и коду, стрелки и Enter на клавиатуре, маска номера от выбранной страны. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-phoneinput-009-* и не подменять её токенами вашей темы",
+            "свой listbox вместо нативного select: на списке из двух сотен стран нативный список листают колесом до Уругвая",
+            "поиск сразу по названию и по коду — человек помнит либо «Германия», либо «+49», и заранее неизвестно что",
+            "клавиатуру списка: стрелки двигают активную строку, Enter выбирает, Escape закрывает и возвращает фокус на кнопку",
+            "aria-activedescendant вместо переноса фокуса на строку: иначе поле поиска теряет ввод на каждой стрелке",
+            "нормализацию номера до цифр на входе: без неё вставка «+7 (999) 123-45-67» из буфера ломает маску",
+            "флаг эмодзи: картинка или иконочный пакет превращают самодостаточный файл в зависимость"
+          ],
+          "adapt": [
+            "имя поля через label и набор стран с масками через countries",
+            "подписи: searchPlaceholder у поиска, countryLabel у кнопки страны, emptyText для пустой выдачи",
+            "шаблон строки hint с подстановками {country}, {code} и {digits}",
+            "цвет фокуса и выбранной строки через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "сами маски: символ # — место под цифру, остальное подставляется как есть"
+          ],
+          "notes": [
+            "Проп open — режим витрины: список стоит в потоке под полем. Escape и уход фокуса в нём не закрывают список, на странице пользователя его не ставят.",
+            "Список стран здесь короткий и статичный: полный справочник кодов весит больше самого компонента и должен приходить снаружи.",
+            "Маска — подсказка формы, а не проверка: настоящую проверку номера делайте на сервере.",
+            "Каретка при вводе в середину номера прыгает в конец — цена простой реализации без работы с selectionStart.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Телефон",
+            "maxLength": 40
+          },
+          {
+            "prop": "searchPlaceholder",
+            "label": "Поиск",
+            "type": "text",
+            "default": "Поиск страны",
+            "maxLength": 40
+          },
+          {
+            "prop": "hint",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "{country} {code}: {digits} цифр в номере.",
+            "maxLength": 80
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "label",
+          "searchPlaceholder",
+          "hint",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Country Search",
+            "description": "A phone field where the country is picked from a searchable list: the query filters by name and dial code, and the chosen country sets the number mask.",
+            "docs": "A client component: the country, the search query and the raw digits live in useState. One file, no dependencies, the palette in the local --vibeui-phoneinput-009-* variables. The country picker is not a native select but a listbox of its own: a button with the flag and the dial code opens a panel with a search field and a list marked up as listbox and option. The search filters by name and by dial code, the up and down arrows move the active row across the matches, Enter picks, Escape closes and returns focus to the button; the active row is announced through aria-activedescendant instead of moving focus. The panel closes when focus leaves the block: onBlur compares relatedTarget against the block contents. The flag is an emoji, so there are no images and no icon packages. The mask lives in the country record: input is normalised to digits, so \"+7 (999) 123-45-67\" pasted from the clipboard becomes the same number as one typed by hand. The open prop unfolds the list in flow — that is the showcase and screenshot mode.",
+            "ai": {
+              "summary": "A phone field with a searchable country picker: filtering by name and dial code, arrows and Enter on the keyboard, and a number mask driven by the chosen country. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-phoneinput-009-* palette — do not swap it for your theme tokens",
+                "the custom listbox instead of a native select: on a list of two hundred countries the native one is scrolled by wheel all the way to Uruguay",
+                "search over both the name and the dial code — a person remembers either \"Germany\" or \"+49\", and you cannot know which",
+                "the list keyboard: arrows move the active row, Enter picks, Escape closes and returns focus to the button",
+                "aria-activedescendant instead of moving focus onto the row: otherwise the search field loses input on every arrow key",
+                "normalising the number to digits on input: without it pasting \"+7 (999) 123-45-67\" breaks the mask",
+                "the emoji flag: an image or an icon package turns a self-contained file into a dependency"
+              ],
+              "adapt": [
+                "the field name through label and the country set with masks through countries",
+                "the captions: searchPlaceholder on the search, countryLabel on the country button, emptyText for an empty result",
+                "the hint template with the {country}, {code} and {digits} placeholders",
+                "the focus and selected-row colour through accent",
+                "background — the component background; empty means no background, taking the page colour",
+                "the masks themselves: # is a digit slot, everything else is inserted as is"
+              ],
+              "notes": [
+                "The open prop is the showcase mode: the list sits in flow under the field. Escape and focus loss do not close it there, so do not ship it on a user-facing page.",
+                "The country list here is short and static: a full dial-code directory weighs more than the component and should come from outside.",
+                "A mask is a hint about shape, not a validation: verify the real number on the server.",
+                "The caret jumps to the end when typing mid-number — the cost of a simple implementation without selectionStart handling.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Phoneinput009\n  label=\"Phone\"\n  countries={[{ flag: \"🇩🇪\", code: \"+49\", name: \"Germany\", mask: \"#### #######\" }]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Phone"
+              },
+              "searchPlaceholder": {
+                "label": "Search",
+                "default": "Search country"
+              },
+              "hint": {
+                "label": "Hint",
+                "default": "{country} {code}: {digits} digits in the number."
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "open": true,
+                "label": "Phone",
+                "countryLabel": "Country",
+                "searchPlaceholder": "Search country",
+                "emptyText": "No country found",
+                "hint": "{country} {code}: {digits} digits in the number.",
+                "countries": [
+                  {
+                    "flag": "🇬🇧",
+                    "code": "+44",
+                    "name": "United Kingdom",
+                    "mask": "#### ######"
+                  },
+                  {
+                    "flag": "🇺🇸",
+                    "code": "+1",
+                    "name": "United States",
+                    "mask": "(###) ###-####"
+                  },
+                  {
+                    "flag": "🇩🇪",
+                    "code": "+49",
+                    "name": "Germany",
+                    "mask": "#### #######"
+                  },
+                  {
+                    "flag": "🇫🇷",
+                    "code": "+33",
+                    "name": "France",
+                    "mask": "# ## ## ## ##"
+                  },
+                  {
+                    "flag": "🇮🇹",
+                    "code": "+39",
+                    "name": "Italy",
+                    "mask": "### #######"
+                  },
+                  {
+                    "flag": "🇪🇸",
+                    "code": "+34",
+                    "name": "Spain",
+                    "mask": "### ### ###"
+                  },
+                  {
+                    "flag": "🇵🇱",
+                    "code": "+48",
+                    "name": "Poland",
+                    "mask": "### ### ###"
+                  },
+                  {
+                    "flag": "🇹🇷",
+                    "code": "+90",
+                    "name": "Türkiye",
+                    "mask": "### ### ## ##"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

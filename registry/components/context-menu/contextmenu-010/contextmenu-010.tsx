@@ -12,6 +12,11 @@ export type Contextmenu010Props = Omit<
   ComponentProps<"section">,
   "children"
 > & {
+  /**
+   * Показать меню развёрнутым в потоке области: витрина, скриншот, отладка.
+   * В этом режиме меню не следует за курсором и не закрывается по Escape.
+   */
+  open?: boolean
   text?: string
   emptyHint?: string
   /** Форматы меню: компонент несёт русские подписи, проект подставляет свои. */
@@ -123,6 +128,11 @@ transition:background-color .14s ease;
 [data-vibeui-block="contextmenu-010"] [data-part="item"][aria-disabled="true"]{color:var(--vibeui-contextmenu-010-muted);cursor:not-allowed}
 [data-vibeui-block="contextmenu-010"] [data-part="item"][aria-disabled="true"]:hover{background:none}
 [data-vibeui-block="contextmenu-010"] [data-part="glyph"]{flex:none;width:1.125rem;font-weight:800;text-align:center}
+/* Развёрнутый режим: меню стоит в потоке области под абзацем, а не слоем у
+   курсора, поэтому область растёт вниз и горизонтальной прокрутки нет. */
+[data-vibeui-block="contextmenu-010"] [data-part="menu"][data-open="true"]{
+position:static;width:min(12.5rem,100%);margin-block-start:0.5rem;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="contextmenu-010"] *{animation:none!important;transition:none!important}}
 `
 
@@ -168,6 +178,7 @@ const MENU_HEIGHT = 214
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Contextmenu010({
+  open = false,
   text = DEFAULT_TEXT,
   emptyHint = "Ничего не выделено",
   actions = DEFAULT_ACTIONS,
@@ -190,7 +201,7 @@ export function Contextmenu010({
   const [spot, setSpot] = useState<{ x: number; y: number } | null>(null)
   const [marks, setMarks] = useState<string[]>([])
 
-  const open = spot !== null
+  const pointed = spot !== null
 
   // Выделение известно только сейчас — читаем его до открытия, а не в рендере.
   const openAt = (clientX: number, clientY: number, trigger: HTMLElement) => {
@@ -218,7 +229,7 @@ export function Contextmenu010({
   }
 
   useEffect(() => {
-    if (!open) {
+    if (!pointed) {
       return
     }
 
@@ -243,7 +254,7 @@ export function Contextmenu010({
       window.removeEventListener("pointerdown", onPointerDown)
       window.removeEventListener("keydown", onKeyDown)
     }
-  }, [open])
+  }, [pointed])
 
   const run = (label: string) => {
     if (!picked) {
@@ -291,13 +302,16 @@ export function Contextmenu010({
           >
             {text}
           </p>
-          {open ? (
+          {pointed || open ? (
             <div
               ref={menu}
               data-part="menu"
+              data-open={pointed ? undefined : true}
               role="menu"
               aria-label={menuLabel}
-              style={{ left: `${spot.x}px`, top: `${spot.y}px` }}
+              style={
+                spot ? { left: `${spot.x}px`, top: `${spot.y}px` } : undefined
+              }
               onKeyDown={(event) => {
                 if (event.key !== "ArrowDown" && event.key !== "ArrowUp") {
                   return

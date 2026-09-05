@@ -6,6 +6,8 @@ export type Tooltip008Props = Omit<ComponentProps<"p">, "children"> & {
   term?: string
   definition?: string
   after?: string
+  /** Показать объяснение принудительно: онбординг, отладка, витрина. */
+  open?: boolean
   /** Пусто — подложки нет, абзац лежит прямо на фоне страницы. */
   background?: string
 }
@@ -68,6 +70,17 @@ background:inherit;transform:rotate(45deg);
 [data-vibeui-block="tooltip-008"] [data-part="term"]:focus-visible [data-part="tip"]{
 opacity:1;transform:translate(-50%,0);
 }
+/* Витринный режим: объяснение раскрыто без наведения — миниатюра каталога и
+   скриншот показывают, о чём компонент. Термин на время теряет position:relative,
+   и плашку начинает считать от самого абзаца: центрированная по слову посреди
+   строки, она на узкой карточке уехала бы за край. */
+[data-vibeui-block="tooltip-008"][data-open="true"]{position:relative}
+[data-vibeui-block="tooltip-008"][data-open="true"] [data-part="term"]{position:static}
+[data-vibeui-block="tooltip-008"][data-open="true"] [data-part="tip"]{
+opacity:1;left:50%;bottom:0.625rem;
+width:min(16rem,calc(100% - 2.75rem));
+transform:translateX(-50%);
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="tooltip-008"] *{animation:none!important;transition:none!important}}
 `
 
@@ -102,6 +115,7 @@ export function Tooltip008({
   term = "95-й перцентиль",
   definition = "Из всех замеров за месяц отбрасываются пять процентов самых высоких, и счёт выставляется по следующему значению. Короткие всплески не попадают в оплату.",
   after = ", поэтому ночной бэкап не влияет на счёт.",
+  open = false,
   background = "",
   className,
   style,
@@ -126,6 +140,7 @@ export function Tooltip008({
         {...props}
         data-slot="tooltip"
         data-vibeui-block="tooltip-008"
+        data-open={open || undefined}
         className={className}
         style={palette}
       >

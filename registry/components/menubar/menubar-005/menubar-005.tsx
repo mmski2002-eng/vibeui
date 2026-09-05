@@ -6,6 +6,11 @@ export type Menubar005Menu = {
 }
 
 export type Menubar005Props = {
+  /**
+   * Показать меню развёрнутым: в узком виде раскрыт бургер, в широком — первый
+   * раздел в потоке строки. Витрина, скриншот, отладка. Дальше как обычно.
+   */
+  open?: boolean
   menus?: Menubar005Menu[]
   burgerLabel?: string
   /** Имя строки меню для скринридера. */
@@ -77,6 +82,10 @@ min-width:12rem;padding:0.25rem;box-sizing:border-box;margin:0;list-style:none;
 background:var(--vibeui-menubar-005-panel);
 border:1px solid var(--vibeui-menubar-005-border);border-radius:0.625rem;
 box-shadow:0 16px 36px -18px var(--vibeui-menubar-005-shadow);
+}
+/* Развёрнутый режим: меню стоит в потоке под своей кнопкой, а не поверх соседей. */
+[data-vibeui-block="menubar-005"] [data-part="menu"][data-open="true"]{
+position:static;margin-block-start:0.375rem;
 }
 [data-vibeui-block="menubar-005"] [data-part="item"]{
 display:block;width:100%;min-height:1.875rem;padding:0.3125rem 0.5rem;box-sizing:border-box;
@@ -154,6 +163,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Один файл, ноль зависимостей, собственная палитра, клиентского JS нет.
  */
 export function Menubar005({
+  open = false,
   menus = DEFAULT_MENUS,
   burgerLabel = "Меню",
   menubarLabel = "Меню приложения",
@@ -188,12 +198,22 @@ export function Menubar005({
       >
         <div data-part="shell">
           <div data-part="wide" role="menubar" aria-label={menubarLabel}>
-            {menus.map((menu) => (
-              <details key={menu.label} data-part="slot" name={group}>
+            {menus.map((menu, index) => (
+              <details
+                key={menu.label}
+                data-part="slot"
+                name={group}
+                open={open && index === 0}
+              >
                 <summary data-part="trigger" role="menuitem">
                   {menu.label}
                 </summary>
-                <ul data-part="menu" role="menu" aria-label={menu.label}>
+                <ul
+                  data-part="menu"
+                  data-open={(open && index === 0) || undefined}
+                  role="menu"
+                  aria-label={menu.label}
+                >
                   {menu.items.map((item) => (
                     <li key={item} role="none">
                       <button type="button" data-part="item" role="menuitem">
@@ -205,7 +225,7 @@ export function Menubar005({
               </details>
             ))}
           </div>
-          <details data-part="narrow">
+          <details data-part="narrow" open={open}>
             <summary data-part="trigger">
               <span data-part="bars" aria-hidden="true">
                 <i />

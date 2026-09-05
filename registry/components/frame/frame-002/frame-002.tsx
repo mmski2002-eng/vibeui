@@ -50,10 +50,25 @@ background:var(--vibeui-frame-002-screen);
 position:absolute;inset:0;display:block;width:100%;height:100%;border:0;
 object-fit:cover;
 }
+/* Заглушка — не пустое поле, а постер ролика: градиент, кнопка и дорожка
+   времени. По миниатюре каталога сразу видно, что в рамку встаёт видео. */
 [data-vibeui-block="frame-002"] [data-part="stub"]{
 position:absolute;inset:0;
 display:grid;place-content:center;justify-items:center;gap:0.625rem;
 padding:1rem;text-align:center;color:var(--vibeui-frame-002-light);
+background:
+radial-gradient(90% 90% at 22% 12%,oklch(0.55 0.16 285),transparent 62%),
+radial-gradient(80% 80% at 82% 88%,oklch(0.6 0.15 25),transparent 60%),
+linear-gradient(145deg,oklch(0.32 0.07 275),var(--vibeui-frame-002-screen));
+}
+[data-vibeui-block="frame-002"] [data-part="track"]{
+position:absolute;left:0.75rem;right:0.75rem;bottom:0.75rem;
+height:0.1875rem;border-radius:9999px;
+background:color-mix(in oklab,var(--vibeui-frame-002-light) 28%,transparent);
+}
+[data-vibeui-block="frame-002"] [data-part="track"]::before{
+content:"";display:block;width:38%;height:100%;border-radius:9999px;
+background:var(--vibeui-frame-002-light);
 }
 [data-vibeui-block="frame-002"] [data-part="play"]{
 display:grid;place-items:center;
@@ -147,6 +162,7 @@ export function Frame002({
             <div data-part="stub">
               <span data-part="play" aria-hidden="true" />
               <span data-part="stub-title">{title}</span>
+              <span data-part="track" aria-hidden="true" />
             </div>
           )}
           <span data-part="badge">{ratio}</span>

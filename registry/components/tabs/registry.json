@@ -1528,6 +1528,9 @@
       "meta": {
         "tags": ["tabs", "no-js", "radio", "has-selector"],
         "preview": {
+          "props": {
+            "hint": "Без JS: выбор держат радиокнопки в <form>, полосу двигает правило CSS :has()."
+          },
           "width": "full"
         },
         "ai": {
@@ -1618,6 +1621,7 @@
             "title": "Radio Tabs",
             "preview": {
               "props": {
+                "hint": "No JS: radio buttons inside a <form> hold the choice, a CSS :has() rule moves the underline.",
                 "tabs": [
                   {
                     "label": "Delivery",
@@ -1794,6 +1798,9 @@
           }
         },
         "preview": {
+          "props": {
+            "showAddress": true
+          },
           "width": "full"
         },
         "cardControls": ["groupLabel", "hint", "accent", "background"]

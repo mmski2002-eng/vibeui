@@ -1,22 +1,19 @@
 // Сгенерировано `npm run indexes` из registry/**/registry.json.
 // Не править руками: правки затрёт следующая сборка.
 
-import type { ComponentType } from "react"
-
-import type { PreviewProps } from "@/registry/preview-types"
-
-import { Faq001 } from "@/registry/blocks/faq/faq-001/faq-001"
-import { Faq002 } from "@/registry/blocks/faq/faq-002/faq-002"
-import { Faq003 } from "@/registry/blocks/faq/faq-003/faq-003"
-import { Faq004 } from "@/registry/blocks/faq/faq-004/faq-004"
-import { Faq005 } from "@/registry/blocks/faq/faq-005/faq-005"
-import { Faq006 } from "@/registry/blocks/faq/faq-006/faq-006"
+import type { PreviewLoaderMap } from "@/registry/preview-types"
 
 export const PREVIEWS = {
-  "faq-001": Faq001,
-  "faq-002": Faq002,
-  "faq-003": Faq003,
-  "faq-004": Faq004,
-  "faq-005": Faq005,
-  "faq-006": Faq006,
-} satisfies Record<string, ComponentType<PreviewProps>>
+  "faq-001": () =>
+    import("@/registry/blocks/faq/faq-001/faq-001").then((module) => module.Faq001),
+  "faq-002": () =>
+    import("@/registry/blocks/faq/faq-002/faq-002").then((module) => module.Faq002),
+  "faq-003": () =>
+    import("@/registry/blocks/faq/faq-003/faq-003").then((module) => module.Faq003),
+  "faq-004": () =>
+    import("@/registry/blocks/faq/faq-004/faq-004").then((module) => module.Faq004),
+  "faq-005": () =>
+    import("@/registry/blocks/faq/faq-005/faq-005").then((module) => module.Faq005),
+  "faq-006": () =>
+    import("@/registry/blocks/faq/faq-006/faq-006").then((module) => module.Faq006),
+} satisfies PreviewLoaderMap

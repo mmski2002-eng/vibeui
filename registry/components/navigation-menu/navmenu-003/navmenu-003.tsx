@@ -7,6 +7,11 @@ export type Navmenu003Group = {
 }
 
 export type Navmenu003Props = {
+  /**
+   * Показать первый раздел развёрнутым в потоке полосы: витрина, скриншот.
+   * В этом режиме столбик не висит слоем, а раздвигает полосу вниз.
+   */
+  open?: boolean
   groups?: Navmenu003Group[]
   /** Подпись навигации для скринридера. */
   label?: string
@@ -87,6 +92,12 @@ font-weight:700;
 text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:0.3125rem;
 text-decoration-color:var(--vibeui-navmenu-003-accent);
 }
+/* Развёрнутый режим: столбик стоит в потоке под кнопкой, поэтому полоса
+   растёт вниз, а не накрывает соседей слоем. */
+[data-vibeui-block="navmenu-003"]:has([data-part="slot"][data-open="true"]){align-items:flex-start}
+[data-vibeui-block="navmenu-003"] [data-part="slot"][data-open="true"] [data-part="menu"]{
+position:static;margin-top:0.375rem;max-width:100%;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="navmenu-003"] *{animation:none!important;transition:none!important}}
 `
 
@@ -131,6 +142,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Navmenu003({
+  open = false,
   groups = DEFAULT_GROUPS,
   label = "Основная навигация",
   current = "Цены",
@@ -139,6 +151,7 @@ export function Navmenu003({
   className,
   style,
 }: Navmenu003Props) {
+  const shown = open ? groups.find((group) => group.items)?.label : undefined
   const palette = {
     ...(accent ? { "--vibeui-navmenu-003-accent": accent } : null),
     ...(background
@@ -167,6 +180,8 @@ export function Navmenu003({
             <details
               key={group.label}
               data-part="slot"
+              data-open={group.label === shown || undefined}
+              open={group.label === shown || undefined}
               name="vibeui-navmenu-003"
             >
               <summary data-part="trigger">

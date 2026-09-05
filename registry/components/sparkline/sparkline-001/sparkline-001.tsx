@@ -120,7 +120,9 @@ export function Sparkline001({
   style,
 }: Sparkline001Props) {
   const palette = {
-    ...(accent ? { "--vibeui-sparkline-001-accent": accent } : null),
+    // Красит рост, а не линию целиком: иначе падение переставало быть
+    // красным, и график врал о направлении.
+    ...(accent ? { "--vibeui-sparkline-001-up": accent } : null),
     ...(background
       ? {
           "--vibeui-sparkline-001-surface": background,

@@ -7,6 +7,8 @@ export type Tooltip009Props = Omit<ComponentProps<"div">, "children"> & {
   labels?: string[]
   /** Пояснение под строкой кнопок: {delay} подставляется числом. */
   note?: string
+  /** Показать подсказку средней кнопки принудительно: онбординг, отладка, витрина. */
+  open?: boolean
   /** Пусто — подложки нет, карточка лежит прямо на фоне страницы. */
   background?: string
 }
@@ -70,6 +72,13 @@ background:inherit;transform:rotate(45deg);
 opacity:1;transform:translate(-50%,0);
 transition-delay:var(--vibeui-tooltip-009-delay);
 }
+/* Витринный режим: раскрыта ровно одна подсказка — три сразу перекрыли бы
+   друг друга. Средняя кнопка выбрана потому, что её плашка помещается внутрь
+   карточки, у крайних она вылезла бы за край. Задержки здесь нет: показ
+   не по наведению. */
+[data-vibeui-block="tooltip-009"][data-open="true"] [data-part="item"]:nth-of-type(2) [data-part="tip"]{
+opacity:1;transform:translate(-50%,0);transition-delay:0s;
+}
 [data-vibeui-block="tooltip-009"] [data-part="note"]{
 margin:0;font-size:0.75rem;line-height:1.5;color:var(--vibeui-tooltip-009-muted);
 }
@@ -109,6 +118,7 @@ export function Tooltip009({
   tip = "Действие над выбранной строкой",
   delay = 0.5,
   labels = DEFAULT_LABELS,
+  open = false,
   note = "Задержка появления — {delay} с. Проведите курсором по строке: подсказки не мигают, потому что скрытие происходит без задержки.",
   background = "",
   className,
@@ -136,6 +146,7 @@ export function Tooltip009({
         {...props}
         data-slot="tooltip"
         data-vibeui-block="tooltip-009"
+        data-open={open || undefined}
         className={className}
         style={palette}
       >

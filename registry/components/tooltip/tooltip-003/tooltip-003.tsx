@@ -7,6 +7,8 @@ export type Tooltip003Props = Omit<ComponentProps<"span">, "children"> & {
   children?: ReactNode
   /** Подпись кнопки-заглушки превью. */
   triggerLabel?: string
+  /** Показать подсказку принудительно: онбординг, отладка, витрина. */
+  open?: boolean
   /** Цвет самой подсказки. Пусто — собственный тёмный тон. */
   background?: string
 }
@@ -64,6 +66,9 @@ background:inherit;transform:rotate(45deg);
 }
 [data-vibeui-block="tooltip-003"]:hover [data-part="tip"],
 [data-vibeui-block="tooltip-003"]:focus-within [data-part="tip"]{opacity:1;transform:translate(-50%,0)}
+/* Витринный режим: подсказка раскрыта без наведения — миниатюра каталога и
+   скриншот показывают, о чём компонент. Плашка абсолютная, кнопка не съезжает. */
+[data-vibeui-block="tooltip-003"][data-open="true"] [data-part="tip"]{opacity:1;transform:translate(-50%,0)}
 [data-vibeui-block="tooltip-003"] [data-part="keys"]{display:inline-flex;align-items:center;gap:0.1875rem;flex:none}
 [data-vibeui-block="tooltip-003"] kbd{
 display:inline-flex;align-items:center;justify-content:center;
@@ -108,6 +113,7 @@ export function Tooltip003({
   keys = DEFAULT_KEYS,
   children,
   triggerLabel = "Поиск",
+  open = false,
   background = "",
   className,
   style,
@@ -128,6 +134,7 @@ export function Tooltip003({
         {...props}
         data-slot="tooltip"
         data-vibeui-block="tooltip-003"
+        data-open={open || undefined}
         className={className}
         style={palette}
       >

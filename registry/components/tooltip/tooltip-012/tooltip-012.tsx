@@ -5,6 +5,8 @@ export type Tooltip012Props = Omit<ComponentProps<"span">, "children"> & {
   heading?: string
   /** Вторая строка: развёрнутое пояснение в одно предложение. */
   detail?: string
+  /** Показать подсказку принудительно: онбординг, отладка, витрина. */
+  open?: boolean
   /** Цвет самой подсказки. Пусто — собственный тёмный тон. */
   background?: string
 }
@@ -64,6 +66,11 @@ background:inherit;transform:rotate(45deg);
 [data-vibeui-block="tooltip-012"]:focus-within [data-part="tip"]{
 opacity:1;transform:translate(-50%,0);
 }
+/* Витринный режим: подсказка раскрыта без наведения — иначе на миниатюре
+   каталога виден только круглый значок. Плашка абсолютная, значок не съезжает. */
+[data-vibeui-block="tooltip-012"][data-open="true"] [data-part="tip"]{
+opacity:1;transform:translate(-50%,0);
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="tooltip-012"] *{animation:none!important;transition:none!important}}
 `
 
@@ -96,6 +103,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 export function Tooltip012({
   heading = "Пробный период",
   detail = "14 дней с полным доступом. Карта не требуется, отменить можно в любой момент.",
+  open = false,
   background = "",
   className,
   style,
@@ -115,6 +123,7 @@ export function Tooltip012({
         {...props}
         data-slot="tooltip"
         data-vibeui-block="tooltip-012"
+        data-open={open || undefined}
         className={className}
         style={palette}
       >

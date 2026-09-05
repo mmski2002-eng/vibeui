@@ -1,68 +1,65 @@
 // Сгенерировано `npm run indexes` из registry/**/registry.json.
 // Не править руками: правки затрёт следующая сборка.
 
-import type { ComponentType } from "react"
-
-import type { PreviewProps } from "@/registry/preview-types"
-
-import { Chart001 } from "@/registry/components/chart/chart-001/chart-001"
-import { Chart002 } from "@/registry/components/chart/chart-002/chart-002"
-import { Chart003 } from "@/registry/components/chart/chart-003/chart-003"
-import { Chart004 } from "@/registry/components/chart/chart-004/chart-004"
-import { Chart005 } from "@/registry/components/chart/chart-005/chart-005"
-import { Chart006 } from "@/registry/components/chart/chart-006/chart-006"
-import { Chart007 } from "@/registry/components/chart/chart-007/chart-007"
-import { Chart008 } from "@/registry/components/chart/chart-008/chart-008"
-import { Chart009 } from "@/registry/components/chart/chart-009/chart-009"
-import { Chart010 } from "@/registry/components/chart/chart-010/chart-010"
-import { Chart011 } from "@/registry/components/chart/chart-011/chart-011"
-import { Chart012 } from "@/registry/components/chart/chart-012/chart-012"
-import { Chart013 } from "@/registry/components/chart/chart-013/chart-013"
-import { Chart014 } from "@/registry/components/chart/chart-014/chart-014"
-import { Chart015 } from "@/registry/components/chart/chart-015/chart-015"
-import { Chart016 } from "@/registry/components/chart/chart-016/chart-016"
-import { Chart017 } from "@/registry/components/chart/chart-017/chart-017"
-import { Chart018 } from "@/registry/components/chart/chart-018/chart-018"
-import { Chart019 } from "@/registry/components/chart/chart-019/chart-019"
-import { Chart020 } from "@/registry/components/chart/chart-020/chart-020"
-import { Chart021 } from "@/registry/components/chart/chart-021/chart-021"
-import { Chart022 } from "@/registry/components/chart/chart-022/chart-022"
-import { Chart023 } from "@/registry/components/chart/chart-023/chart-023"
-import { Chart024 } from "@/registry/components/chart/chart-024/chart-024"
-import { Chart025 } from "@/registry/components/chart/chart-025/chart-025"
-import { Chart026 } from "@/registry/components/chart/chart-026/chart-026"
-import { Chart027 } from "@/registry/components/chart/chart-027/chart-027"
-import { Chart028 } from "@/registry/components/chart/chart-028/chart-028"
-import { Chart029 } from "@/registry/components/chart/chart-029/chart-029"
+import type { PreviewLoaderMap } from "@/registry/preview-types"
 
 export const PREVIEWS = {
-  "chart-001": Chart001,
-  "chart-002": Chart002,
-  "chart-003": Chart003,
-  "chart-004": Chart004,
-  "chart-005": Chart005,
-  "chart-006": Chart006,
-  "chart-007": Chart007,
-  "chart-008": Chart008,
-  "chart-009": Chart009,
-  "chart-010": Chart010,
-  "chart-011": Chart011,
-  "chart-012": Chart012,
-  "chart-013": Chart013,
-  "chart-014": Chart014,
-  "chart-015": Chart015,
-  "chart-016": Chart016,
-  "chart-017": Chart017,
-  "chart-018": Chart018,
-  "chart-019": Chart019,
-  "chart-020": Chart020,
-  "chart-021": Chart021,
-  "chart-022": Chart022,
-  "chart-023": Chart023,
-  "chart-024": Chart024,
-  "chart-025": Chart025,
-  "chart-026": Chart026,
-  "chart-027": Chart027,
-  "chart-028": Chart028,
-  "chart-029": Chart029,
-} satisfies Record<string, ComponentType<PreviewProps>>
+  "chart-001": () =>
+    import("@/registry/components/chart/chart-001/chart-001").then((module) => module.Chart001),
+  "chart-002": () =>
+    import("@/registry/components/chart/chart-002/chart-002").then((module) => module.Chart002),
+  "chart-003": () =>
+    import("@/registry/components/chart/chart-003/chart-003").then((module) => module.Chart003),
+  "chart-004": () =>
+    import("@/registry/components/chart/chart-004/chart-004").then((module) => module.Chart004),
+  "chart-005": () =>
+    import("@/registry/components/chart/chart-005/chart-005").then((module) => module.Chart005),
+  "chart-006": () =>
+    import("@/registry/components/chart/chart-006/chart-006").then((module) => module.Chart006),
+  "chart-007": () =>
+    import("@/registry/components/chart/chart-007/chart-007").then((module) => module.Chart007),
+  "chart-008": () =>
+    import("@/registry/components/chart/chart-008/chart-008").then((module) => module.Chart008),
+  "chart-009": () =>
+    import("@/registry/components/chart/chart-009/chart-009").then((module) => module.Chart009),
+  "chart-010": () =>
+    import("@/registry/components/chart/chart-010/chart-010").then((module) => module.Chart010),
+  "chart-011": () =>
+    import("@/registry/components/chart/chart-011/chart-011").then((module) => module.Chart011),
+  "chart-012": () =>
+    import("@/registry/components/chart/chart-012/chart-012").then((module) => module.Chart012),
+  "chart-013": () =>
+    import("@/registry/components/chart/chart-013/chart-013").then((module) => module.Chart013),
+  "chart-014": () =>
+    import("@/registry/components/chart/chart-014/chart-014").then((module) => module.Chart014),
+  "chart-015": () =>
+    import("@/registry/components/chart/chart-015/chart-015").then((module) => module.Chart015),
+  "chart-016": () =>
+    import("@/registry/components/chart/chart-016/chart-016").then((module) => module.Chart016),
+  "chart-017": () =>
+    import("@/registry/components/chart/chart-017/chart-017").then((module) => module.Chart017),
+  "chart-018": () =>
+    import("@/registry/components/chart/chart-018/chart-018").then((module) => module.Chart018),
+  "chart-019": () =>
+    import("@/registry/components/chart/chart-019/chart-019").then((module) => module.Chart019),
+  "chart-020": () =>
+    import("@/registry/components/chart/chart-020/chart-020").then((module) => module.Chart020),
+  "chart-021": () =>
+    import("@/registry/components/chart/chart-021/chart-021").then((module) => module.Chart021),
+  "chart-022": () =>
+    import("@/registry/components/chart/chart-022/chart-022").then((module) => module.Chart022),
+  "chart-023": () =>
+    import("@/registry/components/chart/chart-023/chart-023").then((module) => module.Chart023),
+  "chart-024": () =>
+    import("@/registry/components/chart/chart-024/chart-024").then((module) => module.Chart024),
+  "chart-025": () =>
+    import("@/registry/components/chart/chart-025/chart-025").then((module) => module.Chart025),
+  "chart-026": () =>
+    import("@/registry/components/chart/chart-026/chart-026").then((module) => module.Chart026),
+  "chart-027": () =>
+    import("@/registry/components/chart/chart-027/chart-027").then((module) => module.Chart027),
+  "chart-028": () =>
+    import("@/registry/components/chart/chart-028/chart-028").then((module) => module.Chart028),
+  "chart-029": () =>
+    import("@/registry/components/chart/chart-029/chart-029").then((module) => module.Chart029),
+} satisfies PreviewLoaderMap

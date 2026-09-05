@@ -7,6 +7,8 @@ export type Kanban001Card = {
   id: string
   title: string
   tag?: string
+  /** Оттенок метки и полосы карточки в градусах oklch: 0 — красный, 150 — зелёный. */
+  hue?: number
   column: string
 }
 
@@ -25,9 +27,12 @@ export type Kanban001Props = Omit<
 }
 
 // Идея компонента: доска задач по колонкам. Перенос — нативный drag and drop,
-// без библиотеки. Второй путь обязателен: у карточки есть список выбора
-// колонки, потому что перетаскивание недоступно с клавиатуры и тяжело даётся
-// на телефоне. Счётчик в шапке колонки считается из карточек, а не хранится
+// без библиотеки. Второй путь обязателен: у карточки есть ряд чипов-колонок,
+// потому что перетаскивание недоступно с клавиатуры и тяжело даётся на
+// телефоне. Чипы — обычные кнопки с aria-pressed, а не список: список внутри
+// карточки выглядит формой и уводит внимание с самой задачи. Метка карточки
+// красится оттенком из данных, поэтому доска читается по цвету, а не только
+// по тексту. Счётчик в шапке колонки считается из карточек, а не хранится
 // отдельно, — иначе после переноса цифра начинает врать.
 //
 // Тема берётся из color-scheme окружения через light-dark(): доска темнеет
@@ -40,6 +45,7 @@ const STYLES = `
 --vibeui-kanban-001-muted:color-mix(in oklab,var(--vibeui-kanban-001-fg) 68%,transparent);
 --vibeui-kanban-001-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-kanban-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.15 262));
+--vibeui-kanban-001-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.03 262));
 --vibeui-kanban-001-shadow:light-dark(oklch(0.2 0.02 265 / 6%),oklch(0 0 0 / 32%));
 --vibeui-kanban-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -82,30 +88,75 @@ box-shadow:0 1px 2px var(--vibeui-kanban-001-shadow);
 font-size:0.75rem;line-height:1.35;
 }
 [data-vibeui-block="kanban-001"] [data-part="card"][data-dragging="true"]{opacity:.45}
+/* Цвет метки приходит из данных: доска должна читаться по цвету, а не только
+   по тексту, и оттенок задаётся одним числом, а не новой переменной темы. */
+[data-vibeui-block="kanban-001"] [data-part="card"]{
+--vibeui-kanban-001-mark:light-dark(oklch(0.5 0.16 var(--vibeui-kanban-001-hue,262)),oklch(0.78 0.14 var(--vibeui-kanban-001-hue,262)));
+border-left:3px solid var(--vibeui-kanban-001-mark);
+}
 [data-vibeui-block="kanban-001"] [data-part="tag"]{
 align-self:flex-start;padding:0 0.375rem;border-radius:0.375rem;
-background:color-mix(in oklab,var(--vibeui-kanban-001-accent) 14%,transparent);
-color:var(--vibeui-kanban-001-accent);
+background:color-mix(in oklab,var(--vibeui-kanban-001-mark) 16%,transparent);
+color:var(--vibeui-kanban-001-mark);
 font-size:0.625rem;font-weight:650;
 }
-/* Второй путь переноса: drag недоступен с клавиатуры и труден на телефоне. */
-[data-vibeui-block="kanban-001"] select{
-width:100%;height:1.625rem;padding:0 0.25rem;
-border:1px solid var(--vibeui-kanban-001-border);border-radius:0.375rem;
-background:var(--vibeui-kanban-001-card);color:var(--vibeui-kanban-001-muted);
-font:inherit;font-size:0.625rem;
+/* Второй путь переноса: drag недоступен с клавиатуры и труден на телефоне.
+   Чипы — кнопки с aria-pressed: нажатие переносит карточку, текущая колонка
+   залита акцентом. Список выбора превращал бы карточку в форму. */
+[data-vibeui-block="kanban-001"] [data-part="move"]{
+display:flex;flex-wrap:wrap;gap:0.25rem;
 }
-[data-vibeui-block="kanban-001"] select:focus-visible{outline:2px solid var(--vibeui-kanban-001-accent);outline-offset:1px}
+[data-vibeui-block="kanban-001"] [data-part="chip"]{
+appearance:none;cursor:pointer;
+padding:0.0625rem 0.4375rem;border-radius:9999px;
+border:1px solid var(--vibeui-kanban-001-border);
+background:none;color:var(--vibeui-kanban-001-muted);
+font:inherit;font-size:0.625rem;font-weight:600;line-height:1.5;
+transition:background-color .15s ease,color .15s ease,border-color .15s ease;
+}
+[data-vibeui-block="kanban-001"] [data-part="chip"]:hover{
+border-color:var(--vibeui-kanban-001-accent);color:var(--vibeui-kanban-001-fg);
+}
+[data-vibeui-block="kanban-001"] [data-part="chip"][aria-pressed="true"]{
+background:var(--vibeui-kanban-001-accent);
+border-color:var(--vibeui-kanban-001-accent);
+color:var(--vibeui-kanban-001-on-accent);cursor:default;
+}
+[data-vibeui-block="kanban-001"] [data-part="chip"]:focus-visible{outline:2px solid var(--vibeui-kanban-001-accent);outline-offset:1px}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="kanban-001"] *{animation:none!important;transition:none!important}}
 `
 
 const DEFAULT_COLUMNS = ["Очередь", "В работе", "Готово"]
 
 const DEFAULT_CARDS: Kanban001Card[] = [
-  { id: "1", title: "Вторая волна таблиц", tag: "каталог", column: "Очередь" },
-  { id: "2", title: "Блоки витрины товара", tag: "каталог", column: "Очередь" },
-  { id: "3", title: "Панель фильтров", tag: "блоки", column: "В работе" },
-  { id: "4", title: "Недельное расписание", tag: "блоки", column: "Готово" },
+  {
+    id: "1",
+    title: "Вторая волна таблиц",
+    tag: "каталог",
+    hue: 262,
+    column: "Очередь",
+  },
+  {
+    id: "2",
+    title: "Блоки витрины товара",
+    tag: "срочно",
+    hue: 25,
+    column: "Очередь",
+  },
+  {
+    id: "3",
+    title: "Панель фильтров",
+    tag: "блоки",
+    hue: 60,
+    column: "В работе",
+  },
+  {
+    id: "4",
+    title: "Недельное расписание",
+    tag: "готово",
+    hue: 150,
+    column: "Готово",
+  },
 ]
 
 const DEFAULT_PICKER_LABEL = "Колонка задачи «{title}»"
@@ -215,6 +266,13 @@ export function Kanban001({
                       data-part="card"
                       data-dragging={card.id === dragged}
                       draggable
+                      style={
+                        card.hue === undefined
+                          ? undefined
+                          : ({
+                              "--vibeui-kanban-001-hue": card.hue,
+                            } as CSSProperties)
+                      }
                       onDragStart={() => setDragged(card.id)}
                       onDragEnd={() => {
                         setDragged(null)
@@ -225,20 +283,26 @@ export function Kanban001({
                         <span data-part="tag">{card.tag}</span>
                       ) : null}
                       {card.title}
-                      <select
-                        value={card.column}
+                      <div
+                        data-part="move"
+                        role="group"
                         aria-label={columnPickerLabel.replace(
                           "{title}",
                           card.title,
                         )}
-                        onChange={(event) => put(card.id, event.target.value)}
                       >
                         {columns.map((option) => (
-                          <option key={option} value={option}>
+                          <button
+                            key={option}
+                            type="button"
+                            data-part="chip"
+                            aria-pressed={option === card.column}
+                            onClick={() => put(card.id, option)}
+                          >
                             {option}
-                          </option>
+                          </button>
                         ))}
-                      </select>
+                      </div>
                     </article>
                   </li>
                 ))}

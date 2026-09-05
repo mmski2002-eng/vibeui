@@ -25,6 +25,10 @@ export type Sortable005Props = Omit<
   tileLabel?: string
   /** Реплики живой области: {item}, {position}, {total}, {spot}. */
   announcements?: Record<Sortable005Announcement, string>
+  /** Индекс приподнятой плитки: показать перенос на статичной картинке. */
+  defaultDragged?: number
+  /** Индекс плитки, на место которой встанет перенесённая. */
+  defaultOver?: number
   /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
   background?: string
   accent?: string
@@ -81,7 +85,13 @@ outline:2px solid var(--vibeui-sortable-005-accent);outline-offset:2px;
 border-color:var(--vibeui-sortable-005-accent);
 box-shadow:0 6px 14px var(--vibeui-sortable-005-shadow);
 }
-[data-vibeui-block="sortable-005"] [data-part="tile"][data-dragging="true"]{opacity:.45}
+/* Плитка «в руке» приподнята тенью: одной полупрозрачности мало — на
+   миниатюре она читается как выключенная, а не как переносимая. */
+[data-vibeui-block="sortable-005"] [data-part="tile"][data-dragging="true"]{
+opacity:.6;border-color:var(--vibeui-sortable-005-accent);
+box-shadow:0 8px 18px var(--vibeui-sortable-005-shadow);
+transform:translateY(-2px);
+}
 [data-vibeui-block="sortable-005"] [data-part="tile"][data-over="true"]{box-shadow:inset 0 0 0 2px var(--vibeui-sortable-005-accent)}
 [data-vibeui-block="sortable-005"] [data-part="order"]{
 color:var(--vibeui-sortable-005-muted);font-size:0.5625rem;font-weight:650;font-variant-numeric:tabular-nums;
@@ -144,6 +154,8 @@ export function Sortable005({
   spotLabel = "ряд {row}, колонка {column}",
   tileLabel = "{item}, позиция {position} из {total}, {spot}. Стрелки переставляют плитку.",
   announcements = DEFAULT_ANNOUNCEMENTS,
+  defaultDragged,
+  defaultOver,
   background = "",
   accent,
   className,
@@ -151,8 +163,12 @@ export function Sortable005({
   ...props
 }: Sortable005Props) {
   const [order, setOrder] = useState(tiles)
-  const [dragged, setDragged] = useState<string | null>(null)
-  const [over, setOver] = useState<string | null>(null)
+  const [dragged, setDragged] = useState<string | null>(
+    tiles[defaultDragged ?? -1] ?? null,
+  )
+  const [over, setOver] = useState<string | null>(
+    tiles[defaultOver ?? -1] ?? null,
+  )
   const [announcement, setAnnouncement] = useState("")
 
   const spot = (index: number) =>
@@ -177,6 +193,8 @@ export function Sortable005({
     const next = [...order]
     const [tile] = next.splice(from, 1)
     next.splice(to, 0, tile)
+    setDragged(null)
+    setOver(null)
     setOrder(next)
     onChange?.(next)
     setAnnouncement(say("moved", tile, to + 1, next.length, to))

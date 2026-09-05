@@ -52,6 +52,7 @@
             "ariaTemplate — подпись для скринридера: {label}, {value}, {delta} и {unit} подставляются"
           ],
           "notes": [
+            "accent красит только рост. Падение остаётся красным, ровный тренд — приглушённым: цвет здесь несёт смысл, и бренд-переменная не должна его стирать.",
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "У кривой нет осей и подписей: это намеренно. Спарклайн показывает форму, а не значения точек.",
             "Не используйте его как единственный график на дашборде — за формой не видно масштаба.",
@@ -129,6 +130,7 @@
                 "ariaTemplate — the screen-reader caption: {label}, {value}, {delta} and {unit} are substituted"
               ],
               "notes": [
+                "accent recolours growth only. A fall stays red and a flat trend stays muted: colour carries meaning here, and a brand variable must not erase it.",
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The curve has no axes or labels, deliberately. A sparkline shows shape, not point values.",
                 "Do not make it the only chart on a dashboard — shape hides scale.",

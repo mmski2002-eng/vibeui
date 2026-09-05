@@ -16,6 +16,10 @@ export type Otp007Props = Omit<
   /** Подпись кнопки возврата к вводу. */
   retryText?: string
   onSubmit?: (code: string) => void
+  /** Начальный код в клетках: витрине нужны заполненные клетки, а не пустые. */
+  defaultCode?: string
+  /** Начальное состояние: витрина показывает результат автоотправки сразу. */
+  defaultState?: "idle" | "sending" | "done"
   /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
   background?: string
   accent?: string
@@ -75,7 +79,9 @@ transition:border-color .16s ease,opacity .16s ease;
 outline:2px solid var(--vibeui-otp-007-accent);outline-offset:1px;border-color:transparent;
 }
 [data-vibeui-block="otp-007"] input:disabled{opacity:.6;cursor:default}
-[data-vibeui-block="otp-007"] [data-state="done"] input{
+/* data-state лежит на самом блоке, поэтому селектор без пробела: с пробелом
+   правило искало бы потомка с этим атрибутом и молча не срабатывало. */
+[data-vibeui-block="otp-007"][data-state="done"] input{
 border-color:var(--vibeui-otp-007-ok);
 background:color-mix(in oklab,var(--vibeui-otp-007-ok) 8%,var(--vibeui-otp-007-surface));
 }
@@ -101,7 +107,7 @@ flex-wrap:wrap;min-height:2rem;
 flex:1 1 9rem;
 font-size:0.875rem;line-height:1.4;color:var(--vibeui-otp-007-muted);
 }
-[data-vibeui-block="otp-007"] [data-state="done"] [data-part="status"]{
+[data-vibeui-block="otp-007"][data-state="done"] [data-part="status"]{
 color:var(--vibeui-otp-007-ok);font-weight:600;
 }
 [data-vibeui-block="otp-007"] [data-part="again"]{
@@ -156,6 +162,8 @@ export function Otp007({
   statusText = STATUS_LABEL,
   retryText = "Ввести заново",
   onSubmit,
+  defaultCode = "",
+  defaultState = "idle",
   background = "",
   accent,
   className,
@@ -164,8 +172,10 @@ export function Otp007({
 }: Otp007Props) {
   const id = useId()
   const size = Math.max(4, Math.min(8, length))
-  const [code, setCode] = useState<string[]>(Array(size).fill(""))
-  const [state, setState] = useState<"idle" | "sending" | "done">("idle")
+  const [code, setCode] = useState<string[]>(() =>
+    Array.from({ length: size }, (_, index) => defaultCode[index] ?? ""),
+  )
+  const [state, setState] = useState<"idle" | "sending" | "done">(defaultState)
   const boxes = useRef<(HTMLInputElement | null)[]>([])
 
   const palette = {

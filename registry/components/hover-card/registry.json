@@ -156,7 +156,8 @@
                     "label": "on the team",
                     "value": "3 years"
                   }
-                ]
+                ],
+                "open": true
               }
             },
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-hovercard-001-* variables. Client-side only for the sake of Escape: the handler removes focus from the trigger and the card, held open by :focus-within, closes — the reveal itself stays in CSS. The only hook is useId, used for the aria-describedby link. The reveal runs on :hover and :focus-within, so the keyboard sees the card. There are no interactive elements inside: the card is declared role=\"tooltip\"."
@@ -170,7 +171,10 @@
           "background"
         ],
         "preview": {
-          "width": "auto"
+          "width": "auto",
+          "props": {
+            "open": true
+          }
         }
       }
     },
@@ -200,7 +204,10 @@
           "article"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "open": true
+          }
         },
         "ai": {
           "export": "Hovercard002",
@@ -318,7 +325,8 @@
                 "domain": "web.dev.example",
                 "excerpt": "What breaks most often on narrow screens: fixed widths, type below 16 pixels, hidden focus and tables that scroll sideways.",
                 "leadText": "More on that — ",
-                "tailText": " — hover to see where it leads."
+                "tailText": " — hover to see where it leads.",
+                "open": true
               }
             },
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-hovercard-002-* variables. Client-side only for the sake of Escape: the handler removes focus from the trigger and the card, held open by :focus-within, closes — the reveal itself stays in CSS. The reveal rests on :hover and :focus-within of the link wrapper rather than of the whole paragraph — otherwise the card would pop up over any text. The cover hue is derived from the domain by an FNV-1a hash and put into --vibeui-hovercard-002-hue. The title is clamped at two lines and the excerpt at three through -webkit-line-clamp. The card is hidden with visibility, so while closed it does not catch the pointer."
@@ -358,7 +366,10 @@
           "rating"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "open": true
+          }
         },
         "ai": {
           "export": "Hovercard003",
@@ -478,7 +489,8 @@
                 "leadText": "The roundup includes the ",
                 "tailText": " — price and stock are visible without leaving the page.",
                 "ratingText": "{rating} · {reviews} reviews",
-                "locale": "en-US"
+                "locale": "en-US",
+                "open": true
               }
             },
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-hovercard-003-* variables. Client-side only for the sake of Escape: the handler removes focus from the trigger and the card, held open by :focus-within, closes — the reveal itself stays in CSS. The reveal rests on :hover and :focus-within of the link wrapper. The rating is drawn as a string of five stars in ::before, filled with a linear gradient whose breakpoint is calc(rating * 20%) and clipped to the text — a fractional score is shown honestly, without a set of half-stars. The value arrives in --vibeui-hovercard-003-rating. Availability is spelled out in a word, not only by colour."
@@ -518,7 +530,10 @@
           "stats"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "open": true
+          }
         },
         "ai": {
           "export": "Hovercard004",
@@ -647,7 +662,8 @@
                 "leadText": "The sources live in ",
                 "tailText": " — hover instead of opening a tab just for the description.",
                 "starsLabel": "stars",
-                "forksLabel": "forks"
+                "forksLabel": "forks",
+                "open": true
               }
             },
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-hovercard-004-* variables. Client-side only for the sake of Escape: the handler removes focus from the trigger and the card, held open by :focus-within, closes — the reveal itself stays in CSS. The reveal rests on :hover and :focus-within of the link wrapper. The owner/name pair is set at one size but in different weights — that way it reads as a single whole while it is still clear where the name begins. The language colour arrives through the languageColor prop and is put into --vibeui-hovercard-004-lang. The link in the text is set in a monospaced font: the path is recognised by shape."
@@ -688,7 +704,10 @@
           "definition"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "open": true
+          }
         },
         "ai": {
           "export": "Hovercard005",
@@ -810,7 +829,8 @@
                 ],
                 "leadText": "We serve static files through a ",
                 "tailText": ", so the first load comes from the nearest city.",
-                "relatedLabel": "see also: "
+                "relatedLabel": "see also: ",
+                "open": true
               }
             },
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-hovercard-005-* variables. Client-side only for the sake of Escape: the handler removes focus from the trigger and the card, held open by :focus-within, closes — the reveal itself stays in CSS. The reveal rests on :hover and :focus-visible of the abbreviation itself inside the wrapper. The abbreviation stays an inline element with tabIndex=0 — not a link and not a button, so the setting of the text is not broken. The card is marked with the tooltip role and linked through aria-describedby. The left edge is coloured with the accent: this marks a glossary entry rather than a notification."
@@ -850,7 +870,10 @@
           "people"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "open": true
+          }
         },
         "ai": {
           "export": "Hovercard006",
@@ -974,7 +997,8 @@
                 ],
                 "leadText": "The next meeting is the ",
                 "tailText": " — time and place without opening the calendar.",
-                "restText": "and {count} more"
+                "restText": "and {count} more",
+                "open": true
               }
             },
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-hovercard-006-* variables. Client-side only for the sake of Escape: the handler removes focus from the trigger and the card, held open by :focus-within, closes — the reveal itself stays in CSS. The reveal rests on :hover and :focus-within of the link wrapper. The date is assembled from two bands in a block of its own — a recognisable shape is read faster than a line of text. The attendee avatars overlap through a negative right margin and are ringed in the surface colour, so the fan reads as a group; anything past three shows as a count. The link in the text is underlined with an inset shadow rather than with text-decoration."
@@ -1014,7 +1038,10 @@
           "progress"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "open": true
+          }
         },
         "ai": {
           "export": "Hovercard007",
@@ -1131,7 +1158,8 @@
                 "leadText": "Details live in the section on ",
                 "tailText": " — sweep the cursor past and nothing opens.",
                 "hintText": "the card opens after {delay} of hovering",
-                "delayUnit": "s"
+                "delayUnit": "s",
+                "open": true
               }
             },
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-hovercard-007-* variables. Client-side only for the sake of Escape: the handler removes focus from the trigger and the card, held open by :focus-within, closes — the reveal itself stays in CSS. The delay sits only in the open-state rule, through transition-delay, while the base rule zeroes it, so the pointer leaving cancels both the bar and the reveal. The bar is the link's ::after pseudo-element, stretched with scaleX over the same time as the delay: the waiting becomes visible. The value lives in --vibeui-hovercard-007-delay and arrives through the delay prop."
@@ -1171,7 +1199,10 @@
           "stats"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "open": true
+          }
         },
         "ai": {
           "export": "Hovercard008",
@@ -1316,7 +1347,8 @@
                 "tailText": ".",
                 "commitText": "commit {commit}",
                 "starsLabel": "stars",
-                "issuesText": "{count} open issues"
+                "issuesText": "{count} open issues",
+                "open": true
               }
             },
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-hovercard-008-* variables. Client-side only for the sake of Escape: the handler removes focus from the trigger and the card, held open by :focus-within, closes — the reveal itself stays in CSS. The reveal rests on :hover and :focus-within of the trigger wrapper. The trigger is a compact pill with a language dot rather than an underlined link inside the paragraph: it is visible at once, without reading the sentence to the end. The card supplies what the owner/name pair usually lacks: the time of the last commit in the header and the number of open issues in the footer next to the license."

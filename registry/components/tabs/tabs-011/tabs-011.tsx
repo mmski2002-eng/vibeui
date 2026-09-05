@@ -13,6 +13,8 @@ export type Tabs011Props = Omit<ComponentProps<"div">, "children" | "title"> & {
   groupLabel?: string
   /** Пояснение под панелью: почему адрес меняется. */
   hint?: string
+  /** Показывать кусок адреса текущей вкладки: то, что уедет в ссылку. */
+  showAddress?: boolean
   accent?: string
   /** Пусто — штатная палитра. */
   background?: string
@@ -72,6 +74,15 @@ margin:0;font-size:0.875rem;line-height:1.5;
 [data-vibeui-block="tabs-011"] [data-part="hint"]{
 margin:0;font-size:0.75rem;line-height:1.4;color:var(--vibeui-tabs-011-muted);
 }
+/* Кусок адреса текущей вкладки. Показан ровно один — тем же :target, что и
+   панель: иначе бейдж врал бы про ссылку, которую человек скопирует. */
+[data-vibeui-block="tabs-011"] [data-part="address"]{display:flex;flex-wrap:wrap;gap:0.25rem;margin-top:-0.25rem}
+[data-vibeui-block="tabs-011"] [data-part="url"]{
+display:none;padding:0.0625rem 0.375rem;border-radius:0.375rem;
+border:1px solid var(--vibeui-tabs-011-border);background:var(--vibeui-tabs-011-hover);
+font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+font-size:0.6875rem;color:var(--vibeui-tabs-011-muted);
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="tabs-011"] *{animation:none!important;transition:none!important}}
 `
 
@@ -123,6 +134,7 @@ export function Tabs011({
   panels = DEFAULT_PANELS,
   groupLabel = "Разделы товара",
   hint = "Вкладка попадает в адрес: ссылку можно отправить, «назад» вернёт прежнюю.",
+  showAddress = false,
   accent,
   background = "",
   className,
@@ -143,12 +155,13 @@ export function Tabs011({
   // Подсветка активной ссылки строится по тем же идентификаторам: они
   // приходят пропсом, поэтому правила собираются здесь.
   const rules = panels
-    .map(
-      (panel) =>
-        `[data-vibeui-block="tabs-011"]:has(#${panel.id}:target) [data-part="tab"][href="#${panel.id}"]{color:var(--vibeui-tabs-011-fg);border-bottom-color:var(--vibeui-tabs-011-accent)}`,
-    )
+    .flatMap((panel) => [
+      `[data-vibeui-block="tabs-011"]:has(#${panel.id}:target) [data-part="tab"][href="#${panel.id}"]{color:var(--vibeui-tabs-011-fg);border-bottom-color:var(--vibeui-tabs-011-accent)}`,
+      `[data-vibeui-block="tabs-011"]:has(#${panel.id}:target) [data-part="url"][data-for="${panel.id}"]{display:inline-block}`,
+    ])
     .concat(
       `[data-vibeui-block="tabs-011"]:not(:has([data-part="panel"]:target)) [data-part="tab"]:first-of-type{color:var(--vibeui-tabs-011-fg);border-bottom-color:var(--vibeui-tabs-011-accent)}`,
+      `[data-vibeui-block="tabs-011"]:not(:has([data-part="panel"]:target)) [data-part="url"]:first-of-type{display:inline-block}`,
     )
     .join("\n")
 
@@ -176,6 +189,16 @@ export function Tabs011({
             </a>
           ))}
         </nav>
+
+        {showAddress ? (
+          <div data-part="address" aria-hidden="true">
+            {panels.map((panel) => (
+              <code key={panel.id} data-part="url" data-for={panel.id}>
+                #{panel.id}
+              </code>
+            ))}
+          </div>
+        ) : null}
 
         <div data-part="panels">
           {panels.map((panel) => (

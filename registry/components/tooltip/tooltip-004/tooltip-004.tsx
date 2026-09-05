@@ -8,6 +8,8 @@ export type Tooltip004Props = Omit<ComponentProps<"div">, "children"> & {
   side?: "top" | "bottom"
   /** Имя панели для скринридера. */
   toolbarLabel?: string
+  /** Показать подсказку второй кнопки принудительно: онбординг, отладка, витрина. */
+  open?: boolean
   /** Пусто — подложки нет, панель лежит прямо на фоне страницы. */
   background?: string
 }
@@ -65,6 +67,10 @@ transition:opacity .12s ease,transform .12s ease;
 [data-vibeui-block="tooltip-004"][data-side="bottom"] [data-part="tip"]{top:calc(100% + 0.5rem);transform:translate(-50%,-0.1875rem)}
 [data-vibeui-block="tooltip-004"] [data-part="item"]:hover [data-part="tip"],
 [data-vibeui-block="tooltip-004"] [data-part="item"]:focus-within [data-part="tip"]{opacity:1;transform:translate(-50%,0)}
+/* Витринный режим: раскрыта ровно одна подсказка — соседние наложились бы
+   друг на друга. Вторая кнопка выбрана потому, что её плашка целиком
+   помещается над панелью и не выходит за край. */
+[data-vibeui-block="tooltip-004"][data-open="true"] [data-part="item"]:nth-of-type(2) [data-part="tip"]{opacity:1;transform:translate(-50%,0)}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="tooltip-004"] *{animation:none!important;transition:none!important}}
 `
 
@@ -105,6 +111,7 @@ export function Tooltip004({
   actions = DEFAULT_ACTIONS,
   side = "top",
   toolbarLabel = "Действия над слоем",
+  open = false,
   background = "",
   className,
   style,
@@ -130,6 +137,7 @@ export function Tooltip004({
         data-slot="tooltip"
         data-vibeui-block="tooltip-004"
         data-side={side}
+        data-open={open || undefined}
         role="toolbar"
         aria-label={toolbarLabel}
         className={className}

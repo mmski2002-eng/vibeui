@@ -20,6 +20,9 @@
       "meta": {
         "tags": ["collapsible", "details", "no-js", "disclosure"],
         "preview": {
+          "props": {
+            "open": true
+          },
           "width": "full"
         },
         "ai": {
@@ -433,6 +436,9 @@
       "meta": {
         "tags": ["collapsible", "log", "details", "counter"],
         "preview": {
+          "props": {
+            "open": true
+          },
           "width": "full"
         },
         "ai": {
@@ -711,6 +717,9 @@
       "meta": {
         "tags": ["collapsible", "avatars", "counter", "details"],
         "preview": {
+          "props": {
+            "open": true
+          },
           "width": "full"
         },
         "ai": {
@@ -859,6 +868,9 @@
       "meta": {
         "tags": ["collapsible", "settings", "diff", "details"],
         "preview": {
+          "props": {
+            "open": true
+          },
           "width": "full"
         },
         "ai": {

@@ -62,7 +62,6 @@ const STYLES = `
 --vibeui-gantt-003-accent:light-dark(oklch(0.55 0.16 275),oklch(0.74 0.14 275));
 --vibeui-gantt-003-risk:light-dark(oklch(0.6 0.18 25),oklch(0.75 0.16 30));
 --vibeui-gantt-003-done:light-dark(oklch(0.6 0.12 165),oklch(0.76 0.12 165));
---vibeui-gantt-003-day:2.125rem;
 --vibeui-gantt-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -100,9 +99,26 @@ overflow-x:auto;border:1px solid var(--vibeui-gantt-003-line);border-radius:0.62
 [data-vibeui-block="gantt-003"] [data-part="scroll"]:focus-visible{
 outline:2px solid var(--vibeui-gantt-003-accent);outline-offset:2px;
 }
+/* Дни сжимаются вместе с блоком: план на витрине виден целиком, без
+   горизонтальной прокрутки. Колонка названий забирает свою ширину только
+   тогда, когда блоку хватает места. */
 [data-vibeui-block="gantt-003"] [data-part="grid"]{
 display:grid;
-grid-template-columns:9.5rem repeat(var(--vibeui-gantt-003-days,14),var(--vibeui-gantt-003-day));
+grid-template-columns:6rem repeat(var(--vibeui-gantt-003-days,14),minmax(0,1fr));
+}
+@container (min-width:30rem){
+[data-vibeui-block="gantt-003"] [data-part="grid"]{
+grid-template-columns:9.5rem repeat(var(--vibeui-gantt-003-days,14),minmax(0,1fr));
+}
+}
+/* Совсем узкий блок: колонка названий отдаёт место дням, иначе число дня
+   не помещается в свою клетку. */
+@container (max-width:18rem){
+[data-vibeui-block="gantt-003"] [data-part="grid"]{
+grid-template-columns:4.5rem repeat(var(--vibeui-gantt-003-days,14),minmax(0,1fr));
+}
+[data-vibeui-block="gantt-003"] [data-part="daycap"]{font-size:0.5rem}
+[data-vibeui-block="gantt-003"] [data-part="name"]{padding:0.25rem 0.375rem;font-size:0.6875rem}
 }
 [data-vibeui-block="gantt-003"] [data-part="corner"]{
 position:sticky;left:0;z-index:2;
@@ -148,23 +164,25 @@ border:1px solid var(--vibeui-gantt-003-accent);
 background:color-mix(in oklab,var(--vibeui-gantt-003-accent) 16%,transparent);
 font-size:0.625rem;line-height:1.2;white-space:nowrap;overflow:hidden;
 }
-[data-vibeui-block="gantt-003"] [data-tone="risk"]{
+[data-vibeui-block="gantt-003"] [data-part="bar"][data-tone="risk"]{
 border-color:var(--vibeui-gantt-003-risk);border-style:dashed;
 background:color-mix(in oklab,var(--vibeui-gantt-003-risk) 14%,transparent);
 }
-[data-vibeui-block="gantt-003"] [data-tone="done"]{
+[data-vibeui-block="gantt-003"] [data-part="bar"][data-tone="done"]{
 border-color:var(--vibeui-gantt-003-done);
 background:color-mix(in oklab,var(--vibeui-gantt-003-done) 16%,transparent);
 }
 /* Веха — точка, а не короткая полоса: своя форма и подпись рядом. */
 [data-vibeui-block="gantt-003"] [data-part="milestone"]{
-align-self:center;justify-self:start;z-index:1;
-display:flex;align-items:center;gap:0.375rem;
+align-self:center;z-index:1;
+display:flex;align-items:center;gap:0.375rem;overflow:hidden;
 font-size:0.625rem;font-weight:650;white-space:nowrap;
 }
+/* Ромб центрируется в своём дне: отступ — половина колонки, а ширина колонки
+   задана числом занятых дней в инлайновом стиле. */
 [data-vibeui-block="gantt-003"] [data-part="milestone"] i{
 flex:none;width:0.75rem;height:0.75rem;
-margin-left:calc(var(--vibeui-gantt-003-day) / 2 - 0.375rem);
+margin-left:calc(var(--vibeui-gantt-003-mark,0%) - 0.375rem);
 transform:rotate(45deg);
 background:var(--vibeui-gantt-003-accent);
 border:1px solid var(--vibeui-gantt-003-accent);
@@ -178,6 +196,11 @@ background:var(--vibeui-gantt-003-done);border-color:var(--vibeui-gantt-003-done
 }
 [data-vibeui-block="gantt-003"] [data-part="name"][data-kind="milestone"]{
 font-style:italic;
+}
+/* В узком блоке подписи у ромба места нет, и она не нужна: та же дата стоит
+   в колонке названий и в таблице под диаграммой. */
+@container (max-width:40rem){
+[data-vibeui-block="gantt-003"] [data-part="milestone"] span{display:none}
 }
 [data-vibeui-block="gantt-003"] [data-part="table"]{margin:0.75rem 0 0}
 [data-vibeui-block="gantt-003"] summary{
@@ -408,11 +431,12 @@ export function Gantt003({
                     {
                       gridRow: index + 2,
                       gridColumn: `${row.start + 2} / -1`,
+                      "--vibeui-gantt-003-mark": `${50 / Math.max(1, days - row.start)}%`,
                     } as CSSProperties
                   }
                 >
                   <i aria-hidden="true" />
-                  {dateText(row.start).slice(5)}
+                  <span>{dateText(row.start).slice(5)}</span>
                 </span>
               ),
             )}

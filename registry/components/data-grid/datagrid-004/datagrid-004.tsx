@@ -54,9 +54,14 @@ const STYLES = `
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="datagrid-004"]{color-scheme:dark}
 [data-vibeui-block="datagrid-004"]{
 box-sizing:border-box;width:100%;max-width:46rem;margin:0 auto;
+/* container-type отрывает ширину от содержимого: без нижней границы
+   блок схлопнется внутри flex-контейнера. */
+min-width:min(100%,16rem);
 background:var(--vibeui-datagrid-004-bg);color:var(--vibeui-datagrid-004-fg);
 border:1px solid var(--vibeui-datagrid-004-border);border-radius:0.875rem;
 font-family:var(--vibeui-datagrid-004-font);overflow:hidden;
+/* Поля ячеек считаются от собственной ширины блока, а не от окна. */
+container-type:inline-size;
 }
 [data-vibeui-block="datagrid-004"] *{box-sizing:border-box}
 [data-vibeui-block="datagrid-004"] [data-part="head"]{
@@ -83,6 +88,21 @@ background:var(--vibeui-datagrid-004-bg);
 [data-vibeui-block="datagrid-004"] td{
 padding:0.4375rem 0.875rem;text-align:left;white-space:nowrap;
 border-bottom:1px solid var(--vibeui-datagrid-004-border);
+}
+/* В узком блоке строка не умещается в одну линию. Поля сжимаются, а название
+   операции переносится: горизонтальная прокрутка на витрине недоступна, и
+   уехавшая под край сумма читается как отсутствующая. */
+@container (max-width:30rem){
+[data-vibeui-block="datagrid-004"] th,
+[data-vibeui-block="datagrid-004"] td{padding:0.4375rem 0.5rem}
+[data-vibeui-block="datagrid-004"] tbody td:first-of-type{white-space:normal}
+}
+@container (max-width:22rem){
+[data-vibeui-block="datagrid-004"] table{font-size:0.75rem}
+[data-vibeui-block="datagrid-004"] th,
+[data-vibeui-block="datagrid-004"] td{padding:0.375rem 0.3125rem}
+[data-vibeui-block="datagrid-004"] tbody td:not([data-align="end"]){white-space:normal}
+[data-vibeui-block="datagrid-004"] [data-part="code"]{font-size:0.6875rem}
 }
 /* Липкая шапка: собственный фон обязателен, иначе строки просвечивают. */
 [data-vibeui-block="datagrid-004"] thead th{

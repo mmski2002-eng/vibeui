@@ -15,6 +15,11 @@ export type Menubar002Menu = {
 }
 
 export type Menubar002Props = {
+  /**
+   * Показать первое меню развёрнутым в потоке строки: витрина, скриншот,
+   * отладка. Дальше строка живёт как обычно: клик и клавиши закрывают меню.
+   */
+  open?: boolean
   menus?: Menubar002Menu[]
   /** Имя строки меню для скринридера. */
   menubarLabel?: string
@@ -69,6 +74,10 @@ min-width:12rem;padding:0.25rem;box-sizing:border-box;
 background:var(--vibeui-menubar-002-panel);color:var(--vibeui-menubar-002-fg);
 border:1px solid var(--vibeui-menubar-002-border);border-radius:0.625rem;
 box-shadow:0 16px 36px -18px var(--vibeui-menubar-002-shadow);
+}
+/* Развёрнутый режим: меню стоит в потоке под своей кнопкой, а не поверх соседей. */
+[data-vibeui-block="menubar-002"] [data-part="menu"][data-open="true"]{
+position:static;margin-block-start:0.375rem;
 }
 [data-vibeui-block="menubar-002"] [data-part="item"]{
 display:flex;align-items:center;justify-content:space-between;gap:1.5rem;
@@ -141,6 +150,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Menubar002({
+  open = false,
   menus = DEFAULT_MENUS,
   menubarLabel = "Меню приложения",
   hint = "← → между разделами",
@@ -149,7 +159,7 @@ export function Menubar002({
   className,
   style,
 }: Menubar002Props) {
-  const [open, setOpen] = useState<number | null>(null)
+  const [active, setActive] = useState<number | null>(open ? 0 : null)
   const [focused, setFocused] = useState(0)
   const rootRef = useRef<HTMLDivElement>(null)
   const wanted = useRef<"first" | "last" | null>(null)
@@ -169,32 +179,32 @@ export function Menubar002({
   // Клик мимо закрывает меню: без этого открытый список остаётся висеть,
   // когда человек ушёл работать в другую часть страницы.
   useEffect(() => {
-    if (open === null) {
+    if (active === null) {
       return
     }
 
     function onOutside(event: PointerEvent) {
       if (!rootRef.current?.contains(event.target as Node)) {
-        setOpen(null)
+        setActive(null)
       }
     }
 
     document.addEventListener("pointerdown", onOutside)
     return () => document.removeEventListener("pointerdown", onOutside)
-  }, [open])
+  }, [active])
 
   // Фокус на пункт ставится после отрисовки списка: до неё узла ещё нет.
   useEffect(() => {
     const mode = wanted.current
     wanted.current = null
 
-    if (open === null || !mode) {
+    if (active === null || !mode) {
       return
     }
 
     const items = itemNodes()
     ;(mode === "first" ? items[0] : items[items.length - 1])?.focus()
-  }, [open])
+  }, [active])
 
   function itemNodes() {
     return Array.from(
@@ -216,7 +226,7 @@ export function Menubar002({
 
     if (keepOpen) {
       wanted.current = null
-      setOpen(index)
+      setActive(index)
     }
   }
 
@@ -226,27 +236,27 @@ export function Menubar002({
     if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
       event.preventDefault()
       const step = event.key === "ArrowRight" ? 1 : -1
-      goTo((focused + step + menus.length) % menus.length, open !== null)
+      goTo((focused + step + menus.length) % menus.length, active !== null)
       return
     }
 
     if (event.key === "Home" || event.key === "End") {
       event.preventDefault()
-      goTo(event.key === "Home" ? 0 : last, open !== null)
+      goTo(event.key === "Home" ? 0 : last, active !== null)
       return
     }
 
     if (event.key === "ArrowDown" || event.key === "ArrowUp") {
       event.preventDefault()
       wanted.current = event.key === "ArrowDown" ? "first" : "last"
-      setOpen(focused)
+      setActive(focused)
     }
   }
 
   function onMenuKeyDown(event: KeyboardEvent<HTMLDivElement>) {
     if (event.key === "Escape") {
       event.preventDefault()
-      setOpen(null)
+      setActive(null)
       focusTrigger(focused)
       return
     }
@@ -257,7 +267,7 @@ export function Menubar002({
       const next = (focused + step + menus.length) % menus.length
       setFocused(next)
       wanted.current = "first"
-      setOpen(next)
+      setActive(next)
       return
     }
 
@@ -306,18 +316,19 @@ export function Menubar002({
               data-part="trigger"
               role="menuitem"
               aria-haspopup="menu"
-              aria-expanded={open === index}
+              aria-expanded={active === index}
               tabIndex={index === focused ? 0 : -1}
               onClick={() => {
                 setFocused(index)
-                setOpen(open === index ? null : index)
+                setActive(active === index ? null : index)
               }}
             >
               {menu.label}
             </button>
-            {open === index ? (
+            {active === index ? (
               <div
                 data-part="menu"
+                data-open={open || undefined}
                 role="menu"
                 aria-label={menu.label}
                 onKeyDown={onMenuKeyDown}
@@ -331,7 +342,7 @@ export function Menubar002({
                     disabled={item.disabled}
                     tabIndex={-1}
                     onClick={() => {
-                      setOpen(null)
+                      setActive(null)
                       focusTrigger(index)
                     }}
                   >

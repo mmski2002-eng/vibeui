@@ -158,6 +158,10 @@
           "background"
         ],
         "preview": {
+          "props": {
+            "defaultDragged": 3,
+            "defaultOver": 1
+          },
           "width": "full"
         }
       }
@@ -188,6 +192,9 @@
           "a11y"
         ],
         "preview": {
+          "props": {
+            "defaultHeld": 2
+          },
           "width": "full"
         },
         "ai": {
@@ -711,6 +718,10 @@
           "keyboard"
         ],
         "preview": {
+          "props": {
+            "defaultDragged": 5,
+            "defaultOver": 1
+          },
           "width": "full"
         },
         "ai": {
@@ -1083,6 +1094,12 @@
           "list"
         ],
         "preview": {
+          "props": {
+            "defaultMove": {
+              "from": 3,
+              "to": 1
+            }
+          },
           "width": "full"
         },
         "ai": {

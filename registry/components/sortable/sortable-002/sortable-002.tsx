@@ -23,6 +23,8 @@ export type Sortable002Props = Omit<
   gripLabel?: string
   /** Реплики живой области: те же подстановки, ключи из Sortable002Announcement. */
   announcements?: Record<Sortable002Announcement, string>
+  /** Индекс строки «в руке»: показать захват на статичной картинке. */
+  defaultHeld?: number
   /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
   background?: string
   accent?: string
@@ -149,6 +151,7 @@ export function Sortable002({
   onChange,
   gripLabel = "Перенести «{item}», позиция {position} из {total}",
   announcements = DEFAULT_ANNOUNCEMENTS,
+  defaultHeld,
   background = "",
   accent,
   className,
@@ -156,7 +159,9 @@ export function Sortable002({
   ...props
 }: Sortable002Props) {
   const [order, setOrder] = useState(items)
-  const [held, setHeld] = useState<string | null>(null)
+  const [held, setHeld] = useState<string | null>(
+    items[defaultHeld ?? -1] ?? null,
+  )
   const [snapshot, setSnapshot] = useState(items)
   const [dragged, setDragged] = useState<string | null>(null)
   const [over, setOver] = useState<string | null>(null)

@@ -83,10 +83,39 @@ transition:background-color .15s ease;
 content:"";position:absolute;inset:0 calc(50% - 0.5px);
 background:var(--vibeui-resizable-001-border);
 }
+/* Грипса заметная и в покое: на статичной миниатюре разделитель шириной в
+   волосок не читается, и компонент не отличить от двух колонок. */
 [data-vibeui-block="resizable-001"] [data-part="split"]::after{
 content:"";position:absolute;top:50%;left:50%;
-width:0.1875rem;height:1.75rem;margin:-0.875rem 0 0 -0.09375rem;border-radius:9999px;
-background:var(--vibeui-resizable-001-border);
+width:0.3125rem;height:2.25rem;margin:-1.125rem 0 0 -0.15625rem;border-radius:9999px;
+background:var(--vibeui-resizable-001-muted);
+box-shadow:0 0 0 3px var(--vibeui-resizable-001-surface);
+}
+[data-vibeui-block="resizable-001"] [data-part="letters"]{
+list-style:none;margin:0.5rem 0 0;padding:0;display:flex;flex-direction:column;gap:0.375rem;
+}
+[data-vibeui-block="resizable-001"] [data-part="letter"]{
+display:grid;grid-template-columns:1fr auto;gap:0 0.5rem;min-inline-size:0;
+padding:0.4375rem 0.5rem;border-radius:0.5rem;
+background:var(--vibeui-resizable-001-surface);
+}
+[data-vibeui-block="resizable-001"] [data-part="from"]{
+font-size:0.8125rem;font-weight:600;
+overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+[data-vibeui-block="resizable-001"] [data-part="time"]{
+font-size:0.6875rem;color:var(--vibeui-resizable-001-muted);
+font-variant-numeric:tabular-nums;
+}
+[data-vibeui-block="resizable-001"] [data-part="subject"]{
+grid-column:1 / -1;font-size:0.75rem;color:var(--vibeui-resizable-001-muted);
+overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+[data-vibeui-block="resizable-001"] [data-part="paragraph"]{
+margin:0.5rem 0 0;font-size:0.8125rem;line-height:1.5;
+}
+[data-vibeui-block="resizable-001"] [data-part="hint"]{
+margin:0.625rem 0 0;font-size:0.6875rem;color:var(--vibeui-resizable-001-muted);
 }
 [data-vibeui-block="resizable-001"] [data-part="split"]:hover::after,
 [data-vibeui-block="resizable-001"] [data-part="split"][data-dragging="true"]::after{
@@ -197,6 +226,22 @@ export function Resizable001({
     }
   }
 
+  // Панели показывают настоящий сценарий сплита — список слева, документ
+  // справа. Пустые панели с одной инструкцией внутри читаются как заглушка, а
+  // именно по картинке компонент и выбирают.
+  const LETTERS = [
+    { from: "Ирина Соколова", subject: "Договор на подпись", time: "09:24" },
+    { from: "Пётр Ким", subject: "Правки по макету каталога", time: "08:51" },
+    { from: "Бухгалтерия", subject: "Акт за август", time: "вчера" },
+    { from: "Ольга Дан", subject: "Планёрка перенеслась", time: "вчера" },
+    { from: "Сергей Ли", subject: "Доступы к стенду", time: "пн" },
+  ]
+
+  const PARAGRAPHS = [
+    "Исполнитель передаёт заказчику неисключительное право на использование компонентов каталога в проектах заказчика без ограничения по числу установок.",
+    "Оплата производится единовременно. Возврат — в течение четырнадцати дней с даты покупки, если компоненты не были опубликованы в открытом доступе.",
+  ]
+
   return (
     <>
       <style href="vibeui-resizable-001" precedence="medium">
@@ -218,7 +263,16 @@ export function Resizable001({
             aria-label={primaryLabel}
           >
             <h3>{primaryTitle}</h3>
-            <p>{primaryText}</p>
+            <ul data-part="letters">
+              {LETTERS.map((letter) => (
+                <li key={letter.subject} data-part="letter">
+                  <span data-part="from">{letter.from}</span>
+                  <span data-part="time">{letter.time}</span>
+                  <span data-part="subject">{letter.subject}</span>
+                </li>
+              ))}
+            </ul>
+            <p data-part="hint">{primaryText}</p>
           </section>
           <div
             data-part="split"
@@ -249,7 +303,12 @@ export function Resizable001({
           />
           <section data-part="pane" data-role="rest" aria-label={restLabel}>
             <h3>{restTitle}</h3>
-            <p>{restText}</p>
+            {PARAGRAPHS.map((paragraph) => (
+              <p key={paragraph.slice(0, 24)} data-part="paragraph">
+                {paragraph}
+              </p>
+            ))}
+            <p data-part="hint">{restText}</p>
           </section>
         </div>
         <p data-part="status" role="status">

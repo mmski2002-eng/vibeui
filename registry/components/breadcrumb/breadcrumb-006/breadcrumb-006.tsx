@@ -45,7 +45,10 @@ box-sizing:border-box;padding:var(--vibeui-breadcrumb-006-pad);
 background:var(--vibeui-breadcrumb-006-bg);
 border-radius:var(--vibeui-breadcrumb-006-radius);
 display:flex;flex-direction:column;gap:0.375rem;
-width:100%;max-width:32rem;
+width:100%;max-width:32rem;min-width:min(100%,16rem);
+/* Заголовок растёт от ширины самого блока, а не окна: крошки ставят и в
+   узкую колонку, и во всю строку. */
+container-type:inline-size;
 font-family:var(--vibeui-breadcrumb-006-font);color:var(--vibeui-breadcrumb-006-fg);
 }
 [data-vibeui-block="breadcrumb-006"] ol{
@@ -60,7 +63,7 @@ font-size:0.75rem;line-height:1.3;color:var(--vibeui-breadcrumb-006-muted);
 [data-vibeui-block="breadcrumb-006"] a:focus-visible{outline:2px solid var(--vibeui-breadcrumb-006-accent);outline-offset:2px}
 /* Заголовок отвечает «где я»: в крошках текущий уровень не повторяется. */
 [data-vibeui-block="breadcrumb-006"] h1{
-margin:0;font-size:clamp(1.25rem,2.5vw,1.75rem);line-height:1.15;
+margin:0;font-size:clamp(1.25rem,5cqw,1.75rem);line-height:1.15;
 letter-spacing:-0.02em;font-weight:680;
 }
 [data-vibeui-block="breadcrumb-006"] [data-part="meta"]{

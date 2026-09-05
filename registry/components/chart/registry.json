@@ -2958,7 +2958,7 @@
           "target": "@components/vibeui/chart-017.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-chart-017-*. Серверный: хуков нет. Форма ступени целиком живёт в clip-path: polygon, координаты углов приходят четырьмя CSS-переменными из доли шага и доли следующего шага, поэтому фигура тянется вместе с контейнером и не требует ни SVG, ни псевдоэлементов с бордерами. Ширина ступени ограничена снизу двенадцатью процентами, чтобы последний шаг не схлопнулся в линию. Данные продублированы визуально скрытой таблицей.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-chart-017-*. Серверный: хуков нет. Форма ступени целиком живёт в clip-path: polygon, координаты углов приходят четырьмя CSS-переменными из доли шага и доли следующего шага, поэтому фигура тянется вместе с контейнером и не требует ни SVG, ни псевдоэлементов с бордерами. Ширина ступени ограничена снизу третью ширины: узкая ступень не схлопывается в линию, и в ней помещаются число и хвост подписи. Подпись внутри ступени сужена padding до ширины трапеции на высоте строки и обрезается многоточием, а не срезом clip-path посреди буквы. Данные продублированы визуально скрытой таблицей.",
       "meta": {
         "tags": [
           "funnel",
@@ -3031,7 +3031,7 @@
           "en": {
             "title": "Conversion Funnel",
             "description": "A symmetrical funnel with a real shape: every step is a clip-path trapezoid, the slope between steps is the loss, and the step-to-step rate is spelled out.",
-            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-chart-017-* variables. Server component: no hooks. The step shape lives entirely in clip-path: polygon, and the corner coordinates arrive in four CSS variables computed from the step's share and the next step's share, so the figure stretches with the container and needs neither SVG nor pseudo-elements with borders. The step width is floored at twelve per cent so that the last step does not collapse into a line. The data is mirrored in a visually hidden table.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-chart-017-* variables. Server component: no hooks. The step shape lives entirely in clip-path: polygon, and the corner coordinates arrive in four CSS variables computed from the step's share and the next step's share, so the figure stretches with the container and needs neither SVG nor pseudo-elements with borders. The step width is floored at about a third of the width: a narrow step does not collapse into a line and still fits the number and the tail of the label. The label inside a step is narrowed by padding down to the trapezoid width at the line height and is cut with an ellipsis instead of being sliced mid-letter by the clip-path. The data is mirrored in a visually hidden table.",
             "ai": {
               "summary": "A conversion funnel in symmetrical trapezoids: a step's top width is its share of the first step, its bottom width is the next step's share, and between the steps the pass-through rate and the absolute loss are printed. The data is mirrored in a hidden table. Zero dependencies, one file, no client JS.",
               "preserve": [
@@ -3089,23 +3089,23 @@
                 "shareLabel": "{share}% of the first step",
                 "steps": [
                   {
-                    "label": "Opened the catalog",
+                    "label": "Catalog",
                     "value": 12400
                   },
                   {
-                    "label": "Opened a component",
+                    "label": "Component",
                     "value": 7150
                   },
                   {
-                    "label": "Hit Copy for AI",
+                    "label": "Copy for AI",
                     "value": 3020
                   },
                   {
-                    "label": "Installed",
+                    "label": "Install",
                     "value": 1260
                   },
                   {
-                    "label": "Came back for a second",
+                    "label": "Return",
                     "value": 540
                   }
                 ]

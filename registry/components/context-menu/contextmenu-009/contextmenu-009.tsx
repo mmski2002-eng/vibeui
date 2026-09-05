@@ -12,6 +12,11 @@ export type Contextmenu009Props = Omit<
   ComponentProps<"section">,
   "children" | "title"
 > & {
+  /**
+   * Показать меню развёрнутым в потоке области: витрина, скриншот, отладка.
+   * В этом режиме меню не следует за курсором и не закрывается по Escape.
+   */
+  open?: boolean
   fileName?: string
   meta?: string
   actions?: Contextmenu009Action[]
@@ -123,6 +128,11 @@ transition:background-color .14s ease;
 [data-vibeui-block="contextmenu-009"] [data-part="rule"]{
 height:1px;margin:0.3125rem 0.25rem;background:var(--vibeui-contextmenu-009-border);
 }
+/* Развёрнутый режим: меню стоит в потоке области под карточкой, а не слоем
+   у курсора, поэтому область растёт вниз и горизонтальной прокрутки нет. */
+[data-vibeui-block="contextmenu-009"] [data-part="menu"][data-open="true"]{
+position:static;width:min(12rem,100%);
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="contextmenu-009"] *{animation:none!important;transition:none!important}}
 `
 
@@ -167,6 +177,7 @@ const MENU_HEIGHT = 224
  * зависимостей, собственная палитра.
  */
 export function Contextmenu009({
+  open = false,
   fileName = "Презентация Q3.pdf",
   meta = "4,1 МБ · изменён вчера",
   actions = DEFAULT_ACTIONS,
@@ -187,7 +198,7 @@ export function Contextmenu009({
   const [spot, setSpot] = useState<{ x: number; y: number } | null>(null)
   const [done, setDone] = useState("")
 
-  const open = spot !== null
+  const pointed = spot !== null
 
   const openAt = (clientX: number, clientY: number, trigger: HTMLElement) => {
     const box = stage.current?.getBoundingClientRect()
@@ -212,7 +223,7 @@ export function Contextmenu009({
   }
 
   useEffect(() => {
-    if (!open) {
+    if (!pointed) {
       return
     }
 
@@ -237,7 +248,7 @@ export function Contextmenu009({
       window.removeEventListener("pointerdown", onPointerDown)
       window.removeEventListener("keydown", onKeyDown)
     }
-  }, [open])
+  }, [pointed])
 
   const run = (action: string) => {
     setDone(doneText.replace("{action}", action).replace("{file}", fileName))
@@ -297,13 +308,16 @@ export function Contextmenu009({
             </button>
           </div>
           <span data-part="hint">{hint}</span>
-          {open ? (
+          {pointed || open ? (
             <div
               ref={menu}
               data-part="menu"
+              data-open={pointed ? undefined : true}
               role="menu"
               aria-label={menuLabel.replace("{file}", fileName)}
-              style={{ left: `${spot.x}px`, top: `${spot.y}px` }}
+              style={
+                spot ? { left: `${spot.x}px`, top: `${spot.y}px` } : undefined
+              }
               onKeyDown={(event) => {
                 if (event.key !== "ArrowDown" && event.key !== "ArrowUp") {
                   return

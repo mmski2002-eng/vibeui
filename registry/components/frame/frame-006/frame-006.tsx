@@ -48,9 +48,33 @@ border:1px solid var(--vibeui-frame-006-border);border-radius:0.75rem;
 }
 [data-vibeui-block="frame-006"] [data-part="media"] > *{display:block;width:100%}
 [data-vibeui-block="frame-006"] img{display:block;width:100%;height:100%;object-fit:cover}
-[data-vibeui-block="frame-006"] [data-part="stub"]{
-display:grid;place-items:center;height:100%;padding:1rem;
-font-size:0.8125rem;color:var(--vibeui-frame-006-muted);
+/* Пустой кадр рисует иллюстрацию средствами CSS, а не выкладывает серое
+   поле с надписью: категория обещает картинку с подписью, и картинка нужна
+   уже на миниатюре каталога. Смысл кадра несёт aria-label, фигуры внутри
+   декоративны. */
+[data-vibeui-block="frame-006"] [data-part="media"] [data-part="stub"]{
+position:relative;overflow:hidden;height:100%;
+background:linear-gradient(180deg,oklch(0.72 0.13 265) 0%,oklch(0.8 0.12 40) 62%,oklch(0.86 0.1 70) 100%);
+}
+[data-vibeui-block="frame-006"] [data-part="sun"]{
+position:absolute;left:26%;top:26%;
+width:22%;aspect-ratio:1 / 1;border-radius:9999px;
+background:oklch(0.95 0.11 85);
+box-shadow:0 0 2.5rem oklch(0.9 0.12 75 / 0.75);
+}
+/* Горы — треугольники на clip-path: без картинок и без SVG-файла. */
+[data-vibeui-block="frame-006"] [data-part="peak"]{
+position:absolute;bottom:18%;
+background:oklch(0.42 0.06 285);
+clip-path:polygon(50% 0,100% 100%,0 100%);
+}
+[data-vibeui-block="frame-006"] [data-part="peak"][data-pos="left"]{left:-4%;width:56%;height:52%}
+[data-vibeui-block="frame-006"] [data-part="peak"][data-pos="right"]{
+right:-2%;width:48%;height:40%;background:oklch(0.5 0.05 290);
+}
+[data-vibeui-block="frame-006"] [data-part="ground"]{
+position:absolute;inset:auto 0 0;height:18%;
+background:oklch(0.34 0.05 285);
 }
 [data-vibeui-block="frame-006"] figcaption{
 display:flex;flex-direction:column;gap:0.1875rem;
@@ -134,7 +158,14 @@ export function Frame006({
         style={palette}
       >
         <div data-part="media">
-          {children ?? <div data-part="stub">{stubText}</div>}
+          {children ?? (
+            <div data-part="stub" role="img" aria-label={stubText}>
+              <span data-part="sun" />
+              <span data-part="peak" data-pos="right" />
+              <span data-part="peak" data-pos="left" />
+              <span data-part="ground" />
+            </div>
+          )}
         </div>
         <figcaption>
           <span data-part="index">

@@ -33,6 +33,8 @@ const STYLES = `
 /* Плашка скидки — белый текст на акценте, поэтому в тёмной ветке акцент не
    светлее, чем в светлой: выше L≈0.58 контраст падает ниже 4.5:1. */
 --vibeui-aspect-003-accent:light-dark(oklch(0.56 0.19 25),oklch(0.56 0.17 25));
+--vibeui-aspect-003-object:light-dark(oklch(0.42 0.03 265),oklch(0.78 0.02 265));
+--vibeui-aspect-003-glow:light-dark(oklch(0.9 0.11 85 / 0.85),oklch(0.8 0.13 82 / 0.55));
 --vibeui-aspect-003-radius:0.875rem;
 --vibeui-aspect-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -59,6 +61,29 @@ radial-gradient(90% 80% at 30% 20%,var(--vibeui-aspect-003-sheen),transparent 70
 var(--vibeui-aspect-003-frame);
 }
 [data-vibeui-block="aspect-003"] [data-part="frame"] img{display:block;width:100%;height:100%;object-fit:cover}
+/* Пока снимка нет, кадр рисует силуэт товара средствами CSS: пустой квадрат
+   в сетке магазина читается как товар без фотографии, то есть как поломка. */
+[data-vibeui-block="aspect-003"] [data-part="glow"]{
+position:absolute;left:50%;top:34%;width:70%;aspect-ratio:1 / 1;
+transform:translate(-50%,-50%);border-radius:9999px;
+background:radial-gradient(closest-side,var(--vibeui-aspect-003-glow),transparent 72%);
+}
+[data-vibeui-block="aspect-003"] [data-part="shade"]{
+position:absolute;left:50%;top:22%;width:46%;height:24%;
+transform:translateX(-50%);
+background:var(--vibeui-aspect-003-object);
+clip-path:polygon(26% 0,74% 0,100% 100%,0 100%);
+}
+[data-vibeui-block="aspect-003"] [data-part="stem"]{
+position:absolute;left:50%;top:46%;width:5%;height:28%;
+transform:translateX(-50%);border-radius:9999px;
+background:var(--vibeui-aspect-003-object);
+}
+[data-vibeui-block="aspect-003"] [data-part="foot"]{
+position:absolute;left:50%;bottom:16%;width:40%;height:5%;
+transform:translateX(-50%);border-radius:9999px;
+background:var(--vibeui-aspect-003-object);
+}
 [data-vibeui-block="aspect-003"] [data-part="badge"]{
 position:absolute;left:0.625rem;top:0.625rem;
 padding:0.1875rem 0.4375rem;border-radius:0.375rem;
@@ -144,6 +169,10 @@ export function Aspect003({
         style={palette}
       >
         <div data-part="frame">
+          <span data-part="glow" aria-hidden="true" />
+          <span data-part="shade" aria-hidden="true" />
+          <span data-part="stem" aria-hidden="true" />
+          <span data-part="foot" aria-hidden="true" />
           {badge ? <span data-part="badge">{badge}</span> : null}
         </div>
         <span data-part="title">

@@ -28,6 +28,10 @@ const STYLES = `
 --vibeui-aspect-007-muted:color-mix(in oklab,var(--vibeui-aspect-007-fg) 68%,transparent);
 --vibeui-aspect-007-bg:transparent;
 --vibeui-aspect-007-line:light-dark(oklch(0.9 0.008 265),oklch(0.33 0.012 265));
+--vibeui-aspect-007-land:light-dark(oklch(0.96 0.008 110),oklch(0.26 0.012 250));
+--vibeui-aspect-007-park:light-dark(oklch(0.89 0.07 150),oklch(0.36 0.05 155));
+--vibeui-aspect-007-water:light-dark(oklch(0.86 0.07 230),oklch(0.38 0.06 235));
+--vibeui-aspect-007-road:light-dark(oklch(0.92 0.05 85),oklch(0.45 0.04 85));
 --vibeui-aspect-007-border:light-dark(oklch(0.89 0.006 265),oklch(0.38 0.012 265));
 --vibeui-aspect-007-pin:light-dark(oklch(1 0 0),oklch(0.26 0.014 265));
 --vibeui-aspect-007-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
@@ -49,13 +53,30 @@ border-radius:var(--vibeui-aspect-007-radius);
 background:var(--vibeui-aspect-007-bg);
 }
 [data-vibeui-block="aspect-007"] iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-/* Сетка-заглушка: пустая рамка карты должна читаться как карта. */
+/* Сетка-заглушка: пустая рамка карты должна читаться как карта. Поверх
+   тона земли идут парк, река и магистраль — без цвета сетка остаётся
+   миллиметровкой, а не картой. */
 [data-vibeui-block="aspect-007"] [data-part="grid"]{
 position:absolute;inset:0;
+background-color:var(--vibeui-aspect-007-land);
 background-image:
 linear-gradient(var(--vibeui-aspect-007-line) 1px,transparent 1px),
 linear-gradient(90deg,var(--vibeui-aspect-007-line) 1px,transparent 1px);
 background-size:2.5rem 2.5rem;
+}
+[data-vibeui-block="aspect-007"] [data-part="park"]{
+position:absolute;left:8%;top:14%;width:26%;height:34%;
+border-radius:0.5rem;background:var(--vibeui-aspect-007-park);
+}
+[data-vibeui-block="aspect-007"] [data-part="water"]{
+position:absolute;inset:auto 0 0;height:26%;
+background:var(--vibeui-aspect-007-water);
+clip-path:polygon(0 44%,22% 28%,48% 52%,72% 30%,100% 48%,100% 100%,0 100%);
+}
+[data-vibeui-block="aspect-007"] [data-part="road"]{
+position:absolute;left:-6%;right:-6%;top:56%;height:0.375rem;
+background:var(--vibeui-aspect-007-road);
+transform:rotate(-6deg);
 }
 [data-vibeui-block="aspect-007"] [data-part="pin"]{
 position:absolute;left:50%;top:50%;width:0.875rem;height:0.875rem;
@@ -63,9 +84,14 @@ margin:-0.9375rem 0 0 -0.4375rem;
 border:2px solid var(--vibeui-aspect-007-accent);border-radius:9999px 9999px 9999px 0;
 transform:rotate(-45deg);background:var(--vibeui-aspect-007-pin);
 }
+/* Подпись лежит на плашке: под ней теперь река, и на воде текст пропадал бы. */
 [data-vibeui-block="aspect-007"] [data-part="hint"]{
-position:absolute;left:0;right:0;bottom:0.75rem;text-align:center;
-font-size:0.75rem;color:var(--vibeui-aspect-007-muted);
+position:absolute;left:50%;bottom:0.75rem;transform:translateX(-50%);
+max-width:calc(100% - 1.5rem);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+padding:0.1875rem 0.5rem;border-radius:0.375rem;
+background:var(--vibeui-aspect-007-pin);
+border:1px solid var(--vibeui-aspect-007-border);
+font-size:0.75rem;color:var(--vibeui-aspect-007-fg);
 }
 [data-vibeui-block="aspect-007"] [data-part="source"]{
 font-size:0.75rem;color:var(--vibeui-aspect-007-muted);
@@ -138,6 +164,9 @@ export function Aspect007({
           ) : (
             <>
               <span data-part="grid" aria-hidden="true" />
+              <span data-part="park" aria-hidden="true" />
+              <span data-part="water" aria-hidden="true" />
+              <span data-part="road" aria-hidden="true" />
               <span data-part="pin" aria-hidden="true" />
               <span data-part="hint">{title}</span>
             </>

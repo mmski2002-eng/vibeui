@@ -3,6 +3,11 @@
 import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Hovercard005Props = Omit<ComponentProps<"div">, "children"> & {
+  /**
+   * Показать статью раскрытой прямо в потоке: витрина, скриншот, отладка.
+   * Сокращение остаётся на месте, карточка встаёт под ним.
+   */
+  open?: boolean
   /** Сокращение, набранное в тексте. */
   term?: string
   /** Полная расшифровка сокращения. */
@@ -90,6 +95,14 @@ padding-top:0.375rem;border-top:1px dashed var(--vibeui-hovercard-005-border);
 font-size:0.75rem;color:var(--vibeui-hovercard-005-muted);
 }
 [data-vibeui-block="hovercard-005"] [data-part="related"] b{color:var(--vibeui-hovercard-005-fg);font-weight:640}
+/* Витринный режим: статья стоит в потоке под сокращением, а не поверх текста —
+   иначе на миниатюре каталога от компонента видна одна строка. Обёртка
+   становится блоком, чтобы карточка не разрывала строку по вертикали. */
+[data-vibeui-block="hovercard-005"][data-open="true"] [data-part="host"]{display:block}
+[data-vibeui-block="hovercard-005"][data-open="true"] [data-part="card"]{
+position:static;opacity:1;visibility:visible;translate:0;
+margin-top:0.5rem;max-width:100%;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="hovercard-005"] *{animation:none!important;transition:none!important}}
 `
 
@@ -132,6 +145,7 @@ function closeOnEscape(event: KeyboardEvent<HTMLElement>) {
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Hovercard005({
+  open = false,
   term = "CDN",
   full = "Content Delivery Network",
   definition = "Сеть серверов, раздающих статические файлы из точки, ближайшей к посетителю. Сокращает задержку и снимает нагрузку с основного сервера.",
@@ -167,6 +181,7 @@ export function Hovercard005({
         data-slot="hover-card"
         onKeyDown={closeOnEscape}
         data-vibeui-block="hovercard-005"
+        data-open={open || undefined}
         className={className}
         style={palette}
       >

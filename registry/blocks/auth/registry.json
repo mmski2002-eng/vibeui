@@ -4884,6 +4884,465 @@
           "background"
         ]
       }
+    },
+    {
+      "name": "auth-031",
+      "type": "registry:block",
+      "title": "Вход с брендовой панелью",
+      "description": "Вход с перевёрнутой пропорцией: узкая колонка формы слева, широкая брендовая панель справа — градиент, паттерн, цифры и подписанная цитата клиента.",
+      "categories": ["auth"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "auth-031/auth-031.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/auth-031.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-031-*. Серверный: хуков нет. Раскладка считается контейнерным запросом от ширины самого блока: от 52rem grid ставит форму в колонку minmax(0,23rem), а панель забирает остаток. Панель собрана из трёх радиальных градиентов поверх базового цвета и диагонального паттерна в ::before под маской. На узкой ширине панель ужимается в полосу с брендом и обещанием: цифры и цитата скрываются, сама панель остаётся.",
+      "meta": {
+        "tags": ["auth", "signin", "brand", "gradient", "split"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Auth031",
+          "usage": "<Auth031 claim=\"Дизайн, который агент ставит без правок\" stats={[{ value: \"1 480\", label: \"блоков в каталоге\" }]} />",
+          "summary": "Экран входа, у которого брендовая панель — главный элемент кадра: форма занимает узкую колонку слева, декоративная панель с градиентом, паттерном, цифрами и цитатой — всю оставшуюся ширину справа. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-auth-031-* и не подменять её токенами вашей темы",
+            "перевёрнутую пропорцию колонок minmax(0,23rem) 1fr: широкая панель и есть характер блока, пополам он превращается в обычный сплит",
+            "форму первой в разметке: с клавиатуры до полей доходят раньше рекламы",
+            "плотность панели — градиент, паттерн в ::before и цифры вместе, по отдельности панель читается пустой заливкой",
+            "поведение на узкой ширине: панель ужимается в полосу с брендом, а не исчезает целиком",
+            "подпись цитаты именем и должностью: анонимный отзыв не работает",
+            "autoComplete в полях формы",
+            "тёмную панель в обеих ветках темы: это дизайн-идея блока, а не забытая палитра",
+            "вывод цвета текста на кнопке из светлоты акцента — фиксированный белый однажды окажется белым на жёлтом"
+          ],
+          "adapt": [
+            "claim, набор stats и текст цитаты",
+            "title, lead, подписи полей и кнопок",
+            "accent — акцент формы, от него же считается первое пятно градиента",
+            "panel — базовый цвет панели под градиентом",
+            "порог перестроения в контейнерном запросе"
+          ],
+          "notes": [
+            "Панель декоративна: не кладите в неё то, без чего нельзя войти.",
+            "Цифр держите три: четвёртая не помещается в строку и переносится некрасиво.",
+            "Цитата должна быть настоящей: выдуманная подрывает доверие ко всему экрану.",
+            "Тема формы берётся из color-scheme. Чтобы она темнела вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "claim",
+            "label": "Обещание",
+            "type": "text",
+            "default": "Дизайн, который агент ставит без правок",
+            "maxLength": 48
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок формы",
+            "type": "text",
+            "default": "С возвращением",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "panel",
+            "label": "Цвет панели",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Brand Panel Sign In",
+            "description": "A sign-in with the proportions flipped: a narrow form column on the left and a wide brand panel on the right — gradient, pattern, figures and a signed customer quote.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-031-*. A server component: there are no hooks. The layout is driven by a container query on the block's own width: from 52rem the grid puts the form into a minmax(0,23rem) column and the panel takes the rest. The panel is built from three radial gradients over a base colour plus a diagonal pattern in ::before under a mask. On narrow widths the panel shrinks to a band with the brand and the promise: the figures and the quote are hidden, the panel itself stays.",
+            "ai": {
+              "summary": "A sign-in screen where the brand panel is the main element of the frame: the form takes a narrow column on the left, and the decorative panel with a gradient, a pattern, figures and a quote takes the rest of the width on the right. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-auth-031-* palette — do not swap it for your theme tokens",
+                "the flipped column proportion minmax(0,23rem) 1fr: the wide panel is the character of the block, split in half it turns into an ordinary two-column screen",
+                "the form first in the markup: keyboard users reach the fields before the pitch",
+                "the density of the panel — gradient, the ::before pattern and the figures together; on their own the panel reads as an empty fill",
+                "the narrow-width behaviour: the panel shrinks to a band with the brand instead of disappearing entirely",
+                "the quote signed with a name and a role: an anonymous testimonial does nothing",
+                "autoComplete on the form fields",
+                "the dark panel in both theme branches: it is the design idea of the block rather than a forgotten palette",
+                "deriving the button text colour from the lightness of the accent — a hard-coded white will one day be white on yellow"
+              ],
+              "adapt": [
+                "claim, the stats set and the quote text",
+                "title, lead, the field labels and the button labels",
+                "accent — the form accent, and the first gradient blob is computed from it too",
+                "panel — the base colour of the panel under the gradient",
+                "the container-query breakpoint"
+              ],
+              "notes": [
+                "The panel is decorative: never put anything sign-in critical there.",
+                "Keep three figures: a fourth does not fit the row and wraps badly.",
+                "The quote must be real: an invented one undermines the whole screen.",
+                "The form theme comes from color-scheme. For it to darken with the system, the project must declare color-scheme: light dark on html.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Auth031 claim=\"Design your agent installs without edits\" stats={[{ value: \"1,480\", label: \"blocks in the catalog\" }]} />"
+            },
+            "controls": {
+              "claim": {
+                "label": "Promise",
+                "default": "Design your agent installs without edits"
+              },
+              "title": {
+                "label": "Form heading",
+                "default": "Welcome back"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "panel": {
+                "label": "Panel colour"
+              }
+            },
+            "preview": {
+              "props": {
+                "brand": "VibeUI",
+                "claim": "Design your agent installs without edits",
+                "stats": [
+                  {
+                    "value": "1,480",
+                    "label": "blocks in the catalog"
+                  },
+                  {
+                    "value": "12s",
+                    "label": "from picking to pasting"
+                  },
+                  {
+                    "value": "0",
+                    "label": "dependencies per block"
+                  }
+                ],
+                "quote": "We stopped arguing about markup. The designer picks a block, the agent installs it, the front-end team works on logic.",
+                "quoteAuthor": "Anna Merz",
+                "quoteRole": "CTO, Polden",
+                "title": "Welcome back",
+                "lead": "Sign in to keep building.",
+                "submit": "Sign in",
+                "emailLabel": "Work email",
+                "emailPlaceholder": "name@company.com",
+                "passwordLabel": "Password",
+                "forgotText": "Forgot?",
+                "switchText": "No account yet?",
+                "switchLink": "Create one"
+              }
+            }
+          }
+        },
+        "cardControls": ["claim", "title", "accent", "panel"]
+      }
+    },
+    {
+      "name": "auth-032",
+      "type": "registry:block",
+      "title": "Светлая форма входа",
+      "description": "Светлый экран входа целиком: шапка с брендом, белая карточка с мягкими тенями, поля в две колонки и ряд сервисов под ними.",
+      "categories": ["auth"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "auth-032/auth-032.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/auth-032.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-032-*. Серверный: хуков нет. Палитра задана явно светлой, light-dark() не используется, а color-scheme:light зафиксирован на корне — блок остаётся светлым и на тёмной странице проекта-хозяина. Кадр держат три горизонтали: шапка, карточка и правовая строка. От 34rem контейнерный запрос ставит поля в две колонки, а кнопки сервисов — в ряд по три.",
+      "meta": {
+        "tags": ["auth", "signin", "light", "card", "shadow"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Auth032",
+          "usage": "<Auth032 title=\"Вход в рабочее пространство\" providers={[\"Google\", \"Apple\", \"GitHub\"]} />",
+          "summary": "Светлый экран входа: белая карточка с многослойными тенями на светлой подложке, поля в две колонки, ряд из трёх сервисов, шапка с брендом и правовая строка внизу. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-auth-032-* и не подменять её токенами вашей темы",
+            "явно светлую палитру и color-scheme:light: блок не переворачивается по теме — светлый вход остаётся светлым и на тёмной странице",
+            "многослойную тень карточки вместо жирной рамки: светлая карточка держится на глубине, а не на контрасте линий",
+            "три горизонтали кадра — шапку, карточку и правовую строку: без них карточка снова повисает в пустоте",
+            "поля в две колонки на широкой ширине: растянутая на всю карточку строка ввода выглядит пустой",
+            "autoComplete в полях формы и настоящий input type=checkbox вместо роли",
+            "видимые фокус-стили: на светлом фоне тонкая обводка теряется быстрее, чем на тёмном"
+          ],
+          "adapt": [
+            "title и lead карточки",
+            "подписи полей, кнопок, ссылку «забыли пароль» и список providers",
+            "accent — акцент кнопки, ссылок и чипа бренда",
+            "surface — цвет светлой подложки страницы",
+            "состав правовой строки legal и текст helpText в шапке"
+          ],
+          "notes": [
+            "Сервисов держите три: четвёртая кнопка ломает ряд и переносится на вторую строку.",
+            "Не заменяйте подложку тёмной: тени рассчитаны на светлый фон и на тёмном исчезают.",
+            "Ссылки правовой строки обязаны вести на настоящие документы — иначе это декорация в юридически значимом месте.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Вход в рабочее пространство",
+            "maxLength": 32
+          },
+          {
+            "prop": "lead",
+            "label": "Подзаголовок",
+            "type": "text",
+            "default": "Введите рабочую почту и пароль — остальное подтянется само.",
+            "maxLength": 72
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": "#3538cd"
+          },
+          {
+            "prop": "surface",
+            "label": "Подложка",
+            "type": "color",
+            "default": "#f4f6fb"
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Light Sign In",
+            "description": "A fully light sign-in screen: a brand bar, a white card with soft shadows, fields in two columns and a row of providers underneath.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-032-*. A server component: there are no hooks. The palette is explicitly light, light-dark() is not used, and color-scheme:light is pinned on the root — the block stays light even on a dark host page. Three horizontals hold the frame: the bar, the card and the legal row. From 34rem a container query puts the fields into two columns and the provider buttons into a row of three.",
+            "ai": {
+              "summary": "A light sign-in screen: a white card with layered shadows on a light surface, fields in two columns, a row of three providers, a brand bar on top and a legal row at the bottom. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-auth-032-* palette — do not swap it for your theme tokens",
+                "the explicitly light palette and color-scheme:light: the block does not flip with the theme — a light sign-in stays light on a dark page too",
+                "the layered card shadow instead of a heavy border: a light card is held by depth, not by contrasting lines",
+                "the three horizontals of the frame — the bar, the card and the legal row: without them the card hangs in emptiness again",
+                "the two-column fields at wide widths: an input stretched across the whole card reads as empty",
+                "autoComplete on the form fields and a real input type=checkbox instead of a role",
+                "the visible focus styles: on a light background a thin outline is lost faster than on a dark one"
+              ],
+              "adapt": [
+                "the card title and lead",
+                "the field labels, the button labels, the forgot-password link and the providers list",
+                "accent — the accent of the button, the links and the brand chip",
+                "surface — the colour of the light page background",
+                "the contents of the legal row and the helpText in the bar"
+              ],
+              "notes": [
+                "Keep three providers: a fourth button breaks the row and wraps onto a second line.",
+                "Do not swap the surface for a dark one: the shadows are tuned for a light background and vanish on a dark one.",
+                "The legal links must point at real documents — otherwise it is decoration in a legally meaningful place.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Auth032 title=\"Sign in to your workspace\" providers={[\"Google\", \"Apple\", \"GitHub\"]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Sign in to your workspace"
+              },
+              "lead": {
+                "label": "Subheading",
+                "default": "Enter your work email and password — we will handle the rest."
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "surface": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "brand": "VibeUI",
+                "helpText": "Need help?",
+                "title": "Sign in to your workspace",
+                "lead": "Enter your work email and password — we will handle the rest.",
+                "emailLabel": "Work email",
+                "emailPlaceholder": "name@company.com",
+                "passwordLabel": "Password",
+                "forgotText": "Forgot password?",
+                "rememberText": "Keep me signed in on this device",
+                "submit": "Sign in",
+                "dividerText": "or continue with",
+                "providers": ["Google", "Apple", "GitHub"],
+                "switchText": "New here?",
+                "switchLink": "Create an account",
+                "legal": ["Terms", "Privacy", "Support"]
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "lead", "accent", "surface"]
+      }
+    },
+    {
+      "name": "auth-033",
+      "type": "registry:block",
+      "title": "Стеклянная карточка входа",
+      "description": "Полупрозрачная карточка входа на backdrop-filter поверх цветного поля с размытыми пятнами и сеткой во всю ширину кадра.",
+      "categories": ["auth"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "auth-033/auth-033.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/auth-033.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-auth-033-*. Серверный: хуков нет. Цветное поле рисует сам блок: диагональный градиент от hue к hueEnd, четыре размытых пятна в слое [data-part=\"field-art\"] и сетка в [data-part=\"grid\"] под маской. Стекло собрано из трёх слоёв — backdrop-filter blur(22px) saturate(180%), полупрозрачная заливка и внутренняя светлая линия по верхней кромке. Палитра задана явно тёмной, color-scheme:dark зафиксирован на корне.",
+      "meta": {
+        "tags": ["auth", "signin", "glass", "backdrop-filter", "gradient"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Auth033",
+          "usage": "<Auth033 title=\"Вход\" hue=\"#4c2fd6\" hueEnd=\"#0b1030\" />",
+          "summary": "Стеклянная карточка входа: полупрозрачная форма с backdrop-filter поверх цветного поля с размытыми пятнами и сеткой. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-auth-033-* и не подменять её токенами вашей темы",
+            "связку «пятна за стеклом плюс backdrop-filter»: на плоской заливке приём вырождается в серую плашку",
+            "три слоя стекла — размытие фона, полупрозрачную заливку и внутреннюю светлую линию по верхней кромке; без линии карточка читается дыркой, а не материалом",
+            "префикс -webkit-backdrop-filter рядом с обычным: без него Safari покажет просто прозрачную плашку",
+            "явно тёмную палитру и color-scheme:dark: цветное поле — суть блока, а не ветка окружения",
+            "контраст текста на стекле: подписи и кнопка выведены на светлые значения и не должны переезжать на приглушённый серый",
+            "autoComplete в полях формы и видимые фокус-стили на полупрозрачном фоне"
+          ],
+          "adapt": [
+            "hue и hueEnd — цвета поля, от них же считаются пятна",
+            "title, lead, badge и подписи полей",
+            "текст кнопок submit и passkeyText, разделитель dividerText",
+            "footnote внизу кадра",
+            "радиусы и степень размытия стекла, если у вашего продукта другой характер поверхностей"
+          ],
+          "notes": [
+            "backdrop-filter стоит дорого: не разводите десяток стеклянных карточек на одном экране.",
+            "Проверяйте контраст на самом светлом пятне фона — именно там текст на стекле тонет первым.",
+            "Не кладите блок на пёструю фотографию: пятна уже дают стеклу что размывать, две фактуры спорят.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Вход",
+            "maxLength": 24
+          },
+          {
+            "prop": "badge",
+            "label": "Метка",
+            "type": "text",
+            "default": "Бета",
+            "maxLength": 14
+          },
+          {
+            "prop": "hue",
+            "label": "Цвет поля",
+            "type": "color",
+            "default": "#4c2fd6"
+          },
+          {
+            "prop": "hueEnd",
+            "label": "Второй цвет",
+            "type": "color",
+            "default": "#0b1030"
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Glass Sign In",
+            "description": "A translucent backdrop-filter sign-in card over a colour field with blurred blobs and a grid spanning the full frame.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-auth-033-*. A server component: there are no hooks. The block paints the colour field itself: a diagonal gradient from hue to hueEnd, four blurred blobs in the [data-part=\"field-art\"] layer and a grid in [data-part=\"grid\"] under a mask. The glass is three layers — backdrop-filter blur(22px) saturate(180%), a translucent fill and an inner light line along the top edge. The palette is explicitly dark and color-scheme:dark is pinned on the root.",
+            "ai": {
+              "summary": "A glass sign-in card: a translucent backdrop-filter form over a colour field with blurred blobs and a grid. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-auth-033-* palette — do not swap it for your theme tokens",
+                "the pairing of blobs behind the glass with backdrop-filter: over a flat fill the effect degenerates into a grey panel",
+                "the three glass layers — the background blur, the translucent fill and the inner light line along the top edge; without the line the card reads as a hole rather than a material",
+                "the -webkit-backdrop-filter prefix next to the plain one: without it Safari shows a merely transparent panel",
+                "the explicitly dark palette and color-scheme:dark: the colour field is the point of the block, not a branch of the surroundings",
+                "the text contrast on the glass: the labels and the button sit on light values and must not drift to a muted grey",
+                "autoComplete on the form fields and visible focus styles on the translucent background"
+              ],
+              "adapt": [
+                "hue and hueEnd — the field colours, the blobs are computed from them too",
+                "title, lead, badge and the field labels",
+                "the submit and passkeyText button labels and the dividerText separator",
+                "the footnote at the bottom of the frame",
+                "the radii and the blur strength of the glass if your product has a different surface character"
+              ],
+              "notes": [
+                "backdrop-filter is expensive: do not scatter a dozen glass cards across one screen.",
+                "Check the contrast over the lightest blob of the background — that is where text on glass drowns first.",
+                "Do not put the block over a busy photograph: the blobs already give the glass something to blur, and two textures fight.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Auth033 title=\"Sign in\" hue=\"#4c2fd6\" hueEnd=\"#0b1030\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Sign in"
+              },
+              "badge": {
+                "label": "Badge",
+                "default": "Beta"
+              },
+              "hue": {
+                "label": "Field colour"
+              },
+              "hueEnd": {
+                "label": "Second colour"
+              }
+            },
+            "preview": {
+              "props": {
+                "brand": "VibeUI",
+                "badge": "Beta",
+                "title": "Sign in",
+                "lead": "Pick up where you left off.",
+                "emailLabel": "Email",
+                "emailPlaceholder": "name@company.com",
+                "passwordLabel": "Password",
+                "forgotText": "Forgot?",
+                "submit": "Sign in",
+                "dividerText": "or",
+                "passkeyText": "Sign in with a passkey",
+                "switchText": "No account yet?",
+                "switchLink": "Create one",
+                "footnote": "Protected with end-to-end encryption"
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "badge", "hue", "hueEnd"]
+      }
     }
   ]
 }

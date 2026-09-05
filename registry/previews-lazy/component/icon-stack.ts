@@ -7,33 +7,21 @@ import type { PreviewMap } from "@/registry/preview-types"
 
 export const PREVIEWS = {
   "iconstack-001": dynamic(() =>
-    import("@/registry/components/icon-stack/iconstack-001/iconstack-001").then(
-      (module) => module.Iconstack001,
-    ),
+    import("@/registry/components/icon-stack/iconstack-001/iconstack-001").then((module) => module.Iconstack001),
   ),
   "iconstack-002": dynamic(() =>
-    import("@/registry/components/icon-stack/iconstack-002/iconstack-002").then(
-      (module) => module.Iconstack002,
-    ),
+    import("@/registry/components/icon-stack/iconstack-002/iconstack-002").then((module) => module.Iconstack002),
   ),
   "iconstack-003": dynamic(() =>
-    import("@/registry/components/icon-stack/iconstack-003/iconstack-003").then(
-      (module) => module.Iconstack003,
-    ),
+    import("@/registry/components/icon-stack/iconstack-003/iconstack-003").then((module) => module.Iconstack003),
   ),
   "iconstack-004": dynamic(() =>
-    import("@/registry/components/icon-stack/iconstack-004/iconstack-004").then(
-      (module) => module.Iconstack004,
-    ),
+    import("@/registry/components/icon-stack/iconstack-004/iconstack-004").then((module) => module.Iconstack004),
   ),
   "iconstack-005": dynamic(() =>
-    import("@/registry/components/icon-stack/iconstack-005/iconstack-005").then(
-      (module) => module.Iconstack005,
-    ),
+    import("@/registry/components/icon-stack/iconstack-005/iconstack-005").then((module) => module.Iconstack005),
   ),
   "iconstack-006": dynamic(() =>
-    import("@/registry/components/icon-stack/iconstack-006/iconstack-006").then(
-      (module) => module.Iconstack006,
-    ),
+    import("@/registry/components/icon-stack/iconstack-006/iconstack-006").then((module) => module.Iconstack006),
   ),
 } satisfies PreviewMap

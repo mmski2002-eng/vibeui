@@ -3,6 +3,11 @@
 import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Hovercard007Props = Omit<ComponentProps<"div">, "children"> & {
+  /**
+   * Показать карточку раскрытой прямо в потоке: витрина, скриншот, отладка.
+   * Ссылка остаётся на месте, задержка в этом режиме не отсчитывается.
+   */
+  open?: boolean
   label?: string
   title?: string
   text?: string
@@ -96,6 +101,15 @@ padding-top:0.375rem;border-top:1px solid var(--vibeui-hovercard-007-border);
 font-size:0.6875rem;color:var(--vibeui-hovercard-007-muted);
 }
 [data-vibeui-block="hovercard-007"] [data-part="hint"] b{color:var(--vibeui-hovercard-007-fg);font-weight:650;font-variant-numeric:tabular-nums}
+/* Витринный режим: карточка стоит в потоке под ссылкой, а не поверх текста —
+   иначе на миниатюре каталога от компонента видна одна строка. Полоска
+   ожидания залита сразу: отсчитывать нечего, карточка уже раскрыта. */
+[data-vibeui-block="hovercard-007"][data-open="true"] [data-part="host"]{display:block}
+[data-vibeui-block="hovercard-007"][data-open="true"] [data-part="link"]::after{transform:scaleX(1)}
+[data-vibeui-block="hovercard-007"][data-open="true"] [data-part="card"]{
+position:static;opacity:1;visibility:visible;translate:0;
+margin-top:0.5rem;max-width:100%;transition-delay:0s;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="hovercard-007"] *{animation:none!important;transition:none!important}}
 `
 
@@ -136,6 +150,7 @@ function closeOnEscape(event: KeyboardEvent<HTMLElement>) {
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Hovercard007({
+  open = false,
   label = "тарифы на хранение",
   title = "Хранение файлов",
   text = "Первые 50 ГБ входят в любой тариф. Дальше считаем по 4 ₽ за гигабайт в месяц, округляя вниз до целого.",
@@ -173,6 +188,7 @@ export function Hovercard007({
         data-slot="hover-card"
         onKeyDown={closeOnEscape}
         data-vibeui-block="hovercard-007"
+        data-open={open || undefined}
         className={className}
         style={palette}
       >

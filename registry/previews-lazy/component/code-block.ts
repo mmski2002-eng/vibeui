@@ -7,158 +7,96 @@ import type { PreviewMap } from "@/registry/preview-types"
 
 export const PREVIEWS = {
   "codeblock-001": dynamic(() =>
-    import("@/registry/components/code-block/codeblock-001/codeblock-001").then(
-      (module) => module.Codeblock001,
-    ),
+    import("@/registry/components/code-block/codeblock-001/codeblock-001").then((module) => module.Codeblock001),
   ),
   "codeblock-002": dynamic(() =>
-    import("@/registry/components/code-block/codeblock-002/codeblock-002").then(
-      (module) => module.Codeblock002,
-    ),
+    import("@/registry/components/code-block/codeblock-002/codeblock-002").then((module) => module.Codeblock002),
   ),
   "codeblock-003": dynamic(() =>
-    import("@/registry/components/code-block/codeblock-003/codeblock-003").then(
-      (module) => module.Codeblock003,
-    ),
+    import("@/registry/components/code-block/codeblock-003/codeblock-003").then((module) => module.Codeblock003),
   ),
   "codeblock-004": dynamic(() =>
-    import("@/registry/components/code-block/codeblock-004/codeblock-004").then(
-      (module) => module.Codeblock004,
-    ),
+    import("@/registry/components/code-block/codeblock-004/codeblock-004").then((module) => module.Codeblock004),
   ),
   "codeblock-005": dynamic(() =>
-    import("@/registry/components/code-block/codeblock-005/codeblock-005").then(
-      (module) => module.Codeblock005,
-    ),
+    import("@/registry/components/code-block/codeblock-005/codeblock-005").then((module) => module.Codeblock005),
   ),
   "codeblock-006": dynamic(() =>
-    import("@/registry/components/code-block/codeblock-006/codeblock-006").then(
-      (module) => module.Codeblock006,
-    ),
+    import("@/registry/components/code-block/codeblock-006/codeblock-006").then((module) => module.Codeblock006),
   ),
   "codeblock-007": dynamic(() =>
-    import("@/registry/components/code-block/codeblock-007/codeblock-007").then(
-      (module) => module.Codeblock007,
-    ),
+    import("@/registry/components/code-block/codeblock-007/codeblock-007").then((module) => module.Codeblock007),
   ),
   "codeblock-008": dynamic(() =>
-    import("@/registry/components/code-block/codeblock-008/codeblock-008").then(
-      (module) => module.Codeblock008,
-    ),
+    import("@/registry/components/code-block/codeblock-008/codeblock-008").then((module) => module.Codeblock008),
   ),
   "codeblock-009": dynamic(() =>
-    import("@/registry/components/code-block/codeblock-009/codeblock-009").then(
-      (module) => module.Codeblock009,
-    ),
+    import("@/registry/components/code-block/codeblock-009/codeblock-009").then((module) => module.Codeblock009),
   ),
   "codeblock-010": dynamic(() =>
-    import("@/registry/components/code-block/codeblock-010/codeblock-010").then(
-      (module) => module.Codeblock010,
-    ),
+    import("@/registry/components/code-block/codeblock-010/codeblock-010").then((module) => module.Codeblock010),
   ),
   "codeblock-011": dynamic(() =>
-    import("@/registry/components/code-block/codeblock-011/codeblock-011").then(
-      (module) => module.Codeblock011,
-    ),
+    import("@/registry/components/code-block/codeblock-011/codeblock-011").then((module) => module.Codeblock011),
   ),
   "codeblock-012": dynamic(() =>
-    import("@/registry/components/code-block/codeblock-012/codeblock-012").then(
-      (module) => module.Codeblock012,
-    ),
+    import("@/registry/components/code-block/codeblock-012/codeblock-012").then((module) => module.Codeblock012),
   ),
   "codeblock-013": dynamic(() =>
-    import("@/registry/components/code-block/codeblock-013/codeblock-013").then(
-      (module) => module.Codeblock013,
-    ),
+    import("@/registry/components/code-block/codeblock-013/codeblock-013").then((module) => module.Codeblock013),
   ),
   "codeblock-014": dynamic(() =>
-    import("@/registry/components/code-block/codeblock-014/codeblock-014").then(
-      (module) => module.Codeblock014,
-    ),
+    import("@/registry/components/code-block/codeblock-014/codeblock-014").then((module) => module.Codeblock014),
   ),
   "codeblock-015": dynamic(() =>
-    import("@/registry/components/code-block/codeblock-015/codeblock-015").then(
-      (module) => module.Codeblock015,
-    ),
+    import("@/registry/components/code-block/codeblock-015/codeblock-015").then((module) => module.Codeblock015),
   ),
   "codeblock-016": dynamic(() =>
-    import("@/registry/components/code-block/codeblock-016/codeblock-016").then(
-      (module) => module.Codeblock016,
-    ),
+    import("@/registry/components/code-block/codeblock-016/codeblock-016").then((module) => module.Codeblock016),
   ),
   "codeblock-017": dynamic(() =>
-    import("@/registry/components/code-block/codeblock-017/codeblock-017").then(
-      (module) => module.Codeblock017,
-    ),
+    import("@/registry/components/code-block/codeblock-017/codeblock-017").then((module) => module.Codeblock017),
   ),
   "codeblock-018": dynamic(() =>
-    import("@/registry/components/code-block/codeblock-018/codeblock-018").then(
-      (module) => module.Codeblock018,
-    ),
+    import("@/registry/components/code-block/codeblock-018/codeblock-018").then((module) => module.Codeblock018),
   ),
   "codeblock-019": dynamic(() =>
-    import("@/registry/components/code-block/codeblock-019/codeblock-019").then(
-      (module) => module.Codeblock019,
-    ),
+    import("@/registry/components/code-block/codeblock-019/codeblock-019").then((module) => module.Codeblock019),
   ),
   "codeblock-020": dynamic(() =>
-    import("@/registry/components/code-block/codeblock-020/codeblock-020").then(
-      (module) => module.Codeblock020,
-    ),
+    import("@/registry/components/code-block/codeblock-020/codeblock-020").then((module) => module.Codeblock020),
   ),
   "codeblock-021": dynamic(() =>
-    import("@/registry/components/code-block/codeblock-021/codeblock-021").then(
-      (module) => module.Codeblock021,
-    ),
+    import("@/registry/components/code-block/codeblock-021/codeblock-021").then((module) => module.Codeblock021),
   ),
   "codeblock-022": dynamic(() =>
-    import("@/registry/components/code-block/codeblock-022/codeblock-022").then(
-      (module) => module.Codeblock022,
-    ),
+    import("@/registry/components/code-block/codeblock-022/codeblock-022").then((module) => module.Codeblock022),
   ),
   "codeblock-023": dynamic(() =>
-    import("@/registry/components/code-block/codeblock-023/codeblock-023").then(
-      (module) => module.Codeblock023,
-    ),
+    import("@/registry/components/code-block/codeblock-023/codeblock-023").then((module) => module.Codeblock023),
   ),
   "codeblock-024": dynamic(() =>
-    import("@/registry/components/code-block/codeblock-024/codeblock-024").then(
-      (module) => module.Codeblock024,
-    ),
+    import("@/registry/components/code-block/codeblock-024/codeblock-024").then((module) => module.Codeblock024),
   ),
   "codeblock-025": dynamic(() =>
-    import("@/registry/components/code-block/codeblock-025/codeblock-025").then(
-      (module) => module.Codeblock025,
-    ),
+    import("@/registry/components/code-block/codeblock-025/codeblock-025").then((module) => module.Codeblock025),
   ),
   "codeblock-026": dynamic(() =>
-    import("@/registry/components/code-block/codeblock-026/codeblock-026").then(
-      (module) => module.Codeblock026,
-    ),
+    import("@/registry/components/code-block/codeblock-026/codeblock-026").then((module) => module.Codeblock026),
   ),
   "codeblock-027": dynamic(() =>
-    import("@/registry/components/code-block/codeblock-027/codeblock-027").then(
-      (module) => module.Codeblock027,
-    ),
+    import("@/registry/components/code-block/codeblock-027/codeblock-027").then((module) => module.Codeblock027),
   ),
   "code-001": dynamic(() =>
-    import("@/registry/components/code-block/code-001/code-001").then(
-      (module) => module.Code001,
-    ),
+    import("@/registry/components/code-block/code-001/code-001").then((module) => module.Code001),
   ),
   "codeblock-028": dynamic(() =>
-    import("@/registry/components/code-block/codeblock-028/codeblock-028").then(
-      (module) => module.Codeblock028,
-    ),
+    import("@/registry/components/code-block/codeblock-028/codeblock-028").then((module) => module.Codeblock028),
   ),
   "codeblock-029": dynamic(() =>
-    import("@/registry/components/code-block/codeblock-029/codeblock-029").then(
-      (module) => module.Codeblock029,
-    ),
+    import("@/registry/components/code-block/codeblock-029/codeblock-029").then((module) => module.Codeblock029),
   ),
   "codeblock-030": dynamic(() =>
-    import("@/registry/components/code-block/codeblock-030/codeblock-030").then(
-      (module) => module.Codeblock030,
-    ),
+    import("@/registry/components/code-block/codeblock-030/codeblock-030").then((module) => module.Codeblock030),
   ),
 } satisfies PreviewMap

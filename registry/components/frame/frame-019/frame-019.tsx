@@ -69,10 +69,29 @@ border-radius:calc(var(--vibeui-frame-019-radius) - 2px);
 }
 [data-vibeui-block="frame-019"] [data-part="card"] > *{display:block;width:100%}
 [data-vibeui-block="frame-019"] img{display:block;width:100%;height:auto}
-[data-vibeui-block="frame-019"] [data-part="stub"]{
-display:grid;place-items:center;gap:0.5rem;
-min-height:9rem;padding:1.75rem;text-align:center;
+/* Внутри светящейся рамки стоит небольшая карточка, а не строка текста:
+   свечение должно обрамлять содержимое, иначе приём не читается. */
+[data-vibeui-block="frame-019"] [data-part="card"] [data-part="stub"]{
+display:flex;flex-direction:column;align-items:flex-start;gap:0.5rem;
+min-height:9rem;padding:1.125rem 1.25rem;text-align:left;
 font-size:0.8125rem;color:var(--vibeui-frame-019-muted);
+}
+[data-vibeui-block="frame-019"] [data-part="badge"]{
+display:block;width:3rem;height:0.75rem;border-radius:9999px;
+background:linear-gradient(120deg,var(--vibeui-frame-019-border-a),var(--vibeui-frame-019-border-b));
+}
+[data-vibeui-block="frame-019"] [data-part="stub-title"]{
+margin:0;font-size:1rem;font-weight:700;line-height:1.25;
+color:var(--vibeui-frame-019-fg);
+}
+[data-vibeui-block="frame-019"] [data-part="stub-line"]{
+display:block;width:100%;height:0.4375rem;border-radius:9999px;
+background:color-mix(in oklab,var(--vibeui-frame-019-fg) 16%,transparent);
+}
+[data-vibeui-block="frame-019"] [data-part="stub-line"] + [data-part="stub-line"]{width:64%}
+[data-vibeui-block="frame-019"] [data-part="stub-cta"]{
+display:block;width:5.5rem;height:1.5rem;margin-top:0.25rem;border-radius:0.5rem;
+background:linear-gradient(120deg,var(--vibeui-frame-019-border-a),var(--vibeui-frame-019-border-b));
 }
 [data-vibeui-block="frame-019"] figcaption{
 position:relative;z-index:1;margin-top:1rem;
@@ -156,7 +175,15 @@ export function Frame019({
           <div data-part="glow" aria-hidden="true" />
           <div data-part="border">
             <div data-part="card">
-              {children ?? <div data-part="stub">{stub}</div>}
+              {children ?? (
+                <div data-part="stub">
+                  <span data-part="badge" aria-hidden="true" />
+                  <p data-part="stub-title">{stub}</p>
+                  <span data-part="stub-line" aria-hidden="true" />
+                  <span data-part="stub-line" aria-hidden="true" />
+                  <span data-part="stub-cta" aria-hidden="true" />
+                </div>
+              )}
             </div>
           </div>
         </div>

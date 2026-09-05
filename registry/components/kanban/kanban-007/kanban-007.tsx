@@ -7,6 +7,8 @@ export type Kanban007Card = {
   id: string
   title: string
   hours: number
+  /** Оттенок полосы и плашки часов в градусах oklch: 0 — красный, 150 — зелёный. */
+  hue?: number
   column: string
 }
 
@@ -31,7 +33,7 @@ export type Kanban007Props = Omit<
 // колонки показана и цифрой, и полосой: полоса даёт сравнение колонок с одного
 // взгляда, цифра — точность. Итоговая строка сделана тегом footer со сводкой
 // словами, поэтому её читают и глазами, и скринридером. Перенос: мышью — drag,
-// с клавиатуры — список колонок на карточке, результат объявляется вслух.
+// с клавиатуры — ряд чипов-колонок на карточке, результат объявляется вслух.
 //
 // Тема берётся из color-scheme окружения через light-dark(): доска темнеет
 // вместе со страницей и не носит собственной тёмной темы.
@@ -43,6 +45,7 @@ const STYLES = `
 --vibeui-kanban-007-muted:color-mix(in oklab,var(--vibeui-kanban-007-fg) 68%,transparent);
 --vibeui-kanban-007-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
 --vibeui-kanban-007-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.15 262));
+--vibeui-kanban-007-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.03 262));
 --vibeui-kanban-007-shadow:light-dark(oklch(0.2 0.02 265 / 6%),oklch(0 0 0 / 32%));
 --vibeui-kanban-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -84,19 +87,40 @@ box-shadow:0 1px 2px var(--vibeui-kanban-007-shadow);
 font-size:0.75rem;line-height:1.35;
 }
 [data-vibeui-block="kanban-007"] [data-part="card"][data-dragging="true"]{opacity:.45}
+/* Оттенок приходит из данных: по цвету полосы видно вес задачи ещё до чтения
+   часов, и оттенок задаётся одним числом, а не новой переменной темы. */
+[data-vibeui-block="kanban-007"] [data-part="card"]{
+--vibeui-kanban-007-mark:light-dark(oklch(0.5 0.16 var(--vibeui-kanban-007-hue,262)),oklch(0.78 0.14 var(--vibeui-kanban-007-hue,262)));
+border-left:3px solid var(--vibeui-kanban-007-mark);
+}
 [data-vibeui-block="kanban-007"] [data-part="hours"]{
 justify-self:start;padding:0 0.375rem;border-radius:0.375rem;
-background:color-mix(in oklab,var(--vibeui-kanban-007-accent) 10%,transparent);
-color:color-mix(in oklab,var(--vibeui-kanban-007-accent) 80%,light-dark(black,white));
+background:color-mix(in oklab,var(--vibeui-kanban-007-mark) 16%,transparent);
+color:var(--vibeui-kanban-007-mark);
 font-size:0.625rem;font-weight:650;font-variant-numeric:tabular-nums;
 }
-[data-vibeui-block="kanban-007"] select{
-width:100%;height:1.625rem;padding:0 0.25rem;
-border:1px solid var(--vibeui-kanban-007-border);border-radius:0.375rem;
-background:var(--vibeui-kanban-007-card);color:var(--vibeui-kanban-007-muted);
-font:inherit;font-size:0.625rem;
+/* Второй путь переноса: чипы-кнопки с aria-pressed вместо списка выбора.
+   Список внутри карточки выглядит формой и уводит внимание с задачи. */
+[data-vibeui-block="kanban-007"] [data-part="move"]{
+display:flex;flex-wrap:wrap;gap:0.25rem;
 }
-[data-vibeui-block="kanban-007"] select:focus-visible{outline:2px solid var(--vibeui-kanban-007-accent);outline-offset:1px}
+[data-vibeui-block="kanban-007"] [data-part="chip"]{
+appearance:none;cursor:pointer;
+padding:0.0625rem 0.4375rem;border-radius:9999px;
+border:1px solid var(--vibeui-kanban-007-border);
+background:none;color:var(--vibeui-kanban-007-muted);
+font:inherit;font-size:0.625rem;font-weight:600;line-height:1.5;
+transition:background-color .15s ease,color .15s ease,border-color .15s ease;
+}
+[data-vibeui-block="kanban-007"] [data-part="chip"]:hover{
+border-color:var(--vibeui-kanban-007-accent);color:var(--vibeui-kanban-007-fg);
+}
+[data-vibeui-block="kanban-007"] [data-part="chip"][aria-pressed="true"]{
+background:var(--vibeui-kanban-007-accent);
+border-color:var(--vibeui-kanban-007-accent);
+color:var(--vibeui-kanban-007-on-accent);cursor:default;
+}
+[data-vibeui-block="kanban-007"] [data-part="chip"]:focus-visible{outline:2px solid var(--vibeui-kanban-007-accent);outline-offset:1px}
 /* Итог колонки считается из карточек: отдельное число разошлось бы после переноса. */
 [data-vibeui-block="kanban-007"] [data-part="total"]{
 display:grid;gap:0.25rem;padding-top:0.375rem;
@@ -128,11 +152,11 @@ clip-path:inset(50%);white-space:nowrap;border:0;
 const DEFAULT_COLUMNS = ["Оценено", "В работе", "Сдано"]
 
 const DEFAULT_CARDS: Kanban007Card[] = [
-  { id: "1", title: "Каталог: фильтры", hours: 12, column: "Оценено" },
-  { id: "2", title: "Экспорт заказов", hours: 6, column: "Оценено" },
-  { id: "3", title: "Личный кабинет", hours: 20, column: "В работе" },
-  { id: "4", title: "Импорт остатков", hours: 8, column: "В работе" },
-  { id: "5", title: "Страница тарифов", hours: 5, column: "Сдано" },
+  { id: "1", title: "Каталог: фильтры", hours: 12, hue: 262, column: "Оценено" },
+  { id: "2", title: "Экспорт заказов", hours: 6, hue: 150, column: "Оценено" },
+  { id: "3", title: "Личный кабинет", hours: 20, hue: 25, column: "В работе" },
+  { id: "4", title: "Импорт остатков", hours: 8, hue: 60, column: "В работе" },
+  { id: "5", title: "Страница тарифов", hours: 5, hue: 150, column: "Сдано" },
 ]
 
 const DEFAULT_TEXT: Record<string, string> = {
@@ -277,6 +301,13 @@ export function Kanban007({
                         data-part="card"
                         data-dragging={card.id === dragged}
                         draggable
+                        style={
+                          card.hue === undefined
+                            ? undefined
+                            : ({
+                                "--vibeui-kanban-007-hue": card.hue,
+                              } as CSSProperties)
+                        }
                         onDragStart={() => setDragged(card.id)}
                         onDragEnd={() => {
                           setDragged(null)
@@ -287,19 +318,25 @@ export function Kanban007({
                         <span data-part="hours">
                           {card.hours} {unit}
                         </span>
-                        <select
-                          value={card.column}
+                        <div
+                          data-part="move"
+                          role="group"
                           aria-label={fill(labels.picker, {
                             title: card.title,
                           })}
-                          onChange={(event) => put(card.id, event.target.value)}
                         >
                           {columns.map((option) => (
-                            <option key={option} value={option}>
+                            <button
+                              key={option}
+                              type="button"
+                              data-part="chip"
+                              aria-pressed={option === card.column}
+                              onClick={() => put(card.id, option)}
+                            >
                               {option}
-                            </option>
+                            </button>
                           ))}
-                        </select>
+                        </div>
                       </article>
                     </li>
                   ))}

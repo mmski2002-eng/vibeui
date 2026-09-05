@@ -142,6 +142,10 @@
         },
         "cardControls": ["page", "total", "siblings", "accent"],
         "preview": {
+          "props": {
+            "page": 11,
+            "total": 12
+          },
           "width": "full"
         }
       }
@@ -165,6 +169,11 @@
       "meta": {
         "tags": ["pagination", "cursor", "list", "range"],
         "preview": {
+          "props": {
+            "from": 121,
+            "perPage": 20,
+            "total": 3480
+          },
           "width": "full"
         },
         "ai": {
@@ -320,6 +329,10 @@
       "meta": {
         "tags": ["pagination", "ellipsis", "jump", "list"],
         "preview": {
+          "props": {
+            "defaultPage": 64,
+            "total": 128
+          },
           "width": "full"
         },
         "ai": {
@@ -609,6 +622,10 @@
         },
         "cardControls": ["page", "total", "accent", "background"],
         "preview": {
+          "props": {
+            "page": 4,
+            "total": 128
+          },
           "width": "full"
         }
       }

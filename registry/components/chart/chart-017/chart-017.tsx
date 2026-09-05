@@ -56,11 +56,18 @@ color:var(--vibeui-chart-017-fg);font-family:var(--vibeui-chart-017-font);
    с бордерами, поэтому фигура тянется вместе с контейнером. */
 [data-vibeui-block="chart-017"] [data-part="slab"]{
 display:flex;align-items:center;justify-content:center;gap:0.5rem;
+box-sizing:border-box;padding-inline:var(--vibeui-chart-017-inset);
 height:2.75rem;color:oklch(1 0 0);font-size:0.8125rem;font-weight:600;
 background:var(--vibeui-chart-017-slab);
 clip-path:polygon(var(--vibeui-chart-017-tl) 0%,var(--vibeui-chart-017-tr) 0%,var(--vibeui-chart-017-br) 100%,var(--vibeui-chart-017-bl) 100%);
 }
-[data-vibeui-block="chart-017"] [data-part="count"]{font-variant-numeric:tabular-nums;opacity:0.85}
+/* Подпись живёт внутри узкой части трапеции: за её краем clip-path режет
+   текст посреди буквы. Ширину задаёт padding по узкой стороне, лишнее
+   уходит в многоточие, а число не сжимается — цифры не усекают. */
+[data-vibeui-block="chart-017"] [data-part="label"]{
+min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+[data-vibeui-block="chart-017"] [data-part="count"]{flex:none;font-variant-numeric:tabular-nums;opacity:0.85}
 [data-vibeui-block="chart-017"] [data-part="drop"]{
 display:flex;align-items:center;justify-content:center;gap:0.375rem;
 padding:0.1875rem 0;font-size:0.6875rem;color:var(--vibeui-chart-017-muted);
@@ -74,12 +81,16 @@ clip-path:inset(50%);white-space:nowrap;border:0;
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="chart-017"] *{animation:none!important;transition:none!important}}
 `
 
+const MIN_SHARE = 0.34
+
+// Подписи короткие намеренно: ступень тем уже, чем меньше её доля, и длинное
+// название в нижних ступенях не помещается ни при какой вёрстке.
 const DEFAULT_STEPS: Chart017Step[] = [
-  { label: "Открыли каталог", value: 12_400 },
-  { label: "Открыли компонент", value: 7_150 },
-  { label: "Нажали Copy for AI", value: 3_020 },
-  { label: "Установили", value: 1_260 },
-  { label: "Вернулись за вторым", value: 540 },
+  { label: "Каталог", value: 12_400 },
+  { label: "Компонент", value: 7_150 },
+  { label: "Copy for AI", value: 3_020 },
+  { label: "Установка", value: 1_260 },
+  { label: "Возврат", value: 540 },
 ]
 
 /**
@@ -159,14 +170,20 @@ export function Chart017({
         <ol>
           {steps.map((step, index) => {
             const next = steps[index + 1]
-            // Минимум в 12 % ширины: нулевая ступень не должна схлопываться
-            // в линию, иначе последний шаг исчезает с картинки.
-            const topShare = Math.max(step.value / first, 0.12)
+            // Минимум в 34 % ширины: ступень не должна схлопываться в линию,
+            // а в узкой части обязаны помещаться число и хвост подписи.
+            const topShare = Math.max(step.value / first, MIN_SHARE)
             const bottomShare = Math.max(
               (next?.value ?? step.value) / first,
-              0.12,
+              MIN_SHARE,
             )
+            // Ширина трапеции на высоте строки: середина минус запас на скос,
+            // потому что подпись стоит по центру, а не по краю ступени.
+            const narrow =
+              (topShare + bottomShare) / 2 -
+              0.2 * Math.abs(topShare - bottomShare)
             const edges = {
+              "--vibeui-chart-017-inset": `calc(${((1 - narrow) / 2) * 100}% + 0.375rem)`,
               "--vibeui-chart-017-tl": `${((1 - topShare) / 2) * 100}%`,
               "--vibeui-chart-017-tr": `${((1 + topShare) / 2) * 100}%`,
               "--vibeui-chart-017-bl": `${((1 - bottomShare) / 2) * 100}%`,
@@ -177,7 +194,7 @@ export function Chart017({
             return (
               <li key={step.label} data-part="step">
                 <div data-part="slab" style={edges}>
-                  <span>{step.label}</span>
+                  <span data-part="label">{step.label}</span>
                   <span data-part="count">{step.value}</span>
                 </div>
                 {next ? (

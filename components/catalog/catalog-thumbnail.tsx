@@ -52,6 +52,7 @@ export function CatalogThumbnail({
       full={preview?.width === "full"}
       props={preview?.props}
       states={preview?.states}
+      aspect={preview?.aspect}
     />
   )
 }

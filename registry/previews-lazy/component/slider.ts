@@ -7,63 +7,39 @@ import type { PreviewMap } from "@/registry/preview-types"
 
 export const PREVIEWS = {
   "slider-001": dynamic(() =>
-    import("@/registry/components/slider/slider-001/slider-001").then(
-      (module) => module.Slider001,
-    ),
+    import("@/registry/components/slider/slider-001/slider-001").then((module) => module.Slider001),
   ),
   "slider-002": dynamic(() =>
-    import("@/registry/components/slider/slider-002/slider-002").then(
-      (module) => module.Slider002,
-    ),
+    import("@/registry/components/slider/slider-002/slider-002").then((module) => module.Slider002),
   ),
   "slider-003": dynamic(() =>
-    import("@/registry/components/slider/slider-003/slider-003").then(
-      (module) => module.Slider003,
-    ),
+    import("@/registry/components/slider/slider-003/slider-003").then((module) => module.Slider003),
   ),
   "slider-004": dynamic(() =>
-    import("@/registry/components/slider/slider-004/slider-004").then(
-      (module) => module.Slider004,
-    ),
+    import("@/registry/components/slider/slider-004/slider-004").then((module) => module.Slider004),
   ),
   "slider-005": dynamic(() =>
-    import("@/registry/components/slider/slider-005/slider-005").then(
-      (module) => module.Slider005,
-    ),
+    import("@/registry/components/slider/slider-005/slider-005").then((module) => module.Slider005),
   ),
   "slider-006": dynamic(() =>
-    import("@/registry/components/slider/slider-006/slider-006").then(
-      (module) => module.Slider006,
-    ),
+    import("@/registry/components/slider/slider-006/slider-006").then((module) => module.Slider006),
   ),
   "slider-007": dynamic(() =>
-    import("@/registry/components/slider/slider-007/slider-007").then(
-      (module) => module.Slider007,
-    ),
+    import("@/registry/components/slider/slider-007/slider-007").then((module) => module.Slider007),
   ),
   "slider-008": dynamic(() =>
-    import("@/registry/components/slider/slider-008/slider-008").then(
-      (module) => module.Slider008,
-    ),
+    import("@/registry/components/slider/slider-008/slider-008").then((module) => module.Slider008),
   ),
   "slider-009": dynamic(() =>
-    import("@/registry/components/slider/slider-009/slider-009").then(
-      (module) => module.Slider009,
-    ),
+    import("@/registry/components/slider/slider-009/slider-009").then((module) => module.Slider009),
   ),
   "slider-010": dynamic(() =>
-    import("@/registry/components/slider/slider-010/slider-010").then(
-      (module) => module.Slider010,
-    ),
+    import("@/registry/components/slider/slider-010/slider-010").then((module) => module.Slider010),
   ),
   "slider-011": dynamic(() =>
-    import("@/registry/components/slider/slider-011/slider-011").then(
-      (module) => module.Slider011,
-    ),
+    import("@/registry/components/slider/slider-011/slider-011").then((module) => module.Slider011),
   ),
   "slider-012": dynamic(() =>
-    import("@/registry/components/slider/slider-012/slider-012").then(
-      (module) => module.Slider012,
-    ),
+    import("@/registry/components/slider/slider-012/slider-012").then((module) => module.Slider012),
   ),
 } satisfies PreviewMap

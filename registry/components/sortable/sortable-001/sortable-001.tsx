@@ -15,6 +15,10 @@ export type Sortable001Props = Omit<
   moveUpLabel?: string
   /** Подпись кнопки «ниже»: те же подстановки. */
   moveDownLabel?: string
+  /** Индекс приподнятой строки: показать перенос на статичной картинке. */
+  defaultDragged?: number
+  /** Индекс строки, перед которой встанет вставка. */
+  defaultOver?: number
   /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
   background?: string
   accent?: string
@@ -32,6 +36,7 @@ const STYLES = `
 --vibeui-sortable-001-muted:color-mix(in oklab,var(--vibeui-sortable-001-fg) 68%,transparent);
 --vibeui-sortable-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
 --vibeui-sortable-001-hover:light-dark(oklch(0.55 0.02 265 / 7%),oklch(0.85 0.02 265 / 12%));
+--vibeui-sortable-001-shadow:light-dark(oklch(0.2 0.02 265 / 16%),oklch(0 0 0 / 46%));
 --vibeui-sortable-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.73 0.16 262));
 --vibeui-sortable-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -54,7 +59,13 @@ padding:0.4375rem 0.5rem;border-radius:0.625rem;
 border:1px solid var(--vibeui-sortable-001-border);
 background:var(--vibeui-sortable-001-bg);font-size:0.8125rem;
 }
-[data-vibeui-block="sortable-001"] li[data-dragging="true"]{opacity:.45}
+/* Строка «в руке» приподнята тенью и сдвигом: одной полупрозрачности мало —
+   на миниатюре она читается как выключенная строка, а не как переносимая. */
+[data-vibeui-block="sortable-001"] li[data-dragging="true"]{
+opacity:.6;border-color:var(--vibeui-sortable-001-accent);
+box-shadow:0 8px 18px var(--vibeui-sortable-001-shadow);
+transform:translateY(-1px);
+}
 /* Место вставки — линия сверху строки, а не подсветка всей строки целиком. */
 [data-vibeui-block="sortable-001"] li[data-over="true"]{box-shadow:inset 0 2px 0 var(--vibeui-sortable-001-accent)}
 [data-vibeui-block="sortable-001"] [data-part="grip"]{
@@ -122,6 +133,8 @@ export function Sortable001({
   onChange,
   moveUpLabel = "Поднять «{item}», сейчас {position} из {total}",
   moveDownLabel = "Опустить «{item}», сейчас {position} из {total}",
+  defaultDragged,
+  defaultOver,
   background = "",
   accent,
   className,
@@ -129,8 +142,12 @@ export function Sortable001({
   ...props
 }: Sortable001Props) {
   const [order, setOrder] = useState(items)
-  const [dragged, setDragged] = useState<string | null>(null)
-  const [over, setOver] = useState<string | null>(null)
+  const [dragged, setDragged] = useState<string | null>(
+    items[defaultDragged ?? -1] ?? null,
+  )
+  const [over, setOver] = useState<string | null>(
+    items[defaultOver ?? -1] ?? null,
+  )
 
   const apply = (next: string[]) => {
     setOrder(next)
@@ -142,6 +159,8 @@ export function Sortable001({
     const next = [...order]
     const [row] = next.splice(from, 1)
     next.splice(to, 0, row)
+    setDragged(null)
+    setOver(null)
     apply(next)
   }
 

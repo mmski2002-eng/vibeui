@@ -3,3 +3,13 @@ node_modules
 public/r
 package-lock.json
 local
+
+# Индексы каталога: машинный вывод `npm run indexes`. Форматировать их
+# незачем, а прогон prettier по двум сотням файлов стоил почти десять
+# секунд на каждой сборке.
+registry/sources.ts
+registry/preview-types.ts
+registry/preview-loaders.ts
+registry/preview-loaders-lazy.ts
+registry/previews/
+registry/previews-lazy/

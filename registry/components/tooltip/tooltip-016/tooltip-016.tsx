@@ -8,6 +8,8 @@ export type Tooltip016Props = Omit<ComponentProps<"div">, "children"> & {
   name?: string
   /** Пояснение под полем: компонент несёт русское, проект подставляет своё. */
   note?: string
+  /** Показать инструкцию принудительно: онбординг, отладка, витрина. */
+  open?: boolean
   /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
   background?: string
 }
@@ -74,6 +76,11 @@ width:0.5rem;height:0.5rem;background:inherit;transform:rotate(45deg);
 [data-vibeui-block="tooltip-016"] [data-part="select"]:focus-visible ~ [data-part="hint"]{
 opacity:1;visibility:visible;translate:0 0;
 }
+/* Витринный режим: инструкция раскрыта без фокуса — миниатюра каталога и
+   скриншот показывают, о чём компонент. Плашка абсолютная, поле не съезжает. */
+[data-vibeui-block="tooltip-016"][data-open="true"] [data-part="hint"]{
+opacity:1;visibility:visible;translate:0 0;
+}
 [data-vibeui-block="tooltip-016"] [data-part="foot"]{
 margin:0;font-size:0.75rem;line-height:1.45;color:var(--vibeui-tooltip-016-muted);
 }
@@ -118,6 +125,7 @@ export function Tooltip016({
   options = DEFAULT_OPTIONS,
   name = "time-format",
   note = DEFAULT_NOTE,
+  open = false,
   background = "",
   className,
   style,
@@ -142,6 +150,7 @@ export function Tooltip016({
         {...props}
         data-slot="tooltip"
         data-vibeui-block="tooltip-016"
+        data-open={open || undefined}
         className={className}
         style={palette}
       >

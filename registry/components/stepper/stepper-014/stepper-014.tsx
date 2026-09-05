@@ -65,8 +65,11 @@ top:var(--vibeui-stepper-014-dot);bottom:0.25rem;width:2px;
 background:var(--vibeui-stepper-014-line);
 }
 [data-vibeui-block="stepper-014"] li[data-state="done"]::before{background:var(--vibeui-stepper-014-accent)}
+/* grid-row:1 / span 3, а не 1 / -1: у пункта нет явных строк, и -1 указывает
+   на первую же линию — кружок занимал одну строку, а описание и ссылка
+   сваливались в колонку кружка и переносились по слову. */
 [data-vibeui-block="stepper-014"] [data-part="mark"]{
-grid-row:1 / -1;align-self:start;
+grid-column:1;grid-row:1 / span 3;align-self:start;
 display:flex;align-items:center;justify-content:center;
 width:var(--vibeui-stepper-014-dot);height:var(--vibeui-stepper-014-dot);
 border-radius:9999px;border:2px solid var(--vibeui-stepper-014-line);

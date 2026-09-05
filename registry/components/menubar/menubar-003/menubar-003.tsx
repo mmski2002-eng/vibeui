@@ -12,6 +12,11 @@ export type Menubar003Menu = {
 }
 
 export type Menubar003Props = {
+  /**
+   * Показать первое меню развёрнутым в потоке строки: витрина, скриншот,
+   * отладка. Дальше строка живёт как обычно: клик по разделу закрывает меню.
+   */
+  open?: boolean
   menus?: Menubar003Menu[]
   platform?: "mac" | "windows"
   /** Имя строки меню для скринридера. */
@@ -72,6 +77,10 @@ min-width:14rem;padding:0.25rem;box-sizing:border-box;
 background:var(--vibeui-menubar-003-panel);
 border:1px solid var(--vibeui-menubar-003-border);border-radius:0.625rem;
 box-shadow:0 16px 36px -18px var(--vibeui-menubar-003-shadow);
+}
+/* Развёрнутый режим: меню стоит в потоке под своей кнопкой, а не поверх соседей. */
+[data-vibeui-block="menubar-003"] [data-part="menu"][data-open="true"]{
+position:static;margin-block-start:0.375rem;
 }
 /* Пункт — сетка из двух колонок: подпись слева, сочетание всегда у правого края. */
 [data-vibeui-block="menubar-003"] [data-part="item"]{
@@ -160,6 +169,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Menubar003({
+  open = false,
   menus = DEFAULT_MENUS,
   platform = "mac",
   menubarLabel = "Меню приложения",
@@ -194,12 +204,22 @@ export function Menubar003({
         className={className}
         style={palette}
       >
-        {menus.map((menu) => (
-          <details key={menu.label} data-part="slot" name={group}>
+        {menus.map((menu, index) => (
+          <details
+            key={menu.label}
+            data-part="slot"
+            name={group}
+            open={open && index === 0}
+          >
             <summary data-part="trigger" role="menuitem">
               {menu.label}
             </summary>
-            <div data-part="menu" role="menu" aria-label={menu.label}>
+            <div
+              data-part="menu"
+              data-open={(open && index === 0) || undefined}
+              role="menu"
+              aria-label={menu.label}
+            >
               {menu.items.map((item) => (
                 <button
                   key={item.label}

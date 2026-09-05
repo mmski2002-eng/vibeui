@@ -1169,6 +1169,377 @@
           "background"
         ]
       }
+    },
+    {
+      "name": "textarea-009",
+      "type": "registry:component",
+      "title": "Промпт-бокс",
+      "description": "Поле запроса к модели с отправкой внутри рамки: растёт под текст, Enter отправляет, Shift+Enter переносит строку.",
+      "categories": [
+        "textarea"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "textarea-009/textarea-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/textarea-009.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-textarea-009-*. Клиентский: \"use client\". Высота набирается невидимой копией текста в той же ячейке grid — data-value у [data-part=\"grow\"], — поэтому scrollHeight не измеряется и поле не дёргается на каждый символ. Enter отправляет, Shift+Enter переносит строку, а nativeEvent.isComposing глушит отправку во время набора в IME. Предел мягкий: ввод не прерывается, блокируется только кнопка, поле помечается aria-invalid, а подсказка и счётчик связаны с полем через aria-describedby.",
+      "meta": {
+        "tags": [
+          "textarea",
+          "prompt",
+          "ai",
+          "chat",
+          "composer"
+        ],
+        "ai": {
+          "export": "Textarea009",
+          "usage": "<Textarea009 limit={2000} onSend={ask} />",
+          "summary": "Поле запроса к модели: кнопка отправки внутри рамки, рост под содержимое до maxRows, счётчик символов и подсказка про Enter и Shift+Enter. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-textarea-009-* и не подменять её токенами вашей темы",
+            "кнопку отправки внутри рамки: в чате это единственная цель, и вынос её наружу разрывает поле на две",
+            "договор клавиш: Enter отправляет, Shift+Enter переносит строку",
+            "проверку nativeEvent.isComposing: без неё Enter обрывает набор в IME на середине иероглифа",
+            "рост высоты невидимой копией текста в ячейке grid вместо измерения scrollHeight",
+            "мягкий предел: ввод не прерывается, блокируется только отправка",
+            "подсказку про клавиши прямо в рамке, а не в отдельной справке",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "placeholder — текст в пустом поле",
+            "label — подпись поля для скринридера, видимой строки над рамкой нет",
+            "limit — мягкий предел в символах",
+            "maxRows — после скольких строк поле начинает прокручиваться",
+            "hint — строка про клавиши под текстом",
+            "sendLabel и sentText — подпись кнопки и строка после отправки",
+            "accent — цвет кнопки отправки и рамки в фокусе",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "обработчик onSend и стартовый текст defaultValue"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Отправка только чистит поле и обновляет строку состояния: сеть, очередь и повтор — забота приложения.",
+            "На телефоне Enter обычно переносит строку, а не отправляет: для мобильного веба оставьте отправку кнопке.",
+            "Предел мягкий по замыслу: жёсткое ограничение ставит сама модель, и обрезать текст молча здесь нельзя.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "placeholder",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Опишите, что нужно сделать",
+            "maxLength": 40
+          },
+          {
+            "prop": "limit",
+            "label": "Предел",
+            "type": "number",
+            "default": 2000,
+            "min": 200,
+            "max": 8000
+          },
+          {
+            "prop": "maxRows",
+            "label": "Строк",
+            "type": "number",
+            "default": 8,
+            "min": 3,
+            "max": 16
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Prompt Box",
+            "description": "A model prompt field with the send button inside the frame: it grows with the text, Enter sends, Shift+Enter breaks the line.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-textarea-009-* variables. A client component: \"use client\". Height is set by an invisible copy of the text in the same grid cell — data-value on [data-part=\"grow\"] — so scrollHeight is never measured and the field does not jump on every character. Enter sends, Shift+Enter breaks the line, and nativeEvent.isComposing suppresses sending while an IME is composing. The limit is soft: typing is never blocked, only the button is, the field is marked aria-invalid, and the hint and the counter are tied to the field via aria-describedby.",
+            "ai": {
+              "summary": "A model prompt field: the send button lives inside the frame, the field grows up to maxRows, and a character counter sits next to the Enter / Shift+Enter hint. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-textarea-009-* palette — do not swap it for your theme tokens",
+                "the send button inside the frame: in a chat it is the only control, and moving it out splits the field in two",
+                "the key contract: Enter sends, Shift+Enter breaks the line",
+                "the nativeEvent.isComposing check: without it Enter cuts an IME word in half",
+                "growing the height with an invisible copy of the text in a grid cell instead of measuring scrollHeight",
+                "the soft limit: typing is never interrupted, only sending is blocked",
+                "the key hint inside the frame rather than in separate help",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "placeholder — the text in the empty field",
+                "label — the field label for screen readers; there is no visible line above the frame",
+                "limit — the soft character cap",
+                "maxRows — how many rows before the field starts scrolling",
+                "hint — the key line under the text",
+                "sendLabel and sentText — the button label and the line after sending",
+                "accent — the colour of the send button and of the focused frame",
+                "background — the component background; empty means no background, taking the page colour",
+                "the onSend handler and the starting text through defaultValue"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Sending only clears the field and updates the status line: the network, the queue and retries are the app's job.",
+                "On phones Enter usually breaks the line rather than sends: for mobile web leave sending to the button.",
+                "The limit is soft by design: the hard cap belongs to the model, and silently truncating text here is not an option.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Textarea009 limit={2000} onSend={ask} />"
+            },
+            "controls": {
+              "placeholder": {
+                "label": "Placeholder",
+                "default": "Describe what to do"
+              },
+              "limit": {
+                "label": "Limit"
+              },
+              "maxRows": {
+                "label": "Rows"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "Prompt for the assistant",
+                "placeholder": "Describe what to do",
+                "hint": "Enter to send, Shift+Enter for a new line",
+                "sendLabel": "Send",
+                "sentText": "Sent, characters: {chars}",
+                "defaultValue": "Build a landing page for a plant studio: hero, services, reviews."
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "placeholder",
+          "limit",
+          "maxRows",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
+      }
+    },
+    {
+      "name": "textarea-010",
+      "type": "registry:component",
+      "title": "Поле с вложениями",
+      "description": "Поле сообщения, где прикреплённые файлы стоят фишками внутри той же рамки: имя, размер и крестик у каждого.",
+      "categories": [
+        "textarea"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "textarea-010/textarea-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/textarea-010.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-textarea-010-*. Клиентский: \"use client\". Кнопка «Прикрепить» — настоящий input type=\"file\" внутри <label>, растянутый на всю подпись и прозрачный: клавиатура и мобильный выбор файла работают штатно, обходного клика по скрытому полю через ref нет. Размер подписывается из байтов кратными 1024 единицами (проп units), полное имя остаётся в title фишки и в aria-label крестика. Поле растёт под текст невидимой копией в ячейке grid.",
+      "meta": {
+        "tags": [
+          "textarea",
+          "attachments",
+          "files",
+          "chat",
+          "composer"
+        ],
+        "ai": {
+          "export": "Textarea010",
+          "usage": "<Textarea010 maxFiles={5} onSend={send} />",
+          "summary": "Поле сообщения с вложениями: файлы лежат фишками внутри рамки — имя, размер и крестик у каждого, — а «Прикрепить» открывает настоящий выбор файла. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-textarea-010-* и не подменять её токенами вашей темы",
+            "настоящий input type=\"file\" внутри подписи вместо клика по скрытому полю через ref",
+            "крестик у каждой фишки с осмысленным aria-label: «Убрать имя-файла», а не «Удалить»",
+            "полное имя файла в title фишки: по обрезанному многоточием имени вложение не опознать",
+            "размер рядом с именем — по одному имени два похожих файла не различить",
+            "потолок вложений, который гасит кнопку, вместо сообщения об ошибке после выбора",
+            "вложения внутри рамки поля, а не отдельной зоной загрузки под ним",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "placeholder — текст в пустом поле",
+            "files — вложения, с которыми поле открывается",
+            "maxFiles — потолок числа вложений",
+            "attachLabel, sendLabel и removeLabel — подписи кнопок и крестика",
+            "units — единицы размера, порядок от байтов к большим",
+            "sentText — строка под рамкой после отправки",
+            "accent — цвет кнопки отправки и рамки в фокусе",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "обработчик onSend и стартовый текст defaultValue"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Компонент только собирает список вложений: загрузка, прогресс и повтор — забота приложения, для них есть отдельная категория «Загрузка файлов».",
+            "Ограничение по типу файла ставится атрибутом accept у input и проверяется ещё раз на сервере: в браузере его обходят.",
+            "Размер считается кратными 1024, как в файловом менеджере: у поставщиков хранилищ бывает кратность 1000, и числа разойдутся.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "placeholder",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Напишите сообщение или прикрепите файл",
+            "maxLength": 48
+          },
+          {
+            "prop": "attachLabel",
+            "label": "Кнопка вложения",
+            "type": "text",
+            "default": "Прикрепить",
+            "maxLength": 20
+          },
+          {
+            "prop": "maxFiles",
+            "label": "Потолок вложений",
+            "type": "number",
+            "default": 5,
+            "min": 1,
+            "max": 8
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Field With Attachments",
+            "description": "A message field where attached files sit as chips inside the same frame: name, size and a remove cross on each.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-textarea-010-* variables. A client component: \"use client\". The attach button is a real input type=\"file\" inside a <label>, stretched across it and transparent: the keyboard and the mobile file picker work as usual, with no ref click on a hidden field. The size caption is built from bytes in 1024-based units (the units prop), and the full name stays in the chip title and in the aria-label of the cross. The field grows with the text through an invisible copy in a grid cell.",
+            "ai": {
+              "summary": "A message field with attachments: files sit as chips inside the frame — name, size and a cross on each — and the attach button opens a real file picker. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-textarea-010-* palette — do not swap it for your theme tokens",
+                "a real input type=\"file\" inside the label instead of a ref click on a hidden field",
+                "a cross on every chip with a meaningful aria-label: \"Remove file-name\", not \"Delete\"",
+                "the full file name in the chip title: a name cut by an ellipsis does not identify the attachment",
+                "the size next to the name — two similar files are not told apart by name alone",
+                "an attachment cap that dims the button instead of an error message after the pick",
+                "attachments inside the field frame rather than in a separate upload zone below it",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "placeholder — the text in the empty field",
+                "files — the attachments the field opens with",
+                "maxFiles — the cap on the number of attachments",
+                "attachLabel, sendLabel and removeLabel — the button and cross captions",
+                "units — the size units, ordered from bytes upwards",
+                "sentText — the line under the frame after sending",
+                "accent — the colour of the send button and of the focused frame",
+                "background — the component background; empty means no background, taking the page colour",
+                "the onSend handler and the starting text through defaultValue"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The component only collects the list: uploading, progress and retries are the app's job — there is a separate \"File upload\" category for those.",
+                "File type limits belong on the input accept attribute and have to be checked again on the server: in the browser they are trivially bypassed.",
+                "Sizes are 1024-based, like in a file manager: storage vendors sometimes use 1000 and the numbers will disagree.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Textarea010 maxFiles={5} onSend={send} />"
+            },
+            "controls": {
+              "placeholder": {
+                "label": "Placeholder",
+                "default": "Write a message or attach a file"
+              },
+              "attachLabel": {
+                "label": "Attach button",
+                "default": "Attach"
+              },
+              "maxFiles": {
+                "label": "Attachment cap"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "Message with attachments",
+                "placeholder": "Write a message or attach a file",
+                "attachLabel": "Attach",
+                "sendLabel": "Send",
+                "removeLabel": "Remove {name}",
+                "units": [
+                  "B",
+                  "KB",
+                  "MB",
+                  "GB"
+                ],
+                "sentText": "Sent, attachments: {count}",
+                "defaultValue": "Take a look at the mockup and the brief — what should change in the hero?",
+                "files": [
+                  {
+                    "name": "hero-mockup.fig",
+                    "size": 2411724
+                  },
+                  {
+                    "name": "brief-2025.pdf",
+                    "size": 184320
+                  },
+                  {
+                    "name": "palette.png",
+                    "size": 43008
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "placeholder",
+          "attachLabel",
+          "maxFiles",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        }
+      }
     }
   ]
 }

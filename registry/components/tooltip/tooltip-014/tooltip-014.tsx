@@ -6,6 +6,8 @@ export type Tooltip014Props = Omit<ComponentProps<"span">, "children"> & {
   reason?: string
   /** Значок замка рядом с подписью: дублирует состояние для сканирования взглядом. */
   showLock?: boolean
+  /** Показать причину принудительно: онбординг, отладка, витрина. */
+  open?: boolean
 }
 
 // Тема берётся из color-scheme окружения через light-dark(): в тёмном
@@ -61,6 +63,11 @@ background:inherit;transform:rotate(45deg);
 [data-vibeui-block="tooltip-014"]:focus-within [data-part="tip"]{
 opacity:1;transform:translate(-50%,0);
 }
+/* Витринный режим: причина раскрыта без наведения — иначе на миниатюре
+   каталога видна только серая кнопка. Плашка абсолютная, кнопка не съезжает. */
+[data-vibeui-block="tooltip-014"][data-open="true"] [data-part="tip"]{
+opacity:1;transform:translate(-50%,0);
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="tooltip-014"] *{animation:none!important;transition:none!important}}
 `
 
@@ -73,6 +80,7 @@ export function Tooltip014({
   label = "Опубликовать",
   reason = "Сначала заполните обязательные поля: заголовок и хотя бы одну картинку.",
   showLock = true,
+  open = false,
   className,
   style,
   ...props
@@ -86,6 +94,7 @@ export function Tooltip014({
         {...props}
         data-slot="tooltip"
         data-vibeui-block="tooltip-014"
+        data-open={open || undefined}
         className={className}
         style={style as CSSProperties}
       >

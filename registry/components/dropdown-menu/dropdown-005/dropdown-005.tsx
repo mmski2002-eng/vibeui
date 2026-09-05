@@ -121,8 +121,10 @@ color:var(--vibeui-dropdown-005-accent);opacity:0;
 }
 [data-vibeui-block="dropdown-005"] [data-part="item"][aria-checked="true"]{font-weight:600}
 [data-vibeui-block="dropdown-005"] [data-part="item"][aria-checked="true"] [data-part="tick"]{opacity:1}
-/* Развёрнутый режим: меню стоит в потоке под кнопкой, а не в верхнем слое. */
-[data-vibeui-block="dropdown-005"]:has([data-open="true"]){flex-wrap:wrap}
+/* Развёрнутый режим: меню стоит в потоке под кнопкой, а не в верхнем слое.
+   Радиус панели перестаёт быть пилюлей: на высоком блоке 9999px превращает
+   подложку в огромную каплю за меню. */
+[data-vibeui-block="dropdown-005"]:has([data-open="true"]){flex-wrap:wrap;border-radius:1.25rem}
 [data-vibeui-block="dropdown-005"] [data-part="menu"][data-open="true"]{
 position:static;opacity:1;transform:none;margin-top:0.375rem;flex-basis:100%;
 }

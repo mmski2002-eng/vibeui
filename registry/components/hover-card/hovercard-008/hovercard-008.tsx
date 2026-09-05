@@ -3,6 +3,11 @@
 import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Hovercard008Props = Omit<ComponentProps<"div">, "children"> & {
+  /**
+   * Показать снимок раскрытым прямо в потоке: витрина, скриншот, отладка.
+   * Пилюля-триггер остаётся на месте, карточка встаёт под ней.
+   */
+  open?: boolean
   owner?: string
   repo?: string
   about?: string
@@ -125,6 +130,14 @@ padding:0.0625rem 0.4375rem;border-radius:0.375rem;
 background:var(--vibeui-hovercard-008-fill);
 border:1px solid var(--vibeui-hovercard-008-border);
 }
+/* Витринный режим: карточка стоит в потоке под пилюлей, а не поверх текста —
+   иначе на миниатюре каталога от компонента видна одна строка. Обёртка
+   становится блоком, чтобы карточка не разрывала строку по вертикали. */
+[data-vibeui-block="hovercard-008"][data-open="true"] [data-part="host"]{display:block}
+[data-vibeui-block="hovercard-008"][data-open="true"] [data-part="card"]{
+position:static;opacity:1;visibility:visible;translate:0;
+margin-top:0.5rem;max-width:100%;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="hovercard-008"] *{animation:none!important;transition:none!important}}
 `
 
@@ -166,6 +179,7 @@ function closeOnEscape(event: KeyboardEvent<HTMLElement>) {
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Hovercard008({
+  open = false,
   owner = "vibeui",
   repo = "registry",
   about = "Каталог самодостаточных React-компонентов: один файл, своя палитра, ноль зависимостей.",
@@ -208,6 +222,7 @@ export function Hovercard008({
         data-slot="hover-card"
         onKeyDown={closeOnEscape}
         data-vibeui-block="hovercard-008"
+        data-open={open || undefined}
         className={className}
         style={palette}
       >

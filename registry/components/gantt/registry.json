@@ -41,7 +41,7 @@
             "липкую колонку названий — план читают по строкам, а не по датам",
             "заливку вместе со стилем рамки: одного цвета мало на печати и при дальтонизме",
             "сроки текстом внутри полосы, а не только её длиной",
-            "горизонтальную прокрутку вместо сжатия недель",
+            "сжатие недель вместо горизонтальной прокрутки: план виден целиком",
             "подложку липкой колонки заодно с фоном компонента: прозрачная колонка названий пропустит под себя полосы при прокрутке"
           ],
           "adapt": [
@@ -94,7 +94,7 @@
                 "the sticky name column — a plan is read by rows, not by dates",
                 "fill together with border style: colour alone dies in print and for colour blindness",
                 "the dates as text inside the bar, not only its length",
-                "horizontal scrolling instead of squeezing the weeks",
+                "squeezing the weeks instead of scrolling horizontally: the plan stays visible in full",
                 "the sticky column fill riding along with the component background: a transparent name column lets the bars show through while scrolling"
               ],
               "adapt": [
@@ -419,8 +419,8 @@
           "preserve": [
             "локальную палитру --vibeui-gantt-003-* и не подменять её токенами вашей темы",
             "ромб как отдельную форму: полоса нулевой длины в плане просто не видна",
-            "подпись даты рядом с ромбом — точку на сетке без числа читают неверно",
-            "контейнер прокрутки с overflow-x и tabindex=0: сетка дней шире экрана почти всегда",
+            "подпись даты рядом с ромбом там, где для неё хватает места: точку на сетке без числа читают неверно, а в узком блоке дата остаётся в колонке названий",
+            "сжатие дней вместо горизонтальной прокрутки: план виден целиком, а контейнер с tabindex=0 остаётся страховкой на крайних размерах",
             "таблицу точных дат в <details>: диаграмма без текстовой альтернативы недоступна скринридеру",
             "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
             "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
@@ -432,12 +432,12 @@
             "заголовок через heading",
             "подписи: hintText, scrollText, taskText, daysText, tableText, columnText и kindText — в шаблонах {heading}, {date} и {days} подставляются значения",
             "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
-            "акцент через accent, ширину дня и ширину колонки названий"
+            "акцент через accent и ширину колонки названий"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Единица сетки — день: на квартал колонок станет слишком много, для него нужен сжатый вид.",
-            "Подпись вехи занимает место справа от ромба и на последних днях может упереться в край.",
+            "Подпись вехи занимает место справа от ромба и в узком блоке скрывается: дата остаётся в колонке названий и в таблице.",
             "Связей между строками нет: тут показываются сроки, а не логика зависимостей.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
           ]
@@ -471,8 +471,8 @@
               "preserve": [
                 "the local --vibeui-gantt-003-* palette — do not swap it for your theme tokens",
                 "the diamond as its own shape: a zero-length bar is simply invisible in a plan",
-                "the date label next to the diamond — a point on a grid without a number is misread",
-                "the scroll container with overflow-x and tabindex=0: a day grid is wider than the screen almost always",
+                "the date label next to the diamond wherever it fits: a point on a grid without a number is misread, and in a narrow block the date stays in the name column",
+                "squeezing the days instead of scrolling horizontally: the plan stays visible in full, while the tabindex=0 container remains a fallback at extreme sizes",
                 "the exact-dates table in <details>: a chart without a text alternative is unavailable to a screen reader",
                 "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
                 "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
@@ -484,12 +484,12 @@
                 "the caption through heading",
                 "the labels: hintText, scrollText, taskText, daysText, tableText, columnText and kindText — the {heading}, {date} and {days} placeholders take the values",
                 "background — the component surface; empty means no surface, taking the page colour",
-                "the accent through accent, the day width and the name column width"
+                "the accent through accent and the name column width"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "The grid unit is a day: a quarter produces far too many columns and needs a compressed view.",
-                "A milestone label takes space to the right of the diamond and can hit the edge on the last days.",
+                "A milestone label takes space to the right of the diamond and hides in a narrow block: the date stays in the name column and in the table.",
                 "There are no links between rows: this shows dates, not dependency logic.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],

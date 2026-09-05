@@ -7,6 +7,12 @@ export type Navmenu006Section = {
 }
 
 export type Navmenu006Props = {
+  /**
+   * Показать лист развёрнутым: витрина, скриншот. Лист и так раскрывается
+   * в потоке и толкает содержимое, поэтому режим меняет только стартовое
+   * состояние чекбокса — бургер продолжает закрывать и открывать его.
+   */
+  open?: boolean
   sections?: Navmenu006Section[]
   brand?: string
   actionLabel?: string
@@ -160,6 +166,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Один файл, ноль зависимостей, собственная палитра, клиентского JS нет.
  */
 export function Navmenu006({
+  open = false,
   sections = DEFAULT_SECTIONS,
   brand = "Полотно",
   actionLabel = "Начать бесплатно",
@@ -201,6 +208,7 @@ export function Navmenu006({
             type="checkbox"
             id="vibeui-navmenu-006-toggle"
             aria-label={toggleLabel}
+            defaultChecked={open}
           />
           <label data-part="burger" htmlFor="vibeui-navmenu-006-toggle">
             <span data-part="bars" aria-hidden="true">

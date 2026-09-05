@@ -3,6 +3,11 @@ import type { ComponentProps, CSSProperties } from "react"
 export type Spinner013Props = Omit<ComponentProps<"div">, "children"> & {
   /** false — компонент ничего не рендерит: переход завершён или ещё не начат. */
   active?: boolean
+  /**
+   * Витринный режим: полоса лежит внутри своего блока, а не поверх страницы.
+   * Нужен карточке каталога и скриншотам; в приложении полоса остаётся fixed.
+   */
+  inline?: boolean
   label?: string
   height?: number
   accent?: string
@@ -33,6 +38,11 @@ position:fixed;top:0;left:0;right:0;z-index:2147483647;
 height:var(--vibeui-spinner-013-height);
 background:var(--vibeui-spinner-013-track);
 pointer-events:none;
+}
+/* Витринный режим: полоса встаёт в поток своего контейнера. Нужен там, где
+   компонент показывают внутри кадра, а не поверх окна. */
+[data-vibeui-block="spinner-013"][data-inline="true"]{
+position:relative;inset:auto;z-index:auto;width:100%;
 }
 [data-vibeui-block="spinner-013"] [data-part="bar"]{
 display:block;height:100%;width:0%;
@@ -94,6 +104,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Spinner013({
   active = true,
+  inline = false,
   label = "Переход на новую страницу",
   height = 3,
   accent,
@@ -127,6 +138,7 @@ export function Spinner013({
         {...props}
         data-slot="spinner"
         data-vibeui-block="spinner-013"
+        data-inline={inline || undefined}
         role="status"
         aria-live="polite"
         className={className}

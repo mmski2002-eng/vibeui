@@ -1446,7 +1446,7 @@
           "target": "@components/vibeui/stepper-010.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в переменных --vibeui-stepper-010-*. Серверный: хуков нет. Кружок растянут на все строки пункта через grid-row:1 / -1, поэтому высота ряда не завязана на количество текста. Панель подробностей — отдельный блок data-part=\"panel\", который рендерится, только когда состояние шага current и у него задан массив details; у остальных шагов виден только заголовок и однострочная сводка. Текущий шаг помечен aria-current=\"step\", состояние продублировано словом рядом с заголовком.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в переменных --vibeui-stepper-010-*. Серверный: хуков нет. Кружок растянут на все строки пункта через grid-row:1 / span 3, поэтому высота ряда не завязана на количество текста; форма 1 / -1 здесь не годится — явных строк у пункта нет, и -1 указывает на первую же линию, после чего текст сваливается в колонку кружка. Панель подробностей — отдельный блок data-part=\"panel\", который рендерится, только когда состояние шага current и у него задан массив details; у остальных шагов виден только заголовок и однострочная сводка. Текущий шаг помечен aria-current=\"step\", состояние продублировано словом рядом с заголовком.",
       "meta": {
         "tags": ["stepper", "vertical", "details", "onboarding"],
         "preview": {
@@ -1514,7 +1514,7 @@
           "en": {
             "title": "Detail Steps",
             "description": "Vertical steps with a one-line summary on each and an expanded detail panel on the current one — details show only once their turn has come.",
-            "docs": "The component is self-contained: one file, zero dependencies, the palette in the --vibeui-stepper-010-* variables. Server component: no hooks. The circle is stretched across all of the item's rows through grid-row: 1 / -1, so the row height is not tied to the amount of text. The detail panel is a separate data-part=\"panel\" block, rendered only when the step's state is current and it has a details array; on the other steps only the title and a one-line summary are visible. The current step is marked aria-current=\"step\", and the state is duplicated by a word next to the title.",
+            "docs": "The component is self-contained: one file, zero dependencies, the palette in the --vibeui-stepper-010-* variables. Server component: no hooks. The circle is stretched across all of the item's rows through grid-row: 1 / span 3, so the row height is not tied to the amount of text; the 1 / -1 form does not work here — the item has no explicit rows, so -1 resolves to the very first line and the text falls into the circle column. The detail panel is a separate data-part=\"panel\" block, rendered only when the step's state is current and it has a details array; on the other steps only the title and a one-line summary are visible. The current step is marked aria-current=\"step\", and the state is duplicated by a word next to the title.",
             "ai": {
               "summary": "Vertical steps with a one-line summary on each and an expanded detail panel on the current step. Zero dependencies, one file, no client JS.",
               "preserve": [

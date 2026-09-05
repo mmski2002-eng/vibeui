@@ -6,9 +6,7 @@
       "type": "registry:component",
       "title": "Поле даты",
       "description": "Поле даты на нативном input: календарь, локаль и системный выбор на телефоне достаются от браузера.",
-      "categories": [
-        "date-selector"
-      ],
+      "categories": ["date-selector"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-date-001-*. Серверный: хуков нет. Значение хранится в формате ГГГГ-ММ-ДД, а показывается по настройкам системы. Границы заданы min и max, поэтому недоступные даты отсекает сам браузер, а пояснение связано с полем через aria-describedby.",
       "meta": {
-        "tags": [
-          "date",
-          "native",
-          "form",
-          "calendar"
-        ],
+        "tags": ["date", "native", "form", "calendar"],
         "ai": {
           "export": "Date001",
           "usage": "<Date001 label=\"Дата поездки\" min=\"2026-08-31\" max=\"2026-09-30\" />",
@@ -134,20 +127,21 @@
             "preview": {
               "props": {
                 "label": "Travel date",
-                "hint": "Dates through the end of September."
+                "defaultValue": "2026-09-12",
+                "hint": "Available from 31 August to the end of September — bookings are closed outside that."
               }
             },
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-date-001-* variables. Server component: no hooks. The value is stored in YYYY-MM-DD format and displayed according to the system settings. The bounds are set with min and max, so the browser itself rejects unavailable dates, and the note is linked to the field through aria-describedby."
           }
         },
-        "cardControls": [
-          "label",
-          "hint",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "hint", "accent", "background"],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "label": "Дата поездки",
+            "defaultValue": "2026-09-12",
+            "hint": "Доступны даты с 31 августа до конца сентября — раньше и позже бронь закрыта."
+          }
         }
       }
     },
@@ -156,9 +150,7 @@
       "type": "registry:component",
       "title": "Кнопка календаря",
       "description": "Поле даты с настоящей кнопкой календаря рядом: родная иконка внутри поля крошечная, а в части браузеров её вообще не видно.",
-      "categories": [
-        "date-selector"
-      ],
+      "categories": ["date-selector"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -170,12 +162,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-date-002-*. Клиентский: нужен ref на поле и обработчик клика. Кнопка вызывает input.showPicker() — тот же системный календарь, что открывает родная иконка, но зона нажатия 2.75rem вместо нескольких пикселей. Метод знают не все браузеры, поэтому есть запасной путь: фокус в поле и ввод с клавиатуры. Родной индикатор скрыт, чтобы рядом не оказалось двух кнопок с одинаковым смыслом.",
       "meta": {
-        "tags": [
-          "date",
-          "calendar",
-          "picker",
-          "form"
-        ],
+        "tags": ["date", "calendar", "picker", "form"],
         "ai": {
           "export": "Date002",
           "usage": "<Date002 label=\"Дата визита\" defaultValue=\"2026-09-15\" min=\"2026-09-01\" max=\"2026-12-31\" />",
@@ -202,6 +189,7 @@
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Проп active — только для витрины: он показывает кнопку нажатой, потому что системный календарь рисует браузер и на карточке каталога его не видно.",
             "showPicker обязан вызываться из обработчика жеста: браузер отклонит вызов из эффекта или таймера.",
             "Формат хранения всегда ГГГГ-ММ-ДД, а показ зависит от локали системы — не парсите видимую строку.",
             "min и max ограничивают и календарь, и ручной ввод, но не отменяют серверную проверку.",
@@ -270,6 +258,7 @@
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The active prop is for the showcase only: it renders the button pressed, because the system calendar is drawn by the browser and never shows up on a catalogue card.",
                 "showPicker must be called from a gesture handler: a call from an effect or a timer is rejected.",
                 "The stored format is always YYYY-MM-DD while the display follows the system locale — never parse the visible string.",
                 "min and max constrain both the calendar and typing, but they do not replace server-side validation.",
@@ -301,8 +290,10 @@
             "preview": {
               "props": {
                 "label": "Visit date",
-                "hint": "The button opens the system calendar; the field takes keyboard input.",
-                "openLabel": "Open calendar"
+                "defaultValue": "2026-09-15",
+                "openLabel": "Open calendar",
+                "hint": "",
+                "active": true
               }
             },
             "docs": "The component is self-contained: one file, zero dependencies, palette in the local --vibeui-date-002-* variables. Client component: it needs a ref on the field and a click handler. The button calls input.showPicker() — the same system calendar the native icon opens, but with a 2.75rem hit area instead of a few pixels. Not every browser knows the method, so there is a fallback path: focus the field and type on the keyboard. The native indicator is hidden so that two buttons with the same meaning do not end up side by side."
@@ -316,7 +307,14 @@
           "background"
         ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "label": "Дата визита",
+            "defaultValue": "2026-09-15",
+            "openLabel": "Открыть календарь",
+            "hint": "",
+            "active": true
+          }
         }
       }
     },
@@ -325,9 +323,7 @@
       "type": "registry:component",
       "title": "Диапазон двумя полями",
       "description": "Диапазон дат двумя полями, где порядок чинится сам: конец подтягивается за началом, а длительность считается тут же.",
-      "categories": [
-        "date-selector"
-      ],
+      "categories": ["date-selector"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -339,12 +335,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-date-003-*. Клиентский: обе даты в состоянии, они связаны. Второму полю ставится min по первому, поэтому системный календарь просто не даёт выбрать дату раньше начала. Если начало сдвинули за уже выбранный конец, конец переносится на следующий день вместо ошибки. Даты сравниваются как строки ISO — при одинаковом формате это корректно и не требует парсинга. legend лежит во float, поэтому у ряда полей стоит clear:both.",
       "meta": {
-        "tags": [
-          "date",
-          "range",
-          "booking",
-          "validation"
-        ],
+        "tags": ["date", "range", "booking", "validation"],
         "ai": {
           "export": "Date003",
           "usage": "<Date003 legend=\"Даты проживания\" defaultFrom=\"2026-09-14\" defaultTo=\"2026-09-19\" min=\"2026-09-01\" />",
@@ -498,9 +489,7 @@
       "type": "registry:component",
       "title": "Дата и время",
       "description": "Дата и время двумя полями в одной рамке, с явной подписью часового пояса: «в 19:00» без пояса срывает встречи чаще всего.",
-      "categories": [
-        "date-selector"
-      ],
+      "categories": ["date-selector"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -512,12 +501,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-date-004-*. Серверный: состояние не нужно, оба значения забирает форма по именам name-date и name-time. Вместо datetime-local два родных поля в общей рамке: на телефоне datetime-local открывает два экрана подряд, а на десктопе даёт длинную маску, где легко промахнуться мимо сегмента. Рамка одна, focus-within подсвечивает её целиком, поэтому пара читается как одно значение.",
       "meta": {
-        "tags": [
-          "date",
-          "time",
-          "schedule",
-          "timezone"
-        ],
+        "tags": ["date", "time", "schedule", "timezone"],
         "ai": {
           "export": "Date004",
           "usage": "<Date004 label=\"Начало встречи\" defaultDate=\"2026-09-08\" defaultTime=\"19:00\" timezone=\"Время московское, UTC+3\" />",
@@ -638,12 +622,7 @@
             "docs": "The component is self-contained: one file, zero dependencies, palette in the local --vibeui-date-004-* variables. Server component: no state is needed, the form collects both values by the names name-date and name-time. Instead of datetime-local there are two native fields in a shared frame: on a phone datetime-local opens two screens in a row, and on the desktop it gives a long mask where it is easy to mis-aim past a segment. The frame is single, focus-within highlights it as a whole, so the pair reads as one value."
           }
         },
-        "cardControls": [
-          "label",
-          "timezone",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "timezone", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -654,9 +633,7 @@
       "type": "registry:component",
       "title": "Относительные пресеты",
       "description": "Поле даты с кнопками «сегодня» и «завтра»: человек думает словами, а вводить его заставляют числами.",
-      "categories": [
-        "date-selector"
-      ],
+      "categories": ["date-selector"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -668,12 +645,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-date-005-*. Клиентский: дата и выбранный пресет в состоянии. Системные часы читаются в обработчике нажатия, а не при отрисовке: вычислить «сегодня» на сервере и на клиенте — верный способ получить разные даты на границе поясов и расхождение при гидратации. День недели считается из выбранного значения разбором по частям, потому что Date.parse трактует «2026-09-16» как UTC и в минусовых поясах отдаёт предыдущий день.",
       "meta": {
-        "tags": [
-          "date",
-          "presets",
-          "quick",
-          "form"
-        ],
+        "tags": ["date", "presets", "quick", "form"],
         "ai": {
           "export": "Date005",
           "usage": "<Date005 label=\"Дата доставки\" defaultValue=\"2026-09-16\" presets={[{ text: \"Сегодня\", days: 0 }, { text: \"Завтра\", days: 1 }]} />",
@@ -725,11 +697,7 @@
             "label": "Локаль",
             "type": "select",
             "default": "ru-RU",
-            "options": [
-              "ru-RU",
-              "en-US",
-              "de-DE"
-            ]
+            "options": ["ru-RU", "en-US", "de-DE"]
           },
           {
             "prop": "accent",
@@ -839,9 +807,7 @@
       "type": "registry:component",
       "title": "Предупреждение о сроке",
       "description": "Поле срока, которое само говорит, что дата уже прошла: браузер прошедшую дату считает валидной и молчит.",
-      "categories": [
-        "date-selector"
-      ],
+      "categories": ["date-selector"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -853,12 +819,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-date-006-*. Клиентский: дата в состоянии, а сегодняшний день читается через useSyncExternalStore — серверный снимок пустой, поэтому сравнивать нечего и гидратация не расходится; считать «сегодня» при отрисовке значит получить на сервере и на клиенте разные даты. Состояний три: прошло, скоро, в запасе; они помечаются data-state на корне и переопределяют одну переменную акцента, поэтому цвет рамки, полосы и текста меняется разом. До первого клиентского снимка состояние нейтральное.",
       "meta": {
-        "tags": [
-          "date",
-          "deadline",
-          "warning",
-          "task"
-        ],
+        "tags": ["date", "deadline", "warning", "task"],
         "ai": {
           "export": "Date006",
           "usage": "<Date006 label=\"Срок сдачи\" defaultValue=\"2026-09-04\" soonInDays={3} />",
@@ -986,12 +947,7 @@
             "docs": "The component is self-contained: one file, zero dependencies, palette in the local --vibeui-date-006-* variables. Client component: the date is in state, while today is read through useSyncExternalStore — the server snapshot is empty, so there is nothing to compare and hydration does not disagree; computing \"today\" during render means getting different dates on the server and on the client. There are three states: overdue, due soon, time left; they are marked with data-state on the root and override a single accent variable, so the colour of the border, the stripe and the text changes at once. Before the first client snapshot the state is neutral."
           }
         },
-        "cardControls": [
-          "label",
-          "soonInDays",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "soonInDays", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -1002,9 +958,7 @@
       "type": "registry:component",
       "title": "Три списка",
       "description": "Дата рождения тремя списками: долистать календарь до 1987 года — сорок нажатий, а маска требует помнить порядок частей.",
-      "categories": [
-        "date-selector"
-      ],
+      "categories": ["date-selector"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1016,12 +970,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-date-007-*. Клиентский: число дней зависит от выбранных месяца и года. Количество дней берётся из new Date(year, month, 0).getDate() — нулевой день следующего месяца и есть последний день текущего, поэтому високосный февраль считается сам. Если выбранный день выпал из месяца, он подтягивается к последнему существующему, а не обнуляется. legend лежит во float, поэтому у ряда стоит clear:both.",
       "meta": {
-        "tags": [
-          "date",
-          "select",
-          "birthday",
-          "form"
-        ],
+        "tags": ["date", "select", "birthday", "form"],
         "ai": {
           "export": "Date007",
           "usage": "<Date007 legend=\"Дата рождения\" defaultValue=\"1987-04-12\" fromYear={1940} toYear={2010} />",
@@ -1185,9 +1134,7 @@
       "type": "registry:component",
       "title": "Слоты по четверти часа",
       "description": "Время по сетке в четверть часа: любое введённое значение округляется до ближайшей четверти, а кнопки сдвигают по шагу.",
-      "categories": [
-        "date-selector"
-      ],
+      "categories": ["date-selector"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1199,12 +1146,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-date-008-*. Клиентский: время в состоянии, кнопки и округление меняют его. Время переводится в минуты от полуночи — так сдвиг и выравнивание по сетке становятся обычной арифметикой, без разбора строк на каждом шаге. Округление к ближайшей четверти делается по blur, а не на каждое нажатие, иначе поле начнёт прыгать во время набора. Границы приёма заданы через min и max и учитываются и кнопками, и клавиатурой.",
       "meta": {
-        "tags": [
-          "time",
-          "slots",
-          "booking",
-          "step"
-        ],
+        "tags": ["time", "slots", "booking", "step"],
         "ai": {
           "export": "Date008",
           "usage": "<Date008 label=\"Время записи\" defaultValue=\"14:30\" stepMinutes={15} openAt=\"09:00\" closeAt=\"20:00\" />",
@@ -1326,12 +1268,7 @@
             "docs": "The component is self-contained: one file, zero dependencies, palette in the local --vibeui-date-008-* variables. Client component: the time is in state, and the buttons and the snapping change it. The time is converted into minutes past midnight — that turns shifting and snapping to the grid into ordinary arithmetic, without parsing strings at every step. Snapping to the nearest quarter happens on blur rather than on every keystroke, otherwise the field starts jumping while you type. The opening bounds are set through min and max and are respected both by the buttons and by the keyboard."
           }
         },
-        "cardControls": [
-          "label",
-          "stepMinutes",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "stepMinutes", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -1342,9 +1279,7 @@
       "type": "registry:component",
       "title": "Период отчёта",
       "description": "Неделя, месяц или квартал целиком: отрезок выбирают одним контролом, а границы выписаны словами.",
-      "categories": [
-        "date-selector"
-      ],
+      "categories": ["date-selector"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1356,12 +1291,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-date-009-*. Клиентский. Неделя и месяц берутся нативными полями week и month — браузер сам знает нумерацию недель и не даст выбрать несуществующую. Квартала такого типа нет, поэтому он собран списком. Границы отрезка считаются в UTC: местная полночь на границе месяца легко уезжает на сутки. Переключатель отрезков лежит в собственной form, поэтому два блока на странице не мешают друг другу.",
       "meta": {
-        "tags": [
-          "date",
-          "period",
-          "report",
-          "native"
-        ],
+        "tags": ["date", "period", "report", "native"],
         "ai": {
           "export": "Date009",
           "usage": "<Date009 defaultUnit=\"month\" defaultValue=\"2026-09\" />",
@@ -1402,11 +1332,7 @@
             "label": "Отрезок",
             "type": "select",
             "default": "month",
-            "options": [
-              "week",
-              "month",
-              "quarter"
-            ]
+            "options": ["week", "month", "quarter"]
           },
           {
             "prop": "hint",
@@ -1494,13 +1420,7 @@
         "preview": {
           "width": "full"
         },
-        "cardControls": [
-          "label",
-          "defaultUnit",
-          "hint",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["label", "defaultUnit", "hint", "accent", "background"]
       }
     },
     {
@@ -1508,9 +1428,7 @@
       "type": "registry:component",
       "title": "Диапазон с пресетами",
       "description": "Кнопки для частых отрезков и два поля для остального: выбранный пресет слетает, как только даты правят руками.",
-      "categories": [
-        "date-selector"
-      ],
+      "categories": ["date-selector"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1522,12 +1440,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-date-010-*. Клиентский. Даты пресета считаются в момент нажатия, а не при отрисовке: вычислять «сегодня» и на сервере, и на клиенте — верный способ разойтись на сутки. Второму полю ставится min по первому, поэтому браузер сам не даёт выбрать конец раньше начала, а длительность считается тут же.",
       "meta": {
-        "tags": [
-          "date",
-          "range",
-          "presets",
-          "analytics"
-        ],
+        "tags": ["date", "range", "presets", "analytics"],
         "ai": {
           "export": "Date010",
           "usage": "<Date010 presets={presets} />",
@@ -1543,6 +1456,7 @@
           ],
           "adapt": [
             "набор пресетов через presets",
+            "defaultFrom, defaultTo и defaultPreset — стартовый диапазон и подсвеченный пресет",
             "подписи label, fromLabel и toLabel",
             "текст длительности через lengthTemplate",
             "accent — цвет фокуса и выбранного пресета",
@@ -1551,7 +1465,7 @@
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
             "Пресеты считают дни включительно: «7 дней» — это сегодня и шесть предыдущих.",
-            "Поля пустые до первого выбора: подставлять диапазон по умолчанию значит решать за человека, что он ищет.",
+            "Поля пустые до первого выбора: подставлять диапазон по умолчанию значит решать за человека, что он ищет. Когда стартовый отрезок всё-таки известен — отчёт открывается на прошлом месяце, — задайте его через defaultFrom, defaultTo и defaultPreset.",
             "Значения полей всегда в формате ГГГГ-ММ-ДД, показ зависит от системных настроек.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
           ]
@@ -1609,6 +1523,7 @@
               ],
               "adapt": [
                 "the preset set through presets",
+                "defaultFrom, defaultTo and defaultPreset — the starting range and the highlighted preset",
                 "the label, fromLabel and toLabel captions",
                 "the length text through lengthTemplate",
                 "accent — the focus ring and chosen preset colour",
@@ -1617,7 +1532,7 @@
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Presets count days inclusively: «7 days» means today plus the six before it.",
-                "The fields start empty: pre-filling a range decides for the person what they are looking for.",
+                "The fields start empty: pre-filling a range decides for the person what they are looking for. When the starting span is genuinely known — a report opening on the previous month — set it through defaultFrom, defaultTo and defaultPreset.",
                 "Field values are always YYYY-MM-DD; the display follows system settings.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
@@ -1671,13 +1586,21 @@
                     "label": "This month",
                     "thisMonth": true
                   }
-                ]
+                ],
+                "defaultFrom": "2026-08-08",
+                "defaultTo": "2026-09-06",
+                "defaultPreset": "30"
               }
             }
           }
         },
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "defaultFrom": "2026-08-08",
+            "defaultTo": "2026-09-06",
+            "defaultPreset": "30"
+          }
         },
         "cardControls": [
           "label",
@@ -1693,9 +1616,7 @@
       "type": "registry:component",
       "title": "Занятые даты",
       "description": "Поле даты с занятыми днями: отказ приходит на месте, а рядом стоит кнопка ближайшего свободного дня.",
-      "categories": [
-        "date-selector"
-      ],
+      "categories": ["date-selector"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1707,12 +1628,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-date-011-*. Клиентский. Нативный input умеет только границы min и max, поэтому занятость проверяется в компоненте: выбранный день сверяется со списком и с признаком выходных. Вместо сухого «дата недоступна» предлагается ближайший свободный день — поиск идёт вперёд и не дальше двух месяцев. Отказ несёт aria-invalid и связан с полем через aria-describedby.",
       "meta": {
-        "tags": [
-          "date",
-          "busy",
-          "booking",
-          "validation"
-        ],
+        "tags": ["date", "busy", "booking", "validation"],
         "ai": {
           "export": "Date011",
           "usage": "<Date011 busy={[\"2026-09-15\"]} />",
@@ -1847,6 +1763,351 @@
           "accent",
           "background"
         ]
+      }
+    },
+    {
+      "name": "date-012",
+      "type": "registry:component",
+      "title": "Поле с календарём",
+      "description": "Поле даты с собственной месячной сеткой под ним: в нативном календаре нельзя ни подсветить сегодняшний день, ни поставить кнопку «Сегодня».",
+      "categories": ["date-selector"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "date-012/date-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/date-012.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-date-012-*. Клиентский: выбранная дата, набранная строка и показанный месяц лежат в состоянии. Значение живёт в текстовом поле формы и набирается с клавиатуры, а сетка — второй способ ввести то же самое: набранное она подхватывает, только когда строка дописана до конца, иначе месяц прыгал бы на каждой цифре. Выбор дня возвращает дату в поле и закрывает панель. Панель на нативном popover: верхний слой, Esc и клик мимо достаются от браузера, позиция — из CSS anchor positioning, а где его нет, панель остаётся карточкой по центру экрана. Проп open раскрывает её в потоке страницы для витрины и скриншотов.",
+      "meta": {
+        "tags": ["date", "calendar", "picker", "form"],
+        "ai": {
+          "export": "Date012",
+          "usage": "<Date012 label=\"Дата встречи\" defaultValue=\"2026-09-16\" locale=\"ru-RU\" />",
+          "summary": "Поле даты с собственной месячной сеткой под ним: ввод с клавиатуры, выбор в сетке, переход по месяцам и кнопка «Сегодня». Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-date-012-* и не подменять её токенами вашей темы",
+            "связку поля и сетки: значение живёт в поле формы, а календарь — второй способ его заполнить",
+            "подхват набранного только по полной строке ГГГГ-ММ-ДД: иначе месяц прыгает на каждой цифре",
+            "закрытие панели после выбора дня — календарь здесь помощник поля, а не отдельный экран",
+            "нативный popover: верхний слой, Esc и клик мимо приходят от браузера даром",
+            "витринный режим open: без него на карточке каталога от компонента видно одно поле",
+            "стрелки по дням и ровно одну кнопку сетки в табуляции: сорок две подряд — это сорок два Tab",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "label — подпись поля",
+            "defaultValue — стартовая дата в формате ГГГГ-ММ-ДД",
+            "locale — локаль названий месяца и дней недели",
+            "name — имя поля в форме, hint — пояснение под ним",
+            "openLabel, previousLabel, nextLabel и todayLabel — подписи кнопок",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Отличие от категории «Календарь»: там сетка месяца — самостоятельный компонент (calendar-001), её ставят на страницу саму по себе. Здесь сетка обслуживает поле: открывается из него, подхватывает набранное и, отдав дату обратно, закрывается.",
+            "Нативный input[type=date] сюда не годится: его календарь рисует браузер, и ни подсветить сегодняшний день, ни поставить «Сегодня» в нём нельзя. Нативное поле — это date-001.",
+            "В режиме open панель лежит в потоке и popover не используется, поэтому Esc и клик мимо там не работают: это режим витрины и скриншотов, а не страницы пользователя.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Дата встречи",
+            "maxLength": 24
+          },
+          {
+            "prop": "defaultValue",
+            "label": "Дата",
+            "type": "text",
+            "default": "2026-09-16",
+            "maxLength": 10
+          },
+          {
+            "prop": "locale",
+            "label": "Локаль",
+            "type": "select",
+            "default": "ru-RU",
+            "options": ["ru-RU", "en-US", "de-DE"]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Field With Calendar",
+            "description": "A date field with its own month grid under it: the native calendar cannot highlight today or carry a «Today» button.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in the local --vibeui-date-012-* variables. Client component: the selected date, the typed string and the displayed month live in state. The value belongs to a text form field and can be typed on the keyboard, while the grid is a second way to enter the same thing: it picks the typed string up only once it is complete, otherwise the month would jump on every digit. Choosing a day returns the date to the field and closes the panel. The panel is a native popover: top layer, Esc and outside clicks come from the browser, the position comes from CSS anchor positioning, and where that is missing the panel stays a card in the middle of the screen. The open prop unfolds it in page flow for the showcase and for screenshots.",
+            "ai": {
+              "summary": "A date field with its own month grid under it: keyboard input, grid selection, month navigation and a «Today» button. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-date-012-* palette — do not swap it for your theme tokens",
+                "the field-and-grid pairing: the value lives in the form field, the calendar is a second way to fill it",
+                "picking up the typed string only when the full YYYY-MM-DD is there: otherwise the month jumps on every digit",
+                "closing the panel after a day is chosen — the calendar here assists the field, it is not a separate screen",
+                "the native popover: top layer, Esc and outside clicks come free from the browser",
+                "the open showcase mode: without it the catalogue card shows a bare field",
+                "arrow keys across days and exactly one grid button in the tab order: forty-two in a row means forty-two Tabs",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "label — the field caption",
+                "defaultValue — the starting date in YYYY-MM-DD",
+                "locale — the locale of the month and weekday names",
+                "name — the form field name, hint — the note under it",
+                "openLabel, previousLabel, nextLabel and todayLabel — the button captions",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "How this differs from the Calendar category: there the month grid is a component in its own right (calendar-001) and goes on the page by itself. Here the grid serves the field: it opens from it, picks up what was typed and closes once the date is handed back.",
+                "A native input[type=date] does not fit here: its calendar is drawn by the browser, which can neither highlight today nor carry a «Today» button. The native field is date-001.",
+                "In open mode the panel sits in the flow and no popover is used, so Esc and outside clicks do not work there: it is a mode for the showcase and for screenshots, not for a user-facing page.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Date012 label=\"Meeting date\" defaultValue=\"2026-09-16\" locale=\"en-US\" />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Meeting date"
+              },
+              "defaultValue": {
+                "label": "Date",
+                "default": "2026-09-16"
+              },
+              "locale": {
+                "label": "Locale"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "open": true,
+                "label": "Meeting date",
+                "locale": "en-US",
+                "hint": "Type the date or pick it in the calendar.",
+                "openLabel": "Open calendar",
+                "previousLabel": "Previous month",
+                "nextLabel": "Next month",
+                "todayLabel": "Today"
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "label",
+          "defaultValue",
+          "locale",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "open": true
+          }
+        }
+      }
+    },
+    {
+      "name": "date-013",
+      "type": "registry:component",
+      "title": "Диапазон одной панелью",
+      "description": "Диапазон «с … по …» в одной сетке: промежуток закрашен сплошной полосой, а под ней сразу счёт ночей.",
+      "categories": ["date-selector"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "date-013/date-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/date-013.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-date-013-*. Клиентский: обе границы, правящийся конец и показанный месяц лежат в состоянии. Главное здесь два поля — они видны всегда, показывают выбранное и отмечают, какой конец правится; сетка пристёгнута к ним и открывается тем полем, которое нажали. Клик раньше заезда не ошибка: он переносит начало, а не ругается. Ячейки сетки идут без зазора, иначе промежуток читался бы пунктиром из отдельных плашек. Даты сравниваются как строки ГГГГ-ММ-ДД — при одинаковом формате это корректно и не требует разбора. Значения уходят в форму скрытыми полями name-from и name-to.",
+      "meta": {
+        "tags": ["date", "range", "booking", "calendar"],
+        "ai": {
+          "export": "Date013",
+          "usage": "<Date013 legend=\"Даты проживания\" defaultFrom=\"2026-09-14\" defaultTo=\"2026-09-21\" />",
+          "summary": "Два поля диапазона и одна месячная сетка под ними: полоса промежутка, подпись «7 ночей» и отметка того конца, который сейчас правится. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-date-013-* и не подменять её токенами вашей темы",
+            "два видимых поля как главную часть: диапазон читают по ним, а не по сетке",
+            "отметку правящегося конца: без неё второй клик уходит непонятно куда",
+            "одну сетку на оба конца: полоса промежутка — единственный способ увидеть диапазон целиком",
+            "перенос начала вместо ошибки, когда кликнули раньше заезда",
+            "счёт ночей рядом: диапазон человек всё равно переводит в длительность",
+            "ячейки без зазора: иначе промежуток распадается на пунктир из плашек",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "legend, fromLabel и toLabel — заголовок и подписи полей",
+            "defaultFrom и defaultTo — стартовый диапазон в формате ГГГГ-ММ-ДД",
+            "nightsText — склонения ночей с подстановкой {count}",
+            "locale — локаль названий месяца и дней недели",
+            "name — префикс имён скрытых полей формы, hint — пояснение под полями",
+            "emptyText, clearLabel, todayLabel, previousLabel и nextLabel — подписи",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Отличие от категории «Календарь»: calendar-002 — это сетка выбора диапазона сама по себе, её ставят на страницу как самостоятельный виджет. Здесь главное — пара полей «заезд/выезд», а сетка их обслуживает: открывается нажатым полем, отмечает правящийся конец и закрывается, вернув границы в поля.",
+            "Ночей на одну меньше, чем дней: с 14 по 21 — это семь ночей, а не восемь. Если нужен счёт дней, прибавьте единицу.",
+            "В режиме open панель лежит в потоке и popover не используется, поэтому Esc и клик мимо там не работают: это режим витрины и скриншотов, а не страницы пользователя.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "legend",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Даты проживания",
+            "maxLength": 28
+          },
+          {
+            "prop": "defaultFrom",
+            "label": "Заезд",
+            "type": "text",
+            "default": "2026-09-14",
+            "maxLength": 10
+          },
+          {
+            "prop": "defaultTo",
+            "label": "Выезд",
+            "type": "text",
+            "default": "2026-09-21",
+            "maxLength": 10
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Range In One Panel",
+            "description": "A «from … to …» range in a single grid: the span is filled with a solid stripe and the night count sits right under it.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in the local --vibeui-date-013-* variables. Client component: both bounds, the edge being edited and the displayed month live in state. The two fields are the main part here — they are always visible, they show what is chosen and they mark which edge is being edited; the grid is attached to them and opens from whichever field was pressed. A click before the check-in is not an error: it moves the start instead of complaining. The grid cells carry no gap, otherwise the span would read as a dotted line of separate tiles. Dates are compared as YYYY-MM-DD strings — with an identical format that is correct and needs no parsing. The values reach the form through the hidden name-from and name-to fields.",
+            "ai": {
+              "summary": "Two range fields and a single month grid under them: a span stripe, a «7 nights» caption and a mark on the edge currently being edited. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-date-013-* palette — do not swap it for your theme tokens",
+                "the two visible fields as the main part: the range is read from them, not from the grid",
+                "the mark on the edge being edited: without it the second click goes who knows where",
+                "one grid for both edges: the span stripe is the only way to see the range as a whole",
+                "moving the start instead of raising an error when a click lands before the check-in",
+                "the night count next to it: a range gets translated into a duration anyway",
+                "cells without a gap: otherwise the span falls apart into a dotted line of tiles",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "legend, fromLabel and toLabel — the heading and the field captions",
+                "defaultFrom and defaultTo — the starting range in YYYY-MM-DD",
+                "nightsText — the night plural forms with a {count} placeholder",
+                "locale — the locale of the month and weekday names",
+                "name — the prefix of the hidden form field names, hint — the note under the fields",
+                "emptyText, clearLabel, todayLabel, previousLabel and nextLabel — the captions",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "How this differs from the Calendar category: calendar-002 is a range grid in its own right, placed on the page as a standalone widget. Here the check-in / check-out pair is the point and the grid serves it: it opens from the pressed field, marks the edge being edited and closes once the bounds are back in the fields.",
+                "There is one night fewer than days: the 14th to the 21st is seven nights, not eight. Add one if you need a day count.",
+                "In open mode the panel sits in the flow and no popover is used, so Esc and outside clicks do not work there: it is a mode for the showcase and for screenshots, not for a user-facing page.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Date013 legend=\"Stay dates\" defaultFrom=\"2026-09-14\" defaultTo=\"2026-09-21\" />"
+            },
+            "controls": {
+              "legend": {
+                "label": "Heading",
+                "default": "Stay dates"
+              },
+              "defaultFrom": {
+                "label": "Check-in",
+                "default": "2026-09-14"
+              },
+              "defaultTo": {
+                "label": "Check-out",
+                "default": "2026-09-21"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "open": true,
+                "legend": "Stay dates",
+                "fromLabel": "Check-in",
+                "toLabel": "Check-out",
+                "locale": "en-US",
+                "hint": "The first click sets the check-in, the second the check-out.",
+                "emptyText": "not set",
+                "clearLabel": "Clear",
+                "todayLabel": "today",
+                "previousLabel": "Previous month",
+                "nextLabel": "Next month",
+                "nightsText": {
+                  "one": "{count} night",
+                  "few": "{count} nights",
+                  "many": "{count} nights"
+                }
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "legend",
+          "defaultFrom",
+          "defaultTo",
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "open": true
+          }
+        }
       }
     }
   ]

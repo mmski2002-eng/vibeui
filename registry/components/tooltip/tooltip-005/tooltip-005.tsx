@@ -6,6 +6,8 @@ export type Tooltip005Props = Omit<ComponentProps<"span">, "children"> & {
   tip?: string
   /** Предельная ширина подсказки. Строка длиннее 60 знаков не читается. */
   tipWidth?: string
+  /** Показать подсказку принудительно: онбординг, отладка, витрина. */
+  open?: boolean
   /** Цвет самой подсказки. Пусто — собственный тёмный тон. */
   background?: string
 }
@@ -70,6 +72,14 @@ background:var(--vibeui-tooltip-005-bg);transform:rotate(45deg);
 }
 [data-vibeui-block="tooltip-005"]:hover [data-part="tip"],
 [data-vibeui-block="tooltip-005"]:focus-within [data-part="tip"]{opacity:1;transform:translate(-50%,0)}
+/* Витринный режим: подсказка раскрыта без наведения. Текста здесь на четыре
+   строки, и абсолютной плашке над кнопкой не хватает места в кадре витрины —
+   поэтому она встаёт в поток под кнопкой, а стрелка переворачивается вверх. */
+[data-vibeui-block="tooltip-005"][data-open="true"]{flex-direction:column;align-items:center;gap:0.5625rem}
+[data-vibeui-block="tooltip-005"][data-open="true"] [data-part="tip"]{
+opacity:1;position:static;transform:none;box-shadow:none;
+}
+[data-vibeui-block="tooltip-005"][data-open="true"] [data-part="tip"]::after{top:-0.1875rem;bottom:auto}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="tooltip-005"] *{animation:none!important;transition:none!important}}
 `
 
@@ -103,6 +113,7 @@ export function Tooltip005({
   label = "Как считается остаток",
   tip = "Остаток — это оплаченный объём минус израсходованный за текущий период. Перерасход не блокирует работу: он переносится в следующий счёт отдельной строкой.",
   tipWidth = "17rem",
+  open = false,
   background = "",
   className,
   style,
@@ -123,6 +134,7 @@ export function Tooltip005({
         {...props}
         data-slot="tooltip"
         data-vibeui-block="tooltip-005"
+        data-open={open || undefined}
         className={className}
         style={palette}
       >

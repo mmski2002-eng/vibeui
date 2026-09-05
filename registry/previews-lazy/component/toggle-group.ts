@@ -7,88 +7,54 @@ import type { PreviewMap } from "@/registry/preview-types"
 
 export const PREVIEWS = {
   "togglegroup-001": dynamic(() =>
-    import("@/registry/components/toggle-group/togglegroup-001/togglegroup-001").then(
-      (module) => module.Togglegroup001,
-    ),
+    import("@/registry/components/toggle-group/togglegroup-001/togglegroup-001").then((module) => module.Togglegroup001),
   ),
   "togglegroup-002": dynamic(() =>
-    import("@/registry/components/toggle-group/togglegroup-002/togglegroup-002").then(
-      (module) => module.Togglegroup002,
-    ),
+    import("@/registry/components/toggle-group/togglegroup-002/togglegroup-002").then((module) => module.Togglegroup002),
   ),
   "togglegroup-003": dynamic(() =>
-    import("@/registry/components/toggle-group/togglegroup-003/togglegroup-003").then(
-      (module) => module.Togglegroup003,
-    ),
+    import("@/registry/components/toggle-group/togglegroup-003/togglegroup-003").then((module) => module.Togglegroup003),
   ),
   "togglegroup-004": dynamic(() =>
-    import("@/registry/components/toggle-group/togglegroup-004/togglegroup-004").then(
-      (module) => module.Togglegroup004,
-    ),
+    import("@/registry/components/toggle-group/togglegroup-004/togglegroup-004").then((module) => module.Togglegroup004),
   ),
   "togglegroup-005": dynamic(() =>
-    import("@/registry/components/toggle-group/togglegroup-005/togglegroup-005").then(
-      (module) => module.Togglegroup005,
-    ),
+    import("@/registry/components/toggle-group/togglegroup-005/togglegroup-005").then((module) => module.Togglegroup005),
   ),
   "togglegroup-006": dynamic(() =>
-    import("@/registry/components/toggle-group/togglegroup-006/togglegroup-006").then(
-      (module) => module.Togglegroup006,
-    ),
+    import("@/registry/components/toggle-group/togglegroup-006/togglegroup-006").then((module) => module.Togglegroup006),
   ),
   "togglegroup-007": dynamic(() =>
-    import("@/registry/components/toggle-group/togglegroup-007/togglegroup-007").then(
-      (module) => module.Togglegroup007,
-    ),
+    import("@/registry/components/toggle-group/togglegroup-007/togglegroup-007").then((module) => module.Togglegroup007),
   ),
   "togglegroup-008": dynamic(() =>
-    import("@/registry/components/toggle-group/togglegroup-008/togglegroup-008").then(
-      (module) => module.Togglegroup008,
-    ),
+    import("@/registry/components/toggle-group/togglegroup-008/togglegroup-008").then((module) => module.Togglegroup008),
   ),
   "togglegroup-009": dynamic(() =>
-    import("@/registry/components/toggle-group/togglegroup-009/togglegroup-009").then(
-      (module) => module.Togglegroup009,
-    ),
+    import("@/registry/components/toggle-group/togglegroup-009/togglegroup-009").then((module) => module.Togglegroup009),
   ),
   "togglegroup-010": dynamic(() =>
-    import("@/registry/components/toggle-group/togglegroup-010/togglegroup-010").then(
-      (module) => module.Togglegroup010,
-    ),
+    import("@/registry/components/toggle-group/togglegroup-010/togglegroup-010").then((module) => module.Togglegroup010),
   ),
   "togglegroup-011": dynamic(() =>
-    import("@/registry/components/toggle-group/togglegroup-011/togglegroup-011").then(
-      (module) => module.Togglegroup011,
-    ),
+    import("@/registry/components/toggle-group/togglegroup-011/togglegroup-011").then((module) => module.Togglegroup011),
   ),
   "togglegroup-012": dynamic(() =>
-    import("@/registry/components/toggle-group/togglegroup-012/togglegroup-012").then(
-      (module) => module.Togglegroup012,
-    ),
+    import("@/registry/components/toggle-group/togglegroup-012/togglegroup-012").then((module) => module.Togglegroup012),
   ),
   "togglegroup-013": dynamic(() =>
-    import("@/registry/components/toggle-group/togglegroup-013/togglegroup-013").then(
-      (module) => module.Togglegroup013,
-    ),
+    import("@/registry/components/toggle-group/togglegroup-013/togglegroup-013").then((module) => module.Togglegroup013),
   ),
   "togglegroup-014": dynamic(() =>
-    import("@/registry/components/toggle-group/togglegroup-014/togglegroup-014").then(
-      (module) => module.Togglegroup014,
-    ),
+    import("@/registry/components/toggle-group/togglegroup-014/togglegroup-014").then((module) => module.Togglegroup014),
   ),
   "togglegroup-015": dynamic(() =>
-    import("@/registry/components/toggle-group/togglegroup-015/togglegroup-015").then(
-      (module) => module.Togglegroup015,
-    ),
+    import("@/registry/components/toggle-group/togglegroup-015/togglegroup-015").then((module) => module.Togglegroup015),
   ),
   "togglegroup-016": dynamic(() =>
-    import("@/registry/components/toggle-group/togglegroup-016/togglegroup-016").then(
-      (module) => module.Togglegroup016,
-    ),
+    import("@/registry/components/toggle-group/togglegroup-016/togglegroup-016").then((module) => module.Togglegroup016),
   ),
   "togglegroup-017": dynamic(() =>
-    import("@/registry/components/toggle-group/togglegroup-017/togglegroup-017").then(
-      (module) => module.Togglegroup017,
-    ),
+    import("@/registry/components/toggle-group/togglegroup-017/togglegroup-017").then((module) => module.Togglegroup017),
   ),
 } satisfies PreviewMap

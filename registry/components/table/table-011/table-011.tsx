@@ -52,7 +52,12 @@ const STYLES = `
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="table-011"]{color-scheme:dark}
 [data-vibeui-block="table-011"]{
 width:100%;box-sizing:border-box;
+/* container-type отрывает ширину от содержимого: без нижней границы
+   блок схлопнется внутри flex-контейнера. */
+min-width:min(100%,16rem);
 font-family:var(--vibeui-table-011-font);color:var(--vibeui-table-011-fg);
+/* Поля ячеек считаются от собственной ширины блока, а не от окна. */
+container-type:inline-size;
 }
 [data-vibeui-block="table-011"] [data-part="shell"]{
 background:var(--vibeui-table-011-bg);
@@ -65,7 +70,29 @@ border:1px solid var(--vibeui-table-011-border);border-radius:1rem;overflow:hidd
 [data-vibeui-block="table-011"] [data-part="scroll"]:focus-visible{
 outline:2px solid var(--vibeui-table-011-accent);outline-offset:-2px;
 }
-[data-vibeui-block="table-011"] table{width:100%;border-collapse:collapse;font-size:0.8125rem;min-width:26rem}
+/* min() вместо min-width:26rem: желаемая ширина остаётся, но никогда не
+   перерастает контейнер — иначе матрица уезжает под правый край. */
+[data-vibeui-block="table-011"] table{
+width:100%;border-collapse:collapse;font-size:0.8125rem;
+min-width:min(100%,26rem);
+}
+/* В узком блоке место забирают поля ячеек, а не текст: сжимаем их, чтобы
+   названия возможностей и цены остались целыми. */
+@container (max-width:28rem){
+[data-vibeui-block="table-011"] th,
+[data-vibeui-block="table-011"] td{padding:0.5rem 0.375rem}
+[data-vibeui-block="table-011"] caption{padding:0.75rem 0.625rem 0.375rem}
+}
+@container (max-width:22rem){
+[data-vibeui-block="table-011"] table{font-size:0.75rem}
+[data-vibeui-block="table-011"] th,
+[data-vibeui-block="table-011"] td{padding:0.4375rem 0.25rem}
+[data-vibeui-block="table-011"] [data-part="name"]{font-size:0.75rem}
+[data-vibeui-block="table-011"] [data-part="price"]{font-size:0.6875rem}
+[data-vibeui-block="table-011"] [data-part="badge"]{
+padding:0.0625rem 0.25rem;font-size:0.5rem;letter-spacing:normal;
+}
+}
 [data-vibeui-block="table-011"] caption{
 padding:0.875rem 1rem 0.5rem;text-align:left;
 font-size:0.9375rem;font-weight:650;

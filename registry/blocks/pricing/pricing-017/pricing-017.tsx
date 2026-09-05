@@ -17,6 +17,12 @@ export type Pricing017Props = {
   plans?: Pricing017Plan[]
   /** Подпись ленты для скринридера. */
   trackLabel?: string
+  /**
+   * `auto` — лента на узкой ширине, сетка от 52rem. `swipe` — лента всегда,
+   * в том числе на десктопе: так блок показывает свой смысл, а не притворяется
+   * обычной сеткой тарифов.
+   */
+  layout?: "auto" | "swipe"
   accent?: string
   /** Пусто — подложки нет, блок лежит прямо на фоне страницы. */
   background?: string
@@ -68,6 +74,22 @@ overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-left:1.25rem;
 scrollbar-width:none;-webkit-overflow-scrolling:touch;
 }
 [data-vibeui-block="pricing-017"] [data-part="track"]::-webkit-scrollbar{display:none}
+/* Точки-пейджер без единой строки скрипта: ::scroll-marker даёт настоящие
+   маркеры ленты — они следят за прокруткой и переносят к карточке по щелчку.
+   Объявлены только в режиме ленты: дефолтный вид блока менять нельзя, иначе
+   у тех, кто уже поставил компонент, картинка поедет после обновления.
+   Браузер без поддержки просто не рисует точки, лента работает как прежде. */
+[data-vibeui-block="pricing-017"][data-layout="swipe"] [data-part="track"]{scroll-marker-group:after}
+[data-vibeui-block="pricing-017"][data-layout="swipe"] [data-part="track"]::scroll-marker-group{
+display:flex;justify-content:center;align-items:center;gap:0.375rem;padding-bottom:0.75rem;
+}
+[data-vibeui-block="pricing-017"][data-layout="swipe"] [data-part="plan"]::scroll-marker{
+content:"";width:0.4375rem;height:0.4375rem;border-radius:9999px;
+background:color-mix(in oklab,var(--vibeui-pricing-017-muted) 45%,transparent);
+}
+[data-vibeui-block="pricing-017"][data-layout="swipe"] [data-part="plan"]::scroll-marker:target-current{
+background:var(--vibeui-pricing-017-accent);
+}
 [data-vibeui-block="pricing-017"] [data-part="plan"]{
 flex:0 0 min(85%,19rem);scroll-snap-align:start;
 display:flex;flex-direction:column;padding:1.5rem;border-radius:1.125rem;
@@ -99,9 +121,14 @@ font-size:0.75rem;color:var(--vibeui-pricing-017-muted);
 @container (min-width: 52rem){
 [data-vibeui-block="pricing-017"] [data-part="shell"]{padding:5rem 2rem}
 [data-vibeui-block="pricing-017"] [data-part="head"]{padding:0;margin-bottom:2rem}
-[data-vibeui-block="pricing-017"] [data-part="track"]{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.25rem;padding:0;overflow:visible;scroll-snap-type:none}
+[data-vibeui-block="pricing-017"]:not([data-layout="swipe"]) [data-part="track"]{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.25rem;padding:0;overflow:visible;scroll-snap-type:none}
 [data-vibeui-block="pricing-017"] [data-part="plan"]{flex:1 1 auto;padding:1.75rem}
-[data-vibeui-block="pricing-017"] [data-part="hint"]{display:none}
+[data-vibeui-block="pricing-017"]:not([data-layout="swipe"]) [data-part="hint"]{display:none}
+/* Лента, оставленная на десктопе: карточки шире экрана ленты, поэтому край
+   следующей остаётся в кадре и видно, что блок листается вбок. */
+[data-vibeui-block="pricing-017"][data-layout="swipe"] [data-part="track"]{padding-left:0;padding-right:0;scroll-padding-left:0}
+[data-vibeui-block="pricing-017"][data-layout="swipe"] [data-part="plan"]{flex:0 0 min(88%,26rem)}
+[data-vibeui-block="pricing-017"][data-layout="swipe"] [data-part="hint"]{padding:0}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="pricing-017"] *{animation:none!important;transition:none!important}}
 `
@@ -171,6 +198,7 @@ export function Pricing017({
   hint = "Листайте вбок, чтобы увидеть все тарифы",
   plans = DEFAULT_PLANS,
   trackLabel = "Тарифы",
+  layout = "auto",
   accent,
   background = "",
   className,
@@ -194,6 +222,7 @@ export function Pricing017({
       </style>
       <section
         data-vibeui-block="pricing-017"
+        data-layout={layout}
         className={className}
         style={palette}
       >

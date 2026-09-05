@@ -176,6 +176,9 @@
       "meta": {
         "tags": ["tooltip", "comparison", "accessibility", "native"],
         "preview": {
+          "props": {
+            "open": true
+          },
           "width": "full"
         },
         "ai": {
@@ -425,6 +428,9 @@
         },
         "cardControls": ["tip", "triggerLabel", "background"],
         "preview": {
+          "props": {
+            "open": true
+          },
           "width": "auto"
         }
       }
@@ -559,6 +565,9 @@
         },
         "cardControls": ["side", "background"],
         "preview": {
+          "props": {
+            "open": true
+          },
           "width": "auto"
         }
       }
@@ -687,6 +696,9 @@
         },
         "cardControls": ["label", "tipWidth", "background"],
         "preview": {
+          "props": {
+            "open": true
+          },
           "width": "auto"
         }
       }
@@ -710,6 +722,9 @@
       "meta": {
         "tags": ["tooltip", "flip", "arrow", "edge"],
         "preview": {
+          "props": {
+            "open": true
+          },
           "width": "full"
         },
         "ai": {
@@ -829,6 +844,9 @@
       "meta": {
         "tags": ["tooltip", "form", "focus", "hint"],
         "preview": {
+          "props": {
+            "open": true
+          },
           "width": "full"
         },
         "ai": {
@@ -959,6 +977,9 @@
       "meta": {
         "tags": ["tooltip", "glossary", "inline", "typography"],
         "preview": {
+          "props": {
+            "open": true
+          },
           "width": "full"
         },
         "ai": {
@@ -1088,6 +1109,9 @@
       "meta": {
         "tags": ["tooltip", "delay", "hover intent", "row"],
         "preview": {
+          "props": {
+            "open": true
+          },
           "width": "full"
         },
         "ai": {
@@ -1329,6 +1353,9 @@
         ],
         "cardControls": ["shortcutLabel", "background"],
         "preview": {
+          "props": {
+            "open": true
+          },
           "width": "full"
         }
       }
@@ -1352,6 +1379,9 @@
       "meta": {
         "tags": ["tooltip", "delay", "monitoring", "grid"],
         "preview": {
+          "props": {
+            "open": true
+          },
           "width": "full"
         },
         "ai": {
@@ -1579,6 +1609,9 @@
         },
         "cardControls": ["heading", "detail", "background"],
         "preview": {
+          "props": {
+            "open": true
+          },
           "width": "auto"
         }
       }
@@ -1602,6 +1635,9 @@
       "meta": {
         "tags": ["tooltip", "flip", "arrow", "vertical"],
         "preview": {
+          "props": {
+            "open": true
+          },
           "width": "full"
         },
         "ai": {
@@ -1823,6 +1859,9 @@
         },
         "cardControls": ["label", "reason", "showLock"],
         "preview": {
+          "props": {
+            "open": true
+          },
           "width": "auto"
         }
       }
@@ -1951,6 +1990,9 @@
         },
         "cardControls": ["label", "caption", "accent"],
         "preview": {
+          "props": {
+            "open": true
+          },
           "width": "auto"
         }
       }
@@ -1974,6 +2016,9 @@
       "meta": {
         "tags": ["tooltip", "form", "focus-visible", "keyboard"],
         "preview": {
+          "props": {
+            "open": true
+          },
           "width": "full"
         },
         "ai": {
@@ -2105,6 +2150,9 @@
       "meta": {
         "tags": ["tooltip", "truncate", "ellipsis", "overflow"],
         "preview": {
+          "props": {
+            "open": true
+          },
           "width": "full"
         },
         "ai": {

@@ -50,10 +50,15 @@ const STYLES = `
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="eventcalendar-001"]{color-scheme:dark}
 [data-vibeui-block="eventcalendar-001"]{
 width:100%;max-width:46rem;box-sizing:border-box;padding:1rem;
+/* container-type отрывает ширину от содержимого: без нижней границы
+   блок схлопнется внутри flex-контейнера. */
+min-width:min(100%,16rem);
 background:var(--vibeui-eventcalendar-001-bg);
 border:1px solid var(--vibeui-eventcalendar-001-border);border-radius:1rem;
 color:var(--vibeui-eventcalendar-001-fg);
 font-family:var(--vibeui-eventcalendar-001-font);
+/* Плотность клетки считается от собственной ширины блока, а не от окна. */
+container-type:inline-size;
 }
 [data-vibeui-block="eventcalendar-001"] *{box-sizing:border-box}
 [data-vibeui-block="eventcalendar-001"] [data-part="head"]{
@@ -110,6 +115,28 @@ white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 font-weight:600;font-variant-numeric:tabular-nums;
 color:var(--vibeui-eventcalendar-001-muted);
 }
+/* Узкий месяц: клетка шириной в палец не держит «время + название» в одну
+   строку, и подпись обрезалась бы на полуслове. Время уходит — оно всё равно
+   есть во всплывающем списке дня, — а название остаётся целым. */
+@container (max-width:34rem){
+[data-vibeui-block="eventcalendar-001"] [data-part="weekday"]{padding:0.25rem 0.125rem;font-size:0.5625rem}
+[data-vibeui-block="eventcalendar-001"] [data-part="cell"]{padding:0.1875rem;min-height:4.5rem}
+[data-vibeui-block="eventcalendar-001"] [data-part="chip"]{
+padding:0.0625rem 0.1875rem;border-left-width:2px;font-size:0.5rem;
+}
+[data-vibeui-block="eventcalendar-001"] [data-part="cell"] > [data-part="chip"] b{display:none}
+[data-vibeui-block="eventcalendar-001"] summary{font-size:0.5625rem}
+/* Всплывающий список шире клетки: в нём время остаётся, и ширины клетки
+   на «время + название» уже не хватает. У правых колонок он раскрывается
+   влево, иначе уходит за край компонента. */
+[data-vibeui-block="eventcalendar-001"] [data-part="overflow"]{
+left:-0.375rem;right:auto;width:max-content;max-width:8rem;
+}
+[data-vibeui-block="eventcalendar-001"] [data-part="cell"]:nth-child(7n) [data-part="overflow"],
+[data-vibeui-block="eventcalendar-001"] [data-part="cell"]:nth-child(7n+6) [data-part="overflow"]{
+left:auto;right:-0.375rem;
+}
+}
 [data-vibeui-block="eventcalendar-001"] [data-tone="personal"]{
 border-left-color:var(--vibeui-eventcalendar-001-personal);
 background:color-mix(in oklab,var(--vibeui-eventcalendar-001-personal) 14%,transparent);
@@ -131,9 +158,9 @@ color:var(--vibeui-eventcalendar-001-accent);
 outline:2px solid var(--vibeui-eventcalendar-001-accent);outline-offset:1px;
 }
 [data-vibeui-block="eventcalendar-001"] [data-part="overflow"]{
-position:absolute;left:0.25rem;right:0.25rem;top:100%;z-index:2;
+position:absolute;left:0.125rem;right:0.125rem;top:100%;z-index:2;
 display:flex;flex-direction:column;gap:0.1875rem;
-margin:0.1875rem 0 0;padding:0.375rem;list-style:none;
+margin:0.1875rem 0 0;padding:0.25rem;list-style:none;
 background:var(--vibeui-eventcalendar-001-panel);
 border:1px solid var(--vibeui-eventcalendar-001-border);border-radius:0.5rem;
 box-shadow:0 10px 24px oklch(0.24 0.014 265 / 14%);
@@ -146,22 +173,24 @@ top:auto;bottom:100%;margin:0 0 0.1875rem;
 
 const DAY = 86400000
 
+// Подписи короткие намеренно: клетка месяца узкая, и длинное название в ней
+// всё равно не читается — обрезанное на полуслове хуже, чем короткое целиком.
 const DEFAULT_EVENTS: Eventcalendar001Event[] = [
-  { day: 3, title: "Планёрка", time: "10:00" },
-  { day: 5, title: "Ревью дизайна", time: "14:00" },
-  { day: 5, title: "Созвон с Кимом", time: "16:30", tone: "personal" },
-  { day: 11, title: "Релиз 4.2", time: "12:00" },
+  { day: 3, title: "Стендап", time: "10:00" },
+  { day: 5, title: "Ревью", time: "14:00" },
+  { day: 5, title: "Созвон", time: "16:30", tone: "personal" },
+  { day: 11, title: "Релиз", time: "12:00" },
   { day: 12, title: "Бассейн", time: "07:30", tone: "personal" },
-  { day: 12, title: "Спринт-обзор", time: "11:00" },
-  { day: 12, title: "Интервью", time: "15:00" },
+  { day: 12, title: "Обзор", time: "11:00" },
+  { day: 12, title: "Найм", time: "15:00" },
   { day: 12, title: "Ретро", time: "17:00", tone: "hold" },
-  { day: 18, title: "Отчёт за квартал", time: "09:00" },
-  { day: 19, title: "Обед с Верой", time: "13:00", tone: "personal" },
-  { day: 19, title: "Правки бюджета", tone: "hold" },
-  { day: 24, title: "Демо клиенту", time: "11:30" },
-  { day: 24, title: "Тренировка", time: "19:00", tone: "personal" },
-  { day: 24, title: "Черновик плана", tone: "hold" },
-  { day: 27, title: "Выезд команды", time: "10:00" },
+  { day: 18, title: "Отчёт", time: "09:00" },
+  { day: 19, title: "Обед", time: "13:00", tone: "personal" },
+  { day: 19, title: "Бюджет", tone: "hold" },
+  { day: 24, title: "Демо", time: "11:30" },
+  { day: 24, title: "Зал", time: "19:00", tone: "personal" },
+  { day: 24, title: "План", tone: "hold" },
+  { day: 27, title: "Выезд", time: "10:00" },
 ]
 
 /**

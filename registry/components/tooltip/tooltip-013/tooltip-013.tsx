@@ -6,6 +6,8 @@ export type Tooltip013Props = Omit<ComponentProps<"div">, "children"> & {
   labels?: [string, string]
   /** Пояснение под пунктами: компонент несёт русское, проект подставляет своё. */
   note?: string
+  /** Показать подсказку верхнего пункта принудительно: онбординг, отладка, витрина. */
+  open?: boolean
   /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
   background?: string
 }
@@ -77,6 +79,12 @@ bottom:calc(100% + 0.5rem);transform:translate(-50%,0.25rem);
 [data-vibeui-block="tooltip-013"] [data-part="item"]:focus-within [data-part="tip"]{
 opacity:1;transform:translate(-50%,0);
 }
+/* Витринный режим: раскрыта подсказка верхнего пункта. Две сразу столкнулись
+   бы посреди области — они летят навстречу друг другу. Верхняя раскрывается
+   вниз и остаётся внутри карточки. */
+[data-vibeui-block="tooltip-013"][data-open="true"] [data-part="item"][data-side="bottom"] [data-part="tip"]{
+opacity:1;transform:translate(-50%,0);
+}
 [data-vibeui-block="tooltip-013"] [data-part="note"]{
 margin:0;font-size:0.75rem;line-height:1.5;color:var(--vibeui-tooltip-013-muted);
 }
@@ -119,6 +127,7 @@ export function Tooltip013({
   tip = "Добавить в закладки",
   labels = DEFAULT_LABELS,
   note = DEFAULT_NOTE,
+  open = false,
   background = "",
   className,
   style,
@@ -143,6 +152,7 @@ export function Tooltip013({
         {...props}
         data-slot="tooltip"
         data-vibeui-block="tooltip-013"
+        data-open={open || undefined}
         className={className}
         style={palette}
       >

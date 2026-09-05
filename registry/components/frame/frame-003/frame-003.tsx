@@ -21,6 +21,8 @@ const STYLES = `
 --vibeui-frame-003-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.005 265));
 --vibeui-frame-003-muted:color-mix(in oklab,var(--vibeui-frame-003-fg) 68%,transparent);
 --vibeui-frame-003-border:light-dark(oklch(0.89 0.006 265),oklch(0.38 0.011 265));
+--vibeui-frame-003-accent:light-dark(oklch(0.62 0.15 262),oklch(0.68 0.15 262));
+--vibeui-frame-003-hero-fg:oklch(0.99 0.003 265);
 --vibeui-frame-003-radius:0.875rem;
 --vibeui-frame-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -92,15 +94,47 @@ border-radius:0.25rem 0.25rem 0 0;
 [data-vibeui-block="frame-003"] [data-part="body"]{display:block;background:var(--vibeui-frame-003-bg)}
 [data-vibeui-block="frame-003"] [data-part="body"] > *{display:block;width:100%}
 [data-vibeui-block="frame-003"] img{display:block;width:100%;height:auto}
-[data-vibeui-block="frame-003"] [data-part="stub"]{
-display:grid;place-items:center;gap:0.5rem;
-min-height:9rem;padding:1.5rem;text-align:center;
+/* Пустое окно рисует условную страницу: обложка, заголовок и ряд карточек.
+   Серые полосы посреди белого поля читались бы как ошибка загрузки. */
+[data-vibeui-block="frame-003"] [data-part="body"] [data-part="stub"]{
+display:flex;flex-direction:column;gap:0.625rem;
+min-height:9rem;padding:0.75rem;
+}
+[data-vibeui-block="frame-003"] [data-part="hero"]{
+display:flex;flex-direction:column;justify-content:flex-end;gap:0.375rem;
+min-height:3.5rem;padding:0.625rem 0.75rem;border-radius:0.625rem;
+background:
+radial-gradient(80% 120% at 12% 10%,var(--vibeui-frame-003-accent),transparent 68%),
+linear-gradient(120deg,color-mix(in oklab,var(--vibeui-frame-003-accent) 55%,transparent),color-mix(in oklab,var(--vibeui-frame-003-accent) 12%,transparent));
+}
+[data-vibeui-block="frame-003"] [data-part="stub-text"]{
+margin:0;font-size:0.8125rem;font-weight:700;line-height:1.25;
+color:var(--vibeui-frame-003-hero-fg);
 }
 [data-vibeui-block="frame-003"] [data-part="stub-line"]{
-width:9rem;height:0.5rem;border-radius:9999px;background:var(--vibeui-frame-003-chrome);
+display:block;width:9rem;max-width:70%;height:0.375rem;border-radius:9999px;
+background:color-mix(in oklab,var(--vibeui-frame-003-hero-fg) 55%,transparent);
 }
-[data-vibeui-block="frame-003"] [data-part="stub-line"]:last-child{width:6rem}
-[data-vibeui-block="frame-003"] [data-part="stub-text"]{font-size:0.8125rem;color:var(--vibeui-frame-003-muted)}
+[data-vibeui-block="frame-003"] [data-part="cards"]{
+display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem;
+}
+[data-vibeui-block="frame-003"] [data-part="card"]{
+display:flex;flex-direction:column;gap:0.3125rem;
+padding:0.5rem;border-radius:0.5rem;
+border:1px solid var(--vibeui-frame-003-border);
+background:var(--vibeui-frame-003-chrome);
+}
+[data-vibeui-block="frame-003"] [data-part="card"] i{
+display:block;width:1.125rem;height:1.125rem;border-radius:0.3125rem;
+background:var(--vibeui-frame-003-accent);
+}
+[data-vibeui-block="frame-003"] [data-part="card-line"]{
+display:block;height:0.3125rem;border-radius:9999px;
+background:color-mix(in oklab,var(--vibeui-frame-003-fg) 22%,transparent);
+}
+[data-vibeui-block="frame-003"] [data-part="card-line"]:last-child{width:60%}
+[data-vibeui-block="frame-003"] [data-part="card"]:nth-child(2){--vibeui-frame-003-accent:light-dark(oklch(0.6 0.15 160),oklch(0.75 0.14 160))}
+[data-vibeui-block="frame-003"] [data-part="card"]:nth-child(3){--vibeui-frame-003-accent:light-dark(oklch(0.68 0.15 60),oklch(0.8 0.13 60))}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="frame-003"] *{animation:none!important;transition:none!important}}
 `
 
@@ -184,9 +218,19 @@ export function Frame003({
           <div data-part="body">
             {children ?? (
               <div data-part="stub">
-                <span data-part="stub-text">{tab}</span>
-                <span data-part="stub-line" />
-                <span data-part="stub-line" />
+                <div data-part="hero">
+                  <p data-part="stub-text">{tab}</p>
+                  <span data-part="stub-line" aria-hidden="true" />
+                </div>
+                <div data-part="cards" aria-hidden="true">
+                  {[0, 1, 2].map((card) => (
+                    <span data-part="card" key={card}>
+                      <i />
+                      <span data-part="card-line" />
+                      <span data-part="card-line" />
+                    </span>
+                  ))}
+                </div>
               </div>
             )}
           </div>

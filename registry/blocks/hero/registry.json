@@ -2722,6 +2722,306 @@
         },
         "cardControls": ["eyebrow", "prefix", "suffix", "accent", "background"]
       }
+    },
+    {
+      "name": "hero-018",
+      "type": "registry:block",
+      "title": "Светлый первый экран",
+      "description": "Светлый флагманский hero на кремовой бумаге: миллиметровая сетка под радиальной маской, одно тёплое пятно под заголовком, крупная типографика и пара кнопок. Палитра фиксированно светлая и не темнеет вместе с темой сайта.",
+      "categories": ["hero"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hero-018/hero-018.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-018.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-hero-018-* задана явными значениями oklch, без light-dark(): светлота — суть блока, поэтому на тёмной странице он остаётся кремовым листом. По той же причине на корне объявлен color-scheme:light, иначе браузер рисовал бы фокусные кольца и выделение текста по тёмной ветке поверх светлого фона. Фон декорирует один слой [data-part=\"canvas\"]: две повторяющиеся линейные заливки дают сетку 4rem, radial-gradient в mask-image гасит её к краям, а ::after кладёт под заголовок тёплое пятно из акцента. Цвет текста на акцентной кнопке считается из светлоты самого акцента через oklch(from …), поэтому светлый пользовательский акцент не даст белого по жёлтому. Заголовок набран clamp(2rem,7cqi,4.25rem) от ширины блока, хвост titleAccent подчёркнут мягкой заливкой через linear-gradient. Кнопкам задан min-height, а не height: длинный перевод переносится на вторую строку и не вылезает. Отступы кадра растут container-запросами на 40rem и 64rem.",
+      "meta": {
+        "tags": ["hero", "light", "cream", "typography", "grid", "landing"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Hero018",
+          "usage": "<Hero018 title=\"Соберите лендинг, который\" titleAccent=\"выглядит дорого\" />",
+          "summary": "Светлый первый экран: кремовый фон с сеткой и тёплым пятном, пилюля-надзаголовок, крупный центрированный заголовок с подчёркнутым хвостом, подзаголовок, две кнопки и строка-сноска под ними. Один файл, ноль зависимостей.",
+          "preserve": [
+            "светлую палитру: блок задуман как кремовый лист и не переключается на тёмную ветку — не переводите его переменные на light-dark()",
+            "строку color-scheme:light на корне: без неё браузер нарисует фокусные кольца и выделение текста по тёмной ветке поверх светлого фона",
+            "декоративный слой canvas с маской: сетка обязана гаснуть к краям радиальным mask-image, иначе кадр превращается в миллиметровку",
+            "мягкое пятно из акцента вместо тёмного свечения: это светлый жанр, glow сюда не переносится",
+            "расчёт цвета текста на кнопке через oklch(from var(--vibeui-hero-018-accent) …): фиксированный белый однажды окажется белым по жёлтому",
+            "min-height у обеих кнопок вместо height: длинная подпись переносится на вторую строку и не вылезает за пределы",
+            "крупный кегль заголовка clamp(2rem,7cqi,4.25rem) от ширины блока — на нём держится вся композиция",
+            "локальную палитру --vibeui-hero-018-* и container-запросы: раскладка считается от ширины блока, а не окна"
+          ],
+          "adapt": [
+            "тексты eyebrow, title, titleAccent, lede и note",
+            "подписи и адреса кнопок: primaryLabel, primaryHref, secondaryLabel, secondaryHref",
+            "акцентный цвет через проп accent — от него зависят пятно, подчёркивание и заливка кнопки",
+            "внешние отступы через className и точечные переопределения через style",
+            "шаг сетки и размер пятна, если блок стоит в узкой колонке"
+          ],
+          "notes": [
+            "Пустой titleAccent оставляет заголовок цельным: подчёркивание рисуется только у хвоста.",
+            "Акцент приходит один на весь блок: и пятно, и подчёркивание, и кнопка считаются из него через color-mix и oklch(from …).",
+            "Блок не читает тему проекта: на тёмной странице он останется светлым — это осознанное решение, а не недосмотр.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом.",
+            "Ссылки-кнопки — обычные <a>: подставьте свой роутер, если он нужен."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Соберите лендинг, который",
+            "maxLength": 60
+          },
+          {
+            "prop": "titleAccent",
+            "label": "Хвост заголовка",
+            "type": "text",
+            "default": "выглядит дорого",
+            "maxLength": 40
+          },
+          {
+            "prop": "primaryLabel",
+            "label": "Главная кнопка",
+            "type": "text",
+            "default": "Начать бесплатно",
+            "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Light Hero",
+            "description": "A light flagship hero on cream paper: a fine grid faded by a radial mask, one warm glow under the headline, large type and a pair of buttons. The palette is deliberately light and does not darken with the site theme.",
+            "docs": "A server component, one file, zero dependencies. The --vibeui-hero-018-* palette is written out in explicit oklch values rather than light-dark(): lightness is the point of the block, so on a dark page it stays a sheet of cream paper. For the same reason color-scheme:light is declared on the root — otherwise the browser would paint focus rings and text selection from the dark branch on top of a light background. The background is decorated by a single [data-part=\"canvas\"] layer: two repeating linear gradients draw a 4rem grid, a radial-gradient in mask-image fades it towards the edges, and ::after lays a warm accent glow under the headline. The text colour on the accent button is derived from the lightness of the accent itself through oklch(from …), so a light custom accent never produces white on yellow. The headline is set in clamp(2rem,7cqi,4.25rem) against the block width, and the titleAccent tail is underlined by a soft linear-gradient. The buttons carry min-height rather than height: a long translation wraps to a second line instead of spilling out. Frame padding grows through container queries at 40rem and 64rem.",
+            "ai": {
+              "summary": "A light hero: a cream canvas with a grid and a warm glow, an eyebrow pill, a large centred headline with an underlined tail, a subhead, two buttons and a fine-print line below. One file, zero dependencies.",
+              "preserve": [
+                "the light palette: the block is meant to be a sheet of cream paper and never flips to a dark branch — do not move its variables onto light-dark()",
+                "the color-scheme:light declaration on the root: without it the browser paints focus rings and text selection from the dark branch on a light background",
+                "the decorative canvas layer with its mask: the grid has to fade towards the edges through a radial mask-image, otherwise the frame turns into graph paper",
+                "the soft accent glow instead of a dark halo: this is the light genre, glow does not travel here",
+                "the button text colour derived through oklch(from var(--vibeui-hero-018-accent) …): a hard-coded white will one day land as white on yellow",
+                "min-height on both buttons instead of height: a long caption wraps to a second line rather than spilling out",
+                "the large headline size clamp(2rem,7cqi,4.25rem) driven by block width — the whole composition rests on it",
+                "the local --vibeui-hero-018-* palette and the container queries: the layout is measured against the block, not the window"
+              ],
+              "adapt": [
+                "the eyebrow, title, titleAccent, lede and note copy",
+                "the button captions and destinations: primaryLabel, primaryHref, secondaryLabel, secondaryHref",
+                "the accent colour through the accent prop — the glow, the underline and the button fill all derive from it",
+                "outer spacing through className and pinpoint overrides through style",
+                "the grid step and the size of the glow when the block sits in a narrow column"
+              ],
+              "notes": [
+                "An empty titleAccent leaves the headline whole: the underline is drawn on the tail only.",
+                "One accent feeds the whole block: the glow, the underline and the button are all computed from it through color-mix and oklch(from …).",
+                "The block does not read the project theme: on a dark page it stays light — a deliberate decision, not an oversight.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file.",
+                "The buttons are plain <a> elements: swap in your router if you need one."
+              ],
+              "usage": "<Hero018 title=\"Ship a landing page that\" titleAccent=\"looks expensive\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Headline",
+                "default": "Ship a landing page that"
+              },
+              "titleAccent": {
+                "label": "Headline tail",
+                "default": "looks expensive"
+              },
+              "primaryLabel": {
+                "label": "Primary button",
+                "default": "Start for free"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Release 2.0 — light theme",
+                "title": "Ship a landing page that",
+                "titleAccent": "looks expensive",
+                "lede": "Ready-made sections install with one command, live in your repository and pull in not a single dependency.",
+                "primaryLabel": "Start for free",
+                "secondaryLabel": "Browse the catalog",
+                "note": "No card required. Fourteen days of full access."
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "titleAccent", "primaryLabel", "accent"]
+      }
+    },
+    {
+      "name": "hero-019",
+      "type": "registry:block",
+      "title": "Первый экран с регистрацией",
+      "description": "Классический SaaS-hero, где правая половина — не мокап, а сама форма: слева обещание и три довода, справа карточка с полем почты, кнопкой, мелким текстом про условия и ссылкой на вход.",
+      "categories": ["hero"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hero-019/hero-019.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-019.tsx"
+        }
+      ],
+      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-hero-019-* построена на light-dark(): по умолчанию секция светлая, в тёмном контексте карточка светлее фона, а граница светлее карточки; строка :where(.dark,[data-theme=\"dark\"]) … {color-scheme:dark} нужна потому, что next-themes и shadcn переключают класс, а не color-scheme. Правая колонка — настоящий <form> с <label for>, <input type=\"email\" required autocomplete=\"email\"> и <button type=\"submit\">: браузер сам проверит адрес, подставит сохранённый и отправит форму по Enter. Цвет подписи на кнопке считается из светлоты акцента через oklch(from …). Поле и карточка объявляют min-width:0 и width:100%, иначе <input> со своей шириной по умолчанию растянул бы сетку на узком экране. Раскладка одноколоночная до 52rem, дальше container-запрос разводит текст и карточку в две колонки. Кнопке и полю задан min-height, а не height.",
+      "meta": {
+        "tags": ["hero", "signup", "form", "saas", "split", "landing"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Hero019",
+          "usage": "<Hero019 title=\"Соберите первую страницу сегодня вечером\" submitLabel=\"Создать аккаунт\" />",
+          "summary": "Первый экран с регистрацией: слева надзаголовок, заголовок, подзаголовок, три довода с галочками и строка социального доказательства, справа карточка формы — поле почты, кнопка отправки, условия и ссылка на вход. Один файл, ноль зависимостей.",
+          "preserve": [
+            "настоящую форму: <form> с <label for>, <input type=\"email\" required> и <button type=\"submit\"> — имитация полем-заглушкой ломает автозаполнение и отправку по Enter",
+            "одно поле в карточке: смысл жанра в том, что между «прочитал» и «зарегистрировался» ровно один шаг",
+            "мелкий текст про условия под кнопкой: без него форма собирает согласие молча",
+            "min-width:0 и width:100% у поля: <input> со своей шириной по умолчанию растягивает сетку на узком экране",
+            "расчёт цвета подписи на кнопке через oklch(from var(--vibeui-hero-019-accent) …): фиксированный белый однажды окажется белым по жёлтому",
+            "строку :where(.dark,[data-theme=\"dark\"]) … {color-scheme:dark}: без неё блок останется светлым на тёмной странице проекта на shadcn",
+            "видимое фокусное кольцо у поля, кнопки и ссылки: форму заполняют и с клавиатуры",
+            "локальную палитру --vibeui-hero-019-* и container-запрос, разводящий текст и карточку в две колонки от 52rem"
+          ],
+          "adapt": [
+            "тексты eyebrow, title, lede, proof и список доводов points",
+            "содержимое карточки: formTitle, formLede, emailLabel, emailPlaceholder, submitLabel и terms",
+            "ссылку на вход: signinPrompt, signinLabel и адрес signinHref",
+            "акцентный цвет через проп accent — от него зависят кнопка, галочки и фокусное кольцо",
+            "внешние отступы через className и точечные переопределения через style"
+          ],
+          "notes": [
+            "У формы нет action и обработчика: подключите свой submit или серверное действие.",
+            "Идентификатор поля зафиксирован строкой vibeui-hero-019-email — на одной странице блок ставится один раз, иначе label свяжется с первым полем.",
+            "Список points обрезается до четырёх пунктов: пятый не покажется.",
+            "Если нужен пароль, добавляйте второе поле в ту же форму, а не второй <form>.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним самодостаточным файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Соберите первую страницу сегодня вечером",
+            "maxLength": 70
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Бесплатный старт",
+            "maxLength": 40
+          },
+          {
+            "prop": "submitLabel",
+            "label": "Кнопка формы",
+            "type": "text",
+            "default": "Создать аккаунт",
+            "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Signup Form Hero",
+            "description": "The classic SaaS hero where the right half is not a mockup but the form itself: the promise and three reasons on the left, a card with an email field, a button, the fine print and a sign-in link on the right.",
+            "docs": "A server component, one file, zero dependencies. The --vibeui-hero-019-* palette is built on light-dark(): the section is light by default, and in a dark context the card is lighter than the background while the border is lighter than the card; the :where(.dark,[data-theme=\"dark\"]) … {color-scheme:dark} rule is there because next-themes and shadcn switch a class rather than color-scheme. The right column is a real <form> with <label for>, <input type=\"email\" required autocomplete=\"email\"> and <button type=\"submit\">: the browser validates the address, offers the saved one and submits on Enter. The button caption colour is derived from the lightness of the accent through oklch(from …). The field and the card declare min-width:0 and width:100%, otherwise an <input> at its default width would stretch the grid on a narrow screen. The layout is a single column up to 52rem, beyond which a container query splits the copy and the card into two columns. The button and the field carry min-height rather than height.",
+            "ai": {
+              "summary": "A signup hero: an eyebrow, headline, subhead, three ticked reasons and a social-proof line on the left; a form card on the right with an email field, a submit button, the terms and a sign-in link. One file, zero dependencies.",
+              "preserve": [
+                "the real form: <form> with <label for>, <input type=\"email\" required> and <button type=\"submit\"> — faking it with a dummy field breaks autofill and submitting on Enter",
+                "the single field in the card: the point of the genre is that exactly one step separates reading from signing up",
+                "the fine print under the button: without it the form collects consent silently",
+                "min-width:0 and width:100% on the field: an <input> at its default width stretches the grid on a narrow screen",
+                "the button caption colour derived through oklch(from var(--vibeui-hero-019-accent) …): a hard-coded white will one day land as white on yellow",
+                "the :where(.dark,[data-theme=\"dark\"]) … {color-scheme:dark} rule: without it the block stays light on a dark shadcn page",
+                "the visible focus ring on the field, the button and the link: forms get filled from the keyboard too",
+                "the local --vibeui-hero-019-* palette and the container query that splits copy and card into two columns from 52rem"
+              ],
+              "adapt": [
+                "the eyebrow, title, lede and proof copy and the points list",
+                "the contents of the card: formTitle, formLede, emailLabel, emailPlaceholder, submitLabel and terms",
+                "the sign-in link: signinPrompt, signinLabel and the signinHref destination",
+                "the accent colour through the accent prop — the button, the ticks and the focus ring all derive from it",
+                "outer spacing through className and pinpoint overrides through style"
+              ],
+              "notes": [
+                "The form has no action and no handler: wire up your own submit or server action.",
+                "The field id is pinned to the string vibeui-hero-019-email — place the block once per page, otherwise the label binds to the first field.",
+                "The points list is trimmed to four entries: a fifth one will not render.",
+                "If you need a password, add a second field to the same form rather than a second <form>.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single self-contained file."
+              ],
+              "usage": "<Hero019 title=\"Ship your first page tonight\" submitLabel=\"Create account\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Headline",
+                "default": "Ship your first page tonight"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Free to start"
+              },
+              "submitLabel": {
+                "label": "Form button",
+                "default": "Create account"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Free to start",
+                "title": "Ship your first page tonight",
+                "lede": "Create an account, open the catalog and let your agent install the sections you need — an evening of work instead of a sprint.",
+                "points": [
+                  "Fifteen hundred sections and components",
+                  "Installed into your project with one command",
+                  "Zero dependencies — the code stays yours"
+                ],
+                "proof": "12,400 teams already build here — from solo developers to product studios.",
+                "formTitle": "Create account",
+                "formLede": "Start on the free plan. No card required.",
+                "emailLabel": "Work email",
+                "emailPlaceholder": "name@company.com",
+                "submitLabel": "Create account",
+                "terms": "By continuing you agree to the terms of service and the privacy policy.",
+                "signinPrompt": "Already have an account?",
+                "signinLabel": "Sign in"
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "eyebrow", "submitLabel", "accent"]
+      }
     }
   ]
 }

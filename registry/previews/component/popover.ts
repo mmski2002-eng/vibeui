@@ -1,38 +1,35 @@
 // Сгенерировано `npm run indexes` из registry/**/registry.json.
 // Не править руками: правки затрёт следующая сборка.
 
-import type { ComponentType } from "react"
-
-import type { PreviewProps } from "@/registry/preview-types"
-
-import { Popover001 } from "@/registry/components/popover/popover-001/popover-001"
-import { Popover002 } from "@/registry/components/popover/popover-002/popover-002"
-import { Popover003 } from "@/registry/components/popover/popover-003/popover-003"
-import { Popover004 } from "@/registry/components/popover/popover-004/popover-004"
-import { Popover005 } from "@/registry/components/popover/popover-005/popover-005"
-import { Popover006 } from "@/registry/components/popover/popover-006/popover-006"
-import { Popover007 } from "@/registry/components/popover/popover-007/popover-007"
-import { Popover008 } from "@/registry/components/popover/popover-008/popover-008"
-import { Popover009 } from "@/registry/components/popover/popover-009/popover-009"
-import { Popover010 } from "@/registry/components/popover/popover-010/popover-010"
-import { Popover011 } from "@/registry/components/popover/popover-011/popover-011"
-import { Popover012 } from "@/registry/components/popover/popover-012/popover-012"
-import { Popover013 } from "@/registry/components/popover/popover-013/popover-013"
-import { Popover014 } from "@/registry/components/popover/popover-014/popover-014"
+import type { PreviewLoaderMap } from "@/registry/preview-types"
 
 export const PREVIEWS = {
-  "popover-001": Popover001,
-  "popover-002": Popover002,
-  "popover-003": Popover003,
-  "popover-004": Popover004,
-  "popover-005": Popover005,
-  "popover-006": Popover006,
-  "popover-007": Popover007,
-  "popover-008": Popover008,
-  "popover-009": Popover009,
-  "popover-010": Popover010,
-  "popover-011": Popover011,
-  "popover-012": Popover012,
-  "popover-013": Popover013,
-  "popover-014": Popover014,
-} satisfies Record<string, ComponentType<PreviewProps>>
+  "popover-001": () =>
+    import("@/registry/components/popover/popover-001/popover-001").then((module) => module.Popover001),
+  "popover-002": () =>
+    import("@/registry/components/popover/popover-002/popover-002").then((module) => module.Popover002),
+  "popover-003": () =>
+    import("@/registry/components/popover/popover-003/popover-003").then((module) => module.Popover003),
+  "popover-004": () =>
+    import("@/registry/components/popover/popover-004/popover-004").then((module) => module.Popover004),
+  "popover-005": () =>
+    import("@/registry/components/popover/popover-005/popover-005").then((module) => module.Popover005),
+  "popover-006": () =>
+    import("@/registry/components/popover/popover-006/popover-006").then((module) => module.Popover006),
+  "popover-007": () =>
+    import("@/registry/components/popover/popover-007/popover-007").then((module) => module.Popover007),
+  "popover-008": () =>
+    import("@/registry/components/popover/popover-008/popover-008").then((module) => module.Popover008),
+  "popover-009": () =>
+    import("@/registry/components/popover/popover-009/popover-009").then((module) => module.Popover009),
+  "popover-010": () =>
+    import("@/registry/components/popover/popover-010/popover-010").then((module) => module.Popover010),
+  "popover-011": () =>
+    import("@/registry/components/popover/popover-011/popover-011").then((module) => module.Popover011),
+  "popover-012": () =>
+    import("@/registry/components/popover/popover-012/popover-012").then((module) => module.Popover012),
+  "popover-013": () =>
+    import("@/registry/components/popover/popover-013/popover-013").then((module) => module.Popover013),
+  "popover-014": () =>
+    import("@/registry/components/popover/popover-014/popover-014").then((module) => module.Popover014),
+} satisfies PreviewLoaderMap

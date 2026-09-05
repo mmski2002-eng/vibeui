@@ -1922,6 +1922,220 @@
           "width": "auto"
         }
       }
+    },
+    {
+      "name": "tree-011",
+      "type": "registry:component",
+      "title": "Дерево с меню узла",
+      "description": "Дерево, где действия живут на самом узле: правый клик по строке или кнопка «⋯» открывают меню узла — переименовать, дублировать, удалить.",
+      "categories": [
+        "tree"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "tree-011/tree-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/tree-011.tsx"
+        }
+      ],
+      "docs": "Клиентский компонент: список раскрытых веток, узел-цель и последнее выбранное действие лежат в useState. Один файл, без зависимостей, палитра в локальных переменных --vibeui-tree-011-*. Меню — HTML popover, поэтому закрытие по Escape и по клику мимо достаются от браузера; координаты курсора известны только в момент события и подставляются переменными --vibeui-tree-011-x и --vibeui-tree-011-y. Правый клик ловится обработчиком onContextMenu на строке — тот же обработчик срабатывает и на клавише вызова меню, поэтому меню доступно без мыши. Для тача у каждой строки есть кнопка «⋯»: она открывает то же меню под собой. Имя узла стоит в шапке меню и в его aria-label, иначе после промаха человек переименует не то. Дерево размечено вложенными списками, а раскрытие ветки — кнопкой с aria-expanded: роль tree требует переноса фокуса стрелками, и без него она врёт скринридеру. Проп open разворачивает меню в потоке — это режим витрины и скриншотов.",
+      "meta": {
+        "tags": [
+          "tree",
+          "context-menu",
+          "popover",
+          "files",
+          "client"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "open": true
+          }
+        },
+        "ai": {
+          "export": "Tree011",
+          "usage": "<Tree011\n  label=\"Файлы проекта\"\n  nodes={[{ name: \"Проект «Север»\", children: [{ name: \"Смета.xlsx\" }] }]}\n/>",
+          "summary": "Дерево с меню на каждом узле: правый клик по строке или кнопка «⋯» для тача открывают переименование, дублирование и удаление. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-tree-011-* и не подменять её токенами вашей темы",
+            "кнопку «⋯» рядом с правым кликом: правого клика нет ни на тач-экране, ни у части клавиатурных сценариев",
+            "HTML popover под меню: Escape и клик мимо написаны браузером, своя реализация чинится месяцами",
+            "имя узла в шапке меню и в его aria-label — без него после промаха мимо строки удаляют не тот файл",
+            "координаты курсора через CSS-переменные: меню обязано вставать там, где нажали, а не в углу блока",
+            "разметку вложенными списками и aria-expanded на ветке вместо роли tree без переноса фокуса стрелками",
+            "красный пункт удаления отдельным цветом: необратимое действие не должно выглядеть как соседнее"
+          ],
+          "adapt": [
+            "заголовок дерева через label и структуру через nodes",
+            "набор пунктов меню через actions: подпись, горячие клавиши и признак danger",
+            "шаблон строки hint с подстановками {action} и {name}",
+            "подпись кнопки «⋯» через moreLabel — к ней подставляется имя узла",
+            "цвет выделения и фокуса через accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Проп open — режим витрины: меню стоит в потоке под деревом. Escape и клик мимо в нём не работают, на странице пользователя его не ставят.",
+            "Пункты меню только называют выбранное действие в строке под деревом: переименование, копирование и удаление — работа приложения, повесьте её на onClick.",
+            "Меню открывается влево от кнопки «⋯», чтобы не вылезать за правый край узкой колонки.",
+            "Раскрытые ветки перечисляются путями: у одинаковых имён в разных папках пути разные, поэтому они не путаются.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Файлы проекта",
+            "maxLength": 40
+          },
+          {
+            "prop": "hint",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "Правый клик по строке или «⋯». Выбрано: {action} — {name}.",
+            "maxLength": 80
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "label",
+          "hint",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Tree With Node Menu",
+            "description": "A tree where the actions live on the node itself: a right click on the row or the \"⋯\" button opens the node menu — rename, duplicate, delete.",
+            "docs": "A client component: the list of expanded branches, the target node and the last chosen action live in useState. One file, no dependencies, the palette in the local --vibeui-tree-011-* variables. The menu is an HTML popover, so closing on Escape and on an outside click comes from the browser; the cursor coordinates are known only at the moment of the event and are passed through the --vibeui-tree-011-x and --vibeui-tree-011-y variables. The right click is caught by an onContextMenu handler on the row — the same handler fires on the context-menu key, so the menu is reachable without a mouse. For touch every row carries a \"⋯\" button that opens the same menu beneath itself. The node name sits in the menu header and in its aria-label, otherwise a person who misses the row renames the wrong thing. The tree is marked up as nested lists and a branch is expanded by a button with aria-expanded: the tree role demands arrow-key focus management, and without it the role lies to a screen reader. The open prop unfolds the menu in flow — that is the showcase and screenshot mode.",
+            "ai": {
+              "summary": "A tree with a menu on every node: a right click on the row, or the \"⋯\" button for touch, opens rename, duplicate and delete. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-tree-011-* palette — do not swap it for your theme tokens",
+                "the \"⋯\" button next to the right click: there is no right click on a touch screen and in part of the keyboard scenarios",
+                "the HTML popover behind the menu: Escape and the outside click are written by the browser, a hand-rolled one takes months to fix",
+                "the node name in the menu header and in its aria-label — without it a miss on the row deletes the wrong file",
+                "the cursor coordinates through CSS variables: the menu has to appear where it was invoked, not in the corner of the block",
+                "the nested-list markup with aria-expanded on a branch instead of a tree role without arrow-key focus management",
+                "the red delete item in its own colour: an irreversible action must not look like the one next to it"
+              ],
+              "adapt": [
+                "the tree heading through label and the structure through nodes",
+                "the menu items through actions: a caption, shortcut keys and the danger flag",
+                "the hint template with the {action} and {name} placeholders",
+                "the \"⋯\" button caption through moreLabel — the node name is appended to it",
+                "the selection and focus colour through accent",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The open prop is the showcase mode: the menu sits in flow under the tree. Escape and the outside click do not work there, so do not ship it on a user-facing page.",
+                "The menu items only name the chosen action in the line under the tree: renaming, copying and deleting are the application's job — hang them on onClick.",
+                "The menu opens to the left of the \"⋯\" button so that it does not spill past the right edge of a narrow column.",
+                "Expanded branches are listed by path: identical names in different folders have different paths, so they do not collide.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Tree011\n  label=\"Project files\"\n  nodes={[{ name: \"North project\", children: [{ name: \"Budget.xlsx\" }] }]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Heading",
+                "default": "Project files"
+              },
+              "hint": {
+                "label": "Hint",
+                "default": "Right click a row or press \"⋯\". Chosen: {action} — {name}."
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "open": true,
+                "label": "Project files",
+                "moreLabel": "Node actions",
+                "hint": "Right click a row or press \"⋯\". Chosen: {action} — {name}.",
+                "nodes": [
+                  {
+                    "name": "North project",
+                    "children": [
+                      {
+                        "name": "Research",
+                        "children": [
+                          {
+                            "name": "Interviews.md"
+                          },
+                          {
+                            "name": "Segments.csv"
+                          },
+                          {
+                            "name": "Findings.pdf"
+                          }
+                        ]
+                      },
+                      {
+                        "name": "Mockups",
+                        "children": [
+                          {
+                            "name": "Home.fig"
+                          },
+                          {
+                            "name": "Catalog.fig"
+                          }
+                        ]
+                      },
+                      {
+                        "name": "Budget.xlsx"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "Archive 2024",
+                    "children": [
+                      {
+                        "name": "March report.pdf"
+                      }
+                    ]
+                  }
+                ],
+                "actions": [
+                  {
+                    "label": "Rename",
+                    "keys": "F2"
+                  },
+                  {
+                    "label": "Duplicate",
+                    "keys": "⌘D"
+                  },
+                  {
+                    "label": "Delete",
+                    "keys": "⌫",
+                    "danger": true
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

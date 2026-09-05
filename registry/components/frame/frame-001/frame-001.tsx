@@ -23,6 +23,9 @@ const STYLES = `
 --vibeui-frame-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.005 265));
 --vibeui-frame-001-muted:color-mix(in oklab,var(--vibeui-frame-001-fg) 68%,transparent);
 --vibeui-frame-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.011 265));
+--vibeui-frame-001-line:light-dark(oklch(0.91 0.005 265),oklch(0.4 0.011 265));
+--vibeui-frame-001-tile:light-dark(oklch(0.965 0.004 265),oklch(0.31 0.01 265));
+--vibeui-frame-001-accent:light-dark(oklch(0.55 0.16 262),oklch(0.72 0.15 262));
 --vibeui-frame-001-radius:0.875rem;
 --vibeui-frame-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -80,10 +83,49 @@ border-radius:9999px;background:var(--vibeui-frame-001-border);
 margin-top:0.5rem;font-size:0.75rem;line-height:1.4;
 color:var(--vibeui-frame-001-muted);text-align:center;
 }
-[data-vibeui-block="frame-001"] [data-part="slot"]{
-display:grid;place-items:center;min-height:9rem;padding:1.25rem;
-font-size:0.8125rem;color:var(--vibeui-frame-001-muted);text-align:center;
+/* Пустой слот рисует условный экран страницы, а не серый прямоугольник:
+   по одной миниатюре должно быть понятно, что рамка обрамляет интерфейс. */
+[data-vibeui-block="frame-001"] [data-part="body"] [data-part="slot"]{
+display:flex;flex-direction:column;gap:0.625rem;min-height:9rem;padding:0.75rem;
 }
+[data-vibeui-block="frame-001"] [data-part="slot-bar"]{
+display:flex;align-items:center;gap:0.5rem;
+padding-bottom:0.5rem;border-bottom:1px solid var(--vibeui-frame-001-line);
+}
+[data-vibeui-block="frame-001"] [data-part="slot-logo"]{
+flex:none;width:1rem;height:1rem;border-radius:0.3125rem;
+background:var(--vibeui-frame-001-accent);
+}
+[data-vibeui-block="frame-001"] [data-part="slot-nav"]{display:flex;gap:0.375rem;flex:1 1 auto}
+[data-vibeui-block="frame-001"] [data-part="slot-nav"] i{
+display:block;width:2rem;height:0.375rem;border-radius:9999px;
+background:var(--vibeui-frame-001-line);
+}
+[data-vibeui-block="frame-001"] [data-part="slot-cta"]{
+flex:none;width:2.75rem;height:1rem;border-radius:0.375rem;
+background:var(--vibeui-frame-001-accent);
+}
+[data-vibeui-block="frame-001"] [data-part="slot-hero"]{display:flex;flex-direction:column;gap:0.375rem}
+[data-vibeui-block="frame-001"] [data-part="slot-title"]{
+margin:0;font-size:0.875rem;font-weight:700;line-height:1.25;
+}
+[data-vibeui-block="frame-001"] [data-part="slot-line"]{
+display:block;height:0.4375rem;border-radius:9999px;
+background:var(--vibeui-frame-001-line);
+}
+[data-vibeui-block="frame-001"] [data-part="slot-line"]:last-of-type{width:62%}
+[data-vibeui-block="frame-001"] [data-part="slot-tiles"]{
+display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem;
+}
+/* Цвет плитки задан переопределением локального акцента: три оттенка без
+   трёх новых переменных. */
+[data-vibeui-block="frame-001"] [data-part="slot-tile"]{
+height:2.75rem;border-radius:0.5rem;
+border:1px solid var(--vibeui-frame-001-line);
+background:linear-gradient(180deg,color-mix(in oklab,var(--vibeui-frame-001-accent) 30%,transparent) 0 0.375rem,var(--vibeui-frame-001-tile) 0.375rem);
+}
+[data-vibeui-block="frame-001"] [data-part="slot-tile"]:nth-child(2){--vibeui-frame-001-accent:light-dark(oklch(0.6 0.15 160),oklch(0.75 0.14 160))}
+[data-vibeui-block="frame-001"] [data-part="slot-tile"]:nth-child(3){--vibeui-frame-001-accent:light-dark(oklch(0.68 0.15 60),oklch(0.8 0.13 60))}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="frame-001"] *{animation:none!important;transition:none!important}}
 `
 
@@ -162,7 +204,29 @@ export function Frame001({
             <span data-part="notch" aria-hidden="true" />
           ) : null}
           <div data-part="body">
-            {children ?? <div data-part="slot">{title}</div>}
+            {children ?? (
+              <div data-part="slot">
+                <div data-part="slot-bar" aria-hidden="true">
+                  <span data-part="slot-logo" />
+                  <span data-part="slot-nav">
+                    <i />
+                    <i />
+                    <i />
+                  </span>
+                  <span data-part="slot-cta" />
+                </div>
+                <div data-part="slot-hero">
+                  <p data-part="slot-title">{title}</p>
+                  <span data-part="slot-line" aria-hidden="true" />
+                  <span data-part="slot-line" aria-hidden="true" />
+                </div>
+                <div data-part="slot-tiles" aria-hidden="true">
+                  <span data-part="slot-tile" />
+                  <span data-part="slot-tile" />
+                  <span data-part="slot-tile" />
+                </div>
+              </div>
+            )}
           </div>
         </div>
         {caption ? <figcaption>{caption}</figcaption> : null}

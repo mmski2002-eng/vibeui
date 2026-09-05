@@ -23,6 +23,8 @@ const STYLES = `
 --vibeui-frame-011-muted:color-mix(in oklab,var(--vibeui-frame-011-fg) 68%,transparent);
 --vibeui-frame-011-border:light-dark(oklch(0.88 0.006 265),oklch(0.42 0.011 265));
 --vibeui-frame-011-shadow:light-dark(oklch(0.2 0.02 265 / 0.28),oklch(0 0 0 / 0.5));
+--vibeui-frame-011-soft:light-dark(oklch(0.965 0.004 265),oklch(0.33 0.01 265));
+--vibeui-frame-011-accent:light-dark(oklch(0.55 0.16 262),oklch(0.72 0.15 262));
 --vibeui-frame-011-radius:0.875rem;
 --vibeui-frame-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -63,11 +65,45 @@ border-bottom:1px solid var(--vibeui-frame-011-border);
 [data-vibeui-block="frame-011"] [data-part="body"]{display:block}
 [data-vibeui-block="frame-011"] [data-part="body"] > *{display:block;width:100%}
 [data-vibeui-block="frame-011"] img{display:block;width:100%;height:auto}
-[data-vibeui-block="frame-011"] [data-part="stub"]{
-display:grid;place-items:center;gap:0.5rem;
-min-height:9rem;padding:1.5rem;text-align:center;
-font-size:0.8125rem;color:var(--vibeui-frame-011-muted);
+/* Пустая карточка рисует условный экран: заголовок, показатели и график.
+   Развёрнутый в перспективе серый прямоугольник ничего не показывает. */
+[data-vibeui-block="frame-011"] [data-part="body"] [data-part="stub"]{
+display:flex;flex-direction:column;gap:0.5rem;
+min-height:9rem;padding:0.75rem;text-align:left;
 }
+[data-vibeui-block="frame-011"] [data-part="stub-title"]{
+margin:0;font-size:0.8125rem;font-weight:700;color:var(--vibeui-frame-011-fg);
+}
+[data-vibeui-block="frame-011"] [data-part="tiles"]{display:grid;grid-template-columns:repeat(2,1fr);gap:0.5rem}
+[data-vibeui-block="frame-011"] [data-part="tile"]{
+display:flex;flex-direction:column;gap:0.3125rem;
+padding:0.4375rem 0.5rem;border-radius:0.5rem;
+background:var(--vibeui-frame-011-soft);
+border-left:2px solid var(--vibeui-frame-011-accent);
+}
+[data-vibeui-block="frame-011"] [data-part="tile"] span{
+display:block;height:0.5rem;width:52%;border-radius:9999px;
+background:var(--vibeui-frame-011-accent);
+}
+[data-vibeui-block="frame-011"] [data-part="tile"] i{
+display:block;height:0.3125rem;width:80%;border-radius:9999px;
+background:color-mix(in oklab,var(--vibeui-frame-011-fg) 20%,transparent);
+}
+[data-vibeui-block="frame-011"] [data-part="tile"]:nth-child(2){--vibeui-frame-011-accent:light-dark(oklch(0.6 0.15 160),oklch(0.74 0.14 160))}
+[data-vibeui-block="frame-011"] [data-part="chart"]{
+display:flex;align-items:flex-end;gap:0.375rem;
+height:3rem;padding:0.5rem;border-radius:0.5rem;
+background:var(--vibeui-frame-011-soft);
+}
+[data-vibeui-block="frame-011"] [data-part="chart"] i{
+display:block;flex:1 1 0;border-radius:0.125rem 0.125rem 0 0;
+background:color-mix(in oklab,var(--vibeui-frame-011-accent) 45%,transparent);
+}
+[data-vibeui-block="frame-011"] [data-part="chart"] i:nth-child(1){height:40%}
+[data-vibeui-block="frame-011"] [data-part="chart"] i:nth-child(2){height:68%}
+[data-vibeui-block="frame-011"] [data-part="chart"] i:nth-child(3){height:52%}
+[data-vibeui-block="frame-011"] [data-part="chart"] i:nth-child(4){height:86%}
+[data-vibeui-block="frame-011"] [data-part="chart"] i:nth-child(5){height:100%;background:var(--vibeui-frame-011-accent)}
 [data-vibeui-block="frame-011"] figcaption{
 margin-top:1rem;font-size:0.75rem;line-height:1.4;
 color:var(--vibeui-frame-011-muted);text-align:center;
@@ -149,7 +185,28 @@ export function Frame011({
               <span data-part="dot" />
             </div>
             <div data-part="body">
-              {children ?? <div data-part="stub">{stubText}</div>}
+              {children ?? (
+                <div data-part="stub">
+                  <p data-part="stub-title">{stubText}</p>
+                  <div data-part="tiles" aria-hidden="true">
+                    <span data-part="tile">
+                      <span />
+                      <i />
+                    </span>
+                    <span data-part="tile">
+                      <span />
+                      <i />
+                    </span>
+                  </div>
+                  <div data-part="chart" aria-hidden="true">
+                    <i />
+                    <i />
+                    <i />
+                    <i />
+                    <i />
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

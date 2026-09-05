@@ -4,8 +4,8 @@
     {
       "name": "footer-001",
       "type": "registry:block",
-      "title": "Светлый подвал",
-      "description": "Светлый подвал: подпись бренда, три колонки ссылок и нижняя строка с юридическим. Тёмная плита в конце спорила бы с финальной секцией призыва.",
+      "title": "Подвал на фоне страницы",
+      "description": "Подвал без собственной плиты: фон и палитра берутся у страницы. Подпись бренда, три колонки ссылок и нижняя строка с юридическим. Тёмная плита в конце спорила бы с финальной секцией призыва.",
       "categories": [
         "footer"
       ],
@@ -59,7 +59,7 @@
         },
         "i18n": {
           "en": {
-            "description": "A light footer: brand line, three link columns and a legal row. A dark slab here would fight the closing call-to-action.",
+            "description": "A footer without a slab of its own: background and palette come from the page. Brand line, three link columns and a legal row. A dark slab here would fight the closing call-to-action.",
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-footer-001-* variables. The layout is computed from the block's own width: two columns of links, then three, then the brand moves into a separate column on the left. Each link group is a <nav> with its own label, so a screen reader lists them separately rather than as one undifferentiated run of twenty links.",
             "ai": {
               "summary": "A site footer: the mark, name and a single line about the product on the left, link columns on the right, copyright and legal links along the bottom. Light on purpose — a dark footer right after a dark CTA gives two heavy blocks in a row. Zero dependencies, one file, its own palette, no client JS.",
@@ -91,7 +91,7 @@
               ],
               "usage": "<Footer001\n  brand=\"Flight\"\n  columns={[{ title: \"Product\", links: [{ label: \"Pricing\", href: \"/pricing\" }] }]}\n  legal=\"© 2026 Flight Studio\"\n/>"
             },
-            "title": "Light Footer",
+            "title": "Page-Toned Footer",
             "controls": {
               "accent": {
                 "label": "Accent"

@@ -27,11 +27,16 @@ export type Filters001Props = Omit<
 }
 
 // Идея компонента: строитель условий вместо набора отдельных полей. Условие —
-// это тройка «поле, оператор, значение», и она собрана из нативных select и
-// input, поэтому клавиатура и мобильный выбор работают сами. Связка между
-// условиями показана словом «и» между строками, а не подразумевается: без неё
-// набор фильтров читается как «или» ровно так же часто, как «и». Удаление
-// строки — кнопка с именем условия, чтобы не пришлось считать строки на слух.
+// это тройка «поле, оператор, значение». Поле и оператор выбираются кнопкой со
+// значением и списком под ней, а не нативным select: строка условий с двумя
+// системными списками выглядит формой из административной панели и спорит с
+// остальным интерфейсом. Клавиатура сохранена целиком — кнопка объявлена
+// role="combobox", список role="listbox", а стрелки, Home, End, Enter и Escape
+// обрабатываются на самой кнопке через aria-activedescendant, поэтому фокус
+// никуда не уезжает. Связка между условиями показана словом «и» между
+// строками, а не подразумевается: без неё набор фильтров читается как «или»
+// ровно так же часто, как «и». Удаление строки — кнопка с именем условия,
+// чтобы не пришлось считать строки на слух.
 const STYLES = `
 :where([data-vibeui-block="filters-001"]){
 --vibeui-filters-001-bg:transparent;
@@ -69,15 +74,50 @@ margin-bottom:0.375rem;
 [data-vibeui-block="filters-001"] [data-part="join"]{
 width:1.75rem;font-size:0.6875rem;color:var(--vibeui-filters-001-muted);text-align:right;
 }
-[data-vibeui-block="filters-001"] select,
 [data-vibeui-block="filters-001"] input{
 min-width:0;width:100%;height:2rem;padding:0 0.5rem;
 background:var(--vibeui-filters-001-field);color:inherit;
 border:1px solid var(--vibeui-filters-001-border);border-radius:0.5rem;
 font:inherit;font-size:0.75rem;
 }
-[data-vibeui-block="filters-001"] select:focus-visible,
 [data-vibeui-block="filters-001"] input:focus-visible{outline:2px solid var(--vibeui-filters-001-accent);outline-offset:1px}
+/* Выбор кнопкой со значением вместо нативного select: два системных списка в
+   строке делают из конструктора фильтров форму администратора. */
+[data-vibeui-block="filters-001"] [data-part="picker"]{position:relative;min-width:0}
+[data-vibeui-block="filters-001"] [data-part="value"]{
+appearance:none;cursor:pointer;
+display:flex;align-items:center;justify-content:space-between;gap:0.375rem;
+width:100%;min-height:2rem;padding:0 0.5rem;
+background:var(--vibeui-filters-001-field);color:inherit;
+border:1px solid var(--vibeui-filters-001-border);border-radius:0.5rem;
+font:inherit;font-size:0.75rem;text-align:left;
+}
+[data-vibeui-block="filters-001"] [data-part="value"]:hover{border-color:var(--vibeui-filters-001-accent)}
+[data-vibeui-block="filters-001"] [data-part="value"]:focus-visible{outline:2px solid var(--vibeui-filters-001-accent);outline-offset:1px}
+[data-vibeui-block="filters-001"] [data-part="value-text"]{
+min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+/* Уголок нарисован границами: иконочная библиотека ради одного знака не нужна. */
+[data-vibeui-block="filters-001"] [data-part="chevron"]{
+flex:none;width:0.375rem;height:0.375rem;
+border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;
+transform:translateY(-0.1rem) rotate(45deg);opacity:0.6;
+}
+[data-vibeui-block="filters-001"] [data-part="menu"]{
+position:absolute;left:0;top:calc(100% + 0.25rem);z-index:2;
+min-width:100%;max-height:11rem;overflow:auto;
+margin:0;padding:0.25rem;list-style:none;
+background:var(--vibeui-filters-001-field);
+border:1px solid var(--vibeui-filters-001-border);border-radius:0.5rem;
+box-shadow:0 0.5rem 1.25rem oklch(0 0 0 / 0.14);
+}
+[data-vibeui-block="filters-001"] [data-part="menu"][hidden]{display:none}
+[data-vibeui-block="filters-001"] [data-part="option"]{
+padding:0.25rem 0.5rem;border-radius:0.375rem;cursor:pointer;
+font-size:0.75rem;white-space:nowrap;
+}
+[data-vibeui-block="filters-001"] [data-part="option"][data-active="true"]{background:var(--vibeui-filters-001-hover)}
+[data-vibeui-block="filters-001"] [data-part="option"][aria-selected="true"]{color:var(--vibeui-filters-001-accent);font-weight:650}
 [data-vibeui-block="filters-001"] [data-part="drop"]{
 appearance:none;border:0;background:none;cursor:pointer;
 width:1.75rem;height:1.75rem;border-radius:0.375rem;

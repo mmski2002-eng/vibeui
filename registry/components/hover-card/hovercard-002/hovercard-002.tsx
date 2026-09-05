@@ -3,6 +3,11 @@
 import type { ComponentProps, CSSProperties, KeyboardEvent } from "react"
 
 export type Hovercard002Props = Omit<ComponentProps<"div">, "children"> & {
+  /**
+   * Показать превью раскрытым прямо в потоке: витрина, скриншот, отладка.
+   * Ссылка остаётся на месте, карточка встаёт под ней и никуда не всплывает.
+   */
+  open?: boolean
   /** Текст ссылки в строке. */
   anchorText?: string
   title?: string
@@ -100,6 +105,14 @@ display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hi
 font-size:0.75rem;line-height:1.45;color:var(--vibeui-hovercard-002-muted);
 display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden;
 }
+/* Витринный режим: карточка стоит в потоке под ссылкой, а не поверх текста —
+   иначе на миниатюре каталога от компонента видна одна строка. Обёртка
+   становится блоком, чтобы карточка не разрывала строку по вертикали. */
+[data-vibeui-block="hovercard-002"][data-open="true"] [data-part="host"]{display:block}
+[data-vibeui-block="hovercard-002"][data-open="true"] [data-part="card"]{
+position:static;opacity:1;visibility:visible;translate:0;
+margin-top:0.5rem;max-width:100%;
+}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="hovercard-002"] *{animation:none!important;transition:none!important}}
 `
 
@@ -151,6 +164,7 @@ function closeOnEscape(event: KeyboardEvent<HTMLElement>) {
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Hovercard002({
+  open = false,
   anchorText = "разбор популярных ошибок вёрстки",
   title = "Двенадцать ошибок вёрстки, которые видно с телефона",
   domain = "web.dev.example",
@@ -186,6 +200,7 @@ export function Hovercard002({
         data-slot="hover-card"
         onKeyDown={closeOnEscape}
         data-vibeui-block="hovercard-002"
+        data-open={open || undefined}
         className={className}
         style={palette}
       >

@@ -287,6 +287,10 @@
         },
         "cardControls": ["label", "length", "accent", "background"],
         "preview": {
+          "props": {
+            "defaultCode": "482",
+            "defaultFocused": true
+          },
           "width": "full"
         }
       }
@@ -1033,6 +1037,10 @@
         },
         "cardControls": ["label", "length", "accent", "background"],
         "preview": {
+          "props": {
+            "defaultCode": "482913",
+            "defaultState": "done"
+          },
           "width": "full"
         }
       }
@@ -1188,6 +1196,10 @@
           }
         },
         "preview": {
+          "props": {
+            "defaultCode": "482915",
+            "defaultState": "error"
+          },
           "width": "full"
         },
         "cardControls": [

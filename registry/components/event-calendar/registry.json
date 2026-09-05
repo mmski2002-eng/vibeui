@@ -136,34 +136,34 @@
                   },
                   {
                     "day": 5,
-                    "title": "Design review",
+                    "title": "Review",
                     "time": "14:00"
                   },
                   {
                     "day": 5,
-                    "title": "Call with Kim",
+                    "title": "Call",
                     "time": "16:30",
                     "tone": "personal"
                   },
                   {
                     "day": 11,
-                    "title": "Release 4.2",
+                    "title": "Release",
                     "time": "12:00"
                   },
                   {
                     "day": 12,
-                    "title": "Swimming",
+                    "title": "Swim",
                     "time": "07:30",
                     "tone": "personal"
                   },
                   {
                     "day": 12,
-                    "title": "Sprint review",
+                    "title": "Sprint",
                     "time": "11:00"
                   },
                   {
                     "day": 12,
-                    "title": "Interview",
+                    "title": "Hiring",
                     "time": "15:00"
                   },
                   {
@@ -174,39 +174,39 @@
                   },
                   {
                     "day": 18,
-                    "title": "Quarterly report",
+                    "title": "Report",
                     "time": "09:00"
                   },
                   {
                     "day": 19,
-                    "title": "Lunch with Vera",
+                    "title": "Lunch",
                     "time": "13:00",
                     "tone": "personal"
                   },
                   {
                     "day": 19,
-                    "title": "Budget edits",
+                    "title": "Budget",
                     "tone": "hold"
                   },
                   {
                     "day": 24,
-                    "title": "Client demo",
+                    "title": "Demo",
                     "time": "11:30"
                   },
                   {
                     "day": 24,
-                    "title": "Workout",
+                    "title": "Gym",
                     "time": "19:00",
                     "tone": "personal"
                   },
                   {
                     "day": 24,
-                    "title": "Plan draft",
+                    "title": "Draft",
                     "tone": "hold"
                   },
                   {
                     "day": 27,
-                    "title": "Team offsite",
+                    "title": "Offsite",
                     "time": "10:00"
                   }
                 ]
@@ -259,7 +259,7 @@
             "положение события в процентах от рабочего дня: округление до строк сетки врёт про время начала",
             "отдельную строку «весь день» — у такого события нет положения на шкале",
             "контейнер прокрутки с tabindex=0 и видимым фокусом: неделя шире телефона всегда",
-            "min-width полотна: сжатые до 2 рем колонки перестают быть читаемыми",
+            "сжатие недели вместо горизонтальной прокрутки: на витрине полотно не прокрутить, а уехавшие за край дни просто пропадают",
             "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
             "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
           ],
@@ -326,7 +326,7 @@
                 "event placement as a percentage of the working day: snapping to grid rows misstates the start time",
                 "the separate all-day row — such an event has no position on the scale",
                 "the scroll container with tabindex=0 and a visible focus ring: a week is always wider than a phone",
-                "the min-width of the canvas: columns squeezed to 2rem stop being readable",
+                "squeezing the week instead of scrolling horizontally: a showcase frame cannot be scrolled, and days pushed past the edge simply disappear",
                 "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
                 "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
               ],
@@ -376,7 +376,7 @@
                 "events": [
                   {
                     "day": 0,
-                    "title": "Vera on leave"
+                    "title": "Leave"
                   },
                   {
                     "day": 0,
@@ -388,13 +388,13 @@
                     "day": 0,
                     "from": "11:00",
                     "to": "12:30",
-                    "title": "Design review"
+                    "title": "Review"
                   },
                   {
                     "day": 1,
                     "from": "10:15",
                     "to": "11:45",
-                    "title": "Interview",
+                    "title": "Hiring",
                     "tone": "focus"
                   },
                   {
@@ -407,18 +407,18 @@
                     "day": 2,
                     "from": "09:30",
                     "to": "12:00",
-                    "title": "Focus block",
+                    "title": "Focus",
                     "tone": "focus"
                   },
                   {
                     "day": 2,
                     "from": "14:00",
                     "to": "14:45",
-                    "title": "1:1 with Kim"
+                    "title": "1:1 Kim"
                   },
                   {
                     "day": 3,
-                    "title": "Study day"
+                    "title": "Study"
                   },
                   {
                     "day": 3,
@@ -431,7 +431,7 @@
                     "day": 4,
                     "from": "09:00",
                     "to": "10:00",
-                    "title": "Sprint review"
+                    "title": "Sprint"
                   },
                   {
                     "day": 4,
@@ -443,7 +443,7 @@
                     "day": 5,
                     "from": "11:00",
                     "to": "12:00",
-                    "title": "Backlog cleanup",
+                    "title": "Backlog",
                     "tone": "away"
                   }
                 ]

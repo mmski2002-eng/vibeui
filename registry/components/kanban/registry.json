@@ -5,7 +5,7 @@
       "name": "kanban-001",
       "type": "registry:component",
       "title": "Канбан-доска",
-      "description": "Доска задач по колонкам: нативный перенос плюс выбор колонки списком, потому что drag недоступен с клавиатуры.",
+      "description": "Доска задач по колонкам: нативный перенос плюс ряд чипов-колонок на карточке, потому что drag недоступен с клавиатуры.",
       "categories": [
         "kanban"
       ],
@@ -32,10 +32,10 @@
         "ai": {
           "export": "Kanban001",
           "usage": "<Kanban001 columns={[\"Очередь\", \"В работе\"]} cards={[{ id: \"1\", title: \"Задача\", column: \"Очередь\" }]} />",
-          "summary": "Доска задач: колонки со счётчиком, карточки с меткой, перенос мышью и выбор колонки списком. Ноль зависимостей, один файл.",
+          "summary": "Доска задач: колонки со счётчиком, цветные метки на карточках, перенос мышью и чипы колонок для клавиатуры. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-kanban-001-* и не подменять её токенами вашей темы",
-            "выбор колонки списком: перенос мышью недоступен с клавиатуры и труден на телефоне",
+            "чипы колонок на карточке: перенос мышью недоступен с клавиатуры и труден на телефоне",
             "счётчик, посчитанный из карточек — отдельное число врёт после первого переноса",
             "подсветку цели рамкой, а не заливкой: заливка спорит с карточками внутри",
             "горизонтальную прокрутку колонок вместо их сжатия",
@@ -49,7 +49,7 @@
             "акцент через проп accent",
             "ширину колонки",
             "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
-            "columnPickerLabel — подпись списка выбора колонки, шаблон с {title}"
+            "columnPickerLabel — подпись группы чипов колонок, шаблон с {title}"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
@@ -75,12 +75,12 @@
         ],
         "i18n": {
           "en": {
-            "description": "A column board: native drag plus a column select, because dragging is unavailable from a keyboard.",
+            "description": "A column board: native drag plus a row of column chips on the card, because dragging is unavailable from a keyboard.",
             "ai": {
-              "summary": "A task board: columns with counters, tagged cards, mouse dragging and a column select. Zero dependencies, one file.",
+              "summary": "A task board: columns with counters, colour-coded card tags, mouse dragging and column chips for the keyboard. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-kanban-001-* palette — do not swap it for your theme tokens",
-                "the column select: dragging is unavailable from a keyboard and hard on a phone",
+                "the column chips on the card: dragging is unavailable from a keyboard and hard on a phone",
                 "the counter computed from the cards — a stored number lies after the first move",
                 "highlighting the target with a border, not a fill: a fill fights the cards inside",
                 "horizontal scrolling of columns instead of squeezing them",
@@ -94,7 +94,7 @@
                 "the accent through the accent prop",
                 "the column width",
                 "background — the component background; empty means no background, taking the page colour",
-                "columnPickerLabel — the label of the column select, a template with {title}"
+                "columnPickerLabel — the label of the column chip group, a template with {title}"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
@@ -126,25 +126,29 @@
                     "id": "1",
                     "title": "Second wave of tables",
                     "tag": "catalog",
-                    "column": "Queue"
+                    "column": "Queue",
+                    "hue": 262
                   },
                   {
                     "id": "2",
                     "title": "Product page blocks",
-                    "tag": "catalog",
-                    "column": "Queue"
+                    "tag": "urgent",
+                    "column": "Queue",
+                    "hue": 25
                   },
                   {
                     "id": "3",
                     "title": "Filter panel",
                     "tag": "blocks",
-                    "column": "In progress"
+                    "column": "In progress",
+                    "hue": 60
                   },
                   {
                     "id": "4",
                     "title": "Weekly schedule",
-                    "tag": "blocks",
-                    "column": "Done"
+                    "tag": "done",
+                    "column": "Done",
+                    "hue": 150
                   }
                 ],
                 "columnPickerLabel": "Column for “{title}”"
@@ -1098,7 +1102,7 @@
           "target": "@components/vibeui/kanban-007.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-kanban-007-*. Клиентский: \"use client\" ради состояния доски. Итог колонки, доля и общий итог считаются из массива карточек, а не хранятся числом: сохранённая сумма расходится с содержимым после первого переноса. Доля показана и процентом, и полосой, чтобы колонки сравнивались с одного взгляда. Итоговая строка вынесена в тег footer. Перенос: нативный drag мышью и список колонок на карточке с клавиатуры, результат объявляется в живой области.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-kanban-007-*. Клиентский: \"use client\" ради состояния доски. Итог колонки, доля и общий итог считаются из массива карточек, а не хранятся числом: сохранённая сумма расходится с содержимым после первого переноса. Доля показана и процентом, и полосой, чтобы колонки сравнивались с одного взгляда. Итоговая строка вынесена в тег footer. Перенос: нативный drag мышью и ряд чипов-колонок на карточке с клавиатуры, результат объявляется в живой области.",
       "meta": {
         "tags": [
           "kanban",
@@ -1117,7 +1121,7 @@
             "локальную палитру --vibeui-kanban-007-* и не подменять её токенами вашей темы",
             "подсчёт итогов из карточек: сохранённая сумма разойдётся с доской после первого переноса",
             "долю и полосой, и цифрой — полоса даёт сравнение, цифра даёт точность",
-            "список выбора колонки на карточке: перенос мышью недоступен с клавиатуры",
+            "чипы колонок на карточке: перенос мышью недоступен с клавиатуры",
             "живую область role=status с новым итогом колонки после переноса",
             "итоговую строку тегом footer со сводкой словами",
             "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
@@ -1169,7 +1173,7 @@
                 "the local --vibeui-kanban-007-* palette — do not swap it for your theme tokens",
                 "computing the totals from the cards: a stored sum drifts from the board after the first move",
                 "the share as both a bar and a number — the bar gives comparison, the number gives precision",
-                "the column select on the card: mouse dragging is unavailable from a keyboard",
+                "the column chips on the card: mouse dragging is unavailable from a keyboard",
                 "the role=status live region carrying the column's new total after a move",
                 "the footer element for the grand total with a worded summary",
                 "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
@@ -1218,31 +1222,36 @@
                     "id": "1",
                     "title": "Catalog: filters",
                     "hours": 12,
-                    "column": "Estimated"
+                    "column": "Estimated",
+                    "hue": 262
                   },
                   {
                     "id": "2",
                     "title": "Order export",
                     "hours": 6,
-                    "column": "Estimated"
+                    "column": "Estimated",
+                    "hue": 150
                   },
                   {
                     "id": "3",
                     "title": "Customer area",
                     "hours": 20,
-                    "column": "In progress"
+                    "column": "In progress",
+                    "hue": 25
                   },
                   {
                     "id": "4",
                     "title": "Stock import",
                     "hours": 8,
-                    "column": "In progress"
+                    "column": "In progress",
+                    "hue": 60
                   },
                   {
                     "id": "5",
                     "title": "Pricing page",
                     "hours": 5,
-                    "column": "Delivered"
+                    "column": "Delivered",
+                    "hue": 150
                   }
                 ],
                 "text": {
@@ -1254,7 +1263,7 @@
                 }
               }
             },
-            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-kanban-007-*. It is a client component: \"use client\" for the board state. The column total, the share and the grand total are computed from the cards array rather than stored as a number: a stored sum drifts from the contents after the first move. The share is shown both as a percentage and as a bar, so that columns can be compared at a glance. The totals row is moved into a footer tag. Moving: native mouse drag, and a column select on the card from the keyboard, with the result announced in the live region."
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-kanban-007-*. It is a client component: \"use client\" for the board state. The column total, the share and the grand total are computed from the cards array rather than stored as a number: a stored sum drifts from the contents after the first move. The share is shown both as a percentage and as a bar, so that columns can be compared at a glance. The totals row is moved into a footer tag. Moving: native mouse drag, and a row of column chips on the card from the keyboard, with the result announced in the live region."
           }
         },
         "cardControls": [

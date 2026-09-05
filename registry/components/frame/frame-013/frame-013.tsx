@@ -103,18 +103,48 @@ border:1px solid var(--vibeui-frame-013-border);
 }
 [data-vibeui-block="frame-013"] [data-part="body"]{flex:1 1 auto;min-height:0;padding:1rem;overflow:auto}
 [data-vibeui-block="frame-013"] [data-part="body"] > *{display:block;width:100%}
-[data-vibeui-block="frame-013"] [data-part="grid"]{
+/* Рабочая область по умолчанию показывает показатели и график, а не четыре
+   пустые плашки: каркас приложения обязан читаться каркасом приложения. */
+[data-vibeui-block="frame-013"] [data-part="body"] [data-part="grid"]{
 display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0.625rem;
 }
 [data-vibeui-block="frame-013"] [data-part="card"]{
-height:3.5rem;border-radius:0.625rem;
+display:flex;flex-direction:column;gap:0.375rem;
+padding:0.5rem 0.625rem;border-radius:0.625rem;
+background:var(--vibeui-frame-013-panel);
+border:1px solid var(--vibeui-frame-013-border);
+border-left:2px solid var(--vibeui-frame-013-accent);
+}
+[data-vibeui-block="frame-013"] [data-part="card"] span{
+display:block;height:0.5625rem;width:50%;border-radius:9999px;
+background:var(--vibeui-frame-013-accent);
+}
+[data-vibeui-block="frame-013"] [data-part="card"] i{
+display:block;height:0.3125rem;width:78%;border-radius:9999px;
+background:color-mix(in oklab,var(--vibeui-frame-013-fg) 20%,transparent);
+}
+[data-vibeui-block="frame-013"] [data-part="card"]:nth-child(2){--vibeui-frame-013-accent:light-dark(oklch(0.6 0.15 160),oklch(0.74 0.14 160))}
+[data-vibeui-block="frame-013"] [data-part="chart"]{
+grid-column:1 / -1;
+display:flex;align-items:flex-end;gap:0.375rem;
+height:4rem;padding:0.5rem;border-radius:0.625rem;
 background:var(--vibeui-frame-013-panel);
 border:1px solid var(--vibeui-frame-013-border);
 }
+[data-vibeui-block="frame-013"] [data-part="chart"] i{
+display:block;flex:1 1 0;border-radius:0.1875rem 0.1875rem 0 0;
+background:color-mix(in oklab,var(--vibeui-frame-013-accent) 45%,transparent);
+}
+[data-vibeui-block="frame-013"] [data-part="chart"] i:nth-child(1){height:36%}
+[data-vibeui-block="frame-013"] [data-part="chart"] i:nth-child(2){height:58%}
+[data-vibeui-block="frame-013"] [data-part="chart"] i:nth-child(3){height:44%}
+[data-vibeui-block="frame-013"] [data-part="chart"] i:nth-child(4){height:78%}
+[data-vibeui-block="frame-013"] [data-part="chart"] i:nth-child(5){height:64%}
+[data-vibeui-block="frame-013"] [data-part="chart"] i:nth-child(6){height:100%;background:var(--vibeui-frame-013-accent)}
 @container (max-width: 24rem){
 [data-vibeui-block="frame-013"] [data-part="sidebar"]{width:6.5rem;padding:0.75rem 0.5rem}
 [data-vibeui-block="frame-013"] [data-part="item"]{font-size:0.6875rem}
-[data-vibeui-block="frame-013"] [data-part="grid"]{grid-template-columns:1fr}
+[data-vibeui-block="frame-013"] [data-part="body"] [data-part="grid"]{grid-template-columns:1fr}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="frame-013"] *{animation:none!important;transition:none!important}}
 `
@@ -214,11 +244,23 @@ export function Frame013({
             </header>
             <div data-part="body">
               {children ?? (
-                <div data-part="grid">
-                  <span data-part="card" />
-                  <span data-part="card" />
-                  <span data-part="card" />
-                  <span data-part="card" />
+                <div data-part="grid" aria-hidden="true">
+                  <span data-part="card">
+                    <span />
+                    <i />
+                  </span>
+                  <span data-part="card">
+                    <span />
+                    <i />
+                  </span>
+                  <span data-part="chart">
+                    <i />
+                    <i />
+                    <i />
+                    <i />
+                    <i />
+                    <i />
+                  </span>
                 </div>
               )}
             </div>

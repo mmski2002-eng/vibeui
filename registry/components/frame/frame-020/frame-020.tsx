@@ -24,6 +24,8 @@ const STYLES = `
 --vibeui-frame-020-fg:light-dark(oklch(0.23 0.014 265),oklch(0.93 0.005 265));
 --vibeui-frame-020-muted:color-mix(in oklab,var(--vibeui-frame-020-fg) 68%,transparent);
 --vibeui-frame-020-soft:light-dark(oklch(0.96 0.004 265),oklch(0.33 0.008 265));
+--vibeui-frame-020-panel:light-dark(oklch(1 0 0),oklch(0.28 0.009 265));
+--vibeui-frame-020-accent:light-dark(oklch(0.55 0.16 262),oklch(0.72 0.15 262));
 --vibeui-frame-020-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -60,10 +62,49 @@ border-radius:0.375rem;
 }
 [data-vibeui-block="frame-020"] [data-part="screen"] > *{display:block;width:100%}
 [data-vibeui-block="frame-020"] img{display:block;width:100%;height:100%;object-fit:cover}
-[data-vibeui-block="frame-020"] [data-part="stub"]{
-display:grid;place-items:center;height:100%;padding:1rem;text-align:center;
-font-size:0.8125rem;color:var(--vibeui-frame-020-muted);background:var(--vibeui-frame-020-soft);
+/* Пустой экран рисует условную панель приложения: подпись, показатели и
+   график. Серое поле с надписью читается как незагрузившийся скриншот. */
+[data-vibeui-block="frame-020"] [data-part="screen"] [data-part="stub"]{
+display:flex;flex-direction:column;gap:0.5rem;height:100%;padding:0.75rem 0.875rem;
+text-align:left;background:var(--vibeui-frame-020-soft);
 }
+[data-vibeui-block="frame-020"] [data-part="stub-title"]{
+margin:0;font-size:0.8125rem;font-weight:700;color:var(--vibeui-frame-020-fg);
+}
+[data-vibeui-block="frame-020"] [data-part="tiles"]{
+display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem;flex:none;
+}
+[data-vibeui-block="frame-020"] [data-part="tile"]{
+display:flex;flex-direction:column;gap:0.3125rem;
+padding:0.4375rem 0.5rem;border-radius:0.5rem;
+background:var(--vibeui-frame-020-panel);
+border-left:2px solid var(--vibeui-frame-020-accent);
+}
+[data-vibeui-block="frame-020"] [data-part="tile"] span{
+display:block;height:0.5rem;width:56%;border-radius:9999px;
+background:var(--vibeui-frame-020-accent);
+}
+[data-vibeui-block="frame-020"] [data-part="tile"] i{
+display:block;height:0.3125rem;width:82%;border-radius:9999px;
+background:color-mix(in oklab,var(--vibeui-frame-020-fg) 20%,transparent);
+}
+[data-vibeui-block="frame-020"] [data-part="tile"]:nth-child(2){--vibeui-frame-020-accent:light-dark(oklch(0.6 0.15 160),oklch(0.74 0.14 160))}
+[data-vibeui-block="frame-020"] [data-part="tile"]:nth-child(3){--vibeui-frame-020-accent:light-dark(oklch(0.68 0.15 60),oklch(0.8 0.13 60))}
+[data-vibeui-block="frame-020"] [data-part="chart"]{
+display:flex;align-items:flex-end;gap:0.375rem;
+flex:1 1 auto;min-height:2.5rem;padding:0.5rem;border-radius:0.5rem;
+background:var(--vibeui-frame-020-panel);
+}
+[data-vibeui-block="frame-020"] [data-part="chart"] i{
+display:block;flex:1 1 0;border-radius:0.1875rem 0.1875rem 0 0;
+background:color-mix(in oklab,var(--vibeui-frame-020-accent) 45%,transparent);
+}
+[data-vibeui-block="frame-020"] [data-part="chart"] i:nth-child(1){height:38%}
+[data-vibeui-block="frame-020"] [data-part="chart"] i:nth-child(2){height:64%}
+[data-vibeui-block="frame-020"] [data-part="chart"] i:nth-child(3){height:48%}
+[data-vibeui-block="frame-020"] [data-part="chart"] i:nth-child(4){height:84%}
+[data-vibeui-block="frame-020"] [data-part="chart"] i:nth-child(5){height:70%}
+[data-vibeui-block="frame-020"] [data-part="chart"] i:nth-child(6){height:100%;background:var(--vibeui-frame-020-accent)}
 /* Шея и ножка, а не клавиатура: монитор — отдельно стоящий экран. */
 [data-vibeui-block="frame-020"] [data-part="stand"]{
 display:flex;flex-direction:column;align-items:center;
@@ -148,7 +189,27 @@ export function Frame020({
         <div data-part="bezel">
           <span data-part="cam" aria-hidden="true" />
           <div data-part="screen">
-            {children ?? <div data-part="stub">{stubText}</div>}
+            {children ?? (
+              <div data-part="stub">
+                <p data-part="stub-title">{stubText}</p>
+                <div data-part="tiles" aria-hidden="true">
+                  {[0, 1, 2].map((tile) => (
+                    <span data-part="tile" key={tile}>
+                      <span />
+                      <i />
+                    </span>
+                  ))}
+                </div>
+                <div data-part="chart" aria-hidden="true">
+                  <i />
+                  <i />
+                  <i />
+                  <i />
+                  <i />
+                  <i />
+                </div>
+              </div>
+            )}
           </div>
         </div>
         <div data-part="stand" aria-hidden="true">

@@ -9,6 +9,8 @@ export type Tooltip011Props = Omit<ComponentProps<"div">, "children"> & {
   statusText?: Record<string, string>
   /** Имя точки для скринридера: {number} подставляется номером узла. */
   nodeLabel?: string
+  /** Показать подсказку шестого узла принудительно: онбординг, отладка, витрина. */
+  open?: boolean
   /** Пояснение под сеткой: {delay} подставляется числом. */
   note?: string
   /** Пусто — подложки нет, карточка лежит прямо на фоне страницы. */
@@ -77,6 +79,12 @@ background:inherit;transform:rotate(45deg);
 opacity:1;transform:translate(-50%,0);
 transition-delay:var(--vibeui-tooltip-011-delay);
 }
+/* Витринный режим: раскрыта ровно одна подсказка — шестнадцать сразу
+   слиплись бы в кашу. Узел из верхнего ряда: плашка встаёт над сеткой и не
+   закрывает соседние точки. Задержки здесь нет: показ не по наведению. */
+[data-vibeui-block="tooltip-011"][data-open="true"] [data-part="cell"]:nth-of-type(6) [data-part="tip"]{
+opacity:1;transform:translate(-50%,0);transition-delay:0s;
+}
 [data-vibeui-block="tooltip-011"] [data-part="note"]{
 margin:0;font-size:0.75rem;line-height:1.5;color:var(--vibeui-tooltip-011-muted);
 }
@@ -140,6 +148,7 @@ export function Tooltip011({
   statuses,
   statusText = STATUS_LABEL,
   nodeLabel = "Узел {number}",
+  open = false,
   note = "Задержка появления — {delay} с, скрытие — мгновенно. Проведите курсором по сетке: подсказки не мигают на каждой точке.",
   background = "",
   className,
@@ -168,6 +177,7 @@ export function Tooltip011({
         {...props}
         data-slot="tooltip"
         data-vibeui-block="tooltip-011"
+        data-open={open || undefined}
         className={className}
         style={palette}
       >

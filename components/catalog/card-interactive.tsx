@@ -122,7 +122,7 @@ export function CardInteractive({
     <>
       <div
         data-preview-theme={theme}
-        className="border-shell-border bg-shell flex min-h-44 min-w-0 flex-1 flex-col overflow-hidden rounded-xl border"
+        className="border-shell-border bg-shell flex min-w-0 flex-1 flex-col overflow-hidden rounded-xl border"
       >
         {/* Отдельная полоса, а не наложение поверх кадра: у компонентов
             высота разная, и при переключении настройки содержимое доезжало

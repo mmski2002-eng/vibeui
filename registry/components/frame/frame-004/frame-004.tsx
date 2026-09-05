@@ -24,6 +24,7 @@ const STYLES = `
 --vibeui-frame-004-muted:color-mix(in oklab,var(--vibeui-frame-004-fg) 68%,transparent);
 --vibeui-frame-004-island:light-dark(oklch(0.2 0.014 265),oklch(0.08 0.006 265));
 --vibeui-frame-004-card:light-dark(oklch(0.96 0.004 265),oklch(0.36 0.008 265));
+--vibeui-frame-004-accent:light-dark(oklch(0.55 0.16 262),oklch(0.7 0.15 262));
 --vibeui-frame-004-width:15rem;
 --vibeui-frame-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -80,16 +81,68 @@ background:var(--vibeui-frame-004-island);
 [data-vibeui-block="frame-004"] [data-part="body"]{flex:1 1 auto;min-height:0;overflow:hidden}
 [data-vibeui-block="frame-004"] [data-part="body"] > *{display:block;width:100%}
 [data-vibeui-block="frame-004"] img{display:block;width:100%;height:100%;object-fit:cover}
-[data-vibeui-block="frame-004"] [data-part="stub"]{
+/* Пустой экран рисует условное приложение — поиск, промо и список записей.
+   Три серых прямоугольника читались бы как незагрузившийся скриншот. */
+[data-vibeui-block="frame-004"] [data-part="body"] [data-part="stub"]{
 display:flex;flex-direction:column;gap:0.5rem;
-height:100%;padding:1rem 0.875rem;
+height:100%;padding:0.75rem 0.875rem;
 }
-[data-vibeui-block="frame-004"] [data-part="stub-title"]{font-size:0.875rem;font-weight:700;margin:0 0 0.25rem}
-[data-vibeui-block="frame-004"] [data-part="card"]{
-height:2.75rem;border-radius:0.625rem;
+[data-vibeui-block="frame-004"] [data-part="stub-title"]{font-size:0.875rem;font-weight:700;margin:0}
+[data-vibeui-block="frame-004"] [data-part="search"]{
+display:flex;align-items:center;gap:0.375rem;flex:none;
+padding:0.3125rem 0.5rem;border-radius:9999px;
 background:var(--vibeui-frame-004-card);
 }
-[data-vibeui-block="frame-004"] [data-part="card"]:nth-child(3){height:4.5rem}
+[data-vibeui-block="frame-004"] [data-part="search"] i{
+flex:none;width:0.625rem;height:0.625rem;border-radius:9999px;
+border:1.5px solid var(--vibeui-frame-004-muted);
+}
+[data-vibeui-block="frame-004"] [data-part="search"] span{
+flex:1 1 auto;height:0.375rem;border-radius:9999px;
+background:color-mix(in oklab,var(--vibeui-frame-004-muted) 40%,transparent);
+}
+/* Промо-карточка цветная: она задаёт экрану характер приложения, а не макета. */
+[data-vibeui-block="frame-004"] [data-part="promo"]{
+display:flex;flex-direction:column;justify-content:flex-end;gap:0.3125rem;
+flex:none;height:4.25rem;padding:0.5rem 0.625rem;border-radius:0.75rem;
+background:
+radial-gradient(90% 120% at 15% 15%,var(--vibeui-frame-004-accent),transparent 65%),
+linear-gradient(130deg,color-mix(in oklab,var(--vibeui-frame-004-accent) 60%,transparent),color-mix(in oklab,var(--vibeui-frame-004-accent) 18%,transparent));
+}
+[data-vibeui-block="frame-004"] [data-part="promo"] span{
+display:block;height:0.375rem;width:70%;border-radius:9999px;
+background:oklch(0.99 0.003 265);
+}
+[data-vibeui-block="frame-004"] [data-part="promo"] span:last-child{width:44%;opacity:0.65}
+[data-vibeui-block="frame-004"] [data-part="row"]{
+display:flex;align-items:center;gap:0.5rem;flex:none;
+padding:0.4375rem 0.5rem;border-radius:0.625rem;
+background:var(--vibeui-frame-004-card);
+}
+[data-vibeui-block="frame-004"] [data-part="row"] i{
+flex:none;width:1.5rem;height:1.5rem;border-radius:0.5rem;
+background:var(--vibeui-frame-004-accent);
+}
+[data-vibeui-block="frame-004"] [data-part="row-lines"]{
+display:flex;flex-direction:column;gap:0.25rem;flex:1 1 auto;min-width:0;
+}
+[data-vibeui-block="frame-004"] [data-part="row-lines"] span{
+display:block;height:0.3125rem;border-radius:9999px;
+background:color-mix(in oklab,var(--vibeui-frame-004-fg) 24%,transparent);
+}
+[data-vibeui-block="frame-004"] [data-part="row-lines"] span:last-child{width:55%}
+[data-vibeui-block="frame-004"] [data-part="row"]:nth-child(5){--vibeui-frame-004-accent:light-dark(oklch(0.6 0.15 160),oklch(0.72 0.14 160))}
+[data-vibeui-block="frame-004"] [data-part="row"]:nth-child(6){--vibeui-frame-004-accent:light-dark(oklch(0.68 0.15 60),oklch(0.78 0.13 60))}
+[data-vibeui-block="frame-004"] [data-part="tabs"]{
+display:flex;justify-content:space-around;align-items:center;
+margin-top:auto;padding-top:0.5rem;
+border-top:1px solid var(--vibeui-frame-004-edge);
+}
+[data-vibeui-block="frame-004"] [data-part="tabs"] i{
+display:block;width:1rem;height:0.5rem;border-radius:0.25rem;
+background:color-mix(in oklab,var(--vibeui-frame-004-fg) 20%,transparent);
+}
+[data-vibeui-block="frame-004"] [data-part="tabs"] i:first-child{background:var(--vibeui-frame-004-accent)}
 [data-vibeui-block="frame-004"] [data-part="home"]{
 flex:none;width:35%;height:0.25rem;margin:0.375rem auto 0.5rem;
 border-radius:9999px;background:var(--vibeui-frame-004-edge);
@@ -174,9 +227,28 @@ export function Frame004({
               {children ?? (
                 <div data-part="stub">
                   <p data-part="stub-title">{stubTitle}</p>
-                  <span data-part="card" />
-                  <span data-part="card" />
-                  <span data-part="card" />
+                  <div data-part="search" aria-hidden="true">
+                    <i />
+                    <span />
+                  </div>
+                  <div data-part="promo" aria-hidden="true">
+                    <span />
+                    <span />
+                  </div>
+                  {[0, 1, 2].map((row) => (
+                    <div data-part="row" key={row} aria-hidden="true">
+                      <i />
+                      <span data-part="row-lines">
+                        <span />
+                        <span />
+                      </span>
+                    </div>
+                  ))}
+                  <div data-part="tabs" aria-hidden="true">
+                    <i />
+                    <i />
+                    <i />
+                  </div>
                 </div>
               )}
             </div>

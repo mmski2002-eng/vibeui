@@ -5058,6 +5058,541 @@
         },
         "cardControls": ["label", "maxWidthCh", "accent", "background"]
       }
+    },
+    {
+      "name": "select-034",
+      "type": "registry:component",
+      "categories": ["select"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "select-034/select-034.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/select-034.tsx"
+        }
+      ],
+      "title": "Список с разделами",
+      "description": "Список рисует сам компонент, а не операционная система: заголовки разделов прилипают к верху при прокрутке, выбранная строка помечена галочкой, а раздел текущего значения подписан справа в поле.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-select-034-*. Нативный <select> не используется: список рисуется разметкой, поэтому разделы, галочка и подсветка активной строки видны в дизайне, а не отданы операционной системе. Внутри role=\"listbox\" с вложенными role=\"group\", заголовок каждого раздела связан с группой через aria-labelledby и прилипает position:sticky к верху панели. Клавиатура: стрелки водят активную строку, Home и End прыгают к краям списка, Enter и пробел выбирают, Esc закрывает и возвращает фокус на поле; активная строка объявляется через aria-activedescendant. Галочка нарисована двумя гранями рамки, повёрнутыми на 45°, иконочная библиотека не нужна; у невыбранных строк её место сохранено через visibility, иначе текст прыгает в момент выбора. Проп open раскрывает список в потоке страницы — витринный режим для карточки каталога и скриншотов, закрытия кликом мимо в нём нет. При заданном name значение уезжает в форму скрытым input.",
+      "meta": {
+        "tags": ["select", "listbox", "group", "checkmark", "keyboard"],
+        "preview": {
+          "props": {
+            "open": true
+          },
+          "width": "full"
+        },
+        "ai": {
+          "export": "Select034",
+          "usage": "<Select034\n  label=\"Команда\"\n  name=\"team\"\n  defaultValue=\"frontend\"\n  groups={[\n    {\n      label: \"Разработка\",\n      options: [\n        { value: \"frontend\", label: \"Фронтенд\" },\n        { value: \"backend\", label: \"Бэкенд\" },\n      ],\n    },\n    {\n      label: \"Дизайн\",\n      options: [{ value: \"brand\", label: \"Бренд и графика\" }],\n    },\n  ]}\n/>",
+          "summary": "Выпадающий список с разделами: свой listbox вместо системного, заголовки групп прилипают к верху панели, выбранный пункт помечен галочкой в строке. Клавиатура — стрелки, Home/End, Enter и пробел, Esc. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-select-034-* и не подменять её токенами вашей темы (bg-popover, border-input и подобными)",
+            "разметку role=\"listbox\" с вложенными role=\"group\" и aria-labelledby у заголовков: без неё скринридер прочитает список сплошняком, без разделов",
+            "клавиатуру: стрелки, Home и End, Enter и пробел, Esc с возвратом фокуса на поле — это единственный способ выбрать значение без мыши",
+            "aria-activedescendant вместе с data-active: подсветка активной строки обязана совпадать с тем, что озвучено",
+            "зарезервированное место под галочку у невыбранных строк — без него текст прыгает в момент выбора",
+            "прилипающие заголовки разделов: в длинном списке иначе непонятно, к какому разделу относится строка",
+            "витринный проп open: он раскрывает список в потоке страницы, и на нём держится карточка каталога"
+          ],
+          "adapt": [
+            "разделы и их содержимое через groups — label раздела и options с value и label",
+            "подпись поля через label",
+            "стартовое значение через defaultValue",
+            "имя поля формы через name — значение уедет скрытым input",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Разделов уместно два-четыре, строк в разделе — до семи: дальше нужен поиск, а не группировка.",
+            "Проп open витринный: список раскрывается в потоке страницы и не закрывается кликом мимо. На рабочей странице его не передают.",
+            "Панель позиционируется абсолютом относительно поля, поэтому внутри контейнера с overflow:hidden она будет обрезана.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Команда",
+            "maxLength": 40
+          },
+          {
+            "prop": "defaultValue",
+            "label": "Значение",
+            "type": "select",
+            "default": "frontend",
+            "options": [
+              "frontend",
+              "backend",
+              "product",
+              "brand",
+              "support",
+              "success"
+            ]
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Grouped List",
+            "description": "The component draws the list itself instead of leaving it to the operating system: section headings stick to the top while scrolling, the selected row carries a check mark, and the section of the current value is named on the right of the field.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-select-034-* variables. No native <select> is involved: the list is real markup, so sections, the check mark and the active row highlight belong to the design instead of the operating system. Inside is a role=\"listbox\" with nested role=\"group\", every heading tied to its group through aria-labelledby and stuck to the top of the panel with position:sticky. Keyboard: arrows move the active row, Home and End jump to the ends of the list, Enter and Space pick, Esc closes and returns focus to the field; the active row is announced through aria-activedescendant. The check mark is drawn with two rotated borders, so no icon library is needed; unselected rows keep its slot via visibility, otherwise the text jumps at the moment of selection. The open prop expands the list in page flow — a showcase mode for the catalogue card and screenshots, with no light dismiss. When name is set, the value is submitted through a hidden input.",
+            "ai": {
+              "summary": "A dropdown with sections: a real listbox instead of the system one, group headings sticking to the top of the panel, the selected item marked with a check mark in its row. Keyboard — arrows, Home/End, Enter and Space, Esc. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-select-034-* palette — do not swap it for your theme tokens (bg-popover, border-input and the like)",
+                "the role=\"listbox\" markup with nested role=\"group\" and aria-labelledby on the headings: without it a screen reader reads one flat list with no sections",
+                "the keyboard: arrows, Home and End, Enter and Space, Esc with focus returning to the field — the only way to pick a value without a mouse",
+                "aria-activedescendant together with data-active: the highlighted row has to be the row that is announced",
+                "the reserved slot for the check mark on unselected rows — without it the text jumps as soon as something is selected",
+                "the sticky section headings: in a long list there is otherwise no telling which section a row belongs to",
+                "the showcase open prop: it expands the list in page flow, and the catalogue card relies on it"
+              ],
+              "adapt": [
+                "the sections and their contents through groups — the section label and options with value and label",
+                "the field label through label",
+                "the initial value through defaultValue",
+                "the form field name through name — the value is submitted in a hidden input",
+                "the accent through the accent prop",
+                "background — the component's surface; empty means no surface, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Two to four sections and up to seven rows per section is the sensible range: beyond that you need search, not grouping.",
+                "The open prop is for the showcase: the list expands in page flow and does not close on an outside click. Do not pass it on a real page.",
+                "The panel is positioned absolutely against the field, so inside a container with overflow:hidden it will be clipped.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Select034\n  label=\"Team\"\n  name=\"team\"\n  defaultValue=\"frontend\"\n  groups={[\n    {\n      label: \"Engineering\",\n      options: [\n        { value: \"frontend\", label: \"Frontend\" },\n        { value: \"backend\", label: \"Backend\" },\n      ],\n    },\n    {\n      label: \"Design\",\n      options: [{ value: \"brand\", label: \"Brand and graphics\" }],\n    },\n  ]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Team"
+              },
+              "defaultValue": {
+                "label": "Value"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "Team",
+                "defaultValue": "frontend",
+                "groups": [
+                  {
+                    "label": "Engineering",
+                    "options": [
+                      {
+                        "value": "frontend",
+                        "label": "Frontend"
+                      },
+                      {
+                        "value": "backend",
+                        "label": "Backend"
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Design",
+                    "options": [
+                      {
+                        "value": "product",
+                        "label": "Product design"
+                      },
+                      {
+                        "value": "brand",
+                        "label": "Brand and graphics"
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Support",
+                    "options": [
+                      {
+                        "value": "support",
+                        "label": "First line"
+                      },
+                      {
+                        "value": "success",
+                        "label": "Customer success"
+                      }
+                    ]
+                  }
+                ],
+                "open": true
+              }
+            }
+          }
+        },
+        "cardControls": ["label", "defaultValue", "accent", "background"]
+      }
+    },
+    {
+      "name": "select-035",
+      "type": "registry:component",
+      "categories": ["select"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "select-035/select-035.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/select-035.tsx"
+        }
+      ],
+      "title": "Мультивыбор с подтверждением",
+      "description": "Галочки в списке правят черновик, а не поле: отмеченное въезжает чипами в поле только по «Применить», счётчик под списком всё время называет число отмеченных, «Сбросить» снимает все галочки разом.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-select-035-*. Строки списка — настоящие <input type=\"checkbox\"> внутри <label>: пробел, чтение состояния и работа с клавиатуры достаются от браузера, роль руками не собирается. Состояний два: applied — то, что показано чипами в поле и уходит в форму, draft — черновик внутри списка. Открытие копирует applied в черновик, «Применить» переносит черновик обратно и закрывает список, «Сбросить» снимает все галочки, Esc откатывает черновик к применённому. Счётчик под списком помечен aria-live=\"polite\", поэтому число отмеченных озвучивается по мере работы. Чипы лежат прямо в поле и переносятся на вторую строку, высота поля набирается содержимым. При заданном name уходит по одному скрытому input на значение. Проп open раскрывает список в потоке страницы — витринный режим для карточки каталога, закрытия кликом мимо в нём нет.",
+      "meta": {
+        "tags": ["select", "multiselect", "checkbox", "filter", "chips"],
+        "preview": {
+          "props": {
+            "open": true
+          },
+          "width": "full"
+        },
+        "ai": {
+          "export": "Select035",
+          "usage": "<Select035\n  label=\"Статусы заявок\"\n  name=\"status\"\n  defaultValue={[\"new\", \"work\"]}\n  options={[\n    { value: \"new\", label: \"Новые\", hint: \"24\" },\n    { value: \"work\", label: \"В работе\", hint: \"11\" },\n    { value: \"done\", label: \"Завершены\", hint: \"148\" },\n  ]}\n/>",
+          "summary": "Множественный выбор с черновиком: чекбоксы правят промежуточный набор, в поле он попадает чипами только по «Применить», а счётчик под списком называет число отмеченных. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-select-035-* и не подменять её токенами вашей темы (bg-popover, border-input и подобными)",
+            "настоящие <input type=\"checkbox\"> внутри <label>: пробел, состояние для скринридера и попадание по подписи браузер делает сам",
+            "разделение на черновик и применённое значение: без него кнопки «Применить» и «Сбросить» теряют смысл, а фильтр пересчитывается на каждый щелчок",
+            "aria-live=\"polite\" у счётчика: изменение числа отмеченных иначе остаётся немой правкой",
+            "откат черновика по Esc — закрытие без «Применить» обязано вернуть список к тому, что было",
+            "чипы внутри поля вместе с растущей высотой: фиксированная высота обрежет вторую строку",
+            "витринный проп open: он раскрывает список в потоке страницы, и на нём держится карточка каталога"
+          ],
+          "adapt": [
+            "варианты через options — value, label и короткая правая колонка hint",
+            "подпись поля через label и текст пустого поля через placeholder",
+            "подписи кнопок через applyLabel и resetLabel",
+            "строку счётчика через counterLabel — {count} подставляется числом",
+            "стартовый набор через defaultValue и имя поля формы через name",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Компонент держит значение сам. Чтобы поднять его наверх, добавьте обработчик в apply — он единственная точка, где применённый набор меняется.",
+            "Вариантов уместно до десяти: дальше к списку нужен поиск, иначе галочки ищут глазами.",
+            "Проп open витринный: список раскрывается в потоке страницы и не закрывается кликом мимо. На рабочей странице его не передают.",
+            "В форме уходит по одному скрытому input на значение, поэтому на сервере читайте name как массив."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Статусы заявок",
+            "maxLength": 40
+          },
+          {
+            "prop": "applyLabel",
+            "label": "Кнопка подтверждения",
+            "type": "text",
+            "default": "Применить",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Multi-Select with Apply",
+            "description": "Check boxes edit a draft, not the field: the ticked values slide into the field as chips only on Apply, the counter under the list keeps naming how many are ticked, and Reset clears them all at once.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-select-035-* variables. The rows are real <input type=\"checkbox\"> elements inside <label>: Space, state announcement and keyboard handling come from the browser, no role is assembled by hand. There are two states: applied — what the field shows as chips and what the form submits — and draft, the working set inside the list. Opening copies applied into the draft, Apply moves the draft back and closes the list, Reset unticks everything, and Esc rolls the draft back to the applied set. The counter under the list is marked aria-live=\"polite\", so the number of ticked rows is announced as you work. Chips live inside the field and wrap onto a second line; the field's height is set by its content. When name is set, one hidden input per value is submitted. The open prop expands the list in page flow — a showcase mode for the catalogue card, with no light dismiss.",
+            "ai": {
+              "summary": "Multi-select with a draft: check boxes edit an intermediate set that reaches the field as chips only on Apply, while a counter under the list names how many are ticked. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-select-035-* palette — do not swap it for your theme tokens (bg-popover, border-input and the like)",
+                "the real <input type=\"checkbox\"> inside <label>: Space, the state for screen readers and hitting the row by its text all come from the browser",
+                "the split between draft and applied value: without it Apply and Reset lose their meaning and the filter recomputes on every click",
+                "aria-live=\"polite\" on the counter: a change in the number of ticked rows would otherwise be a silent edit",
+                "the draft rollback on Esc — closing without Apply has to restore what was there before",
+                "the chips inside the field together with its content-driven height: a fixed height clips the second line",
+                "the showcase open prop: it expands the list in page flow, and the catalogue card relies on it"
+              ],
+              "adapt": [
+                "the options through options — value, label and the short right-hand hint",
+                "the field label through label and the empty-field text through placeholder",
+                "the button captions through applyLabel and resetLabel",
+                "the counter line through counterLabel — {count} is replaced by the number",
+                "the initial set through defaultValue and the form field name through name",
+                "the accent through the accent prop",
+                "background — the component's surface; empty means no surface, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The component owns its value. To lift it up, add a handler in apply — that is the single place where the applied set changes.",
+                "Up to ten options is sensible: beyond that the list needs search, otherwise the boxes are hunted by eye.",
+                "The open prop is for the showcase: the list expands in page flow and does not close on an outside click. Do not pass it on a real page.",
+                "The form receives one hidden input per value, so read name as an array on the server."
+              ],
+              "usage": "<Select035\n  label=\"Request statuses\"\n  name=\"status\"\n  defaultValue={[\"new\", \"work\"]}\n  options={[\n    { value: \"new\", label: \"New\", hint: \"24\" },\n    { value: \"work\", label: \"In progress\", hint: \"11\" },\n    { value: \"done\", label: \"Closed\", hint: \"148\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Request statuses"
+              },
+              "applyLabel": {
+                "label": "Confirm button",
+                "default": "Apply"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "Request statuses",
+                "placeholder": "All statuses",
+                "applyLabel": "Apply",
+                "resetLabel": "Reset",
+                "counterLabel": "{count} selected",
+                "options": [
+                  {
+                    "value": "new",
+                    "label": "New",
+                    "hint": "24"
+                  },
+                  {
+                    "value": "work",
+                    "label": "In progress",
+                    "hint": "11"
+                  },
+                  {
+                    "value": "review",
+                    "label": "In review",
+                    "hint": "6"
+                  },
+                  {
+                    "value": "hold",
+                    "label": "On hold",
+                    "hint": "3"
+                  },
+                  {
+                    "value": "done",
+                    "label": "Closed",
+                    "hint": "148"
+                  }
+                ],
+                "open": true
+              }
+            }
+          }
+        },
+        "cardControls": ["label", "applyLabel", "accent", "background"]
+      }
+    },
+    {
+      "name": "select-036",
+      "type": "registry:component",
+      "categories": ["select"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "select-036/select-036.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/select-036.tsx"
+        }
+      ],
+      "title": "Своё значение из поиска",
+      "description": "Поиск живёт внутри раскрытого списка и подсвечивает совпавший кусок, а последней строкой стоит «Создать» — она появляется, только пока точного совпадения нет; заведённое значение остаётся в списке с плашкой «новое».",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-select-036-*. Поле — обычная кнопка со значением, поиск открывается вместе со списком и лежит внутри панели: input с role=\"combobox\", aria-autocomplete=\"list\" и aria-activedescendant, рядом role=\"listbox\", в котором строки вариантов и последней — строка создания. Совпадение ищется без учёта регистра, найденный кусок обёрнут в <mark> и подсвечен фоном, а не цветом текста: на цветной подложке перекрашенный текст перестаёт читаться. Строка «Создать» показывается, только пока в списке нет точного совпадения с запросом, — иначе она предлагала бы завести дубль; на ней напечатана подсказка Enter, и Enter действительно её выполняет, когда активна именно она. Заведённое значение добавляется в список и помечается плашкой, чтобы его было видно среди справочных. Проп defaultQuery заранее набирает запрос — им пользуются витрина и отладка. Проп open раскрывает список в потоке страницы; закрытия кликом мимо в этом режиме нет. При заданном name значение уезжает в форму скрытым input.",
+      "meta": {
+        "tags": ["select", "creatable", "search", "highlight", "tags"],
+        "preview": {
+          "props": {
+            "open": true,
+            "defaultQuery": "Дизайн"
+          },
+          "width": "full"
+        },
+        "ai": {
+          "export": "Select036",
+          "usage": "<Select036\n  label=\"Тема обращения\"\n  name=\"topic\"\n  createLabel=\"Создать «{query}»\"\n  options={[\n    { value: \"design-system\", label: \"Дизайн-система\" },\n    { value: \"analytics\", label: \"Аналитика\" },\n  ]}\n/>",
+          "summary": "Список, который дополняет сам пользователь: поиск внутри раскрытой панели подсвечивает совпавший кусок, а строка «Создать „…“» стоит последней и появляется, только пока точного совпадения нет. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-select-036-* и не подменять её токенами вашей темы (bg-popover, border-input и подобными)",
+            "условие показа строки создания: при точном совпадении она обязана исчезать, иначе интерфейс предлагает завести дубль",
+            "подсветку совпадения фоном через <mark>, а не сменой цвета текста — на цветной подложке перекрашенный текст тонет",
+            "связку role=\"combobox\" у поиска с role=\"listbox\" и aria-activedescendant: без неё клавиатурная строка не озвучивается",
+            "клавиатуру: стрелки водят активную строку включая строку создания, Enter выполняет активную, Esc закрывает и возвращает фокус на поле",
+            "плашку у заведённого значения: без неё пользовательские значения не отличить от справочных",
+            "витринный проп open: он раскрывает список в потоке страницы, и на нём держится карточка каталога"
+          ],
+          "adapt": [
+            "справочник через options — value и label",
+            "подпись поля через label, текст пустого поля через placeholder, подсказку поиска через searchPlaceholder",
+            "строку создания через createLabel — {query} подставляется набранным текстом",
+            "плашку нового значения через newBadge и текст пустого результата через emptyText",
+            "стартовое значение через defaultValue и имя поля формы через name",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Заведённые значения живут только в состоянии компонента: чтобы они пережили перезагрузку, отправьте новое значение на сервер в create.",
+            "Значение нового пункта собирается из текста запроса. Если ключи справочника заданы форматом, замените эту сборку своей.",
+            "Проп defaultQuery заранее набирает запрос — он нужен витрине и отладке, на рабочей странице поле поиска открывается пустым.",
+            "Проп open витринный: список раскрывается в потоке страницы и не закрывается кликом мимо. На рабочей странице его не передают."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Тема обращения",
+            "maxLength": 40
+          },
+          {
+            "prop": "createLabel",
+            "label": "Строка создания",
+            "type": "text",
+            "default": "Создать «{query}»",
+            "maxLength": 32
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Create from Search",
+            "description": "Search lives inside the open list and highlights the matched fragment, while the last row offers Create — it appears only while there is no exact match; a created value stays in the list with a \"new\" badge.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-select-036-* variables. The field is a plain button showing the value; search opens together with the list and lives inside the panel: an input with role=\"combobox\", aria-autocomplete=\"list\" and aria-activedescendant, next to a role=\"listbox\" holding the option rows and, last, the create row. Matching is case-insensitive, the matched fragment is wrapped in <mark> and highlighted with a background rather than a text colour: on a coloured surface recoloured text stops reading. The create row is shown only while no option matches the query exactly — otherwise it would offer a duplicate; it prints the Enter hint, and Enter really does run it while that row is active. A created value is appended to the list and badged so it stands out among the reference ones. The defaultQuery prop pre-fills the search — the showcase and debugging use it. The open prop expands the list in page flow; there is no light dismiss in that mode. When name is set, the value is submitted through a hidden input.",
+            "ai": {
+              "summary": "A list the user extends: search inside the open panel highlights the matched fragment, and the \"Create …\" row sits last, appearing only while there is no exact match. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-select-036-* palette — do not swap it for your theme tokens (bg-popover, border-input and the like)",
+                "the condition on the create row: it has to disappear on an exact match, otherwise the UI offers to create a duplicate",
+                "the match highlight through <mark> with a background rather than a text colour — recoloured text drowns on a coloured surface",
+                "the role=\"combobox\" search bound to the role=\"listbox\" through aria-activedescendant: without it the keyboard row is never announced",
+                "the keyboard: arrows move the active row including the create row, Enter runs the active one, Esc closes and returns focus to the field",
+                "the badge on a created value: without it user-made entries are indistinguishable from the reference ones",
+                "the showcase open prop: it expands the list in page flow, and the catalogue card relies on it"
+              ],
+              "adapt": [
+                "the reference list through options — value and label",
+                "the field label through label, the empty-field text through placeholder, the search hint through searchPlaceholder",
+                "the create row through createLabel — {query} is replaced by the typed text",
+                "the badge of a new value through newBadge and the empty-result text through emptyText",
+                "the initial value through defaultValue and the form field name through name",
+                "the accent through the accent prop",
+                "background — the component's surface; empty means no surface, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Created values live only in component state: to survive a reload, send the new value to the server inside create.",
+                "The key of a new entry is derived from the query text. If your reference keys follow a format, replace that derivation with your own.",
+                "The defaultQuery prop pre-fills the search — it exists for the showcase and debugging; on a real page the search opens empty.",
+                "The open prop is for the showcase: the list expands in page flow and does not close on an outside click. Do not pass it on a real page."
+              ],
+              "usage": "<Select036\n  label=\"Request topic\"\n  name=\"topic\"\n  createLabel=\"Create “{query}”\"\n  options={[\n    { value: \"design-system\", label: \"Design system\" },\n    { value: \"analytics\", label: \"Analytics\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Request topic"
+              },
+              "createLabel": {
+                "label": "Create row",
+                "default": "Create “{query}”"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "Request topic",
+                "placeholder": "Pick or create",
+                "searchPlaceholder": "Search or type your own",
+                "createLabel": "Create “{query}”",
+                "newBadge": "new",
+                "emptyText": "Nothing found",
+                "options": [
+                  {
+                    "value": "design-system",
+                    "label": "Design system"
+                  },
+                  {
+                    "value": "onboarding",
+                    "label": "Onboarding"
+                  },
+                  {
+                    "value": "analytics",
+                    "label": "Analytics"
+                  },
+                  {
+                    "value": "billing",
+                    "label": "Billing and plans"
+                  },
+                  {
+                    "value": "docs",
+                    "label": "Documentation"
+                  }
+                ],
+                "defaultQuery": "Design",
+                "open": true
+              }
+            }
+          }
+        },
+        "cardControls": ["label", "createLabel", "accent", "background"]
+      }
     }
   ]
 }

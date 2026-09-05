@@ -24,6 +24,8 @@ export type Sortable007Props = Omit<
   moveDownLabel?: string
   /** Реплики живой области: {item}, {position}, {total}, {step}. */
   announcements?: Record<Sortable007Announcement, string>
+  /** Готовый перенос в истории: полоса отмены видна на статичной картинке. */
+  defaultMove?: { from: number; to: number }
   /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
   background?: string
   accent?: string
@@ -123,6 +125,46 @@ const DEFAULT_ITEMS = [
 
 type Step = { items: string[]; label: string; item: string }
 
+/**
+ * Начальный порядок вместе с историей. Полоса отмены появляется только после
+ * переноса, поэтому без готового шага её не видно ни на витрине, ни на
+ * скриншоте в документации.
+ */
+function seedMove(
+  items: string[],
+  move: { from: number; to: number } | undefined,
+  stepLabel: string,
+): { order: string[]; history: Step[] } {
+  if (
+    !move ||
+    move.from < 0 ||
+    move.to < 0 ||
+    move.from >= items.length ||
+    move.to >= items.length ||
+    move.from === move.to
+  ) {
+    return { order: items, history: [] }
+  }
+
+  const order = [...items]
+  const [row] = order.splice(move.from, 1)
+  order.splice(move.to, 0, row)
+
+  return {
+    order,
+    history: [
+      {
+        items,
+        item: row,
+        label: stepLabel
+          .replace("{item}", row)
+          .replace("{from}", String(move.from + 1))
+          .replace("{to}", String(move.to + 1)),
+      },
+    ],
+  }
+}
+
 const DEFAULT_ANNOUNCEMENTS: Record<Sortable007Announcement, string> = {
   moved: "«{item}» на позиции {position} из {total}.",
   undone: "Отменено: {step}. «{item}» снова на позиции {position} из {total}.",
@@ -164,6 +206,7 @@ export function Sortable007({
   moveUpLabel = "Поднять «{item}», сейчас {position} из {total}",
   moveDownLabel = "Опустить «{item}», сейчас {position} из {total}",
   announcements = DEFAULT_ANNOUNCEMENTS,
+  defaultMove,
   onChange,
   background = "",
   accent,
@@ -171,8 +214,9 @@ export function Sortable007({
   style,
   ...props
 }: Sortable007Props) {
-  const [order, setOrder] = useState(items)
-  const [history, setHistory] = useState<Step[]>([])
+  const seed = seedMove(items, defaultMove, stepLabel)
+  const [order, setOrder] = useState(seed.order)
+  const [history, setHistory] = useState<Step[]>(seed.history)
   const [restored, setRestored] = useState<string | null>(null)
   const [dragged, setDragged] = useState<string | null>(null)
   const [over, setOver] = useState<string | null>(null)

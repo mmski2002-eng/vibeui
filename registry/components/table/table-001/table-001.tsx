@@ -184,7 +184,10 @@ export function Table001({
           </thead>
           <tbody>
             {rows.map((row, index) => (
-              <tr key={index}>
+              // Ключ — значение первой колонки: при сортировке и фильтрации
+              // индекс переезжает с одной строки на другую, и React переносит
+              // состояние ячеек не туда.
+              <tr key={String(row[columns[0]?.key] ?? index)}>
                 {columns.map((column) => (
                   <td
                     key={column.key}
