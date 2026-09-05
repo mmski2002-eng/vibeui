@@ -23,12 +23,20 @@ export const metadata: Metadata = {
     "AI-native библиотека UI-компонентов для вайбкодинга: live preview, shadcn-совместимый registry и готовая инструкция для AI-агента.",
 }
 
+// Ставит data-shell-theme на <html> до первой отрисовки: без этого React
+// смонтировал бы тёмную оболочку по умолчанию, а затем перекрасил в светлую
+// после гидратации — заметная вспышка.
+const THEME_INIT_SCRIPT = `(function(){try{var t=localStorage.getItem("vibeui-shell-theme");if(t==="light")document.documentElement.setAttribute("data-shell-theme","light")}catch(e){}})()`
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="ru"
       className={`${inter.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+      </head>
       <body className="flex min-h-full flex-col">{children}</body>
     </html>
   )
