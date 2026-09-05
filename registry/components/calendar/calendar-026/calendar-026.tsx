@@ -280,7 +280,10 @@ export function Calendar026({
     }))
   }, [locale])
 
-  const start = new Date(`${startDate}T00:00:00`)
+  const start = useMemo(
+    () => new Date(`${startDate}T00:00:00`),
+    [startDate],
+  )
 
   const dates = useMemo(() => {
     const result: Date[] = []
@@ -325,7 +328,7 @@ export function Calendar026({
     }
 
     return result
-  }, [frequency, interval, weekdays, occurrences, startDate])
+  }, [frequency, interval, weekdays, occurrences, start])
 
   const rule = ruleOf(frequency, interval, weekdays, start.getDate())
 
@@ -362,7 +365,7 @@ export function Calendar026({
       head,
       days: weekdays.map((day) => names[day].long.toLowerCase()).join(", "),
     })
-  }, [frequency, interval, weekdays, names, startDate, phraseText, unitForms])
+  }, [frequency, interval, weekdays, names, start, phraseText, unitForms])
 
   const toggle = (index: number) => {
     const next = weekdays.includes(index)
