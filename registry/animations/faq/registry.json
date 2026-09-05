@@ -1,0 +1,141 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "faq-anim-001",
+      "type": "registry:component",
+      "title": "FAQ с зацикленным раскрытием",
+      "description": "Полноценная секция вопросов и ответов в две колонки: заголовок и подводка слева, список вопросов справа. Пункты раскрываются по одному и закрываются перед следующим по кругу — без единой строки JS, только grid-template-rows и вращение шеврона на CSS.",
+      "categories": ["faq"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "faq-anim-001/faq-anim-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/faq-anim-001.tsx"
+        }
+      ],
+      "docs": "Секция самодостаточна: один файл, ноль зависимостей, палитра в локальных --vibeui-faq-anim-001-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark. container-type делает блок собственным query-контейнером: от 56rem включается двухколоночная раскладка со sticky-заголовком слева. Раскрытие пунктов — зацикленная демонстрация на чистом CSS: пять именованных keyframes (по одному на первые пять вопросов) двигают grid-template-rows панели с 0fr до 1fr и синхронно вращают шеврон на 180deg, каждый в своей пятой доле пятнадцатисекундного круга. autoplay={false} и prefers-reduced-motion останавливают цикл и оставляют первый вопрос статично раскрытым.",
+      "meta": {
+        "tags": [
+          "faq",
+          "accordion",
+          "marketing",
+          "animated",
+          "section",
+          "looping"
+        ],
+        "ai": {
+          "export": "FaqAnim001",
+          "usage": "<FaqAnim001 title=\"Коротко о том, как это работает\" items={[{ question: \"Вопрос\", answer: \"Ответ\" }]} />",
+          "summary": "Секция вопросов и ответов на всю ширину страницы: заголовок с подводкой слева, аккордеон справа. Пункты аккордеона раскрываются по одному и закрываются перед следующим в бесконечном цикле — демонстрация на чистом CSS, без клиентского JS.",
+          "preserve": [
+            "локальную палитру --vibeui-faq-anim-001-* — не подменяйте её токенами вашей темы",
+            "зацикленное раскрытие пунктов по одному через grid-template-rows и синхронный поворот шеврона — опознавательный знак секции",
+            "двухколоночную раскладку от 56rem со sticky-заголовком слева",
+            "container-type:inline-size на корне — раскладка не должна зависеть от ширины окна",
+            "строку для класса .dark: без неё секция останется светлой на тёмной странице чужого проекта",
+            "статичное раскрытие первого вопроса при autoplay={false} и под prefers-reduced-motion"
+          ],
+          "adapt": [
+            "текст eyebrow, title, description и ссылку contactLabel/contactHref",
+            "содержимое items: вопросы и ответы, число пунктов",
+            "акцентный цвет через проп accent под свой бренд",
+            "autoplay — останавливает цикл и фиксирует первый вопрос раскрытым"
+          ],
+          "notes": [
+            "цикл размечен для первых пяти пунктов items; при другом их числе лишние остаются статично закрытыми",
+            "autoplay={false} совпадает по виду с поведением под prefers-reduced-motion"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "autoplay",
+            "label": "Цикл раскрытия",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "FAQ with a looping reveal",
+            "description": "A full two-column FAQ section: heading and lead copy on the left, question list on the right. Items open one at a time and close before the next in a loop — no JavaScript at all, just grid-template-rows and a CSS chevron rotation.",
+            "docs": "The section is self-contained: one file, zero dependencies, palette in local --vibeui-faq-anim-001-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. container-type makes the block its own query container: a two-column layout with a sticky left heading kicks in from 56rem. The reveal is a looping CSS-only demo: five named keyframes (one per first five questions) move the panel's grid-template-rows from 0fr to 1fr and rotate the chevron 180deg in sync, each owning its fifth of a fifteen-second loop. autoplay={false} and prefers-reduced-motion stop the loop and leave the first question statically open.",
+            "ai": {
+              "summary": "A full-width FAQ section: heading and lead copy on the left, accordion on the right. Accordion items open one at a time and close before the next in an endless loop — a CSS-only demo, no client JS.",
+              "preserve": [
+                "the local --vibeui-faq-anim-001-* palette — do not swap it for your theme tokens",
+                "the looping one-at-a-time reveal via grid-template-rows and the synced chevron rotation — the section's signature",
+                "the two-column layout from 56rem with a sticky left heading",
+                "container-type:inline-size on the root — layout must not depend on window width",
+                "the .dark class rule: without it the section stays light on a dark page in another project",
+                "the static open first question under autoplay={false} and prefers-reduced-motion"
+              ],
+              "adapt": [
+                "the eyebrow, title, description text and the contactLabel/contactHref link",
+                "the items content: questions and answers, and their count",
+                "the accent color via the accent prop to match your brand",
+                "autoplay — stops the loop and pins the first question open"
+              ],
+              "notes": [
+                "the loop is wired for the first five items; extra ones beyond that stay statically closed",
+                "autoplay={false} looks the same as the prefers-reduced-motion behavior"
+              ],
+              "usage": "<FaqAnim001 title=\"How it works, in short\" items={[{ question: \"Question\", answer: \"Answer\" }]} />"
+            },
+            "controls": {
+              "autoplay": {
+                "label": "Reveal loop"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Questions",
+                "title": "How it works, in short",
+                "description": "Can't find an answer here? Write to us, we reply within one business day.",
+                "contactLabel": "Ask your own question",
+                "contactHref": "#contact",
+                "items": [
+                  {
+                    "question": "What do I get after installing a block?",
+                    "answer": "One file in your project — the exact same one you saw in the preview. No build step, no wrappers, no lock-in to our theme: the block carries its own palette and works in any React project."
+                  },
+                  {
+                    "question": "Does the agent really install this exact component?",
+                    "answer": "Yes. Copy for AI gives a link with instructions: the component id, the install command, and a list of what not to change. The agent downloads the file from the registry instead of recreating something similar from a description."
+                  },
+                  {
+                    "question": "What if I already have my own design system?",
+                    "answer": "Override the block's local variables and it will fit your theme without touching the rest of the project. No need to edit the file itself: colors, radii and accents live in variables."
+                  },
+                  {
+                    "question": "Do I need extra libraries?",
+                    "answer": "Dependencies are declared in each block's metadata, and most have zero: only React. No icon library is required — icons are drawn in CSS."
+                  },
+                  {
+                    "question": "Can I use blocks in commercial projects?",
+                    "answer": "Yes. After installation the file belongs to your project: edit it, rename it, and ship it with your site."
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "preview": {
+          "width": "full"
+        },
+        "cardControls": ["autoplay", "accent"]
+      }
+    }
+  ]
+}

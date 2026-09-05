@@ -1,0 +1,147 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "hero-anim-001",
+      "type": "registry:component",
+      "title": "Первый экран",
+      "description": "Полноширинная секция первого экрана лендинга: бейдж, заголовок, подтекст и две кнопки въезжают по очереди на фоне дышащего радиального свечения и мерцающей точечной сетки.",
+      "categories": ["hero"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hero-anim-001/hero-anim-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-anim-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-hero-anim-001-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark. container-type:inline-size на корне делает секцию собственным query-контейнером — раскладка кнопок переключается на @container (min-width:34rem), а не на ширину окна. Бейдж, заголовок, подтекст и кнопки используют один keyframe вертикального въезда с разным animation-delay: при бесконечном повторе фазовый сдвиг между элементами сохраняется на каждом цикле. Фон — радиальное свечение (дышит по масштабу и яркости) и точечная сетка под радиальной маской (едва заметно мерцает прозрачностью).",
+      "meta": {
+        "tags": [
+          "hero",
+          "landing",
+          "marketing",
+          "stagger",
+          "animated",
+          "glow"
+        ],
+        "ai": {
+          "export": "HeroAnim001",
+          "usage": "<HeroAnim001 title=\"Запускайте продукт вдвое быстрее\" primaryLabel=\"Начать сборку\" secondaryLabel=\"Записаться на демо\" />",
+          "summary": "Полноширинная секция первого экрана: бейдж, заголовок, подтекст и две кнопки появляются по очереди на фоне дышащего свечения и мерцающей точечной сетки. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-hero-anim-001-* — не подменяйте её токенами вашей темы",
+            "стаггер въезда бейджа, заголовка, подтекста и кнопок по одному keyframe с разными animation-delay",
+            "дышащее радиальное свечение и мерцающую точечную сетку на фоне — опознавательный знак секции",
+            "container-type:inline-size на корне и раскладку кнопок через @container, а не через viewport-медиа",
+            "строку для класса .dark: без неё секция останется светлой на тёмной странице чужого проекта",
+            "угасание всех анимаций при prefers-reduced-motion"
+          ],
+          "adapt": [
+            "заголовок (title), подтекст (description) и бейдж (badge) под свой продукт",
+            "подписи и ссылки primaryLabel/primaryHref, secondaryLabel/secondaryHref",
+            "акцентный цвет через проп accent под свой бренд"
+          ],
+          "notes": [
+            "пустой badge или description убирает соответствующий блок из раскладки",
+            "секция кладётся во всю ширину контейнера — не оборачивайте её в узкую колонку"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Запускайте продукт вдвое быстрее",
+            "maxLength": 60
+          },
+          {
+            "prop": "description",
+            "label": "Подтекст",
+            "type": "text",
+            "default": "Всё, что нужно команде, чтобы проектировать, собирать и выпускать, — в одном пространстве, которое не мешает работать.",
+            "maxLength": 160
+          },
+          {
+            "prop": "badge",
+            "label": "Бейдж",
+            "type": "text",
+            "default": "Уже в открытой бете",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Hero",
+            "description": "A marketing hero section with heading, copy, and buttons: badge, title, subtext and two buttons rise in one after another over a breathing radial glow and a shimmering dot grid.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-hero-anim-001-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. container-type:inline-size on the root makes the section its own query container — the action row switches layout at @container (min-width:34rem) instead of the viewport width. The badge, title, subtext and actions share one vertical rise keyframe with different animation-delay values: under infinite repeat the phase offset between elements is preserved on every cycle. The background is a radial glow (breathes in scale and opacity) and a dot grid under a radial mask (shimmers faintly in opacity).",
+            "ai": {
+              "summary": "A full-width hero section: badge, title, subtext and two buttons rise in one after another over a breathing glow and a shimmering dot grid. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-hero-anim-001-* palette — do not swap it for your theme tokens",
+                "the staggered rise of badge, title, subtext and actions sharing one keyframe with different animation-delay",
+                "the breathing radial glow and shimmering dot grid on the background — the section's signature",
+                "container-type:inline-size on the root and the action-row layout switch via @container, not viewport media",
+                "the .dark class rule: without it the section stays light on a dark page in another project",
+                "the fade-out of every animation under prefers-reduced-motion"
+              ],
+              "adapt": [
+                "the badge, title and subtext copy for your product",
+                "the primaryLabel/primaryHref and secondaryLabel/secondaryHref labels and links",
+                "the accent color via the accent prop to match your brand"
+              ],
+              "notes": [
+                "an empty badge or description removes that block from the layout",
+                "the section is meant to span the full width of its container — do not wrap it in a narrow column"
+              ],
+              "usage": "<HeroAnim001 title=\"Ship products twice as fast\" primaryLabel=\"Start building\" secondaryLabel=\"Book a demo\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Ship products twice as fast"
+              },
+              "description": {
+                "label": "Subtext",
+                "default": "Everything your team needs to design, build, and ship — in one workspace that stays out of the way."
+              },
+              "badge": {
+                "label": "Badge",
+                "default": "Now in open beta"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "badge": "Now in open beta",
+                "title": "Ship products twice as fast",
+                "description": "Everything your team needs to design, build, and ship — in one workspace that stays out of the way.",
+                "primaryLabel": "Start building",
+                "secondaryLabel": "Book a demo"
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "badge": "Уже в открытой бете",
+            "title": "Запускайте продукт вдвое быстрее",
+            "description": "Всё, что нужно команде, чтобы проектировать, собирать и выпускать, — в одном пространстве, которое не мешает работать.",
+            "primaryLabel": "Начать сборку",
+            "secondaryLabel": "Записаться на демо"
+          }
+        },
+        "cardControls": ["title", "badge", "accent"]
+      }
+    }
+  ]
+}

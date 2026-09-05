@@ -1,0 +1,166 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "timeline-anim-001",
+      "type": "registry:component",
+      "title": "Вехи с рисующейся линией",
+      "description": "Секция вех: линия между точками рисуется постепенно по мере появления секции, а точки проступают вдоль неё по очереди, синхронно с прогрессом отрисовки.",
+      "categories": ["timeline"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "timeline-anim-001/timeline-anim-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/timeline-anim-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-timeline-anim-001-*. Линия рисуется постепенно через transform:scale от 0 до 1 с transform-origin у начала — заготовка линии лежит фоном, поверх неё растёт залитый отрезок. Точки вдоль линии появляются по очереди с задержкой, синхронной с прогрессом отрисовки. В узкой колонке лента вертикальная, container-query на широком контейнере переключает её в горизонтальную; ориентацию можно закрепить пропом orientation.",
+      "meta": {
+        "tags": [
+          "timeline",
+          "milestones",
+          "roadmap",
+          "marketing",
+          "animated",
+          "section"
+        ],
+        "ai": {
+          "export": "TimelineAnim001",
+          "usage": "<TimelineAnim001 title=\"Вехи\" milestones={[{ date: \"Янв 2023\", title: \"Запуск\", description: \"Первая версия\" }]} />",
+          "summary": "Секция вех: заголовок и лента точек с датой и заголовком, соединённых линией, которая рисуется постепенно; точки появляются вдоль неё по очереди. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-timeline-anim-001-* — не подменяйте её токенами вашей темы",
+            "постепенную отрисовку линии через transform:scale с transform-origin у начала",
+            "последовательное появление точек вдоль линии, синхронное с прогрессом отрисовки",
+            "переключение вертикальной ленты в горизонтальную через container-query на широком контейнере",
+            "строку для класса .dark: без неё компонент останется светлым на тёмной странице чужого проекта",
+            "container-type:inline-size на корне — ориентация считается от ширины секции, а не от окна"
+          ],
+          "adapt": [
+            "список вех: date, title и описание description каждой точки",
+            "заголовок, kicker и описание секции под свой продукт",
+            "акцентный цвет через проп accent под свой бренд",
+            "ориентацию ленты через orientation (auto/vertical/horizontal)"
+          ],
+          "notes": [
+            "orientation=\"auto\" (по умолчанию) переключает ленту по ширине контейнера, vertical/horizontal закрепляют её",
+            "прогресс отрисовки линии и появление точек останавливаются на конечном состоянии при prefers-reduced-motion"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "orientation",
+            "label": "Ориентация",
+            "type": "select",
+            "options": ["auto", "vertical", "horizontal"],
+            "default": "auto"
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Timeline",
+            "description": "A timeline section of milestones and dates.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-timeline-anim-001-* variables. The line draws progressively via transform:scale from 0 to 1 with transform-origin at the start — a faint track sits as the base and a filled segment grows over it. Dots along the line appear one after another with a delay synced to the drawing progress. The rail is vertical in a narrow column; a container-query flips it to horizontal on a wide container, and the orientation prop can pin it either way.",
+            "ai": {
+              "summary": "A timeline section: a heading and a rail of dots with a date and title, connected by a line that draws progressively; dots appear along it one after another. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-timeline-anim-001-* palette — do not swap it for your theme tokens",
+                "the progressive line draw via transform:scale with transform-origin at the start",
+                "the sequential dot reveal along the line, synced to the drawing progress",
+                "the container-query switch from a vertical to a horizontal rail on a wide container",
+                "the .dark class rule: without it the component stays light on a dark page in another project",
+                "container-type:inline-size on the root — orientation is computed from the section's width, not the window"
+              ],
+              "adapt": [
+                "the milestone list: date, title and description for each dot",
+                "the section title, kicker and description for your own product",
+                "the accent color via the accent prop to match your brand",
+                "the rail orientation via orientation (auto/vertical/horizontal)"
+              ],
+              "notes": [
+                "orientation=\"auto\" (default) switches the rail by container width; vertical/horizontal pin it",
+                "the line draw progress and dot reveal snap to their end state under prefers-reduced-motion"
+              ],
+              "usage": "<TimelineAnim001 title=\"Milestones\" milestones={[{ date: \"Jan 2023\", title: \"Launch\", description: \"First version\" }]} />"
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              },
+              "orientation": {
+                "label": "Orientation"
+              }
+            },
+            "preview": {
+              "props": {
+                "kicker": "Product journey",
+                "title": "The milestones that got us here",
+                "description": "A short look at how the catalog grew from its first version to the current release.",
+                "milestones": [
+                  {
+                    "date": "Jan 2023",
+                    "title": "First catalog version",
+                    "description": "20 components and Copy for AI"
+                  },
+                  {
+                    "date": "Jun 2023",
+                    "title": "Public launch",
+                    "description": "Open beta, first teams"
+                  },
+                  {
+                    "date": "Feb 2024",
+                    "title": "shadcn-compatible registry",
+                    "description": "One-command install via the CLI"
+                  },
+                  {
+                    "date": "Sep 2024",
+                    "title": "500+ components",
+                    "description": "Blocks, animations and full page templates"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "kicker": "Путь продукта",
+            "title": "Вехи, которые привели нас сюда",
+            "description": "Коротко о том, как каталог рос от первой версии до текущего релиза.",
+            "milestones": [
+              {
+                "date": "Янв 2023",
+                "title": "Первая версия каталога",
+                "description": "20 компонентов и Copy for AI"
+              },
+              {
+                "date": "Июн 2023",
+                "title": "Публичный запуск",
+                "description": "Открытая бета, первые команды"
+              },
+              {
+                "date": "Фев 2024",
+                "title": "shadcn-совместимый registry",
+                "description": "Установка одной командой в CLI"
+              },
+              {
+                "date": "Сен 2024",
+                "title": "500+ компонентов",
+                "description": "Блоки, анимации и полноценные шаблоны"
+              }
+            ]
+          }
+        },
+        "cardControls": ["accent", "orientation"]
+      }
+    }
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "auth-anim-001",
+      "type": "registry:component",
+      "title": "Карточка входа со свечением",
+      "description": "Компактная карточка входа: соцкнопки, разделитель и поля формы появляются по очереди, а кнопка входа мягко дышит свечением, привлекая внимание.",
+      "categories": ["auth"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "auth-anim-001/auth-anim-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/auth-anim-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-auth-anim-001-*. Соцкнопки, разделитель и поля формы появляются stagger fade+rise: задержка задаётся не nth-child, а инлайновым --vibeui-auth-anim-001-i, потому что элементы лежат на разной глубине вложенности. Кнопка входа отдельно дышит мягким размытым свечением — тот же приём, что радужный глоу в activity-001, только локальный, на самой кнопке. Поля некотролируемые: компонент — витрина вида, а не форма с логикой.",
+      "meta": {
+        "tags": [
+          "auth",
+          "login",
+          "form",
+          "social",
+          "animated",
+          "compact"
+        ],
+        "ai": {
+          "export": "AuthAnim001",
+          "usage": "<AuthAnim001 title=\"Вход в аккаунт\" submitLabel=\"Войти\" />",
+          "summary": "Компактная карточка входа: две соцкнопки, разделитель, поля email и пароля и кнопка входа; поля появляются по очереди, кнопка входа мягко дышит свечением. Ноль зависимостей, один файл, поля некотролируемые.",
+          "preserve": [
+            "локальную палитру --vibeui-auth-anim-001-* — не подменяйте её токенами вашей темы",
+            "stagger fade+rise появление соцкнопок, разделителя и полей формы по порядку",
+            "дышащее свечение вокруг кнопки входа как отдельный визуальный акцент",
+            "inline SVG-иконки Google и GitHub — компонент не тянет иконки извне",
+            "строку для класса .dark: без неё компонент останется светлым на тёмной странице чужого проекта",
+            "компактный размер карточки (max-width ~22rem) — это виджет, а не полноширинная секция"
+          ],
+          "adapt": [
+            "подписи title, description, googleLabel, githubLabel, dividerLabel, emailLabel, passwordLabel и submitLabel",
+            "акцентный цвет через проп accent под свой бренд",
+            "свечение кнопки входа через проп glow",
+            "обработку отправки формы: onSubmit сейчас лишь гасит перезагрузку страницы"
+          ],
+          "notes": [
+            "glow={false} убирает дышащее свечение вокруг кнопки входа",
+            "поля email и пароль некотролируемые — значения и валидацию нужно подключить в своём проекте"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "glow",
+            "label": "Свечение",
+            "type": "boolean",
+            "default": true
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Auth",
+            "description": "A login section with social buttons, fields, and a sign-in button.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-auth-anim-001-* variables. The social buttons, divider and form fields appear with a stagger fade+rise: the delay comes from an inline --vibeui-auth-anim-001-i variable rather than nth-child, since the elements sit at different nesting depths. The submit button separately breathes with a soft blurred glow — the same idea as the rainbow glow in activity-001, just local to the button itself. The fields are uncontrolled: this component is a visual showcase, not a form with logic.",
+            "ai": {
+              "summary": "A compact login card: two social buttons, a divider, email and password fields and a submit button; fields appear one after another and the submit button breathes with a soft glow. Zero dependencies, one file, uncontrolled fields.",
+              "preserve": [
+                "the local --vibeui-auth-anim-001-* palette — do not swap it for your theme tokens",
+                "the stagger fade+rise entrance of the social buttons, divider and form fields in order",
+                "the breathing glow around the submit button as a distinct visual accent",
+                "the inline Google and GitHub SVG icons — the component pulls no icons from outside",
+                "the .dark class rule: without it the component stays light on a dark page in another project",
+                "the compact card size (max-width ~22rem) — this is a widget, not a full-width section"
+              ],
+              "adapt": [
+                "the labels: title, description, googleLabel, githubLabel, dividerLabel, emailLabel, passwordLabel and submitLabel",
+                "the accent color via the accent prop to match your brand",
+                "the submit button glow via the glow prop",
+                "the form submit handling: onSubmit currently only prevents the page reload"
+              ],
+              "notes": [
+                "glow={false} removes the breathing glow around the submit button",
+                "the email and password fields are uncontrolled — wire up state and validation in your own project"
+              ],
+              "usage": "<AuthAnim001 title=\"Sign in\" submitLabel=\"Sign in\" />"
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              },
+              "glow": {
+                "label": "Glow"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Sign in to your account",
+                "description": "Continue with email or a social account",
+                "googleLabel": "Google",
+                "githubLabel": "GitHub",
+                "dividerLabel": "or",
+                "emailLabel": "Email",
+                "passwordLabel": "Password",
+                "submitLabel": "Sign in"
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "title": "Вход в аккаунт",
+            "description": "Продолжите с почтой или через соцсеть",
+            "googleLabel": "Google",
+            "githubLabel": "GitHub",
+            "dividerLabel": "или",
+            "emailLabel": "Email",
+            "passwordLabel": "Пароль",
+            "submitLabel": "Войти"
+          }
+        },
+        "cardControls": ["accent", "glow"]
+      }
+    }
+  ]
+}

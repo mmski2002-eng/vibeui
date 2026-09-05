@@ -196,6 +196,193 @@
         },
         "cardControls": ["gradient", "fadeOut", "isometric", "accent"]
       }
+    },
+    {
+      "name": "activity-002",
+      "type": "registry:component",
+      "title": "Лента активности с аватарами",
+      "description": "Лента активности команды: аватар-инициалы, действие (запушил в main, открыл pull request), относительное время и деталь снизу — файл или номер PR. Строки въезжают по мере прокрутки, аватар одновременно увеличивается из уменьшенного состояния.",
+      "categories": ["activity"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "activity-002/activity-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/activity-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-activity-002-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark, поэтому в тёмном проекте не остаётся светлым. Цвет аватара идёт по кругу из шести оттенков по номеру строки. Строка целиком появляется по scroll-driven view-timeline карточки (собственный namespace --vibeui-activity-002, не конфликтует с activity-001 на одной странице), а аватар одновременно чуть увеличивается из уменьшенного состояния; всё гаснет при prefers-reduced-motion.",
+      "meta": {
+        "tags": [
+          "activity",
+          "feed",
+          "avatar",
+          "team",
+          "commits",
+          "animated"
+        ],
+        "ai": {
+          "export": "Activity002",
+          "usage": "<Activity002 title=\"Активность сегодня\" badge=\"5\" events={[{ name: \"Sarah Chen\", action: \"запушила в main\", meta: \"2 мин\", detail: \"3 коммита · src/api/auth.ts\" }]} />",
+          "summary": "Лента активности команды: аватар-инициалы цветом по кругу из шести оттенков, действие, относительное время и деталь снизу (файл, номер PR). Строки въезжают по мере прокрутки, аватар одновременно увеличивается из уменьшенного состояния. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-activity-002-* — не подменяйте её токенами вашей темы",
+            "круговой цикл из шести акцентных цветов фона аватара по номеру строки — не заменяйте одним цветом",
+            "строку для класса .dark: без неё компонент останется светлым на тёмной странице чужого проекта",
+            "появление строк по прокрутке (scroll-driven view-timeline) вместе со scale-in аватара и их отключение при prefers-reduced-motion",
+            "структуру строки: аватар слева, имя и действие сверху, относительное время справа, деталь мелким шрифтом снизу"
+          ],
+          "adapt": [
+            "содержимое events: имя, действие, относительное время и деталь (файл, номер PR, число коммитов)",
+            "акцентный цвет через проп accent под свой бренд (влияет на пилюлю badge)",
+            "заголовок группы title и пилюлю badge с числом событий",
+            "режимы fadeOut и dense под контекст: растворение низа и уплотнённая лента без деталей"
+          ],
+          "notes": [
+            "fadeOut растворяет низ ленты, dense убирает нижнюю строку с деталью и уплотняет отступы",
+            "initials в событии необязательны — по умолчанию берутся первые буквы имени и фамилии",
+            "scroll-driven появление требует поддержки view-timeline; без неё строки и аватары просто видимы сразу"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "fadeOut",
+            "label": "Растворение низа",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "dense",
+            "label": "Плотная лента",
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Activity feed with avatars",
+            "description": "A team activity feed: an initials avatar, an action (pushed to main, opened a pull request), a relative time and a detail line below — a file or PR number. Rows rise in on scroll while the avatar scales up from a smaller state.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-activity-002-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class, so it does not stay light in a dark project. The avatar color cycles through six hues by row number. A row fully appears via the card's scroll-driven view-timeline (its own namespace --vibeui-activity-002, so it does not clash with activity-001 on the same page), while the avatar scales up from a smaller state at the same time; everything stops under prefers-reduced-motion.",
+            "ai": {
+              "summary": "A team activity feed: an initials avatar colored from a six-hue cycle, an action, a relative time and a detail line below (file, PR number). Rows rise in on scroll while the avatar scales up from a smaller state. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-activity-002-* palette — do not swap it for your theme tokens",
+                "the six-color cycle for the avatar background by row number — do not collapse it to one color",
+                "the .dark class rule: without it the component stays light on a dark page in another project",
+                "the scroll-driven row reveal (view-timeline) together with the avatar scale-in, and their removal under prefers-reduced-motion",
+                "the row structure: avatar on the left, name and action on top, relative time on the right, a small detail line below"
+              ],
+              "adapt": [
+                "the events content: name, action, relative time and detail (file, PR number, commit count)",
+                "the accent color via the accent prop to match your brand (affects the badge pill)",
+                "the group title and the badge pill with the event count",
+                "the fadeOut and dense modes for the context: bottom fade and a tighter feed without details"
+              ],
+              "notes": [
+                "fadeOut dissolves the bottom of the feed, dense hides the detail line and tightens spacing",
+                "initials on an event are optional — they default to the first letters of the first and last name",
+                "the scroll-driven reveal needs view-timeline support; without it rows and avatars are simply shown at once"
+              ],
+              "usage": "<Activity002 title=\"Today's activity\" badge=\"5\" events={[{ name: \"Sarah Chen\", action: \"pushed to main\", meta: \"2m\", detail: \"3 commits · src/api/auth.ts\" }]} />"
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              },
+              "fadeOut": {
+                "label": "Fade bottom"
+              },
+              "dense": {
+                "label": "Dense feed"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Today's activity",
+                "badge": "5",
+                "events": [
+                  {
+                    "name": "Sarah Chen",
+                    "action": "pushed to main",
+                    "meta": "2m",
+                    "detail": "3 commits · src/api/auth.ts"
+                  },
+                  {
+                    "name": "Alex Park",
+                    "action": "opened a pull request",
+                    "meta": "18m",
+                    "detail": "#482 Fix session restore"
+                  },
+                  {
+                    "name": "Maria Lopez",
+                    "action": "left a review comment",
+                    "meta": "1h",
+                    "detail": "components/Sidebar.tsx"
+                  },
+                  {
+                    "name": "Jonas Weber",
+                    "action": "merged a pull request",
+                    "meta": "3h",
+                    "detail": "#479 Dependency updates"
+                  },
+                  {
+                    "name": "Sarah Chen",
+                    "action": "created a release tag",
+                    "meta": "5h",
+                    "detail": "v2.4.0"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "title": "Активность сегодня",
+            "badge": "5",
+            "events": [
+              {
+                "name": "Sarah Chen",
+                "action": "запушила в main",
+                "meta": "2 мин",
+                "detail": "3 коммита · src/api/auth.ts"
+              },
+              {
+                "name": "Alex Park",
+                "action": "открыл pull request",
+                "meta": "18 мин",
+                "detail": "#482 Исправление восстановления сессии"
+              },
+              {
+                "name": "Maria Lopez",
+                "action": "оставила комментарий к обзору",
+                "meta": "1 ч",
+                "detail": "components/Sidebar.tsx"
+              },
+              {
+                "name": "Jonas Weber",
+                "action": "смержил pull request",
+                "meta": "3 ч",
+                "detail": "#479 Обновление зависимостей"
+              },
+              {
+                "name": "Sarah Chen",
+                "action": "создала тег релиза",
+                "meta": "5 ч",
+                "detail": "v2.4.0"
+              }
+            ]
+          }
+        },
+        "cardControls": ["accent", "fadeOut", "dense"]
+      }
     }
   ]
 }

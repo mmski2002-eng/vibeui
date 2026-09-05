@@ -1,0 +1,411 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "chat-001",
+      "type": "registry:component",
+      "title": "ИИ-чат",
+      "description": "Диалог с ИИ-ассистентом: ответ печатается по буквам с мигающим курсором, сообщение пользователя — пузырём справа, снизу неактивная строка ввода промпта.",
+      "categories": ["chat"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "chat-001/chat-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/chat-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-chat-001-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Ответ ассистента раскрывается ступенями (steps()) до ширины, посчитанной из длины текста через CSS-переменную --vibeui-chat-001-chars, в конце мигает текстовый курсор; всё гаснет при prefers-reduced-motion. Точка статуса в шапке дышит кольцом.",
+      "meta": {
+        "tags": [
+          "chat",
+          "ai",
+          "streaming",
+          "typing",
+          "prompt",
+          "animated"
+        ],
+        "ai": {
+          "export": "Chat001",
+          "usage": "<Chat001 title=\"Ассистент\" userMessage=\"Привет\" assistantMessage=\"Чем помочь?\" streaming />",
+          "summary": "Диалог с ИИ: сообщение пользователя пузырём справа, ответ ассистента слева печатается по буквам с мигающим курсором, внизу строка ввода промпта. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-chat-001-* — не подменяйте её токенами вашей темы",
+            "эффект печати ответа ассистента (steps() по ширине) и мигающий курсор в конце строки",
+            "точку статуса в шапке с дышащим кольцом вокруг неё",
+            "асимметрию пузырей: сообщение пользователя акцентное справа, ответ ассистента нейтральный слева",
+            "неактивную строку ввода промпта внизу карточки",
+            "строку для класса .dark: без неё компонент останется светлым на тёмной странице чужого проекта"
+          ],
+          "adapt": [
+            "содержимое сообщений: userMessage, assistantMessage и placeholder строки ввода",
+            "заголовок ассистента title и статусную пилюлю badge",
+            "акцентный цвет через проп accent под свой бренд",
+            "streaming: false показывает ответ сразу, без печати и курсора"
+          ],
+          "notes": [
+            "ширина печатаемого текста считается из assistantMessage.length — держите ответ короче полутора строк, иначе пузырь обрежет хвост",
+            "streaming={false} убирает и анимацию печати, и курсор — ответ виден целиком сразу"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "streaming",
+            "label": "Печать ответа",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "badge",
+            "label": "Статус",
+            "type": "text",
+            "default": "В сети",
+            "maxLength": 16
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "AI Chat",
+            "description": "An AI chat interface with streaming responses and a prompt box: the assistant's reply types out letter by letter with a blinking caret, the user message sits in a bubble on the right.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-chat-001-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. The assistant's reply reveals in steps() up to a width computed from the text length via the --vibeui-chat-001-chars custom property, ending with a blinking text caret; everything stops under prefers-reduced-motion. The status dot in the header breathes a ring around itself.",
+            "ai": {
+              "summary": "An AI chat interface: the user message sits in an accent bubble on the right, the assistant's reply on the left types out letter by letter with a blinking caret, and a prompt input row sits at the bottom. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-chat-001-* palette — do not swap it for your theme tokens",
+                "the assistant reply's typing effect (steps() width reveal) and the blinking caret at the end of the line",
+                "the status dot in the header with its breathing ring",
+                "the bubble asymmetry: accent bubble for the user on the right, neutral bubble for the assistant on the left",
+                "the inert prompt input row at the bottom of the card",
+                "the .dark class rule: without it the component stays light on a dark page in another project"
+              ],
+              "adapt": [
+                "the message content: userMessage, assistantMessage and the placeholder text",
+                "the assistant title and the status badge pill",
+                "the accent color via the accent prop to match your brand",
+                "streaming: false shows the reply instantly, with no typing or caret"
+              ],
+              "notes": [
+                "the typed width is computed from assistantMessage.length — keep the reply under a line and a half or the bubble will clip the tail",
+                "streaming={false} removes both the typing animation and the caret — the reply appears in full immediately"
+              ],
+              "usage": "<Chat001 title=\"Assistant\" userMessage=\"Hi\" assistantMessage=\"How can I help?\" streaming />"
+            },
+            "controls": {
+              "streaming": {
+                "label": "Type reply"
+              },
+              "badge": {
+                "label": "Status",
+                "default": "Online"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Assistant",
+                "badge": "Online",
+                "userMessage": "Help me speed up a database query",
+                "assistantMessage": "Sure, let's break it down",
+                "placeholder": "Ask me anything…"
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "title": "Ассистент",
+            "badge": "В сети",
+            "userMessage": "Помоги ускорить запрос к базе данных",
+            "assistantMessage": "Конечно, разберу его по шагам",
+            "placeholder": "Спросите что-нибудь…"
+          }
+        },
+        "cardControls": ["streaming", "badge", "accent"]
+      }
+    },
+    {
+      "name": "chat-002",
+      "type": "registry:component",
+      "title": "Пузыри",
+      "description": "Переписка двух собеседников: пузыри поднимаются по очереди снизу вверх, у собеседника — аватар с инициалом, после последней реплики держится индикатор «печатает…» из трёх точек.",
+      "categories": ["chat"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "chat-002/chat-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/chat-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-chat-002-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Реплики проявляются по очереди при загрузке (stagger rise+fade по nth-child), индикатор «печатает…» — три точки, пульсирующие вразнобой по кругу; всё гаснет при prefers-reduced-motion.",
+      "meta": {
+        "tags": [
+          "chat",
+          "bubbles",
+          "conversation",
+          "typing",
+          "messenger",
+          "animated"
+        ],
+        "ai": {
+          "export": "Chat002",
+          "usage": "<Chat002 title=\"Аня Соколова\" messages={[{ text: \"Привет!\", author: \"them\" }]} typing />",
+          "summary": "Переписка двух собеседников в пузырях: реплики поднимаются снизу вверх по очереди, слева — аватар с инициалом собеседника, справа — ваши акцентные пузыри без аватара, внизу может держаться индикатор «печатает…». Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-chat-002-* — не подменяйте её токенами вашей темы",
+            "стаггер появления реплик снизу вверх при загрузке карточки",
+            "аватар с инициалом у собеседника слева и его отсутствие у ваших реплик справа",
+            "асимметрию пузырей: нейтральный слева, акцентный справа",
+            "индикатор «печатает…» из трёх точек с пульсацией вразнобой",
+            "строку для класса .dark: без неё компонент останется светлым на тёмной странице чужого проекта"
+          ],
+          "adapt": [
+            "список messages: текст и автор (me/them) каждой реплики",
+            "имя собеседника title и статус status в шапке",
+            "typing: false убирает индикатор «печатает…» после последней реплики",
+            "акцентный цвет через проп accent под свой бренд"
+          ],
+          "notes": [
+            "инициал аватара берётся из первой буквы title — задавайте имя собеседника, а не название чата",
+            "стаггер реплик считается по nth-child и рассчитан на 3–5 строк вместе с индикатором"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "typing",
+            "label": "Индикатор «печатает»",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Bubbles",
+            "description": "A conversation of chat bubbles between two people: bubbles rise in one by one from the bottom, the other person has an initial avatar, and a three-dot \"typing…\" indicator can hold after the last message.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-chat-002-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. Messages rise in one by one on load (stagger rise+fade by nth-child), the \"typing…\" indicator is three dots pulsing out of sync in a loop; everything stops under prefers-reduced-motion.",
+            "ai": {
+              "summary": "A two-person bubble conversation: messages rise in one by one from the bottom, the other person has an initial avatar on the left, your accent bubbles sit on the right with no avatar, and a \"typing…\" indicator can hold at the bottom. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-chat-002-* palette — do not swap it for your theme tokens",
+                "the bottom-up stagger reveal of messages on card load",
+                "the initial avatar for the other person on the left and its absence on your bubbles on the right",
+                "the bubble asymmetry: neutral on the left, accent on the right",
+                "the three-dot \"typing…\" indicator pulsing out of sync",
+                "the .dark class rule: without it the component stays light on a dark page in another project"
+              ],
+              "adapt": [
+                "the messages list: text and author (me/them) for each bubble",
+                "the contact name title and the status text in the header",
+                "typing: false removes the \"typing…\" indicator after the last message",
+                "the accent color via the accent prop to match your brand"
+              ],
+              "notes": [
+                "the avatar initial comes from the first letter of title — set the contact's name, not a chat label",
+                "the message stagger is keyed by nth-child and tuned for 3–5 rows including the typing indicator"
+              ],
+              "usage": "<Chat002 title=\"Anna Cole\" messages={[{ text: \"Hi!\", author: \"them\" }]} typing />"
+            },
+            "controls": {
+              "typing": {
+                "label": "Typing indicator"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Anna Cole",
+                "status": "online",
+                "messages": [
+                  { "text": "Hey! Free for a call at 3pm?", "author": "them" },
+                  { "text": "Yep, I'll be on time", "author": "me" },
+                  { "text": "Great, sending the link over", "author": "them" }
+                ]
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "title": "Аня Соколова",
+            "status": "в сети",
+            "messages": [
+              { "text": "Привет! Готов созвониться в 15:00?", "author": "them" },
+              { "text": "Да, буду вовремя", "author": "me" },
+              { "text": "Отлично, скину ссылку на встречу", "author": "them" }
+            ]
+          }
+        },
+        "cardControls": ["typing", "accent"]
+      }
+    },
+    {
+      "name": "chat-003",
+      "type": "registry:component",
+      "title": "Тред",
+      "description": "Тред обсуждения с вложенными ответами и пилюлями реакций: реакции всплывают по очереди с перелётом, ответы въезжают снизу по вертикальной линии треда.",
+      "categories": ["chat"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "chat-003/chat-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/chat-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-chat-003-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Пилюли реакций всплывают с перелётом (pop-scale, cubic-bezier с overshoot), вложенные ответы въезжают снизу по очереди вдоль вертикальной линии треда; всё гаснет при prefers-reduced-motion.",
+      "meta": {
+        "tags": [
+          "chat",
+          "thread",
+          "replies",
+          "reactions",
+          "comments",
+          "animated"
+        ],
+        "ai": {
+          "export": "Chat003",
+          "usage": "<Chat003 author=\"Марина Волкова\" message=\"Обновила макет\" replies={[{ author: \"Игорь\", text: \"Класс!\" }]} />",
+          "summary": "Тред обсуждения: корневое сообщение с аватаром, текстом и пилюлями реакций, под ним — вложенные ответы вдоль вертикальной линии. Реакции всплывают по очереди с перелётом, ответы въезжают снизу. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-chat-003-* — не подменяйте её токенами вашей темы",
+            "вертикальную линию треда слева от вложенных ответов",
+            "всплытие пилюль реакций по очереди с лёгким перелётом (overshoot)",
+            "въезд ответов снизу по очереди вдоль линии треда",
+            "пилюли реакций: эмодзи плюс счётчик",
+            "строку для класса .dark: без неё компонент останется светлым на тёмной странице чужого проекта"
+          ],
+          "adapt": [
+            "текст корневого сообщения message, автора author и относительное время meta",
+            "список replies: автор, текст и время каждого ответа",
+            "список reactions: эмодзи и счётчик",
+            "showReactions и threadLine — скрыть пилюли реакций или линию треда",
+            "акцентный цвет через проп accent под свой бренд"
+          ],
+          "notes": [
+            "инициалы аватаров берутся из первой буквы author — задавайте настоящее имя, а не логин",
+            "стаггер реакций и ответов рассчитан на 3–4 пилюли и 2–4 ответа"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "showReactions",
+            "label": "Реакции",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "threadLine",
+            "label": "Линия треда",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Thread",
+            "description": "A threaded message view with replies and reactions: reaction pills pop in one by one with a slight overshoot, and replies slide up one by one along the thread's vertical line.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-chat-003-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. Reaction pills pop in with overshoot (cubic-bezier), nested replies rise in one by one along the thread's vertical line; everything stops under prefers-reduced-motion.",
+            "ai": {
+              "summary": "A discussion thread: a root message with an avatar, text and reaction pills, with nested replies below along a vertical thread line. Reactions pop in one by one with overshoot, replies rise in from the bottom. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-chat-003-* palette — do not swap it for your theme tokens",
+                "the vertical thread line to the left of nested replies",
+                "the one-by-one pop-in of reaction pills with a slight overshoot",
+                "the bottom-up, one-by-one rise of replies along the thread line",
+                "the reaction pills: emoji plus a count",
+                "the .dark class rule: without it the component stays light on a dark page in another project"
+              ],
+              "adapt": [
+                "the root message text, author and relative time (message, author, meta)",
+                "the replies list: author, text and time for each reply",
+                "the reactions list: emoji and count",
+                "showReactions and threadLine — hide the reaction pills or the thread line",
+                "the accent color via the accent prop to match your brand"
+              ],
+              "notes": [
+                "avatar initials come from the first letter of author — use a real name, not a login",
+                "the reaction and reply stagger is tuned for 3–4 pills and 2–4 replies"
+              ],
+              "usage": "<Chat003 author=\"Marina Wolf\" message=\"Updated the card layout\" replies={[{ author: \"Igor\", text: \"Nice!\" }]} />"
+            },
+            "controls": {
+              "showReactions": {
+                "label": "Reactions"
+              },
+              "threadLine": {
+                "label": "Thread line"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "author": "Marina Wolf",
+                "meta": "2h ago",
+                "message": "Updated the card layout — added shadows and fixed the spacing. Take a look, please.",
+                "replies": [
+                  {
+                    "author": "Igor Petrov",
+                    "text": "Looks great, though the bottom shadow feels heavy",
+                    "meta": "1h"
+                  },
+                  {
+                    "author": "Marina Wolf",
+                    "text": "Ok, I'll soften it",
+                    "meta": "45m"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "author": "Марина Волкова",
+            "meta": "2 ч назад",
+            "message": "Обновила макет карточки — добавила тени и поправила отступы. Гляньте, пожалуйста.",
+            "replies": [
+              {
+                "author": "Игорь Петров",
+                "text": "Выглядит отлично, только тень снизу тяжеловата",
+                "meta": "1 ч"
+              },
+              {
+                "author": "Марина Волкова",
+                "text": "Ок, сделаю мягче",
+                "meta": "45 мин"
+              }
+            ]
+          }
+        },
+        "cardControls": ["showReactions", "threadLine", "accent"]
+      }
+    }
+  ]
+}

@@ -1,0 +1,194 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "bento-001",
+      "type": "registry:component",
+      "title": "Бенто-сетка",
+      "description": "Маркетинговая секция-бенто: заголовок с подзаголовком и сетка плиток разного размера с крупной ведущей плиткой, у каждой плитки иконка, название и короткое описание. Плитки появляются со ступенчатым scale-in, на узкой ширине сетка сворачивается в одну колонку.",
+      "categories": ["bento"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "bento-001/bento-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/bento-001.tsx"
+        }
+      ],
+      "docs": "Секция самодостаточна: один файл, ноль зависимостей, палитра в локальных --vibeui-bento-001-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark, поэтому в тёмном проекте не остаётся светлой. Раскладка бенто считается container-запросами от собственной ширины секции (container-type: inline-size), а не от окна: на широкой ширине это сетка 4×3 с ведущей плиткой 2×2, ниже 40rem всё сворачивается в одну колонку. Плитки появляются ступенчатым scale+fade, у ведущей плитки декоративные CSS-столбики; всё гаснет при prefers-reduced-motion. Иконки — inline SVG, внешних ассетов нет. Акцент задаётся пропом accent, подложка — пропом background.",
+      "meta": {
+        "tags": ["bento", "grid", "features", "marketing", "landing", "animated"],
+        "ai": {
+          "export": "Bento001",
+          "usage": "<Bento001 eyebrow=\"Платформа\" title=\"Всё, что нужно продукту\" tiles={[{ title: \"Быстрая интеграция\", description: \"SDK и вебхуки из коробки\", icon: \"bolt\", size: \"lg\" }]} />",
+          "summary": "Маркетинговая бенто-секция: центрированная шапка (eyebrow, заголовок h2, описание) и CSS-Grid из плиток разного размера с крупной ведущей плиткой 2×2. У каждой плитки inline-SVG иконка, название и короткое описание; у ведущей плитки декоративные CSS-столбики. Плитки появляются ступенчатым scale+fade, на узкой ширине сетка сворачивается в одну колонку. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-bento-001-* — не подменяйте её токенами вашей темы (bg-background, text-foreground, primary и т.п.)",
+            "light-dark() в палитре и строку для класса .dark: без неё секция останется светлой на тёмной странице чужого проекта",
+            "бенто-раскладку с крупной ведущей плиткой 2×2 и плитками разного размера — не превращайте её в ровную сетку одинаковых карточек или в один столбец на широкой ширине",
+            "container-type: inline-size на корне секции и @container-правило сворачивания в одну колонку — секция меряет собственную ширину, а не ширину окна; не переписывайте на viewport-медиазапросы или Tailwind sm:/md:/lg:",
+            "ступенчатое появление плиток (scale+fade через animation-delay) и рост декоративных столбиков, а также их отключение при prefers-reduced-motion",
+            "inline-SVG иконки и декоративные CSS-столбики ведущей плитки — внешних картинок в секции нет"
+          ],
+          "adapt": [
+            "содержимое tiles: title, description, icon (bolt/shield/layers/chart/sparkles) и size (lg/md/sm) каждой плитки",
+            "тексты шапки: eyebrow, title и description",
+            "акцентный цвет через проп accent под свой бренд",
+            "background — подложка секции; пусто означает «без подложки», по цвету страницы",
+            "внешние отступы через className"
+          ],
+          "notes": [
+            "первая плитка массива обычно ведущая (size: \"lg\") — она получает декоративные столбики и увеличенный заголовок",
+            "size управляет площадью плитки: lg — 2×2, md — 2×1, sm — 1×1; на ширине ниже 40rem все плитки становятся полноширинными",
+            "иконка вне набора bolt/shield/layers/chart/sparkles откатывается к bolt"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Bento",
+            "description": "A bento grid section with a featured tile and mixed-size cards.",
+            "docs": "The section is self-contained: one file, zero dependencies, palette in local --vibeui-bento-001-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class, so it does not stay light in a dark project. The bento layout is driven by container queries against the section's own width (container-type: inline-size), not the window: on a wide width it is a 4×3 grid with a 2×2 featured tile, below 40rem it collapses to a single column. Tiles appear with a staggered scale+fade, the featured tile carries decorative CSS bars, and everything stops under prefers-reduced-motion. The icons are inline SVG, there are no external assets. The accent is set with the accent prop, the backdrop with the background prop.",
+            "ai": {
+              "summary": "A marketing bento section: a centred header (eyebrow, h2 title, description) and a CSS Grid of mixed-size tiles with a large 2×2 featured tile. Each tile has an inline-SVG icon, a title and a short description; the featured tile has decorative CSS bars. Tiles appear with a staggered scale+fade, and on a narrow width the grid collapses to a single column. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-bento-001-* palette — do not swap it for your theme tokens (bg-background, text-foreground, primary and the like)",
+                "light-dark() in the palette and the .dark class rule: without it the section stays light on a dark page in another project",
+                "the bento layout with a large 2×2 featured tile and mixed-size tiles — do not flatten it into an even grid of identical cards or into a single column on a wide width",
+                "container-type: inline-size on the section root and the @container rule that collapses to one column — the section measures its own width, not the window's; do not rewrite it as viewport media queries or Tailwind sm:/md:/lg:",
+                "the staggered tile reveal (scale+fade via animation-delay) and the growth of the decorative bars, and their removal under prefers-reduced-motion",
+                "the inline-SVG icons and the featured tile's decorative CSS bars — there are no external images in the section"
+              ],
+              "adapt": [
+                "the tiles content: title, description, icon (bolt/shield/layers/chart/sparkles) and size (lg/md/sm) of each tile",
+                "the header copy: eyebrow, title and description",
+                "the accent color via the accent prop to match your brand",
+                "background — the section backdrop; empty means no backdrop, taking the page colour",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "the first tile of the array is usually the featured one (size: \"lg\") — it gets the decorative bars and a larger title",
+                "size controls the tile area: lg is 2×2, md is 2×1, sm is 1×1; below 40rem of width all tiles become full-width",
+                "an icon outside the bolt/shield/layers/chart/sparkles set falls back to bolt"
+              ],
+              "usage": "<Bento001 eyebrow=\"Platform\" title=\"Everything your product needs\" tiles={[{ title: \"Fast integration\", description: \"SDKs and webhooks out of the box\", icon: \"bolt\", size: \"lg\" }]} />"
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Backdrop"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Platform",
+                "title": "Everything your product needs, in one grid",
+                "description": "Assemble your interface from ready-made blocks: performance, security and analytics are already inside.",
+                "tiles": [
+                  {
+                    "title": "Fast integration",
+                    "description": "Connect your stack in minutes: SDKs, webhooks and ready-made connectors work out of the box.",
+                    "icon": "bolt",
+                    "size": "lg"
+                  },
+                  {
+                    "title": "Secure by default",
+                    "description": "SOC 2, SSO and end-to-end encryption are on from day one.",
+                    "icon": "shield",
+                    "size": "sm"
+                  },
+                  {
+                    "title": "99.98% uptime",
+                    "description": "Steady under load over the last quarter.",
+                    "icon": "chart",
+                    "size": "sm"
+                  },
+                  {
+                    "title": "Flexible access control",
+                    "description": "Roles, teams and granular policies without a single line of code.",
+                    "icon": "layers",
+                    "size": "md"
+                  },
+                  {
+                    "title": "Smart suggestions",
+                    "description": "The model hints at the next step right in your workflow.",
+                    "icon": "sparkles",
+                    "size": "md"
+                  },
+                  {
+                    "title": "Real-time analytics",
+                    "description": "Product metrics update on the fly, no separate data warehouse.",
+                    "icon": "chart",
+                    "size": "md"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "eyebrow": "Платформа",
+            "title": "Всё, что нужно продукту, в одной сетке",
+            "description": "Соберите интерфейс из готовых блоков: производительность, безопасность и аналитика уже внутри.",
+            "tiles": [
+              {
+                "title": "Быстрая интеграция",
+                "description": "Подключите свой стек за минуты: SDK, вебхуки и готовые коннекторы работают из коробки.",
+                "icon": "bolt",
+                "size": "lg"
+              },
+              {
+                "title": "Безопасность по умолчанию",
+                "description": "SOC 2, SSO и сквозное шифрование включены с первого дня.",
+                "icon": "shield",
+                "size": "sm"
+              },
+              {
+                "title": "99.98% аптайм",
+                "description": "Стабильная работа под нагрузкой за последний квартал.",
+                "icon": "chart",
+                "size": "sm"
+              },
+              {
+                "title": "Гибкие права доступа",
+                "description": "Роли, команды и гранулярные политики без единой строки кода.",
+                "icon": "layers",
+                "size": "md"
+              },
+              {
+                "title": "Умные подсказки",
+                "description": "Модель подсказывает следующий шаг прямо в потоке работы.",
+                "icon": "sparkles",
+                "size": "md"
+              },
+              {
+                "title": "Аналитика в реальном времени",
+                "description": "Метрики продукта обновляются на лету, без отдельной витрины данных.",
+                "icon": "chart",
+                "size": "md"
+              }
+            ]
+          }
+        },
+        "cardControls": ["accent", "background"]
+      }
+    }
+  ]
+}

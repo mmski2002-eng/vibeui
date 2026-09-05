@@ -1,0 +1,426 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "avatar-anim-001",
+      "type": "registry:component",
+      "title": "Сетка аватаров",
+      "description": "Сетка круглых аватаров с инициалами на цветном фоне: акцентные цвета идут по кругу из шести оттенков, а кружки досыпаются по очереди с лёгким увеличением при появлении карточки.",
+      "categories": ["avatar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "avatar-anim-001/avatar-anim-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/avatar-anim-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-avatar-anim-001-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Радужное свечение под карточкой дышит по ширине, каждый кружок сетки появляется со своей задержкой через CSS-переменную --i на инлайн-стиле — так сетка «досыпается» по очереди, а не вся сразу.",
+      "meta": {
+        "tags": [
+          "avatar",
+          "grid",
+          "team",
+          "people",
+          "animated",
+          "stagger"
+        ],
+        "ai": {
+          "export": "AvatarAnim001",
+          "usage": "<AvatarAnim001 title=\"Команда\" badge=\"24\" people={[{ initials: \"АК\", name: \"Анна Ковалёва\" }]} />",
+          "summary": "Сетка круглых аватаров с инициалами: акцентные цвета идут по кругу из шести оттенков, под карточкой дышит радужное свечение, кружки досыпаются по очереди при появлении. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-avatar-anim-001-* — не подменяйте её токенами вашей темы",
+            "радужное свечение под карточкой и его дыхание — опознавательный знак семейства",
+            "круговой цикл из шести акцентных цветов фона по nth-child — не заменяйте одним цветом",
+            "строку для класса .dark: без неё компонент останется светлым на тёмной странице чужого проекта",
+            "стаггер-появление кружков через --i на инлайн-стиле и его отключение при prefers-reduced-motion",
+            "круглую форму аватаров с обводкой цвета карточки — это разделяет соседние кружки при overlap-раскладке"
+          ],
+          "adapt": [
+            "список people: инициалы и полное имя (уходит в aria-label)",
+            "заголовок группы и пилюлю badge с общим числом",
+            "режим dense — плотная раскладка с более мелкими аватарами",
+            "режимы gradient и isometric под контекст: свечение и наклон карточки"
+          ],
+          "notes": [
+            "gradient={false} убирает свечение, isometric наклоняет карточку, dense уплотняет сетку",
+            "цвета фона циклом по шести значениям заданы в CSS через nth-child, а не пропом на каждый элемент"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "gradient",
+            "label": "Свечение",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "isometric",
+            "label": "Изометрия",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "dense",
+            "label": "Плотная сетка",
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Avatar grid",
+            "description": "A grid of user avatars with subtle staggered reveals. Accent colors cycle through six hues and each circle pops in with a short delay when the card mounts.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-avatar-anim-001-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. The rainbow glow under the card breathes in width, and each avatar in the grid reveals with its own delay via the --i inline custom property — so the grid fills in one by one instead of all at once.",
+            "ai": {
+              "summary": "A grid of circular initials avatars: accent colors cycle through six hues, a rainbow glow breathes under the card, and circles pop in one by one on mount. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-avatar-anim-001-* palette — do not swap it for your theme tokens",
+                "the rainbow glow under the card and its breathing — the family's signature",
+                "the six-color cycle for avatar backgrounds via nth-child — do not collapse it to one color",
+                "the .dark class rule: without it the component stays light on a dark page in another project",
+                "the staggered reveal via the --i inline variable and its removal under prefers-reduced-motion",
+                "the circular avatar shape with a card-colored border — it separates neighboring circles"
+              ],
+              "adapt": [
+                "the people list: initials and full name (used for aria-label)",
+                "the group title and the badge pill with the total count",
+                "the dense mode — a tighter grid with smaller avatars",
+                "the gradient and isometric modes for the context: glow and card tilt"
+              ],
+              "notes": [
+                "gradient={false} removes the glow, isometric tilts the card, dense packs the grid tighter",
+                "background colors cycle through six values in CSS via nth-child, not a prop per item"
+              ],
+              "usage": "<AvatarAnim001 title=\"Team\" badge=\"24\" people={[{ initials: \"AK\", name: \"Anna Kovaleva\" }]} />"
+            },
+            "controls": {
+              "gradient": {
+                "label": "Glow"
+              },
+              "isometric": {
+                "label": "Isometric"
+              },
+              "dense": {
+                "label": "Dense grid"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Team",
+                "badge": "24",
+                "people": [
+                  { "initials": "AK", "name": "Anna Kovaleva" },
+                  { "initials": "MP", "name": "Max Petrov" },
+                  { "initials": "ES", "name": "Elena Smirnova" },
+                  { "initials": "DV", "name": "Dmitry Volkov" },
+                  { "initials": "NT", "name": "Natalia Titova" },
+                  { "initials": "IL", "name": "Igor Lebedev" },
+                  { "initials": "OR", "name": "Olga Romanova" },
+                  { "initials": "SZ", "name": "Sergey Zhukov" }
+                ]
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "title": "Команда",
+            "badge": "24",
+            "people": [
+              { "initials": "АК", "name": "Анна Ковалёва" },
+              { "initials": "МП", "name": "Максим Петров" },
+              { "initials": "ЕС", "name": "Елена Смирнова" },
+              { "initials": "ДВ", "name": "Дмитрий Волков" },
+              { "initials": "НТ", "name": "Наталья Титова" },
+              { "initials": "ИЛ", "name": "Игорь Лебедев" },
+              { "initials": "ОР", "name": "Ольга Романова" },
+              { "initials": "СЖ", "name": "Сергей Жуков" }
+            ]
+          }
+        },
+        "cardControls": ["gradient", "isometric", "dense"]
+      }
+    },
+    {
+      "name": "avatar-anim-002",
+      "type": "registry:component",
+      "title": "Стопка аватаров",
+      "description": "Ряд аватаров внахлёст с обводкой цвета карточки и пилюлей остатка «+N»: при появлении карточки кружки разъезжаются из одной точки в свою позицию, а по наведению верхний слегка приподнимается.",
+      "categories": ["avatar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "avatar-anim-002/avatar-anim-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/avatar-anim-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-avatar-anim-002-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Кружки лежат внахлёст через отрицательный margin-left и обводку цвета карточки; при монтировании каждый кружок разъезжается из общей точки в свою позицию с задержкой через --i, а по hover приподнимается и выходит на передний план.",
+      "meta": {
+        "tags": [
+          "avatar",
+          "stack",
+          "overlap",
+          "team",
+          "animated",
+          "hover"
+        ],
+        "ai": {
+          "export": "AvatarAnim002",
+          "usage": "<AvatarAnim002 people={[{ initials: \"АК\", name: \"Анна Ковалёва\" }]} moreCount={8} caption=\"12 участников\" />",
+          "summary": "Стопка круглых аватаров внахлёст с пилюлей остатка «+N»: акцентные цвета идут по кругу из шести оттенков, кружки разъезжаются из одной точки при появлении, а по hover верхний приподнимается. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-avatar-anim-002-* — не подменяйте её токенами вашей темы",
+            "внахлёст через отрицательный margin-left и обводку цвета карточки — это разделяет соседние кружки",
+            "пилюлю остатка «+N» тем же размером и обводкой, что и остальные кружки",
+            "строку для класса .dark: без неё компонент останется светлым на тёмной странице чужого проекта",
+            "разъезжание кружков из одной точки при монтировании через --i и его отключение при prefers-reduced-motion",
+            "приподнятие кружка по hover с ростом z-index — иначе он теряется под соседями"
+          ],
+          "adapt": [
+            "список people, moreCount и caption под конкретный контекст (чат, встреча, документ)",
+            "размер size: sm, md или lg под плотность интерфейса",
+            "режимы gradient и isometric под контекст: свечение и наклон карточки"
+          ],
+          "notes": [
+            "gradient={false} убирает свечение, isometric наклоняет карточку",
+            "moreCount={0} скрывает пилюлю остатка полностью"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "gradient",
+            "label": "Свечение",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "isometric",
+            "label": "Изометрия",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "size",
+            "label": "Размер",
+            "type": "select",
+            "options": ["sm", "md", "lg"],
+            "default": "md"
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Avatar stack",
+            "description": "An overlapping avatar stack with a remaining count badge. On mount the circles slide out from a single point into their overlapped position, and on hover the top one lifts slightly.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-avatar-anim-002-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. Circles overlap via negative margin-left and a card-colored border; on mount each circle slides out from a shared point into its slot with a delay via --i, and on hover it lifts and comes to the front.",
+            "ai": {
+              "summary": "A stack of overlapping initials avatars with a remaining count pill: accent colors cycle through six hues, circles slide out from a single point on mount, and the top one lifts on hover. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-avatar-anim-002-* palette — do not swap it for your theme tokens",
+                "the overlap via negative margin-left and card-colored border — it separates neighboring circles",
+                "the remaining-count pill at the same size and border as the other circles",
+                "the .dark class rule: without it the component stays light on a dark page in another project",
+                "the slide-out-from-a-point mount animation via --i and its removal under prefers-reduced-motion",
+                "the hover lift with a raised z-index — otherwise the circle gets lost under its neighbors"
+              ],
+              "adapt": [
+                "the people list, moreCount and caption for the context (chat, meeting, document)",
+                "the size: sm, md or lg to match interface density",
+                "the gradient and isometric modes for the context: glow and card tilt"
+              ],
+              "notes": [
+                "gradient={false} removes the glow, isometric tilts the card",
+                "moreCount={0} hides the remaining-count pill entirely"
+              ],
+              "usage": "<AvatarAnim002 people={[{ initials: \"AK\", name: \"Anna Kovaleva\" }]} moreCount={8} caption=\"12 people\" />"
+            },
+            "controls": {
+              "gradient": {
+                "label": "Glow"
+              },
+              "isometric": {
+                "label": "Isometric"
+              },
+              "size": {
+                "label": "Size"
+              }
+            },
+            "preview": {
+              "props": {
+                "people": [
+                  { "initials": "AK", "name": "Anna Kovaleva" },
+                  { "initials": "MP", "name": "Max Petrov" },
+                  { "initials": "ES", "name": "Elena Smirnova" },
+                  { "initials": "DV", "name": "Dmitry Volkov" }
+                ],
+                "moreCount": 8,
+                "caption": "12 people in this discussion"
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "people": [
+              { "initials": "АК", "name": "Анна Ковалёва" },
+              { "initials": "МП", "name": "Максим Петров" },
+              { "initials": "ЕС", "name": "Елена Смирнова" },
+              { "initials": "ДВ", "name": "Дмитрий Волков" }
+            ],
+            "moreCount": 8,
+            "caption": "12 участников обсуждения"
+          }
+        },
+        "cardControls": ["gradient", "isometric", "size"]
+      }
+    },
+    {
+      "name": "avatar-anim-003",
+      "type": "registry:component",
+      "title": "Профильная карточка",
+      "description": "Компактная профильная карточка: аватар с непрерывно пульсирующим кольцом, имя, роль и ряд из мини-статистик, которые въезжают снизу по очереди при появлении карточки.",
+      "categories": ["avatar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "avatar-anim-003/avatar-anim-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/avatar-anim-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-avatar-anim-003-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark. За аватаром непрерывно пульсирует размытое кольцо акцентного цвета — сигнал «на связи», не привязанный к hover. Статистики снизу въезжают по очереди с нарастающей задержкой по nth-child при монтировании карточки.",
+      "meta": {
+        "tags": [
+          "avatar",
+          "profile",
+          "card",
+          "stats",
+          "animated",
+          "pulse"
+        ],
+        "ai": {
+          "export": "AvatarAnim003",
+          "usage": "<AvatarAnim003 name=\"Анна Ковалёва\" role=\"Дизайнер\" initials=\"АК\" stats={[{ label: \"Проекты\", value: \"24\" }]} />",
+          "summary": "Профильная карточка: аватар с пульсирующим кольцом, имя и роль сверху, ряд мини-статистик снизу, который въезжает по очереди при появлении. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-avatar-anim-003-* — не подменяйте её токенами вашей темы",
+            "непрерывный пульс кольца за аватаром — это вечный сигнал, а не hover-эффект",
+            "разделители между статистиками (border-left) — они читаются как отдельные метрики, а не одна строка",
+            "строку для класса .dark: без неё компонент останется светлым на тёмной странице чужого проекта",
+            "въезд статистик по очереди при монтировании и его отключение при prefers-reduced-motion",
+            "круглую форму аватара и однострочное усечение имени и роли с ellipsis"
+          ],
+          "adapt": [
+            "name, role, initials и список stats (label + value) под конкретный профиль",
+            "акцентный цвет через проп accent под свой бренд",
+            "режим pulse — отключает кольцо, если сигнал «на связи» неуместен",
+            "режимы gradient и isometric под контекст: свечение и наклон карточки"
+          ],
+          "notes": [
+            "gradient={false} убирает свечение, isometric наклоняет карточку, pulse={false} гасит кольцо",
+            "количество stats задаёт сама ширина ряда: 2–3 пункта, четвёртый уже теснит остальные"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "gradient",
+            "label": "Свечение",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "isometric",
+            "label": "Изометрия",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "pulse",
+            "label": "Пульс кольца",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Profile card",
+            "description": "A compact profile card with avatar, name, and key stats. A continuously pulsing ring sits behind the avatar and the stat row rises in one by one when the card mounts.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-avatar-anim-003-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. A blurred accent-colored ring pulses continuously behind the avatar — an always-on presence signal, not a hover effect. The stats below rise in one by one with an increasing nth-child delay when the card mounts.",
+            "ai": {
+              "summary": "A profile card: an avatar with a pulsing ring, name and role above, a row of mini stats below that rise in one by one on mount. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-avatar-anim-003-* palette — do not swap it for your theme tokens",
+                "the continuous pulse of the ring behind the avatar — an always-on signal, not a hover effect",
+                "the border-left dividers between stats — they read as separate metrics, not one line",
+                "the .dark class rule: without it the component stays light on a dark page in another project",
+                "the one-by-one stat rise-in on mount and its removal under prefers-reduced-motion",
+                "the circular avatar shape and single-line ellipsis truncation for name and role"
+              ],
+              "adapt": [
+                "name, role, initials and the stats list (label + value) for the specific profile",
+                "the accent color via the accent prop to match your brand",
+                "the pulse mode — turns off the ring when a presence signal is not appropriate",
+                "the gradient and isometric modes for the context: glow and card tilt"
+              ],
+              "notes": [
+                "gradient={false} removes the glow, isometric tilts the card, pulse={false} turns off the ring",
+                "the stat row width sets the count itself: 2-3 items fit well, a fourth already crowds the rest"
+              ],
+              "usage": "<AvatarAnim003 name=\"Anna Kovaleva\" role=\"Designer\" initials=\"AK\" stats={[{ label: \"Projects\", value: \"24\" }]} />"
+            },
+            "controls": {
+              "gradient": {
+                "label": "Glow"
+              },
+              "isometric": {
+                "label": "Isometric"
+              },
+              "pulse": {
+                "label": "Ring pulse"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "name": "Anna Kovaleva",
+                "role": "Product designer",
+                "initials": "AK",
+                "stats": [
+                  { "label": "Projects", "value": "24" },
+                  { "label": "Followers", "value": "1.2K" },
+                  { "label": "Rating", "value": "4.9" }
+                ]
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "name": "Анна Ковалёва",
+            "role": "Продуктовый дизайнер",
+            "initials": "АК",
+            "stats": [
+              { "label": "Проекты", "value": "24" },
+              { "label": "Подписчики", "value": "1.2K" },
+              { "label": "Рейтинг", "value": "4.9" }
+            ]
+          }
+        },
+        "cardControls": ["gradient", "isometric", "pulse", "accent"]
+      }
+    }
+  ]
+}

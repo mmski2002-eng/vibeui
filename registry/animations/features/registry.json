@@ -1,0 +1,149 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "features-anim-001",
+      "type": "registry:component",
+      "title": "Возможности со stagger-появлением",
+      "description": "Полноценная секция возможностей: заголовок по центру и сетка карточек с иконкой, заголовком и описанием. Карточки въезжают по очереди с масштабом и подъёмом, а иконка внутри каждой довешивает лёгкий одноразовый bounce чуть позже.",
+      "categories": ["features"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "features-anim-001/features-anim-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/features-anim-001.tsx"
+        }
+      ],
+      "docs": "Секция самодостаточна: один файл, ноль зависимостей, палитра в локальных --vibeui-features-anim-001-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark. container-type делает блок собственным query-контейнером: сетка от 34rem становится двухколоночной, от 60rem — трёхколоночной. Иконки нарисованы inline SVG-путями и берут цвет из currentColor. При монтировании карточки въезжают stagger scale+fade по нарастающей задержке на nth-child, а иконка внутри каждой довешивает одноразовый bounce ещё позже. Всё гаснет при prefers-reduced-motion.",
+      "meta": {
+        "tags": [
+          "features",
+          "grid",
+          "marketing",
+          "icons",
+          "animated",
+          "section"
+        ],
+        "ai": {
+          "export": "FeaturesAnim001",
+          "usage": "<FeaturesAnim001 title=\"Шесть причин не верстать секции руками\" items={[{ icon: \"bolt\", title: \"Быстро\", description: \"Одна команда\" }]} />",
+          "summary": "Секция возможностей на всю ширину страницы: заголовок по центру, сетка карточек с иконкой, заголовком и описанием (до шести штук, две-три колонки от ширины). Карточки въезжают stagger scale+fade, иконки довешивают одноразовый bounce. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-features-anim-001-* — не подменяйте её токенами вашей темы",
+            "stagger-появление карточек scale+fade и одноразовый bounce иконки следом — опознавательный знак секции",
+            "инлайновые SVG-иконки на currentColor вместо библиотеки иконок",
+            "container-type:inline-size на корне и переход сетки на две/три колонки по ширине блока",
+            "строку для класса .dark: без неё секция останется светлой на тёмной странице чужого проекта",
+            "правило prefers-reduced-motion, отключающее анимации карточек и иконок"
+          ],
+          "adapt": [
+            "текст eyebrow, title, lede",
+            "содержимое items: иконку из набора (bolt/shield/layers/chat/chart/plug), заголовок и описание, до шести штук",
+            "акцентный цвет через проп accent под свой бренд",
+            "bounce — выключает одноразовый bounce иконок, оставляя только въезд карточек"
+          ],
+          "notes": [
+            "стаггер и bounce размечены для первых шести карточек; лишние остаются без задержки",
+            "bounce={false} убирает анимацию только у иконок, карточки продолжают появляться scale+fade"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "bounce",
+            "label": "Bounce иконок",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Features with a staggered reveal",
+            "description": "A full features section: a centered heading and a grid of cards with an icon, title and description. Cards rise in one after another with a scale and lift, and the icon inside each adds a light one-off bounce a beat later.",
+            "docs": "The section is self-contained: one file, zero dependencies, palette in local --vibeui-features-anim-001-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. container-type makes the block its own query container: the grid becomes two columns from 34rem and three columns from 60rem. Icons are drawn as inline SVG paths on currentColor. On mount, cards rise in with a staggered scale+fade based on nth-child delay, and the icon inside each adds a one-off bounce a bit later. Everything stops under prefers-reduced-motion.",
+            "ai": {
+              "summary": "A full-width features section: a centered heading and a grid of up to six icon+title+description cards (two-three columns by width). Cards rise in with a staggered scale+fade, icons add a one-off bounce. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-features-anim-001-* palette — do not swap it for your theme tokens",
+                "the staggered scale+fade card reveal and the one-off icon bounce that follows — the section's signature",
+                "the inline SVG icons on currentColor instead of an icon library",
+                "container-type:inline-size on the root and the two/three-column grid switch by block width",
+                "the .dark class rule: without it the section stays light on a dark page in another project",
+                "the prefers-reduced-motion rule that disables card and icon animations"
+              ],
+              "adapt": [
+                "the eyebrow, title, lede text",
+                "the items content: an icon from the set (bolt/shield/layers/chat/chart/plug), title and description, up to six",
+                "the accent color via the accent prop to match your brand",
+                "bounce — turns off the one-off icon bounce, keeping only the card entrance"
+              ],
+              "notes": [
+                "the stagger and bounce timing is wired for the first six cards; extras beyond that appear without delay",
+                "bounce={false} only removes the icon animation, cards still enter with scale+fade"
+              ],
+              "usage": "<FeaturesAnim001 title=\"Six reasons to stop hand-coding sections\" items={[{ icon: \"bolt\", title: \"Fast\", description: \"One command\" }]} />"
+            },
+            "controls": {
+              "bounce": {
+                "label": "Icon bounce"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Features",
+                "title": "Six reasons to stop hand-coding sections",
+                "lede": "Every feature works on its own — no need to turn them on in sequence.",
+                "items": [
+                  {
+                    "icon": "bolt",
+                    "title": "Instant install",
+                    "description": "One command and the section lands in your project with its styles, no config edits."
+                  },
+                  {
+                    "icon": "shield",
+                    "title": "Its own palette",
+                    "description": "The section doesn't read your theme and won't break from foreign tokens: colors live inside the file."
+                  },
+                  {
+                    "icon": "layers",
+                    "title": "One file",
+                    "description": "No sibling components, no utilities: it moves by copy-paste into any project."
+                  },
+                  {
+                    "icon": "chat",
+                    "title": "Agent instructions",
+                    "description": "Copy for AI ships a list of what must not break and what's safe to change."
+                  },
+                  {
+                    "icon": "chart",
+                    "title": "Layout from the block",
+                    "description": "Container queries read the section's own width, not the window's: sidebar layouts stay honest."
+                  },
+                  {
+                    "icon": "plug",
+                    "title": "Zero dependencies",
+                    "description": "No icon packages, no motion libraries — just React and CSS."
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "preview": {
+          "width": "full"
+        },
+        "cardControls": ["bounce", "accent"]
+      }
+    }
+  ]
+}

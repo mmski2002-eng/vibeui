@@ -1,0 +1,826 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "ai-anim-001",
+      "type": "registry:component",
+      "title": "Поток агента",
+      "description": "Изометрическая лестница из кубов конвейера агента: каждый куб — этап обработки, кубы загораются по очереди снизу вверх с glow-тенью, рядом подписаны названия этапов.",
+      "categories": ["ai"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "ai-anim-001/ai-anim-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/ai-anim-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-ai-anim-001-* переменных. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Четыре куба нарисованы вручную как SVG-полигоны трёх граней с общим currentColor: анимация крутит не заливку каждой грани, а color родительской <g> от приглушённого к акцентному вместе с drop-shadow, поэтому куб «загорается» целиком. Стагер — animation-delay по индексу куба, все четыре делят общий цикл длиной 3.2с.",
+      "meta": {
+        "tags": ["ai", "agent", "pipeline", "isometric", "animated", "glow"],
+        "ai": {
+          "export": "AiAnim001",
+          "usage": "<AiAnim001 title=\"Пайплайн агента\" stages={[{ label: \"Приём запроса\" }, { label: \"Разбор контекста\" }, { label: \"Вызов инструмента\" }, { label: \"Ответ\" }]} />",
+          "summary": "Изометрическая лестница из четырёх кубов конвейера агента, кубы загораются по очереди снизу вверх с glow-тенью, рядом подписаны этапы. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-ai-anim-001-* — не подменяйте её токенами вашей темы",
+            "изометрическую форму кубов (три грани SVG-полигонами) и их диагональную лестницу",
+            "последовательное загорание кубов снизу вверх с glow drop-shadow — опознавательный знак компонента",
+            "строку для класса .dark: без неё компонент останется светлым на тёмной странице чужого проекта",
+            "общий цикл анимации 3.2с с фазовым сдвигом по кубу (animation-delay), а не независимые таймеры",
+            "затухание анимации при prefers-reduced-motion до статично подсвеченного вида"
+          ],
+          "adapt": [
+            "содержимое stages: подписи этапов конвейера под свой сценарий",
+            "акцентный цвет через проп accent под свой бренд",
+            "заголовок title и статус-пилюлю badge",
+            "видимость подписей через labels и паузу анимации через paused"
+          ],
+          "notes": [
+            "рассчитан ровно на четыре этапа: массив длиннее обрезается до четырёх, короче — лишние кубы гаснут без подписи",
+            "paused={true} останавливает всю анимацию через animation-play-state, glow не сбрасывается на середине кадра"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "labels",
+            "label": "Подписи этапов",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "paused",
+            "label": "Пауза",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Agent flow",
+            "description": "An isometric staircase of cubes for an agent pipeline: each cube is a processing stage, cubes light up in sequence from bottom to top with a glow shadow, stage names labelled alongside.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-ai-anim-001-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. The four cubes are hand-drawn SVG polygons for three faces sharing currentColor: the animation drives not each face's fill but the parent <g>'s color from muted to accent together with a drop-shadow, so the cube lights up as a whole. The stagger is an animation-delay per cube index, all four sharing one 3.2s cycle.",
+            "ai": {
+              "summary": "An isometric staircase of four cubes for an agent pipeline, lighting up in sequence from bottom to top with a glow shadow, stage names labelled alongside. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-ai-anim-001-* palette — do not swap it for your theme tokens",
+                "the isometric cube shape (three SVG polygon faces) and their diagonal staircase",
+                "the sequential bottom-to-top lighting with the glow drop-shadow — the component's signature",
+                "the .dark class rule: without it the component stays light on a dark page in another project",
+                "the shared 3.2s animation cycle with a per-cube phase offset (animation-delay), not independent timers",
+                "the fallback to a statically lit view under prefers-reduced-motion"
+              ],
+              "adapt": [
+                "the stages content: pipeline step labels for your scenario",
+                "the accent color via the accent prop to match your brand",
+                "the title and the badge status pill",
+                "label visibility via labels and pausing the animation via paused"
+              ],
+              "notes": [
+                "built for exactly four stages: a longer array is trimmed to four, a shorter one leaves the extra cubes unlit and unlabelled",
+                "paused={true} stops the whole animation via animation-play-state, the glow does not reset mid-frame"
+              ],
+              "usage": "<AiAnim001 title=\"Agent pipeline\" stages={[{ label: \"Ingest\" }, { label: \"Understand\" }, { label: \"Call tool\" }, { label: \"Respond\" }]} />"
+            },
+            "controls": {
+              "labels": {
+                "label": "Stage labels"
+              },
+              "paused": {
+                "label": "Paused"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Agent pipeline",
+                "badge": "Live",
+                "stages": [
+                  {
+                    "label": "Ingest request"
+                  },
+                  {
+                    "label": "Parse context"
+                  },
+                  {
+                    "label": "Call tool"
+                  },
+                  {
+                    "label": "Respond"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "title": "Пайплайн агента",
+            "badge": "Live",
+            "stages": [
+              {
+                "label": "Приём запроса"
+              },
+              {
+                "label": "Разбор контекста"
+              },
+              {
+                "label": "Вызов инструмента"
+              },
+              {
+                "label": "Ответ"
+              }
+            ]
+          }
+        },
+        "cardControls": ["labels", "paused", "accent"]
+      }
+    },
+    {
+      "name": "ai-anim-002",
+      "type": "registry:component",
+      "title": "Присутствие",
+      "description": "Общий холст с живыми курсорами коллег, которые бродят по независимым траекториям: курсор «Вы» несёт мини-аватар с инициалом, остальные — именные пилюли, полотно размечено точечной сеткой.",
+      "categories": ["ai"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "ai-anim-002/ai-anim-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/ai-anim-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-ai-anim-002-* переменных. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Три курсора двигаются по замкнутым траекториям (несколько точек translate в keyframes) с разной длительностью и задержкой, чтобы движение не выглядело синхронным; полотно — едва заметная точечная сетка на фоне карточки.",
+      "meta": {
+        "tags": [
+          "ai",
+          "presence",
+          "cursor",
+          "multiplayer",
+          "collaboration",
+          "animated"
+        ],
+        "ai": {
+          "export": "AiAnim002",
+          "usage": "<AiAnim002 title=\"Общий холст\" cursors={[{ name: \"Вы\", you: true }, { name: \"Аня\" }, { name: \"Марк\" }]} />",
+          "summary": "Общий холст с тремя живыми курсорами коллег, каждый бродит по своей замкнутой траектории; курсор «Вы» несёт мини-аватар с инициалом. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-ai-anim-002-* — не подменяйте её токенами вашей темы",
+            "точечную сетку полотна как намёк на общий canvas",
+            "разные траектории и длительность каждого курсора — асинхронность движения важна для эффекта присутствия",
+            "мини-аватар с инициалом у курсора «Вы» рядом с именной пилюлей",
+            "строку для класса .dark: без неё компонент останется светлым на тёмной странице чужого проекта",
+            "пульсирующее кольцо у статус-точки «онлайн» и его отключение при prefers-reduced-motion"
+          ],
+          "adapt": [
+            "состав cursors: имена участников и то, кто из них «вы» (you)",
+            "акцентный цвет курсора «Вы» через проп accent",
+            "заголовок title и текст статуса status",
+            "видимость именных пилюль через showNames",
+            "паузу анимации курсоров через проп paused — для статичного скриншота"
+          ],
+          "notes": [
+            "рассчитан ровно на три курсора: массив длиннее обрезается, у каждого своя фиксированная траектория в CSS",
+            "paused={true} останавливает движение курсоров, ping-кольцо статус-точки продолжает идти отдельно"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "paused",
+            "label": "Пауза",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "showNames",
+            "label": "Имена курсоров",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Presence",
+            "description": "A shared canvas with live teammate cursors roaming independent paths: the \"You\" cursor carries a small initial avatar, the others carry name pills, the canvas is marked with a dot grid.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-ai-anim-002-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. Three cursors move along closed paths (several translate points in keyframes) with different durations and delays so the motion doesn't look synchronized; the canvas is a faint dot grid on the card background.",
+            "ai": {
+              "summary": "A shared canvas with three live teammate cursors, each wandering its own closed path; the \"You\" cursor carries a small initial avatar. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-ai-anim-002-* palette — do not swap it for your theme tokens",
+                "the canvas dot grid as a hint of a shared canvas",
+                "the distinct path and duration per cursor — asynchronous motion matters for the presence effect",
+                "the small initial avatar on the \"You\" cursor next to its name pill",
+                "the .dark class rule: without it the component stays light on a dark page in another project",
+                "the pulsing ring on the \"online\" status dot and its removal under prefers-reduced-motion"
+              ],
+              "adapt": [
+                "the cursors list: participant names and which one is \"you\" (you)",
+                "the \"You\" cursor's accent color via the accent prop",
+                "the title and the status text",
+                "name pill visibility via showNames",
+                "pause the cursor animation via the paused prop — for a static screenshot"
+              ],
+              "notes": [
+                "built for exactly three cursors: a longer array is trimmed, each has a fixed path in CSS",
+                "paused={true} stops cursor motion, the status dot's ping ring keeps running independently"
+              ],
+              "usage": "<AiAnim002 title=\"Shared canvas\" cursors={[{ name: \"You\", you: true }, { name: \"Amy\" }, { name: \"Mark\" }]} />"
+            },
+            "controls": {
+              "paused": {
+                "label": "Paused"
+              },
+              "showNames": {
+                "label": "Cursor names"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Shared canvas",
+                "status": "3 online",
+                "cursors": [
+                  {
+                    "name": "You",
+                    "you": true
+                  },
+                  {
+                    "name": "Amy"
+                  },
+                  {
+                    "name": "Mark"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "title": "Общий холст",
+            "status": "3 онлайн",
+            "cursors": [
+              {
+                "name": "Вы",
+                "you": true
+              },
+              {
+                "name": "Аня"
+              },
+              {
+                "name": "Марк"
+              }
+            ]
+          }
+        },
+        "cardControls": ["paused", "showNames", "accent"]
+      }
+    },
+    {
+      "name": "ai-anim-003",
+      "type": "registry:component",
+      "title": "Поле промпта",
+      "description": "Широкий composer промпта: текст печатается по буквам с мигающим курсором, снизу — пилюля выбранной модели и счётчик токенов, растущий стопкой значений в такт печати.",
+      "categories": ["ai"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "ai-anim-003/ai-anim-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/ai-anim-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-ai-anim-003-* переменных. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Текст печатается через steps() по ширине строки, как в chat-001. Счётчик токенов — не JS-счётчик, а стопка чисел в одной grid-ячейке: каждое значение проявляется своим opacity-кейфреймом в свою долю общего цикла 4.5с, синхронизированную с печатью, финальное значение держится до конца цикла.",
+      "meta": {
+        "tags": ["ai", "prompt", "composer", "typing", "tokens", "animated"],
+        "ai": {
+          "export": "AiAnim003",
+          "usage": "<AiAnim003 title=\"Новый промпт\" promptText=\"Сравни выручку за Q2 и Q3\" modelName=\"Nova Pro\" tokenCount={128} />",
+          "summary": "Composer промпта с печатающимся по буквам текстом и мигающим курсором, снизу — пилюля модели и счётчик токенов, растущий стопкой значений в такт печати. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-ai-anim-003-* — не подменяйте её токенами вашей темы",
+            "печать текста по буквам (steps()) с мигающим текстовым курсором",
+            "стопку значений счётчика токенов — приём, которым имитируется рост числа без JS",
+            "пилюлю модели с иконкой-искрой и шевроном рядом со счётчиком токенов",
+            "строку для класса .dark: без неё компонент останется светлым на тёмной странице чужого проекта",
+            "общий цикл печати и счётчика длиной 4.5с и его отключение при prefers-reduced-motion"
+          ],
+          "adapt": [
+            "текст промпта promptText и название модели modelName под свой сценарий",
+            "итоговое число токенов tokenCount — промежуточные значения считаются от него",
+            "акцентный цвет через проп accent под свой бренд",
+            "заголовок title, подпись tokenLabel и режим streaming (печать вкл/выкл)"
+          ],
+          "notes": [
+            "streaming={false} показывает промпт сразу целиком, без печати, курсора и роста счётчика",
+            "ширина поля печати считается в ch от длины promptText через CSS-переменную --vibeui-ai-anim-003-chars"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "streaming",
+            "label": "Печать",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "tokenCount",
+            "label": "Токенов",
+            "type": "number",
+            "default": 128,
+            "min": 0,
+            "max": 999
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Prompt box",
+            "description": "A wide prompt composer: the text types out letter by letter with a blinking caret, below it a model picker pill and a token counter that climbs in steps in time with the typing.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-ai-anim-003-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. Text types out via steps() on line width, same technique as chat-001. The token counter is not a JS counter but a stack of numbers in one grid cell: each value shows through its own opacity keyframe in its slice of the shared 4.5s cycle, synced with typing, the final value holding until the cycle resets.",
+            "ai": {
+              "summary": "A prompt composer with letter-by-letter typing and a blinking caret, a model pill and a token counter climbing in steps in time with the typing below. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-ai-anim-003-* palette — do not swap it for your theme tokens",
+                "the letter-by-letter typing (steps()) with the blinking text caret",
+                "the stacked token counter values — the technique that fakes a rising number without JS",
+                "the model pill with a spark icon and chevron next to the token counter",
+                "the .dark class rule: without it the component stays light on a dark page in another project",
+                "the shared 4.5s typing/counter cycle and its removal under prefers-reduced-motion"
+              ],
+              "adapt": [
+                "the prompt text promptText and model name modelName for your scenario",
+                "the final token count tokenCount — intermediate values are derived from it",
+                "the accent color via the accent prop to match your brand",
+                "the title, the tokenLabel caption and the streaming mode (typing on/off)"
+              ],
+              "notes": [
+                "streaming={false} shows the whole prompt at once, without typing, caret or counter climb",
+                "the typing field width is computed in ch from promptText's length via the --vibeui-ai-anim-003-chars CSS variable"
+              ],
+              "usage": "<AiAnim003 title=\"New prompt\" promptText=\"Compare Q2 and Q3 revenue\" modelName=\"Nova Pro\" tokenCount={128} />"
+            },
+            "controls": {
+              "streaming": {
+                "label": "Typing"
+              },
+              "tokenCount": {
+                "label": "Tokens"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "New prompt",
+                "promptText": "Compare Q2 and Q3 revenue and flag anomalies",
+                "modelName": "Nova Pro",
+                "tokenLabel": "tokens",
+                "tokenCount": 128
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "title": "Новый промпт",
+            "promptText": "Сравни выручку за Q2 и Q3 и выдели аномалии",
+            "modelName": "Nova Pro",
+            "tokenLabel": "токенов",
+            "tokenCount": 128
+          }
+        },
+        "cardControls": ["streaming", "tokenCount", "accent"]
+      }
+    },
+    {
+      "name": "ai-anim-004",
+      "type": "registry:component",
+      "title": "Поиск источников",
+      "description": "Запрос в центре рассылает импульс по трём кривым к ранжированным карточкам-источникам справа: импульсы приходят по очереди, а карточка вспыхивает в момент прибытия своего импульса.",
+      "categories": ["ai"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "ai-anim-004/ai-anim-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/ai-anim-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-ai-anim-004-* переменных. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Импульсы бегут по offset-path трёх кривых, как пакеты в connections-001, но не одновременно: все три импульса и их карточки делят общий цикл 3с с собственной фазой активности (animation-delay), поэтому подсветка идёт строго по рангу 1 → 2 → 3.",
+      "meta": {
+        "tags": ["ai", "retrieval", "rag", "ranking", "search", "animated"],
+        "ai": {
+          "export": "AiAnim004",
+          "usage": "<AiAnim004 title=\"Поиск источников\" query=\"Запрос\" sources={[{ label: \"Документация API\" }, { label: \"Тикеты поддержки\" }, { label: \"Гайд по продукту\" }]} />",
+          "summary": "Запрос в центре рассылает импульс по трём кривым к ранжированным карточкам-источникам, импульсы приходят по очереди, карточка вспыхивает в момент прибытия. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-ai-anim-004-* — не подменяйте её токенами вашей темы",
+            "движение импульса по кривой offset-path и вспышку карточки строго в момент его прибытия",
+            "последовательный, а не одновременный порядок прибытия импульсов по рангу",
+            "номерные бейджи ранга у каждой карточки-источника",
+            "строку для класса .dark: без неё компонент останется светлым на тёмной странице чужого проекта",
+            "общий цикл анимации 3с с фазовым сдвигом по индексу и его отключение при prefers-reduced-motion"
+          ],
+          "adapt": [
+            "содержимое sources: подписи источников под свой сценарий",
+            "текст в узле запроса query и статус status",
+            "акцентный цвет через проп accent под свой бренд",
+            "видимость подписей источников через labels и паузу анимации через paused"
+          ],
+          "notes": [
+            "рассчитан ровно на три источника: массив длиннее обрезается, кривые SVG заданы под три позиции",
+            "paused={true} останавливает импульсы и подсветку карточек через animation-play-state"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "paused",
+            "label": "Пауза",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "labels",
+            "label": "Подписи источников",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Retrieval",
+            "description": "A query in the center fans a pulse out along three curves to ranked source cards on the right: pulses arrive in turn, and each card lights up the moment its pulse arrives.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-ai-anim-004-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. Pulses run along the offset-path of three curves, like packets in connections-001, but not simultaneously: all three pulses and their cards share one 3s cycle with their own phase of activity (animation-delay), so the highlight strictly follows rank 1 → 2 → 3.",
+            "ai": {
+              "summary": "A query in the center fans a pulse out along three curves to ranked source cards, pulses arriving in turn and each card lighting up on arrival. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-ai-anim-004-* palette — do not swap it for your theme tokens",
+                "the pulse travelling along the curve's offset-path and the card lighting up exactly on arrival",
+                "the sequential, not simultaneous, order of pulse arrival by rank",
+                "the numbered rank badges on each source card",
+                "the .dark class rule: without it the component stays light on a dark page in another project",
+                "the shared 3s animation cycle with a per-index phase offset and its removal under prefers-reduced-motion"
+              ],
+              "adapt": [
+                "the sources content: source labels for your scenario",
+                "the query node text query and the status text",
+                "the accent color via the accent prop to match your brand",
+                "source label visibility via labels and pausing the animation via paused"
+              ],
+              "notes": [
+                "built for exactly three sources: a longer array is trimmed, the SVG curves are laid out for three positions",
+                "paused={true} stops both the pulses and the card highlight via animation-play-state"
+              ],
+              "usage": "<AiAnim004 title=\"Source search\" query=\"Query\" sources={[{ label: \"API docs\" }, { label: \"Support tickets\" }, { label: \"Product guide\" }]} />"
+            },
+            "controls": {
+              "paused": {
+                "label": "Paused"
+              },
+              "labels": {
+                "label": "Source labels"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Source search",
+                "status": "Ranking",
+                "query": "Query",
+                "sources": [
+                  {
+                    "label": "API docs"
+                  },
+                  {
+                    "label": "Support tickets"
+                  },
+                  {
+                    "label": "Product guide"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "title": "Поиск источников",
+            "status": "Ранжирование",
+            "query": "Запрос",
+            "sources": [
+              {
+                "label": "Документация API"
+              },
+              {
+                "label": "Тикеты поддержки"
+              },
+              {
+                "label": "Гайд по продукту"
+              }
+            ]
+          }
+        },
+        "cardControls": ["paused", "labels", "accent"]
+      }
+    },
+    {
+      "name": "ai-anim-005",
+      "type": "registry:component",
+      "title": "Инструменты агента",
+      "description": "Список вызовов инструментов агента: каждая строка по очереди переходит из ожидания со спиннером в готовый результат с галочкой, в такт общему циклу анимации.",
+      "categories": ["ai"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "ai-anim-005/ai-anim-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/ai-anim-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-ai-anim-005-* переменных. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Четыре строки делят общий цикл 6.4с с фазовым сдвигом по индексу (animation-delay): пока не пришла очередь строки, она приглушена, затем крутится спиннер, а после — держится галочка до конца цикла. repeat={false} останавливает цикл на первом проходе через animation-iteration-count.",
+      "meta": {
+        "tags": ["ai", "tools", "agent", "spinner", "checklist", "animated"],
+        "ai": {
+          "export": "AiAnim005",
+          "usage": "<AiAnim005 title=\"Действия агента\" tools={[{ label: \"Поиск в базе знаний\" }, { label: \"Чтение файла\" }, { label: \"Выполнение кода\" }, { label: \"Запись результата\" }]} />",
+          "summary": "Список вызовов инструментов агента: каждая строка по очереди переключается из ожидания со спиннером в готовый результат с галочкой. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-ai-anim-005-* — не подменяйте её токенами вашей темы",
+            "переход строки из спиннера-ожидания в галочку-результат строго по своей очереди",
+            "общий цикл анимации 6.4с с фазовым сдвигом по индексу строки, а не независимые таймеры",
+            "иконку инструмента в цветном чипе слева от названия",
+            "строку для класса .dark: без неё компонент останется светлым на тёмной странице чужого проекта",
+            "замену спиннера и подсветки строки на статичный готовый вид при prefers-reduced-motion"
+          ],
+          "adapt": [
+            "содержимое tools: названия вызовов инструментов под свой сценарий",
+            "акцентный цвет через проп accent под свой бренд",
+            "заголовок title и бейдж badge",
+            "паузу через paused и однократный прогон цикла через repeat={false}"
+          ],
+          "notes": [
+            "рассчитан ровно на четыре строки: массив длиннее обрезается до четырёх",
+            "repeat={false} проигрывает цикл один раз и останавливается на виде «все готово»"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "paused",
+            "label": "Пауза",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "repeat",
+            "label": "Повтор цикла",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Tools",
+            "description": "A list of an agent's tool calls: each row switches in turn from a pending spinner to a completed result with a check mark, in time with the shared animation cycle.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-ai-anim-005-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. Four rows share a 6.4s cycle with a per-index phase offset (animation-delay): until a row's turn comes it stays muted, then a spinner runs, then a check mark holds until the cycle resets. repeat={false} stops the cycle after one pass via animation-iteration-count.",
+            "ai": {
+              "summary": "A list of an agent's tool calls, each row switching in turn from a pending spinner to a completed check mark result. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-ai-anim-005-* palette — do not swap it for your theme tokens",
+                "the row's transition from a pending spinner to a completed check mark strictly on its own turn",
+                "the shared 6.4s animation cycle with a per-row phase offset, not independent timers",
+                "the tool icon in a colored chip to the left of the name",
+                "the .dark class rule: without it the component stays light on a dark page in another project",
+                "the fallback of the spinner and row highlight to a static completed view under prefers-reduced-motion"
+              ],
+              "adapt": [
+                "the tools content: tool call names for your scenario",
+                "the accent color via the accent prop to match your brand",
+                "the title and the badge",
+                "pausing via paused and running the cycle once via repeat={false}"
+              ],
+              "notes": [
+                "built for exactly four rows: a longer array is trimmed to four",
+                "repeat={false} plays the cycle once and stops on the \"all done\" view"
+              ],
+              "usage": "<AiAnim005 title=\"Agent actions\" tools={[{ label: \"Search knowledge base\" }, { label: \"Read file\" }, { label: \"Run code\" }, { label: \"Write result\" }]} />"
+            },
+            "controls": {
+              "paused": {
+                "label": "Paused"
+              },
+              "repeat": {
+                "label": "Repeat cycle"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Agent actions",
+                "badge": "4 steps",
+                "tools": [
+                  {
+                    "label": "Search knowledge base"
+                  },
+                  {
+                    "label": "Read file"
+                  },
+                  {
+                    "label": "Run code"
+                  },
+                  {
+                    "label": "Write result"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "title": "Действия агента",
+            "badge": "4 шага",
+            "tools": [
+              {
+                "label": "Поиск в базе знаний"
+              },
+              {
+                "label": "Чтение файла"
+              },
+              {
+                "label": "Выполнение кода"
+              },
+              {
+                "label": "Запись результата"
+              }
+            ]
+          }
+        },
+        "cardControls": ["paused", "repeat", "accent"]
+      }
+    },
+    {
+      "name": "ai-anim-006",
+      "type": "registry:component",
+      "title": "Голосовой orb",
+      "description": "Круглый голосовой orb со свечением, циклически проходящий три состояния: слушает — пульсирующие кольца звуковых волн, думает — вращающиеся точки, говорит — эквалайзер из столбиков.",
+      "categories": ["ai"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "ai-anim-006/ai-anim-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/ai-anim-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-ai-anim-006-* переменных. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Три группы элементов (кольца, орбита точек, эквалайзер) всегда в разметке, видимость каждой задаётся собственным opacity-кейфреймом с окном на треть общего цикла 9с; подписи состояний используют тот же таймлайн, поэтому текст сменяется синхронно со сферой.",
+      "meta": {
+        "tags": ["ai", "voice", "orb", "assistant", "realtime", "animated"],
+        "ai": {
+          "export": "AiAnim006",
+          "usage": "<AiAnim006 title=\"Голосовой ассистент\" listeningLabel=\"Слушаю…\" thinkingLabel=\"Думаю…\" speakingLabel=\"Говорю…\" />",
+          "summary": "Голосовой orb со свечением, циклически проходящий состояния «слушаю → думаю → говорю»: кольца звуковых волн, вращающиеся точки и эквалайзер сменяют друг друга по фазе. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-ai-anim-006-* — не подменяйте её токенами вашей темы",
+            "три визуальных состояния (кольца, орбита точек, эквалайзер) и их строгую последовательность",
+            "радиальный градиент и glow-тень сферы, мягко дышащей в собственном ритме",
+            "строку для класса .dark: без неё компонент останется светлым на тёмной странице чужого проекта",
+            "общий таймлайн 9с с окном по трети цикла на состояние и его отключение при prefers-reduced-motion",
+            "текстовую подпись текущего состояния, синхронизированную с визуалом того же таймлайна"
+          ],
+          "adapt": [
+            "подписи состояний listeningLabel, thinkingLabel, speakingLabel под свой сценарий",
+            "акцентный цвет через проп accent под свой бренд",
+            "заголовок title (скрытый визуально, но доступный для скринридера)",
+            "видимость текстовой подписи через labels и паузу анимации через paused"
+          ],
+          "notes": [
+            "paused={true} останавливает весь таймлайн, сфера и кольца замирают в текущем кадре",
+            "при prefers-reduced-motion компонент статично показывает состояние «слушаю»"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "paused",
+            "label": "Пауза",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "labels",
+            "label": "Подпись состояния",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Voice",
+            "description": "A round glowing voice orb cycling through three states: listening — pulsing sound-wave rings, thinking — orbiting dots, speaking — a bar equalizer.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-ai-anim-006-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. Three element groups (rings, dot orbit, equalizer) are always in the markup, each one's visibility set by its own opacity keyframe with a window spanning a third of the shared 9s cycle; the state labels use the same timeline, so the text switches in sync with the orb.",
+            "ai": {
+              "summary": "A glowing voice orb cycling through \"listening → thinking → speaking\": sound-wave rings, orbiting dots and a bar equalizer take turns by phase. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-ai-anim-006-* palette — do not swap it for your theme tokens",
+                "the three visual states (rings, dot orbit, equalizer) and their strict sequence",
+                "the orb's radial gradient and glow shadow, breathing softly on its own rhythm",
+                "the .dark class rule: without it the component stays light on a dark page in another project",
+                "the shared 9s timeline with a third-of-cycle window per state and its removal under prefers-reduced-motion",
+                "the current-state text label synced to the same timeline as the visual"
+              ],
+              "adapt": [
+                "the state labels listeningLabel, thinkingLabel, speakingLabel for your scenario",
+                "the accent color via the accent prop to match your brand",
+                "the title (visually hidden but available to screen readers)",
+                "text label visibility via labels and pausing the animation via paused"
+              ],
+              "notes": [
+                "paused={true} stops the whole timeline, the orb and rings freeze on the current frame",
+                "under prefers-reduced-motion the component statically shows the \"listening\" state"
+              ],
+              "usage": "<AiAnim006 title=\"Voice assistant\" listeningLabel=\"Listening…\" thinkingLabel=\"Thinking…\" speakingLabel=\"Speaking…\" />"
+            },
+            "controls": {
+              "paused": {
+                "label": "Paused"
+              },
+              "labels": {
+                "label": "State label"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Voice assistant",
+                "listeningLabel": "Listening…",
+                "thinkingLabel": "Thinking…",
+                "speakingLabel": "Speaking…"
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "title": "Голосовой ассистент",
+            "listeningLabel": "Слушаю…",
+            "thinkingLabel": "Думаю…",
+            "speakingLabel": "Говорю…"
+          }
+        },
+        "cardControls": ["paused", "labels", "accent"]
+      }
+    }
+  ]
+}

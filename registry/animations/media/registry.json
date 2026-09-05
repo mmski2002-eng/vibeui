@@ -1,0 +1,289 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "media-001",
+      "type": "registry:component",
+      "title": "Аудиоволна",
+      "description": "Аудиоплеер с живой волной: полоски колышутся собственным бесконечным циклом со сдвигом фазы, прослушанная часть подсвечена акцентом, кнопка играет пульсирующим кольцом.",
+      "categories": ["media"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "media-001/media-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/media-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-media-001-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Волна — 28 полосок, каждая со своей базовой высотой и собственным бесконечным CSS-циклом колебания (animation-delay по индексу), поэтому волна выглядит непрерывно живой без единого JS-таймера. Полоски до порога progress (0–100) окрашены акцентом — прослушанная доля читается визуально прямо на волне. Кнопка play/pause переключает иконку пропом playing; на воспроизведении вокруг кнопки расширяется и гаснет кольцо.",
+      "meta": {
+        "tags": [
+          "audio",
+          "player",
+          "waveform",
+          "media",
+          "animated",
+          "sound"
+        ],
+        "ai": {
+          "export": "Media001",
+          "usage": "<Media001 trackTitle=\"Утренний эфир\" trackArtist=\"Подкаст «Вайб»\" elapsed=\"1:12\" duration=\"3:24\" progress={38} playing />",
+          "summary": "Аудиоплеер с живой волной из 28 полосок: каждая колышется собственным бесконечным циклом со сдвигом фазы, прослушанная доля (progress) окрашена акцентом, круглая кнопка play/pause с пульсирующим кольцом на воспроизведении. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-media-001-* — не подменяйте её токенами вашей темы",
+            "непрерывное колебание высоты каждой полоски волны со сдвигом фазы по индексу",
+            "акцентную заливку прослушанной части волны (по progress) поверх приглушённого цвета остальных полосок",
+            "круглую кнопку play/pause с расширяющимся кольцом на воспроизведении",
+            "заголовок группы с пилюлью формата и строку трека с исполнителем под кнопкой",
+            "радужное свечение под карточкой и его дыхание — опознавательный знак семейства анимаций"
+          ],
+          "adapt": [
+            "название трека, исполнителя и таймкоды (trackTitle, trackArtist, elapsed, duration)",
+            "долю прослушанного через проп progress (0–100)",
+            "состояние кнопки через проп playing (иконка и пульсирующее кольцо)",
+            "акцентный цвет через проп accent под свой бренд",
+            "режимы gradient и isometric под контекст витрины"
+          ],
+          "notes": [
+            "playing={false} убирает пульсирующее кольцо у кнопки и переключает иконку на play",
+            "высоты полосок волны фиксированы (не случайны) — стабильны между рендерами и на SSR"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "playing",
+            "label": "Играет",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "gradient",
+            "label": "Свечение",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "isometric",
+            "label": "Изометрия",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Audio waveform",
+            "description": "An audio player with an animated waveform and controls: bars sway on their own infinite phase-shifted cycle, the listened portion glows in the accent color, and the play button pulses a ring while playing.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-media-001-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. The waveform is 28 bars, each with its own base height and its own infinite CSS sway cycle (animation-delay by index), so the wave reads as continuously alive without a single JS timer. Bars up to the progress threshold (0–100) are colored in the accent — the listened share reads visually right on the wave. The play/pause button swaps its icon via the playing prop; while playing, a ring expands and fades around the button.",
+            "ai": {
+              "summary": "An audio player with a 28-bar animated waveform: each bar sways on its own infinite phase-shifted cycle, the listened share (progress) is colored in the accent, and a round play/pause button pulses a ring while playing. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-media-001-* palette — do not swap it for your theme tokens",
+                "the continuous height sway of every waveform bar with a phase offset by index",
+                "the accent fill on the listened portion of the wave (by progress) over the muted color of the rest",
+                "the round play/pause button with the expanding ring while playing",
+                "the group title with the format pill and the track line with the artist under the button",
+                "the rainbow glow under the card and its breathing — the animation family's signature"
+              ],
+              "adapt": [
+                "the track title, artist and timecodes (trackTitle, trackArtist, elapsed, duration)",
+                "the listened share via the progress prop (0–100)",
+                "the button state via the playing prop (icon and pulsing ring)",
+                "the accent color via the accent prop to match your brand",
+                "the gradient and isometric modes for the showcase context"
+              ],
+              "notes": [
+                "playing={false} removes the button's pulsing ring and switches the icon to play",
+                "the waveform bar heights are fixed (not random) — stable across renders and on SSR"
+              ],
+              "usage": "<Media001 trackTitle=\"Morning show\" trackArtist=\"Vibe podcast\" elapsed=\"1:12\" duration=\"3:24\" progress={38} playing />"
+            },
+            "controls": {
+              "playing": {
+                "label": "Playing"
+              },
+              "gradient": {
+                "label": "Glow"
+              },
+              "isometric": {
+                "label": "Isometric"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Now playing",
+                "badge": "MP3",
+                "trackTitle": "Morning show",
+                "trackArtist": "Vibe podcast",
+                "elapsed": "1:12",
+                "duration": "3:24",
+                "progress": 38,
+                "playing": true
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "title": "Сейчас играет",
+            "badge": "MP3",
+            "trackTitle": "Утренний эфир",
+            "trackArtist": "Подкаст «Вайб»",
+            "elapsed": "1:12",
+            "duration": "3:24",
+            "progress": 38,
+            "playing": true
+          }
+        },
+        "cardControls": ["playing", "gradient", "isometric", "accent"]
+      }
+    },
+    {
+      "name": "media-002",
+      "type": "registry:component",
+      "title": "Видеоплеер",
+      "description": "Рамка видео с панелью управления: на паузе поверх тёмного кадра дышит большая кнопка play, снизу — панель с полосой прогресса, которая плавно растёт и сжимается бесконечным циклом.",
+      "categories": ["media"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "media-002/media-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/media-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-media-002-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark, но сам кадр видео всегда тёмный (эстетика видеоплеера) независимо от темы страницы. На паузе (playing=false) поверх кадра — большая полупрозрачная кнопка play с расширяющимся кольцом и мягким пульсирующим свечением; на воспроизведении кнопка скрыта, остаётся только нижняя панель. Полоса прогресса в панели растёт и сжимается бесконечным циклом (animation alternate) — демонстрационная перемотка без единого JS-таймера.",
+      "meta": {
+        "tags": [
+          "video",
+          "player",
+          "media",
+          "controls",
+          "animated",
+          "progress"
+        ],
+        "ai": {
+          "export": "Media002",
+          "usage": "<Media002 title=\"Демо-ролик\" badge=\"4K\" elapsed=\"0:42\" duration=\"2:15\" playing={false} />",
+          "summary": "Рамка видео с панелью управления: тёмный кадр-заглушка, на паузе поверх него дышит большая кнопка play с расширяющимся кольцом, снизу — панель с иконкой play/pause, полосой прогресса (растёт и сжимается бесконечным циклом) и таймкодом. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-media-002-* — не подменяйте её токенами вашей темы",
+            "всегда тёмный кадр видео (эстетика плеера) независимо от темы страницы",
+            "большую кнопку play по центру с расширяющимся кольцом и пульсирующим свечением на паузе",
+            "нижнюю панель управления с иконкой, полосой прогресса и таймкодом поверх кадра",
+            "плавный бесконечный цикл роста и сжатия полосы прогресса",
+            "радужное свечение под карточкой и его дыхание — опознавательный знак семейства анимаций"
+          ],
+          "adapt": [
+            "заголовок группы, пилюлю качества и таймкоды (title, badge, elapsed, duration)",
+            "состояние через проп playing: показывать большую кнопку play (пауза) или скрывать её (воспроизведение)",
+            "акцентный цвет полосы прогресса и свечения кнопки через проп accent",
+            "режимы gradient и isometric под контекст витрины"
+          ],
+          "notes": [
+            "полоса прогресса — декоративный бесконечный цикл, не связана с переданными elapsed/duration",
+            "playing={true} скрывает большую кнопку play и переключает иконку панели на pause"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "playing",
+            "label": "Воспроизведение",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "gradient",
+            "label": "Свечение",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "isometric",
+            "label": "Изометрия",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Video player",
+            "description": "A video player frame with controls and a progress bar: a big play button breathes over the dark frame while paused, and the bottom bar's progress bar smoothly grows and shrinks in an endless loop.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-media-002-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class, but the video frame itself stays dark at all times (player aesthetic) regardless of the page theme. While paused (playing=false), a big translucent play button with an expanding ring and a soft pulsing glow sits over the frame; while playing, the button is hidden and only the bottom bar remains. The progress bar in the panel grows and shrinks in an endless alternate cycle — a demo scrub without a single JS timer.",
+            "ai": {
+              "summary": "A video player frame with controls: a dark placeholder frame, a big play button that breathes with an expanding ring while paused, and a bottom bar with a play/pause icon, a progress bar (grows and shrinks in an endless loop) and a timecode. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-media-002-* palette — do not swap it for your theme tokens",
+                "the always-dark video frame (player aesthetic) regardless of the page theme",
+                "the big centered play button with the expanding ring and pulsing glow while paused",
+                "the bottom control bar with the icon, progress bar and timecode over the frame",
+                "the smooth endless grow-and-shrink cycle of the progress bar",
+                "the rainbow glow under the card and its breathing — the animation family's signature"
+              ],
+              "adapt": [
+                "the group title, quality pill and timecodes (title, badge, elapsed, duration)",
+                "the state via the playing prop: show the big play button (paused) or hide it (playing)",
+                "the progress bar and button glow accent color via the accent prop",
+                "the gradient and isometric modes for the showcase context"
+              ],
+              "notes": [
+                "the progress bar is a decorative endless loop, not tied to the passed elapsed/duration",
+                "playing={true} hides the big play button and switches the bar icon to pause"
+              ],
+              "usage": "<Media002 title=\"Demo clip\" badge=\"4K\" elapsed=\"0:42\" duration=\"2:15\" playing={false} />"
+            },
+            "controls": {
+              "playing": {
+                "label": "Playing"
+              },
+              "gradient": {
+                "label": "Glow"
+              },
+              "isometric": {
+                "label": "Isometric"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Demo clip",
+                "badge": "4K",
+                "elapsed": "0:42",
+                "duration": "2:15",
+                "playing": false
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "title": "Демо-ролик",
+            "badge": "4K",
+            "elapsed": "0:42",
+            "duration": "2:15",
+            "playing": false
+          }
+        },
+        "cardControls": ["playing", "gradient", "isometric", "accent"]
+      }
+    }
+  ]
+}

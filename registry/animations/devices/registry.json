@@ -1,0 +1,356 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "devices-001",
+      "type": "registry:component",
+      "title": "Ноутбук",
+      "description": "Рамка ноутбука для демонстрации скриншота или интерфейса: экран на шарнире над клавиатурной декой с трекпадом, по стеклу экрана раз в несколько секунд скользит мягкий блик света.",
+      "categories": ["devices"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "devices-001/devices-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/devices-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-devices-001-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Экран — CSS-рамка с демо-интерфейсом (панель вкладок, плитка с иконкой, строки-скелетоны, мини-график), под экраном — шарнир и клавиатурная дека с трекпадом (клин clip-path'ом). Блик — скошенная светлая полоса, которая по кругу проезжает по экрану; гаснет при prefers-reduced-motion. Рамку можно наклонить в изометрию пропом isometric.",
+      "meta": {
+        "tags": ["device", "laptop", "mockup", "frame", "screen", "animated"],
+        "ai": {
+          "export": "Devices001",
+          "usage": "<Devices001 sheen isometric={false} />",
+          "summary": "Рамка ноутбука с демо-интерфейсом на экране: панель вкладок, плитка с иконкой, строки и мини-график. По стеклу раз в несколько секунд скользит мягкий блик света. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-devices-001-* — не подменяйте её токенами вашей темы",
+            "форму рамки: экран на шарнире над клавиатурной декой с трекпадом — опознавательный знак компонента",
+            "диагональный блик, скользящий по экрану по кругу, и его отключение при prefers-reduced-motion",
+            "строку для класса .dark: без неё компонент останется светлым на тёмной странице чужого проекта",
+            "демо-интерфейс внутри экрана: панель вкладок сверху, плитка с иконкой и строки, мини-график снизу"
+          ],
+          "adapt": [
+            "проп sheen — включает или выключает блик света на экране",
+            "проп isometric — наклоняет рамку ноутбука в изометрическую проекцию",
+            "акцентный цвет через проп accent под свой бренд",
+            "содержимое демо-экрана можно заменить своим макетом интерфейса"
+          ],
+          "notes": [
+            "sheen={false} убирает блик, isometric={true} наклоняет рамку",
+            "экран собран из div'ов и clip-path, а не из растрового изображения — заменяется вёрсткой, а не картинкой"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "sheen",
+            "label": "Блик",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "isometric",
+            "label": "Изометрия",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Laptop",
+            "description": "A laptop device frame for presenting a screenshot or UI: a hinged screen above a keyboard deck with a trackpad, with a soft light sheen sweeping across the glass every few seconds.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-devices-001-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. The screen is a CSS frame with demo UI inside (a tab bar, an icon tile, skeleton lines, a mini chart); below it a hinge and a keyboard deck with a trackpad (a clip-path wedge). The sheen is a skewed light band that sweeps across the screen on a loop and stops under prefers-reduced-motion. The frame can be tilted into isometric view with the isometric prop.",
+            "ai": {
+              "summary": "A laptop device frame with demo UI on the screen: a tab bar, an icon tile, lines and a mini chart. A soft light sheen sweeps across the glass every few seconds. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-devices-001-* palette — do not swap it for your theme tokens",
+                "the frame shape: a hinged screen above a keyboard deck with a trackpad — the component's signature",
+                "the diagonal sheen sweeping across the screen on a loop and its removal under prefers-reduced-motion",
+                "the .dark class rule: without it the component stays light on a dark page in another project",
+                "the demo UI inside the screen: a top tab bar, an icon tile with lines, a mini chart at the bottom"
+              ],
+              "adapt": [
+                "the sheen prop — turns the screen light sheen on or off",
+                "the isometric prop — tilts the laptop frame into an isometric projection",
+                "the accent color via the accent prop to match your brand",
+                "the demo screen content can be swapped for your own interface mockup"
+              ],
+              "notes": [
+                "sheen={false} removes the sheen, isometric={true} tilts the frame",
+                "the screen is built from divs and clip-path, not a raster image — it is replaced with markup, not a picture"
+              ],
+              "usage": "<Devices001 sheen isometric={false} />"
+            },
+            "controls": {
+              "sheen": {
+                "label": "Sheen"
+              },
+              "isometric": {
+                "label": "Isometric"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {}
+            }
+          }
+        },
+        "preview": {
+          "props": {}
+        },
+        "cardControls": ["sheen", "isometric", "accent"]
+      }
+    },
+    {
+      "name": "devices-002",
+      "type": "registry:component",
+      "title": "Смартфон",
+      "description": "Рамка смартфона для демонстрации мобильного экрана: чёлка, статус-бар и лента уведомлений, которая бесконечно едет вверх без остановки.",
+      "categories": ["devices"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "devices-002/devices-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/devices-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-devices-002-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Корпус — скруглённая CSS-рамка с чёлкой и боковыми кнопками; экран содержит статус-бар (время, индикатор сигнала) и окно ленты уведомлений с маской по верхнему и нижнему краю. Лента — продублированный список карточек, который едет вверх по кругу через translateY; останавливается при prefers-reduced-motion или пропе autoScroll={false}. Рамку можно наклонить в изометрию пропом isometric.",
+      "meta": {
+        "tags": ["device", "phone", "mobile", "mockup", "frame", "animated"],
+        "ai": {
+          "export": "Devices002",
+          "usage": "<Devices002 notifications={[{ title: \"Sara Ruiz\", body: \"Обедаем в час?\", meta: \"сейчас\" }]} autoScroll />",
+          "summary": "Рамка смартфона с чёлкой, статус-баром и лентой уведомлений, которая бесконечно едет вверх. Карточки ленты дублируются для бесшовной прокрутки. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-devices-002-* — не подменяйте её токенами вашей темы",
+            "форму рамки: скруглённый корпус, чёлка сверху, боковые кнопки — опознавательный знак компонента",
+            "бесконечную прокрутку ленты вверх (дублированный список, translateY по кругу) и её остановку при prefers-reduced-motion",
+            "строку для класса .dark: без неё компонент останется светлым на тёмной странице чужого проекта",
+            "маску, гасящую верх и низ окна ленты — без неё карточки обрезаются резко",
+            "статус-бар с временем и индикатором сигнала над лентой"
+          ],
+          "adapt": [
+            "содержимое ленты через проп notifications: заголовок, текст, время",
+            "проп autoScroll — включает или выключает бесконечную прокрутку",
+            "проп isometric — наклоняет рамку смартфона в изометрическую проекцию",
+            "акцентный цвет через проп accent под свой бренд"
+          ],
+          "notes": [
+            "autoScroll={false} останавливает ленту, isometric={true} наклоняет рамку",
+            "список уведомлений рендерится дважды подряд для бесшовного цикла — передавайте чётное число элементов ровного размера"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "autoScroll",
+            "label": "Прокрутка",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "isometric",
+            "label": "Изометрия",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Phone",
+            "description": "A phone device frame for showcasing a mobile screen: a notch, a status bar and a notification feed that scrolls upward endlessly.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-devices-002-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. The body is a rounded CSS frame with a notch and side buttons; the screen holds a status bar (time, signal bars) and a feed viewport masked at the top and bottom edges. The feed is a duplicated list of cards that scrolls up on a loop via translateY; it stops under prefers-reduced-motion or the autoScroll={false} prop. The frame can be tilted into isometric view with the isometric prop.",
+            "ai": {
+              "summary": "A phone device frame with a notch, a status bar and a notification feed that scrolls upward endlessly. Feed cards are duplicated for a seamless loop. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-devices-002-* palette — do not swap it for your theme tokens",
+                "the frame shape: rounded body, top notch, side buttons — the component's signature",
+                "the endless upward feed scroll (duplicated list, looping translateY) and its removal under prefers-reduced-motion",
+                "the .dark class rule: without it the component stays light on a dark page in another project",
+                "the mask fading the top and bottom of the feed viewport — without it cards get cut off sharply",
+                "the status bar with time and signal indicator above the feed"
+              ],
+              "adapt": [
+                "the feed content via the notifications prop: title, body text, time",
+                "the autoScroll prop — turns the endless scroll on or off",
+                "the isometric prop — tilts the phone frame into an isometric projection",
+                "the accent color via the accent prop to match your brand"
+              ],
+              "notes": [
+                "autoScroll={false} stops the feed, isometric={true} tilts the frame",
+                "the notification list is rendered twice in a row for a seamless loop — pass an even, evenly sized set of items"
+              ],
+              "usage": "<Devices002 notifications={[{ title: \"Sara Ruiz\", body: \"Lunch at 1?\", meta: \"now\" }]} autoScroll />"
+            },
+            "controls": {
+              "autoScroll": {
+                "label": "Scroll"
+              },
+              "isometric": {
+                "label": "Isometric"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "notifications": [
+                  {
+                    "title": "Sara Ruiz",
+                    "body": "Lunch at 1?",
+                    "meta": "now"
+                  },
+                  {
+                    "title": "Team",
+                    "body": "Sprint review moved",
+                    "meta": "2m"
+                  },
+                  {
+                    "title": "Calendar",
+                    "body": "Call starts in 15 min",
+                    "meta": "5m"
+                  },
+                  {
+                    "title": "Bank",
+                    "body": "Payment completed",
+                    "meta": "12m"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {}
+        },
+        "cardControls": ["autoScroll", "isometric", "accent"]
+      }
+    },
+    {
+      "name": "devices-003",
+      "type": "registry:component",
+      "title": "Планшет",
+      "description": "Рамка планшета для демонстрации приложения или страницы: боковая панель иконок и главная область с карточками, за рамкой лёгкий параллакс из размытых пятен.",
+      "categories": ["devices"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "devices-003/devices-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/devices-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-devices-003-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Рамка — альбомная CSS-рамка планшета с приложением внутри: узкая боковая панель иконок и главная область с сеткой карточек. За рамкой дрейфуют два размытых пятна с разной длительностью и направлением, карточки внутри покачиваются со сдвигом по фазе — вместе это читается как лёгкий параллакс сцены; гаснет при prefers-reduced-motion или пропе parallax={false}. Рамку можно наклонить в изометрию пропом isometric.",
+      "meta": {
+        "tags": ["device", "tablet", "mockup", "frame", "parallax", "animated"],
+        "ai": {
+          "export": "Devices003",
+          "usage": "<Devices003 parallax isometric={false} />",
+          "summary": "Рамка планшета в альбомной ориентации с приложением внутри: боковая панель иконок и сетка карточек. За рамкой дрейфуют два размытых пятна, карточки покачиваются со сдвигом по фазе — лёгкий параллакс сцены. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-devices-003-* — не подменяйте её токенами вашей темы",
+            "форму рамки: альбомный корпус планшета с боковой панелью и сеткой карточек — опознавательный знак компонента",
+            "два фоновых пятна с разной длительностью дрейфа и покачивание карточек со сдвигом по фазе — вместе они и дают параллакс",
+            "строку для класса .dark: без неё компонент останется светлым на тёмной странице чужого проекта",
+            "отключение анимации при prefers-reduced-motion",
+            "боковую панель иконок слева от главной области"
+          ],
+          "adapt": [
+            "проп parallax — включает или выключает дрейф пятен и покачивание карточек",
+            "проп isometric — наклоняет рамку планшета в изометрическую проекцию",
+            "акцентный цвет через проп accent под свой бренд",
+            "содержимое главной области и карточек можно заменить своим макетом приложения"
+          ],
+          "notes": [
+            "parallax={false} останавливает и пятна, и карточки, isometric={true} наклоняет рамку",
+            "экран собран из div'ов и grid, а не из растрового изображения — заменяется вёрсткой, а не картинкой"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "parallax",
+            "label": "Параллакс",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "isometric",
+            "label": "Изометрия",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Tablet",
+            "description": "A tablet device frame for showcasing an app or page: a sidebar of icons and a main area with cards, with a light parallax of blurred blobs behind the frame.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-devices-003-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. The frame is a landscape CSS tablet body with an app inside: a narrow icon sidebar and a main area with a card grid. Two blurred blobs drift behind the frame at different durations and directions, and the cards inside sway with a phase offset — together they read as a light scene parallax; it stops under prefers-reduced-motion or the parallax={false} prop. The frame can be tilted into isometric view with the isometric prop.",
+            "ai": {
+              "summary": "A landscape tablet device frame with an app inside: an icon sidebar and a card grid. Two blurred blobs drift behind the frame and the cards sway with a phase offset — a light scene parallax. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-devices-003-* palette — do not swap it for your theme tokens",
+                "the frame shape: a landscape tablet body with a sidebar and a card grid — the component's signature",
+                "the two background blobs drifting at different durations and the phase-offset card sway — together they produce the parallax",
+                "the .dark class rule: without it the component stays light on a dark page in another project",
+                "the animation being disabled under prefers-reduced-motion",
+                "the icon sidebar to the left of the main area"
+              ],
+              "adapt": [
+                "the parallax prop — turns the blob drift and card sway on or off",
+                "the isometric prop — tilts the tablet frame into an isometric projection",
+                "the accent color via the accent prop to match your brand",
+                "the main area and card content can be swapped for your own app mockup"
+              ],
+              "notes": [
+                "parallax={false} stops both the blobs and the cards, isometric={true} tilts the frame",
+                "the screen is built from divs and grid, not a raster image — it is replaced with markup, not a picture"
+              ],
+              "usage": "<Devices003 parallax isometric={false} />"
+            },
+            "controls": {
+              "parallax": {
+                "label": "Parallax"
+              },
+              "isometric": {
+                "label": "Isometric"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {}
+            }
+          }
+        },
+        "preview": {
+          "props": {}
+        },
+        "cardControls": ["parallax", "isometric", "accent"]
+      }
+    }
+  ]
+}

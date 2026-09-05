@@ -1,0 +1,128 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "navbar-anim-001",
+      "type": "registry:component",
+      "title": "Шапка с имитацией sticky-scroll",
+      "description": "Полноценная шапка сайта: лого слева, навигация по центру, кнопка входа и основное действие справа. Рамка шапки зациклено сжимается по паддингу, набирает фон и тень, затем возвращается в развёрнутый вид — демонстрация эффекта, который на живой странице включает настоящая прокрутка.",
+      "categories": ["navbar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navbar-anim-001/navbar-anim-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navbar-anim-001.tsx"
+        }
+      ],
+      "docs": "Секция самодостаточна: один файл, ноль зависимостей, палитра в локальных --vibeui-navbar-anim-001-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark. container-type делает шапку собственным query-контейнером: от 52rem включается десктопная раскладка с центрированной навигацией, ниже — мобильное меню на HTML popover без единой строки JS. Сжатие при прокрутке показано зацикленной CSS-анимацией: паддинг рамки периодически уменьшается, фон становится плотнее, снизу проступает тень, затем шапка возвращается в исходный развёрнутый вид. animate={false} и prefers-reduced-motion останавливают цикл в развёрнутом состоянии.",
+      "meta": {
+        "tags": [
+          "navbar",
+          "header",
+          "navigation",
+          "sticky",
+          "animated",
+          "section"
+        ],
+        "ai": {
+          "export": "NavbarAnim001",
+          "usage": "<NavbarAnim001 brand=\"Полёт\" links={[{ label: \"Тарифы\", href: \"#pricing\" }]} actionLabel=\"Начать бесплатно\" />",
+          "summary": "Шапка сайта на всю ширину страницы: лого слева, центрированная навигация, кнопка входа и основное действие справа, мобильное меню на HTML popover. Рамка зациклено сжимается по паддингу и набирает фон с тенью, имитируя реакцию на прокрутку. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-navbar-anim-001-* — не подменяйте её токенами вашей темы",
+            "зацикленное сжатие рамки по паддингу с появлением фона и тени — опознавательный знак секции",
+            "центрированную навигацию между лого и действиями на десктопной ширине",
+            "мобильное меню на нативном popover без клиентского JS",
+            "container-type:inline-size на корне и переключение раскладки от 52rem собственной ширины",
+            "строку для класса .dark: без неё шапка останется светлой на тёмной странице чужого проекта",
+            "правило prefers-reduced-motion, останавливающее цикл сжатия"
+          ],
+          "adapt": [
+            "brand, links, actionLabel/actionHref и secondaryLabel/secondaryHref под свою навигацию",
+            "акцентный цвет через проп accent под свой бренд",
+            "open — разворачивает мобильную панель в потоке страницы для витрины или скриншота",
+            "animate — останавливает цикл сжатия, оставляя шапку в развёрнутом виде"
+          ],
+          "notes": [
+            "цикл сжатия — демонстрация: настоящей прокрутки страницы у превью нет, поэтому эффект зациклен по времени",
+            "open={true} отключает popover-поведение: Esc и клик мимо панели перестают её закрывать"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "animate",
+            "label": "Цикл сжатия",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Header with a sticky-scroll simulation",
+            "description": "A full site header: logo on the left, centered navigation, a login link and a primary action on the right. The header frame loops through shrinking its padding, gaining a background and a shadow, then returning to its expanded look — a demo of the effect real scrolling would trigger on a live page.",
+            "docs": "The section is self-contained: one file, zero dependencies, palette in local --vibeui-navbar-anim-001-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. container-type makes the header its own query container: a desktop layout with centered navigation kicks in from 52rem, below that a mobile menu runs on an HTML popover with no JavaScript at all. The scroll-compression is shown as a looping CSS animation: the frame's padding periodically shrinks, the background gets denser, a shadow appears underneath, then the header returns to its expanded state. animate={false} and prefers-reduced-motion stop the loop in the expanded state.",
+            "ai": {
+              "summary": "A full-width site header: logo on the left, centered navigation, a login link and a primary action on the right, with a JS-free popover mobile menu. The frame loops through a padding shrink and a background+shadow gain, simulating a scroll reaction. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-navbar-anim-001-* palette — do not swap it for your theme tokens",
+                "the looping frame compression with the background and shadow gain — the section's signature",
+                "the centered navigation between the logo and the actions at desktop width",
+                "the native popover mobile menu with no client JS",
+                "container-type:inline-size on the root and the layout switch from 52rem of the block's own width",
+                "the .dark class rule: without it the header stays light on a dark page in another project",
+                "the prefers-reduced-motion rule that stops the compression loop"
+              ],
+              "adapt": [
+                "brand, links, actionLabel/actionHref and secondaryLabel/secondaryHref for your own navigation",
+                "the accent color via the accent prop to match your brand",
+                "open — expands the mobile panel in the page flow for showcase or screenshot purposes",
+                "animate — stops the compression loop, leaving the header in its expanded look"
+              ],
+              "notes": [
+                "the compression loop is a demo: the preview has no real page scroll, so the effect is time-looped instead",
+                "open={true} disables popover behavior: Esc and clicking outside the panel no longer close it"
+              ],
+              "usage": "<NavbarAnim001 brand=\"Skyline\" links={[{ label: \"Pricing\", href: \"#pricing\" }]} actionLabel=\"Start for free\" />"
+            },
+            "controls": {
+              "animate": {
+                "label": "Compression loop"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "brand": "Skyline",
+                "links": [
+                  { "label": "Features", "href": "#features" },
+                  { "label": "Pricing", "href": "#pricing" },
+                  { "label": "Examples", "href": "#cases" },
+                  { "label": "Docs", "href": "#docs" }
+                ],
+                "actionLabel": "Start for free",
+                "actionHref": "#start",
+                "secondaryLabel": "Log in",
+                "secondaryHref": "#login"
+              }
+            }
+          }
+        },
+        "preview": {
+          "width": "full",
+          "aspect": "1280 / 100"
+        },
+        "cardControls": ["animate", "accent"]
+      }
+    }
+  ]
+}

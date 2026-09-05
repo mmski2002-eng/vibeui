@@ -1,0 +1,279 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "integrations-001",
+      "type": "registry:component",
+      "title": "Хаб",
+      "description": "Радиальный хаб интеграций: центральное приложение и узлы сторонних сервисов вокруг него, соединённые спицами, которые рисуются по очереди, а узлы пульсируют кольцом в момент «подключения».",
+      "categories": ["integrations"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "integrations-001/integrations-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/integrations-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-integrations-001-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark, поэтому в тёмном проекте не остаётся светлым. Позиции узлов считаются от их числа (углы делят окружность поровну), спицы рисуются через pathLength=\"1\" и stroke-dashoffset, задержка каждой связки — CSS-переменная --vibeui-integrations-001-i. Всё гаснет при prefers-reduced-motion.",
+      "meta": {
+        "tags": [
+          "integrations",
+          "hub",
+          "network",
+          "connections",
+          "animated",
+          "svg"
+        ],
+        "ai": {
+          "export": "Integrations001",
+          "usage": "<Integrations001 title=\"Интеграции\" badge=\"5 активно\" services={[{ label: \"Почта\" }, { label: \"Чат\" }, { label: \"Платежи\" }]} />",
+          "summary": "Радиальный хаб: центральное приложение и узлы сервисов вокруг него на спицах; спицы рисуются по очереди stroke-dashoffset, узел в конце пульсирует кольцом в момент «подключения». Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-integrations-001-* — не подменяйте её токенами вашей темы",
+            "радужное свечение под карточкой и его дыхание — опознавательный знак семейства",
+            "последовательную отрисовку спиц (stroke-dashoffset через pathLength=\"1\") и пульс узла в момент завершения",
+            "строку для класса .dark: без неё компонент останется светлым на тёмной странице чужого проекта",
+            "радиальную раскладку узлов вокруг центра — углы делятся поровну по их количеству",
+            "остановку всех анимаций при prefers-reduced-motion"
+          ],
+          "adapt": [
+            "список сервисов services: подпись каждого узла и их количество (4–6)",
+            "акцентный цвет через проп accent под свой бренд",
+            "заголовок группы и пилюлю badge",
+            "режимы gradient и isometric под контекст: свечение и наклон карточки"
+          ],
+          "notes": [
+            "gradient={false} убирает свечение, isometric наклоняет карточку",
+            "значки узлов — абстрактные плашки без брендов, различаются формой и цветом по индексу"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "gradient",
+            "label": "Свечение",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "isometric",
+            "label": "Изометрия",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Hub",
+            "description": "A central app connected to surrounding integration logos: spokes draw one by one to each service node, and every node pulses with a ring the moment it \"connects\".",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-integrations-001-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class, so it does not stay light in a dark project. Node positions are derived from their count (angles split the circle evenly), spokes draw via pathLength=\"1\" and stroke-dashoffset, and each link's delay comes from the --vibeui-integrations-001-i CSS variable. Everything stops under prefers-reduced-motion.",
+            "ai": {
+              "summary": "A radial hub: a central app with service nodes around it on spokes; spokes draw one by one via stroke-dashoffset, and the node at the end pulses with a ring the moment it \"connects\". Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-integrations-001-* palette — do not swap it for your theme tokens",
+                "the rainbow glow under the card and its breathing — the family's signature",
+                "the sequential spoke draw (stroke-dashoffset via pathLength=\"1\") and the node pulse when it completes",
+                "the .dark class rule: without it the component stays light on a dark page in another project",
+                "the radial layout of nodes around the center — angles split evenly by their count",
+                "stopping every animation under prefers-reduced-motion"
+              ],
+              "adapt": [
+                "the services list: each node's label and how many there are (4–6)",
+                "the accent color via the accent prop to match your brand",
+                "the group title and the badge pill",
+                "the gradient and isometric modes for the context: glow and card tilt"
+              ],
+              "notes": [
+                "gradient={false} removes the glow, isometric tilts the card",
+                "node icons are abstract brandless marks, distinguished by shape and color per index"
+              ],
+              "usage": "<Integrations001 title=\"Integrations\" badge=\"5 active\" services={[{ label: \"Mail\" }, { label: \"Chat\" }, { label: \"Payments\" }]} />"
+            },
+            "controls": {
+              "gradient": {
+                "label": "Glow"
+              },
+              "isometric": {
+                "label": "Isometric"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Integrations",
+                "badge": "5 active",
+                "services": [
+                  { "label": "Mail" },
+                  { "label": "Chat" },
+                  { "label": "Payments" },
+                  { "label": "Storage" },
+                  { "label": "Analytics" }
+                ]
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "title": "Интеграции",
+            "badge": "5 активно",
+            "services": [
+              { "label": "Почта" },
+              { "label": "Чат" },
+              { "label": "Платежи" },
+              { "label": "Хранилище" },
+              { "label": "Аналитика" }
+            ]
+          }
+        },
+        "cardControls": ["gradient", "isometric", "accent"]
+      }
+    },
+    {
+      "name": "integrations-002",
+      "type": "registry:component",
+      "title": "Орбита логотипов",
+      "description": "Значки интеграций вращаются по круговой орбите вокруг центрального значка бренда: каждый спутник крутится в кольце и одновременно поворачивается в обратную сторону, оставаясь прямым.",
+      "categories": ["integrations"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "integrations-002/integrations-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/integrations-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-integrations-002-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark, поэтому в тёмном проекте не остаётся светлым. Каждый спутник сидит в своём кольце: кольцо вращается на 360° бесконечно, а сам значок внутри крутится в обратную сторону с той же длительностью и той же отрицательной задержкой (--vibeui-integrations-002-i из --vibeui-integrations-002-n), поэтому поворот компенируется и значок остаётся прямым. Всё гаснет при prefers-reduced-motion.",
+      "meta": {
+        "tags": [
+          "integrations",
+          "orbit",
+          "logos",
+          "brand",
+          "animated",
+          "rotation"
+        ],
+        "ai": {
+          "export": "Integrations002",
+          "usage": "<Integrations002 title=\"Интеграции\" badge=\"5 сервисов\" satellites={[{ label: \"Почта\" }, { label: \"Чат\" }, { label: \"Платежи\" }]} />",
+          "summary": "Орбита логотипов: центральный значок бренда и вращающиеся вокруг него значки сервисов; каждый спутник крутится в кольце и одновременно контр-вращается, оставаясь прямым. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-integrations-002-* — не подменяйте её токенами вашей темы",
+            "радужное свечение под карточкой и его дыхание — опознавательный знак семейства",
+            "парную анимацию кольца и спутника с одинаковой длительностью и задержкой — без неё контр-вращение рассинхронизируется и значки начнут крутиться",
+            "строку для класса .dark: без неё компонент останется светлым на тёмной странице чужого проекта",
+            "равномерное распределение спутников по орбите независимо от их числа",
+            "остановку всех анимаций при prefers-reduced-motion"
+          ],
+          "adapt": [
+            "список спутников satellites: подпись каждого сервиса и их количество (4–6)",
+            "акцентный цвет через проп accent под свой бренд",
+            "заголовок группы и пилюлю badge",
+            "режимы gradient и isometric под контекст: свечение и наклон карточки"
+          ],
+          "notes": [
+            "gradient={false} убирает свечение, isometric наклоняет карточку",
+            "значки спутников и центра — абстрактные плашки без брендов, различаются формой и цветом по индексу"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "gradient",
+            "label": "Свечение",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "isometric",
+            "label": "Изометрия",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Logo orbit",
+            "description": "Integration logos orbiting a central brand mark: each satellite spins around the ring while counter-rotating at the same time, staying upright.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-integrations-002-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class, so it does not stay light in a dark project. Each satellite sits in its own ring: the ring spins 360° endlessly while the icon inside spins the opposite way with the same duration and the same negative delay (--vibeui-integrations-002-i out of --vibeui-integrations-002-n), so the rotation cancels out and the icon stays upright. Everything stops under prefers-reduced-motion.",
+            "ai": {
+              "summary": "A logo orbit: a central brand mark with service icons revolving around it; each satellite spins in its ring while counter-rotating, staying upright. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-integrations-002-* palette — do not swap it for your theme tokens",
+                "the rainbow glow under the card and its breathing — the family's signature",
+                "the paired ring/satellite animation with matching duration and delay — without it the counter-rotation desyncs and icons start spinning",
+                "the .dark class rule: without it the component stays light on a dark page in another project",
+                "the even distribution of satellites around the orbit regardless of their count",
+                "stopping every animation under prefers-reduced-motion"
+              ],
+              "adapt": [
+                "the satellites list: each service's label and how many there are (4–6)",
+                "the accent color via the accent prop to match your brand",
+                "the group title and the badge pill",
+                "the gradient and isometric modes for the context: glow and card tilt"
+              ],
+              "notes": [
+                "gradient={false} removes the glow, isometric tilts the card",
+                "satellite and hub icons are abstract brandless marks, distinguished by shape and color per index"
+              ],
+              "usage": "<Integrations002 title=\"Integrations\" badge=\"5 services\" satellites={[{ label: \"Mail\" }, { label: \"Chat\" }, { label: \"Payments\" }]} />"
+            },
+            "controls": {
+              "gradient": {
+                "label": "Glow"
+              },
+              "isometric": {
+                "label": "Isometric"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Integrations",
+                "badge": "5 services",
+                "satellites": [
+                  { "label": "Mail" },
+                  { "label": "Chat" },
+                  { "label": "Payments" },
+                  { "label": "Storage" },
+                  { "label": "Analytics" }
+                ]
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "title": "Интеграции",
+            "badge": "5 сервисов",
+            "satellites": [
+              { "label": "Почта" },
+              { "label": "Чат" },
+              { "label": "Платежи" },
+              { "label": "Хранилище" },
+              { "label": "Аналитика" }
+            ]
+          }
+        },
+        "cardControls": ["gradient", "isometric", "accent"]
+      }
+    }
+  ]
+}

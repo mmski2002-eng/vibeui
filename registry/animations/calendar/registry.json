@@ -1,0 +1,579 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "calendar-anim-001",
+      "type": "registry:component",
+      "title": "Пикер даты",
+      "description": "Календарь-пикер даты с выбранным днём и подсветкой диапазона: день пружинно появляется и держит пульсирующее кольцо, диапазон плавно растягивается между двумя датами.",
+      "categories": ["calendar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "calendar-anim-001/calendar-anim-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/calendar-anim-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-calendar-anim-001-* переменных. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Выбранный день появляется пружинным scale-in и держит бесконечное пульсирующее кольцо; диапазон между двумя датами — сплошная мягкая заливка, которая растягивается слева направо через clip-path со ступенчатой задержкой по дате. Всё гаснет при prefers-reduced-motion.",
+      "meta": {
+        "tags": [
+          "calendar",
+          "date-picker",
+          "range",
+          "selection",
+          "animated",
+          "pulse"
+        ],
+        "ai": {
+          "export": "CalendarAnim001",
+          "usage": "<CalendarAnim001 title=\"Сентябрь 2026\" days={[{ day: 16, state: \"selected\" }]} />",
+          "summary": "Календарь-пикер даты: сетка месяца с сокращёнными днями недели, выбранный день читается пружинным scale-in и пульсирующим кольцом, диапазон между двумя датами — сплошная мягкая заливка, растягивающаяся слева направо. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-calendar-anim-001-* — не подменяйте её токенами вашей темы",
+            "правило для класса .dark: без него компонент останется светлым на тёмной странице чужого проекта",
+            "пружинный scale-in выбранного дня и бесконечное пульсирующее кольцо вокруг него",
+            "сплошную мягкую заливку диапазона, которая растягивается слева направо со ступенчатой задержкой по дате",
+            "сетку из 7 колонок с сокращёнными днями недели над числами"
+          ],
+          "adapt": [
+            "состав days: номер, приглушённость соседнего месяца и state (selected/range-start/range/range-end)",
+            "подписи weekdays под свой язык или локаль",
+            "акцентный цвет через проп accent под свой бренд",
+            "заголовок title и пилюлю badge",
+            "переключатели pulse и highlightRange — пульс выбранного дня и заливку диапазона можно выключить"
+          ],
+          "notes": [
+            "pulse={false} убирает пульсирующее кольцо, highlightRange={false} — заливку диапазона",
+            "порядок элементов в days задаёт визуальную сетку по 7 в ряд — раскладка не проверяет календарные даты"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "pulse",
+            "label": "Пульс выбора",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "highlightRange",
+            "label": "Заливка диапазона",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Date picker",
+            "description": "A calendar date picker with a selected day and range highlight: the day springs in and keeps a pulsing ring, the range smoothly stretches out between two dates.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-calendar-anim-001-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. The selected day appears with a spring scale-in and keeps an infinite pulsing ring; the range between two dates is a solid soft fill that stretches left to right via clip-path with a staggered delay per date. Everything stops under prefers-reduced-motion.",
+            "ai": {
+              "summary": "A calendar date picker: a month grid with abbreviated weekday labels, the selected day reads through a spring scale-in and a pulsing ring, and the range between two dates is a solid soft fill stretching left to right. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-calendar-anim-001-* palette — do not swap it for your theme tokens",
+                "the .dark class rule: without it the component stays light on a dark page in another project",
+                "the spring scale-in of the selected day and the infinite pulsing ring around it",
+                "the solid soft range fill that stretches left to right with a staggered delay per date",
+                "the 7-column grid with abbreviated weekday labels above the numbers"
+              ],
+              "adapt": [
+                "the days content: number, adjacent-month muted flag and state (selected/range-start/range/range-end)",
+                "the weekdays labels for your language or locale",
+                "the accent color via the accent prop to match your brand",
+                "the title and the badge pill",
+                "the pulse and highlightRange toggles — the selected day's pulse and the range fill can be turned off"
+              ],
+              "notes": [
+                "pulse={false} removes the pulsing ring, highlightRange={false} removes the range fill",
+                "the order of entries in days sets the visual 7-per-row grid — the layout does not validate calendar dates"
+              ],
+              "usage": "<CalendarAnim001 title=\"September 2026\" days={[{ day: 16, state: \"selected\" }]} />"
+            },
+            "controls": {
+              "pulse": {
+                "label": "Selection pulse"
+              },
+              "highlightRange": {
+                "label": "Range fill"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "September 2026",
+                "badge": "Mo–Su",
+                "weekdays": ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
+                "days": [
+                  { "day": 31, "muted": true },
+                  { "day": 1 },
+                  { "day": 2 },
+                  { "day": 3 },
+                  { "day": 4 },
+                  { "day": 5 },
+                  { "day": 6 },
+                  { "day": 7 },
+                  { "day": 8 },
+                  { "day": 9, "state": "range-start" },
+                  { "day": 10, "state": "range" },
+                  { "day": 11, "state": "range" },
+                  { "day": 12, "state": "range-end" },
+                  { "day": 13 },
+                  { "day": 14 },
+                  { "day": 15 },
+                  { "day": 16, "state": "selected" },
+                  { "day": 17 },
+                  { "day": 18 },
+                  { "day": 19 },
+                  { "day": 20 },
+                  { "day": 21 },
+                  { "day": 22 },
+                  { "day": 23 },
+                  { "day": 24 },
+                  { "day": 25 },
+                  { "day": 26 },
+                  { "day": 27 },
+                  { "day": 28 },
+                  { "day": 29 },
+                  { "day": 30 },
+                  { "day": 1, "muted": true },
+                  { "day": 2, "muted": true },
+                  { "day": 3, "muted": true },
+                  { "day": 4, "muted": true }
+                ]
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "title": "Сентябрь 2026",
+            "badge": "Пн–Вс",
+            "days": [
+              { "day": 31, "muted": true },
+              { "day": 1 },
+              { "day": 2 },
+              { "day": 3 },
+              { "day": 4 },
+              { "day": 5 },
+              { "day": 6 },
+              { "day": 7 },
+              { "day": 8 },
+              { "day": 9, "state": "range-start" },
+              { "day": 10, "state": "range" },
+              { "day": 11, "state": "range" },
+              { "day": 12, "state": "range-end" },
+              { "day": 13 },
+              { "day": 14 },
+              { "day": 15 },
+              { "day": 16, "state": "selected" },
+              { "day": 17 },
+              { "day": 18 },
+              { "day": 19 },
+              { "day": 20 },
+              { "day": 21 },
+              { "day": 22 },
+              { "day": 23 },
+              { "day": 24 },
+              { "day": 25 },
+              { "day": 26 },
+              { "day": 27 },
+              { "day": 28 },
+              { "day": 29 },
+              { "day": 30 },
+              { "day": 1, "muted": true },
+              { "day": 2, "muted": true },
+              { "day": 3, "muted": true },
+              { "day": 4, "muted": true }
+            ]
+          }
+        },
+        "cardControls": ["pulse", "highlightRange", "accent"]
+      }
+    },
+    {
+      "name": "calendar-anim-002",
+      "type": "registry:component",
+      "title": "Список событий",
+      "description": "Список событий в формате повестки дня: время, название и цветная полоска категории слева, строки поднимаются снизу по очереди и дышат бесконечным циклом.",
+      "categories": ["calendar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "calendar-anim-002/calendar-anim-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/calendar-anim-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-calendar-anim-002-* переменных. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Строки дышат по кругу: поднимаются снизу с растяжкой по номеру строки, держатся видимыми, затем вместе уходят вниз, и цикл повторяется. Цвет полоски слева берётся из палитры категорий 1–4. Всё гаснет при prefers-reduced-motion.",
+      "meta": {
+        "tags": [
+          "calendar",
+          "agenda",
+          "events",
+          "list",
+          "animated",
+          "stagger"
+        ],
+        "ai": {
+          "export": "CalendarAnim002",
+          "usage": "<CalendarAnim002 title=\"Сегодня\" events={[{ time: \"09:00\", label: \"Дейли-синк\", category: 1 }]} />",
+          "summary": "Повестка дня: список событий с временем, названием и цветной полоской категории слева; строки поднимаются снизу по очереди с растяжкой, держатся видимыми и уходят вниз бесконечным циклом. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-calendar-anim-002-* — не подменяйте её токенами вашей темы",
+            "правило для класса .dark: без него компонент останется светлым на тёмной странице чужого проекта",
+            "цветную полоску категории слева от каждой строки",
+            "бесконечный цикл появления строк снизу с растяжкой по номеру строки",
+            "время в табличных цифрах слева и подпись места под названием"
+          ],
+          "adapt": [
+            "содержимое events: time, label, place и category (1–4)",
+            "акцентный цвет через проп accent под свой бренд",
+            "заголовок title и счётчик badge",
+            "переключатели showPlace и loop — подпись места и цикл анимации можно выключить"
+          ],
+          "notes": [
+            "loop={false} останавливает строки в видимом состоянии, showPlace={false} скрывает вторую строку",
+            "событие без category красит полоску акцентным цветом accent"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "loop",
+            "label": "Цикл появления",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "showPlace",
+            "label": "Показывать место",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Event list",
+            "description": "An agenda style list of upcoming calendar events: time, title and a colored category bar on the left, rows rise from the bottom one after another in an endless breathing loop.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-calendar-anim-002-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. Rows breathe in a loop: they rise from the bottom with a stagger per row index, hold visible, then move down together and the cycle repeats. The left bar color comes from category palette 1–4. Everything stops under prefers-reduced-motion.",
+            "ai": {
+              "summary": "An agenda: a list of events with time, title and a colored category bar on the left; rows rise from the bottom one after another with a stagger, hold visible and fall away in an endless loop. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-calendar-anim-002-* palette — do not swap it for your theme tokens",
+                "the .dark class rule: without it the component stays light on a dark page in another project",
+                "the colored category bar to the left of each row",
+                "the endless loop of rows rising from the bottom with a stagger per row index",
+                "the tabular-figure time on the left and the place subline under the title"
+              ],
+              "adapt": [
+                "the events content: time, label, place and category (1–4)",
+                "the accent color via the accent prop to match your brand",
+                "the title and the counter badge",
+                "the showPlace and loop toggles — the place subline and the animation loop can be turned off"
+              ],
+              "notes": [
+                "loop={false} holds the rows in the visible state, showPlace={false} hides the second line",
+                "an event without category paints the bar with the accent color"
+              ],
+              "usage": "<CalendarAnim002 title=\"Today\" events={[{ time: \"09:00\", label: \"Daily sync\", category: 1 }]} />"
+            },
+            "controls": {
+              "loop": {
+                "label": "Rise loop"
+              },
+              "showPlace": {
+                "label": "Show place"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Today",
+                "badge": "5",
+                "events": [
+                  {
+                    "time": "09:00",
+                    "label": "Daily sync",
+                    "place": "Zoom",
+                    "category": 1
+                  },
+                  {
+                    "time": "11:30",
+                    "label": "Design review",
+                    "place": "Meeting room 2",
+                    "category": 2
+                  },
+                  {
+                    "time": "14:00",
+                    "label": "Focus time",
+                    "place": "No calls",
+                    "category": 3
+                  },
+                  {
+                    "time": "16:30",
+                    "label": "Client call",
+                    "place": "Google Meet",
+                    "category": 4
+                  },
+                  {
+                    "time": "18:00",
+                    "label": "Weekly wrap-up",
+                    "place": "Slack thread",
+                    "category": 1
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "title": "Сегодня",
+            "badge": "5",
+            "events": [
+              {
+                "time": "09:00",
+                "label": "Дейли-синк",
+                "place": "Zoom",
+                "category": 1
+              },
+              {
+                "time": "11:30",
+                "label": "Ревью дизайна",
+                "place": "Переговорная 2",
+                "category": 2
+              },
+              {
+                "time": "14:00",
+                "label": "Фокус-время",
+                "place": "Без звонков",
+                "category": 3
+              },
+              {
+                "time": "16:30",
+                "label": "Созвон с клиентом",
+                "place": "Google Meet",
+                "category": 4
+              },
+              {
+                "time": "18:00",
+                "label": "Итоги недели",
+                "place": "Слэк-тред",
+                "category": 1
+              }
+            ]
+          }
+        },
+        "cardControls": ["loop", "showPlace", "accent"]
+      }
+    },
+    {
+      "name": "calendar-anim-003",
+      "type": "registry:component",
+      "title": "Месяц целиком",
+      "description": "Полная сетка месяца с точками событий под числами: точки проявляются волной по диагонали, а сегодняшний день держит бесконечное пульсирующее кольцо.",
+      "categories": ["calendar"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "calendar-anim-003/calendar-anim-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/calendar-anim-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-calendar-anim-003-* переменных. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Точки событий проявляются не разом и не по порядку чтения, а волной по диагонали: задержка растёт с суммой номера строки и колонки, поэтому фронт волны идёт из левого верхнего угла к правому нижнему. Сегодняшний день отмечен кольцом, которое пульсирует бесконечно. Всё гаснет при prefers-reduced-motion.",
+      "meta": {
+        "tags": ["calendar", "month", "grid", "events", "animated", "wave"],
+        "ai": {
+          "export": "CalendarAnim003",
+          "usage": "<CalendarAnim003 title=\"Сентябрь 2026\" days={[{ day: 16, today: true, events: [2] }]} />",
+          "summary": "Полная сетка месяца с сокращёнными днями недели: под числами дней — до трёх точек событий, которые проявляются волной по диагонали, а сегодняшний день держит бесконечное пульсирующее кольцо. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-calendar-anim-003-* — не подменяйте её токенами вашей темы",
+            "правило для класса .dark: без него компонент останется светлым на тёмной странице чужого проекта",
+            "волну по диагонали для точек событий — задержка суммой номера строки и колонки, а не построчный порядок",
+            "пульсирующее кольцо вокруг сегодняшнего дня",
+            "сетку из 7 колонок с сокращёнными днями недели над числами"
+          ],
+          "adapt": [
+            "состав days: номер, muted, today и events (до трёх меток категорий 1–4)",
+            "подписи weekdays под свой язык или локаль",
+            "акцентный цвет через проп accent под свой бренд",
+            "заголовок title и бейдж badge",
+            "переключатели wave и pulse — волну точек и пульс сегодняшнего дня можно выключить"
+          ],
+          "notes": [
+            "wave={false} показывает все точки сразу, pulse={false} убирает кольцо сегодняшнего дня",
+            "events хранит категории цветом (1–4), не текстом — на день помещается до трёх точек"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "wave",
+            "label": "Волна точек",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "pulse",
+            "label": "Пульс сегодня",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Month view",
+            "description": "A full month calendar grid with events placed on days: dots reveal in a diagonal wave, and today's cell keeps an infinite pulsing ring.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-calendar-anim-003-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. Event dots do not reveal all at once or in reading order — they reveal in a diagonal wave: the delay grows with the sum of row and column index, so the wave front moves from the top-left corner to the bottom-right. Today's cell is marked with a ring that pulses infinitely. Everything stops under prefers-reduced-motion.",
+            "ai": {
+              "summary": "A full month grid with abbreviated weekday labels: up to three event dots sit under each day number and reveal in a diagonal wave, while today's cell keeps an infinite pulsing ring. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-calendar-anim-003-* palette — do not swap it for your theme tokens",
+                "the .dark class rule: without it the component stays light on a dark page in another project",
+                "the diagonal wave for event dots — the delay is the sum of row and column index, not row-by-row order",
+                "the pulsing ring around today's cell",
+                "the 7-column grid with abbreviated weekday labels above the numbers"
+              ],
+              "adapt": [
+                "the days content: number, muted, today and events (up to three category marks 1–4)",
+                "the weekdays labels for your language or locale",
+                "the accent color via the accent prop to match your brand",
+                "the title and the badge",
+                "the wave and pulse toggles — the dot wave and today's pulse can be turned off"
+              ],
+              "notes": [
+                "wave={false} shows all dots at once, pulse={false} removes today's ring",
+                "events stores categories as color (1–4), not text — up to three dots per day"
+              ],
+              "usage": "<CalendarAnim003 title=\"September 2026\" days={[{ day: 16, today: true, events: [2] }]} />"
+            },
+            "controls": {
+              "wave": {
+                "label": "Dot wave"
+              },
+              "pulse": {
+                "label": "Today pulse"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "September 2026",
+                "badge": "8 events",
+                "weekdays": ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
+                "days": [
+                  { "day": 31, "muted": true },
+                  { "day": 1 },
+                  { "day": 2 },
+                  { "day": 3 },
+                  { "day": 4, "events": [1] },
+                  { "day": 5 },
+                  { "day": 6 },
+                  { "day": 7 },
+                  { "day": 8 },
+                  { "day": 9, "events": [2] },
+                  { "day": 10 },
+                  { "day": 11, "events": [1, 3] },
+                  { "day": 12 },
+                  { "day": 13 },
+                  { "day": 14 },
+                  { "day": 15 },
+                  { "day": 16, "today": true, "events": [2] },
+                  { "day": 17 },
+                  { "day": 18, "events": [4, 1] },
+                  { "day": 19 },
+                  { "day": 20 },
+                  { "day": 21 },
+                  { "day": 22, "events": [3] },
+                  { "day": 23 },
+                  { "day": 24 },
+                  { "day": 25, "events": [2, 4] },
+                  { "day": 26 },
+                  { "day": 27 },
+                  { "day": 28 },
+                  { "day": 29, "events": [1] },
+                  { "day": 30 },
+                  { "day": 1, "muted": true },
+                  { "day": 2, "muted": true },
+                  { "day": 3, "muted": true },
+                  { "day": 4, "muted": true }
+                ]
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "title": "Сентябрь 2026",
+            "badge": "8 событий",
+            "days": [
+              { "day": 31, "muted": true },
+              { "day": 1 },
+              { "day": 2 },
+              { "day": 3 },
+              { "day": 4, "events": [1] },
+              { "day": 5 },
+              { "day": 6 },
+              { "day": 7 },
+              { "day": 8 },
+              { "day": 9, "events": [2] },
+              { "day": 10 },
+              { "day": 11, "events": [1, 3] },
+              { "day": 12 },
+              { "day": 13 },
+              { "day": 14 },
+              { "day": 15 },
+              { "day": 16, "today": true, "events": [2] },
+              { "day": 17 },
+              { "day": 18, "events": [4, 1] },
+              { "day": 19 },
+              { "day": 20 },
+              { "day": 21 },
+              { "day": 22, "events": [3] },
+              { "day": 23 },
+              { "day": 24 },
+              { "day": 25, "events": [2, 4] },
+              { "day": 26 },
+              { "day": 27 },
+              { "day": 28 },
+              { "day": 29, "events": [1] },
+              { "day": 30 },
+              { "day": 1, "muted": true },
+              { "day": 2, "muted": true },
+              { "day": 3, "muted": true },
+              { "day": 4, "muted": true }
+            ]
+          }
+        },
+        "cardControls": ["wave", "pulse", "accent"]
+      }
+    }
+  ]
+}

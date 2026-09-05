@@ -1,0 +1,263 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "geo-001",
+      "type": "registry:component",
+      "title": "Глобус",
+      "description": "Вращающийся глобус из точек-континентов с маркерами городов, пульсом и дугами-соединениями между ними; вращение — бесконечная прокрутка точек внутри круглой маски сферы.",
+      "categories": ["geo"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "geo-001/geo-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/geo-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-geo-001-* переменных. Тему берёт из окружения через light-dark() плюс строку для класса .dark, поэтому в тёмном проекте не остаётся светлым. Вращение сферы — не поворот, а бесконечная горизонтальная прокрутка полосы точек-континентов шириной ровно с диаметр сферы; полоса продублирована, поэтому шов между повтором не виден, а круглый clip-path естественно сужает видимую ширину у полюсов, продавая объём без единой строки JS. Поверх сферы — маркеры городов с пульсирующим кольцом и дуги маршрутов между ними с бегущим пунктиром, они не участвуют в прокрутке и остаются развёрнутыми к зрителю. Радиальный градиент поверх сферы одновременно даёт блик сверху слева и лёгкое затемнение к краю. Секция декоративна и размечена как role=\"img\" с aria-label, всё содержимое внутри aria-hidden. Всё останавливается при prefers-reduced-motion.",
+      "meta": {
+        "tags": [
+          "globe",
+          "geo",
+          "map",
+          "dots",
+          "rotate",
+          "connections",
+          "animated"
+        ],
+        "ai": {
+          "export": "Geo001",
+          "usage": "<Geo001 label=\"Глобус\" accent=\"#ff6b3d\" />",
+          "summary": "Вращающийся глобус из точек-континентов: горизонтальная прокрутка продублированной полосы точек внутри круглой маски сферы имитирует вращение, поверх — маркеры городов с пульсом и дуги маршрутов между ними с бегущим пунктиром. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-geo-001-* — не подменяйте её токенами вашей темы",
+            "приём вращения: продублированная полоса точек шириной с диаметр сферы едет по translateX внутри круглого clip-path — сам поворот не анимируется",
+            "маркеры городов с пульсирующим кольцом (ping) и дуги маршрутов с бегущим пунктиром (stroke-dashoffset) — они статичны относительно прокрутки точек",
+            "радиальный градиент поверх сферы: блик сверху слева и затемнение к краю — единственная имитация объёма",
+            "строку для класса .dark: без неё компонент останется светлым на тёмной странице чужого проекта",
+            "role=\"img\" и aria-label на секции: содержимое декоративно, не текстовое"
+          ],
+          "adapt": [
+            "акцентный цвет маркеров и дуг через проп accent под свой бренд",
+            "текст aria-label через проп label под контекст использования",
+            "режимы grid, markers и paused под контекст: тонкие линии экватора и меридиана, маркеры городов с дугами, остановку всей анимации"
+          ],
+          "notes": [
+            "grid={false} убирает линии экватора, меридиана и рамку сферы, markers={false} убирает маркеры городов и дуги, paused={true} останавливает все анимации",
+            "точки-континенты — стилизованные кластеры, а не географическая карта; компонент декоративный и не принимает произвольный контент"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "grid",
+            "label": "Сетка",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "markers",
+            "label": "Маркеры",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "paused",
+            "label": "Пауза",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Globe",
+            "description": "A rotating globe of dotted continents with location markers and connection lines.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-geo-001-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class, so it does not stay light in a dark project. The sphere rotation is not an actual turn but an infinite horizontal scroll of a dot-continent strip exactly as wide as the sphere's diameter; the strip is duplicated so the seam between repeats is invisible, and the circular clip-path naturally narrows the visible width near the poles, selling volume without a single line of JS. On top of the sphere sit city markers with a pulsing ring and route arcs between them with a running dash, staying static relative to the dot scroll and always facing the viewer. A radial gradient over the sphere gives a top-left highlight and a slight edge darkening at once. The section is decorative and marked as role=\"img\" with an aria-label, all inner content is aria-hidden. Everything stops under prefers-reduced-motion.",
+            "ai": {
+              "summary": "A rotating globe of dotted continents: a horizontal scroll of a duplicated dot strip inside a circular sphere mask fakes the rotation, while city markers with a pulsing ring and route arcs with a running dash sit on top. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-geo-001-* palette — do not swap it for your theme tokens",
+                "the rotation trick: a duplicated dot strip as wide as the sphere's diameter scrolls via translateX inside a circular clip-path — the turn itself is never animated",
+                "the city markers with a pulsing ring (ping) and the route arcs with a running dash (stroke-dashoffset) — they stay static relative to the dot scroll",
+                "the radial gradient over the sphere: a top-left highlight and edge darkening — the only volume cue",
+                "the .dark class rule: without it the component stays light on a dark page in another project",
+                "role=\"img\" and aria-label on the section: the content is decorative, not textual"
+              ],
+              "adapt": [
+                "the marker and arc accent color via the accent prop to match your brand",
+                "the aria-label text via the label prop for your context",
+                "the grid, markers and paused modes for the context: equator/meridian lines, city markers with arcs, stopping all animation"
+              ],
+              "notes": [
+                "grid={false} removes the equator, meridian and sphere outline, markers={false} removes the city markers and arcs, paused={true} stops all animation",
+                "the dotted continents are stylized clusters, not a geographic map; the component is decorative and does not accept arbitrary content"
+              ],
+              "usage": "<Geo001 label=\"Globe\" accent=\"#ff6b3d\" />"
+            },
+            "controls": {
+              "grid": {
+                "label": "Grid"
+              },
+              "markers": {
+                "label": "Markers"
+              },
+              "paused": {
+                "label": "Paused"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "Rotating globe with city markers and connection lines"
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "label": "Вращающийся глобус с маркерами городов и линиями соединений"
+          }
+        },
+        "cardControls": ["grid", "markers", "paused", "accent"]
+      }
+    },
+    {
+      "name": "geo-002",
+      "type": "registry:component",
+      "title": "Падение пина",
+      "description": "Пины локаций падают с отскоком на абстрактное радар-поле из концентрических колец и вращающегося луча, по очереди оставляя расходящуюся и гаснущую рябь в точке приземления.",
+      "categories": ["geo"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "geo-002/geo-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/geo-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-geo-002-* переменных. Тему берёт из окружения через light-dark() плюс строку для класса .dark, поэтому в тёмном проекте не остаётся светлым. Три пина используют общий keyframe падения с отскоком, у каждого — отрицательная задержка по индексу, поэтому падения идут внахлёст один за другим по кругу. В момент касания у того же пина стартует отдельное кольцо ряби с синхронизированной задержкой: оно расходится и гаснет ровно в точке приземления. Радар-поле — статичные концентрические окружности и перекрестие, поверх которых непрерывно вращается клиновидный луч-сектор, независимо от циклов падения. Секция декоративна и размечена как role=\"img\" с aria-label, всё содержимое внутри aria-hidden. Всё останавливается при prefers-reduced-motion.",
+      "meta": {
+        "tags": [
+          "pin",
+          "location",
+          "radar",
+          "geo",
+          "drop",
+          "ripple",
+          "animated"
+        ],
+        "ai": {
+          "export": "Geo002",
+          "usage": "<Geo002 label=\"Радар\" accent=\"#22c55e\" sweep={false} />",
+          "summary": "Пины локаций падают с отскоком на абстрактное радар-поле из концентрических колец и вращающегося луча, по очереди, каждый оставляет расходящуюся и гаснущую рябь точно в точке приземления. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-geo-002-* — не подменяйте её токенами вашей темы",
+            "общий keyframe падения с отскоком и отрицательную задержку по индексу пина — этим приёмом падения идут внахлёст, без ручного JS-таймера",
+            "кольцо ряби, синхронизированное с моментом касания того же пина той же задержкой",
+            "вращающийся клиновидный луч радара поверх статичных концентрических колец и перекрестия",
+            "строку для класса .dark: без неё компонент останется светлым на тёмной странице чужого проекта",
+            "role=\"img\" и aria-label на секции: содержимое декоративно, не текстовое"
+          ],
+          "adapt": [
+            "акцентный цвет пинов, ряби и луча через проп accent под свой бренд",
+            "текст aria-label через проп label под контекст использования",
+            "режимы sweep, rings и paused под контекст: вращающийся луч, концентрическое поле, остановку всей анимации"
+          ],
+          "notes": [
+            "sweep={false} убирает вращающийся луч радара, rings={false} убирает концентрические кольца и перекрестие, paused={true} останавливает все анимации",
+            "точки приземления и число пинов фиксированы — компонент декоративный и не принимает произвольный контент"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "sweep",
+            "label": "Луч радара",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "rings",
+            "label": "Кольца поля",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "paused",
+            "label": "Пауза",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Pin Drop",
+            "description": "Location pins dropping onto an abstract radar field with concentric ripples.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-geo-002-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class, so it does not stay light in a dark project. The three pins share one bounce-drop keyframe, each with a negative delay by index, so the drops overlap one after another in a loop. At the moment a pin touches down, a matching ripple ring starts with the same synchronized delay: it expands and fades exactly at the landing spot. The radar field is a set of static concentric circles and a crosshair, with a wedge-shaped sweep beam rotating continuously on top, independent of the drop cycles. The section is decorative and marked as role=\"img\" with an aria-label, all inner content is aria-hidden. Everything stops under prefers-reduced-motion.",
+            "ai": {
+              "summary": "Location pins drop with a bounce onto an abstract radar field of concentric rings and a rotating sweep beam, one after another, each leaving an expanding, fading ripple exactly at its landing spot. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-geo-002-* palette — do not swap it for your theme tokens",
+                "the shared bounce-drop keyframe with a negative delay by pin index — this trick staggers the drops without a manual JS timer",
+                "the ripple ring synchronized to the same pin's landing moment via the same delay",
+                "the rotating wedge-shaped radar sweep beam over the static concentric rings and crosshair",
+                "the .dark class rule: without it the component stays light on a dark page in another project",
+                "role=\"img\" and aria-label on the section: the content is decorative, not textual"
+              ],
+              "adapt": [
+                "the pin, ripple and sweep accent color via the accent prop to match your brand",
+                "the aria-label text via the label prop for your context",
+                "the sweep, rings and paused modes for the context: the rotating beam, the concentric field, stopping all animation"
+              ],
+              "notes": [
+                "sweep={false} removes the rotating radar beam, rings={false} removes the concentric rings and crosshair, paused={true} stops all animation",
+                "the landing spots and pin count are fixed — the component is decorative and does not accept arbitrary content"
+              ],
+              "usage": "<Geo002 label=\"Radar\" accent=\"#22c55e\" sweep={false} />"
+            },
+            "controls": {
+              "sweep": {
+                "label": "Radar beam"
+              },
+              "rings": {
+                "label": "Field rings"
+              },
+              "paused": {
+                "label": "Paused"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "Location pins dropping onto a radar field with expanding ripples"
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "label": "Пины локаций падают на радар-поле с расходящейся рябью"
+          }
+        },
+        "cardControls": ["sweep", "rings", "paused", "accent"]
+      }
+    }
+  ]
+}

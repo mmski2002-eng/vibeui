@@ -1,0 +1,1125 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "chart-anim-001",
+      "type": "registry:component",
+      "title": "Столбчатый график",
+      "description": "Анимированная столбчатая диаграмма с крупным значением, пилюлей тренда и фоновой сеткой: столбики растут снизу вверх по очереди при появлении на экране.",
+      "categories": ["chart"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "chart-anim-001/chart-anim-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/chart-anim-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-chart-anim-001-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Каждый столбик — заливка, растущая по вертикали от 0 до полной высоты; задержка растёт с индексом столбика через CSS-переменную, поэтому подходит для любого числа точек. Всё гаснет при prefers-reduced-motion.",
+      "meta": {
+        "tags": ["chart", "bar", "analytics", "animated", "trend", "dashboard"],
+        "ai": {
+          "export": "ChartAnim001",
+          "usage": "<ChartAnim001 title=\"Выручка\" value=\"48,2k ₽\" trend={12.4} points={[{ label: \"Пн\", value: 32 }]} />",
+          "summary": "Столбчатая диаграмма: заголовок с периодом, крупное значение и пилюля тренда сверху, столбики растут снизу вверх с задержкой по индексу, под ними — сетка и подписи оси. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-chart-anim-001-* — не подменяйте её токенами вашей темы",
+            "рост столбиков снизу вверх со ступенчатой задержкой по индексу — опознавательный знак компонента",
+            "пилюлю тренда с цветом по знаку изменения (зелёный/красный)",
+            "фоновую сетку горизонтальных линий за столбиками",
+            "строку для класса .dark: без неё компонент останется светлым на тёмной странице чужого проекта",
+            "скрытый для зрячих текстовый список значений для скринридеров"
+          ],
+          "adapt": [
+            "набор точек points: подписи и значения под свои данные",
+            "заголовок, период period и крупное значение value",
+            "акцентный цвет через проп accent под свой бренд",
+            "режимы gradient, fadeOut и isometric под контекст: заливка столбиков, растворение края, наклон"
+          ],
+          "notes": [
+            "gradient={false} делает заливку столбиков плоской, fadeOut растворяет правый край сетки, isometric наклоняет карточку",
+            "высота столбика считается от максимума в points — новый набор данных пересчитывает пропорции сам"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "gradient",
+            "label": "Градиент",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "fadeOut",
+            "label": "Растворение края",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "isometric",
+            "label": "Изометрия",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Bar",
+            "description": "An animated bar chart with a value, trend badge, and grid: bars grow from the bottom up one by one as they enter the viewport.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-chart-anim-001-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. Each bar is a fill that grows vertically from 0 to full height; the delay grows with the bar's index via a CSS custom property, so it works for any number of points. Everything stops under prefers-reduced-motion.",
+            "ai": {
+              "summary": "A bar chart: header with period, a large value and a trend badge on top, bars grow bottom-up with a per-index delay, a grid and axis labels sit underneath. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-chart-anim-001-* palette — do not swap it for your theme tokens",
+                "bars growing bottom-up with a stepped per-index delay — the component's signature",
+                "the trend badge colored by the sign of the change (green/red)",
+                "the background grid of horizontal lines behind the bars",
+                "the .dark class rule: without it the component stays light on a dark page in another project",
+                "the visually hidden value list for screen readers"
+              ],
+              "adapt": [
+                "the points array: labels and values for your data",
+                "the title, period and the large value prop",
+                "the accent color via the accent prop to match your brand",
+                "the gradient, fadeOut and isometric modes for the context: bar fill, edge fade, tilt"
+              ],
+              "notes": [
+                "gradient={false} makes the bar fill flat, fadeOut dissolves the grid's right edge, isometric tilts the card",
+                "bar height is computed from the max of points — a new dataset rescales itself automatically"
+              ],
+              "usage": "<ChartAnim001 title=\"Revenue\" value=\"$48.2k\" trend={12.4} points={[{ label: \"Mon\", value: 32 }]} />"
+            },
+            "controls": {
+              "gradient": {
+                "label": "Gradient"
+              },
+              "fadeOut": {
+                "label": "Edge fade"
+              },
+              "isometric": {
+                "label": "Isometric"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Revenue",
+                "period": "7d",
+                "value": "$48.2k",
+                "trend": 12.4,
+                "points": [
+                  {
+                    "label": "Mon",
+                    "value": 32
+                  },
+                  {
+                    "label": "Tue",
+                    "value": 41
+                  },
+                  {
+                    "label": "Wed",
+                    "value": 38
+                  },
+                  {
+                    "label": "Thu",
+                    "value": 55
+                  },
+                  {
+                    "label": "Fri",
+                    "value": 62
+                  },
+                  {
+                    "label": "Sat",
+                    "value": 47
+                  },
+                  {
+                    "label": "Sun",
+                    "value": 58
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "title": "Выручка",
+            "period": "7д",
+            "value": "48,2k ₽",
+            "trend": 12.4,
+            "points": [
+              {
+                "label": "Пн",
+                "value": 32
+              },
+              {
+                "label": "Вт",
+                "value": 41
+              },
+              {
+                "label": "Ср",
+                "value": 38
+              },
+              {
+                "label": "Чт",
+                "value": 55
+              },
+              {
+                "label": "Пт",
+                "value": 62
+              },
+              {
+                "label": "Сб",
+                "value": 47
+              },
+              {
+                "label": "Вс",
+                "value": 58
+              }
+            ]
+          }
+        },
+        "cardControls": ["gradient", "fadeOut", "isometric", "accent"]
+      }
+    },
+    {
+      "name": "chart-anim-002",
+      "type": "registry:component",
+      "title": "Кольцевая диаграмма",
+      "description": "Анимированная кольцевая диаграмма с итоговым числом в центре и легендой: сегменты дорисовываются по очереди, каждый со своим цветом и долей.",
+      "categories": ["chart"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "chart-anim-002/chart-anim-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/chart-anim-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-chart-anim-002-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Кольцо построено классическим SVG-приёмом viewBox 36×36 с r=15.9155: длина окружности равна 100, поэтому доля сегмента напрямую становится длиной штриха без пересчёта периметра. Сегменты дорисовываются по очереди, легенда появляется следом. Всё гаснет при prefers-reduced-motion.",
+      "meta": {
+        "tags": ["chart", "donut", "pie", "analytics", "animated", "legend"],
+        "ai": {
+          "export": "ChartAnim002",
+          "usage": "<ChartAnim002 title=\"Хранилище\" centerValue=\"82%\" segments={[{ label: \"Фото\", percent: 38 }]} />",
+          "summary": "Кольцевая диаграмма: сегменты дорисовываются по очереди по кругу, в центре — крупное итоговое число с подписью, снизу — легенда с цветным маркером, названием и долей. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-chart-anim-002-* — не подменяйте её токенами вашей темы",
+            "последовательную дорисовку сегментов кольца по кругу — опознавательный знак компонента",
+            "приём viewBox 36×36 с r=15.9155: доля сегмента напрямую равна длине штриха",
+            "центральное число с подписью внутри кольца",
+            "строку для класса .dark: без неё компонент останется светлым на тёмной странице чужого проекта",
+            "легенду с цветным маркером, названием и процентом под кольцом"
+          ],
+          "adapt": [
+            "массив segments: подписи и доли сегментов (сумма должна давать 100)",
+            "центральное значение centerValue и подпись centerLabel",
+            "акцентный цвет первого сегмента через проп accent под свой бренд",
+            "режимы gradient, fadeOut и isometric под контекст: заливка сегментов, растворение легенды, наклон"
+          ],
+          "notes": [
+            "gradient={false} убирает SVG-градиент в заливке сегментов, fadeOut растворяет легенду к низу, isometric наклоняет карточку",
+            "цвета второго-четвёртого сегментов берутся из встроенной палитры c2–c4 и не настраиваются пропом"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "gradient",
+            "label": "Градиент",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "fadeOut",
+            "label": "Растворение легенды",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "isometric",
+            "label": "Изометрия",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Donut",
+            "description": "An animated donut chart with a center total and legend: segments draw in one by one, each with its own color and share.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-chart-anim-002-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. The ring uses the classic SVG viewBox 36×36 with r=15.9155 trick: the circumference equals 100, so a segment's share becomes its stroke length directly, no perimeter math needed. Segments draw in one by one, the legend follows. Everything stops under prefers-reduced-motion.",
+            "ai": {
+              "summary": "A donut chart: ring segments draw in sequentially around the circle, a large total number with a caption sits in the center, and a legend with a color marker, name and share sits below. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-chart-anim-002-* palette — do not swap it for your theme tokens",
+                "the sequential draw-in of ring segments around the circle — the component's signature",
+                "the viewBox 36×36 with r=15.9155 trick: a segment's share equals its stroke length directly",
+                "the center number with its caption inside the ring",
+                "the .dark class rule: without it the component stays light on a dark page in another project",
+                "the legend with a color marker, name and percentage below the ring"
+              ],
+              "adapt": [
+                "the segments array: labels and shares (they should sum to 100)",
+                "the center value and center label",
+                "the first segment's accent color via the accent prop to match your brand",
+                "the gradient, fadeOut and isometric modes for the context: segment fill, legend fade, tilt"
+              ],
+              "notes": [
+                "gradient={false} removes the SVG gradient in segment fills, fadeOut dissolves the legend toward the bottom, isometric tilts the card",
+                "the second through fourth segment colors come from the built-in c2–c4 palette and are not configurable via a prop"
+              ],
+              "usage": "<ChartAnim002 title=\"Storage\" centerValue=\"82%\" segments={[{ label: \"Photos\", percent: 38 }]} />"
+            },
+            "controls": {
+              "gradient": {
+                "label": "Gradient"
+              },
+              "fadeOut": {
+                "label": "Legend fade"
+              },
+              "isometric": {
+                "label": "Isometric"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Storage usage",
+                "centerValue": "82%",
+                "centerLabel": "of 128GB",
+                "segments": [
+                  {
+                    "label": "Photos",
+                    "percent": 38
+                  },
+                  {
+                    "label": "Videos",
+                    "percent": 27
+                  },
+                  {
+                    "label": "Documents",
+                    "percent": 18
+                  },
+                  {
+                    "label": "Other",
+                    "percent": 17
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "title": "Использование хранилища",
+            "centerValue": "82%",
+            "centerLabel": "из 128 ГБ",
+            "segments": [
+              {
+                "label": "Фото",
+                "percent": 38
+              },
+              {
+                "label": "Видео",
+                "percent": 27
+              },
+              {
+                "label": "Документы",
+                "percent": 18
+              },
+              {
+                "label": "Прочее",
+                "percent": 17
+              }
+            ]
+          }
+        },
+        "cardControls": ["gradient", "fadeOut", "isometric", "accent"]
+      }
+    },
+    {
+      "name": "chart-anim-003",
+      "type": "registry:component",
+      "title": "Воронка конверсии",
+      "description": "Анимированная воронка конверсии из сужающихся трапеций-этапов: слэбы вливаются по очереди сверху вниз, у каждого — название, число и доля.",
+      "categories": ["chart"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "chart-anim-003/chart-anim-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/chart-anim-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-chart-anim-003-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Каждый этап — центрированная полоса с сужением по clip-path, ширина равна доле этапа. Полосы появляются сверху вниз с нарастающей задержкой (opacity и scaleY от 0 до 1). Всё гаснет при prefers-reduced-motion.",
+      "meta": {
+        "tags": [
+          "chart",
+          "funnel",
+          "conversion",
+          "analytics",
+          "animated",
+          "stages"
+        ],
+        "ai": {
+          "export": "ChartAnim003",
+          "usage": "<ChartAnim003 title=\"Воронка регистрации\" stages={[{ label: \"Визиты\", value: \"24 800\", percent: 100 }]} />",
+          "summary": "Воронка конверсии: сужающиеся трапеции-этапы вливаются сверху вниз по очереди, у каждой — название слева, число и доля справа. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-chart-anim-003-* — не подменяйте её токенами вашей темы",
+            "последовательное появление слэбов сверху вниз с нарастающей задержкой — опознавательный знак компонента",
+            "сужение слэба по clip-path и ширину, равную доле этапа",
+            "строку для класса .dark: без неё компонент останется светлым на тёмной странице чужого проекта",
+            "строку над каждым слэбом с названием этапа слева и числом с долей справа"
+          ],
+          "adapt": [
+            "массив stages: название, число и долю каждого этапа воронки",
+            "заголовок title и период period",
+            "акцентный цвет через проп accent под свой бренд",
+            "режимы gradient, fadeOut и isometric под контекст: заливка слэбов, растворение низа, наклон"
+          ],
+          "notes": [
+            "gradient={false} делает заливку слэбов плоской, fadeOut растворяет нижние этапы, isometric наклоняет карточку",
+            "порядок stages задаёт порядок этапов сверху вниз — воронка не сортирует их сама"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "gradient",
+            "label": "Градиент",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "fadeOut",
+            "label": "Растворение низа",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "isometric",
+            "label": "Изометрия",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Funnel",
+            "description": "A conversion funnel of tapering stage slabs that pour in one by one: each slab shows a name, a count and a share.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-chart-anim-003-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. Each stage is a centered bar tapered with clip-path, its width equal to the stage's share. Bars pour in top to bottom with a growing delay (opacity and scaleY from 0 to 1). Everything stops under prefers-reduced-motion.",
+            "ai": {
+              "summary": "A conversion funnel: tapering stage slabs pour in top to bottom one by one, each with a name on the left and a count with share on the right. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-chart-anim-003-* palette — do not swap it for your theme tokens",
+                "the sequential top-to-bottom pour-in of slabs with a growing delay — the component's signature",
+                "the clip-path taper on each slab and a width equal to the stage's share",
+                "the .dark class rule: without it the component stays light on a dark page in another project",
+                "the row above each slab with the stage name on the left and count with share on the right"
+              ],
+              "adapt": [
+                "the stages array: name, count and share for each funnel stage",
+                "the title and period props",
+                "the accent color via the accent prop to match your brand",
+                "the gradient, fadeOut and isometric modes for the context: slab fill, bottom fade, tilt"
+              ],
+              "notes": [
+                "gradient={false} makes the slab fill flat, fadeOut dissolves the lower stages, isometric tilts the card",
+                "the order of stages sets the top-to-bottom order — the funnel does not sort them itself"
+              ],
+              "usage": "<ChartAnim003 title=\"Signup funnel\" stages={[{ label: \"Visits\", value: \"24,800\", percent: 100 }]} />"
+            },
+            "controls": {
+              "gradient": {
+                "label": "Gradient"
+              },
+              "fadeOut": {
+                "label": "Bottom fade"
+              },
+              "isometric": {
+                "label": "Isometric"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Signup funnel",
+                "period": "30d",
+                "stages": [
+                  {
+                    "label": "Visits",
+                    "value": "24,800",
+                    "percent": 100
+                  },
+                  {
+                    "label": "Sign-ups",
+                    "value": "8,950",
+                    "percent": 68
+                  },
+                  {
+                    "label": "Added to cart",
+                    "value": "3,120",
+                    "percent": 41
+                  },
+                  {
+                    "label": "Checked out",
+                    "value": "1,590",
+                    "percent": 22
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "title": "Воронка регистрации",
+            "period": "30д",
+            "stages": [
+              {
+                "label": "Визиты",
+                "value": "24 800",
+                "percent": 100
+              },
+              {
+                "label": "Регистрации",
+                "value": "8 950",
+                "percent": 68
+              },
+              {
+                "label": "Добавили в корзину",
+                "value": "3 120",
+                "percent": 41
+              },
+              {
+                "label": "Оплатили",
+                "value": "1 590",
+                "percent": 22
+              }
+            ]
+          }
+        },
+        "cardControls": ["gradient", "fadeOut", "isometric", "accent"]
+      }
+    },
+    {
+      "name": "chart-anim-004",
+      "type": "registry:component",
+      "title": "Круговой индикатор",
+      "description": "Анимированный полукруглый индикатор со стрелкой-дугой, разворачивающейся до значения, и опциональными цветными зонами нормы под шкалой.",
+      "categories": ["chart"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "chart-anim-004/chart-anim-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/chart-anim-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-chart-anim-004-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Дуге задан pathLength=100, поэтому доля заполнения не зависит от реальной геометрии; цель дозаполнения передаётся CSS-переменной и анимируется штатным keyframes. Опциональные зоны нормы — статичная трёхцветная подложка под дугой. Всё гаснет при prefers-reduced-motion.",
+      "meta": {
+        "tags": ["chart", "gauge", "meter", "kpi", "animated", "zones"],
+        "ai": {
+          "export": "ChartAnim004",
+          "usage": "<ChartAnim004 title=\"Индекс здоровья\" value={92} max={100} sublabel=\"Все системы в норме\" />",
+          "summary": "Полукруглый индикатор: дуга разворачивается от начала шкалы до значения, в центре — крупное число с подписью, по краям — границы диапазона, в углу — пилюля статуса. Опционально под дугой видны цветные зоны нормы. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-chart-anim-004-* — не подменяйте её токенами вашей темы",
+            "разворот дуги от начала шкалы до значения при появлении — опознавательный знак компонента",
+            "трюк pathLength=100 на дуге: доля заполнения не требует пересчёта геометрии",
+            "пилюлю статуса в верхнем левом углу карточки",
+            "строку для класса .dark: без неё компонент останется светлым на тёмной странице чужого проекта",
+            "подписи границ диапазона (min/max) под дугой"
+          ],
+          "adapt": [
+            "value, min и max под свою шкалу",
+            "заголовок title, подпись sublabel и текст пилюли status/statusTone",
+            "акцентный цвет дуги через проп accent под свой бренд",
+            "режимы zones, gradient, fadeOut и isometric под контекст: зоны нормы, заливка дуги, растворение конца, наклон"
+          ],
+          "notes": [
+            "zones={false} убирает цветные зоны и показывает серую подложку-трек",
+            "statusTone управляет цветом пилюли (pos/warn/neg); statusLabel по умолчанию берётся из tone"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "zones",
+            "label": "Зоны нормы",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "gradient",
+            "label": "Градиент дуги",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "fadeOut",
+            "label": "Растворение конца",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "isometric",
+            "label": "Изометрия",
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Gauge",
+            "description": "A semicircular gauge whose arc sweeps to its value, with an optional zoned band under the scale.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-chart-anim-004-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. The arc has pathLength=100, so the fill share is independent of the real geometry; the fill target is passed as a CSS custom property and animated by a plain keyframes rule. Optional zones are a static three-color band under the arc. Everything stops under prefers-reduced-motion.",
+            "ai": {
+              "summary": "A semicircular gauge: the arc sweeps from the start of the scale to the value, a large number with a caption sits in the center, range bounds sit at the ends, and a status badge sits in the corner. Optional colored zones show under the arc. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-chart-anim-004-* palette — do not swap it for your theme tokens",
+                "the arc sweeping from the start of the scale to the value on mount — the component's signature",
+                "the pathLength=100 trick on the arc: the fill share needs no geometry recalculation",
+                "the status badge in the card's top-left corner",
+                "the .dark class rule: without it the component stays light on a dark page in another project",
+                "the range bound labels (min/max) under the arc"
+              ],
+              "adapt": [
+                "value, min and max for your scale",
+                "the title, sublabel and status/statusTone badge text",
+                "the arc's accent color via the accent prop to match your brand",
+                "the zones, gradient, fadeOut and isometric modes for the context: normal-range bands, arc fill, end fade, tilt"
+              ],
+              "notes": [
+                "zones={false} removes the colored zones and shows a plain gray track instead",
+                "statusTone controls the badge color (pos/warn/neg); statusLabel defaults from the tone"
+              ],
+              "usage": "<ChartAnim004 title=\"Health score\" value={92} max={100} sublabel=\"All systems healthy\" />"
+            },
+            "controls": {
+              "zones": {
+                "label": "Zone bands"
+              },
+              "gradient": {
+                "label": "Arc gradient"
+              },
+              "fadeOut": {
+                "label": "End fade"
+              },
+              "isometric": {
+                "label": "Isometric"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "System health score",
+                "status": "Healthy",
+                "statusTone": "pos",
+                "value": 92,
+                "min": 0,
+                "max": 100,
+                "sublabel": "All systems healthy"
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "title": "Индекс здоровья системы",
+            "status": "Норма",
+            "statusTone": "pos",
+            "value": 92,
+            "min": 0,
+            "max": 100,
+            "sublabel": "Все системы в норме"
+          }
+        },
+        "cardControls": ["zones", "gradient", "fadeOut", "isometric"]
+      }
+    },
+    {
+      "name": "chart-anim-005",
+      "type": "registry:component",
+      "title": "Тепловая карта",
+      "description": "Анимированная тепловая карта из подписанных строк и колонок: ячейки загораются диагональной волной от левого верхнего угла к правому нижнему.",
+      "categories": ["chart"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "chart-anim-005/chart-anim-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/chart-anim-005.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-chart-anim-005-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Цвет ячейки — смешение акцента с подложкой на долю интенсивности через color-mix(). Задержка появления ячейки растёт с суммой номера строки и колонки — так волна идёт по диагонали. Всё гаснет при prefers-reduced-motion.",
+      "meta": {
+        "tags": [
+          "chart",
+          "heatmap",
+          "grid",
+          "analytics",
+          "animated",
+          "activity"
+        ],
+        "ai": {
+          "export": "ChartAnim005",
+          "usage": "<ChartAnim005 title=\"Активные часы\" rows={[\"Пн\",\"Вт\"]} cols={[\"00\",\"12\"]} data={[[0.2,0.8],[0.5,0.3]]} />",
+          "summary": "Тепловая карта: подписанные строки и колонки, ячейки загораются по диагонали волной от угла к углу, интенсивность цвета читается по значению. Сверху — заголовок, период, значение и пилюля тренда, снизу — шкала «меньше — больше». Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-chart-anim-005-* — не подменяйте её токенами вашей темы",
+            "диагональную волну появления ячеек (задержка растёт с суммой строки и колонки) — опознавательный знак компонента",
+            "цвет ячейки через смешение акцента с подложкой на долю интенсивности",
+            "подписи строк слева и колонок снизу сетки",
+            "строку для класса .dark: без неё компонент останется светлым на тёмной странице чужого проекта",
+            "шкалу-легенду «меньше — больше» под сеткой"
+          ],
+          "adapt": [
+            "rows, cols и матрицу data под свои измерения и значения (0–1)",
+            "заголовок title, период period, крупное значение value и тренд trend",
+            "акцентный цвет через проп accent под свой бренд",
+            "режимы gradient и fadeOut под контекст: плавность заливки, растворение угла",
+            "изометрический наклон карточки через проп isometric под контекст витрины"
+          ],
+          "notes": [
+            "gradient={false} округляет интенсивность до одной из четырёх ступеней вместо плавной заливки",
+            "data должна повторять размерность rows × cols; недостающие ячейки читаются как 0"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "gradient",
+            "label": "Плавная заливка",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "fadeOut",
+            "label": "Растворение угла",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "isometric",
+            "label": "Изометрия",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Heatmap",
+            "description": "A grid heatmap of labeled rows and columns whose cells light up in a diagonal wave from the top-left corner to the bottom-right.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-chart-anim-005-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. A cell's color mixes the accent with the backdrop by its intensity share via color-mix(). A cell's reveal delay grows with the sum of its row and column index, so the wave travels diagonally. Everything stops under prefers-reduced-motion.",
+            "ai": {
+              "summary": "A heatmap: labeled rows and columns, cells light up in a diagonal wave from corner to corner, color intensity reads the value. A header shows title, period, value and trend badge; a legend below reads low to high. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-chart-anim-005-* palette — do not swap it for your theme tokens",
+                "the diagonal reveal wave of cells (delay grows with row + column index) — the component's signature",
+                "the cell color mixing the accent with the backdrop by its intensity share",
+                "the row labels on the left and column labels under the grid",
+                "the .dark class rule: without it the component stays light on a dark page in another project",
+                "the low-to-high legend scale under the grid"
+              ],
+              "adapt": [
+                "rows, cols and the data matrix for your dimensions and values (0–1)",
+                "the title, period, large value and trend props",
+                "the accent color via the accent prop to match your brand",
+                "the gradient and fadeOut modes for the context: fill smoothness, corner fade",
+                "the isometric tilt via the isometric prop to match the showcase context"
+              ],
+              "notes": [
+                "gradient={false} rounds intensity to one of four steps instead of a smooth fill",
+                "data must match the rows × cols dimensions; missing cells read as 0"
+              ],
+              "usage": "<ChartAnim005 title=\"Active hours\" rows={[\"Mon\",\"Tue\"]} cols={[\"00\",\"12\"]} data={[[0.2,0.8],[0.5,0.3]]} />"
+            },
+            "controls": {
+              "gradient": {
+                "label": "Smooth fill"
+              },
+              "fadeOut": {
+                "label": "Corner fade"
+              },
+              "isometric": {
+                "label": "Isometric"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Active hours",
+                "period": "4w",
+                "value": "312 sessions",
+                "trend": 18.6,
+                "rows": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+                "cols": ["00", "04", "08", "12", "16", "20"]
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "title": "Активные часы",
+            "period": "4нед",
+            "value": "312 сессии",
+            "trend": 18.6,
+            "rows": ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"],
+            "cols": ["00", "04", "08", "12", "16", "20"]
+          }
+        },
+        "cardControls": ["gradient", "fadeOut", "isometric", "accent"]
+      }
+    },
+    {
+      "name": "chart-anim-006",
+      "type": "registry:component",
+      "title": "Линейный график",
+      "description": "Анимированный линейный график со значением, пилюлей тренда и градиентной заливкой: линия рисуется слева направо, следом проявляется заливка под ней.",
+      "categories": ["chart"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "chart-anim-006/chart-anim-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/chart-anim-006.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-chart-anim-006-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Пути задан pathLength=1 — единица штриха всегда равна всей длине линии независимо от данных, поэтому анимация рисования одинакова для любого набора точек. Заливка проявляется отдельным затуханием после линии. Всё гаснет при prefers-reduced-motion.",
+      "meta": {
+        "tags": [
+          "chart",
+          "line",
+          "trend",
+          "analytics",
+          "animated",
+          "dashboard"
+        ],
+        "ai": {
+          "export": "ChartAnim006",
+          "usage": "<ChartAnim006 title=\"Активные пользователи\" value=\"12 481\" trend={24.1} points={[{ label: \"Янв\", value: 8200 }]} />",
+          "summary": "Линейный график: заголовок с периодом, крупное значение и пилюля тренда сверху, линия рисуется слева направо при появлении, под ней проявляется градиентная заливка, снизу — сетка и подписи оси. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-chart-anim-006-* — не подменяйте её токенами вашей темы",
+            "рисование линии слева направо при появлении — опознавательный знак компонента",
+            "трюк pathLength=1 на пути: анимация рисования не зависит от геометрии данных",
+            "проявление градиентной заливки под линией после её дорисовки",
+            "строку для класса .dark: без неё компонент останется светлым на тёмной странице чужого проекта",
+            "фоновую сетку горизонтальных линий и подписи оси"
+          ],
+          "adapt": [
+            "набор точек points: подписи и значения под свои данные",
+            "заголовок, период period и крупное значение value",
+            "акцентный цвет через проп accent под свой бренд",
+            "режимы gradient, fadeOut и isometric под контекст: заливка под линией, растворение края, наклон"
+          ],
+          "notes": [
+            "gradient={false} убирает заливку под линией целиком, оставляя только саму линию",
+            "fadeOut растворяет правый край графика, isometric наклоняет карточку"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "gradient",
+            "label": "Заливка",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "fadeOut",
+            "label": "Растворение края",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "isometric",
+            "label": "Изометрия",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Line",
+            "description": "An animated line chart with a value, trend badge, and gradient fill: the line draws left to right, then the fill beneath it fades in.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-chart-anim-006-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. The path has pathLength=1 — the stroke unit always equals the whole line length regardless of the data, so the draw-in animation is identical for any dataset. The fill fades in separately after the line finishes. Everything stops under prefers-reduced-motion.",
+            "ai": {
+              "summary": "A line chart: header with period, a large value and a trend badge on top, the line draws left to right on mount, a gradient fill fades in beneath it, a grid and axis labels sit underneath. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-chart-anim-006-* palette — do not swap it for your theme tokens",
+                "the line drawing left to right on mount — the component's signature",
+                "the pathLength=1 trick on the path: the draw-in animation is independent of the data's geometry",
+                "the gradient fill fading in under the line after it finishes drawing",
+                "the .dark class rule: without it the component stays light on a dark page in another project",
+                "the background grid of horizontal lines and the axis labels"
+              ],
+              "adapt": [
+                "the points array: labels and values for your data",
+                "the title, period and the large value prop",
+                "the accent color via the accent prop to match your brand",
+                "the gradient, fadeOut and isometric modes for the context: fill under the line, edge fade, tilt"
+              ],
+              "notes": [
+                "gradient={false} removes the fill under the line entirely, leaving just the stroke",
+                "fadeOut dissolves the chart's right edge, isometric tilts the card"
+              ],
+              "usage": "<ChartAnim006 title=\"Active users\" value=\"12,481\" trend={24.1} points={[{ label: \"Jan\", value: 8200 }]} />"
+            },
+            "controls": {
+              "gradient": {
+                "label": "Fill"
+              },
+              "fadeOut": {
+                "label": "Edge fade"
+              },
+              "isometric": {
+                "label": "Isometric"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Active users",
+                "period": "YTD",
+                "value": "12,481",
+                "trend": 24.1,
+                "points": [
+                  {
+                    "label": "Jan",
+                    "value": 8200
+                  },
+                  {
+                    "label": "Mar",
+                    "value": 9400
+                  },
+                  {
+                    "label": "May",
+                    "value": 8800
+                  },
+                  {
+                    "label": "Jul",
+                    "value": 11200
+                  },
+                  {
+                    "label": "Sep",
+                    "value": 12481
+                  },
+                  {
+                    "label": "Nov",
+                    "value": 13950
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "title": "Активные пользователи",
+            "period": "с начала года",
+            "value": "12 481",
+            "trend": 24.1,
+            "points": [
+              {
+                "label": "Янв",
+                "value": 8200
+              },
+              {
+                "label": "Мар",
+                "value": 9400
+              },
+              {
+                "label": "Май",
+                "value": 8800
+              },
+              {
+                "label": "Июл",
+                "value": 11200
+              },
+              {
+                "label": "Сен",
+                "value": 12481
+              },
+              {
+                "label": "Ноя",
+                "value": 13950
+              }
+            ]
+          }
+        },
+        "cardControls": ["gradient", "fadeOut", "isometric", "accent"]
+      }
+    },
+    {
+      "name": "chart-anim-007",
+      "type": "registry:component",
+      "title": "Спарклайн",
+      "description": "Компактный инлайн-спарклайн для тесных мест и карточек метрик: линия рисуется слева направо, в конце — пульсирующая точка-маркер.",
+      "categories": ["chart"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "chart-anim-007/chart-anim-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/chart-anim-007.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-chart-anim-007-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Пути задан pathLength=1 для одинаковой анимации рисования вне зависимости от данных; точка-маркер и её пульсирующее кольцо включаются только после того, как линия дорисована. Всё гаснет при prefers-reduced-motion.",
+      "meta": {
+        "tags": ["chart", "sparkline", "inline", "stat", "animated", "compact"],
+        "ai": {
+          "export": "ChartAnim007",
+          "usage": "<ChartAnim007 label=\"Активные пользователи\" value=\"1 284\" trend={12.5} points={[8,11,9,14,12,17,15,21]} />",
+          "summary": "Компактный спарклайн: подпись и значение с трендом слева, тонкая линия рисуется слева направо справа от них, в конце линии — точка-маркер с лёгким пульсом. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-chart-anim-007-* — не подменяйте её токенами вашей темы",
+            "рисование линии слева направо при появлении — опознавательный знак компонента",
+            "точку-маркер с пульсирующим кольцом в конце линии, включающуюся после дорисовки",
+            "компактную инлайн-компоновку: подпись и значение слева, график занимает оставшуюся ширину",
+            "строку для класса .dark: без неё компонент останется светлым на тёмной странице чужого проекта",
+            "цвет подписи тренда по знаку изменения (зелёный/красный)"
+          ],
+          "adapt": [
+            "points: массив чисел под свои данные",
+            "label, value и trend под свою метрику",
+            "акцентный цвет через проп accent под свой бренд",
+            "режимы gradient, fadeOut и isometric под контекст: заливка под линией, растворение края, наклон"
+          ],
+          "notes": [
+            "gradient={false} убирает лёгкую заливку под линией, оставляя только саму линию и точку",
+            "компонент рассчитан на узкие контейнеры — max-width 15rem, как в карточке метрики"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "gradient",
+            "label": "Заливка",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "fadeOut",
+            "label": "Растворение края",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "isometric",
+            "label": "Изометрия",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Sparkline",
+            "description": "A compact inline sparkline for tight spaces and stat cards: the line draws left to right, ending in a pulsing dot marker.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-chart-anim-007-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. The path has pathLength=1 for an identical draw-in animation regardless of the data; the dot marker and its pulsing ring only turn on once the line finishes drawing. Everything stops under prefers-reduced-motion.",
+            "ai": {
+              "summary": "A compact sparkline: label and value with trend on the left, a thin line draws left to right filling the remaining width, ending in a dot marker with a gentle pulse. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-chart-anim-007-* palette — do not swap it for your theme tokens",
+                "the line drawing left to right on mount — the component's signature",
+                "the dot marker with a pulsing ring at the line's end, turning on after the draw finishes",
+                "the compact inline layout: label and value on the left, the chart filling the remaining width",
+                "the .dark class rule: without it the component stays light on a dark page in another project",
+                "the trend label color by the sign of the change (green/red)"
+              ],
+              "adapt": [
+                "points: an array of numbers for your data",
+                "label, value and trend for your metric",
+                "the accent color via the accent prop to match your brand",
+                "the gradient, fadeOut and isometric modes for the context: fill under the line, edge fade, tilt"
+              ],
+              "notes": [
+                "gradient={false} removes the light fill under the line, leaving only the stroke and the dot",
+                "the component is built for narrow containers — max-width 15rem, like in a stat card"
+              ],
+              "usage": "<ChartAnim007 label=\"Active users\" value=\"1,284\" trend={12.5} points={[8,11,9,14,12,17,15,21]} />"
+            },
+            "controls": {
+              "gradient": {
+                "label": "Fill"
+              },
+              "fadeOut": {
+                "label": "Edge fade"
+              },
+              "isometric": {
+                "label": "Isometric"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "Active users",
+                "value": "1,284",
+                "trend": 12.5,
+                "points": [8, 11, 9, 14, 12, 17, 15, 21]
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "label": "Активные пользователи",
+            "value": "1 284",
+            "trend": 12.5,
+            "points": [8, 11, 9, 14, 12, 17, 15, 21]
+          }
+        },
+        "cardControls": ["gradient", "fadeOut", "isometric", "accent"]
+      }
+    }
+  ]
+}

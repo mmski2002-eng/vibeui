@@ -1,0 +1,170 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "testimonials-anim-001",
+      "type": "registry:component",
+      "title": "Отзывы со звёздами по очереди",
+      "description": "Секция отзывов: сетка карточек с цитатой, автором и рейтингом; карточки проявляются stagger, а звёзды рейтинга закрашиваются по очереди слева направо.",
+      "categories": ["testimonials"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "testimonials-anim-001/testimonials-anim-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/testimonials-anim-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-testimonials-anim-001-*. Карточки проявляются stagger fade+translateY через nth-child задержку. Внутри каждой карточки — ряд из пяти звёзд: закрашенные звёзды (их количество равно rating) заполняются по очереди слева направо, пустые остаются контуром сразу. container-type делает сетку собственным query-контейнером: одна колонка в узком месте, три — в полную ширину.",
+      "meta": {
+        "tags": [
+          "testimonials",
+          "reviews",
+          "rating",
+          "marketing",
+          "animated",
+          "section"
+        ],
+        "ai": {
+          "export": "TestimonialsAnim001",
+          "usage": "<TestimonialsAnim001 title=\"Отзывы\" quotes={[{ quote: \"Отличный продукт\", name: \"Елена Радина\", role: \"CEO\", rating: 5 }]} />",
+          "summary": "Секция отзывов: заголовок и сетка карточек с цитатой, аватаром-плейсхолдером автора и рейтингом; карточки проявляются stagger fade+translateY, звёзды рейтинга закрашиваются по очереди слева направо. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-testimonials-anim-001-* — не подменяйте её токенами вашей темы",
+            "stagger fade+translateY появление карточек с нарастающей задержкой по nth-child",
+            "последовательное закрашивание звёзд рейтинга слева направо",
+            "аватар-плейсхолдер с инициалами рядом с именем и должностью автора",
+            "строку для класса .dark: без неё компонент останется светлым на тёмной странице чужого проекта",
+            "container-type:inline-size на корне — число колонок считается от ширины секции, а не от окна"
+          ],
+          "adapt": [
+            "содержимое отзывов: quote, name, role, initials и rating каждого автора",
+            "заголовок, kicker и описание секции под свой продукт",
+            "акцентный цвет через проп accent под свой бренд",
+            "видимость рейтинга через ratings и аватаров через avatars"
+          ],
+          "notes": [
+            "ratings={false} скрывает ряд звёзд над цитатой",
+            "avatars={false} убирает аватар-плейсхолдер, оставляя только имя и роль"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ratings",
+            "label": "Рейтинг",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "avatars",
+            "label": "Аватары",
+            "type": "boolean",
+            "default": true
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Testimonials",
+            "description": "A testimonials section with quotes and authors.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-testimonials-anim-001-* variables. Cards appear with a stagger fade+translateY via an nth-child delay. Each card carries a row of five stars: the filled stars (their count equals rating) fill in one after another left to right, while empty stars stay outlined immediately. container-type makes the grid its own query container: one column in a narrow spot, three at full width.",
+            "ai": {
+              "summary": "A testimonials section: a heading and a grid of cards with a quote, an author avatar placeholder and a star rating; cards appear with a stagger fade+translateY and the rating stars fill in left to right. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-testimonials-anim-001-* palette — do not swap it for your theme tokens",
+                "the stagger fade+translateY card entrance with a growing nth-child delay",
+                "the sequential left-to-right fill of the rating stars",
+                "the avatar placeholder with initials next to the author's name and role",
+                "the .dark class rule: without it the component stays light on a dark page in another project",
+                "container-type:inline-size on the root — the column count is computed from the section's width, not the window"
+              ],
+              "adapt": [
+                "the testimonial content: quote, name, role, initials and rating for each author",
+                "the section title, kicker and description for your own product",
+                "the accent color via the accent prop to match your brand",
+                "the rating visibility via ratings and the avatar visibility via avatars"
+              ],
+              "notes": [
+                "ratings={false} hides the row of stars above the quote",
+                "avatars={false} removes the avatar placeholder, leaving just the name and role"
+              ],
+              "usage": "<TestimonialsAnim001 title=\"Testimonials\" quotes={[{ quote: \"Great product\", name: \"Elena Radina\", role: \"CEO\", rating: 5 }]} />"
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              },
+              "ratings": {
+                "label": "Rating"
+              },
+              "avatars": {
+                "label": "Avatars"
+              }
+            },
+            "preview": {
+              "props": {
+                "kicker": "Testimonials",
+                "title": "Teams that already shipped a site",
+                "description": "Real words from people who installed the components in their own project instead of rebuilding from scratch.",
+                "quotes": [
+                  {
+                    "quote": "We shipped a landing page in one evening: copied the blocks, handed them to the AI, and got exactly what we saw in the preview.",
+                    "name": "Elena Radina",
+                    "role": "Founder, Studio Nord",
+                    "rating": 5
+                  },
+                  {
+                    "quote": "Components port over without edits — we never had to retouch the theme after installing.",
+                    "name": "Pavel Kuzmin",
+                    "role": "Frontend Lead, Flowbase",
+                    "rating": 5
+                  },
+                  {
+                    "quote": "The animations look like an expensive agency built them, yet a single person installs them from the terminal.",
+                    "name": "Irina Gay",
+                    "role": "Product Designer, Northlane",
+                    "rating": 4
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "kicker": "Отзывы",
+            "title": "Команды, которые уже собрали сайт",
+            "description": "Реальные слова людей, которые ставили компоненты в свой проект и не переписывали их с нуля.",
+            "quotes": [
+              {
+                "quote": "Собрали лендинг за вечер: скопировали блоки, отдали ИИ — и получили ровно то, что видели в превью.",
+                "name": "Елена Радина",
+                "role": "Основательница, Studio Nord",
+                "rating": 5
+              },
+              {
+                "quote": "Компоненты переносятся без правок — ни разу не пришлось донастраивать тему после установки.",
+                "name": "Павел Кузьмин",
+                "role": "Frontend Lead, Flowbase",
+                "rating": 5
+              },
+              {
+                "quote": "Анимации выглядят как в дорогом агентстве, а ставятся одной командой в терминале.",
+                "name": "Ирина Гай",
+                "role": "Продакт-дизайнер, Northlane",
+                "rating": 4
+              }
+            ]
+          }
+        },
+        "cardControls": ["accent", "ratings", "avatars"]
+      }
+    }
+  ]
+}

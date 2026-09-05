@@ -1,0 +1,434 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "payments-001",
+      "type": "registry:component",
+      "title": "Чекаут",
+      "description": "Сводка заказа перед оплатой: позиции с ценами въезжают по очереди снизу вверх, итог держится жирной строкой у низа карточки, а кнопка «Оплатить» ровно пульсирует свечением.",
+      "categories": ["payments"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "payments-001/payments-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/payments-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-payments-001-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Позиции заказа въезжают по очереди (stagger, animation-delay по nth-child), итоговая строка отделена пунктирной чертой и въезжает последней, кнопка «Оплатить» держит бесконечный пульс свечения (box-shadow), под карточкой дышит акцентное свечение. Все анимации гаснут при prefers-reduced-motion.",
+      "meta": {
+        "tags": [
+          "checkout",
+          "payments",
+          "order",
+          "summary",
+          "animated",
+          "pulse"
+        ],
+        "ai": {
+          "export": "Payments001",
+          "usage": "<Payments001 title=\"Ваш заказ\" items={[{ label: \"Подписка Pro\", price: \"4 990 ₽\" }]} total=\"4 990 ₽\" />",
+          "summary": "Сводка заказа: строки позиций с ценами и итог; строки въезжают по очереди при появлении, кнопка «Оплатить» держит пульсирующее свечение, под карточкой дышит акцентный ореол. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-payments-001-* — не подменяйте её токенами вашей темы",
+            "стаггер-появление строк позиций (animation-delay по порядку) при монтировании карточки",
+            "итоговую строку, отделённую пунктирной чертой и въезжающую последней, жирным начертанием",
+            "пульсирующее свечение вокруг кнопки «Оплатить» — это точка действия сводки",
+            "строку для класса .dark: без неё компонент останется светлым на тёмной странице чужого проекта",
+            "дышащее акцентное свечение под карточкой при gradient={true}"
+          ],
+          "adapt": [
+            "список позиций items: название и цена каждой строки",
+            "итоговую сумму total и подпись кнопки payLabel",
+            "акцентный цвет через проп accent под свой бренд",
+            "заголовок title и пилюлю badge с числом позиций",
+            "режимы gradient, isometric и pulse под контекст витрины"
+          ],
+          "notes": [
+            "gradient={false} убирает свечение под карточкой, pulse={false} останавливает пульс кнопки",
+            "isometric={true} наклоняет карточку в перспективе для витринных кадров"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "gradient",
+            "label": "Свечение",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "pulse",
+            "label": "Пульс кнопки",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "isometric",
+            "label": "Изометрия",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Checkout",
+            "description": "A checkout summary with line items and a pay button: rows rise in one after another, the total holds a bold line at the bottom, and the pay button keeps a steady glow pulse.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-payments-001-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. Order rows rise in one after another (stagger via nth-child animation-delay), the total row is separated by a dashed line and rises in last, the pay button keeps an infinite glow pulse (box-shadow), and an accent glow breathes under the card. All animations stop under prefers-reduced-motion.",
+              "ai": {
+              "summary": "An order summary: line items with prices and a total; rows rise in one after another on mount, the pay button keeps a pulsing glow, and an accent halo breathes under the card. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-payments-001-* palette — do not swap it for your theme tokens",
+                "the staggered rise of line item rows (ordered animation-delay) on card mount",
+                "the total row, separated by a dashed line and rising in last, in bold weight",
+                "the pulsing glow around the pay button — it is the summary's call to action",
+                "the .dark class rule: without it the component stays light on a dark page in another project",
+                "the breathing accent glow under the card when gradient={true}"
+              ],
+              "adapt": [
+                "the items list: label and price of each row",
+                "the total sum and the payLabel button caption",
+                "the accent color via the accent prop to match your brand",
+                "the title and the badge pill with the item count",
+                "the gradient, isometric and pulse modes for the showcase context"
+              ],
+              "notes": [
+                "gradient={false} removes the glow under the card, pulse={false} stops the button pulse",
+                "isometric={true} tilts the card in perspective for showcase frames"
+              ],
+              "usage": "<Payments001 title=\"Your order\" items={[{ label: \"Pro subscription\", price: \"$49\" }]} total=\"$49\" />"
+            },
+            "controls": {
+              "gradient": {
+                "label": "Glow"
+              },
+              "pulse": {
+                "label": "Button pulse"
+              },
+              "isometric": {
+                "label": "Isometric"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Your order",
+                "badge": "3 items",
+                "items": [
+                  { "label": "Pro annual plan", "price": "$49.00" },
+                  { "label": "Extra seat", "price": "$9.00" },
+                  { "label": "Priority support", "price": "$15.00" }
+                ],
+                "total": "$73.00",
+                "payLabel": "Pay now"
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "title": "Ваш заказ",
+            "badge": "3 позиции",
+            "items": [
+              { "label": "Годовая подписка Pro", "price": "4 990 ₽" },
+              { "label": "Дополнительное место", "price": "990 ₽" },
+              { "label": "Приоритетная поддержка", "price": "1 490 ₽" }
+            ],
+            "total": "7 470 ₽",
+            "payLabel": "Оплатить"
+          }
+        },
+        "cardControls": ["gradient", "pulse", "isometric", "accent"]
+      }
+    },
+    {
+      "name": "payments-002",
+      "type": "registry:component",
+      "title": "Банковская карта",
+      "description": "Визуал банковской карты с градиентным фоном, чипом, номером и данными держателя: карта мягко покачивается в перспективе, а по чипу пробегает блик.",
+      "categories": ["payments"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "payments-002/payments-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/payments-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-payments-002-*. Лицо карты — фиксированный градиент (не зависит от темы страницы, как у настоящей карты), но правило для класса .dark всё равно объявлено для переменных фона. Карта покачивается вокруг вертикальной оси в бесконечном цикле (perspective + rotateY), а не переворачивается — обратной стороны нет. По чипу слева сверху раз в несколько секунд пробегает диагональный блик (та же техника, что и sheen в devices-001). Компонент декоративен: role=\"img\" с aria-label, собирающим бренд, номер, держателя и срок в одну фразу.",
+      "meta": {
+        "tags": [
+          "credit-card",
+          "payments",
+          "card",
+          "chip",
+          "animated",
+          "tilt"
+        ],
+        "ai": {
+          "export": "Payments002",
+          "usage": "<Payments002 brand=\"Nova Pay\" number=\"4242 4242 4242 4242\" holder=\"A. Ivanov\" expiry=\"09/29\" />",
+          "summary": "Визуал банковской карты: градиентный фон, чип с бегущим бликом, номер моноширинным шрифтом, держатель и срок снизу по краям; карта мягко покачивается в перспективе бесконечным циклом. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-payments-002-* — не подменяйте её токенами вашей темы",
+            "покачивание карты вокруг вертикальной оси в перспективе (perspective + rotateY) — опознавательный знак компонента",
+            "диагональный блик, пробегающий по чипу",
+            "пропорции лица карты (aspect-ratio ISO 7810) и раскладку: чип и бренд сверху, номер по центру, держатель и срок снизу",
+            "моноширинный шрифт с разрядкой для номера карты",
+            "role=\"img\" с aria-label — карта декоративна, данные читаются одной фразой для скринридера"
+          ],
+          "adapt": [
+            "содержимое карты: brand, number, holder, expiry",
+            "цвет градиента через проп accent под свой бренд",
+            "видимость покачивания (tilt) и блика на чипе (shimmer) под контекст витрины"
+          ],
+          "notes": [
+            "tilt={false} останавливает покачивание, shimmer={false} убирает блик на чипе",
+            "номер и данные держателя — демонстрационные, не реальные платёжные данные"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "tilt",
+            "label": "Покачивание",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "shimmer",
+            "label": "Блик на чипе",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "brand",
+            "label": "Бренд",
+            "type": "text",
+            "default": "Nova Pay",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Credit card",
+            "description": "A credit card visual with brand, number, and chip: the card gently tilts in perspective while a sheen sweeps across the chip.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-payments-002-* variables. The card face is a fixed gradient (independent of the page theme, like a real card), but the .dark class rule is still declared for the background variables. The card tilts around its vertical axis in an infinite loop (perspective + rotateY) rather than flipping — there is no back face. A diagonal sheen sweeps across the chip every few seconds (the same technique as devices-001's sheen). The component is decorative: role=\"img\" with an aria-label combining brand, number, holder and expiry into one phrase.",
+            "ai": {
+              "summary": "A credit card visual: gradient face, a chip with a sweeping sheen, a monospaced number, holder and expiry at the bottom edges; the card gently tilts in perspective in an infinite loop. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-payments-002-* palette — do not swap it for your theme tokens",
+                "the vertical-axis tilt in perspective (perspective + rotateY) — the component's signature motion",
+                "the diagonal sheen sweeping across the chip",
+                "the card face proportions (ISO 7810 aspect ratio) and layout: chip and brand on top, number centered, holder and expiry at the bottom",
+                "the monospaced, letter-spaced font for the card number",
+                "role=\"img\" with an aria-label — the card is decorative and its data reads as one phrase for screen readers"
+              ],
+              "adapt": [
+                "the card content: brand, number, holder, expiry",
+                "the gradient color via the accent prop to match your brand",
+                "the tilt and shimmer visibility for the showcase context"
+              ],
+              "notes": [
+                "tilt={false} stops the rocking motion, shimmer={false} removes the chip sheen",
+                "the number and holder data are demo values, not real payment data"
+              ],
+              "usage": "<Payments002 brand=\"Nova Pay\" number=\"4242 4242 4242 4242\" holder=\"A. Ivanov\" expiry=\"09/29\" />"
+            },
+            "controls": {
+              "tilt": {
+                "label": "Tilt"
+              },
+              "shimmer": {
+                "label": "Chip sheen"
+              },
+              "brand": {
+                "label": "Brand",
+                "default": "Nova Pay"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "brand": "Nova Pay",
+                "number": "4242 4242 4242 4242",
+                "holder": "A. Ivanov",
+                "expiry": "09/29"
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "brand": "Nova Pay",
+            "number": "4242 4242 4242 4242",
+            "holder": "A. Ivanov",
+            "expiry": "09/29"
+          }
+        },
+        "cardControls": ["tilt", "shimmer", "brand", "accent"]
+      }
+    },
+    {
+      "name": "payments-003",
+      "type": "registry:component",
+      "title": "Счётчик использования",
+      "description": "Сводка тарификации по использованию: главная полоса заполняется слева направо и краснеет у предела, ниже — список отдельных метрик со своими полосами.",
+      "categories": ["payments"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "payments-003/payments-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/payments-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-payments-003-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Главная полоса и полосы отдельных метрик заполняются слева направо при появлении карточки — transform:scaleX(0→1) с transform-origin:left, а не анимация width, метрики въезжают с задержкой по индексу через CSS-переменную --i. Цвет главной полосы переключается по порогам процента (data-level ok/warn/danger, до 70% акцент, до 90% янтарный, дальше красный) — логика на TypeScript, а не в CSS. Все анимации гаснут при prefers-reduced-motion.",
+      "meta": {
+        "tags": [
+          "usage",
+          "payments",
+          "billing",
+          "metered",
+          "animated",
+          "progress"
+        ],
+        "ai": {
+          "export": "Payments003",
+          "usage": "<Payments003 usageLabel=\"Запросы к API\" used=\"82 400\" quota=\"100 000\" percent={82} meters={[{ label: \"Хранилище\", percent: 78 }]} />",
+          "summary": "Сводка тарификации: главная полоса использования против квоты (краснеет у предела) и список отдельных метрик со своими полосами; все полосы заполняются слева направо при появлении. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-payments-003-* — не подменяйте её токенами вашей темы",
+            "заполнение полос слева направо при появлении карточки (transform:scaleX, не width)",
+            "смену цвета главной полосы по порогам процента: акцент → янтарный → красный у предела",
+            "стаггер отдельных метрик по индексу при появлении",
+            "строку для класса .dark: без неё компонент останется светлым на тёмной странице чужого проекта",
+            "role=\"progressbar\" с aria-valuenow/min/max на каждой полосе"
+          ],
+          "adapt": [
+            "usageLabel, used, quota и percent главной полосы под свой тариф",
+            "список meters: название и процент каждой отдельной метрики",
+            "акцентный цвет через проп accent под свой бренд",
+            "заголовок title и пилюлю badge с названием тарифа",
+            "изометрический наклон карточки (isometric) под контекст витрины"
+          ],
+          "notes": [
+            "пороги цвета зафиксированы в коде: 0–69% акцент, 70–89% янтарный, 90–100% красный",
+            "percent округляется в диапазон 0–100, как и percent каждого элемента meters"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "percent",
+            "label": "Использовано, %",
+            "type": "number",
+            "default": 82,
+            "min": 0,
+            "max": 100
+          },
+          {
+            "prop": "isometric",
+            "label": "Изометрия",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Usage meter",
+            "description": "A metered billing summary with a usage bar against quota, itemized meters: the main bar fills left to right and turns red near the limit, with individual metrics listed below.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-payments-003-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. The main bar and the itemized meter bars fill left to right on mount — transform:scaleX(0→1) with transform-origin:left, not a width animation — and the itemized meters rise in with a per-index delay via a CSS variable --i. The main bar's color switches on percent thresholds (data-level ok/warn/danger: accent up to 70%, amber up to 90%, red beyond) — the logic lives in TypeScript, not CSS. All animations stop under prefers-reduced-motion.",
+            "ai": {
+              "summary": "A billing usage summary: a main bar showing usage against quota (turns red near the limit) and a list of itemized meters with their own bars; all bars fill left to right on mount. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-payments-003-* palette — do not swap it for your theme tokens",
+                "the left-to-right bar fill on card mount (transform:scaleX, not width)",
+                "the main bar's color change across percent thresholds: accent → amber → red near the limit",
+                "the per-index stagger of the itemized meters on mount",
+                "the .dark class rule: without it the component stays light on a dark page in another project",
+                "the role=\"progressbar\" with aria-valuenow/min/max on every bar"
+              ],
+              "adapt": [
+                "usageLabel, used, quota and percent of the main bar for your plan",
+                "the meters list: label and percent of each itemized metric",
+                "the accent color via the accent prop to match your brand",
+                "the title and the badge pill with the plan name",
+                "the isometric tilt for the showcase context"
+              ],
+              "notes": [
+                "the color thresholds are fixed in code: 0–69% accent, 70–89% amber, 90–100% red",
+                "percent is clamped to 0–100, same as each meters entry's percent"
+              ],
+              "usage": "<Payments003 usageLabel=\"API requests\" used=\"82,400\" quota=\"100,000\" percent={82} meters={[{ label: \"Storage\", percent: 78 }]} />"
+            },
+            "controls": {
+              "percent": {
+                "label": "Used, %"
+              },
+              "isometric": {
+                "label": "Isometric"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Usage this period",
+                "badge": "Pro plan",
+                "usageLabel": "API requests",
+                "used": "82,400",
+                "quota": "100,000",
+                "percent": 82,
+                "meters": [
+                  { "label": "API requests", "percent": 46 },
+                  { "label": "Storage", "percent": 78 },
+                  { "label": "Outbound traffic", "percent": 33 }
+                ]
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "title": "Использование за период",
+            "badge": "Тариф Pro",
+            "usageLabel": "Запросы к API",
+            "used": "82 400",
+            "quota": "100 000",
+            "percent": 82,
+            "meters": [
+              { "label": "Запросы API", "percent": 46 },
+              { "label": "Хранилище", "percent": 78 },
+              { "label": "Исходящий трафик", "percent": 33 }
+            ]
+          }
+        },
+        "cardControls": ["percent", "isometric", "accent"]
+      }
+    }
+  ]
+}

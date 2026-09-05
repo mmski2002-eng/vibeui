@@ -1,0 +1,175 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "stats-001",
+      "type": "registry:component",
+      "title": "Статистика с подсчётом",
+      "description": "Секция статистики: ряд крупных чисел, которые считаются от нуля до цели при появлении, а вертикальные разделители между колонками проявляются по очереди.",
+      "categories": ["stats"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "stats-001/stats-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/stats-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-stats-001-*. Числа считаются от нуля до цели через анимируемое @property (CSS Houdini) — интерполяция целого числа кадр за кадром без единой строчки JS, счётчик читает значение через counter(). Между колонками — вертикальные разделители, они проявляются fade-in с нарастающей задержкой. container-type делает секцию собственным query-контейнером: в узкой колонке числа складываются по два, в полную ширину — в один ряд.",
+      "meta": {
+        "tags": [
+          "stats",
+          "counter",
+          "numbers",
+          "marketing",
+          "animated",
+          "section"
+        ],
+        "ai": {
+          "export": "Stats001",
+          "usage": "<Stats001 title=\"Рост\" stats={[{ value: 120, suffix: \"K+\", label: \"Пользователей\" }]} />",
+          "summary": "Секция статистики: заголовок, описание и ряд крупных чисел, которые считаются от нуля до цели через анимируемое @property; разделители между ними проявляются по очереди. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-stats-001-* — не подменяйте её токенами вашей темы",
+            "подсчёт чисел от нуля до цели через анимируемое @property (--vibeui-stats-001-n) и counter()",
+            "вертикальные разделители между числами и их последовательное fade-in появление",
+            "строку для класса .dark: без неё компонент останется светлым на тёмной странице чужого проекта",
+            "container-type:inline-size на корне — раскладка считается от ширины секции, а не от окна",
+            "остановку подсчёта на конечном значении при prefers-reduced-motion"
+          ],
+          "adapt": [
+            "контент статистики: value, suffix и label каждой карточки",
+            "заголовок, kicker и описание секции под свой продукт",
+            "акцентный цвет через проп accent под свой бренд",
+            "выравнивание заголовка через align (center/left) и видимость разделителей через dividers"
+          ],
+          "notes": [
+            "align=\"left\" убирает центрирование заголовка и выравнивает ряд чисел по левому краю",
+            "dividers={false} скрывает разделители между числами независимо от ширины контейнера"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "align",
+            "label": "Выравнивание",
+            "type": "select",
+            "options": ["center", "left"],
+            "default": "center"
+          },
+          {
+            "prop": "dividers",
+            "label": "Разделители",
+            "type": "boolean",
+            "default": true
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Stats",
+            "description": "A stats section highlighting key numbers.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-stats-001-* variables. Numbers count from zero to their target via an animatable @property (CSS Houdini) — the integer is interpolated frame by frame with no JS at all, and the counter reads the value through counter(). Vertical dividers sit between columns and fade in with a growing delay. container-type makes the section its own query container: numbers stack two per row in a narrow column, one full row at full width.",
+            "ai": {
+              "summary": "A stats section: a title, description and a row of large numbers that count from zero to their target through an animatable @property; dividers between them fade in one after another. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-stats-001-* palette — do not swap it for your theme tokens",
+                "the count-up from zero to target via the animatable @property (--vibeui-stats-001-n) and counter()",
+                "the vertical dividers between numbers and their sequential fade-in",
+                "the .dark class rule: without it the component stays light on a dark page in another project",
+                "container-type:inline-size on the root — layout is computed from the section's own width, not the window",
+                "snapping to the final value under prefers-reduced-motion instead of counting"
+              ],
+              "adapt": [
+                "the stats content: value, suffix and label for each cell",
+                "the section title, kicker and description for your product",
+                "the accent color via the accent prop to match your brand",
+                "the heading alignment via align (center/left) and divider visibility via dividers"
+              ],
+              "notes": [
+                "align=\"left\" removes heading centering and left-aligns the row of numbers",
+                "dividers={false} hides the dividers between numbers regardless of container width"
+              ],
+              "usage": "<Stats001 title=\"Growth\" stats={[{ value: 120, suffix: \"K+\", label: \"Users\" }]} />"
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              },
+              "align": {
+                "label": "Alignment"
+              },
+              "dividers": {
+                "label": "Dividers"
+              }
+            },
+            "preview": {
+              "props": {
+                "kicker": "By the numbers",
+                "title": "Growth you can see without a slide deck",
+                "description": "Metrics update in real time and stay in sync with the production dashboard — this is exactly what the team sees.",
+                "stats": [
+                  {
+                    "value": 128,
+                    "suffix": "K+",
+                    "label": "Active users"
+                  },
+                  {
+                    "value": 42,
+                    "suffix": "",
+                    "label": "Countries with teams"
+                  },
+                  {
+                    "value": 99,
+                    "suffix": "%",
+                    "label": "Uptime"
+                  },
+                  {
+                    "value": 24,
+                    "suffix": "/7",
+                    "label": "Chat support"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "kicker": "В цифрах",
+            "title": "Рост, который видно без презентации",
+            "description": "Метрики обновляются в реальном времени и синхронизированы с продовым дашбордом — здесь ровно то, что видит команда.",
+            "stats": [
+              {
+                "value": 128,
+                "suffix": "K+",
+                "label": "Активных пользователей"
+              },
+              {
+                "value": 42,
+                "suffix": "",
+                "label": "Стран с командами"
+              },
+              {
+                "value": 99,
+                "suffix": "%",
+                "label": "Время безотказной работы"
+              },
+              {
+                "value": 24,
+                "suffix": "/7",
+                "label": "Поддержка в чате"
+              }
+            ]
+          }
+        },
+        "cardControls": ["accent", "align", "dividers"]
+      }
+    }
+  ]
+}

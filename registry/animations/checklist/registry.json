@@ -1,0 +1,133 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "checklist-001",
+      "type": "registry:component",
+      "title": "Чек-лист",
+      "description": "Чек-лист задач, которые сами отмечаются выполненными по очереди: флажок заполняется галочкой, подпись перечёркивается растущей линией, затем всё гаснет и цикл повторяется со следующего пункта.",
+      "categories": ["checklist"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "checklist-001/checklist-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/checklist-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-checklist-001-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Цикл держится на @keyframes: флажок, галочка и линия перечёркивания используют общие keyframes (vibeui-checklist-001-box/-check/-label/-strike) с animation-delay, вычисленным от позиции строки в списке через переменную --vibeui-checklist-001-duration. JS не участвует, каждый пункт отмечается в свой черёд. При prefers-reduced-motion анимация отключается.",
+      "meta": {
+        "tags": [
+          "checklist",
+          "tasks",
+          "todo",
+          "progress",
+          "animated",
+          "cycle"
+        ],
+        "ai": {
+          "export": "Checklist001",
+          "usage": "<Checklist001 title=\"Чек-лист\" items={[{ label: \"Собрать макет\", meta: \"10 мин\" }]} duration={8} />",
+          "summary": "Чек-лист задач: флажки заполняются галочкой и перечёркивают подпись по очереди, зацикленно, демонстрируя выполнение списка. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-checklist-001-* — не подменяйте её токенами вашей темы",
+            "цикл отметок по очереди через animation-delay по позиции строки — это и есть анимация категории",
+            "растущую линию перечёркивания подписи, синхронную с заполнением флажка",
+            "строку для класса .dark: без неё компонент останется светлым на тёмной странице чужого проекта",
+            "отключение анимации при prefers-reduced-motion",
+            "правую колонку meta с короткой пометкой у каждого пункта"
+          ],
+          "adapt": [
+            "содержимое пунктов: label, необязательный meta (время, тег)",
+            "акцентный цвет флажка через проп accent под свой бренд",
+            "заголовок и пилюлю badge в шапке карточки",
+            "скорость полного цикла через проп duration (секунд на обход всего списка)"
+          ],
+          "notes": [
+            "цикл держится на @keyframes с animation-delay по позиции строки, JS не участвует",
+            "duration меняет CSS-переменную --vibeui-checklist-001-duration, от которой считаются все задержки"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "duration",
+            "label": "Скорость цикла (с)",
+            "type": "number",
+            "default": 8,
+            "min": 4,
+            "max": 16
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Checklist",
+            "description": "A checklist whose items complete one by one on their own: the checkbox fills with a check mark, the label gets a growing strikethrough line, then everything fades and the cycle repeats from the next item.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-checklist-001-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. The cycle runs on @keyframes: the checkbox, check mark and strikethrough line share the same keyframes (vibeui-checklist-001-box/-check/-label/-strike) with an animation-delay computed from the row's position in the list via the --vibeui-checklist-001-duration variable. No JS involved, each item takes its own turn. Animation stops under prefers-reduced-motion.",
+            "ai": {
+              "summary": "A task checklist: checkboxes fill with a check mark and strike through the label one by one, looping, to show a task list completing itself. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-checklist-001-* palette — do not swap it for your theme tokens",
+                "the one-by-one check cycle driven by animation-delay per row position — the category's signature animation",
+                "the growing strikethrough line on the label, synced with the checkbox fill",
+                "the .dark class rule: without it the component stays light on a dark page in another project",
+                "the animation being disabled under prefers-reduced-motion",
+                "the right-side meta column with a short note per item"
+              ],
+              "adapt": [
+                "the item content: label and optional meta (time, tag)",
+                "the checkbox accent color via the accent prop to match your brand",
+                "the title and badge pill in the card header",
+                "the full cycle speed via the duration prop (seconds per pass through the list)"
+              ],
+              "notes": [
+                "the cycle runs on @keyframes with an animation-delay per row position, no JS involved",
+                "duration changes the --vibeui-checklist-001-duration CSS variable that all delays are computed from"
+              ],
+              "usage": "<Checklist001 title=\"Checklist\" items={[{ label: \"Draft the wireframe\", meta: \"10m\" }]} duration={8} />"
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              },
+              "duration": {
+                "label": "Cycle speed (s)"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Launch checklist",
+                "items": [
+                  { "label": "Draft the wireframe", "meta": "10m" },
+                  { "label": "Set the palette", "meta": "5m" },
+                  { "label": "Assemble components", "meta": "20m" },
+                  { "label": "Run the tests", "meta": "8m" },
+                  { "label": "Ship the release", "meta": "3m" }
+                ]
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "title": "Чек-лист запуска",
+            "items": [
+              { "label": "Собрать макет", "meta": "10 мин" },
+              { "label": "Настроить палитру", "meta": "5 мин" },
+              { "label": "Собрать компоненты", "meta": "20 мин" },
+              { "label": "Прогнать тесты", "meta": "8 мин" },
+              { "label": "Опубликовать релиз", "meta": "3 мин" }
+            ]
+          }
+        },
+        "cardControls": ["accent", "duration"]
+      }
+    }
+  ]
+}

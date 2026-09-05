@@ -1,0 +1,527 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "connections-001",
+      "type": "registry:component",
+      "title": "Схождение потоков",
+      "description": "Три источника слева отправляют пакеты по кривым линиям в общий приёмник справа: точки бегут по offset-path, приёмник подсвечивается расширяющимся контуром в момент получения.",
+      "categories": ["connections"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "connections-001/connections-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/connections-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-connections-001-*. Тема берётся из окружения через light-dark() плюс строка для класса .dark. Раскладка фиксирована под три источника: три кривые SVG-пути заданы координатами, каждая несёт свой кружок-пакет через CSS offset-path (animation-timeline тут не нужен — простой linear infinite с отрицательной задержкой на каждый пакет создаёт непрерывный поток). Приёмник обведён прямоугольником-контуром, который расширяется и гаснет в том же ритме, в котором приходят пакеты. Всё гаснет при prefers-reduced-motion.",
+      "meta": {
+        "tags": [
+          "connections",
+          "network",
+          "flow",
+          "converge",
+          "animated",
+          "svg"
+        ],
+        "ai": {
+          "export": "Connections001",
+          "usage": "<Connections001 title=\"Схождение потоков\" destination=\"Аналитика\" sources={[{ label: \"Заказы\" }, { label: \"Платежи\" }, { label: \"Профили\" }]} />",
+          "summary": "Диаграмма схождения потоков: три источника слева непрерывно шлют кружки-пакеты по изогнутым линиям в один приёмник справа, приёмник подсвечивается контуром в момент приёма. Ноль зависимостей, один файл, клиентского JS нет, вся анимация на CSS offset-path.",
+          "preserve": [
+            "локальную палитру --vibeui-connections-001-* — не подменяйте её токенами вашей темы",
+            "фиксированную раскладку из трёх источников и одного приёмника — SVG-пути рассчитаны именно под три узла",
+            "движение пакетов вдоль кривых через CSS offset-path и отрицательные animation-delay, создающие непрерывный поток",
+            "расширяющийся контур приёмника в момент получения пакета",
+            "строку для класса .dark: без неё компонент останется светлым на тёмной странице чужого проекта",
+            "мигающий индикатор статуса в шапке карточки"
+          ],
+          "adapt": [
+            "подписи источников и приёмника через пропы sources и destination",
+            "заголовок карточки title и статус status",
+            "акцентный цвет через проп accent под свой бренд",
+            "paused для статичного кадра и labels для скрытия подписей узлов"
+          ],
+          "notes": [
+            "sources принимает ровно до трёх элементов — раскладка SVG рассчитана под три источника, другое число потребует пересчёта путей",
+            "paused={true} ставит animation-play-state: paused на все анимации блока — удобно для скриншотов и тестов"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "paused",
+            "label": "Пауза",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "labels",
+            "label": "Подписи узлов",
+            "type": "boolean",
+            "default": true
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Converge",
+            "description": "Three sources on the left send packets along curved lines into a single destination node on the right: dots travel via offset-path, and the destination lights up with an expanding outline on receipt.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-connections-001-* variables. The theme comes from the environment via light-dark() plus a rule for the .dark class. The layout is fixed for three sources: three SVG paths are set by coordinates, each carrying its own dot through CSS offset-path (no animation-timeline needed here — a simple linear infinite loop with a negative delay per packet creates a continuous stream). The destination is outlined by a rectangle that expands and fades in the same rhythm packets arrive. Everything stops under prefers-reduced-motion.",
+            "ai": {
+              "summary": "A converge diagram: three sources on the left continuously send dot packets along curved lines into one destination on the right, which lights up with an outline on each arrival. Zero dependencies, one file, no client JS, all animation is CSS offset-path.",
+              "preserve": [
+                "the local --vibeui-connections-001-* palette — do not swap it for your theme tokens",
+                "the fixed layout of three sources and one destination — the SVG paths are computed for exactly three nodes",
+                "the packet motion along curves via CSS offset-path and negative animation-delay creating a continuous stream",
+                "the expanding outline on the destination when a packet arrives",
+                "the .dark class rule: without it the component stays light on a dark page in another project",
+                "the blinking status indicator in the card header"
+              ],
+              "adapt": [
+                "the source and destination labels via the sources and destination props",
+                "the card title and status text",
+                "the accent color via the accent prop to match your brand",
+                "paused for a static frame and labels to hide node captions"
+              ],
+              "notes": [
+                "sources accepts up to three entries — the SVG layout is built for three sources, a different count needs the paths recomputed",
+                "paused={true} sets animation-play-state: paused on every animation in the block — useful for screenshots and tests"
+              ],
+              "usage": "<Connections001 title=\"Converge\" destination=\"Analytics\" sources={[{ label: \"Orders\" }, { label: \"Payments\" }, { label: \"Profiles\" }]} />"
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              },
+              "paused": {
+                "label": "Paused"
+              },
+              "labels": {
+                "label": "Node labels"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Converge",
+                "status": "Syncing",
+                "destination": "Analytics",
+                "sources": [
+                  { "label": "Orders" },
+                  { "label": "Payments" },
+                  { "label": "Profiles" }
+                ]
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "title": "Схождение потоков",
+            "status": "Синхронизация",
+            "destination": "Аналитика",
+            "sources": [
+              { "label": "Заказы" },
+              { "label": "Платежи" },
+              { "label": "Профили" }
+            ]
+          }
+        },
+        "cardControls": ["accent", "paused", "labels"]
+      }
+    },
+    {
+      "name": "connections-002",
+      "type": "registry:component",
+      "title": "Поток данных",
+      "description": "Пять узлов графа соединены рёбрами, вдоль каждого непрерывно бежит своя точка данных с собственной длительностью — сеть выглядит живой, а не одним зацикленным маршрутом.",
+      "categories": ["connections"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "connections-002/connections-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/connections-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-connections-002-*. Тема берётся из окружения через light-dark() плюс строка для класса .dark. Раскладка фиксирована под пять узлов и пять рёбер: координаты узлов и пути рёбер заданы напрямую в SVG. Каждое ребро несёт кружок-пакет через CSS offset-path со своей длительностью и задержкой — это и создаёт впечатление многонаправленного потока данных. Узел рисуется кружком с однобуквенной монограммой (первая буква подписи) и подписью под ним. Всё гаснет при prefers-reduced-motion.",
+      "meta": {
+        "tags": [
+          "connections",
+          "network",
+          "graph",
+          "flow",
+          "animated",
+          "svg"
+        ],
+        "ai": {
+          "export": "Connections002",
+          "usage": "<Connections002 title=\"Поток данных\" nodes={[{ label: \"Приём\" }, { label: \"Очередь\" }, { label: \"Расчёт\" }, { label: \"Кэш\" }, { label: \"Хранилище\" }]} />",
+          "summary": "Диаграмма потока: граф из пяти узлов и пяти рёбер, вдоль каждого ребра бежит точка данных со своей скоростью. Ноль зависимостей, один файл, клиентского JS нет, вся анимация на CSS offset-path.",
+          "preserve": [
+            "локальную палитру --vibeui-connections-002-* — не подменяйте её токенами вашей темы",
+            "фиксированную раскладку из пяти узлов и пяти рёбер — SVG-пути рассчитаны именно под эту сеть",
+            "движение точек вдоль рёбер через CSS offset-path с разной длительностью на каждое ребро",
+            "монограмму узла (первая буква подписи) внутри кружка и полную подпись под ним",
+            "строку для класса .dark: без неё компонент останется светлым на тёмной странице чужого проекта",
+            "мигающий индикатор статуса в шапке карточки"
+          ],
+          "adapt": [
+            "подписи узлов через проп nodes (до пяти элементов)",
+            "заголовок карточки title и статус status",
+            "акцентный цвет через проп accent под свой бренд",
+            "paused для статичного кадра и labels для скрытия подписей узлов"
+          ],
+          "notes": [
+            "nodes принимает ровно до пяти элементов — раскладка графа рассчитана под пять узлов, другое число потребует пересчёта координат",
+            "монограмма — это всегда первая буква переданной подписи, для различимости выбирайте узлы с разными первыми буквами"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "paused",
+            "label": "Пауза",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "labels",
+            "label": "Подписи узлов",
+            "type": "boolean",
+            "default": true
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Flow",
+            "description": "Five graph nodes connected by edges, each carrying its own continuously moving data dot at its own pace — the network reads as alive, not a single looping route.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-connections-002-* variables. The theme comes from the environment via light-dark() plus a rule for the .dark class. The layout is fixed for five nodes and five edges: node coordinates and edge paths are set directly in the SVG. Each edge carries its own dot through CSS offset-path with its own duration and delay — this is what creates the impression of multi-directional data flow. A node is drawn as a circle with a single-letter monogram (the label's first letter) and a caption underneath. Everything stops under prefers-reduced-motion.",
+            "ai": {
+              "summary": "A flow diagram: a graph of five nodes and five edges, each edge carrying its own data dot at its own speed. Zero dependencies, one file, no client JS, all animation is CSS offset-path.",
+              "preserve": [
+                "the local --vibeui-connections-002-* palette — do not swap it for your theme tokens",
+                "the fixed layout of five nodes and five edges — the SVG paths are computed for this exact network",
+                "the dot motion along edges via CSS offset-path with a different duration per edge",
+                "the node monogram (the label's first letter) inside the circle and the full caption underneath",
+                "the .dark class rule: without it the component stays light on a dark page in another project",
+                "the blinking status indicator in the card header"
+              ],
+              "adapt": [
+                "the node labels via the nodes prop (up to five entries)",
+                "the card title and status text",
+                "the accent color via the accent prop to match your brand",
+                "paused for a static frame and labels to hide node captions"
+              ],
+              "notes": [
+                "nodes accepts up to five entries — the graph layout is built for five nodes, a different count needs the coordinates recomputed",
+                "the monogram is always the first letter of the given label — pick nodes with distinct first letters for legibility"
+              ],
+              "usage": "<Connections002 title=\"Flow\" nodes={[{ label: \"Ingest\" }, { label: \"Queue\" }, { label: \"Compute\" }, { label: \"Cache\" }, { label: \"Storage\" }]} />"
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              },
+              "paused": {
+                "label": "Paused"
+              },
+              "labels": {
+                "label": "Node labels"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Flow",
+                "status": "Streaming",
+                "nodes": [
+                  { "label": "Ingest" },
+                  { "label": "Queue" },
+                  { "label": "Compute" },
+                  { "label": "Cache" },
+                  { "label": "Storage" }
+                ]
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "title": "Поток данных",
+            "status": "Стрим",
+            "nodes": [
+              { "label": "Приём" },
+              { "label": "Очередь" },
+              { "label": "Расчёт" },
+              { "label": "Кэш" },
+              { "label": "Хранилище" }
+            ]
+          }
+        },
+        "cardControls": ["accent", "paused", "labels"]
+      }
+    },
+    {
+      "name": "connections-003",
+      "type": "registry:component",
+      "title": "Пайплайн релиза",
+      "description": "Горизонтальная цепочка из четырёх этапов вдоль общей линии: полоска прогресса и точка-хвост непрерывно бегут слева направо, подсвечивая пройденные этапы акцентом.",
+      "categories": ["connections"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "connections-003/connections-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/connections-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-connections-003-*. Тема берётся из окружения через light-dark() плюс строка для класса .dark. Раскладка фиксирована под четыре этапа на общей базовой линии. Прогресс — прямоугольник, растущий через transform: scaleX(0 → 1) с transform-origin по левому краю; точка-хвост едет по той же линии через CSS offset-path с той же длительностью, поэтому оба синхронны. Каждый этап вспыхивает акцентом и остаётся «пройденным»: один keyframes-набор для fill/stroke чипа, сдвинутый по фазе отрицательной задержкой на четверть цикла для каждого следующего этапа. Всё гаснет при prefers-reduced-motion.",
+      "meta": {
+        "tags": [
+          "connections",
+          "pipeline",
+          "progress",
+          "stages",
+          "animated",
+          "svg"
+        ],
+        "ai": {
+          "export": "Connections003",
+          "usage": "<Connections003 title=\"Конвейер релиза\" stages={[\"Сборка\", \"Тесты\", \"Деплой\", \"Прод\"]} />",
+          "summary": "Пайплайн из четырёх этапов на общей линии: полоска прогресса и точка-хвост непрерывно едут слева направо, каждый этап вспыхивает акцентом и остаётся подсвеченным как пройденный. Ноль зависимостей, один файл, клиентского JS нет, анимация на CSS (transform + offset-path).",
+          "preserve": [
+            "локальную палитру --vibeui-connections-003-* — не подменяйте её токенами вашей темы",
+            "фиксированную раскладку из четырёх этапов вдоль одной базовой линии",
+            "рост полоски прогресса через transform: scaleX и синхронную точку-хвост на offset-path",
+            "вспышку и последующее «пройденное» состояние каждого этапа, сдвинутые по фазе на четверть цикла",
+            "строку для класса .dark: без неё компонент останется светлым на тёмной странице чужого проекта",
+            "нумерованные бейджи над этапами и мигающий индикатор статуса в шапке"
+          ],
+          "adapt": [
+            "названия этапов через проп stages (до четырёх элементов)",
+            "заголовок карточки title и статус status",
+            "акцентный цвет через проп accent под свой бренд",
+            "paused для статичного кадра и numbers для скрытия нумерованных бейджей"
+          ],
+          "notes": [
+            "stages принимает ровно до четырёх элементов — раскладка рассчитана под четыре этапа, другое число потребует пересчёта координат",
+            "paused={true} ставит animation-play-state: paused на все анимации блока — удобно для скриншотов и тестов"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "paused",
+            "label": "Пауза",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "numbers",
+            "label": "Номера этапов",
+            "type": "boolean",
+            "default": true
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Pipeline",
+            "description": "A horizontal chain of four stages along a shared baseline: a progress stripe and a trailing dot continuously travel left to right, lighting up completed stages with the accent color.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-connections-003-* variables. The theme comes from the environment via light-dark() plus a rule for the .dark class. The layout is fixed for four stages on one shared baseline. Progress is a rectangle growing via transform: scaleX(0 → 1) with transform-origin on the left edge; a trailing dot rides the same baseline through CSS offset-path with the same duration, so both stay in sync. Each stage flashes the accent color and stays 'done': one keyframes set for the chip's fill/stroke, phase-shifted by a negative delay of a quarter cycle for each following stage. Everything stops under prefers-reduced-motion.",
+            "ai": {
+              "summary": "A four-stage pipeline on a shared line: a progress stripe and a trailing dot continuously travel left to right, each stage flashing the accent color and staying lit as done. Zero dependencies, one file, no client JS, animation is CSS (transform + offset-path).",
+              "preserve": [
+                "the local --vibeui-connections-003-* palette — do not swap it for your theme tokens",
+                "the fixed layout of four stages along one baseline",
+                "the growing progress stripe via transform: scaleX and the synced trailing dot on offset-path",
+                "the flash-then-done state of each stage, phase-shifted by a quarter cycle",
+                "the .dark class rule: without it the component stays light on a dark page in another project",
+                "the numbered badges above the stages and the blinking status indicator in the header"
+              ],
+              "adapt": [
+                "the stage names via the stages prop (up to four entries)",
+                "the card title and status text",
+                "the accent color via the accent prop to match your brand",
+                "paused for a static frame and numbers to hide the numbered badges"
+              ],
+              "notes": [
+                "stages accepts up to four entries — the layout is built for four stages, a different count needs the coordinates recomputed",
+                "paused={true} sets animation-play-state: paused on every animation in the block — useful for screenshots and tests"
+              ],
+              "usage": "<Connections003 title=\"Release pipeline\" stages={[\"Build\", \"Test\", \"Deploy\", \"Live\"]} />"
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              },
+              "paused": {
+                "label": "Paused"
+              },
+              "numbers": {
+                "label": "Stage numbers"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Release pipeline",
+                "status": "Running",
+                "stages": ["Build", "Test", "Deploy", "Live"]
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "title": "Конвейер релиза",
+            "status": "Выполняется",
+            "stages": ["Сборка", "Тесты", "Деплой", "Прод"]
+          }
+        },
+        "cardControls": ["accent", "paused", "numbers"]
+      }
+    },
+    {
+      "name": "connections-004",
+      "type": "registry:component",
+      "title": "Синхронизация",
+      "description": "Два узла соединены двумя линиями: точки бегут попеременно туда и обратно, в центре непрерывно вращается иконка синхронизации.",
+      "categories": ["connections"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "connections-004/connections-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/connections-004.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-connections-004-*. Тема берётся из окружения через light-dark() плюс строка для класса .dark. Два узла соединены верхней и нижней линией; оба пакета используют один keyframes-набор (появление на 0%, полный проход к 45%, угасание к 50%), но у пакета обратного направления отрицательная задержка в половину длительности — из-за этого пакеты чередуются: пока один едет и гаснет, второй в тот же момент появляется на другом конце. В центре крутится SVG-иконка синхронизации — самостоятельное непрерывное вращение, не связанное с движением пакетов. Всё гаснет при prefers-reduced-motion.",
+      "meta": {
+        "tags": [
+          "connections",
+          "sync",
+          "bidirectional",
+          "network",
+          "animated",
+          "svg"
+        ],
+        "ai": {
+          "export": "Connections004",
+          "usage": "<Connections004 title=\"Синхронизация\" systemA=\"Локально\" systemB=\"Облако\" />",
+          "summary": "Диаграмма синхронизации двух систем: точки данных бегут попеременно вперёд и назад по двум параллельным линиям, в центре крутится иконка синхронизации. Ноль зависимостей, один файл, клиентского JS нет, вся анимация на CSS (offset-path + rotate).",
+          "preserve": [
+            "локальную палитру --vibeui-connections-004-* — не подменяйте её токенами вашей темы",
+            "две параллельные линии и чередование пакетов между ними — прямое и обратное направление, а не одновременное движение",
+            "отрицательную задержку у обратного пакета в половину длительности цикла — она и создаёт чередование",
+            "непрерывно вращающуюся иконку синхронизации в центре",
+            "строку для класса .dark: без неё компонент останется светлым на тёмной странице чужого проекта",
+            "мигающий индикатор статуса в шапке карточки"
+          ],
+          "adapt": [
+            "названия систем через пропы systemA и systemB",
+            "заголовок карточки title и статус status",
+            "акцентный цвет через проп accent под свой бренд",
+            "paused для статичного кадра и labels для скрытия подписей узлов"
+          ],
+          "notes": [
+            "paused={true} ставит animation-play-state: paused на все анимации блока, включая вращение иконки — удобно для скриншотов и тестов"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "paused",
+            "label": "Пауза",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "labels",
+            "label": "Подписи узлов",
+            "type": "boolean",
+            "default": true
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Sync",
+            "description": "Two nodes connected by two lines: dots travel back and forth in alternation, while a sync icon spins continuously at the center.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-connections-004-* variables. The theme comes from the environment via light-dark() plus a rule for the .dark class. Two nodes are connected by a top and a bottom line; both packets share one keyframes set (appear at 0%, fully travel by 45%, fade by 50%), but the backward packet carries a negative delay of half the duration — this is what makes them alternate: while one is traveling and fading, the other appears at the opposite end at the same moment. A spinning sync icon sits at the center — a self-contained continuous rotation unrelated to the packet motion. Everything stops under prefers-reduced-motion.",
+            "ai": {
+              "summary": "A two-system sync diagram: data dots travel back and forth in alternation along two parallel lines, with a sync icon spinning at the center. Zero dependencies, one file, no client JS, all animation is CSS (offset-path + rotate).",
+              "preserve": [
+                "the local --vibeui-connections-004-* palette — do not swap it for your theme tokens",
+                "the two parallel lines and the alternation of packets between them — forward and backward, not simultaneous",
+                "the backward packet's negative delay of half the cycle duration — it is what creates the alternation",
+                "the continuously spinning sync icon at the center",
+                "the .dark class rule: without it the component stays light on a dark page in another project",
+                "the blinking status indicator in the card header"
+              ],
+              "adapt": [
+                "the system names via the systemA and systemB props",
+                "the card title and status text",
+                "the accent color via the accent prop to match your brand",
+                "paused for a static frame and labels to hide node captions"
+              ],
+              "notes": [
+                "paused={true} sets animation-play-state: paused on every animation in the block, including the icon spin — useful for screenshots and tests"
+              ],
+              "usage": "<Connections004 title=\"Sync\" systemA=\"Local\" systemB=\"Cloud\" />"
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              },
+              "paused": {
+                "label": "Paused"
+              },
+              "labels": {
+                "label": "Node labels"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Sync",
+                "status": "Online",
+                "systemA": "Local",
+                "systemB": "Cloud"
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "title": "Синхронизация",
+            "status": "Онлайн",
+            "systemA": "Локально",
+            "systemB": "Облако"
+          }
+        },
+        "cardControls": ["accent", "paused", "labels"]
+      }
+    }
+  ]
+}

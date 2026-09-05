@@ -1,0 +1,146 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "logos-001",
+      "type": "registry:component",
+      "title": "Облако логотипов",
+      "description": "Полноширинная секция с бесконечной лентой лого партнёров: монохромные плейсхолдеры едут вбок по кругу, приглушены по умолчанию и становятся чёткими под курсором.",
+      "categories": ["logos"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "logos-001/logos-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/logos-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-logos-001-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Список логотипов удваивается и едет через translateX(0) → translateX(-50%) по кругу (26s linear infinite) — переход между копиями незаметен. Наведение на ленту ставит анимацию на паузу через animation-play-state. Каждый логотип — плитка с инициалом плюс имя, приглушённая opacity и grayscale, которая проясняется под курсором. Настоящий список логотипов дублируется в скрытый для экрана текстовый абзац для читалок с экрана, сама лента помечена aria-hidden.",
+      "meta": {
+        "tags": [
+          "logos",
+          "marquee",
+          "partners",
+          "landing",
+          "animated",
+          "infinite-scroll"
+        ],
+        "ai": {
+          "export": "Logos001",
+          "usage": "<Logos001 title=\"Нам доверяют команды по всему миру\" logos={[\"Acme\", \"Globex\", \"Umbrella\"]} />",
+          "summary": "Полноширинная секция с бесконечной лентой лого-плейсхолдеров: список едет вбок по кругу, приглушён по умолчанию и проясняется под курсором, на наведении встаёт на паузу. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-logos-001-* — не подменяйте её токенами вашей темы",
+            "бесконечную ленту translateX(0) → translateX(-50%) со списком, удвоенным ровно вдвое — иначе переход между копиями заметен",
+            "маску по краям ленты (linear-gradient), которая скрывает жёсткий обрез списка",
+            "паузу анимации при наведении (animation-play-state:paused) и осветление логотипа под курсором",
+            "строку для класса .dark: без неё секция останется светлой на тёмной странице чужого проекта",
+            "скрытый текстовый список логотипов для читалок с экрана и aria-hidden на самой ленте"
+          ],
+          "adapt": [
+            "список логотипов через проп logos (имя + инициал плитки берётся из первой буквы)",
+            "заголовок секции через title, направление ленты через reverse",
+            "акцентный цвет через проп accent под свой бренд"
+          ],
+          "notes": [
+            "logos дублируется компонентом внутри — передавайте оригинальный список без повторов",
+            "reverse={true} разворачивает направление ленты"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Нам доверяют команды по всему миру",
+            "maxLength": 60
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "reverse",
+            "label": "Реверс",
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Logos",
+            "description": "A full-width logo cloud section with an infinite marquee of partner marks: monochrome placeholders scroll sideways on a loop, muted by default and sharpening on hover.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-logos-001-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. The logo list is doubled and scrolls via translateX(0) → translateX(-50%) on a loop (26s linear infinite) — the seam between copies is invisible. Hovering the track pauses the animation via animation-play-state. Each logo is a tile with an initial plus a name, muted with opacity and grayscale, sharpening under the cursor. The real logo list is also rendered into a screen-reader-only text paragraph, while the marquee itself is aria-hidden.",
+            "ai": {
+              "summary": "A full-width logo cloud: the list scrolls sideways on an infinite loop, muted by default and sharpening on hover, pausing while hovered. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-logos-001-* palette — do not swap it for your theme tokens",
+                "the infinite translateX(0) → translateX(-50%) marquee with the list doubled exactly once — otherwise the seam between copies is visible",
+                "the edge mask (linear-gradient) that hides the list's hard cutoff",
+                "the pause on hover (animation-play-state:paused) and the logo brightening under the cursor",
+                "the .dark class rule: without it the section stays light on a dark page in another project",
+                "the screen-reader-only text list of logos and the aria-hidden marquee itself"
+              ],
+              "adapt": [
+                "the logo list via the logos prop (the tile initial is taken from the first letter)",
+                "the section title via title, the marquee direction via reverse",
+                "the accent color via the accent prop to match your brand"
+              ],
+              "notes": [
+                "the component doubles logos internally — pass the original list without repeats",
+                "reverse={true} flips the marquee direction"
+              ],
+              "usage": "<Logos001 title=\"Trusted by teams worldwide\" logos={[\"Acme\", \"Globex\", \"Umbrella\"]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Trusted by teams worldwide"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "reverse": {
+                "label": "Reverse"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Trusted by teams worldwide",
+                "logos": [
+                  "Acme",
+                  "Globex",
+                  "Umbrella",
+                  "Initech",
+                  "Hooli",
+                  "Stark",
+                  "Wayne",
+                  "Vertex"
+                ]
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "title": "Нам доверяют команды по всему миру",
+            "logos": [
+              "Acme",
+              "Globex",
+              "Umbrella",
+              "Initech",
+              "Hooli",
+              "Stark",
+              "Wayne",
+              "Vertex"
+            ]
+          }
+        },
+        "cardControls": ["title", "reverse", "accent"]
+      }
+    }
+  ]
+}

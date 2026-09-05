@@ -1,0 +1,490 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "search-001",
+      "type": "registry:component",
+      "title": "Командная палитра",
+      "description": "Командная палитра с печатающимся запросом и сгруппированными командами: строка поиска печатает текст по буквам, ниже по очереди въезжают строки с иконкой и подсказкой горячей клавиши справа.",
+      "categories": ["search"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "search-001/search-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/search-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-search-001-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Запрос раскрывается ступенями (steps()) до ширины, посчитанной из длины текста через --vibeui-search-001-chars, с мигающим текстовым курсором в конце. Команды сгруппированы в отдельные <ul>, поэтому стаггер строк ведётся не через nth-child, а через инлайновую переменную --vibeui-search-001-row с последовательным индексом по всем группам; всё гаснет при prefers-reduced-motion.",
+      "meta": {
+        "tags": [
+          "search",
+          "command-palette",
+          "shortcuts",
+          "typing",
+          "navigation",
+          "animated"
+        ],
+        "ai": {
+          "export": "Search001",
+          "usage": "<Search001 query=\"настрой\" groups={[{ label: \"Навигация\", commands: [{ label: \"Открыть настройки\", shortcut: \"⌘ ,\", icon: \"settings\" }] }]} />",
+          "summary": "Командная палитра: строка поиска печатает запрос по буквам с мигающим курсором, ниже сгруппированные команды с иконкой и горячей клавишей въезжают по очереди после печати. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-search-001-* — не подменяйте её токенами вашей темы",
+            "эффект печати запроса (steps() по ширине) и мигающий курсор в конце строки",
+            "группировку команд заголовками групп с прописной подписью",
+            "последовательный въезд строк команд после завершения печати запроса",
+            "правую колонку с пилюлей горячей клавиши у каждой команды",
+            "строку для класса .dark: без неё компонент останется светлым на тёмной странице чужого проекта"
+          ],
+          "adapt": [
+            "текст запроса query и его длину — от неё считается длительность печати",
+            "список groups: заголовок группы и команды с label, shortcut и icon",
+            "typing: false показывает запрос и команды сразу, без печати и въезда",
+            "акцентный цвет через проп accent под свой бренд"
+          ],
+          "notes": [
+            "icon принимает один из пяти встроенных значков: search, settings, user, file, message",
+            "первая команда в списке подсвечена как активная (data-active) — это заготовка под клавиатурную навигацию, а не состояние на пропе"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "typing",
+            "label": "Печать запроса",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "query",
+            "label": "Запрос",
+            "type": "text",
+            "default": "настрой",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Command palette",
+            "description": "A command palette with a typed query and grouped commands: the search field types out the query letter by letter, and grouped command rows rise in below with an icon and a keyboard-shortcut hint on the right.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-search-001-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. The query reveals in steps() up to a width computed from the text length via --vibeui-search-001-chars, ending with a blinking text caret. Commands are grouped into separate <ul> elements, so the row stagger runs on an inline --vibeui-search-001-row index counted across all groups instead of nth-child; everything stops under prefers-reduced-motion.",
+            "ai": {
+              "summary": "A command palette: the search field types out the query letter by letter with a blinking caret, and grouped commands with an icon and a keyboard shortcut rise in one by one once typing finishes. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-search-001-* palette — do not swap it for your theme tokens",
+                "the query's typing effect (steps() width reveal) and the blinking caret at the end of the line",
+                "grouping commands under uppercase group headings",
+                "the sequential rise-in of command rows once the query finishes typing",
+                "the right-side keyboard-shortcut pill on every command",
+                "the .dark class rule: without it the component stays light on a dark page in another project"
+              ],
+              "adapt": [
+                "the query text and its length — the typing duration is computed from it",
+                "the groups list: group label and commands with label, shortcut and icon",
+                "typing: false shows the query and commands instantly, with no typing or rise-in",
+                "the accent color via the accent prop to match your brand"
+              ],
+              "notes": [
+                "icon accepts one of five built-in glyphs: search, settings, user, file, message",
+                "the first command in the list is marked active (data-active) as a placeholder for keyboard navigation, not a prop-driven state"
+              ],
+              "usage": "<Search001 query=\"sett\" groups={[{ label: \"Navigation\", commands: [{ label: \"Open settings\", shortcut: \"⌘ ,\", icon: \"settings\" }] }]} />"
+            },
+            "controls": {
+              "typing": {
+                "label": "Type query"
+              },
+              "query": {
+                "label": "Query",
+                "default": "sett"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "query": "sett",
+                "groups": [
+                  {
+                    "label": "Navigation",
+                    "commands": [
+                      {
+                        "label": "Open settings",
+                        "shortcut": "⌘ ,",
+                        "icon": "settings"
+                      },
+                      {
+                        "label": "Go to profile",
+                        "shortcut": "⌘ P",
+                        "icon": "user"
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Actions",
+                    "commands": [
+                      {
+                        "label": "Create project",
+                        "shortcut": "⌘ N",
+                        "icon": "file"
+                      },
+                      {
+                        "label": "Write a message",
+                        "shortcut": "⌘ M",
+                        "icon": "message"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "query": "настрой",
+            "groups": [
+              {
+                "label": "Навигация",
+                "commands": [
+                  {
+                    "label": "Открыть настройки",
+                    "shortcut": "⌘ ,",
+                    "icon": "settings"
+                  },
+                  {
+                    "label": "Перейти в профиль",
+                    "shortcut": "⌘ P",
+                    "icon": "user"
+                  }
+                ]
+              },
+              {
+                "label": "Действия",
+                "commands": [
+                  {
+                    "label": "Создать проект",
+                    "shortcut": "⌘ N",
+                    "icon": "file"
+                  },
+                  {
+                    "label": "Написать сообщение",
+                    "shortcut": "⌘ M",
+                    "icon": "message"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "cardControls": ["typing", "query", "accent"]
+      }
+    },
+    {
+      "name": "search-002",
+      "type": "registry:component",
+      "title": "Результаты",
+      "description": "Панель результатов поиска с фильтр-чипами и счётчиком найденного: строки въезжают по очереди снизу вверх, совпадающие с запросом слова подсвечиваются акцентом с небольшой задержкой.",
+      "categories": ["search"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "search-002/search-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/search-002.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-search-002-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Совпадающая подстрока каждого результата оборачивается в <mark data-part=\"hit\"> через простой split по регулярному выражению — сторонних библиотек подсветки не требуется. Строка и её подсветки читают одну переменную --vibeui-search-002-row: она задаётся на <li> и наследуется вниз до вложенных <mark>, поэтому подсветка стартует с задержкой относительно въезда строки без отдельного таймера. Всё гаснет при prefers-reduced-motion.",
+      "meta": {
+        "tags": [
+          "search",
+          "results",
+          "filters",
+          "highlight",
+          "chips",
+          "animated"
+        ],
+        "ai": {
+          "export": "Search002",
+          "usage": "<Search002 title=\"Результаты поиска\" items={[{ title: \"Настройки уведомлений\", description: \"Push и email оповещения\", match: \"уведомл\" }]} />",
+          "summary": "Панель результатов поиска: фильтр-чипы сверху, счётчик найденного, список результатов со словами, совпавшими с запросом, подсвеченными акцентом. Строки въезжают по очереди, подсветка загорается чуть позже. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-search-002-* — не подменяйте её токенами вашей темы",
+            "последовательный въезд строк результатов снизу вверх",
+            "подсветку совпадений акцентным цветом с задержкой после появления строки",
+            "ряд фильтр-чипов сверху с выделенным активным чипом",
+            "счётчик найденных результатов рядом с заголовком",
+            "строку для класса .dark: без неё компонент останется светлым на тёмной странице чужого проекта"
+          ],
+          "adapt": [
+            "список items: title, description и подстрока match для подсветки в каждом",
+            "список chips: подписи фильтров и активный фильтр",
+            "countLabel — подпись перед числом найденного",
+            "showChips: false скрывает ряд фильтр-чипов",
+            "акцентный цвет через проп accent под свой бренд"
+          ],
+          "notes": [
+            "match ищется без учёта регистра и подсвечивается во всех вхождениях title и description",
+            "счётчик считается автоматически из items.length, отдельного пропа для числа нет"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "showChips",
+            "label": "Фильтр-чипы",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "countLabel",
+            "label": "Подпись счётчика",
+            "type": "text",
+            "default": "Найдено",
+            "maxLength": 16
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Results",
+            "description": "A search results panel with filter chips and a result count: rows rise in one by one from the bottom, and words matching the query are highlighted in the accent color with a short delay.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-search-002-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. Each result's matching substring is wrapped in <mark data-part=\"hit\"> via a plain regex split — no highlighting library needed. A row and its highlights read the same --vibeui-search-002-row variable, set on the <li> and inherited down to the nested <mark> elements, so the highlight fires with a delay relative to the row's own rise-in without a second timer. Everything stops under prefers-reduced-motion.",
+            "ai": {
+              "summary": "A search results panel: filter chips on top, a result count, and a list of results with query-matching words highlighted in the accent color. Rows rise in one by one, and the highlight lights up a moment later. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-search-002-* palette — do not swap it for your theme tokens",
+                "the sequential bottom-up rise-in of result rows",
+                "the accent-colored match highlight that fires after the row itself appears",
+                "the filter chip row on top with the active chip set apart",
+                "the result count next to the title",
+                "the .dark class rule: without it the component stays light on a dark page in another project"
+              ],
+              "adapt": [
+                "the items list: title, description and the match substring to highlight in each",
+                "the chips list: filter labels and the active filter",
+                "countLabel — the label shown before the result count",
+                "showChips: false hides the filter chip row",
+                "the accent color via the accent prop to match your brand"
+              ],
+              "notes": [
+                "match is matched case-insensitively and highlighted at every occurrence in title and description",
+                "the count is computed automatically from items.length — there is no separate number prop"
+              ],
+              "usage": "<Search002 title=\"Search results\" items={[{ title: \"Notification settings\", description: \"Push and email alerts\", match: \"notif\" }]} />"
+            },
+            "controls": {
+              "showChips": {
+                "label": "Filter chips"
+              },
+              "countLabel": {
+                "label": "Count label",
+                "default": "Found"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Search results",
+                "countLabel": "Found",
+                "chips": [
+                  { "label": "All", "active": true },
+                  { "label": "Settings" },
+                  { "label": "Documents" },
+                  { "label": "Profile" }
+                ],
+                "items": [
+                  {
+                    "title": "Notification settings",
+                    "description": "Manage push and email alerts in your profile section",
+                    "match": "notif"
+                  },
+                  {
+                    "title": "Payment notifications",
+                    "description": "Turn on alerts for balance changes on your account",
+                    "match": "notif"
+                  },
+                  {
+                    "title": "Notification history",
+                    "description": "Archive of system notifications sent over the last 30 days",
+                    "match": "notif"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "title": "Результаты поиска",
+            "countLabel": "Найдено",
+            "chips": [
+              { "label": "Все", "active": true },
+              { "label": "Настройки" },
+              { "label": "Документы" },
+              { "label": "Профиль" }
+            ],
+            "items": [
+              {
+                "title": "Настройки уведомлений",
+                "description": "Управление push- и email-оповещениями в разделе профиля",
+                "match": "уведомл"
+              },
+              {
+                "title": "Уведомления о платежах",
+                "description": "Включить оповещения об изменении баланса счёта",
+                "match": "уведомл"
+              },
+              {
+                "title": "История уведомлений",
+                "description": "Архив отправленных системных уведомлений за 30 дней",
+                "match": "уведомл"
+              }
+            ]
+          }
+        },
+        "cardControls": ["showChips", "countLabel", "accent"]
+      }
+    },
+    {
+      "name": "search-003",
+      "type": "registry:component",
+      "title": "Семантический поиск",
+      "description": "Запрос приземляется в центре абстрактного поля точек (embedding space), волна радиуса расходится наружу и подсвечивает семантически близкие точки в момент, когда достигает их.",
+      "categories": ["search"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "search-003/search-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/search-003.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-search-003-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Волна — окружность максимального радиуса, растянутая transform:scale от 0 до 1 (дешевле, чем анимировать SVG-атрибут r). Для точек с related=true задержка их собственного keyframe считается в TSX из расстояния до центра: (distance / maxRadius) * длительность волны, — и передаётся через инлайновую переменную --vibeui-search-003-delay, поэтому вспышка точки совпадает с моментом прохождения волны. Несвязанные точки статичны — это и продаёт «семантическую», а не пространственную близость. Всё гаснет при prefers-reduced-motion.",
+      "meta": {
+        "tags": [
+          "search",
+          "semantic",
+          "embedding",
+          "ai",
+          "vector",
+          "animated"
+        ],
+        "ai": {
+          "export": "Search003",
+          "usage": "<Search003 query=\"уютный свитер на зиму\" points={[{ x: 200, y: 60, related: true }]} />",
+          "summary": "Семантический поиск: запрос приземляется в центре абстрактного поля точек, окружность-волна расходится наружу и подсвечивает связанные точки ровно в момент, когда достигает их расстояния от центра. Несвязанные точки остаются тусклыми. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-search-003-* — не подменяйте её токенами вашей темы",
+            "расходящуюся волну-окружность от центрального запроса наружу",
+            "синхронизацию вспышки точки с моментом прохождения волны через её расстояние от центра",
+            "тусклые статичные несвязанные точки — контраст, который продаёт «семантическую» связь",
+            "дышащее кольцо вокруг центральной точки запроса",
+            "строку для класса .dark: без неё компонент останется светлым на тёмной странице чужого проекта"
+          ],
+          "adapt": [
+            "текст query, показанный в шапке рядом с заголовком",
+            "список points: координаты x/y в SVG viewBox 320×200 и related для семантически близких",
+            "sweeping: false останавливает волну и подсветку точек",
+            "акцентный цвет через проп accent под свой бренд"
+          ],
+          "notes": [
+            "задержка вспышки каждой related-точки считается в компоненте из её расстояния до центра (160,100) — переставляя точки, синхронизация с волной сохраняется автоматически",
+            "координаты точек — числа в системе viewBox 320×200, а не проценты или пиксели контейнера"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "sweeping",
+            "label": "Волна",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "query",
+            "label": "Запрос",
+            "type": "text",
+            "default": "уютный свитер на зиму",
+            "maxLength": 32
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Semantic",
+            "description": "A query landing in an embedding space, where a radius sweep lights up related points the moment it reaches their distance from the center.",
+            "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-search-003-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. The sweep is a full-radius circle stretched with transform:scale from 0 to 1 — cheaper than animating the SVG r attribute. For points with related=true, the delay of their own keyframe is computed in TSX from their distance to the center: (distance / maxRadius) * sweep duration, passed through the inline --vibeui-search-003-delay variable, so the point's flash lines up with the moment the sweep passes it. Unrelated points stay static — that contrast is what sells \"semantic\" rather than spatial proximity. Everything stops under prefers-reduced-motion.",
+            "ai": {
+              "summary": "Semantic search: a query lands at the center of an abstract point field, a ring sweep expands outward and lights up related points exactly when it reaches their distance from the center. Unrelated points stay dim. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-search-003-* palette — do not swap it for your theme tokens",
+                "the outward-expanding ring sweep from the central query",
+                "syncing each point's flash to the moment the sweep passes its distance from the center",
+                "the dim, static unrelated points — the contrast that sells the \"semantic\" connection",
+                "the breathing ring around the central query point",
+                "the .dark class rule: without it the component stays light on a dark page in another project"
+              ],
+              "adapt": [
+                "the query text shown in the header next to the title",
+                "the points list: x/y coordinates in the 320×200 SVG viewBox and related for semantically close points",
+                "sweeping: false stops the ring sweep and the point highlights",
+                "the accent color via the accent prop to match your brand"
+              ],
+              "notes": [
+                "each related point's flash delay is computed in the component from its distance to the center (160,100) — rearranging points keeps the sync with the sweep automatic",
+                "point coordinates are numbers in the 320×200 viewBox coordinate system, not container percentages or pixels"
+              ],
+              "usage": "<Search003 query=\"cozy winter sweater\" points={[{ x: 200, y: 60, related: true }]} />"
+            },
+            "controls": {
+              "sweeping": {
+                "label": "Sweep"
+              },
+              "query": {
+                "label": "Query",
+                "default": "cozy winter sweater"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Semantic search",
+                "query": "cozy winter sweater"
+              }
+            }
+          }
+        },
+        "preview": {
+          "props": {
+            "title": "Семантический поиск",
+            "query": "уютный свитер на зиму"
+          }
+        },
+        "cardControls": ["sweeping", "query", "accent"]
+      }
+    }
+  ]
+}
