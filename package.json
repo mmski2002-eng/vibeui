@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npm run indexes && npm run meta:validate && npm run registry:build && next build --turbopack",
+    "build": "npm run check:shadcn && npm run indexes && npm run meta:validate && npm run registry:build && next build --turbopack",
     "meta:validate": "node scripts/validate-meta.mjs",
+    "check:shadcn": "node scripts/check-shadcn.mjs",
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
