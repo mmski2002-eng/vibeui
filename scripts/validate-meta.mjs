@@ -326,6 +326,40 @@ function validateSource(where, directory, item) {
     }
   }
 
+  // Раскладка item'а считается от его собственной ширины, а не от окна:
+  // блок ставят и в узкую колонку, и в кадр витрины, и в чужой лейаут.
+  // Tailwind-варианты в registry не работают вовсе — своего Tailwind у
+  // чужого проекта может не быть, а классы проекта сюда не дотягиваются.
+  const viewportVariant = source.match(/\b(?:sm|md|lg|xl|2xl):[a-z-]/)
+
+  if (viewportVariant) {
+    errors.push(
+      `${where}: viewport-вариант "${viewportVariant[0]}" — раскладка item'а считается от его ширины (container-type), а классы Tailwind сюда не дотягиваются`,
+    )
+  }
+
+  // Единицы окна ломают ту же границу, но с двумя законными исключениями:
+  // слой, прижатый к окну (fixed-popover и <dialog> в top layer), и потолок
+  // размера (`max-width: min(24rem, 100vw - 2rem)`) — он не задаёт размер, а
+  // страхует всплывашку от вылета за край экрана.
+  const viewportSizing = [...source.matchAll(/([a-z-]+)\s*:\s*([^;{}]*[\d.]v[wh]\b[^;{}]*)/g)]
+    .filter(([, property, value]) => {
+      // Потолок размера — законное применение: `min(24rem, 100vw - 2rem)`
+      // страхует всплывашку от вылета за край экрана, но размер задаёт rem.
+      if (/^(?:max|min)-(?:width|height|inline-size|block-size)$/.test(property)) {
+        return false
+      }
+
+      return !/\bmin\(/.test(value)
+    })
+
+  if (viewportSizing.length > 0 && !/position:\s*fixed|\bdialog\s*\{/.test(source)) {
+    const [first] = viewportSizing
+    errors.push(
+      `${where}: единица окна в "${first[0].trim().slice(0, 40)}" — размер item'а считается от его ширины, а не от окна`,
+    )
+  }
+
   const animated = /@keyframes|transition:|animation:/.test(source)
 
   if (animated && !source.includes("prefers-reduced-motion")) {
@@ -467,6 +501,7 @@ function validateItem(file, item, { requireApi }) {
 for (const [directory, options] of [
   ["registry/components", { requireApi: true }],
   ["registry/blocks", { requireApi: false }],
+  ["registry/animations", { requireApi: true }],
 ]) {
   for (const file of registriesIn(directory)) {
     const registry = JSON.parse(readFileSync(file, "utf8"))
