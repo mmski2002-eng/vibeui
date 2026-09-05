@@ -44,14 +44,6 @@ export function CatalogTopbar({
           >
             {t.topbar.blocks}
           </Link>
-          {/* Внутренняя страница согласования дизайна: одна на весь сайт,
-              без языковой пары, поэтому ссылка без префикса локали. */}
-          <Link
-            href="/lab"
-            className="hover:text-shell-fg focus-visible:ring-shell-ring hidden shrink-0 rounded-sm whitespace-nowrap transition-colors focus-visible:ring-2 focus-visible:outline-none sm:inline"
-          >
-            {t.topbar.lab}
-          </Link>
           <Link
             href="/animations"
             className="hover:text-shell-fg focus-visible:ring-shell-ring shrink-0 rounded-sm whitespace-nowrap transition-colors focus-visible:ring-2 focus-visible:outline-none"
@@ -64,9 +56,19 @@ export function CatalogTopbar({
             забирает себе весь свободный остаток строки, а не долю наравне
             с зазором до ссылок. На телефоне они остаются в первой строке
             рядом с логотипом — ссылки уезжают на вторую. */}
-        <div className="flex shrink-0 items-center gap-2 sm:ml-auto">
-          <ThemeSwitch />
-          <LocaleSwitch locale={locale} />
+        <div className="flex shrink-0 items-center gap-3 sm:ml-auto">
+          {/* Внутренняя страница согласования дизайна: одна на весь сайт,
+              без языковой пары, поэтому ссылка без префикса локали. */}
+          <Link
+            href="/lab"
+            className="text-shell-muted hover:text-shell-fg focus-visible:ring-shell-ring hidden shrink-0 rounded-sm text-sm whitespace-nowrap transition-colors focus-visible:ring-2 focus-visible:outline-none sm:inline"
+          >
+            {t.topbar.lab}
+          </Link>
+          <div className="flex shrink-0 items-center gap-2">
+            <ThemeSwitch />
+            <LocaleSwitch locale={locale} />
+          </div>
         </div>
       </div>
     </header>

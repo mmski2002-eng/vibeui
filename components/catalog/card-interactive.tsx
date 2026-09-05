@@ -3,9 +3,10 @@
 import dynamic from "next/dynamic"
 import Link from "next/link"
 import { Moon, RotateCcw, Sun } from "lucide-react"
-import { useState, type ReactNode } from "react"
+import { useEffect, useState, type ReactNode } from "react"
 
 import { CopyButton } from "@/components/copy-button"
+import { SHELL_THEME_EVENT } from "@/components/catalog/theme-switch"
 import {
   cardControlIcon,
   cardControlTitle,
@@ -85,6 +86,26 @@ export function CardInteractive({
 }) {
   const t = getDictionary(locale)
   const [theme, setTheme] = useState<PreviewTheme>("dark")
+
+  // Подложка карточки следует за темой оболочки: и на старте (если человек
+  // уже переключил сайт на светлую — начинать с тёмного кадра было бы
+  // противоречием на виду), и живьём при клике на переключатель темы в
+  // шапке. Начальное состояние ставится из эффекта: на сервере атрибута нет,
+  // а взять его из document прямо в рендере сломало бы гидратацию.
+  useEffect(() => {
+    if (document.documentElement.dataset.shellTheme === "light") {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setTheme("light")
+    }
+
+    const onShellTheme = (event: Event) => {
+      const light = (event as CustomEvent<{ light: boolean }>).detail.light
+      setTheme(light ? "light" : "dark")
+    }
+
+    document.addEventListener(SHELL_THEME_EVENT, onShellTheme)
+    return () => document.removeEventListener(SHELL_THEME_EVENT, onShellTheme)
+  }, [])
   const [values, setValues] = useState<ControlValues>(() =>
     defaultValues(controls),
   )

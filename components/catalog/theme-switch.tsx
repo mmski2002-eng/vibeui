@@ -5,6 +5,9 @@ import { useEffect, useRef } from "react"
 
 const STORAGE_KEY = "vibeui-shell-theme"
 
+/** Слушают карточки каталога: подложка превью следует за темой оболочки. */
+export const SHELL_THEME_EVENT = "vibeui:shell-theme"
+
 /**
  * Переключатель светлой/тёмной оболочки каталога. Атрибут ставится на
  * <html> (см. THEME_INIT_SCRIPT в app/layout.tsx), а не на .catalog-shell:
@@ -38,6 +41,9 @@ export function ThemeSwitch() {
     document.documentElement.setAttribute(
       "data-shell-theme",
       next ? "light" : "dark",
+    )
+    document.dispatchEvent(
+      new CustomEvent(SHELL_THEME_EVENT, { detail: { light: next } }),
     )
     try {
       localStorage.setItem(STORAGE_KEY, next ? "light" : "dark")
