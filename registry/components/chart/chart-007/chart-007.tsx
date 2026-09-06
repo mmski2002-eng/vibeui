@@ -28,12 +28,12 @@ export type Chart007Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="chart-007"]){
 --vibeui-chart-007-bg:transparent;
---vibeui-chart-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-chart-007-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-chart-007-muted:color-mix(in oklab,var(--vibeui-chart-007-fg) 68%,transparent);
---vibeui-chart-007-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
---vibeui-chart-007-track:light-dark(oklch(0.93 0.005 265),oklch(0.31 0.01 265));
+--vibeui-chart-007-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
+--vibeui-chart-007-track:light-dark(oklch(0.93 0 265),oklch(0.31 0 265));
 --vibeui-chart-007-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
---vibeui-chart-007-mark:light-dark(oklch(0.45 0.02 265),oklch(0.76 0.02 265));
+--vibeui-chart-007-mark:light-dark(oklch(0.45 0 265),oklch(0.76 0 265));
 --vibeui-chart-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

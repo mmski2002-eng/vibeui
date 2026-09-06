@@ -32,13 +32,13 @@ export type Chart014Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="chart-014"]){
 --vibeui-chart-014-bg:transparent;
---vibeui-chart-014-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-chart-014-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-chart-014-muted:color-mix(in oklab,var(--vibeui-chart-014-fg) 68%,transparent);
---vibeui-chart-014-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-chart-014-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-chart-014-bad:light-dark(oklch(0.63 0.18 28),oklch(0.71 0.16 28));
 --vibeui-chart-014-warn:light-dark(oklch(0.76 0.15 85),oklch(0.83 0.14 85));
 --vibeui-chart-014-good:light-dark(oklch(0.64 0.15 155),oklch(0.76 0.14 155));
---vibeui-chart-014-needle:light-dark(oklch(0.25 0.016 265),oklch(0.9 0.008 265));
+--vibeui-chart-014-needle:light-dark(oklch(0.25 0 265),oklch(0.9 0 265));
 --vibeui-chart-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

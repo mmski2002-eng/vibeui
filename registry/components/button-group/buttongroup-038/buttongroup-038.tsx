@@ -18,13 +18,13 @@ export type Buttongroup038Props = Omit<ComponentProps<"div">, "children"> & {
 // именно первая submit-кнопка, и это должно быть безопасное действие.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-038"]){
---vibeui-buttongroup-038-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.005 265));
+--vibeui-buttongroup-038-fg:light-dark(oklch(0.25 0 265),oklch(0.95 0 265));
 --vibeui-buttongroup-038-muted:color-mix(in oklab,var(--vibeui-buttongroup-038-fg) 68%,transparent);
---vibeui-buttongroup-038-border:light-dark(oklch(0.88 0.008 265),oklch(0.41 0.012 265));
---vibeui-buttongroup-038-kbd:light-dark(oklch(0.98 0.003 265),oklch(0.31 0.01 265));
+--vibeui-buttongroup-038-border:light-dark(oklch(0.88 0 265),oklch(0.41 0 265));
+--vibeui-buttongroup-038-kbd:light-dark(oklch(0.98 0 265),oklch(0.31 0 265));
 --vibeui-buttongroup-038-accent:light-dark(oklch(0.48 0.15 265),oklch(0.62 0.16 265));
---vibeui-buttongroup-038-on-accent:light-dark(oklch(0.99 0.004 265),oklch(0.98 0.006 265));
---vibeui-buttongroup-038-shadow:light-dark(oklch(0.2 0.03 265 / 14%),oklch(0 0 0 / 34%));
+--vibeui-buttongroup-038-on-accent:light-dark(oklch(0.99 0 265),oklch(0.98 0 265));
+--vibeui-buttongroup-038-shadow:light-dark(oklch(0.2 0 265 / 14%),oklch(0 0 0 / 34%));
 --vibeui-buttongroup-038-radius:0.625rem;
 --vibeui-buttongroup-038-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

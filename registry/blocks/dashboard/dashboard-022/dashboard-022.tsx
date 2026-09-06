@@ -40,13 +40,13 @@ export type Dashboard022Props = {
 // Значок сервиса нарисован буквой на цветном поле — блок не тянет чужие файлы.
 const STYLES = `
 :where([data-vibeui-block="dashboard-022"]){
---vibeui-dashboard-022-bg:light-dark(oklch(0.985 0.003 265),oklch(0.21 0.012 265));
---vibeui-dashboard-022-card:light-dark(oklch(1 0 0),oklch(0.26 0.013 265));
---vibeui-dashboard-022-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-dashboard-022-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
---vibeui-dashboard-022-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-dashboard-022-bg:light-dark(oklch(0.985 0 265),oklch(0.21 0 265));
+--vibeui-dashboard-022-card:light-dark(oklch(1 0 0),oklch(0.26 0 265));
+--vibeui-dashboard-022-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
+--vibeui-dashboard-022-muted:light-dark(oklch(0.55 0 265),oklch(0.69 0 265));
+--vibeui-dashboard-022-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
 --vibeui-dashboard-022-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.15 262));
---vibeui-dashboard-022-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 265));
+--vibeui-dashboard-022-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0 265));
 --vibeui-dashboard-022-ok:light-dark(oklch(0.53 0.14 152),oklch(0.76 0.13 152));
 --vibeui-dashboard-022-warn:light-dark(oklch(0.63 0.15 65),oklch(0.79 0.13 65));
 --vibeui-dashboard-022-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

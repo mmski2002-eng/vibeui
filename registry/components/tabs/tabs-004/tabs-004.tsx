@@ -31,13 +31,13 @@ export type Tabs004Props = {
 const STYLES = `
 :where([data-vibeui-block="tabs-004"]){
 --vibeui-tabs-004-bg:transparent;
---vibeui-tabs-004-track:light-dark(oklch(0.96 0.003 265),oklch(0.26 0.01 265));
---vibeui-tabs-004-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-tabs-004-track:light-dark(oklch(0.96 0 265),oklch(0.26 0 265));
+--vibeui-tabs-004-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-tabs-004-muted:color-mix(in oklab,var(--vibeui-tabs-004-fg) 68%,transparent);
---vibeui-tabs-004-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
---vibeui-tabs-004-line:light-dark(oklch(0.86 0.006 265),oklch(0.4 0.012 265));
+--vibeui-tabs-004-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
+--vibeui-tabs-004-line:light-dark(oklch(0.86 0 265),oklch(0.4 0 265));
 --vibeui-tabs-004-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
---vibeui-tabs-004-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.02 265));
+--vibeui-tabs-004-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0 265));
 --vibeui-tabs-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -64,7 +64,7 @@ transition:background-color .18s ease,color .18s ease;
 [data-vibeui-block="tabs-004"] [data-part="tab"]:focus-visible{outline:2px solid var(--vibeui-tabs-004-accent);outline-offset:2px}
 [data-vibeui-block="tabs-004"] [data-part="tab"][aria-selected="true"]{
 background:var(--vibeui-tabs-004-accent);color:var(--vibeui-tabs-004-on-accent);
-box-shadow:0 1px 2px oklch(0.2 0.02 265 / 18%);
+box-shadow:0 1px 2px oklch(0.2 0 265 / 18%);
 }
 /* Разделитель между соседями; у краёв активной пилюли он не нужен. */
 [data-vibeui-block="tabs-004"] [data-part="tab"] + [data-part="tab"]::before{

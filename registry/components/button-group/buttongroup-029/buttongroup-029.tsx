@@ -27,12 +27,12 @@ export type Buttongroup029Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="buttongroup-029"]){
 --vibeui-buttongroup-029-surface:transparent;
---vibeui-buttongroup-029-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.005 265));
+--vibeui-buttongroup-029-fg:light-dark(oklch(0.25 0 265),oklch(0.95 0 265));
 --vibeui-buttongroup-029-muted:color-mix(in oklab,var(--vibeui-buttongroup-029-fg) 68%,transparent);
---vibeui-buttongroup-029-border:light-dark(oklch(0.89 0.008 265),oklch(0.4 0.012 265));
+--vibeui-buttongroup-029-border:light-dark(oklch(0.89 0 265),oklch(0.4 0 265));
 --vibeui-buttongroup-029-accent:light-dark(oklch(0.52 0.16 285),oklch(0.78 0.13 285));
---vibeui-buttongroup-029-light:oklch(0.98 0.003 265);
---vibeui-buttongroup-029-dark:oklch(0.29 0.02 265);
+--vibeui-buttongroup-029-light:oklch(0.98 0 265);
+--vibeui-buttongroup-029-dark:oklch(0.29 0 265);
 --vibeui-buttongroup-029-radius:0.75rem;
 --vibeui-buttongroup-029-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -70,18 +70,18 @@ position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:point
    вариант «светлая» обязан остаться светлым в любой теме страницы. */
 [data-vibeui-block="buttongroup-029"] [data-part="swatch"]{
 position:relative;display:block;width:100%;height:3rem;
-border:1px solid oklch(0.86 0.008 265);border-radius:0.5rem;overflow:hidden;
+border:1px solid oklch(0.86 0 265);border-radius:0.5rem;overflow:hidden;
 background:var(--vibeui-buttongroup-029-light);
 }
 [data-vibeui-block="buttongroup-029"] [data-part="swatch"] i{
 position:absolute;left:0.4375rem;height:0.25rem;border-radius:2px;
-background:oklch(0.72 0.01 265);
+background:oklch(0.72 0 265);
 }
 [data-vibeui-block="buttongroup-029"] [data-part="swatch"] i:nth-child(1){top:0.5rem;width:55%}
 [data-vibeui-block="buttongroup-029"] [data-part="swatch"] i:nth-child(2){top:1.125rem;width:75%}
 [data-vibeui-block="buttongroup-029"] [data-part="swatch"] i:nth-child(3){top:1.75rem;width:40%}
 [data-vibeui-block="buttongroup-029"] [data-theme="dark"]{background:var(--vibeui-buttongroup-029-dark)}
-[data-vibeui-block="buttongroup-029"] [data-theme="dark"] i{background:oklch(0.62 0.014 265)}
+[data-vibeui-block="buttongroup-029"] [data-theme="dark"] i{background:oklch(0.62 0 265)}
 /* Диагональный разрез: половина светлая, половина тёмная. */
 [data-vibeui-block="buttongroup-029"] [data-theme="system"]::after{
 content:"";position:absolute;inset:0;

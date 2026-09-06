@@ -49,10 +49,10 @@ export type Solutions019Props = {
 const STYLES = `
 :where([data-vibeui-block="solutions-019"]){
 --vibeui-solutions-019-bg:transparent;
---vibeui-solutions-019-panel:light-dark(oklch(0.975 0.004 300),oklch(0.27 0.012 300));
---vibeui-solutions-019-fg:light-dark(oklch(0.21 0.014 300),oklch(0.94 0.005 300));
---vibeui-solutions-019-muted:light-dark(oklch(0.54 0.014 300),oklch(0.7 0.012 300));
---vibeui-solutions-019-border:light-dark(oklch(0.9 0.006 300),oklch(0.36 0.012 300));
+--vibeui-solutions-019-panel:light-dark(oklch(0.975 0 300),oklch(0.27 0 300));
+--vibeui-solutions-019-fg:light-dark(oklch(0.21 0 300),oklch(0.94 0 300));
+--vibeui-solutions-019-muted:light-dark(oklch(0.54 0 300),oklch(0.7 0 300));
+--vibeui-solutions-019-border:light-dark(oklch(0.9 0 300),oklch(0.36 0 300));
 --vibeui-solutions-019-accent:light-dark(oklch(0.53 0.17 305),oklch(0.74 0.15 305));
 --vibeui-solutions-019-stuck:light-dark(oklch(0.6 0.18 40),oklch(0.76 0.15 40));
 --vibeui-solutions-019-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

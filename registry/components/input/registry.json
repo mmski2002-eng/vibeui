@@ -1280,7 +1280,7 @@
           "target": "@components/vibeui/input-009.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-input-009-*. Клиентский: \"use client\". Сочетание вешается на document в useEffect и снимается при размонтировании. Модификатор (⌘ или Ctrl) читается через useSyncExternalStore: серверный снимок возвращает Ctrl, поэтому разметка сервера и первого клиентского рендера совпадает, а после гидратации на маке появляется ⌘. Значок клавиши — <kbd>, он уступает место кнопке очистки, когда в поле есть текст.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-input-009-*. Клиентский: \"use client\". Сочетание вешается на document в useEffect и снимается при размонтировании. Модификатор (Ctrl или Ctrl) читается через useSyncExternalStore: серверный снимок возвращает Ctrl, поэтому разметка сервера и первого клиентского рендера совпадает, а после гидратации на маке появляется Ctrl+. Значок клавиши — <kbd>, он уступает место кнопке очистки, когда в поле есть текст.",
       "meta": {
         "tags": ["input", "search", "shortcut", "keyboard"],
         "ai": {
@@ -1401,7 +1401,7 @@
                 }
               }
             },
-            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-009-*. A client component: \"use client\". The shortcut is attached to document in a useEffect and removed on unmount. The modifier (⌘ or Ctrl) is read through useSyncExternalStore: the server snapshot returns Ctrl, so the server markup and the first client render agree, and after hydration ⌘ appears on a Mac. The key glyph is a <kbd>, and it gives way to the clear button when the field holds text."
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-input-009-*. A client component: \"use client\". The shortcut is attached to document in a useEffect and removed on unmount. The modifier (Ctrl or Ctrl) is read through useSyncExternalStore: the server snapshot returns Ctrl, so the server markup and the first client render agree, and after hydration Ctrl appears on a Mac. The key glyph is a <kbd>, and it gives way to the clear button when the field holds text."
           }
         },
         "cardControls": ["placeholder", "shortcut", "accent", "background"],

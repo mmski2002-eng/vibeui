@@ -26,11 +26,11 @@ export type Breadcrumb011Props = Omit<
 // вместе со страницей, собственная заливка остаётся только у поля выбора.
 const STYLES = `
 :where([data-vibeui-block="breadcrumb-011"]){
---vibeui-breadcrumb-011-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.008 265));
+--vibeui-breadcrumb-011-fg:light-dark(oklch(0.26 0 265),oklch(0.94 0 265));
 --vibeui-breadcrumb-011-muted:color-mix(in oklab,var(--vibeui-breadcrumb-011-fg) 68%,transparent);
---vibeui-breadcrumb-011-sep:light-dark(oklch(0.78 0.01 265),oklch(0.5 0.012 265));
---vibeui-breadcrumb-011-border:light-dark(oklch(0.9 0.006 265),oklch(0.4 0.012 265));
---vibeui-breadcrumb-011-field:light-dark(oklch(0.98 0.002 265),oklch(0.29 0.012 265));
+--vibeui-breadcrumb-011-sep:light-dark(oklch(0.78 0 265),oklch(0.5 0 265));
+--vibeui-breadcrumb-011-border:light-dark(oklch(0.9 0 265),oklch(0.4 0 265));
+--vibeui-breadcrumb-011-field:light-dark(oklch(0.98 0 265),oklch(0.29 0 265));
 --vibeui-breadcrumb-011-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-breadcrumb-011-bg:transparent;
 --vibeui-breadcrumb-011-pad:0;

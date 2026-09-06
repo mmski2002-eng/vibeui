@@ -34,12 +34,12 @@ export type Table017Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="table-017"]){
 --vibeui-table-017-bg:transparent;
---vibeui-table-017-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-table-017-fg:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
 --vibeui-table-017-muted:color-mix(in oklab,var(--vibeui-table-017-fg) 68%,transparent);
---vibeui-table-017-border:light-dark(oklch(0.92 0.006 265),oklch(0.36 0.011 265));
---vibeui-table-017-head:light-dark(oklch(0.5 0.02 265 / 5%),oklch(0.85 0.02 265 / 7%));
+--vibeui-table-017-border:light-dark(oklch(0.92 0 265),oklch(0.36 0 265));
+--vibeui-table-017-head:light-dark(oklch(0.5 0 265 / 5%),oklch(0.85 0 265 / 7%));
 --vibeui-table-017-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.16 262));
---vibeui-table-017-shadow:light-dark(oklch(0.24 0.014 265 / 6%),oklch(0 0 0 / 24%));
+--vibeui-table-017-shadow:light-dark(oklch(0.24 0 265 / 6%),oklch(0 0 0 / 24%));
 --vibeui-table-017-card:14rem;
 --vibeui-table-017-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

@@ -23,8 +23,9 @@ export type Button021Props = Omit<
 // длинной из них и не прыгает при смене состояния.
 const STYLES = `
 :where([data-vibeui-block="button-021"]){
---vibeui-button-021-accent:light-dark(oklch(0.55 0.17 265),oklch(0.63 0.18 265));
---vibeui-button-021-fg:oklch(0.99 0.01 265);
+--vibeui-button-021-accent:light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));
+--vibeui-button-021-hover-filter:light-dark(brightness(1.45),brightness(0.9));
+--vibeui-button-021-fg:light-dark(oklch(0.99 0 265),oklch(0.17 0.01 265));
 --vibeui-button-021-error:light-dark(oklch(0.55 0.19 25),oklch(0.62 0.2 25));
 --vibeui-button-021-done:light-dark(oklch(0.53 0.14 152),oklch(0.6 0.15 152));
 --vibeui-button-021-radius:0.625rem;
@@ -42,7 +43,7 @@ background:var(--vibeui-button-021-accent);color:var(--vibeui-button-021-fg);
 font-family:var(--vibeui-button-021-font);font-size:0.875rem;font-weight:650;line-height:1;
 transition:background-color .18s ease,filter .18s ease;
 }
-[data-vibeui-block="button-021"]:hover{filter:brightness(0.96)}
+[data-vibeui-block="button-021"]:hover{filter:var(--vibeui-button-021-hover-filter)}
 [data-vibeui-block="button-021"]:focus-visible{outline:2px solid var(--vibeui-button-021-accent);outline-offset:2px}
 [data-vibeui-block="button-021"][data-state="error"]{background:var(--vibeui-button-021-error)}
 [data-vibeui-block="button-021"][data-state="done"]{background:var(--vibeui-button-021-done)}

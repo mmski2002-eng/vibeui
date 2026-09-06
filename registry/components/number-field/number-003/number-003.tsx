@@ -28,12 +28,12 @@ export type Number003Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="number-003"]){
 --vibeui-number-003-surface:transparent;
---vibeui-number-003-field:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
---vibeui-number-003-suffix:light-dark(oklch(0.965 0.004 265),oklch(0.32 0.013 265));
---vibeui-number-003-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
---vibeui-number-003-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-number-003-field:light-dark(oklch(1 0 0),oklch(0.26 0 265));
+--vibeui-number-003-suffix:light-dark(oklch(0.965 0 265),oklch(0.32 0 265));
+--vibeui-number-003-shell:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-number-003-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-number-003-muted:color-mix(in oklab,var(--vibeui-number-003-fg) 68%,transparent);
---vibeui-number-003-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
+--vibeui-number-003-border:light-dark(oklch(0.88 0 265),oklch(0.42 0 265));
 --vibeui-number-003-accent:light-dark(oklch(0.52 0.15 250),oklch(0.72 0.14 250));
 --vibeui-number-003-ring:light-dark(oklch(0.52 0.15 250 / 20%),oklch(0.72 0.14 250 / 30%));
 --vibeui-number-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

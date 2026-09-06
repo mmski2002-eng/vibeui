@@ -21,8 +21,9 @@ export type Button017Props = Omit<
 // зафиксирована по самой длинной подписи: смена текста не должна её дёргать.
 const STYLES = `
 :where([data-vibeui-block="button-017"]){
---vibeui-button-017-accent:light-dark(oklch(0.55 0.17 265),oklch(0.63 0.18 265));
---vibeui-button-017-fg:oklch(0.99 0.01 265);
+--vibeui-button-017-accent:light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));
+--vibeui-button-017-hover-filter:light-dark(brightness(1.45),brightness(0.9));
+--vibeui-button-017-fg:light-dark(oklch(0.99 0 265),oklch(0.17 0.01 265));
 --vibeui-button-017-done:light-dark(oklch(0.55 0.15 152),oklch(0.6 0.15 152));
 --vibeui-button-017-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -38,7 +39,7 @@ border-radius:0.625rem;
 background:var(--vibeui-button-017-accent);color:var(--vibeui-button-017-fg);
 font-family:var(--vibeui-button-017-font);font-size:0.875rem;font-weight:650;line-height:1;
 }
-[data-vibeui-block="button-017"]:hover:not(:disabled){filter:brightness(0.96)}
+[data-vibeui-block="button-017"]:hover:not(:disabled){filter:var(--vibeui-button-017-hover-filter)}
 [data-vibeui-block="button-017"]:focus-visible{outline:2px solid var(--vibeui-button-017-accent);outline-offset:2px}
 [data-vibeui-block="button-017"]:disabled{cursor:progress;opacity:.85}
 [data-vibeui-block="button-017"][data-state="done"]{background:var(--vibeui-button-017-done);cursor:default;opacity:1}

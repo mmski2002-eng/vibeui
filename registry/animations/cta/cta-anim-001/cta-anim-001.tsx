@@ -29,12 +29,12 @@ export type CtaAnim001Props = {
 // миниатюра каталога и живая страница выглядят одинаково.
 const STYLES = `
 :where([data-vibeui-block="cta-anim-001"]){
---vibeui-cta-anim-001-bg:light-dark(oklch(0.99 0.002 265),oklch(0.16 0.014 265));
---vibeui-cta-anim-001-ink:light-dark(oklch(0.18 0.02 265),oklch(0.97 0.004 265));
---vibeui-cta-anim-001-muted:light-dark(oklch(0.48 0.018 265),oklch(0.72 0.014 265));
+--vibeui-cta-anim-001-bg:light-dark(oklch(0.99 0 265),oklch(0.16 0 265));
+--vibeui-cta-anim-001-ink:light-dark(oklch(0.18 0 265),oklch(0.97 0 265));
+--vibeui-cta-anim-001-muted:light-dark(oklch(0.48 0 265),oklch(0.72 0 265));
 --vibeui-cta-anim-001-accent:light-dark(oklch(0.58 0.18 285),oklch(0.75 0.16 285));
---vibeui-cta-anim-001-accent-fg:light-dark(oklch(0.99 0.004 285),oklch(0.14 0.02 285));
---vibeui-cta-anim-001-border:light-dark(oklch(0.16 0.02 265 / 12%),oklch(1 0 0 / 16%));
+--vibeui-cta-anim-001-accent-fg:light-dark(oklch(0.99 0 285),oklch(0.14 0 285));
+--vibeui-cta-anim-001-border:light-dark(oklch(0.16 0 265 / 12%),oklch(1 0 0 / 16%));
 --vibeui-cta-anim-001-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

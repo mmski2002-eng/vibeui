@@ -9,8 +9,8 @@ export const PREVIEWS = {
   "tabs-001": dynamic(() =>
     import("@/registry/components/tabs/tabs-001/tabs-001").then((module) => module.Tabs001),
   ),
-  "tabbar-001": dynamic(() =>
-    import("@/registry/components/tabs/tabbar-001/tabbar-001").then((module) => module.Tabbar001),
+  "tabs-014": dynamic(() =>
+    import("@/registry/components/tabs/tabs-014/tabs-014").then((module) => module.Tabs014),
   ),
   "tabs-002": dynamic(() =>
     import("@/registry/components/tabs/tabs-002/tabs-002").then((module) => module.Tabs002),
@@ -41,9 +41,6 @@ export const PREVIEWS = {
   ),
   "tabs-011": dynamic(() =>
     import("@/registry/components/tabs/tabs-011/tabs-011").then((module) => module.Tabs011),
-  ),
-  "tabs-012": dynamic(() =>
-    import("@/registry/components/tabs/tabs-012/tabs-012").then((module) => module.Tabs012),
   ),
   "tabs-013": dynamic(() =>
     import("@/registry/components/tabs/tabs-013/tabs-013").then((module) => module.Tabs013),

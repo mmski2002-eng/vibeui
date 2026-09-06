@@ -47,14 +47,14 @@ const STYLES = `
 :where([data-vibeui-block="dashboard-089"]){
 --vibeui-dashboard-089-bg:transparent;
 /* Панель, поле и карточка предпросмотра: сам блок остаётся прозрачным. */
---vibeui-dashboard-089-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 275));
---vibeui-dashboard-089-inset:light-dark(oklch(0.985 0.003 275),oklch(0.22 0.012 275));
---vibeui-dashboard-089-fg:light-dark(oklch(0.21 0.014 275),oklch(0.94 0.005 275));
---vibeui-dashboard-089-muted:light-dark(oklch(0.54 0.014 275),oklch(0.72 0.012 275));
---vibeui-dashboard-089-border:light-dark(oklch(0.91 0.006 275),oklch(0.36 0.012 275));
+--vibeui-dashboard-089-card:light-dark(oklch(1 0 0),oklch(0.26 0 275));
+--vibeui-dashboard-089-inset:light-dark(oklch(0.985 0 275),oklch(0.22 0 275));
+--vibeui-dashboard-089-fg:light-dark(oklch(0.21 0 275),oklch(0.94 0 275));
+--vibeui-dashboard-089-muted:light-dark(oklch(0.54 0 275),oklch(0.72 0 275));
+--vibeui-dashboard-089-border:light-dark(oklch(0.91 0 275),oklch(0.36 0 275));
 --vibeui-dashboard-089-accent:light-dark(oklch(0.52 0.16 275),oklch(0.74 0.14 275));
---vibeui-dashboard-089-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.03 275));
---vibeui-dashboard-089-soft:light-dark(oklch(0.965 0.02 275),oklch(0.3 0.03 275));
+--vibeui-dashboard-089-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0 275));
+--vibeui-dashboard-089-soft:light-dark(oklch(0.965 0 275),oklch(0.3 0 275));
 --vibeui-dashboard-089-ring:light-dark(oklch(0 0 0 / 0.12),oklch(1 0 0 / 0.18));
 --vibeui-dashboard-089-brand:oklch(0.52 0.16 275);
 --vibeui-dashboard-089-on-brand:oklch(1 0 0);
@@ -173,7 +173,7 @@ const DEFAULT_SWATCHES: Dashboard089Swatch[] = [
   { name: "Сапфир", value: "oklch(0.52 0.16 262)" },
   { name: "Слива", value: "oklch(0.5 0.17 305)" },
   { name: "Кирпич", value: "oklch(0.55 0.17 32)" },
-  { name: "Графит", value: "oklch(0.34 0.01 260)" },
+  { name: "Графит", value: "oklch(0.34 0 260)" },
   { name: "Охра", value: "oklch(0.62 0.13 75)" },
 ]
 

@@ -35,9 +35,9 @@ export type Carousel014Props = Omit<ComponentProps<"section">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="carousel-014"]){
 --vibeui-carousel-014-bg:transparent;
---vibeui-carousel-014-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-carousel-014-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-carousel-014-muted:color-mix(in oklab,var(--vibeui-carousel-014-fg) 68%,transparent);
---vibeui-carousel-014-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-carousel-014-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
 --vibeui-carousel-014-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-carousel-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -68,10 +68,10 @@ aspect-ratio:16 / 9;padding:1rem 2.75rem;box-sizing:border-box;
 background:
 radial-gradient(90% 80% at 22% 18%,oklch(0.9 0.06 var(--vibeui-carousel-014-hue,250)),transparent 70%),
 linear-gradient(150deg,oklch(0.74 0.1 var(--vibeui-carousel-014-hue,250)),oklch(0.44 0.11 var(--vibeui-carousel-014-hue,250)));
-color:oklch(0.99 0.003 265);
+color:oklch(0.99 0 265);
 }
 [data-vibeui-block="carousel-014"] [data-part="title"]{margin:0;font-size:1.0625rem;font-weight:680;line-height:1.2}
-[data-vibeui-block="carousel-014"] [data-part="text"]{margin:0;font-size:0.8125rem;line-height:1.45;color:oklch(0.94 0.01 265)}
+[data-vibeui-block="carousel-014"] [data-part="text"]{margin:0;font-size:0.8125rem;line-height:1.45;color:oklch(0.94 0 265)}
 /* Стрелки лежат в самом слайде и ведут на соседний якорь: текущая позиция
    компоненту не нужна, а значит не нужен и JS. Лежат они на кадре, а не на
    странице, поэтому белый кружок остаётся белым в обеих темах. */
@@ -79,7 +79,7 @@ color:oklch(0.99 0.003 265);
 position:absolute;top:50%;transform:translateY(-50%);
 display:inline-flex;align-items:center;justify-content:center;
 width:1.75rem;height:1.75rem;border-radius:9999px;
-background:oklch(1 0 0 / 88%);color:oklch(0.24 0.02 265);
+background:oklch(1 0 0 / 88%);color:oklch(0.24 0 265);
 text-decoration:none;font-size:0.875rem;line-height:1;
 }
 [data-vibeui-block="carousel-014"] [data-part="arrow"]:hover{background:oklch(1 0 0)}

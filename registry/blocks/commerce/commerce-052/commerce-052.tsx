@@ -38,10 +38,10 @@ export type Commerce052Props = {
 const STYLES = `
 :where([data-vibeui-block="commerce-052"]){
 --vibeui-commerce-052-bg:transparent;
---vibeui-commerce-052-fg:light-dark(oklch(0.2 0.014 275),oklch(0.93 0.006 275));
---vibeui-commerce-052-muted:light-dark(oklch(0.53 0.014 275),oklch(0.72 0.012 275));
---vibeui-commerce-052-border:light-dark(oklch(0.91 0.006 275),oklch(0.36 0.012 275));
---vibeui-commerce-052-soft:light-dark(oklch(0.97 0.004 275),oklch(0.28 0.008 275));
+--vibeui-commerce-052-fg:light-dark(oklch(0.2 0 275),oklch(0.93 0 275));
+--vibeui-commerce-052-muted:light-dark(oklch(0.53 0 275),oklch(0.72 0 275));
+--vibeui-commerce-052-border:light-dark(oklch(0.91 0 275),oklch(0.36 0 275));
+--vibeui-commerce-052-soft:light-dark(oklch(0.97 0 275),oklch(0.28 0 275));
 --vibeui-commerce-052-accent:light-dark(oklch(0.53 0.2 20),oklch(0.76 0.16 25));
 --vibeui-commerce-052-onaccent:light-dark(oklch(0.99 0 0),oklch(0.18 0.03 25));
 --vibeui-commerce-052-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -66,7 +66,7 @@ display:flex;align-items:center;justify-content:center;
 }
 [data-vibeui-block="commerce-052"] [data-part="play"]{
 appearance:none;border:0;cursor:pointer;width:4.5rem;height:4.5rem;border-radius:9999px;
-background:oklch(1 0 0 / 92%);color:oklch(0.2 0.014 275);
+background:oklch(1 0 0 / 92%);color:oklch(0.2 0 275);
 display:flex;align-items:center;justify-content:center;
 transition:transform .16s ease;
 }
@@ -81,7 +81,7 @@ position:absolute;left:0.75rem;bottom:0.75rem;display:flex;gap:0.375rem;flex-wra
 }
 [data-vibeui-block="commerce-052"] [data-part="tag"]{
 display:inline-flex;align-items:center;height:1.625rem;padding:0 0.625rem;border-radius:9999px;
-background:oklch(0.2 0.02 275 / 72%);color:oklch(0.99 0 0);font-size:0.6875rem;font-weight:650;
+background:oklch(0.2 0 275 / 72%);color:oklch(0.99 0 0);font-size:0.6875rem;font-weight:650;
 font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="commerce-052"] [data-part="brand"]{margin:0;font-size:0.75rem;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--vibeui-commerce-052-accent)}

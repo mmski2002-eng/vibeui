@@ -25,9 +25,9 @@ export type Pricing005Props = {
 // заменяет собой сравнение с соседями.
 const STYLES = `
 :where([data-vibeui-block="pricing-005"]){
---vibeui-pricing-005-bg:oklch(0.21 0.03 275);
---vibeui-pricing-005-fg:oklch(0.98 0.004 275);
---vibeui-pricing-005-muted:oklch(0.75 0.016 275);
+--vibeui-pricing-005-bg:oklch(0.21 0 275);
+--vibeui-pricing-005-fg:oklch(0.98 0 275);
+--vibeui-pricing-005-muted:oklch(0.75 0 275);
 --vibeui-pricing-005-panel:oklch(0.26 0.035 275);
 --vibeui-pricing-005-line:oklch(1 0 0 / 14%);
 --vibeui-pricing-005-accent:oklch(0.82 0.15 100);

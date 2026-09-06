@@ -31,17 +31,15 @@ transition:filter .16s ease;
 }
 [data-vibeui-block="button-052"]:hover{filter:brightness(1.07)}
 [data-vibeui-block="button-052"]:focus-visible{outline:2px solid var(--vibeui-button-052-accent);outline-offset:3px}
-/* Трубка: скруглённый прямоугольник, повёрнутый и обрезанный по углам. */
+/* Трубка нарисована svg: обрезанная рамка на псевдоэлементе читалась
+   крючком, а не телефоном. */
 [data-vibeui-block="button-052"] [data-part="dial"]{
 position:relative;flex:none;
 display:flex;align-items:center;justify-content:center;
 width:2rem;height:2rem;border-radius:50%;background:oklch(1 0 0 / 20%);
 }
-[data-vibeui-block="button-052"] [data-part="dial"]::before{
-content:"";width:0.875rem;height:0.875rem;
-border:2px solid currentColor;border-radius:0.4375rem 0.25rem 0.4375rem 0.25rem;
-border-top-color:transparent;border-right-color:transparent;
-transform:rotate(8deg);
+[data-vibeui-block="button-052"] [data-part="dial"] svg{
+width:1rem;height:1rem;fill:currentColor;
 }
 /* Кольцо доступности пульсирует: линия открыта прямо сейчас. */
 [data-vibeui-block="button-052"] [data-part="dial"]::after{
@@ -95,7 +93,11 @@ export function Button052({
         className={className}
         style={palette}
       >
-        <span data-part="dial" aria-hidden="true" />
+        <span data-part="dial" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M6.6 10.9a15.6 15.6 0 0 0 6.5 6.5l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.9 0-18-8.1-18-18 0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.2 2.2Z" />
+          </svg>
+        </span>
         <span data-part="text">
           <span data-part="label">{children}</span>
           <span data-part="phone">{phone}</span>

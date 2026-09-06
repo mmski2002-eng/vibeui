@@ -26,10 +26,10 @@ export type Codeblock010Props = {
 const STYLES = `
 :where([data-vibeui-block="codeblock-010"]){
 --vibeui-codeblock-010-bg:transparent;
---vibeui-codeblock-010-fg:light-dark(oklch(0.27 0.016 265),oklch(0.92 0.008 265));
+--vibeui-codeblock-010-fg:light-dark(oklch(0.27 0 265),oklch(0.92 0 265));
 --vibeui-codeblock-010-muted:color-mix(in oklab,var(--vibeui-codeblock-010-fg) 68%,transparent);
---vibeui-codeblock-010-border:light-dark(oklch(0.9 0.006 265),oklch(1 0 0 / 16%));
---vibeui-codeblock-010-chip-bg:light-dark(oklch(0.94 0.012 265),oklch(1 0 0 / 10%));
+--vibeui-codeblock-010-border:light-dark(oklch(0.9 0 265),oklch(1 0 0 / 16%));
+--vibeui-codeblock-010-chip-bg:light-dark(oklch(0.94 0 265),oklch(1 0 0 / 10%));
 --vibeui-codeblock-010-chip-fg:light-dark(oklch(0.32 0.09 300),oklch(0.85 0.11 305));
 --vibeui-codeblock-010-path-fg:light-dark(oklch(0.36 0.09 240),oklch(0.83 0.1 240));
 --vibeui-codeblock-010-key-bg:light-dark(oklch(1 0 0),oklch(1 0 0 / 8%));

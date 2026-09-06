@@ -31,13 +31,13 @@ export type Input011Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="input-011"]){
 --vibeui-input-011-surface:transparent;
---vibeui-input-011-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
---vibeui-input-011-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-input-011-shell:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
+--vibeui-input-011-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-input-011-muted:color-mix(in oklab,var(--vibeui-input-011-fg) 68%,transparent);
---vibeui-input-011-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.012 265));
---vibeui-input-011-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
+--vibeui-input-011-field:light-dark(oklch(0.985 0 265),oklch(0.26 0 265));
+--vibeui-input-011-border:light-dark(oklch(0.88 0 265),oklch(0.42 0 265));
 --vibeui-input-011-accent:light-dark(oklch(0.52 0.18 285),oklch(0.76 0.15 285));
---vibeui-input-011-track:light-dark(oklch(0.92 0.005 265),oklch(0.34 0.012 265));
+--vibeui-input-011-track:light-dark(oklch(0.92 0 265),oklch(0.34 0 265));
 --vibeui-input-011-weak:light-dark(oklch(0.6 0.2 25),oklch(0.74 0.17 25));
 --vibeui-input-011-fair:light-dark(oklch(0.72 0.15 75),oklch(0.8 0.14 75));
 --vibeui-input-011-good:light-dark(oklch(0.55 0.14 155),oklch(0.76 0.14 155));

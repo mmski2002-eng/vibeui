@@ -32,10 +32,10 @@ export type Dialog004Props = {
 // Клавиатура работает как в родном списке: стрелки переключают вариант.
 const STYLES = `
 :where([data-vibeui-block="dialog-004"]){
---vibeui-dialog-004-fg:light-dark(oklch(0.22 0.016 265),oklch(0.94 0.005 265));
+--vibeui-dialog-004-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-dialog-004-muted:color-mix(in oklab,var(--vibeui-dialog-004-fg) 68%,transparent);
---vibeui-dialog-004-bg:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
---vibeui-dialog-004-border:light-dark(oklch(0.89 0.006 265),oklch(0.38 0.012 265));
+--vibeui-dialog-004-bg:light-dark(oklch(1 0 0),oklch(0.24 0 265));
+--vibeui-dialog-004-border:light-dark(oklch(0.89 0 265),oklch(0.38 0 265));
 --vibeui-dialog-004-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
 --vibeui-dialog-004-radius:1rem;
 --vibeui-dialog-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -55,24 +55,24 @@ background:var(--vibeui-dialog-004-bg);color:var(--vibeui-dialog-004-fg);
 [data-vibeui-dialog-004-window]{
 position:fixed;inset:0;margin:auto;height:fit-content;
 width:min(27rem,calc(100vw - 2rem));box-sizing:border-box;padding:1.375rem;
-border:1px solid var(--vibeui-dialog-004-border,light-dark(oklch(0.89 0.006 265),oklch(0.38 0.012 265)));
+border:1px solid var(--vibeui-dialog-004-border,light-dark(oklch(0.89 0 265),oklch(0.38 0 265)));
 border-radius:var(--vibeui-dialog-004-radius,1rem);
-background:var(--vibeui-dialog-004-bg,light-dark(oklch(1 0 0),oklch(0.24 0.012 265)));
-color:var(--vibeui-dialog-004-fg,light-dark(oklch(0.22 0.016 265),oklch(0.94 0.005 265)));
+background:var(--vibeui-dialog-004-bg,light-dark(oklch(1 0 0),oklch(0.24 0 265)));
+color:var(--vibeui-dialog-004-fg,light-dark(oklch(0.22 0 265),oklch(0.94 0 265)));
 font-family:var(--vibeui-dialog-004-font,ui-sans-serif,system-ui,sans-serif);
-box-shadow:0 24px 60px -24px oklch(0.2 0.03 265 / 45%);
+box-shadow:0 24px 60px -24px oklch(0.2 0 265 / 45%);
 opacity:0;transform:scale(0.97);
 transition:opacity .18s ease,transform .18s ease,display .18s allow-discrete,overlay .18s allow-discrete;
 }
 [data-vibeui-dialog-004-window]:popover-open{opacity:1;transform:none}
 @starting-style{[data-vibeui-dialog-004-window]:popover-open{opacity:0;transform:scale(0.97)}}
-[data-vibeui-dialog-004-window]::backdrop{background:oklch(0.18 0.02 265 / 45%)}
+[data-vibeui-dialog-004-window]::backdrop{background:oklch(0.18 0 265 / 45%)}
 [data-vibeui-dialog-004-window] [data-part="title"]{margin:0 0 0.875rem;font-size:1.0625rem;font-weight:620;line-height:1.35}
 [data-vibeui-dialog-004-window] [data-part="list"]{display:flex;flex-direction:column;gap:0.5rem}
 [data-vibeui-dialog-004-window] [data-part="option"]{
 display:flex;align-items:flex-start;gap:0.625rem;
 padding:0.75rem 0.875rem;cursor:pointer;
-border:1px solid var(--vibeui-dialog-004-border,light-dark(oklch(0.89 0.006 265),oklch(0.38 0.012 265)));
+border:1px solid var(--vibeui-dialog-004-border,light-dark(oklch(0.89 0 265),oklch(0.38 0 265)));
 border-radius:0.75rem;
 transition:border-color .16s ease,background-color .16s ease;
 }
@@ -81,12 +81,12 @@ transition:border-color .16s ease,background-color .16s ease;
 border-color:var(--vibeui-dialog-004-accent,light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262)));
 background:color-mix(in oklab,var(--vibeui-dialog-004-accent,light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262))) 6%,transparent);
 }
-[data-vibeui-dialog-004-window] [data-part="option"]:hover{background:color-mix(in oklab,var(--vibeui-dialog-004-border,light-dark(oklch(0.89 0.006 265),oklch(0.38 0.012 265))) 25%,transparent)}
+[data-vibeui-dialog-004-window] [data-part="option"]:hover{background:color-mix(in oklab,var(--vibeui-dialog-004-border,light-dark(oklch(0.89 0 265),oklch(0.38 0 265))) 25%,transparent)}
 [data-vibeui-dialog-004-window] input{
 appearance:none;-webkit-appearance:none;flex:none;margin:0.125rem 0 0;
 width:1.0625rem;height:1.0625rem;border-radius:9999px;
-border:1.5px solid var(--vibeui-dialog-004-border,light-dark(oklch(0.89 0.006 265),oklch(0.38 0.012 265)));
-background:light-dark(oklch(1 0 0),oklch(0.2 0.01 265));cursor:inherit;
+border:1.5px solid var(--vibeui-dialog-004-border,light-dark(oklch(0.89 0 265),oklch(0.38 0 265)));
+background:light-dark(oklch(1 0 0),oklch(0.2 0 265));cursor:inherit;
 transition:border-color .16s ease,box-shadow .16s ease;
 }
 [data-vibeui-dialog-004-window] input:checked{
@@ -96,15 +96,15 @@ box-shadow:inset 0 0 0 3.5px var(--vibeui-dialog-004-accent,light-dark(oklch(0.5
 [data-vibeui-dialog-004-window] input:focus-visible{outline:2px solid var(--vibeui-dialog-004-accent,light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262)));outline-offset:2px}
 [data-vibeui-dialog-004-window] [data-part="text"]{display:flex;flex-direction:column;gap:0.125rem}
 [data-vibeui-dialog-004-window] [data-part="label"]{font-size:0.875rem;font-weight:550;line-height:1.35}
-[data-vibeui-dialog-004-window] [data-part="description"]{font-size:0.8125rem;line-height:1.45;color:var(--vibeui-dialog-004-muted,light-dark(oklch(0.5 0.014 265),oklch(0.7 0.012 265)))}
+[data-vibeui-dialog-004-window] [data-part="description"]{font-size:0.8125rem;line-height:1.45;color:var(--vibeui-dialog-004-muted,light-dark(oklch(0.5 0 265),oklch(0.7 0 265)))}
 [data-vibeui-dialog-004-window] [data-part="actions"]{display:flex;justify-content:flex-end;gap:0.5rem;margin-top:1.25rem}
 [data-vibeui-dialog-004-window] button{
 appearance:none;cursor:pointer;font:inherit;font-size:0.875rem;font-weight:600;
 display:inline-flex;align-items:center;height:2.25rem;padding:0 1rem;
 border-radius:0.5rem;border:1px solid transparent;
 }
-[data-vibeui-dialog-004-window] [data-part="cancel"]{background:transparent;color:inherit;border-color:var(--vibeui-dialog-004-border,light-dark(oklch(0.89 0.006 265),oklch(0.38 0.012 265)))}
-[data-vibeui-dialog-004-window] [data-part="submit"]{background:var(--vibeui-dialog-004-accent,light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262)));color:light-dark(oklch(1 0 0),oklch(0.17 0.02 265))}
+[data-vibeui-dialog-004-window] [data-part="cancel"]{background:transparent;color:inherit;border-color:var(--vibeui-dialog-004-border,light-dark(oklch(0.89 0 265),oklch(0.38 0 265)))}
+[data-vibeui-dialog-004-window] [data-part="submit"]{background:var(--vibeui-dialog-004-accent,light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262)));color:light-dark(oklch(1 0 0),oklch(0.17 0 265))}
 [data-vibeui-dialog-004-window] button:focus-visible{outline:2px solid var(--vibeui-dialog-004-accent,light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262)));outline-offset:2px}
 /* Popover страницу не блокирует: фон под окном иначе продолжает прокручиваться. */
 html:has([data-vibeui-dialog-004-window]:popover-open){overflow:hidden}

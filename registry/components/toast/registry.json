@@ -2328,7 +2328,10 @@
       "meta": {
         "tags": ["toast", "network", "offline", "status"],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "repeatAfter": 2400
+          }
         },
         "ai": {
           "export": "Toast016",

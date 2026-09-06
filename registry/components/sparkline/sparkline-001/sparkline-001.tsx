@@ -27,8 +27,8 @@ export type Sparkline001Props = {
 const STYLES = `
 :where([data-vibeui-block="sparkline-001"]){
 --vibeui-sparkline-001-surface:transparent;
---vibeui-sparkline-001-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
---vibeui-sparkline-001-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
+--vibeui-sparkline-001-surface-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
+--vibeui-sparkline-001-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-sparkline-001-muted:color-mix(in oklab,var(--vibeui-sparkline-001-fg) 68%,transparent);
 --vibeui-sparkline-001-up:light-dark(oklch(0.58 0.15 152),oklch(0.76 0.14 152));
 --vibeui-sparkline-001-down:light-dark(oklch(0.56 0.19 25),oklch(0.72 0.17 25));

@@ -23,9 +23,9 @@ export type Avatar033Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `:where([data-vibeui-block="avatar-033"]){
 --vibeui-avatar-033-size:2.5rem;
 --vibeui-avatar-033-bg:transparent;
---vibeui-avatar-033-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-avatar-033-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-avatar-033-muted:color-mix(in oklab,var(--vibeui-avatar-033-fg) 68%,transparent);
---vibeui-avatar-033-border:light-dark(oklch(0.91 0.006 265),oklch(0.31 0.01 265));
+--vibeui-avatar-033-border:light-dark(oklch(0.91 0 265),oklch(0.31 0 265));
 --vibeui-avatar-033-live:oklch(0.62 0.15 152);
 --vibeui-avatar-033-off:oklch(0.6 0.19 25);
 --vibeui-avatar-033-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -83,7 +83,7 @@ background:oklch(1 0 0);transform:translateY(0.3125rem);
 [data-vibeui-block="avatar-033"][data-state="muted"] [data-part="mic"]::after{
 width:0.75rem;transform:rotate(-45deg);
 }
-[data-vibeui-block="avatar-033"][data-state="listening"] [data-part="mic"]{background:light-dark(oklch(0.62 0.02 265),oklch(0.66 0.02 265))}
+[data-vibeui-block="avatar-033"][data-state="listening"] [data-part="mic"]{background:light-dark(oklch(0.62 0 265),oklch(0.66 0 265))}
 [data-vibeui-block="avatar-033"] [data-part="text"]{display:flex;flex-direction:column;gap:0.0625rem;min-width:0;flex:1 1 auto}
 [data-vibeui-block="avatar-033"] [data-part="name"]{
 font-size:0.875rem;font-weight:650;

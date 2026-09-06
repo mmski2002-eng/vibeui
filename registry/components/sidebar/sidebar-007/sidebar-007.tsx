@@ -37,11 +37,11 @@ export type Sidebar007Props = Omit<ComponentProps<"nav">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="sidebar-007"]){
 --vibeui-sidebar-007-bg:transparent;
---vibeui-sidebar-007-fg:light-dark(oklch(0.25 0.016 265),oklch(0.93 0.006 265));
+--vibeui-sidebar-007-fg:light-dark(oklch(0.25 0 265),oklch(0.93 0 265));
 --vibeui-sidebar-007-muted:color-mix(in oklab,var(--vibeui-sidebar-007-fg) 68%,transparent);
---vibeui-sidebar-007-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
---vibeui-sidebar-007-hover:light-dark(oklch(0.55 0.02 265 / 7%),oklch(0.85 0.02 265 / 10%));
---vibeui-sidebar-007-chip:light-dark(oklch(0.55 0.02 265 / 10%),oklch(0.85 0.02 265 / 14%));
+--vibeui-sidebar-007-border:light-dark(oklch(0.91 0 265),oklch(0.35 0 265));
+--vibeui-sidebar-007-hover:light-dark(oklch(0.55 0 265 / 7%),oklch(0.85 0 265 / 10%));
+--vibeui-sidebar-007-chip:light-dark(oklch(0.55 0 265 / 10%),oklch(0.85 0 265 / 14%));
 --vibeui-sidebar-007-accent:light-dark(oklch(0.55 0.19 262),oklch(0.73 0.16 262));
 --vibeui-sidebar-007-alert:light-dark(oklch(0.57 0.2 25),oklch(0.65 0.19 25));
 --vibeui-sidebar-007-alert-fg:light-dark(oklch(1 0 0),oklch(0.16 0.02 25));

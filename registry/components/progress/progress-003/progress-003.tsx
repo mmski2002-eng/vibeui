@@ -26,11 +26,11 @@ const STYLES = `
 --vibeui-progress-003-value:0;
 --vibeui-progress-003-target:0;
 --vibeui-progress-003-bg:transparent;
---vibeui-progress-003-surface:light-dark(oklch(0.99 0.002 265),oklch(0.2 0.012 265));
---vibeui-progress-003-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-progress-003-surface:light-dark(oklch(0.99 0 265),oklch(0.2 0 265));
+--vibeui-progress-003-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-progress-003-muted:color-mix(in oklab,var(--vibeui-progress-003-fg) 68%,transparent);
---vibeui-progress-003-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
---vibeui-progress-003-track:light-dark(oklch(0.93 0.006 265),oklch(0.31 0.012 265));
+--vibeui-progress-003-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-progress-003-track:light-dark(oklch(0.93 0 265),oklch(0.31 0 265));
 --vibeui-progress-003-accent:light-dark(oklch(0.58 0.16 155),oklch(0.74 0.15 155));
 --vibeui-progress-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

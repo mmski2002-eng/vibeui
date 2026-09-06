@@ -36,10 +36,10 @@ export type Carousel015Props = Omit<ComponentProps<"section">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="carousel-015"]){
 --vibeui-carousel-015-bg:transparent;
---vibeui-carousel-015-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-carousel-015-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-carousel-015-muted:color-mix(in oklab,var(--vibeui-carousel-015-fg) 68%,transparent);
---vibeui-carousel-015-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
---vibeui-carousel-015-hover:light-dark(oklch(0.96 0.004 265),oklch(0.32 0.012 265));
+--vibeui-carousel-015-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
+--vibeui-carousel-015-hover:light-dark(oklch(0.96 0 265),oklch(0.32 0 265));
 --vibeui-carousel-015-accent:light-dark(oklch(0.52 0.16 200),oklch(0.76 0.13 200));
 --vibeui-carousel-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

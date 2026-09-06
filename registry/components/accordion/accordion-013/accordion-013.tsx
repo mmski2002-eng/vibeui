@@ -38,11 +38,11 @@ export type Accordion013Props = Omit<ComponentProps<"div">, "children"> & {
 // темнее беда, а индикатор набирает свечение.
 const STYLES = `
 :where([data-vibeui-block="accordion-013"]){
---vibeui-accordion-013-ground:light-dark(oklch(0.94 0.005 85),oklch(0.195 0.006 265));
---vibeui-accordion-013-key:light-dark(oklch(0.995 0.002 85),oklch(0.255 0.007 265));
---vibeui-accordion-013-key-down:light-dark(oklch(0.965 0.004 85),oklch(0.215 0.006 265));
---vibeui-accordion-013-edge:light-dark(oklch(0.86 0.008 85),oklch(0.14 0.005 265));
---vibeui-accordion-013-fg:light-dark(oklch(0.22 0.012 265),oklch(0.93 0.004 265));
+--vibeui-accordion-013-ground:light-dark(oklch(0.94 0.005 85),oklch(0.195 0 265));
+--vibeui-accordion-013-key:light-dark(oklch(0.995 0.002 85),oklch(0.255 0 265));
+--vibeui-accordion-013-key-down:light-dark(oklch(0.965 0.004 85),oklch(0.215 0 265));
+--vibeui-accordion-013-edge:light-dark(oklch(0.86 0.008 85),oklch(0.14 0 265));
+--vibeui-accordion-013-fg:light-dark(oklch(0.22 0 265),oklch(0.93 0 265));
 --vibeui-accordion-013-muted:color-mix(in oklab,var(--vibeui-accordion-013-fg) 68%,transparent);
 --vibeui-accordion-013-accent:light-dark(oklch(0.52 0.18 258),oklch(0.72 0.16 258));
 --vibeui-accordion-013-press:light-dark(oklch(0.6 0.01 85 / 22%),oklch(0 0 0 / 50%));

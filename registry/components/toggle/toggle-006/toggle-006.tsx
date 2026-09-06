@@ -24,9 +24,9 @@ export type Toggle006Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="toggle-006"]){
 --vibeui-toggle-006-bg:transparent;
---vibeui-toggle-006-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-toggle-006-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-toggle-006-muted:color-mix(in oklab,var(--vibeui-toggle-006-fg) 68%,transparent);
---vibeui-toggle-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-toggle-006-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
 --vibeui-toggle-006-accent:light-dark(oklch(0.55 0.15 155),oklch(0.75 0.13 155));
 --vibeui-toggle-006-soft:light-dark(oklch(0.95 0.04 155),oklch(0.3 0.05 155));
 --vibeui-toggle-006-strong:light-dark(oklch(0.36 0.09 155),oklch(0.88 0.1 155));

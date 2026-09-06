@@ -17,9 +17,9 @@ export type Button047Props = ComponentProps<"a"> & {
 // скрытая строка «откроется в новой вкладке» — target сам по себе её не даёт.
 const STYLES = `
 :where([data-vibeui-block="button-047"]){
---vibeui-button-047-surface:light-dark(oklch(1 0 0),oklch(0.25 0.014 265));
---vibeui-button-047-border:light-dark(oklch(0.9 0.006 265),oklch(0.4 0.014 265));
---vibeui-button-047-fg:light-dark(oklch(0.26 0.02 265),oklch(0.93 0.008 265));
+--vibeui-button-047-surface:light-dark(oklch(1 0 0),oklch(0.25 0 265));
+--vibeui-button-047-border:light-dark(oklch(0.9 0 265),oklch(0.4 0 265));
+--vibeui-button-047-fg:light-dark(oklch(0.26 0 265),oklch(0.93 0 265));
 --vibeui-button-047-muted:color-mix(in oklab,var(--vibeui-button-047-fg) 68%,transparent);
 --vibeui-button-047-accent:light-dark(oklch(0.5 0.16 245),oklch(0.75 0.13 245));
 --vibeui-button-047-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

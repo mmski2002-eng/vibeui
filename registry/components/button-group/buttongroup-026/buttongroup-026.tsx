@@ -31,11 +31,11 @@ export type Buttongroup026Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="buttongroup-026"]){
 --vibeui-buttongroup-026-bg:transparent;
---vibeui-buttongroup-026-surface:light-dark(oklch(1 0 0),oklch(0.3 0.014 265));
---vibeui-buttongroup-026-track:light-dark(oklch(0.96 0.004 265),oklch(0.24 0.012 265));
---vibeui-buttongroup-026-fg:light-dark(oklch(0.24 0.016 265),oklch(0.95 0.005 265));
+--vibeui-buttongroup-026-surface:light-dark(oklch(1 0 0),oklch(0.3 0 265));
+--vibeui-buttongroup-026-track:light-dark(oklch(0.96 0 265),oklch(0.24 0 265));
+--vibeui-buttongroup-026-fg:light-dark(oklch(0.24 0 265),oklch(0.95 0 265));
 --vibeui-buttongroup-026-muted:color-mix(in oklab,var(--vibeui-buttongroup-026-fg) 68%,transparent);
---vibeui-buttongroup-026-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265));
+--vibeui-buttongroup-026-border:light-dark(oklch(0.9 0 265),oklch(0.38 0 265));
 --vibeui-buttongroup-026-accent:light-dark(oklch(0.45 0.13 305),oklch(0.8 0.13 305));
 --vibeui-buttongroup-026-radius:0.5rem;
 --vibeui-buttongroup-026-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -84,7 +84,7 @@ transition:max-width .22s cubic-bezier(.2,.7,.3,1),opacity .18s ease;
 flex-grow:2.4;
 background:var(--vibeui-buttongroup-026-surface);
 color:var(--vibeui-buttongroup-026-accent);
-box-shadow:0 1px 2px oklch(0.2 0.02 265 / 16%);
+box-shadow:0 1px 2px oklch(0.2 0 265 / 16%);
 }
 [data-vibeui-block="buttongroup-026"] [data-part="segment"]:has(input:checked) [data-part="note"]{
 max-width:8rem;opacity:1;

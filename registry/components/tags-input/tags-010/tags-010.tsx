@@ -28,8 +28,8 @@ export type Tags010Props = Omit<ComponentProps<"div">, "children" | "title"> & {
 // первый от второго не отличить.
 const STYLES = `
 :where([data-vibeui-block="tags-010"]){
---vibeui-tags-010-bg:light-dark(oklch(0.99 0.002 265),oklch(0.23 0.014 265));
---vibeui-tags-010-fg:light-dark(oklch(0.25 0.014 265),oklch(0.95 0.005 265));
+--vibeui-tags-010-bg:light-dark(oklch(0.99 0 265),oklch(0.23 0 265));
+--vibeui-tags-010-fg:light-dark(oklch(0.25 0 265),oklch(0.95 0 265));
 --vibeui-tags-010-muted:color-mix(in oklab,var(--vibeui-tags-010-fg) 62%,transparent);
 --vibeui-tags-010-border:light-dark(oklch(0 0 0 / 14%),oklch(1 0 0 / 16%));
 --vibeui-tags-010-field:light-dark(oklch(1 0 0),oklch(1 0 0 / 5%));

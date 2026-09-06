@@ -30,14 +30,14 @@ export type Select013Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="select-013"]){
 --vibeui-select-013-surface:transparent;
---vibeui-select-013-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
---vibeui-select-013-fg:light-dark(oklch(0.23 0.016 265),oklch(0.94 0.005 265));
+--vibeui-select-013-surface-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
+--vibeui-select-013-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-select-013-muted:color-mix(in oklab,var(--vibeui-select-013-fg) 68%,transparent);
---vibeui-select-013-border:light-dark(oklch(0.87 0.008 265),oklch(0.4 0.012 265));
+--vibeui-select-013-border:light-dark(oklch(0.87 0 265),oklch(0.4 0 265));
 --vibeui-select-013-accent:light-dark(oklch(0.55 0.19 262),oklch(0.73 0.17 262));
 --vibeui-select-013-tint:light-dark(oklch(0.55 0.19 262 / 14%),oklch(0.73 0.17 262 / 22%));
---vibeui-select-013-panel:light-dark(oklch(1 0 0),oklch(0.25 0.014 265));
---vibeui-select-013-check:light-dark(oklch(1 0 0),oklch(0.19 0.014 265));
+--vibeui-select-013-panel:light-dark(oklch(1 0 0),oklch(0.25 0 265));
+--vibeui-select-013-check:light-dark(oklch(1 0 0),oklch(0.19 0 265));
 --vibeui-select-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

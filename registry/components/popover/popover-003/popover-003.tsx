@@ -25,14 +25,14 @@ export type Popover003Props = Omit<
 // отмена стоит первой, потому что случайный Enter не должен удалять данные.
 const STYLES = `
 :where([data-vibeui-block="popover-003"]){
---vibeui-popover-003-bg:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
---vibeui-popover-003-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.006 265));
+--vibeui-popover-003-bg:light-dark(oklch(1 0 0),oklch(0.22 0 265));
+--vibeui-popover-003-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-popover-003-muted:color-mix(in oklab,var(--vibeui-popover-003-fg) 68%,transparent);
---vibeui-popover-003-border:light-dark(oklch(0.89 0.006 265),oklch(0.36 0.012 265));
---vibeui-popover-003-hover:light-dark(oklch(0.96 0.004 265),oklch(0.27 0.014 265));
+--vibeui-popover-003-border:light-dark(oklch(0.89 0 265),oklch(0.36 0 265));
+--vibeui-popover-003-hover:light-dark(oklch(0.96 0 265),oklch(0.27 0 265));
 --vibeui-popover-003-danger:light-dark(oklch(0.55 0.2 25),oklch(0.72 0.17 25));
 --vibeui-popover-003-on-danger:light-dark(oklch(0.99 0.01 25),oklch(0.18 0.03 25));
---vibeui-popover-003-shadow:light-dark(oklch(0.2 0.02 265 / 60%),oklch(0.02 0.01 265 / 72%));
+--vibeui-popover-003-shadow:light-dark(oklch(0.2 0 265 / 60%),oklch(0.02 0 265 / 72%));
 --vibeui-popover-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -61,12 +61,12 @@ width:min(17.5rem,100vw - 2rem);box-sizing:border-box;
 border:1px solid var(--vibeui-popover-003-border);border-radius:0.875rem;
 background:var(--vibeui-popover-003-bg);color:inherit;
 box-shadow:0 24px 50px -30px var(--vibeui-popover-003-shadow);
-position-anchor:--vibeui-popover-003-anchor;
+position-anchor:--vibeui-popover-003-anchor;inset:auto;
 top:anchor(bottom);left:anchor(center);translate:-50% 0;margin-top:0.5rem;
 }
 [data-vibeui-block="popover-003"] [data-part="panel"]:popover-open{display:block}
 @supports not (anchor-name: --a){
-[data-vibeui-block="popover-003"] [data-part="panel"]{position:absolute;inset:auto;top:calc(100% + 0.5rem);left:0;translate:0 0}
+[data-vibeui-block="popover-003"] [data-part="panel"]{position:fixed;inset:0;margin:auto}
 }
 [data-vibeui-block="popover-003"] [data-part="title"]{margin:0 0 0.25rem;font-size:0.875rem;font-weight:660;line-height:1.3}
 [data-vibeui-block="popover-003"] [data-part="text"]{margin:0 0 0.75rem;font-size:0.8125rem;line-height:1.45;color:var(--vibeui-popover-003-muted)}
@@ -89,9 +89,11 @@ border:0;background:var(--vibeui-popover-003-danger);color:var(--vibeui-popover-
 [data-vibeui-block="popover-003"] [data-part="confirm"]:focus-visible{outline:2px solid var(--vibeui-popover-003-danger);outline-offset:2px}
 /* Раскрытая панель на месте: атрибут popover прячет её правилом браузера,
    а это правило той же специфичности его переопределяет и возвращает панель
-   в поток. Так её показывают на витрине и в документации, без верхнего слоя. */
-[data-vibeui-block="popover-003"][data-open] [popover]{
-display:block;position:static;inset:auto;margin:0.5rem 0 0;
+   в поток. Так её показывают на витрине и в документации, без верхнего слоя.
+   Только пока popover закрыт: у открытого положение задаёт верхний слой,
+   и static отправил бы панель в левый верхний угол экрана. */
+[data-vibeui-block="popover-003"][data-open] [popover]:not(:popover-open){
+display:block;position:static;inset:auto;translate:none;margin:0.5rem 0 0;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="popover-003"] *{animation:none!important;transition:none!important}}
 `

@@ -47,13 +47,13 @@ export type Dashboard024Props = {
 // читается как «его никогда не было» и рушит разбор инцидента.
 const STYLES = `
 :where([data-vibeui-block="dashboard-024"]){
---vibeui-dashboard-024-bg:light-dark(oklch(1 0 0),oklch(0.23 0.013 265));
---vibeui-dashboard-024-panel:light-dark(oklch(0.985 0.003 265),oklch(0.27 0.013 265));
---vibeui-dashboard-024-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-dashboard-024-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
---vibeui-dashboard-024-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-dashboard-024-bg:light-dark(oklch(1 0 0),oklch(0.23 0 265));
+--vibeui-dashboard-024-panel:light-dark(oklch(0.985 0 265),oklch(0.27 0 265));
+--vibeui-dashboard-024-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
+--vibeui-dashboard-024-muted:light-dark(oklch(0.55 0 265),oklch(0.69 0 265));
+--vibeui-dashboard-024-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
 --vibeui-dashboard-024-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.15 262));
---vibeui-dashboard-024-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 265));
+--vibeui-dashboard-024-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0 265));
 --vibeui-dashboard-024-warn:light-dark(oklch(0.62 0.15 65),oklch(0.82 0.13 65));
 --vibeui-dashboard-024-warnbg:light-dark(oklch(0.975 0.03 85),oklch(0.29 0.04 75));
 --vibeui-dashboard-024-risk:light-dark(oklch(0.55 0.18 25),oklch(0.74 0.15 25));

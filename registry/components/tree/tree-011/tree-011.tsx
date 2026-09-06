@@ -42,14 +42,14 @@ export type Tree011Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="tree-011"]){
 --vibeui-tree-011-bg:transparent;
---vibeui-tree-011-surface:light-dark(oklch(1 0 0),oklch(0.24 0.013 265));
---vibeui-tree-011-fg:light-dark(oklch(0.24 0.015 265),oklch(0.94 0.005 265));
+--vibeui-tree-011-surface:light-dark(oklch(1 0 0),oklch(0.24 0 265));
+--vibeui-tree-011-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-tree-011-muted:color-mix(in oklab,var(--vibeui-tree-011-fg) 68%,transparent);
---vibeui-tree-011-border:light-dark(oklch(0.89 0.007 265),oklch(0.37 0.012 265));
---vibeui-tree-011-hover:light-dark(oklch(0.55 0.02 265 / 9%),oklch(0.92 0.02 265 / 12%));
+--vibeui-tree-011-border:light-dark(oklch(0.89 0 265),oklch(0.37 0 265));
+--vibeui-tree-011-hover:light-dark(oklch(0.55 0 265 / 9%),oklch(0.92 0 265 / 12%));
 --vibeui-tree-011-accent:light-dark(oklch(0.52 0.16 196),oklch(0.78 0.12 196));
 --vibeui-tree-011-danger:light-dark(oklch(0.55 0.19 25),oklch(0.74 0.16 25));
---vibeui-tree-011-shadow:light-dark(oklch(0.2 0.03 265 / 40%),oklch(0 0 0 / 70%));
+--vibeui-tree-011-shadow:light-dark(oklch(0.2 0 265 / 40%),oklch(0 0 0 / 70%));
 --vibeui-tree-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-tree-011-x:50%;
 --vibeui-tree-011-y:50%;
@@ -169,8 +169,8 @@ const DEFAULT_NODES: Tree011Node[] = [
 
 const DEFAULT_ACTIONS: Tree011Action[] = [
   { label: "Переименовать", keys: "F2" },
-  { label: "Дублировать", keys: "⌘D" },
-  { label: "Удалить", keys: "⌫", danger: true },
+  { label: "Дублировать", keys: "Ctrl+D" },
+  { label: "Удалить", keys: "Backspace", danger: true },
 ]
 
 /**
@@ -260,7 +260,10 @@ export function Tree011({
               key={id}
               onContextMenu={(event) => onRowContextMenu(event, node.name)}
             >
-              <div data-part="row" data-active={node.name === target || undefined}>
+              <div
+                data-part="row"
+                data-active={node.name === target || undefined}
+              >
                 <button
                   type="button"
                   data-part="name"

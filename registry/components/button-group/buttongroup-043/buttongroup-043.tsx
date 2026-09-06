@@ -25,11 +25,11 @@ export type Buttongroup043Props = Omit<ComponentProps<"nav">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="buttongroup-043"]){
 --vibeui-buttongroup-043-surface:transparent;
---vibeui-buttongroup-043-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.005 265));
+--vibeui-buttongroup-043-fg:light-dark(oklch(0.25 0 265),oklch(0.95 0 265));
 --vibeui-buttongroup-043-muted:color-mix(in oklab,var(--vibeui-buttongroup-043-fg) 68%,transparent);
---vibeui-buttongroup-043-border:light-dark(oklch(0.88 0.008 265),oklch(0.41 0.012 265));
---vibeui-buttongroup-043-hover:light-dark(oklch(0.965 0.005 265),oklch(0.33 0.012 265));
---vibeui-buttongroup-043-rail:light-dark(oklch(0.93 0.006 265),oklch(0.36 0.01 265));
+--vibeui-buttongroup-043-border:light-dark(oklch(0.88 0 265),oklch(0.41 0 265));
+--vibeui-buttongroup-043-hover:light-dark(oklch(0.965 0 265),oklch(0.33 0 265));
+--vibeui-buttongroup-043-rail:light-dark(oklch(0.93 0 265),oklch(0.36 0 265));
 --vibeui-buttongroup-043-accent:light-dark(oklch(0.5 0.16 265),oklch(0.77 0.13 265));
 --vibeui-buttongroup-043-radius:0.625rem;
 --vibeui-buttongroup-043-progress:0%;

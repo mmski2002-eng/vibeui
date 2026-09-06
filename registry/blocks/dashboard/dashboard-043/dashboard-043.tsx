@@ -46,10 +46,10 @@ const STYLES = `
 :where([data-vibeui-block="dashboard-043"]){
 --vibeui-dashboard-043-bg:transparent;
 /* Карточки сервисов: подложка блока прозрачна, и рисовать их ею нечем. */
---vibeui-dashboard-043-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 240));
---vibeui-dashboard-043-fg:light-dark(oklch(0.22 0.014 240),oklch(0.94 0.005 240));
---vibeui-dashboard-043-muted:light-dark(oklch(0.55 0.014 240),oklch(0.72 0.012 240));
---vibeui-dashboard-043-border:light-dark(oklch(0.91 0.006 240),oklch(0.36 0.012 240));
+--vibeui-dashboard-043-card:light-dark(oklch(1 0 0),oklch(0.26 0 240));
+--vibeui-dashboard-043-fg:light-dark(oklch(0.22 0 240),oklch(0.94 0 240));
+--vibeui-dashboard-043-muted:light-dark(oklch(0.55 0 240),oklch(0.72 0 240));
+--vibeui-dashboard-043-border:light-dark(oklch(0.91 0 240),oklch(0.36 0 240));
 --vibeui-dashboard-043-ok:light-dark(oklch(0.58 0.13 155),oklch(0.75 0.14 155));
 --vibeui-dashboard-043-warn:light-dark(oklch(0.66 0.15 70),oklch(0.81 0.14 70));
 --vibeui-dashboard-043-bad:light-dark(oklch(0.58 0.19 25),oklch(0.72 0.17 25));

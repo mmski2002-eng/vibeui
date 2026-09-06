@@ -18,12 +18,12 @@ export type Pagination001Props = Omit<ComponentProps<"nav">, "children"> & {
 // поэтому ширина блока не скачет при переходе.
 const STYLES = `
 :where([data-vibeui-block="pagination-001"]){
---vibeui-pagination-001-fg:light-dark(oklch(0.26 0.016 265),oklch(0.93 0.006 265));
+--vibeui-pagination-001-fg:light-dark(oklch(0.26 0 265),oklch(0.93 0 265));
 --vibeui-pagination-001-muted:color-mix(in oklab,var(--vibeui-pagination-001-fg) 68%,transparent);
---vibeui-pagination-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
---vibeui-pagination-001-hover:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.82 0.02 265 / 14%));
+--vibeui-pagination-001-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
+--vibeui-pagination-001-hover:light-dark(oklch(0.55 0 265 / 8%),oklch(0.82 0 265 / 14%));
 --vibeui-pagination-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.7 0.16 262));
---vibeui-pagination-001-accent-fg:light-dark(oklch(1 0 0),oklch(0.19 0.03 262));
+--vibeui-pagination-001-accent-fg:light-dark(oklch(1 0 0),oklch(0.19 0 262));
 --vibeui-pagination-001-size:2.25rem;
 --vibeui-pagination-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

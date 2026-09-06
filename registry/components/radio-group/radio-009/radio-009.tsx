@@ -30,11 +30,11 @@ export type Radio009Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="radio-009"]){
 --vibeui-radio-009-bg:transparent;
---vibeui-radio-009-card:light-dark(oklch(0.99 0.002 265),oklch(0.27 0.008 265));
---vibeui-radio-009-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-radio-009-card:light-dark(oklch(0.99 0 265),oklch(0.27 0 265));
+--vibeui-radio-009-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-radio-009-muted:color-mix(in oklab,var(--vibeui-radio-009-fg) 68%,transparent);
---vibeui-radio-009-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
---vibeui-radio-009-ring:light-dark(oklch(0.74 0.012 265),oklch(0.54 0.014 265));
+--vibeui-radio-009-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
+--vibeui-radio-009-ring:light-dark(oklch(0.74 0 265),oklch(0.54 0 265));
 --vibeui-radio-009-accent:light-dark(oklch(0.58 0.15 165),oklch(0.76 0.14 165));
 --vibeui-radio-009-tint:light-dark(oklch(0.58 0.15 165 / 7%),oklch(0.76 0.14 165 / 15%));
 --vibeui-radio-009-save:light-dark(oklch(0.58 0.15 165),oklch(0.76 0.14 165));

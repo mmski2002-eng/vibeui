@@ -19,10 +19,10 @@ export type Skeleton008Props = ComponentProps<"div"> & {
 const STYLES = `
 :where([data-vibeui-block="skeleton-008"]){
 --vibeui-skeleton-008-bg:transparent;
---vibeui-skeleton-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
---vibeui-skeleton-008-grid:light-dark(oklch(0.94 0.004 265),oklch(0.32 0.01 265));
---vibeui-skeleton-008-base:light-dark(oklch(0.93 0.005 265),oklch(0.3 0.012 265));
---vibeui-skeleton-008-shine:light-dark(oklch(0.97 0.003 265),oklch(0.39 0.016 265));
+--vibeui-skeleton-008-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
+--vibeui-skeleton-008-grid:light-dark(oklch(0.94 0 265),oklch(0.32 0 265));
+--vibeui-skeleton-008-base:light-dark(oklch(0.93 0 265),oklch(0.3 0 265));
+--vibeui-skeleton-008-shine:light-dark(oklch(0.97 0 265),oklch(0.39 0 265));
 --vibeui-skeleton-008-height:8.5rem;
 --vibeui-skeleton-008-bar:0;
 --vibeui-skeleton-008-delay:0s;

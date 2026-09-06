@@ -34,12 +34,12 @@ export type Hero019Props = {
 // секция светлая, а в тёмном контексте карточка светлее фона.
 const STYLES = `
 :where([data-vibeui-block="hero-019"]){
---vibeui-hero-019-bg:light-dark(oklch(0.985 0.004 250),oklch(0.19 0.012 258));
---vibeui-hero-019-fg:light-dark(oklch(0.21 0.014 258),oklch(0.95 0.005 258));
---vibeui-hero-019-muted:light-dark(oklch(0.51 0.013 258),oklch(0.72 0.012 258));
---vibeui-hero-019-card:light-dark(oklch(1 0 0),oklch(0.25 0.014 258));
---vibeui-hero-019-field:light-dark(oklch(0.985 0.003 258),oklch(0.22 0.012 258));
---vibeui-hero-019-line:light-dark(oklch(0.89 0.007 258),oklch(0.36 0.014 258));
+--vibeui-hero-019-bg:light-dark(oklch(0.985 0 250),oklch(0.19 0 258));
+--vibeui-hero-019-fg:light-dark(oklch(0.21 0 258),oklch(0.95 0 258));
+--vibeui-hero-019-muted:light-dark(oklch(0.51 0 258),oklch(0.72 0 258));
+--vibeui-hero-019-card:light-dark(oklch(1 0 0),oklch(0.25 0 258));
+--vibeui-hero-019-field:light-dark(oklch(0.985 0 258),oklch(0.22 0 258));
+--vibeui-hero-019-line:light-dark(oklch(0.89 0 258),oklch(0.36 0 258));
 --vibeui-hero-019-accent:light-dark(oklch(0.53 0.17 262),oklch(0.72 0.15 262));
 --vibeui-hero-019-accent-fg:oklch(from var(--vibeui-hero-019-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-hero-019-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

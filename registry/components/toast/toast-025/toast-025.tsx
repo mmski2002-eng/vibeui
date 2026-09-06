@@ -31,13 +31,13 @@ export type Toast025Props = Omit<ComponentProps<"div">, "children"> & {
 // подложка светлее фона страницы, а граница светлее подложки.
 const STYLES = `
 :where([data-vibeui-block="toast-025"]){
---vibeui-toast-025-bg:light-dark(oklch(0.99 0.002 265),oklch(0.25 0.014 265));
---vibeui-toast-025-fg:light-dark(oklch(0.22 0.014 265),oklch(0.96 0.003 265));
+--vibeui-toast-025-bg:light-dark(oklch(0.99 0 265),oklch(0.25 0 265));
+--vibeui-toast-025-fg:light-dark(oklch(0.22 0 265),oklch(0.96 0 265));
 --vibeui-toast-025-muted:color-mix(in oklab,var(--vibeui-toast-025-fg) 68%,transparent);
---vibeui-toast-025-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.014 265));
---vibeui-toast-025-hover:light-dark(oklch(0.2 0.02 265 / 7%),oklch(1 0 0 / 12%));
---vibeui-toast-025-shadow:light-dark(oklch(0.18 0.02 265 / 55%),oklch(0.05 0.01 265 / 70%));
---vibeui-toast-025-tile:light-dark(oklch(0.94 0.006 265),oklch(0.32 0.012 265));
+--vibeui-toast-025-border:light-dark(oklch(0.9 0 265),oklch(0.38 0 265));
+--vibeui-toast-025-hover:light-dark(oklch(0.2 0 265 / 7%),oklch(1 0 0 / 12%));
+--vibeui-toast-025-shadow:light-dark(oklch(0.18 0 265 / 55%),oklch(0.05 0 265 / 70%));
+--vibeui-toast-025-tile:light-dark(oklch(0.94 0 265),oklch(0.32 0 265));
 --vibeui-toast-025-accent:light-dark(oklch(0.55 0.15 152),oklch(0.72 0.14 152));
 --vibeui-toast-025-on-accent:oklch(from var(--vibeui-toast-025-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-toast-025-radius:0.875rem;
@@ -57,14 +57,18 @@ box-shadow:0 16px 34px -24px var(--vibeui-toast-025-shadow);
 animation:vibeui-toast-025-in .22s ease;
 }
 @keyframes vibeui-toast-025-in{from{opacity:0;transform:translateY(-0.375rem)}to{opacity:1;transform:translateY(0)}}
+/* Без overflow:hidden: значок «добавлено» вылезает за угол миниатюры на
+   четверть rem, и обрезка съедала его нижний правый край. Скругляет
+   картинку её собственный радиус. */
 [data-vibeui-block="toast-025"] [data-part="thumb"]{
 position:relative;flex:none;width:2.75rem;height:2.75rem;border-radius:0.625rem;
-overflow:hidden;background:var(--vibeui-toast-025-tile);color:var(--vibeui-toast-025-muted);
+background:var(--vibeui-toast-025-tile);color:var(--vibeui-toast-025-muted);
 display:flex;align-items:center;justify-content:center;
 font-size:1rem;font-weight:700;
 }
 [data-vibeui-block="toast-025"] [data-part="thumb"] img{
 position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+border-radius:inherit;
 }
 [data-vibeui-block="toast-025"] [data-part="badge"]{
 position:absolute;right:-0.25rem;bottom:-0.25rem;

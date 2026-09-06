@@ -46,12 +46,12 @@ export type Datagrid007Props = Omit<ComponentProps<"section">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="datagrid-007"]){
 --vibeui-datagrid-007-bg:transparent;
---vibeui-datagrid-007-fg:light-dark(oklch(0.23 0.014 300),oklch(0.93 0.006 300));
+--vibeui-datagrid-007-fg:light-dark(oklch(0.23 0 300),oklch(0.93 0 300));
 --vibeui-datagrid-007-muted:color-mix(in oklab,var(--vibeui-datagrid-007-fg) 68%,transparent);
---vibeui-datagrid-007-border:light-dark(oklch(0.92 0.006 300),oklch(0.34 0.012 300));
---vibeui-datagrid-007-head:light-dark(oklch(0.975 0.003 300),oklch(0.27 0.012 300));
---vibeui-datagrid-007-group:light-dark(oklch(0.955 0.008 300),oklch(0.3 0.016 300));
---vibeui-datagrid-007-field:light-dark(oklch(1 0 0),oklch(0.22 0.012 300));
+--vibeui-datagrid-007-border:light-dark(oklch(0.92 0 300),oklch(0.34 0 300));
+--vibeui-datagrid-007-head:light-dark(oklch(0.975 0 300),oklch(0.27 0 300));
+--vibeui-datagrid-007-group:light-dark(oklch(0.955 0 300),oklch(0.3 0 300));
+--vibeui-datagrid-007-field:light-dark(oklch(1 0 0),oklch(0.22 0 300));
 --vibeui-datagrid-007-accent:light-dark(oklch(0.5 0.16 320),oklch(0.76 0.14 320));
 --vibeui-datagrid-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

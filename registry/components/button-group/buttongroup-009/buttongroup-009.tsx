@@ -1,3 +1,4 @@
+import { useId } from "react"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Buttongroup009Props = Omit<ComponentProps<"div">, "children"> & {
@@ -16,19 +17,20 @@ export type Buttongroup009Props = Omit<ComponentProps<"div">, "children"> & {
 // от собственной ширины через container query, а не от ширины окна: в узкой
 // колонке широкого экрана группа обязана схлопнуться так же, как на телефоне.
 // Раскладка лежит на внутреннем shell — правило внутри @container действует
-// на потомков контейнера, но не на сам контейнер. Спрятанные действия
-// уезжают в details/summary, поэтому раскрытие работает без клиентского JS.
+// на потомков контейнера, но не на сам контейнер. Спрятанные действия уезжают
+// в нативный popover: верхний слой не режет ни одна рамка с overflow, а
+// открытие, Escape и клик мимо достаются от браузера — без клиентского JS.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-009"]){
 --vibeui-buttongroup-009-surface:transparent;
---vibeui-buttongroup-009-sheet:light-dark(oklch(1 0 0),oklch(0.24 0.014 265));
---vibeui-buttongroup-009-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.006 265));
+--vibeui-buttongroup-009-sheet:light-dark(oklch(1 0 0),oklch(0.24 0 265));
+--vibeui-buttongroup-009-fg:light-dark(oklch(0.26 0 265),oklch(0.94 0 265));
 --vibeui-buttongroup-009-muted:color-mix(in oklab,var(--vibeui-buttongroup-009-fg) 68%,transparent);
---vibeui-buttongroup-009-border:light-dark(oklch(0.88 0.008 265),oklch(0.37 0.012 265));
---vibeui-buttongroup-009-hover:light-dark(oklch(0.96 0.004 265),oklch(0.3 0.012 265));
+--vibeui-buttongroup-009-border:light-dark(oklch(0.88 0 265),oklch(0.37 0 265));
+--vibeui-buttongroup-009-hover:light-dark(oklch(0.96 0 265),oklch(0.3 0 265));
 --vibeui-buttongroup-009-accent:light-dark(oklch(0.52 0.17 265),oklch(0.62 0.17 265));
 --vibeui-buttongroup-009-accent-dark:light-dark(oklch(0.45 0.16 265),oklch(0.55 0.17 265));
---vibeui-buttongroup-009-on-accent:oklch(0.99 0.005 265);
+--vibeui-buttongroup-009-on-accent:oklch(0.99 0 265);
 --vibeui-buttongroup-009-radius:0.625rem;
 --vibeui-buttongroup-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -51,24 +53,19 @@ border:1px solid var(--vibeui-buttongroup-009-border);
 border-radius:calc(var(--vibeui-buttongroup-009-radius) + 0.25rem);
 background:var(--vibeui-buttongroup-009-surface);
 }
-[data-vibeui-block="buttongroup-009"] button,
-[data-vibeui-block="buttongroup-009"] summary{
+[data-vibeui-block="buttongroup-009"] button{
 appearance:none;cursor:pointer;font:inherit;
 display:inline-flex;align-items:center;justify-content:center;gap:0.375rem;
 height:2.25rem;padding:0 0.75rem;
 border:1px solid transparent;border-radius:var(--vibeui-buttongroup-009-radius);
 background:transparent;color:var(--vibeui-buttongroup-009-muted);
 font-size:0.8125rem;font-weight:600;line-height:1;white-space:nowrap;
-list-style:none;
 transition:background-color .16s ease,color .16s ease;
 }
-[data-vibeui-block="buttongroup-009"] summary::-webkit-details-marker{display:none}
-[data-vibeui-block="buttongroup-009"] button:hover,
-[data-vibeui-block="buttongroup-009"] summary:hover{
+[data-vibeui-block="buttongroup-009"] button:hover{
 background:var(--vibeui-buttongroup-009-hover);color:var(--vibeui-buttongroup-009-fg);
 }
-[data-vibeui-block="buttongroup-009"] button:focus-visible,
-[data-vibeui-block="buttongroup-009"] summary:focus-visible{
+[data-vibeui-block="buttongroup-009"] button:focus-visible{
 outline:2px solid var(--vibeui-buttongroup-009-accent);outline-offset:2px;
 }
 [data-vibeui-block="buttongroup-009"] [data-part="primary"]{
@@ -83,17 +80,24 @@ background:var(--vibeui-buttongroup-009-accent-dark);color:var(--vibeui-buttongr
 /* Узкая ширина — состояние по умолчанию: лишние действия спрятаны,
    а «Ещё» на месте. Широкая раскладка добавляется запросом ниже. */
 [data-vibeui-block="buttongroup-009"] [data-part="extra"]{display:none}
-[data-vibeui-block="buttongroup-009"] [data-part="more"]{position:relative}
-[data-vibeui-block="buttongroup-009"] [data-part="more"] summary{
+[data-vibeui-block="buttongroup-009"] [data-part="more"]{
 border-color:var(--vibeui-buttongroup-009-border);
+anchor-name:--vibeui-buttongroup-009-anchor;
 }
 [data-vibeui-block="buttongroup-009"] [data-part="sheet"]{
-position:absolute;inset-inline-end:0;top:calc(100% + 0.375rem);z-index:2;
+position:fixed;margin:0;inset:auto;
+position-anchor:--vibeui-buttongroup-009-anchor;
+top:anchor(bottom);right:anchor(right);margin-top:0.375rem;
 display:flex;flex-direction:column;gap:0.125rem;min-width:11rem;padding:0.25rem;
 border:1px solid var(--vibeui-buttongroup-009-border);
 border-radius:var(--vibeui-buttongroup-009-radius);
 background:var(--vibeui-buttongroup-009-sheet);
-box-shadow:0 18px 40px -22px oklch(0.2 0.02 265 / 60%);
+box-shadow:0 18px 40px -22px oklch(0.2 0 265 / 60%);
+}
+/* Без anchor positioning панель встаёт по центру экрана: absolute в верхнем
+   слое считался бы от вьюпорта и улетал бы в угол. */
+@supports not (anchor-name: --a){
+[data-vibeui-block="buttongroup-009"] [data-part="sheet"]{position:fixed;inset:0;margin:auto}
 }
 [data-vibeui-block="buttongroup-009"] [data-part="sheet"] button{
 justify-content:flex-start;width:100%;
@@ -152,6 +156,7 @@ export function Buttongroup009({
   style,
   ...props
 }: Buttongroup009Props) {
+  const sheetId = `vibeui-buttongroup-009-${useId().replace(/:/g, "")}`
   const palette = {
     ...(accent ? { "--vibeui-buttongroup-009-accent": accent } : null),
     ...(background
@@ -184,23 +189,26 @@ export function Buttongroup009({
               {action}
             </button>
           ))}
-          <details data-part="more">
-            <summary aria-label={moreDescription.replace("{more}", moreLabel)}>
-              {moreLabel}
-              <span data-part="dots" aria-hidden="true">
-                <i />
-                <i />
-                <i />
-              </span>
-            </summary>
-            <div data-part="sheet">
-              {actions.map((action) => (
-                <button key={action} type="button">
-                  {action}
-                </button>
-              ))}
-            </div>
-          </details>
+          <button
+            type="button"
+            data-part="more"
+            popoverTarget={sheetId}
+            aria-label={moreDescription.replace("{more}", moreLabel)}
+          >
+            {moreLabel}
+            <span data-part="dots" aria-hidden="true">
+              <i />
+              <i />
+              <i />
+            </span>
+          </button>
+          <div id={sheetId} data-part="sheet" popover="auto">
+            {actions.map((action) => (
+              <button key={action} type="button">
+                {action}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </>

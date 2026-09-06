@@ -25,12 +25,12 @@ export type Testimonials002Props = {
 const STYLES = `
 :where([data-vibeui-block="testimonials-002"]){
 --vibeui-testimonials-002-bg:transparent;
---vibeui-testimonials-002-card:light-dark(oklch(1 0 0),oklch(0.255 0.016 260));
---vibeui-testimonials-002-ink:light-dark(oklch(0.22 0.014 260),oklch(0.95 0.006 260));
---vibeui-testimonials-002-muted:light-dark(oklch(0.5 0.014 260),oklch(0.72 0.012 260));
---vibeui-testimonials-002-border:light-dark(oklch(0.91 0.006 260),oklch(0.35 0.014 260));
+--vibeui-testimonials-002-card:light-dark(oklch(1 0 0),oklch(0.255 0 260));
+--vibeui-testimonials-002-ink:light-dark(oklch(0.22 0 260),oklch(0.95 0 260));
+--vibeui-testimonials-002-muted:light-dark(oklch(0.5 0 260),oklch(0.72 0 260));
+--vibeui-testimonials-002-border:light-dark(oklch(0.91 0 260),oklch(0.35 0 260));
 --vibeui-testimonials-002-accent:light-dark(oklch(0.51 0.17 268),oklch(0.76 0.14 268));
---vibeui-testimonials-002-shadow:light-dark(oklch(0.2 0.04 260 / 70%),oklch(0.05 0.02 260 / 85%));
+--vibeui-testimonials-002-shadow:light-dark(oklch(0.2 0.04 260 / 70%),oklch(0.05 0 260 / 85%));
 --vibeui-testimonials-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

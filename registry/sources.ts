@@ -52,7 +52,6 @@ import fieldRegistry from "@/registry/components/field/registry.json"
 import fileUploadRegistry from "@/registry/components/file-upload/registry.json"
 import filtersRegistry from "@/registry/components/filters/registry.json"
 import frameRegistry from "@/registry/components/frame/registry.json"
-import ganttRegistry from "@/registry/components/gantt/registry.json"
 import hoverCardRegistry from "@/registry/components/hover-card/registry.json"
 import iconStackRegistry from "@/registry/components/icon-stack/registry.json"
 import iconTileRegistry from "@/registry/components/icon-tile/registry.json"
@@ -60,7 +59,6 @@ import inputRegistry from "@/registry/components/input/registry.json"
 import inputGroupRegistry from "@/registry/components/input-group/registry.json"
 import inputOtpRegistry from "@/registry/components/input-otp/registry.json"
 import itemRegistry from "@/registry/components/item/registry.json"
-import kanbanRegistry from "@/registry/components/kanban/registry.json"
 import kbdRegistry from "@/registry/components/kbd/registry.json"
 import labelRegistry from "@/registry/components/label/registry.json"
 import menubarRegistry from "@/registry/components/menubar/registry.json"
@@ -79,7 +77,6 @@ import scrollAreaRegistry from "@/registry/components/scroll-area/registry.json"
 import scrollspyRegistry from "@/registry/components/scrollspy/registry.json"
 import selectRegistry from "@/registry/components/select/registry.json"
 import separatorRegistry from "@/registry/components/separator/registry.json"
-import sheetRegistry from "@/registry/components/sheet/registry.json"
 import sidebarRegistry from "@/registry/components/sidebar/registry.json"
 import skeletonRegistry from "@/registry/components/skeleton/registry.json"
 import sliderRegistry from "@/registry/components/slider/registry.json"
@@ -116,7 +113,7 @@ import calendarAnimationRegistry from "@/registry/animations/calendar/registry.j
 import chartAnimationRegistry from "@/registry/animations/chart/registry.json"
 import codeBlockAnimationRegistry from "@/registry/animations/code-block/registry.json"
 import emptyAnimationRegistry from "@/registry/animations/empty/registry.json"
-import kanbanAnimationRegistry from "@/registry/animations/kanban/registry.json"
+import kanbanRegistry from "@/registry/animations/kanban/registry.json"
 import kbdAnimationRegistry from "@/registry/animations/kbd/registry.json"
 import tableAnimationRegistry from "@/registry/animations/table/registry.json"
 import timelineAnimationRegistry from "@/registry/animations/timeline/registry.json"
@@ -409,11 +406,6 @@ export const SOURCES = [
     items: frameRegistry.items,
   },
   {
-    directory: "registry/components/gantt",
-    kind: "component",
-    items: ganttRegistry.items,
-  },
-  {
     directory: "registry/components/hover-card",
     kind: "component",
     items: hoverCardRegistry.items,
@@ -447,11 +439,6 @@ export const SOURCES = [
     directory: "registry/components/item",
     kind: "component",
     items: itemRegistry.items,
-  },
-  {
-    directory: "registry/components/kanban",
-    kind: "component",
-    items: kanbanRegistry.items,
   },
   {
     directory: "registry/components/kbd",
@@ -542,11 +529,6 @@ export const SOURCES = [
     directory: "registry/components/separator",
     kind: "component",
     items: separatorRegistry.items,
-  },
-  {
-    directory: "registry/components/sheet",
-    kind: "component",
-    items: sheetRegistry.items,
   },
   {
     directory: "registry/components/sidebar",
@@ -731,7 +713,7 @@ export const SOURCES = [
   {
     directory: "registry/animations/kanban",
     kind: "animation",
-    items: kanbanAnimationRegistry.items,
+    items: kanbanRegistry.items,
   },
   {
     directory: "registry/animations/kbd",

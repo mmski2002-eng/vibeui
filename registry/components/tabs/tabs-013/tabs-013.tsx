@@ -36,7 +36,7 @@ export type Tabs013Props = Omit<ComponentProps<"div">, "children" | "title"> & {
 const STYLES = `
 :where([data-vibeui-block="tabs-013"]){
 --vibeui-tabs-013-bg:transparent;
---vibeui-tabs-013-fg:light-dark(oklch(0.25 0.014 265),oklch(0.95 0.005 265));
+--vibeui-tabs-013-fg:light-dark(oklch(0.25 0 265),oklch(0.95 0 265));
 --vibeui-tabs-013-muted:color-mix(in oklab,var(--vibeui-tabs-013-fg) 60%,transparent);
 --vibeui-tabs-013-border:light-dark(oklch(0 0 0 / 13%),oklch(1 0 0 / 14%));
 --vibeui-tabs-013-hover:light-dark(oklch(0 0 0 / 5%),oklch(1 0 0 / 7%));

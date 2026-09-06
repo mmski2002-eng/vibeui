@@ -39,14 +39,14 @@ export type Sidebar009Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="sidebar-009"]){
 --vibeui-sidebar-009-bg:transparent;
---vibeui-sidebar-009-panel:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
---vibeui-sidebar-009-fg:light-dark(oklch(0.25 0.016 265),oklch(0.93 0.006 265));
+--vibeui-sidebar-009-panel:light-dark(oklch(1 0 0),oklch(0.25 0 265));
+--vibeui-sidebar-009-fg:light-dark(oklch(0.25 0 265),oklch(0.93 0 265));
 --vibeui-sidebar-009-muted:color-mix(in oklab,var(--vibeui-sidebar-009-fg) 68%,transparent);
---vibeui-sidebar-009-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
---vibeui-sidebar-009-hover:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.85 0.02 265 / 11%));
---vibeui-sidebar-009-shadow:light-dark(oklch(0.2 0.02 265 / 18%),oklch(0 0 0 / 55%));
+--vibeui-sidebar-009-border:light-dark(oklch(0.91 0 265),oklch(0.35 0 265));
+--vibeui-sidebar-009-hover:light-dark(oklch(0.55 0 265 / 8%),oklch(0.85 0 265 / 11%));
+--vibeui-sidebar-009-shadow:light-dark(oklch(0.2 0 265 / 18%),oklch(0 0 0 / 55%));
 --vibeui-sidebar-009-accent:light-dark(oklch(0.55 0.19 262),oklch(0.73 0.16 262));
---vibeui-sidebar-009-scrim:light-dark(oklch(0.2 0.02 265 / 45%),oklch(0.08 0.01 265 / 62%));
+--vibeui-sidebar-009-scrim:light-dark(oklch(0.2 0 265 / 45%),oklch(0.08 0 265 / 62%));
 --vibeui-sidebar-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

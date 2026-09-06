@@ -36,12 +36,12 @@ export type Carousel017Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="carousel-017"]){
 --vibeui-carousel-017-bg:transparent;
---vibeui-carousel-017-surface:light-dark(oklch(1 0 0),oklch(0.23 0.013 265));
---vibeui-carousel-017-fg:light-dark(oklch(0.24 0.015 265),oklch(0.95 0.005 265));
+--vibeui-carousel-017-surface:light-dark(oklch(1 0 0),oklch(0.23 0 265));
+--vibeui-carousel-017-fg:light-dark(oklch(0.24 0 265),oklch(0.95 0 265));
 --vibeui-carousel-017-muted:color-mix(in oklab,var(--vibeui-carousel-017-fg) 68%,transparent);
---vibeui-carousel-017-border:light-dark(oklch(0.89 0.007 265),oklch(0.37 0.012 265));
+--vibeui-carousel-017-border:light-dark(oklch(0.89 0 265),oklch(0.37 0 265));
 --vibeui-carousel-017-accent:light-dark(oklch(0.53 0.17 268),oklch(0.77 0.13 268));
---vibeui-carousel-017-shadow:light-dark(oklch(0.2 0.03 265 / 42%),oklch(0 0 0 / 70%));
+--vibeui-carousel-017-shadow:light-dark(oklch(0.2 0 265 / 42%),oklch(0 0 0 / 70%));
 --vibeui-carousel-017-radius:0.75rem;
 --vibeui-carousel-017-hue:268;
 --vibeui-carousel-017-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -91,7 +91,7 @@ background:var(--vibeui-carousel-017-surface);color:var(--vibeui-carousel-017-fg
 box-shadow:0 26px 64px -26px var(--vibeui-carousel-017-shadow);
 font-family:var(--vibeui-carousel-017-font);
 }
-[data-vibeui-block="carousel-017"] dialog::backdrop{background:light-dark(oklch(0.2 0.02 265 / 55%),oklch(0.06 0.012 265 / 72%))}
+[data-vibeui-block="carousel-017"] dialog::backdrop{background:light-dark(oklch(0.2 0 265 / 55%),oklch(0.06 0 265 / 72%))}
 [data-vibeui-block="carousel-017"] [data-part="stage"]{
 position:relative;display:flex;align-items:center;justify-content:space-between;gap:0.5rem;
 padding:0.5rem;border-radius:0.625rem;aspect-ratio:4/3;
@@ -105,13 +105,13 @@ background:linear-gradient(146deg,oklch(0.74 0.15 var(--vibeui-carousel-017-hue)
 display:inline-flex;align-items:center;justify-content:center;flex:none;
 width:2rem;height:2rem;padding:0;
 appearance:none;cursor:pointer;border:0;border-radius:999px;
-background:oklch(0.18 0.02 265 / 55%);color:oklch(0.98 0 0);
+background:oklch(0.18 0 265 / 55%);color:oklch(0.98 0 0);
 font:inherit;font-size:0.875rem;line-height:1;
 }
 [data-vibeui-block="carousel-017"] [data-part="close"]{position:absolute;top:0.5rem;right:0.5rem}
 [data-vibeui-block="carousel-017"] [data-part="prev"]:hover,
 [data-vibeui-block="carousel-017"] [data-part="next"]:hover,
-[data-vibeui-block="carousel-017"] [data-part="close"]:hover{background:oklch(0.18 0.02 265 / 78%)}
+[data-vibeui-block="carousel-017"] [data-part="close"]:hover{background:oklch(0.18 0 265 / 78%)}
 [data-vibeui-block="carousel-017"] dialog button:focus-visible{outline:2px solid oklch(0.98 0 0);outline-offset:2px}
 [data-vibeui-block="carousel-017"] [data-part="caption"]{
 display:flex;align-items:baseline;justify-content:space-between;gap:0.75rem;

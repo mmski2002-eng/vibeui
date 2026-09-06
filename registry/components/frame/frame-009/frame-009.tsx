@@ -24,8 +24,8 @@ const STYLES = `
 --vibeui-frame-009-land:light-dark(oklch(0.94 0.014 145),oklch(0.27 0.016 145));
 --vibeui-frame-009-line:light-dark(oklch(0.86 0.012 145),oklch(0.36 0.014 145));
 --vibeui-frame-009-border:light-dark(oklch(0.82 0.014 145),oklch(0.44 0.015 145));
---vibeui-frame-009-chip:light-dark(oklch(1 0 0),oklch(0.3 0.01 265));
---vibeui-frame-009-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.005 265));
+--vibeui-frame-009-chip:light-dark(oklch(1 0 0),oklch(0.3 0 265));
+--vibeui-frame-009-fg:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
 --vibeui-frame-009-muted:color-mix(in oklab,var(--vibeui-frame-009-fg) 68%,transparent);
 --vibeui-frame-009-accent:light-dark(oklch(0.58 0.19 25),oklch(0.7 0.19 25));
 --vibeui-frame-009-radius:0.875rem;

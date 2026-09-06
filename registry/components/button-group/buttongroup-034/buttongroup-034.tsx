@@ -25,14 +25,14 @@ export type Buttongroup034Props = Omit<
 // без поддержки контейнеров шапка останется рабочей, просто в две строки.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-034"]){
---vibeui-buttongroup-034-surface:light-dark(oklch(1 0 0),oklch(0.27 0.012 265));
---vibeui-buttongroup-034-fg:light-dark(oklch(0.24 0.016 265),oklch(0.95 0.005 265));
+--vibeui-buttongroup-034-surface:light-dark(oklch(1 0 0),oklch(0.27 0 265));
+--vibeui-buttongroup-034-fg:light-dark(oklch(0.24 0 265),oklch(0.95 0 265));
 --vibeui-buttongroup-034-muted:color-mix(in oklab,var(--vibeui-buttongroup-034-fg) 68%,transparent);
---vibeui-buttongroup-034-border:light-dark(oklch(0.9 0.006 265),oklch(0.4 0.012 265));
---vibeui-buttongroup-034-hover:light-dark(oklch(0.97 0.004 265),oklch(0.33 0.014 265));
+--vibeui-buttongroup-034-border:light-dark(oklch(0.9 0 265),oklch(0.4 0 265));
+--vibeui-buttongroup-034-hover:light-dark(oklch(0.97 0 265),oklch(0.33 0 265));
 --vibeui-buttongroup-034-accent:light-dark(oklch(0.5 0.16 265),oklch(0.62 0.17 265));
 --vibeui-buttongroup-034-accent-strong:light-dark(oklch(0.45 0.16 265),oklch(0.7 0.16 265));
---vibeui-buttongroup-034-on-accent:light-dark(oklch(0.99 0.004 265),oklch(0.16 0.02 265));
+--vibeui-buttongroup-034-on-accent:light-dark(oklch(0.99 0 265),oklch(0.16 0 265));
 --vibeui-buttongroup-034-radius:0.5rem;
 --vibeui-buttongroup-034-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

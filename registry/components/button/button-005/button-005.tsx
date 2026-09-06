@@ -21,13 +21,13 @@ export type Button005Props = Omit<ComponentProps<"button">, "onClick"> & {
 // светлее фона, иначе кнопка теряет край.
 const STYLES = `
 :where([data-vibeui-block="button-005"]){
---vibeui-button-005-bg:light-dark(oklch(0.96 0.004 265),oklch(0.27 0.012 265));
---vibeui-button-005-fg:light-dark(oklch(0.28 0.014 265),oklch(0.93 0.006 265));
---vibeui-button-005-border:light-dark(oklch(0.55 0.02 265 / 24%),oklch(0.82 0.02 265 / 30%));
+--vibeui-button-005-bg:light-dark(oklch(0.96 0 265),oklch(0.27 0 265));
+--vibeui-button-005-fg:light-dark(oklch(0.28 0 265),oklch(0.93 0 265));
+--vibeui-button-005-border:light-dark(oklch(0.55 0 265 / 24%),oklch(0.82 0 265 / 30%));
 --vibeui-button-005-armed-bg:light-dark(oklch(0.93 0.07 84),oklch(0.37 0.075 70));
 --vibeui-button-005-armed-fg:light-dark(oklch(0.36 0.09 70),oklch(0.93 0.06 84));
 --vibeui-button-005-armed-bar:light-dark(oklch(0.7 0.15 62),oklch(0.78 0.14 62));
---vibeui-button-005-ring:light-dark(oklch(0.55 0.02 265 / 60%),oklch(0.82 0.02 265 / 60%));
+--vibeui-button-005-ring:light-dark(oklch(0.55 0 265 / 60%),oklch(0.82 0 265 / 60%));
 --vibeui-button-005-radius:0.625rem;
 --vibeui-button-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

@@ -31,10 +31,10 @@ export type Features013Props = {
 // секция должна вести к бумагам, иначе это просто набор бейджей.
 const STYLES = `
 :where([data-vibeui-block="features-013"]){
---vibeui-features-013-bg:oklch(0.19 0.02 220);
---vibeui-features-013-fg:oklch(0.97 0.004 220);
---vibeui-features-013-muted:oklch(0.72 0.014 220);
---vibeui-features-013-panel:oklch(0.23 0.022 220);
+--vibeui-features-013-bg:oklch(0.19 0 220);
+--vibeui-features-013-fg:oklch(0.97 0 220);
+--vibeui-features-013-muted:oklch(0.72 0 220);
+--vibeui-features-013-panel:oklch(0.23 0 220);
 --vibeui-features-013-line:oklch(1 0 0 / 12%);
 --vibeui-features-013-accent:oklch(0.76 0.13 195);
 --vibeui-features-013-warn:oklch(0.8 0.13 85);

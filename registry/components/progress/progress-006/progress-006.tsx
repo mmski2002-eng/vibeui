@@ -21,10 +21,10 @@ export type Progress006Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="progress-006"]){
 --vibeui-progress-006-bg:transparent;
---vibeui-progress-006-fg:light-dark(oklch(0.25 0.016 265),oklch(0.94 0.006 265));
+--vibeui-progress-006-fg:light-dark(oklch(0.25 0 265),oklch(0.94 0 265));
 --vibeui-progress-006-muted:color-mix(in oklab,var(--vibeui-progress-006-fg) 68%,transparent);
---vibeui-progress-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
---vibeui-progress-006-track:light-dark(oklch(0.93 0.005 265),oklch(0.3 0.011 265));
+--vibeui-progress-006-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-progress-006-track:light-dark(oklch(0.93 0 265),oklch(0.3 0 265));
 --vibeui-progress-006-accent:light-dark(oklch(0.58 0.16 155),oklch(0.74 0.15 155));
 --vibeui-progress-006-alarm:light-dark(oklch(0.58 0.19 28),oklch(0.7 0.17 28));
 --vibeui-progress-006-alert-bg:light-dark(oklch(0.96 0.03 28),oklch(0.31 0.06 28));

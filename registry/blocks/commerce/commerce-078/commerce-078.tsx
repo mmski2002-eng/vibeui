@@ -52,11 +52,11 @@ export type Commerce078Props = {
 // делает её светлой.
 const STYLES = `
 :where([data-vibeui-block="commerce-078"]){
---vibeui-commerce-078-bg:oklch(0.21 0.02 285);
---vibeui-commerce-078-panel:oklch(0.27 0.025 285);
---vibeui-commerce-078-fg:oklch(0.97 0.006 285);
---vibeui-commerce-078-muted:oklch(0.73 0.018 285);
---vibeui-commerce-078-border:oklch(0.37 0.025 285);
+--vibeui-commerce-078-bg:oklch(0.21 0 285);
+--vibeui-commerce-078-panel:oklch(0.27 0 285);
+--vibeui-commerce-078-fg:oklch(0.97 0 285);
+--vibeui-commerce-078-muted:oklch(0.73 0 285);
+--vibeui-commerce-078-border:oklch(0.37 0 285);
 --vibeui-commerce-078-accent:oklch(0.82 0.14 85);
 --vibeui-commerce-078-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -96,7 +96,7 @@ border:1px solid var(--vibeui-commerce-078-border);border-radius:1rem;padding:0.
 [data-vibeui-block="commerce-078"] [data-part="lname"]{margin:0;font-size:1rem;font-weight:700}
 [data-vibeui-block="commerce-078"] [data-part="now"]{
 padding:0.0625rem 0.4375rem;border-radius:0.3125rem;background:var(--vibeui-commerce-078-accent);
-color:oklch(0.21 0.02 285);font-size:0.625rem;font-weight:750;letter-spacing:0.04em;text-transform:uppercase;
+color:oklch(0.21 0 285);font-size:0.625rem;font-weight:750;letter-spacing:0.04em;text-transform:uppercase;
 }
 [data-vibeui-block="commerce-078"] [data-part="lfrom"]{margin:0.1875rem 0 0;font-size:0.75rem;color:var(--vibeui-commerce-078-muted);font-variant-numeric:tabular-nums}
 [data-vibeui-block="commerce-078"] [data-part="lcash"]{margin:0.5rem 0 0.5rem;font-size:1.375rem;font-weight:750;color:var(--vibeui-commerce-078-accent);font-variant-numeric:tabular-nums}
@@ -105,7 +105,7 @@ color:oklch(0.21 0.02 285);font-size:0.625rem;font-weight:750;letter-spacing:0.0
 [data-vibeui-block="commerce-078"] [data-part="perks"] li::before{content:"·";flex:none;color:var(--vibeui-commerce-078-accent);font-weight:800}
 [data-vibeui-block="commerce-078"] [data-part="go"]{
 appearance:none;border:0;cursor:pointer;height:2.875rem;padding:0 1.75rem;border-radius:0.875rem;
-background:var(--vibeui-commerce-078-accent);color:oklch(0.21 0.02 285);font:inherit;font-size:0.9375rem;font-weight:750;
+background:var(--vibeui-commerce-078-accent);color:oklch(0.21 0 285);font:inherit;font-size:0.9375rem;font-weight:750;
 }
 [data-vibeui-block="commerce-078"] [data-part="go"]:focus-visible,
 [data-vibeui-block="commerce-078"] summary:focus-visible{outline:2px solid var(--vibeui-commerce-078-accent);outline-offset:2px}

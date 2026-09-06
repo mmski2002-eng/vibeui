@@ -34,10 +34,10 @@ export type Carousel009Props = Omit<ComponentProps<"section">, "children"> & {
 // темнеют вместе со страницей, своей тёмной темы компонент не носит.
 const STYLES = `
 :where([data-vibeui-block="carousel-009"]){
---vibeui-carousel-009-bg:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
---vibeui-carousel-009-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-carousel-009-bg:light-dark(oklch(1 0 0),oklch(0.21 0 265));
+--vibeui-carousel-009-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-carousel-009-muted:color-mix(in oklab,var(--vibeui-carousel-009-fg) 68%,transparent);
---vibeui-carousel-009-border:light-dark(oklch(0.91 0.006 265),oklch(0.37 0.012 265));
+--vibeui-carousel-009-border:light-dark(oklch(0.91 0 265),oklch(0.37 0 265));
 --vibeui-carousel-009-accent:light-dark(oklch(0.55 0.19 262),oklch(0.74 0.16 262));
 --vibeui-carousel-009-index:0;
 --vibeui-carousel-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -68,10 +68,10 @@ aspect-ratio:16 / 9;padding:1rem;box-sizing:border-box;
 background:
 radial-gradient(90% 80% at 22% 18%,oklch(0.9 0.06 var(--vibeui-carousel-009-hue,250)),transparent 70%),
 linear-gradient(150deg,oklch(0.74 0.1 var(--vibeui-carousel-009-hue,250)),oklch(0.44 0.11 var(--vibeui-carousel-009-hue,250)));
-color:oklch(0.99 0.003 265);
+color:oklch(0.99 0 265);
 }
 [data-vibeui-block="carousel-009"] [data-part="title"]{margin:0;font-size:1.0625rem;font-weight:680;line-height:1.2}
-[data-vibeui-block="carousel-009"] [data-part="text"]{margin:0;font-size:0.8125rem;line-height:1.45;color:oklch(0.94 0.01 265);max-width:20rem}
+[data-vibeui-block="carousel-009"] [data-part="text"]{margin:0;font-size:0.8125rem;line-height:1.45;color:oklch(0.94 0 265);max-width:20rem}
 [data-vibeui-block="carousel-009"] [data-part="dots"]{
 display:flex;justify-content:center;align-items:center;gap:0.375rem;
 }

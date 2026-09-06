@@ -20,11 +20,11 @@ export type Frame014Props = Omit<ComponentProps<"figure">, "title"> & {
 const STYLES = `
 :where([data-vibeui-block="frame-014"]){
 --vibeui-frame-014-bg:transparent;
---vibeui-frame-014-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-frame-014-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-frame-014-muted:color-mix(in oklab,var(--vibeui-frame-014-fg) 68%,transparent);
---vibeui-frame-014-border:light-dark(oklch(0.89 0.006 265),oklch(0.4 0.011 265));
+--vibeui-frame-014-border:light-dark(oklch(0.89 0 265),oklch(0.4 0 265));
 --vibeui-frame-014-avatar:light-dark(oklch(0.55 0.14 260),oklch(0.7 0.14 260));
---vibeui-frame-014-avatar-fg:light-dark(oklch(0.99 0.004 260),oklch(0.2 0.03 260));
+--vibeui-frame-014-avatar-fg:light-dark(oklch(0.99 0 260),oklch(0.2 0 260));
 --vibeui-frame-014-radius:0.875rem;
 --vibeui-frame-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

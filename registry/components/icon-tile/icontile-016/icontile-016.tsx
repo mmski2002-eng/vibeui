@@ -77,7 +77,7 @@ const ICONS: Record<
 // Идея компонента: горячая клавиша дублируется дважды — визуальной плашкой
 // в углу плитки и атрибутом aria-keyshortcuts на самой кнопке. Плашка
 // помечена aria-hidden целиком, потому что для скринридера сочетание уже
-// объявлено стандартным атрибутом, и повторное прочтение символов вроде «⌘»
+// объявлено стандартным атрибутом, и повторное прочтение символов вроде «Ctrl»
 // по буквам было бы шумом поверх осмысленного названия действия.
 //
 // Тема берётся из color-scheme окружения через light-dark(): в тёмной ветке
@@ -87,10 +87,10 @@ const STYLES = `
 container-type:inline-size;
 --vibeui-icontile-016-hue:262;
 --vibeui-icontile-016-chroma:0.05;
---vibeui-icontile-016-fg:light-dark(oklch(0.26 0.014 265),oklch(0.94 0.006 265));
+--vibeui-icontile-016-fg:light-dark(oklch(0.26 0 265),oklch(0.94 0 265));
 --vibeui-icontile-016-muted:color-mix(in oklab,var(--vibeui-icontile-016-fg) 68%,transparent);
---vibeui-icontile-016-border:light-dark(oklch(0.88 0.006 265),oklch(0.35 0.011 265));
---vibeui-icontile-016-key:light-dark(oklch(0.97 0.006 265),oklch(0.29 0.011 265));
+--vibeui-icontile-016-border:light-dark(oklch(0.88 0 265),oklch(0.35 0 265));
+--vibeui-icontile-016-key:light-dark(oklch(0.97 0 265),oklch(0.29 0 265));
 --vibeui-icontile-016-accent:light-dark(oklch(0.55 0.18 var(--vibeui-icontile-016-hue)),oklch(0.74 0.15 var(--vibeui-icontile-016-hue)));
 --vibeui-icontile-016-hover:light-dark(oklch(0.75 0.05 var(--vibeui-icontile-016-hue)),oklch(0.52 0.07 var(--vibeui-icontile-016-hue)));
 --vibeui-icontile-016-surface:transparent;
@@ -184,7 +184,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 export function Icontile016({
   label = "Быстрый поиск",
   description = "Найти команду или файл",
-  hotkey = ["⌘", "K"],
+  hotkey = ["Ctrl", "K"],
   hotkeyAriaLabel = "Meta+K",
   icon = "search",
   tone = "accent",

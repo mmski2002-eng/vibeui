@@ -27,14 +27,14 @@ export type Banner015Props = Omit<ComponentProps<"div">, "children"> & {
 // подложка светлее фона страницы, граница светлее подложки.
 const STYLES = `
 :where([data-vibeui-block="banner-015"]){
---vibeui-banner-015-bg:light-dark(oklch(0.99 0.002 265),oklch(0.24 0.012 265));
---vibeui-banner-015-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-banner-015-bg:light-dark(oklch(0.99 0 265),oklch(0.24 0 265));
+--vibeui-banner-015-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-banner-015-muted:color-mix(in oklab,var(--vibeui-banner-015-fg) 68%,transparent);
---vibeui-banner-015-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
---vibeui-banner-015-tile:light-dark(oklch(0.94 0.006 265),oklch(0.32 0.012 265));
+--vibeui-banner-015-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
+--vibeui-banner-015-tile:light-dark(oklch(0.94 0 265),oklch(0.32 0 265));
 --vibeui-banner-015-accent:light-dark(oklch(0.55 0.16 265),oklch(0.74 0.14 265));
 --vibeui-banner-015-on-accent:oklch(from var(--vibeui-banner-015-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
---vibeui-banner-015-hover:light-dark(oklch(0.2 0.02 265 / 7%),oklch(1 0 0 / 10%));
+--vibeui-banner-015-hover:light-dark(oklch(0.2 0 265 / 7%),oklch(1 0 0 / 10%));
 --vibeui-banner-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

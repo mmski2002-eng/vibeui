@@ -28,11 +28,11 @@ export type Button061Props = Omit<
 // сам компонент, работу — приложение.
 const STYLES = `
 :where([data-vibeui-block="button-061"]){
---vibeui-button-061-surface:light-dark(oklch(1 0 0),oklch(0.25 0.014 265));
---vibeui-button-061-border:light-dark(oklch(0.89 0.006 265),oklch(0.42 0.014 265));
---vibeui-button-061-fg:light-dark(oklch(0.26 0.02 265),oklch(0.94 0.008 265));
+--vibeui-button-061-surface:light-dark(oklch(1 0 0),oklch(0.25 0 265));
+--vibeui-button-061-border:light-dark(oklch(0.89 0 265),oklch(0.42 0 265));
+--vibeui-button-061-fg:light-dark(oklch(0.26 0 265),oklch(0.94 0 265));
 --vibeui-button-061-muted:color-mix(in oklab,var(--vibeui-button-061-fg) 68%,transparent);
---vibeui-button-061-accent:light-dark(oklch(0.55 0.16 250),oklch(0.74 0.13 250));
+--vibeui-button-061-accent:light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));
 --vibeui-button-061-warn:light-dark(oklch(0.62 0.15 70),oklch(0.78 0.14 70));
 --vibeui-button-061-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-button-061-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;

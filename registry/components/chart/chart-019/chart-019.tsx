@@ -33,11 +33,11 @@ export type Chart019Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="chart-019"]){
 --vibeui-chart-019-bg:transparent;
---vibeui-chart-019-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-chart-019-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-chart-019-muted:color-mix(in oklab,var(--vibeui-chart-019-fg) 68%,transparent);
---vibeui-chart-019-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
---vibeui-chart-019-grid:light-dark(oklch(0.94 0.005 265),oklch(0.3 0.01 265));
---vibeui-chart-019-axis:light-dark(oklch(0.78 0.01 265),oklch(0.46 0.012 265));
+--vibeui-chart-019-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
+--vibeui-chart-019-grid:light-dark(oklch(0.94 0 265),oklch(0.3 0 265));
+--vibeui-chart-019-axis:light-dark(oklch(0.78 0 265),oklch(0.46 0 265));
 --vibeui-chart-019-accent:light-dark(oklch(0.55 0.17 300),oklch(0.7 0.16 300));
 --vibeui-chart-019-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

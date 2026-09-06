@@ -18,9 +18,9 @@ export type Badge007Props = Omit<ComponentProps<"span">, "children"> & {
 // поэтому значение читается и в чёрно-белом виде.
 const STYLES = `
 :where([data-vibeui-block="badge-007"]){
---vibeui-badge-007-surface:light-dark(oklch(1 0 0),oklch(0.22 0.01 265));
---vibeui-badge-007-bg:light-dark(oklch(0.96 0.004 265),oklch(0.27 0.009 265));
---vibeui-badge-007-fg:light-dark(oklch(0.32 0.014 265),oklch(0.93 0.006 265));
+--vibeui-badge-007-surface:light-dark(oklch(1 0 0),oklch(0.22 0 265));
+--vibeui-badge-007-bg:light-dark(oklch(0.96 0 265),oklch(0.27 0 265));
+--vibeui-badge-007-fg:light-dark(oklch(0.32 0 265),oklch(0.93 0 265));
 --vibeui-badge-007-muted:color-mix(in oklab,var(--vibeui-badge-007-fg) 68%,transparent);
 --vibeui-badge-007-good:light-dark(oklch(0.55 0.15 152),oklch(0.77 0.15 152));
 --vibeui-badge-007-bad:light-dark(oklch(0.55 0.18 25),oklch(0.73 0.17 25));

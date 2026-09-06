@@ -18,8 +18,8 @@ export type Spinner010Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="spinner-010"]){
 --vibeui-spinner-010-surface:transparent;
---vibeui-spinner-010-border:light-dark(oklch(0.91 0.006 265),oklch(0.32 0.012 265));
---vibeui-spinner-010-base:light-dark(oklch(0.92 0.005 265),oklch(0.37 0.011 265));
+--vibeui-spinner-010-border:light-dark(oklch(0.91 0 265),oklch(0.32 0 265));
+--vibeui-spinner-010-base:light-dark(oklch(0.92 0 265),oklch(0.37 0 265));
 --vibeui-spinner-010-shine:light-dark(oklch(1 0 0 / 70%),oklch(1 0 0 / 16%));
 --vibeui-spinner-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

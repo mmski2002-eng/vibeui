@@ -28,7 +28,7 @@
         ],
         "ai": {
           "export": "Search001",
-          "usage": "<Search001 query=\"настрой\" groups={[{ label: \"Навигация\", commands: [{ label: \"Открыть настройки\", shortcut: \"⌘ ,\", icon: \"settings\" }] }]} />",
+          "usage": "<Search001 query=\"настрой\" groups={[{ label: \"Навигация\", commands: [{ label: \"Открыть настройки\", shortcut: \"Ctrl+,\", icon: \"settings\" }] }]} />",
           "summary": "Командная палитра: строка поиска печатает запрос по буквам с мигающим курсором, ниже сгруппированные команды с иконкой и горячей клавишей въезжают по очереди после печати. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
             "локальную палитру --vibeui-search-001-* — не подменяйте её токенами вашей темы",
@@ -95,7 +95,7 @@
                 "icon accepts one of five built-in glyphs: search, settings, user, file, message",
                 "the first command in the list is marked active (data-active) as a placeholder for keyboard navigation, not a prop-driven state"
               ],
-              "usage": "<Search001 query=\"sett\" groups={[{ label: \"Navigation\", commands: [{ label: \"Open settings\", shortcut: \"⌘ ,\", icon: \"settings\" }] }]} />"
+              "usage": "<Search001 query=\"sett\" groups={[{ label: \"Navigation\", commands: [{ label: \"Open settings\", shortcut: \"Ctrl+,\", icon: \"settings\" }] }]} />"
             },
             "controls": {
               "typing": {
@@ -118,12 +118,12 @@
                     "commands": [
                       {
                         "label": "Open settings",
-                        "shortcut": "⌘ ,",
+                        "shortcut": "Ctrl+,",
                         "icon": "settings"
                       },
                       {
                         "label": "Go to profile",
-                        "shortcut": "⌘ P",
+                        "shortcut": "Ctrl+P",
                         "icon": "user"
                       }
                     ]
@@ -133,12 +133,12 @@
                     "commands": [
                       {
                         "label": "Create project",
-                        "shortcut": "⌘ N",
+                        "shortcut": "Ctrl+N",
                         "icon": "file"
                       },
                       {
                         "label": "Write a message",
-                        "shortcut": "⌘ M",
+                        "shortcut": "Ctrl+M",
                         "icon": "message"
                       }
                     ]
@@ -157,12 +157,12 @@
                 "commands": [
                   {
                     "label": "Открыть настройки",
-                    "shortcut": "⌘ ,",
+                    "shortcut": "Ctrl+,",
                     "icon": "settings"
                   },
                   {
                     "label": "Перейти в профиль",
-                    "shortcut": "⌘ P",
+                    "shortcut": "Ctrl+P",
                     "icon": "user"
                   }
                 ]
@@ -172,12 +172,12 @@
                 "commands": [
                   {
                     "label": "Создать проект",
-                    "shortcut": "⌘ N",
+                    "shortcut": "Ctrl+N",
                     "icon": "file"
                   },
                   {
                     "label": "Написать сообщение",
-                    "shortcut": "⌘ M",
+                    "shortcut": "Ctrl+M",
                     "icon": "message"
                   }
                 ]
@@ -378,14 +378,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-search-003-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Волна — окружность максимального радиуса, растянутая transform:scale от 0 до 1 (дешевле, чем анимировать SVG-атрибут r). Для точек с related=true задержка их собственного keyframe считается в TSX из расстояния до центра: (distance / maxRadius) * длительность волны, — и передаётся через инлайновую переменную --vibeui-search-003-delay, поэтому вспышка точки совпадает с моментом прохождения волны. Несвязанные точки статичны — это и продаёт «семантическую», а не пространственную близость. Всё гаснет при prefers-reduced-motion.",
       "meta": {
-        "tags": [
-          "search",
-          "semantic",
-          "embedding",
-          "ai",
-          "vector",
-          "animated"
-        ],
+        "tags": ["search", "semantic", "embedding", "ai", "vector", "animated"],
         "ai": {
           "export": "Search003",
           "usage": "<Search003 query=\"уютный свитер на зиму\" points={[{ x: 200, y: 60, related: true }]} />",

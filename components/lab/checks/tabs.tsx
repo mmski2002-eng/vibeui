@@ -1,7 +1,7 @@
 import type { LabCheck } from "@/components/lab/check-types"
 
 import { Tabs001 } from "@/registry/components/tabs/tabs-001/tabs-001"
-import { Tabbar001 } from "@/registry/components/tabs/tabbar-001/tabbar-001"
+import { Tabs014 } from "@/registry/components/tabs/tabs-014/tabs-014"
 import { Tabs002 } from "@/registry/components/tabs/tabs-002/tabs-002"
 import { Tabs003 } from "@/registry/components/tabs/tabs-003/tabs-003"
 import { Tabs004 } from "@/registry/components/tabs/tabs-004/tabs-004"
@@ -12,7 +12,6 @@ import { Tabs008 } from "@/registry/components/tabs/tabs-008/tabs-008"
 import { Tabs009 } from "@/registry/components/tabs/tabs-009/tabs-009"
 import { Tabs010 } from "@/registry/components/tabs/tabs-010/tabs-010"
 import { Tabs011 } from "@/registry/components/tabs/tabs-011/tabs-011"
-import { Tabs012 } from "@/registry/components/tabs/tabs-012/tabs-012"
 import { Tabs013 } from "@/registry/components/tabs/tabs-013/tabs-013"
 
 /** Seed прогона: с ним набор воспроизводится один в один. */
@@ -26,10 +25,10 @@ export const CHECKS: LabCheck[] = [
     node: <Tabs001 defaultId="domains" accent="#139d8a" />,
   },
   {
-    name: "tabbar-001",
+    name: "tabs-014",
     title: "Полоса вкладок на телефоне",
     notes: ["Активный: Профиль", "Акцент: #adef6a"],
-    node: <Tabbar001 activeLabel="Профиль" accent="#adef6a" />,
+    node: <Tabs014 activeLabel="Профиль" accent="#adef6a" />,
   },
   {
     name: "tabs-002",
@@ -90,24 +89,6 @@ export const CHECKS: LabCheck[] = [
     title: "Вкладки в адресе",
     notes: ["Подпись полосы: Разделы услуги", "Акцент: #0f766e"],
     node: <Tabs011 groupLabel="Разделы услуги" accent="#0f766e" />,
-  },
-  {
-    name: "tabs-012",
-    title: "Вкладки-значки",
-    notes: [
-      "Открытая вкладка: chart",
-      "Показывать подписи: включено",
-      "Подпись полосы: Представление",
-      "Акцент: #9d4edd",
-    ],
-    node: (
-      <Tabs012
-        currentId="chart"
-        withLabels
-        groupLabel="Представление"
-        accent="#9d4edd"
-      />
-    ),
   },
   {
     name: "tabs-013",

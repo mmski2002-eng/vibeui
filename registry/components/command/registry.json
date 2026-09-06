@@ -22,7 +22,7 @@
         "ai": {
           "export": "Command001",
           "usage": "<Command001 commands={[{ label: \"Создать компонент\", group: \"Действия\" }]} />",
-          "summary": "Командная палитра: кнопка с подсказкой ⌘K, поиск по названию, команды по группам и подсветка стрелками. Ноль зависимостей, один файл.",
+          "summary": "Командная палитра: кнопка с подсказкой Ctrl+K, поиск по названию, команды по группам и подсветка стрелками. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-command-001-* и не подменять её токенами вашей темы",
             "нативный dialog: ловушка фокуса, Escape и затемнение достаются даром",
@@ -42,7 +42,7 @@
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
-            "Глобальное сочетание ⌘K компонент не вешает: подсказка на кнопке, обработчик — за вами.",
+            "Глобальное сочетание Ctrl+K компонент не вешает: подсказка на кнопке, обработчик — за вами.",
             "Поиск идёт по подстроке названия: нечёткий поиск и синонимы добавляются в фильтре снаружи.",
             "Enter по подсвеченной строке не срабатывает: строки открываются кликом, добавьте обработчик под свою модель.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
@@ -87,7 +87,7 @@
           "en": {
             "description": "A command palette in a native dialog: focus trapping, Escape and the backdrop come from the browser instead of being rewritten.",
             "ai": {
-              "summary": "A command palette: a trigger with a ⌘K hint, search by name, grouped commands and arrow-key highlighting. Zero dependencies, one file.",
+              "summary": "A command palette: a trigger with a Ctrl+K hint, search by name, grouped commands and arrow-key highlighting. Zero dependencies, one file.",
               "preserve": [
                 "the local --vibeui-command-001-* palette — do not swap it for your theme tokens",
                 "the native dialog: focus trapping, Escape and the backdrop come free",
@@ -107,7 +107,7 @@
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
-                "The component does not bind the global ⌘K: the hint is on the button, the handler is yours.",
+                "The component does not bind the global Ctrl+K: the hint is on the button, the handler is yours.",
                 "Search is a substring match on the label: fuzzy search and synonyms belong in your own filter.",
                 "Enter on the highlighted row does nothing: rows open on click, add a handler for your model.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -141,7 +141,7 @@
                   {
                     "label": "New component",
                     "group": "Actions",
-                    "keys": "⌘N"
+                    "keys": "Ctrl+N"
                   },
                   {
                     "label": "Build registry",
@@ -164,7 +164,7 @@
                   {
                     "label": "Toggle theme",
                     "group": "View",
-                    "keys": "⌘⇧L"
+                    "keys": "Ctrl+Shift+L"
                   },
                   {
                     "label": "Show grid",
@@ -218,7 +218,7 @@
         },
         "ai": {
           "export": "Command002",
-          "usage": "<Command002 commands={[{ label: \"Новый компонент\", group: \"Действия\", keys: \"⌘N\" }]} />",
+          "usage": "<Command002 commands={[{ label: \"Новый компонент\", group: \"Действия\", keys: \"Ctrl+N\" }]} />",
           "summary": "Командная палитра прямо на странице: группы команд, поиск по подстроке, стрелки и Enter, Escape сбрасывает запрос. Роли combobox и listbox проставлены явно. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-command-002-* и не подменять её токенами вашей темы",
@@ -239,7 +239,7 @@
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
-            "Глобальное сочетание ⌘K компонент не вешает: панель встроена в страницу, обработчик за вами.",
+            "Глобальное сочетание Ctrl+K компонент не вешает: панель встроена в страницу, обработчик за вами.",
             "Ловушки фокуса здесь нет намеренно — панель не модальная; для модалки берите нативный dialog.",
             "Поиск идёт по подстроке названия: нечёткий поиск и синонимы добавляются в вашем фильтре.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
@@ -312,13 +312,13 @@
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
-                "The component does not bind the global ⌘K: the panel is inline, the handler is yours.",
+                "The component does not bind the global Ctrl+K: the panel is inline, the handler is yours.",
                 "There is deliberately no focus trap — the panel is not modal; use a native dialog for that.",
                 "Search is a substring match on the label: fuzzy search and synonyms belong in your own filter.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
                 "doneText puts the command name where {command} stands: without the placeholder the string shows as written."
               ],
-              "usage": "<Command002 commands={[{ label: \"New component\", group: \"Actions\", keys: \"⌘N\" }]} />"
+              "usage": "<Command002 commands={[{ label: \"New component\", group: \"Actions\", keys: \"Ctrl+N\" }]} />"
             },
             "controls": {
               "placeholder": {
@@ -351,12 +351,12 @@
                   {
                     "label": "New component",
                     "group": "Actions",
-                    "keys": "⌘N"
+                    "keys": "Ctrl+N"
                   },
                   {
                     "label": "Rebuild registry",
                     "group": "Actions",
-                    "keys": "⌘R"
+                    "keys": "Ctrl+R"
                   },
                   {
                     "label": "Open catalog",
@@ -371,7 +371,7 @@
                   {
                     "label": "Switch theme",
                     "group": "View",
-                    "keys": "⌘⇧L"
+                    "keys": "Ctrl+Shift+L"
                   },
                   {
                     "label": "Show grid",
@@ -959,7 +959,7 @@
           "target": "@components/vibeui/command-006.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-command-006-*. Клиентский: \"use client\" ради поиска и стрелок. Сочетание описано массивом keys, а не строкой, поэтому каждая клавиша получает собственный <kbd> и последовательности вроде «G затем C» читаются как два нажатия. Фильтр проверяет и label, и склеенные клавиши: «⌘K» находит команду быстрее, чем попытка вспомнить её имя. Группе клавиш выдан aria-label, иначе строка озвучивается набором отдельных символов.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-command-006-*. Клиентский: \"use client\" ради поиска и стрелок. Сочетание описано массивом keys, а не строкой, поэтому каждая клавиша получает собственный <kbd> и последовательности вроде «G затем C» читаются как два нажатия. Фильтр проверяет и label, и склеенные клавиши: «Ctrl+K» находит команду быстрее, чем попытка вспомнить её имя. Группе клавиш выдан aria-label, иначе строка озвучивается набором отдельных символов.",
       "meta": {
         "tags": ["command", "shortcuts", "kbd", "palette"],
         "preview": {
@@ -967,7 +967,7 @@
         },
         "ai": {
           "export": "Command006",
-          "usage": "<Command006 commands={[{ label: \"Открыть палитру\", keys: [\"⌘\", \"K\"] }]} />",
+          "usage": "<Command006 commands={[{ label: \"Открыть палитру\", keys: [\"Ctrl\", \"K\"] }]} />",
           "summary": "Палитра с горячими клавишами у каждой строки: клавиши в отдельных kbd, поиск по названию и по сочетанию, подсветка стрелками. Ноль зависимостей, один файл.",
           "preserve": [
             "локальную палитру --vibeui-command-006-* и не подменять её токенами вашей темы",
@@ -1055,7 +1055,7 @@
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
                 "keysLabel puts the space-separated keys where {keys} stands: without the placeholder a screen reader hears the caption alone."
               ],
-              "usage": "<Command006 commands={[{ label: \"Open palette\", keys: [\"⌘\", \"K\"] }]} />"
+              "usage": "<Command006 commands={[{ label: \"Open palette\", keys: [\"Ctrl\", \"K\"] }]} />"
             },
             "controls": {
               "placeholder": {
@@ -1079,11 +1079,11 @@
                 "commands": [
                   {
                     "label": "Open palette",
-                    "keys": ["⌘", "K"]
+                    "keys": ["Ctrl", "K"]
                   },
                   {
                     "label": "Save file",
-                    "keys": ["⌘", "S"]
+                    "keys": ["Ctrl", "S"]
                   },
                   {
                     "label": "Go to catalog",
@@ -1095,15 +1095,15 @@
                   },
                   {
                     "label": "Toggle sidebar",
-                    "keys": ["⌘", "B"]
+                    "keys": ["Ctrl", "B"]
                   },
                   {
                     "label": "Undo",
-                    "keys": ["⌘", "Z"]
+                    "keys": ["Ctrl", "Z"]
                   },
                   {
                     "label": "Rebuild registry",
-                    "keys": ["⌘", "⇧", "R"]
+                    "keys": ["Ctrl", "Shift", "R"]
                   }
                 ],
                 "label": "Keyboard shortcuts",
@@ -1113,7 +1113,7 @@
                 "emptyText": "No such shortcut — try another one."
               }
             },
-            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-command-006-* variables. Client-side: \"use client\" for the sake of search and the arrow keys. A combination is described by a keys array rather than a string, so every key gets its own <kbd> and sequences such as «G then C» read as two presses. The filter checks both the label and the joined keys: «⌘K» finds a command faster than trying to recall its name. The key group is given an aria-label, otherwise the row is announced as a set of separate symbols."
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-command-006-* variables. Client-side: \"use client\" for the sake of search and the arrow keys. A combination is described by a keys array rather than a string, so every key gets its own <kbd> and sequences such as «G then C» read as two presses. The filter checks both the label and the joined keys: «Ctrl+K» finds a command faster than trying to recall its name. The key group is given an aria-label, otherwise the row is announced as a set of separate symbols."
           }
         },
         "cardControls": ["placeholder", "emptyText", "accent", "background"]
@@ -1607,7 +1607,7 @@
                   },
                   {
                     "label": "Duplicate",
-                    "keys": "⌘D"
+                    "keys": "Ctrl+D"
                   },
                   {
                     "label": "Snap to grid"
@@ -1617,7 +1617,7 @@
                   },
                   {
                     "label": "Delete layer",
-                    "keys": "⌫",
+                    "keys": "Backspace",
                     "tone": "danger"
                   }
                 ],
@@ -2206,7 +2206,7 @@
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
-            "Панель встроена в страницу: модальное открытие по ⌘K, ловушку фокуса и затемнение добавляет приложение.",
+            "Панель встроена в страницу: модальное открытие по Ctrl+K, ловушку фокуса и затемнение добавляет приложение.",
             "Запуск только помечает выбранное в подвале: обращение к модели и потоковый ответ — забота приложения.",
             "Фильтр ищет подстроку в названии. Нечёткий поиск и ранжирование ставятся снаружи — компонент только рисует то, что ему передали.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
@@ -2269,7 +2269,7 @@
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
-                "The panel is embedded in the page: opening it modally on ⌘K, the focus trap and the backdrop are added by the app.",
+                "The panel is embedded in the page: opening it modally on Ctrl+K, the focus trap and the backdrop are added by the app.",
                 "Running only marks the choice in the footer: talking to the model and streaming the answer are the app's job.",
                 "The filter looks for a substring in the label. Fuzzy search and ranking belong outside — the component only draws what it is handed.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
@@ -2377,7 +2377,7 @@
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
-            "Панель встроена в страницу: модальное открытие по ⌘K, ловушку фокуса и затемнение добавляет приложение.",
+            "Панель встроена в страницу: модальное открытие по Ctrl+K, ловушку фокуса и затемнение добавляет приложение.",
             "Значки нарисованы путями в самом файле: набор иконок сюда не тянется, иначе компонент перестанет быть самодостаточным.",
             "На сервере, где счётчики приходят вместе с ответом, передавайте их готовыми: локальный подсчёт верен только для полного набора результатов на клиенте.",
             "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
@@ -2439,7 +2439,7 @@
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
-                "The panel is embedded in the page: opening it modally on ⌘K, the focus trap and the backdrop are added by the app.",
+                "The panel is embedded in the page: opening it modally on Ctrl+K, the focus trap and the backdrop are added by the app.",
                 "The icons are drawn as paths inside the file: no icon set is pulled in, otherwise the component would stop being self-contained.",
                 "When the server returns counts along with the results, pass them in ready-made: counting locally is only correct for a complete result set on the client.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."

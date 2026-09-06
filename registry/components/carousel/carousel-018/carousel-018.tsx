@@ -31,11 +31,11 @@ export type Carousel018Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="carousel-018"]){
 --vibeui-carousel-018-bg:transparent;
---vibeui-carousel-018-fg:light-dark(oklch(0.24 0.015 265),oklch(0.95 0.005 265));
+--vibeui-carousel-018-fg:light-dark(oklch(0.24 0 265),oklch(0.95 0 265));
 --vibeui-carousel-018-muted:color-mix(in oklab,var(--vibeui-carousel-018-fg) 68%,transparent);
---vibeui-carousel-018-border:light-dark(oklch(0.89 0.007 265),oklch(0.37 0.012 265));
+--vibeui-carousel-018-border:light-dark(oklch(0.89 0 265),oklch(0.37 0 265));
 --vibeui-carousel-018-accent:light-dark(oklch(0.53 0.17 22),oklch(0.78 0.13 22));
---vibeui-carousel-018-dot:light-dark(oklch(0.55 0.02 265 / 32%),oklch(0.92 0.02 265 / 34%));
+--vibeui-carousel-018-dot:light-dark(oklch(0.55 0 265 / 32%),oklch(0.92 0 265 / 34%));
 --vibeui-carousel-018-radius:0.875rem;
 --vibeui-carousel-018-hue:22;
 --vibeui-carousel-018-fade:.55s;
@@ -76,7 +76,7 @@ display:flex;flex-direction:column;gap:0.125rem;margin:0;
 position:absolute;inset-inline:0;bottom:0;
 padding:1.5rem 0.875rem 0.75rem;
 border-radius:0 0 var(--vibeui-carousel-018-radius) var(--vibeui-carousel-018-radius);
-background:linear-gradient(to top,oklch(0.14 0.02 265 / 82%),transparent);
+background:linear-gradient(to top,oklch(0.14 0 265 / 82%),transparent);
 color:oklch(0.98 0 0);
 }
 [data-vibeui-block="carousel-018"] [data-part="caption"][data-place="under"]{

@@ -32,10 +32,10 @@ export type Togglegroup013Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="togglegroup-013"]){
 --vibeui-togglegroup-013-bg:transparent;
---vibeui-togglegroup-013-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-togglegroup-013-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-togglegroup-013-muted:color-mix(in oklab,var(--vibeui-togglegroup-013-fg) 68%,transparent);
---vibeui-togglegroup-013-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
---vibeui-togglegroup-013-surface:light-dark(oklch(0.97 0.004 265),oklch(0.29 0.011 265));
+--vibeui-togglegroup-013-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
+--vibeui-togglegroup-013-surface:light-dark(oklch(0.97 0 265),oklch(0.29 0 265));
 --vibeui-togglegroup-013-accent:light-dark(oklch(0.55 0.16 250),oklch(0.74 0.14 250));
 --vibeui-togglegroup-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

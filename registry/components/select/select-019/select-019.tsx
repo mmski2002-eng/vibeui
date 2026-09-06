@@ -34,10 +34,10 @@ export type Select019Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="select-019"]){
 --vibeui-select-019-surface:transparent;
---vibeui-select-019-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
---vibeui-select-019-fg:light-dark(oklch(0.23 0.016 265),oklch(0.94 0.005 265));
+--vibeui-select-019-surface-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
+--vibeui-select-019-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-select-019-muted:color-mix(in oklab,var(--vibeui-select-019-fg) 68%,transparent);
---vibeui-select-019-border:light-dark(oklch(0.87 0.008 265),oklch(0.4 0.012 265));
+--vibeui-select-019-border:light-dark(oklch(0.87 0 265),oklch(0.4 0 265));
 --vibeui-select-019-accent:light-dark(oklch(0.58 0.16 165),oklch(0.76 0.14 165));
 --vibeui-select-019-tint:light-dark(oklch(0.58 0.16 165 / 12%),oklch(0.76 0.14 165 / 20%));
 --vibeui-select-019-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

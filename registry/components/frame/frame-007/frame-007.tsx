@@ -23,12 +23,12 @@ export type Frame007Props = Omit<ComponentProps<"figure">, "title"> & {
 // не трогая разметку.
 const STYLES = `
 :where([data-vibeui-block="frame-007"]){
---vibeui-frame-007-bg:oklch(0.2 0.014 260);
---vibeui-frame-007-bar:oklch(0.26 0.014 260);
---vibeui-frame-007-fg:oklch(0.92 0.006 260);
+--vibeui-frame-007-bg:oklch(0.2 0 260);
+--vibeui-frame-007-bar:oklch(0.26 0 260);
+--vibeui-frame-007-fg:oklch(0.92 0 260);
 --vibeui-frame-007-muted:color-mix(in oklab,var(--vibeui-frame-007-fg) 68%,transparent);
 --vibeui-frame-007-accent:oklch(0.78 0.16 150);
---vibeui-frame-007-border:oklch(0.32 0.014 260);
+--vibeui-frame-007-border:oklch(0.32 0 260);
 --vibeui-frame-007-radius:0.875rem;
 --vibeui-frame-007-font:ui-monospace,"Cascadia Code","Consolas","SFMono-Regular",Menlo,monospace;
 container-type:inline-size;

@@ -31,8 +31,8 @@ export type Otp008Props = Omit<ComponentProps<"div">, "children" | "title"> & {
 // заново из-за одной опечатки — наказание не по вине.
 const STYLES = `
 :where([data-vibeui-block="otp-008"]){
---vibeui-otp-008-bg:light-dark(oklch(0.99 0.002 265),oklch(0.23 0.014 265));
---vibeui-otp-008-fg:light-dark(oklch(0.25 0.014 265),oklch(0.95 0.005 265));
+--vibeui-otp-008-bg:light-dark(oklch(0.99 0 265),oklch(0.23 0 265));
+--vibeui-otp-008-fg:light-dark(oklch(0.25 0 265),oklch(0.95 0 265));
 --vibeui-otp-008-muted:color-mix(in oklab,var(--vibeui-otp-008-fg) 62%,transparent);
 --vibeui-otp-008-border:light-dark(oklch(0 0 0 / 16%),oklch(1 0 0 / 18%));
 --vibeui-otp-008-cell:light-dark(oklch(1 0 0),oklch(1 0 0 / 6%));

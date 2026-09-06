@@ -21,9 +21,9 @@ const STYLES = `
 --vibeui-icontile-005-size:2.5rem;
 --vibeui-icontile-005-hue:262;
 --vibeui-icontile-005-surface:transparent;
---vibeui-icontile-005-ring:light-dark(oklch(0.99 0 0),oklch(0.21 0.008 265));
---vibeui-icontile-005-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.008 265));
---vibeui-icontile-005-fg:light-dark(oklch(0.26 0.014 265),oklch(0.93 0.006 265));
+--vibeui-icontile-005-ring:light-dark(oklch(0.99 0 0),oklch(0.21 0 265));
+--vibeui-icontile-005-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
+--vibeui-icontile-005-fg:light-dark(oklch(0.26 0 265),oklch(0.93 0 265));
 --vibeui-icontile-005-badge:light-dark(oklch(0.56 0.2 25),oklch(0.66 0.19 25));
 --vibeui-icontile-005-fill:light-dark(oklch(0.93 0.04 var(--vibeui-icontile-005-hue)),oklch(0.34 0.05 var(--vibeui-icontile-005-hue)));
 --vibeui-icontile-005-mark:light-dark(oklch(0.44 0.16 var(--vibeui-icontile-005-hue)),oklch(0.87 0.09 var(--vibeui-icontile-005-hue)));

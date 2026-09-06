@@ -35,15 +35,15 @@ export type Blog003Props = {
 const STYLES = `
 :where([data-vibeui-block="blog-003"]){
 --vibeui-blog-003-bg:transparent;
---vibeui-blog-003-card:light-dark(oklch(1 0 0),oklch(0.245 0.014 300));
---vibeui-blog-003-fg:light-dark(oklch(0.2 0.014 265),oklch(0.95 0.005 265));
---vibeui-blog-003-muted:light-dark(oklch(0.51 0.014 265),oklch(0.72 0.012 265));
---vibeui-blog-003-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.014 300));
+--vibeui-blog-003-card:light-dark(oklch(1 0 0),oklch(0.245 0 300));
+--vibeui-blog-003-fg:light-dark(oklch(0.2 0 265),oklch(0.95 0 265));
+--vibeui-blog-003-muted:light-dark(oklch(0.51 0 265),oklch(0.72 0 265));
+--vibeui-blog-003-border:light-dark(oklch(0.91 0 265),oklch(0.35 0 300));
 --vibeui-blog-003-accent:light-dark(oklch(0.52 0.18 300),oklch(0.76 0.15 300));
 --vibeui-blog-003-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.035 300));
 /* Плашка лежит на цветной обложке, а не на фоне блока: у неё своя пара. */
---vibeui-blog-003-chip:light-dark(oklch(1 0 0 / 88%),oklch(0.22 0.02 300 / 88%));
---vibeui-blog-003-chip-fg:light-dark(oklch(0.2 0.014 265),oklch(0.95 0.005 265));
+--vibeui-blog-003-chip:light-dark(oklch(1 0 0 / 88%),oklch(0.22 0 300 / 88%));
+--vibeui-blog-003-chip-fg:light-dark(oklch(0.2 0 265),oklch(0.95 0 265));
 --vibeui-blog-003-serif:ui-serif,Georgia,"Times New Roman",serif;
 --vibeui-blog-003-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

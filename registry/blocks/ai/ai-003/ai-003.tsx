@@ -34,14 +34,14 @@ export type Ai003Props = {
 const STYLES = `
 :where([data-vibeui-block="ai-003"]){
 --vibeui-ai-003-bg:transparent;
---vibeui-ai-003-knockout:light-dark(oklch(1 0 0),oklch(0.19 0.011 265));
---vibeui-ai-003-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-ai-003-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
---vibeui-ai-003-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
---vibeui-ai-003-line:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.011 265));
---vibeui-ai-003-code:light-dark(oklch(0.97 0.003 265),oklch(0.27 0.011 265));
+--vibeui-ai-003-knockout:light-dark(oklch(1 0 0),oklch(0.19 0 265));
+--vibeui-ai-003-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
+--vibeui-ai-003-muted:light-dark(oklch(0.55 0 265),oklch(0.69 0 265));
+--vibeui-ai-003-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
+--vibeui-ai-003-line:light-dark(oklch(0.9 0 265),oklch(0.38 0 265));
+--vibeui-ai-003-code:light-dark(oklch(0.97 0 265),oklch(0.27 0 265));
 --vibeui-ai-003-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
---vibeui-ai-003-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 265));
+--vibeui-ai-003-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0 265));
 --vibeui-ai-003-done:light-dark(oklch(0.58 0.14 152),oklch(0.62 0.14 152));
 --vibeui-ai-003-fail:light-dark(oklch(0.57 0.19 25),oklch(0.63 0.18 25));
 --vibeui-ai-003-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;

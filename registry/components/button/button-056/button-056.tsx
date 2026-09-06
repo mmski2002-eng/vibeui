@@ -16,11 +16,11 @@ export type Button056Props = Omit<ComponentProps<"select">, "children"> & {
 // список на телефоне; кнопке остаётся нарисовать глобус, рамку и шеврон.
 const STYLES = `
 :where([data-vibeui-block="button-056"]){
---vibeui-button-056-surface:light-dark(oklch(1 0 0),oklch(0.25 0.014 265));
---vibeui-button-056-border:light-dark(oklch(0.88 0.006 265),oklch(0.42 0.014 265));
---vibeui-button-056-fg:light-dark(oklch(0.26 0.02 265),oklch(0.93 0.008 265));
+--vibeui-button-056-surface:light-dark(oklch(1 0 0),oklch(0.25 0 265));
+--vibeui-button-056-border:light-dark(oklch(0.88 0 265),oklch(0.42 0 265));
+--vibeui-button-056-fg:light-dark(oklch(0.26 0 265),oklch(0.93 0 265));
 --vibeui-button-056-muted:color-mix(in oklab,var(--vibeui-button-056-fg) 68%,transparent);
---vibeui-button-056-accent:light-dark(oklch(0.52 0.15 275),oklch(0.74 0.13 275));
+--vibeui-button-056-accent:light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));
 --vibeui-button-056-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

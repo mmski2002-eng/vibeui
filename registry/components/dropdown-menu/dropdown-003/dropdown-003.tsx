@@ -34,11 +34,11 @@ export type Dropdown003Props = Omit<ComponentProps<"div">, "children"> & {
 // контексте панель светлее фона страницы, а её граница светлее панели.
 const STYLES = `
 :where([data-vibeui-block="dropdown-003"]){
---vibeui-dropdown-003-bg:light-dark(oklch(1 0 0),oklch(0.25 0.013 275));
---vibeui-dropdown-003-fg:light-dark(oklch(0.25 0.015 275),oklch(0.94 0.006 275));
+--vibeui-dropdown-003-bg:light-dark(oklch(1 0 0),oklch(0.25 0 275));
+--vibeui-dropdown-003-fg:light-dark(oklch(0.25 0 275),oklch(0.94 0 275));
 --vibeui-dropdown-003-muted:color-mix(in oklab,var(--vibeui-dropdown-003-fg) 68%,transparent);
---vibeui-dropdown-003-border:light-dark(oklch(0.9 0.006 275),oklch(0.37 0.012 275));
---vibeui-dropdown-003-hover:light-dark(oklch(0.96 0.005 275),oklch(0.32 0.014 275));
+--vibeui-dropdown-003-border:light-dark(oklch(0.9 0 275),oklch(0.37 0 275));
+--vibeui-dropdown-003-hover:light-dark(oklch(0.96 0 275),oklch(0.32 0 275));
 --vibeui-dropdown-003-accent:light-dark(oklch(0.55 0.18 285),oklch(0.62 0.17 285));
 --vibeui-dropdown-003-danger:light-dark(oklch(0.56 0.19 25),oklch(0.72 0.16 25));
 --vibeui-dropdown-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -73,7 +73,7 @@ padding-right:0.375rem;font-size:0.75rem;color:var(--vibeui-dropdown-003-muted);
 position:fixed;padding:0.3125rem;min-width:15rem;box-sizing:border-box;
 background:var(--vibeui-dropdown-003-bg);color:var(--vibeui-dropdown-003-fg);
 border:1px solid var(--vibeui-dropdown-003-border);border-radius:0.75rem;
-box-shadow:0 20px 44px -24px oklch(0.2 0.03 275 / 50%);
+box-shadow:0 20px 44px -24px oklch(0.2 0 275 / 50%);
 font-family:var(--vibeui-dropdown-003-font);
 opacity:0;transform:translateY(-0.25rem);
 transition:opacity .14s ease,transform .14s ease,display .14s allow-discrete,overlay .14s allow-discrete;
@@ -117,10 +117,10 @@ position:static;opacity:1;transform:none;margin-top:0.375rem;flex-basis:100%;
 
 const DEFAULT_ITEMS: Dropdown003Item[] = [
   { label: "Переименовать", keys: "F2", icon: "pencil" },
-  { label: "Дублировать", keys: "⌘D", icon: "copy" },
-  { label: "Поделиться", keys: "⇧⌘S", icon: "share" },
-  { label: "В архив", keys: "⌘E", icon: "archive" },
-  { label: "Удалить", keys: "⌘⌫", icon: "trash", danger: true },
+  { label: "Дублировать", keys: "Ctrl+D", icon: "copy" },
+  { label: "Поделиться", keys: "Shift+Ctrl+S", icon: "share" },
+  { label: "В архив", keys: "Ctrl+E", icon: "archive" },
+  { label: "Удалить", keys: "Ctrl+Backspace", icon: "trash", danger: true },
 ]
 
 const PATHS: Record<Dropdown003Item["icon"], string> = {
@@ -177,7 +177,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 export function Dropdown003({
   open = false,
   trigger = "Правка",
-  keysLabel = "⌘K",
+  keysLabel = "Ctrl+K",
   items = DEFAULT_ITEMS,
   accent,
   background = "",

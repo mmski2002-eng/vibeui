@@ -22,14 +22,14 @@ export type Toggle011Props = Omit<
 // дёргается. Рядом карточка-образец плавно перекрашивается тем же атрибутом.
 const STYLES = `
 :where([data-vibeui-block="toggle-011"]){
---vibeui-toggle-011-border:oklch(0.9 0.006 265);
+--vibeui-toggle-011-border:oklch(0.9 0 265);
 --vibeui-toggle-011-accent-light:oklch(0.72 0.16 75);
 --vibeui-toggle-011-accent-dark:oklch(0.62 0.14 265);
 --vibeui-toggle-011-panel-bg:oklch(1 0 0);
---vibeui-toggle-011-panel-fg:oklch(0.22 0.014 265);
---vibeui-toggle-011-sample-bg:oklch(0.97 0.004 265);
---vibeui-toggle-011-sample-fg:oklch(0.24 0.014 265);
---vibeui-toggle-011-muted:oklch(0.55 0.014 265);
+--vibeui-toggle-011-panel-fg:oklch(0.22 0 265);
+--vibeui-toggle-011-sample-bg:oklch(0.97 0 265);
+--vibeui-toggle-011-sample-fg:oklch(0.24 0 265);
+--vibeui-toggle-011-muted:oklch(0.55 0 265);
 --vibeui-toggle-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="toggle-011"]{
@@ -71,10 +71,10 @@ background:var(--vibeui-toggle-011-sample-bg);color:var(--vibeui-toggle-011-samp
 transition:background-color .3s ease,color .3s ease;
 }
 [data-vibeui-block="toggle-011"][data-theme="dark"]{
-background:oklch(0.2 0.01 265);color:oklch(0.94 0.004 265);
+background:oklch(0.2 0 265);color:oklch(0.94 0 265);
 }
 [data-vibeui-block="toggle-011"][data-theme="dark"] [data-part="sample"]{
-background:oklch(0.27 0.012 265);color:oklch(0.94 0.004 265);
+background:oklch(0.27 0 265);color:oklch(0.94 0 265);
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="toggle-011"] *{animation:none!important;transition:none!important}}
 `

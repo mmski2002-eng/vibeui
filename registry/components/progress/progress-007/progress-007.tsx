@@ -22,10 +22,10 @@ export type Progress007Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="progress-007"]){
 --vibeui-progress-007-bg:transparent;
---vibeui-progress-007-fg:light-dark(oklch(0.25 0.016 265),oklch(0.94 0.006 265));
+--vibeui-progress-007-fg:light-dark(oklch(0.25 0 265),oklch(0.94 0 265));
 --vibeui-progress-007-muted:color-mix(in oklab,var(--vibeui-progress-007-fg) 68%,transparent);
---vibeui-progress-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
---vibeui-progress-007-track:light-dark(oklch(0.93 0.005 265),oklch(0.3 0.011 265));
+--vibeui-progress-007-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-progress-007-track:light-dark(oklch(0.93 0 265),oklch(0.3 0 265));
 --vibeui-progress-007-accent:light-dark(oklch(0.6 0.15 262),oklch(0.72 0.14 262));
 --vibeui-progress-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

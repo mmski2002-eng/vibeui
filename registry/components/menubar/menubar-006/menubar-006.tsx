@@ -27,11 +27,11 @@ export type Menubar006Props = {
 const STYLES = `
 :where([data-vibeui-block="menubar-006"]){
 --vibeui-menubar-006-bg:transparent;
---vibeui-menubar-006-sub:light-dark(oklch(0.975 0.003 265),oklch(0.28 0.012 265));
---vibeui-menubar-006-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-menubar-006-sub:light-dark(oklch(0.975 0 265),oklch(0.28 0 265));
+--vibeui-menubar-006-fg:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
 --vibeui-menubar-006-muted:color-mix(in oklab,var(--vibeui-menubar-006-fg) 68%,transparent);
---vibeui-menubar-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
---vibeui-menubar-006-hover:light-dark(oklch(0.55 0.02 265 / 9%),oklch(0.88 0.02 265 / 14%));
+--vibeui-menubar-006-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-menubar-006-hover:light-dark(oklch(0.55 0 265 / 9%),oklch(0.88 0 265 / 14%));
 --vibeui-menubar-006-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
 --vibeui-menubar-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

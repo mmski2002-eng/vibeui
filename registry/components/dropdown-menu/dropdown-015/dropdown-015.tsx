@@ -34,11 +34,11 @@ export type Dropdown015Props = Omit<ComponentProps<"div">, "children"> & {
 // контексте карточка светлее фона страницы, а её граница светлее карточки.
 const STYLES = `
 :where([data-vibeui-block="dropdown-015"]){
---vibeui-dropdown-015-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 220));
---vibeui-dropdown-015-fg:light-dark(oklch(0.24 0.014 220),oklch(0.94 0.006 220));
+--vibeui-dropdown-015-bg:light-dark(oklch(1 0 0),oklch(0.25 0 220));
+--vibeui-dropdown-015-fg:light-dark(oklch(0.24 0 220),oklch(0.94 0 220));
 --vibeui-dropdown-015-muted:color-mix(in oklab,var(--vibeui-dropdown-015-fg) 68%,transparent);
---vibeui-dropdown-015-border:light-dark(oklch(0.9 0.006 220),oklch(0.37 0.012 220));
---vibeui-dropdown-015-hover:light-dark(oklch(0.96 0.004 220),oklch(0.32 0.014 220));
+--vibeui-dropdown-015-border:light-dark(oklch(0.9 0 220),oklch(0.37 0 220));
+--vibeui-dropdown-015-hover:light-dark(oklch(0.96 0 220),oklch(0.32 0 220));
 --vibeui-dropdown-015-accent:light-dark(oklch(0.56 0.17 220),oklch(0.76 0.13 220));
 --vibeui-dropdown-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -71,7 +71,7 @@ transition:background-color .16s ease;
 position:fixed;margin:0;padding:0.3125rem;min-width:12.5rem;box-sizing:border-box;
 background:var(--vibeui-dropdown-015-bg);color:var(--vibeui-dropdown-015-fg);
 border:1px solid var(--vibeui-dropdown-015-border);border-radius:0.75rem;
-box-shadow:0 18px 40px -22px oklch(0.2 0.03 220 / 45%);
+box-shadow:0 18px 40px -22px oklch(0.2 0 220 / 45%);
 font-family:var(--vibeui-dropdown-015-font);
 opacity:0;transform:translateY(-0.25rem);
 transition:opacity .14s ease,transform .14s ease,display .14s allow-discrete,overlay .14s allow-discrete;
@@ -112,7 +112,7 @@ position:absolute;top:-0.3125rem;left:calc(100% + 0.25rem);z-index:1;
 padding:0.3125rem;min-width:9.5rem;box-sizing:border-box;
 background:var(--vibeui-dropdown-015-bg);
 border:1px solid var(--vibeui-dropdown-015-border);border-radius:0.75rem;
-box-shadow:0 18px 40px -22px oklch(0.2 0.03 220 / 45%);
+box-shadow:0 18px 40px -22px oklch(0.2 0 220 / 45%);
 }
 [data-vibeui-block="dropdown-015"][data-side="left"] [data-part="sub"]{left:auto;right:calc(100% + 0.25rem)}
 [data-vibeui-block="dropdown-015"] [data-part="ext"]{

@@ -43,13 +43,13 @@ export type Contact001Props = {
 const STYLES = `
 :where([data-vibeui-block="contact-001"]){
 --vibeui-contact-001-bg:transparent;
---vibeui-contact-001-card:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
---vibeui-contact-001-field:light-dark(oklch(0.985 0.003 265),oklch(0.2 0.012 265));
---vibeui-contact-001-fg:light-dark(oklch(0.2 0.014 265),oklch(0.94 0.005 265));
---vibeui-contact-001-muted:light-dark(oklch(0.52 0.014 265),oklch(0.72 0.012 265));
---vibeui-contact-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-contact-001-card:light-dark(oklch(1 0 0),oklch(0.24 0 265));
+--vibeui-contact-001-field:light-dark(oklch(0.985 0 265),oklch(0.2 0 265));
+--vibeui-contact-001-fg:light-dark(oklch(0.2 0 265),oklch(0.94 0 265));
+--vibeui-contact-001-muted:light-dark(oklch(0.52 0 265),oklch(0.72 0 265));
+--vibeui-contact-001-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
 --vibeui-contact-001-accent:light-dark(oklch(0.51 0.17 262),oklch(0.72 0.15 262));
---vibeui-contact-001-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.03 262));
+--vibeui-contact-001-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0 262));
 --vibeui-contact-001-alarm:light-dark(oklch(0.55 0.19 25),oklch(0.73 0.16 25));
 --vibeui-contact-001-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

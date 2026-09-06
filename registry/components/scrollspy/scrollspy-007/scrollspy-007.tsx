@@ -33,9 +33,9 @@ export type Scrollspy007Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="scrollspy-007"]){
 --vibeui-scrollspy-007-bg:transparent;
---vibeui-scrollspy-007-fg:light-dark(oklch(0.23 0.014 265),oklch(0.93 0.006 265));
+--vibeui-scrollspy-007-fg:light-dark(oklch(0.23 0 265),oklch(0.93 0 265));
 --vibeui-scrollspy-007-muted:color-mix(in oklab,var(--vibeui-scrollspy-007-fg) 68%,transparent);
---vibeui-scrollspy-007-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-scrollspy-007-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-scrollspy-007-accent:light-dark(oklch(0.55 0.18 145),oklch(0.76 0.15 145));
 --vibeui-scrollspy-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

@@ -27,11 +27,11 @@ export type Nativeselect003Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="nativeselect-003"]){
 --vibeui-nativeselect-003-bg:transparent;
---vibeui-nativeselect-003-line:light-dark(oklch(0.91 0.006 265),oklch(0.33 0.012 265));
---vibeui-nativeselect-003-field:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
---vibeui-nativeselect-003-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.004 265));
+--vibeui-nativeselect-003-line:light-dark(oklch(0.91 0 265),oklch(0.33 0 265));
+--vibeui-nativeselect-003-field:light-dark(oklch(1 0 0),oklch(0.26 0 265));
+--vibeui-nativeselect-003-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-nativeselect-003-muted:color-mix(in oklab,var(--vibeui-nativeselect-003-fg) 68%,transparent);
---vibeui-nativeselect-003-field-border:light-dark(oklch(0.85 0.01 265),oklch(0.42 0.014 265));
+--vibeui-nativeselect-003-field-border:light-dark(oklch(0.85 0 265),oklch(0.42 0 265));
 --vibeui-nativeselect-003-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
 --vibeui-nativeselect-003-required:light-dark(oklch(0.58 0.19 25),oklch(0.74 0.15 25));
 --vibeui-nativeselect-003-radius:0.625rem;

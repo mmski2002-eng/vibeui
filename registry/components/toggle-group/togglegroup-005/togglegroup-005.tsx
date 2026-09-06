@@ -39,13 +39,13 @@ export type Togglegroup005Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="togglegroup-005"]){
 --vibeui-togglegroup-005-bg:transparent;
---vibeui-togglegroup-005-fg:light-dark(oklch(0.2 0.014 265),oklch(0.94 0.005 265));
+--vibeui-togglegroup-005-fg:light-dark(oklch(0.2 0 265),oklch(0.94 0 265));
 --vibeui-togglegroup-005-muted:color-mix(in oklab,var(--vibeui-togglegroup-005-fg) 68%,transparent);
---vibeui-togglegroup-005-border:light-dark(oklch(0.88 0.006 265),oklch(0.36 0.012 265));
---vibeui-togglegroup-005-surface:light-dark(oklch(0.97 0.004 265),oklch(0.25 0.01 265));
---vibeui-togglegroup-005-raised:light-dark(oklch(1 0 0),oklch(0.29 0.01 265));
---vibeui-togglegroup-005-accent:light-dark(oklch(0.28 0.02 265),oklch(0.88 0.008 265));
---vibeui-togglegroup-005-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.2 0.014 265));
+--vibeui-togglegroup-005-border:light-dark(oklch(0.88 0 265),oklch(0.36 0 265));
+--vibeui-togglegroup-005-surface:light-dark(oklch(0.97 0 265),oklch(0.25 0 265));
+--vibeui-togglegroup-005-raised:light-dark(oklch(1 0 0),oklch(0.29 0 265));
+--vibeui-togglegroup-005-accent:light-dark(oklch(0.28 0 265),oklch(0.88 0 265));
+--vibeui-togglegroup-005-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.2 0 265));
 --vibeui-togglegroup-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

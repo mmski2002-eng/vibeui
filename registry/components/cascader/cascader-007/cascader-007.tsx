@@ -30,9 +30,9 @@ export type Cascader007Props = {
 const STYLES = `
 :where([data-vibeui-block="cascader-007"]){
 --vibeui-cascader-007-bg:transparent;
---vibeui-cascader-007-fg:light-dark(oklch(0.23 0.014 275),oklch(0.94 0.006 275));
+--vibeui-cascader-007-fg:light-dark(oklch(0.23 0 275),oklch(0.94 0 275));
 --vibeui-cascader-007-muted:color-mix(in oklab,var(--vibeui-cascader-007-fg) 68%,transparent);
---vibeui-cascader-007-border:light-dark(oklch(0.9 0.006 275),oklch(0.38 0.011 275));
+--vibeui-cascader-007-border:light-dark(oklch(0.9 0 275),oklch(0.38 0 275));
 --vibeui-cascader-007-accent:light-dark(oklch(0.53 0.2 275),oklch(0.74 0.16 275));
 --vibeui-cascader-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -45,7 +45,7 @@ width:100%;max-width:23rem;box-sizing:border-box;padding:0.875rem;
 background:var(--vibeui-cascader-007-bg);color:var(--vibeui-cascader-007-fg);
 border:1px solid var(--vibeui-cascader-007-border);border-radius:1rem;
 font-family:var(--vibeui-cascader-007-font);
-box-shadow:0 18px 40px -32px oklch(0.2 0.03 275 / 55%);
+box-shadow:0 18px 40px -32px oklch(0.2 0 275 / 55%);
 }
 [data-vibeui-block="cascader-007"] *{box-sizing:border-box}
 [data-vibeui-block="cascader-007"] [data-part="head"]{

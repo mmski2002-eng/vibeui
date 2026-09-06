@@ -43,14 +43,14 @@ export type Date012Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="date-012"]){
 --vibeui-date-012-surface:transparent;
---vibeui-date-012-field:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
---vibeui-date-012-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
---vibeui-date-012-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-date-012-field:light-dark(oklch(1 0 0),oklch(0.26 0 265));
+--vibeui-date-012-shell:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-date-012-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-date-012-muted:color-mix(in oklab,var(--vibeui-date-012-fg) 68%,transparent);
---vibeui-date-012-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
---vibeui-date-012-panel:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
---vibeui-date-012-hover:light-dark(oklch(0.96 0.004 265),oklch(0.3 0.014 265));
---vibeui-date-012-shadow:light-dark(oklch(0.2 0.02 265 / 55%),oklch(0 0 0 / 70%));
+--vibeui-date-012-border:light-dark(oklch(0.88 0 265),oklch(0.42 0 265));
+--vibeui-date-012-panel:light-dark(oklch(1 0 0),oklch(0.24 0 265));
+--vibeui-date-012-hover:light-dark(oklch(0.96 0 265),oklch(0.3 0 265));
+--vibeui-date-012-shadow:light-dark(oklch(0.2 0 265 / 55%),oklch(0 0 0 / 70%));
 --vibeui-date-012-accent:light-dark(oklch(0.55 0.18 262),oklch(0.76 0.15 262));
 /* Текст на заливке выводится из светлоты акцента: пользовательский цвет
    приходит один на обе ветки темы, и фиксированный белый однажды окажется

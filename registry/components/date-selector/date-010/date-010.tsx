@@ -40,9 +40,9 @@ export type Date010Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="date-010"]){
 --vibeui-date-010-bg:transparent;
---vibeui-date-010-fg:light-dark(oklch(0.25 0.014 265),oklch(0.95 0.005 265));
+--vibeui-date-010-fg:light-dark(oklch(0.25 0 265),oklch(0.95 0 265));
 --vibeui-date-010-muted:color-mix(in oklab,var(--vibeui-date-010-fg) 62%,transparent);
---vibeui-date-010-border:light-dark(oklch(0.86 0.008 265),oklch(0.38 0.012 265));
+--vibeui-date-010-border:light-dark(oklch(0.86 0 265),oklch(0.38 0 265));
 --vibeui-date-010-field:light-dark(oklch(1 0 0),oklch(1 0 0 / 6%));
 --vibeui-date-010-hover:light-dark(oklch(0 0 0 / 5%),oklch(1 0 0 / 7%));
 --vibeui-date-010-accent:light-dark(oklch(0.5 0.16 265),oklch(0.78 0.12 265));

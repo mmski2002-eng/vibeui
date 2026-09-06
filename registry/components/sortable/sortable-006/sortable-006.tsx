@@ -38,10 +38,10 @@ export type Sortable006Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="sortable-006"]){
 --vibeui-sortable-006-bg:transparent;
---vibeui-sortable-006-row:light-dark(oklch(0.99 0.002 265),oklch(0.27 0.011 265));
---vibeui-sortable-006-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-sortable-006-row:light-dark(oklch(0.99 0 265),oklch(0.27 0 265));
+--vibeui-sortable-006-fg:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
 --vibeui-sortable-006-muted:color-mix(in oklab,var(--vibeui-sortable-006-fg) 68%,transparent);
---vibeui-sortable-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-sortable-006-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
 --vibeui-sortable-006-accent:light-dark(oklch(0.55 0.2 262),oklch(0.73 0.16 262));
 --vibeui-sortable-006-pin:light-dark(oklch(0.62 0.13 78),oklch(0.76 0.12 78));
 --vibeui-sortable-006-pin-ink:light-dark(oklch(0.48 0.11 78),oklch(0.86 0.09 78));

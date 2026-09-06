@@ -41,10 +41,10 @@ export type Accordion005Props = Omit<ComponentProps<"div">, "children"> & {
 // Тема берётся из color-scheme окружения через light-dark().
 const STYLES = `
 :where([data-vibeui-block="accordion-005"]){
---vibeui-accordion-005-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-accordion-005-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-accordion-005-muted:color-mix(in oklab,var(--vibeui-accordion-005-fg) 68%,transparent);
 --vibeui-accordion-005-bg:transparent;
---vibeui-accordion-005-border:light-dark(oklch(0.91 0.006 265),oklch(0.31 0.01 265));
+--vibeui-accordion-005-border:light-dark(oklch(0.91 0 265),oklch(0.31 0 265));
 --vibeui-accordion-005-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.16 262));
 --vibeui-accordion-005-warn:light-dark(oklch(0.68 0.15 70),oklch(0.78 0.15 75));
 /* Цвет подписи выводится из самого цвета внимания: заданный через проп warn

@@ -6,9 +6,7 @@
       "type": "registry:component",
       "title": "Строка меню приложения",
       "description": "Строка меню приложения: открытие, Escape и взаимное закрытие соседних меню держит HTML popover, а не свой код.",
-      "categories": [
-        "menubar"
-      ],
+      "categories": ["menubar"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,15 +18,10 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menubar-001-*. Серверный: хуков нет, состояние держит браузер. Каждое меню — popover=\"auto\", поэтому Escape, клик мимо и закрытие соседа работают сами. Положение под своей кнопкой даёт CSS anchor positioning: имя якоря уникально для каждой пары и передаётся переменной.",
       "meta": {
-        "tags": [
-          "menubar",
-          "menu",
-          "popover",
-          "no-js"
-        ],
+        "tags": ["menubar", "menu", "popover", "no-js"],
         "ai": {
           "export": "Menubar001",
-          "usage": "<Menubar001 menus={[{ label: \"Файл\", items: [{ label: \"Открыть\", keys: \"⌘O\" }] }]} />",
+          "usage": "<Menubar001 menus={[{ label: \"Файл\", items: [{ label: \"Открыть\", keys: \"Ctrl+O\" }] }]} />",
           "summary": "Строка меню приложения: разделы с выпадающими списками, сочетания клавиш справа, недоступные пункты приглушены. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
             "локальную палитру --vibeui-menubar-001-* и не подменять её токенами вашей темы",
@@ -103,7 +96,7 @@
                 "A menubar belongs in an application, not on a landing page: a header with links is enough there.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
-              "usage": "<Menubar001 menus={[{ label: \"File\", items: [{ label: \"Open\", keys: \"⌘O\" }] }]} />"
+              "usage": "<Menubar001 menus={[{ label: \"File\", items: [{ label: \"Open\", keys: \"Ctrl+O\" }] }]} />"
             },
             "controls": {
               "accent": {
@@ -124,15 +117,15 @@
                     "items": [
                       {
                         "label": "New project",
-                        "keys": "⌘N"
+                        "keys": "Ctrl+N"
                       },
                       {
                         "label": "Open…",
-                        "keys": "⌘O"
+                        "keys": "Ctrl+O"
                       },
                       {
                         "label": "Save",
-                        "keys": "⌘S"
+                        "keys": "Ctrl+S"
                       },
                       {
                         "label": "Restore version",
@@ -145,15 +138,15 @@
                     "items": [
                       {
                         "label": "Undo",
-                        "keys": "⌘Z"
+                        "keys": "Ctrl+Z"
                       },
                       {
                         "label": "Redo",
-                        "keys": "⇧⌘Z"
+                        "keys": "Shift+Ctrl+Z"
                       },
                       {
                         "label": "Find in project",
-                        "keys": "⌘F"
+                        "keys": "Ctrl+F"
                       }
                     ]
                   },
@@ -177,10 +170,7 @@
             }
           }
         },
-        "cardControls": [
-          "accent",
-          "background"
-        ],
+        "cardControls": ["accent", "background"],
         "preview": {
           "props": {
             "open": true
@@ -194,9 +184,7 @@
       "type": "registry:component",
       "title": "Строка меню со стрелками",
       "description": "Строка меню, по которой ходят стрелками: влево и вправо переводят раздел, вниз открывает список и ставит фокус на первый пункт.",
-      "categories": [
-        "menubar"
-      ],
+      "categories": ["menubar"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -208,12 +196,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menubar-002-*. Клиентский: \"use client\" ради состояния открытого меню и клавиатуры. Разметка следует паттерну menubar из WAI-ARIA: role=\"menubar\", кнопки role=\"menuitem\" с aria-haspopup и aria-expanded, списки role=\"menu\". В Tab-порядке живёт только один раздел (roving tabindex), переход между разделами идёт стрелками. Меню позиционируется абсолютно от своей обёртки, поэтому anchor positioning не требуется. Клик мимо закрывает список через слушатель pointerdown, снимаемый вместе с закрытием.",
       "meta": {
-        "tags": [
-          "menubar",
-          "keyboard",
-          "menu",
-          "aria"
-        ],
+        "tags": ["menubar", "keyboard", "menu", "aria"],
         "preview": {
           "props": {
             "open": true
@@ -222,7 +205,7 @@
         },
         "ai": {
           "export": "Menubar002",
-          "usage": "<Menubar002\n  menus={[\n    { label: \"Файл\", items: [{ label: \"Открыть…\", keys: \"⌘O\" }] },\n    { label: \"Правка\", items: [{ label: \"Отменить\", keys: \"⌘Z\" }] },\n  ]}\n/>",
+          "usage": "<Menubar002\n  menus={[\n    { label: \"Файл\", items: [{ label: \"Открыть…\", keys: \"Ctrl+O\" }] },\n    { label: \"Правка\", items: [{ label: \"Отменить\", keys: \"Ctrl+Z\" }] },\n  ]}\n/>",
           "summary": "Строка меню приложения с полной клавиатурой: стрелки влево и вправо переводят раздел по кругу, Home и End прыгают к краям, стрелка вниз открывает меню и ставит фокус на первый пункт, Escape закрывает и возвращает фокус на кнопку раздела. Внутри открытого списка стрелки вверх и вниз перебирают пункты. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
             "локальную палитру --vibeui-menubar-002-* и не подменять её токенами вашей темы (bg-popover, text-muted-foreground и подобными)",
@@ -304,7 +287,7 @@
                 "Type-ahead on item initials is not handled — it is a familiar shortcut in system menus, add it if you need it.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
-              "usage": "<Menubar002\n  menus={[\n    { label: \"File\", items: [{ label: \"Open…\", keys: \"⌘O\" }] },\n    { label: \"Edit\", items: [{ label: \"Undo\", keys: \"⌘Z\" }] },\n  ]}\n/>"
+              "usage": "<Menubar002\n  menus={[\n    { label: \"File\", items: [{ label: \"Open…\", keys: \"Ctrl+O\" }] },\n    { label: \"Edit\", items: [{ label: \"Undo\", keys: \"Ctrl+Z\" }] },\n  ]}\n/>"
             },
             "controls": {
               "accent": {
@@ -329,15 +312,15 @@
                     "items": [
                       {
                         "label": "New project",
-                        "keys": "⌘N"
+                        "keys": "Ctrl+N"
                       },
                       {
                         "label": "Open…",
-                        "keys": "⌘O"
+                        "keys": "Ctrl+O"
                       },
                       {
                         "label": "Save",
-                        "keys": "⌘S"
+                        "keys": "Ctrl+S"
                       },
                       {
                         "label": "Restore version",
@@ -350,15 +333,15 @@
                     "items": [
                       {
                         "label": "Undo",
-                        "keys": "⌘Z"
+                        "keys": "Ctrl+Z"
                       },
                       {
                         "label": "Redo",
-                        "keys": "⇧⌘Z"
+                        "keys": "Shift+Ctrl+Z"
                       },
                       {
                         "label": "Find in project",
-                        "keys": "⌘F"
+                        "keys": "Ctrl+F"
                       }
                     ]
                   },
@@ -382,21 +365,15 @@
             }
           }
         },
-        "cardControls": [
-          "accent",
-          "background",
-          "hint"
-        ]
+        "cardControls": ["accent", "background", "hint"]
       }
     },
     {
       "name": "menubar-003",
       "type": "registry:component",
       "title": "Строка меню с сочетаниями",
-      "description": "Строка меню, где сочетания клавиш выстроены в общую колонку и записаны платформонезависимо: ⌘ на Mac, Ctrl на Windows.",
-      "categories": [
-        "menubar"
-      ],
+      "description": "Строка меню, где сочетания клавиш выстроены в общую колонку и записаны платформонезависимо: Ctrl на Mac, Ctrl на Windows.",
+      "categories": ["menubar"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -406,14 +383,9 @@
           "target": "@components/vibeui/menubar-003.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menubar-003-*. Серверный: хуков нет, состояние держит браузер. Каждый раздел — <details> с общим атрибутом name, поэтому браузер сам следит, что раскрыт только один. Пункт — сетка из двух колонок, сочетание всегда прижато к правому краю. Подписи клавиш хранятся как «Mod S» и разворачиваются функцией keysFor в ⌘ или Ctrl по пропу platform, каждая клавиша выводится отдельным <kbd>.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menubar-003-*. Серверный: хуков нет, состояние держит браузер. Каждый раздел — <details> с общим атрибутом name, поэтому браузер сам следит, что раскрыт только один. Пункт — сетка из двух колонок, сочетание всегда прижато к правому краю. Подписи клавиш хранятся как «Mod S» и разворачиваются функцией keysFor в Ctrl или Ctrl по пропу platform, каждая клавиша выводится отдельным <kbd>.",
       "meta": {
-        "tags": [
-          "menubar",
-          "shortcuts",
-          "no-js",
-          "kbd"
-        ],
+        "tags": ["menubar", "shortcuts", "no-js", "kbd"],
         "preview": {
           "props": {
             "open": true
@@ -428,7 +400,7 @@
             "локальную палитру --vibeui-menubar-003-* и не подменять её токенами вашей темы (bg-muted, border-border и подобными)",
             "общий атрибут name у <details>: именно он закрывает соседний раздел при открытии следующего, и без него раскрываются все сразу",
             "сетку из двух колонок в пункте: сочетание должно стоять в общей колонке, иначе взгляд не находит его сверху вниз",
-            "запись сочетания через Mod вместо жёстко вписанного ⌘: на Windows символ ⌘ ничего не значит",
+            "запись сочетания через Mod вместо жёстко вписанного Ctrl: на Windows символ Ctrl ничего не значит",
             "каждую клавишу отдельным <kbd> — это семантика клавиши, а не украшение",
             "disabled вместо скрытия недоступного пункта: исчезающие пункты ломают память о меню",
             "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
@@ -457,10 +429,7 @@
             "label": "Платформа",
             "type": "select",
             "default": "mac",
-            "options": [
-              "mac",
-              "windows"
-            ]
+            "options": ["mac", "windows"]
           },
           {
             "prop": "accent",
@@ -477,15 +446,15 @@
         ],
         "i18n": {
           "en": {
-            "description": "A menubar where the shortcuts line up in a column of their own and are written platform-independently: ⌘ on Mac, Ctrl on Windows.",
-            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-menubar-003-* variables. Server rendered: no hooks, the browser holds the state. Every section is a <details> with a shared name attribute, so the browser itself makes sure only one is open. An item is a two-column grid, and the shortcut is always pushed to the right edge. The key labels are stored as \"Mod S\" and are expanded by the keysFor function into ⌘ or Ctrl according to the platform prop, with every key rendered in its own <kbd>.",
+            "description": "A menubar where the shortcuts line up in a column of their own and are written platform-independently: Ctrl on Mac, Ctrl on Windows.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-menubar-003-* variables. Server rendered: no hooks, the browser holds the state. Every section is a <details> with a shared name attribute, so the browser itself makes sure only one is open. An item is a two-column grid, and the shortcut is always pushed to the right edge. The key labels are stored as \"Mod S\" and are expanded by the keysFor function into Ctrl or Ctrl according to the platform prop, with every key rendered in its own <kbd>.",
             "ai": {
               "summary": "A menubar with a shortcut column: labels on the left, key combinations on the right, every key in its own <kbd>. Sections close one another without JS — that is the name attribute on <details>. Shortcuts are stored as \"Mod S\" and expanded for the platform. Zero dependencies, one file, no client JS.",
               "preserve": [
                 "the local --vibeui-menubar-003-* palette — do not swap it for your theme tokens (bg-muted, border-border and the like)",
                 "the shared name attribute on <details>: it is what closes the neighbouring section, and without it every section opens at once",
                 "the two-column grid inside an item: the shortcut has to sit in a shared column or the eye cannot scan it downwards",
-                "writing shortcuts with Mod instead of a hardcoded ⌘: on Windows the ⌘ symbol means nothing",
+                "writing shortcuts with Mod instead of a hardcoded Ctrl: on Windows the Ctrl symbol means nothing",
                 "each key in its own <kbd> — that is key semantics, not decoration",
                 "disabled instead of hiding an unavailable item: vanishing items break the memory of a menu",
                 "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
@@ -589,11 +558,7 @@
             }
           }
         },
-        "cardControls": [
-          "platform",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["platform", "accent", "background"]
       }
     },
     {
@@ -601,9 +566,7 @@
       "type": "registry:component",
       "title": "Строка меню с флажками",
       "description": "Меню «Вид», где пункты не запускают действие, а держат состояние: переключатели с галочкой и взаимоисключающие варианты с точкой.",
-      "categories": [
-        "menubar"
-      ],
+      "categories": ["menubar"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -615,15 +578,10 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menubar-004-*. Клиентский: \"use client\" ради состояния переключателей. Меню — popover=\"auto\", поэтому Escape и клик мимо достаются от браузера, а клик внутри его не закрывает — это и нужно для пунктов-переключателей. Пункты помечены role=\"menuitemcheckbox\" и role=\"menuitemradio\" с aria-checked. Отметка живёт в отдельной колонке фиксированной ширины, поэтому подписи не разъезжаются при включении.",
       "meta": {
-        "tags": [
-          "menubar",
-          "checkbox",
-          "state",
-          "popover"
-        ],
+        "tags": ["menubar", "checkbox", "state", "popover"],
         "ai": {
           "export": "Menubar004",
-          "usage": "<Menubar004\n  toggles={[{ id: \"grid\", label: \"Сетка\", keys: \"⌘'\" }]}\n  defaultOn={[\"grid\"]}\n  defaultChoice=\"cozy\"\n/>",
+          "usage": "<Menubar004\n  toggles={[{ id: \"grid\", label: \"Сетка\", keys: \"Ctrl'\" }]}\n  defaultOn={[\"grid\"]}\n  defaultChoice=\"cozy\"\n/>",
           "summary": "Меню с пунктами-переключателями: галочки для независимых настроек, точки для взаимоисключающих вариантов, состояние видно прямо в строке меню. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
             "локальную палитру --vibeui-menubar-004-* и не подменять её токенами вашей темы (bg-accent, text-muted-foreground и подобными)",
@@ -659,11 +617,7 @@
             "label": "Плотность",
             "type": "select",
             "default": "cozy",
-            "options": [
-              "compact",
-              "cozy",
-              "wide"
-            ]
+            "options": ["compact", "cozy", "wide"]
           },
           {
             "prop": "triggerLabel",
@@ -718,7 +672,7 @@
                 "Without anchor positioning support the menu opens centred: check your target browsers.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
-              "usage": "<Menubar004\n  toggles={[{ id: \"grid\", label: \"Grid\", keys: \"⌘'\" }]}\n  defaultOn={[\"grid\"]}\n  defaultChoice=\"cozy\"\n/>"
+              "usage": "<Menubar004\n  toggles={[{ id: \"grid\", label: \"Grid\", keys: \"Ctrl'\" }]}\n  defaultOn={[\"grid\"]}\n  defaultChoice=\"cozy\"\n/>"
             },
             "controls": {
               "defaultChoice": {
@@ -748,12 +702,12 @@
                   {
                     "id": "grid",
                     "label": "Grid",
-                    "keys": "⌘'"
+                    "keys": "Ctrl'"
                   },
                   {
                     "id": "rulers",
                     "label": "Rulers",
-                    "keys": "⌘R"
+                    "keys": "Ctrl+R"
                   },
                   {
                     "id": "outlines",
@@ -797,9 +751,7 @@
       "type": "registry:component",
       "title": "Сворачиваемая строка меню",
       "description": "Строка меню, которая на узкой ширине сворачивается в бургер: порог берётся от ширины самого блока, а не от размера окна.",
-      "categories": [
-        "menubar"
-      ],
+      "categories": ["menubar"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -811,12 +763,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menubar-005-*. Серверный: хуков нет, состояние держат <details>. Широкий и узкий виды лежат в разметке одновременно, лишний убирается display:none — так он не попадает ни в порядок табуляции, ни в дерево доступности. Порог переключения задан контейнерным запросом на внутреннем [data-part=\"shell\"], потому что правило внутри @container не действует на сам контейнер. Разделы в широком виде закрывают друг друга через общий атрибут name.",
       "meta": {
-        "tags": [
-          "menubar",
-          "responsive",
-          "container-query",
-          "no-js"
-        ],
+        "tags": ["menubar", "responsive", "container-query", "no-js"],
         "preview": {
           "props": {
             "open": true
@@ -929,46 +876,26 @@
                 "menus": [
                   {
                     "label": "File",
-                    "items": [
-                      "New project",
-                      "Open…",
-                      "Save",
-                      "Export"
-                    ]
+                    "items": ["New project", "Open…", "Save", "Export"]
                   },
                   {
                     "label": "Edit",
-                    "items": [
-                      "Undo",
-                      "Redo",
-                      "Find in project"
-                    ]
+                    "items": ["Undo", "Redo", "Find in project"]
                   },
                   {
                     "label": "View",
-                    "items": [
-                      "Grid",
-                      "Sidebar",
-                      "Full screen"
-                    ]
+                    "items": ["Grid", "Sidebar", "Full screen"]
                   },
                   {
                     "label": "Help",
-                    "items": [
-                      "Shortcuts",
-                      "Documentation"
-                    ]
+                    "items": ["Shortcuts", "Documentation"]
                   }
                 ]
               }
             }
           }
         },
-        "cardControls": [
-          "burgerLabel",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["burgerLabel", "accent", "background"]
       }
     },
     {
@@ -976,9 +903,7 @@
       "type": "registry:component",
       "title": "Строка меню с разделами",
       "description": "Строка меню приложения, где активный раздел не просто подсвечен, а раскрыт: вторая строка показывает страницы именно этого раздела.",
-      "categories": [
-        "menubar"
-      ],
+      "categories": ["menubar"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -990,12 +915,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menubar-006-*. Серверный: хуков нет, активный раздел приходит пропом activeLabel. Выпадающих списков нет вовсе — страницы активного раздела выводятся во вторую строку, поэтому и состояния не требуется. Активный раздел помечен aria-current=\"page\" и полосой через ::after. Обе строки — это <nav> с собственной подписью, счётчики набраны табличными цифрами.",
       "meta": {
-        "tags": [
-          "menubar",
-          "sections",
-          "app shell",
-          "no-js"
-        ],
+        "tags": ["menubar", "sections", "app shell", "no-js"],
         "preview": {
           "width": "full"
         },
@@ -1035,12 +955,7 @@
             "label": "Активный раздел",
             "type": "select",
             "default": "Контент",
-            "options": [
-              "Обзор",
-              "Контент",
-              "Оформление",
-              "Настройки"
-            ]
+            "options": ["Обзор", "Контент", "Оформление", "Настройки"]
           },
           {
             "prop": "accent",
@@ -1171,11 +1086,7 @@
             }
           }
         },
-        "cardControls": [
-          "activeLabel",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["activeLabel", "accent", "background"]
       }
     },
     {
@@ -1183,9 +1094,7 @@
       "type": "registry:component",
       "title": "Строка меню с подменю",
       "description": "Строка меню с вложенными подменю, которые раскрываются вбок по наведению и по фокусу — без единой строки JS.",
-      "categories": [
-        "menubar"
-      ],
+      "categories": ["menubar"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1197,12 +1106,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menubar-007-*. Серверный: хуков нет. Разделы — <details> с общим атрибутом name, поэтому открыт всегда один. Подменю показывается правилом :hover и :focus-within у своей строки: фокус на родительском пункте уже раскрывает список, и в него можно уйти табуляцией, поэтому вложенность доступна и без мыши. Пункт с продолжением помечен aria-haspopup и стрелкой из бордюров.",
       "meta": {
-        "tags": [
-          "menubar",
-          "submenu",
-          "focus-within",
-          "no-js"
-        ],
+        "tags": ["menubar", "submenu", "focus-within", "no-js"],
         "ai": {
           "export": "Menubar007",
           "usage": "<Menubar007\n  menus={[\n    {\n      label: \"Файл\",\n      items: [{ label: \"Экспорт\", items: [{ label: \"В PDF\" }] }],\n    },\n  ]}\n/>",
@@ -1300,7 +1204,7 @@
                     "items": [
                       {
                         "label": "New project",
-                        "keys": "⌘N"
+                        "keys": "Ctrl+N"
                       },
                       {
                         "label": "Open recent",
@@ -1324,7 +1228,7 @@
                           },
                           {
                             "label": "To PNG",
-                            "keys": "⌘E"
+                            "keys": "Ctrl+E"
                           },
                           {
                             "label": "To archive"
@@ -1333,7 +1237,7 @@
                       },
                       {
                         "label": "Save",
-                        "keys": "⌘S"
+                        "keys": "Ctrl+S"
                       }
                     ]
                   },
@@ -1342,7 +1246,7 @@
                     "items": [
                       {
                         "label": "Undo",
-                        "keys": "⌘Z"
+                        "keys": "Ctrl+Z"
                       },
                       {
                         "label": "Transform",
@@ -1362,10 +1266,7 @@
             }
           }
         },
-        "cardControls": [
-          "accent",
-          "background"
-        ],
+        "cardControls": ["accent", "background"],
         "preview": {
           "props": {
             "open": true
@@ -1379,9 +1280,7 @@
       "type": "registry:component",
       "title": "Строка меню с действиями",
       "description": "Строка меню с правой частью: разделы слева, уведомления со счётчиком и профиль справа, прижатые к краю.",
-      "categories": [
-        "menubar"
-      ],
+      "categories": ["menubar"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1393,12 +1292,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-menubar-008-*. Серверный: хуков нет, все меню — popover=\"auto\". Правая группа прижата margin-left:auto, а её меню выравниваются по правому краю кнопки через position-area:bottom span-left, иначе они вылезают за пределы окна. Число непрочитанных попадает в aria-label кнопки, сам значок скрыт от скринридера. В узком блоке имя пользователя прячется контейнерным запросом, остаётся кружок с инициалами.",
       "meta": {
-        "tags": [
-          "menubar",
-          "profile",
-          "notifications",
-          "popover"
-        ],
+        "tags": ["menubar", "profile", "notifications", "popover"],
         "preview": {
           "props": {
             "open": true
@@ -1533,46 +1427,26 @@
                   "Comment on a page",
                   "Domain verified"
                 ],
-                "profileItems": [
-                  "Profile",
-                  "Workspace",
-                  "Sign out"
-                ],
+                "profileItems": ["Profile", "Workspace", "Sign out"],
                 "menus": [
                   {
                     "label": "File",
-                    "items": [
-                      "New project",
-                      "Open…",
-                      "Save"
-                    ]
+                    "items": ["New project", "Open…", "Save"]
                   },
                   {
                     "label": "Edit",
-                    "items": [
-                      "Undo",
-                      "Redo",
-                      "Find"
-                    ]
+                    "items": ["Undo", "Redo", "Find"]
                   },
                   {
                     "label": "View",
-                    "items": [
-                      "Grid",
-                      "Sidebar"
-                    ]
+                    "items": ["Grid", "Sidebar"]
                   }
                 ]
               }
             }
           }
         },
-        "cardControls": [
-          "userName",
-          "unread",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["userName", "unread", "accent", "background"]
       }
     }
   ]

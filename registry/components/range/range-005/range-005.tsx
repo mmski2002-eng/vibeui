@@ -30,13 +30,13 @@ export type Range005Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="range-005"]){
 --vibeui-range-005-surface:transparent;
---vibeui-range-005-knob:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
---vibeui-range-005-shell:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.011 265));
---vibeui-range-005-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-range-005-knob:light-dark(oklch(1 0 0),oklch(0.26 0 265));
+--vibeui-range-005-shell:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
+--vibeui-range-005-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-range-005-muted:color-mix(in oklab,var(--vibeui-range-005-fg) 68%,transparent);
---vibeui-range-005-track:light-dark(oklch(0.93 0.006 265),oklch(0.33 0.012 265));
+--vibeui-range-005-track:light-dark(oklch(0.93 0 265),oklch(0.33 0 265));
 --vibeui-range-005-accent:light-dark(oklch(0.5 0.17 320),oklch(0.76 0.14 320));
---vibeui-range-005-shadow:light-dark(oklch(0.2 0.02 265 / 25%),oklch(0 0 0 / 45%));
+--vibeui-range-005-shadow:light-dark(oklch(0.2 0 265 / 25%),oklch(0 0 0 / 45%));
 --vibeui-range-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-range-005-from:0%;
 --vibeui-range-005-to:100%;

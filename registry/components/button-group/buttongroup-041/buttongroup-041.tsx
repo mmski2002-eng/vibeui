@@ -34,10 +34,10 @@ export type Buttongroup041Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="buttongroup-041"]){
 --vibeui-buttongroup-041-surface:transparent;
---vibeui-buttongroup-041-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.005 265));
+--vibeui-buttongroup-041-fg:light-dark(oklch(0.25 0 265),oklch(0.95 0 265));
 --vibeui-buttongroup-041-muted:color-mix(in oklab,var(--vibeui-buttongroup-041-fg) 68%,transparent);
---vibeui-buttongroup-041-border:light-dark(oklch(0.89 0.008 265),oklch(0.42 0.012 265));
---vibeui-buttongroup-041-line:light-dark(oklch(0.8 0.01 265),oklch(0.56 0.014 265));
+--vibeui-buttongroup-041-border:light-dark(oklch(0.89 0 265),oklch(0.42 0 265));
+--vibeui-buttongroup-041-line:light-dark(oklch(0.8 0 265),oklch(0.56 0 265));
 --vibeui-buttongroup-041-on:light-dark(oklch(0.95 0.045 250),oklch(0.33 0.06 250));
 --vibeui-buttongroup-041-accent:light-dark(oklch(0.5 0.16 250),oklch(0.78 0.13 250));
 --vibeui-buttongroup-041-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -82,7 +82,10 @@ color:var(--vibeui-buttongroup-041-accent);
 outline:2px solid var(--vibeui-buttongroup-041-accent);outline-offset:2px;
 }
 [data-vibeui-block="buttongroup-041"] [data-part="add"]{
-width:1.875rem;padding:0;color:var(--vibeui-buttongroup-041-muted);
+/* Кнопка квадратная, а содержимое одно: без центрирования плюс прижимался
+   к левому краю — общее правило кнопок выравнивает по началу строки. */
+width:1.875rem;padding:0;justify-content:center;
+color:var(--vibeui-buttongroup-041-muted);
 border-style:dashed;
 }
 [data-vibeui-block="buttongroup-041"] [data-part="add"] svg{

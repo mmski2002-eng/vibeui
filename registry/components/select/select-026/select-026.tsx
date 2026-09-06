@@ -33,11 +33,11 @@ export type Select026Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="select-026"]){
 --vibeui-select-026-surface:transparent;
---vibeui-select-026-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
---vibeui-select-026-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-select-026-surface-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
+--vibeui-select-026-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-select-026-muted:color-mix(in oklab,var(--vibeui-select-026-fg) 68%,transparent);
---vibeui-select-026-field:light-dark(oklch(0.985 0.002 265),oklch(0.27 0.012 265));
---vibeui-select-026-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.012 265));
+--vibeui-select-026-field:light-dark(oklch(0.985 0 265),oklch(0.27 0 265));
+--vibeui-select-026-border:light-dark(oklch(0.87 0 265),oklch(0.42 0 265));
 --vibeui-select-026-accent:light-dark(oklch(0.55 0.19 262),oklch(0.73 0.17 262));
 --vibeui-select-026-warn:light-dark(oklch(0.6 0.19 45),oklch(0.79 0.15 62));
 --vibeui-select-026-danger:light-dark(oklch(0.55 0.21 25),oklch(0.72 0.17 25));

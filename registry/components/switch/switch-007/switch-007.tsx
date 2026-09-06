@@ -20,11 +20,11 @@ export type Switch007Props = Omit<ComponentProps<"fieldset">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="switch-007"]){
 --vibeui-switch-007-bg:transparent;
---vibeui-switch-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-switch-007-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-switch-007-muted:color-mix(in oklab,var(--vibeui-switch-007-fg) 68%,transparent);
---vibeui-switch-007-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
---vibeui-switch-007-track:light-dark(oklch(0.88 0.008 265),oklch(0.43 0.014 265));
---vibeui-switch-007-thumb:light-dark(oklch(1 0 0),oklch(0.93 0.004 265));
+--vibeui-switch-007-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
+--vibeui-switch-007-track:light-dark(oklch(0.88 0 265),oklch(0.43 0 265));
+--vibeui-switch-007-thumb:light-dark(oklch(1 0 0),oklch(0.93 0 265));
 --vibeui-switch-007-accent:light-dark(oklch(0.55 0.19 300),oklch(0.74 0.16 300));
 --vibeui-switch-007-unit:1.5rem;
 --vibeui-switch-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -75,7 +75,7 @@ width:calc(var(--vibeui-switch-007-unit) - 0.25rem);
 height:calc(var(--vibeui-switch-007-unit) - 0.25rem);
 border-radius:9999px;pointer-events:none;
 background:var(--vibeui-switch-007-thumb);
-box-shadow:0 1px 2px oklch(0.2 0.02 265 / 28%);
+box-shadow:0 1px 2px oklch(0.2 0 265 / 28%);
 transition:transform .18s cubic-bezier(.32,.72,0,1);
 }
 [data-vibeui-block="switch-007"] input:checked + [data-part="thumb"]{

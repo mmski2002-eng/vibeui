@@ -42,13 +42,13 @@ export type Dashboard019Props = {
 // символов осталось, вместо того чтобы молча обрезать текст.
 const STYLES = `
 :where([data-vibeui-block="dashboard-019"]){
---vibeui-dashboard-019-bg:light-dark(oklch(1 0 0),oklch(0.23 0.013 265));
---vibeui-dashboard-019-panel:light-dark(oklch(0.985 0.003 265),oklch(0.27 0.013 265));
---vibeui-dashboard-019-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-dashboard-019-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
---vibeui-dashboard-019-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-dashboard-019-bg:light-dark(oklch(1 0 0),oklch(0.23 0 265));
+--vibeui-dashboard-019-panel:light-dark(oklch(0.985 0 265),oklch(0.27 0 265));
+--vibeui-dashboard-019-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
+--vibeui-dashboard-019-muted:light-dark(oklch(0.55 0 265),oklch(0.69 0 265));
+--vibeui-dashboard-019-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
 --vibeui-dashboard-019-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.15 262));
---vibeui-dashboard-019-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 265));
+--vibeui-dashboard-019-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0 265));
 --vibeui-dashboard-019-hue:262;
 --vibeui-dashboard-019-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

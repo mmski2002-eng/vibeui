@@ -39,10 +39,10 @@ export type Dashboard008Props = {
 const STYLES = `
 :where([data-vibeui-block="dashboard-008"]){
 --vibeui-dashboard-008-bg:transparent;
---vibeui-dashboard-008-fg:light-dark(oklch(0.22 0.014 265),oklch(0.95 0.005 265));
---vibeui-dashboard-008-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
---vibeui-dashboard-008-border:light-dark(oklch(0.91 0.006 265),oklch(0.37 0.012 265));
---vibeui-dashboard-008-hover:light-dark(oklch(0.55 0.02 265 / 5%),oklch(0.85 0.02 265 / 8%));
+--vibeui-dashboard-008-fg:light-dark(oklch(0.22 0 265),oklch(0.95 0 265));
+--vibeui-dashboard-008-muted:light-dark(oklch(0.55 0 265),oklch(0.71 0 265));
+--vibeui-dashboard-008-border:light-dark(oklch(0.91 0 265),oklch(0.37 0 265));
+--vibeui-dashboard-008-hover:light-dark(oklch(0.55 0 265 / 5%),oklch(0.85 0 265 / 8%));
 --vibeui-dashboard-008-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
 --vibeui-dashboard-008-ok:light-dark(oklch(0.58 0.14 152),oklch(0.76 0.14 152));
 --vibeui-dashboard-008-wait:light-dark(oklch(0.72 0.15 75),oklch(0.82 0.14 75));

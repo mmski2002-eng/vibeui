@@ -47,14 +47,14 @@ export type Contextmenu002Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="contextmenu-002"]){
 --vibeui-contextmenu-002-bg:transparent;
---vibeui-contextmenu-002-surface:light-dark(oklch(1 0 0),oklch(0.24 0.013 265));
---vibeui-contextmenu-002-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-contextmenu-002-surface:light-dark(oklch(1 0 0),oklch(0.24 0 265));
+--vibeui-contextmenu-002-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-contextmenu-002-muted:color-mix(in oklab,var(--vibeui-contextmenu-002-fg) 68%,transparent);
---vibeui-contextmenu-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
---vibeui-contextmenu-002-hover:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.014 265));
+--vibeui-contextmenu-002-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
+--vibeui-contextmenu-002-hover:light-dark(oklch(0.96 0 265),oklch(0.31 0 265));
 --vibeui-contextmenu-002-accent:light-dark(oklch(0.55 0.18 258),oklch(0.75 0.14 258));
 --vibeui-contextmenu-002-danger:light-dark(oklch(0.56 0.19 25),oklch(0.73 0.16 25));
---vibeui-contextmenu-002-shadow:light-dark(oklch(0.2 0.03 265 / 50%),oklch(0 0 0 / 72%));
+--vibeui-contextmenu-002-shadow:light-dark(oklch(0.2 0 265 / 50%),oklch(0 0 0 / 72%));
 --vibeui-contextmenu-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-contextmenu-002-x:50%;
 --vibeui-contextmenu-002-y:50%;
@@ -156,7 +156,7 @@ const DEFAULT_FILES = [
 const DEFAULT_ACTIONS: Contextmenu002Action[] = [
   { label: "Открыть", keys: "↵" },
   { label: "Переименовать", keys: "F2" },
-  { label: "Скачать", keys: "⌘S" },
+  { label: "Скачать", keys: "Ctrl+S" },
 ]
 
 /**
@@ -367,7 +367,7 @@ export function Contextmenu002({
             onClick={() => run(deleteLabel)}
           >
             {deleteLabel}
-            <span data-part="keys">⌫</span>
+            <span data-part="keys">Backspace</span>
           </button>
         </div>
       </section>

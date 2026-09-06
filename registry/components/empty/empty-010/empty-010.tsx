@@ -29,12 +29,12 @@ export type Empty010Props = {
 const STYLES = `
 :where([data-vibeui-block="empty-010"]){
 --vibeui-empty-010-bg:transparent;
---vibeui-empty-010-fg:light-dark(oklch(0.21 0.014 265),oklch(0.95 0.005 265));
+--vibeui-empty-010-fg:light-dark(oklch(0.21 0 265),oklch(0.95 0 265));
 --vibeui-empty-010-muted:color-mix(in oklab,var(--vibeui-empty-010-fg) 68%,transparent);
---vibeui-empty-010-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
---vibeui-empty-010-hover:light-dark(oklch(0.97 0.003 265),oklch(0.31 0.011 265));
+--vibeui-empty-010-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
+--vibeui-empty-010-hover:light-dark(oklch(0.97 0 265),oklch(0.31 0 265));
 --vibeui-empty-010-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
---vibeui-empty-010-accent-fg:light-dark(oklch(0.99 0.01 265),oklch(0.18 0.03 265));
+--vibeui-empty-010-accent-fg:light-dark(oklch(0.99 0 265),oklch(0.18 0 265));
 --vibeui-empty-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

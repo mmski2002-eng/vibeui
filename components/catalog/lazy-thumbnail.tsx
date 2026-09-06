@@ -123,7 +123,9 @@ export function LazyThumbnail({
         <div
           className={
             "preview-fade" +
-            (full ? " w-full max-w-[30rem]" : "") +
+            // Компонент со своей максимальной шириной иначе прижимается к
+            // левому краю кадра: обёртка занимает всю ширину, а он — нет.
+            (full ? " preview-center w-full max-w-[30rem]" : "") +
             (row ? " flex flex-wrap items-center justify-center gap-4" : "")
           }
         >

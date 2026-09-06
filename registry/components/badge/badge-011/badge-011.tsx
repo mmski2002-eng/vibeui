@@ -21,12 +21,12 @@ export type Badge011Props = Omit<
 // у неё галочка, иначе выбор не виден при дальтонизме.
 const STYLES = `
 :where([data-vibeui-block="badge-011"]){
---vibeui-badge-011-surface:light-dark(oklch(1 0 0),oklch(0.22 0.01 265));
---vibeui-badge-011-ink:light-dark(oklch(0.2 0.02 265),oklch(0.97 0.01 265));
---vibeui-badge-011-bg:light-dark(oklch(0.97 0.003 265),oklch(0.27 0.009 265));
---vibeui-badge-011-fg:light-dark(oklch(0.32 0.014 265),oklch(0.93 0.006 265));
---vibeui-badge-011-border:light-dark(oklch(0.89 0.006 265),oklch(0.39 0.011 265));
---vibeui-badge-011-hover:light-dark(oklch(0.82 0.008 265),oklch(0.52 0.013 265));
+--vibeui-badge-011-surface:light-dark(oklch(1 0 0),oklch(0.22 0 265));
+--vibeui-badge-011-ink:light-dark(oklch(0.2 0 265),oklch(0.97 0 265));
+--vibeui-badge-011-bg:light-dark(oklch(0.97 0 265),oklch(0.27 0 265));
+--vibeui-badge-011-fg:light-dark(oklch(0.32 0 265),oklch(0.93 0 265));
+--vibeui-badge-011-border:light-dark(oklch(0.89 0 265),oklch(0.39 0 265));
+--vibeui-badge-011-hover:light-dark(oklch(0.82 0 265),oklch(0.52 0 265));
 --vibeui-badge-011-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-badge-011-on-bg:color-mix(in oklab,var(--vibeui-badge-011-accent) 14%,var(--vibeui-badge-011-surface));
 --vibeui-badge-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

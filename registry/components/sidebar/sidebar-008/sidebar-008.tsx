@@ -40,14 +40,14 @@ export type Sidebar008Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="sidebar-008"]){
 --vibeui-sidebar-008-bg:transparent;
---vibeui-sidebar-008-panel:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
---vibeui-sidebar-008-field:light-dark(oklch(0.985 0.002 265),oklch(0.29 0.012 265));
---vibeui-sidebar-008-field-hover:light-dark(oklch(0.96 0.004 265),oklch(0.33 0.012 265));
---vibeui-sidebar-008-fg:light-dark(oklch(0.25 0.016 265),oklch(0.93 0.006 265));
+--vibeui-sidebar-008-panel:light-dark(oklch(1 0 0),oklch(0.25 0 265));
+--vibeui-sidebar-008-field:light-dark(oklch(0.985 0 265),oklch(0.29 0 265));
+--vibeui-sidebar-008-field-hover:light-dark(oklch(0.96 0 265),oklch(0.33 0 265));
+--vibeui-sidebar-008-fg:light-dark(oklch(0.25 0 265),oklch(0.93 0 265));
 --vibeui-sidebar-008-muted:color-mix(in oklab,var(--vibeui-sidebar-008-fg) 68%,transparent);
---vibeui-sidebar-008-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
---vibeui-sidebar-008-hover:light-dark(oklch(0.55 0.02 265 / 7%),oklch(0.85 0.02 265 / 10%));
---vibeui-sidebar-008-shadow:light-dark(oklch(0.2 0.02 265 / 14%),oklch(0 0 0 / 55%));
+--vibeui-sidebar-008-border:light-dark(oklch(0.91 0 265),oklch(0.35 0 265));
+--vibeui-sidebar-008-hover:light-dark(oklch(0.55 0 265 / 7%),oklch(0.85 0 265 / 10%));
+--vibeui-sidebar-008-shadow:light-dark(oklch(0.2 0 265 / 14%),oklch(0 0 0 / 55%));
 --vibeui-sidebar-008-accent:light-dark(oklch(0.55 0.17 155),oklch(0.74 0.15 155));
 --vibeui-sidebar-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

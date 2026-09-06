@@ -15,7 +15,7 @@ export type Button011Props = ComponentProps<"button"> & {
 // и акцент наведения объявлены парой светлот.
 const STYLES = `
 :where([data-vibeui-block="button-011"]){
---vibeui-button-011-fg:light-dark(oklch(0.35 0.015 265),oklch(0.88 0.008 265));
+--vibeui-button-011-fg:light-dark(oklch(0.35 0 265),oklch(0.88 0 265));
 --vibeui-button-011-accent:light-dark(oklch(0.55 0.16 258),oklch(0.74 0.14 258));
 --vibeui-button-011-ring:color-mix(in oklab, var(--vibeui-button-011-accent) 65%, transparent);
 --vibeui-button-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

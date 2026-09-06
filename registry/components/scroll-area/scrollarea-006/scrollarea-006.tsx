@@ -29,12 +29,12 @@ export type Scrollarea006Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="scrollarea-006"]){
 --vibeui-scrollarea-006-bg:transparent;
---vibeui-scrollarea-006-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-scrollarea-006-fg:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
 --vibeui-scrollarea-006-muted:color-mix(in oklab,var(--vibeui-scrollarea-006-fg) 68%,transparent);
---vibeui-scrollarea-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.33 0.012 265));
+--vibeui-scrollarea-006-border:light-dark(oklch(0.9 0 265),oklch(0.33 0 265));
 --vibeui-scrollarea-006-accent:light-dark(oklch(0.55 0.19 265),oklch(0.74 0.16 265));
---vibeui-scrollarea-006-soft:light-dark(oklch(0.95 0.03 265),oklch(0.29 0.05 265));
---vibeui-scrollarea-006-hover:light-dark(oklch(0.97 0.003 265),oklch(0.28 0.011 265));
+--vibeui-scrollarea-006-soft:light-dark(oklch(0.95 0 265),oklch(0.29 0.05 265));
+--vibeui-scrollarea-006-hover:light-dark(oklch(0.97 0 265),oklch(0.28 0 265));
 --vibeui-scrollarea-006-height:12rem;
 --vibeui-scrollarea-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

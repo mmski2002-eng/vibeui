@@ -30,11 +30,11 @@ export type Table002Props = Omit<ComponentProps<"div">, "children"> & {
 // вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="table-002"]){
---vibeui-table-002-fg:light-dark(oklch(0.24 0.016 265),oklch(0.93 0.006 265));
+--vibeui-table-002-fg:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
 --vibeui-table-002-muted:color-mix(in oklab,var(--vibeui-table-002-fg) 68%,transparent);
 --vibeui-table-002-bg:transparent;
---vibeui-table-002-head:light-dark(oklch(0.975 0.003 265),oklch(0.27 0.012 265));
---vibeui-table-002-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.011 265));
+--vibeui-table-002-head:light-dark(oklch(0.975 0 265),oklch(0.27 0 265));
+--vibeui-table-002-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
 --vibeui-table-002-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.16 262));
 --vibeui-table-002-yes:light-dark(oklch(0.58 0.15 152),oklch(0.76 0.14 152));
 --vibeui-table-002-radius:0.75rem;

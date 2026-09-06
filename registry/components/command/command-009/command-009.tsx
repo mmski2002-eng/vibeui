@@ -36,14 +36,14 @@ export type Command009Props = Omit<ComponentProps<"div">, "children"> & {
 // акцент светлеет, поэтому текст на плашке типа темнеет вместе с ним.
 const STYLES = `
 :where([data-vibeui-block="command-009"]){
---vibeui-command-009-bg:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
---vibeui-command-009-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.006 265));
+--vibeui-command-009-bg:light-dark(oklch(1 0 0),oklch(0.21 0 265));
+--vibeui-command-009-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-command-009-muted:color-mix(in oklab,var(--vibeui-command-009-fg) 68%,transparent);
---vibeui-command-009-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-command-009-border:light-dark(oklch(0.9 0 265),oklch(0.35 0 265));
 --vibeui-command-009-accent:light-dark(oklch(0.55 0.2 300),oklch(0.74 0.15 300));
---vibeui-command-009-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.03 300));
+--vibeui-command-009-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0 300));
 --vibeui-command-009-danger:light-dark(oklch(0.55 0.2 25),oklch(0.76 0.16 25));
---vibeui-command-009-shadow:light-dark(oklch(0.2 0.03 265 / 60%),oklch(0.04 0.015 265 / 70%));
+--vibeui-command-009-shadow:light-dark(oklch(0.2 0 265 / 60%),oklch(0.04 0 265 / 70%));
 --vibeui-command-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -111,10 +111,10 @@ margin:0;padding:1.125rem 0.875rem;font-size:0.875rem;color:var(--vibeui-command
 
 const DEFAULT_ACTIONS: Command009Action[] = [
   { label: "Переименовать", keys: "F2" },
-  { label: "Дублировать", keys: "⌘D" },
+  { label: "Дублировать", keys: "Ctrl+D" },
   { label: "Выровнять по сетке" },
   { label: "Экспортировать в SVG" },
-  { label: "Удалить слой", keys: "⌫", tone: "danger" },
+  { label: "Удалить слой", keys: "Backspace", tone: "danger" },
 ]
 
 /**

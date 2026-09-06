@@ -17,9 +17,9 @@ export type Separator002Props = Omit<ComponentProps<"div">, "children"> & {
 // темнее фона страницы, а текст в ней светлый.
 const STYLES = `
 :where([data-vibeui-block="separator-002"]){
---vibeui-separator-002-line:light-dark(oklch(0.88 0.006 265),oklch(0.37 0.012 265));
---vibeui-separator-002-pill:light-dark(oklch(0.98 0.002 265),oklch(0.26 0.012 265));
---vibeui-separator-002-fg:light-dark(oklch(0.35 0.014 265),oklch(0.9 0.008 265));
+--vibeui-separator-002-line:light-dark(oklch(0.88 0 265),oklch(0.37 0 265));
+--vibeui-separator-002-pill:light-dark(oklch(0.98 0 265),oklch(0.26 0 265));
+--vibeui-separator-002-fg:light-dark(oklch(0.35 0 265),oklch(0.9 0 265));
 --vibeui-separator-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

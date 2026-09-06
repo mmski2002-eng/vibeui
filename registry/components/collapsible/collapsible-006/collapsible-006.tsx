@@ -27,12 +27,12 @@ export type Collapsible006Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="collapsible-006"]){
 --vibeui-collapsible-006-bg:transparent;
---vibeui-collapsible-006-ring:light-dark(oklch(1 0 0),oklch(0.19 0.013 265));
---vibeui-collapsible-006-chip:light-dark(oklch(1 0 0),oklch(0.27 0.014 265));
---vibeui-collapsible-006-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.02 240));
---vibeui-collapsible-006-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-collapsible-006-ring:light-dark(oklch(1 0 0),oklch(0.19 0 265));
+--vibeui-collapsible-006-chip:light-dark(oklch(1 0 0),oklch(0.27 0 265));
+--vibeui-collapsible-006-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0 240));
+--vibeui-collapsible-006-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-collapsible-006-muted:color-mix(in oklab,var(--vibeui-collapsible-006-fg) 68%,transparent);
---vibeui-collapsible-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-collapsible-006-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
 --vibeui-collapsible-006-accent:light-dark(oklch(0.55 0.17 240),oklch(0.74 0.14 240));
 --vibeui-collapsible-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

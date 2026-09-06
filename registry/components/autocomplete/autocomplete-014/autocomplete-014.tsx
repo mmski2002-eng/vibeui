@@ -25,17 +25,18 @@ export type Autocomplete014Props = Omit<
 // пока выбрано двое-трое: дальше они переносят строку, поле прыгает по высоте,
 // и найти уже выбранное глазами трудно. Здесь выбранное остаётся на своих
 // местах в списке с галочкой — порядок не меняется, поиск не сбрасывается,
-// и видно сразу, что выбрано, а что нет. Список не закрывается после выбора:
-// закрытие после каждой галочки — главная беда мультивыбора.
+// и видно сразу, что выбрано, а что нет. Список раскрывается курсором в поле и
+// не закрывается после выбора: закрытие после каждой галочки — главная беда
+// мультивыбора.
 const STYLES = `
 :where([data-vibeui-block="autocomplete-014"]){
 --vibeui-autocomplete-014-bg:transparent;
---vibeui-autocomplete-014-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-autocomplete-014-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-autocomplete-014-muted:color-mix(in oklab,var(--vibeui-autocomplete-014-fg) 68%,transparent);
---vibeui-autocomplete-014-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
---vibeui-autocomplete-014-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.011 265));
---vibeui-autocomplete-014-panel:light-dark(oklch(1 0 0),oklch(0.24 0.011 265));
---vibeui-autocomplete-014-active:light-dark(oklch(0.95 0.02 265),oklch(0.33 0.028 265));
+--vibeui-autocomplete-014-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-autocomplete-014-field:light-dark(oklch(0.985 0 265),oklch(0.26 0 265));
+--vibeui-autocomplete-014-panel:light-dark(oklch(1 0 0),oklch(0.24 0 265));
+--vibeui-autocomplete-014-active:light-dark(oklch(0.95 0 265),oklch(0.33 0 265));
 --vibeui-autocomplete-014-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-autocomplete-014-radius:0.625rem;
 --vibeui-autocomplete-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -189,6 +190,9 @@ export function Autocomplete014({
   const [query, setQuery] = useState("")
   const [selected, setSelected] = useState<string[]>(defaultValue)
   const [active, setActive] = useState(0)
+  // Список открывается курсором в поле и закрывается, когда фокус ушёл из
+  // компонента целиком: галочки внутри списка фокус не теряют.
+  const [open, setOpen] = useState(false)
 
   const matches = useMemo(() => {
     const needle = query.trim().toLowerCase()
@@ -206,7 +210,13 @@ export function Autocomplete014({
   }
 
   const onKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Escape") {
+      setOpen(false)
+      return
+    }
+
     if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+      setOpen(true)
       event.preventDefault()
       const step = event.key === "ArrowDown" ? 1 : -1
       const next =
@@ -252,6 +262,11 @@ export function Autocomplete014({
         data-vibeui-block="autocomplete-014"
         className={className}
         style={palette}
+        onBlur={(event) => {
+          if (!event.currentTarget.contains(event.relatedTarget)) {
+            setOpen(false)
+          }
+        }}
       >
         <label htmlFor={id}>{label}</label>
         <input
@@ -260,10 +275,15 @@ export function Autocomplete014({
           autoComplete="off"
           placeholder={placeholder}
           value={query}
+          role="combobox"
+          aria-expanded={open}
           aria-controls={`${id}-list`}
+          onFocus={() => setOpen(true)}
+          onClick={() => setOpen(true)}
           onChange={(event) => {
             setQuery(event.target.value)
             setActive(0)
+            setOpen(true)
           }}
           onKeyDown={onKeyDown}
         />
@@ -273,6 +293,7 @@ export function Autocomplete014({
           id={`${id}-list`}
           data-part="list"
           aria-label={label}
+          hidden={!open}
         >
           {matches.map((option, index) => (
             <li

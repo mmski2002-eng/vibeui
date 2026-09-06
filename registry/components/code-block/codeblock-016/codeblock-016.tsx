@@ -32,7 +32,7 @@ const STYLES = `
 :where([data-vibeui-block="codeblock-016"]){
 --vibeui-codeblock-016-bg:transparent;
 --vibeui-codeblock-016-head:light-dark(oklch(0 0 0 / 4%),oklch(1 0 0 / 5%));
---vibeui-codeblock-016-fg:light-dark(oklch(0.26 0.016 285),oklch(0.94 0.006 285));
+--vibeui-codeblock-016-fg:light-dark(oklch(0.26 0 285),oklch(0.94 0 285));
 --vibeui-codeblock-016-muted:color-mix(in oklab,var(--vibeui-codeblock-016-fg) 68%,transparent);
 --vibeui-codeblock-016-border:light-dark(oklch(0 0 0 / 12%),oklch(1 0 0 / 12%));
 --vibeui-codeblock-016-track:light-dark(oklch(0 0 0 / 8%),oklch(0 0 0 / 30%));
@@ -40,7 +40,7 @@ const STYLES = `
 --vibeui-codeblock-016-accent:light-dark(oklch(0.52 0.16 285),oklch(0.84 0.13 285));
 --vibeui-codeblock-016-keyword:light-dark(oklch(0.5 0.19 320),oklch(0.8 0.13 320));
 --vibeui-codeblock-016-string:light-dark(oklch(0.45 0.14 145),oklch(0.83 0.12 145));
---vibeui-codeblock-016-comment:light-dark(oklch(0.58 0.02 285),oklch(0.61 0.02 285));
+--vibeui-codeblock-016-comment:light-dark(oklch(0.58 0 285),oklch(0.61 0 285));
 --vibeui-codeblock-016-number:light-dark(oklch(0.52 0.14 72),oklch(0.85 0.12 72));
 --vibeui-codeblock-016-type:light-dark(oklch(0.5 0.14 230),oklch(0.83 0.11 230));
 --vibeui-codeblock-016-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;

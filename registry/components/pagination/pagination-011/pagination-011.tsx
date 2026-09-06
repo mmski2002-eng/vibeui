@@ -25,11 +25,11 @@ export type Pagination011Props = {
 const STYLES = `
 :where([data-vibeui-block="pagination-011"]){
 --vibeui-pagination-011-bg:transparent;
---vibeui-pagination-011-hole:light-dark(oklch(1 0 0),oklch(0.21 0.008 265));
---vibeui-pagination-011-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-pagination-011-hole:light-dark(oklch(1 0 0),oklch(0.21 0 265));
+--vibeui-pagination-011-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-pagination-011-muted:color-mix(in oklab,var(--vibeui-pagination-011-fg) 68%,transparent);
---vibeui-pagination-011-border:light-dark(oklch(0.91 0.006 265),oklch(0.38 0.012 265));
---vibeui-pagination-011-track:light-dark(oklch(0.91 0.006 265),oklch(0.4 0.012 265));
+--vibeui-pagination-011-border:light-dark(oklch(0.91 0 265),oklch(0.38 0 265));
+--vibeui-pagination-011-track:light-dark(oklch(0.91 0 265),oklch(0.4 0 265));
 --vibeui-pagination-011-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.16 262));
 --vibeui-pagination-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

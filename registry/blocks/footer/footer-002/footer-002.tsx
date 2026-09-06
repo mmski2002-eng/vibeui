@@ -32,10 +32,10 @@ export type Footer002Props = {
 // светлого варианта у него нет, поэтому light-dark() здесь не применяется.
 const STYLES = `
 :where([data-vibeui-block="footer-002"]){
---vibeui-footer-002-bg:oklch(0.19 0.016 265);
---vibeui-footer-002-ink:oklch(0.97 0.004 265);
---vibeui-footer-002-muted:oklch(0.72 0.012 265);
---vibeui-footer-002-border:oklch(0.3 0.018 265);
+--vibeui-footer-002-bg:oklch(0.19 0 265);
+--vibeui-footer-002-ink:oklch(0.97 0 265);
+--vibeui-footer-002-muted:oklch(0.72 0 265);
+--vibeui-footer-002-border:oklch(0.3 0 265);
 --vibeui-footer-002-accent:oklch(0.74 0.15 155);
 --vibeui-footer-002-accent-fg:oklch(0.2 0.04 155);
 --vibeui-footer-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

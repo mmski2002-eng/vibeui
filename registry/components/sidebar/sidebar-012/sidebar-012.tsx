@@ -26,7 +26,7 @@ export type Sidebar012Props = Omit<ComponentProps<"nav">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="sidebar-012"]){
 --vibeui-sidebar-012-bg:transparent;
---vibeui-sidebar-012-fg:light-dark(oklch(0.27 0.014 265),oklch(0.94 0.006 265));
+--vibeui-sidebar-012-fg:light-dark(oklch(0.27 0 265),oklch(0.94 0 265));
 --vibeui-sidebar-012-muted:color-mix(in oklab,var(--vibeui-sidebar-012-fg) 62%,transparent);
 --vibeui-sidebar-012-border:light-dark(oklch(0 0 0 / 11%),oklch(1 0 0 / 12%));
 --vibeui-sidebar-012-hover:light-dark(oklch(0 0 0 / 5%),oklch(1 0 0 / 7%));

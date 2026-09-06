@@ -23,11 +23,11 @@ export type Tooltip002Props = Omit<ComponentProps<"div">, "title"> & {
 const STYLES = `
 :where([data-vibeui-block="tooltip-002"]){
 --vibeui-tooltip-002-bg:transparent;
---vibeui-tooltip-002-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-tooltip-002-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-tooltip-002-muted:color-mix(in oklab,var(--vibeui-tooltip-002-fg) 68%,transparent);
---vibeui-tooltip-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
---vibeui-tooltip-002-face:light-dark(oklch(0.98 0.003 265),oklch(0.29 0.012 265));
---vibeui-tooltip-002-tip:light-dark(oklch(0.26 0.014 265),oklch(0.36 0.014 265));
+--vibeui-tooltip-002-border:light-dark(oklch(0.9 0 265),oklch(0.35 0 265));
+--vibeui-tooltip-002-face:light-dark(oklch(0.98 0 265),oklch(0.29 0 265));
+--vibeui-tooltip-002-tip:light-dark(oklch(0.26 0 265),oklch(0.36 0 265));
 --vibeui-tooltip-002-accent:light-dark(oklch(0.57 0.17 265),oklch(0.72 0.16 265));
 --vibeui-tooltip-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -67,7 +67,7 @@ position:absolute;bottom:calc(100% + 0.5rem);left:50%;z-index:20;
 width:max-content;max-width:11rem;
 padding:0.375rem 0.5625rem;border-radius:0.4375rem;
 /* Обе ветки --tip тёмные — плашка подсказки тёмная всегда, поэтому подпись светлая без light-dark(). */
-background:var(--vibeui-tooltip-002-tip);color:oklch(0.98 0.002 265);
+background:var(--vibeui-tooltip-002-tip);color:oklch(0.98 0 265);
 font-size:0.75rem;line-height:1.4;
 pointer-events:none;opacity:0;
 transform:translate(-50%,0.25rem);

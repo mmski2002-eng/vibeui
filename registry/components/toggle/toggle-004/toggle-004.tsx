@@ -26,11 +26,11 @@ export type Toggle004Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="toggle-004"]){
 --vibeui-toggle-004-bg:transparent;
---vibeui-toggle-004-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-toggle-004-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-toggle-004-muted:color-mix(in oklab,var(--vibeui-toggle-004-fg) 68%,transparent);
---vibeui-toggle-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
---vibeui-toggle-004-canvas:light-dark(oklch(0.975 0.004 265),oklch(0.26 0.01 265));
---vibeui-toggle-004-art:light-dark(oklch(0.86 0.02 265),oklch(0.38 0.016 265));
+--vibeui-toggle-004-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
+--vibeui-toggle-004-canvas:light-dark(oklch(0.975 0 265),oklch(0.26 0 265));
+--vibeui-toggle-004-art:light-dark(oklch(0.86 0 265),oklch(0.38 0 265));
 --vibeui-toggle-004-accent:light-dark(oklch(0.58 0.15 200),oklch(0.76 0.12 200));
 --vibeui-toggle-004-line:light-dark(oklch(0.58 0.15 200 / 26%),oklch(0.76 0.12 200 / 34%));
 --vibeui-toggle-004-step:1.25rem;

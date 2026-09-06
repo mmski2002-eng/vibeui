@@ -34,10 +34,10 @@ export type Dialog007Props = {
 // позиционируется относительно экрана, а не родителя.
 const STYLES = `
 :where([data-vibeui-block="dialog-007"]){
---vibeui-dialog-007-fg:light-dark(oklch(0.22 0.016 265),oklch(0.94 0.005 265));
+--vibeui-dialog-007-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-dialog-007-muted:color-mix(in oklab,var(--vibeui-dialog-007-fg) 68%,transparent);
---vibeui-dialog-007-bg:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
---vibeui-dialog-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265));
+--vibeui-dialog-007-bg:light-dark(oklch(1 0 0),oklch(0.24 0 265));
+--vibeui-dialog-007-border:light-dark(oklch(0.9 0 265),oklch(0.38 0 265));
 --vibeui-dialog-007-danger:light-dark(oklch(0.56 0.19 25),oklch(0.7 0.17 25));
 --vibeui-dialog-007-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
 --vibeui-dialog-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -59,24 +59,24 @@ background:var(--vibeui-dialog-007-bg);color:var(--vibeui-dialog-007-fg);
 position:fixed;inset:auto 0 0;margin:0;
 width:100%;box-sizing:border-box;padding:0.75rem 0.75rem 1rem;
 border:0;border-radius:1.25rem 1.25rem 0 0;
-background:var(--vibeui-dialog-007-bg,light-dark(oklch(1 0 0),oklch(0.24 0.012 265)));
-color:var(--vibeui-dialog-007-fg,light-dark(oklch(0.22 0.016 265),oklch(0.94 0.005 265)));
+background:var(--vibeui-dialog-007-bg,light-dark(oklch(1 0 0),oklch(0.24 0 265)));
+color:var(--vibeui-dialog-007-fg,light-dark(oklch(0.22 0 265),oklch(0.94 0 265)));
 font-family:var(--vibeui-dialog-007-font,ui-sans-serif,system-ui,sans-serif);
-box-shadow:0 -12px 40px -20px oklch(0.2 0.03 265 / 45%);
+box-shadow:0 -12px 40px -20px oklch(0.2 0 265 / 45%);
 translate:0 100%;
 transition:translate .24s cubic-bezier(.32,.72,0,1),display .24s allow-discrete,overlay .24s allow-discrete;
 }
 [data-vibeui-dialog-007-sheet]:popover-open{translate:0 0}
 @starting-style{[data-vibeui-dialog-007-sheet]:popover-open{translate:0 100%}}
-[data-vibeui-dialog-007-sheet]::backdrop{background:oklch(0.18 0.02 265 / 45%)}
+[data-vibeui-dialog-007-sheet]::backdrop{background:oklch(0.18 0 265 / 45%)}
 /* Полоска-ручка: сообщает, что лист пришёл снизу и туда же уйдёт. */
 [data-vibeui-dialog-007-sheet] [data-part="grip"]{
 display:block;width:2.25rem;height:0.25rem;margin:0 auto 0.75rem;
-border-radius:9999px;background:var(--vibeui-dialog-007-border,light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265)));
+border-radius:9999px;background:var(--vibeui-dialog-007-border,light-dark(oklch(0.9 0 265),oklch(0.38 0 265)));
 }
 [data-vibeui-dialog-007-sheet] [data-part="head"]{padding:0 0.5rem 0.625rem}
 [data-vibeui-dialog-007-sheet] [data-part="title"]{margin:0;font-size:1.0625rem;font-weight:620;line-height:1.35}
-[data-vibeui-dialog-007-sheet] [data-part="description"]{margin:0.125rem 0 0;font-size:0.8125rem;line-height:1.45;color:var(--vibeui-dialog-007-muted,light-dark(oklch(0.5 0.014 265),oklch(0.7 0.012 265)))}
+[data-vibeui-dialog-007-sheet] [data-part="description"]{margin:0.125rem 0 0;font-size:0.8125rem;line-height:1.45;color:var(--vibeui-dialog-007-muted,light-dark(oklch(0.5 0 265),oklch(0.7 0 265)))}
 [data-vibeui-dialog-007-sheet] [data-part="list"]{display:flex;flex-direction:column;gap:0.125rem}
 [data-vibeui-dialog-007-sheet] [data-part="action"]{
 display:flex;align-items:center;width:100%;box-sizing:border-box;
@@ -85,11 +85,11 @@ background:transparent;color:inherit;text-decoration:none;
 font:inherit;font-size:0.9375rem;cursor:pointer;text-align:left;
 transition:background-color .16s ease;
 }
-[data-vibeui-dialog-007-sheet] [data-part="action"]:hover{background:color-mix(in oklab,var(--vibeui-dialog-007-border,light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265))) 35%,transparent)}
+[data-vibeui-dialog-007-sheet] [data-part="action"]:hover{background:color-mix(in oklab,var(--vibeui-dialog-007-border,light-dark(oklch(0.9 0 265),oklch(0.38 0 265))) 35%,transparent)}
 [data-vibeui-dialog-007-sheet] [data-part="action"][data-danger="true"]{color:var(--vibeui-dialog-007-danger,light-dark(oklch(0.56 0.19 25),oklch(0.7 0.17 25)))}
 [data-vibeui-dialog-007-sheet] [data-cancel="true"]{
 margin-top:0.5rem;justify-content:center;font-weight:600;
-background:color-mix(in oklab,var(--vibeui-dialog-007-border,light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265))) 35%,transparent);
+background:color-mix(in oklab,var(--vibeui-dialog-007-border,light-dark(oklch(0.9 0 265),oklch(0.38 0 265))) 35%,transparent);
 }
 [data-vibeui-dialog-007-sheet] :focus-visible{outline:2px solid var(--vibeui-dialog-007-accent,light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262)));outline-offset:-2px}
 /* От 40rem ширины окна лист становится обычным окном по центру. */
@@ -97,7 +97,7 @@ background:color-mix(in oklab,var(--vibeui-dialog-007-border,light-dark(oklch(0.
 [data-vibeui-dialog-007-sheet]{
 inset:0;margin:auto;height:fit-content;
 width:min(22rem,calc(100vw - 2rem));
-border:1px solid var(--vibeui-dialog-007-border,light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265)));
+border:1px solid var(--vibeui-dialog-007-border,light-dark(oklch(0.9 0 265),oklch(0.38 0 265)));
 border-radius:1rem;padding:1rem;
 translate:0 0;opacity:0;transform:scale(0.97);
 transition:opacity .18s ease,transform .18s ease,display .18s allow-discrete,overlay .18s allow-discrete;

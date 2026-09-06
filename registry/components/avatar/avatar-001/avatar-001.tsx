@@ -21,7 +21,7 @@ const STYLES = `
 --vibeui-avatar-001-hue:250;
 --vibeui-avatar-001-bg:light-dark(oklch(0.92 0.05 var(--vibeui-avatar-001-hue)),oklch(0.34 0.065 var(--vibeui-avatar-001-hue)));
 --vibeui-avatar-001-fg:light-dark(oklch(0.38 0.09 var(--vibeui-avatar-001-hue)),oklch(0.88 0.063 var(--vibeui-avatar-001-hue)));
---vibeui-avatar-001-ring:light-dark(oklch(1 0 0),oklch(0.19 0.01 265));
+--vibeui-avatar-001-ring:light-dark(oklch(1 0 0),oklch(0.19 0 265));
 --vibeui-avatar-001-status:light-dark(oklch(0.63 0.17 152),oklch(0.77 0.17 152));
 --vibeui-avatar-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

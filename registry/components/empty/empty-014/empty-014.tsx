@@ -25,11 +25,11 @@ export type Empty014Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="empty-014"]){
 --vibeui-empty-014-bg:transparent;
---vibeui-empty-014-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.006 265));
+--vibeui-empty-014-fg:light-dark(oklch(0.21 0 265),oklch(0.94 0 265));
 --vibeui-empty-014-muted:color-mix(in oklab,var(--vibeui-empty-014-fg) 68%,transparent);
---vibeui-empty-014-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-empty-014-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-empty-014-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
---vibeui-empty-014-on-accent:light-dark(oklch(0.99 0.01 265),oklch(0.18 0.02 265));
+--vibeui-empty-014-on-accent:light-dark(oklch(0.99 0 265),oklch(0.18 0 265));
 --vibeui-empty-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

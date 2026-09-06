@@ -47,14 +47,14 @@ export type Dashboard017Props = {
 // не сказано, что редактор может.
 const STYLES = `
 :where([data-vibeui-block="dashboard-017"]){
---vibeui-dashboard-017-bg:light-dark(oklch(1 0 0),oklch(0.23 0.013 265));
---vibeui-dashboard-017-panel:light-dark(oklch(0.985 0.003 265),oklch(0.27 0.013 265));
---vibeui-dashboard-017-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-dashboard-017-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
---vibeui-dashboard-017-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-dashboard-017-bg:light-dark(oklch(1 0 0),oklch(0.23 0 265));
+--vibeui-dashboard-017-panel:light-dark(oklch(0.985 0 265),oklch(0.27 0 265));
+--vibeui-dashboard-017-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
+--vibeui-dashboard-017-muted:light-dark(oklch(0.55 0 265),oklch(0.69 0 265));
+--vibeui-dashboard-017-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
 --vibeui-dashboard-017-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.15 262));
 --vibeui-dashboard-017-wait:light-dark(oklch(0.66 0.14 75),oklch(0.79 0.13 75));
---vibeui-dashboard-017-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 265));
+--vibeui-dashboard-017-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0 265));
 --vibeui-dashboard-017-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

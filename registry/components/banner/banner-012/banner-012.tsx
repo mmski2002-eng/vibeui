@@ -28,10 +28,10 @@ export type Banner012Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="banner-012"]){
 --vibeui-banner-012-bg:transparent;
---vibeui-banner-012-fg:light-dark(oklch(0.22 0.014 265),oklch(0.95 0.005 265));
+--vibeui-banner-012-fg:light-dark(oklch(0.22 0 265),oklch(0.95 0 265));
 --vibeui-banner-012-muted:color-mix(in oklab,var(--vibeui-banner-012-fg) 66%,transparent);
---vibeui-banner-012-surface:light-dark(oklch(0.98 0.008 300),oklch(0.26 0.024 300));
---vibeui-banner-012-border:light-dark(oklch(0.9 0.02 300),oklch(0.38 0.03 300));
+--vibeui-banner-012-surface:light-dark(oklch(0.98 0 300),oklch(0.26 0 300));
+--vibeui-banner-012-border:light-dark(oklch(0.9 0 300),oklch(0.38 0 300));
 --vibeui-banner-012-accent:light-dark(oklch(0.5 0.19 300),oklch(0.8 0.14 300));
 /* Текст на акценте считается из его светлоты: проект передаёт один цвет на
    обе ветки темы, и фиксированный однажды окажется тёмным на тёмном. */

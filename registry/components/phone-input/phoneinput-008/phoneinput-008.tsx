@@ -39,10 +39,10 @@ export type Phoneinput008Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="phoneinput-008"]){
 --vibeui-phoneinput-008-surface:transparent;
---vibeui-phoneinput-008-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.33 0.012 265));
---vibeui-phoneinput-008-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.005 265));
+--vibeui-phoneinput-008-surface-border:light-dark(oklch(0.91 0 265),oklch(0.33 0 265));
+--vibeui-phoneinput-008-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-phoneinput-008-muted:color-mix(in oklab,var(--vibeui-phoneinput-008-fg) 68%,transparent);
---vibeui-phoneinput-008-field-border:light-dark(oklch(0.85 0.01 265),oklch(0.4 0.014 265));
+--vibeui-phoneinput-008-field-border:light-dark(oklch(0.85 0 265),oklch(0.4 0 265));
 --vibeui-phoneinput-008-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
 --vibeui-phoneinput-008-warn:light-dark(oklch(0.62 0.14 75),oklch(0.82 0.14 75));
 --vibeui-phoneinput-008-bad:light-dark(oklch(0.58 0.2 25),oklch(0.75 0.16 25));

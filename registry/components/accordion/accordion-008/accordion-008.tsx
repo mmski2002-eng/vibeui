@@ -33,10 +33,10 @@ export type Accordion008Props = Omit<ComponentProps<"div">, "children"> & {
 // нативные details, поэтому поиск по странице раскрывает сразу оба.
 const STYLES = `
 :where([data-vibeui-block="accordion-008"]){
---vibeui-accordion-008-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-accordion-008-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-accordion-008-muted:color-mix(in oklab,var(--vibeui-accordion-008-fg) 68%,transparent);
 --vibeui-accordion-008-bg:transparent;
---vibeui-accordion-008-border:light-dark(oklch(0.91 0.006 265),oklch(0.31 0.01 265));
+--vibeui-accordion-008-border:light-dark(oklch(0.91 0 265),oklch(0.31 0 265));
 --vibeui-accordion-008-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.16 262));
 --vibeui-accordion-008-radius:0.875rem;
 --vibeui-accordion-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

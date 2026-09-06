@@ -34,11 +34,11 @@ const DEFAULT_PREVIEW =
 // можно не открывая файл.
 const STYLES = `
 :where([data-vibeui-block="tooltip-015"]){
---vibeui-tooltip-015-bg:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
---vibeui-tooltip-015-fg:light-dark(oklch(0.25 0.014 265),oklch(0.93 0.006 265));
+--vibeui-tooltip-015-bg:light-dark(oklch(1 0 0),oklch(0.26 0 265));
+--vibeui-tooltip-015-fg:light-dark(oklch(0.25 0 265),oklch(0.93 0 265));
 --vibeui-tooltip-015-muted:color-mix(in oklab,var(--vibeui-tooltip-015-fg) 68%,transparent);
---vibeui-tooltip-015-border:light-dark(oklch(0.9 0.006 265),oklch(0.4 0.012 265));
---vibeui-tooltip-015-thumb:light-dark(oklch(0.94 0.006 265),oklch(0.33 0.012 265));
+--vibeui-tooltip-015-border:light-dark(oklch(0.9 0 265),oklch(0.4 0 265));
+--vibeui-tooltip-015-thumb:light-dark(oklch(0.94 0 265),oklch(0.33 0 265));
 --vibeui-tooltip-015-link:light-dark(oklch(0.5 0.16 265),oklch(0.78 0.13 265));
 --vibeui-tooltip-015-accent:light-dark(oklch(0.57 0.17 265),oklch(0.76 0.15 265));
 --vibeui-tooltip-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -61,7 +61,7 @@ position:absolute;bottom:calc(100% + 0.625rem);left:0;z-index:20;
 width:11rem;box-sizing:border-box;overflow:hidden;
 border:1px solid var(--vibeui-tooltip-015-border);border-radius:0.75rem;
 background:var(--vibeui-tooltip-015-bg);
-box-shadow:0 20px 40px -24px oklch(0.15 0.02 265 / 55%);
+box-shadow:0 20px 40px -24px oklch(0.15 0 265 / 55%);
 pointer-events:none;opacity:0;
 transform:translateY(0.375rem);
 transition:opacity .15s ease,transform .15s ease;

@@ -48,10 +48,10 @@ const STYLES = `
 :where([data-vibeui-block="dashboard-041"]){
 --vibeui-dashboard-041-bg:transparent;
 /* Карточки документов: подложка блока прозрачна, и рисовать их ею нечем. */
---vibeui-dashboard-041-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
---vibeui-dashboard-041-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-dashboard-041-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
---vibeui-dashboard-041-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.011 265));
+--vibeui-dashboard-041-card:light-dark(oklch(1 0 0),oklch(0.26 0 265));
+--vibeui-dashboard-041-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
+--vibeui-dashboard-041-muted:light-dark(oklch(0.55 0 265),oklch(0.71 0 265));
+--vibeui-dashboard-041-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
 --vibeui-dashboard-041-accent:light-dark(oklch(0.5 0.14 200),oklch(0.74 0.12 200));
 --vibeui-dashboard-041-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.03 200));
 --vibeui-dashboard-041-soft:light-dark(oklch(0.95 0.03 200),oklch(0.32 0.05 200));

@@ -28,12 +28,12 @@ export type Autocomplete010Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="autocomplete-010"]){
 --vibeui-autocomplete-010-bg:transparent;
---vibeui-autocomplete-010-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-autocomplete-010-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-autocomplete-010-muted:color-mix(in oklab,var(--vibeui-autocomplete-010-fg) 68%,transparent);
---vibeui-autocomplete-010-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
---vibeui-autocomplete-010-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.011 265));
---vibeui-autocomplete-010-panel:light-dark(oklch(1 0 0),oklch(0.24 0.011 265));
---vibeui-autocomplete-010-active:light-dark(oklch(0.95 0.02 265),oklch(0.33 0.028 265));
+--vibeui-autocomplete-010-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-autocomplete-010-field:light-dark(oklch(0.985 0 265),oklch(0.26 0 265));
+--vibeui-autocomplete-010-panel:light-dark(oklch(1 0 0),oklch(0.24 0 265));
+--vibeui-autocomplete-010-active:light-dark(oklch(0.95 0 265),oklch(0.33 0 265));
 --vibeui-autocomplete-010-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-autocomplete-010-radius:0.625rem;
 --vibeui-autocomplete-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

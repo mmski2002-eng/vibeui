@@ -35,10 +35,10 @@ export type Calendar025Props = Omit<ComponentProps<"section">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="calendar-025"]){
 --vibeui-calendar-025-bg:transparent;
---vibeui-calendar-025-fg:light-dark(oklch(0.23 0.014 250),oklch(0.94 0.005 250));
+--vibeui-calendar-025-fg:light-dark(oklch(0.23 0 250),oklch(0.94 0 250));
 --vibeui-calendar-025-muted:color-mix(in oklab,var(--vibeui-calendar-025-fg) 68%,transparent);
---vibeui-calendar-025-border:light-dark(oklch(0.91 0.006 250),oklch(0.34 0.012 250));
---vibeui-calendar-025-soft:light-dark(oklch(0.97 0.006 250),oklch(0.27 0.01 250));
+--vibeui-calendar-025-border:light-dark(oklch(0.91 0 250),oklch(0.34 0 250));
+--vibeui-calendar-025-soft:light-dark(oklch(0.97 0 250),oklch(0.27 0 250));
 --vibeui-calendar-025-day:light-dark(oklch(0.93 0.06 95),oklch(0.43 0.07 95));
 --vibeui-calendar-025-dayfg:light-dark(oklch(0.4 0.09 75),oklch(0.92 0.06 90));
 --vibeui-calendar-025-night:light-dark(oklch(0.9 0.05 270),oklch(0.41 0.08 275));

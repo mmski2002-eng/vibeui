@@ -18,10 +18,10 @@ export type Autocomplete001Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="autocomplete-001"]){
 --vibeui-autocomplete-001-bg:transparent;
---vibeui-autocomplete-001-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-autocomplete-001-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-autocomplete-001-muted:color-mix(in oklab,var(--vibeui-autocomplete-001-fg) 68%,transparent);
---vibeui-autocomplete-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
---vibeui-autocomplete-001-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.011 265));
+--vibeui-autocomplete-001-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-autocomplete-001-field:light-dark(oklch(0.985 0 265),oklch(0.26 0 265));
 --vibeui-autocomplete-001-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-autocomplete-001-radius:0.625rem;
 --vibeui-autocomplete-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

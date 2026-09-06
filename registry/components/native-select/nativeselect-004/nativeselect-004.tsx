@@ -27,13 +27,13 @@ export type Nativeselect004Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="nativeselect-004"]){
 --vibeui-nativeselect-004-bg:transparent;
---vibeui-nativeselect-004-line:light-dark(oklch(0.91 0.006 265),oklch(0.33 0.012 265));
---vibeui-nativeselect-004-field:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
---vibeui-nativeselect-004-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.004 265));
+--vibeui-nativeselect-004-line:light-dark(oklch(0.91 0 265),oklch(0.33 0 265));
+--vibeui-nativeselect-004-field:light-dark(oklch(1 0 0),oklch(0.26 0 265));
+--vibeui-nativeselect-004-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-nativeselect-004-muted:color-mix(in oklab,var(--vibeui-nativeselect-004-fg) 68%,transparent);
---vibeui-nativeselect-004-field-border:light-dark(oklch(0.85 0.01 265),oklch(0.42 0.014 265));
+--vibeui-nativeselect-004-field-border:light-dark(oklch(0.85 0 265),oklch(0.42 0 265));
 --vibeui-nativeselect-004-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
---vibeui-nativeselect-004-key-bg:light-dark(oklch(0.96 0.004 265),oklch(0.34 0.012 265));
+--vibeui-nativeselect-004-key-bg:light-dark(oklch(0.96 0 265),oklch(0.34 0 265));
 --vibeui-nativeselect-004-radius:0.625rem;
 --vibeui-nativeselect-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -173,7 +173,7 @@ export function Nativeselect004({
           ))}
         </select>
         <p data-part="hint" id={hintId}>
-          <kbd>Ctrl</kbd> / <kbd>⌘</kbd> {hint}
+          <kbd>Ctrl</kbd> / <kbd>Ctrl</kbd> {hint}
         </p>
       </div>
     </>

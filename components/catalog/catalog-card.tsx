@@ -33,7 +33,7 @@ export function CatalogCard({
     // Кадр превью не ведёт на страницу item'а: внутри живой компонент, и
     // клик по нему должен нажимать кнопку или раскрывать раздел, а не
     // уводить с витрины. На страницу ведёт заголовок, код открывает Get Code.
-    <article className="bg-shell border-shell-card-strong relative flex h-full flex-col overflow-hidden rounded-2xl border p-0.5 shadow-sm shadow-black/5">
+    <article className="bg-shell border-shell-card-strong relative flex h-full w-full flex-col overflow-hidden rounded-2xl border p-0.5 shadow-sm shadow-black/5">
       <CardInteractive
         name={localized.name}
         kind={kind}

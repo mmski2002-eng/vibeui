@@ -28,13 +28,13 @@ export type Buttongroup017Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="buttongroup-017"]){
 --vibeui-buttongroup-017-surface:transparent;
---vibeui-buttongroup-017-track:light-dark(oklch(0.955 0.004 265),oklch(0.28 0.01 265));
---vibeui-buttongroup-017-fg:light-dark(oklch(0.25 0.016 265),oklch(0.94 0.006 265));
+--vibeui-buttongroup-017-track:light-dark(oklch(0.955 0 265),oklch(0.28 0 265));
+--vibeui-buttongroup-017-fg:light-dark(oklch(0.25 0 265),oklch(0.94 0 265));
 --vibeui-buttongroup-017-muted:color-mix(in oklab,var(--vibeui-buttongroup-017-fg) 68%,transparent);
---vibeui-buttongroup-017-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-buttongroup-017-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
 --vibeui-buttongroup-017-accent:light-dark(oklch(0.55 0.15 150),oklch(0.62 0.15 150));
 --vibeui-buttongroup-017-deny:light-dark(oklch(0.6 0.15 25),oklch(0.63 0.16 25));
---vibeui-buttongroup-017-on-thumb:oklch(0.99 0.004 265);
+--vibeui-buttongroup-017-on-thumb:oklch(0.99 0 265);
 --vibeui-buttongroup-017-thumb:var(--vibeui-buttongroup-017-accent);
 --vibeui-buttongroup-017-radius:0.5rem;
 --vibeui-buttongroup-017-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

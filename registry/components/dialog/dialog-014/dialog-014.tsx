@@ -27,13 +27,13 @@ export type Dialog014Props = {
 // выделена: выход по бездействию должен требовать бездействия, а не клика.
 const STYLES = `
 :where([data-vibeui-block="dialog-014"]){
---vibeui-dialog-014-fg:light-dark(oklch(0.22 0.016 265),oklch(0.94 0.005 265));
+--vibeui-dialog-014-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-dialog-014-muted:color-mix(in oklab,var(--vibeui-dialog-014-fg) 68%,transparent);
---vibeui-dialog-014-bg:light-dark(oklch(1 0 0),oklch(0.23 0.012 265));
+--vibeui-dialog-014-bg:light-dark(oklch(1 0 0),oklch(0.23 0 265));
 --vibeui-dialog-014-mark:light-dark(oklch(0.45 0.11 70),oklch(0.86 0.12 70));
---vibeui-dialog-014-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.03 262));
---vibeui-dialog-014-track:light-dark(oklch(0.93 0.006 265),oklch(0.3 0.012 265));
---vibeui-dialog-014-border:light-dark(oklch(0.89 0.006 265),oklch(0.36 0.012 265));
+--vibeui-dialog-014-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0 262));
+--vibeui-dialog-014-track:light-dark(oklch(0.93 0 265),oklch(0.3 0 265));
+--vibeui-dialog-014-border:light-dark(oklch(0.89 0 265),oklch(0.36 0 265));
 --vibeui-dialog-014-warn:light-dark(oklch(0.68 0.15 70),oklch(0.78 0.15 70));
 --vibeui-dialog-014-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
 --vibeui-dialog-014-radius:1rem;
@@ -54,18 +54,18 @@ background:var(--vibeui-dialog-014-bg);color:var(--vibeui-dialog-014-fg);
 [data-vibeui-dialog-014-window]{
 position:fixed;inset:0;margin:auto;height:fit-content;
 width:min(25rem,calc(100vw - 2rem));box-sizing:border-box;padding:1.375rem;overflow:hidden;
-border:1px solid var(--vibeui-dialog-014-border,light-dark(oklch(0.89 0.006 265),oklch(0.36 0.012 265)));
+border:1px solid var(--vibeui-dialog-014-border,light-dark(oklch(0.89 0 265),oklch(0.36 0 265)));
 border-radius:var(--vibeui-dialog-014-radius,1rem);
-background:var(--vibeui-dialog-014-bg,light-dark(oklch(1 0 0),oklch(0.23 0.012 265)));
-color:var(--vibeui-dialog-014-fg,light-dark(oklch(0.22 0.016 265),oklch(0.94 0.005 265)));
+background:var(--vibeui-dialog-014-bg,light-dark(oklch(1 0 0),oklch(0.23 0 265)));
+color:var(--vibeui-dialog-014-fg,light-dark(oklch(0.22 0 265),oklch(0.94 0 265)));
 font-family:var(--vibeui-dialog-014-font,ui-sans-serif,system-ui,sans-serif);
-box-shadow:0 24px 60px -24px oklch(0.2 0.03 265 / 45%);
+box-shadow:0 24px 60px -24px oklch(0.2 0 265 / 45%);
 opacity:0;transform:scale(0.97);
 transition:opacity .18s ease,transform .18s ease,display .18s allow-discrete,overlay .18s allow-discrete;
 }
 [data-vibeui-dialog-014-window]:popover-open{opacity:1;transform:none}
 @starting-style{[data-vibeui-dialog-014-window]:popover-open{opacity:0;transform:scale(0.97)}}
-[data-vibeui-dialog-014-window]::backdrop{background:oklch(0.18 0.02 265 / 50%)}
+[data-vibeui-dialog-014-window]::backdrop{background:oklch(0.18 0 265 / 50%)}
 [data-vibeui-dialog-014-window] [data-part="head"]{display:flex;align-items:center;gap:0.75rem;margin-bottom:0.5rem}
 [data-vibeui-dialog-014-window] [data-part="mark"]{
 display:flex;align-items:center;justify-content:center;flex:none;
@@ -75,10 +75,10 @@ color:var(--vibeui-dialog-014-mark,light-dark(oklch(0.45 0.11 70),oklch(0.86 0.1
 font-size:0.875rem;font-weight:800;line-height:1;
 }
 [data-vibeui-dialog-014-window] [data-part="title"]{margin:0;font-size:1.0625rem;font-weight:620;line-height:1.35}
-[data-vibeui-dialog-014-window] [data-part="description"]{margin:0;font-size:0.875rem;line-height:1.55;color:var(--vibeui-dialog-014-muted,light-dark(oklch(0.5 0.014 265),oklch(0.7 0.012 265)))}
+[data-vibeui-dialog-014-window] [data-part="description"]{margin:0;font-size:0.875rem;line-height:1.55;color:var(--vibeui-dialog-014-muted,light-dark(oklch(0.5 0 265),oklch(0.7 0 265)))}
 [data-vibeui-dialog-014-window] [data-part="track"]{
 margin-top:1rem;height:0.25rem;border-radius:9999px;overflow:hidden;
-background:var(--vibeui-dialog-014-track,light-dark(oklch(0.93 0.006 265),oklch(0.3 0.012 265)));
+background:var(--vibeui-dialog-014-track,light-dark(oklch(0.93 0 265),oklch(0.3 0 265)));
 }
 /* Полоса убывает ровно столько секунд, сколько названо в тексте. */
 [data-vibeui-dialog-014-window] [data-part="bar"]{
@@ -94,8 +94,8 @@ appearance:none;cursor:pointer;font:inherit;font-size:0.875rem;font-weight:600;
 display:inline-flex;align-items:center;height:2.25rem;padding:0 1rem;
 border-radius:0.5rem;border:1px solid transparent;
 }
-[data-vibeui-dialog-014-window] [data-part="leave"]{background:transparent;color:inherit;border-color:var(--vibeui-dialog-014-border,light-dark(oklch(0.89 0.006 265),oklch(0.36 0.012 265)))}
-[data-vibeui-dialog-014-window] [data-part="stay"]{background:var(--vibeui-dialog-014-accent,light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262)));color:var(--vibeui-dialog-014-on-accent,light-dark(oklch(1 0 0),oklch(0.18 0.03 262)))}
+[data-vibeui-dialog-014-window] [data-part="leave"]{background:transparent;color:inherit;border-color:var(--vibeui-dialog-014-border,light-dark(oklch(0.89 0 265),oklch(0.36 0 265)))}
+[data-vibeui-dialog-014-window] [data-part="stay"]{background:var(--vibeui-dialog-014-accent,light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262)));color:var(--vibeui-dialog-014-on-accent,light-dark(oklch(1 0 0),oklch(0.18 0 262)))}
 [data-vibeui-dialog-014-window] [data-part="stay"]:hover{filter:brightness(0.94)}
 [data-vibeui-dialog-014-window] :focus-visible{outline:2px solid var(--vibeui-dialog-014-accent,light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262)));outline-offset:2px}
 /* Popover страницу не блокирует: фон под окном иначе продолжает прокручиваться. */

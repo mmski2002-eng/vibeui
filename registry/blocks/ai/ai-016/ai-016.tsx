@@ -40,15 +40,15 @@ export type Ai016Props = {
 const STYLES = `
 :where([data-vibeui-block="ai-016"]){
 --vibeui-ai-016-bg:transparent;
---vibeui-ai-016-soft:light-dark(oklch(0.975 0.004 265),oklch(0.26 0.012 265));
---vibeui-ai-016-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
---vibeui-ai-016-muted:light-dark(oklch(0.53 0.014 265),oklch(0.7 0.012 265));
---vibeui-ai-016-border:light-dark(oklch(0.91 0.006 265),oklch(0.37 0.012 265));
+--vibeui-ai-016-soft:light-dark(oklch(0.975 0 265),oklch(0.26 0 265));
+--vibeui-ai-016-fg:light-dark(oklch(0.21 0 265),oklch(0.94 0 265));
+--vibeui-ai-016-muted:light-dark(oklch(0.53 0 265),oklch(0.7 0 265));
+--vibeui-ai-016-border:light-dark(oklch(0.91 0 265),oklch(0.37 0 265));
 --vibeui-ai-016-accent:light-dark(oklch(0.52 0.17 268),oklch(0.74 0.14 268));
---vibeui-ai-016-on-accent:light-dark(oklch(1 0 0),oklch(0.2 0.03 268));
+--vibeui-ai-016-on-accent:light-dark(oklch(1 0 0),oklch(0.2 0 268));
 --vibeui-ai-016-add:light-dark(oklch(0.56 0.13 152),oklch(0.74 0.13 152));
 --vibeui-ai-016-remove:light-dark(oklch(0.57 0.18 25),oklch(0.72 0.15 25));
---vibeui-ai-016-shadow:light-dark(oklch(0.21 0.014 265 / 6%),oklch(0 0 0 / 32%));
+--vibeui-ai-016-shadow:light-dark(oklch(0.21 0 265 / 6%),oklch(0 0 0 / 32%));
 --vibeui-ai-016-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-ai-016-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

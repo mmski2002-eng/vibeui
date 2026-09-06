@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useId, useState } from "react"
+import { useEffect, useId, useRef, useState } from "react"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type File005Props = Omit<
@@ -18,6 +18,8 @@ export type File005Props = Omit<
   zoomText?: string
   /** Альтернативный текст выбранного фото. */
   photoAlt?: string
+  /** Уже загруженное фото: адрес из профиля. Пусто — показываются инициалы. */
+  photo?: string
   onChange?: (name: string | null) => void
   /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
   background?: string
@@ -35,11 +37,11 @@ export type File005Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="file-005"]){
 --vibeui-file-005-surface:transparent;
---vibeui-file-005-tile:light-dark(oklch(0.96 0.006 265),oklch(0.29 0.012 265));
---vibeui-file-005-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-file-005-tile:light-dark(oklch(0.96 0 265),oklch(0.29 0 265));
+--vibeui-file-005-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-file-005-muted:color-mix(in oklab,var(--vibeui-file-005-fg) 68%,transparent);
---vibeui-file-005-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
---vibeui-file-005-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-file-005-border:light-dark(oklch(0.88 0 265),oklch(0.42 0 265));
+--vibeui-file-005-shell:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
 --vibeui-file-005-accent:light-dark(oklch(0.55 0.19 20),oklch(0.72 0.17 20));
 --vibeui-file-005-zoom:1;
 --vibeui-file-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -56,14 +58,16 @@ border:1px solid var(--vibeui-file-005-shell);border-radius:0.875rem;
 font-family:var(--vibeui-file-005-font);color:var(--vibeui-file-005-fg);
 }
 [data-vibeui-block="file-005"] *{box-sizing:border-box}
-/* Круглая рамка показывает ровно то, что увидят другие. */
-[data-vibeui-block="file-005"] label{
+/* Круглая рамка показывает ровно то, что увидят другие. Правило именное:
+   по голому label под него попадала и подпись ползунка — она получала круг
+   80×80 и наезжала на текст карточки. */
+[data-vibeui-block="file-005"] [data-part="frame"]{
 position:relative;flex:none;display:grid;place-items:center;
 width:5rem;height:5rem;overflow:hidden;cursor:pointer;
 border-radius:9999px;background:var(--vibeui-file-005-tile);
 box-shadow:0 0 0 1px var(--vibeui-file-005-border),0 0 0 4px var(--vibeui-file-005-surface),0 0 0 5px var(--vibeui-file-005-border);
 }
-[data-vibeui-block="file-005"] label:has(input:focus-visible){
+[data-vibeui-block="file-005"] [data-part="frame"]:has(input:focus-visible){
 outline:2px solid var(--vibeui-file-005-accent);outline-offset:5px;
 }
 [data-vibeui-block="file-005"] input[type="file"]{
@@ -94,8 +98,11 @@ display:flex;flex-direction:column;gap:0.375rem;min-width:0;flex:1;
 margin:0;font-size:0.6875rem;line-height:1.4;color:var(--vibeui-file-005-muted);
 }
 [data-vibeui-block="file-005"] [data-part="zoom"]{
-display:flex;flex-direction:column;gap:0.125rem;
+display:flex;flex-direction:column;gap:0.25rem;
 font-size:0.6875rem;color:var(--vibeui-file-005-muted);
+}
+[data-vibeui-block="file-005"] [data-part="zoom"] label{
+font-variant-numeric:tabular-nums;
 }
 /* Нативный range: стрелки с клавиатуры и объявление значения даром. */
 [data-vibeui-block="file-005"] input[type="range"]{
@@ -156,6 +163,7 @@ export function File005({
   changeText = "сменить",
   zoomText = "Масштаб · {value}%",
   photoAlt = "Выбранное фото профиля",
+  photo,
   onChange,
   background = "",
   accent,
@@ -164,14 +172,20 @@ export function File005({
   ...props
 }: File005Props) {
   const id = useId()
-  const [preview, setPreview] = useState<string | null>(null)
+  const [preview, setPreview] = useState<string | null>(photo ?? null)
   const [scale, setScale] = useState(zoom)
+  // Освобождать нужно только собственные объектные ссылки: адрес из профиля
+  // живёт своей жизнью, и revoke сломал бы его.
+  const objectUrl = useRef<string | null>(null)
 
-  // Ссылку обязательно освобождаем: иначе вкладка копит изображения в памяти.
-  useEffect(() => {
-    if (!preview) return
-    return () => URL.revokeObjectURL(preview)
-  }, [preview])
+  useEffect(
+    () => () => {
+      if (objectUrl.current) {
+        URL.revokeObjectURL(objectUrl.current)
+      }
+    },
+    [],
+  )
 
   const palette = {
     "--vibeui-file-005-zoom": String(scale),
@@ -197,7 +211,7 @@ export function File005({
         className={className}
         style={palette}
       >
-        <label htmlFor={id}>
+        <label data-part="frame" htmlFor={id}>
           {preview ? (
             <img src={preview} alt={photoAlt} />
           ) : (
@@ -213,7 +227,13 @@ export function File005({
             onChange={(event) => {
               const file = event.target.files?.[0]
               if (!file) return
-              setPreview(URL.createObjectURL(file))
+
+              if (objectUrl.current) {
+                URL.revokeObjectURL(objectUrl.current)
+              }
+
+              objectUrl.current = URL.createObjectURL(file)
+              setPreview(objectUrl.current)
               onChange?.(file.name)
             }}
           />

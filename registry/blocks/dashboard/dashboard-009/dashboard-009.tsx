@@ -36,12 +36,12 @@ export type Dashboard009Props = {
 const STYLES = `
 :where([data-vibeui-block="dashboard-009"]){
 --vibeui-dashboard-009-bg:transparent;
---vibeui-dashboard-009-panel:light-dark(oklch(0.985 0.002 265),oklch(0.27 0.012 265));
---vibeui-dashboard-009-fg:light-dark(oklch(0.22 0.014 265),oklch(0.95 0.005 265));
---vibeui-dashboard-009-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
---vibeui-dashboard-009-border:light-dark(oklch(0.91 0.006 265),oklch(0.38 0.012 265));
+--vibeui-dashboard-009-panel:light-dark(oklch(0.985 0 265),oklch(0.27 0 265));
+--vibeui-dashboard-009-fg:light-dark(oklch(0.22 0 265),oklch(0.95 0 265));
+--vibeui-dashboard-009-muted:light-dark(oklch(0.55 0 265),oklch(0.71 0 265));
+--vibeui-dashboard-009-border:light-dark(oklch(0.91 0 265),oklch(0.38 0 265));
 --vibeui-dashboard-009-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
---vibeui-dashboard-009-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.03 262));
+--vibeui-dashboard-009-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0 262));
 --vibeui-dashboard-009-art:light-dark(oklch(0.55 0.2 262 / 18%),oklch(0.74 0.16 262 / 26%));
 --vibeui-dashboard-009-art-tall:light-dark(oklch(0.55 0.2 262 / 32%),oklch(0.74 0.16 262 / 45%));
 --vibeui-dashboard-009-done:light-dark(oklch(0.58 0.14 152),oklch(0.76 0.14 152));

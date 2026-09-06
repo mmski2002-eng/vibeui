@@ -40,11 +40,11 @@ export type Resizable010Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="resizable-010"]){
 --vibeui-resizable-010-bg:transparent;
---vibeui-resizable-010-pane:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
---vibeui-resizable-010-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-resizable-010-pane:light-dark(oklch(1 0 0),oklch(0.25 0 265));
+--vibeui-resizable-010-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-resizable-010-muted:color-mix(in oklab,var(--vibeui-resizable-010-fg) 68%,transparent);
---vibeui-resizable-010-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
---vibeui-resizable-010-surface:light-dark(oklch(0.975 0.004 265),oklch(0.31 0.011 265));
+--vibeui-resizable-010-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
+--vibeui-resizable-010-surface:light-dark(oklch(0.975 0 265),oklch(0.31 0 265));
 --vibeui-resizable-010-accent:light-dark(oklch(0.58 0.16 40),oklch(0.78 0.15 40));
 --vibeui-resizable-010-top:1;
 --vibeui-resizable-010-bottom:1;

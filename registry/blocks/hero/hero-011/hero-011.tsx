@@ -23,11 +23,11 @@ export type Hero011Props = {
 const STYLES = `
 :where([data-vibeui-block="hero-011"]){
 --vibeui-hero-011-bg:transparent;
---vibeui-hero-011-fg:light-dark(oklch(0.19 0.02 275),oklch(0.98 0.003 275));
---vibeui-hero-011-muted:light-dark(oklch(0.5 0.016 275),oklch(0.72 0.014 275));
---vibeui-hero-011-line:light-dark(oklch(0.19 0.02 275 / 9%),oklch(1 0 0 / 8%));
---vibeui-hero-011-edge:light-dark(oklch(0.19 0.02 275 / 18%),oklch(1 0 0 / 18%));
---vibeui-hero-011-veil:light-dark(oklch(0.19 0.02 275 / 4%),oklch(1 0 0 / 5%));
+--vibeui-hero-011-fg:light-dark(oklch(0.19 0 275),oklch(0.98 0 275));
+--vibeui-hero-011-muted:light-dark(oklch(0.5 0 275),oklch(0.72 0 275));
+--vibeui-hero-011-line:light-dark(oklch(0.19 0 275 / 9%),oklch(1 0 0 / 8%));
+--vibeui-hero-011-edge:light-dark(oklch(0.19 0 275 / 18%),oklch(1 0 0 / 18%));
+--vibeui-hero-011-veil:light-dark(oklch(0.19 0 275 / 4%),oklch(1 0 0 / 5%));
 --vibeui-hero-011-accent:light-dark(oklch(0.58 0.19 30),oklch(0.72 0.18 30));
 --vibeui-hero-011-accent-fg:light-dark(oklch(0.99 0.005 30),oklch(0.16 0.03 30));
 --vibeui-hero-011-cool:light-dark(oklch(0.55 0.2 275),oklch(0.64 0.19 275));

@@ -53,13 +53,13 @@ export type Menubar004Props = {
 const STYLES = `
 :where([data-vibeui-block="menubar-004"]){
 --vibeui-menubar-004-bg:transparent;
---vibeui-menubar-004-panel:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
---vibeui-menubar-004-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-menubar-004-panel:light-dark(oklch(1 0 0),oklch(0.25 0 265));
+--vibeui-menubar-004-fg:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
 --vibeui-menubar-004-muted:color-mix(in oklab,var(--vibeui-menubar-004-fg) 68%,transparent);
---vibeui-menubar-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
---vibeui-menubar-004-hover:light-dark(oklch(0.55 0.02 265 / 10%),oklch(0.88 0.02 265 / 14%));
+--vibeui-menubar-004-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-menubar-004-hover:light-dark(oklch(0.55 0 265 / 10%),oklch(0.88 0 265 / 14%));
 --vibeui-menubar-004-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
---vibeui-menubar-004-shadow:light-dark(oklch(0.2 0.03 265 / 45%),oklch(0 0 0 / 62%));
+--vibeui-menubar-004-shadow:light-dark(oklch(0.2 0 265 / 45%),oklch(0 0 0 / 62%));
 --vibeui-menubar-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -133,8 +133,8 @@ position:static;margin-block-start:0.375rem;
 `
 
 const DEFAULT_TOGGLES: Menubar004Toggle[] = [
-  { id: "grid", label: "Сетка", keys: "⌘'" },
-  { id: "rulers", label: "Линейки", keys: "⌘R" },
+  { id: "grid", label: "Сетка", keys: "Ctrl'" },
+  { id: "rulers", label: "Линейки", keys: "Ctrl+R" },
   { id: "outlines", label: "Контуры блоков" },
 ]
 

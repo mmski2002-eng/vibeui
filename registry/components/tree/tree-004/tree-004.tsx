@@ -34,12 +34,12 @@ export type Tree004Props = {
 const STYLES = `
 :where([data-vibeui-block="tree-004"]){
 --vibeui-tree-004-bg:transparent;
---vibeui-tree-004-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-tree-004-fg:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
 --vibeui-tree-004-muted:color-mix(in oklab,var(--vibeui-tree-004-fg) 68%,transparent);
---vibeui-tree-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
---vibeui-tree-004-hover:light-dark(oklch(0.97 0.004 265),oklch(0.29 0.01 265));
+--vibeui-tree-004-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-tree-004-hover:light-dark(oklch(0.97 0 265),oklch(0.29 0 265));
 --vibeui-tree-004-selected:light-dark(oklch(0.94 0.04 265),oklch(0.34 0.06 265));
---vibeui-tree-004-panel:light-dark(oklch(0.97 0.004 265),oklch(0.28 0.01 265));
+--vibeui-tree-004-panel:light-dark(oklch(0.97 0 265),oklch(0.28 0 265));
 --vibeui-tree-004-accent:light-dark(oklch(0.53 0.19 265),oklch(0.75 0.16 265));
 --vibeui-tree-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

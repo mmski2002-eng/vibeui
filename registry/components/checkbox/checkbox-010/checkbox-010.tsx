@@ -39,11 +39,11 @@ export type Checkbox010Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="checkbox-010"]){
 --vibeui-checkbox-010-panel:transparent;
---vibeui-checkbox-010-bg:light-dark(oklch(1 0 0),oklch(0.29 0.012 265));
---vibeui-checkbox-010-surface:light-dark(oklch(0.985 0.002 265),oklch(0.24 0.012 265));
---vibeui-checkbox-010-fg:light-dark(oklch(0.21 0.014 265),oklch(0.95 0.005 265));
+--vibeui-checkbox-010-bg:light-dark(oklch(1 0 0),oklch(0.29 0 265));
+--vibeui-checkbox-010-surface:light-dark(oklch(0.985 0 265),oklch(0.24 0 265));
+--vibeui-checkbox-010-fg:light-dark(oklch(0.21 0 265),oklch(0.95 0 265));
 --vibeui-checkbox-010-muted:color-mix(in oklab,var(--vibeui-checkbox-010-fg) 68%,transparent);
---vibeui-checkbox-010-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265));
+--vibeui-checkbox-010-border:light-dark(oklch(0.9 0 265),oklch(0.38 0 265));
 --vibeui-checkbox-010-accent:light-dark(oklch(0.52 0.15 168),oklch(0.74 0.13 168));
 --vibeui-checkbox-010-soft:light-dark(oklch(0.96 0.03 168),oklch(0.3 0.05 168));
 --vibeui-checkbox-010-mark:light-dark(oklch(0.99 0.01 168),oklch(0.19 0.03 168));

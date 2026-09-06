@@ -30,14 +30,14 @@ export type Toast022Props = Omit<ComponentProps<"div">, "children" | "title"> & 
 // случайно.
 const STYLES = `
 :where([data-vibeui-block="toast-022"]){
---vibeui-toast-022-bg:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
---vibeui-toast-022-fg:light-dark(oklch(0.24 0.014 265),oklch(0.95 0.005 265));
+--vibeui-toast-022-bg:light-dark(oklch(1 0 0),oklch(0.24 0 265));
+--vibeui-toast-022-fg:light-dark(oklch(0.24 0 265),oklch(0.95 0 265));
 --vibeui-toast-022-muted:color-mix(in oklab,var(--vibeui-toast-022-fg) 64%,transparent);
---vibeui-toast-022-border:light-dark(oklch(0.89 0.006 265),oklch(0.36 0.012 265));
+--vibeui-toast-022-border:light-dark(oklch(0.89 0 265),oklch(0.36 0 265));
 --vibeui-toast-022-hover:light-dark(oklch(0 0 0 / 5%),oklch(1 0 0 / 7%));
 --vibeui-toast-022-tone:light-dark(oklch(0.5 0.16 265),oklch(0.78 0.12 265));
 --vibeui-toast-022-on-tone:oklch(from var(--vibeui-toast-022-tone) clamp(0,(0.62 - l) * 100,1) 0 0);
---vibeui-toast-022-shadow:light-dark(oklch(0.2 0.02 265 / 22%),oklch(0 0 0 / 58%));
+--vibeui-toast-022-shadow:light-dark(oklch(0.2 0 265 / 22%),oklch(0 0 0 / 58%));
 --vibeui-toast-022-radius:0.875rem;
 --vibeui-toast-022-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

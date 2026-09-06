@@ -28,13 +28,13 @@ export type Switch012Props = Omit<ComponentProps<"fieldset">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="switch-012"]){
 --vibeui-switch-012-bg:transparent;
---vibeui-switch-012-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-switch-012-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-switch-012-muted:color-mix(in oklab,var(--vibeui-switch-012-fg) 68%,transparent);
---vibeui-switch-012-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
---vibeui-switch-012-track:light-dark(oklch(0.88 0.008 265),oklch(0.43 0.014 265));
---vibeui-switch-012-thumb:light-dark(oklch(1 0 0),oklch(0.93 0.004 265));
+--vibeui-switch-012-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
+--vibeui-switch-012-track:light-dark(oklch(0.88 0 265),oklch(0.43 0 265));
+--vibeui-switch-012-thumb:light-dark(oklch(1 0 0),oklch(0.93 0 265));
 --vibeui-switch-012-accent:light-dark(oklch(0.55 0.19 262),oklch(0.73 0.16 262));
---vibeui-switch-012-hover:light-dark(oklch(0.55 0.02 265 / 6%),oklch(0.88 0.02 265 / 10%));
+--vibeui-switch-012-hover:light-dark(oklch(0.55 0 265 / 6%),oklch(0.88 0 265 / 10%));
 --vibeui-switch-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -84,7 +84,7 @@ transition:background-color .18s ease;
 position:absolute;left:0.1875rem;top:0.1875rem;
 width:1.125rem;height:1.125rem;border-radius:9999px;pointer-events:none;
 background:var(--vibeui-switch-012-thumb);
-box-shadow:0 1px 2px oklch(0.2 0.02 265 / 28%);
+box-shadow:0 1px 2px oklch(0.2 0 265 / 28%);
 transition:transform .18s cubic-bezier(.32,.72,0,1);
 }
 [data-vibeui-block="switch-012"] input:checked + [data-part="thumb"]{transform:translateX(1.25rem)}

@@ -37,10 +37,10 @@ export type Checkbox014Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="checkbox-014"]){
 --vibeui-checkbox-014-bg:transparent;
---vibeui-checkbox-014-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-checkbox-014-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-checkbox-014-muted:color-mix(in oklab,var(--vibeui-checkbox-014-fg) 68%,transparent);
---vibeui-checkbox-014-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
---vibeui-checkbox-014-track:light-dark(oklch(0.94 0.005 265),oklch(0.3 0.01 265));
+--vibeui-checkbox-014-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
+--vibeui-checkbox-014-track:light-dark(oklch(0.94 0 265),oklch(0.3 0 265));
 --vibeui-checkbox-014-accent:light-dark(oklch(0.56 0.14 150),oklch(0.68 0.15 150));
 --vibeui-checkbox-014-on-accent:oklch(0.99 0.01 150);
 --vibeui-checkbox-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

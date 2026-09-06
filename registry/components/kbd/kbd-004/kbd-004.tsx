@@ -23,10 +23,10 @@ export type Kbd004Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="kbd-004"]){
 --vibeui-kbd-004-surface:transparent;
---vibeui-kbd-004-fg:light-dark(oklch(0.3 0.014 265),oklch(0.91 0.006 265));
+--vibeui-kbd-004-fg:light-dark(oklch(0.3 0 265),oklch(0.91 0 265));
 --vibeui-kbd-004-muted:color-mix(in oklab,var(--vibeui-kbd-004-fg) 68%,transparent);
---vibeui-kbd-004-border:light-dark(oklch(0.89 0.008 265),oklch(0.38 0.012 265));
---vibeui-kbd-004-key:light-dark(oklch(0.97 0.003 265),oklch(0.3 0.012 265));
+--vibeui-kbd-004-border:light-dark(oklch(0.89 0 265),oklch(0.38 0 265));
+--vibeui-kbd-004-key:light-dark(oklch(0.97 0 265),oklch(0.3 0 265));
 --vibeui-kbd-004-gap:0.875rem;
 --vibeui-kbd-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

@@ -44,10 +44,10 @@ export type Blog005Props = {
 const STYLES = `
 :where([data-vibeui-block="blog-005"]){
 --vibeui-blog-005-bg:transparent;
---vibeui-blog-005-soft:light-dark(oklch(0.975 0.004 265),oklch(0.26 0.012 265));
---vibeui-blog-005-fg:light-dark(oklch(0.2 0.014 265),oklch(0.95 0.005 265));
---vibeui-blog-005-muted:light-dark(oklch(0.52 0.014 265),oklch(0.72 0.012 265));
---vibeui-blog-005-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
+--vibeui-blog-005-soft:light-dark(oklch(0.975 0 265),oklch(0.26 0 265));
+--vibeui-blog-005-fg:light-dark(oklch(0.2 0 265),oklch(0.95 0 265));
+--vibeui-blog-005-muted:light-dark(oklch(0.52 0 265),oklch(0.72 0 265));
+--vibeui-blog-005-border:light-dark(oklch(0.91 0 265),oklch(0.35 0 265));
 --vibeui-blog-005-accent:light-dark(oklch(0.5 0.17 240),oklch(0.76 0.13 240));
 --vibeui-blog-005-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

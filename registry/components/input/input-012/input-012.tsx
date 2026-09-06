@@ -30,12 +30,12 @@ const STYLES = `
 --vibeui-input-012-surface:transparent;
 /* Список подсказок висит над страницей, поэтому его подложка непрозрачна
    всегда и не зависит от surface. */
---vibeui-input-012-panel:light-dark(oklch(1 0 0),oklch(0.28 0.012 265));
---vibeui-input-012-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
---vibeui-input-012-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-input-012-panel:light-dark(oklch(1 0 0),oklch(0.28 0 265));
+--vibeui-input-012-shell:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
+--vibeui-input-012-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-input-012-muted:color-mix(in oklab,var(--vibeui-input-012-fg) 68%,transparent);
---vibeui-input-012-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.012 265));
---vibeui-input-012-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
+--vibeui-input-012-field:light-dark(oklch(0.985 0 265),oklch(0.26 0 265));
+--vibeui-input-012-border:light-dark(oklch(0.88 0 265),oklch(0.42 0 265));
 --vibeui-input-012-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-input-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

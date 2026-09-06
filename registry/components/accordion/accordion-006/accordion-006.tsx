@@ -39,13 +39,13 @@ export type Accordion006Props = Omit<ComponentProps<"div">, "children"> & {
 // берётся из color-scheme окружения через light-dark().
 const STYLES = `
 :where([data-vibeui-block="accordion-006"]){
---vibeui-accordion-006-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-accordion-006-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-accordion-006-muted:color-mix(in oklab,var(--vibeui-accordion-006-fg) 68%,transparent);
 --vibeui-accordion-006-bg:transparent;
---vibeui-accordion-006-border:light-dark(oklch(0.91 0.006 265),oklch(0.31 0.01 265));
---vibeui-accordion-006-track:light-dark(oklch(0.93 0.006 265),oklch(0.28 0.01 265));
+--vibeui-accordion-006-border:light-dark(oklch(0.91 0 265),oklch(0.31 0 265));
+--vibeui-accordion-006-track:light-dark(oklch(0.93 0 265),oklch(0.28 0 265));
 --vibeui-accordion-006-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.16 262));
---vibeui-accordion-006-accent-fg:light-dark(oklch(1 0 0),oklch(0.17 0.02 265));
+--vibeui-accordion-006-accent-fg:light-dark(oklch(1 0 0),oklch(0.17 0 265));
 --vibeui-accordion-006-done:light-dark(oklch(0.58 0.15 152),oklch(0.75 0.15 155));
 --vibeui-accordion-006-radius:1rem;
 --vibeui-accordion-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

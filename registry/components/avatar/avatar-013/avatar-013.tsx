@@ -25,7 +25,7 @@ const STYLES = `
 --vibeui-avatar-013-online:light-dark(oklch(0.62 0.15 152),oklch(0.76 0.15 152));
 --vibeui-avatar-013-away:light-dark(oklch(0.75 0.14 75),oklch(0.88 0.14 75));
 --vibeui-avatar-013-busy:oklch(0.6 0.19 25);
---vibeui-avatar-013-offline:light-dark(oklch(0.7 0.014 265),oklch(0.84 0.014 265));
+--vibeui-avatar-013-offline:light-dark(oklch(0.7 0 265),oklch(0.84 0 265));
 --vibeui-avatar-013-owner:light-dark(oklch(0.55 0.2 262),oklch(0.69 0.2 262));
 --vibeui-avatar-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -69,7 +69,7 @@ background:var(--vibeui-avatar-013-owner);color:oklch(1 0 0);
 font-size:calc(var(--vibeui-avatar-013-dot) * 0.72);font-weight:700;line-height:1;
 }
 [data-vibeui-block="avatar-013"][data-role="editor"] [data-part="role"]{background:light-dark(oklch(0.6 0.13 195),oklch(0.72 0.13 195))}
-[data-vibeui-block="avatar-013"][data-role="reader"] [data-part="role"]{background:light-dark(oklch(0.62 0.02 265),oklch(0.66 0.02 265))}
+[data-vibeui-block="avatar-013"][data-role="reader"] [data-part="role"]{background:light-dark(oklch(0.62 0 265),oklch(0.66 0 265))}
 [data-vibeui-block="avatar-013"] [data-part="dot"]{
 position:absolute;right:0;bottom:0;
 width:var(--vibeui-avatar-013-dot);height:var(--vibeui-avatar-013-dot);

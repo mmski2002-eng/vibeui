@@ -27,11 +27,11 @@ export type Card016Props = Omit<ComponentProps<"article">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="card-016"]){
 --vibeui-card-016-bg:transparent;
---vibeui-card-016-surface:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
---vibeui-card-016-ink:light-dark(oklch(0.2 0.02 265),oklch(0.97 0.005 265));
---vibeui-card-016-fg:light-dark(oklch(0.22 0.015 265),oklch(0.94 0.006 265));
+--vibeui-card-016-surface:light-dark(oklch(1 0 0),oklch(0.26 0 265));
+--vibeui-card-016-ink:light-dark(oklch(0.2 0 265),oklch(0.97 0 265));
+--vibeui-card-016-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-card-016-muted:color-mix(in oklab,var(--vibeui-card-016-fg) 68%,transparent);
---vibeui-card-016-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-card-016-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
 --vibeui-card-016-kind:light-dark(oklch(0.58 0.16 265),oklch(0.74 0.14 265));
 --vibeui-card-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

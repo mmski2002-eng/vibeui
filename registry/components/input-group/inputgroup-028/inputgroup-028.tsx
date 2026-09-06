@@ -31,12 +31,12 @@ const DEFAULT_CITIES = ["Москва", "Санкт-Петербург", "Каз
 const STYLES = `
 :where([data-vibeui-block="inputgroup-028"]){
 --vibeui-inputgroup-028-surface:transparent;
---vibeui-inputgroup-028-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
---vibeui-inputgroup-028-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-inputgroup-028-shell:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
+--vibeui-inputgroup-028-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-inputgroup-028-muted:color-mix(in oklab,var(--vibeui-inputgroup-028-fg) 68%,transparent);
---vibeui-inputgroup-028-field:light-dark(oklch(0.99 0.002 265),oklch(0.26 0.012 265));
---vibeui-inputgroup-028-fixed:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.012 265));
---vibeui-inputgroup-028-border:light-dark(oklch(0.86 0.008 265),oklch(0.42 0.014 265));
+--vibeui-inputgroup-028-field:light-dark(oklch(0.99 0 265),oklch(0.26 0 265));
+--vibeui-inputgroup-028-fixed:light-dark(oklch(0.96 0 265),oklch(0.31 0 265));
+--vibeui-inputgroup-028-border:light-dark(oklch(0.86 0 265),oklch(0.42 0 265));
 --vibeui-inputgroup-028-accent:light-dark(oklch(0.56 0.14 275),oklch(0.77 0.13 275));
 --vibeui-inputgroup-028-radius:0.75rem;
 --vibeui-inputgroup-028-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

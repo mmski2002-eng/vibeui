@@ -24,11 +24,11 @@ export type Input001Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="input-001"]){
 --vibeui-input-001-surface:transparent;
---vibeui-input-001-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
---vibeui-input-001-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.005 265));
+--vibeui-input-001-surface-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
+--vibeui-input-001-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-input-001-muted:color-mix(in oklab,var(--vibeui-input-001-fg) 68%,transparent);
---vibeui-input-001-bg:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
---vibeui-input-001-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.014 265));
+--vibeui-input-001-bg:light-dark(oklch(1 0 0),oklch(0.26 0 265));
+--vibeui-input-001-border:light-dark(oklch(0.87 0 265),oklch(0.42 0 265));
 --vibeui-input-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
 --vibeui-input-001-danger:light-dark(oklch(0.55 0.19 25),oklch(0.74 0.16 25));
 --vibeui-input-001-radius:0.625rem;

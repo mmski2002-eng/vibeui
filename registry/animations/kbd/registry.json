@@ -18,14 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-kbd-anim-001-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Четыре ряда клавиш — цифровой, два буквенных и нижний — собраны из статичного описания раскладки; клавиши Ctrl и P помечены как участники демо-комбинации и по очереди получают акцентный фон и лёгкий translateY по CSS-анимации со сдвигом задержки. Подпись под клавиатурой называет комбинацию и отключается пропом showCaption.",
       "meta": {
-        "tags": [
-          "keyboard",
-          "shortcut",
-          "kbd",
-          "key",
-          "combo",
-          "animated"
-        ],
+        "tags": ["keyboard", "shortcut", "kbd", "key", "combo", "animated"],
         "ai": {
           "export": "KbdAnim001",
           "usage": "<KbdAnim001 caption=\"Быстрая команда\" />",
@@ -139,17 +132,10 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-kbd-anim-002-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Каждая клавиша — keycap-кнопка с нижней тенью-ребром, знак «+» стоит статичной вставкой между клавишами. Клавиши нажимаются по очереди: translateY вниз на толщину ребра и схлопывание тени, доля цикла на клавишу сдвинута через animation-delay пропорционально её позиции в списке keys.",
       "meta": {
-        "tags": [
-          "keyboard",
-          "shortcut",
-          "keycap",
-          "kbd",
-          "combo",
-          "animated"
-        ],
+        "tags": ["keyboard", "shortcut", "keycap", "kbd", "combo", "animated"],
         "ai": {
           "export": "KbdAnim002",
-          "usage": "<KbdAnim002 keys={[\"⌘\", \"K\"]} label=\"Быстрый поиск\" />",
+          "usage": "<KbdAnim002 keys={[\"Ctrl\", \"K\"]} label=\"Быстрый поиск\" />",
           "summary": "Комбинация клавиш из объёмных keycap-кнопок: клавиши по очереди нажимаются — уходят вниз, тень схлопывается, — демонстрируя шорткат в цикле. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
             "локальную палитру --vibeui-kbd-anim-002-* — не подменяйте её токенами вашей темы",
@@ -166,7 +152,7 @@
             "подпись под клавишами через проп label"
           ],
           "notes": [
-            "keys принимает готовые символы строкой (например ⌘, ⇧, K) — своей раскладки спецсимволов компонент не хранит",
+            "keys принимает готовые символы строкой (например Ctrl+, Shift+, K) — своей раскладки спецсимволов компонент не хранит",
             "label=\"\" убирает подпись под клавишами"
           ]
         },
@@ -207,10 +193,10 @@
                 "the caption under the keys via the label prop"
               ],
               "notes": [
-                "keys takes ready-made characters as strings (e.g. ⌘, ⇧, K) — the component does not keep its own special-character layout",
+                "keys takes ready-made characters as strings (e.g. Ctrl+, Shift+, K) — the component does not keep its own special-character layout",
                 "label=\"\" removes the caption under the keys"
               ],
-              "usage": "<KbdAnim002 keys={[\"⌘\", \"K\"]} label=\"Quick search\" />"
+              "usage": "<KbdAnim002 keys={[\"Ctrl\", \"K\"]} label=\"Quick search\" />"
             },
             "controls": {
               "label": {

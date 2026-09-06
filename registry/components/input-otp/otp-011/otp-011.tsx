@@ -33,10 +33,10 @@ export type Otp011Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="otp-011"]){
 --vibeui-otp-011-bg:transparent;
---vibeui-otp-011-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-otp-011-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-otp-011-muted:color-mix(in oklab,var(--vibeui-otp-011-fg) 68%,transparent);
---vibeui-otp-011-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
---vibeui-otp-011-field:light-dark(oklch(0.985 0.002 265),oklch(0.27 0.014 265));
+--vibeui-otp-011-border:light-dark(oklch(0.88 0 265),oklch(0.42 0 265));
+--vibeui-otp-011-field:light-dark(oklch(0.985 0 265),oklch(0.27 0 265));
 --vibeui-otp-011-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-otp-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

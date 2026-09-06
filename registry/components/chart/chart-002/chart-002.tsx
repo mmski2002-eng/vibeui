@@ -29,12 +29,12 @@ export type Chart002Props = {
 // темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="chart-002"]){
---vibeui-chart-002-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
+--vibeui-chart-002-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-chart-002-muted:color-mix(in oklab,var(--vibeui-chart-002-fg) 68%,transparent);
 --vibeui-chart-002-bg:transparent;
---vibeui-chart-002-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
---vibeui-chart-002-grid:light-dark(oklch(0.94 0.005 265),oklch(0.3 0.01 265));
---vibeui-chart-002-bar:light-dark(oklch(0.88 0.03 262),oklch(0.4 0.045 262));
+--vibeui-chart-002-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
+--vibeui-chart-002-grid:light-dark(oklch(0.94 0 265),oklch(0.3 0 265));
+--vibeui-chart-002-bar:light-dark(oklch(0.88 0 262),oklch(0.4 0.045 262));
 --vibeui-chart-002-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.17 262));
 --vibeui-chart-002-radius:0.875rem;
 --vibeui-chart-002-height:9rem;

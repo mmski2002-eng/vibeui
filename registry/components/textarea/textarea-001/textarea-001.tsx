@@ -23,11 +23,11 @@ export type Textarea001Props = Omit<ComponentProps<"textarea">, "rows"> & {
 const STYLES = `
 :where([data-vibeui-block="textarea-001"]){
 --vibeui-textarea-001-surface:transparent;
---vibeui-textarea-001-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.33 0.012 265));
---vibeui-textarea-001-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
+--vibeui-textarea-001-surface-border:light-dark(oklch(0.91 0 265),oklch(0.33 0 265));
+--vibeui-textarea-001-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-textarea-001-muted:color-mix(in oklab,var(--vibeui-textarea-001-fg) 68%,transparent);
---vibeui-textarea-001-bg:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
---vibeui-textarea-001-border:light-dark(oklch(0.87 0.008 265),oklch(0.38 0.014 265));
+--vibeui-textarea-001-bg:light-dark(oklch(1 0 0),oklch(0.26 0 265));
+--vibeui-textarea-001-border:light-dark(oklch(0.87 0 265),oklch(0.38 0 265));
 --vibeui-textarea-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
 --vibeui-textarea-001-radius:0.75rem;
 --vibeui-textarea-001-line:1.55;

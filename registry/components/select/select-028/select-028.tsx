@@ -33,10 +33,10 @@ export type Select028Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="select-028"]){
 --vibeui-select-028-surface:transparent;
---vibeui-select-028-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
---vibeui-select-028-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-select-028-surface-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
+--vibeui-select-028-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-select-028-muted:color-mix(in oklab,var(--vibeui-select-028-fg) 68%,transparent);
---vibeui-select-028-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.012 265));
+--vibeui-select-028-border:light-dark(oklch(0.87 0 265),oklch(0.42 0 265));
 --vibeui-select-028-accent:light-dark(oklch(0.55 0.19 262),oklch(0.73 0.17 262));
 --vibeui-select-028-tone-low:light-dark(oklch(0.62 0.13 200),oklch(0.78 0.12 200));
 --vibeui-select-028-tone-medium:light-dark(oklch(0.75 0.16 85),oklch(0.83 0.14 88));

@@ -34,11 +34,11 @@ export type Buttongroup046Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="buttongroup-046"]){
 --vibeui-buttongroup-046-surface:transparent;
---vibeui-buttongroup-046-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.005 265));
+--vibeui-buttongroup-046-fg:light-dark(oklch(0.25 0 265),oklch(0.95 0 265));
 --vibeui-buttongroup-046-muted:color-mix(in oklab,var(--vibeui-buttongroup-046-fg) 68%,transparent);
---vibeui-buttongroup-046-border:light-dark(oklch(0.89 0.008 265),oklch(0.41 0.012 265));
---vibeui-buttongroup-046-hover:light-dark(oklch(0.985 0.003 265),oklch(0.32 0.012 265));
---vibeui-buttongroup-046-on:light-dark(oklch(0.965 0.03 265),oklch(0.33 0.055 265));
+--vibeui-buttongroup-046-border:light-dark(oklch(0.89 0 265),oklch(0.41 0 265));
+--vibeui-buttongroup-046-hover:light-dark(oklch(0.985 0 265),oklch(0.32 0 265));
+--vibeui-buttongroup-046-on:light-dark(oklch(0.965 0 265),oklch(0.33 0.055 265));
 --vibeui-buttongroup-046-accent:light-dark(oklch(0.5 0.16 265),oklch(0.79 0.13 265));
 --vibeui-buttongroup-046-radius:0.75rem;
 --vibeui-buttongroup-046-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

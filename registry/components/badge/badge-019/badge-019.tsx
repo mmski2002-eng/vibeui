@@ -14,10 +14,10 @@ export type Badge019Props = ComponentProps<"span"> & {
 // печати счёта.
 const STYLES = `
 :where([data-vibeui-block="badge-019"]){
---vibeui-badge-019-bg:light-dark(oklch(0.97 0.004 265),oklch(0.27 0.009 265));
---vibeui-badge-019-fg:light-dark(oklch(0.38 0.014 265),oklch(0.92 0.006 265));
---vibeui-badge-019-border:light-dark(oklch(0.88 0.006 265),oklch(0.4 0.011 265));
---vibeui-badge-019-mark:light-dark(oklch(0.6 0.02 265),oklch(0.72 0.018 265));
+--vibeui-badge-019-bg:light-dark(oklch(0.97 0 265),oklch(0.27 0 265));
+--vibeui-badge-019-fg:light-dark(oklch(0.38 0 265),oklch(0.92 0 265));
+--vibeui-badge-019-border:light-dark(oklch(0.88 0 265),oklch(0.4 0 265));
+--vibeui-badge-019-mark:light-dark(oklch(0.6 0 265),oklch(0.72 0 265));
 --vibeui-badge-019-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -41,10 +41,10 @@ background:linear-gradient(135deg,light-dark(oklch(0.96 0.05 85),oklch(0.36 0.05
    отличается от соседей материалом, а не только числом ромбов, и в светлой
    теме тоже обязан читаться как «дороже». */
 [data-vibeui-block="badge-019"][data-plan="business"]{
---vibeui-badge-019-fg:oklch(0.97 0.01 265);
+--vibeui-badge-019-fg:oklch(0.97 0 265);
 --vibeui-badge-019-border:oklch(0.42 0.05 265);
 --vibeui-badge-019-mark:oklch(0.86 0.09 85);
-background:linear-gradient(135deg,oklch(0.32 0.03 265),oklch(0.24 0.03 275));
+background:linear-gradient(135deg,oklch(0.32 0 265),oklch(0.24 0 275));
 }
 [data-vibeui-block="badge-019"] [data-part="marks"]{
 display:inline-flex;align-items:center;gap:0.1875rem;flex:none;

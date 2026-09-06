@@ -23,13 +23,13 @@ export type Hero007Props = {
 const STYLES = `
 :where([data-vibeui-block="hero-007"]){
 --vibeui-hero-007-bg:transparent;
---vibeui-hero-007-fg:light-dark(oklch(0.19 0.02 300),oklch(0.97 0.004 300));
---vibeui-hero-007-muted:light-dark(oklch(0.5 0.018 300),oklch(0.7 0.015 300));
---vibeui-hero-007-line:light-dark(oklch(0.19 0.02 300 / 15%),oklch(1 0 0 / 16%));
+--vibeui-hero-007-fg:light-dark(oklch(0.19 0 300),oklch(0.97 0 300));
+--vibeui-hero-007-muted:light-dark(oklch(0.5 0 300),oklch(0.7 0 300));
+--vibeui-hero-007-line:light-dark(oklch(0.19 0 300 / 15%),oklch(1 0 0 / 16%));
 --vibeui-hero-007-accent:light-dark(oklch(0.52 0.2 305),oklch(0.7 0.19 305));
 --vibeui-hero-007-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.17 0.04 305));
 /* Постер всегда тёмный — это кадр, а не подложка; текст на нём светлый в обеих темах. */
---vibeui-hero-007-on-poster:oklch(0.97 0.004 300);
+--vibeui-hero-007-on-poster:oklch(0.97 0 300);
 --vibeui-hero-007-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

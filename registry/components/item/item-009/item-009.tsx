@@ -25,13 +25,13 @@ export type Item009Props = Omit<ComponentProps<"li">, "children" | "title"> & {
 const STYLES = `
 :where([data-vibeui-block="item-009"]){
 --vibeui-item-009-bg:transparent;
---vibeui-item-009-fg:light-dark(oklch(0.23 0.014 265),oklch(0.93 0.006 265));
+--vibeui-item-009-fg:light-dark(oklch(0.23 0 265),oklch(0.93 0 265));
 --vibeui-item-009-muted:color-mix(in oklab,var(--vibeui-item-009-fg) 68%,transparent);
---vibeui-item-009-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-item-009-border:light-dark(oklch(0.9 0 265),oklch(0.35 0 265));
 --vibeui-item-009-ok:light-dark(oklch(0.58 0.15 152),oklch(0.76 0.14 152));
 --vibeui-item-009-wait:light-dark(oklch(0.68 0.14 78),oklch(0.83 0.13 82));
 --vibeui-item-009-fail:light-dark(oklch(0.58 0.19 27),oklch(0.74 0.17 27));
---vibeui-item-009-off:light-dark(oklch(0.6 0.01 265),oklch(0.68 0.01 265));
+--vibeui-item-009-off:light-dark(oklch(0.6 0 265),oklch(0.68 0 265));
 --vibeui-item-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

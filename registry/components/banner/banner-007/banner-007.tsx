@@ -24,10 +24,10 @@ export type Banner007Props = Omit<ComponentProps<"div">, "children"> & {
 // инверсия светлой, блок времени в ней светлее подложки, а не темнее.
 const STYLES = `
 :where([data-vibeui-block="banner-007"]){
---vibeui-banner-007-bg:light-dark(oklch(0.98 0.012 285),oklch(0.26 0.028 285));
---vibeui-banner-007-fg:light-dark(oklch(0.26 0.04 285),oklch(0.93 0.018 285));
+--vibeui-banner-007-bg:light-dark(oklch(0.98 0 285),oklch(0.26 0 285));
+--vibeui-banner-007-fg:light-dark(oklch(0.26 0.04 285),oklch(0.93 0 285));
 --vibeui-banner-007-muted:color-mix(in oklab,var(--vibeui-banner-007-fg) 68%,transparent);
---vibeui-banner-007-border:light-dark(oklch(0.88 0.03 285),oklch(0.4 0.03 285));
+--vibeui-banner-007-border:light-dark(oklch(0.88 0 285),oklch(0.4 0 285));
 --vibeui-banner-007-slot:light-dark(oklch(0.94 0.04 285),oklch(0.34 0.035 285));
 --vibeui-banner-007-accent:light-dark(oklch(0.5 0.14 290),oklch(0.79 0.13 290));
 /* Акцентом набрана дата на светлой панели: светлота ограничивается сверху,

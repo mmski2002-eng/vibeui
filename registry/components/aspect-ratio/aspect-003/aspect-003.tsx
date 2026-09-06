@@ -24,16 +24,16 @@ export type Aspect003Props = Omit<
 // вместе со страницей, а подложки под собой по умолчанию не выкладывает.
 const STYLES = `
 :where([data-vibeui-block="aspect-003"]){
---vibeui-aspect-003-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-aspect-003-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-aspect-003-muted:color-mix(in oklab,var(--vibeui-aspect-003-fg) 68%,transparent);
 --vibeui-aspect-003-bg:transparent;
---vibeui-aspect-003-frame:light-dark(oklch(0.955 0.006 265),oklch(0.28 0.012 265));
---vibeui-aspect-003-sheen:light-dark(oklch(1 0 0),oklch(0.35 0.014 265));
---vibeui-aspect-003-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-aspect-003-frame:light-dark(oklch(0.955 0 265),oklch(0.28 0 265));
+--vibeui-aspect-003-sheen:light-dark(oklch(1 0 0),oklch(0.35 0 265));
+--vibeui-aspect-003-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
 /* Плашка скидки — белый текст на акценте, поэтому в тёмной ветке акцент не
    светлее, чем в светлой: выше L≈0.58 контраст падает ниже 4.5:1. */
 --vibeui-aspect-003-accent:light-dark(oklch(0.56 0.19 25),oklch(0.56 0.17 25));
---vibeui-aspect-003-object:light-dark(oklch(0.42 0.03 265),oklch(0.78 0.02 265));
+--vibeui-aspect-003-object:light-dark(oklch(0.42 0 265),oklch(0.78 0 265));
 --vibeui-aspect-003-glow:light-dark(oklch(0.9 0.11 85 / 0.85),oklch(0.8 0.13 82 / 0.55));
 --vibeui-aspect-003-radius:0.875rem;
 --vibeui-aspect-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

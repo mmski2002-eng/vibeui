@@ -24,11 +24,11 @@ export type Breadcrumb015Props = Omit<ComponentProps<"nav">, "children"> & {
 // место под имя перестаёт читаться.
 const STYLES = `
 :where([data-vibeui-block="breadcrumb-015"]){
---vibeui-breadcrumb-015-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.008 265));
+--vibeui-breadcrumb-015-fg:light-dark(oklch(0.26 0 265),oklch(0.94 0 265));
 --vibeui-breadcrumb-015-muted:color-mix(in oklab,var(--vibeui-breadcrumb-015-fg) 68%,transparent);
---vibeui-breadcrumb-015-faint:light-dark(oklch(0.78 0.01 265),oklch(0.5 0.012 265));
---vibeui-breadcrumb-015-bone:light-dark(oklch(0.93 0.005 265),oklch(0.34 0.012 265));
---vibeui-breadcrumb-015-sheen:light-dark(oklch(0.975 0.003 265),oklch(0.44 0.014 265));
+--vibeui-breadcrumb-015-faint:light-dark(oklch(0.78 0 265),oklch(0.5 0 265));
+--vibeui-breadcrumb-015-bone:light-dark(oklch(0.93 0 265),oklch(0.34 0 265));
+--vibeui-breadcrumb-015-sheen:light-dark(oklch(0.975 0 265),oklch(0.44 0 265));
 --vibeui-breadcrumb-015-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-breadcrumb-015-bg:transparent;
 --vibeui-breadcrumb-015-pad:0;

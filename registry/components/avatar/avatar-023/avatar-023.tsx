@@ -23,9 +23,9 @@ export type Avatar023Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `:where([data-vibeui-block="avatar-023"]){
 --vibeui-avatar-023-size:2.5rem;
 --vibeui-avatar-023-bg:transparent;
---vibeui-avatar-023-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-avatar-023-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-avatar-023-muted:color-mix(in oklab,var(--vibeui-avatar-023-fg) 68%,transparent);
---vibeui-avatar-023-border:light-dark(oklch(0.91 0.006 265),oklch(0.31 0.01 265));
+--vibeui-avatar-023-border:light-dark(oklch(0.91 0 265),oklch(0.31 0 265));
 --vibeui-avatar-023-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Своя светлая подложка: тёмный текст обязан читаться на любом фоне. */
@@ -63,7 +63,7 @@ font-size:calc(var(--vibeui-avatar-023-size) * 0.2);font-weight:700;line-height:
 [data-vibeui-block="avatar-023"] [data-part="tile"] img{width:100%;height:100%;border-radius:inherit;object-fit:cover;display:block}
 [data-vibeui-block="avatar-023"][data-count="1"] [data-part="tile"]{font-size:calc(var(--vibeui-avatar-023-size) * 0.34)}
 [data-vibeui-block="avatar-023"] [data-rest="true"]{
-background:light-dark(oklch(0.93 0.008 265),oklch(0.3 0.008 265));color:light-dark(oklch(0.42 0.014 265),oklch(0.86 0.014 265));
+background:light-dark(oklch(0.93 0 265),oklch(0.3 0 265));color:light-dark(oklch(0.42 0 265),oklch(0.86 0 265));
 font-size:calc(var(--vibeui-avatar-023-size) * 0.18);
 }
 [data-vibeui-block="avatar-023"] [data-part="text"]{display:flex;flex-direction:column;gap:0.0625rem;min-width:0}

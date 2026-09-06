@@ -1,3 +1,6 @@
+"use client"
+
+import { useRef } from "react"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Dropdown020Item = {
@@ -32,11 +35,11 @@ export type Dropdown020Props = Omit<ComponentProps<"div">, "children"> & {
 // одно, и сервер отдаёт готовую страницу без гидрации.
 const STYLES = `
 :where([data-vibeui-block="dropdown-020"]){
---vibeui-dropdown-020-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
+--vibeui-dropdown-020-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-dropdown-020-muted:color-mix(in oklab,var(--vibeui-dropdown-020-fg) 60%,transparent);
---vibeui-dropdown-020-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
---vibeui-dropdown-020-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
---vibeui-dropdown-020-hover:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.86 0.02 265 / 12%));
+--vibeui-dropdown-020-bg:light-dark(oklch(1 0 0),oklch(0.25 0 265));
+--vibeui-dropdown-020-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
+--vibeui-dropdown-020-hover:light-dark(oklch(0.55 0 265 / 8%),oklch(0.86 0 265 / 12%));
 --vibeui-dropdown-020-accent:light-dark(oklch(0.52 0.19 262),oklch(0.72 0.16 262));
 --vibeui-dropdown-020-danger:light-dark(oklch(0.55 0.2 25),oklch(0.72 0.16 25));
 --vibeui-dropdown-020-radius:0.875rem;
@@ -70,12 +73,12 @@ transform:rotate(45deg) translate(-0.0625rem,-0.0625rem);
 [data-vibeui-dropdown-020-menu]{
 position:fixed;margin:0;padding:0.3125rem;
 min-inline-size:15rem;box-sizing:border-box;
-border:1px solid var(--vibeui-dropdown-020-border,light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265)));
+border:1px solid var(--vibeui-dropdown-020-border,light-dark(oklch(0.9 0 265),oklch(0.37 0 265)));
 border-radius:var(--vibeui-dropdown-020-radius,0.875rem);
-background:var(--vibeui-dropdown-020-bg,light-dark(oklch(1 0 0),oklch(0.25 0.012 265)));
-color:var(--vibeui-dropdown-020-fg,light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265)));
+background:var(--vibeui-dropdown-020-bg,light-dark(oklch(1 0 0),oklch(0.25 0 265)));
+color:var(--vibeui-dropdown-020-fg,light-dark(oklch(0.24 0 265),oklch(0.94 0 265)));
 font-family:var(--vibeui-dropdown-020-font,ui-sans-serif,system-ui,sans-serif);
-box-shadow:0 18px 40px -20px oklch(0.2 0.03 265 / 48%);
+box-shadow:0 18px 40px -20px oklch(0.2 0 265 / 48%);
 opacity:0;transform:translateY(-0.25rem);
 transition:opacity .16s ease,transform .16s ease,display .16s allow-discrete,overlay .16s allow-discrete;
 }
@@ -99,7 +102,7 @@ font-size:0.8125rem;line-height:1.3;
 transition:background-color .14s ease;
 }
 [data-vibeui-dropdown-020-menu] [data-part="item"]:hover{
-background:var(--vibeui-dropdown-020-hover,light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.86 0.02 265 / 12%)));
+background:var(--vibeui-dropdown-020-hover,light-dark(oklch(0.55 0 265 / 8%),oklch(0.86 0 265 / 12%)));
 }
 [data-vibeui-dropdown-020-menu] [data-part="item"]:focus-visible{
 outline:2px solid var(--vibeui-dropdown-020-accent,light-dark(oklch(0.52 0.19 262),oklch(0.72 0.16 262)));
@@ -143,7 +146,7 @@ min-block-size:2.875rem;justify-content:center;
 padding:0.5rem 0.75rem;font-size:0.875rem;
 }
 [data-vibeui-dropdown-020-menu] [data-part="item"] + [data-part="item"]{
-border-block-start:1px solid var(--vibeui-dropdown-020-border,light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265)));
+border-block-start:1px solid var(--vibeui-dropdown-020-border,light-dark(oklch(0.9 0 265),oklch(0.37 0 265)));
 border-radius:0;
 }
 }
@@ -160,11 +163,20 @@ margin-block-start:0.375rem;max-block-size:none;
 `
 
 const DEFAULT_ITEMS: Dropdown020Item[] = [
-  { label: "Открыть доступ", hint: "Ссылка для тех, у кого есть код", href: "#" },
+  {
+    label: "Открыть доступ",
+    hint: "Ссылка для тех, у кого есть код",
+    href: "#",
+  },
   { label: "Переименовать", href: "#" },
   { label: "Дублировать", hint: "Копия ляжет рядом в той же папке", href: "#" },
   { label: "Переместить в архив", href: "#" },
-  { label: "Удалить", hint: "Останется в корзине 30 дней", href: "#", danger: true },
+  {
+    label: "Удалить",
+    hint: "Останется в корзине 30 дней",
+    href: "#",
+    danger: true,
+  },
 ]
 
 /**
@@ -205,6 +217,17 @@ export function Dropdown020({
   style,
   ...props
 }: Dropdown020Props) {
+  // Ссылка внутри popover его не закрывает: браузер гасит меню только по
+  // клику мимо. В приложении меню убрал бы переход, но пункт может вести и
+  // на текущую страницу — закрываем сами.
+  const menu = useRef<HTMLDivElement>(null)
+
+  const close = () => {
+    if (menu.current?.matches(":popover-open")) {
+      menu.current.hidePopover()
+    }
+  }
+
   const palette = {
     ...(accent ? { "--vibeui-dropdown-020-accent": accent } : null),
     ...(background
@@ -234,6 +257,7 @@ export function Dropdown020({
         </button>
         <div
           id={id}
+          ref={menu}
           popover={open ? undefined : "auto"}
           data-vibeui-dropdown-020-menu=""
           data-open={open || undefined}
@@ -247,6 +271,7 @@ export function Dropdown020({
               data-part="item"
               data-danger={item.danger || undefined}
               href={item.href}
+              onClick={close}
             >
               {item.label}
               {item.hint ? <span data-part="hint">{item.hint}</span> : null}

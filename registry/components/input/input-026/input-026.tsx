@@ -29,11 +29,11 @@ export type Input026Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="input-026"]){
 --vibeui-input-026-surface:transparent;
---vibeui-input-026-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
---vibeui-input-026-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-input-026-shell:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
+--vibeui-input-026-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-input-026-muted:color-mix(in oklab,var(--vibeui-input-026-fg) 68%,transparent);
---vibeui-input-026-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.012 265));
---vibeui-input-026-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.012 265));
+--vibeui-input-026-field:light-dark(oklch(0.985 0 265),oklch(0.26 0 265));
+--vibeui-input-026-border:light-dark(oklch(0.88 0 265),oklch(0.38 0 265));
 --vibeui-input-026-accent:light-dark(oklch(0.55 0.15 200),oklch(0.76 0.13 200));
 --vibeui-input-026-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

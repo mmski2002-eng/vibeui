@@ -35,12 +35,12 @@ export type Tags004Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="tags-004"]){
 --vibeui-tags-004-surface:transparent;
---vibeui-tags-004-field:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
---vibeui-tags-004-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.01 265));
---vibeui-tags-004-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-tags-004-field:light-dark(oklch(1 0 0),oklch(0.22 0 265));
+--vibeui-tags-004-shell:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-tags-004-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-tags-004-muted:color-mix(in oklab,var(--vibeui-tags-004-fg) 68%,transparent);
---vibeui-tags-004-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.012 265));
---vibeui-tags-004-chip:light-dark(oklch(0.96 0.004 265),oklch(0.3 0.012 265));
+--vibeui-tags-004-border:light-dark(oklch(0.88 0 265),oklch(0.38 0 265));
+--vibeui-tags-004-chip:light-dark(oklch(0.96 0 265),oklch(0.3 0 265));
 --vibeui-tags-004-accent:light-dark(oklch(0.52 0.15 190),oklch(0.76 0.13 190));
 --vibeui-tags-004-ring:light-dark(oklch(0.52 0.15 190 / 18%),oklch(0.76 0.13 190 / 28%));
 --vibeui-tags-004-warn:light-dark(oklch(0.58 0.18 30),oklch(0.78 0.16 30));

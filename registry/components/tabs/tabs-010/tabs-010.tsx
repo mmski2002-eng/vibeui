@@ -33,9 +33,9 @@ export type Tabs010Props = {
 const STYLES = `
 :where([data-vibeui-block="tabs-010"]){
 --vibeui-tabs-010-bg:transparent;
---vibeui-tabs-010-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-tabs-010-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-tabs-010-muted:color-mix(in oklab,var(--vibeui-tabs-010-fg) 68%,transparent);
---vibeui-tabs-010-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-tabs-010-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-tabs-010-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
 --vibeui-tabs-010-index:0;
 --vibeui-tabs-010-count:4;

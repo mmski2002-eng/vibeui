@@ -24,9 +24,9 @@ export type Avatar007Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `:where([data-vibeui-block="avatar-007"]){
 --vibeui-avatar-007-size:2.5rem;
 --vibeui-avatar-007-bg:transparent;
---vibeui-avatar-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-avatar-007-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-avatar-007-muted:color-mix(in oklab,var(--vibeui-avatar-007-fg) 68%,transparent);
---vibeui-avatar-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.31 0.01 265));
+--vibeui-avatar-007-border:light-dark(oklch(0.9 0 265),oklch(0.31 0 265));
 --vibeui-avatar-007-hue:250;
 --vibeui-avatar-007-shape:light-dark(oklch(0.92 0.05 var(--vibeui-avatar-007-hue)),oklch(0.34 0.065 var(--vibeui-avatar-007-hue)));
 --vibeui-avatar-007-initials:light-dark(oklch(0.38 0.09 var(--vibeui-avatar-007-hue)),oklch(0.88 0.063 var(--vibeui-avatar-007-hue)));
@@ -46,7 +46,7 @@ border:1px solid var(--vibeui-avatar-007-border);border-radius:0.75rem;
 color:var(--vibeui-avatar-007-fg);font-family:var(--vibeui-avatar-007-font);
 }
 [data-vibeui-block="avatar-007"][data-status="away"]{--vibeui-avatar-007-status:oklch(0.75 0.16 75)}
-[data-vibeui-block="avatar-007"][data-status="offline"]{--vibeui-avatar-007-status:light-dark(oklch(0.72 0.012 265),oklch(0.42 0.012 265))}
+[data-vibeui-block="avatar-007"][data-status="offline"]{--vibeui-avatar-007-status:light-dark(oklch(0.72 0 265),oklch(0.42 0 265))}
 [data-vibeui-block="avatar-007"] [data-part="shape"]{
 position:relative;display:flex;align-items:center;justify-content:center;flex:none;
 width:var(--vibeui-avatar-007-size);height:var(--vibeui-avatar-007-size);

@@ -22,10 +22,10 @@ export type Buttongroup007Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="buttongroup-007"]){
 --vibeui-buttongroup-007-surface:transparent;
---vibeui-buttongroup-007-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.006 265));
+--vibeui-buttongroup-007-fg:light-dark(oklch(0.26 0 265),oklch(0.94 0 265));
 --vibeui-buttongroup-007-muted:color-mix(in oklab,var(--vibeui-buttongroup-007-fg) 68%,transparent);
---vibeui-buttongroup-007-border:light-dark(oklch(0.89 0.008 265),oklch(0.37 0.012 265));
---vibeui-buttongroup-007-hover:light-dark(oklch(0.965 0.004 265),oklch(0.3 0.012 265));
+--vibeui-buttongroup-007-border:light-dark(oklch(0.89 0 265),oklch(0.37 0 265));
+--vibeui-buttongroup-007-hover:light-dark(oklch(0.965 0 265),oklch(0.3 0 265));
 --vibeui-buttongroup-007-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
 --vibeui-buttongroup-007-radius:0.75rem;
 --vibeui-buttongroup-007-width:16rem;
@@ -82,7 +82,7 @@ font-size:0.75rem;font-weight:500;font-variant-numeric:tabular-nums;
 
 const DEFAULT_ACTIONS: Buttongroup007Action[] = [
   { label: "Переименовать", hint: "F2" },
-  { label: "Переместить", hint: "⌘M" },
+  { label: "Переместить", hint: "Ctrl+M" },
   { label: "Скачать копию", hint: "2,4 МБ" },
   { label: "История версий", hint: "12" },
 ]

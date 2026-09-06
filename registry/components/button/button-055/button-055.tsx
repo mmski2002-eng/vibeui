@@ -23,9 +23,9 @@ export type Button055Props = Omit<ComponentProps<"button">, "children"> & {
 // оставила бы кнопку взведённой.
 const STYLES = `
 :where([data-vibeui-block="button-055"]){
---vibeui-button-055-locked:light-dark(oklch(0.93 0.004 265),oklch(0.27 0.012 265));
---vibeui-button-055-locked-fg:light-dark(oklch(0.52 0.014 265),oklch(0.73 0.012 265));
---vibeui-button-055-border:light-dark(oklch(0.86 0.006 265),oklch(0.43 0.014 265));
+--vibeui-button-055-locked:light-dark(oklch(0.93 0 265),oklch(0.27 0 265));
+--vibeui-button-055-locked-fg:light-dark(oklch(0.52 0 265),oklch(0.73 0 265));
+--vibeui-button-055-border:light-dark(oklch(0.86 0 265),oklch(0.43 0 265));
 --vibeui-button-055-danger:light-dark(oklch(0.55 0.2 25),oklch(0.63 0.19 25));
 --vibeui-button-055-fg:oklch(0.99 0.02 25);
 --vibeui-button-055-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

@@ -31,13 +31,13 @@ export type Drawer004Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="drawer-004"]){
 --vibeui-drawer-004-bg:transparent;
---vibeui-drawer-004-surface:light-dark(oklch(1 0 0),oklch(0.22 0.013 265));
---vibeui-drawer-004-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-drawer-004-surface:light-dark(oklch(1 0 0),oklch(0.22 0 265));
+--vibeui-drawer-004-fg:light-dark(oklch(0.21 0 265),oklch(0.94 0 265));
 --vibeui-drawer-004-muted:color-mix(in oklab,var(--vibeui-drawer-004-fg) 68%,transparent);
---vibeui-drawer-004-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-drawer-004-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
 --vibeui-drawer-004-accent:light-dark(oklch(0.55 0.17 265),oklch(0.73 0.15 265));
---vibeui-drawer-004-on-accent:light-dark(oklch(0.99 0.01 265),oklch(0.17 0.02 265));
---vibeui-drawer-004-hover:light-dark(oklch(0.96 0.004 265),oklch(0.29 0.013 265));
+--vibeui-drawer-004-on-accent:light-dark(oklch(0.99 0 265),oklch(0.17 0 265));
+--vibeui-drawer-004-hover:light-dark(oklch(0.96 0 265),oklch(0.29 0 265));
 --vibeui-drawer-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -58,7 +58,7 @@ font:inherit;font-size:0.8125rem;font-weight:600;
 position:fixed;inset:0 0 0 auto;margin:0;
 width:min(26rem,100vw);max-width:100vw;height:100dvh;max-height:100dvh;
 padding:0;border:0;background:var(--vibeui-drawer-004-surface);color:inherit;
-box-shadow:-24px 0 60px -30px oklch(0.2 0.02 265 / 55%);
+box-shadow:-24px 0 60px -30px oklch(0.2 0 265 / 55%);
 translate:100% 0;transition:translate .22s ease,overlay .22s allow-discrete,display .22s allow-discrete;
 }
 [data-vibeui-block="drawer-004"] dialog[open]{translate:0 0}
@@ -66,7 +66,7 @@ translate:100% 0;transition:translate .22s ease,overlay .22s allow-discrete,disp
 [data-vibeui-block="drawer-004"] dialog[open]{translate:100% 0}
 }
 /* Затемнение позади ящика одно на обе темы: подложка гасит страницу, а не красится вместе с ней. */
-[data-vibeui-block="drawer-004"] dialog::backdrop{background:oklch(0.19 0.02 265 / 45%)}
+[data-vibeui-block="drawer-004"] dialog::backdrop{background:oklch(0.19 0 265 / 45%)}
 [data-vibeui-block="drawer-004"] [data-part="panel"]{display:flex;flex-direction:column;height:100%;box-sizing:border-box}
 [data-vibeui-block="drawer-004"] [data-part="head"]{
 display:flex;align-items:flex-start;gap:0.75rem;padding:1rem 1rem 0.875rem;

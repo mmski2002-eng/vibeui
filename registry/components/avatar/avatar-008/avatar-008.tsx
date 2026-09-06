@@ -21,9 +21,9 @@ const STYLES = `
 :where([data-vibeui-block="avatar-008"]){
 --vibeui-avatar-008-size:2.5rem;
 --vibeui-avatar-008-bg:transparent;
---vibeui-avatar-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.31 0.01 265));
---vibeui-avatar-008-base:light-dark(oklch(0.93 0.005 265),oklch(0.27 0.008 265));
---vibeui-avatar-008-shine:light-dark(oklch(0.97 0.003 265),oklch(0.33 0.005 265));
+--vibeui-avatar-008-border:light-dark(oklch(0.9 0 265),oklch(0.31 0 265));
+--vibeui-avatar-008-base:light-dark(oklch(0.93 0 265),oklch(0.27 0 265));
+--vibeui-avatar-008-shine:light-dark(oklch(0.97 0 265),oklch(0.33 0 265));
 --vibeui-avatar-008-radius:0.75rem;
 }
 [data-vibeui-block="avatar-008"]{
@@ -63,12 +63,12 @@ display:flex;flex-direction:column;gap:0.125rem;flex:1;min-width:0;
 font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="avatar-008"] [data-part="name"]{
-color:light-dark(oklch(0.22 0.015 265),oklch(0.96 0.005 265));
+color:light-dark(oklch(0.22 0 265),oklch(0.96 0 265));
 font-size:0.875rem;font-weight:600;line-height:1.25;
 overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 }
 [data-vibeui-block="avatar-008"] [data-part="role"]{
-color:light-dark(oklch(0.52 0.015 265),oklch(0.72 0.012 265));
+color:light-dark(oklch(0.52 0 265),oklch(0.72 0 265));
 font-size:0.75rem;line-height:1.25;
 overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 }

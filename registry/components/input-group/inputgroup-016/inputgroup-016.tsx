@@ -47,17 +47,17 @@ function generatePassword(length: number) {
 const STYLES = `
 :where([data-vibeui-block="inputgroup-016"]){
 --vibeui-inputgroup-016-surface:transparent;
---vibeui-inputgroup-016-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
---vibeui-inputgroup-016-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-inputgroup-016-shell:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
+--vibeui-inputgroup-016-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-inputgroup-016-muted:color-mix(in oklab,var(--vibeui-inputgroup-016-fg) 68%,transparent);
---vibeui-inputgroup-016-field:light-dark(oklch(0.99 0.002 265),oklch(0.26 0.012 265));
---vibeui-inputgroup-016-fixed:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.012 265));
---vibeui-inputgroup-016-border:light-dark(oklch(0.86 0.008 265),oklch(0.4 0.014 265));
+--vibeui-inputgroup-016-field:light-dark(oklch(0.99 0 265),oklch(0.26 0 265));
+--vibeui-inputgroup-016-fixed:light-dark(oklch(0.96 0 265),oklch(0.31 0 265));
+--vibeui-inputgroup-016-border:light-dark(oklch(0.86 0 265),oklch(0.4 0 265));
 --vibeui-inputgroup-016-accent:light-dark(oklch(0.5 0.16 350),oklch(0.72 0.15 350));
 --vibeui-inputgroup-016-weak:light-dark(oklch(0.55 0.19 25),oklch(0.7 0.17 25));
 --vibeui-inputgroup-016-mid:light-dark(oklch(0.72 0.16 85),oklch(0.8 0.15 85));
 --vibeui-inputgroup-016-strong:light-dark(oklch(0.55 0.14 155),oklch(0.76 0.14 155));
---vibeui-inputgroup-016-track:light-dark(oklch(0.93 0.005 265),oklch(0.3 0.01 265));
+--vibeui-inputgroup-016-track:light-dark(oklch(0.93 0 265),oklch(0.3 0 265));
 --vibeui-inputgroup-016-radius:0.75rem;
 --vibeui-inputgroup-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-inputgroup-016-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;

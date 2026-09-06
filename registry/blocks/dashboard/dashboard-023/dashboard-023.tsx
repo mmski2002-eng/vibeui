@@ -42,11 +42,11 @@ export type Dashboard023Props = {
 // время идёт моноширинным с табличными цифрами, чтобы столбец не дрожал.
 const STYLES = `
 :where([data-vibeui-block="dashboard-023"]){
---vibeui-dashboard-023-bg:light-dark(oklch(1 0 0),oklch(0.23 0.013 265));
---vibeui-dashboard-023-panel:light-dark(oklch(0.98 0.003 265),oklch(0.27 0.013 265));
---vibeui-dashboard-023-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-dashboard-023-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
---vibeui-dashboard-023-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-dashboard-023-bg:light-dark(oklch(1 0 0),oklch(0.23 0 265));
+--vibeui-dashboard-023-panel:light-dark(oklch(0.98 0 265),oklch(0.27 0 265));
+--vibeui-dashboard-023-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
+--vibeui-dashboard-023-muted:light-dark(oklch(0.55 0 265),oklch(0.69 0 265));
+--vibeui-dashboard-023-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
 --vibeui-dashboard-023-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.15 262));
 --vibeui-dashboard-023-warn:light-dark(oklch(0.62 0.15 65),oklch(0.79 0.13 65));
 --vibeui-dashboard-023-error:light-dark(oklch(0.55 0.18 25),oklch(0.62 0.19 25));

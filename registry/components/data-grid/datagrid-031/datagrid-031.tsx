@@ -35,12 +35,12 @@ export type Datagrid031Props = Omit<ComponentProps<"section">, "children"> & {
 // уезжающие ячейки только собственным фоном.
 const STYLES = `
 :where([data-vibeui-block="datagrid-031"]){
---vibeui-datagrid-031-bg:light-dark(oklch(1 0 0),oklch(0.2 0.012 250));
---vibeui-datagrid-031-fg:light-dark(oklch(0.23 0.014 250),oklch(0.93 0.006 250));
+--vibeui-datagrid-031-bg:light-dark(oklch(1 0 0),oklch(0.2 0 250));
+--vibeui-datagrid-031-fg:light-dark(oklch(0.23 0 250),oklch(0.93 0 250));
 --vibeui-datagrid-031-muted:color-mix(in oklab,var(--vibeui-datagrid-031-fg) 68%,transparent);
---vibeui-datagrid-031-border:light-dark(oklch(0.92 0.006 250),oklch(0.34 0.012 250));
---vibeui-datagrid-031-head:light-dark(oklch(0.975 0.003 250),oklch(0.27 0.012 250));
---vibeui-datagrid-031-zebra:light-dark(oklch(0.985 0.003 250),oklch(0.24 0.01 250));
+--vibeui-datagrid-031-border:light-dark(oklch(0.92 0 250),oklch(0.34 0 250));
+--vibeui-datagrid-031-head:light-dark(oklch(0.975 0 250),oklch(0.27 0 250));
+--vibeui-datagrid-031-zebra:light-dark(oklch(0.985 0 250),oklch(0.24 0 250));
 --vibeui-datagrid-031-accent:light-dark(oklch(0.52 0.14 200),oklch(0.76 0.12 200));
 --vibeui-datagrid-031-low:light-dark(oklch(0.55 0.19 25),oklch(0.74 0.15 25));
 --vibeui-datagrid-031-height:18rem;

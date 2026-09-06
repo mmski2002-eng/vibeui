@@ -33,11 +33,11 @@ export type Card005Props = Omit<
 // контексте рамка светлее подложки, а не темнее.
 const STYLES = `
 :where([data-vibeui-block="card-005"]){
---vibeui-card-005-bg:light-dark(oklch(1 0 0),oklch(0.29 0.011 265));
+--vibeui-card-005-bg:light-dark(oklch(1 0 0),oklch(0.29 0 265));
 --vibeui-card-005-surface:transparent;
---vibeui-card-005-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-card-005-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-card-005-muted:color-mix(in oklab,var(--vibeui-card-005-fg) 68%,transparent);
---vibeui-card-005-border:light-dark(oklch(0.91 0.006 265),oklch(0.37 0.012 265));
+--vibeui-card-005-border:light-dark(oklch(0.91 0 265),oklch(0.37 0 265));
 --vibeui-card-005-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-card-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

@@ -26,11 +26,11 @@ export type Alert017Props = Omit<
 // темнеет там, где тёмный контекст, и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="alert-017"]){
---vibeui-alert-017-fg:light-dark(oklch(0.22 0.014 265),oklch(0.95 0.006 265));
+--vibeui-alert-017-fg:light-dark(oklch(0.22 0 265),oklch(0.95 0 265));
 --vibeui-alert-017-muted:color-mix(in oklab,var(--vibeui-alert-017-fg) 68%,transparent);
 --vibeui-alert-017-bg:transparent;
---vibeui-alert-017-panel:light-dark(oklch(0.97 0.004 265),oklch(0.28 0.01 265));
---vibeui-alert-017-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-alert-017-panel:light-dark(oklch(0.97 0 265),oklch(0.28 0 265));
+--vibeui-alert-017-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
 --vibeui-alert-017-accent:light-dark(oklch(0.55 0.09 250),oklch(0.78 0.08 250));
 --vibeui-alert-017-radius:0.875rem;
 --vibeui-alert-017-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;

@@ -17,10 +17,10 @@ export type Badge006Props = Omit<ComponentProps<"span">, "children"> & {
 // градиента, без иконочного пакета.
 const STYLES = `
 :where([data-vibeui-block="badge-006"]){
---vibeui-badge-006-bg:light-dark(oklch(0.96 0.004 265),oklch(0.27 0.009 265));
---vibeui-badge-006-fg:light-dark(oklch(0.32 0.014 265),oklch(0.93 0.006 265));
---vibeui-badge-006-border:light-dark(oklch(0.89 0.006 265),oklch(0.39 0.011 265));
---vibeui-badge-006-mark:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
+--vibeui-badge-006-bg:light-dark(oklch(0.96 0 265),oklch(0.27 0 265));
+--vibeui-badge-006-fg:light-dark(oklch(0.32 0 265),oklch(0.93 0 265));
+--vibeui-badge-006-border:light-dark(oklch(0.89 0 265),oklch(0.39 0 265));
+--vibeui-badge-006-mark:light-dark(oklch(0.55 0 265),oklch(0.7 0 265));
 --vibeui-badge-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -36,7 +36,7 @@ line-height:1;white-space:nowrap;vertical-align:middle;
 }
 [data-vibeui-block="badge-006"][data-stage="review"]{--vibeui-badge-006-mark:light-dark(oklch(0.72 0.16 75),oklch(0.81 0.15 75))}
 [data-vibeui-block="badge-006"][data-stage="live"]{--vibeui-badge-006-mark:light-dark(oklch(0.6 0.17 152),oklch(0.73 0.16 152))}
-[data-vibeui-block="badge-006"][data-stage="archived"]{--vibeui-badge-006-mark:light-dark(oklch(0.66 0.012 265),oklch(0.56 0.012 265));color:light-dark(oklch(0.5 0.014 265),oklch(0.68 0.012 265))}
+[data-vibeui-block="badge-006"][data-stage="archived"]{--vibeui-badge-006-mark:light-dark(oklch(0.66 0 265),oklch(0.56 0 265));color:light-dark(oklch(0.5 0 265),oklch(0.68 0 265))}
 /* Форма знака несёт стадию: цвет только усиливает, но не заменяет её. */
 [data-vibeui-block="badge-006"] [data-part="mark"]{
 position:relative;flex:none;width:0.625rem;height:0.625rem;

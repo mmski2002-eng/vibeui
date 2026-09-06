@@ -30,15 +30,15 @@ export type Toast021Props = Omit<ComponentProps<"div">, "children"> & {
 // подложка крестика на ней темнее, а не светлее.
 const STYLES = `
 :where([data-vibeui-block="toast-021"]){
---vibeui-toast-021-bg:light-dark(oklch(0.99 0.002 265),oklch(0.24 0.014 265));
---vibeui-toast-021-stage:light-dark(oklch(0.97 0.004 265),oklch(0.21 0.012 265));
---vibeui-toast-021-grid:light-dark(oklch(0.88 0.008 265 / 45%),oklch(0.52 0.014 265 / 40%));
---vibeui-toast-021-fg:light-dark(oklch(0.22 0.014 265),oklch(0.95 0.003 265));
+--vibeui-toast-021-bg:light-dark(oklch(0.99 0 265),oklch(0.24 0 265));
+--vibeui-toast-021-stage:light-dark(oklch(0.97 0 265),oklch(0.21 0 265));
+--vibeui-toast-021-grid:light-dark(oklch(0.88 0 265 / 45%),oklch(0.52 0 265 / 40%));
+--vibeui-toast-021-fg:light-dark(oklch(0.22 0 265),oklch(0.95 0 265));
 --vibeui-toast-021-muted:color-mix(in oklab,var(--vibeui-toast-021-fg) 68%,transparent);
---vibeui-toast-021-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.014 265));
---vibeui-toast-021-key:light-dark(oklch(1 0 0 / 14%),oklch(0.2 0.02 265 / 12%));
---vibeui-toast-021-key-hover:light-dark(oklch(1 0 0 / 22%),oklch(0.2 0.02 265 / 20%));
---vibeui-toast-021-shadow:light-dark(oklch(0.15 0.02 265 / 70%),oklch(0.03 0.01 265 / 78%));
+--vibeui-toast-021-border:light-dark(oklch(0.9 0 265),oklch(0.38 0 265));
+--vibeui-toast-021-key:light-dark(oklch(1 0 0 / 14%),oklch(0.2 0 265 / 12%));
+--vibeui-toast-021-key-hover:light-dark(oklch(1 0 0 / 22%),oklch(0.2 0 265 / 20%));
+--vibeui-toast-021-shadow:light-dark(oklch(0.15 0 265 / 70%),oklch(0.03 0 265 / 78%));
 --vibeui-toast-021-tone:light-dark(oklch(0.58 0.16 265),oklch(0.6 0.15 265));
 --vibeui-toast-021-offset:0.75rem;
 --vibeui-toast-021-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -107,7 +107,7 @@ font:inherit;font-size:0.75rem;color:var(--vibeui-toast-021-muted);
 // Тон читается на самой пилюле, а она в тёмной теме светлая: пары светлот
 // у каждого тона свои, инверсией одной ветки их не получить.
 const TONE_COLOR: Record<Toast021Tone, string> = {
-  neutral: "light-dark(oklch(0.82 0.02 265),oklch(0.45 0.02 265))",
+  neutral: "light-dark(oklch(0.82 0 265),oklch(0.45 0 265))",
   success: "light-dark(oklch(0.78 0.13 152),oklch(0.52 0.14 152))",
   warning: "light-dark(oklch(0.82 0.15 85),oklch(0.58 0.14 70))",
 }

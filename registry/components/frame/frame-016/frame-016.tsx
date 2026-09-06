@@ -18,14 +18,14 @@ export type Frame016Props = Omit<ComponentProps<"figure">, "title"> & {
 // в тёмной подложке каталога, как и у телефона в frame-004.
 const STYLES = `
 :where([data-vibeui-block="frame-016"]){
---vibeui-frame-016-case:light-dark(oklch(0.88 0.006 265),oklch(0.52 0.008 265));
---vibeui-frame-016-case-edge:light-dark(oklch(0.74 0.008 265),oklch(0.63 0.01 265));
---vibeui-frame-016-strap:light-dark(oklch(0.8 0.006 265),oklch(0.43 0.008 265));
---vibeui-frame-016-screen:oklch(0.18 0.014 265);
+--vibeui-frame-016-case:light-dark(oklch(0.88 0 265),oklch(0.52 0 265));
+--vibeui-frame-016-case-edge:light-dark(oklch(0.74 0 265),oklch(0.63 0 265));
+--vibeui-frame-016-strap:light-dark(oklch(0.8 0 265),oklch(0.43 0 265));
+--vibeui-frame-016-screen:oklch(0.18 0 265);
 --vibeui-frame-016-fg:oklch(0.97 0.004 95);
 --vibeui-frame-016-muted:color-mix(in oklab,oklch(0.97 0.004 95) 60%,transparent);
---vibeui-frame-016-caption:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
---vibeui-frame-016-shadow:light-dark(oklch(0.2 0.02 265 / 0.22),oklch(0 0 0 / 0.5));
+--vibeui-frame-016-caption:light-dark(oklch(0.55 0 265),oklch(0.72 0 265));
+--vibeui-frame-016-shadow:light-dark(oklch(0.2 0 265 / 0.22),oklch(0 0 0 / 0.5));
 --vibeui-frame-016-size:11rem;
 --vibeui-frame-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

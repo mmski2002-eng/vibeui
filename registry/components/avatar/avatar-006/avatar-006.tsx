@@ -21,13 +21,13 @@ const STYLES = `
 :where([data-vibeui-block="avatar-006"]){
 --vibeui-avatar-006-size:5rem;
 --vibeui-avatar-006-bg:transparent;
---vibeui-avatar-006-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-avatar-006-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-avatar-006-muted:color-mix(in oklab,var(--vibeui-avatar-006-fg) 68%,transparent);
---vibeui-avatar-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.31 0.01 265));
+--vibeui-avatar-006-border:light-dark(oklch(0.9 0 265),oklch(0.31 0 265));
 --vibeui-avatar-006-hue:250;
 --vibeui-avatar-006-shape:light-dark(oklch(0.92 0.05 var(--vibeui-avatar-006-hue)),oklch(0.34 0.065 var(--vibeui-avatar-006-hue)));
 --vibeui-avatar-006-initials:light-dark(oklch(0.38 0.09 var(--vibeui-avatar-006-hue)),oklch(0.88 0.063 var(--vibeui-avatar-006-hue)));
---vibeui-avatar-006-veil:oklch(0.2 0.02 265 / 62%);
+--vibeui-avatar-006-veil:oklch(0.2 0 265 / 62%);
 --vibeui-avatar-006-accent:light-dark(oklch(0.55 0.17 265),oklch(0.69 0.17 265));
 --vibeui-avatar-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -51,7 +51,7 @@ font-size:calc(var(--vibeui-avatar-006-size) * 0.32);font-weight:650;line-height
 [data-vibeui-block="avatar-006"] [data-part="veil"]{
 position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
 /* Плёнка тёмная в обеих темах: она лежит на фотографии, поэтому подпись светлая без второй ветки. */
-background:var(--vibeui-avatar-006-veil);color:oklch(0.99 0.003 265);
+background:var(--vibeui-avatar-006-veil);color:oklch(0.99 0 265);
 font-size:0.6875rem;font-weight:600;text-align:center;line-height:1.2;
 opacity:0;transition:opacity .16s ease;
 }

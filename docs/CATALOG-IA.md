@@ -164,7 +164,9 @@
    `menu-001…007` (внутри action menu, context menu, menubar, profile,
    mega menu, action sheet — часть уедет в `dropdown-menu`, `context-menu`,
    `menubar`, `navigation-menu`, `sheet`), `code-001` → `code-block`,
-   `tabbar-001` → `tabs`.
+   `tabbar-001` → `tabs`. Позже оба переименованы под префикс своей
+   категории: `code-001` → `codeblock-031`, `tabbar-001` → `tabs-014`
+   (в категории живёт ровно один префикс).
 3. `npm run indexes` + `npm run meta:validate`.
 4. Проверить страницы: `/components` (81 карточка), `/components/tree`,
    `/components/select`, старые адреса корзин.

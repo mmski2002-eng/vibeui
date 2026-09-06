@@ -19,12 +19,12 @@ export type Label010Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="label-010"]){
 --vibeui-label-010-surface:transparent;
---vibeui-label-010-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.33 0.012 265));
---vibeui-label-010-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.005 265));
+--vibeui-label-010-surface-border:light-dark(oklch(0.91 0 265),oklch(0.33 0 265));
+--vibeui-label-010-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-label-010-muted:color-mix(in oklab,var(--vibeui-label-010-fg) 68%,transparent);
---vibeui-label-010-field-border:light-dark(oklch(0.85 0.01 265),oklch(0.4 0.014 265));
+--vibeui-label-010-field-border:light-dark(oklch(0.85 0 265),oklch(0.4 0 265));
 --vibeui-label-010-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
---vibeui-label-010-answer-bg:light-dark(oklch(0.97 0.004 265),oklch(0.28 0.011 265));
+--vibeui-label-010-answer-bg:light-dark(oklch(0.97 0 265),oklch(0.28 0 265));
 /* Наведение уводит акцент в сторону подложки темы: к чёрному в светлой,
    к белому в тёмной — иначе в темноте ссылка гаснет вместо подсветки. */
 --vibeui-label-010-hover-mix:light-dark(black,white);

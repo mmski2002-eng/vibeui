@@ -23,11 +23,11 @@ export type Hero010Props = {
 const STYLES = `
 :where([data-vibeui-block="hero-010"]){
 --vibeui-hero-010-bg:transparent;
---vibeui-hero-010-fg:light-dark(oklch(0.2 0.014 240),oklch(0.95 0.006 240));
---vibeui-hero-010-muted:light-dark(oklch(0.5 0.014 240),oklch(0.73 0.012 240));
---vibeui-hero-010-line:light-dark(oklch(0.89 0.008 240),oklch(0.37 0.011 240));
+--vibeui-hero-010-fg:light-dark(oklch(0.2 0 240),oklch(0.95 0 240));
+--vibeui-hero-010-muted:light-dark(oklch(0.5 0 240),oklch(0.73 0 240));
+--vibeui-hero-010-line:light-dark(oklch(0.89 0 240),oklch(0.37 0 240));
 --vibeui-hero-010-accent:light-dark(oklch(0.55 0.16 232),oklch(0.74 0.14 232));
---vibeui-hero-010-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0.03 232));
+--vibeui-hero-010-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0 232));
 --vibeui-hero-010-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

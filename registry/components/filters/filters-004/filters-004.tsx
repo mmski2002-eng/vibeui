@@ -32,11 +32,11 @@ export type Filters004Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="filters-004"]){
 --vibeui-filters-004-surface:transparent;
---vibeui-filters-004-fill:light-dark(oklch(0.975 0.004 265),oklch(0.29 0.012 265));
---vibeui-filters-004-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-filters-004-fill:light-dark(oklch(0.975 0 265),oklch(0.29 0 265));
+--vibeui-filters-004-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-filters-004-muted:color-mix(in oklab,var(--vibeui-filters-004-fg) 68%,transparent);
---vibeui-filters-004-border:light-dark(oklch(0.89 0.008 265),oklch(0.4 0.014 265));
---vibeui-filters-004-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-filters-004-border:light-dark(oklch(0.89 0 265),oklch(0.4 0 265));
+--vibeui-filters-004-shell:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
 --vibeui-filters-004-accent:light-dark(oklch(0.52 0.16 165),oklch(0.76 0.14 165));
 --vibeui-filters-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

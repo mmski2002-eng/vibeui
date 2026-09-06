@@ -36,11 +36,11 @@ const STATE_LABEL: Record<"done" | "current" | "todo", string> = {
 const STYLES = `
 :where([data-vibeui-block="timeline-009"]){
 --vibeui-timeline-009-bg:transparent;
---vibeui-timeline-009-surface:light-dark(oklch(0.99 0.002 265),oklch(0.19 0.012 265));
---vibeui-timeline-009-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-timeline-009-surface:light-dark(oklch(0.99 0 265),oklch(0.19 0 265));
+--vibeui-timeline-009-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-timeline-009-muted:color-mix(in oklab,var(--vibeui-timeline-009-fg) 68%,transparent);
---vibeui-timeline-009-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
---vibeui-timeline-009-track:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-timeline-009-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
+--vibeui-timeline-009-track:light-dark(oklch(0.9 0 265),oklch(0.35 0 265));
 --vibeui-timeline-009-done:light-dark(oklch(0.58 0.14 152),oklch(0.72 0.14 152));
 --vibeui-timeline-009-accent:light-dark(oklch(0.55 0.18 262),oklch(0.74 0.16 262));
 --vibeui-timeline-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

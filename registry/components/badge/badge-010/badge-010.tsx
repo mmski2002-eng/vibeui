@@ -21,11 +21,11 @@ export type Badge010Props = Omit<ComponentProps<"span">, "children"> & {
 // словом: полоски уточняют степень, а не заменяют название.
 const STYLES = `
 :where([data-vibeui-block="badge-010"]){
---vibeui-badge-010-bg:light-dark(oklch(0.96 0.004 265),oklch(0.27 0.009 265));
---vibeui-badge-010-fg:light-dark(oklch(0.32 0.014 265),oklch(0.93 0.006 265));
---vibeui-badge-010-border:light-dark(oklch(0.89 0.006 265),oklch(0.39 0.011 265));
---vibeui-badge-010-track:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.011 265));
---vibeui-badge-010-mark:light-dark(oklch(0.45 0.014 265),oklch(0.82 0.01 265));
+--vibeui-badge-010-bg:light-dark(oklch(0.96 0 265),oklch(0.27 0 265));
+--vibeui-badge-010-fg:light-dark(oklch(0.32 0 265),oklch(0.93 0 265));
+--vibeui-badge-010-border:light-dark(oklch(0.89 0 265),oklch(0.39 0 265));
+--vibeui-badge-010-track:light-dark(oklch(0.87 0 265),oklch(0.42 0 265));
+--vibeui-badge-010-mark:light-dark(oklch(0.45 0 265),oklch(0.82 0 265));
 --vibeui-badge-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

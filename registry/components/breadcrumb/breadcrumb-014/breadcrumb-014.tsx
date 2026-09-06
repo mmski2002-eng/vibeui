@@ -33,16 +33,16 @@ export type Breadcrumb014Props = Omit<ComponentProps<"nav">, "children"> & {
 // иначе контуры пропадают на тёмном фоне.
 const STYLES = `
 :where([data-vibeui-block="breadcrumb-014"]){
---vibeui-breadcrumb-014-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.008 265));
+--vibeui-breadcrumb-014-fg:light-dark(oklch(0.26 0 265),oklch(0.94 0 265));
 --vibeui-breadcrumb-014-muted:color-mix(in oklab,var(--vibeui-breadcrumb-014-fg) 68%,transparent);
---vibeui-breadcrumb-014-faint:light-dark(oklch(0.78 0.01 265),oklch(0.5 0.012 265));
---vibeui-breadcrumb-014-chip:light-dark(oklch(0.97 0.003 265),oklch(0.32 0.012 265));
---vibeui-breadcrumb-014-chip-border:light-dark(oklch(0.92 0.005 265),oklch(0.42 0.012 265));
+--vibeui-breadcrumb-014-faint:light-dark(oklch(0.78 0 265),oklch(0.5 0 265));
+--vibeui-breadcrumb-014-chip:light-dark(oklch(0.97 0 265),oklch(0.32 0 265));
+--vibeui-breadcrumb-014-chip-border:light-dark(oklch(0.92 0 265),oklch(0.42 0 265));
 --vibeui-breadcrumb-014-space:light-dark(oklch(0.55 0.15 285),oklch(0.76 0.13 285));
 --vibeui-breadcrumb-014-folder:light-dark(oklch(0.6 0.13 75),oklch(0.8 0.12 75));
 --vibeui-breadcrumb-014-database:light-dark(oklch(0.55 0.12 195),oklch(0.77 0.11 195));
 --vibeui-breadcrumb-014-table:light-dark(oklch(0.52 0.13 150),oklch(0.76 0.12 150));
---vibeui-breadcrumb-014-record:light-dark(oklch(0.52 0.02 265),oklch(0.76 0.018 265));
+--vibeui-breadcrumb-014-record:light-dark(oklch(0.52 0 265),oklch(0.76 0 265));
 --vibeui-breadcrumb-014-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-breadcrumb-014-bg:transparent;
 --vibeui-breadcrumb-014-pad:0;

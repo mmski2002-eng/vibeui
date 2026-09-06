@@ -35,10 +35,10 @@ export type Faq001Props = {
 const STYLES = `
 :where([data-vibeui-block="faq-001"]){
 --vibeui-faq-001-bg:transparent;
---vibeui-faq-001-card:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
---vibeui-faq-001-ink:light-dark(oklch(0.22 0.014 265),oklch(0.95 0.005 265));
---vibeui-faq-001-muted:light-dark(oklch(0.5 0.014 265),oklch(0.72 0.012 265));
---vibeui-faq-001-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-faq-001-card:light-dark(oklch(1 0 0),oklch(0.24 0 265));
+--vibeui-faq-001-ink:light-dark(oklch(0.22 0 265),oklch(0.95 0 265));
+--vibeui-faq-001-muted:light-dark(oklch(0.5 0 265),oklch(0.72 0 265));
+--vibeui-faq-001-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-faq-001-accent:light-dark(oklch(0.52 0.19 265),oklch(0.74 0.15 265));
 --vibeui-faq-001-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

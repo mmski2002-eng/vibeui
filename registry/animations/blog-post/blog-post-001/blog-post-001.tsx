@@ -31,9 +31,9 @@ export type BlogPost001Props = {
 const STYLES = `
 :where([data-vibeui-block="blog-post-001"]){
 --vibeui-blog-post-001-bg:transparent;
---vibeui-blog-post-001-fg:light-dark(oklch(0.22 0.01 265),oklch(0.94 0.005 265));
---vibeui-blog-post-001-muted:light-dark(oklch(0.55 0.02 265),oklch(0.72 0.02 265));
---vibeui-blog-post-001-border:light-dark(oklch(0.9 0.008 265),oklch(0.3 0.01 265));
+--vibeui-blog-post-001-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
+--vibeui-blog-post-001-muted:light-dark(oklch(0.55 0 265),oklch(0.72 0 265));
+--vibeui-blog-post-001-border:light-dark(oklch(0.9 0 265),oklch(0.3 0 265));
 --vibeui-blog-post-001-accent:light-dark(oklch(0.55 0.19 264),oklch(0.72 0.16 264));
 --vibeui-blog-post-001-accent-fg:oklch(from var(--vibeui-blog-post-001-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-blog-post-001-line:color-mix(in oklab,var(--vibeui-blog-post-001-fg) 13%,transparent);

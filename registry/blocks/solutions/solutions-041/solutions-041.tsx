@@ -45,11 +45,11 @@ export type Solutions041Props = {
 const STYLES = `
 :where([data-vibeui-block="solutions-041"]){
 --vibeui-solutions-041-bg:transparent;
---vibeui-solutions-041-card:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
---vibeui-solutions-041-panel:light-dark(oklch(0.976 0.004 250),oklch(0.27 0.011 265));
---vibeui-solutions-041-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
---vibeui-solutions-041-muted:light-dark(oklch(0.54 0.014 265),oklch(0.69 0.012 265));
---vibeui-solutions-041-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-solutions-041-card:light-dark(oklch(1 0 0),oklch(0.22 0 265));
+--vibeui-solutions-041-panel:light-dark(oklch(0.976 0 250),oklch(0.27 0 265));
+--vibeui-solutions-041-fg:light-dark(oklch(0.21 0 265),oklch(0.94 0 265));
+--vibeui-solutions-041-muted:light-dark(oklch(0.54 0 265),oklch(0.69 0 265));
+--vibeui-solutions-041-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
 --vibeui-solutions-041-accent:light-dark(oklch(0.5 0.15 250),oklch(0.72 0.14 250));
 --vibeui-solutions-041-ok:light-dark(oklch(0.55 0.14 152),oklch(0.71 0.14 152));
 --vibeui-solutions-041-warn:light-dark(oklch(0.68 0.16 75),oklch(0.79 0.15 75));

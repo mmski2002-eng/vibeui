@@ -34,9 +34,9 @@ export type Carousel001Props = Omit<ComponentProps<"section">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="carousel-001"]){
 --vibeui-carousel-001-bg:transparent;
---vibeui-carousel-001-fg:light-dark(oklch(0.22 0.014 265),oklch(0.93 0.006 265));
+--vibeui-carousel-001-fg:light-dark(oklch(0.22 0 265),oklch(0.93 0 265));
 --vibeui-carousel-001-muted:color-mix(in oklab,var(--vibeui-carousel-001-fg) 68%,transparent);
---vibeui-carousel-001-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-carousel-001-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
 --vibeui-carousel-001-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-carousel-001-radius:0.875rem;
 --vibeui-carousel-001-pad:0;
@@ -73,7 +73,7 @@ border-radius:var(--vibeui-carousel-001-radius);
 background:
 radial-gradient(90% 80% at 25% 20%,oklch(0.9 0.06 var(--vibeui-carousel-001-hue,250)),transparent 70%),
 linear-gradient(150deg,oklch(0.78 0.09 var(--vibeui-carousel-001-hue,250)),oklch(0.5 0.11 var(--vibeui-carousel-001-hue,250)));
-color:oklch(0.99 0.003 265);font-size:0.9375rem;font-weight:650;
+color:oklch(0.99 0 265);font-size:0.9375rem;font-weight:650;
 }
 [data-vibeui-block="carousel-001"] [data-part="dots"]{
 display:flex;justify-content:center;gap:0.4375rem;

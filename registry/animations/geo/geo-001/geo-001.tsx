@@ -28,11 +28,11 @@ export type Geo001Props = Omit<ComponentProps<"section">, "children"> & {
 // строкой ниже, а не собственной тёмной темой.
 const STYLES = `
 :where([data-vibeui-block="geo-001"]){
---vibeui-geo-001-bg-top:light-dark(oklch(0.94 0.006 260),oklch(0.19 0.012 260));
---vibeui-geo-001-bg-bottom:light-dark(oklch(0.88 0.01 260),oklch(0.09 0.01 260));
+--vibeui-geo-001-bg-top:light-dark(oklch(0.94 0 260),oklch(0.19 0 260));
+--vibeui-geo-001-bg-bottom:light-dark(oklch(0.88 0 260),oklch(0.09 0 260));
 --vibeui-geo-001-fg:light-dark(oklch(0.2 0 0),oklch(0.95 0 0));
---vibeui-geo-001-border:light-dark(oklch(0.82 0.02 240),oklch(0.34 0.02 240));
---vibeui-geo-001-ocean:light-dark(oklch(0.88 0.03 235),oklch(0.28 0.045 235));
+--vibeui-geo-001-border:light-dark(oklch(0.82 0 240),oklch(0.34 0 240));
+--vibeui-geo-001-ocean:light-dark(oklch(0.88 0 235),oklch(0.28 0.045 235));
 --vibeui-geo-001-land:light-dark(oklch(0.52 0.09 165),oklch(0.66 0.1 165));
 --vibeui-geo-001-grid:color-mix(in oklab,var(--vibeui-geo-001-fg) 22%,transparent);
 --vibeui-geo-001-accent:light-dark(oklch(0.63 0.19 32),oklch(0.73 0.17 32));

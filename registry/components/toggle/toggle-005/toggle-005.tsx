@@ -26,12 +26,12 @@ export type Toggle005Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="toggle-005"]){
 --vibeui-toggle-005-bg:transparent;
---vibeui-toggle-005-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-toggle-005-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-toggle-005-muted:color-mix(in oklab,var(--vibeui-toggle-005-fg) 68%,transparent);
---vibeui-toggle-005-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-toggle-005-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
 --vibeui-toggle-005-accent:light-dark(oklch(0.55 0.17 285),oklch(0.75 0.14 285));
---vibeui-toggle-005-track:light-dark(oklch(0.93 0.006 265),oklch(0.33 0.012 265));
---vibeui-toggle-005-on:light-dark(oklch(0.99 0 0),oklch(0.18 0.014 265));
+--vibeui-toggle-005-track:light-dark(oklch(0.93 0 265),oklch(0.33 0 265));
+--vibeui-toggle-005-on:light-dark(oklch(0.99 0 0),oklch(0.18 0 265));
 --vibeui-toggle-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

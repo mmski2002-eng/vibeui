@@ -43,10 +43,10 @@ export type Textarea009Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="textarea-009"]){
 --vibeui-textarea-009-bg:transparent;
---vibeui-textarea-009-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.006 265));
+--vibeui-textarea-009-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-textarea-009-muted:color-mix(in oklab,var(--vibeui-textarea-009-fg) 62%,transparent);
---vibeui-textarea-009-field:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
---vibeui-textarea-009-border:light-dark(oklch(0.88 0.008 265),oklch(0.37 0.014 265));
+--vibeui-textarea-009-field:light-dark(oklch(1 0 0),oklch(0.25 0 265));
+--vibeui-textarea-009-border:light-dark(oklch(0.88 0 265),oklch(0.37 0 265));
 --vibeui-textarea-009-accent:light-dark(oklch(0.54 0.19 265),oklch(0.74 0.15 265));
 --vibeui-textarea-009-on-accent:oklch(from var(--vibeui-textarea-009-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-textarea-009-danger:light-dark(oklch(0.55 0.19 25),oklch(0.74 0.16 25));

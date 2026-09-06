@@ -37,11 +37,11 @@ export type Dropdown017Props = Omit<
 // контексте плашка светлее фона страницы, а её граница светлее плашки.
 const STYLES = `
 :where([data-vibeui-block="dropdown-017"]){
---vibeui-dropdown-017-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 235));
---vibeui-dropdown-017-fg:light-dark(oklch(0.24 0.014 235),oklch(0.94 0.006 235));
+--vibeui-dropdown-017-bg:light-dark(oklch(1 0 0),oklch(0.25 0 235));
+--vibeui-dropdown-017-fg:light-dark(oklch(0.24 0 235),oklch(0.94 0 235));
 --vibeui-dropdown-017-muted:color-mix(in oklab,var(--vibeui-dropdown-017-fg) 68%,transparent);
---vibeui-dropdown-017-border:light-dark(oklch(0.9 0.006 235),oklch(0.37 0.012 235));
---vibeui-dropdown-017-hover:light-dark(oklch(0.96 0.004 235),oklch(0.32 0.014 235));
+--vibeui-dropdown-017-border:light-dark(oklch(0.9 0 235),oklch(0.37 0 235));
+--vibeui-dropdown-017-hover:light-dark(oklch(0.96 0 235),oklch(0.32 0 235));
 --vibeui-dropdown-017-accent:light-dark(oklch(0.56 0.17 235),oklch(0.76 0.13 235));
 --vibeui-dropdown-017-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -72,7 +72,7 @@ transition:background-color .16s ease,color .16s ease;
 position:fixed;margin:0;padding:0.3125rem;min-width:12.5rem;box-sizing:border-box;
 background:var(--vibeui-dropdown-017-bg);color:var(--vibeui-dropdown-017-fg);
 border:1px solid var(--vibeui-dropdown-017-border);border-radius:0.875rem;
-box-shadow:0 18px 40px -22px oklch(0.2 0.03 235 / 45%);
+box-shadow:0 18px 40px -22px oklch(0.2 0 235 / 45%);
 font-family:var(--vibeui-dropdown-017-font);
 opacity:0;transform:translateY(-0.25rem);
 transition:opacity .14s ease,transform .14s ease,display .14s allow-discrete,overlay .14s allow-discrete;

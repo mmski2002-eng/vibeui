@@ -35,12 +35,12 @@ const STYLES = `
 :where([data-vibeui-block="process-001"]){
 --vibeui-process-001-duration:8s;
 --vibeui-process-001-bg:transparent;
---vibeui-process-001-fg:light-dark(oklch(0.2 0.016 266),oklch(0.97 0.004 266));
---vibeui-process-001-muted:light-dark(oklch(0.5 0.02 266),oklch(0.72 0.018 266));
---vibeui-process-001-border:light-dark(oklch(0.16 0.014 266 / 16%),oklch(1 0 0 / 18%));
---vibeui-process-001-card:light-dark(oklch(1 0 0),oklch(0.22 0.014 266));
+--vibeui-process-001-fg:light-dark(oklch(0.2 0 266),oklch(0.97 0 266));
+--vibeui-process-001-muted:light-dark(oklch(0.5 0 266),oklch(0.72 0 266));
+--vibeui-process-001-border:light-dark(oklch(0.16 0 266 / 16%),oklch(1 0 0 / 18%));
+--vibeui-process-001-card:light-dark(oklch(1 0 0),oklch(0.22 0 266));
 --vibeui-process-001-accent:light-dark(oklch(0.55 0.19 264),oklch(0.72 0.163 264));
---vibeui-process-001-accent-fg:light-dark(oklch(0.99 0.004 266),oklch(0.17 0.02 266));
+--vibeui-process-001-accent-fg:light-dark(oklch(0.99 0 266),oklch(0.17 0 266));
 --vibeui-process-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="process-001"]{color-scheme:dark}

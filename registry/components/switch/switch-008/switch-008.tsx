@@ -21,11 +21,11 @@ export type Switch008Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="switch-008"]){
 --vibeui-switch-008-bg:transparent;
---vibeui-switch-008-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-switch-008-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-switch-008-muted:color-mix(in oklab,var(--vibeui-switch-008-fg) 68%,transparent);
---vibeui-switch-008-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
---vibeui-switch-008-track:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
---vibeui-switch-008-thumb:light-dark(oklch(0.97 0.002 265),oklch(0.56 0.01 265));
+--vibeui-switch-008-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
+--vibeui-switch-008-track:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
+--vibeui-switch-008-thumb:light-dark(oklch(0.97 0 265),oklch(0.56 0 265));
 --vibeui-switch-008-accent:light-dark(oklch(0.55 0.19 262),oklch(0.75 0.16 262));
 --vibeui-switch-008-lock:light-dark(oklch(0.66 0.13 75),oklch(0.79 0.13 75));
 --vibeui-switch-008-lock-tint:light-dark(oklch(0.66 0.13 75 / 12%),oklch(0.79 0.13 75 / 16%));
@@ -72,7 +72,7 @@ box-sizing:border-box;
 position:absolute;left:0.1875rem;top:0.1875rem;
 width:1.125rem;height:1.125rem;border-radius:9999px;pointer-events:none;
 background:var(--vibeui-switch-008-thumb);
-box-shadow:0 1px 2px oklch(0.2 0.02 265 / 18%);
+box-shadow:0 1px 2px oklch(0.2 0 265 / 18%);
 }
 [data-vibeui-block="switch-008"] [data-part="reason"]{
 display:flex;gap:0.5rem;margin:0;padding:0.5rem 0.625rem;

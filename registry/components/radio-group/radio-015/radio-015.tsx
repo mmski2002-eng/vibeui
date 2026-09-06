@@ -30,20 +30,20 @@ export type Radio015Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="radio-015"]){
 --vibeui-radio-015-bg:transparent;
---vibeui-radio-015-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-radio-015-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-radio-015-muted:color-mix(in oklab,var(--vibeui-radio-015-fg) 68%,transparent);
---vibeui-radio-015-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
---vibeui-radio-015-ring:light-dark(oklch(0.74 0.012 265),oklch(0.5 0.014 265));
+--vibeui-radio-015-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
+--vibeui-radio-015-ring:light-dark(oklch(0.74 0 265),oklch(0.5 0 265));
 --vibeui-radio-015-accent:light-dark(oklch(0.55 0.17 260),oklch(0.75 0.15 260));
 --vibeui-radio-015-tint:light-dark(oklch(0.55 0.17 260 / 7%),oklch(0.75 0.15 260 / 16%));
 /* Миниатюры остаются фиксированными: они рисуют светлую и тёмную тему как
    картинку выбора, а не как оформление компонента. */
---vibeui-radio-015-thumb-light-bg:oklch(0.98 0.002 265);
---vibeui-radio-015-thumb-light-bar:oklch(0.9 0.006 265);
---vibeui-radio-015-thumb-light-line:oklch(0.8 0.006 265);
---vibeui-radio-015-thumb-dark-bg:oklch(0.24 0.012 265);
---vibeui-radio-015-thumb-dark-bar:oklch(0.34 0.012 265);
---vibeui-radio-015-thumb-dark-line:oklch(0.56 0.012 265);
+--vibeui-radio-015-thumb-light-bg:oklch(0.98 0 265);
+--vibeui-radio-015-thumb-light-bar:oklch(0.9 0 265);
+--vibeui-radio-015-thumb-light-line:oklch(0.8 0 265);
+--vibeui-radio-015-thumb-dark-bg:oklch(0.24 0 265);
+--vibeui-radio-015-thumb-dark-bar:oklch(0.34 0 265);
+--vibeui-radio-015-thumb-dark-line:oklch(0.56 0 265);
 --vibeui-radio-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

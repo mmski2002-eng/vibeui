@@ -34,12 +34,12 @@ export type Checkbox022Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="checkbox-022"]){
 --vibeui-checkbox-022-bg:transparent;
---vibeui-checkbox-022-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-checkbox-022-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-checkbox-022-muted:color-mix(in oklab,var(--vibeui-checkbox-022-fg) 68%,transparent);
---vibeui-checkbox-022-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
---vibeui-checkbox-022-locked:light-dark(oklch(0.955 0.004 265),oklch(0.28 0.009 265));
+--vibeui-checkbox-022-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
+--vibeui-checkbox-022-locked:light-dark(oklch(0.955 0 265),oklch(0.28 0 265));
 --vibeui-checkbox-022-accent:light-dark(oklch(0.5 0.14 265),oklch(0.65 0.15 265));
---vibeui-checkbox-022-on-accent:oklch(0.99 0.01 265);
+--vibeui-checkbox-022-on-accent:oklch(0.99 0 265);
 --vibeui-checkbox-022-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

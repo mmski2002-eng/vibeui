@@ -26,12 +26,12 @@ export type Alert004Props = Omit<
 // темнеет там, где тёмный контекст, и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="alert-004"]){
---vibeui-alert-004-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
+--vibeui-alert-004-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-alert-004-muted:color-mix(in oklab,var(--vibeui-alert-004-fg) 68%,transparent);
 --vibeui-alert-004-bg:transparent;
---vibeui-alert-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-alert-004-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
 --vibeui-alert-004-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
---vibeui-alert-004-accent-fg:light-dark(oklch(1 0 0),oklch(0.18 0.01 265));
+--vibeui-alert-004-accent-fg:light-dark(oklch(1 0 0),oklch(0.18 0 265));
 --vibeui-alert-004-danger:light-dark(oklch(0.56 0.19 25),oklch(0.72 0.17 25));
 --vibeui-alert-004-radius:0.75rem;
 --vibeui-alert-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

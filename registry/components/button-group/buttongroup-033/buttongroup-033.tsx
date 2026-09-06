@@ -27,10 +27,10 @@ export type Buttongroup033Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="buttongroup-033"]){
 --vibeui-buttongroup-033-surface:transparent;
---vibeui-buttongroup-033-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.005 265));
+--vibeui-buttongroup-033-fg:light-dark(oklch(0.25 0 265),oklch(0.95 0 265));
 --vibeui-buttongroup-033-muted:color-mix(in oklab,var(--vibeui-buttongroup-033-fg) 68%,transparent);
---vibeui-buttongroup-033-border:light-dark(oklch(0.89 0.008 265),oklch(0.39 0.012 265));
---vibeui-buttongroup-033-on:light-dark(oklch(0.96 0.03 265),oklch(0.33 0.06 265));
+--vibeui-buttongroup-033-border:light-dark(oklch(0.89 0 265),oklch(0.39 0 265));
+--vibeui-buttongroup-033-on:light-dark(oklch(0.96 0 265),oklch(0.33 0.06 265));
 --vibeui-buttongroup-033-accent:light-dark(oklch(0.52 0.16 265),oklch(0.78 0.13 265));
 --vibeui-buttongroup-033-danger:light-dark(oklch(0.55 0.19 27),oklch(0.75 0.16 27));
 --vibeui-buttongroup-033-danger-soft:light-dark(oklch(0.97 0.02 27),oklch(0.31 0.06 27));

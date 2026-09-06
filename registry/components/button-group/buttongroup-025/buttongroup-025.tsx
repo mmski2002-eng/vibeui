@@ -27,12 +27,12 @@ const STYLES = `
 :where([data-vibeui-block="buttongroup-025"]){
 --vibeui-buttongroup-025-map:light-dark(oklch(0.93 0.02 150),oklch(0.3 0.024 155));
 --vibeui-buttongroup-025-road:light-dark(oklch(0.99 0.004 150),oklch(0.42 0.016 155));
---vibeui-buttongroup-025-surface:light-dark(oklch(1 0 0),oklch(0.27 0.012 265));
---vibeui-buttongroup-025-fg:light-dark(oklch(0.26 0.016 265),oklch(0.95 0.005 265));
+--vibeui-buttongroup-025-surface:light-dark(oklch(1 0 0),oklch(0.27 0 265));
+--vibeui-buttongroup-025-fg:light-dark(oklch(0.26 0 265),oklch(0.95 0 265));
 --vibeui-buttongroup-025-muted:color-mix(in oklab,var(--vibeui-buttongroup-025-fg) 68%,transparent);
---vibeui-buttongroup-025-border:light-dark(oklch(0.9 0.006 265),oklch(0.41 0.012 265));
---vibeui-buttongroup-025-hover:light-dark(oklch(0.965 0.005 265),oklch(0.34 0.014 265));
---vibeui-buttongroup-025-tick:light-dark(oklch(0.88 0.008 265),oklch(0.46 0.012 265));
+--vibeui-buttongroup-025-border:light-dark(oklch(0.9 0 265),oklch(0.41 0 265));
+--vibeui-buttongroup-025-hover:light-dark(oklch(0.965 0 265),oklch(0.34 0 265));
+--vibeui-buttongroup-025-tick:light-dark(oklch(0.88 0 265),oklch(0.46 0 265));
 --vibeui-buttongroup-025-accent:light-dark(oklch(0.55 0.16 250),oklch(0.76 0.14 250));
 --vibeui-buttongroup-025-radius:0.625rem;
 --vibeui-buttongroup-025-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -59,7 +59,7 @@ display:flex;flex-direction:column;gap:0.5rem;
 display:flex;flex-direction:column;isolation:isolate;
 border-radius:var(--vibeui-buttongroup-025-radius);
 background:var(--vibeui-buttongroup-025-surface);
-box-shadow:0 1px 2px oklch(0.2 0.03 265 / 20%),0 6px 16px oklch(0.2 0.03 265 / 14%);
+box-shadow:0 1px 2px oklch(0.2 0 265 / 20%),0 6px 16px oklch(0.2 0 265 / 14%);
 }
 [data-vibeui-block="buttongroup-025"] button{
 appearance:none;cursor:pointer;font:inherit;

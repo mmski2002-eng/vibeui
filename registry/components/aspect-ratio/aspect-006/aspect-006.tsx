@@ -22,8 +22,8 @@ export type Aspect006Props = Omit<ComponentProps<"div">, "children"> & {
 // окружения через light-dark(). Своей подложки у коллажа нет.
 const STYLES = `
 :where([data-vibeui-block="aspect-006"]){
---vibeui-aspect-006-border:light-dark(oklch(0.91 0.006 265),oklch(0.38 0.012 265));
---vibeui-aspect-006-fg:oklch(0.99 0.003 265);
+--vibeui-aspect-006-border:light-dark(oklch(0.91 0 265),oklch(0.38 0 265));
+--vibeui-aspect-006-fg:oklch(0.99 0 265);
 --vibeui-aspect-006-radius:0.875rem;
 --vibeui-aspect-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -57,13 +57,13 @@ linear-gradient(150deg,oklch(0.78 0.09 var(--vibeui-aspect-006-hue,250)),oklch(0
 [data-vibeui-block="aspect-006"] [data-part="label"]{
 position:absolute;left:0.5rem;bottom:0.5rem;
 padding:0.125rem 0.4375rem;border-radius:0.3125rem;
-background:oklch(0.18 0.02 265 / 55%);color:var(--vibeui-aspect-006-fg);
+background:oklch(0.18 0 265 / 55%);color:var(--vibeui-aspect-006-fg);
 font-size:0.6875rem;font-weight:600;
 }
 /* Счётчик на последней плитке: коллаж не растёт бесконечно. */
 [data-vibeui-block="aspect-006"] [data-part="more"]{
 position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-background:oklch(0.18 0.02 265 / 55%);color:var(--vibeui-aspect-006-fg);
+background:oklch(0.18 0 265 / 55%);color:var(--vibeui-aspect-006-fg);
 font-size:1rem;font-weight:650;font-variant-numeric:tabular-nums;
 }
 /* В узкой колонке коллаж превращается в две колонки и три строки. */

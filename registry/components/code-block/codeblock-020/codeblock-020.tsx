@@ -27,7 +27,7 @@ const STYLES = `
 :where([data-vibeui-block="codeblock-020"]){
 --vibeui-codeblock-020-bg:transparent;
 --vibeui-codeblock-020-head:light-dark(oklch(0 0 0 / 4%),oklch(1 0 0 / 5%));
---vibeui-codeblock-020-fg:light-dark(oklch(0.26 0.016 250),oklch(0.93 0.008 250));
+--vibeui-codeblock-020-fg:light-dark(oklch(0.26 0 250),oklch(0.93 0 250));
 --vibeui-codeblock-020-muted:color-mix(in oklab,var(--vibeui-codeblock-020-fg) 68%,transparent);
 --vibeui-codeblock-020-border:light-dark(oklch(0 0 0 / 12%),oklch(1 0 0 / 12%));
 --vibeui-codeblock-020-fresh:light-dark(oklch(0.47 0.15 152),oklch(0.83 0.14 152));

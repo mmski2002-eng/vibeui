@@ -23,10 +23,10 @@ export type Calendar005Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="calendar-005"]){
 --vibeui-calendar-005-bg:transparent;
---vibeui-calendar-005-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-calendar-005-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-calendar-005-muted:color-mix(in oklab,var(--vibeui-calendar-005-fg) 68%,transparent);
---vibeui-calendar-005-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
---vibeui-calendar-005-field:light-dark(oklch(0.985 0.002 265),oklch(0.27 0.012 265));
+--vibeui-calendar-005-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
+--vibeui-calendar-005-field:light-dark(oklch(0.985 0 265),oklch(0.27 0 265));
 --vibeui-calendar-005-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
 --vibeui-calendar-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

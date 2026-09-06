@@ -33,13 +33,13 @@ export type Comments001Props = {
 const STYLES = `
 :where([data-vibeui-block="comments-001"]){
 --vibeui-comments-001-bg:transparent;
---vibeui-comments-001-fg:light-dark(oklch(0.24 0.012 265),oklch(0.96 0.004 265));
---vibeui-comments-001-muted:light-dark(oklch(0.52 0.016 265),oklch(0.72 0.02 265));
---vibeui-comments-001-border:light-dark(oklch(0.9 0.006 265),oklch(1 0 0 / 12%));
---vibeui-comments-001-card:light-dark(oklch(0.99 0.002 265),oklch(0.25 0.01 265));
+--vibeui-comments-001-fg:light-dark(oklch(0.24 0 265),oklch(0.96 0 265));
+--vibeui-comments-001-muted:light-dark(oklch(0.52 0 265),oklch(0.72 0 265));
+--vibeui-comments-001-border:light-dark(oklch(0.9 0 265),oklch(1 0 0 / 12%));
+--vibeui-comments-001-card:light-dark(oklch(0.99 0 265),oklch(0.25 0 265));
 --vibeui-comments-001-accent:light-dark(oklch(0.55 0.2 264),oklch(0.72 0.16 264));
---vibeui-comments-001-accent-fg:light-dark(oklch(0.99 0.004 266),oklch(0.18 0.02 266));
---vibeui-comments-001-av-fg:oklch(0.99 0.01 265);
+--vibeui-comments-001-accent-fg:light-dark(oklch(0.99 0 266),oklch(0.18 0 266));
+--vibeui-comments-001-av-fg:oklch(0.99 0 265);
 --vibeui-comments-001-av-0:light-dark(oklch(0.6 0.19 25),oklch(0.68 0.17 25));
 --vibeui-comments-001-av-1:light-dark(oklch(0.62 0.16 145),oklch(0.7 0.15 145));
 --vibeui-comments-001-av-2:light-dark(oklch(0.58 0.19 265),oklch(0.68 0.16 265));

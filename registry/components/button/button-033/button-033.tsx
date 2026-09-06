@@ -25,11 +25,11 @@ export type Button033Props = Omit<
 // а на тёмной подложке каталога его было бы не видно.
 const STYLES = `
 :where([data-vibeui-block="button-033"]){
---vibeui-button-033-surface:light-dark(oklch(0.99 0.003 265),oklch(0.24 0.012 265));
---vibeui-button-033-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
---vibeui-button-033-fg:light-dark(oklch(0.46 0.014 265),oklch(0.74 0.012 265));
---vibeui-button-033-fg-strong:light-dark(oklch(0.24 0.02 265),oklch(0.96 0.006 265));
---vibeui-button-033-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
+--vibeui-button-033-surface:light-dark(oklch(0.99 0 265),oklch(0.24 0 265));
+--vibeui-button-033-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-button-033-fg:light-dark(oklch(0.46 0 265),oklch(0.74 0 265));
+--vibeui-button-033-fg-strong:light-dark(oklch(0.24 0 265),oklch(0.96 0 265));
+--vibeui-button-033-accent:light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));
 --vibeui-button-033-radius:0.5rem;
 --vibeui-button-033-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

@@ -28,12 +28,12 @@ export type Number004Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="number-004"]){
 --vibeui-number-004-surface:transparent;
---vibeui-number-004-field:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
---vibeui-number-004-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
---vibeui-number-004-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-number-004-field:light-dark(oklch(1 0 0),oklch(0.26 0 265));
+--vibeui-number-004-shell:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-number-004-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-number-004-muted:color-mix(in oklab,var(--vibeui-number-004-fg) 68%,transparent);
---vibeui-number-004-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
---vibeui-number-004-track:light-dark(oklch(0.93 0.006 265),oklch(0.33 0.011 265));
+--vibeui-number-004-border:light-dark(oklch(0.88 0 265),oklch(0.42 0 265));
+--vibeui-number-004-track:light-dark(oklch(0.93 0 265),oklch(0.33 0 265));
 --vibeui-number-004-accent:light-dark(oklch(0.58 0.17 285),oklch(0.76 0.15 285));
 --vibeui-number-004-ring:light-dark(oklch(0.58 0.17 285 / 20%),oklch(0.76 0.15 285 / 30%));
 --vibeui-number-004-danger:light-dark(oklch(0.55 0.19 25),oklch(0.72 0.16 25));

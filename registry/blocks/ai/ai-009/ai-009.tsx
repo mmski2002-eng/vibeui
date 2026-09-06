@@ -42,10 +42,10 @@ export type Ai009Props = {
 const STYLES = `
 :where([data-vibeui-block="ai-009"]){
 --vibeui-ai-009-bg:transparent;
---vibeui-ai-009-soft:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.011 265));
---vibeui-ai-009-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.006 265));
---vibeui-ai-009-muted:light-dark(oklch(0.53 0.014 265),oklch(0.69 0.012 265));
---vibeui-ai-009-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-ai-009-soft:light-dark(oklch(0.975 0 265),oklch(0.27 0 265));
+--vibeui-ai-009-fg:light-dark(oklch(0.21 0 265),oklch(0.94 0 265));
+--vibeui-ai-009-muted:light-dark(oklch(0.53 0 265),oklch(0.69 0 265));
+--vibeui-ai-009-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-ai-009-accent:light-dark(oklch(0.5 0.14 210),oklch(0.74 0.12 210));
 --vibeui-ai-009-ok:light-dark(oklch(0.56 0.14 152),oklch(0.72 0.14 152));
 --vibeui-ai-009-fail:light-dark(oklch(0.57 0.19 25),oklch(0.7 0.17 25));

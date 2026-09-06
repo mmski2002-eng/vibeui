@@ -28,8 +28,8 @@ export type Button001Props = ComponentProps<"button"> & {
 // не выжигала строку.
 const STYLES = `
 :where([data-vibeui-block="button-001"]){
---vibeui-button-001-accent:light-dark(oklch(0.62 0.187 264),oklch(0.72 0.155 264));
---vibeui-button-001-accent-fg:light-dark(oklch(0.99 0.004 264),oklch(0.21 0.045 264));
+--vibeui-button-001-accent:light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));
+--vibeui-button-001-accent-fg:light-dark(oklch(0.99 0 264),oklch(0.21 0.045 264));
 --vibeui-button-001-soft-bg:color-mix(in oklab, var(--vibeui-button-001-accent) 14%, transparent);
 --vibeui-button-001-soft-bg-hover:color-mix(in oklab, var(--vibeui-button-001-accent) 22%, transparent);
 --vibeui-button-001-border:color-mix(in oklab, var(--vibeui-button-001-accent) 45%, transparent);

@@ -29,9 +29,9 @@ export type Footer004Props = {
 const STYLES = `
 :where([data-vibeui-block="footer-004"]){
 --vibeui-footer-004-bg:transparent;
---vibeui-footer-004-ink:light-dark(oklch(0.22 0.012 255),oklch(0.94 0.006 255));
---vibeui-footer-004-muted:light-dark(oklch(0.52 0.012 255),oklch(0.7 0.012 255));
---vibeui-footer-004-border:light-dark(oklch(0.91 0.006 255),oklch(0.34 0.012 255));
+--vibeui-footer-004-ink:light-dark(oklch(0.22 0 255),oklch(0.94 0 255));
+--vibeui-footer-004-muted:light-dark(oklch(0.52 0 255),oklch(0.7 0 255));
+--vibeui-footer-004-border:light-dark(oklch(0.91 0 255),oklch(0.34 0 255));
 --vibeui-footer-004-accent:light-dark(oklch(0.5 0.16 258),oklch(0.74 0.14 258));
 --vibeui-footer-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

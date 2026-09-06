@@ -29,11 +29,11 @@ export type Button032Props = Omit<ComponentProps<"button">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="button-032"]){
 --vibeui-button-032-bg:transparent;
---vibeui-button-032-surface:light-dark(oklch(1 0 0),oklch(0.25 0.014 265));
---vibeui-button-032-fg:light-dark(oklch(0.28 0.016 265),oklch(0.92 0.008 265));
+--vibeui-button-032-surface:light-dark(oklch(1 0 0),oklch(0.25 0 265));
+--vibeui-button-032-fg:light-dark(oklch(0.28 0 265),oklch(0.92 0 265));
 --vibeui-button-032-muted:color-mix(in oklab,var(--vibeui-button-032-fg) 68%,transparent);
---vibeui-button-032-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265));
---vibeui-button-032-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
+--vibeui-button-032-border:light-dark(oklch(0.9 0 265),oklch(0.38 0 265));
+--vibeui-button-032-accent:light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));
 --vibeui-button-032-danger:light-dark(oklch(0.55 0.19 25),oklch(0.72 0.16 25));
 --vibeui-button-032-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -60,7 +60,7 @@ margin:auto;padding:0.3125rem;box-sizing:border-box;
 min-width:11rem;
 border:1px solid var(--vibeui-button-032-border);border-radius:0.75rem;
 background:var(--vibeui-button-032-surface);color:var(--vibeui-button-032-fg);
-box-shadow:0 12px 32px -12px light-dark(oklch(0.2 0.02 265 / 35%),oklch(0 0 0 / 55%));
+box-shadow:0 12px 32px -12px light-dark(oklch(0.2 0 265 / 35%),oklch(0 0 0 / 55%));
 font-family:var(--vibeui-button-032-font);
 opacity:0;transform:translateY(-0.25rem);
 transition:opacity .14s ease,transform .14s ease,overlay .14s allow-discrete,display .14s allow-discrete;
@@ -96,9 +96,11 @@ position-try-fallbacks:flip-block;
 }
 [data-vibeui-menu="button-032"][data-align="start"]{position-area:block-end span-inline-start}
 }
-/* Развёрнутый режим: меню стоит в потоке под кнопкой, а не в верхнем слое. */
+/* Развёрнутый режим: меню стоит в потоке под кнопкой, а не в верхнем слое.
+   Только пока popover закрыт: у открытого положение задаёт верхний слой,
+   и static отправил бы меню в левый верхний угол экрана. */
 [data-vibeui-wrap="button-032"]:has([data-open="true"]){display:flex;flex-direction:column;align-items:flex-start}
-[data-vibeui-menu="button-032"][data-open="true"]{
+[data-vibeui-menu="button-032"][data-open="true"]:not(:popover-open){
 position:static;opacity:1;transform:none;margin:0.375rem 0 0;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-menu="button-032"],[data-vibeui-menu="button-032"] *{animation:none!important;transition:none!important}}

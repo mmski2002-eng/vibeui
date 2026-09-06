@@ -23,13 +23,13 @@ export type Label002Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="label-002"]){
 --vibeui-label-002-surface:transparent;
---vibeui-label-002-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.33 0.012 265));
---vibeui-label-002-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.005 265));
+--vibeui-label-002-surface-border:light-dark(oklch(0.91 0 265),oklch(0.33 0 265));
+--vibeui-label-002-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-label-002-muted:color-mix(in oklab,var(--vibeui-label-002-fg) 68%,transparent);
---vibeui-label-002-field-border:light-dark(oklch(0.85 0.01 265),oklch(0.4 0.014 265));
+--vibeui-label-002-field-border:light-dark(oklch(0.85 0 265),oklch(0.4 0 265));
 --vibeui-label-002-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.16 262));
---vibeui-label-002-tip-bg:light-dark(oklch(0.22 0.02 265),oklch(0.34 0.016 265));
---vibeui-label-002-tip-fg:light-dark(oklch(0.97 0.004 265),oklch(0.96 0.004 265));
+--vibeui-label-002-tip-bg:light-dark(oklch(0.22 0 265),oklch(0.34 0 265));
+--vibeui-label-002-tip-fg:light-dark(oklch(0.97 0 265),oklch(0.96 0 265));
 --vibeui-label-002-radius:0.625rem;
 --vibeui-label-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -73,7 +73,7 @@ box-sizing:border-box;margin:auto;padding:0.625rem 0.75rem;
 max-width:17rem;border:0;border-radius:0.625rem;
 font-family:var(--vibeui-label-002-font);font-size:0.8125rem;line-height:1.45;
 color:var(--vibeui-label-002-tip-fg);background:var(--vibeui-label-002-tip-bg);
-box-shadow:0 12px 28px oklch(0.2 0.02 265 / 28%);
+box-shadow:0 12px 28px oklch(0.2 0 265 / 28%);
 }
 @supports (anchor-name: --a){
 [data-vibeui-block="label-002"] [data-part="tip"]{

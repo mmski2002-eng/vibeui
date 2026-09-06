@@ -18,10 +18,10 @@ export type Label012Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="label-012"]){
 --vibeui-label-012-surface:transparent;
---vibeui-label-012-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.33 0.012 265));
---vibeui-label-012-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.005 265));
+--vibeui-label-012-surface-border:light-dark(oklch(0.91 0 265),oklch(0.33 0 265));
+--vibeui-label-012-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-label-012-muted:color-mix(in oklab,var(--vibeui-label-012-fg) 68%,transparent);
---vibeui-label-012-field-border:light-dark(oklch(0.85 0.01 265),oklch(0.4 0.014 265));
+--vibeui-label-012-field-border:light-dark(oklch(0.85 0 265),oklch(0.4 0 265));
 --vibeui-label-012-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.16 262));
 --vibeui-label-012-radius:0.625rem;
 --vibeui-label-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

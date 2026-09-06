@@ -21,12 +21,12 @@ const STYLES = `
 :where([data-vibeui-block="aspect-001"]){
 --vibeui-aspect-001-ratio:16 / 9;
 --vibeui-aspect-001-bg:transparent;
---vibeui-aspect-001-fg:light-dark(oklch(0.5 0.014 265),oklch(0.72 0.012 265));
---vibeui-aspect-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-aspect-001-fg:light-dark(oklch(0.5 0 265),oklch(0.72 0 265));
+--vibeui-aspect-001-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
 --vibeui-aspect-001-sky:light-dark(oklch(0.9 0.06 245),oklch(0.34 0.05 262));
 --vibeui-aspect-001-hill:light-dark(oklch(0.74 0.09 190),oklch(0.44 0.07 195));
 --vibeui-aspect-001-sun:light-dark(oklch(0.9 0.12 85),oklch(0.78 0.13 80));
---vibeui-aspect-001-chip:light-dark(oklch(1 0 0 / 0.85),oklch(0.2 0.014 265 / 0.8));
+--vibeui-aspect-001-chip:light-dark(oklch(1 0 0 / 0.85),oklch(0.2 0 265 / 0.8));
 --vibeui-aspect-001-radius:0.75rem;
 --vibeui-aspect-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

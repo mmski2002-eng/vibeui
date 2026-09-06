@@ -47,11 +47,11 @@ const STYLES = `
 :where([data-vibeui-block="solutions-016"]){
 --vibeui-solutions-016-bg:transparent;
 /* Липкая колонка обязана быть непрозрачной: сквозь неё уезжали бы клетки. */
---vibeui-solutions-016-sticky:light-dark(oklch(1 0 0),oklch(0.18 0.012 280));
---vibeui-solutions-016-panel:light-dark(oklch(0.975 0.004 280),oklch(0.26 0.012 280));
---vibeui-solutions-016-fg:light-dark(oklch(0.21 0.014 280),oklch(0.94 0.005 280));
---vibeui-solutions-016-muted:light-dark(oklch(0.54 0.014 280),oklch(0.7 0.012 280));
---vibeui-solutions-016-border:light-dark(oklch(0.9 0.006 280),oklch(0.36 0.012 280));
+--vibeui-solutions-016-sticky:light-dark(oklch(1 0 0),oklch(0.18 0 280));
+--vibeui-solutions-016-panel:light-dark(oklch(0.975 0 280),oklch(0.26 0 280));
+--vibeui-solutions-016-fg:light-dark(oklch(0.21 0 280),oklch(0.94 0 280));
+--vibeui-solutions-016-muted:light-dark(oklch(0.54 0 280),oklch(0.7 0 280));
+--vibeui-solutions-016-border:light-dark(oklch(0.9 0 280),oklch(0.36 0 280));
 --vibeui-solutions-016-morning:light-dark(oklch(0.62 0.14 200),oklch(0.68 0.13 200));
 --vibeui-solutions-016-evening:light-dark(oklch(0.62 0.15 300),oklch(0.66 0.14 300));
 --vibeui-solutions-016-night:light-dark(oklch(0.42 0.1 275),oklch(0.55 0.12 275));

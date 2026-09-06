@@ -50,7 +50,7 @@ padding:0.875rem 1rem;border-radius:var(--vibeui-alert-002-radius);
 background:var(--vibeui-alert-002-bg);color:var(--vibeui-alert-002-fg);
 font-family:var(--vibeui-alert-002-font);
 }
-[data-vibeui-block="alert-002"][data-tone="info"]{--vibeui-alert-002-bg:light-dark(oklch(0.45 0.16 262),oklch(0.42 0.14 262));--vibeui-alert-002-fg:light-dark(oklch(0.99 0.01 262),oklch(0.97 0.02 262));--vibeui-alert-002-muted:light-dark(oklch(0.9 0.04 262),oklch(0.85 0.05 262))}
+[data-vibeui-block="alert-002"][data-tone="info"]{--vibeui-alert-002-bg:light-dark(oklch(0.45 0.16 262),oklch(0.42 0.14 262));--vibeui-alert-002-fg:light-dark(oklch(0.99 0 262),oklch(0.97 0 262));--vibeui-alert-002-muted:light-dark(oklch(0.9 0.04 262),oklch(0.85 0.05 262))}
 [data-vibeui-block="alert-002"][data-tone="success"]{--vibeui-alert-002-bg:light-dark(oklch(0.44 0.12 152),oklch(0.41 0.11 152));--vibeui-alert-002-fg:light-dark(oklch(0.99 0.01 152),oklch(0.97 0.02 152));--vibeui-alert-002-muted:light-dark(oklch(0.9 0.04 152),oklch(0.85 0.05 152))}
 [data-vibeui-block="alert-002"][data-tone="warning"]{--vibeui-alert-002-bg:light-dark(oklch(0.5 0.13 70),oklch(0.48 0.12 70));--vibeui-alert-002-fg:light-dark(oklch(0.99 0.01 70),oklch(0.98 0.02 70));--vibeui-alert-002-muted:light-dark(oklch(0.94 0.04 70),oklch(0.89 0.05 70))}
 /* Значок на просвете заливки: обводка вместо второго цвета. */

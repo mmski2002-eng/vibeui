@@ -29,9 +29,9 @@ export type Navbar004Props = {
 // тёмная тема, поэтому light-dark() здесь не нужен.
 const STYLES = `
 :where([data-vibeui-block="navbar-004"]){
---vibeui-navbar-004-ink:oklch(0.98 0.003 265);
---vibeui-navbar-004-muted:oklch(0.86 0.012 265);
---vibeui-navbar-004-veil:oklch(0.18 0.03 265 / 72%);
+--vibeui-navbar-004-ink:oklch(0.98 0 265);
+--vibeui-navbar-004-muted:oklch(0.86 0 265);
+--vibeui-navbar-004-veil:oklch(0.18 0 265 / 72%);
 --vibeui-navbar-004-border:oklch(1 0 0 / 16%);
 --vibeui-navbar-004-accent:oklch(0.78 0.15 78);
 --vibeui-navbar-004-accent-fg:oklch(0.24 0.05 78);

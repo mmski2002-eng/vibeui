@@ -23,12 +23,12 @@ export type Tooltip013Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="tooltip-013"]){
 --vibeui-tooltip-013-bg:transparent;
---vibeui-tooltip-013-fg:light-dark(oklch(0.25 0.014 265),oklch(0.93 0.006 265));
+--vibeui-tooltip-013-fg:light-dark(oklch(0.25 0 265),oklch(0.93 0 265));
 --vibeui-tooltip-013-muted:color-mix(in oklab,var(--vibeui-tooltip-013-fg) 68%,transparent);
---vibeui-tooltip-013-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
---vibeui-tooltip-013-face:light-dark(oklch(0.98 0.003 265),oklch(0.3 0.012 265));
---vibeui-tooltip-013-tip:light-dark(oklch(0.24 0.014 265),oklch(0.9 0.008 265));
---vibeui-tooltip-013-tipfg:light-dark(oklch(0.98 0.002 265),oklch(0.22 0.014 265));
+--vibeui-tooltip-013-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
+--vibeui-tooltip-013-face:light-dark(oklch(0.98 0 265),oklch(0.3 0 265));
+--vibeui-tooltip-013-tip:light-dark(oklch(0.24 0 265),oklch(0.9 0 265));
+--vibeui-tooltip-013-tipfg:light-dark(oklch(0.98 0 265),oklch(0.22 0 265));
 --vibeui-tooltip-013-accent:light-dark(oklch(0.57 0.17 265),oklch(0.75 0.15 265));
 --vibeui-tooltip-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

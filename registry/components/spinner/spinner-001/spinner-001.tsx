@@ -20,10 +20,10 @@ const STYLES = `
 :where([data-vibeui-block="spinner-001"]){
 --vibeui-spinner-001-size:1.5rem;
 --vibeui-spinner-001-bg:transparent;
---vibeui-spinner-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.32 0.012 265));
---vibeui-spinner-001-fg:light-dark(oklch(0.28 0.014 265),oklch(0.94 0.005 265));
+--vibeui-spinner-001-border:light-dark(oklch(0.9 0 265),oklch(0.32 0 265));
+--vibeui-spinner-001-fg:light-dark(oklch(0.28 0 265),oklch(0.94 0 265));
 --vibeui-spinner-001-muted:color-mix(in oklab,var(--vibeui-spinner-001-fg) 68%,transparent);
---vibeui-spinner-001-track:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-spinner-001-track:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
 --vibeui-spinner-001-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.16 265));
 --vibeui-spinner-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

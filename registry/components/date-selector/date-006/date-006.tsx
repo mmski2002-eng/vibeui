@@ -35,11 +35,11 @@ export type Date006Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="date-006"]){
 --vibeui-date-006-surface:transparent;
---vibeui-date-006-field:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
---vibeui-date-006-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
---vibeui-date-006-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-date-006-field:light-dark(oklch(1 0 0),oklch(0.26 0 265));
+--vibeui-date-006-shell:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-date-006-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-date-006-muted:color-mix(in oklab,var(--vibeui-date-006-fg) 68%,transparent);
---vibeui-date-006-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
+--vibeui-date-006-border:light-dark(oklch(0.88 0 265),oklch(0.42 0 265));
 --vibeui-date-006-ok:light-dark(oklch(0.55 0.14 160),oklch(0.78 0.13 160));
 --vibeui-date-006-soon:light-dark(oklch(0.66 0.15 70),oklch(0.82 0.14 70));
 --vibeui-date-006-past:light-dark(oklch(0.56 0.19 25),oklch(0.75 0.16 25));

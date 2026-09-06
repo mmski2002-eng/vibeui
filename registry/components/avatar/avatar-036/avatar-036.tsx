@@ -33,25 +33,47 @@ export type Avatar036Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="avatar-036"]){
 --vibeui-avatar-036-frame:11rem;
---vibeui-avatar-036-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.16 262));
---vibeui-avatar-036-surface:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
---vibeui-avatar-036-border:light-dark(oklch(0.9 0.008 265),oklch(0.31 0.012 265));
---vibeui-avatar-036-fg:light-dark(oklch(0.22 0.015 265),oklch(0.96 0.005 265));
---vibeui-avatar-036-muted:color-mix(in oklab,var(--vibeui-avatar-036-fg) 68%,transparent);
---vibeui-avatar-036-shade:light-dark(oklch(0.98 0.004 265),oklch(0.26 0.014 265));
+--vibeui-avatar-036-ink:light-dark(oklch(0.24 0 265),oklch(0.96 0 265));
+--vibeui-avatar-036-on-ink:light-dark(oklch(0.99 0 265),oklch(0.18 0 265));
+--vibeui-avatar-036-surface:light-dark(oklch(0.995 0 265),oklch(0.2 0 265));
+--vibeui-avatar-036-border:light-dark(oklch(0.91 0 265),oklch(0.3 0 265));
+--vibeui-avatar-036-fg:light-dark(oklch(0.22 0 265),oklch(0.96 0 265));
+--vibeui-avatar-036-muted:color-mix(in oklab,var(--vibeui-avatar-036-fg) 62%,transparent);
+--vibeui-avatar-036-stage:light-dark(oklch(0.96 0 265),oklch(0.24 0 265));
+--vibeui-avatar-036-track:light-dark(oklch(0.9 0 265),oklch(0.32 0 265));
+--vibeui-avatar-036-shadow:light-dark(oklch(0.2 0 265 / 12%),oklch(0 0 0 / 45%));
 --vibeui-avatar-036-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="avatar-036"]{
-display:flex;flex-direction:column;align-items:center;gap:0.875rem;
-padding:1.25rem;border-radius:1rem;
+display:flex;flex-direction:column;align-items:center;gap:1rem;
+padding:1.5rem 1.5rem 1.25rem;border-radius:1.375rem;
 border:1px solid var(--vibeui-avatar-036-border);
-background:var(--vibeui-avatar-036-surface);color:var(--vibeui-avatar-036-fg);
+background:
+ radial-gradient(120% 90% at 50% -10%,color-mix(in oklab,var(--vibeui-avatar-036-stage) 70%,transparent) 0%,transparent 62%),
+ var(--vibeui-avatar-036-surface);
+color:var(--vibeui-avatar-036-fg);
 font-family:var(--vibeui-avatar-036-font);
+box-shadow:0 1px 2px var(--vibeui-avatar-036-shadow),0 20px 44px -28px var(--vibeui-avatar-036-shadow);
+}
+[data-vibeui-block="avatar-036"] *{box-sizing:border-box}
+/* Подложка кадра: круг лежит на мягкой плашке, а не на голой карточке. */
+[data-vibeui-block="avatar-036"] [data-part="stage"]{
+display:grid;place-items:center;
+padding:0.875rem;border-radius:1.125rem;
+background:
+ radial-gradient(70% 70% at 50% 25%,color-mix(in oklab,var(--vibeui-avatar-036-surface) 85%,transparent) 0%,transparent 70%),
+ var(--vibeui-avatar-036-stage);
+box-shadow:inset 0 1px 0 light-dark(oklch(1 0 0 / 70%),oklch(1 0 0 / 6%));
 }
 [data-vibeui-block="avatar-036"] [data-part="frame"]{
 position:relative;flex:none;overflow:hidden;
 width:var(--vibeui-avatar-036-frame);height:var(--vibeui-avatar-036-frame);
-border-radius:9999px;background:var(--vibeui-avatar-036-shade);
+border-radius:9999px;background:var(--vibeui-avatar-036-stage);
+box-shadow:
+ 0 0 0 1px light-dark(oklch(0.2 0 265 / 10%),oklch(1 0 0 / 12%)),
+ 0 0 0 0.4375rem var(--vibeui-avatar-036-surface),
+ 0 0 0 0.5rem light-dark(oklch(0.2 0 265 / 7%),oklch(1 0 0 / 8%)),
+ 0 14px 30px -18px var(--vibeui-avatar-036-shadow);
 touch-action:none;cursor:grab;
 }
 [data-vibeui-block="avatar-036"][data-dragging="true"] [data-part="frame"]{cursor:grabbing}
@@ -66,12 +88,46 @@ display:flex;align-items:center;justify-content:center;
 width:100%;height:100%;
 color:var(--vibeui-avatar-036-muted);font-size:0.8125rem;text-align:center;padding:0 1.5rem;
 }
-[data-vibeui-block="avatar-036"] [data-part="zoom"]{
-width:100%;max-width:var(--vibeui-avatar-036-frame);accent-color:var(--vibeui-avatar-036-accent);
+/* Ползунок: собственный трек и ручка, иначе браузер рисует системный синий. */
+[data-vibeui-block="avatar-036"] [data-part="scale"]{
+display:flex;align-items:center;gap:0.625rem;
+width:100%;max-width:calc(var(--vibeui-avatar-036-frame) + 3rem);
+color:var(--vibeui-avatar-036-muted);
 }
-[data-vibeui-block="avatar-036"] [data-part="zoom"]:disabled{opacity:.4}
+[data-vibeui-block="avatar-036"] [data-part="scale"] svg{flex:none;width:0.875rem;height:0.875rem}
+[data-vibeui-block="avatar-036"] [data-part="scale"] [data-icon="big"]{width:1.125rem;height:1.125rem}
+[data-vibeui-block="avatar-036"] [data-part="zoom"]{
+flex:1;min-width:0;height:1.25rem;margin:0;padding:0;
+appearance:none;-webkit-appearance:none;background:transparent;cursor:pointer;
+}
+[data-vibeui-block="avatar-036"] [data-part="zoom"]::-webkit-slider-runnable-track{
+height:0.375rem;border-radius:9999px;
+background:linear-gradient(to right,
+ var(--vibeui-avatar-036-ink) var(--vibeui-avatar-036-fill,0%),
+ var(--vibeui-avatar-036-track) var(--vibeui-avatar-036-fill,0%));
+}
+[data-vibeui-block="avatar-036"] [data-part="zoom"]::-moz-range-track{
+height:0.375rem;border-radius:9999px;background:var(--vibeui-avatar-036-track);
+}
+[data-vibeui-block="avatar-036"] [data-part="zoom"]::-moz-range-progress{
+height:0.375rem;border-radius:9999px;background:var(--vibeui-avatar-036-ink);
+}
+[data-vibeui-block="avatar-036"] [data-part="zoom"]::-webkit-slider-thumb{
+-webkit-appearance:none;appearance:none;
+width:1.125rem;height:1.125rem;margin-top:-0.375rem;border-radius:9999px;
+border:1px solid light-dark(oklch(0.2 0 265 / 14%),oklch(1 0 0 / 18%));
+background:var(--vibeui-avatar-036-surface);
+box-shadow:0 1px 2px var(--vibeui-avatar-036-shadow),0 4px 10px -4px var(--vibeui-avatar-036-shadow);
+}
+[data-vibeui-block="avatar-036"] [data-part="zoom"]::-moz-range-thumb{
+width:1.125rem;height:1.125rem;border-radius:9999px;
+border:1px solid light-dark(oklch(0.2 0 265 / 14%),oklch(1 0 0 / 18%));
+background:var(--vibeui-avatar-036-surface);
+box-shadow:0 1px 2px var(--vibeui-avatar-036-shadow),0 4px 10px -4px var(--vibeui-avatar-036-shadow);
+}
+[data-vibeui-block="avatar-036"] [data-part="zoom"]:disabled{opacity:.4;cursor:not-allowed}
 [data-vibeui-block="avatar-036"] [data-part="hint"]{
-margin:0;color:var(--vibeui-avatar-036-muted);font-size:0.75rem;text-align:center;line-height:1.35;
+margin:0;color:var(--vibeui-avatar-036-muted);font-size:0.75rem;text-align:center;line-height:1.4;
 }
 [data-vibeui-block="avatar-036"] [data-part="actions"]{
 display:flex;flex-wrap:wrap;justify-content:center;gap:0.5rem;
@@ -80,22 +136,34 @@ display:flex;flex-wrap:wrap;justify-content:center;gap:0.5rem;
 [data-vibeui-block="avatar-036"] [data-part="save"],
 [data-vibeui-block="avatar-036"] [data-part="reset"]{
 appearance:none;cursor:pointer;
-display:inline-flex;align-items:center;justify-content:center;
-min-height:2.25rem;padding:0.3125rem 0.875rem;border-radius:0.625rem;
-font-family:inherit;font-size:0.875rem;font-weight:600;line-height:1;
+display:inline-flex;align-items:center;justify-content:center;gap:0.375rem;
+min-height:2.375rem;padding:0.375rem 1rem;border-radius:9999px;
+font-family:inherit;font-size:0.8125rem;font-weight:600;letter-spacing:-0.01em;line-height:1;
+transition:transform .16s ease,box-shadow .16s ease,background-color .16s ease;
 }
 [data-vibeui-block="avatar-036"] [data-part="pick"]{
-border:0;background:var(--vibeui-avatar-036-accent);color:oklch(0.99 0.003 265);
+border:0;background:var(--vibeui-avatar-036-ink);color:var(--vibeui-avatar-036-on-ink);
+box-shadow:0 1px 2px var(--vibeui-avatar-036-shadow),0 8px 18px -10px var(--vibeui-avatar-036-shadow);
 }
 [data-vibeui-block="avatar-036"] [data-part="save"],
 [data-vibeui-block="avatar-036"] [data-part="reset"]{
 border:1px solid var(--vibeui-avatar-036-border);
-background:transparent;color:inherit;
+background:var(--vibeui-avatar-036-surface);color:inherit;
+box-shadow:0 1px 2px color-mix(in oklab,var(--vibeui-avatar-036-shadow) 60%,transparent);
 }
+[data-vibeui-block="avatar-036"] [data-part="pick"]:hover,
+[data-vibeui-block="avatar-036"] [data-part="save"]:not(:disabled):hover,
+[data-vibeui-block="avatar-036"] [data-part="reset"]:not(:disabled):hover{
+transform:translateY(-1px);
+box-shadow:0 2px 4px var(--vibeui-avatar-036-shadow),0 12px 22px -12px var(--vibeui-avatar-036-shadow);
+}
+[data-vibeui-block="avatar-036"] [data-part="pick"]:active,
+[data-vibeui-block="avatar-036"] [data-part="save"]:not(:disabled):active,
+[data-vibeui-block="avatar-036"] [data-part="reset"]:not(:disabled):active{transform:translateY(0)}
 [data-vibeui-block="avatar-036"] [data-part="save"]:disabled,
-[data-vibeui-block="avatar-036"] [data-part="reset"]:disabled{opacity:.45;cursor:not-allowed}
+[data-vibeui-block="avatar-036"] [data-part="reset"]:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
 [data-vibeui-block="avatar-036"] :focus-visible{
-outline:2px solid var(--vibeui-avatar-036-accent);outline-offset:2px;
+outline:2px solid var(--vibeui-avatar-036-ink);outline-offset:2px;
 }
 /* Поле файла остаётся настоящим: клик по кнопке открывает его через label. */
 [data-vibeui-block="avatar-036"] input[type="file"]{
@@ -106,6 +174,7 @@ position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);
 `
 
 const FRAME = 176
+const MAX_ZOOM = 3
 
 /**
  * Аватар с обрезкой: человек сам выбирает кадр, а не доверяет его середине
@@ -131,9 +200,41 @@ export function Avatar036({
   // не пришедший пропом адрес.
   const objectUrlRef = useRef<string | null>(null)
   const [source, setSource] = useState<string | null>(src ?? null)
+  // Размер снимка на экране считается после загрузки: снимок 512 px в кадре
+  // 176 px иначе показал бы одни ноздри.
+  const [size, setSize] = useState<{ width: number; height: number } | null>(
+    null,
+  )
   const [zoom, setZoom] = useState(1)
   const [offset, setOffset] = useState({ x: 0, y: 0 })
   const [dragging, setDragging] = useState(false)
+
+  /** Меньшая сторона снимка равна кадру: при масштабе 1 в круг влезает всё. */
+  function fit(image: HTMLImageElement) {
+    const scale = FRAME / Math.min(image.naturalWidth, image.naturalHeight)
+    const width = Math.round(image.naturalWidth * scale)
+    const height = Math.round(image.naturalHeight * scale)
+
+    // Тот же размер возвращается прежним объектом: ref-функция пересоздаётся
+    // на каждом рендере, и новый объект закрутил бы бесконечный цикл.
+    setSize((current) =>
+      current && current.width === width && current.height === height
+        ? current
+        : { width, height },
+    )
+  }
+
+  /**
+   * Снимок из кэша успевает загрузиться до гидратации, и onLoad для него уже
+   * не сработает — размер приходится снимать прямо при появлении элемента.
+   */
+  function measure(image: HTMLImageElement | null) {
+    imageRef.current = image
+
+    if (image?.complete && image.naturalWidth > 0) {
+      fit(image)
+    }
+  }
 
   function pick(files: FileList | null) {
     const file = files?.[0]
@@ -148,6 +249,7 @@ export function Avatar036({
 
     objectUrlRef.current = URL.createObjectURL(file)
     setSource(objectUrlRef.current)
+    setSize(null)
     setZoom(1)
     setOffset({ x: 0, y: 0 })
   }
@@ -237,6 +339,7 @@ export function Avatar036({
     "--vibeui-avatar-036-x": `${offset.x}px`,
     "--vibeui-avatar-036-y": `${offset.y}px`,
     "--vibeui-avatar-036-zoom": zoom,
+    "--vibeui-avatar-036-fill": `${((zoom - 1) / (MAX_ZOOM - 1)) * 100}%`,
     ...(textColor ? { "--vibeui-avatar-036-fg": textColor } : null),
     ...style,
   } as CSSProperties
@@ -254,49 +357,62 @@ export function Avatar036({
         className={className}
         style={palette}
       >
-        <div
-          data-part="frame"
-          role="group"
-          aria-label="Кадр фотографии: стрелки сдвигают снимок"
-          tabIndex={source ? 0 : -1}
-          onPointerDown={startDrag}
-          onPointerMove={moveDrag}
-          onPointerUp={endDrag}
-          onPointerCancel={endDrag}
-          onKeyDown={nudge}
-        >
-          {source ? (
-            // Размер задаётся по меньшей стороне: кадр всегда заполнен целиком.
-            <img
-              ref={imageRef}
-              src={source}
-              alt=""
-              width={FRAME}
-              height={FRAME}
-              style={{
-                width: "auto",
-                height: "auto",
-                minWidth: FRAME,
-                minHeight: FRAME,
-              }}
-              draggable={false}
-            />
-          ) : (
-            <span data-part="empty">{emptyText}</span>
-          )}
+        <div data-part="stage">
+          <div
+            data-part="frame"
+            role="group"
+            aria-label="Кадр фотографии: стрелки сдвигают снимок"
+            tabIndex={source ? 0 : -1}
+            onPointerDown={startDrag}
+            onPointerMove={moveDrag}
+            onPointerUp={endDrag}
+            onPointerCancel={endDrag}
+            onKeyDown={nudge}
+          >
+            {source ? (
+              <img
+                ref={measure}
+                src={source}
+                alt=""
+                width={size?.width ?? FRAME}
+                height={size?.height ?? FRAME}
+                style={{
+                  width: `${size?.width ?? FRAME}px`,
+                  height: `${size?.height ?? FRAME}px`,
+                }}
+                draggable={false}
+                onLoad={(event) => fit(event.currentTarget)}
+              />
+            ) : (
+              <span data-part="empty">{emptyText}</span>
+            )}
+          </div>
         </div>
 
-        <input
-          type="range"
-          data-part="zoom"
-          min={1}
-          max={3}
-          step={0.01}
-          value={zoom}
-          disabled={!source}
-          aria-label="Масштаб"
-          onChange={(event) => setZoom(Number(event.target.value))}
-        />
+        <div data-part="scale">
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
+            <circle cx="12" cy="12" r="6" />
+          </svg>
+          <input
+            type="range"
+            data-part="zoom"
+            min={1}
+            max={MAX_ZOOM}
+            step={0.01}
+            value={zoom}
+            disabled={!source}
+            aria-label="Масштаб"
+            onChange={(event) => setZoom(Number(event.target.value))}
+          />
+          <svg
+            viewBox="0 0 24 24"
+            data-icon="big"
+            aria-hidden="true"
+            fill="currentColor"
+          >
+            <circle cx="12" cy="12" r="9" />
+          </svg>
+        </div>
 
         <div data-part="actions">
           <label data-part="pick">

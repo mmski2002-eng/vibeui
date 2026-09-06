@@ -35,14 +35,14 @@ export type Eventcalendar001Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="eventcalendar-001"]){
 --vibeui-eventcalendar-001-bg:transparent;
---vibeui-eventcalendar-001-panel:light-dark(oklch(1 0 0),oklch(0.24 0.011 265));
---vibeui-eventcalendar-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-eventcalendar-001-panel:light-dark(oklch(1 0 0),oklch(0.24 0 265));
+--vibeui-eventcalendar-001-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-eventcalendar-001-muted:color-mix(in oklab,var(--vibeui-eventcalendar-001-fg) 68%,transparent);
---vibeui-eventcalendar-001-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
---vibeui-eventcalendar-001-line:light-dark(oklch(0.95 0.004 265),oklch(0.31 0.01 265));
+--vibeui-eventcalendar-001-border:light-dark(oklch(0.91 0 265),oklch(0.35 0 265));
+--vibeui-eventcalendar-001-line:light-dark(oklch(0.95 0 265),oklch(0.31 0 265));
 --vibeui-eventcalendar-001-accent:light-dark(oklch(0.55 0.16 262),oklch(0.74 0.15 262));
 --vibeui-eventcalendar-001-personal:light-dark(oklch(0.58 0.14 152),oklch(0.76 0.13 152));
---vibeui-eventcalendar-001-hold:light-dark(oklch(0.6 0.02 265),oklch(0.72 0.02 265));
+--vibeui-eventcalendar-001-hold:light-dark(oklch(0.6 0 265),oklch(0.72 0 265));
 --vibeui-eventcalendar-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -163,7 +163,7 @@ display:flex;flex-direction:column;gap:0.1875rem;
 margin:0.1875rem 0 0;padding:0.25rem;list-style:none;
 background:var(--vibeui-eventcalendar-001-panel);
 border:1px solid var(--vibeui-eventcalendar-001-border);border-radius:0.5rem;
-box-shadow:0 10px 24px oklch(0.24 0.014 265 / 14%);
+box-shadow:0 10px 24px oklch(0.24 0 265 / 14%);
 }
 [data-vibeui-block="eventcalendar-001"] [data-part="cell"]:nth-child(n+29) [data-part="overflow"]{
 top:auto;bottom:100%;margin:0 0 0.1875rem;

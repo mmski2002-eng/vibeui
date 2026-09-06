@@ -35,10 +35,10 @@ export type Hovercard007Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="hovercard-007"]){
 --vibeui-hovercard-007-bg:transparent;
---vibeui-hovercard-007-card:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
---vibeui-hovercard-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-hovercard-007-card:light-dark(oklch(1 0 0),oklch(0.25 0 265));
+--vibeui-hovercard-007-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-hovercard-007-muted:color-mix(in oklab,var(--vibeui-hovercard-007-fg) 68%,transparent);
---vibeui-hovercard-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-hovercard-007-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
 --vibeui-hovercard-007-accent:light-dark(oklch(0.55 0.16 200),oklch(0.76 0.13 200));
 --vibeui-hovercard-007-delay:0.45s;
 --vibeui-hovercard-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -55,7 +55,7 @@ font-family:var(--vibeui-hovercard-007-font);color:var(--vibeui-hovercard-007-fg
 }
 [data-vibeui-block="hovercard-007"] [data-part="line"]{margin:0;font-size:0.875rem;line-height:1.7}
 /* Ожидание и карточка привязаны к ссылке в строке, а не ко всему абзацу. */
-[data-vibeui-block="hovercard-007"] [data-part="host"]{position:relative;display:inline-block}
+[data-vibeui-block="hovercard-007"] [data-part="host"]{position:relative;display:inline-block;anchor-name:--vibeui-hovercard-007-anchor}
 [data-vibeui-block="hovercard-007"] [data-part="link"]{
 position:relative;display:inline-block;
 color:var(--vibeui-hovercard-007-accent);font-weight:640;text-decoration:none;
@@ -72,14 +72,20 @@ transition:transform var(--vibeui-hovercard-007-delay) linear;
 [data-vibeui-block="hovercard-007"] [data-part="host"]:hover [data-part="link"]::after,
 [data-vibeui-block="hovercard-007"] [data-part="host"]:focus-within [data-part="link"]::after{transform:scaleX(1)}
 [data-vibeui-block="hovercard-007"] [data-part="card"]{
-position:absolute;left:0;top:calc(100% + 0.5rem);z-index:20;
+/* fixed с привязкой к якорю: absolute режет рамка карточки каталога,
+   а фиксированный слой её не замечает. */
+position:fixed;inset:auto;position-anchor:--vibeui-hovercard-007-anchor;
+top:anchor(bottom);left:anchor(left);margin-top:0.5rem;z-index:20;
 display:flex;flex-direction:column;gap:0.375rem;
 width:17rem;box-sizing:border-box;padding:0.8125rem 0.875rem;
 border:1px solid var(--vibeui-hovercard-007-border);border-radius:0.875rem;
 background:var(--vibeui-hovercard-007-card);
-box-shadow:0 22px 46px -28px oklch(0.2 0.02 265 / 55%);
+box-shadow:0 22px 46px -28px oklch(0.2 0 265 / 55%);
 opacity:0;visibility:hidden;translate:0 -0.25rem;
 transition:opacity .14s ease 0s,translate .14s ease 0s,visibility .14s 0s;
+}
+@supports not (anchor-name: --a){
+[data-vibeui-block="hovercard-007"] [data-part="card"]{position:absolute;inset:auto;left:0;top:calc(100% + 0.5rem);margin-top:0}
 }
 /* Задержка стоит только в открытом состоянии: уход курсора отменяет её. */
 [data-vibeui-block="hovercard-007"] [data-part="host"]:hover [data-part="card"],

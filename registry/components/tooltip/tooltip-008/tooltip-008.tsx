@@ -18,10 +18,10 @@ export type Tooltip008Props = Omit<ComponentProps<"p">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="tooltip-008"]){
 --vibeui-tooltip-008-bg:transparent;
---vibeui-tooltip-008-fg:light-dark(oklch(0.28 0.012 265),oklch(0.92 0.006 265));
+--vibeui-tooltip-008-fg:light-dark(oklch(0.28 0 265),oklch(0.92 0 265));
 --vibeui-tooltip-008-border:light-dark(oklch(0.9 0.008 90),oklch(0.37 0.01 90));
 --vibeui-tooltip-008-mark:light-dark(oklch(0.52 0.13 55),oklch(0.76 0.12 55));
---vibeui-tooltip-008-tip:light-dark(oklch(0.25 0.014 265),oklch(0.35 0.014 265));
+--vibeui-tooltip-008-tip:light-dark(oklch(0.25 0 265),oklch(0.35 0 265));
 --vibeui-tooltip-008-font:ui-serif,Georgia,"Times New Roman",serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -53,10 +53,10 @@ position:absolute;bottom:calc(100% + 0.45em);left:50%;z-index:20;
 width:16rem;max-width:70vw;box-sizing:border-box;white-space:normal;
 padding:0.5rem 0.6875rem;border-radius:0.5rem;
 /* Обе ветки --tip тёмные — плашка подсказки тёмная всегда, поэтому подпись светлая без light-dark(). */
-background:var(--vibeui-tooltip-008-tip);color:oklch(0.97 0.002 265);
+background:var(--vibeui-tooltip-008-tip);color:oklch(0.97 0 265);
 font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 font-size:0.75rem;font-weight:400;line-height:1.5;text-align:left;
-box-shadow:0 18px 36px -26px oklch(0.15 0.02 265 / 70%);
+box-shadow:0 18px 36px -26px oklch(0.15 0 265 / 70%);
 pointer-events:none;opacity:0;
 transform:translate(-50%,0.25rem);
 transition:opacity .14s ease,transform .14s ease;

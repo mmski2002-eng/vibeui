@@ -32,12 +32,12 @@ export type ContactAnim001Props = {
 const STYLES = `
 :where([data-vibeui-block="contact-anim-001"]){
 --vibeui-contact-anim-001-bg:transparent;
---vibeui-contact-anim-001-fg:light-dark(oklch(0.2 0.02 275),oklch(0.96 0.006 275));
---vibeui-contact-anim-001-muted:light-dark(oklch(0.5 0.018 275),oklch(0.72 0.016 275));
---vibeui-contact-anim-001-border:light-dark(oklch(0.16 0.02 275 / 14%),oklch(1 0 0 / 16%));
---vibeui-contact-anim-001-card:light-dark(oklch(1 0 0),oklch(0.24 0.014 275));
+--vibeui-contact-anim-001-fg:light-dark(oklch(0.2 0 275),oklch(0.96 0 275));
+--vibeui-contact-anim-001-muted:light-dark(oklch(0.5 0 275),oklch(0.72 0 275));
+--vibeui-contact-anim-001-border:light-dark(oklch(0.16 0 275 / 14%),oklch(1 0 0 / 16%));
+--vibeui-contact-anim-001-card:light-dark(oklch(1 0 0),oklch(0.24 0 275));
 --vibeui-contact-anim-001-accent:light-dark(oklch(0.54 0.17 275),oklch(0.72 0.15 275));
---vibeui-contact-anim-001-accent-fg:light-dark(oklch(0.99 0.004 275),oklch(0.18 0.03 275));
+--vibeui-contact-anim-001-accent-fg:light-dark(oklch(0.99 0 275),oklch(0.18 0 275));
 --vibeui-contact-anim-001-accent-soft:color-mix(in oklab,var(--vibeui-contact-anim-001-accent) 14%,transparent);
 --vibeui-contact-anim-001-ring:color-mix(in oklab,var(--vibeui-contact-anim-001-accent) 24%,transparent);
 --vibeui-contact-anim-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

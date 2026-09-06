@@ -24,8 +24,8 @@ export type Aspect004Props = Omit<
 // нечитаемой, поэтому light-dark() здесь не применяется.
 const STYLES = `
 :where([data-vibeui-block="aspect-004"]){
---vibeui-aspect-004-ink:oklch(0.18 0.02 265);
---vibeui-aspect-004-fg:oklch(0.99 0.003 265);
+--vibeui-aspect-004-ink:oklch(0.18 0 265);
+--vibeui-aspect-004-fg:oklch(0.99 0 265);
 --vibeui-aspect-004-muted:color-mix(in oklab,var(--vibeui-aspect-004-fg) 68%,transparent);
 --vibeui-aspect-004-accent:oklch(0.75 0.14 75);
 --vibeui-aspect-004-radius:1rem;

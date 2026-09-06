@@ -26,11 +26,11 @@ const STYLES = `
 :where([data-vibeui-block="avatar-003"]){
 --vibeui-avatar-003-size:2.5rem;
 --vibeui-avatar-003-overlap:0.625rem;
---vibeui-avatar-003-ring:light-dark(oklch(1 0 0),oklch(0.19 0.01 265));
---vibeui-avatar-003-more-bg:light-dark(oklch(0.94 0.006 265),oklch(0.31 0.012 265));
---vibeui-avatar-003-more-fg:light-dark(oklch(0.38 0.014 265),oklch(0.88 0.008 265));
---vibeui-avatar-003-tip-bg:light-dark(oklch(0.24 0.02 265),oklch(0.95 0.008 265));
---vibeui-avatar-003-tip-fg:light-dark(oklch(0.98 0.003 265),oklch(0.22 0.015 265));
+--vibeui-avatar-003-ring:light-dark(oklch(1 0 0),oklch(0.19 0 265));
+--vibeui-avatar-003-more-bg:light-dark(oklch(0.94 0 265),oklch(0.31 0 265));
+--vibeui-avatar-003-more-fg:light-dark(oklch(0.38 0 265),oklch(0.88 0 265));
+--vibeui-avatar-003-tip-bg:light-dark(oklch(0.24 0 265),oklch(0.95 0 265));
+--vibeui-avatar-003-tip-fg:light-dark(oklch(0.98 0 265),oklch(0.22 0 265));
 --vibeui-avatar-003-focus:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.16 262));
 --vibeui-avatar-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

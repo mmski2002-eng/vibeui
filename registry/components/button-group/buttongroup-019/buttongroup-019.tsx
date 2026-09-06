@@ -30,10 +30,10 @@ export type Buttongroup019Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="buttongroup-019"]){
 --vibeui-buttongroup-019-surface:transparent;
---vibeui-buttongroup-019-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.006 265));
+--vibeui-buttongroup-019-fg:light-dark(oklch(0.26 0 265),oklch(0.94 0 265));
 --vibeui-buttongroup-019-muted:color-mix(in oklab,var(--vibeui-buttongroup-019-fg) 68%,transparent);
---vibeui-buttongroup-019-border:light-dark(oklch(0.89 0.008 265),oklch(0.37 0.012 265));
---vibeui-buttongroup-019-hover:light-dark(oklch(0.96 0.005 265),oklch(0.31 0.012 265));
+--vibeui-buttongroup-019-border:light-dark(oklch(0.89 0 265),oklch(0.37 0 265));
+--vibeui-buttongroup-019-hover:light-dark(oklch(0.96 0 265),oklch(0.31 0 265));
 --vibeui-buttongroup-019-on:light-dark(oklch(0.96 0.035 265),oklch(0.3 0.05 265));
 --vibeui-buttongroup-019-accent:light-dark(oklch(0.53 0.16 265),oklch(0.76 0.13 265));
 --vibeui-buttongroup-019-radius:0.625rem;
@@ -57,7 +57,11 @@ display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;
    overflow-x не сработал бы. */
 [data-vibeui-block="buttongroup-019"] [data-part="track"]{
 display:flex;isolation:isolate;min-inline-size:0;max-inline-size:100%;overflow-x:auto;
+/* Полосу прокрутки прячем: она появлялась под сцепкой, как только галочки
+   раздвигали пилюли, и читалась как поломка. Прокрутка остаётся. */
+scrollbar-width:none;overscroll-behavior-x:contain;
 }
+[data-vibeui-block="buttongroup-019"] [data-part="track"]::-webkit-scrollbar{display:none}
 [data-vibeui-block="buttongroup-019"] [data-part="chip"]{
 appearance:none;cursor:pointer;font:inherit;
 position:relative;z-index:0;

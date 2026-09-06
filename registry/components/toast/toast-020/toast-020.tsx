@@ -31,15 +31,15 @@ export type Toast020Props = Omit<ComponentProps<"div">, "children"> & {
 // темнее подложки — иначе пустая часть полосы читалась бы как заполненная.
 const STYLES = `
 :where([data-vibeui-block="toast-020"]){
---vibeui-toast-020-bg:light-dark(oklch(0.99 0.002 265),oklch(0.25 0.014 265));
---vibeui-toast-020-fg:light-dark(oklch(0.22 0.014 265),oklch(0.96 0.003 265));
+--vibeui-toast-020-bg:light-dark(oklch(0.99 0 265),oklch(0.25 0 265));
+--vibeui-toast-020-fg:light-dark(oklch(0.22 0 265),oklch(0.96 0 265));
 --vibeui-toast-020-muted:color-mix(in oklab,var(--vibeui-toast-020-fg) 68%,transparent);
---vibeui-toast-020-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.014 265));
---vibeui-toast-020-track:light-dark(oklch(0.92 0.006 265),oklch(0.33 0.012 265));
---vibeui-toast-020-hover:light-dark(oklch(0.2 0.02 265 / 7%),oklch(1 0 0 / 12%));
---vibeui-toast-020-shadow:light-dark(oklch(0.18 0.02 265 / 55%),oklch(0.05 0.01 265 / 70%));
+--vibeui-toast-020-border:light-dark(oklch(0.9 0 265),oklch(0.38 0 265));
+--vibeui-toast-020-track:light-dark(oklch(0.92 0 265),oklch(0.33 0 265));
+--vibeui-toast-020-hover:light-dark(oklch(0.2 0 265 / 7%),oklch(1 0 0 / 12%));
+--vibeui-toast-020-shadow:light-dark(oklch(0.18 0 265 / 55%),oklch(0.05 0 265 / 70%));
 --vibeui-toast-020-tone:light-dark(oklch(0.58 0.19 40),oklch(0.76 0.16 45));
---vibeui-toast-020-on-tone:light-dark(oklch(0.99 0.004 265),oklch(0.2 0.04 45));
+--vibeui-toast-020-on-tone:light-dark(oklch(0.99 0 265),oklch(0.2 0.04 45));
 --vibeui-toast-020-paused-text:" · пауза";
 --vibeui-toast-020-percent:100;
 --vibeui-toast-020-radius:0.875rem;

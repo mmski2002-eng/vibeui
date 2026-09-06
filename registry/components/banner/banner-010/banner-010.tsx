@@ -30,7 +30,7 @@ const STYLES = `
    акцента, а не задаётся токеном — проект передаёт один цвет на обе ветки. */
 --vibeui-banner-010-ink:oklch(from var(--vibeui-banner-010-accent) max(l,0.78) c h);
 --vibeui-banner-010-surface:light-dark(oklch(0.22 0.02 25),oklch(0.24 0.024 25));
---vibeui-banner-010-fg:oklch(0.97 0.004 265);
+--vibeui-banner-010-fg:oklch(0.97 0 265);
 --vibeui-banner-010-muted:color-mix(in oklab,var(--vibeui-banner-010-fg) 68%,transparent);
 --vibeui-banner-010-radius:0.625rem;
 --vibeui-banner-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

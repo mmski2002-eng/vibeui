@@ -40,11 +40,11 @@ export type Cascader014Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="cascader-014"]){
 --vibeui-cascader-014-bg:transparent;
---vibeui-cascader-014-fg:light-dark(oklch(0.22 0.014 250),oklch(0.94 0.006 250));
+--vibeui-cascader-014-fg:light-dark(oklch(0.22 0 250),oklch(0.94 0 250));
 --vibeui-cascader-014-muted:color-mix(in oklab,var(--vibeui-cascader-014-fg) 68%,transparent);
---vibeui-cascader-014-faint:light-dark(oklch(0.76 0.01 250),oklch(0.55 0.014 250));
---vibeui-cascader-014-border:light-dark(oklch(0.9 0.008 250),oklch(0.35 0.012 250));
---vibeui-cascader-014-soft:light-dark(oklch(0.965 0.006 250),oklch(0.28 0.012 250));
+--vibeui-cascader-014-faint:light-dark(oklch(0.76 0 250),oklch(0.55 0 250));
+--vibeui-cascader-014-border:light-dark(oklch(0.9 0 250),oklch(0.35 0 250));
+--vibeui-cascader-014-soft:light-dark(oklch(0.965 0 250),oklch(0.28 0 250));
 --vibeui-cascader-014-accent:light-dark(oklch(0.48 0.12 250),oklch(0.76 0.13 250));
 --vibeui-cascader-014-accentsoft:light-dark(oklch(0.94 0.04 250),oklch(0.34 0.055 250));
 --vibeui-cascader-014-radius:0.625rem;

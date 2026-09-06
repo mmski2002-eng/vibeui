@@ -32,12 +32,12 @@ export type Inputgroup007Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="inputgroup-007"]){
 --vibeui-inputgroup-007-surface:transparent;
---vibeui-inputgroup-007-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.011 265));
---vibeui-inputgroup-007-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-inputgroup-007-shell:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
+--vibeui-inputgroup-007-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-inputgroup-007-muted:color-mix(in oklab,var(--vibeui-inputgroup-007-fg) 68%,transparent);
---vibeui-inputgroup-007-field:light-dark(oklch(0.99 0.002 265),oklch(0.27 0.013 265));
---vibeui-inputgroup-007-fixed:light-dark(oklch(0.96 0.004 265),oklch(0.32 0.012 265));
---vibeui-inputgroup-007-border:light-dark(oklch(0.86 0.008 265),oklch(0.44 0.013 265));
+--vibeui-inputgroup-007-field:light-dark(oklch(0.99 0 265),oklch(0.27 0 265));
+--vibeui-inputgroup-007-fixed:light-dark(oklch(0.96 0 265),oklch(0.32 0 265));
+--vibeui-inputgroup-007-border:light-dark(oklch(0.86 0 265),oklch(0.44 0 265));
 --vibeui-inputgroup-007-accent:light-dark(oklch(0.52 0.17 320),oklch(0.74 0.15 320));
 --vibeui-inputgroup-007-radius:0.75rem;
 --vibeui-inputgroup-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

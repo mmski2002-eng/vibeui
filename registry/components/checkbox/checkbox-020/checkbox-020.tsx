@@ -32,13 +32,13 @@ export type Checkbox020Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="checkbox-020"]){
 --vibeui-checkbox-020-bg:transparent;
---vibeui-checkbox-020-fg:light-dark(oklch(0.24 0.012 265),oklch(0.94 0.006 265));
+--vibeui-checkbox-020-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-checkbox-020-muted:color-mix(in oklab,var(--vibeui-checkbox-020-fg) 68%,transparent);
---vibeui-checkbox-020-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-checkbox-020-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
 --vibeui-checkbox-020-paper:light-dark(oklch(0.985 0.003 90),oklch(0.25 0.006 90));
---vibeui-checkbox-020-off:light-dark(oklch(0.95 0.004 265),oklch(0.31 0.009 265));
+--vibeui-checkbox-020-off:light-dark(oklch(0.95 0 265),oklch(0.31 0 265));
 --vibeui-checkbox-020-accent:light-dark(oklch(0.45 0.11 260),oklch(0.65 0.13 260));
---vibeui-checkbox-020-on-accent:oklch(0.99 0.01 260);
+--vibeui-checkbox-020-on-accent:oklch(0.99 0 260);
 --vibeui-checkbox-020-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-checkbox-020-serif:ui-serif,Georgia,"Times New Roman",serif;
 }

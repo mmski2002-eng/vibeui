@@ -27,11 +27,11 @@ export type Select025Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="select-025"]){
 --vibeui-select-025-surface:transparent;
---vibeui-select-025-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
---vibeui-select-025-fg:light-dark(oklch(0.23 0.016 265),oklch(0.94 0.005 265));
+--vibeui-select-025-surface-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
+--vibeui-select-025-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-select-025-muted:color-mix(in oklab,var(--vibeui-select-025-fg) 68%,transparent);
---vibeui-select-025-field:light-dark(oklch(0.985 0.002 265),oklch(0.27 0.012 265));
---vibeui-select-025-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.012 265));
+--vibeui-select-025-field:light-dark(oklch(0.985 0 265),oklch(0.27 0 265));
+--vibeui-select-025-border:light-dark(oklch(0.87 0 265),oklch(0.42 0 265));
 --vibeui-select-025-accent:light-dark(oklch(0.55 0.19 262),oklch(0.73 0.17 262));
 --vibeui-select-025-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

@@ -31,14 +31,14 @@ export type Toast014Props = Omit<ComponentProps<"div">, "children"> & {
 // слились бы в одно пятно.
 const STYLES = `
 :where([data-vibeui-block="toast-014"]){
---vibeui-toast-014-bg:light-dark(oklch(0.97 0.004 265),oklch(0.21 0.012 265));
---vibeui-toast-014-grid:light-dark(oklch(0.88 0.008 265 / 45%),oklch(0.52 0.014 265 / 40%));
---vibeui-toast-014-fg:light-dark(oklch(0.24 0.014 265),oklch(0.96 0.003 265));
+--vibeui-toast-014-bg:light-dark(oklch(0.97 0 265),oklch(0.21 0 265));
+--vibeui-toast-014-grid:light-dark(oklch(0.88 0 265 / 45%),oklch(0.52 0 265 / 40%));
+--vibeui-toast-014-fg:light-dark(oklch(0.24 0 265),oklch(0.96 0 265));
 --vibeui-toast-014-muted:color-mix(in oklab,var(--vibeui-toast-014-fg) 68%,transparent);
---vibeui-toast-014-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.014 265));
---vibeui-toast-014-card:light-dark(oklch(1 0 0),oklch(0.28 0.015 265));
---vibeui-toast-014-hover:light-dark(oklch(0.2 0.02 265 / 7%),oklch(1 0 0 / 12%));
---vibeui-toast-014-shadow:light-dark(oklch(0.2 0.02 265 / 55%),oklch(0.05 0.01 265 / 72%));
+--vibeui-toast-014-border:light-dark(oklch(0.9 0 265),oklch(0.38 0 265));
+--vibeui-toast-014-card:light-dark(oklch(1 0 0),oklch(0.28 0 265));
+--vibeui-toast-014-hover:light-dark(oklch(0.2 0 265 / 7%),oklch(1 0 0 / 12%));
+--vibeui-toast-014-shadow:light-dark(oklch(0.2 0 265 / 55%),oklch(0.05 0 265 / 72%));
 --vibeui-toast-014-tone:light-dark(oklch(0.55 0.16 265),oklch(0.74 0.15 265));
 --vibeui-toast-014-offset:0.875rem;
 --vibeui-toast-014-radius:0.875rem;

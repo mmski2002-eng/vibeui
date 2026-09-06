@@ -24,13 +24,13 @@ export type Empty001Props = Omit<
 // темнеет вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="empty-001"]){
---vibeui-empty-001-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
+--vibeui-empty-001-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-empty-001-muted:color-mix(in oklab,var(--vibeui-empty-001-fg) 68%,transparent);
 --vibeui-empty-001-bg:transparent;
---vibeui-empty-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
---vibeui-empty-001-tile:light-dark(oklch(1 0 0),oklch(0.28 0.011 265));
+--vibeui-empty-001-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
+--vibeui-empty-001-tile:light-dark(oklch(1 0 0),oklch(0.28 0 265));
 --vibeui-empty-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
---vibeui-empty-001-accent-fg:light-dark(oklch(1 0 0),oklch(0.17 0.03 262));
+--vibeui-empty-001-accent-fg:light-dark(oklch(1 0 0),oklch(0.17 0 262));
 --vibeui-empty-001-radius:1rem;
 --vibeui-empty-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

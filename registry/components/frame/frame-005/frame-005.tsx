@@ -15,13 +15,13 @@ export type Frame005Props = Omit<ComponentProps<"figure">, "title"> & {
 // заметно более плоский силуэт и читается как телевизор.
 const STYLES = `
 :where([data-vibeui-block="frame-005"]){
---vibeui-frame-005-body:light-dark(oklch(0.9 0.005 265),oklch(0.72 0.006 265));
---vibeui-frame-005-edge:light-dark(oklch(0.76 0.008 265),oklch(0.6 0.009 265));
---vibeui-frame-005-base:light-dark(oklch(0.85 0.006 265),oklch(0.66 0.007 265));
+--vibeui-frame-005-body:light-dark(oklch(0.9 0 265),oklch(0.72 0 265));
+--vibeui-frame-005-edge:light-dark(oklch(0.76 0 265),oklch(0.6 0 265));
+--vibeui-frame-005-base:light-dark(oklch(0.85 0 265),oklch(0.66 0 265));
 --vibeui-frame-005-screen:transparent;
---vibeui-frame-005-fg:light-dark(oklch(0.23 0.014 265),oklch(0.93 0.005 265));
+--vibeui-frame-005-fg:light-dark(oklch(0.23 0 265),oklch(0.93 0 265));
 --vibeui-frame-005-muted:color-mix(in oklab,var(--vibeui-frame-005-fg) 68%,transparent);
---vibeui-frame-005-soft:light-dark(oklch(0.96 0.004 265),oklch(0.33 0.008 265));
+--vibeui-frame-005-soft:light-dark(oklch(0.96 0 265),oklch(0.33 0 265));
 --vibeui-frame-005-accent:light-dark(oklch(0.55 0.16 262),oklch(0.72 0.15 262));
 --vibeui-frame-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -35,9 +35,9 @@ font-family:var(--vibeui-frame-005-font);color:var(--vibeui-frame-005-fg);
 }
 [data-vibeui-block="frame-005"] *{box-sizing:border-box}
 [data-vibeui-block="frame-005"][data-tone="graphite"]{
---vibeui-frame-005-body:oklch(0.42 0.012 265);
---vibeui-frame-005-edge:oklch(0.55 0.012 265);
---vibeui-frame-005-base:oklch(0.36 0.012 265);
+--vibeui-frame-005-body:oklch(0.42 0 265);
+--vibeui-frame-005-edge:oklch(0.55 0 265);
+--vibeui-frame-005-base:oklch(0.36 0 265);
 }
 [data-vibeui-block="frame-005"] [data-part="lid"]{
 width:100%;padding:0.5rem 0.5rem 0.625rem;

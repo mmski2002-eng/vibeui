@@ -32,9 +32,9 @@ export type Features004Props = {
 const STYLES = `
 :where([data-vibeui-block="features-004"]){
 --vibeui-features-004-bg:transparent;
---vibeui-features-004-fg:light-dark(oklch(0.2 0.012 260),oklch(0.95 0.005 260));
---vibeui-features-004-muted:light-dark(oklch(0.51 0.012 260),oklch(0.72 0.012 260));
---vibeui-features-004-line:light-dark(oklch(0.9 0.006 260),oklch(0.36 0.012 260));
+--vibeui-features-004-fg:light-dark(oklch(0.2 0 260),oklch(0.95 0 260));
+--vibeui-features-004-muted:light-dark(oklch(0.51 0 260),oklch(0.72 0 260));
+--vibeui-features-004-line:light-dark(oklch(0.9 0 260),oklch(0.36 0 260));
 --vibeui-features-004-accent:light-dark(oklch(0.55 0.16 265),oklch(0.76 0.14 265));
 --vibeui-features-004-hue:265;
 --vibeui-features-004-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -94,7 +94,7 @@ background:light-dark(oklch(0.62 0.14 var(--vibeui-features-004-hue)),oklch(0.74
 [data-vibeui-block="features-004"] [data-part="bars"] span:nth-child(4){height:100%;opacity:1}
 [data-vibeui-block="features-004"] [data-part="chip"]{
 position:absolute;left:12%;top:14%;padding:0.375rem 0.625rem;border-radius:0.5rem;
-background:light-dark(oklch(1 0 0 / 80%),oklch(0.22 0.014 260 / 80%));border:1px solid var(--vibeui-features-004-line);
+background:light-dark(oklch(1 0 0 / 80%),oklch(0.22 0 260 / 80%));border:1px solid var(--vibeui-features-004-line);
 font-size:0.6875rem;font-weight:650;color:var(--vibeui-features-004-fg);
 }
 @container (min-width: 34rem){

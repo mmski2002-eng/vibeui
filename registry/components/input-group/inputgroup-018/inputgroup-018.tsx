@@ -82,11 +82,11 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 const STYLES = `
 :where([data-vibeui-block="inputgroup-018"]){
 --vibeui-inputgroup-018-surface:transparent;
---vibeui-inputgroup-018-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
---vibeui-inputgroup-018-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-inputgroup-018-shell:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
+--vibeui-inputgroup-018-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-inputgroup-018-muted:color-mix(in oklab,var(--vibeui-inputgroup-018-fg) 68%,transparent);
---vibeui-inputgroup-018-field:light-dark(oklch(0.99 0.002 265),oklch(0.26 0.012 265));
---vibeui-inputgroup-018-border:light-dark(oklch(0.86 0.008 265),oklch(0.4 0.014 265));
+--vibeui-inputgroup-018-field:light-dark(oklch(0.99 0 265),oklch(0.26 0 265));
+--vibeui-inputgroup-018-border:light-dark(oklch(0.86 0 265),oklch(0.4 0 265));
 --vibeui-inputgroup-018-accent:light-dark(oklch(0.5 0.13 165),oklch(0.74 0.13 165));
 --vibeui-inputgroup-018-radius:0.75rem;
 --vibeui-inputgroup-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

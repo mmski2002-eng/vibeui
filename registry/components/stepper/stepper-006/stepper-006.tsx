@@ -30,10 +30,10 @@ export type Stepper006Props = Omit<ComponentProps<"nav">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="stepper-006"]){
 --vibeui-stepper-006-bg:transparent;
---vibeui-stepper-006-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
+--vibeui-stepper-006-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-stepper-006-muted:color-mix(in oklab,var(--vibeui-stepper-006-fg) 68%,transparent);
---vibeui-stepper-006-border:light-dark(oklch(0.92 0.006 265),oklch(0.32 0.012 265));
---vibeui-stepper-006-track:light-dark(oklch(0.93 0.008 265),oklch(0.3 0.012 265));
+--vibeui-stepper-006-border:light-dark(oklch(0.92 0 265),oklch(0.32 0 265));
+--vibeui-stepper-006-track:light-dark(oklch(0.93 0 265),oklch(0.3 0 265));
 --vibeui-stepper-006-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.16 262));
 --vibeui-stepper-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

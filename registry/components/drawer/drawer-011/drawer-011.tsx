@@ -35,8 +35,8 @@ export type Drawer011Props = Omit<
 // ширина, а «узкая», «обычная» или «во весь экран».
 const STYLES = `
 :where([data-vibeui-block="drawer-011"]){
---vibeui-drawer-011-bg:light-dark(oklch(0.99 0.002 265),oklch(0.22 0.014 265));
---vibeui-drawer-011-fg:light-dark(oklch(0.25 0.014 265),oklch(0.95 0.005 265));
+--vibeui-drawer-011-bg:light-dark(oklch(0.99 0 265),oklch(0.22 0 265));
+--vibeui-drawer-011-fg:light-dark(oklch(0.25 0 265),oklch(0.95 0 265));
 --vibeui-drawer-011-muted:color-mix(in oklab,var(--vibeui-drawer-011-fg) 62%,transparent);
 --vibeui-drawer-011-border:light-dark(oklch(0 0 0 / 12%),oklch(1 0 0 / 13%));
 --vibeui-drawer-011-head:light-dark(oklch(0 0 0 / 3%),oklch(1 0 0 / 4%));
@@ -44,8 +44,8 @@ const STYLES = `
 --vibeui-drawer-011-grip:light-dark(oklch(0 0 0 / 16%),oklch(1 0 0 / 22%));
 --vibeui-drawer-011-accent:light-dark(oklch(0.5 0.16 265),oklch(0.78 0.12 265));
 --vibeui-drawer-011-soft:color-mix(in oklab,var(--vibeui-drawer-011-accent) 14%,transparent);
---vibeui-drawer-011-scrim:light-dark(oklch(0.2 0.02 265 / 42%),oklch(0 0 0 / 62%));
---vibeui-drawer-011-shadow:light-dark(oklch(0.2 0.02 265 / 40%),oklch(0 0 0 / 70%));
+--vibeui-drawer-011-scrim:light-dark(oklch(0.2 0 265 / 42%),oklch(0 0 0 / 62%));
+--vibeui-drawer-011-shadow:light-dark(oklch(0.2 0 265 / 40%),oklch(0 0 0 / 70%));
 --vibeui-drawer-011-width:26rem;
 --vibeui-drawer-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

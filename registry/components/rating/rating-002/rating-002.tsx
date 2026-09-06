@@ -35,14 +35,14 @@ export type Rating002Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="rating-002"]){
 --vibeui-rating-002-surface:transparent;
---vibeui-rating-002-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
---vibeui-rating-002-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-rating-002-shell:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-rating-002-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-rating-002-muted:color-mix(in oklab,var(--vibeui-rating-002-fg) 68%,transparent);
 /* Звёзды — текстовые глифы, а не иконки, поэтому обе краски держат 4.5:1 к
    фону. На светлой странице это загоняет обе в узкую тёмную полосу, и чтобы
    закраска всё же читалась ярче пустой звезды, серый уведён темнее охры —
    как в тёмной ветке, где золото светлее серого. */
---vibeui-rating-002-empty:light-dark(oklch(0.42 0.008 265),oklch(0.58 0.014 265));
+--vibeui-rating-002-empty:light-dark(oklch(0.42 0 265),oklch(0.58 0 265));
 --vibeui-rating-002-accent:light-dark(oklch(0.54 0.16 78),oklch(0.84 0.15 80));
 --vibeui-rating-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-rating-002-fill:0%;

@@ -62,12 +62,12 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 const STYLES = `
 :where([data-vibeui-block="inputgroup-023"]){
 --vibeui-inputgroup-023-surface:transparent;
---vibeui-inputgroup-023-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
---vibeui-inputgroup-023-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-inputgroup-023-shell:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
+--vibeui-inputgroup-023-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-inputgroup-023-muted:color-mix(in oklab,var(--vibeui-inputgroup-023-fg) 68%,transparent);
---vibeui-inputgroup-023-field:light-dark(oklch(0.99 0.002 265),oklch(0.26 0.012 265));
---vibeui-inputgroup-023-fixed:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.012 265));
---vibeui-inputgroup-023-border:light-dark(oklch(0.86 0.008 265),oklch(0.4 0.014 265));
+--vibeui-inputgroup-023-field:light-dark(oklch(0.99 0 265),oklch(0.26 0 265));
+--vibeui-inputgroup-023-fixed:light-dark(oklch(0.96 0 265),oklch(0.31 0 265));
+--vibeui-inputgroup-023-border:light-dark(oklch(0.86 0 265),oklch(0.4 0 265));
 --vibeui-inputgroup-023-accent:light-dark(oklch(0.58 0.15 142),oklch(0.76 0.14 142));
 --vibeui-inputgroup-023-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.012 142));
 --vibeui-inputgroup-023-radius:0.75rem;

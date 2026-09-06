@@ -33,13 +33,13 @@ export type Stepper008Props = Omit<ComponentProps<"nav">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="stepper-008"]){
 --vibeui-stepper-008-bg:transparent;
---vibeui-stepper-008-surface:light-dark(oklch(1 0 0),oklch(0.2 0.012 265));
---vibeui-stepper-008-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
+--vibeui-stepper-008-surface:light-dark(oklch(1 0 0),oklch(0.2 0 265));
+--vibeui-stepper-008-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-stepper-008-muted:color-mix(in oklab,var(--vibeui-stepper-008-fg) 68%,transparent);
---vibeui-stepper-008-border:light-dark(oklch(0.92 0.006 265),oklch(0.32 0.012 265));
---vibeui-stepper-008-line:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-stepper-008-border:light-dark(oklch(0.92 0 265),oklch(0.32 0 265));
+--vibeui-stepper-008-line:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
 --vibeui-stepper-008-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.16 262));
---vibeui-stepper-008-accent-fg:light-dark(oklch(1 0 0),oklch(0.19 0.02 262));
+--vibeui-stepper-008-accent-fg:light-dark(oklch(1 0 0),oklch(0.19 0 262));
 --vibeui-stepper-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

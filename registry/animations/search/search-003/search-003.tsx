@@ -65,7 +65,7 @@ const STYLES = `
 --vibeui-search-003-fg:light-dark(oklch(0.205 0 0),oklch(0.95 0 0));
 --vibeui-search-003-muted:color-mix(in oklab,var(--vibeui-search-003-fg) 58%,transparent);
 --vibeui-search-003-border:light-dark(oklch(0.92 0 0),oklch(0.28 0 0));
---vibeui-search-003-dim:light-dark(oklch(0.82 0.006 265),oklch(0.42 0.01 265));
+--vibeui-search-003-dim:light-dark(oklch(0.82 0 265),oklch(0.42 0 265));
 --vibeui-search-003-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-search-003-accent-fg:oklch(from var(--vibeui-search-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-search-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

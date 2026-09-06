@@ -26,8 +26,8 @@ export type Otp010Props = Omit<ComponentProps<"div">, "children" | "title"> & {
 // не все, а полоса без цифр не даёт точности.
 const STYLES = `
 :where([data-vibeui-block="otp-010"]){
---vibeui-otp-010-bg:light-dark(oklch(0.99 0.002 265),oklch(0.23 0.014 265));
---vibeui-otp-010-fg:light-dark(oklch(0.25 0.014 265),oklch(0.95 0.005 265));
+--vibeui-otp-010-bg:light-dark(oklch(0.99 0 265),oklch(0.23 0 265));
+--vibeui-otp-010-fg:light-dark(oklch(0.25 0 265),oklch(0.95 0 265));
 --vibeui-otp-010-muted:color-mix(in oklab,var(--vibeui-otp-010-fg) 62%,transparent);
 --vibeui-otp-010-border:light-dark(oklch(0 0 0 / 16%),oklch(1 0 0 / 18%));
 --vibeui-otp-010-cell:light-dark(oklch(1 0 0),oklch(1 0 0 / 6%));

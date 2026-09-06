@@ -18,12 +18,12 @@ export type Frame011Props = Omit<ComponentProps<"figure">, "title"> & {
 // чисто CSS-псевдоклассом, без JS, и гасится по prefers-reduced-motion.
 const STYLES = `
 :where([data-vibeui-block="frame-011"]){
---vibeui-frame-011-bg:light-dark(oklch(1 0 0),oklch(0.28 0.008 265));
---vibeui-frame-011-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.005 265));
+--vibeui-frame-011-bg:light-dark(oklch(1 0 0),oklch(0.28 0 265));
+--vibeui-frame-011-fg:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
 --vibeui-frame-011-muted:color-mix(in oklab,var(--vibeui-frame-011-fg) 68%,transparent);
---vibeui-frame-011-border:light-dark(oklch(0.88 0.006 265),oklch(0.42 0.011 265));
---vibeui-frame-011-shadow:light-dark(oklch(0.2 0.02 265 / 0.28),oklch(0 0 0 / 0.5));
---vibeui-frame-011-soft:light-dark(oklch(0.965 0.004 265),oklch(0.33 0.01 265));
+--vibeui-frame-011-border:light-dark(oklch(0.88 0 265),oklch(0.42 0 265));
+--vibeui-frame-011-shadow:light-dark(oklch(0.2 0 265 / 0.28),oklch(0 0 0 / 0.5));
+--vibeui-frame-011-soft:light-dark(oklch(0.965 0 265),oklch(0.33 0 265));
 --vibeui-frame-011-accent:light-dark(oklch(0.55 0.16 262),oklch(0.72 0.15 262));
 --vibeui-frame-011-radius:0.875rem;
 --vibeui-frame-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

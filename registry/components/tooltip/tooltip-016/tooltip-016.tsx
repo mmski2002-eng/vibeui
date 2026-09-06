@@ -26,12 +26,12 @@ export type Tooltip016Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="tooltip-016"]){
 --vibeui-tooltip-016-bg:transparent;
---vibeui-tooltip-016-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-tooltip-016-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-tooltip-016-muted:color-mix(in oklab,var(--vibeui-tooltip-016-fg) 68%,transparent);
---vibeui-tooltip-016-border:light-dark(oklch(0.88 0.006 265),oklch(0.36 0.012 265));
---vibeui-tooltip-016-field:light-dark(oklch(0.99 0.002 265),oklch(0.29 0.012 265));
---vibeui-tooltip-016-tip:light-dark(oklch(0.97 0.02 250),oklch(0.36 0.05 250));
---vibeui-tooltip-016-tipfg:light-dark(oklch(0.35 0.07 250),oklch(0.92 0.03 250));
+--vibeui-tooltip-016-border:light-dark(oklch(0.88 0 265),oklch(0.36 0 265));
+--vibeui-tooltip-016-field:light-dark(oklch(0.99 0 265),oklch(0.29 0 265));
+--vibeui-tooltip-016-tip:light-dark(oklch(0.97 0 250),oklch(0.36 0.05 250));
+--vibeui-tooltip-016-tipfg:light-dark(oklch(0.35 0.07 250),oklch(0.92 0 250));
 --vibeui-tooltip-016-accent:light-dark(oklch(0.56 0.17 260),oklch(0.74 0.15 260));
 --vibeui-tooltip-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

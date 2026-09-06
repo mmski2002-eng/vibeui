@@ -39,12 +39,12 @@ export type Pricing017Props = {
 const STYLES = `
 :where([data-vibeui-block="pricing-017"]){
 --vibeui-pricing-017-bg:transparent;
---vibeui-pricing-017-fg:light-dark(oklch(0.2 0.012 255),oklch(0.94 0.005 255));
---vibeui-pricing-017-muted:light-dark(oklch(0.51 0.012 255),oklch(0.7 0.01 255));
---vibeui-pricing-017-card:light-dark(oklch(1 0 0),oklch(0.25 0.011 255));
---vibeui-pricing-017-line:light-dark(oklch(0.89 0.006 255),oklch(0.37 0.011 255));
+--vibeui-pricing-017-fg:light-dark(oklch(0.2 0 255),oklch(0.94 0 255));
+--vibeui-pricing-017-muted:light-dark(oklch(0.51 0 255),oklch(0.7 0 255));
+--vibeui-pricing-017-card:light-dark(oklch(1 0 0),oklch(0.25 0 255));
+--vibeui-pricing-017-line:light-dark(oklch(0.89 0 255),oklch(0.37 0 255));
 --vibeui-pricing-017-accent:light-dark(oklch(0.51 0.17 255),oklch(0.75 0.14 255));
---vibeui-pricing-017-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.19 0.03 255));
+--vibeui-pricing-017-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.19 0 255));
 --vibeui-pricing-017-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

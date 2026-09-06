@@ -38,11 +38,11 @@ export type Combobox018Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="combobox-018"]){
 --vibeui-combobox-018-bg:transparent;
---vibeui-combobox-018-fg:light-dark(oklch(0.22 0.014 240),oklch(0.94 0.006 240));
+--vibeui-combobox-018-fg:light-dark(oklch(0.22 0 240),oklch(0.94 0 240));
 --vibeui-combobox-018-muted:color-mix(in oklab,var(--vibeui-combobox-018-fg) 68%,transparent);
---vibeui-combobox-018-border:light-dark(oklch(0.9 0.008 240),oklch(0.35 0.012 240));
---vibeui-combobox-018-field:light-dark(oklch(0.985 0.004 240),oklch(0.27 0.012 240));
---vibeui-combobox-018-soft:light-dark(oklch(0.96 0.008 240),oklch(0.31 0.014 240));
+--vibeui-combobox-018-border:light-dark(oklch(0.9 0 240),oklch(0.35 0 240));
+--vibeui-combobox-018-field:light-dark(oklch(0.985 0 240),oklch(0.27 0 240));
+--vibeui-combobox-018-soft:light-dark(oklch(0.96 0 240),oklch(0.31 0 240));
 --vibeui-combobox-018-accent:light-dark(oklch(0.5 0.13 240),oklch(0.72 0.13 240));
 --vibeui-combobox-018-accentsoft:light-dark(oklch(0.94 0.04 240),oklch(0.36 0.06 240));
 --vibeui-combobox-018-ok:light-dark(oklch(0.5 0.11 150),oklch(0.76 0.12 150));

@@ -30,14 +30,14 @@ export type Buttongroup014Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="buttongroup-014"]){
 --vibeui-buttongroup-014-surface:transparent;
---vibeui-buttongroup-014-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.006 265));
+--vibeui-buttongroup-014-fg:light-dark(oklch(0.26 0 265),oklch(0.94 0 265));
 --vibeui-buttongroup-014-muted:color-mix(in oklab,var(--vibeui-buttongroup-014-fg) 68%,transparent);
---vibeui-buttongroup-014-border:light-dark(oklch(0.89 0.008 265),oklch(0.37 0.012 265));
---vibeui-buttongroup-014-hover:light-dark(oklch(0.96 0.006 265),oklch(0.31 0.012 265));
+--vibeui-buttongroup-014-border:light-dark(oklch(0.89 0 265),oklch(0.37 0 265));
+--vibeui-buttongroup-014-hover:light-dark(oklch(0.96 0 265),oklch(0.31 0 265));
 --vibeui-buttongroup-014-accent:light-dark(oklch(0.52 0.16 265),oklch(0.63 0.17 265));
---vibeui-buttongroup-014-on-accent:oklch(0.99 0.004 265);
---vibeui-buttongroup-014-tip:light-dark(oklch(0.26 0.016 265),oklch(0.9 0.008 265));
---vibeui-buttongroup-014-on-tip:light-dark(oklch(0.99 0 0),oklch(0.21 0.014 265));
+--vibeui-buttongroup-014-on-accent:oklch(0.99 0 265);
+--vibeui-buttongroup-014-tip:light-dark(oklch(0.26 0 265),oklch(0.9 0 265));
+--vibeui-buttongroup-014-on-tip:light-dark(oklch(0.99 0 0),oklch(0.21 0 265));
 --vibeui-buttongroup-014-radius:0.625rem;
 --vibeui-buttongroup-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

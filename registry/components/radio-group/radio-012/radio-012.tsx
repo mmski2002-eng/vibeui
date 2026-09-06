@@ -29,10 +29,10 @@ export type Radio012Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="radio-012"]){
 --vibeui-radio-012-bg:transparent;
---vibeui-radio-012-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-radio-012-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-radio-012-muted:color-mix(in oklab,var(--vibeui-radio-012-fg) 68%,transparent);
---vibeui-radio-012-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
---vibeui-radio-012-accent:light-dark(oklch(0.5 0.03 265),oklch(0.8 0.02 265));
+--vibeui-radio-012-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
+--vibeui-radio-012-accent:light-dark(oklch(0.5 0 265),oklch(0.8 0 265));
 --vibeui-radio-012-edge:light-dark(oklch(0 0 0 / 10%),oklch(1 0 0 / 18%));
 --vibeui-radio-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

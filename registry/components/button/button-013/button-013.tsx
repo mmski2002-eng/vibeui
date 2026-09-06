@@ -22,12 +22,12 @@ export type Button013Props = Omit<
 // значением, но состояние держит форма, а не анимация.
 const STYLES = `
 :where([data-vibeui-block="button-013"]){
---vibeui-button-013-fg:light-dark(oklch(0.3 0.014 265),oklch(0.94 0.006 265));
+--vibeui-button-013-fg:light-dark(oklch(0.3 0 265),oklch(0.94 0 265));
 --vibeui-button-013-muted:color-mix(in oklab,var(--vibeui-button-013-fg) 68%,transparent);
 --vibeui-button-013-bg:transparent;
---vibeui-button-013-on:light-dark(oklch(1 0 0),oklch(0.34 0.014 265));
---vibeui-button-013-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
---vibeui-button-013-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
+--vibeui-button-013-on:light-dark(oklch(1 0 0),oklch(0.34 0 265));
+--vibeui-button-013-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
+--vibeui-button-013-accent:light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));
 --vibeui-button-013-radius:0.625rem;
 --vibeui-button-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -56,7 +56,7 @@ opacity:0;cursor:pointer;
 }
 [data-vibeui-block="button-013"] label:has(input:checked){
 background:var(--vibeui-button-013-on);color:var(--vibeui-button-013-fg);
-box-shadow:0 1px 2px light-dark(oklch(0.2 0.02 265 / 12%),oklch(0 0 0 / 40%));
+box-shadow:0 1px 2px light-dark(oklch(0.2 0 265 / 12%),oklch(0 0 0 / 40%));
 }
 [data-vibeui-block="button-013"] label:has(input:focus-visible){outline:2px solid var(--vibeui-button-013-accent);outline-offset:2px}
 [data-vibeui-block="button-013"] label:hover{color:var(--vibeui-button-013-fg)}

@@ -35,9 +35,9 @@ const STYLES = `
 --vibeui-codeblock-019-bg:transparent;
 --vibeui-codeblock-019-side:light-dark(oklch(0 0 0 / 4%),oklch(1 0 0 / 5%));
 --vibeui-codeblock-019-hover:light-dark(oklch(0 0 0 / 6%),oklch(1 0 0 / 8%));
---vibeui-codeblock-019-fg:light-dark(oklch(0.26 0.018 240),oklch(0.93 0.008 240));
+--vibeui-codeblock-019-fg:light-dark(oklch(0.26 0 240),oklch(0.93 0 240));
 --vibeui-codeblock-019-muted:color-mix(in oklab,var(--vibeui-codeblock-019-fg) 68%,transparent);
---vibeui-codeblock-019-gutter:light-dark(oklch(0.63 0.02 240),oklch(0.5 0.02 240));
+--vibeui-codeblock-019-gutter:light-dark(oklch(0.63 0 240),oklch(0.5 0 240));
 --vibeui-codeblock-019-border:light-dark(oklch(0 0 0 / 12%),oklch(1 0 0 / 12%));
 --vibeui-codeblock-019-accent:light-dark(oklch(0.5 0.13 200),oklch(0.82 0.13 200));
 --vibeui-codeblock-019-target:light-dark(oklch(0.7 0.12 200 / 24%),oklch(0.6 0.12 200 / 22%));

@@ -29,14 +29,14 @@ export type Popover006Props = Omit<
 // Поэтому это popover, а не tooltip: закрытие по Escape и клику вне, не по уходу.
 const STYLES = `
 :where([data-vibeui-block="popover-006"]){
---vibeui-popover-006-bg:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
+--vibeui-popover-006-bg:light-dark(oklch(1 0 0),oklch(0.22 0 265));
 --vibeui-popover-006-plate:transparent;
---vibeui-popover-006-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.006 265));
+--vibeui-popover-006-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-popover-006-muted:color-mix(in oklab,var(--vibeui-popover-006-fg) 68%,transparent);
---vibeui-popover-006-border:light-dark(oklch(0.89 0.006 265),oklch(0.36 0.012 265));
+--vibeui-popover-006-border:light-dark(oklch(0.89 0 265),oklch(0.36 0 265));
 --vibeui-popover-006-accent:light-dark(oklch(0.52 0.16 250),oklch(0.75 0.14 250));
---vibeui-popover-006-soft:light-dark(oklch(0.96 0.02 250),oklch(0.3 0.04 250));
---vibeui-popover-006-shadow:light-dark(oklch(0.2 0.02 265 / 60%),oklch(0.02 0.01 265 / 72%));
+--vibeui-popover-006-soft:light-dark(oklch(0.96 0 250),oklch(0.3 0.04 250));
+--vibeui-popover-006-shadow:light-dark(oklch(0.2 0 265 / 60%),oklch(0.02 0 265 / 72%));
 --vibeui-popover-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -71,16 +71,16 @@ font-size:0.625rem;font-weight:800;text-decoration:none;
    отменил бы браузерный display:none и справка висела бы поверх текста. */
 [data-vibeui-block="popover-006"] [data-part="card"]{
 position:fixed;margin:0;padding:0.875rem;
-width:min(18rem,calc(100% - 2rem));box-sizing:border-box;
+width:min(18rem,100vw - 2rem);box-sizing:border-box;
 border:1px solid var(--vibeui-popover-006-border);border-radius:0.875rem;
 background:var(--vibeui-popover-006-bg);color:inherit;
 box-shadow:0 24px 52px -30px var(--vibeui-popover-006-shadow);
-position-anchor:--vibeui-popover-006-anchor;
+position-anchor:--vibeui-popover-006-anchor;inset:auto;
 top:anchor(bottom);left:anchor(left);margin-top:0.5rem;
 }
 [data-vibeui-block="popover-006"] [data-part="card"]:popover-open{display:flex;flex-direction:column;gap:0.5rem}
 @supports not (anchor-name: --a){
-[data-vibeui-block="popover-006"] [data-part="card"]{position:absolute;inset:auto;top:calc(100% + 0.5rem);left:0}
+[data-vibeui-block="popover-006"] [data-part="card"]{position:fixed;inset:0;margin:auto}
 }
 [data-vibeui-block="popover-006"] [data-part="title"]{display:block;margin:0;font-size:0.875rem;font-weight:660;line-height:1.3}
 [data-vibeui-block="popover-006"] [data-part="text"]{display:block;margin:0;font-size:0.8125rem;line-height:1.5;color:var(--vibeui-popover-006-muted)}
@@ -93,9 +93,14 @@ text-decoration:none;border-radius:0.25rem;
 [data-vibeui-block="popover-006"] [data-part="link"]:focus-visible{outline:2px solid var(--vibeui-popover-006-accent);outline-offset:2px}
 /* Раскрытая панель на месте: атрибут popover прячет её правилом браузера,
    а это правило той же специфичности его переопределяет и возвращает панель
-   в поток. Так её показывают на витрине и в документации, без верхнего слоя. */
-[data-vibeui-block="popover-006"][data-open] [popover]{
-display:block;position:static;inset:auto;margin:0.5rem 0 0;
+   в поток. Так её показывают на витрине и в документации, без верхнего слоя.
+   Только пока popover закрыт: у открытого положение задаёт верхний слой,
+   и static отправил бы панель в левый верхний угол экрана. Здесь панель ещё
+   и висит поверх абзаца: кнопка стоит внутри фразы, и вставшая в поток
+   справка разрывала бы предложение пополам. */
+[data-vibeui-block="popover-006"][data-open]{position:relative}
+[data-vibeui-block="popover-006"][data-open] [popover]:not(:popover-open){
+display:flex;flex-direction:column;gap:0.5rem;position:absolute;z-index:20;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="popover-006"] *{animation:none!important;transition:none!important}}
 `

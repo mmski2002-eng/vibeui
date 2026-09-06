@@ -23,7 +23,7 @@ const STYLES = `
 :where([data-vibeui-block="codeblock-012"]){
 --vibeui-codeblock-012-bg:transparent;
 --vibeui-codeblock-012-out-bg:light-dark(oklch(0 0 0 / 4%),oklch(1 0 0 / 5%));
---vibeui-codeblock-012-fg:light-dark(oklch(0.26 0.014 265),oklch(0.94 0.006 265));
+--vibeui-codeblock-012-fg:light-dark(oklch(0.26 0 265),oklch(0.94 0 265));
 --vibeui-codeblock-012-muted:color-mix(in oklab,var(--vibeui-codeblock-012-fg) 68%,transparent);
 --vibeui-codeblock-012-border:light-dark(oklch(0 0 0 / 12%),oklch(1 0 0 / 12%));
 --vibeui-codeblock-012-prompt:light-dark(oklch(0.5 0.12 200),oklch(0.78 0.13 200));

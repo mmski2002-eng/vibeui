@@ -34,10 +34,10 @@ export type Togglegroup017Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="togglegroup-017"]){
 --vibeui-togglegroup-017-bg:transparent;
---vibeui-togglegroup-017-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-togglegroup-017-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-togglegroup-017-muted:color-mix(in oklab,var(--vibeui-togglegroup-017-fg) 66%,transparent);
---vibeui-togglegroup-017-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
---vibeui-togglegroup-017-track:light-dark(oklch(0.96 0.004 265),oklch(0.28 0.011 265));
+--vibeui-togglegroup-017-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
+--vibeui-togglegroup-017-track:light-dark(oklch(0.96 0 265),oklch(0.28 0 265));
 --vibeui-togglegroup-017-accent:light-dark(oklch(0.55 0.15 265),oklch(0.73 0.13 265));
 --vibeui-togglegroup-017-on-accent:oklch(from var(--vibeui-togglegroup-017-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-togglegroup-017-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -72,7 +72,7 @@ inset:0.1875rem auto 0.1875rem 0.1875rem;
 inline-size:calc((100% - 0.375rem) / var(--vibeui-togglegroup-017-count,3));
 translate:calc(var(--vibeui-togglegroup-017-index,0) * 100%) 0;
 border-radius:999px;background:var(--vibeui-togglegroup-017-accent);
-box-shadow:0 1px 2px oklch(0.2 0.03 265 / 22%);
+box-shadow:0 1px 2px oklch(0.2 0 265 / 22%);
 transition:translate .22s cubic-bezier(0.2,0.7,0.3,1);
 }
 [data-vibeui-block="togglegroup-017"] [data-part="option"]{

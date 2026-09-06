@@ -40,13 +40,13 @@ export type Filters001Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="filters-001"]){
 --vibeui-filters-001-bg:transparent;
---vibeui-filters-001-field:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
---vibeui-filters-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-filters-001-field:light-dark(oklch(1 0 0),oklch(0.26 0 265));
+--vibeui-filters-001-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-filters-001-muted:color-mix(in oklab,var(--vibeui-filters-001-fg) 68%,transparent);
---vibeui-filters-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
---vibeui-filters-001-hover:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.85 0.02 265 / 14%));
+--vibeui-filters-001-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
+--vibeui-filters-001-hover:light-dark(oklch(0.55 0 265 / 8%),oklch(0.85 0 265 / 14%));
 --vibeui-filters-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
---vibeui-filters-001-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.03 262));
+--vibeui-filters-001-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0 262));
 --vibeui-filters-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

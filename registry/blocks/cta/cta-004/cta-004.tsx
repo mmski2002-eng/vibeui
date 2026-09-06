@@ -26,9 +26,9 @@ export type Cta004Props = {
 const STYLES = `
 :where([data-vibeui-block="cta-004"]){
 --vibeui-cta-004-accent:light-dark(oklch(0.52 0.2 268),oklch(0.45 0.18 268));
---vibeui-cta-004-ink:light-dark(oklch(0.99 0.01 268),oklch(0.96 0.012 268));
+--vibeui-cta-004-ink:light-dark(oklch(0.99 0 268),oklch(0.96 0 268));
 --vibeui-cta-004-muted:light-dark(oklch(0.9 0.04 268),oklch(0.85 0.04 268));
---vibeui-cta-004-button:light-dark(oklch(1 0 0),oklch(0.93 0.02 268));
+--vibeui-cta-004-button:light-dark(oklch(1 0 0),oklch(0.93 0 268));
 --vibeui-cta-004-button-fg:light-dark(oklch(0.28 0.14 268),oklch(0.24 0.12 268));
 --vibeui-cta-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

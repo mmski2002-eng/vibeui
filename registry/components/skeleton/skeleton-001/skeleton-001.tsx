@@ -18,8 +18,8 @@ export type Skeleton001Props = ComponentProps<"div"> & {
 // вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="skeleton-001"]){
---vibeui-skeleton-001-base:light-dark(oklch(0.93 0.005 265),oklch(0.3 0.012 265));
---vibeui-skeleton-001-shine:light-dark(oklch(0.97 0.003 265),oklch(0.39 0.016 265));
+--vibeui-skeleton-001-base:light-dark(oklch(0.93 0 265),oklch(0.3 0 265));
+--vibeui-skeleton-001-shine:light-dark(oklch(0.97 0 265),oklch(0.39 0 265));
 --vibeui-skeleton-001-radius:0.375rem;
 --vibeui-skeleton-001-line:1rem;
 --vibeui-skeleton-001-gap:0.625rem;

@@ -20,10 +20,10 @@ export type Breadcrumb012Props = Omit<ComponentProps<"nav">, "children"> & {
 // вместе со страницей и не выкладывает под себя плашку.
 const STYLES = `
 :where([data-vibeui-block="breadcrumb-012"]){
---vibeui-breadcrumb-012-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.008 265));
+--vibeui-breadcrumb-012-fg:light-dark(oklch(0.26 0 265),oklch(0.94 0 265));
 --vibeui-breadcrumb-012-muted:color-mix(in oklab,var(--vibeui-breadcrumb-012-fg) 68%,transparent);
---vibeui-breadcrumb-012-sep:light-dark(oklch(0.78 0.01 265),oklch(0.5 0.012 265));
---vibeui-breadcrumb-012-hover:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.012 265));
+--vibeui-breadcrumb-012-sep:light-dark(oklch(0.78 0 265),oklch(0.5 0 265));
+--vibeui-breadcrumb-012-hover:light-dark(oklch(0.96 0 265),oklch(0.31 0 265));
 --vibeui-breadcrumb-012-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-breadcrumb-012-bg:transparent;
 --vibeui-breadcrumb-012-pad:0;

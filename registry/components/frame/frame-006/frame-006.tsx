@@ -23,10 +23,10 @@ export type Frame006Props = ComponentProps<"figure"> & {
 const STYLES = `
 :where([data-vibeui-block="frame-006"]){
 --vibeui-frame-006-bg:transparent;
---vibeui-frame-006-media:light-dark(oklch(0.96 0.004 265),oklch(0.3 0.008 265));
---vibeui-frame-006-fg:light-dark(oklch(0.23 0.014 265),oklch(0.93 0.005 265));
+--vibeui-frame-006-media:light-dark(oklch(0.96 0 265),oklch(0.3 0 265));
+--vibeui-frame-006-fg:light-dark(oklch(0.23 0 265),oklch(0.93 0 265));
 --vibeui-frame-006-muted:color-mix(in oklab,var(--vibeui-frame-006-fg) 68%,transparent);
---vibeui-frame-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.011 265));
+--vibeui-frame-006-border:light-dark(oklch(0.9 0 265),oklch(0.38 0 265));
 --vibeui-frame-006-accent:light-dark(oklch(0.52 0.16 262),oklch(0.74 0.15 262));
 --vibeui-frame-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

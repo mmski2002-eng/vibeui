@@ -32,11 +32,11 @@ export type Card007Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="card-007"]){
 --vibeui-card-007-bg:transparent;
---vibeui-card-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-card-007-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-card-007-muted:color-mix(in oklab,var(--vibeui-card-007-fg) 68%,transparent);
---vibeui-card-007-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-card-007-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
 --vibeui-card-007-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
---vibeui-card-007-on-accent:light-dark(oklch(0.99 0.01 265),oklch(0.18 0.02 265));
+--vibeui-card-007-on-accent:light-dark(oklch(0.99 0 265),oklch(0.18 0 265));
 --vibeui-card-007-done:light-dark(oklch(0.55 0.15 152),oklch(0.76 0.14 152));
 --vibeui-card-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

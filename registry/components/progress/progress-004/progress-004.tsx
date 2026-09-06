@@ -23,14 +23,14 @@ export type Progress004Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="progress-004"]){
 --vibeui-progress-004-bg:transparent;
---vibeui-progress-004-fg:light-dark(oklch(0.25 0.016 265),oklch(0.94 0.006 265));
+--vibeui-progress-004-fg:light-dark(oklch(0.25 0 265),oklch(0.94 0 265));
 --vibeui-progress-004-muted:color-mix(in oklab,var(--vibeui-progress-004-fg) 68%,transparent);
---vibeui-progress-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
---vibeui-progress-004-track:light-dark(oklch(0.93 0.005 265),oklch(0.3 0.011 265));
+--vibeui-progress-004-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-progress-004-track:light-dark(oklch(0.93 0 265),oklch(0.3 0 265));
 /* Светлая ветка притемнена до 0.535: этим же цветом набрано «PDF» на бледной
    плитке, и на 0.55 подпись давала 4.3:1. */
 --vibeui-progress-004-accent:light-dark(oklch(0.535 0.19 262),oklch(0.72 0.16 262));
---vibeui-progress-004-tile:light-dark(oklch(0.95 0.021 262),oklch(0.32 0.045 262));
+--vibeui-progress-004-tile:light-dark(oklch(0.95 0 262),oklch(0.32 0.045 262));
 --vibeui-progress-004-value:0;
 --vibeui-progress-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

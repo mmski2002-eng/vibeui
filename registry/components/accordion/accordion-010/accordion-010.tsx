@@ -26,9 +26,9 @@ export type Accordion010Props = Omit<ComponentProps<"div">, "children"> & {
 // сам складывается в обычный список. Ширина считается от блока, не от окна.
 const STYLES = `
 :where([data-vibeui-block="accordion-010"]){
---vibeui-accordion-010-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-accordion-010-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-accordion-010-muted:color-mix(in oklab,var(--vibeui-accordion-010-fg) 68%,transparent);
---vibeui-accordion-010-line:light-dark(oklch(0.91 0.006 265),oklch(0.31 0.01 265));
+--vibeui-accordion-010-line:light-dark(oklch(0.91 0 265),oklch(0.31 0 265));
 --vibeui-accordion-010-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.16 262));
 --vibeui-accordion-010-bg:transparent;
 --vibeui-accordion-010-pad:0;

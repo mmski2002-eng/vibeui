@@ -18,9 +18,9 @@ export type Skeleton005Props = ComponentProps<"div"> & {
 const STYLES = `
 :where([data-vibeui-block="skeleton-005"]){
 --vibeui-skeleton-005-bg:transparent;
---vibeui-skeleton-005-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
---vibeui-skeleton-005-base:light-dark(oklch(0.93 0.005 265),oklch(0.3 0.012 265));
---vibeui-skeleton-005-shine:light-dark(oklch(0.97 0.003 265),oklch(0.39 0.016 265));
+--vibeui-skeleton-005-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
+--vibeui-skeleton-005-base:light-dark(oklch(0.93 0 265),oklch(0.3 0 265));
+--vibeui-skeleton-005-shine:light-dark(oklch(0.97 0 265),oklch(0.39 0 265));
 --vibeui-skeleton-005-cover:5.5rem;
 --vibeui-skeleton-005-avatar:4.25rem;
 }

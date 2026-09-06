@@ -33,10 +33,10 @@ export type Chart020Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="chart-020"]){
 --vibeui-chart-020-bg:transparent;
---vibeui-chart-020-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-chart-020-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-chart-020-muted:color-mix(in oklab,var(--vibeui-chart-020-fg) 68%,transparent);
---vibeui-chart-020-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
---vibeui-chart-020-track:light-dark(oklch(0.95 0.004 265),oklch(0.29 0.01 265));
+--vibeui-chart-020-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
+--vibeui-chart-020-track:light-dark(oklch(0.95 0 265),oklch(0.29 0 265));
 --vibeui-chart-020-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

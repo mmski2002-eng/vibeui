@@ -21,8 +21,8 @@ export type Aspect005Props = Omit<
 // у баннера контраст, поэтому палитра здесь одна на обе темы.
 const STYLES = `
 :where([data-vibeui-block="aspect-005"]){
---vibeui-aspect-005-ink:oklch(0.2 0.02 265);
---vibeui-aspect-005-fg:oklch(0.99 0.003 265);
+--vibeui-aspect-005-ink:oklch(0.2 0 265);
+--vibeui-aspect-005-fg:oklch(0.99 0 265);
 --vibeui-aspect-005-muted:color-mix(in oklab,var(--vibeui-aspect-005-fg) 68%,transparent);
 --vibeui-aspect-005-accent:oklch(0.72 0.16 195);
 --vibeui-aspect-005-radius:1rem;

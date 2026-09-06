@@ -28,11 +28,11 @@ export type Tabs002Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="tabs-002"]){
 --vibeui-tabs-002-bg:transparent;
---vibeui-tabs-002-pill:light-dark(oklch(1 0 0),oklch(0.32 0.012 265));
---vibeui-tabs-002-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-tabs-002-pill:light-dark(oklch(1 0 0),oklch(0.32 0 265));
+--vibeui-tabs-002-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-tabs-002-muted:color-mix(in oklab,var(--vibeui-tabs-002-fg) 68%,transparent);
---vibeui-tabs-002-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
---vibeui-tabs-002-track:light-dark(oklch(0.96 0.003 265),oklch(0.25 0.01 265));
+--vibeui-tabs-002-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
+--vibeui-tabs-002-track:light-dark(oklch(0.96 0 265),oklch(0.25 0 265));
 --vibeui-tabs-002-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
 --vibeui-tabs-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -62,7 +62,7 @@ font-size:0.8125rem;color:var(--vibeui-tabs-002-muted);white-space:nowrap;
 /* Отмеченная радиокнопка задаёт и вид вкладки, и видимость панели. */
 [data-vibeui-block="tabs-002"] input:checked + [data-part="tab"]{
 background:var(--vibeui-tabs-002-pill);color:var(--vibeui-tabs-002-fg);font-weight:650;
-box-shadow:0 1px 2px oklch(0.2 0.02 265 / 12%);
+box-shadow:0 1px 2px oklch(0.2 0 265 / 12%);
 }
 [data-vibeui-block="tabs-002"] input:focus-visible + [data-part="tab"]{outline:2px solid var(--vibeui-tabs-002-accent);outline-offset:-2px}
 /* Панель открывает :has() по отмеченной кнопке: правила заданы на шесть вкладок. */

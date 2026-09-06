@@ -25,11 +25,11 @@ export type Collapsible005Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="collapsible-005"]){
 --vibeui-collapsible-005-bg:transparent;
---vibeui-collapsible-005-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-collapsible-005-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-collapsible-005-muted:color-mix(in oklab,var(--vibeui-collapsible-005-fg) 68%,transparent);
---vibeui-collapsible-005-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-collapsible-005-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
 --vibeui-collapsible-005-accent:light-dark(oklch(0.54 0.19 285),oklch(0.75 0.15 285));
---vibeui-collapsible-005-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.02 285));
+--vibeui-collapsible-005-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0 285));
 --vibeui-collapsible-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

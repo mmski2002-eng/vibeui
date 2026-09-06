@@ -37,10 +37,10 @@ export type Cascader004Props = {
 const STYLES = `
 :where([data-vibeui-block="cascader-004"]){
 --vibeui-cascader-004-bg:transparent;
---vibeui-cascader-004-surface:light-dark(oklch(0.985 0.003 250),oklch(0.28 0.012 250));
---vibeui-cascader-004-fg:light-dark(oklch(0.22 0.014 250),oklch(0.94 0.006 250));
+--vibeui-cascader-004-surface:light-dark(oklch(0.985 0 250),oklch(0.28 0 250));
+--vibeui-cascader-004-fg:light-dark(oklch(0.22 0 250),oklch(0.94 0 250));
 --vibeui-cascader-004-muted:color-mix(in oklab,var(--vibeui-cascader-004-fg) 68%,transparent);
---vibeui-cascader-004-border:light-dark(oklch(0.91 0.006 250),oklch(0.38 0.011 250));
+--vibeui-cascader-004-border:light-dark(oklch(0.91 0 250),oklch(0.38 0 250));
 --vibeui-cascader-004-accent:light-dark(oklch(0.58 0.15 190),oklch(0.78 0.13 190));
 --vibeui-cascader-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -53,7 +53,7 @@ width:100%;max-width:19rem;box-sizing:border-box;overflow:hidden;
 background:var(--vibeui-cascader-004-bg);color:var(--vibeui-cascader-004-fg);
 border:1px solid var(--vibeui-cascader-004-border);border-radius:1.125rem;
 font-family:var(--vibeui-cascader-004-font);
-box-shadow:0 20px 44px -34px oklch(0.2 0.03 250 / 65%);
+box-shadow:0 20px 44px -34px oklch(0.2 0 250 / 65%);
 }
 [data-vibeui-block="cascader-004"] *{box-sizing:border-box}
 [data-vibeui-block="cascader-004"] [data-part="bar"]{

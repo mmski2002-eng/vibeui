@@ -21,9 +21,9 @@ export type Kbd003Props = Omit<ComponentProps<"p">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="kbd-003"]){
 --vibeui-kbd-003-surface:transparent;
---vibeui-kbd-003-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
---vibeui-kbd-003-border:light-dark(oklch(0.87 0.008 265),oklch(0.38 0.012 265));
---vibeui-kbd-003-key:light-dark(oklch(0.97 0.003 265),oklch(0.3 0.012 265));
+--vibeui-kbd-003-fg:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
+--vibeui-kbd-003-border:light-dark(oklch(0.87 0 265),oklch(0.38 0 265));
+--vibeui-kbd-003-key:light-dark(oklch(0.97 0 265),oklch(0.3 0 265));
 --vibeui-kbd-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

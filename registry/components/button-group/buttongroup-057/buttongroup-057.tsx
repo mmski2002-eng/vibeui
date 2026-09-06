@@ -32,14 +32,14 @@ export type Buttongroup057Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="buttongroup-057"]){
 --vibeui-buttongroup-057-surface:transparent;
---vibeui-buttongroup-057-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.005 265));
+--vibeui-buttongroup-057-fg:light-dark(oklch(0.25 0 265),oklch(0.95 0 265));
 --vibeui-buttongroup-057-muted:color-mix(in oklab,var(--vibeui-buttongroup-057-fg) 68%,transparent);
---vibeui-buttongroup-057-border:light-dark(oklch(0.89 0.008 265),oklch(0.41 0.012 265));
+--vibeui-buttongroup-057-border:light-dark(oklch(0.89 0 265),oklch(0.41 0 265));
 /* Нажатая кнопка — самый контрастный элемент группы: в светлой теме тёмная
    плашка, в тёмной светлая, иначе выбор перестаёт читаться. */
---vibeui-buttongroup-057-on:light-dark(oklch(0.24 0.02 265),oklch(0.93 0.008 265));
---vibeui-buttongroup-057-on-fg:light-dark(oklch(0.99 0.002 265),oklch(0.21 0.02 265));
---vibeui-buttongroup-057-code:light-dark(oklch(0.96 0.005 265),oklch(0.32 0.012 265));
+--vibeui-buttongroup-057-on:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
+--vibeui-buttongroup-057-on-fg:light-dark(oklch(0.99 0 265),oklch(0.21 0 265));
+--vibeui-buttongroup-057-code:light-dark(oklch(0.96 0 265),oklch(0.32 0 265));
 --vibeui-buttongroup-057-accent:light-dark(oklch(0.5 0.16 265),oklch(0.76 0.14 265));
 --vibeui-buttongroup-057-radius:0.625rem;
 --vibeui-buttongroup-057-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

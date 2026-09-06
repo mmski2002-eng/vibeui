@@ -33,10 +33,10 @@ export type Accordion011Props = Omit<ComponentProps<"div">, "children"> & {
 // изнутри градиентом от края — тени на тёмном фоне не работают.
 const STYLES = `
 :where([data-vibeui-block="accordion-011"]){
---vibeui-accordion-011-fg:oklch(0.97 0.003 265);
+--vibeui-accordion-011-fg:oklch(0.97 0 265);
 --vibeui-accordion-011-muted:color-mix(in oklab,var(--vibeui-accordion-011-fg) 68%,transparent);
---vibeui-accordion-011-bg:oklch(0.21 0.018 265);
---vibeui-accordion-011-raised:oklch(0.25 0.02 265);
+--vibeui-accordion-011-bg:oklch(0.21 0 265);
+--vibeui-accordion-011-raised:oklch(0.25 0 265);
 --vibeui-accordion-011-border:oklch(1 0 0 / 12%);
 --vibeui-accordion-011-accent:oklch(0.72 0.16 195);
 --vibeui-accordion-011-radius:0.875rem;

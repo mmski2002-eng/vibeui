@@ -42,12 +42,12 @@ export type File009Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="file-009"]){
 --vibeui-file-009-surface:transparent;
---vibeui-file-009-raise:light-dark(oklch(1 0 0),oklch(0.34 0.014 265));
---vibeui-file-009-tile:light-dark(oklch(0.965 0.005 265),oklch(0.26 0.012 265));
---vibeui-file-009-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-file-009-raise:light-dark(oklch(1 0 0),oklch(0.34 0 265));
+--vibeui-file-009-tile:light-dark(oklch(0.965 0 265),oklch(0.26 0 265));
+--vibeui-file-009-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-file-009-muted:color-mix(in oklab,var(--vibeui-file-009-fg) 68%,transparent);
---vibeui-file-009-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
---vibeui-file-009-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-file-009-border:light-dark(oklch(0.88 0 265),oklch(0.42 0 265));
+--vibeui-file-009-shell:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
 --vibeui-file-009-accent:light-dark(oklch(0.52 0.17 255),oklch(0.74 0.16 255));
 --vibeui-file-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

@@ -30,7 +30,7 @@ export type Accordion009Props = Omit<ComponentProps<"div">, "children"> & {
 // последнее событие важнее остальных, и оно должно быть видно сразу.
 const STYLES = `
 :where([data-vibeui-block="accordion-009"]){
---vibeui-accordion-009-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-accordion-009-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-accordion-009-muted:color-mix(in oklab,var(--vibeui-accordion-009-fg) 68%,transparent);
 --vibeui-accordion-009-bg:transparent;
 --vibeui-accordion-009-pad:0;
@@ -38,7 +38,7 @@ const STYLES = `
 /* Заливка полой точки: она должна перекрыть линию, идущую за ней. Canvas —
    системный цвет страницы, он сам следует color-scheme. */
 --vibeui-accordion-009-dot-fill:Canvas;
---vibeui-accordion-009-line:light-dark(oklch(0.9 0.006 265),oklch(0.31 0.01 265));
+--vibeui-accordion-009-line:light-dark(oklch(0.9 0 265),oklch(0.31 0 265));
 --vibeui-accordion-009-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.16 262));
 --vibeui-accordion-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

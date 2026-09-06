@@ -17,12 +17,12 @@ export type Button007Props = ComponentProps<"button"> & {
 // в ней. Подпись остаётся светлой в обеих ветках.
 const STYLES = `
 :where([data-vibeui-block="button-007"]){
---vibeui-button-007-bg:light-dark(oklch(0.22 0.014 265),oklch(0.33 0.016 265));
---vibeui-button-007-fg:oklch(0.98 0.003 265);
---vibeui-button-007-hint:light-dark(oklch(0.72 0.012 265),oklch(0.78 0.012 265));
+--vibeui-button-007-bg:light-dark(oklch(0.22 0 265),oklch(0.33 0 265));
+--vibeui-button-007-fg:oklch(0.98 0 265);
+--vibeui-button-007-hint:light-dark(oklch(0.72 0 265),oklch(0.78 0 265));
 --vibeui-button-007-avatar:light-dark(oklch(0.62 0.13 250),oklch(0.68 0.125 250));
---vibeui-button-007-avatar-fg:oklch(0.99 0.004 250);
---vibeui-button-007-ring:light-dark(oklch(0.72 0.012 265),oklch(0.84 0.012 265));
+--vibeui-button-007-avatar-fg:oklch(0.99 0 250);
+--vibeui-button-007-ring:light-dark(oklch(0.72 0 265),oklch(0.84 0 265));
 --vibeui-button-007-radius:9999px;
 --vibeui-button-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -46,7 +46,9 @@ background:var(--vibeui-button-007-avatar);color:var(--vibeui-button-007-avatar-
 box-shadow:0 0 0 2px var(--vibeui-button-007-bg);
 transition:transform .22s cubic-bezier(0.16,1,0.3,1);
 }
-[data-vibeui-block="button-007"] [data-part="avatar"]+[data-part="avatar"]{margin-left:-0.5rem}
+/* Нахлёст меньше половины буквы: при -0.5rem соседний кружок съедал
+   вторую букву инициалов, и стопка читалась как каша. */
+[data-vibeui-block="button-007"] [data-part="avatar"]+[data-part="avatar"]{margin-left:-0.3125rem}
 [data-vibeui-block="button-007"] [data-part="avatar"]:nth-child(2){background:color-mix(in oklab, var(--vibeui-button-007-avatar) 70%, oklch(0.7 0.14 160))}
 [data-vibeui-block="button-007"] [data-part="avatar"]:nth-child(3){background:color-mix(in oklab, var(--vibeui-button-007-avatar) 55%, oklch(0.72 0.16 40))}
 [data-vibeui-block="button-007"]:hover:not(:disabled){background:color-mix(in oklab, var(--vibeui-button-007-bg) 82%, white)}

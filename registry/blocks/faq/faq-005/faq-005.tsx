@@ -35,11 +35,11 @@ export type Faq005Props = {
 const STYLES = `
 :where([data-vibeui-block="faq-005"]){
 --vibeui-faq-005-bg:transparent;
---vibeui-faq-005-field:light-dark(oklch(0.98 0.003 240),oklch(0.26 0.012 240));
---vibeui-faq-005-field-focus:light-dark(oklch(1 0 0),oklch(0.3 0.014 240));
---vibeui-faq-005-ink:light-dark(oklch(0.22 0.014 240),oklch(0.95 0.005 240));
---vibeui-faq-005-muted:light-dark(oklch(0.5 0.014 240),oklch(0.72 0.012 240));
---vibeui-faq-005-border:light-dark(oklch(0.9 0.006 240),oklch(0.36 0.012 240));
+--vibeui-faq-005-field:light-dark(oklch(0.98 0 240),oklch(0.26 0 240));
+--vibeui-faq-005-field-focus:light-dark(oklch(1 0 0),oklch(0.3 0 240));
+--vibeui-faq-005-ink:light-dark(oklch(0.22 0 240),oklch(0.95 0 240));
+--vibeui-faq-005-muted:light-dark(oklch(0.5 0 240),oklch(0.72 0 240));
+--vibeui-faq-005-border:light-dark(oklch(0.9 0 240),oklch(0.36 0 240));
 --vibeui-faq-005-accent:light-dark(oklch(0.52 0.16 230),oklch(0.74 0.13 230));
 --vibeui-faq-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

@@ -23,13 +23,13 @@ export type Checkbox005Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="checkbox-005"]){
 --vibeui-checkbox-005-surface:transparent;
---vibeui-checkbox-005-bg:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
---vibeui-checkbox-005-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-checkbox-005-bg:light-dark(oklch(1 0 0),oklch(0.26 0 265));
+--vibeui-checkbox-005-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-checkbox-005-muted:color-mix(in oklab,var(--vibeui-checkbox-005-fg) 68%,transparent);
---vibeui-checkbox-005-border:light-dark(oklch(0.88 0.008 265),oklch(0.4 0.012 265));
+--vibeui-checkbox-005-border:light-dark(oklch(0.88 0 265),oklch(0.4 0 265));
 --vibeui-checkbox-005-accent:light-dark(oklch(0.55 0.17 265),oklch(0.73 0.15 265));
 --vibeui-checkbox-005-danger:light-dark(oklch(0.56 0.19 25),oklch(0.74 0.16 25));
---vibeui-checkbox-005-mark:light-dark(oklch(0.99 0.01 265),oklch(0.2 0.014 265));
+--vibeui-checkbox-005-mark:light-dark(oklch(0.99 0 265),oklch(0.2 0 265));
 --vibeui-checkbox-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

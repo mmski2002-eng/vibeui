@@ -36,14 +36,14 @@ export type Textarea005Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="textarea-005"]){
 --vibeui-textarea-005-bg:transparent;
---vibeui-textarea-005-panel:light-dark(oklch(1 0 0),oklch(0.27 0.013 265));
---vibeui-textarea-005-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-textarea-005-panel:light-dark(oklch(1 0 0),oklch(0.27 0 265));
+--vibeui-textarea-005-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-textarea-005-muted:color-mix(in oklab,var(--vibeui-textarea-005-fg) 68%,transparent);
---vibeui-textarea-005-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
---vibeui-textarea-005-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.012 265));
+--vibeui-textarea-005-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-textarea-005-field:light-dark(oklch(0.985 0 265),oklch(0.26 0 265));
 --vibeui-textarea-005-accent:light-dark(oklch(0.55 0.19 262),oklch(0.75 0.15 262));
 --vibeui-textarea-005-tint:light-dark(oklch(0.55 0.19 262 / 10%),oklch(0.75 0.15 262 / 20%));
---vibeui-textarea-005-shadow:light-dark(oklch(0.2 0.02 265 / 14%),oklch(0 0 0 / 45%));
+--vibeui-textarea-005-shadow:light-dark(oklch(0.2 0 265 / 14%),oklch(0 0 0 / 45%));
 --vibeui-textarea-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

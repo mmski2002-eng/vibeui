@@ -1243,7 +1243,7 @@
         "tags": ["tooltip", "shortcut", "menu", "chip"],
         "ai": {
           "export": "Tooltip010",
-          "usage": "<Tooltip010\n  items={[{ glyph: \"↩\", label: \"Отменить\", shortcut: \"⌘Z\" }]}\n/>",
+          "usage": "<Tooltip010\n  items={[{ glyph: \"↩\", label: \"Отменить\", shortcut: \"Ctrl+Z\" }]}\n/>",
           "summary": "Вертикальное меню иконок-кнопок, где подсказка на пункте показывает чип горячей клавиши — сжатый ярлык вместо ряда отдельных <kbd>. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
             "локальную палитру --vibeui-tooltip-010-* и не подменять её токенами вашей темы",
@@ -1299,7 +1299,7 @@
                 "On a phone the tooltip never appears — a mobile menu needs a separate action list.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
-              "usage": "<Tooltip010\n  items={[{ glyph: \"↩\", label: \"Undo\", shortcut: \"⌘Z\" }]}\n/>"
+              "usage": "<Tooltip010\n  items={[{ glyph: \"↩\", label: \"Undo\", shortcut: \"Ctrl+Z\" }]}\n/>"
             },
             "title": "Menu Hotkey",
             "controls": {
@@ -1318,17 +1318,17 @@
                   {
                     "glyph": "↩",
                     "label": "Undo",
-                    "shortcut": "⌘Z"
+                    "shortcut": "Ctrl+Z"
                   },
                   {
                     "glyph": "⧉",
                     "label": "Duplicate row",
-                    "shortcut": "⌘D"
+                    "shortcut": "Ctrl+D"
                   },
                   {
                     "glyph": "⌦",
                     "label": "Delete selection",
-                    "shortcut": "⌫"
+                    "shortcut": "Backspace"
                   }
                 ]
               }

@@ -46,13 +46,13 @@ const STYLES = `
 :where([data-vibeui-block="dashboard-069"]){
 --vibeui-dashboard-069-bg:transparent;
 /* Карточки задач и жёлоб шкалы: подложка блока прозрачна. */
---vibeui-dashboard-069-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 275));
---vibeui-dashboard-069-inset:light-dark(oklch(0.985 0.003 275),oklch(0.22 0.012 275));
---vibeui-dashboard-069-fg:light-dark(oklch(0.21 0.014 275),oklch(0.94 0.005 275));
---vibeui-dashboard-069-muted:light-dark(oklch(0.55 0.014 275),oklch(0.72 0.012 275));
---vibeui-dashboard-069-border:light-dark(oklch(0.91 0.006 275),oklch(0.36 0.012 275));
+--vibeui-dashboard-069-card:light-dark(oklch(1 0 0),oklch(0.26 0 275));
+--vibeui-dashboard-069-inset:light-dark(oklch(0.985 0 275),oklch(0.22 0 275));
+--vibeui-dashboard-069-fg:light-dark(oklch(0.21 0 275),oklch(0.94 0 275));
+--vibeui-dashboard-069-muted:light-dark(oklch(0.55 0 275),oklch(0.72 0 275));
+--vibeui-dashboard-069-border:light-dark(oklch(0.91 0 275),oklch(0.36 0 275));
 --vibeui-dashboard-069-accent:light-dark(oklch(0.52 0.16 275),oklch(0.73 0.14 275));
---vibeui-dashboard-069-soft:light-dark(oklch(0.965 0.02 275),oklch(0.3 0.035 275));
+--vibeui-dashboard-069-soft:light-dark(oklch(0.965 0 275),oklch(0.3 0.035 275));
 --vibeui-dashboard-069-cut:light-dark(oklch(0.57 0.19 25),oklch(0.75 0.17 25));
 --vibeui-dashboard-069-cut-line:light-dark(oklch(0.8 0.1 25),oklch(0.5 0.11 25));
 --vibeui-dashboard-069-warn:light-dark(oklch(0.68 0.15 72),oklch(0.8 0.14 72));

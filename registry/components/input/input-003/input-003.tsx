@@ -27,11 +27,11 @@ export type Input003Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="input-003"]){
 --vibeui-input-003-bg:transparent;
---vibeui-input-003-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-input-003-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-input-003-muted:color-mix(in oklab,var(--vibeui-input-003-fg) 68%,transparent);
---vibeui-input-003-border:light-dark(oklch(0.9 0.006 265),oklch(0.4 0.014 265));
---vibeui-input-003-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.012 265));
---vibeui-input-003-track:light-dark(oklch(0.92 0.005 265),oklch(0.34 0.012 265));
+--vibeui-input-003-border:light-dark(oklch(0.9 0 265),oklch(0.4 0 265));
+--vibeui-input-003-field:light-dark(oklch(0.985 0 265),oklch(0.26 0 265));
+--vibeui-input-003-track:light-dark(oklch(0.92 0 265),oklch(0.34 0 265));
 --vibeui-input-003-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-input-003-weak:light-dark(oklch(0.58 0.19 25),oklch(0.72 0.16 25));
 --vibeui-input-003-fair:light-dark(oklch(0.72 0.16 75),oklch(0.8 0.14 75));

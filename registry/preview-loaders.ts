@@ -107,8 +107,6 @@ export async function loadPreviewMap(
       return (await import("@/registry/previews/component/filters")).PREVIEWS
     case "component/frame":
       return (await import("@/registry/previews/component/frame")).PREVIEWS
-    case "component/gantt":
-      return (await import("@/registry/previews/component/gantt")).PREVIEWS
     case "component/hover-card":
       return (await import("@/registry/previews/component/hover-card")).PREVIEWS
     case "component/icon-stack":
@@ -123,8 +121,6 @@ export async function loadPreviewMap(
       return (await import("@/registry/previews/component/input-otp")).PREVIEWS
     case "component/item":
       return (await import("@/registry/previews/component/item")).PREVIEWS
-    case "component/kanban":
-      return (await import("@/registry/previews/component/kanban")).PREVIEWS
     case "component/kbd":
       return (await import("@/registry/previews/component/kbd")).PREVIEWS
     case "component/label":
@@ -161,8 +157,6 @@ export async function loadPreviewMap(
       return (await import("@/registry/previews/component/select")).PREVIEWS
     case "component/separator":
       return (await import("@/registry/previews/component/separator")).PREVIEWS
-    case "component/sheet":
-      return (await import("@/registry/previews/component/sheet")).PREVIEWS
     case "component/sidebar":
       return (await import("@/registry/previews/component/sidebar")).PREVIEWS
     case "component/skeleton":

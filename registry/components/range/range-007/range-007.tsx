@@ -34,15 +34,15 @@ export type Range007Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="range-007"]){
 --vibeui-range-007-surface:transparent;
---vibeui-range-007-knob:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
---vibeui-range-007-shell:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.011 265));
---vibeui-range-007-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-range-007-knob:light-dark(oklch(1 0 0),oklch(0.26 0 265));
+--vibeui-range-007-shell:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
+--vibeui-range-007-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-range-007-muted:color-mix(in oklab,var(--vibeui-range-007-fg) 68%,transparent);
---vibeui-range-007-border:light-dark(oklch(0.88 0.008 265),oklch(0.39 0.012 265));
---vibeui-range-007-track:light-dark(oklch(0.93 0.006 265),oklch(0.33 0.012 265));
+--vibeui-range-007-border:light-dark(oklch(0.88 0 265),oklch(0.39 0 265));
+--vibeui-range-007-track:light-dark(oklch(0.93 0 265),oklch(0.33 0 265));
 --vibeui-range-007-accent:light-dark(oklch(0.55 0.18 45),oklch(0.79 0.14 45));
 --vibeui-range-007-soft:light-dark(oklch(0.55 0.18 45 / 12%),oklch(0.79 0.14 45 / 20%));
---vibeui-range-007-shadow:light-dark(oklch(0.2 0.02 265 / 25%),oklch(0 0 0 / 45%));
+--vibeui-range-007-shadow:light-dark(oklch(0.2 0 265 / 25%),oklch(0 0 0 / 45%));
 --vibeui-range-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-range-007-from:0%;
 --vibeui-range-007-to:100%;

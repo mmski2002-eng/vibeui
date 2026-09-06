@@ -18,15 +18,15 @@ export type Tooltip003Props = Omit<ComponentProps<"span">, "children"> & {
 // поэтому подсказка становится справочником, а не повтором подписи кнопки.
 const STYLES = `
 :where([data-vibeui-block="tooltip-003"]){
---vibeui-tooltip-003-bg:oklch(0.24 0.014 265);
---vibeui-tooltip-003-fg:light-dark(oklch(0.24 0.014 265),oklch(0.97 0.002 265));
+--vibeui-tooltip-003-bg:oklch(0.24 0 265);
+--vibeui-tooltip-003-fg:light-dark(oklch(0.24 0 265),oklch(0.97 0 265));
 --vibeui-tooltip-003-key:light-dark(oklch(0 0 0 / 10%),oklch(1 0 0 / 14%));
---vibeui-tooltip-003-keyfg:light-dark(oklch(0.32 0.014 265),oklch(0.88 0.008 265));
+--vibeui-tooltip-003-keyfg:light-dark(oklch(0.32 0 265),oklch(0.88 0 265));
 --vibeui-tooltip-003-accent:light-dark(oklch(0.6 0.16 265),oklch(0.74 0.15 265));
---vibeui-tooltip-003-face:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
---vibeui-tooltip-003-facehover:light-dark(oklch(0.97 0.003 265),oklch(0.3 0.012 265));
---vibeui-tooltip-003-line:light-dark(oklch(0.89 0.006 265),oklch(0.38 0.012 265));
---vibeui-tooltip-003-facefg:light-dark(oklch(0.26 0.014 265),oklch(0.92 0.006 265));
+--vibeui-tooltip-003-face:light-dark(oklch(1 0 0),oklch(0.25 0 265));
+--vibeui-tooltip-003-facehover:light-dark(oklch(0.97 0 265),oklch(0.3 0 265));
+--vibeui-tooltip-003-line:light-dark(oklch(0.89 0 265),oklch(0.38 0 265));
+--vibeui-tooltip-003-facefg:light-dark(oklch(0.26 0 265),oklch(0.92 0 265));
 --vibeui-tooltip-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

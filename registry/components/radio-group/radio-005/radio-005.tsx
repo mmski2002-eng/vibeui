@@ -23,13 +23,13 @@ export type Radio005Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="radio-005"]){
 --vibeui-radio-005-bg:transparent;
---vibeui-radio-005-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-radio-005-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-radio-005-muted:color-mix(in oklab,var(--vibeui-radio-005-fg) 68%,transparent);
---vibeui-radio-005-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
---vibeui-radio-005-rail:light-dark(oklch(0.96 0.003 265),oklch(0.29 0.008 265));
+--vibeui-radio-005-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
+--vibeui-radio-005-rail:light-dark(oklch(0.96 0 265),oklch(0.29 0 265));
 --vibeui-radio-005-accent:light-dark(oklch(0.55 0.19 262),oklch(0.68 0.17 262));
---vibeui-radio-005-on-accent:light-dark(oklch(1 0 0),oklch(0.16 0.02 262));
---vibeui-radio-005-shadow:light-dark(oklch(0.2 0.02 265 / 22%),oklch(0 0 0 / 45%));
+--vibeui-radio-005-on-accent:light-dark(oklch(1 0 0),oklch(0.16 0 262));
+--vibeui-radio-005-shadow:light-dark(oklch(0.2 0 265 / 22%),oklch(0 0 0 / 45%));
 --vibeui-radio-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-radio-005-count:3;
 }

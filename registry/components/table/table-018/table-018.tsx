@@ -34,15 +34,15 @@ export type Table018Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="table-018"]){
 --vibeui-table-018-bg:transparent;
---vibeui-table-018-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-table-018-fg:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
 --vibeui-table-018-muted:color-mix(in oklab,var(--vibeui-table-018-fg) 68%,transparent);
---vibeui-table-018-border:light-dark(oklch(0.92 0.006 265),oklch(0.36 0.011 265));
---vibeui-table-018-head:light-dark(oklch(0.5 0.02 265 / 5%),oklch(0.85 0.02 265 / 7%));
+--vibeui-table-018-border:light-dark(oklch(0.92 0 265),oklch(0.36 0 265));
+--vibeui-table-018-head:light-dark(oklch(0.5 0 265 / 5%),oklch(0.85 0 265 / 7%));
 --vibeui-table-018-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.16 262));
 --vibeui-table-018-ok:light-dark(oklch(0.55 0.14 155),oklch(0.75 0.13 155));
 --vibeui-table-018-warn:light-dark(oklch(0.68 0.15 75),oklch(0.82 0.14 75));
 --vibeui-table-018-error:light-dark(oklch(0.55 0.19 27),oklch(0.74 0.16 27));
---vibeui-table-018-off:light-dark(oklch(0.72 0.01 265),oklch(0.6 0.01 265));
+--vibeui-table-018-off:light-dark(oklch(0.72 0 265),oklch(0.6 0 265));
 --vibeui-table-018-pad:0.5625rem;
 --vibeui-table-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

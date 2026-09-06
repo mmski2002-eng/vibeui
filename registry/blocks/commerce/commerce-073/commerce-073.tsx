@@ -41,11 +41,11 @@ export type Commerce073Props = {
 const STYLES = `
 :where([data-vibeui-block="commerce-073"]){
 --vibeui-commerce-073-bg:transparent;
---vibeui-commerce-073-surface:light-dark(oklch(1 0 0),oklch(0.22 0.012 240));
---vibeui-commerce-073-fg:light-dark(oklch(0.21 0.012 240),oklch(0.94 0.006 240));
---vibeui-commerce-073-muted:light-dark(oklch(0.53 0.014 240),oklch(0.73 0.012 240));
---vibeui-commerce-073-border:light-dark(oklch(0.9 0.006 240),oklch(0.38 0.014 240));
---vibeui-commerce-073-soft:light-dark(oklch(0.972 0.004 240),oklch(0.27 0.014 240));
+--vibeui-commerce-073-surface:light-dark(oklch(1 0 0),oklch(0.22 0 240));
+--vibeui-commerce-073-fg:light-dark(oklch(0.21 0 240),oklch(0.94 0 240));
+--vibeui-commerce-073-muted:light-dark(oklch(0.53 0 240),oklch(0.73 0 240));
+--vibeui-commerce-073-border:light-dark(oklch(0.9 0 240),oklch(0.38 0 240));
+--vibeui-commerce-073-soft:light-dark(oklch(0.972 0 240),oklch(0.27 0 240));
 --vibeui-commerce-073-accent:light-dark(oklch(0.48 0.13 240),oklch(0.76 0.13 240));
 --vibeui-commerce-073-gone:light-dark(oklch(0.55 0.15 30),oklch(0.78 0.14 30));
 --vibeui-commerce-073-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

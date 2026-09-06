@@ -15,11 +15,11 @@ export type Switch014Props = Omit<ComponentProps<"input">, "type" | "size"> & {
 const STYLES = `
 :where([data-vibeui-block="switch-014"]){
 --vibeui-switch-014-bg:transparent;
---vibeui-switch-014-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-switch-014-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-switch-014-muted:color-mix(in oklab,var(--vibeui-switch-014-fg) 68%,transparent);
---vibeui-switch-014-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
---vibeui-switch-014-track:light-dark(oklch(0.72 0.02 265),oklch(0.46 0.018 265));
---vibeui-switch-014-thumb:light-dark(oklch(1 0 0),oklch(0.93 0.004 265));
+--vibeui-switch-014-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
+--vibeui-switch-014-track:light-dark(oklch(0.72 0 265),oklch(0.46 0 265));
+--vibeui-switch-014-thumb:light-dark(oklch(1 0 0),oklch(0.93 0 265));
 --vibeui-switch-014-accent:light-dark(oklch(0.55 0.16 155),oklch(0.62 0.15 155));
 --vibeui-switch-014-mark:light-dark(oklch(1 0 0 / 55%),oklch(1 0 0 / 45%));
 --vibeui-switch-014-mark-active:light-dark(oklch(1 0 0 / 95%),oklch(1 0 0 / 90%));
@@ -74,7 +74,7 @@ transform:rotate(45deg);
 position:absolute;left:0.1875rem;top:0.1875rem;
 width:1.5rem;height:1.5rem;border-radius:9999px;pointer-events:none;
 background:var(--vibeui-switch-014-thumb);
-box-shadow:0 1px 3px oklch(0.2 0.02 265 / 30%);
+box-shadow:0 1px 3px oklch(0.2 0 265 / 30%);
 transition:transform .2s cubic-bezier(.32,.72,0,1);
 }
 [data-vibeui-block="switch-014"] input:checked + [data-part="off-mark"] + [data-part="on-mark"] + [data-part="thumb"]{transform:translateX(1.625rem)}

@@ -18,9 +18,9 @@ export type Card010Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="card-010"]){
 --vibeui-card-010-bg:transparent;
---vibeui-card-010-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
---vibeui-card-010-base:light-dark(oklch(0.93 0.005 265),oklch(0.33 0.01 265));
---vibeui-card-010-shine:light-dark(oklch(0.97 0.003 265),oklch(0.41 0.012 265));
+--vibeui-card-010-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
+--vibeui-card-010-base:light-dark(oklch(0.93 0 265),oklch(0.33 0 265));
+--vibeui-card-010-shine:light-dark(oklch(0.97 0 265),oklch(0.41 0 265));
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
    next-themes и shadcn ставят класс .dark и его не объявляют. */

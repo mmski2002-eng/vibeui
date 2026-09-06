@@ -16,12 +16,12 @@ export type Tooltip012Props = Omit<ComponentProps<"span">, "children"> & {
 // а не один сплошной абзац, как в подсказке с длинным текстом.
 const STYLES = `
 :where([data-vibeui-block="tooltip-012"]){
---vibeui-tooltip-012-bg:oklch(0.24 0.014 265);
---vibeui-tooltip-012-fg:light-dark(oklch(0.24 0.014 265),oklch(0.97 0.002 265));
+--vibeui-tooltip-012-bg:oklch(0.24 0 265);
+--vibeui-tooltip-012-fg:light-dark(oklch(0.24 0 265),oklch(0.97 0 265));
 --vibeui-tooltip-012-muted:color-mix(in oklab,var(--vibeui-tooltip-012-fg) 68%,transparent);
---vibeui-tooltip-012-mark:light-dark(oklch(0.55 0.014 265),oklch(0.84 0.008 265));
---vibeui-tooltip-012-face:light-dark(oklch(0.95 0.004 265),oklch(0.3 0.012 265));
---vibeui-tooltip-012-line:light-dark(oklch(0.82 0.008 265),oklch(0.44 0.012 265));
+--vibeui-tooltip-012-mark:light-dark(oklch(0.55 0 265),oklch(0.84 0 265));
+--vibeui-tooltip-012-face:light-dark(oklch(0.95 0 265),oklch(0.3 0 265));
+--vibeui-tooltip-012-line:light-dark(oklch(0.82 0 265),oklch(0.44 0 265));
 --vibeui-tooltip-012-accent:light-dark(oklch(0.6 0.16 265),oklch(0.74 0.15 265));
 --vibeui-tooltip-012-width:13.5rem;
 --vibeui-tooltip-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

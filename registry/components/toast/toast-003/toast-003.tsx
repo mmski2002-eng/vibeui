@@ -39,12 +39,12 @@ export type Toast003Props = Omit<ComponentProps<"div">, "children"> & {
 // граница карточки светлее её подложки, а не темнее.
 const STYLES = `
 :where([data-vibeui-block="toast-003"]){
---vibeui-toast-003-bg:light-dark(oklch(1 0 0),oklch(0.26 0.014 265));
---vibeui-toast-003-fg:light-dark(oklch(0.22 0.014 265),oklch(0.95 0.004 265));
+--vibeui-toast-003-bg:light-dark(oklch(1 0 0),oklch(0.26 0 265));
+--vibeui-toast-003-fg:light-dark(oklch(0.22 0 265),oklch(0.95 0 265));
 --vibeui-toast-003-muted:color-mix(in oklab,var(--vibeui-toast-003-fg) 68%,transparent);
---vibeui-toast-003-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.014 265));
---vibeui-toast-003-hover:light-dark(oklch(0.95 0.004 265),oklch(0.34 0.014 265));
---vibeui-toast-003-shadow:light-dark(oklch(0.2 0.02 265 / 55%),oklch(0.1 0.02 265 / 70%));
+--vibeui-toast-003-border:light-dark(oklch(0.9 0 265),oklch(0.38 0 265));
+--vibeui-toast-003-hover:light-dark(oklch(0.95 0 265),oklch(0.34 0 265));
+--vibeui-toast-003-shadow:light-dark(oklch(0.2 0 265 / 55%),oklch(0.1 0 265 / 70%));
 --vibeui-toast-003-info:light-dark(oklch(0.54 0.16 265),oklch(0.74 0.14 265));
 --vibeui-toast-003-success:light-dark(oklch(0.58 0.15 152),oklch(0.75 0.15 152));
 --vibeui-toast-003-danger:light-dark(oklch(0.58 0.19 25),oklch(0.7 0.18 25));

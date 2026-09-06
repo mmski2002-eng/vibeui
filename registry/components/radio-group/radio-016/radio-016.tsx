@@ -45,14 +45,14 @@ export type Radio016Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="radio-016"]){
 --vibeui-radio-016-bg:transparent;
---vibeui-radio-016-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-radio-016-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-radio-016-muted:color-mix(in oklab,var(--vibeui-radio-016-fg) 68%,transparent);
---vibeui-radio-016-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
---vibeui-radio-016-ring:light-dark(oklch(0.74 0.012 265),oklch(0.5 0.014 265));
+--vibeui-radio-016-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
+--vibeui-radio-016-ring:light-dark(oklch(0.74 0 265),oklch(0.5 0 265));
 --vibeui-radio-016-accent:light-dark(oklch(0.55 0.18 290),oklch(0.76 0.15 290));
---vibeui-radio-016-on-accent:light-dark(oklch(1 0 0),oklch(0.2 0.03 290));
+--vibeui-radio-016-on-accent:light-dark(oklch(1 0 0),oklch(0.2 0 290));
 --vibeui-radio-016-tint:light-dark(oklch(0.55 0.18 290 / 7%),oklch(0.76 0.15 290 / 16%));
---vibeui-radio-016-dash:light-dark(oklch(0.78 0.006 265),oklch(0.48 0.01 265));
+--vibeui-radio-016-dash:light-dark(oklch(0.78 0 265),oklch(0.48 0 265));
 --vibeui-radio-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

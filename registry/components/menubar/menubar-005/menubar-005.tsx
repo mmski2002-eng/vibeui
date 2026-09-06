@@ -35,13 +35,13 @@ export type Menubar005Props = {
 const STYLES = `
 :where([data-vibeui-block="menubar-005"]){
 --vibeui-menubar-005-bg:transparent;
---vibeui-menubar-005-panel:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
---vibeui-menubar-005-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-menubar-005-panel:light-dark(oklch(1 0 0),oklch(0.25 0 265));
+--vibeui-menubar-005-fg:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
 --vibeui-menubar-005-muted:color-mix(in oklab,var(--vibeui-menubar-005-fg) 68%,transparent);
---vibeui-menubar-005-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
---vibeui-menubar-005-hover:light-dark(oklch(0.55 0.02 265 / 10%),oklch(0.88 0.02 265 / 14%));
+--vibeui-menubar-005-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-menubar-005-hover:light-dark(oklch(0.55 0 265 / 10%),oklch(0.88 0 265 / 14%));
 --vibeui-menubar-005-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
---vibeui-menubar-005-shadow:light-dark(oklch(0.2 0.03 265 / 45%),oklch(0 0 0 / 62%));
+--vibeui-menubar-005-shadow:light-dark(oklch(0.2 0 265 / 45%),oklch(0 0 0 / 62%));
 --vibeui-menubar-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

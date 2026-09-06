@@ -47,10 +47,10 @@ export type Datagrid018Props = Omit<ComponentProps<"section">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="datagrid-018"]){
 --vibeui-datagrid-018-bg:transparent;
---vibeui-datagrid-018-fg:light-dark(oklch(0.23 0.014 285),oklch(0.93 0.006 285));
+--vibeui-datagrid-018-fg:light-dark(oklch(0.23 0 285),oklch(0.93 0 285));
 --vibeui-datagrid-018-muted:color-mix(in oklab,var(--vibeui-datagrid-018-fg) 68%,transparent);
---vibeui-datagrid-018-border:light-dark(oklch(0.92 0.006 285),oklch(0.35 0.012 285));
---vibeui-datagrid-018-head:light-dark(oklch(0.975 0.003 285),oklch(0.27 0.012 285));
+--vibeui-datagrid-018-border:light-dark(oklch(0.92 0 285),oklch(0.35 0 285));
+--vibeui-datagrid-018-head:light-dark(oklch(0.975 0 285),oklch(0.27 0 285));
 --vibeui-datagrid-018-accent:light-dark(oklch(0.55 0.17 55),oklch(0.78 0.15 55));
 --vibeui-datagrid-018-mark:light-dark(oklch(0.92 0.13 95),oklch(0.52 0.11 95));
 --vibeui-datagrid-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

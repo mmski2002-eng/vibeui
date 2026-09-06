@@ -30,13 +30,13 @@ export type Input017Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="input-017"]){
 --vibeui-input-017-bg:transparent;
---vibeui-input-017-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-input-017-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-input-017-muted:color-mix(in oklab,var(--vibeui-input-017-fg) 68%,transparent);
---vibeui-input-017-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265));
---vibeui-input-017-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.011 265));
---vibeui-input-017-hover:light-dark(oklch(0.94 0.005 265),oklch(0.33 0.011 265));
+--vibeui-input-017-border:light-dark(oklch(0.9 0 265),oklch(0.38 0 265));
+--vibeui-input-017-field:light-dark(oklch(0.985 0 265),oklch(0.26 0 265));
+--vibeui-input-017-hover:light-dark(oklch(0.94 0 265),oklch(0.33 0 265));
 --vibeui-input-017-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
---vibeui-input-017-ring:light-dark(oklch(0.9 0.006 265),oklch(0.4 0.012 265));
+--vibeui-input-017-ring:light-dark(oklch(0.9 0 265),oklch(0.4 0 265));
 --vibeui-input-017-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

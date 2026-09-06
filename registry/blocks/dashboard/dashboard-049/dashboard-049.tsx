@@ -46,13 +46,13 @@ const STYLES = `
 :where([data-vibeui-block="dashboard-049"]){
 --vibeui-dashboard-049-bg:transparent;
 /* Журнал и врезка подробностей: подложка блока прозрачна, и рисовать их ею нечем. */
---vibeui-dashboard-049-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
---vibeui-dashboard-049-inset:light-dark(oklch(0.97 0.004 265),oklch(0.22 0.012 265));
---vibeui-dashboard-049-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-dashboard-049-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
---vibeui-dashboard-049-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-dashboard-049-card:light-dark(oklch(1 0 0),oklch(0.26 0 265));
+--vibeui-dashboard-049-inset:light-dark(oklch(0.97 0 265),oklch(0.22 0 265));
+--vibeui-dashboard-049-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
+--vibeui-dashboard-049-muted:light-dark(oklch(0.55 0 265),oklch(0.72 0 265));
+--vibeui-dashboard-049-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
 --vibeui-dashboard-049-accent:light-dark(oklch(0.5 0.12 265),oklch(0.76 0.11 265));
---vibeui-dashboard-049-soft:light-dark(oklch(0.96 0.018 265),oklch(0.32 0.04 265));
+--vibeui-dashboard-049-soft:light-dark(oklch(0.96 0 265),oklch(0.32 0.04 265));
 --vibeui-dashboard-049-del:light-dark(oklch(0.58 0.19 25),oklch(0.73 0.17 25));
 --vibeui-dashboard-049-add:light-dark(oklch(0.55 0.13 155),oklch(0.74 0.13 155));
 --vibeui-dashboard-049-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

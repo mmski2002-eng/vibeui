@@ -27,10 +27,10 @@ export type Hovercard001Props = Omit<ComponentProps<"span">, "children"> & {
 // тёмной темы у компонента нет, он следует за страницей.
 const STYLES = `
 :where([data-vibeui-block="hovercard-001"]){
---vibeui-hovercard-001-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
---vibeui-hovercard-001-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-hovercard-001-bg:light-dark(oklch(1 0 0),oklch(0.25 0 265));
+--vibeui-hovercard-001-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-hovercard-001-muted:color-mix(in oklab,var(--vibeui-hovercard-001-fg) 68%,transparent);
---vibeui-hovercard-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-hovercard-001-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
 --vibeui-hovercard-001-hue:250;
 --vibeui-hovercard-001-accent:light-dark(oklch(0.55 0.17 265),oklch(0.76 0.14 265));
 --vibeui-hovercard-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -39,7 +39,7 @@ const STYLES = `
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="hovercard-001"]{color-scheme:dark}
 [data-vibeui-block="hovercard-001"]{
-position:relative;display:inline-block;
+position:relative;display:inline-block;anchor-name:--vibeui-hovercard-001-anchor;
 font-family:var(--vibeui-hovercard-001-font);color:var(--vibeui-hovercard-001-fg);
 }
 [data-vibeui-block="hovercard-001"] [data-part="mention"]{
@@ -49,14 +49,20 @@ border-radius:0.25rem;
 [data-vibeui-block="hovercard-001"] [data-part="mention"]:focus-visible{outline:2px solid var(--vibeui-hovercard-001-accent);outline-offset:2px}
 /* Раскрытие и по фокусу: с клавиатуры карточку иначе не увидеть. */
 [data-vibeui-block="hovercard-001"] [data-part="card"]{
-position:absolute;left:0;top:calc(100% + 0.5rem);z-index:20;
+/* fixed с привязкой к якорю: absolute режет рамка карточки каталога,
+   а фиксированный слой её не замечает. */
+position:fixed;inset:auto;position-anchor:--vibeui-hovercard-001-anchor;
+top:anchor(bottom);left:anchor(left);margin-top:0.5rem;z-index:20;
 display:flex;flex-direction:column;gap:0.5rem;
 width:15rem;box-sizing:border-box;padding:0.75rem;
 border:1px solid var(--vibeui-hovercard-001-border);border-radius:0.875rem;
 background:var(--vibeui-hovercard-001-bg);
-box-shadow:0 20px 44px -26px oklch(0.2 0.02 265 / 55%);
+box-shadow:0 20px 44px -26px oklch(0.2 0 265 / 55%);
 opacity:0;visibility:hidden;translate:0 -0.25rem;
 transition:opacity .14s ease,translate .14s ease,visibility .14s;
+}
+@supports not (anchor-name: --a){
+[data-vibeui-block="hovercard-001"] [data-part="card"]{position:absolute;inset:auto;left:0;top:calc(100% + 0.5rem);margin-top:0}
 }
 [data-vibeui-block="hovercard-001"]:hover [data-part="card"],
 [data-vibeui-block="hovercard-001"]:focus-within [data-part="card"]{

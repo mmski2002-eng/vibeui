@@ -35,13 +35,13 @@ export type Popover013Props = Omit<
 // Панель серверная — клавиши не меняются, состояния здесь нет вовсе.
 const STYLES = `
 :where([data-vibeui-block="popover-013"]){
---vibeui-popover-013-surface:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
---vibeui-popover-013-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.006 265));
+--vibeui-popover-013-surface:light-dark(oklch(1 0 0),oklch(0.22 0 265));
+--vibeui-popover-013-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-popover-013-muted:color-mix(in oklab,var(--vibeui-popover-013-fg) 64%,transparent);
---vibeui-popover-013-border:light-dark(oklch(0.89 0.006 265),oklch(0.36 0.012 265));
---vibeui-popover-013-key:light-dark(oklch(0.97 0.003 265),oklch(1 0 0 / 8%));
+--vibeui-popover-013-border:light-dark(oklch(0.89 0 265),oklch(0.36 0 265));
+--vibeui-popover-013-key:light-dark(oklch(0.97 0 265),oklch(1 0 0 / 8%));
 --vibeui-popover-013-accent:light-dark(oklch(0.5 0.16 265),oklch(0.78 0.12 265));
---vibeui-popover-013-shadow:light-dark(oklch(0.2 0.02 265 / 24%),oklch(0 0 0 / 60%));
+--vibeui-popover-013-shadow:light-dark(oklch(0.2 0 265 / 24%),oklch(0 0 0 / 60%));
 --vibeui-popover-013-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-popover-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 anchor-name:--vibeui-popover-013-anchor;
@@ -68,12 +68,11 @@ width:19rem;max-width:calc(100vw - 1.5rem);
 border:1px solid var(--vibeui-popover-013-border);border-radius:0.75rem;
 background:var(--vibeui-popover-013-surface);color:var(--vibeui-popover-013-fg);
 box-shadow:0 18px 44px -26px var(--vibeui-popover-013-shadow);
-position-anchor:--vibeui-popover-013-anchor;
+position-anchor:--vibeui-popover-013-anchor;inset:auto;
 top:anchor(bottom);left:anchor(left);margin-top:0.5rem;
 }
 @supports not (anchor-name: --a){
-[data-vibeui-block="popover-013"]{position:relative}
-[data-vibeui-block="popover-013"] [popover]{position:absolute;top:calc(100% + 0.5rem);left:0;inset:auto}
+[data-vibeui-block="popover-013"] [popover]{position:fixed;inset:0;margin:auto}
 }
 [data-vibeui-block="popover-013"] [data-part="head"]{
 margin:0 0 0.5rem;font-size:0.875rem;font-weight:650;
@@ -111,8 +110,10 @@ font-size:0.75rem;line-height:1.4;color:var(--vibeui-popover-013-muted);
 }
 /* Раскрытая панель на месте: атрибут popover прячет её правилом браузера,
    а это правило той же специфичности его переопределяет и возвращает панель
-   в поток. Так её показывают на витрине и в документации, без верхнего слоя. */
-[data-vibeui-block="popover-013"][data-open] [popover]{
+   в поток. Так её показывают на витрине и в документации, без верхнего слоя.
+   Только пока popover закрыт: у открытого положение задаёт верхний слой,
+   и static отправил бы панель в левый верхний угол экрана. */
+[data-vibeui-block="popover-013"][data-open] [popover]:not(:popover-open){
 display:block;position:static;inset:auto;margin:0.5rem 0 0;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="popover-013"] *{animation:none!important;transition:none!important}}
@@ -207,11 +208,7 @@ export function Popover013({
           {label}
         </button>
 
-        <div
-          id="vibeui-popover-013-panel"
-          popover="auto"
-          aria-label={title}
-        >
+        <div id="vibeui-popover-013-panel" popover="auto" aria-label={title}>
           <p data-part="head">{title}</p>
 
           {groups.map((group) => (

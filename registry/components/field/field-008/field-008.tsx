@@ -28,13 +28,13 @@ export type Field008Props = Omit<
 // словом: «проверяем», «занято», «свободно». Значок никогда не работает один.
 const STYLES = `
 :where([data-vibeui-block="field-008"]){
---vibeui-field-008-bg:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
+--vibeui-field-008-bg:light-dark(oklch(1 0 0),oklch(0.24 0 265));
 --vibeui-field-008-surface:transparent;
---vibeui-field-008-fill:light-dark(oklch(0.975 0.004 265),oklch(0.29 0.011 265));
---vibeui-field-008-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-field-008-fill:light-dark(oklch(0.975 0 265),oklch(0.29 0 265));
+--vibeui-field-008-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-field-008-muted:color-mix(in oklab,var(--vibeui-field-008-fg) 68%,transparent);
---vibeui-field-008-border:light-dark(oklch(0.88 0.008 265),oklch(0.4 0.012 265));
---vibeui-field-008-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.011 265));
+--vibeui-field-008-border:light-dark(oklch(0.88 0 265),oklch(0.4 0 265));
+--vibeui-field-008-shell:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-field-008-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
 --vibeui-field-008-ok:light-dark(oklch(0.5 0.13 155),oklch(0.75 0.13 155));
 --vibeui-field-008-busy:light-dark(oklch(0.56 0.19 28),oklch(0.74 0.16 28));

@@ -13,7 +13,7 @@ export type Browser001Props = Omit<ComponentProps<"section">, "children"> & {
 // skeleton-полосами с бегущим шиммером: контент ещё не пришёл.
 const STYLES = `
 :where([data-vibeui-block="browser-001"]){
---vibeui-browser-001-chrome:light-dark(oklch(0.97 0.003 265),oklch(0.24 0.008 265));
+--vibeui-browser-001-chrome:light-dark(oklch(0.97 0 265),oklch(0.24 0 265));
 --vibeui-browser-001-page:light-dark(oklch(1 0 0),oklch(0.205 0 0));
 --vibeui-browser-001-fg:light-dark(oklch(0.205 0 0),oklch(0.95 0 0));
 --vibeui-browser-001-muted:color-mix(in oklab,var(--vibeui-browser-001-fg) 60%,transparent);

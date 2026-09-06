@@ -23,12 +23,12 @@ export type Toggle001Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="toggle-001"]){
 --vibeui-toggle-001-bg:transparent;
---vibeui-toggle-001-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-toggle-001-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-toggle-001-muted:color-mix(in oklab,var(--vibeui-toggle-001-fg) 68%,transparent);
---vibeui-toggle-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
---vibeui-toggle-001-hover:light-dark(oklch(0.97 0.004 265),oklch(0.29 0.01 265));
---vibeui-toggle-001-accent:light-dark(oklch(0.5 0.02 265),oklch(0.82 0.02 265));
---vibeui-toggle-001-on:light-dark(oklch(0.99 0 0),oklch(0.2 0.014 265));
+--vibeui-toggle-001-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
+--vibeui-toggle-001-hover:light-dark(oklch(0.97 0 265),oklch(0.29 0 265));
+--vibeui-toggle-001-accent:light-dark(oklch(0.5 0 265),oklch(0.82 0 265));
+--vibeui-toggle-001-on:light-dark(oklch(0.99 0 0),oklch(0.2 0 265));
 --vibeui-toggle-001-radius:0.5rem;
 --vibeui-toggle-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

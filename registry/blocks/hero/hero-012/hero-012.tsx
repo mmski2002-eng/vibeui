@@ -24,12 +24,12 @@ export type Hero012Props = {
 const STYLES = `
 :where([data-vibeui-block="hero-012"]){
 --vibeui-hero-012-bg:transparent;
---vibeui-hero-012-fg:light-dark(oklch(0.2 0.012 265),oklch(0.96 0.004 265));
---vibeui-hero-012-muted:light-dark(oklch(0.51 0.012 265),oklch(0.72 0.012 265));
---vibeui-hero-012-card:light-dark(oklch(1 0 0),oklch(0.235 0.012 265));
---vibeui-hero-012-line:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.011 265));
+--vibeui-hero-012-fg:light-dark(oklch(0.2 0 265),oklch(0.96 0 265));
+--vibeui-hero-012-muted:light-dark(oklch(0.51 0 265),oklch(0.72 0 265));
+--vibeui-hero-012-card:light-dark(oklch(1 0 0),oklch(0.235 0 265));
+--vibeui-hero-012-line:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
 --vibeui-hero-012-accent:light-dark(oklch(0.55 0.2 300),oklch(0.73 0.17 300));
---vibeui-hero-012-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0.03 300));
+--vibeui-hero-012-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0 300));
 --vibeui-hero-012-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-hero-012-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 container-type:inline-size;

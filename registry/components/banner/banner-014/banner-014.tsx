@@ -25,10 +25,10 @@ export type Banner014Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="banner-014"]){
 --vibeui-banner-014-bg:transparent;
---vibeui-banner-014-fg:light-dark(oklch(0.23 0.012 265),oklch(0.94 0.005 265));
+--vibeui-banner-014-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-banner-014-muted:color-mix(in oklab,var(--vibeui-banner-014-fg) 66%,transparent);
---vibeui-banner-014-surface:light-dark(oklch(0.96 0.008 245),oklch(0.27 0.018 245));
---vibeui-banner-014-border:light-dark(oklch(0.87 0.02 245),oklch(0.4 0.026 245));
+--vibeui-banner-014-surface:light-dark(oklch(0.96 0 245),oklch(0.27 0 245));
+--vibeui-banner-014-border:light-dark(oklch(0.87 0 245),oklch(0.4 0 245));
 --vibeui-banner-014-accent:light-dark(oklch(0.45 0.11 245),oklch(0.82 0.1 245));
 /* Акцентом набрана версия: светлота ограничивается по обе стороны, чтобы
    цвет проекта не исчез ни на светлой подложке, ни на тёмной. */

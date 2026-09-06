@@ -25,11 +25,11 @@ export type Toggle002Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="toggle-002"]){
 --vibeui-toggle-002-bg:transparent;
---vibeui-toggle-002-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-toggle-002-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-toggle-002-muted:color-mix(in oklab,var(--vibeui-toggle-002-fg) 68%,transparent);
---vibeui-toggle-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-toggle-002-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
 --vibeui-toggle-002-accent:light-dark(oklch(0.56 0.16 255),oklch(0.76 0.13 255));
---vibeui-toggle-002-soft:light-dark(oklch(0.95 0.03 255),oklch(0.31 0.05 255));
+--vibeui-toggle-002-soft:light-dark(oklch(0.95 0 255),oklch(0.31 0.05 255));
 --vibeui-toggle-002-radius:0.625rem;
 --vibeui-toggle-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

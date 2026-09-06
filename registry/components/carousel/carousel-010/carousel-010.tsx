@@ -35,11 +35,11 @@ export type Carousel010Props = Omit<ComponentProps<"section">, "children"> & {
 // названия темнеют вместе со страницей, своей тёмной темы компонент не носит.
 const STYLES = `
 :where([data-vibeui-block="carousel-010"]){
---vibeui-carousel-010-bg:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
---vibeui-carousel-010-hover:light-dark(oklch(0.96 0.004 265),oklch(0.3 0.014 265));
---vibeui-carousel-010-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-carousel-010-bg:light-dark(oklch(1 0 0),oklch(0.21 0 265));
+--vibeui-carousel-010-hover:light-dark(oklch(0.96 0 265),oklch(0.3 0 265));
+--vibeui-carousel-010-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-carousel-010-muted:color-mix(in oklab,var(--vibeui-carousel-010-fg) 68%,transparent);
---vibeui-carousel-010-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-carousel-010-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
 --vibeui-carousel-010-accent:light-dark(oklch(0.55 0.19 25),oklch(0.66 0.19 25));
 --vibeui-carousel-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

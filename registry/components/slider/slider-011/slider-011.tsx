@@ -35,12 +35,12 @@ export type Slider011Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="slider-011"]){
 --vibeui-slider-011-bg:transparent;
---vibeui-slider-011-surface:light-dark(oklch(1 0 0),oklch(0.28 0.012 265));
---vibeui-slider-011-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-slider-011-surface:light-dark(oklch(1 0 0),oklch(0.28 0 265));
+--vibeui-slider-011-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-slider-011-muted:color-mix(in oklab,var(--vibeui-slider-011-fg) 68%,transparent);
---vibeui-slider-011-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265));
---vibeui-slider-011-field:light-dark(oklch(0.985 0.002 265),oklch(0.32 0.01 265));
---vibeui-slider-011-track:light-dark(oklch(0.92 0.006 265),oklch(0.42 0.012 265));
+--vibeui-slider-011-border:light-dark(oklch(0.9 0 265),oklch(0.38 0 265));
+--vibeui-slider-011-field:light-dark(oklch(0.985 0 265),oklch(0.32 0 265));
+--vibeui-slider-011-track:light-dark(oklch(0.92 0 265),oklch(0.42 0 265));
 --vibeui-slider-011-accent:light-dark(oklch(0.56 0.17 152),oklch(0.74 0.15 152));
 --vibeui-slider-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-slider-011-fill:30%;
@@ -77,7 +77,7 @@ background:linear-gradient(to right,var(--vibeui-slider-011-accent) var(--vibeui
 appearance:none;margin-top:-0.3125rem;
 width:1rem;height:1rem;border-radius:9999px;
 background:var(--vibeui-slider-011-accent);border:3px solid var(--vibeui-slider-011-surface);
-box-shadow:0 1px 4px oklch(0.2 0.02 265 / 30%);
+box-shadow:0 1px 4px oklch(0.2 0 265 / 30%);
 }
 [data-vibeui-block="slider-011"] input[type="range"]::-moz-range-thumb{
 width:1rem;height:1rem;border-radius:9999px;box-sizing:border-box;

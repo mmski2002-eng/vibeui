@@ -25,16 +25,16 @@ export type Buttongroup003Props = Omit<ComponentProps<"div">, "children"> & {
 // popover остаётся карточкой по центру экрана, и это рабочий вид.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-003"]){
---vibeui-buttongroup-003-surface:light-dark(oklch(1 0 0),oklch(0.23 0.014 265));
---vibeui-buttongroup-003-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.006 265));
+--vibeui-buttongroup-003-surface:light-dark(oklch(1 0 0),oklch(0.23 0 265));
+--vibeui-buttongroup-003-fg:light-dark(oklch(0.26 0 265),oklch(0.94 0 265));
 --vibeui-buttongroup-003-muted:color-mix(in oklab,var(--vibeui-buttongroup-003-fg) 68%,transparent);
---vibeui-buttongroup-003-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
---vibeui-buttongroup-003-hover:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.012 265));
+--vibeui-buttongroup-003-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
+--vibeui-buttongroup-003-hover:light-dark(oklch(0.96 0 265),oklch(0.31 0 265));
 /* Подпись на заливке почти белая, поэтому в тёмной ветке акцент не светлее
    светлой: выше L≈0.57 контраст текста падает ниже 4.5:1. */
 --vibeui-buttongroup-003-accent:light-dark(oklch(0.52 0.17 265),oklch(0.56 0.17 265));
 --vibeui-buttongroup-003-accent-dark:light-dark(oklch(0.45 0.16 265),oklch(0.5 0.17 265));
---vibeui-buttongroup-003-on-accent:oklch(0.99 0.005 265);
+--vibeui-buttongroup-003-on-accent:oklch(0.99 0 265);
 --vibeui-buttongroup-003-radius:0.625rem;
 --vibeui-buttongroup-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -89,7 +89,7 @@ border:1px solid var(--vibeui-buttongroup-003-border);
 border-radius:var(--vibeui-buttongroup-003-radius);
 background:var(--vibeui-buttongroup-003-surface);
 font-family:var(--vibeui-buttongroup-003-font);
-box-shadow:0 18px 40px -22px oklch(0.2 0.02 265 / 60%);
+box-shadow:0 18px 40px -22px oklch(0.2 0 265 / 60%);
 }
 [data-vibeui-block="buttongroup-003"] [data-part="menu"]:not(:popover-open){display:none}
 [data-vibeui-block="buttongroup-003"] [data-part="menu"] button{

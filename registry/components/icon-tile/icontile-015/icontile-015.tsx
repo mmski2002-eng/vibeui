@@ -127,11 +127,11 @@ const ICONS: Record<PaymentMethodValue, () => ReactElement> = {
 const STYLES = `
 :where([data-vibeui-block="icontile-015"]){
 --vibeui-icontile-015-hue:262;
---vibeui-icontile-015-fg:light-dark(oklch(0.26 0.014 265),oklch(0.94 0.006 265));
+--vibeui-icontile-015-fg:light-dark(oklch(0.26 0 265),oklch(0.94 0 265));
 --vibeui-icontile-015-muted:color-mix(in oklab,var(--vibeui-icontile-015-fg) 68%,transparent);
---vibeui-icontile-015-border:light-dark(oklch(0.88 0.006 265),oklch(0.35 0.011 265));
---vibeui-icontile-015-surface:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
---vibeui-icontile-015-chip:light-dark(oklch(0.94 0.01 265),oklch(0.32 0.012 265));
+--vibeui-icontile-015-border:light-dark(oklch(0.88 0 265),oklch(0.35 0 265));
+--vibeui-icontile-015-surface:light-dark(oklch(1 0 0),oklch(0.25 0 265));
+--vibeui-icontile-015-chip:light-dark(oklch(0.94 0 265),oklch(0.32 0 265));
 --vibeui-icontile-015-accent:light-dark(oklch(0.55 0.18 var(--vibeui-icontile-015-hue)),oklch(0.74 0.15 var(--vibeui-icontile-015-hue)));
 --vibeui-icontile-015-selected:light-dark(oklch(0.97 0.014 var(--vibeui-icontile-015-hue)),oklch(0.31 0.05 var(--vibeui-icontile-015-hue)));
 --vibeui-icontile-015-selected-chip:light-dark(oklch(0.9 0.03 var(--vibeui-icontile-015-hue)),oklch(0.42 0.07 var(--vibeui-icontile-015-hue)));

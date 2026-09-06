@@ -35,13 +35,13 @@ export type Api001Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="api-001"]){
 --vibeui-api-001-frame:light-dark(oklch(0.968 0 0),oklch(0.225 0 0));
---vibeui-api-001-card:light-dark(oklch(0.15 0.01 260),oklch(0.13 0.012 260));
---vibeui-api-001-fg:light-dark(oklch(0.94 0.005 260),oklch(0.94 0.005 260));
+--vibeui-api-001-card:light-dark(oklch(0.15 0 260),oklch(0.13 0 260));
+--vibeui-api-001-fg:light-dark(oklch(0.94 0 260),oklch(0.94 0 260));
 --vibeui-api-001-muted:color-mix(in oklab,var(--vibeui-api-001-fg) 52%,transparent);
 --vibeui-api-001-border:light-dark(oklch(0.92 0 0),oklch(0.275 0 0));
 --vibeui-api-001-accent:light-dark(oklch(0.62 0.16 255),oklch(0.72 0.14 255));
 --vibeui-api-001-info:oklch(0.66 0.15 255);
---vibeui-api-001-debug:oklch(0.62 0.02 260);
+--vibeui-api-001-debug:oklch(0.62 0 260);
 --vibeui-api-001-warn:oklch(0.75 0.16 70);
 --vibeui-api-001-error:oklch(0.62 0.21 25);
 --vibeui-api-001-ok:oklch(0.72 0.16 150);

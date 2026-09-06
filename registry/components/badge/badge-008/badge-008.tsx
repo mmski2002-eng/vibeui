@@ -13,11 +13,11 @@ export type Badge008Props = Omit<ComponentProps<"span">, "children"> & {
 // одним цветом их путают.
 const STYLES = `
 :where([data-vibeui-block="badge-008"]){
---vibeui-badge-008-surface:light-dark(oklch(1 0 0),oklch(0.24 0.01 265));
---vibeui-badge-008-bg:light-dark(oklch(0.96 0.004 265),oklch(0.27 0.009 265));
---vibeui-badge-008-fg:light-dark(oklch(0.36 0.014 265),oklch(0.9 0.008 265));
---vibeui-badge-008-border:light-dark(oklch(0.89 0.006 265),oklch(0.39 0.011 265));
---vibeui-badge-008-channel:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
+--vibeui-badge-008-surface:light-dark(oklch(1 0 0),oklch(0.24 0 265));
+--vibeui-badge-008-bg:light-dark(oklch(0.96 0 265),oklch(0.27 0 265));
+--vibeui-badge-008-fg:light-dark(oklch(0.36 0 265),oklch(0.9 0 265));
+--vibeui-badge-008-border:light-dark(oklch(0.89 0 265),oklch(0.39 0 265));
+--vibeui-badge-008-channel:light-dark(oklch(0.55 0 265),oklch(0.72 0 265));
 --vibeui-badge-008-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-badge-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

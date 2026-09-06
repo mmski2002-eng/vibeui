@@ -31,12 +31,12 @@ export type Autocomplete004Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="autocomplete-004"]){
 --vibeui-autocomplete-004-bg:transparent;
---vibeui-autocomplete-004-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-autocomplete-004-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-autocomplete-004-muted:color-mix(in oklab,var(--vibeui-autocomplete-004-fg) 68%,transparent);
---vibeui-autocomplete-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
---vibeui-autocomplete-004-active:light-dark(oklch(0.95 0.02 265),oklch(0.33 0.028 265));
+--vibeui-autocomplete-004-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-autocomplete-004-active:light-dark(oklch(0.95 0 265),oklch(0.33 0 265));
 --vibeui-autocomplete-004-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
---vibeui-autocomplete-004-shadow:light-dark(oklch(0.2 0.02 265 / 45%),oklch(0.02 0.01 265 / 70%));
+--vibeui-autocomplete-004-shadow:light-dark(oklch(0.2 0 265 / 45%),oklch(0.02 0 265 / 70%));
 --vibeui-autocomplete-004-radius:0.75rem;
 --vibeui-autocomplete-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -91,6 +91,18 @@ min-height:2.25rem;padding:0 0.5rem;border-radius:0.5rem;
 font-size:0.875rem;cursor:pointer;
 }
 [data-vibeui-block="autocomplete-004"] [data-part="option"][data-active="true"]{background:var(--vibeui-autocomplete-004-active)}
+/* Выбранная команда остаётся отмеченной: без следа нажатие выглядит как
+   отказ — панель ведь не закрывается, её закрывает приложение. */
+[data-vibeui-block="autocomplete-004"] [data-part="option"][data-chosen="true"]{color:var(--vibeui-autocomplete-004-accent);font-weight:650}
+[data-vibeui-block="autocomplete-004"] [data-part="mark"]{
+flex:none;margin-left:0.5rem;font-size:0.8125rem;color:var(--vibeui-autocomplete-004-accent);
+}
+[data-vibeui-block="autocomplete-004"] [data-part="chosen"]{
+margin:0;padding:0.5rem 0.875rem;
+border-top:1px solid var(--vibeui-autocomplete-004-border);
+font-size:0.75rem;color:var(--vibeui-autocomplete-004-muted);
+overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
 [data-vibeui-block="autocomplete-004"] [data-part="hint"]{font-size:0.75rem;color:var(--vibeui-autocomplete-004-muted)}
 [data-vibeui-block="autocomplete-004"] [data-part="empty"]{padding:1.25rem 0.75rem;text-align:center;font-size:0.875rem;color:var(--vibeui-autocomplete-004-muted)}
 @container (max-width: 20rem){
@@ -103,13 +115,13 @@ font-size:0.875rem;cursor:pointer;
 `
 
 const DEFAULT_COMMANDS: Autocomplete004Command[] = [
-  { label: "Создать проект", group: "Действия", hint: "⌘ N" },
+  { label: "Создать проект", group: "Действия", hint: "Ctrl+N" },
   { label: "Пригласить в команду", group: "Действия" },
-  { label: "Загрузить файлы", group: "Действия", hint: "⌘ U" },
+  { label: "Загрузить файлы", group: "Действия", hint: "Ctrl+U" },
   { label: "Оплата и счета", group: "Настройки" },
   { label: "Уведомления", group: "Настройки" },
   { label: "Ключи доступа", group: "Настройки" },
-  { label: "Документация", group: "Помощь", hint: "⌘ ?" },
+  { label: "Документация", group: "Помощь", hint: "Ctrl+?" },
   { label: "Написать в поддержку", group: "Помощь" },
 ]
 
@@ -170,6 +182,14 @@ export function Autocomplete004({
   const id = useId()
   const [query, setQuery] = useState("")
   const [active, setActive] = useState(0)
+  // Выбранная команда: сама панель ничего не выполняет, но нажатие обязано
+  // оставлять след — иначе строка выглядит нерабочей.
+  const [chosen, setChosen] = useState<string | null>(null)
+
+  const choose = (label: string) => {
+    setChosen(label)
+    onSelect?.(label)
+  }
 
   const matches = useMemo(() => {
     const needle = query.trim().toLowerCase()
@@ -191,6 +211,15 @@ export function Autocomplete004({
   } as CSSProperties
 
   const onKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    // Esc нарисован на панели подсказкой, значит обязан работать: он
+    // возвращает строку к пустому запросу.
+    if (event.key === "Escape") {
+      event.preventDefault()
+      setQuery("")
+      setActive(0)
+      return
+    }
+
     if (!matches.length) return
     if (event.key === "ArrowDown") {
       event.preventDefault()
@@ -200,7 +229,7 @@ export function Autocomplete004({
       setActive((active - 1 + matches.length) % matches.length)
     } else if (event.key === "Enter") {
       event.preventDefault()
-      onSelect?.(matches[active].label)
+      choose(matches[active].label)
     }
   }
 
@@ -265,11 +294,12 @@ export function Autocomplete004({
                 role="option"
                 data-part="option"
                 data-active={index === active}
+                data-chosen={command.label === chosen}
                 aria-selected={index === active}
                 onMouseEnter={() => setActive(index)}
                 onMouseDown={(event) => {
                   event.preventDefault()
-                  onSelect?.(command.label)
+                  choose(command.label)
                 }}
               >
                 <span data-part="label">
@@ -277,6 +307,11 @@ export function Autocomplete004({
                 </span>
                 {command.hint ? (
                   <span data-part="hint">{command.hint}</span>
+                ) : null}
+                {command.label === chosen ? (
+                  <span data-part="mark" aria-hidden="true">
+                    ✓
+                  </span>
                 ) : null}
               </span>
             </li>
@@ -287,6 +322,11 @@ export function Autocomplete004({
             </li>
           ) : null}
         </ul>
+        {chosen ? (
+          <p data-part="chosen" role="status">
+            ✓ {chosen}
+          </p>
+        ) : null}
       </div>
     </>
   )

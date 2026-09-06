@@ -29,12 +29,12 @@ export type Otp002Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="otp-002"]){
 --vibeui-otp-002-bg:transparent;
---vibeui-otp-002-surface:light-dark(oklch(1 0 0),oklch(0.3 0.014 265));
---vibeui-otp-002-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
---vibeui-otp-002-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-otp-002-surface:light-dark(oklch(1 0 0),oklch(0.3 0 265));
+--vibeui-otp-002-shell:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
+--vibeui-otp-002-fg:light-dark(oklch(0.21 0 265),oklch(0.94 0 265));
 --vibeui-otp-002-muted:color-mix(in oklab,var(--vibeui-otp-002-fg) 68%,transparent);
---vibeui-otp-002-field:light-dark(oklch(0.98 0.002 265),oklch(0.25 0.014 265));
---vibeui-otp-002-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.014 265));
+--vibeui-otp-002-field:light-dark(oklch(0.98 0 265),oklch(0.25 0 265));
+--vibeui-otp-002-border:light-dark(oklch(0.87 0 265),oklch(0.42 0 265));
 --vibeui-otp-002-accent:light-dark(oklch(0.52 0.18 285),oklch(0.74 0.16 285));
 --vibeui-otp-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

@@ -41,10 +41,10 @@ export type Dashboard026Props = {
 const STYLES = `
 :where([data-vibeui-block="dashboard-026"]){
 --vibeui-dashboard-026-bg:transparent;
---vibeui-dashboard-026-panel:light-dark(oklch(0.985 0.003 265),oklch(0.27 0.012 265));
---vibeui-dashboard-026-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-dashboard-026-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
---vibeui-dashboard-026-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.011 265));
+--vibeui-dashboard-026-panel:light-dark(oklch(0.985 0 265),oklch(0.27 0 265));
+--vibeui-dashboard-026-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
+--vibeui-dashboard-026-muted:light-dark(oklch(0.55 0 265),oklch(0.71 0 265));
+--vibeui-dashboard-026-border:light-dark(oklch(0.91 0 265),oklch(0.35 0 265));
 --vibeui-dashboard-026-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
 --vibeui-dashboard-026-soft:light-dark(color-mix(in oklab,var(--vibeui-dashboard-026-accent) 20%,white),color-mix(in oklab,var(--vibeui-dashboard-026-accent) 32%,black));
 --vibeui-dashboard-026-up:light-dark(oklch(0.53 0.14 152),oklch(0.76 0.14 152));

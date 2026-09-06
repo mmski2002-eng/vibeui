@@ -33,11 +33,11 @@ export type Date005Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="date-005"]){
 --vibeui-date-005-surface:transparent;
---vibeui-date-005-field:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
---vibeui-date-005-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
---vibeui-date-005-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-date-005-field:light-dark(oklch(1 0 0),oklch(0.26 0 265));
+--vibeui-date-005-shell:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-date-005-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-date-005-muted:color-mix(in oklab,var(--vibeui-date-005-fg) 68%,transparent);
---vibeui-date-005-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
+--vibeui-date-005-border:light-dark(oklch(0.88 0 265),oklch(0.42 0 265));
 --vibeui-date-005-accent:light-dark(oklch(0.54 0.15 165),oklch(0.78 0.13 165));
 --vibeui-date-005-soft:color-mix(in oklch,var(--vibeui-date-005-accent) 14%,transparent);
 --vibeui-date-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

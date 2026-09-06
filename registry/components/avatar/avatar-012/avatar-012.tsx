@@ -22,10 +22,10 @@ const STYLES = `
 --vibeui-avatar-012-size:2.5rem;
 --vibeui-avatar-012-overlap:0.5rem;
 --vibeui-avatar-012-bg:transparent;
---vibeui-avatar-012-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-avatar-012-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-avatar-012-muted:color-mix(in oklab,var(--vibeui-avatar-012-fg) 68%,transparent);
---vibeui-avatar-012-border:light-dark(oklch(0.9 0.006 265),oklch(0.31 0.01 265));
---vibeui-avatar-012-ring:light-dark(oklch(1 0 0),oklch(0.19 0.01 265));
+--vibeui-avatar-012-border:light-dark(oklch(0.9 0 265),oklch(0.31 0 265));
+--vibeui-avatar-012-ring:light-dark(oklch(1 0 0),oklch(0.19 0 265));
 --vibeui-avatar-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="avatar-012"]{

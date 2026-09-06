@@ -87,8 +87,8 @@ export const PREVIEWS = {
   "codeblock-027": dynamic(() =>
     import("@/registry/components/code-block/codeblock-027/codeblock-027").then((module) => module.Codeblock027),
   ),
-  "code-001": dynamic(() =>
-    import("@/registry/components/code-block/code-001/code-001").then((module) => module.Code001),
+  "codeblock-031": dynamic(() =>
+    import("@/registry/components/code-block/codeblock-031/codeblock-031").then((module) => module.Codeblock031),
   ),
   "codeblock-028": dynamic(() =>
     import("@/registry/components/code-block/codeblock-028/codeblock-028").then((module) => module.Codeblock028),

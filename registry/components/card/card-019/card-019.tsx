@@ -23,13 +23,13 @@ export type Card019Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="card-019"]){
 --vibeui-card-019-bg:transparent;
---vibeui-card-019-surface:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
---vibeui-card-019-sheet:light-dark(oklch(0.985 0.003 265),oklch(0.3 0.01 265));
---vibeui-card-019-ink:light-dark(oklch(0.18 0.02 265),oklch(0.98 0.005 265));
---vibeui-card-019-on-accent:light-dark(oklch(0.99 0 0),oklch(0.17 0.015 262));
---vibeui-card-019-fg:light-dark(oklch(0.22 0.015 265),oklch(0.94 0.006 265));
+--vibeui-card-019-surface:light-dark(oklch(1 0 0),oklch(0.26 0 265));
+--vibeui-card-019-sheet:light-dark(oklch(0.985 0 265),oklch(0.3 0 265));
+--vibeui-card-019-ink:light-dark(oklch(0.18 0 265),oklch(0.98 0 265));
+--vibeui-card-019-on-accent:light-dark(oklch(0.99 0 0),oklch(0.17 0 262));
+--vibeui-card-019-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-card-019-muted:color-mix(in oklab,var(--vibeui-card-019-fg) 68%,transparent);
---vibeui-card-019-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-card-019-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
 --vibeui-card-019-accent:light-dark(oklch(0.55 0.18 262),oklch(0.72 0.15 262));
 --vibeui-card-019-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

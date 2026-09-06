@@ -25,9 +25,9 @@ const STYLES = `
 :where([data-vibeui-block="button-044"]){
 --vibeui-button-044-speed:4s;
 --vibeui-button-044-accent:light-dark(oklch(0.66 0.18 155),oklch(0.72 0.19 155));
---vibeui-button-044-track:light-dark(oklch(0.9 0.01 265),oklch(0.32 0.02 265));
---vibeui-button-044-inner:light-dark(oklch(0.99 0.003 265),oklch(0.22 0.02 265));
---vibeui-button-044-fg:light-dark(oklch(0.24 0.02 265),oklch(0.97 0.01 265));
+--vibeui-button-044-track:light-dark(oklch(0.9 0 265),oklch(0.32 0 265));
+--vibeui-button-044-inner:light-dark(oklch(0.99 0 265),oklch(0.22 0 265));
+--vibeui-button-044-fg:light-dark(oklch(0.24 0 265),oklch(0.97 0 265));
 /* Наведение уводит поверхность от фона, а не всегда в белый. */
 --vibeui-button-044-hover-mix:light-dark(black,white);
 --vibeui-button-044-radius:0.75rem;

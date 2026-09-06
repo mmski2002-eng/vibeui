@@ -39,15 +39,15 @@ export type Tags005Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="tags-005"]){
 --vibeui-tags-005-surface:transparent;
---vibeui-tags-005-field:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
---vibeui-tags-005-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.01 265));
---vibeui-tags-005-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-tags-005-field:light-dark(oklch(1 0 0),oklch(0.22 0 265));
+--vibeui-tags-005-shell:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-tags-005-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-tags-005-muted:color-mix(in oklab,var(--vibeui-tags-005-fg) 68%,transparent);
---vibeui-tags-005-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.012 265));
+--vibeui-tags-005-border:light-dark(oklch(0.88 0 265),oklch(0.38 0 265));
 --vibeui-tags-005-chip:light-dark(oklch(0.55 0.15 145 / 14%),oklch(0.75 0.15 145 / 22%));
 --vibeui-tags-005-accent:light-dark(oklch(0.48 0.15 145),oklch(0.78 0.14 145));
 --vibeui-tags-005-ring:light-dark(oklch(0.48 0.15 145 / 18%),oklch(0.78 0.14 145 / 28%));
---vibeui-tags-005-key:light-dark(oklch(0.96 0.004 265),oklch(0.3 0.012 265));
+--vibeui-tags-005-key:light-dark(oklch(0.96 0 265),oklch(0.3 0 265));
 --vibeui-tags-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-tags-005-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 }

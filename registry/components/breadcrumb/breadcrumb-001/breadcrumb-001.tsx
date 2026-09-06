@@ -24,7 +24,7 @@ export type Breadcrumb001Props = Omit<ComponentProps<"nav">, "children"> & {
 // вместе со страницей и не выкладывают под себя плашку.
 const STYLES = `
 :where([data-vibeui-block="breadcrumb-001"]){
---vibeui-breadcrumb-001-fg:light-dark(oklch(0.28 0.016 265),oklch(0.93 0.008 265));
+--vibeui-breadcrumb-001-fg:light-dark(oklch(0.28 0 265),oklch(0.93 0 265));
 --vibeui-breadcrumb-001-muted:color-mix(in oklab,var(--vibeui-breadcrumb-001-fg) 68%,transparent);
 --vibeui-breadcrumb-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
 --vibeui-breadcrumb-001-bg:transparent;

@@ -44,10 +44,10 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 const STYLES = `
 :where([data-vibeui-block="pricing-011"]){
 --vibeui-pricing-011-bg:transparent;
---vibeui-pricing-011-fg:light-dark(oklch(0.2 0.012 265),oklch(0.95 0.004 265));
---vibeui-pricing-011-muted:light-dark(oklch(0.51 0.012 265),oklch(0.72 0.012 265));
---vibeui-pricing-011-card:light-dark(oklch(1 0 0),oklch(0.22 0.014 265));
---vibeui-pricing-011-line:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.014 265));
+--vibeui-pricing-011-fg:light-dark(oklch(0.2 0 265),oklch(0.95 0 265));
+--vibeui-pricing-011-muted:light-dark(oklch(0.51 0 265),oklch(0.72 0 265));
+--vibeui-pricing-011-card:light-dark(oklch(1 0 0),oklch(0.22 0 265));
+--vibeui-pricing-011-line:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
 --vibeui-pricing-011-accent:light-dark(oklch(0.5 0.16 275),oklch(0.76 0.14 275));
 --vibeui-pricing-011-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

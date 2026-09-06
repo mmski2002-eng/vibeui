@@ -53,15 +53,15 @@ const STYLES = `
 :where([data-vibeui-block="commerce-036"]){
 --vibeui-commerce-036-bg:transparent;
 --vibeui-commerce-036-radius:0;
---vibeui-commerce-036-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
---vibeui-commerce-036-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
---vibeui-commerce-036-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
---vibeui-commerce-036-soft:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.011 265));
---vibeui-commerce-036-card:light-dark(oklch(1 0 0),oklch(0.22 0.01 265));
+--vibeui-commerce-036-fg:light-dark(oklch(0.21 0 265),oklch(0.94 0 265));
+--vibeui-commerce-036-muted:light-dark(oklch(0.55 0 265),oklch(0.7 0 265));
+--vibeui-commerce-036-border:light-dark(oklch(0.91 0 265),oklch(0.35 0 265));
+--vibeui-commerce-036-soft:light-dark(oklch(0.975 0 265),oklch(0.27 0 265));
+--vibeui-commerce-036-card:light-dark(oklch(1 0 0),oklch(0.22 0 265));
 --vibeui-commerce-036-accent:light-dark(oklch(0.5 0.15 190),oklch(0.76 0.13 190));
 --vibeui-commerce-036-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.03 190));
 --vibeui-commerce-036-save:light-dark(oklch(0.5 0.13 150),oklch(0.78 0.14 150));
---vibeui-commerce-036-past:light-dark(oklch(0.75 0.01 265),oklch(0.45 0.012 265));
+--vibeui-commerce-036-past:light-dark(oklch(0.75 0 265),oklch(0.45 0 265));
 --vibeui-commerce-036-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

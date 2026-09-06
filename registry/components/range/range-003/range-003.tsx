@@ -35,14 +35,14 @@ export type Range003Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="range-003"]){
 --vibeui-range-003-surface:transparent;
---vibeui-range-003-knob:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
---vibeui-range-003-shell:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.011 265));
---vibeui-range-003-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-range-003-knob:light-dark(oklch(1 0 0),oklch(0.26 0 265));
+--vibeui-range-003-shell:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
+--vibeui-range-003-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-range-003-muted:color-mix(in oklab,var(--vibeui-range-003-fg) 68%,transparent);
---vibeui-range-003-track:light-dark(oklch(0.93 0.006 265),oklch(0.33 0.012 265));
+--vibeui-range-003-track:light-dark(oklch(0.93 0 265),oklch(0.33 0 265));
 --vibeui-range-003-accent:light-dark(oklch(0.52 0.16 210),oklch(0.78 0.12 210));
 --vibeui-range-003-soft:light-dark(oklch(0.52 0.16 210 / 12%),oklch(0.78 0.12 210 / 20%));
---vibeui-range-003-shadow:light-dark(oklch(0.2 0.02 265 / 25%),oklch(0 0 0 / 45%));
+--vibeui-range-003-shadow:light-dark(oklch(0.2 0 265 / 25%),oklch(0 0 0 / 45%));
 --vibeui-range-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-range-003-from:0%;
 --vibeui-range-003-to:100%;

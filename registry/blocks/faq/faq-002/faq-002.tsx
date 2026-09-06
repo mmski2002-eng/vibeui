@@ -26,10 +26,10 @@ export type Faq002Props = {
 const STYLES = `
 :where([data-vibeui-block="faq-002"]){
 --vibeui-faq-002-bg:transparent;
---vibeui-faq-002-card:light-dark(oklch(0.98 0.004 255),oklch(0.25 0.012 255));
---vibeui-faq-002-ink:light-dark(oklch(0.22 0.014 255),oklch(0.95 0.005 255));
---vibeui-faq-002-muted:light-dark(oklch(0.5 0.014 255),oklch(0.72 0.012 255));
---vibeui-faq-002-border:light-dark(oklch(0.91 0.006 255),oklch(0.35 0.012 255));
+--vibeui-faq-002-card:light-dark(oklch(0.98 0 255),oklch(0.25 0 255));
+--vibeui-faq-002-ink:light-dark(oklch(0.22 0 255),oklch(0.95 0 255));
+--vibeui-faq-002-muted:light-dark(oklch(0.5 0 255),oklch(0.72 0 255));
+--vibeui-faq-002-border:light-dark(oklch(0.91 0 255),oklch(0.35 0 255));
 --vibeui-faq-002-accent:light-dark(oklch(0.5 0.17 262),oklch(0.74 0.14 262));
 --vibeui-faq-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

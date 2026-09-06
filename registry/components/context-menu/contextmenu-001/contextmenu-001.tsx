@@ -32,14 +32,14 @@ export type Contextmenu001Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="contextmenu-001"]){
 --vibeui-contextmenu-001-bg:transparent;
---vibeui-contextmenu-001-surface:light-dark(oklch(1 0 0),oklch(0.24 0.013 265));
---vibeui-contextmenu-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-contextmenu-001-surface:light-dark(oklch(1 0 0),oklch(0.24 0 265));
+--vibeui-contextmenu-001-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-contextmenu-001-muted:color-mix(in oklab,var(--vibeui-contextmenu-001-fg) 68%,transparent);
---vibeui-contextmenu-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
---vibeui-contextmenu-001-hover:light-dark(oklch(0.55 0.02 265 / 9%),oklch(0.92 0.02 265 / 12%));
+--vibeui-contextmenu-001-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
+--vibeui-contextmenu-001-hover:light-dark(oklch(0.55 0 265 / 9%),oklch(0.92 0 265 / 12%));
 --vibeui-contextmenu-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
 --vibeui-contextmenu-001-danger:light-dark(oklch(0.56 0.19 25),oklch(0.73 0.16 25));
---vibeui-contextmenu-001-shadow:light-dark(oklch(0.2 0.03 265 / 45%),oklch(0 0 0 / 72%));
+--vibeui-contextmenu-001-shadow:light-dark(oklch(0.2 0 265 / 45%),oklch(0 0 0 / 72%));
 --vibeui-contextmenu-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-contextmenu-001-x:50%;
 --vibeui-contextmenu-001-y:50%;
@@ -95,8 +95,8 @@ position:static;margin-block-start:0.5rem;
 const DEFAULT_ITEMS: Contextmenu001Item[] = [
   { label: "Открыть", keys: "↵" },
   { label: "Переименовать", keys: "F2" },
-  { label: "Дублировать", keys: "⌘D" },
-  { label: "Удалить", keys: "⌫", danger: true },
+  { label: "Дублировать", keys: "Ctrl+D" },
+  { label: "Удалить", keys: "Backspace", danger: true },
 ]
 
 /**

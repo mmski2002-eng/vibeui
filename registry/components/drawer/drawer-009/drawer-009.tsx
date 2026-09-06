@@ -37,15 +37,15 @@ export type Drawer009Props = Omit<
 // непонятно, к чему всё это относится.
 const STYLES = `
 :where([data-vibeui-block="drawer-009"]){
---vibeui-drawer-009-bg:light-dark(oklch(0.99 0.002 265),oklch(0.22 0.014 265));
---vibeui-drawer-009-fg:light-dark(oklch(0.25 0.014 265),oklch(0.95 0.005 265));
+--vibeui-drawer-009-bg:light-dark(oklch(0.99 0 265),oklch(0.22 0 265));
+--vibeui-drawer-009-fg:light-dark(oklch(0.25 0 265),oklch(0.95 0 265));
 --vibeui-drawer-009-muted:color-mix(in oklab,var(--vibeui-drawer-009-fg) 62%,transparent);
 --vibeui-drawer-009-border:light-dark(oklch(0 0 0 / 12%),oklch(1 0 0 / 13%));
 --vibeui-drawer-009-head:light-dark(oklch(0 0 0 / 3%),oklch(1 0 0 / 4%));
 --vibeui-drawer-009-hover:light-dark(oklch(0 0 0 / 5%),oklch(1 0 0 / 7%));
 --vibeui-drawer-009-accent:light-dark(oklch(0.5 0.16 265),oklch(0.78 0.12 265));
---vibeui-drawer-009-scrim:light-dark(oklch(0.2 0.02 265 / 42%),oklch(0 0 0 / 62%));
---vibeui-drawer-009-shadow:light-dark(oklch(0.2 0.02 265 / 40%),oklch(0 0 0 / 70%));
+--vibeui-drawer-009-scrim:light-dark(oklch(0.2 0 265 / 42%),oklch(0 0 0 / 62%));
+--vibeui-drawer-009-shadow:light-dark(oklch(0.2 0 265 / 40%),oklch(0 0 0 / 70%));
 --vibeui-drawer-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

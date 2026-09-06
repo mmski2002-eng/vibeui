@@ -29,7 +29,7 @@ export type Alert010Props = Omit<
 // вместе с формой и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="alert-010"]){
---vibeui-alert-010-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
+--vibeui-alert-010-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-alert-010-muted:color-mix(in oklab,var(--vibeui-alert-010-fg) 68%,transparent);
 --vibeui-alert-010-bg:transparent;
 --vibeui-alert-010-danger:light-dark(oklch(0.56 0.19 25),oklch(0.72 0.17 25));

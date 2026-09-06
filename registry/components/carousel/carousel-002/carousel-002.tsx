@@ -30,12 +30,12 @@ export type Carousel002Props = Omit<ComponentProps<"section">, "children"> & {
 // карточки темнеют вместе со страницей, своей тёмной темы компонент не носит.
 const STYLES = `
 :where([data-vibeui-block="carousel-002"]){
---vibeui-carousel-002-surface:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
---vibeui-carousel-002-bg:light-dark(oklch(1 0 0),oklch(0.26 0.013 265));
---vibeui-carousel-002-hover:light-dark(oklch(0.96 0.004 265),oklch(0.32 0.014 265));
---vibeui-carousel-002-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-carousel-002-surface:light-dark(oklch(1 0 0),oklch(0.21 0 265));
+--vibeui-carousel-002-bg:light-dark(oklch(1 0 0),oklch(0.26 0 265));
+--vibeui-carousel-002-hover:light-dark(oklch(0.96 0 265),oklch(0.32 0 265));
+--vibeui-carousel-002-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-carousel-002-muted:color-mix(in oklab,var(--vibeui-carousel-002-fg) 68%,transparent);
---vibeui-carousel-002-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-carousel-002-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
 --vibeui-carousel-002-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-carousel-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

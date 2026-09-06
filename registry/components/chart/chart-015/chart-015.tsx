@@ -32,10 +32,10 @@ export type Chart015Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="chart-015"]){
 --vibeui-chart-015-bg:transparent;
---vibeui-chart-015-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-chart-015-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-chart-015-muted:color-mix(in oklab,var(--vibeui-chart-015-fg) 68%,transparent);
---vibeui-chart-015-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
---vibeui-chart-015-track:light-dark(oklch(0.96 0.004 265),oklch(0.28 0.01 265));
+--vibeui-chart-015-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
+--vibeui-chart-015-track:light-dark(oklch(0.96 0 265),oklch(0.28 0 265));
 --vibeui-chart-015-height:9rem;
 --vibeui-chart-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

@@ -34,10 +34,10 @@ export type Banner011Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="banner-011"]){
 --vibeui-banner-011-bg:transparent;
---vibeui-banner-011-fg:light-dark(oklch(0.23 0.012 265),oklch(0.94 0.005 265));
+--vibeui-banner-011-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-banner-011-muted:color-mix(in oklab,var(--vibeui-banner-011-fg) 68%,transparent);
---vibeui-banner-011-surface:light-dark(oklch(0.99 0.002 265),oklch(0.26 0.012 265));
---vibeui-banner-011-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-banner-011-surface:light-dark(oklch(0.99 0 265),oklch(0.26 0 265));
+--vibeui-banner-011-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
 --vibeui-banner-011-accent:light-dark(oklch(0.52 0.16 265),oklch(0.78 0.13 265));
 --vibeui-banner-011-critical:light-dark(oklch(0.55 0.19 25),oklch(0.76 0.16 25));
 --vibeui-banner-011-warning:light-dark(oklch(0.62 0.14 75),oklch(0.82 0.13 75));

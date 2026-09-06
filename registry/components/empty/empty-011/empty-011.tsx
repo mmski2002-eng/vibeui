@@ -36,11 +36,11 @@ export type Empty011Props = {
 const STYLES = `
 :where([data-vibeui-block="empty-011"]){
 --vibeui-empty-011-bg:transparent;
---vibeui-empty-011-fg:light-dark(oklch(0.21 0.014 265),oklch(0.95 0.005 265));
+--vibeui-empty-011-fg:light-dark(oklch(0.21 0 265),oklch(0.95 0 265));
 --vibeui-empty-011-muted:color-mix(in oklab,var(--vibeui-empty-011-fg) 68%,transparent);
---vibeui-empty-011-border:light-dark(oklch(0.91 0.006 265),oklch(0.37 0.012 265));
+--vibeui-empty-011-border:light-dark(oklch(0.91 0 265),oklch(0.37 0 265));
 --vibeui-empty-011-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
---vibeui-empty-011-accent-fg:light-dark(oklch(0.99 0.01 265),oklch(0.18 0.03 265));
+--vibeui-empty-011-accent-fg:light-dark(oklch(0.99 0 265),oklch(0.18 0 265));
 --vibeui-empty-011-ok:light-dark(oklch(0.6 0.14 152),oklch(0.78 0.13 152));
 --vibeui-empty-011-ok-soft:light-dark(oklch(0.95 0.03 152),oklch(0.32 0.05 152));
 --vibeui-empty-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

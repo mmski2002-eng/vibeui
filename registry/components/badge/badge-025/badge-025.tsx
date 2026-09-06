@@ -18,11 +18,11 @@ export type Badge025Props = Omit<ComponentProps<"span">, "children"> & {
 // контексте зоны меняют светлоту, а рамка становится светлее фона.
 const STYLES = `
 :where([data-vibeui-block="badge-025"]){
---vibeui-badge-025-key-bg:light-dark(oklch(0.38 0.016 265),oklch(0.26 0.014 265));
---vibeui-badge-025-key-fg:light-dark(oklch(0.96 0.004 265),oklch(0.88 0.006 265));
---vibeui-badge-025-value-bg:light-dark(oklch(0.97 0.004 265),oklch(0.42 0.012 265));
---vibeui-badge-025-value-fg:light-dark(oklch(0.28 0.016 265),oklch(0.97 0.004 265));
---vibeui-badge-025-border:light-dark(oklch(0.38 0.016 265),oklch(0.52 0.016 265));
+--vibeui-badge-025-key-bg:light-dark(oklch(0.38 0 265),oklch(0.26 0 265));
+--vibeui-badge-025-key-fg:light-dark(oklch(0.96 0 265),oklch(0.88 0 265));
+--vibeui-badge-025-value-bg:light-dark(oklch(0.97 0 265),oklch(0.42 0 265));
+--vibeui-badge-025-value-fg:light-dark(oklch(0.28 0 265),oklch(0.97 0 265));
+--vibeui-badge-025-border:light-dark(oklch(0.38 0 265),oklch(0.52 0 265));
 --vibeui-badge-025-font:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

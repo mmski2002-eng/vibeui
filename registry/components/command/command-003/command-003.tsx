@@ -37,12 +37,12 @@ export type Command003Props = Omit<ComponentProps<"div">, "children"> & {
 // граница светлее подложки, а акцент поднят по светлоте, чтобы читаться.
 const STYLES = `
 :where([data-vibeui-block="command-003"]){
---vibeui-command-003-bg:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
---vibeui-command-003-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.006 265));
+--vibeui-command-003-bg:light-dark(oklch(1 0 0),oklch(0.21 0 265));
+--vibeui-command-003-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-command-003-muted:color-mix(in oklab,var(--vibeui-command-003-fg) 68%,transparent);
---vibeui-command-003-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-command-003-border:light-dark(oklch(0.9 0 265),oklch(0.35 0 265));
 --vibeui-command-003-accent:light-dark(oklch(0.58 0.16 200),oklch(0.78 0.12 200));
---vibeui-command-003-shadow:light-dark(oklch(0.2 0.03 265 / 60%),oklch(0.04 0.015 265 / 70%));
+--vibeui-command-003-shadow:light-dark(oklch(0.2 0 265 / 60%),oklch(0.04 0 265 / 70%));
 --vibeui-command-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

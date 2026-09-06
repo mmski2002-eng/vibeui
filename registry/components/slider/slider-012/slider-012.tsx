@@ -31,17 +31,17 @@ export type Slider012Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="slider-012"]){
 --vibeui-slider-012-bg:transparent;
---vibeui-slider-012-surface:light-dark(oklch(1 0 0),oklch(0.28 0.012 265));
---vibeui-slider-012-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-slider-012-surface:light-dark(oklch(1 0 0),oklch(0.28 0 265));
+--vibeui-slider-012-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-slider-012-muted:color-mix(in oklab,var(--vibeui-slider-012-fg) 68%,transparent);
---vibeui-slider-012-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-slider-012-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
 --vibeui-slider-012-low:light-dark(oklch(0.62 0.16 150),oklch(0.7 0.15 150));
 --vibeui-slider-012-mid:light-dark(oklch(0.75 0.15 90),oklch(0.8 0.14 90));
 --vibeui-slider-012-high:light-dark(oklch(0.6 0.19 25),oklch(0.68 0.18 25));
 /* Таблетка зоны разбавляется не белым, а собственным токеном: в тёмной
    теме подмешивать белое означало бы выбелить её вопреки окружению. */
---vibeui-slider-012-zone-blend:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
---vibeui-slider-012-on-zone:light-dark(oklch(0.2 0.02 265),oklch(0.95 0.006 265));
+--vibeui-slider-012-zone-blend:light-dark(oklch(1 0 0),oklch(0.25 0 265));
+--vibeui-slider-012-on-zone:light-dark(oklch(0.2 0 265),oklch(0.95 0 265));
 --vibeui-slider-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-slider-012-thumb:var(--vibeui-slider-012-high);
 }
@@ -85,7 +85,7 @@ background:linear-gradient(to right,var(--vibeui-slider-012-low),var(--vibeui-sl
 appearance:none;margin-top:-0.34375rem;
 width:1.0625rem;height:1.0625rem;border-radius:9999px;
 background:var(--vibeui-slider-012-surface);border:3px solid var(--vibeui-slider-012-thumb);
-box-shadow:0 1px 4px oklch(0.2 0.02 265 / 30%);
+box-shadow:0 1px 4px oklch(0.2 0 265 / 30%);
 transition:border-color .16s ease;
 }
 [data-vibeui-block="slider-012"] input::-moz-range-thumb{

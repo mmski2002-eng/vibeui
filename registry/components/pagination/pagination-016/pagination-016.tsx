@@ -28,11 +28,11 @@ export type Pagination016Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="pagination-016"]){
 --vibeui-pagination-016-bg:transparent;
---vibeui-pagination-016-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-pagination-016-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-pagination-016-muted:color-mix(in oklab,var(--vibeui-pagination-016-fg) 68%,transparent);
---vibeui-pagination-016-border:light-dark(oklch(0.91 0.006 265),oklch(0.38 0.012 265));
---vibeui-pagination-016-field:light-dark(oklch(0.97 0.003 265),oklch(0.29 0.009 265));
---vibeui-pagination-016-hover:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.82 0.02 265 / 14%));
+--vibeui-pagination-016-border:light-dark(oklch(0.91 0 265),oklch(0.38 0 265));
+--vibeui-pagination-016-field:light-dark(oklch(0.97 0 265),oklch(0.29 0 265));
+--vibeui-pagination-016-hover:light-dark(oklch(0.55 0 265 / 8%),oklch(0.82 0 265 / 14%));
 --vibeui-pagination-016-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.16 262));
 --vibeui-pagination-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

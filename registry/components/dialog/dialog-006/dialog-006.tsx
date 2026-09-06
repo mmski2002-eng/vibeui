@@ -27,11 +27,11 @@ export type Dialog006Props = {
 // случайно на середине переноса домена или загрузки архива.
 const STYLES = `
 :where([data-vibeui-block="dialog-006"]){
---vibeui-dialog-006-fg:light-dark(oklch(0.22 0.016 265),oklch(0.94 0.005 265));
+--vibeui-dialog-006-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-dialog-006-muted:color-mix(in oklab,var(--vibeui-dialog-006-fg) 68%,transparent);
---vibeui-dialog-006-bg:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
---vibeui-dialog-006-border:light-dark(oklch(0.89 0.006 265),oklch(0.38 0.012 265));
---vibeui-dialog-006-track:light-dark(oklch(0.93 0.006 265),oklch(0.33 0.01 265));
+--vibeui-dialog-006-bg:light-dark(oklch(1 0 0),oklch(0.24 0 265));
+--vibeui-dialog-006-border:light-dark(oklch(0.89 0 265),oklch(0.38 0 265));
+--vibeui-dialog-006-track:light-dark(oklch(0.93 0 265),oklch(0.33 0 265));
 --vibeui-dialog-006-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
 --vibeui-dialog-006-radius:1rem;
 --vibeui-dialog-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -51,18 +51,18 @@ background:var(--vibeui-dialog-006-bg);color:var(--vibeui-dialog-006-fg);
 [data-vibeui-dialog-006-window]{
 position:fixed;inset:0;margin:auto;height:fit-content;
 width:min(24rem,calc(100vw - 2rem));box-sizing:border-box;padding:1.375rem;
-border:1px solid var(--vibeui-dialog-006-border,light-dark(oklch(0.89 0.006 265),oklch(0.38 0.012 265)));
+border:1px solid var(--vibeui-dialog-006-border,light-dark(oklch(0.89 0 265),oklch(0.38 0 265)));
 border-radius:var(--vibeui-dialog-006-radius,1rem);
-background:var(--vibeui-dialog-006-bg,light-dark(oklch(1 0 0),oklch(0.24 0.012 265)));
-color:var(--vibeui-dialog-006-fg,light-dark(oklch(0.22 0.016 265),oklch(0.94 0.005 265)));
+background:var(--vibeui-dialog-006-bg,light-dark(oklch(1 0 0),oklch(0.24 0 265)));
+color:var(--vibeui-dialog-006-fg,light-dark(oklch(0.22 0 265),oklch(0.94 0 265)));
 font-family:var(--vibeui-dialog-006-font,ui-sans-serif,system-ui,sans-serif);
-box-shadow:0 24px 60px -24px oklch(0.2 0.03 265 / 45%);
+box-shadow:0 24px 60px -24px oklch(0.2 0 265 / 45%);
 opacity:0;transform:scale(0.97);
 transition:opacity .18s ease,transform .18s ease,display .18s allow-discrete,overlay .18s allow-discrete;
 }
 [data-vibeui-dialog-006-window]:popover-open{opacity:1;transform:none}
 @starting-style{[data-vibeui-dialog-006-window]:popover-open{opacity:0;transform:scale(0.97)}}
-[data-vibeui-dialog-006-window]::backdrop{background:oklch(0.18 0.02 265 / 55%);backdrop-filter:blur(2px)}
+[data-vibeui-dialog-006-window]::backdrop{background:oklch(0.18 0 265 / 55%);backdrop-filter:blur(2px)}
 [data-vibeui-dialog-006-window] [data-part="head"]{display:flex;align-items:center;gap:0.75rem}
 [data-vibeui-dialog-006-window] [data-part="spinner"]{
 flex:none;width:1.25rem;height:1.25rem;border-radius:9999px;
@@ -74,11 +74,11 @@ animation:vibeui-dialog-006-spin .9s linear infinite;
 [data-vibeui-dialog-006-window] [data-part="title"]{margin:0;font-size:1.0625rem;font-weight:620;line-height:1.35}
 [data-vibeui-dialog-006-window] [data-part="step"]{
 margin:0.5rem 0 0;font-size:0.8125rem;line-height:1.5;
-color:var(--vibeui-dialog-006-muted,light-dark(oklch(0.5 0.014 265),oklch(0.7 0.012 265)));
+color:var(--vibeui-dialog-006-muted,light-dark(oklch(0.5 0 265),oklch(0.7 0 265)));
 }
 [data-vibeui-dialog-006-window] [data-part="track"]{
 margin-top:0.875rem;height:0.375rem;border-radius:9999px;overflow:hidden;
-background:var(--vibeui-dialog-006-track,light-dark(oklch(0.93 0.006 265),oklch(0.33 0.01 265)));
+background:var(--vibeui-dialog-006-track,light-dark(oklch(0.93 0 265),oklch(0.33 0 265)));
 }
 [data-vibeui-dialog-006-window] [data-part="bar"]{
 display:block;height:100%;border-radius:inherit;
@@ -92,16 +92,16 @@ width:35%;transition:none;animation:vibeui-dialog-006-slide 1.4s ease-in-out inf
 @keyframes vibeui-dialog-006-slide{0%{transform:translateX(-110%)}100%{transform:translateX(320%)}}
 [data-vibeui-dialog-006-window] [data-part="note"]{
 margin:0.75rem 0 0;font-size:0.75rem;line-height:1.45;
-color:var(--vibeui-dialog-006-muted,light-dark(oklch(0.5 0.014 265),oklch(0.7 0.012 265)));
+color:var(--vibeui-dialog-006-muted,light-dark(oklch(0.5 0 265),oklch(0.7 0 265)));
 }
 [data-vibeui-dialog-006-window] [data-part="actions"]{display:flex;justify-content:flex-end;margin-top:1.125rem}
 [data-vibeui-dialog-006-window] button{
 appearance:none;cursor:pointer;font:inherit;font-size:0.875rem;font-weight:600;
 display:inline-flex;align-items:center;height:2.25rem;padding:0 1rem;
 border-radius:0.5rem;background:transparent;color:inherit;
-border:1px solid var(--vibeui-dialog-006-border,light-dark(oklch(0.89 0.006 265),oklch(0.38 0.012 265)));
+border:1px solid var(--vibeui-dialog-006-border,light-dark(oklch(0.89 0 265),oklch(0.38 0 265)));
 }
-[data-vibeui-dialog-006-window] button:hover{background:color-mix(in oklab,var(--vibeui-dialog-006-border,light-dark(oklch(0.89 0.006 265),oklch(0.38 0.012 265))) 40%,transparent)}
+[data-vibeui-dialog-006-window] button:hover{background:color-mix(in oklab,var(--vibeui-dialog-006-border,light-dark(oklch(0.89 0 265),oklch(0.38 0 265))) 40%,transparent)}
 [data-vibeui-dialog-006-window] button:focus-visible{outline:2px solid var(--vibeui-dialog-006-accent,light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262)));outline-offset:2px}
 /* Popover страницу не блокирует: фон под окном иначе продолжает прокручиваться. */
 html:has([data-vibeui-dialog-006-window]:popover-open){overflow:hidden}

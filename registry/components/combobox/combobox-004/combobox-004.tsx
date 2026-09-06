@@ -30,11 +30,11 @@ export type Combobox004Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="combobox-004"]){
 --vibeui-combobox-004-bg:transparent;
---vibeui-combobox-004-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-combobox-004-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-combobox-004-muted:color-mix(in oklab,var(--vibeui-combobox-004-fg) 68%,transparent);
---vibeui-combobox-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
---vibeui-combobox-004-field:light-dark(oklch(0.985 0.002 265),oklch(0.3 0.012 265));
---vibeui-combobox-004-active:light-dark(oklch(0.955 0.012 265),oklch(0.35 0.016 265));
+--vibeui-combobox-004-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
+--vibeui-combobox-004-field:light-dark(oklch(0.985 0 265),oklch(0.3 0 265));
+--vibeui-combobox-004-active:light-dark(oklch(0.955 0 265),oklch(0.35 0 265));
 --vibeui-combobox-004-accent:light-dark(oklch(0.55 0.15 25),oklch(0.76 0.14 25));
 --vibeui-combobox-004-radius:0.625rem;
 --vibeui-combobox-004-hue:265;

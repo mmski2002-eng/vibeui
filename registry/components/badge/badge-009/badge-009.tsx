@@ -13,9 +13,9 @@ export type Badge009Props = Omit<ComponentProps<"span">, "children"> & {
 // скринридера: в строке таблицы место одно, а тегов у записи бывает десять.
 const STYLES = `
 :where([data-vibeui-block="badge-009"]){
---vibeui-badge-009-bg:light-dark(oklch(0.96 0.004 265),oklch(0.27 0.009 265));
---vibeui-badge-009-fg:light-dark(oklch(0.32 0.014 265),oklch(0.93 0.006 265));
---vibeui-badge-009-border:light-dark(oklch(0.89 0.006 265),oklch(0.39 0.011 265));
+--vibeui-badge-009-bg:light-dark(oklch(0.96 0 265),oklch(0.27 0 265));
+--vibeui-badge-009-fg:light-dark(oklch(0.32 0 265),oklch(0.93 0 265));
+--vibeui-badge-009-border:light-dark(oklch(0.89 0 265),oklch(0.39 0 265));
 --vibeui-badge-009-muted:color-mix(in oklab,var(--vibeui-badge-009-fg) 68%,transparent);
 --vibeui-badge-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

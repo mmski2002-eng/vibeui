@@ -52,13 +52,13 @@ export type Navbar008Props = {
 const STYLES = `
 :where([data-vibeui-block="navbar-008"]){
 --vibeui-navbar-008-bg:transparent;
---vibeui-navbar-008-ink:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
---vibeui-navbar-008-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
---vibeui-navbar-008-border:light-dark(oklch(0.91 0.005 265),oklch(0.34 0.011 265));
+--vibeui-navbar-008-ink:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
+--vibeui-navbar-008-muted:light-dark(oklch(0.55 0 265),oklch(0.7 0 265));
+--vibeui-navbar-008-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-navbar-008-accent:light-dark(oklch(0.5 0.19 275),oklch(0.72 0.16 275));
---vibeui-navbar-008-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.17 0.03 275));
+--vibeui-navbar-008-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.17 0 275));
 --vibeui-navbar-008-badge:light-dark(oklch(0.6 0.2 25),oklch(0.66 0.2 25));
---vibeui-navbar-008-tint:light-dark(oklch(1 0 0),oklch(0.27 0.016 275));
+--vibeui-navbar-008-tint:light-dark(oklch(1 0 0),oklch(0.27 0 275));
 --vibeui-navbar-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -146,24 +146,24 @@ color:var(--vibeui-navbar-008-accent);
 [data-vibeui-block="navbar-008"] a:focus-visible{outline:2px solid var(--vibeui-navbar-008-accent);outline-offset:2px}
 [data-vibeui-navbar-008-menu]{
 position:fixed;inset:3.75rem 1rem auto auto;margin:0;padding:0.375rem;min-width:15rem;
-border:1px solid var(--vibeui-navbar-008-border,light-dark(oklch(0.91 0.005 265),oklch(0.34 0.011 265)));
+border:1px solid var(--vibeui-navbar-008-border,light-dark(oklch(0.91 0 265),oklch(0.34 0 265)));
 border-radius:0.875rem;
-background:light-dark(oklch(0.99 0.002 265),oklch(0.26 0.014 265));
+background:light-dark(oklch(0.99 0 265),oklch(0.26 0 265));
 font-family:var(--vibeui-navbar-008-font,ui-sans-serif,system-ui,sans-serif);
-box-shadow:0 26px 60px -32px light-dark(oklch(0.2 0.03 265 / 55%),oklch(0 0 0 / 65%));
+box-shadow:0 26px 60px -32px light-dark(oklch(0.2 0 265 / 55%),oklch(0 0 0 / 65%));
 }
 [data-vibeui-navbar-008-menu] [data-part="who"]{
 padding:0.5rem 0.625rem 0.625rem;margin-bottom:0.25rem;
-border-bottom:1px solid light-dark(oklch(0.91 0.005 265),oklch(0.34 0.011 265));
+border-bottom:1px solid light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 }
-[data-vibeui-navbar-008-menu] [data-part="who"] strong{display:block;font-size:0.875rem;color:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265))}
-[data-vibeui-navbar-008-menu] [data-part="who"] span{display:block;font-size:0.8125rem;color:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265))}
+[data-vibeui-navbar-008-menu] [data-part="who"] strong{display:block;font-size:0.875rem;color:light-dark(oklch(0.24 0 265),oklch(0.94 0 265))}
+[data-vibeui-navbar-008-menu] [data-part="who"] span{display:block;font-size:0.8125rem;color:light-dark(oklch(0.55 0 265),oklch(0.7 0 265))}
 [data-vibeui-navbar-008-menu] a{
 display:block;padding:0.5rem 0.625rem;border-radius:0.5rem;
-color:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+color:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 text-decoration:none;font-size:0.875rem;font-weight:520;
 }
-[data-vibeui-navbar-008-menu] a:hover{background:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.85 0.02 265 / 12%))}
+[data-vibeui-navbar-008-menu] a:hover{background:light-dark(oklch(0.55 0 265 / 8%),oklch(0.85 0 265 / 12%))}
 @container (min-width: 46rem){
 [data-vibeui-block="navbar-008"] [data-part="shell"]{padding:0.625rem 1.75rem;gap:1.25rem}
 [data-vibeui-block="navbar-008"] [data-part="plan"]{display:inline-block}

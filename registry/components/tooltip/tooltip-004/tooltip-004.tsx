@@ -20,10 +20,10 @@ export type Tooltip004Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="tooltip-004"]){
 --vibeui-tooltip-004-bg:transparent;
---vibeui-tooltip-004-fg:light-dark(oklch(0.26 0.014 265),oklch(0.92 0.006 265));
---vibeui-tooltip-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
---vibeui-tooltip-004-hover:light-dark(oklch(0.95 0.004 265),oklch(0.32 0.012 265));
---vibeui-tooltip-004-tip:light-dark(oklch(0.24 0.014 265),oklch(0.35 0.014 265));
+--vibeui-tooltip-004-fg:light-dark(oklch(0.26 0 265),oklch(0.92 0 265));
+--vibeui-tooltip-004-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
+--vibeui-tooltip-004-hover:light-dark(oklch(0.95 0 265),oklch(0.32 0 265));
+--vibeui-tooltip-004-tip:light-dark(oklch(0.24 0 265),oklch(0.35 0 265));
 --vibeui-tooltip-004-accent:light-dark(oklch(0.57 0.17 265),oklch(0.72 0.16 265));
 --vibeui-tooltip-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -36,7 +36,7 @@ padding:0.3125rem;box-sizing:border-box;
 border:1px solid var(--vibeui-tooltip-004-border);border-radius:0.875rem;
 background:var(--vibeui-tooltip-004-bg);color:var(--vibeui-tooltip-004-fg);
 font-family:var(--vibeui-tooltip-004-font);
-box-shadow:0 14px 30px -24px oklch(0.2 0.02 265 / 55%);
+box-shadow:0 14px 30px -24px oklch(0.2 0 265 / 55%);
 }
 /* Подсказка привязана к своей ячейке: соседние не перекрываются. */
 [data-vibeui-block="tooltip-004"] [data-part="item"]{position:relative;display:inline-flex}
@@ -57,7 +57,7 @@ position:absolute;left:50%;z-index:30;
 width:max-content;max-width:12rem;
 padding:0.3125rem 0.5rem;border-radius:0.4375rem;
 /* Обе ветки --tip тёмные — плашка подсказки тёмная всегда, поэтому подпись светлая без light-dark(). */
-background:var(--vibeui-tooltip-004-tip);color:oklch(0.98 0.002 265);
+background:var(--vibeui-tooltip-004-tip);color:oklch(0.98 0 265);
 font-size:0.6875rem;font-weight:560;line-height:1.35;text-align:center;
 pointer-events:none;opacity:0;
 transform:translate(-50%,0.1875rem);

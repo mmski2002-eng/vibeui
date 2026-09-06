@@ -33,14 +33,14 @@ export type Popover007Props = Omit<
 // ссылками, поэтому по нему ходят стрелками и Tab, а не мышью по div'ам.
 const STYLES = `
 :where([data-vibeui-block="popover-007"]){
---vibeui-popover-007-bg:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
---vibeui-popover-007-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.006 265));
+--vibeui-popover-007-bg:light-dark(oklch(1 0 0),oklch(0.22 0 265));
+--vibeui-popover-007-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-popover-007-muted:color-mix(in oklab,var(--vibeui-popover-007-fg) 68%,transparent);
---vibeui-popover-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
---vibeui-popover-007-hover:light-dark(oklch(0.965 0.004 265),oklch(0.27 0.014 265));
+--vibeui-popover-007-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
+--vibeui-popover-007-hover:light-dark(oklch(0.965 0 265),oklch(0.27 0 265));
 --vibeui-popover-007-accent:light-dark(oklch(0.58 0.19 25),oklch(0.72 0.17 25));
 --vibeui-popover-007-on-accent:light-dark(oklch(0.99 0.01 25),oklch(0.18 0.03 25));
---vibeui-popover-007-shadow:light-dark(oklch(0.2 0.02 265 / 62%),oklch(0.02 0.01 265 / 74%));
+--vibeui-popover-007-shadow:light-dark(oklch(0.2 0 265 / 62%),oklch(0.02 0 265 / 74%));
 --vibeui-popover-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -77,12 +77,12 @@ width:min(20rem,100vw - 2rem);box-sizing:border-box;overflow:hidden;
 border:1px solid var(--vibeui-popover-007-border);border-radius:1rem;
 background:var(--vibeui-popover-007-bg);color:inherit;
 box-shadow:0 26px 54px -30px var(--vibeui-popover-007-shadow);
-position-anchor:--vibeui-popover-007-anchor;
+position-anchor:--vibeui-popover-007-anchor;inset:auto;
 top:anchor(bottom);right:anchor(right);margin-top:0.5rem;
 }
 [data-vibeui-block="popover-007"] [data-part="panel"]:popover-open{display:flex;flex-direction:column}
 @supports not (anchor-name: --a){
-[data-vibeui-block="popover-007"] [data-part="panel"]{position:absolute;inset:auto;top:calc(100% + 0.5rem);right:0}
+[data-vibeui-block="popover-007"] [data-part="panel"]{position:fixed;inset:0;margin:auto}
 }
 [data-vibeui-block="popover-007"] [data-part="head"]{
 display:flex;align-items:baseline;justify-content:space-between;gap:0.5rem;
@@ -119,9 +119,11 @@ color:var(--vibeui-popover-007-fg);text-decoration:none;
 [data-vibeui-block="popover-007"] [data-part="foot"]:focus-visible{outline:2px solid var(--vibeui-popover-007-accent);outline-offset:-2px}
 /* Раскрытая панель на месте: атрибут popover прячет её правилом браузера,
    а это правило той же специфичности его переопределяет и возвращает панель
-   в поток. Так её показывают на витрине и в документации, без верхнего слоя. */
-[data-vibeui-block="popover-007"][data-open] [popover]{
-display:block;position:static;inset:auto;margin:0.5rem 0 0;
+   в поток. Так её показывают на витрине и в документации, без верхнего слоя.
+   Только пока popover закрыт: у открытого положение задаёт верхний слой,
+   и static отправил бы панель в левый верхний угол экрана. */
+[data-vibeui-block="popover-007"][data-open] [popover]:not(:popover-open){
+display:flex;flex-direction:column;position:static;inset:auto;margin:0.5rem 0 0;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="popover-007"] *{animation:none!important;transition:none!important}}
 `

@@ -16,13 +16,13 @@ export type Frame003Props = Omit<ComponentProps<"figure">, "title"> & {
 const STYLES = `
 :where([data-vibeui-block="frame-003"]){
 --vibeui-frame-003-bg:transparent;
---vibeui-frame-003-chrome:light-dark(oklch(0.95 0.004 265),oklch(0.24 0.009 265));
---vibeui-frame-003-tab:light-dark(oklch(0.99 0.002 265),oklch(0.3 0.009 265));
---vibeui-frame-003-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.005 265));
+--vibeui-frame-003-chrome:light-dark(oklch(0.95 0 265),oklch(0.24 0 265));
+--vibeui-frame-003-tab:light-dark(oklch(0.99 0 265),oklch(0.3 0 265));
+--vibeui-frame-003-fg:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
 --vibeui-frame-003-muted:color-mix(in oklab,var(--vibeui-frame-003-fg) 68%,transparent);
---vibeui-frame-003-border:light-dark(oklch(0.89 0.006 265),oklch(0.38 0.011 265));
+--vibeui-frame-003-border:light-dark(oklch(0.89 0 265),oklch(0.38 0 265));
 --vibeui-frame-003-accent:light-dark(oklch(0.62 0.15 262),oklch(0.68 0.15 262));
---vibeui-frame-003-hero-fg:oklch(0.99 0.003 265);
+--vibeui-frame-003-hero-fg:oklch(0.99 0 265);
 --vibeui-frame-003-radius:0.875rem;
 --vibeui-frame-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

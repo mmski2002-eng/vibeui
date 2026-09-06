@@ -18,6 +18,11 @@ export type Toast016Props = Omit<ComponentProps<"div">, "children"> & {
   reconnectAfter?: number
   /** Через сколько мс после переподключения статус скрывается (демо). */
   hideAfter?: number
+  /**
+   * Через сколько мс после исчезновения история начинается заново.
+   * Ноль — не повторять: в приложении статус показывают один раз.
+   */
+  repeatAfter?: number
   onStatusChange?: (status: Toast016Status) => void
 }
 
@@ -31,11 +36,11 @@ export type Toast016Props = Omit<ComponentProps<"div">, "children"> & {
 // подняты по светлоте, чтобы не проваливаться в тёмный фон.
 const STYLES = `
 :where([data-vibeui-block="toast-016"]){
---vibeui-toast-016-bg:light-dark(oklch(0.99 0.002 265),oklch(0.25 0.014 265));
---vibeui-toast-016-fg:light-dark(oklch(0.22 0.014 265),oklch(0.96 0.003 265));
+--vibeui-toast-016-bg:light-dark(oklch(0.99 0 265),oklch(0.25 0 265));
+--vibeui-toast-016-fg:light-dark(oklch(0.22 0 265),oklch(0.96 0 265));
 --vibeui-toast-016-muted:color-mix(in oklab,var(--vibeui-toast-016-fg) 68%,transparent);
---vibeui-toast-016-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.014 265));
---vibeui-toast-016-shadow:light-dark(oklch(0.18 0.02 265 / 55%),oklch(0.05 0.01 265 / 70%));
+--vibeui-toast-016-border:light-dark(oklch(0.9 0 265),oklch(0.38 0 265));
+--vibeui-toast-016-shadow:light-dark(oklch(0.18 0 265 / 55%),oklch(0.05 0 265 / 70%));
 --vibeui-toast-016-danger:light-dark(oklch(0.56 0.19 25),oklch(0.7 0.17 25));
 --vibeui-toast-016-warning:light-dark(oklch(0.66 0.15 75),oklch(0.8 0.14 78));
 --vibeui-toast-016-success:light-dark(oklch(0.56 0.15 152),oklch(0.74 0.15 152));
@@ -114,6 +119,7 @@ export function Toast016({
   background = "",
   reconnectAfter = 1800,
   hideAfter = 2600,
+  repeatAfter = 0,
   onStatusChange,
   className,
   style,
@@ -146,6 +152,19 @@ export function Toast016({
     const timer = setTimeout(() => setVisible(false), hideAfter)
     return () => clearTimeout(timer)
   }, [status, hideAfter])
+
+  // Витрине нужен повтор: без него карточка навсегда остаётся пустой —
+  // историю досмотрели, и показывать больше нечего.
+  useEffect(() => {
+    if (visible || !repeatAfter) return
+
+    const timer = setTimeout(() => {
+      setStatus("offline")
+      setVisible(true)
+    }, repeatAfter)
+
+    return () => clearTimeout(timer)
+  }, [visible, repeatAfter])
 
   if (!visible) return null
 

@@ -42,11 +42,11 @@ export type Ai010Props = {
 const STYLES = `
 :where([data-vibeui-block="ai-010"]){
 --vibeui-ai-010-bg:transparent;
---vibeui-ai-010-card:light-dark(oklch(1 0 0),oklch(0.25 0.011 265));
---vibeui-ai-010-tint:light-dark(oklch(0.985 0.003 265),oklch(0.22 0.01 265));
---vibeui-ai-010-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.006 265));
---vibeui-ai-010-muted:light-dark(oklch(0.53 0.014 265),oklch(0.69 0.012 265));
---vibeui-ai-010-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-ai-010-card:light-dark(oklch(1 0 0),oklch(0.25 0 265));
+--vibeui-ai-010-tint:light-dark(oklch(0.985 0 265),oklch(0.22 0 265));
+--vibeui-ai-010-fg:light-dark(oklch(0.21 0 265),oklch(0.94 0 265));
+--vibeui-ai-010-muted:light-dark(oklch(0.53 0 265),oklch(0.69 0 265));
+--vibeui-ai-010-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-ai-010-accent:light-dark(oklch(0.55 0.18 45),oklch(0.76 0.15 55));
 --vibeui-ai-010-done:light-dark(oklch(0.58 0.13 155),oklch(0.72 0.13 155));
 --vibeui-ai-010-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;

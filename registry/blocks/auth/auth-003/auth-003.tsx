@@ -34,14 +34,14 @@ export type Auth003Props = {
 const STYLES = `
 :where([data-vibeui-block="auth-003"]){
 --vibeui-auth-003-bg:transparent;
---vibeui-auth-003-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-auth-003-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.013 265));
---vibeui-auth-003-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.011 265));
+--vibeui-auth-003-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
+--vibeui-auth-003-muted:light-dark(oklch(0.55 0 265),oklch(0.69 0 265));
+--vibeui-auth-003-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
 --vibeui-auth-003-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
---vibeui-auth-003-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 265));
+--vibeui-auth-003-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0 265));
 --vibeui-auth-003-ok:light-dark(oklch(0.58 0.14 152),oklch(0.74 0.13 152));
 --vibeui-auth-003-ok-soft:light-dark(oklch(0.58 0.14 152 / 14%),oklch(0.74 0.13 152 / 20%));
---vibeui-auth-003-chip:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.85 0.02 265 / 12%));
+--vibeui-auth-003-chip:light-dark(oklch(0.55 0 265 / 8%),oklch(0.85 0 265 / 12%));
 --vibeui-auth-003-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

@@ -36,10 +36,10 @@ export type Features017Props = {
 const STYLES = `
 :where([data-vibeui-block="features-017"]){
 --vibeui-features-017-bg:transparent;
---vibeui-features-017-tile:light-dark(oklch(0.99 0.003 265),oklch(0.24 0.012 265));
---vibeui-features-017-fg:light-dark(oklch(0.21 0.014 265),oklch(0.95 0.005 265));
---vibeui-features-017-muted:light-dark(oklch(0.51 0.013 265),oklch(0.72 0.012 265));
---vibeui-features-017-line:light-dark(oklch(0.89 0.007 265),oklch(0.36 0.014 265));
+--vibeui-features-017-tile:light-dark(oklch(0.99 0 265),oklch(0.24 0 265));
+--vibeui-features-017-fg:light-dark(oklch(0.21 0 265),oklch(0.95 0 265));
+--vibeui-features-017-muted:light-dark(oklch(0.51 0 265),oklch(0.72 0 265));
+--vibeui-features-017-line:light-dark(oklch(0.89 0 265),oklch(0.36 0 265));
 --vibeui-features-017-accent:light-dark(oklch(0.55 0.16 268),oklch(0.75 0.14 268));
 --vibeui-features-017-soft:color-mix(in oklab,var(--vibeui-features-017-accent) 12%,transparent);
 --vibeui-features-017-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

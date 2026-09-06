@@ -28,13 +28,13 @@ export type Breadcrumb004Props = Omit<ComponentProps<"nav">, "children"> & {
 // списка — он обязан перекрывать содержимое под собой.
 const STYLES = `
 :where([data-vibeui-block="breadcrumb-004"]){
---vibeui-breadcrumb-004-fg:light-dark(oklch(0.28 0.016 265),oklch(0.93 0.008 265));
+--vibeui-breadcrumb-004-fg:light-dark(oklch(0.28 0 265),oklch(0.93 0 265));
 --vibeui-breadcrumb-004-muted:color-mix(in oklab,var(--vibeui-breadcrumb-004-fg) 68%,transparent);
---vibeui-breadcrumb-004-sep:light-dark(oklch(0.75 0.01 265),oklch(0.5 0.012 265));
---vibeui-breadcrumb-004-menu:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
---vibeui-breadcrumb-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265));
---vibeui-breadcrumb-004-hover:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.012 265));
---vibeui-breadcrumb-004-shadow:light-dark(oklch(0.2 0.02 265 / 55%),oklch(0 0 0 / 65%));
+--vibeui-breadcrumb-004-sep:light-dark(oklch(0.75 0 265),oklch(0.5 0 265));
+--vibeui-breadcrumb-004-menu:light-dark(oklch(1 0 0),oklch(0.24 0 265));
+--vibeui-breadcrumb-004-border:light-dark(oklch(0.9 0 265),oklch(0.38 0 265));
+--vibeui-breadcrumb-004-hover:light-dark(oklch(0.96 0 265),oklch(0.31 0 265));
+--vibeui-breadcrumb-004-shadow:light-dark(oklch(0.2 0 265 / 55%),oklch(0 0 0 / 65%));
 --vibeui-breadcrumb-004-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-breadcrumb-004-bg:transparent;
 --vibeui-breadcrumb-004-pad:0;

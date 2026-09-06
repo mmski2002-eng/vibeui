@@ -19,10 +19,10 @@ export type Kbd001Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="kbd-001"]){
 --vibeui-kbd-001-bg:transparent;
---vibeui-kbd-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-kbd-001-fg:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
 --vibeui-kbd-001-muted:color-mix(in oklab,var(--vibeui-kbd-001-fg) 68%,transparent);
---vibeui-kbd-001-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.012 265));
---vibeui-kbd-001-key:light-dark(oklch(0.985 0.002 265),oklch(0.3 0.012 265));
+--vibeui-kbd-001-border:light-dark(oklch(0.88 0 265),oklch(0.38 0 265));
+--vibeui-kbd-001-key:light-dark(oklch(0.985 0 265),oklch(0.3 0 265));
 --vibeui-kbd-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

@@ -4595,7 +4595,7 @@
       }
     },
     {
-      "name": "code-001",
+      "name": "codeblock-031",
       "type": "registry:component",
       "title": "Блок кода",
       "description": "Блок кода с подсветкой из обычной строки: разбор языка живёт внутри компонента, без библиотеки на клиенте.",
@@ -4606,12 +4606,12 @@
       "registryDependencies": [],
       "files": [
         {
-          "path": "code-001/code-001.tsx",
+          "path": "codeblock-031/codeblock-031.tsx",
           "type": "registry:component",
-          "target": "@components/vibeui/code-001.tsx"
+          "target": "@components/vibeui/codeblock-031.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-code-001-*. Клиентский: \"use client\" ради копирования. Подсветка сделана одним регулярным выражением на язык (tsx, ts, js, json, bash) с именованными группами; разбор неглубокий и красит комментарии, строки, числа, ключевые слова, теги JSX и флаги команд. Номера строк печатает счётчик CSS через ::before, поэтому они не попадают в буфер вместе с кодом.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-codeblock-031-*. Клиентский: \"use client\" ради копирования. Подсветка сделана одним регулярным выражением на язык (tsx, ts, js, json, bash) с именованными группами; разбор неглубокий и красит комментарии, строки, числа, ключевые слова, теги JSX и флаги команд. Номера строк печатает счётчик CSS через ::before, поэтому они не попадают в буфер вместе с кодом.",
       "meta": {
         "tags": [
           "code",
@@ -4623,11 +4623,11 @@
           "width": "full"
         },
         "ai": {
-          "export": "Code001",
-          "usage": "<Code001 title=\"hooks/use-price.ts\" language=\"ts\" code={source} />",
+          "export": "Codeblock031",
+          "usage": "<Codeblock031 title=\"hooks/use-price.ts\" language=\"ts\" code={source} />",
           "summary": "Блок кода, который принимает обычную строку и подсвечивает её сам: пять языков, номера строк счётчиком CSS, копирование с отчётом в кнопке. Ноль зависимостей, один файл.",
           "preserve": [
-            "локальную палитру --vibeui-code-001-* и не подменять её токенами вашей темы",
+            "локальную палитру --vibeui-codeblock-031-* и не подменять её токенами вашей темы",
             "разбор внутри компонента: подключать shiki или prism ради тех же пяти правил незачем",
             "номера строк через счётчик CSS и ::before — так они не уезжают в буфер вместе с кодом",
             "моноширинный шрифт и междустрочный интервал: код читают по вертикали",
@@ -4696,11 +4696,11 @@
           "en": {
             "title": "Code Block",
             "description": "A code block that highlights a plain string: the language rules live inside the component, with no library on the client.",
-            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-code-001-* variables. Client component: \"use client\" for the sake of copying. Highlighting is one regular expression per language (tsx, ts, js, json, bash) with named groups; the pass is shallow and colours comments, strings, numbers, keywords, JSX tags and command flags. Line numbers are printed by a CSS counter through ::before, so they never reach the clipboard with the code.",
+            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-codeblock-031-* variables. Client component: \"use client\" for the sake of copying. Highlighting is one regular expression per language (tsx, ts, js, json, bash) with named groups; the pass is shallow and colours comments, strings, numbers, keywords, JSX tags and command flags. Line numbers are printed by a CSS counter through ::before, so they never reach the clipboard with the code.",
             "ai": {
               "summary": "A code block that takes a plain string and highlights it on its own: five languages, line numbers from a CSS counter, copying that reports back inside the button. Zero dependencies, one file.",
               "preserve": [
-                "the local --vibeui-code-001-* palette — do not swap it for your theme tokens",
+                "the local --vibeui-codeblock-031-* palette — do not swap it for your theme tokens",
                 "the parsing inside the component: pulling in shiki or prism for the same handful of rules is not worth it",
                 "line numbers through a CSS counter and ::before — that keeps them out of the clipboard",
                 "the monospaced face and the line height: code is read down the page",
@@ -4724,7 +4724,7 @@
                 "The language is passed explicitly: it is deliberately not guessed from the content.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
-              "usage": "<Code001 title=\"hooks/use-price.ts\" language=\"ts\" code={source} />"
+              "usage": "<Codeblock031 title=\"hooks/use-price.ts\" language=\"ts\" code={source} />"
             },
             "controls": {
               "title": {

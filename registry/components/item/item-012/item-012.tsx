@@ -24,9 +24,9 @@ export type Item012Props = Omit<ComponentProps<"li">, "children" | "title"> & {
 const STYLES = `
 :where([data-vibeui-block="item-012"]){
 --vibeui-item-012-bg:transparent;
---vibeui-item-012-fg:light-dark(oklch(0.23 0.014 265),oklch(0.93 0.006 265));
+--vibeui-item-012-fg:light-dark(oklch(0.23 0 265),oklch(0.93 0 265));
 --vibeui-item-012-muted:color-mix(in oklab,var(--vibeui-item-012-fg) 68%,transparent);
---vibeui-item-012-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-item-012-border:light-dark(oklch(0.9 0 265),oklch(0.35 0 265));
 --vibeui-item-012-accent:light-dark(oklch(0.58 0.18 258),oklch(0.75 0.16 258));
 --vibeui-item-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

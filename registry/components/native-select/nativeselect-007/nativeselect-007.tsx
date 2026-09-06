@@ -24,11 +24,11 @@ export type Nativeselect007Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="nativeselect-007"]){
 --vibeui-nativeselect-007-bg:transparent;
---vibeui-nativeselect-007-line:light-dark(oklch(0.91 0.006 265),oklch(0.33 0.012 265));
---vibeui-nativeselect-007-field:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
---vibeui-nativeselect-007-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.004 265));
+--vibeui-nativeselect-007-line:light-dark(oklch(0.91 0 265),oklch(0.33 0 265));
+--vibeui-nativeselect-007-field:light-dark(oklch(1 0 0),oklch(0.26 0 265));
+--vibeui-nativeselect-007-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-nativeselect-007-muted:color-mix(in oklab,var(--vibeui-nativeselect-007-fg) 68%,transparent);
---vibeui-nativeselect-007-field-border:light-dark(oklch(0.85 0.01 265),oklch(0.42 0.014 265));
+--vibeui-nativeselect-007-field-border:light-dark(oklch(0.85 0 265),oklch(0.42 0 265));
 --vibeui-nativeselect-007-accent:light-dark(oklch(0.58 0.16 300),oklch(0.76 0.14 300));
 --vibeui-nativeselect-007-height:2.25rem;
 --vibeui-nativeselect-007-text:0.875rem;

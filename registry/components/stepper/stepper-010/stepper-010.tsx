@@ -30,14 +30,14 @@ export type Stepper010Props = Omit<ComponentProps<"nav">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="stepper-010"]){
 --vibeui-stepper-010-bg:transparent;
---vibeui-stepper-010-surface:light-dark(oklch(1 0 0),oklch(0.2 0.012 265));
---vibeui-stepper-010-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
+--vibeui-stepper-010-surface:light-dark(oklch(1 0 0),oklch(0.2 0 265));
+--vibeui-stepper-010-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-stepper-010-muted:color-mix(in oklab,var(--vibeui-stepper-010-fg) 68%,transparent);
---vibeui-stepper-010-border:light-dark(oklch(0.92 0.006 265),oklch(0.32 0.012 265));
---vibeui-stepper-010-line:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-stepper-010-border:light-dark(oklch(0.92 0 265),oklch(0.32 0 265));
+--vibeui-stepper-010-line:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
 --vibeui-stepper-010-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.16 262));
---vibeui-stepper-010-accent-fg:light-dark(oklch(1 0 0),oklch(0.19 0.02 262));
---vibeui-stepper-010-panel:light-dark(oklch(0.97 0.01 262),oklch(0.26 0.022 262));
+--vibeui-stepper-010-accent-fg:light-dark(oklch(1 0 0),oklch(0.19 0 262));
+--vibeui-stepper-010-panel:light-dark(oklch(0.97 0 262),oklch(0.26 0 262));
 --vibeui-stepper-010-dot:1.5rem;
 --vibeui-stepper-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

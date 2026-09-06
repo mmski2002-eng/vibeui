@@ -29,11 +29,11 @@ export type Buttongroup005Props = Omit<
 // внутри переключаются стрелками, как в панели форматирования.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-005"]){
---vibeui-buttongroup-005-surface:light-dark(oklch(0.97 0.004 265),oklch(0.28 0.012 265));
---vibeui-buttongroup-005-on:light-dark(oklch(1 0 0),oklch(0.4 0.014 265));
---vibeui-buttongroup-005-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.006 265));
+--vibeui-buttongroup-005-surface:light-dark(oklch(0.97 0 265),oklch(0.28 0 265));
+--vibeui-buttongroup-005-on:light-dark(oklch(1 0 0),oklch(0.4 0 265));
+--vibeui-buttongroup-005-fg:light-dark(oklch(0.25 0 265),oklch(0.95 0 265));
 --vibeui-buttongroup-005-muted:color-mix(in oklab,var(--vibeui-buttongroup-005-fg) 68%,transparent);
---vibeui-buttongroup-005-border:light-dark(oklch(0.89 0.008 265),oklch(0.38 0.012 265));
+--vibeui-buttongroup-005-border:light-dark(oklch(0.89 0 265),oklch(0.38 0 265));
 --vibeui-buttongroup-005-accent:light-dark(oklch(0.55 0.17 265),oklch(0.75 0.15 265));
 --vibeui-buttongroup-005-radius:0.5rem;
 --vibeui-buttongroup-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -69,7 +69,7 @@ outline:2px solid var(--vibeui-buttongroup-005-accent);outline-offset:1px;
 [data-vibeui-block="buttongroup-005"] button[aria-pressed="true"]{
 background:var(--vibeui-buttongroup-005-on);
 color:var(--vibeui-buttongroup-005-fg);
-box-shadow:0 1px 2px oklch(0.2 0.02 265 / 14%);
+box-shadow:0 1px 2px oklch(0.2 0 265 / 14%);
 }
 [data-vibeui-block="buttongroup-005"] button[aria-pressed="true"] svg{color:var(--vibeui-buttongroup-005-accent)}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="buttongroup-005"] *{animation:none!important;transition:none!important}}

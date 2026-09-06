@@ -24,10 +24,10 @@ export type Branding001Props = Omit<ComponentProps<"section">, "children"> & {
 // строкой ниже, а не собственной тёмной темой.
 const STYLES = `
 :where([data-vibeui-block="branding-001"]){
---vibeui-branding-001-bg-top:light-dark(oklch(0.94 0.006 260),oklch(0.19 0.012 260));
---vibeui-branding-001-bg-bottom:light-dark(oklch(0.88 0.01 260),oklch(0.09 0.01 260));
+--vibeui-branding-001-bg-top:light-dark(oklch(0.94 0 260),oklch(0.19 0 260));
+--vibeui-branding-001-bg-bottom:light-dark(oklch(0.88 0 260),oklch(0.09 0 260));
 --vibeui-branding-001-fg:light-dark(oklch(0.2 0 0),oklch(0.95 0 0));
---vibeui-branding-001-border:light-dark(oklch(0.86 0.01 260),oklch(0.3 0.01 260));
+--vibeui-branding-001-border:light-dark(oklch(0.86 0 260),oklch(0.3 0 260));
 --vibeui-branding-001-accent:light-dark(oklch(0.66 0.19 275),oklch(0.75 0.17 275));
 --vibeui-branding-001-icon-fg:oklch(0.98 0 0);
 --vibeui-branding-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

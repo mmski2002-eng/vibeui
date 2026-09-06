@@ -32,15 +32,15 @@ export type Buttongroup056Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="buttongroup-056"]){
 --vibeui-buttongroup-056-surface:transparent;
---vibeui-buttongroup-056-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.005 265));
+--vibeui-buttongroup-056-fg:light-dark(oklch(0.25 0 265),oklch(0.95 0 265));
 --vibeui-buttongroup-056-muted:color-mix(in oklab,var(--vibeui-buttongroup-056-fg) 68%,transparent);
---vibeui-buttongroup-056-border:light-dark(oklch(0.89 0.008 265),oklch(0.41 0.012 265));
---vibeui-buttongroup-056-on:light-dark(oklch(0.96 0.03 265),oklch(0.32 0.045 265));
+--vibeui-buttongroup-056-border:light-dark(oklch(0.89 0 265),oklch(0.41 0 265));
+--vibeui-buttongroup-056-on:light-dark(oklch(0.96 0 265),oklch(0.32 0.045 265));
 --vibeui-buttongroup-056-accent:light-dark(oklch(0.5 0.16 265),oklch(0.76 0.14 265));
 /* Подсказка контрастна к сцепке, а не к теме: в светлой она тёмная,
    в тёмной — светлая, иначе плашка сливается с панелью. */
---vibeui-buttongroup-056-tip:light-dark(oklch(0.26 0.02 265),oklch(0.92 0.008 265));
---vibeui-buttongroup-056-tip-fg:light-dark(oklch(0.985 0.002 265),oklch(0.22 0.02 265));
+--vibeui-buttongroup-056-tip:light-dark(oklch(0.26 0 265),oklch(0.92 0 265));
+--vibeui-buttongroup-056-tip-fg:light-dark(oklch(0.985 0 265),oklch(0.22 0 265));
 --vibeui-buttongroup-056-radius:0.625rem;
 --vibeui-buttongroup-056-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

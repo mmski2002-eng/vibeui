@@ -21,11 +21,11 @@ export type Buttongroup040Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="buttongroup-040"]){
 --vibeui-buttongroup-040-surface:transparent;
---vibeui-buttongroup-040-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.005 265));
+--vibeui-buttongroup-040-fg:light-dark(oklch(0.25 0 265),oklch(0.95 0 265));
 --vibeui-buttongroup-040-muted:color-mix(in oklab,var(--vibeui-buttongroup-040-fg) 68%,transparent);
---vibeui-buttongroup-040-border:light-dark(oklch(0.88 0.008 265),oklch(0.41 0.012 265));
---vibeui-buttongroup-040-hover:light-dark(oklch(0.965 0.005 265),oklch(0.33 0.012 265));
---vibeui-buttongroup-040-soft:light-dark(oklch(0.97 0.02 265),oklch(0.34 0.05 265));
+--vibeui-buttongroup-040-border:light-dark(oklch(0.88 0 265),oklch(0.41 0 265));
+--vibeui-buttongroup-040-hover:light-dark(oklch(0.965 0 265),oklch(0.33 0 265));
+--vibeui-buttongroup-040-soft:light-dark(oklch(0.97 0 265),oklch(0.34 0.05 265));
 --vibeui-buttongroup-040-soft-hover:light-dark(oklch(0.94 0.035 265),oklch(0.39 0.06 265));
 --vibeui-buttongroup-040-accent:light-dark(oklch(0.5 0.16 265),oklch(0.78 0.13 265));
 --vibeui-buttongroup-040-radius:0.625rem;

@@ -17,11 +17,11 @@ export type Switch004Props = Omit<ComponentProps<"input">, "type" | "size"> & {
 const STYLES = `
 :where([data-vibeui-block="switch-004"]){
 --vibeui-switch-004-bg:transparent;
---vibeui-switch-004-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-switch-004-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-switch-004-muted:color-mix(in oklab,var(--vibeui-switch-004-fg) 68%,transparent);
---vibeui-switch-004-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
---vibeui-switch-004-track:light-dark(oklch(0.72 0.02 265),oklch(0.46 0.016 265));
---vibeui-switch-004-thumb:light-dark(oklch(1 0 0),oklch(0.94 0.004 265));
+--vibeui-switch-004-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
+--vibeui-switch-004-track:light-dark(oklch(0.72 0 265),oklch(0.46 0 265));
+--vibeui-switch-004-thumb:light-dark(oklch(1 0 0),oklch(0.94 0 265));
 --vibeui-switch-004-accent:light-dark(oklch(0.55 0.16 155),oklch(0.68 0.15 155));
 --vibeui-switch-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -57,7 +57,7 @@ position:absolute;left:0.1875rem;top:0.1875rem;
 display:grid;place-items:center;
 width:1.5rem;height:1.5rem;border-radius:9999px;pointer-events:none;
 background:var(--vibeui-switch-004-thumb);
-box-shadow:0 1px 3px oklch(0.2 0.02 265 / 30%);
+box-shadow:0 1px 3px oklch(0.2 0 265 / 30%);
 transition:transform .2s cubic-bezier(.32,.72,0,1);
 }
 [data-vibeui-block="switch-004"] input:checked + [data-part="thumb"]{transform:translateX(1.625rem)}

@@ -28,10 +28,10 @@ export type Dialog011Props = {
 // может быть внешних файлов, а заглушка-серый прямоугольник выглядит поломкой.
 const STYLES = `
 :where([data-vibeui-block="dialog-011"]){
---vibeui-dialog-011-fg:light-dark(oklch(0.22 0.016 265),oklch(0.94 0.005 265));
+--vibeui-dialog-011-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-dialog-011-muted:color-mix(in oklab,var(--vibeui-dialog-011-fg) 68%,transparent);
---vibeui-dialog-011-bg:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
---vibeui-dialog-011-border:light-dark(oklch(0.89 0.006 265),oklch(0.38 0.012 265));
+--vibeui-dialog-011-bg:light-dark(oklch(1 0 0),oklch(0.24 0 265));
+--vibeui-dialog-011-border:light-dark(oklch(0.89 0 265),oklch(0.38 0 265));
 --vibeui-dialog-011-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
 --vibeui-dialog-011-radius:1rem;
 --vibeui-dialog-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -51,37 +51,37 @@ background:var(--vibeui-dialog-011-bg);color:var(--vibeui-dialog-011-fg);
 [data-vibeui-dialog-011-window]{
 position:fixed;inset:0;margin:auto;height:fit-content;
 width:min(26rem,calc(100vw - 2rem));box-sizing:border-box;padding:0;overflow:hidden;
-border:1px solid var(--vibeui-dialog-011-border,light-dark(oklch(0.89 0.006 265),oklch(0.38 0.012 265)));
+border:1px solid var(--vibeui-dialog-011-border,light-dark(oklch(0.89 0 265),oklch(0.38 0 265)));
 border-radius:var(--vibeui-dialog-011-radius,1rem);
-background:var(--vibeui-dialog-011-bg,light-dark(oklch(1 0 0),oklch(0.24 0.012 265)));
-color:var(--vibeui-dialog-011-fg,light-dark(oklch(0.22 0.016 265),oklch(0.94 0.005 265)));
+background:var(--vibeui-dialog-011-bg,light-dark(oklch(1 0 0),oklch(0.24 0 265)));
+color:var(--vibeui-dialog-011-fg,light-dark(oklch(0.22 0 265),oklch(0.94 0 265)));
 font-family:var(--vibeui-dialog-011-font,ui-sans-serif,system-ui,sans-serif);
-box-shadow:0 24px 60px -24px oklch(0.2 0.03 265 / 45%);
+box-shadow:0 24px 60px -24px oklch(0.2 0 265 / 45%);
 opacity:0;transform:scale(0.97);
 transition:opacity .18s ease,transform .18s ease,display .18s allow-discrete,overlay .18s allow-discrete;
 }
 [data-vibeui-dialog-011-window]:popover-open{opacity:1;transform:none}
 @starting-style{[data-vibeui-dialog-011-window]:popover-open{opacity:0;transform:scale(0.97)}}
-[data-vibeui-dialog-011-window]::backdrop{background:oklch(0.18 0.02 265 / 50%);backdrop-filter:blur(2px)}
+[data-vibeui-dialog-011-window]::backdrop{background:oklch(0.18 0 265 / 50%);backdrop-filter:blur(2px)}
 /* Обложка градиентами: внешних файлов у компонента быть не может. */
 [data-vibeui-dialog-011-window] [data-part="cover"]{
 position:relative;aspect-ratio:16 / 9;
 background:
 radial-gradient(110% 90% at 18% 10%,color-mix(in oklab,var(--vibeui-dialog-011-accent,light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262))) 55%,transparent),transparent 62%),
-linear-gradient(155deg,light-dark(oklch(0.93 0.03 265),oklch(0.38 0.04 265)),light-dark(oklch(0.84 0.05 250),oklch(0.3 0.05 250)));
+linear-gradient(155deg,light-dark(oklch(0.93 0 265),oklch(0.38 0.04 265)),light-dark(oklch(0.84 0.05 250),oklch(0.3 0.05 250)));
 }
 /* Затемнение низа обложки: полупрозрачное, поэтому работает поверх обеих
    веток обложки и своей ветки не требует. */
 [data-vibeui-dialog-011-window] [data-part="cover"]::after{
 content:"";position:absolute;inset:auto 0 0;height:35%;
-background:linear-gradient(to top,oklch(0.2 0.02 265 / 22%),transparent);
+background:linear-gradient(to top,oklch(0.2 0 265 / 22%),transparent);
 }
 [data-vibeui-dialog-011-window] [data-part="body"]{padding:1.125rem 1.25rem 1.25rem}
 [data-vibeui-dialog-011-window] [data-part="title"]{margin:0 0 0.25rem;font-size:1.0625rem;font-weight:640;line-height:1.3}
-[data-vibeui-dialog-011-window] [data-part="description"]{margin:0;font-size:0.875rem;line-height:1.55;color:var(--vibeui-dialog-011-muted,light-dark(oklch(0.5 0.014 265),oklch(0.7 0.012 265)))}
+[data-vibeui-dialog-011-window] [data-part="description"]{margin:0;font-size:0.875rem;line-height:1.55;color:var(--vibeui-dialog-011-muted,light-dark(oklch(0.5 0 265),oklch(0.7 0 265)))}
 [data-vibeui-dialog-011-window] [data-part="meta"]{
 display:block;margin-top:0.625rem;font-size:0.75rem;
-color:var(--vibeui-dialog-011-muted,light-dark(oklch(0.5 0.014 265),oklch(0.7 0.012 265)));font-variant-numeric:tabular-nums;
+color:var(--vibeui-dialog-011-muted,light-dark(oklch(0.5 0 265),oklch(0.7 0 265)));font-variant-numeric:tabular-nums;
 }
 [data-vibeui-dialog-011-window] [data-part="actions"]{display:flex;justify-content:flex-end;gap:0.5rem;margin-top:1.125rem}
 [data-vibeui-dialog-011-window] [data-part="close"],
@@ -90,8 +90,8 @@ cursor:pointer;font:inherit;font-size:0.875rem;font-weight:600;
 display:inline-flex;align-items:center;min-height:2.25rem;padding:0.3125rem 1rem;
 border-radius:0.5rem;border:1px solid transparent;text-decoration:none;
 }
-[data-vibeui-dialog-011-window] [data-part="close"]{background:transparent;color:inherit;border-color:var(--vibeui-dialog-011-border,light-dark(oklch(0.89 0.006 265),oklch(0.38 0.012 265)))}
-[data-vibeui-dialog-011-window] [data-part="primary"]{background:var(--vibeui-dialog-011-accent,light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262)));color:light-dark(oklch(1 0 0),oklch(0.17 0.02 265))}
+[data-vibeui-dialog-011-window] [data-part="close"]{background:transparent;color:inherit;border-color:var(--vibeui-dialog-011-border,light-dark(oklch(0.89 0 265),oklch(0.38 0 265)))}
+[data-vibeui-dialog-011-window] [data-part="primary"]{background:var(--vibeui-dialog-011-accent,light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262)));color:light-dark(oklch(1 0 0),oklch(0.17 0 265))}
 [data-vibeui-dialog-011-window] [data-part="primary"]:hover{filter:brightness(0.94)}
 [data-vibeui-dialog-011-window] :focus-visible{outline:2px solid var(--vibeui-dialog-011-accent,light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262)));outline-offset:2px}
 /* Popover страницу не блокирует: фон под окном иначе продолжает прокручиваться. */

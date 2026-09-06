@@ -33,16 +33,16 @@ export type Banner013Props = Omit<ComponentProps<"section">, "children"> & {
 // согласием и выглядит так же: разница только в заливке.
 const STYLES = `
 :where([data-vibeui-block="banner-013"]){
---vibeui-banner-013-bg:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
---vibeui-banner-013-fg:light-dark(oklch(0.23 0.012 265),oklch(0.94 0.005 265));
+--vibeui-banner-013-bg:light-dark(oklch(1 0 0),oklch(0.24 0 265));
+--vibeui-banner-013-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-banner-013-muted:color-mix(in oklab,var(--vibeui-banner-013-fg) 68%,transparent);
---vibeui-banner-013-border:light-dark(oklch(0.89 0.006 265),oklch(0.36 0.012 265));
---vibeui-banner-013-accent:light-dark(oklch(0.28 0.02 265),oklch(0.9 0.008 265));
+--vibeui-banner-013-border:light-dark(oklch(0.89 0 265),oklch(0.36 0 265));
+--vibeui-banner-013-accent:light-dark(oklch(0.28 0 265),oklch(0.9 0 265));
 /* Текст на акценте выводится из его светлоты: проект передаёт один цвет на
    обе ветки темы, и фиксированный однажды окажется тёмным на тёмном. */
 --vibeui-banner-013-on-accent:oklch(from var(--vibeui-banner-013-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-banner-013-outline:color-mix(in oklab,var(--vibeui-banner-013-accent) 65%,var(--vibeui-banner-013-fg) 35%);
---vibeui-banner-013-shadow:light-dark(oklch(0.2 0.02 265 / 50%),oklch(0 0 0 / 62%));
+--vibeui-banner-013-shadow:light-dark(oklch(0.2 0 265 / 50%),oklch(0 0 0 / 62%));
 --vibeui-banner-013-radius:0.875rem;
 --vibeui-banner-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

@@ -23,11 +23,11 @@ export type Carousel012Props = Omit<ComponentProps<"section">, "children"> & {
 // темнеют вместе со страницей, своей тёмной темы компонент не носит.
 const STYLES = `
 :where([data-vibeui-block="carousel-012"]){
---vibeui-carousel-012-bg:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
---vibeui-carousel-012-fg:light-dark(oklch(0.34 0.014 265),oklch(0.92 0.007 265));
+--vibeui-carousel-012-bg:light-dark(oklch(1 0 0),oklch(0.21 0 265));
+--vibeui-carousel-012-fg:light-dark(oklch(0.34 0 265),oklch(0.92 0 265));
 --vibeui-carousel-012-muted:color-mix(in oklab,var(--vibeui-carousel-012-fg) 68%,transparent);
---vibeui-carousel-012-border:light-dark(oklch(0.91 0.006 265),oklch(0.37 0.012 265));
---vibeui-carousel-012-chip:light-dark(oklch(0.97 0.003 265),oklch(0.27 0.013 265));
+--vibeui-carousel-012-border:light-dark(oklch(0.91 0 265),oklch(0.37 0 265));
+--vibeui-carousel-012-chip:light-dark(oklch(0.97 0 265),oklch(0.27 0 265));
 --vibeui-carousel-012-duration:34s;
 --vibeui-carousel-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

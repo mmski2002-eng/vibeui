@@ -36,11 +36,11 @@ export type Tags006Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="tags-006"]){
 --vibeui-tags-006-surface:transparent;
---vibeui-tags-006-field:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
---vibeui-tags-006-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.01 265));
---vibeui-tags-006-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-tags-006-field:light-dark(oklch(1 0 0),oklch(0.22 0 265));
+--vibeui-tags-006-shell:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-tags-006-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-tags-006-muted:color-mix(in oklab,var(--vibeui-tags-006-fg) 68%,transparent);
---vibeui-tags-006-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.012 265));
+--vibeui-tags-006-border:light-dark(oklch(0.88 0 265),oklch(0.38 0 265));
 --vibeui-tags-006-accent:light-dark(oklch(0.5 0.15 265),oklch(0.76 0.14 265));
 --vibeui-tags-006-ring:light-dark(oklch(0.5 0.15 265 / 18%),oklch(0.76 0.14 265 / 28%));
 --vibeui-tags-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

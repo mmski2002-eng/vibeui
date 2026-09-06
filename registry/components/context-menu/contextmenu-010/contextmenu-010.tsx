@@ -48,13 +48,13 @@ export type Contextmenu010Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="contextmenu-010"]){
 --vibeui-contextmenu-010-bg:transparent;
---vibeui-contextmenu-010-surface:light-dark(oklch(1 0 0),oklch(0.24 0.013 265));
---vibeui-contextmenu-010-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-contextmenu-010-surface:light-dark(oklch(1 0 0),oklch(0.24 0 265));
+--vibeui-contextmenu-010-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-contextmenu-010-muted:color-mix(in oklab,var(--vibeui-contextmenu-010-fg) 68%,transparent);
---vibeui-contextmenu-010-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
---vibeui-contextmenu-010-hover:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.014 265));
+--vibeui-contextmenu-010-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
+--vibeui-contextmenu-010-hover:light-dark(oklch(0.96 0 265),oklch(0.31 0 265));
 --vibeui-contextmenu-010-accent:light-dark(oklch(0.58 0.17 300),oklch(0.76 0.14 300));
---vibeui-contextmenu-010-shadow:light-dark(oklch(0.2 0.03 265 / 50%),oklch(0 0 0 / 72%));
+--vibeui-contextmenu-010-shadow:light-dark(oklch(0.2 0 265 / 50%),oklch(0 0 0 / 72%));
 --vibeui-contextmenu-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

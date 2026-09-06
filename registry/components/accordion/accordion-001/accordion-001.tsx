@@ -37,9 +37,9 @@ export type Accordion001Props = Omit<ComponentProps<"div">, "children"> & {
 // становится тёмным там, где тёмный контекст, и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="accordion-001"]){
---vibeui-accordion-001-fg:light-dark(oklch(0.2 0.016 255),oklch(0.94 0.005 255));
+--vibeui-accordion-001-fg:light-dark(oklch(0.2 0 255),oklch(0.94 0 255));
 --vibeui-accordion-001-muted:color-mix(in oklab,var(--vibeui-accordion-001-fg) 68%,transparent);
---vibeui-accordion-001-rule:light-dark(oklch(0.9 0.009 250),oklch(0.31 0.01 250));
+--vibeui-accordion-001-rule:light-dark(oklch(0.9 0 250),oklch(0.31 0 250));
 --vibeui-accordion-001-accent:light-dark(oklch(0.5 0.095 195),oklch(0.75 0.11 195));
 --vibeui-accordion-001-bg:transparent;
 --vibeui-accordion-001-pad:0.5rem 0 0.75rem;

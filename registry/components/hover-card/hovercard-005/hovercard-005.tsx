@@ -37,7 +37,7 @@ const STYLES = `
 :where([data-vibeui-block="hovercard-005"]){
 --vibeui-hovercard-005-bg:transparent;
 --vibeui-hovercard-005-card:light-dark(oklch(0.995 0.004 90),oklch(0.26 0.012 70));
---vibeui-hovercard-005-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 90));
+--vibeui-hovercard-005-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0.006 90));
 --vibeui-hovercard-005-muted:color-mix(in oklab,var(--vibeui-hovercard-005-fg) 68%,transparent);
 --vibeui-hovercard-005-border:light-dark(oklch(0.89 0.01 90),oklch(0.37 0.014 70));
 --vibeui-hovercard-005-accent:light-dark(oklch(0.48 0.13 45),oklch(0.79 0.13 55));
@@ -55,7 +55,7 @@ font-family:var(--vibeui-hovercard-005-font);color:var(--vibeui-hovercard-005-fg
 }
 [data-vibeui-block="hovercard-005"] [data-part="line"]{margin:0;font-size:0.875rem;line-height:1.7}
 /* Статья цепляется к сокращению в строке, а не к абзацу целиком. */
-[data-vibeui-block="hovercard-005"] [data-part="host"]{position:relative;display:inline-block}
+[data-vibeui-block="hovercard-005"] [data-part="host"]{position:relative;display:inline-block;anchor-name:--vibeui-hovercard-005-anchor}
 /* Сокращение в тексте: пунктир снизу и курсор help, ссылки здесь нет. */
 [data-vibeui-block="hovercard-005"] [data-part="term"]{
 cursor:help;font-weight:650;color:var(--vibeui-hovercard-005-accent);
@@ -67,7 +67,10 @@ border-radius:0.1875rem;
    короткое слово может стоять где угодно в строке, и левый край карточки на
    узкой странице легко уводит её за правый край. */
 [data-vibeui-block="hovercard-005"] [data-part="card"]{
-position:absolute;left:50%;top:calc(100% + 0.5rem);z-index:20;
+/* fixed с привязкой к якорю: absolute режет рамка карточки каталога,
+   а фиксированный слой её не замечает. */
+position:fixed;inset:auto;position-anchor:--vibeui-hovercard-005-anchor;
+top:anchor(bottom);left:anchor(center);margin-top:0.5rem;z-index:20;
 display:flex;flex-direction:column;gap:0.375rem;
 width:19rem;max-width:calc(100vw - 2rem);box-sizing:border-box;padding:0.875rem;
 border:1px solid var(--vibeui-hovercard-005-border);
@@ -77,6 +80,9 @@ background:var(--vibeui-hovercard-005-card);
 box-shadow:0 22px 46px -28px oklch(0.25 0.03 60 / 55%);
 opacity:0;visibility:hidden;translate:-50% -0.25rem;
 transition:opacity .15s ease,translate .15s ease,visibility .15s;
+}
+@supports not (anchor-name: --a){
+[data-vibeui-block="hovercard-005"] [data-part="card"]{position:absolute;inset:auto;left:50%;top:calc(100% + 0.5rem);margin-top:0}
 }
 [data-vibeui-block="hovercard-005"] [data-part="host"]:hover [data-part="card"],
 [data-vibeui-block="hovercard-005"] [data-part="host"]:focus-within [data-part="card"]{opacity:1;visibility:visible;translate:-50% 0}

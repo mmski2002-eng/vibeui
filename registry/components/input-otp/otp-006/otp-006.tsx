@@ -33,11 +33,11 @@ const PEEK_LABEL: Record<string, string> = {
 const STYLES = `
 :where([data-vibeui-block="otp-006"]){
 --vibeui-otp-006-bg:transparent;
---vibeui-otp-006-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
---vibeui-otp-006-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-otp-006-shell:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
+--vibeui-otp-006-fg:light-dark(oklch(0.21 0 265),oklch(0.94 0 265));
 --vibeui-otp-006-muted:color-mix(in oklab,var(--vibeui-otp-006-fg) 68%,transparent);
---vibeui-otp-006-field:light-dark(oklch(0.98 0.002 265),oklch(0.26 0.014 265));
---vibeui-otp-006-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.014 265));
+--vibeui-otp-006-field:light-dark(oklch(0.98 0 265),oklch(0.26 0 265));
+--vibeui-otp-006-border:light-dark(oklch(0.87 0 265),oklch(0.42 0 265));
 --vibeui-otp-006-accent:light-dark(oklch(0.5 0.17 300),oklch(0.75 0.15 300));
 --vibeui-otp-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-otp-006-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;

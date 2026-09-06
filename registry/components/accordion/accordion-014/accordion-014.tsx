@@ -44,9 +44,9 @@ export type Accordion014Props = Omit<ComponentProps<"div">, "children"> & {
 // одной понятной ссылки получаются два конфликтующих действия.
 const STYLES = `
 :where([data-vibeui-block="accordion-014"]){
---vibeui-accordion-014-fg:light-dark(oklch(0.2 0.016 255),oklch(0.94 0.005 255));
+--vibeui-accordion-014-fg:light-dark(oklch(0.2 0 255),oklch(0.94 0 255));
 --vibeui-accordion-014-muted:color-mix(in oklab,var(--vibeui-accordion-014-fg) 68%,transparent);
---vibeui-accordion-014-rule:light-dark(oklch(0.9 0.009 250),oklch(0.31 0.01 250));
+--vibeui-accordion-014-rule:light-dark(oklch(0.9 0 250),oklch(0.31 0 250));
 --vibeui-accordion-014-accent:light-dark(oklch(0.5 0.15 255),oklch(0.74 0.13 255));
 --vibeui-accordion-014-target:color-mix(in oklab,var(--vibeui-accordion-014-accent) 14%,transparent);
 --vibeui-accordion-014-bg:transparent;

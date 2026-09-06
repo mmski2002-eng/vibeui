@@ -24,8 +24,8 @@ export type CodeBlockAnim003Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="code-block-anim-003"]){
 --vibeui-code-block-anim-003-frame:light-dark(oklch(0.968 0 0),oklch(0.225 0 0));
---vibeui-code-block-anim-003-card:light-dark(oklch(0.14 0.01 260),oklch(0.12 0.01 260));
---vibeui-code-block-anim-003-fg:oklch(0.92 0.006 260);
+--vibeui-code-block-anim-003-card:light-dark(oklch(0.14 0 260),oklch(0.12 0 260));
+--vibeui-code-block-anim-003-fg:oklch(0.92 0 260);
 --vibeui-code-block-anim-003-muted:color-mix(in oklab,var(--vibeui-code-block-anim-003-fg) 42%,transparent);
 --vibeui-code-block-anim-003-border:light-dark(oklch(0.92 0 0),oklch(0.275 0 0));
 --vibeui-code-block-anim-003-accent:light-dark(oklch(0.62 0.16 255),oklch(0.72 0.14 255));

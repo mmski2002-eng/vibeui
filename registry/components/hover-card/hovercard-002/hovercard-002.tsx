@@ -32,10 +32,10 @@ export type Hovercard002Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="hovercard-002"]){
 --vibeui-hovercard-002-bg:transparent;
---vibeui-hovercard-002-card:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
---vibeui-hovercard-002-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-hovercard-002-card:light-dark(oklch(1 0 0),oklch(0.25 0 265));
+--vibeui-hovercard-002-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-hovercard-002-muted:color-mix(in oklab,var(--vibeui-hovercard-002-fg) 68%,transparent);
---vibeui-hovercard-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-hovercard-002-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
 --vibeui-hovercard-002-hue:250;
 --vibeui-hovercard-002-accent:light-dark(oklch(0.53 0.16 255),oklch(0.75 0.14 255));
 --vibeui-hovercard-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -52,21 +52,27 @@ font-family:var(--vibeui-hovercard-002-font);color:var(--vibeui-hovercard-002-fg
 }
 [data-vibeui-block="hovercard-002"] [data-part="line"]{margin:0;font-size:0.875rem;line-height:1.7}
 /* Ссылка живёт в строке текста: карточка цепляется к ней, а не к абзацу. */
-[data-vibeui-block="hovercard-002"] [data-part="host"]{position:relative;display:inline-block}
+[data-vibeui-block="hovercard-002"] [data-part="host"]{position:relative;display:inline-block;anchor-name:--vibeui-hovercard-002-anchor}
 [data-vibeui-block="hovercard-002"] [data-part="link"]{
 color:var(--vibeui-hovercard-002-accent);font-weight:600;
 text-decoration:underline;text-underline-offset:0.2em;border-radius:0.25rem;
 }
 [data-vibeui-block="hovercard-002"] [data-part="link"]:focus-visible{outline:2px solid var(--vibeui-hovercard-002-accent);outline-offset:2px}
 [data-vibeui-block="hovercard-002"] [data-part="card"]{
-position:absolute;left:0;top:calc(100% + 0.5rem);z-index:20;
+/* fixed с привязкой к якорю: absolute режет рамка карточки каталога,
+   а фиксированный слой её не замечает. */
+position:fixed;inset:auto;position-anchor:--vibeui-hovercard-002-anchor;
+top:anchor(bottom);left:anchor(left);margin-top:0.5rem;z-index:20;
 display:flex;flex-direction:column;
 width:17rem;box-sizing:border-box;overflow:hidden;
 border:1px solid var(--vibeui-hovercard-002-border);border-radius:0.875rem;
 background:var(--vibeui-hovercard-002-card);
-box-shadow:0 22px 46px -28px oklch(0.2 0.02 265 / 55%);
+box-shadow:0 22px 46px -28px oklch(0.2 0 265 / 55%);
 opacity:0;visibility:hidden;translate:0 -0.25rem;
 transition:opacity .15s ease,translate .15s ease,visibility .15s;
+}
+@supports not (anchor-name: --a){
+[data-vibeui-block="hovercard-002"] [data-part="card"]{position:absolute;inset:auto;left:0;top:calc(100% + 0.5rem);margin-top:0}
 }
 [data-vibeui-block="hovercard-002"] [data-part="host"]:hover [data-part="card"],
 [data-vibeui-block="hovercard-002"] [data-part="host"]:focus-within [data-part="card"]{opacity:1;visibility:visible;translate:0 0}

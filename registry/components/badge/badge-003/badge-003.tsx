@@ -17,8 +17,8 @@ export type Badge003Props = Omit<ComponentProps<"span">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="badge-003"]){
 --vibeui-badge-003-size:1.25rem;
---vibeui-badge-003-bg:light-dark(oklch(0.93 0.006 265),oklch(0.33 0.012 265));
---vibeui-badge-003-fg:light-dark(oklch(0.3 0.014 265),oklch(0.93 0.006 265));
+--vibeui-badge-003-bg:light-dark(oklch(0.93 0 265),oklch(0.33 0 265));
+--vibeui-badge-003-fg:light-dark(oklch(0.3 0 265),oklch(0.93 0 265));
 --vibeui-badge-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -34,7 +34,7 @@ font-family:var(--vibeui-badge-003-font);font-size:0.6875rem;font-weight:700;
 /* Табличные цифры: иначе счётчик дёргается при каждом изменении. */
 font-variant-numeric:tabular-nums;line-height:1;vertical-align:middle;
 }
-[data-vibeui-block="badge-003"][data-tone="accent"]{--vibeui-badge-003-bg:light-dark(oklch(0.58 0.16 265),oklch(0.63 0.17 265));--vibeui-badge-003-fg:oklch(0.99 0.01 265)}
+[data-vibeui-block="badge-003"][data-tone="accent"]{--vibeui-badge-003-bg:light-dark(oklch(0.58 0.16 265),oklch(0.63 0.17 265));--vibeui-badge-003-fg:oklch(0.99 0 265)}
 /* Тёмная ветка не светлее светлой: текст на счётчике почти белый, а с ним
    красная заливка держит 4.5:1 только до L≈0.58. */
 [data-vibeui-block="badge-003"][data-tone="danger"]{--vibeui-badge-003-bg:light-dark(oklch(0.58 0.2 25),oklch(0.57 0.2 25));--vibeui-badge-003-fg:oklch(0.99 0.01 25)}

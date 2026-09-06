@@ -14,8 +14,9 @@ export type Button040Props = ComponentProps<"button"> & {
 // а стрелка — вправо. Ширину задаёт родитель, кнопка её только занимает.
 const STYLES = `
 :where([data-vibeui-block="button-040"]){
---vibeui-button-040-accent:light-dark(oklch(0.48 0.15 258),oklch(0.62 0.17 258));
---vibeui-button-040-fg:light-dark(oklch(0.99 0.01 258),oklch(0.98 0.012 258));
+--vibeui-button-040-accent:light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));
+--vibeui-button-040-hover-filter:light-dark(brightness(1.45),brightness(0.9));
+--vibeui-button-040-fg:light-dark(oklch(0.99 0 265),oklch(0.17 0.01 265));
 --vibeui-button-040-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

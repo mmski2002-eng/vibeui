@@ -27,10 +27,10 @@ export type Tree008Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="tree-008"]){
 --vibeui-tree-008-bg:transparent;
---vibeui-tree-008-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-tree-008-fg:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
 --vibeui-tree-008-muted:color-mix(in oklab,var(--vibeui-tree-008-fg) 68%,transparent);
---vibeui-tree-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
---vibeui-tree-008-line:light-dark(oklch(0.85 0.008 265),oklch(0.42 0.014 265));
+--vibeui-tree-008-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-tree-008-line:light-dark(oklch(0.85 0 265),oklch(0.42 0 265));
 --vibeui-tree-008-row:1.75rem;
 --vibeui-tree-008-indent:0.875rem;
 --vibeui-tree-008-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;

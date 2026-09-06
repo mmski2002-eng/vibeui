@@ -34,12 +34,12 @@ export type Card015Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="card-015"]){
 --vibeui-card-015-bg:transparent;
---vibeui-card-015-surface:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
---vibeui-card-015-tick:light-dark(oklch(1 0 0),oklch(0.2 0.02 265));
---vibeui-card-015-fg:light-dark(oklch(0.22 0.015 265),oklch(0.94 0.006 265));
+--vibeui-card-015-surface:light-dark(oklch(1 0 0),oklch(0.26 0 265));
+--vibeui-card-015-tick:light-dark(oklch(1 0 0),oklch(0.2 0 265));
+--vibeui-card-015-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-card-015-muted:color-mix(in oklab,var(--vibeui-card-015-fg) 68%,transparent);
---vibeui-card-015-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
---vibeui-card-015-track:light-dark(oklch(0.93 0.005 265),oklch(0.33 0.01 265));
+--vibeui-card-015-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
+--vibeui-card-015-track:light-dark(oklch(0.93 0 265),oklch(0.33 0 265));
 --vibeui-card-015-accent:light-dark(oklch(0.56 0.15 152),oklch(0.74 0.14 152));
 --vibeui-card-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

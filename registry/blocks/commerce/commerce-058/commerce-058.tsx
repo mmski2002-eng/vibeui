@@ -52,10 +52,10 @@ export type Commerce058Props = {
 const STYLES = `
 :where([data-vibeui-block="commerce-058"]){
 --vibeui-commerce-058-bg:transparent;
---vibeui-commerce-058-fg:light-dark(oklch(0.2 0.014 260),oklch(0.94 0.006 260));
---vibeui-commerce-058-muted:light-dark(oklch(0.53 0.016 260),oklch(0.73 0.013 260));
---vibeui-commerce-058-border:light-dark(oklch(0.9 0.008 260),oklch(0.38 0.014 260));
---vibeui-commerce-058-soft:light-dark(oklch(0.973 0.006 260),oklch(0.27 0.012 260));
+--vibeui-commerce-058-fg:light-dark(oklch(0.2 0 260),oklch(0.94 0 260));
+--vibeui-commerce-058-muted:light-dark(oklch(0.53 0 260),oklch(0.73 0 260));
+--vibeui-commerce-058-border:light-dark(oklch(0.9 0 260),oklch(0.38 0 260));
+--vibeui-commerce-058-soft:light-dark(oklch(0.973 0 260),oklch(0.27 0 260));
 --vibeui-commerce-058-accent:light-dark(oklch(0.5 0.16 265),oklch(0.74 0.14 265));
 --vibeui-commerce-058-onaccent:light-dark(oklch(0.99 0 0),oklch(0.19 0.04 265));
 --vibeui-commerce-058-free:light-dark(oklch(0.47 0.12 150),oklch(0.72 0.13 152));

@@ -34,11 +34,11 @@ export type Tree007Props = {
 const STYLES = `
 :where([data-vibeui-block="tree-007"]){
 --vibeui-tree-007-bg:transparent;
---vibeui-tree-007-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-tree-007-fg:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
 --vibeui-tree-007-muted:color-mix(in oklab,var(--vibeui-tree-007-fg) 68%,transparent);
---vibeui-tree-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
---vibeui-tree-007-hover:light-dark(oklch(0.97 0.004 265),oklch(0.29 0.01 265));
---vibeui-tree-007-skeleton:light-dark(oklch(0.93 0.005 265),oklch(0.33 0.01 265));
+--vibeui-tree-007-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-tree-007-hover:light-dark(oklch(0.97 0 265),oklch(0.29 0 265));
+--vibeui-tree-007-skeleton:light-dark(oklch(0.93 0 265),oklch(0.33 0 265));
 --vibeui-tree-007-accent:light-dark(oklch(0.53 0.19 265),oklch(0.75 0.16 265));
 --vibeui-tree-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

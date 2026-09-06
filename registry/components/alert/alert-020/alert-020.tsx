@@ -27,11 +27,11 @@ export type Alert020Props = Omit<
 // темнеет там, где тёмный контекст, и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="alert-020"]){
---vibeui-alert-020-fg:light-dark(oklch(0.22 0.014 265),oklch(0.95 0.006 265));
+--vibeui-alert-020-fg:light-dark(oklch(0.22 0 265),oklch(0.95 0 265));
 --vibeui-alert-020-muted:color-mix(in oklab,var(--vibeui-alert-020-fg) 68%,transparent);
 --vibeui-alert-020-bg:transparent;
---vibeui-alert-020-field:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
---vibeui-alert-020-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-alert-020-field:light-dark(oklch(1 0 0),oklch(0.26 0 265));
+--vibeui-alert-020-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
 --vibeui-alert-020-danger:light-dark(oklch(0.56 0.19 25),oklch(0.71 0.18 25));
 --vibeui-alert-020-danger-fg:light-dark(oklch(0.99 0.01 25),oklch(0.16 0.02 25));
 --vibeui-alert-020-radius:0.875rem;

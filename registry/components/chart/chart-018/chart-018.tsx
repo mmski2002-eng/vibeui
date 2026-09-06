@@ -34,13 +34,13 @@ export type Chart018Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="chart-018"]){
 --vibeui-chart-018-bg:transparent;
---vibeui-chart-018-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-chart-018-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-chart-018-muted:color-mix(in oklab,var(--vibeui-chart-018-fg) 68%,transparent);
---vibeui-chart-018-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
---vibeui-chart-018-grid:light-dark(oklch(0.94 0.005 265),oklch(0.31 0.01 265));
+--vibeui-chart-018-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
+--vibeui-chart-018-grid:light-dark(oklch(0.94 0 265),oklch(0.31 0 265));
 --vibeui-chart-018-up:light-dark(oklch(0.62 0.13 155),oklch(0.74 0.14 155));
 --vibeui-chart-018-down:light-dark(oklch(0.62 0.16 25),oklch(0.71 0.16 25));
---vibeui-chart-018-total:light-dark(oklch(0.42 0.03 265),oklch(0.78 0.025 265));
+--vibeui-chart-018-total:light-dark(oklch(0.42 0 265),oklch(0.78 0 265));
 --vibeui-chart-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

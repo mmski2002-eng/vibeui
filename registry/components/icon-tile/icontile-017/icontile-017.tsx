@@ -61,9 +61,9 @@ container-type:inline-size;
 --vibeui-icontile-017-hue:262;
 --vibeui-icontile-017-chroma:0.05;
 --vibeui-icontile-017-size:2.75rem;
---vibeui-icontile-017-fg:light-dark(oklch(0.26 0.014 265),oklch(0.94 0.006 265));
+--vibeui-icontile-017-fg:light-dark(oklch(0.26 0 265),oklch(0.94 0 265));
 --vibeui-icontile-017-muted:color-mix(in oklab,var(--vibeui-icontile-017-fg) 68%,transparent);
---vibeui-icontile-017-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.011 265));
+--vibeui-icontile-017-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
 --vibeui-icontile-017-surface:transparent;
 --vibeui-icontile-017-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

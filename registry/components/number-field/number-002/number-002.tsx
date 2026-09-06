@@ -39,12 +39,12 @@ export type Number002Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="number-002"]){
 --vibeui-number-002-surface:transparent;
---vibeui-number-002-chip:light-dark(oklch(1 0 0),oklch(0.31 0.013 265));
---vibeui-number-002-field:light-dark(oklch(0.975 0.003 265),oklch(0.25 0.011 265));
---vibeui-number-002-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
---vibeui-number-002-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-number-002-chip:light-dark(oklch(1 0 0),oklch(0.31 0 265));
+--vibeui-number-002-field:light-dark(oklch(0.975 0 265),oklch(0.25 0 265));
+--vibeui-number-002-shell:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-number-002-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-number-002-muted:color-mix(in oklab,var(--vibeui-number-002-fg) 68%,transparent);
---vibeui-number-002-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
+--vibeui-number-002-border:light-dark(oklch(0.88 0 265),oklch(0.42 0 265));
 --vibeui-number-002-accent:light-dark(oklch(0.55 0.16 160),oklch(0.74 0.14 160));
 --vibeui-number-002-ring:light-dark(oklch(0.55 0.16 160 / 20%),oklch(0.74 0.14 160 / 30%));
 --vibeui-number-002-danger:light-dark(oklch(0.55 0.19 25),oklch(0.72 0.16 25));
@@ -82,7 +82,7 @@ appearance:none;border:0;cursor:pointer;flex:none;
 width:2.25rem;height:2.25rem;border-radius:9999px;
 background:var(--vibeui-number-002-chip);color:inherit;
 font:inherit;font-size:1rem;line-height:1;
-box-shadow:0 1px 2px oklch(0.2 0.02 265 / 12%);
+box-shadow:0 1px 2px oklch(0.2 0 265 / 12%);
 transition:color .14s ease,opacity .14s ease;
 }
 [data-vibeui-block="number-002"] button:focus-visible{outline:2px solid var(--vibeui-number-002-accent);outline-offset:2px}

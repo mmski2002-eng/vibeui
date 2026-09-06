@@ -42,10 +42,10 @@ export type Ai007Props = {
 const STYLES = `
 :where([data-vibeui-block="ai-007"]){
 --vibeui-ai-007-bg:transparent;
---vibeui-ai-007-card:light-dark(oklch(1 0 0),oklch(0.25 0.011 265));
---vibeui-ai-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-ai-007-muted:light-dark(oklch(0.53 0.014 265),oklch(0.69 0.012 265));
---vibeui-ai-007-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-ai-007-card:light-dark(oklch(1 0 0),oklch(0.25 0 265));
+--vibeui-ai-007-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
+--vibeui-ai-007-muted:light-dark(oklch(0.53 0 265),oklch(0.69 0 265));
+--vibeui-ai-007-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-ai-007-accent:light-dark(oklch(0.53 0.19 300),oklch(0.76 0.15 300));
 --vibeui-ai-007-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

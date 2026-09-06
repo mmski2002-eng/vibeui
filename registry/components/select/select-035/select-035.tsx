@@ -40,13 +40,13 @@ export type Select035Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="select-035"]){
 --vibeui-select-035-bg:transparent;
---vibeui-select-035-fg:light-dark(oklch(0.23 0.016 265),oklch(0.94 0.005 265));
+--vibeui-select-035-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-select-035-muted:color-mix(in oklab,var(--vibeui-select-035-fg) 68%,transparent);
---vibeui-select-035-border:light-dark(oklch(0.87 0.008 265),oklch(0.4 0.012 265));
+--vibeui-select-035-border:light-dark(oklch(0.87 0 265),oklch(0.4 0 265));
 --vibeui-select-035-accent:light-dark(oklch(0.52 0.18 262),oklch(0.76 0.15 262));
 --vibeui-select-035-on-accent:oklch(from var(--vibeui-select-035-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-select-035-tint:color-mix(in oklab,var(--vibeui-select-035-accent) 14%,transparent);
---vibeui-select-035-panel:light-dark(oklch(1 0 0),oklch(0.25 0.014 265));
+--vibeui-select-035-panel:light-dark(oklch(1 0 0),oklch(0.25 0 265));
 --vibeui-select-035-radius:0.625rem;
 --vibeui-select-035-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

@@ -53,14 +53,14 @@ const STYLES = `
 :where([data-vibeui-block="dashboard-081"]){
 --vibeui-dashboard-081-bg:transparent;
 /* Карточка раздела и строка статьи: подложка самого блока прозрачна. */
---vibeui-dashboard-081-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 235));
---vibeui-dashboard-081-fg:light-dark(oklch(0.21 0.014 235),oklch(0.94 0.005 235));
---vibeui-dashboard-081-muted:light-dark(oklch(0.54 0.014 235),oklch(0.72 0.012 235));
---vibeui-dashboard-081-border:light-dark(oklch(0.91 0.006 235),oklch(0.36 0.012 235));
+--vibeui-dashboard-081-card:light-dark(oklch(1 0 0),oklch(0.26 0 235));
+--vibeui-dashboard-081-fg:light-dark(oklch(0.21 0 235),oklch(0.94 0 235));
+--vibeui-dashboard-081-muted:light-dark(oklch(0.54 0 235),oklch(0.72 0 235));
+--vibeui-dashboard-081-border:light-dark(oklch(0.91 0 235),oklch(0.36 0 235));
 --vibeui-dashboard-081-accent:light-dark(oklch(0.5 0.14 235),oklch(0.74 0.13 235));
 --vibeui-dashboard-081-accent-line:light-dark(oklch(0.78 0.07 235),oklch(0.54 0.1 235));
---vibeui-dashboard-081-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.03 235));
---vibeui-dashboard-081-soft:light-dark(oklch(0.965 0.02 235),oklch(0.3 0.035 235));
+--vibeui-dashboard-081-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0 235));
+--vibeui-dashboard-081-soft:light-dark(oklch(0.965 0 235),oklch(0.3 0.035 235));
 --vibeui-dashboard-081-warn:light-dark(oklch(0.52 0.12 60),oklch(0.82 0.13 60));
 --vibeui-dashboard-081-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 container-type:inline-size;

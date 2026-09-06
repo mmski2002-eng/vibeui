@@ -36,11 +36,11 @@ export type Tabs008Props = {
 const STYLES = `
 :where([data-vibeui-block="tabs-008"]){
 --vibeui-tabs-008-bg:transparent;
---vibeui-tabs-008-menu:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
---vibeui-tabs-008-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-tabs-008-menu:light-dark(oklch(1 0 0),oklch(0.24 0 265));
+--vibeui-tabs-008-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-tabs-008-muted:color-mix(in oklab,var(--vibeui-tabs-008-fg) 68%,transparent);
---vibeui-tabs-008-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
---vibeui-tabs-008-hover:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.85 0.02 265 / 13%));
+--vibeui-tabs-008-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
+--vibeui-tabs-008-hover:light-dark(oklch(0.55 0 265 / 8%),oklch(0.85 0 265 / 13%));
 --vibeui-tabs-008-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
 --vibeui-tabs-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -90,7 +90,7 @@ position:absolute;top:calc(100% + 0.25rem);right:0;z-index:30;
 min-width:10rem;margin:0;padding:0.25rem;box-sizing:border-box;list-style:none;
 background:var(--vibeui-tabs-008-menu);
 border:1px solid var(--vibeui-tabs-008-border);border-radius:0.625rem;
-box-shadow:0 18px 36px -20px oklch(0.2 0.03 265 / 45%);
+box-shadow:0 18px 36px -20px oklch(0.2 0 265 / 45%);
 }
 [data-vibeui-block="tabs-008"] [data-part="pick"]{
 display:block;width:100%;padding:0.4375rem 0.5rem;box-sizing:border-box;

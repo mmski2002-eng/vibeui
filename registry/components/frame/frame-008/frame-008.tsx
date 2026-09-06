@@ -17,15 +17,15 @@ export type Frame008Props = Omit<ComponentProps<"figure">, "title"> & {
 // края на боковой, а не остаётся сверху, как у портретного макета.
 const STYLES = `
 :where([data-vibeui-block="frame-008"]){
---vibeui-frame-008-body:light-dark(oklch(0.93 0.004 265),oklch(0.31 0.007 265));
---vibeui-frame-008-bezel:light-dark(oklch(0.86 0.006 265),oklch(0.45 0.01 265));
+--vibeui-frame-008-body:light-dark(oklch(0.93 0 265),oklch(0.31 0 265));
+--vibeui-frame-008-bezel:light-dark(oklch(0.86 0 265),oklch(0.45 0 265));
 --vibeui-frame-008-screen:transparent;
---vibeui-frame-008-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.005 265));
+--vibeui-frame-008-fg:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
 --vibeui-frame-008-muted:color-mix(in oklab,var(--vibeui-frame-008-fg) 68%,transparent);
---vibeui-frame-008-camera:light-dark(oklch(0.4 0.01 265),oklch(0.16 0.008 265));
---vibeui-frame-008-app:light-dark(oklch(0.99 0.002 265),oklch(0.24 0.01 265));
---vibeui-frame-008-panel:light-dark(oklch(0.96 0.004 265),oklch(0.3 0.01 265));
---vibeui-frame-008-line:light-dark(oklch(0.91 0.005 265),oklch(0.38 0.011 265));
+--vibeui-frame-008-camera:light-dark(oklch(0.4 0 265),oklch(0.16 0 265));
+--vibeui-frame-008-app:light-dark(oklch(0.99 0 265),oklch(0.24 0 265));
+--vibeui-frame-008-panel:light-dark(oklch(0.96 0 265),oklch(0.3 0 265));
+--vibeui-frame-008-line:light-dark(oklch(0.91 0 265),oklch(0.38 0 265));
 --vibeui-frame-008-accent:light-dark(oklch(0.55 0.16 262),oklch(0.72 0.15 262));
 --vibeui-frame-008-radius:1.5rem;
 --vibeui-frame-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

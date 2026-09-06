@@ -17,15 +17,15 @@ export type Switch009Props = Omit<ComponentProps<"input">, "type" | "size"> & {
 const STYLES = `
 :where([data-vibeui-block="switch-009"]){
 --vibeui-switch-009-bg:transparent;
---vibeui-switch-009-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-switch-009-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-switch-009-muted:color-mix(in oklab,var(--vibeui-switch-009-fg) 68%,transparent);
---vibeui-switch-009-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-switch-009-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 /* Небо и светила — это рисунок, а не тема: они одинаковы в обеих ветках,
    иначе день на тёмной странице перестал бы быть днём. */
 --vibeui-switch-009-day:oklch(0.82 0.11 230);
 --vibeui-switch-009-night:oklch(0.32 0.06 275);
 --vibeui-switch-009-sun:oklch(0.88 0.15 85);
---vibeui-switch-009-moon:oklch(0.95 0.02 265);
+--vibeui-switch-009-moon:oklch(0.95 0 265);
 --vibeui-switch-009-accent:light-dark(oklch(0.55 0.19 275),oklch(0.75 0.16 275));
 --vibeui-switch-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -51,7 +51,7 @@ font-size:0.875rem;cursor:pointer;
 appearance:none;-webkit-appearance:none;margin:0;
 width:3.75rem;height:2rem;border-radius:9999px;cursor:inherit;
 background:var(--vibeui-switch-009-day);
-box-shadow:inset 0 1px 3px oklch(0.2 0.02 265 / 25%);
+box-shadow:inset 0 1px 3px oklch(0.2 0 265 / 25%);
 transition:background-color .3s ease;
 }
 [data-vibeui-block="switch-009"] input:checked{background:var(--vibeui-switch-009-night)}
@@ -66,7 +66,7 @@ transition:transform .3s cubic-bezier(.32,.72,0,1),background-color .3s ease,box
 [data-vibeui-block="switch-009"] input:checked + [data-part="orb"]{
 transform:translateX(1.75rem);
 background:var(--vibeui-switch-009-moon);
-box-shadow:0 0 0.5rem oklch(0.95 0.02 265 / 45%);
+box-shadow:0 0 0.5rem oklch(0.95 0 265 / 45%);
 }
 /* Месяц: круг цвета ночного неба наезжает на солнце и выедает из него серп.
    Днём этот круг сдвинут за пределы бегунка. */

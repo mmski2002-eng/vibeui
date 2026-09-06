@@ -28,14 +28,14 @@ export type Toast015Props = Omit<ComponentProps<"div">, "children"> & {
 // подложка светлее фона страницы, а граница светлее подложки.
 const STYLES = `
 :where([data-vibeui-block="toast-015"]){
---vibeui-toast-015-bg:light-dark(oklch(0.99 0.002 265),oklch(0.25 0.014 265));
---vibeui-toast-015-fg:light-dark(oklch(0.22 0.014 265),oklch(0.96 0.003 265));
+--vibeui-toast-015-bg:light-dark(oklch(0.99 0 265),oklch(0.25 0 265));
+--vibeui-toast-015-fg:light-dark(oklch(0.22 0 265),oklch(0.96 0 265));
 --vibeui-toast-015-muted:color-mix(in oklab,var(--vibeui-toast-015-fg) 68%,transparent);
---vibeui-toast-015-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.014 265));
---vibeui-toast-015-hover:light-dark(oklch(0.2 0.02 265 / 7%),oklch(1 0 0 / 12%));
---vibeui-toast-015-shadow:light-dark(oklch(0.18 0.02 265 / 55%),oklch(0.05 0.01 265 / 70%));
+--vibeui-toast-015-border:light-dark(oklch(0.9 0 265),oklch(0.38 0 265));
+--vibeui-toast-015-hover:light-dark(oklch(0.2 0 265 / 7%),oklch(1 0 0 / 12%));
+--vibeui-toast-015-shadow:light-dark(oklch(0.18 0 265 / 55%),oklch(0.05 0 265 / 70%));
 --vibeui-toast-015-accent:light-dark(oklch(0.55 0.16 260),oklch(0.7 0.15 260));
---vibeui-toast-015-accent-fg:light-dark(oklch(0.99 0.004 265),oklch(0.18 0.03 260));
+--vibeui-toast-015-accent-fg:light-dark(oklch(0.99 0 265),oklch(0.18 0 260));
 --vibeui-toast-015-radius:0.875rem;
 --vibeui-toast-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

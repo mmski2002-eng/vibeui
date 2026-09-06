@@ -32,11 +32,11 @@ export type Tree010Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="tree-010"]){
 --vibeui-tree-010-bg:transparent;
---vibeui-tree-010-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-tree-010-fg:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
 --vibeui-tree-010-muted:color-mix(in oklab,var(--vibeui-tree-010-fg) 62%,transparent);
---vibeui-tree-010-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
---vibeui-tree-010-rail:light-dark(oklch(0.92 0.005 265),oklch(0.32 0.01 265));
---vibeui-tree-010-hover:light-dark(oklch(0.97 0.004 265),oklch(0.29 0.01 265));
+--vibeui-tree-010-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-tree-010-rail:light-dark(oklch(0.92 0 265),oklch(0.32 0 265));
+--vibeui-tree-010-hover:light-dark(oklch(0.97 0 265),oklch(0.29 0 265));
 --vibeui-tree-010-accent:light-dark(oklch(0.52 0.19 262),oklch(0.75 0.15 262));
 --vibeui-tree-010-added:light-dark(oklch(0.52 0.15 152),oklch(0.76 0.14 152));
 --vibeui-tree-010-modified:light-dark(oklch(0.58 0.13 75),oklch(0.8 0.12 85));
@@ -96,7 +96,7 @@ overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 flex:none;display:grid;place-items:center;
 inline-size:1rem;block-size:1rem;border-radius:0.25rem;
 font-family:var(--vibeui-tree-010-mono);font-size:0.625rem;font-weight:700;line-height:1;
-color:light-dark(oklch(1 0 0),oklch(0.16 0.012 265));
+color:light-dark(oklch(1 0 0),oklch(0.16 0 265));
 }
 [data-vibeui-block="tree-010"] [data-part="mark"][data-status="added"]{background:var(--vibeui-tree-010-added)}
 [data-vibeui-block="tree-010"] [data-part="mark"][data-status="modified"]{background:var(--vibeui-tree-010-modified)}

@@ -43,10 +43,10 @@ export type Eventcalendar005Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="eventcalendar-005"]){
 --vibeui-eventcalendar-005-bg:transparent;
---vibeui-eventcalendar-005-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.006 265));
+--vibeui-eventcalendar-005-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-eventcalendar-005-muted:color-mix(in oklab,var(--vibeui-eventcalendar-005-fg) 68%,transparent);
---vibeui-eventcalendar-005-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
---vibeui-eventcalendar-005-line:light-dark(oklch(0.95 0.004 265),oklch(0.31 0.01 265));
+--vibeui-eventcalendar-005-border:light-dark(oklch(0.91 0 265),oklch(0.35 0 265));
+--vibeui-eventcalendar-005-line:light-dark(oklch(0.95 0 265),oklch(0.31 0 265));
 --vibeui-eventcalendar-005-accent:light-dark(oklch(0.55 0.16 262),oklch(0.74 0.15 262));
 --vibeui-eventcalendar-005-mark:light-dark(oklch(0.55 0.16 262),oklch(0.74 0.15 262));
 --vibeui-eventcalendar-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

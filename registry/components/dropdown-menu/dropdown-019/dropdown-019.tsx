@@ -1,8 +1,11 @@
+"use client"
+
+import { useRef } from "react"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Dropdown019Item = {
   label: string
-  /** Сочетание клавиш в правой колонке: «⌘⇧S». Пусто — колонка пустует. */
+  /** Сочетание клавиш в правой колонке: «Ctrl+Shift+S». Пусто — колонка пустует. */
   keys?: string
   href?: string
 }
@@ -31,11 +34,11 @@ export type Dropdown019Props = Omit<ComponentProps<"div">, "children"> & {
 // подсказка и свой фокус, поэтому с клавиатуры видно, куда именно ведёт Enter.
 const STYLES = `
 :where([data-vibeui-block="dropdown-019"]){
---vibeui-dropdown-019-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
+--vibeui-dropdown-019-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-dropdown-019-muted:color-mix(in oklab,var(--vibeui-dropdown-019-fg) 62%,transparent);
---vibeui-dropdown-019-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
---vibeui-dropdown-019-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
---vibeui-dropdown-019-hover:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.86 0.02 265 / 12%));
+--vibeui-dropdown-019-bg:light-dark(oklch(1 0 0),oklch(0.25 0 265));
+--vibeui-dropdown-019-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
+--vibeui-dropdown-019-hover:light-dark(oklch(0.55 0 265 / 8%),oklch(0.86 0 265 / 12%));
 --vibeui-dropdown-019-accent:light-dark(oklch(0.52 0.19 262),oklch(0.72 0.16 262));
 --vibeui-dropdown-019-on-accent:oklch(from var(--vibeui-dropdown-019-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-dropdown-019-radius:0.625rem;
@@ -52,7 +55,7 @@ display:inline-flex;font-family:var(--vibeui-dropdown-019-font);
 display:inline-flex;align-items:stretch;
 border-radius:0.5rem;background:var(--vibeui-dropdown-019-accent);
 color:var(--vibeui-dropdown-019-on-accent);
-box-shadow:0 1px 2px oklch(0.2 0.03 265 / 22%);
+box-shadow:0 1px 2px oklch(0.2 0 265 / 22%);
 }
 /* Подпись действия переводится и настраивается, поэтому высоту набирает
    содержимое: фиксированная обрезала бы длинный вариант. */
@@ -93,12 +96,12 @@ transform:rotate(45deg) translate(-0.0625rem,-0.0625rem);
 [data-vibeui-dropdown-019-menu]{
 position:fixed;margin:0;padding:0.3125rem;
 min-inline-size:14rem;box-sizing:border-box;
-border:1px solid var(--vibeui-dropdown-019-border,light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265)));
+border:1px solid var(--vibeui-dropdown-019-border,light-dark(oklch(0.9 0 265),oklch(0.37 0 265)));
 border-radius:var(--vibeui-dropdown-019-radius,0.625rem);
-background:var(--vibeui-dropdown-019-bg,light-dark(oklch(1 0 0),oklch(0.25 0.012 265)));
-color:var(--vibeui-dropdown-019-fg,light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265)));
+background:var(--vibeui-dropdown-019-bg,light-dark(oklch(1 0 0),oklch(0.25 0 265)));
+color:var(--vibeui-dropdown-019-fg,light-dark(oklch(0.24 0 265),oklch(0.94 0 265)));
 font-family:var(--vibeui-dropdown-019-font,ui-sans-serif,system-ui,sans-serif);
-box-shadow:0 16px 36px -18px oklch(0.2 0.03 265 / 45%);
+box-shadow:0 16px 36px -18px oklch(0.2 0 265 / 45%);
 opacity:0;transform:translateY(-0.25rem);
 transition:opacity .14s ease,transform .14s ease,display .14s allow-discrete,overlay .14s allow-discrete;
 }
@@ -122,7 +125,7 @@ font-size:0.8125rem;line-height:1.3;
 transition:background-color .14s ease;
 }
 [data-vibeui-dropdown-019-menu] [data-part="item"]:hover{
-background:var(--vibeui-dropdown-019-hover,light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.86 0.02 265 / 12%)));
+background:var(--vibeui-dropdown-019-hover,light-dark(oklch(0.55 0 265 / 8%),oklch(0.86 0 265 / 12%)));
 }
 [data-vibeui-dropdown-019-menu] [data-part="item"]:focus-visible{
 outline:2px solid var(--vibeui-dropdown-019-accent,light-dark(oklch(0.52 0.19 262),oklch(0.72 0.16 262)));
@@ -145,9 +148,9 @@ position:static;opacity:1;transform:none;margin-block-start:0.375rem;
 `
 
 const DEFAULT_ITEMS: Dropdown019Item[] = [
-  { label: "Сохранить как…", keys: "⌘⇧S", href: "#" },
+  { label: "Сохранить как…", keys: "Ctrl+Shift+S", href: "#" },
   { label: "Сохранить копию", href: "#" },
-  { label: "Сохранить и закрыть", keys: "⌘⏎", href: "#" },
+  { label: "Сохранить и закрыть", keys: "Ctrl+Enter", href: "#" },
 ]
 
 /**
@@ -187,6 +190,17 @@ export function Dropdown019({
   style,
   ...props
 }: Dropdown019Props) {
+  // Ссылка внутри popover его не закрывает: браузер гасит меню только по
+  // клику мимо. В приложении меню убрал бы переход, но пункт может вести и
+  // на текущую страницу — закрываем сами.
+  const menu = useRef<HTMLDivElement>(null)
+
+  const close = () => {
+    if (menu.current?.matches(":popover-open")) {
+      menu.current.hidePopover()
+    }
+  }
+
   const palette = {
     ...(accent ? { "--vibeui-dropdown-019-accent": accent } : null),
     ...(background
@@ -225,13 +239,19 @@ export function Dropdown019({
         </div>
         <div
           id={id}
+          ref={menu}
           popover={open ? undefined : "auto"}
           data-vibeui-dropdown-019-menu=""
           data-open={open || undefined}
           style={palette}
         >
           {items.map((item) => (
-            <a key={item.label} data-part="item" href={item.href}>
+            <a
+              key={item.label}
+              data-part="item"
+              href={item.href}
+              onClick={close}
+            >
               {item.label}
               {item.keys ? <span data-part="keys">{item.keys}</span> : null}
             </a>

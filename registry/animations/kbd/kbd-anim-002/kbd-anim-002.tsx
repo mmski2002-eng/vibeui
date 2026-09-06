@@ -1,14 +1,14 @@
 import { Fragment, type ComponentProps, type CSSProperties } from "react"
 
 export type KbdAnim002Props = Omit<ComponentProps<"section">, "children"> & {
-  /** Клавиши комбинации слева направо, например ["⌘", "K"]. */
+  /** Клавиши комбинации слева направо, например ["Ctrl", "K"]. */
   keys?: string[]
   /** Подпись под клавишами: что делает шорткат. */
   label?: string
   accent?: string
 }
 
-const DEFAULT_KEYS = ["⌘", "K"]
+const DEFAULT_KEYS = ["Ctrl", "K"]
 
 // Идея: комбинация клавиш как ряд объёмных keycap-кнопок с тенью снизу,
 // разделённых знаком «+». Клавиши по очереди «нажимаются» — уходят вниз на
@@ -17,7 +17,7 @@ const DEFAULT_KEYS = ["⌘", "K"]
 const STYLES = `
 :where([data-vibeui-block="kbd-anim-002"]){
 --vibeui-kbd-anim-002-frame:light-dark(oklch(0.968 0 0),oklch(0.225 0 0));
---vibeui-kbd-anim-002-key:light-dark(oklch(1 0 0),oklch(0.28 0.006 265));
+--vibeui-kbd-anim-002-key:light-dark(oklch(1 0 0),oklch(0.28 0 265));
 --vibeui-kbd-anim-002-fg:light-dark(oklch(0.22 0 0),oklch(0.95 0 0));
 --vibeui-kbd-anim-002-muted:color-mix(in oklab,var(--vibeui-kbd-anim-002-fg) 55%,transparent);
 --vibeui-kbd-anim-002-border:light-dark(oklch(0.9 0 0),oklch(0.36 0 0));

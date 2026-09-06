@@ -19,9 +19,10 @@ export type Button054Props = Omit<ComponentProps<"button">, "children"> & {
 // от системного листа (AbortError) не считается ошибкой и не даёт отчёта.
 const STYLES = `
 :where([data-vibeui-block="button-054"]){
---vibeui-button-054-accent:light-dark(oklch(0.52 0.16 235),oklch(0.62 0.15 235));
+--vibeui-button-054-accent:light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));
+--vibeui-button-054-hover-filter:light-dark(brightness(1.45),brightness(0.9));
 --vibeui-button-054-done:light-dark(oklch(0.5 0.13 155),oklch(0.6 0.13 155));
---vibeui-button-054-fg:light-dark(oklch(0.99 0.01 235),oklch(0.17 0.02 250));
+--vibeui-button-054-fg:light-dark(oklch(0.99 0 235),oklch(0.17 0 250));
 --vibeui-button-054-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

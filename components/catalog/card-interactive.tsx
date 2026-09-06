@@ -2,8 +2,8 @@
 
 import dynamic from "next/dynamic"
 import Link from "next/link"
-import { Moon, RotateCcw, Sun } from "lucide-react"
-import { useEffect, useState, type ReactNode } from "react"
+import { CircleAlert, Heart, Moon, RotateCcw, Sun } from "lucide-react"
+import { useEffect, useId, useRef, useState, type ReactNode } from "react"
 
 import { CopyButton } from "@/components/copy-button"
 import { SHELL_THEME_EVENT } from "@/components/catalog/theme-switch"
@@ -19,6 +19,7 @@ import {
   type PreviewTheme,
 } from "@/lib/controls"
 import { getDictionary, type Locale } from "@/lib/i18n"
+import { itemCode } from "@/lib/item-code"
 import type { ItemKind } from "@/registry/categories"
 import type { ItemControl } from "@/registry/meta"
 
@@ -85,6 +86,19 @@ export function CardInteractive({
   children: ReactNode
 }) {
   const t = getDictionary(locale)
+  const code = itemCode(name)
+  const [copiedCode, setCopiedCode] = useState(false)
+
+  async function copyCode() {
+    try {
+      await navigator.clipboard.writeText(code)
+      setCopiedCode(true)
+      window.setTimeout(() => setCopiedCode(false), 1500)
+    } catch {
+      setCopiedCode(false)
+    }
+  }
+
   const [theme, setTheme] = useState<PreviewTheme>("dark")
 
   // Подложка карточки следует за темой оболочки: и на старте (если человек
@@ -114,6 +128,59 @@ export function CardInteractive({
   // Какая панель настройки раскрыта: одновременно открыта максимум одна.
   const [openControl, setOpenControl] = useState<string | null>(null)
 
+  // Кадр не сжимается обратно: раскрытый аккордеон или выехавшая панель
+  // поднимают карточку, и если после закрытия она падала бы назад, сетка
+  // прыгала бы под курсором — вместе с соседкой по ряду. Планка держится до
+  // смены ширины окна, где раскладка всё равно пересчитывается.
+  // Жалоба никуда не уходит: бэкенда у витрины нет. Форма собирает текст и
+  // подтверждает приём — отправку прикрутит тот, у кого появится адрес.
+  const reportId = `report-${useId().replace(/:/g, "")}`
+  const reportRef = useRef<HTMLDivElement>(null)
+  const reportButtonRef = useRef<HTMLButtonElement>(null)
+  // Панель лежит в верхнем слое, поэтому её положение считается вручную:
+  // кадр карточки обрезает всё, что торчит наружу, а верхний слой — нет.
+  const [reportAt, setReportAt] = useState({ top: 0, left: 0 })
+  const [reportText, setReportText] = useState("")
+  const [reportSent, setReportSent] = useState(false)
+  const [favourite, setFavourite] = useState(false)
+
+  const frameRef = useRef<HTMLDivElement>(null)
+  const [floor, setFloor] = useState<number>()
+
+  useEffect(() => {
+    const frame = frameRef.current
+
+    if (!frame) {
+      return
+    }
+
+    const observer = new ResizeObserver(() => {
+      const height = frame.getBoundingClientRect().height
+
+      setFloor((current) =>
+        current === undefined || height > current ? height : current,
+      )
+    })
+
+    observer.observe(frame)
+
+    let width = window.innerWidth
+
+    const onResize = () => {
+      if (window.innerWidth !== width) {
+        width = window.innerWidth
+        setFloor(undefined)
+      }
+    }
+
+    window.addEventListener("resize", onResize)
+
+    return () => {
+      observer.disconnect()
+      window.removeEventListener("resize", onResize)
+    }
+  }, [])
+
   const isDark = theme === "dark"
   const params = toSearchParams(controls, values)
   // Пока настройки не трогали, в кадре живёт серверная миниатюра, и JS
@@ -142,7 +209,9 @@ export function CardInteractive({
   return (
     <>
       <div
+        ref={frameRef}
         data-preview-theme={theme}
+        style={floor ? { minHeight: floor } : undefined}
         className="border-shell-border bg-shell flex min-w-0 flex-1 flex-col overflow-hidden rounded-xl border"
       >
         {/* Отдельная полоса, а не наложение поверх кадра: у компонентов
@@ -325,6 +394,95 @@ export function CardInteractive({
                 {isDark ? t.card.toLight : t.card.toDark}
               </span>
             </button>
+
+            {/* Избранное пока только помечает карточку в этой вкладке:
+                хранилища у витрины нет, а кнопка нужна уже сейчас. */}
+            <button
+              type="button"
+              onClick={() => setFavourite((current) => !current)}
+              aria-pressed={favourite}
+              title={`${t.card.favourite} · ${t.card.favouriteSoon}`}
+              className={`${TOGGLE} ${favourite ? "text-shell-fg border-shell-border-strong" : ""}`}
+            >
+              <Heart
+                className="size-3.5"
+                fill={favourite ? "currentColor" : "none"}
+                aria-hidden="true"
+              />
+              <span className="sr-only">{t.card.favourite}</span>
+            </button>
+
+            <button
+              ref={reportButtonRef}
+              type="button"
+              popoverTarget={reportId}
+              title={t.card.report}
+              className={TOGGLE}
+            >
+              <CircleAlert className="size-3.5" aria-hidden="true" />
+              <span className="sr-only">{t.card.report}</span>
+            </button>
+
+            <div
+              ref={reportRef}
+              id={reportId}
+              popover="auto"
+              onToggle={(event) => {
+                if (event.newState !== "open") {
+                  return
+                }
+
+                const button = reportButtonRef.current?.getBoundingClientRect()
+
+                if (button) {
+                  setReportAt({
+                    top: button.bottom + 8,
+                    left: Math.max(8, button.right - 280),
+                  })
+                }
+              }}
+              style={{
+                position: "fixed",
+                inset: "auto",
+                top: reportAt.top,
+                left: reportAt.left,
+                margin: 0,
+              }}
+              className="border-shell-border bg-shell-panel text-shell-fg w-70 rounded-xl border p-3 shadow-lg shadow-black/40"
+            >
+              <p className="text-shell-fg mb-2 text-xs font-medium">
+                {t.card.reportTitle}
+              </p>
+              <textarea
+                value={reportText}
+                onChange={(event) => {
+                  setReportText(event.target.value)
+                  setReportSent(false)
+                }}
+                rows={3}
+                placeholder={t.card.reportPlaceholder}
+                className="border-shell-border bg-shell text-shell-fg placeholder:text-shell-muted focus-visible:ring-shell-ring w-full resize-none rounded-lg border px-2 py-1.5 text-xs focus-visible:ring-2 focus-visible:outline-none"
+              />
+              <div className="mt-2 flex items-center justify-between gap-2">
+                <span
+                  role="status"
+                  className="text-shell-muted min-w-0 truncate text-[0.6875rem]"
+                >
+                  {reportSent ? t.card.reportSent : ""}
+                </span>
+                <button
+                  type="button"
+                  disabled={reportText.trim() === ""}
+                  onClick={() => {
+                    setReportSent(true)
+                    setReportText("")
+                  }}
+                  className="border-shell-border text-shell-fg hover:bg-shell-elevated hover:border-shell-border-strong focus-visible:ring-shell-ring inline-flex h-7 shrink-0 items-center rounded-md border px-3 text-xs font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-45"
+                >
+                  {t.card.reportSend}
+                </button>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -345,16 +503,31 @@ export function CardInteractive({
         )}
       </div>
 
-      {/* Подпись всегда на своей строке, не в ряд с кнопками: `sm:` — это
-          брейкпоинт вьюпорта, а карточка в двухколоночной сетке каталога
-          узкая уже на десктопе. В ряд с кнопками длинные имена обрезались
-          многоточием («Список с пояснениями (Described Sele…») — а имя
-          для агента и есть смысл карточки. */}
-      <div className="flex flex-col gap-1.5 px-2 py-1.5">
-        <h3 className="text-shell-muted flex min-w-0 flex-1 items-center gap-1.5 truncate text-xs">
+      {/* Имя слева, кнопки справа. Обрезки многоточием здесь быть не должно:
+          имя item'а и есть смысл карточки — длинное переносится на вторую
+          строку, а кнопки остаются на своём месте. */}
+      <div className="flex flex-wrap items-start justify-between gap-2 px-2 py-1.5">
+        <h3 className="text-shell-muted min-w-0 flex-1 basis-40 text-xs leading-5 break-words">
+          {/* Код item'а копируется нажатием: по нему его называют в переписке
+              и ищут в каталоге, где половина имён похожа друг на друга. */}
+          <button
+            type="button"
+            onClick={copyCode}
+            title={`${code} — ${t.card.copyId}`}
+            className={`focus-visible:ring-shell-ring relative z-10 mr-1.5 inline-flex h-5 shrink-0 items-center rounded border px-1.5 align-[1px] font-mono text-[0.6875rem] transition-colors focus-visible:ring-2 focus-visible:outline-none ${
+              copiedCode
+                ? "border-shell-accent text-shell-fg"
+                : "border-shell-border text-shell-muted hover:bg-shell-elevated hover:border-shell-border-strong hover:text-shell-fg"
+            }`}
+          >
+            {code}
+            <span className="sr-only" role="status">
+              {copiedCode ? t.card.idCopied : ""}
+            </span>
+          </button>
           <Link
             href={`${itemUrl}?${itemParams}`}
-            className="hover:text-shell-fg truncate transition-colors focus-visible:outline-none"
+            className="hover:text-shell-fg transition-colors focus-visible:outline-none"
             title={englishTitle ? `${title} (${englishTitle})` : title}
           >
             {title}
@@ -364,7 +537,7 @@ export function CardInteractive({
           </Link>
         </h3>
 
-        <div className="relative z-10 flex items-center gap-1.5">
+        <div className="relative z-10 flex shrink-0 items-center gap-1.5">
           <button
             type="button"
             onClick={() => {

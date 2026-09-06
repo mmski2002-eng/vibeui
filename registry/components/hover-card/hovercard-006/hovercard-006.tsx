@@ -35,10 +35,10 @@ export type Hovercard006Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="hovercard-006"]){
 --vibeui-hovercard-006-bg:transparent;
---vibeui-hovercard-006-card:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
---vibeui-hovercard-006-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-hovercard-006-card:light-dark(oklch(1 0 0),oklch(0.25 0 265));
+--vibeui-hovercard-006-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-hovercard-006-muted:color-mix(in oklab,var(--vibeui-hovercard-006-fg) 68%,transparent);
---vibeui-hovercard-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-hovercard-006-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
 --vibeui-hovercard-006-accent:light-dark(oklch(0.55 0.18 20),oklch(0.66 0.17 20));
 --vibeui-hovercard-006-face:light-dark(oklch(0.92 0.04 265),oklch(0.38 0.05 265));
 --vibeui-hovercard-006-face-fg:light-dark(oklch(0.36 0.07 265),oklch(0.92 0.04 265));
@@ -56,7 +56,7 @@ font-family:var(--vibeui-hovercard-006-font);color:var(--vibeui-hovercard-006-fg
 }
 [data-vibeui-block="hovercard-006"] [data-part="line"]{margin:0;font-size:0.875rem;line-height:1.7}
 /* Карточка цепляется к названию встречи в строке, а не к абзацу. */
-[data-vibeui-block="hovercard-006"] [data-part="host"]{position:relative;display:inline-block}
+[data-vibeui-block="hovercard-006"] [data-part="host"]{position:relative;display:inline-block;anchor-name:--vibeui-hovercard-006-anchor}
 [data-vibeui-block="hovercard-006"] [data-part="link"]{
 color:inherit;font-weight:640;text-decoration:none;
 box-shadow:inset 0 -0.45em 0 color-mix(in oklab,var(--vibeui-hovercard-006-accent) 16%,transparent);
@@ -64,14 +64,20 @@ border-radius:0.1875rem;
 }
 [data-vibeui-block="hovercard-006"] [data-part="link"]:focus-visible{outline:2px solid var(--vibeui-hovercard-006-accent);outline-offset:2px}
 [data-vibeui-block="hovercard-006"] [data-part="card"]{
-position:absolute;left:0;top:calc(100% + 0.5rem);z-index:20;
+/* fixed с привязкой к якорю: absolute режет рамка карточки каталога,
+   а фиксированный слой её не замечает. */
+position:fixed;inset:auto;position-anchor:--vibeui-hovercard-006-anchor;
+top:anchor(bottom);left:anchor(left);margin-top:0.5rem;z-index:20;
 display:grid;grid-template-columns:auto 1fr;gap:0.125rem 0.75rem;
 width:18.5rem;box-sizing:border-box;padding:0.875rem;
 border:1px solid var(--vibeui-hovercard-006-border);border-radius:0.875rem;
 background:var(--vibeui-hovercard-006-card);
-box-shadow:0 22px 46px -28px oklch(0.2 0.02 265 / 55%);
+box-shadow:0 22px 46px -28px oklch(0.2 0 265 / 55%);
 opacity:0;visibility:hidden;translate:0 -0.25rem;
 transition:opacity .15s ease,translate .15s ease,visibility .15s;
+}
+@supports not (anchor-name: --a){
+[data-vibeui-block="hovercard-006"] [data-part="card"]{position:absolute;inset:auto;left:0;top:calc(100% + 0.5rem);margin-top:0}
 }
 [data-vibeui-block="hovercard-006"] [data-part="host"]:hover [data-part="card"],
 [data-vibeui-block="hovercard-006"] [data-part="host"]:focus-within [data-part="card"]{opacity:1;visibility:visible;translate:0 0}

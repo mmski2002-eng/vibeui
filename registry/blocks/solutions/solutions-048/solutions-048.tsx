@@ -71,10 +71,10 @@ function bucketOf(daysOverdue: number): BucketKey {
 const STYLES = `
 :where([data-vibeui-block="solutions-048"]){
 --vibeui-solutions-048-bg:transparent;
---vibeui-solutions-048-panel:light-dark(oklch(0.977 0.004 250),oklch(0.27 0.011 265));
---vibeui-solutions-048-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
---vibeui-solutions-048-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.012 265));
---vibeui-solutions-048-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-solutions-048-panel:light-dark(oklch(0.977 0 250),oklch(0.27 0 265));
+--vibeui-solutions-048-fg:light-dark(oklch(0.21 0 265),oklch(0.94 0 265));
+--vibeui-solutions-048-muted:light-dark(oklch(0.55 0 265),oklch(0.69 0 265));
+--vibeui-solutions-048-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
 --vibeui-solutions-048-accent:light-dark(oklch(0.5 0.17 265),oklch(0.72 0.15 265));
 --vibeui-solutions-048-b0:light-dark(oklch(0.62 0.13 155),oklch(0.73 0.13 155));
 --vibeui-solutions-048-b31:light-dark(oklch(0.72 0.14 95),oklch(0.82 0.14 95));

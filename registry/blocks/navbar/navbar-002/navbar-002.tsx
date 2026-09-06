@@ -31,11 +31,11 @@ export type Navbar002Props = {
 // тёмной и на светлой странице, поэтому палитра намеренно одноцветная.
 const STYLES = `
 :where([data-vibeui-block="navbar-002"]){
---vibeui-navbar-002-bg:oklch(0.21 0.014 265);
---vibeui-navbar-002-rail:oklch(0.27 0.016 265);
---vibeui-navbar-002-ink:oklch(0.97 0.003 265);
---vibeui-navbar-002-muted:oklch(0.72 0.012 265);
---vibeui-navbar-002-border:oklch(0.35 0.014 265);
+--vibeui-navbar-002-bg:oklch(0.21 0 265);
+--vibeui-navbar-002-rail:oklch(0.27 0 265);
+--vibeui-navbar-002-ink:oklch(0.97 0 265);
+--vibeui-navbar-002-muted:oklch(0.72 0 265);
+--vibeui-navbar-002-border:oklch(0.35 0 265);
 --vibeui-navbar-002-accent:oklch(0.72 0.16 152);
 --vibeui-navbar-002-accent-fg:oklch(0.2 0.04 152);
 --vibeui-navbar-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

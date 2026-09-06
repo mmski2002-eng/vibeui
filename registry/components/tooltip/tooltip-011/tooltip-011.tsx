@@ -23,10 +23,10 @@ export type Tooltip011Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="tooltip-011"]){
 --vibeui-tooltip-011-bg:transparent;
---vibeui-tooltip-011-fg:light-dark(oklch(0.25 0.014 265),oklch(0.93 0.005 265));
+--vibeui-tooltip-011-fg:light-dark(oklch(0.25 0 265),oklch(0.93 0 265));
 --vibeui-tooltip-011-muted:color-mix(in oklab,var(--vibeui-tooltip-011-fg) 68%,transparent);
---vibeui-tooltip-011-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
---vibeui-tooltip-011-tip:light-dark(oklch(0.22 0.014 265),oklch(0.34 0.014 265));
+--vibeui-tooltip-011-border:light-dark(oklch(0.9 0 265),oklch(0.35 0 265));
+--vibeui-tooltip-011-tip:light-dark(oklch(0.22 0 265),oklch(0.34 0 265));
 --vibeui-tooltip-011-accent:light-dark(oklch(0.57 0.17 265),oklch(0.72 0.16 265));
 --vibeui-tooltip-011-ok:light-dark(oklch(0.72 0.17 152),oklch(0.78 0.16 152));
 --vibeui-tooltip-011-warn:light-dark(oklch(0.8 0.17 85),oklch(0.85 0.16 85));
@@ -62,7 +62,7 @@ position:absolute;bottom:calc(100% + 0.5rem);left:50%;z-index:20;
 width:max-content;max-width:12rem;
 padding:0.375rem 0.5625rem;border-radius:0.5rem;
 /* Обе ветки --tip тёмные — плашка подсказки тёмная всегда, поэтому подпись светлая без light-dark(). */
-background:var(--vibeui-tooltip-011-tip);color:oklch(0.98 0.002 265);
+background:var(--vibeui-tooltip-011-tip);color:oklch(0.98 0 265);
 font-size:0.75rem;line-height:1.4;
 pointer-events:none;opacity:0;
 transform:translate(-50%,0.25rem);

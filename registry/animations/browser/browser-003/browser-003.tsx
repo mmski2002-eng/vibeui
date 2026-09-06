@@ -22,7 +22,7 @@ export type Browser003Props = Omit<ComponentProps<"section">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="browser-003"]){
 --vibeui-browser-003-duration:9s;
---vibeui-browser-003-chrome:light-dark(oklch(0.965 0.003 265),oklch(0.22 0.008 265));
+--vibeui-browser-003-chrome:light-dark(oklch(0.965 0 265),oklch(0.22 0 265));
 --vibeui-browser-003-page:light-dark(oklch(1 0 0),oklch(0.205 0 0));
 --vibeui-browser-003-fg:light-dark(oklch(0.205 0 0),oklch(0.95 0 0));
 --vibeui-browser-003-muted:color-mix(in oklab,var(--vibeui-browser-003-fg) 58%,transparent);

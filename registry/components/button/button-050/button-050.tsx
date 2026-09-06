@@ -18,14 +18,16 @@ export type Button050Props = Omit<
 }
 
 // Идея компонента: переключатель избранного без счётчика и без подписи.
-// Сердце собрано из двух кругов и повёрнутого квадрата, поэтому не нужен
-// ни SVG, ни иконочный шрифт. При включении из-под сердца расходится кольцо
-// — короткая вспышка, которая подтверждает нажатие без смены раскладки.
+// Сердце нарисовано инлайновым SVG: два псевдоэлемента с рамками давали
+// внутренние линии на стыке половин и читались как знак бесконечности.
+// Контур и заливка — один и тот же путь, поэтому включение не двигает фигуру.
+// При включении из-под сердца расходится кольцо — короткая вспышка, которая
+// подтверждает нажатие без смены раскладки.
 const STYLES = `
 :where([data-vibeui-block="button-050"]){
---vibeui-button-050-surface:light-dark(oklch(1 0 0),oklch(0.25 0.014 265));
---vibeui-button-050-border:light-dark(oklch(0.9 0.006 265),oklch(0.4 0.014 265));
---vibeui-button-050-idle:light-dark(oklch(0.6 0.014 265),oklch(0.74 0.012 265));
+--vibeui-button-050-surface:light-dark(oklch(1 0 0),oklch(0.25 0 265));
+--vibeui-button-050-border:light-dark(oklch(0.9 0 265),oklch(0.4 0 265));
+--vibeui-button-050-idle:light-dark(oklch(0.6 0 265),oklch(0.74 0 265));
 --vibeui-button-050-accent:light-dark(oklch(0.6 0.22 20),oklch(0.72 0.19 20));
 --vibeui-button-050-size:2.75rem;
 --vibeui-button-050-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -45,23 +47,16 @@ transition:border-color .16s ease,color .16s ease;
 [data-vibeui-block="button-050"]:hover{border-color:var(--vibeui-button-050-accent);color:var(--vibeui-button-050-accent)}
 [data-vibeui-block="button-050"][aria-pressed="true"]{color:var(--vibeui-button-050-accent);border-color:var(--vibeui-button-050-accent)}
 [data-vibeui-block="button-050"]:focus-visible{outline:2px solid var(--vibeui-button-050-accent);outline-offset:3px}
-/* Сердце: два круга сверху и повёрнутый квадрат снизу. */
+/* Сердце: один путь, обводка и заливка одного цвета. */
 [data-vibeui-block="button-050"] [data-part="heart"]{
-position:relative;width:1.125rem;height:1rem;
-transition:transform .2s cubic-bezier(0.34,1.56,0.64,1);
+width:1.25rem;height:1.25rem;
+fill:none;stroke:currentColor;stroke-width:1.75;
+stroke-linecap:round;stroke-linejoin:round;
+transition:transform .2s cubic-bezier(0.34,1.56,0.64,1),fill .18s ease;
 }
-[data-vibeui-block="button-050"] [data-part="heart"]::before,
-[data-vibeui-block="button-050"] [data-part="heart"]::after{
-content:"";position:absolute;top:0;width:0.5625rem;height:0.875rem;
-box-sizing:border-box;border-radius:0.5rem 0.5rem 0 0;
-border:1.75px solid currentColor;background:transparent;
-transition:background-color .18s ease;
+[data-vibeui-block="button-050"][aria-pressed="true"] [data-part="heart"]{
+fill:currentColor;transform:scale(1.08);
 }
-[data-vibeui-block="button-050"] [data-part="heart"]::before{left:0;transform:rotate(-45deg);transform-origin:100% 100%}
-[data-vibeui-block="button-050"] [data-part="heart"]::after{right:0;transform:rotate(45deg);transform-origin:0 100%}
-[data-vibeui-block="button-050"][aria-pressed="true"] [data-part="heart"]::before,
-[data-vibeui-block="button-050"][aria-pressed="true"] [data-part="heart"]::after{background:currentColor}
-[data-vibeui-block="button-050"][aria-pressed="true"] [data-part="heart"]{transform:scale(1.08)}
 /* Кольцо-вспышка: рисуется только во включённом состоянии. */
 [data-vibeui-block="button-050"] [data-part="burst"]{
 position:absolute;inset:0;border-radius:50%;pointer-events:none;
@@ -151,7 +146,9 @@ export function Button050({
         }}
       >
         <span data-part="burst" aria-hidden="true" />
-        <span data-part="heart" aria-hidden="true" />
+        <svg data-part="heart" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 20.5 4.2 12.9a4.8 4.8 0 0 1 0-6.8 4.8 4.8 0 0 1 6.8 0l1 1 1-1a4.8 4.8 0 0 1 6.8 0 4.8 4.8 0 0 1 0 6.8Z" />
+        </svg>
       </button>
     </>
   )

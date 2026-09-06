@@ -45,10 +45,10 @@ export type Dashboard025Props = {
 const STYLES = `
 :where([data-vibeui-block="dashboard-025"]){
 --vibeui-dashboard-025-bg:transparent;
---vibeui-dashboard-025-panel:light-dark(oklch(0.985 0.003 265),oklch(0.27 0.012 265));
---vibeui-dashboard-025-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-dashboard-025-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
---vibeui-dashboard-025-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.011 265));
+--vibeui-dashboard-025-panel:light-dark(oklch(0.985 0 265),oklch(0.27 0 265));
+--vibeui-dashboard-025-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
+--vibeui-dashboard-025-muted:light-dark(oklch(0.55 0 265),oklch(0.71 0 265));
+--vibeui-dashboard-025-border:light-dark(oklch(0.91 0 265),oklch(0.35 0 265));
 --vibeui-dashboard-025-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
 --vibeui-dashboard-025-loss:light-dark(oklch(0.6 0.16 25),oklch(0.74 0.15 25));
 --vibeui-dashboard-025-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

@@ -23,9 +23,9 @@ const STYLES = `
 :where([data-vibeui-block="avatar-016"]){
 --vibeui-avatar-016-size:2.5rem;
 --vibeui-avatar-016-bg:transparent;
---vibeui-avatar-016-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-avatar-016-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-avatar-016-muted:color-mix(in oklab,var(--vibeui-avatar-016-fg) 68%,transparent);
---vibeui-avatar-016-border:light-dark(oklch(0.91 0.006 265),oklch(0.31 0.01 265));
+--vibeui-avatar-016-border:light-dark(oklch(0.91 0 265),oklch(0.31 0 265));
 --vibeui-avatar-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

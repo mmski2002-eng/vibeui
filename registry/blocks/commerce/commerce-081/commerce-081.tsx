@@ -55,17 +55,17 @@ export type Commerce081Props = {
 // по умолчанию нет своей тёмной темы, оно темнеет вместе со страницей.
 const STYLES = `
 :where([data-vibeui-block="commerce-081"]){
---vibeui-commerce-081-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
---vibeui-commerce-081-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
---vibeui-commerce-081-bg:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
---vibeui-commerce-081-soft:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.011 265));
---vibeui-commerce-081-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-commerce-081-fg:light-dark(oklch(0.21 0 265),oklch(0.94 0 265));
+--vibeui-commerce-081-muted:light-dark(oklch(0.55 0 265),oklch(0.7 0 265));
+--vibeui-commerce-081-bg:light-dark(oklch(1 0 0),oklch(0.22 0 265));
+--vibeui-commerce-081-soft:light-dark(oklch(0.975 0 265),oklch(0.27 0 265));
+--vibeui-commerce-081-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
 --vibeui-commerce-081-accent:light-dark(oklch(0.55 0.2 262),oklch(0.73 0.16 262));
---vibeui-commerce-081-accent-fg:light-dark(oklch(1 0 0),oklch(0.17 0.02 265));
+--vibeui-commerce-081-accent-fg:light-dark(oklch(1 0 0),oklch(0.17 0 265));
 --vibeui-commerce-081-ok:light-dark(oklch(0.55 0.14 152),oklch(0.75 0.14 152));
 --vibeui-commerce-081-bad:light-dark(oklch(0.58 0.19 25),oklch(0.74 0.16 25));
 --vibeui-commerce-081-star:light-dark(oklch(0.54 0.16 78),oklch(0.84 0.15 80));
---vibeui-commerce-081-star-empty:light-dark(oklch(0.42 0.008 265),oklch(0.58 0.014 265));
+--vibeui-commerce-081-star-empty:light-dark(oklch(0.42 0 265),oklch(0.58 0 265));
 --vibeui-commerce-081-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -90,13 +90,13 @@ position:fixed;inset:0;margin:auto;height:fit-content;max-height:calc(100vh - 2r
 width:min(38rem,calc(100vw - 2rem));box-sizing:border-box;padding:1.25rem;
 border:1px solid var(--vibeui-commerce-081-border);border-radius:1rem;
 background:var(--vibeui-commerce-081-bg);color:var(--vibeui-commerce-081-fg);
-font-family:var(--vibeui-commerce-081-sans);box-shadow:0 24px 60px -24px oklch(0.2 0.03 265 / 45%);
+font-family:var(--vibeui-commerce-081-sans);box-shadow:0 24px 60px -24px oklch(0.2 0 265 / 45%);
 opacity:0;transform:translateY(0.5rem) scale(0.98);
 transition:opacity .18s ease,transform .18s ease,display .18s allow-discrete,overlay .18s allow-discrete;
 }
 [data-vibeui-commerce-081-window]:popover-open{opacity:1;transform:none}
 @starting-style{[data-vibeui-commerce-081-window]:popover-open{opacity:0;transform:translateY(0.5rem) scale(0.98)}}
-[data-vibeui-commerce-081-window]::backdrop{background:oklch(0.18 0.02 265 / 45%);backdrop-filter:blur(2px)}
+[data-vibeui-commerce-081-window]::backdrop{background:oklch(0.18 0 265 / 45%);backdrop-filter:blur(2px)}
 html:has([data-vibeui-commerce-081-window]:popover-open){overflow:hidden}
 [data-vibeui-commerce-081-window] [data-part="head"]{display:flex;justify-content:flex-end}
 [data-vibeui-commerce-081-window] [data-part="dismiss"]{

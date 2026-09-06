@@ -41,10 +41,10 @@ export type Sortable007Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="sortable-007"]){
 --vibeui-sortable-007-bg:transparent;
---vibeui-sortable-007-row:light-dark(oklch(0.99 0.002 265),oklch(0.27 0.011 265));
---vibeui-sortable-007-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-sortable-007-row:light-dark(oklch(0.99 0 265),oklch(0.27 0 265));
+--vibeui-sortable-007-fg:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
 --vibeui-sortable-007-muted:color-mix(in oklab,var(--vibeui-sortable-007-fg) 68%,transparent);
---vibeui-sortable-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-sortable-007-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
 --vibeui-sortable-007-accent:light-dark(oklch(0.55 0.2 262),oklch(0.73 0.16 262));
 --vibeui-sortable-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

@@ -30,10 +30,10 @@ export type Rating001Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="rating-001"]){
 --vibeui-rating-001-bg:transparent;
---vibeui-rating-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-rating-001-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-rating-001-muted:color-mix(in oklab,var(--vibeui-rating-001-fg) 68%,transparent);
---vibeui-rating-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
---vibeui-rating-001-empty:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
+--vibeui-rating-001-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-rating-001-empty:light-dark(oklch(0.88 0 265),oklch(0.42 0 265));
 --vibeui-rating-001-accent:light-dark(oklch(0.72 0.16 75),oklch(0.82 0.15 78));
 --vibeui-rating-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

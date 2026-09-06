@@ -34,11 +34,11 @@ export type Buttongroup027Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="buttongroup-027"]){
 --vibeui-buttongroup-027-surface:transparent;
---vibeui-buttongroup-027-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.005 265));
+--vibeui-buttongroup-027-fg:light-dark(oklch(0.25 0 265),oklch(0.95 0 265));
 --vibeui-buttongroup-027-muted:color-mix(in oklab,var(--vibeui-buttongroup-027-fg) 68%,transparent);
---vibeui-buttongroup-027-border:light-dark(oklch(0.89 0.008 265),oklch(0.4 0.012 265));
---vibeui-buttongroup-027-rule:light-dark(oklch(0.94 0.005 265),oklch(0.35 0.01 265));
---vibeui-buttongroup-027-on:light-dark(oklch(0.96 0.03 215),oklch(0.36 0.05 215));
+--vibeui-buttongroup-027-border:light-dark(oklch(0.89 0 265),oklch(0.4 0 265));
+--vibeui-buttongroup-027-rule:light-dark(oklch(0.94 0 265),oklch(0.35 0 265));
+--vibeui-buttongroup-027-on:light-dark(oklch(0.96 0 215),oklch(0.36 0.05 215));
 --vibeui-buttongroup-027-accent:light-dark(oklch(0.48 0.13 215),oklch(0.8 0.11 215));
 --vibeui-buttongroup-027-radius:0.625rem;
 --vibeui-buttongroup-027-row:1.75rem;

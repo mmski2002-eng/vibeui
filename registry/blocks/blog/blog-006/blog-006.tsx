@@ -38,10 +38,10 @@ export type Blog006Props = {
 const STYLES = `
 :where([data-vibeui-block="blog-006"]){
 --vibeui-blog-006-bg:transparent;
---vibeui-blog-006-card:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
---vibeui-blog-006-fg:light-dark(oklch(0.2 0.014 265),oklch(0.95 0.005 265));
---vibeui-blog-006-muted:light-dark(oklch(0.52 0.014 265),oklch(0.72 0.012 265));
---vibeui-blog-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-blog-006-card:light-dark(oklch(1 0 0),oklch(0.25 0 265));
+--vibeui-blog-006-fg:light-dark(oklch(0.2 0 265),oklch(0.95 0 265));
+--vibeui-blog-006-muted:light-dark(oklch(0.52 0 265),oklch(0.72 0 265));
+--vibeui-blog-006-border:light-dark(oklch(0.9 0 265),oklch(0.35 0 265));
 --vibeui-blog-006-accent:light-dark(oklch(0.5 0.16 190),oklch(0.78 0.12 190));
 --vibeui-blog-006-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

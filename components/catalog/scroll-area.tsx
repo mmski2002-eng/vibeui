@@ -17,9 +17,16 @@ const HIDE_DELAY = 900
 export function ScrollArea({
   children,
   className,
+  storageKey,
 }: {
   children: ReactNode
   className?: string
+  /**
+   * Ключ, под которым положение прокрутки переживает переход между
+   * страницами. Список категорий одинаков на всех страницах витрины, и
+   * прыжок к началу при каждом переходе читается как перезагрузка меню.
+   */
+  storageKey?: string
 }) {
   const viewportRef = useRef<HTMLDivElement>(null)
   const hideRef = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -28,6 +35,45 @@ export function ScrollArea({
   )
   const [visible, setVisible] = useState(false)
   const [hovered, setHovered] = useState(false)
+
+  // Положение возвращается в ref-колбэке, до первой отрисовки: из эффекта
+  // список успел бы моргнуть началом.
+  const attach = useCallback(
+    (node: HTMLDivElement | null) => {
+      viewportRef.current = node
+
+      if (!node || !storageKey) {
+        return
+      }
+
+      try {
+        const saved = Number(window.sessionStorage.getItem(storageKey))
+
+        if (saved > 0) {
+          node.scrollTop = saved
+        }
+      } catch {
+        // Приватный режим и заблокированное хранилище: прокрутка просто
+        // начнётся сверху.
+      }
+    },
+    [storageKey],
+  )
+
+  const remember = useCallback(
+    (node: HTMLDivElement) => {
+      if (!storageKey) {
+        return
+      }
+
+      try {
+        window.sessionStorage.setItem(storageKey, String(node.scrollTop))
+      } catch {
+        // См. выше: без хранилища работаем как раньше.
+      }
+    },
+    [storageKey],
+  )
 
   const measure = useCallback(() => {
     const viewport = viewportRef.current
@@ -133,10 +179,11 @@ export function ScrollArea({
       onPointerLeave={() => setHovered(false)}
     >
       <div
-        ref={viewportRef}
-        onScroll={() => {
+        ref={attach}
+        onScroll={(event) => {
           measure()
           show()
+          remember(event.currentTarget)
         }}
         // max-h-[inherit]: ограничение приходит от обёртки, а h-full на ней не
         // сработает — у обёртки задана максимальная высота, а не высота.

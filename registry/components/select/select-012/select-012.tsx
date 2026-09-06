@@ -35,9 +35,9 @@ const STYLES = `
 --vibeui-select-012-surface-border:transparent;
 --vibeui-select-012-surface-pad:0;
 --vibeui-select-012-surface-radius:0;
---vibeui-select-012-fg:light-dark(oklch(0.23 0.016 265),oklch(0.94 0.005 265));
+--vibeui-select-012-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-select-012-muted:color-mix(in oklab,var(--vibeui-select-012-fg) 68%,transparent);
---vibeui-select-012-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.014 265));
+--vibeui-select-012-border:light-dark(oklch(0.87 0 265),oklch(0.42 0 265));
 --vibeui-select-012-accent:light-dark(oklch(0.55 0.19 262),oklch(0.75 0.15 262));
 --vibeui-select-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -152,7 +152,7 @@ export function Select012({
       ? {
           "--vibeui-select-012-surface": background,
           "--vibeui-select-012-surface-border":
-            "light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265))",
+            "light-dark(oklch(0.91 0 265),oklch(0.36 0 265))",
           "--vibeui-select-012-surface-pad": "0.875rem",
           "--vibeui-select-012-surface-radius": "0.875rem",
           colorScheme: schemeForBackground(background),

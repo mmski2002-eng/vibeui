@@ -13,9 +13,9 @@ export type Badge021Props = ComponentProps<"span"> & {
 // остаётся: перепутанное окружение стоит дороже любой другой ошибки метки.
 const STYLES = `
 :where([data-vibeui-block="badge-021"]){
---vibeui-badge-021-bg:light-dark(oklch(0.97 0.004 265),oklch(0.26 0.009 265));
---vibeui-badge-021-fg:light-dark(oklch(0.36 0.014 265),oklch(0.9 0.007 265));
---vibeui-badge-021-border:light-dark(oklch(0.86 0.008 265),oklch(0.42 0.012 265));
+--vibeui-badge-021-bg:light-dark(oklch(0.97 0 265),oklch(0.26 0 265));
+--vibeui-badge-021-fg:light-dark(oklch(0.36 0 265),oklch(0.9 0 265));
+--vibeui-badge-021-border:light-dark(oklch(0.86 0 265),oklch(0.42 0 265));
 --vibeui-badge-021-font:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -47,8 +47,8 @@ border-radius:9999px;
 }
 /* Разработка: пунктир, «ещё не настоящее». */
 [data-vibeui-block="badge-021"][data-env="dev"]{
---vibeui-badge-021-bg:light-dark(oklch(0.98 0.003 265),oklch(0.23 0.008 265));
---vibeui-badge-021-fg:light-dark(oklch(0.48 0.014 265),oklch(0.78 0.01 265));
+--vibeui-badge-021-bg:light-dark(oklch(0.98 0 265),oklch(0.23 0 265));
+--vibeui-badge-021-fg:light-dark(oklch(0.48 0 265),oklch(0.78 0 265));
 border-style:dashed;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="badge-021"] *{animation:none!important;transition:none!important}}

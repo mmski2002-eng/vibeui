@@ -20,10 +20,10 @@ export type Security001Props = Omit<ComponentProps<"section">, "children"> & {
 // строкой ниже, а не собственной тёмной темой.
 const STYLES = `
 :where([data-vibeui-block="security-001"]){
---vibeui-security-001-bg-top:light-dark(oklch(0.95 0.006 250),oklch(0.2 0.012 250));
---vibeui-security-001-bg-bottom:light-dark(oklch(0.89 0.008 250),oklch(0.1 0.01 250));
---vibeui-security-001-fg:light-dark(oklch(0.28 0.02 255),oklch(0.92 0.006 255));
---vibeui-security-001-border:light-dark(oklch(0.86 0.01 255),oklch(0.32 0.012 255));
+--vibeui-security-001-bg-top:light-dark(oklch(0.95 0 250),oklch(0.2 0 250));
+--vibeui-security-001-bg-bottom:light-dark(oklch(0.89 0 250),oklch(0.1 0 250));
+--vibeui-security-001-fg:light-dark(oklch(0.28 0 255),oklch(0.92 0 255));
+--vibeui-security-001-border:light-dark(oklch(0.86 0 255),oklch(0.32 0 255));
 --vibeui-security-001-accent:light-dark(oklch(0.56 0.17 255),oklch(0.75 0.14 255));
 --vibeui-security-001-success:oklch(0.72 0.17 150);
 --vibeui-security-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

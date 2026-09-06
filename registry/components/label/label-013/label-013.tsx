@@ -19,10 +19,10 @@ export type Label013Props = Omit<ComponentProps<"fieldset">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="label-013"]){
 --vibeui-label-013-surface:transparent;
---vibeui-label-013-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.33 0.012 265));
---vibeui-label-013-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.005 265));
+--vibeui-label-013-surface-border:light-dark(oklch(0.91 0 265),oklch(0.33 0 265));
+--vibeui-label-013-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-label-013-muted:color-mix(in oklab,var(--vibeui-label-013-fg) 68%,transparent);
---vibeui-label-013-field-border:light-dark(oklch(0.85 0.01 265),oklch(0.4 0.014 265));
+--vibeui-label-013-field-border:light-dark(oklch(0.85 0 265),oklch(0.4 0 265));
 --vibeui-label-013-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.16 262));
 --vibeui-label-013-error:light-dark(oklch(0.55 0.2 25),oklch(0.76 0.15 25));
 --vibeui-label-013-error-soft:light-dark(oklch(0.96 0.03 25),oklch(0.31 0.055 25));

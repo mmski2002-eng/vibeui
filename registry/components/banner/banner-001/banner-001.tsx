@@ -27,9 +27,9 @@ export type Banner001Props = Omit<ComponentProps<"div">, "children"> & {
 // следует окружению, идея остаётся прежней.
 const STYLES = `
 :where([data-vibeui-block="banner-001"]){
---vibeui-banner-001-fg:light-dark(oklch(0.96 0.003 265),oklch(0.95 0.004 265));
+--vibeui-banner-001-fg:light-dark(oklch(0.96 0 265),oklch(0.95 0 265));
 --vibeui-banner-001-muted:color-mix(in oklab,var(--vibeui-banner-001-fg) 68%,transparent);
---vibeui-banner-001-bg:light-dark(oklch(0.24 0.016 265),oklch(0.31 0.014 265));
+--vibeui-banner-001-bg:light-dark(oklch(0.24 0 265),oklch(0.31 0 265));
 --vibeui-banner-001-accent:light-dark(oklch(0.72 0.15 200),oklch(0.78 0.13 200));
 /* Текст акцентом на тёмной полосе: светлота поднимается до читаемой,
    иначе тёмный акцент проекта пропадает вместе с меткой и ссылкой. */

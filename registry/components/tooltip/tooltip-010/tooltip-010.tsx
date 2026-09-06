@@ -17,10 +17,10 @@ export type Tooltip010Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="tooltip-010"]){
 --vibeui-tooltip-010-bg:transparent;
---vibeui-tooltip-010-fg:light-dark(oklch(0.25 0.014 265),oklch(0.93 0.005 265));
---vibeui-tooltip-010-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
---vibeui-tooltip-010-hover:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.012 265));
---vibeui-tooltip-010-tip:light-dark(oklch(0.22 0.014 265),oklch(0.34 0.014 265));
+--vibeui-tooltip-010-fg:light-dark(oklch(0.25 0 265),oklch(0.93 0 265));
+--vibeui-tooltip-010-border:light-dark(oklch(0.9 0 265),oklch(0.35 0 265));
+--vibeui-tooltip-010-hover:light-dark(oklch(0.96 0 265),oklch(0.31 0 265));
+--vibeui-tooltip-010-tip:light-dark(oklch(0.22 0 265),oklch(0.34 0 265));
 --vibeui-tooltip-010-chip:oklch(1 0 0 / 16%);
 --vibeui-tooltip-010-accent:light-dark(oklch(0.6 0.16 265),oklch(0.74 0.15 265));
 --vibeui-tooltip-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -53,7 +53,7 @@ display:flex;align-items:center;gap:0.5rem;
 width:max-content;
 padding:0.375rem 0.4375rem 0.375rem 0.625rem;border-radius:0.5rem;
 /* Обе ветки --tip тёмные — плашка подсказки тёмная всегда, поэтому подпись светлая без light-dark(). */
-background:var(--vibeui-tooltip-010-tip);color:oklch(0.98 0.002 265);
+background:var(--vibeui-tooltip-010-tip);color:oklch(0.98 0 265);
 font-size:0.75rem;line-height:1.4;
 pointer-events:none;opacity:0;
 transform:translate(-0.25rem,-50%);
@@ -106,9 +106,9 @@ transform:translateY(0);
 `
 
 const DEFAULT_ITEMS = [
-  { glyph: "↩", label: "Отменить", shortcut: "⌘Z" },
-  { glyph: "⧉", label: "Дублировать строку", shortcut: "⌘D" },
-  { glyph: "⌦", label: "Удалить выделенное", shortcut: "⌫" },
+  { glyph: "↩", label: "Отменить", shortcut: "Ctrl+Z" },
+  { glyph: "⧉", label: "Дублировать строку", shortcut: "Ctrl+D" },
+  { glyph: "⌦", label: "Удалить выделенное", shortcut: "Backspace" },
 ]
 
 /**

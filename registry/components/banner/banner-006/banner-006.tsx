@@ -21,8 +21,8 @@ export type Banner006Props = Omit<ComponentProps<"div">, "children"> & {
 // тёмной ветке light-dark() подложка светлее — цвет следует окружению.
 const STYLES = `
 :where([data-vibeui-block="banner-006"]){
---vibeui-banner-006-bg:light-dark(oklch(0.25 0.012 265),oklch(0.31 0.014 265));
---vibeui-banner-006-fg:light-dark(oklch(0.96 0.002 265),oklch(0.95 0.004 265));
+--vibeui-banner-006-bg:light-dark(oklch(0.25 0 265),oklch(0.31 0 265));
+--vibeui-banner-006-fg:light-dark(oklch(0.96 0 265),oklch(0.95 0 265));
 --vibeui-banner-006-muted:color-mix(in oklab,var(--vibeui-banner-006-fg) 68%,transparent);
 --vibeui-banner-006-tone:light-dark(oklch(0.78 0.13 75),oklch(0.82 0.12 75));
 /* Полоса всегда тёмная, а тоном красится индикатор связи: светлота

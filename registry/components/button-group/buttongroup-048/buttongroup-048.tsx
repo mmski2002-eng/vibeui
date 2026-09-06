@@ -27,11 +27,11 @@ export type Buttongroup048Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="buttongroup-048"]){
 --vibeui-buttongroup-048-surface:transparent;
---vibeui-buttongroup-048-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.005 265));
+--vibeui-buttongroup-048-fg:light-dark(oklch(0.25 0 265),oklch(0.95 0 265));
 --vibeui-buttongroup-048-muted:color-mix(in oklab,var(--vibeui-buttongroup-048-fg) 68%,transparent);
---vibeui-buttongroup-048-glyph:light-dark(oklch(0.78 0.01 265),oklch(0.56 0.014 265));
---vibeui-buttongroup-048-rest:light-dark(oklch(0.91 0.006 265),oklch(0.38 0.01 265));
---vibeui-buttongroup-048-border:light-dark(oklch(0.89 0.008 265),oklch(0.4 0.012 265));
+--vibeui-buttongroup-048-glyph:light-dark(oklch(0.78 0 265),oklch(0.56 0 265));
+--vibeui-buttongroup-048-rest:light-dark(oklch(0.91 0 265),oklch(0.38 0 265));
+--vibeui-buttongroup-048-border:light-dark(oklch(0.89 0 265),oklch(0.4 0 265));
 --vibeui-buttongroup-048-on:light-dark(oklch(0.97 0.025 195),oklch(0.31 0.035 195));
 --vibeui-buttongroup-048-accent:light-dark(oklch(0.5 0.13 195),oklch(0.8 0.11 195));
 --vibeui-buttongroup-048-radius:0.75rem;

@@ -28,13 +28,13 @@ export type Field004Props = Omit<
 // по-разному ещё до того, как человек прочитает цифру.
 const STYLES = `
 :where([data-vibeui-block="field-004"]){
---vibeui-field-004-bg:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
+--vibeui-field-004-bg:light-dark(oklch(1 0 0),oklch(0.24 0 265));
 --vibeui-field-004-surface:transparent;
---vibeui-field-004-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-field-004-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-field-004-muted:color-mix(in oklab,var(--vibeui-field-004-fg) 68%,transparent);
---vibeui-field-004-border:light-dark(oklch(0.88 0.008 265),oklch(0.4 0.012 265));
---vibeui-field-004-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.011 265));
---vibeui-field-004-track:light-dark(oklch(0.92 0.006 265),oklch(0.36 0.01 265));
+--vibeui-field-004-border:light-dark(oklch(0.88 0 265),oklch(0.4 0 265));
+--vibeui-field-004-shell:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
+--vibeui-field-004-track:light-dark(oklch(0.92 0 265),oklch(0.36 0 265));
 --vibeui-field-004-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
 --vibeui-field-004-danger:light-dark(oklch(0.58 0.19 30),oklch(0.74 0.16 30));
 --vibeui-field-004-ratio:0;

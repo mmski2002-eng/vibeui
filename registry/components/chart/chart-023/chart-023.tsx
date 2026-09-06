@@ -31,11 +31,11 @@ export type Chart023Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="chart-023"]){
 --vibeui-chart-023-bg:transparent;
---vibeui-chart-023-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-chart-023-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-chart-023-muted:color-mix(in oklab,var(--vibeui-chart-023-fg) 68%,transparent);
---vibeui-chart-023-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
---vibeui-chart-023-lead:light-dark(oklch(0.82 0.008 265),oklch(0.44 0.012 265));
---vibeui-chart-023-blend:light-dark(oklch(1 0 0),oklch(0.19 0.012 265));
+--vibeui-chart-023-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
+--vibeui-chart-023-lead:light-dark(oklch(0.82 0 265),oklch(0.44 0 265));
+--vibeui-chart-023-blend:light-dark(oklch(1 0 0),oklch(0.19 0 265));
 --vibeui-chart-023-accent:light-dark(oklch(0.52 0.18 275),oklch(0.64 0.17 275));
 --vibeui-chart-023-drop:light-dark(oklch(0.58 0.16 25),oklch(0.74 0.15 25));
 --vibeui-chart-023-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

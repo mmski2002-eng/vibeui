@@ -60,6 +60,10 @@ export function CatalogChrome({
   const t = getDictionary(locale)
   const [filter, setFilter] = useState("")
   const [compact, setCompact] = useState(false)
+  // Ключи привязаны к типу каталога: у компонентов, блоков и анимаций списки
+  // разные, и общее положение прокрутки увело бы меню не туда.
+  const navScrollKey = `vibeui-nav-scroll:${kind}`
+  const navViewKey = `vibeui-nav-view:${kind}`
   const [query, setQuery] = useState("")
   const [empty, setEmpty] = useState(false)
   const gridRef = useRef<HTMLDivElement>(null)
@@ -76,6 +80,19 @@ export function CatalogChrome({
       setQuery(initial)
     }
   }, [])
+
+  // Плотность списка переживает переход между категориями: страница меняется
+  // целиком, а меню слева для человека остаётся тем же самым.
+  useEffect(() => {
+    try {
+      if (window.sessionStorage.getItem(navViewKey) === "compact") {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setCompact(true)
+      }
+    } catch {
+      // Хранилище может быть заблокировано — тогда список просто обычный.
+    }
+  }, [navViewKey])
 
   useEffect(() => {
     const grid = gridRef.current
@@ -152,7 +169,19 @@ export function CatalogChrome({
                 категорий. */}
             <button
               type="button"
-              onClick={() => setCompact(!compact)}
+              onClick={() => {
+                const next = !compact
+                setCompact(next)
+
+                try {
+                  window.sessionStorage.setItem(
+                    navViewKey,
+                    next ? "compact" : "comfortable",
+                  )
+                } catch {
+                  // Без хранилища плотность просто не переживёт переход.
+                }
+              }}
               aria-pressed={compact}
               title={
                 compact ? t.catalog.comfortableView : t.catalog.compactView
@@ -184,7 +213,10 @@ export function CatalogChrome({
             className="bg-shell-divider pointer-events-none absolute inset-y-0 right-0 w-px"
           />
 
-          <ScrollArea className="max-h-[calc(100vh-6.75rem)]">
+          <ScrollArea
+            className="max-h-[calc(100vh-6.75rem)]"
+            storageKey={navScrollKey}
+          >
             <aside
               data-density={compact ? "compact" : "comfortable"}
               className="pt-2 pr-2.5 pb-4 pl-2.5"

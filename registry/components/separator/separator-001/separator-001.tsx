@@ -16,8 +16,8 @@ export type Separator001Props = Omit<ComponentProps<"div">, "children"> & {
 // контексте линия светлее фона, а не темнее.
 const STYLES = `
 :where([data-vibeui-block="separator-001"]){
---vibeui-separator-001-line:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
---vibeui-separator-001-muted:light-dark(oklch(0.56 0.014 265),oklch(0.71 0.012 265));
+--vibeui-separator-001-line:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
+--vibeui-separator-001-muted:light-dark(oklch(0.56 0 265),oklch(0.71 0 265));
 --vibeui-separator-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

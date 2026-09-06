@@ -22,9 +22,9 @@ export type Button057Props = ComponentProps<"button"> & {
 // миллионах. Полное число остаётся в title и aria-label: сокращение врёт.
 const STYLES = `
 :where([data-vibeui-block="button-057"]){
---vibeui-button-057-surface:light-dark(oklch(1 0 0),oklch(0.24 0.014 265));
---vibeui-button-057-border:light-dark(oklch(0.9 0.006 265),oklch(0.41 0.014 265));
---vibeui-button-057-fg:light-dark(oklch(0.25 0.02 265),oklch(0.94 0.008 265));
+--vibeui-button-057-surface:light-dark(oklch(1 0 0),oklch(0.24 0 265));
+--vibeui-button-057-border:light-dark(oklch(0.9 0 265),oklch(0.41 0 265));
+--vibeui-button-057-fg:light-dark(oklch(0.25 0 265),oklch(0.94 0 265));
 --vibeui-button-057-muted:color-mix(in oklab,var(--vibeui-button-057-fg) 68%,transparent);
 --vibeui-button-057-accent:light-dark(oklch(0.55 0.16 210),oklch(0.76 0.13 210));
 --vibeui-button-057-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

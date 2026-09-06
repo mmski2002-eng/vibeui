@@ -26,8 +26,8 @@ export type Aspect002Props = Omit<
 // обложка, и светлая заливка сделала бы подпись нечитаемой.
 const STYLES = `
 :where([data-vibeui-block="aspect-002"]){
---vibeui-aspect-002-bg:oklch(0.28 0.02 265);
---vibeui-aspect-002-fg:oklch(0.98 0.003 265);
+--vibeui-aspect-002-bg:oklch(0.28 0 265);
+--vibeui-aspect-002-fg:oklch(0.98 0 265);
 --vibeui-aspect-002-accent:oklch(0.62 0.2 25);
 --vibeui-aspect-002-radius:0.875rem;
 --vibeui-aspect-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -52,7 +52,7 @@ position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
 display:flex;align-items:center;justify-content:center;
 width:3.5rem;height:3.5rem;border-radius:9999px;
 background:var(--vibeui-aspect-002-accent);
-box-shadow:0 10px 30px -12px oklch(0.15 0.02 265 / 70%);
+box-shadow:0 10px 30px -12px oklch(0.15 0 265 / 70%);
 transition:transform .18s cubic-bezier(.32,.72,0,1);
 }
 [data-vibeui-block="aspect-002"]:hover [data-part="play"]{transform:translate(-50%,-50%) scale(1.06)}
@@ -64,12 +64,12 @@ border-color:transparent transparent transparent var(--vibeui-aspect-002-fg);
 [data-vibeui-block="aspect-002"] [data-part="title"]{
 position:absolute;left:0;right:0;bottom:0;padding:1.75rem 1rem 0.875rem;
 font-size:0.875rem;font-weight:600;line-height:1.35;
-background:linear-gradient(to top,oklch(0.15 0.02 265 / 75%),transparent);
+background:linear-gradient(to top,oklch(0.15 0 265 / 75%),transparent);
 }
 [data-vibeui-block="aspect-002"] [data-part="duration"]{
 position:absolute;right:0.625rem;top:0.625rem;
 padding:0.125rem 0.375rem;border-radius:0.3125rem;
-background:oklch(0.15 0.02 265 / 70%);
+background:oklch(0.15 0 265 / 70%);
 font-size:0.6875rem;font-weight:600;font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="aspect-002"]:focus-visible{outline:2px solid var(--vibeui-aspect-002-accent);outline-offset:3px}

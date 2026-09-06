@@ -26,12 +26,12 @@ export type Field010Props = Omit<
 // связана с ней через aria-describedby — вслух её слышно при входе в любое поле.
 const STYLES = `
 :where([data-vibeui-block="field-010"]){
---vibeui-field-010-bg:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
+--vibeui-field-010-bg:light-dark(oklch(1 0 0),oklch(0.24 0 265));
 --vibeui-field-010-surface:transparent;
---vibeui-field-010-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-field-010-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-field-010-muted:color-mix(in oklab,var(--vibeui-field-010-fg) 68%,transparent);
---vibeui-field-010-border:light-dark(oklch(0.88 0.008 265),oklch(0.4 0.012 265));
---vibeui-field-010-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.011 265));
+--vibeui-field-010-border:light-dark(oklch(0.88 0 265),oklch(0.4 0 265));
+--vibeui-field-010-shell:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-field-010-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
 --vibeui-field-010-danger:light-dark(oklch(0.55 0.19 25),oklch(0.74 0.16 25));
 --vibeui-field-010-on-danger:light-dark(oklch(1 0 0),oklch(0.21 0.03 25));

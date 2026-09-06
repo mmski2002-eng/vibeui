@@ -26,11 +26,11 @@ export type Button060Props = Omit<
 // появляется только у включённого фильтра: у выключенного сбрасывать нечего.
 const STYLES = `
 :where([data-vibeui-block="button-060"]){
---vibeui-button-060-surface:light-dark(oklch(1 0 0),oklch(0.25 0.014 265));
---vibeui-button-060-border:light-dark(oklch(0.88 0.006 265),oklch(0.43 0.014 265));
---vibeui-button-060-fg:light-dark(oklch(0.28 0.02 265),oklch(0.93 0.008 265));
---vibeui-button-060-accent:light-dark(oklch(0.5 0.16 285),oklch(0.62 0.15 285));
---vibeui-button-060-accent-fg:light-dark(oklch(0.99 0.01 285),oklch(0.18 0.03 285));
+--vibeui-button-060-surface:light-dark(oklch(1 0 0),oklch(0.25 0 265));
+--vibeui-button-060-border:light-dark(oklch(0.88 0 265),oklch(0.43 0 265));
+--vibeui-button-060-fg:light-dark(oklch(0.28 0 265),oklch(0.93 0 265));
+--vibeui-button-060-accent:light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));
+--vibeui-button-060-accent-fg:light-dark(oklch(0.99 0 285),oklch(0.18 0 285));
 --vibeui-button-060-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

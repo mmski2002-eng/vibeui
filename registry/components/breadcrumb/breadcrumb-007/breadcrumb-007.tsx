@@ -25,12 +25,12 @@ export type Breadcrumb007Props = Omit<ComponentProps<"div">, "children"> & {
 // вместе со страницей, а рамка в тёмной теме светлее фона, а не темнее.
 const STYLES = `
 :where([data-vibeui-block="breadcrumb-007"]){
---vibeui-breadcrumb-007-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.008 265));
+--vibeui-breadcrumb-007-fg:light-dark(oklch(0.26 0 265),oklch(0.94 0 265));
 --vibeui-breadcrumb-007-muted:color-mix(in oklab,var(--vibeui-breadcrumb-007-fg) 68%,transparent);
---vibeui-breadcrumb-007-sep:light-dark(oklch(0.78 0.01 265),oklch(0.5 0.012 265));
---vibeui-breadcrumb-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265));
+--vibeui-breadcrumb-007-sep:light-dark(oklch(0.78 0 265),oklch(0.5 0 265));
+--vibeui-breadcrumb-007-border:light-dark(oklch(0.9 0 265),oklch(0.38 0 265));
 --vibeui-breadcrumb-007-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
---vibeui-breadcrumb-007-on-accent:light-dark(oklch(0.99 0.01 265),oklch(0.18 0.03 265));
+--vibeui-breadcrumb-007-on-accent:light-dark(oklch(0.99 0 265),oklch(0.18 0 265));
 --vibeui-breadcrumb-007-bg:transparent;
 --vibeui-breadcrumb-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

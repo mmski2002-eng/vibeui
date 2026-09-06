@@ -37,14 +37,14 @@ export type Popover012Props = Omit<
 // пока сбрасывать нечего, — так кнопка не обещает того, чего не сделает.
 const STYLES = `
 :where([data-vibeui-block="popover-012"]){
---vibeui-popover-012-surface:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
---vibeui-popover-012-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.006 265));
+--vibeui-popover-012-surface:light-dark(oklch(1 0 0),oklch(0.22 0 265));
+--vibeui-popover-012-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-popover-012-muted:color-mix(in oklab,var(--vibeui-popover-012-fg) 64%,transparent);
---vibeui-popover-012-border:light-dark(oklch(0.89 0.006 265),oklch(0.36 0.012 265));
+--vibeui-popover-012-border:light-dark(oklch(0.89 0 265),oklch(0.36 0 265));
 --vibeui-popover-012-hover:light-dark(oklch(0 0 0 / 5%),oklch(1 0 0 / 7%));
 --vibeui-popover-012-accent:light-dark(oklch(0.5 0.16 265),oklch(0.78 0.12 265));
 --vibeui-popover-012-on-accent:oklch(from var(--vibeui-popover-012-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
---vibeui-popover-012-shadow:light-dark(oklch(0.2 0.02 265 / 24%),oklch(0 0 0 / 60%));
+--vibeui-popover-012-shadow:light-dark(oklch(0.2 0 265 / 24%),oklch(0 0 0 / 60%));
 --vibeui-popover-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 anchor-name:--vibeui-popover-012-anchor;
 }
@@ -78,12 +78,11 @@ width:16rem;max-width:calc(100vw - 1.5rem);
 border:1px solid var(--vibeui-popover-012-border);border-radius:0.75rem;
 background:var(--vibeui-popover-012-surface);color:var(--vibeui-popover-012-fg);
 box-shadow:0 18px 44px -26px var(--vibeui-popover-012-shadow);
-position-anchor:--vibeui-popover-012-anchor;
+position-anchor:--vibeui-popover-012-anchor;inset:auto;
 top:anchor(bottom);left:anchor(left);margin-top:0.5rem;
 }
 @supports not (anchor-name: --a){
-[data-vibeui-block="popover-012"]{position:relative}
-[data-vibeui-block="popover-012"] [popover]{position:absolute;top:calc(100% + 0.5rem);left:0;inset:auto}
+[data-vibeui-block="popover-012"] [popover]{position:fixed;inset:0;margin:auto}
 }
 [data-vibeui-block="popover-012"] [data-part="title"]{
 margin:0 0 0.375rem;padding:0 0.25rem;
@@ -128,8 +127,10 @@ border:1px solid var(--vibeui-popover-012-border);background:transparent;color:i
 [data-vibeui-block="popover-012"] [data-part="reset"]:focus-visible{outline:2px solid var(--vibeui-popover-012-accent);outline-offset:2px}
 /* Раскрытая панель на месте: атрибут popover прячет её правилом браузера,
    а это правило той же специфичности его переопределяет и возвращает панель
-   в поток. Так её показывают на витрине и в документации, без верхнего слоя. */
-[data-vibeui-block="popover-012"][data-open] [popover]{
+   в поток. Так её показывают на витрине и в документации, без верхнего слоя.
+   Только пока popover закрыт: у открытого положение задаёт верхний слой,
+   и static отправил бы панель в левый верхний угол экрана. */
+[data-vibeui-block="popover-012"][data-open] [popover]:not(:popover-open){
 display:block;position:static;inset:auto;margin:0.5rem 0 0;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="popover-012"] *{animation:none!important;transition:none!important}}

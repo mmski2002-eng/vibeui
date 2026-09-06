@@ -17,9 +17,9 @@ export type Button059Props = Omit<ComponentProps<"form">, "children"> & {
 // кнопкой держит место всегда, поэтому раскладка не прыгает при смене статуса.
 const STYLES = `
 :where([data-vibeui-block="button-059"]){
---vibeui-button-059-surface:light-dark(oklch(1 0 0),oklch(0.24 0.014 265));
---vibeui-button-059-border:light-dark(oklch(0.88 0.006 265),oklch(0.42 0.014 265));
---vibeui-button-059-fg:light-dark(oklch(0.24 0.02 265),oklch(0.94 0.008 265));
+--vibeui-button-059-surface:light-dark(oklch(1 0 0),oklch(0.24 0 265));
+--vibeui-button-059-border:light-dark(oklch(0.88 0 265),oklch(0.42 0 265));
+--vibeui-button-059-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-button-059-muted:color-mix(in oklab,var(--vibeui-button-059-fg) 68%,transparent);
 --vibeui-button-059-accent:light-dark(oklch(0.5 0.16 150),oklch(0.62 0.15 150));
 --vibeui-button-059-accent-fg:light-dark(oklch(0.99 0.01 150),oklch(0.17 0.03 150));

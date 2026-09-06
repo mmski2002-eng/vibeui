@@ -43,13 +43,13 @@ export type Contextmenu004Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="contextmenu-004"]){
 --vibeui-contextmenu-004-bg:transparent;
---vibeui-contextmenu-004-surface:light-dark(oklch(1 0 0),oklch(0.24 0.013 265));
---vibeui-contextmenu-004-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-contextmenu-004-surface:light-dark(oklch(1 0 0),oklch(0.24 0 265));
+--vibeui-contextmenu-004-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-contextmenu-004-muted:color-mix(in oklab,var(--vibeui-contextmenu-004-fg) 68%,transparent);
---vibeui-contextmenu-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
---vibeui-contextmenu-004-hover:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.014 265));
+--vibeui-contextmenu-004-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
+--vibeui-contextmenu-004-hover:light-dark(oklch(0.96 0 265),oklch(0.31 0 265));
 --vibeui-contextmenu-004-accent:light-dark(oklch(0.58 0.17 300),oklch(0.76 0.14 300));
---vibeui-contextmenu-004-shadow:light-dark(oklch(0.2 0.03 265 / 50%),oklch(0 0 0 / 72%));
+--vibeui-contextmenu-004-shadow:light-dark(oklch(0.2 0 265 / 50%),oklch(0 0 0 / 72%));
 --vibeui-contextmenu-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-contextmenu-004-x:50%;
 --vibeui-contextmenu-004-y:50%;
@@ -327,11 +327,11 @@ export function Contextmenu004({
           <div data-part="head">{target}</div>
           <button type="button" role="menuitem" data-part="item" onClick={cut}>
             {actionText.cut}
-            <span data-part="keys">⌘X</span>
+            <span data-part="keys">Ctrl+X</span>
           </button>
           <button type="button" role="menuitem" data-part="item" onClick={copy}>
             {actionText.copy}
-            <span data-part="keys">⌘C</span>
+            <span data-part="keys">Ctrl+C</span>
           </button>
           <button
             type="button"
@@ -342,7 +342,7 @@ export function Contextmenu004({
           >
             {actionText.paste}
             <span data-part="keys">
-              {buffer === null ? pasteDisabledHint : "⌘V"}
+              {buffer === null ? pasteDisabledHint : "Ctrl+V"}
             </span>
           </button>
         </div>

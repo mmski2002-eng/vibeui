@@ -213,15 +213,15 @@ const DEFAULT_GROUPS: Search001Group[] = [
   {
     label: "Навигация",
     commands: [
-      { label: "Открыть настройки", shortcut: "⌘ ,", icon: "settings" },
-      { label: "Перейти в профиль", shortcut: "⌘ P", icon: "user" },
+      { label: "Открыть настройки", shortcut: "Ctrl+,", icon: "settings" },
+      { label: "Перейти в профиль", shortcut: "Ctrl+P", icon: "user" },
     ],
   },
   {
     label: "Действия",
     commands: [
-      { label: "Создать проект", shortcut: "⌘ N", icon: "file" },
-      { label: "Написать сообщение", shortcut: "⌘ M", icon: "message" },
+      { label: "Создать проект", shortcut: "Ctrl+N", icon: "file" },
+      { label: "Написать сообщение", shortcut: "Ctrl+M", icon: "message" },
     ],
   },
 ]

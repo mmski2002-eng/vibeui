@@ -30,11 +30,11 @@ export type Tree009Props = Omit<ComponentProps<"nav">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="tree-009"]){
 --vibeui-tree-009-bg:transparent;
---vibeui-tree-009-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-tree-009-fg:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
 --vibeui-tree-009-muted:color-mix(in oklab,var(--vibeui-tree-009-fg) 62%,transparent);
---vibeui-tree-009-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
---vibeui-tree-009-rail:light-dark(oklch(0.92 0.005 265),oklch(0.32 0.01 265));
---vibeui-tree-009-hover:light-dark(oklch(0.97 0.004 265),oklch(0.29 0.01 265));
+--vibeui-tree-009-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-tree-009-rail:light-dark(oklch(0.92 0 265),oklch(0.32 0 265));
+--vibeui-tree-009-hover:light-dark(oklch(0.97 0 265),oklch(0.29 0 265));
 --vibeui-tree-009-accent:light-dark(oklch(0.52 0.19 262),oklch(0.75 0.15 262));
 --vibeui-tree-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

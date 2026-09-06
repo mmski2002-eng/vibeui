@@ -61,16 +61,16 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 const STYLES = `
 :where([data-vibeui-block="pricing-008"]){
 --vibeui-pricing-008-bg:transparent;
---vibeui-pricing-008-fg:light-dark(oklch(0.19 0.014 285),oklch(0.95 0.005 285));
---vibeui-pricing-008-muted:light-dark(oklch(0.51 0.014 285),oklch(0.72 0.012 285));
---vibeui-pricing-008-card:light-dark(oklch(1 0 0),oklch(0.22 0.014 285));
---vibeui-pricing-008-line:light-dark(oklch(0.89 0.008 285),oklch(0.35 0.014 285));
---vibeui-pricing-008-dark:light-dark(oklch(0.22 0.03 285),oklch(0.95 0.005 285));
---vibeui-pricing-008-darkfg:light-dark(oklch(0.98 0.004 285),oklch(0.2 0.02 285));
---vibeui-pricing-008-darkmuted:light-dark(oklch(0.74 0.016 285),oklch(0.46 0.016 285));
+--vibeui-pricing-008-fg:light-dark(oklch(0.19 0 285),oklch(0.95 0 285));
+--vibeui-pricing-008-muted:light-dark(oklch(0.51 0 285),oklch(0.72 0 285));
+--vibeui-pricing-008-card:light-dark(oklch(1 0 0),oklch(0.22 0 285));
+--vibeui-pricing-008-line:light-dark(oklch(0.89 0 285),oklch(0.35 0 285));
+--vibeui-pricing-008-dark:light-dark(oklch(0.22 0 285),oklch(0.95 0 285));
+--vibeui-pricing-008-darkfg:light-dark(oklch(0.98 0 285),oklch(0.2 0 285));
+--vibeui-pricing-008-darkmuted:light-dark(oklch(0.74 0 285),oklch(0.46 0 285));
 --vibeui-pricing-008-darkline:light-dark(oklch(1 0 0 / 16%),oklch(0 0 0 / 14%));
 --vibeui-pricing-008-accent:light-dark(oklch(0.7 0.17 300),oklch(0.55 0.19 300));
---vibeui-pricing-008-accent-fg:light-dark(oklch(0.18 0.04 300),oklch(0.99 0.005 300));
+--vibeui-pricing-008-accent-fg:light-dark(oklch(0.18 0.04 300),oklch(0.99 0 300));
 --vibeui-pricing-008-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

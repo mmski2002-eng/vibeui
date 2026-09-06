@@ -45,11 +45,11 @@ export type Resizable009Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="resizable-009"]){
 --vibeui-resizable-009-bg:transparent;
---vibeui-resizable-009-pane:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
---vibeui-resizable-009-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-resizable-009-pane:light-dark(oklch(1 0 0),oklch(0.25 0 265));
+--vibeui-resizable-009-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-resizable-009-muted:color-mix(in oklab,var(--vibeui-resizable-009-fg) 68%,transparent);
---vibeui-resizable-009-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
---vibeui-resizable-009-surface:light-dark(oklch(0.975 0.004 265),oklch(0.31 0.011 265));
+--vibeui-resizable-009-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
+--vibeui-resizable-009-surface:light-dark(oklch(0.975 0 265),oklch(0.31 0 265));
 --vibeui-resizable-009-accent:light-dark(oklch(0.55 0.13 165),oklch(0.77 0.13 165));
 --vibeui-resizable-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

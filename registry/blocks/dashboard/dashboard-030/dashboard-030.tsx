@@ -46,13 +46,13 @@ export type Dashboard030Props = {
 const STYLES = `
 :where([data-vibeui-block="dashboard-030"]){
 --vibeui-dashboard-030-bg:transparent;
---vibeui-dashboard-030-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
+--vibeui-dashboard-030-card:light-dark(oklch(1 0 0),oklch(0.26 0 265));
 /* Плашка дела внутри карточки дня: подложка блока бывает прозрачной, и
    заливать ею дело нельзя. */
---vibeui-dashboard-030-tile:light-dark(oklch(0.975 0.003 265),oklch(0.32 0.012 265));
---vibeui-dashboard-030-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-dashboard-030-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
---vibeui-dashboard-030-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.011 265));
+--vibeui-dashboard-030-tile:light-dark(oklch(0.975 0 265),oklch(0.32 0 265));
+--vibeui-dashboard-030-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
+--vibeui-dashboard-030-muted:light-dark(oklch(0.55 0 265),oklch(0.71 0 265));
+--vibeui-dashboard-030-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
 --vibeui-dashboard-030-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
 --vibeui-dashboard-030-focus:light-dark(oklch(0.6 0.14 152),oklch(0.76 0.14 152));
 --vibeui-dashboard-030-release:light-dark(oklch(0.62 0.16 300),oklch(0.78 0.14 300));

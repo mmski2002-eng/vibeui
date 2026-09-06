@@ -29,10 +29,10 @@ export type Buttongroup039Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="buttongroup-039"]){
 --vibeui-buttongroup-039-surface:transparent;
---vibeui-buttongroup-039-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.005 265));
+--vibeui-buttongroup-039-fg:light-dark(oklch(0.25 0 265),oklch(0.95 0 265));
 --vibeui-buttongroup-039-muted:color-mix(in oklab,var(--vibeui-buttongroup-039-fg) 68%,transparent);
---vibeui-buttongroup-039-border:light-dark(oklch(0.88 0.008 265),oklch(0.41 0.012 265));
---vibeui-buttongroup-039-hover:light-dark(oklch(0.97 0.004 265),oklch(0.33 0.012 265));
+--vibeui-buttongroup-039-border:light-dark(oklch(0.88 0 265),oklch(0.41 0 265));
+--vibeui-buttongroup-039-hover:light-dark(oklch(0.97 0 265),oklch(0.33 0 265));
 --vibeui-buttongroup-039-danger:light-dark(oklch(0.53 0.19 27),oklch(0.62 0.18 27));
 --vibeui-buttongroup-039-on-danger:light-dark(oklch(0.99 0.006 27),oklch(0.98 0.008 27));
 --vibeui-buttongroup-039-locked:light-dark(oklch(0.97 0.01 27),oklch(0.3 0.03 27));

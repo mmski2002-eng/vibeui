@@ -66,17 +66,17 @@ const STYLES = `
 :where([data-vibeui-block="dashboard-072"]){
 --vibeui-dashboard-072-bg:transparent;
 /* Плашка приговора, полотно графика и жёлоб шкалы: подложка блока прозрачна. */
---vibeui-dashboard-072-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 285));
---vibeui-dashboard-072-inset:light-dark(oklch(0.985 0.003 285),oklch(0.22 0.012 285));
---vibeui-dashboard-072-fg:light-dark(oklch(0.21 0.014 285),oklch(0.94 0.005 285));
---vibeui-dashboard-072-muted:light-dark(oklch(0.55 0.014 285),oklch(0.72 0.012 285));
---vibeui-dashboard-072-border:light-dark(oklch(0.91 0.006 285),oklch(0.36 0.012 285));
+--vibeui-dashboard-072-card:light-dark(oklch(1 0 0),oklch(0.26 0 285));
+--vibeui-dashboard-072-inset:light-dark(oklch(0.985 0 285),oklch(0.22 0 285));
+--vibeui-dashboard-072-fg:light-dark(oklch(0.21 0 285),oklch(0.94 0 285));
+--vibeui-dashboard-072-muted:light-dark(oklch(0.55 0 285),oklch(0.72 0 285));
+--vibeui-dashboard-072-border:light-dark(oklch(0.91 0 285),oklch(0.36 0 285));
 --vibeui-dashboard-072-accent:light-dark(oklch(0.52 0.16 285),oklch(0.73 0.14 285));
 --vibeui-dashboard-072-accent-line:light-dark(oklch(0.86 0.04 285),oklch(0.48 0.07 285));
 --vibeui-dashboard-072-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.04 285));
---vibeui-dashboard-072-soft:light-dark(oklch(0.965 0.02 285),oklch(0.3 0.035 285));
---vibeui-dashboard-072-control:light-dark(oklch(0.6 0.02 285),oklch(0.72 0.02 285));
---vibeui-dashboard-072-span-control:light-dark(oklch(0.86 0.01 285),oklch(0.45 0.015 285));
+--vibeui-dashboard-072-soft:light-dark(oklch(0.965 0 285),oklch(0.3 0.035 285));
+--vibeui-dashboard-072-control:light-dark(oklch(0.6 0 285),oklch(0.72 0 285));
+--vibeui-dashboard-072-span-control:light-dark(oklch(0.86 0 285),oklch(0.45 0 285));
 --vibeui-dashboard-072-win:light-dark(oklch(0.58 0.13 155),oklch(0.74 0.13 155));
 --vibeui-dashboard-072-span-win:light-dark(oklch(0.85 0.06 155),oklch(0.45 0.07 155));
 --vibeui-dashboard-072-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;

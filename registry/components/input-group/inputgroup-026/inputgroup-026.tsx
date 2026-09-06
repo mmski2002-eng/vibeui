@@ -35,15 +35,15 @@ const DEFAULT_HISTORY = ["кроссовки мужские", "куртка зи
 const STYLES = `
 :where([data-vibeui-block="inputgroup-026"]){
 --vibeui-inputgroup-026-surface:transparent;
---vibeui-inputgroup-026-panel:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
---vibeui-inputgroup-026-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
---vibeui-inputgroup-026-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-inputgroup-026-panel:light-dark(oklch(1 0 0),oklch(0.24 0 265));
+--vibeui-inputgroup-026-shell:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
+--vibeui-inputgroup-026-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-inputgroup-026-muted:color-mix(in oklab,var(--vibeui-inputgroup-026-fg) 68%,transparent);
---vibeui-inputgroup-026-field:light-dark(oklch(0.99 0.002 265),oklch(0.26 0.012 265));
---vibeui-inputgroup-026-fixed:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.012 265));
---vibeui-inputgroup-026-border:light-dark(oklch(0.86 0.008 265),oklch(0.42 0.014 265));
+--vibeui-inputgroup-026-field:light-dark(oklch(0.99 0 265),oklch(0.26 0 265));
+--vibeui-inputgroup-026-fixed:light-dark(oklch(0.96 0 265),oklch(0.31 0 265));
+--vibeui-inputgroup-026-border:light-dark(oklch(0.86 0 265),oklch(0.42 0 265));
 --vibeui-inputgroup-026-accent:light-dark(oklch(0.56 0.13 230),oklch(0.77 0.12 230));
---vibeui-inputgroup-026-hover:light-dark(oklch(0.95 0.02 230),oklch(0.32 0.03 230));
+--vibeui-inputgroup-026-hover:light-dark(oklch(0.95 0 230),oklch(0.32 0 230));
 --vibeui-inputgroup-026-radius:0.75rem;
 --vibeui-inputgroup-026-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -79,7 +79,7 @@ position:absolute;left:0;right:0;top:calc(100% + 0.375rem);z-index:10;
 margin:0;padding:0.375rem;list-style:none;
 background:var(--vibeui-inputgroup-026-panel);
 border:1px solid var(--vibeui-inputgroup-026-border);border-radius:0.625rem;
-box-shadow:0 10px 24px -12px oklch(0.2 0.02 265 / 0.35);
+box-shadow:0 10px 24px -12px oklch(0.2 0 265 / 0.35);
 }
 [data-vibeui-block="inputgroup-026"] [data-part="item"]{
 display:flex;align-items:center;gap:0.5rem;width:100%;

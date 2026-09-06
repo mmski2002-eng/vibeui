@@ -21,14 +21,14 @@ export type Calendar010Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="calendar-010"]){
 --vibeui-calendar-010-bg:transparent;
---vibeui-calendar-010-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-calendar-010-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-calendar-010-muted:color-mix(in oklab,var(--vibeui-calendar-010-fg) 68%,transparent);
---vibeui-calendar-010-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-calendar-010-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-calendar-010-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
---vibeui-calendar-010-sheet:light-dark(oklch(0.98 0.002 265),oklch(0.28 0.012 265));
+--vibeui-calendar-010-sheet:light-dark(oklch(0.98 0 265),oklch(0.28 0 265));
 /* Кольцо между наложенными аватарами: подложки у карточки нет, поэтому оно
    рисуется цветом страницы, а с пропом background — цветом плашки. */
---vibeui-calendar-010-ring:light-dark(oklch(1 0 0),oklch(0.19 0.012 265));
+--vibeui-calendar-010-ring:light-dark(oklch(1 0 0),oklch(0.19 0 265));
 --vibeui-calendar-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

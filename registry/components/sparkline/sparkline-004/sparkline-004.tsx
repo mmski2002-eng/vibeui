@@ -28,9 +28,9 @@ export type Sparkline004Props = Omit<ComponentProps<"span">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="sparkline-004"]){
 --vibeui-sparkline-004-bg:transparent;
---vibeui-sparkline-004-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-sparkline-004-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-sparkline-004-muted:color-mix(in oklab,var(--vibeui-sparkline-004-fg) 62%,transparent);
---vibeui-sparkline-004-rule:light-dark(oklch(0.88 0.006 265),oklch(0.36 0.012 265));
+--vibeui-sparkline-004-rule:light-dark(oklch(0.88 0 265),oklch(0.36 0 265));
 --vibeui-sparkline-004-accent:light-dark(oklch(0.52 0.15 152),oklch(0.75 0.14 152));
 --vibeui-sparkline-004-loss:light-dark(oklch(0.55 0.19 25),oklch(0.74 0.16 25));
 --vibeui-sparkline-004-draw:color-mix(in oklab,var(--vibeui-sparkline-004-fg) 32%,transparent);

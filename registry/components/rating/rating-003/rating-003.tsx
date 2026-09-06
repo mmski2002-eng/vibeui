@@ -33,13 +33,13 @@ export type Rating003Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="rating-003"]){
 --vibeui-rating-003-surface:transparent;
---vibeui-rating-003-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
---vibeui-rating-003-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-rating-003-shell:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-rating-003-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-rating-003-muted:color-mix(in oklab,var(--vibeui-rating-003-fg) 68%,transparent);
---vibeui-rating-003-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
---vibeui-rating-003-empty:light-dark(oklch(0.97 0.003 265),oklch(0.26 0.01 265));
+--vibeui-rating-003-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
+--vibeui-rating-003-empty:light-dark(oklch(0.97 0 265),oklch(0.26 0 265));
 --vibeui-rating-003-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
---vibeui-rating-003-on:light-dark(oklch(1 0 0),oklch(0.18 0.02 265));
+--vibeui-rating-003-on:light-dark(oklch(1 0 0),oklch(0.18 0 265));
 --vibeui-rating-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

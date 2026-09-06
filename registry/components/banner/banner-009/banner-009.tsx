@@ -28,7 +28,7 @@ export type Banner009Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="banner-009"]){
 --vibeui-banner-009-bg:transparent;
---vibeui-banner-009-fg:light-dark(oklch(0.23 0.012 265),oklch(0.94 0.005 265));
+--vibeui-banner-009-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-banner-009-muted:color-mix(in oklab,var(--vibeui-banner-009-fg) 68%,transparent);
 --vibeui-banner-009-surface:light-dark(oklch(0.98 0.012 85),oklch(0.28 0.026 85));
 --vibeui-banner-009-border:light-dark(oklch(0.88 0.05 85),oklch(0.42 0.05 85));

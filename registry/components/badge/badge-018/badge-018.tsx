@@ -28,9 +28,9 @@ const STYLES = `
 --vibeui-badge-018-fg:light-dark(oklch(0.99 0.01 25),oklch(0.17 0.03 25));
 /* Кольцо повторяет фон страницы, а не белый лист: иначе в тёмной теме
    вокруг плашки светится ободок. */
---vibeui-badge-018-ring:light-dark(oklch(1 0 0),oklch(0.19 0.008 265));
---vibeui-badge-018-host-bg:light-dark(oklch(0.93 0.008 265),oklch(0.31 0.012 265));
---vibeui-badge-018-host-fg:light-dark(oklch(0.34 0.016 265),oklch(0.92 0.008 265));
+--vibeui-badge-018-ring:light-dark(oklch(1 0 0),oklch(0.19 0 265));
+--vibeui-badge-018-host-bg:light-dark(oklch(0.93 0 265),oklch(0.31 0 265));
+--vibeui-badge-018-host-fg:light-dark(oklch(0.34 0 265),oklch(0.92 0 265));
 --vibeui-badge-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

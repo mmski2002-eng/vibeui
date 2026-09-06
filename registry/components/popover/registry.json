@@ -6,9 +6,7 @@
       "type": "registry:component",
       "title": "Всплывающая справка",
       "description": "Всплывающая карточка на HTML popover: в неё можно попасть мышью и Tab, поэтому она не закрывается по уходу курсора.",
-      "categories": [
-        "popover"
-      ],
+      "categories": ["popover"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-popover-001-*. Серверный компонент: открытие и закрытие держит HTML popover, позиция — anchor positioning с запасным правилом в @supports. Внутри карточки живут заголовок, текст и кнопка, поэтому нужен именно popover, а не подсказка.",
       "meta": {
-        "tags": [
-          "popover",
-          "explain",
-          "no-js",
-          "anchor"
-        ],
+        "tags": ["popover", "explain", "no-js", "anchor"],
         "ai": {
           "export": "Popover001",
           "usage": "<Popover001 label=\"Что это значит\" title=\"Как считается охват\" />",
@@ -152,8 +145,7 @@
                 "label": "What this means",
                 "title": "How reach is measured",
                 "text": "We take unique visitors over seven days and subtract bots from a list of known agents.",
-                "actionLabel": "Open the method",
-                "defaultOpen": true
+                "actionLabel": "Open the method"
               }
             }
           }
@@ -167,9 +159,7 @@
         ],
         "preview": {
           "width": "full",
-          "props": {
-            "defaultOpen": true
-          }
+          "props": {}
         }
       }
     },
@@ -178,9 +168,7 @@
       "type": "registry:component",
       "title": "Быстрое добавление",
       "description": "Быстрое действие без ухода со страницы: в поповере живёт настоящая форма из поля и списка, а отправка закрывает панель штатным popovertargetaction.",
-      "categories": [
-        "popover"
-      ],
+      "categories": ["popover"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -192,15 +180,10 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-popover-002-*. Серверный: слой, Escape и клик вне достаются от HTML popover, идентификаторы разводит useId. Раскладка панели объявлена только в :popover-open, иначе display перебил бы встроенный display:none. Позиционирование сделано CSS anchor positioning с откатом на absolute под @supports not. Кнопка отправки закрывает панель через popovertargetaction=\"hide\", поэтому обработчик закрытия не нужен.",
       "meta": {
-        "tags": [
-          "popover",
-          "form",
-          "quick add",
-          "anchor"
-        ],
+        "tags": ["popover", "form", "quick add", "anchor"],
         "ai": {
           "export": "Popover002",
-          "usage": "<Popover002\n  label=\"Новая задача\"\n  fieldLabel=\"Что сделать\"\n  submitLabel=\"Добавить\"\n  lists={[\"Входящие\", \"На неделю\"]}\n/>",
+          "usage": "<Popover002\n  label=\"Новая задача\"\n  fieldLabel=\"Что сделать\"\n  submitLabel=\"Добавить\"\n  cancelLabel=\"Отмена\"\n  lists={[\"Входящие\", \"На неделю\"]}\n/>",
           "summary": "Поповер с формой быстрого действия: поле, список и отправка. Ноль зависимостей, один файл, состояние держит браузер.",
           "preserve": [
             "локальную палитру --vibeui-popover-002-* и не подменять её токенами вашей темы",
@@ -249,6 +232,13 @@
             "type": "text",
             "default": "Добавить",
             "maxLength": 20
+          },
+          {
+            "prop": "cancelLabel",
+            "label": "Подпись отмены",
+            "type": "text",
+            "default": "Отмена",
+            "maxLength": 18
           },
           {
             "prop": "accent",
@@ -314,6 +304,10 @@
               },
               "background": {
                 "label": "Background"
+              },
+              "cancelLabel": {
+                "label": "Cancel caption",
+                "default": "Cancel"
               }
             },
             "title": "Quick Add",
@@ -325,12 +319,8 @@
                 "placeholder": "Draft the August report",
                 "submitLabel": "Add",
                 "listLabel": "List",
-                "lists": [
-                  "Inbox",
-                  "This week",
-                  "Someday"
-                ],
-                "defaultOpen": true
+                "lists": ["Inbox", "This week", "Someday"],
+                "cancelLabel": "Cancel"
               }
             }
           }
@@ -339,14 +329,13 @@
           "label",
           "fieldLabel",
           "submitLabel",
+          "cancelLabel",
           "accent",
           "background"
         ],
         "preview": {
           "width": "full",
-          "props": {
-            "defaultOpen": true
-          }
+          "props": {}
         }
       }
     },
@@ -355,9 +344,7 @@
       "type": "registry:component",
       "title": "Подтверждение во всплывашке",
       "description": "Подтверждение у самой кнопки вместо модального окна на весь экран: вопрос называет последствие, а отмена стоит первой.",
-      "categories": [
-        "popover"
-      ],
+      "categories": ["popover"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -369,12 +356,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-popover-003-*. Серверный: панель на HTML popover, идентификаторы разводит useId. Раскладка объявлена только в :popover-open — display в обычном правиле сломал бы закрытие. Панель центрируется относительно кнопки через left:anchor(center) и translate, под @supports not есть откат. Обе кнопки закрывают панель штатным popovertargetaction, подтверждение дополнительно вызывает onConfirm.",
       "meta": {
-        "tags": [
-          "popover",
-          "confirm",
-          "danger",
-          "inline"
-        ],
+        "tags": ["popover", "confirm", "danger", "inline"],
         "ai": {
           "export": "Popover003",
           "usage": "<Popover003\n  label=\"Удалить папку\"\n  title=\"Удалить «Архив 2024»?\"\n  confirmLabel=\"Удалить\"\n  cancelLabel=\"Отмена\"\n/>",
@@ -500,8 +482,7 @@
                 "title": "Delete «Archive 2024»?",
                 "text": "128 files go with the folder. They stay recoverable from the bin for 30 days.",
                 "confirmLabel": "Delete",
-                "cancelLabel": "Cancel",
-                "defaultOpen": true
+                "cancelLabel": "Cancel"
               }
             }
           }
@@ -515,9 +496,7 @@
         ],
         "preview": {
           "width": "full",
-          "props": {
-            "defaultOpen": true
-          }
+          "props": {}
         }
       }
     },
@@ -526,9 +505,7 @@
       "type": "registry:component",
       "title": "Настройки списка",
       "description": "Настройки списка там, где сам список: сортировка радиокнопками и видимость колонок чекбоксами, обе группы размечены fieldset с legend.",
-      "categories": [
-        "popover"
-      ],
+      "categories": ["popover"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -540,12 +517,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-popover-004-*. Серверный: панель на HTML popover, имена групп разводит useId. Раскладка объявлена только в :popover-open. Заголовки групп сделаны настоящими legend, а не div — иначе назначение группы не объявляется. Legend с float:left заставляет следующих детей обтекать, поэтому у контейнера пунктов стоит clear:both. Панель прижата к правому краю кнопки через right:anchor(right) с откатом под @supports not.",
       "meta": {
-        "tags": [
-          "popover",
-          "settings",
-          "fieldset",
-          "columns"
-        ],
+        "tags": ["popover", "settings", "fieldset", "columns"],
         "ai": {
           "export": "Popover004",
           "usage": "<Popover004\n  label=\"Вид списка\"\n  sorts={[\"По дате\", \"По названию\"]}\n  columns={[\"Автор\", \"Размер\"]}\n/>",
@@ -670,18 +642,8 @@
                 "label": "List view",
                 "sortsLabel": "Sorting",
                 "columnsLabel": "Columns",
-                "sorts": [
-                  "By date modified",
-                  "By name",
-                  "By size"
-                ],
-                "columns": [
-                  "Author",
-                  "Size",
-                  "Tags",
-                  "Status"
-                ],
-                "defaultOpen": true
+                "sorts": ["By date modified", "By name", "By size"],
+                "columns": ["Author", "Size", "Tags", "Status"]
               }
             }
           }
@@ -695,9 +657,7 @@
         ],
         "preview": {
           "width": "full",
-          "props": {
-            "defaultOpen": true
-          }
+          "props": {}
         }
       }
     },
@@ -706,9 +666,7 @@
       "type": "registry:component",
       "title": "Выбор цвета",
       "description": "Выбор цвета метки, где цвет — это радиокнопка, а не div с обработчиком: выбор работает стрелками, попадает в форму и не требует ни строчки JS.",
-      "categories": [
-        "popover"
-      ],
+      "categories": ["popover"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -720,12 +678,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-popover-005-*. Серверный: панель на HTML popover, имя группы разводит useId. Раскладка объявлена только в :popover-open. Кружки — это label с визуально скрытым radio внутри; выбранный обведён кольцом через :has(input:checked), а фокус ловится через :has(input:focus-visible). Цвет каждого кружка приходит в собственной переменной --vibeui-popover-005-swatch. Legend с float:left требует clear:both у сетки.",
       "meta": {
-        "tags": [
-          "popover",
-          "color",
-          "radio",
-          "swatches"
-        ],
+        "tags": ["popover", "color", "radio", "swatches"],
         "ai": {
           "export": "Popover005",
           "usage": "<Popover005\n  label=\"Цвет метки\"\n  selected=\"Синий\"\n  swatches={[{ name: \"Синий\", value: \"oklch(0.6 0.17 255)\" }]}\n/>",
@@ -905,24 +858,15 @@
                     "name": "Lavender",
                     "value": "oklch(0.75 0.09 290)"
                   }
-                ],
-                "defaultOpen": true
+                ]
               }
             }
           }
         },
-        "cardControls": [
-          "label",
-          "hint",
-          "selected",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "hint", "selected", "accent", "background"],
         "preview": {
           "width": "full",
-          "props": {
-            "defaultOpen": true
-          }
+          "props": {}
         }
       }
     },
@@ -931,9 +875,7 @@
       "type": "registry:component",
       "title": "Подсказка рядом с полем",
       "description": "Справка внутри строки текста: в отличие от подсказки, внутрь можно войти мышью и Tab — там живёт ссылка на документацию.",
-      "categories": [
-        "popover"
-      ],
+      "categories": ["popover"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -945,12 +887,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-popover-006-*. Серверный: карточка на HTML popover, идентификатор разводит useId. Раскладка объявлена только в :popover-open. Карточка сделана строчным элементом со свойством popover, поэтому она остаётся допустимым содержимым абзаца; заголовок и текст внутри — тоже строчные с display:block. Позиционирование через anchor positioning с откатом под @supports not. Триггер — кнопка, стилизованная под слово в тексте.",
       "meta": {
-        "tags": [
-          "popover",
-          "help",
-          "inline",
-          "link"
-        ],
+        "tags": ["popover", "help", "inline", "link"],
         "ai": {
           "export": "Popover006",
           "usage": "<Popover006\n  term=\"холодный старт\"\n  title=\"Что такое холодный старт\"\n  linkLabel=\"Как его избежать\"\n  href=\"/docs/cold-start\"\n/>",
@@ -1080,24 +1017,15 @@
                 "linkLabel": "How to avoid it",
                 "textBefore": "The first answer after an idle period arrives slower — that is a ",
                 "textAfter": ", and it goes away by itself after a minute of traffic.",
-                "triggerHint": "Help: {term}",
-                "defaultOpen": true
+                "triggerHint": "Help: {term}"
               }
             }
           }
         },
-        "cardControls": [
-          "term",
-          "title",
-          "linkLabel",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["term", "title", "linkLabel", "accent", "background"],
         "preview": {
           "width": "full",
-          "props": {
-            "defaultOpen": true
-          }
+          "props": {}
         }
       }
     },
@@ -1106,9 +1034,7 @@
       "type": "registry:component",
       "title": "Колокольчик уведомлений",
       "description": "Колокольчик со счётчиком и списком внутри: непрочитанное помечено точкой и весом, а строки — настоящие ссылки, по которым ходят с клавиатуры.",
-      "categories": [
-        "popover"
-      ],
+      "categories": ["popover"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1120,12 +1046,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-popover-007-*. Серверный: панель на HTML popover, идентификатор разводит useId. Раскладка объявлена только в :popover-open. Значок-счётчик обведён рамкой цвета подложки, поэтому читается на любой кнопке. Прочитанные строки отличаются весом и цветом, а не только точкой. Список ограничен по высоте и прокручивается, панель прижата к правому краю кнопки через right:anchor(right) с откатом под @supports not.",
       "meta": {
-        "tags": [
-          "popover",
-          "notifications",
-          "badge",
-          "list"
-        ],
+        "tags": ["popover", "notifications", "badge", "list"],
         "ai": {
           "export": "Popover007",
           "usage": "<Popover007\n  count={2}\n  items={[{ title: \"Сборка 412 прошла\", meta: \"конвейер\", unread: true }]}\n  footerLabel=\"Все уведомления\"\n/>",
@@ -1273,8 +1194,7 @@
                     "title": "An access key expires in 7 days",
                     "meta": "security · yesterday"
                   }
-                ],
-                "defaultOpen": true
+                ]
               }
             }
           }
@@ -1288,9 +1208,7 @@
         ],
         "preview": {
           "width": "full",
-          "props": {
-            "defaultOpen": true
-          }
+          "props": {}
         }
       }
     },
@@ -1299,9 +1217,7 @@
       "type": "registry:component",
       "title": "Вложенная всплывашка",
       "description": "Поповер внутри поповера: кнопка второго уровня лежит внутри первой панели, поэтому браузер считает панели вложенными и не закрывает родителя.",
-      "categories": [
-        "popover"
-      ],
+      "categories": ["popover"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1313,12 +1229,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-popover-008-*. Серверный: обе панели на HTML popover, идентификаторы разводит useId. Раскладка обеих объявлена только в :popover-open. Вложенность возникает из того, что кнопка второй панели находится внутри первой: браузер выстраивает стек, Escape закрывает панели по одной изнутри наружу. Вторая панель прицеплена к строке-родителю через собственный anchor-name, у обеих есть откат под @supports not.",
       "meta": {
-        "tags": [
-          "popover",
-          "nested",
-          "menu",
-          "share"
-        ],
+        "tags": ["popover", "nested", "menu", "share"],
         "ai": {
           "export": "Popover008",
           "usage": "<Popover008\n  label=\"Поделиться\"\n  nestedLabel=\"Уровень доступа\"\n  levels={[\"Только чтение\", \"Редактирование\"]}\n/>",
@@ -1445,12 +1356,7 @@
                 "nestedLabel": "Access level",
                 "copyLabel": "Copy link",
                 "inviteLabel": "Invite by email",
-                "levels": [
-                  "Read only",
-                  "Can comment",
-                  "Can edit"
-                ],
-                "defaultOpen": true
+                "levels": ["Read only", "Can comment", "Can edit"]
               }
             }
           }
@@ -1464,9 +1370,7 @@
         ],
         "preview": {
           "width": "full",
-          "props": {
-            "defaultOpen": true
-          }
+          "props": {}
         }
       }
     },
@@ -1475,9 +1379,7 @@
       "type": "registry:component",
       "title": "Быстрая правка",
       "description": "Поповер быстрой правки одного поля с кнопками «Сохранить» и «Отмена»: черновик живёт в состоянии, а закрытие по Escape и клику вне откатывает его без сохранения.",
-      "categories": [
-        "popover"
-      ],
+      "categories": ["popover"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1489,12 +1391,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-popover-009-*. Клиентский: \"use client\" ради черновика и управления фокусом. Кнопка несёт aria-haspopup=\"dialog\" и aria-expanded, панель — role=\"dialog\". Escape и клик вне откатывают черновик к value и закрывают панель; сохраняет только явная кнопка. Панель лежит в контейнере с position:relative и не вылезает за карточку каталога.",
       "meta": {
-        "tags": [
-          "popover",
-          "edit",
-          "form",
-          "inline"
-        ],
+        "tags": ["popover", "edit", "form", "inline"],
         "ai": {
           "export": "Popover009",
           "usage": "<Popover009\n  label=\"Изменить\"\n  fieldLabel=\"Название\"\n  value=\"Список задач\"\n  onSave={(value) => rename(value)}\n/>",
@@ -1624,24 +1521,15 @@
                 "fieldLabel": "Name",
                 "value": "Task list",
                 "saveLabel": "Save",
-                "cancelLabel": "Cancel",
-                "defaultOpen": true
+                "cancelLabel": "Cancel"
               }
             }
           }
         },
-        "cardControls": [
-          "label",
-          "value",
-          "saveLabel",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "value", "saveLabel", "accent", "background"],
         "preview": {
           "width": "full",
-          "props": {
-            "defaultOpen": true
-          }
+          "props": {}
         }
       }
     },
@@ -1650,9 +1538,7 @@
       "type": "registry:component",
       "title": "Карточка пользователя",
       "description": "Карточка пользователя открывается по наведению на имя и по фокусу с клавиатуры, с паузой на закрытие, чтобы курсор успел перейти на карточку; Escape и клик вне закрывают её сразу.",
-      "categories": [
-        "popover"
-      ],
+      "categories": ["popover"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1664,12 +1550,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-popover-010-*. Клиентский: \"use client\" ради наведения, фокуса и паузы закрытия. Имя — кнопка с aria-haspopup=\"dialog\" и aria-expanded, открывается по mouseenter и focus, а также по клику для тач-экранов. Закрытие при уходе курсора откладывается на 160 мс и отменяется входом в карточку; Escape закрывает сразу и возвращает фокус на имя.",
       "meta": {
-        "tags": [
-          "popover",
-          "hover",
-          "profile",
-          "card"
-        ],
+        "tags": ["popover", "hover", "profile", "card"],
         "ai": {
           "export": "Popover010",
           "usage": "<Popover010\n  name=\"Аня Соколова\"\n  role=\"Дизайнер продукта\"\n  email=\"anya@example.com\"\n  onAction={() => openChat()}\n/>",
@@ -1799,24 +1680,15 @@
                 "role": "Product designer",
                 "email": "alex@example.com",
                 "actionLabel": "Message",
-                "cardHint": "User card for {name}",
-                "defaultOpen": true
+                "cardHint": "User card for {name}"
               }
             }
           }
         },
-        "cardControls": [
-          "name",
-          "role",
-          "actionLabel",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["name", "role", "actionLabel", "accent", "background"],
         "preview": {
           "width": "full",
-          "props": {
-            "defaultOpen": true
-          }
+          "props": {}
         }
       }
     },
@@ -1825,9 +1697,7 @@
       "type": "registry:component",
       "title": "Выбор даты у поля",
       "description": "Календарь открывается от кнопки-поля, а не от отдельной иконки: кнопка называет выбранную дату, стрелки листают месяц, выбор дня закрывает панель и возвращает фокус на поле.",
-      "categories": [
-        "popover"
-      ],
+      "categories": ["popover"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1839,12 +1709,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-popover-011-*. Клиентский: \"use client\" ради месяца, выбора и управления фокусом. Кнопка-поле несёт aria-haspopup=\"dialog\" и aria-expanded, панель — role=\"dialog\" с сеткой дней-кнопок. Дата считается через обычный Date без библиотек. Escape и клик вне закрывают панель без выбора и возвращают фокус на поле.",
       "meta": {
-        "tags": [
-          "popover",
-          "date",
-          "calendar",
-          "field"
-        ],
+        "tags": ["popover", "date", "calendar", "field"],
         "ai": {
           "export": "Popover011",
           "usage": "<Popover011\n  label=\"Дата встречи\"\n  onChange={(value) => setDate(value)}\n/>",
@@ -1961,15 +1826,7 @@
               "props": {
                 "label": "Meeting date",
                 "placeholder": "Choose a date",
-                "weekdays": [
-                  "Mon",
-                  "Tue",
-                  "Wed",
-                  "Thu",
-                  "Fri",
-                  "Sat",
-                  "Sun"
-                ],
+                "weekdays": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
                 "months": [
                   "January",
                   "February",
@@ -1986,23 +1843,15 @@
                 ],
                 "prevLabel": "Previous month",
                 "nextLabel": "Next month",
-                "panelHint": "{label}: pick a date",
-                "defaultOpen": true
+                "panelHint": "{label}: pick a date"
               }
             }
           }
         },
-        "cardControls": [
-          "label",
-          "placeholder",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "placeholder", "accent", "background"],
         "preview": {
           "width": "full",
-          "props": {
-            "defaultOpen": true
-          }
+          "props": {}
         }
       }
     },
@@ -2011,9 +1860,7 @@
       "type": "registry:component",
       "title": "Фильтр списка",
       "description": "Фильтр в панели у самой кнопки: список за ней виден, а число отмеченного стоит на кнопке.",
-      "categories": [
-        "popover"
-      ],
+      "categories": ["popover"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2025,12 +1872,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-popover-012-*. Клиентский: отмеченное живёт в состоянии, панель открывает нативный popover. Счётчик отмеченного выведен на кнопку, поэтому включённый фильтр виден при закрытой панели. Кнопка сброса отключается, пока сбрасывать нечего, а применение закрывает панель средствами браузера через popovertargetaction.",
       "meta": {
-        "tags": [
-          "popover",
-          "filter",
-          "checkbox",
-          "anchor"
-        ],
+        "tags": ["popover", "filter", "checkbox", "anchor"],
         "ai": {
           "export": "Popover012",
           "usage": "<Popover012 options={filters} defaultValue={['open']} />",
@@ -2148,7 +1990,6 @@
             },
             "preview": {
               "props": {
-                "defaultOpen": true,
                 "label": "Filter",
                 "title": "Show tasks",
                 "applyLabel": "Apply",
@@ -2186,17 +2027,9 @@
         },
         "preview": {
           "width": "full",
-          "props": {
-            "defaultOpen": true
-          }
+          "props": {}
         },
-        "cardControls": [
-          "label",
-          "title",
-          "applyLabel",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["label", "title", "applyLabel", "accent", "background"]
       }
     },
     {
@@ -2204,9 +2037,7 @@
       "type": "registry:component",
       "title": "Горячие клавиши",
       "description": "Список сочетаний рядом с работой: клавиши набраны kbd, группы названы по задачам, а не по модификаторам.",
-      "categories": [
-        "popover"
-      ],
+      "categories": ["popover"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2218,12 +2049,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-popover-013-*. Серверный: клавиши не меняются, состояния здесь нет. Сочетания набраны элементом kbd, поэтому переживают увеличение шрифта, копируются текстом и читаются скринридером как клавиши. Описание и сочетание связаны списком определений, а не расположением в двух колонках.",
       "meta": {
-        "tags": [
-          "popover",
-          "shortcuts",
-          "keyboard",
-          "help"
-        ],
+        "tags": ["popover", "shortcuts", "keyboard", "help"],
         "ai": {
           "export": "Popover013",
           "usage": "<Popover013 groups={groups} />",
@@ -2341,7 +2167,6 @@
             },
             "preview": {
               "props": {
-                "defaultOpen": true,
                 "label": "Shortcuts",
                 "title": "What you can press",
                 "footnote": "The full list lives in Help, under «Keyboard».",
@@ -2387,17 +2212,9 @@
         },
         "preview": {
           "width": "full",
-          "props": {
-            "defaultOpen": true
-          }
+          "props": {}
         },
-        "cardControls": [
-          "label",
-          "title",
-          "footnote",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["label", "title", "footnote", "accent", "background"]
       }
     },
     {
@@ -2405,9 +2222,7 @@
       "type": "registry:component",
       "title": "Выбор реакции",
       "description": "Ряд реакций, у каждой из которых есть имя: знак сопровождается подписью для скринридера и счётчиком.",
-      "categories": [
-        "popover"
-      ],
+      "categories": ["popover"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2419,12 +2234,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-popover-014-*. Клиентский: выбранная реакция живёт в состоянии, панель открывает нативный popover и раскрывается вверх от кнопки. У каждой кнопки есть имя в aria-label и подсказке, счётчик стоит под знаком, а повторное нажатие снимает свою реакцию. Выбор объявляется скрытой строкой с aria-live.",
       "meta": {
-        "tags": [
-          "popover",
-          "reactions",
-          "emoji",
-          "feedback"
-        ],
+        "tags": ["popover", "reactions", "emoji", "feedback"],
         "ai": {
           "export": "Popover014",
           "usage": "<Popover014 reactions={reactions} />",
@@ -2457,10 +2267,10 @@
         "controls": [
           {
             "prop": "label",
-            "label": "Подпись кнопки",
+            "label": "Имя кнопки",
             "type": "text",
-            "default": "Реакция",
-            "maxLength": 18
+            "default": "Поставить реакцию",
+            "maxLength": 24
           },
           {
             "prop": "title",
@@ -2531,8 +2341,8 @@
             },
             "controls": {
               "label": {
-                "label": "Button caption",
-                "default": "React"
+                "label": "Button name",
+                "default": "Add reaction"
               },
               "title": {
                 "label": "Panel heading",
@@ -2550,8 +2360,7 @@
             },
             "preview": {
               "props": {
-                "defaultOpen": true,
-                "label": "React",
+                "label": "Add reaction",
                 "title": "How to mark it",
                 "chosenTemplate": "Your reaction: {label}",
                 "reactions": [
@@ -2586,9 +2395,7 @@
         },
         "preview": {
           "width": "full",
-          "props": {
-            "defaultOpen": true
-          }
+          "props": {}
         },
         "cardControls": [
           "label",

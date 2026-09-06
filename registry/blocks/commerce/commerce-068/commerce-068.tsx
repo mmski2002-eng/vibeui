@@ -49,11 +49,11 @@ export type Commerce068Props = {
 const STYLES = `
 :where([data-vibeui-block="commerce-068"]){
 --vibeui-commerce-068-bg:transparent;
---vibeui-commerce-068-surface:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
---vibeui-commerce-068-fg:light-dark(oklch(0.21 0.012 265),oklch(0.94 0.006 265));
---vibeui-commerce-068-muted:light-dark(oklch(0.53 0.014 265),oklch(0.73 0.012 265));
---vibeui-commerce-068-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.014 265));
---vibeui-commerce-068-soft:light-dark(oklch(0.972 0.004 265),oklch(0.27 0.014 265));
+--vibeui-commerce-068-surface:light-dark(oklch(1 0 0),oklch(0.22 0 265));
+--vibeui-commerce-068-fg:light-dark(oklch(0.21 0 265),oklch(0.94 0 265));
+--vibeui-commerce-068-muted:light-dark(oklch(0.53 0 265),oklch(0.73 0 265));
+--vibeui-commerce-068-border:light-dark(oklch(0.9 0 265),oklch(0.38 0 265));
+--vibeui-commerce-068-soft:light-dark(oklch(0.972 0 265),oklch(0.27 0 265));
 --vibeui-commerce-068-accent:light-dark(oklch(0.48 0.14 265),oklch(0.76 0.13 265));
 --vibeui-commerce-068-done:light-dark(oklch(0.47 0.12 150),oklch(0.78 0.14 150));
 --vibeui-commerce-068-hold:light-dark(oklch(0.58 0.13 75),oklch(0.82 0.14 75));

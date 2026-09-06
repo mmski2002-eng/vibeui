@@ -21,22 +21,21 @@ export type Tabs007Props = {
   style?: CSSProperties
 }
 
-// Идея компонента: много вкладок в узкой полосе. Ряд прокручивается, а по краям
-// появляются тени — но только с той стороны, где содержимое ещё осталось. Это
-// делает пара градиентов с разной привязкой фона: «маска» едет вместе с
-// содержимым (local), «тень» стоит на месте (scroll). Ни наблюдателя, ни JS.
+// Идея компонента: много вкладок в узкой полосе. Ряд прокручивается, а края
+// растворяются маской — обрезанное посреди буквы «Новосибирс» читается как
+// поломка, растворённое слово читается как «дальше есть ещё». Поверх маски
+// лежит тень на background-attachment:scroll: она стоит на месте, пока ряд
+// едет, и гаснет сама, когда докрутили до края. Ни наблюдателя, ни JS.
 //
-// Тема берётся из color-scheme окружения через light-dark(). Маска края —
-// отдельная переменная: градиенту нужен непрозрачный цвет той поверхности,
-// на которой лежит ряд, а сама подложка компонента прозрачна.
+// Тема берётся из color-scheme окружения через light-dark().
 const STYLES = `
 :where([data-vibeui-block="tabs-007"]){
 --vibeui-tabs-007-bg:transparent;
---vibeui-tabs-007-mask:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
---vibeui-tabs-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-tabs-007-mask:light-dark(oklch(1 0 0),oklch(0.21 0 265));
+--vibeui-tabs-007-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-tabs-007-muted:color-mix(in oklab,var(--vibeui-tabs-007-fg) 68%,transparent);
---vibeui-tabs-007-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
---vibeui-tabs-007-shade:light-dark(oklch(0.35 0.03 265 / 16%),oklch(0.08 0.02 265 / 45%));
+--vibeui-tabs-007-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
+--vibeui-tabs-007-shade:light-dark(oklch(0.35 0 265 / 16%),oklch(0.08 0 265 / 45%));
 --vibeui-tabs-007-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
 --vibeui-tabs-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -44,7 +43,7 @@ const STYLES = `
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="tabs-007"]{color-scheme:dark}
 [data-vibeui-block="tabs-007"]{
-box-sizing:border-box;width:100%;max-width:24rem;padding:0.5rem 0 0.875rem;
+box-sizing:border-box;width:100%;max-width:30rem;padding:0.5rem 0 0.875rem;
 background:var(--vibeui-tabs-007-bg);color:var(--vibeui-tabs-007-fg);
 border:1px solid var(--vibeui-tabs-007-border);border-radius:0.875rem;
 font-family:var(--vibeui-tabs-007-font);
@@ -54,15 +53,16 @@ font-family:var(--vibeui-tabs-007-font);
 display:flex;gap:0.25rem;padding:0 0.75rem;
 overflow-x:auto;scrollbar-width:none;overscroll-behavior-x:contain;
 border-bottom:1px solid var(--vibeui-tabs-007-border);
+/* Края растворяются всегда: маска не знает про положение прокрутки, зато
+   ни одна подпись не обрывается посреди буквы. */
+mask-image:linear-gradient(to right,transparent 0,#000 1.25rem,#000 calc(100% - 1.75rem),transparent 100%);
 background-image:
-linear-gradient(to right,var(--vibeui-tabs-007-mask),transparent),
-linear-gradient(to left,var(--vibeui-tabs-007-mask),transparent),
 linear-gradient(to right,var(--vibeui-tabs-007-shade),transparent),
 linear-gradient(to left,var(--vibeui-tabs-007-shade),transparent);
-background-position:left center,right center,left center,right center;
-background-size:1.5rem 100%,1.5rem 100%,0.75rem 100%,0.75rem 100%;
+background-position:left center,right center;
+background-size:0.75rem 100%,0.75rem 100%;
 background-repeat:no-repeat;
-background-attachment:local,local,scroll,scroll;
+background-attachment:scroll,scroll;
 }
 [data-vibeui-block="tabs-007"] [data-part="list"]::-webkit-scrollbar{display:none}
 [data-vibeui-block="tabs-007"] [data-part="tab"]{

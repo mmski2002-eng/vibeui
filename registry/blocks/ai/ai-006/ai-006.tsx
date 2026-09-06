@@ -29,10 +29,10 @@ export type Ai006Props = {
 const STYLES = `
 :where([data-vibeui-block="ai-006"]){
 --vibeui-ai-006-bg:transparent;
---vibeui-ai-006-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.006 265));
---vibeui-ai-006-muted:light-dark(oklch(0.54 0.014 265),oklch(0.69 0.012 265));
---vibeui-ai-006-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
---vibeui-ai-006-soft:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.011 265));
+--vibeui-ai-006-fg:light-dark(oklch(0.21 0 265),oklch(0.94 0 265));
+--vibeui-ai-006-muted:light-dark(oklch(0.54 0 265),oklch(0.69 0 265));
+--vibeui-ai-006-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
+--vibeui-ai-006-soft:light-dark(oklch(0.975 0 265),oklch(0.27 0 265));
 --vibeui-ai-006-accent:light-dark(oklch(0.55 0.17 155),oklch(0.74 0.15 155));
 --vibeui-ai-006-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

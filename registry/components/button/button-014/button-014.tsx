@@ -13,8 +13,9 @@ export type Button014Props = Omit<ComponentProps<"button">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="button-014"]){
 --vibeui-button-014-size:3.25rem;
---vibeui-button-014-accent:light-dark(oklch(0.55 0.17 265),oklch(0.63 0.18 265));
---vibeui-button-014-fg:oklch(0.99 0.01 265);
+--vibeui-button-014-accent:light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));
+--vibeui-button-014-hover-filter:light-dark(brightness(1.45),brightness(0.9));
+--vibeui-button-014-fg:light-dark(oklch(0.99 0 265),oklch(0.17 0.01 265));
 --vibeui-button-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -22,7 +23,9 @@ const STYLES = `
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="button-014"]{color-scheme:dark}
 [data-vibeui-block="button-014"]{
 appearance:none;border:0;cursor:pointer;
-display:inline-flex;align-items:center;gap:0.5rem;
+/* Пока подпись свёрнута, зазора нет: иначе он сдвигает плюс от центра
+   круга ровно на половину зазора. */
+display:inline-flex;align-items:center;gap:0;
 height:var(--vibeui-button-014-size);
 /* Ширина едет от круга к пилюле: подпись раскрывается, а не появляется
    поверх соседей. */
@@ -31,9 +34,9 @@ border-radius:9999px;
 background:var(--vibeui-button-014-accent);color:var(--vibeui-button-014-fg);
 font-family:var(--vibeui-button-014-font);font-size:0.875rem;font-weight:650;line-height:1;
 box-shadow:0 12px 24px -12px color-mix(in oklab,var(--vibeui-button-014-accent) 70%,transparent);
-transition:padding .18s ease,filter .16s ease;
+transition:padding .18s ease,gap .18s ease,filter .16s ease;
 }
-[data-vibeui-block="button-014"]:hover{filter:brightness(0.96)}
+[data-vibeui-block="button-014"]:hover{filter:var(--vibeui-button-014-hover-filter)}
 [data-vibeui-block="button-014"]:focus-visible{outline:2px solid var(--vibeui-button-014-accent);outline-offset:3px}
 [data-vibeui-block="button-014"] [data-part="plus"]{position:relative;flex:none;width:1rem;height:1rem}
 [data-vibeui-block="button-014"] [data-part="plus"]::before,
@@ -50,12 +53,12 @@ opacity:0;transition:max-width .18s ease,opacity .14s ease;
 [data-vibeui-block="button-014"]:hover [data-part="label"],
 [data-vibeui-block="button-014"]:focus-visible [data-part="label"]{max-width:12rem;opacity:1}
 [data-vibeui-block="button-014"]:hover,
-[data-vibeui-block="button-014"]:focus-visible{padding:0 1.125rem}
+[data-vibeui-block="button-014"]:focus-visible{padding:0 1.125rem;gap:0.5rem}
 /* Без мыши наведения не бывает: на телефоне подпись видна сразу, иначе
    назначение кнопки там просто не существует. */
 @media (hover:none){
 [data-vibeui-block="button-014"] [data-part="label"]{max-width:12rem;opacity:1}
-[data-vibeui-block="button-014"]{padding:0 1.125rem}
+[data-vibeui-block="button-014"]{padding:0 1.125rem;gap:0.5rem}
 }
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="button-014"] *{animation:none!important;transition:none!important}

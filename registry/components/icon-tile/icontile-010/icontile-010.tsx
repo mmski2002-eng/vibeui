@@ -23,7 +23,7 @@ const STYLES = `
 --vibeui-icontile-010-size:3.75rem;
 --vibeui-icontile-010-hue:262;
 --vibeui-icontile-010-chroma:0.05;
---vibeui-icontile-010-fg:light-dark(oklch(0.26 0.014 265),oklch(0.93 0.006 265));
+--vibeui-icontile-010-fg:light-dark(oklch(0.26 0 265),oklch(0.93 0 265));
 --vibeui-icontile-010-muted:color-mix(in oklab,var(--vibeui-icontile-010-fg) 68%,transparent);
 --vibeui-icontile-010-track:light-dark(oklch(0.9 0.012 var(--vibeui-icontile-010-hue)),oklch(0.36 0.016 var(--vibeui-icontile-010-hue)));
 --vibeui-icontile-010-arc:light-dark(oklch(0.5 calc(var(--vibeui-icontile-010-chroma) * 4) var(--vibeui-icontile-010-hue)),oklch(0.75 calc(var(--vibeui-icontile-010-chroma) * 3.4) var(--vibeui-icontile-010-hue)));

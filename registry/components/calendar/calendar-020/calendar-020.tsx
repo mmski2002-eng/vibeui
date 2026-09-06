@@ -31,10 +31,10 @@ export type Calendar020Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="calendar-020"]){
 --vibeui-calendar-020-bg:transparent;
---vibeui-calendar-020-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-calendar-020-fg:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
 --vibeui-calendar-020-muted:color-mix(in oklab,var(--vibeui-calendar-020-fg) 68%,transparent);
---vibeui-calendar-020-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
---vibeui-calendar-020-track:light-dark(oklch(0.94 0.005 265),oklch(0.3 0.011 265));
+--vibeui-calendar-020-border:light-dark(oklch(0.91 0 265),oklch(0.35 0 265));
+--vibeui-calendar-020-track:light-dark(oklch(0.94 0 265),oklch(0.3 0 265));
 --vibeui-calendar-020-accent:light-dark(oklch(0.55 0.16 265),oklch(0.73 0.14 265));
 --vibeui-calendar-020-warn:light-dark(oklch(0.65 0.16 70),oklch(0.78 0.14 70));
 --vibeui-calendar-020-late:light-dark(oklch(0.55 0.18 25),oklch(0.74 0.15 25));

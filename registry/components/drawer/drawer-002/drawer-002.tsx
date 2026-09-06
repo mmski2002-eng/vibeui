@@ -31,13 +31,13 @@ export type Drawer002Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="drawer-002"]){
 --vibeui-drawer-002-bg:transparent;
---vibeui-drawer-002-surface:light-dark(oklch(1 0 0),oklch(0.22 0.013 265));
---vibeui-drawer-002-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-drawer-002-surface:light-dark(oklch(1 0 0),oklch(0.22 0 265));
+--vibeui-drawer-002-fg:light-dark(oklch(0.21 0 265),oklch(0.94 0 265));
 --vibeui-drawer-002-muted:color-mix(in oklab,var(--vibeui-drawer-002-fg) 68%,transparent);
---vibeui-drawer-002-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-drawer-002-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
 --vibeui-drawer-002-accent:light-dark(oklch(0.55 0.17 265),oklch(0.73 0.15 265));
 --vibeui-drawer-002-danger:light-dark(oklch(0.55 0.2 25),oklch(0.73 0.17 25));
---vibeui-drawer-002-hover:light-dark(oklch(0.97 0.003 265),oklch(0.28 0.013 265));
+--vibeui-drawer-002-hover:light-dark(oklch(0.97 0 265),oklch(0.28 0 265));
 --vibeui-drawer-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -66,7 +66,7 @@ translate:0 100%;transition:translate .24s ease,overlay .24s allow-discrete,disp
 [data-vibeui-block="drawer-002"] dialog[open]{translate:0 100%}
 }
 /* Затемнение позади ящика одно на обе темы: подложка гасит страницу, а не красится вместе с ней. */
-[data-vibeui-block="drawer-002"] dialog::backdrop{background:oklch(0.19 0.02 265 / 48%)}
+[data-vibeui-block="drawer-002"] dialog::backdrop{background:oklch(0.19 0 265 / 48%)}
 [data-vibeui-block="drawer-002"] [data-part="panel"]{
 display:flex;flex-direction:column;gap:0.5rem;box-sizing:border-box;
 padding:0.375rem 0.75rem calc(0.75rem + env(safe-area-inset-bottom,0px));
@@ -74,7 +74,7 @@ padding:0.375rem 0.75rem calc(0.75rem + env(safe-area-inset-bottom,0px));
 [data-vibeui-block="drawer-002"] [data-part="card"]{
 display:flex;flex-direction:column;
 background:var(--vibeui-drawer-002-surface);border-radius:1rem;
-box-shadow:0 -18px 50px -28px oklch(0.2 0.02 265 / 60%);
+box-shadow:0 -18px 50px -28px oklch(0.2 0 265 / 60%);
 overflow:hidden;
 }
 /* Ручка — обещание жеста: без неё лист выглядит окном, приклеенным к низу. */
@@ -110,7 +110,7 @@ appearance:none;border:0;cursor:pointer;
 height:3.25rem;border-radius:1rem;
 background:var(--vibeui-drawer-002-surface);color:var(--vibeui-drawer-002-accent);
 font:inherit;font-size:0.9375rem;font-weight:700;
-box-shadow:0 -18px 50px -28px oklch(0.2 0.02 265 / 60%);
+box-shadow:0 -18px 50px -28px oklch(0.2 0 265 / 60%);
 }
 [data-vibeui-block="drawer-002"] [data-part="cancel"]:focus-visible{outline:2px solid var(--vibeui-drawer-002-accent);outline-offset:2px}
 /* Немодальный показ: шторка остаётся внутри блока, а не уходит в верхний

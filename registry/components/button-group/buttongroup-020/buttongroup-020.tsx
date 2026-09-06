@@ -30,11 +30,11 @@ export type Buttongroup020Props = Omit<
 // остался бы без отмеченного варианта.
 const STYLES = `
 :where([data-vibeui-block="buttongroup-020"]){
---vibeui-buttongroup-020-surface:light-dark(oklch(1 0 0),oklch(0.24 0.01 265));
---vibeui-buttongroup-020-fg:light-dark(oklch(0.25 0.016 265),oklch(0.94 0.006 265));
+--vibeui-buttongroup-020-surface:light-dark(oklch(1 0 0),oklch(0.24 0 265));
+--vibeui-buttongroup-020-fg:light-dark(oklch(0.25 0 265),oklch(0.94 0 265));
 --vibeui-buttongroup-020-muted:color-mix(in oklab,var(--vibeui-buttongroup-020-fg) 68%,transparent);
---vibeui-buttongroup-020-border:light-dark(oklch(0.88 0.008 265),oklch(0.39 0.012 265));
---vibeui-buttongroup-020-on:light-dark(oklch(0.965 0.03 250),oklch(0.3 0.045 250));
+--vibeui-buttongroup-020-border:light-dark(oklch(0.88 0 265),oklch(0.39 0 265));
+--vibeui-buttongroup-020-on:light-dark(oklch(0.965 0 250),oklch(0.3 0.045 250));
 --vibeui-buttongroup-020-accent:light-dark(oklch(0.5 0.14 250),oklch(0.77 0.12 250));
 --vibeui-buttongroup-020-radius:0.75rem;
 --vibeui-buttongroup-020-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -54,7 +54,9 @@ overflow:hidden;clip-path:inset(50%);white-space:nowrap;
 }
 /* Заливка трека видна в зазорах — это и есть разделители. */
 [data-vibeui-block="buttongroup-020"] [data-part="track"]{
-display:grid;grid-template-columns:repeat(auto-fit,minmax(6rem,1fr));
+/* Одна строка при любом числе валют: auto-fit переносил четвёртую пилюлю
+   вниз, и переключатель разваливался на две строки. */
+display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);
 gap:1px;isolation:isolate;
 border:1px solid var(--vibeui-buttongroup-020-border);
 border-radius:var(--vibeui-buttongroup-020-radius);

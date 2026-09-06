@@ -47,12 +47,12 @@ export type Commerce038Props = {
 const STYLES = `
 :where([data-vibeui-block="commerce-038"]){
 --vibeui-commerce-038-bg:transparent;
---vibeui-commerce-038-fg:light-dark(oklch(0.21 0.014 265),oklch(0.93 0.006 265));
---vibeui-commerce-038-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
---vibeui-commerce-038-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
---vibeui-commerce-038-soft:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.009 265));
+--vibeui-commerce-038-fg:light-dark(oklch(0.21 0 265),oklch(0.93 0 265));
+--vibeui-commerce-038-muted:light-dark(oklch(0.55 0 265),oklch(0.71 0 265));
+--vibeui-commerce-038-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
+--vibeui-commerce-038-soft:light-dark(oklch(0.975 0 265),oklch(0.27 0 265));
 --vibeui-commerce-038-accent:light-dark(oklch(0.45 0.12 235),oklch(0.72 0.12 235));
---vibeui-commerce-038-onaccent:light-dark(oklch(1 0 0),oklch(0.18 0.03 250));
+--vibeui-commerce-038-onaccent:light-dark(oklch(1 0 0),oklch(0.18 0 250));
 --vibeui-commerce-038-yes:light-dark(oklch(0.52 0.13 150),oklch(0.76 0.14 155));
 --vibeui-commerce-038-no:light-dark(oklch(0.55 0.15 35),oklch(0.75 0.14 35));
 --vibeui-commerce-038-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

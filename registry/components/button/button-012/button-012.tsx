@@ -24,12 +24,13 @@ export type Button012Props = Omit<ComponentProps<"button">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="button-012"]){
 --vibeui-button-012-size:2.25rem;
---vibeui-button-012-fg:light-dark(oklch(0.3 0.014 265),oklch(0.93 0.006 265));
---vibeui-button-012-bg:light-dark(oklch(1 0 0),oklch(0.28 0.012 265));
---vibeui-button-012-border:light-dark(oklch(0.9 0.006 265),oklch(0.45 0.014 265));
---vibeui-button-012-hover:light-dark(oklch(0.96 0.004 265),oklch(0.35 0.014 265));
---vibeui-button-012-accent:light-dark(oklch(0.55 0.17 265),oklch(0.68 0.155 265));
---vibeui-button-012-accent-fg:light-dark(oklch(0.99 0.01 265),oklch(0.2 0.04 265));
+--vibeui-button-012-fg:light-dark(oklch(0.3 0 265),oklch(0.93 0 265));
+--vibeui-button-012-bg:light-dark(oklch(1 0 0),oklch(0.28 0 265));
+--vibeui-button-012-border:light-dark(oklch(0.9 0 265),oklch(0.45 0 265));
+--vibeui-button-012-hover:light-dark(oklch(0.96 0 265),oklch(0.35 0 265));
+--vibeui-button-012-accent:light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));
+--vibeui-button-012-hover-filter:light-dark(brightness(1.45),brightness(0.9));
+--vibeui-button-012-accent-fg:light-dark(oklch(0.99 0 265),oklch(0.2 0.04 265));
 --vibeui-button-012-radius:0.625rem;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -52,7 +53,7 @@ transition:background-color .16s ease,border-color .16s ease;
 border-color:transparent;background:var(--vibeui-button-012-accent);color:var(--vibeui-button-012-accent-fg);
 }
 [data-vibeui-block="button-012"]:hover{background:var(--vibeui-button-012-hover)}
-[data-vibeui-block="button-012"][data-tone="accent"]:hover{filter:brightness(0.95);background:var(--vibeui-button-012-accent)}
+[data-vibeui-block="button-012"][data-tone="accent"]:hover{filter:var(--vibeui-button-012-hover-filter);background:var(--vibeui-button-012-accent)}
 [data-vibeui-block="button-012"]:focus-visible{outline:2px solid var(--vibeui-button-012-accent);outline-offset:2px}
 [data-vibeui-block="button-012"]:disabled{cursor:not-allowed;opacity:.5}
 /* Значки на бордюрах: ради четырёх фигур пакет иконок не подключают. */

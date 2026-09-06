@@ -24,11 +24,11 @@ const STYLES = `
 --vibeui-iconstack-006-size:2.25rem;
 --vibeui-iconstack-006-overlap:0.75rem;
 --vibeui-iconstack-006-surface:transparent;
---vibeui-iconstack-006-ring:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
---vibeui-iconstack-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.01 265));
---vibeui-iconstack-006-fg:light-dark(oklch(0.26 0.014 265),oklch(0.94 0.005 265));
+--vibeui-iconstack-006-ring:light-dark(oklch(1 0 0),oklch(0.21 0 265));
+--vibeui-iconstack-006-border:light-dark(oklch(0.9 0 265),oklch(0.38 0 265));
+--vibeui-iconstack-006-fg:light-dark(oklch(0.26 0 265),oklch(0.94 0 265));
 --vibeui-iconstack-006-muted:color-mix(in oklab,var(--vibeui-iconstack-006-fg) 68%,transparent);
---vibeui-iconstack-006-shadow:light-dark(oklch(0.2 0.02 265 / 16%),oklch(0 0 0 / 34%));
+--vibeui-iconstack-006-shadow:light-dark(oklch(0.2 0 265 / 16%),oklch(0 0 0 / 34%));
 --vibeui-iconstack-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

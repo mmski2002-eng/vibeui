@@ -47,12 +47,12 @@ const STYLES = `
 :where([data-vibeui-block="auth-031"]){
 --vibeui-auth-031-accent:oklch(0.62 0.19 292);
 --vibeui-auth-031-panel:oklch(0.22 0.05 292);
---vibeui-auth-031-ink:oklch(0.98 0.004 292);
---vibeui-auth-031-fg:light-dark(oklch(0.21 0.014 292),oklch(0.95 0.006 292));
---vibeui-auth-031-dim:light-dark(oklch(0.52 0.014 292),oklch(0.72 0.012 292));
---vibeui-auth-031-line:light-dark(oklch(0.9 0.006 292),oklch(0.33 0.012 292));
---vibeui-auth-031-field:light-dark(oklch(1 0 0),oklch(0.19 0.014 292));
---vibeui-auth-031-shell:light-dark(oklch(0.99 0.002 292),oklch(0.16 0.014 292));
+--vibeui-auth-031-ink:oklch(0.98 0 292);
+--vibeui-auth-031-fg:light-dark(oklch(0.21 0 292),oklch(0.95 0 292));
+--vibeui-auth-031-dim:light-dark(oklch(0.52 0 292),oklch(0.72 0 292));
+--vibeui-auth-031-line:light-dark(oklch(0.9 0 292),oklch(0.33 0 292));
+--vibeui-auth-031-field:light-dark(oklch(1 0 0),oklch(0.19 0 292));
+--vibeui-auth-031-shell:light-dark(oklch(0.99 0 292),oklch(0.16 0 292));
 --vibeui-auth-031-on-accent:oklch(from var(--vibeui-auth-031-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-auth-031-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

@@ -20,7 +20,7 @@ const STYLES = `
 --vibeui-avatar-005-bg:light-dark(oklch(0.92 0.05 var(--vibeui-avatar-005-hue)),oklch(0.34 0.065 var(--vibeui-avatar-005-hue)));
 --vibeui-avatar-005-fg:light-dark(oklch(0.38 0.09 var(--vibeui-avatar-005-hue)),oklch(0.88 0.063 var(--vibeui-avatar-005-hue)));
 --vibeui-avatar-005-badge:light-dark(oklch(0.58 0.15 250),oklch(0.72 0.15 250));
---vibeui-avatar-005-badge-fg:oklch(0.99 0.01 250);
+--vibeui-avatar-005-badge-fg:oklch(0.99 0 250);
 --vibeui-avatar-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="avatar-005"]{

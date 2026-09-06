@@ -22,9 +22,9 @@ export type Progress001Props = Omit<ComponentProps<"div">, "children"> & {
 // становится тёмным там, где тёмный контекст, и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="progress-001"]){
---vibeui-progress-001-fg:light-dark(oklch(0.28 0.016 265),oklch(0.94 0.006 265));
+--vibeui-progress-001-fg:light-dark(oklch(0.28 0 265),oklch(0.94 0 265));
 --vibeui-progress-001-muted:color-mix(in oklab,var(--vibeui-progress-001-fg) 68%,transparent);
---vibeui-progress-001-track:light-dark(oklch(0.92 0.006 265),oklch(0.31 0.012 265));
+--vibeui-progress-001-track:light-dark(oklch(0.92 0 265),oklch(0.31 0 265));
 --vibeui-progress-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.7 0.17 262));
 --vibeui-progress-001-bg:transparent;
 --vibeui-progress-001-pad:0;

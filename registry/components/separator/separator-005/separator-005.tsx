@@ -17,9 +17,9 @@ export type Separator005Props = Omit<ComponentProps<"div">, "children"> & {
 // окружением и остаётся плотнее линии, а не выпадает белой наклейкой.
 const STYLES = `
 :where([data-vibeui-block="separator-005"]){
---vibeui-separator-005-line:light-dark(oklch(0.87 0.006 265),oklch(0.37 0.012 265));
---vibeui-separator-005-disc:light-dark(oklch(1 0 0),oklch(0.26 0.01 265));
---vibeui-separator-005-fg:light-dark(oklch(0.45 0.014 265),oklch(0.86 0.01 265));
+--vibeui-separator-005-line:light-dark(oklch(0.87 0 265),oklch(0.37 0 265));
+--vibeui-separator-005-disc:light-dark(oklch(1 0 0),oklch(0.26 0 265));
+--vibeui-separator-005-fg:light-dark(oklch(0.45 0 265),oklch(0.86 0 265));
 --vibeui-separator-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

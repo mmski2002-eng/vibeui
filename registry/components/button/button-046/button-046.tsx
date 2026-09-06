@@ -21,11 +21,11 @@ export type Button046Props = Omit<ComponentProps<"button">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="button-046"]){
 --vibeui-button-046-progress:0;
---vibeui-button-046-surface:light-dark(oklch(1 0 0),oklch(0.25 0.014 265));
---vibeui-button-046-border:light-dark(oklch(0.9 0.006 265),oklch(0.4 0.014 265));
---vibeui-button-046-track:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
---vibeui-button-046-fg:light-dark(oklch(0.26 0.02 265),oklch(0.93 0.008 265));
---vibeui-button-046-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
+--vibeui-button-046-surface:light-dark(oklch(1 0 0),oklch(0.25 0 265));
+--vibeui-button-046-border:light-dark(oklch(0.9 0 265),oklch(0.4 0 265));
+--vibeui-button-046-track:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
+--vibeui-button-046-fg:light-dark(oklch(0.26 0 265),oklch(0.93 0 265));
+--vibeui-button-046-accent:light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));
 --vibeui-button-046-size:3rem;
 --vibeui-button-046-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

@@ -24,10 +24,10 @@ export type Button019Props = Omit<
 // ответа сервера: реакция — дешёвое действие, и ждать её незачем.
 const STYLES = `
 :where([data-vibeui-block="button-019"]){
---vibeui-button-019-fg:light-dark(oklch(0.32 0.014 265),oklch(0.93 0.006 265));
+--vibeui-button-019-fg:light-dark(oklch(0.32 0 265),oklch(0.93 0 265));
 --vibeui-button-019-bg:transparent;
---vibeui-button-019-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
---vibeui-button-019-hover:light-dark(oklch(0.96 0.004 265),oklch(0.32 0.012 265));
+--vibeui-button-019-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
+--vibeui-button-019-hover:light-dark(oklch(0.96 0 265),oklch(0.32 0 265));
 --vibeui-button-019-accent:light-dark(oklch(0.58 0.19 25),oklch(0.72 0.17 25));
 --vibeui-button-019-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

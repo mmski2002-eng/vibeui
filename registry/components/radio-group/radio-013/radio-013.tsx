@@ -24,10 +24,10 @@ export type Radio013Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="radio-013"]){
 --vibeui-radio-013-bg:transparent;
---vibeui-radio-013-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-radio-013-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-radio-013-muted:color-mix(in oklab,var(--vibeui-radio-013-fg) 68%,transparent);
---vibeui-radio-013-ring:light-dark(oklch(0.74 0.012 265),oklch(0.46 0.014 265));
---vibeui-radio-013-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-radio-013-ring:light-dark(oklch(0.74 0 265),oklch(0.46 0 265));
+--vibeui-radio-013-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
 --vibeui-radio-013-accent:light-dark(oklch(0.55 0.17 150),oklch(0.78 0.15 150));
 --vibeui-radio-013-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 150));
 --vibeui-radio-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

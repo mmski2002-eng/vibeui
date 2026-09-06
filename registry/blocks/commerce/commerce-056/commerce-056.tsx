@@ -46,10 +46,10 @@ export type Commerce056Props = {
 const STYLES = `
 :where([data-vibeui-block="commerce-056"]){
 --vibeui-commerce-056-bg:transparent;
---vibeui-commerce-056-fg:light-dark(oklch(0.2 0.014 300),oklch(0.94 0.006 300));
---vibeui-commerce-056-muted:light-dark(oklch(0.53 0.016 300),oklch(0.73 0.013 300));
---vibeui-commerce-056-border:light-dark(oklch(0.9 0.008 300),oklch(0.38 0.014 300));
---vibeui-commerce-056-soft:light-dark(oklch(0.973 0.006 300),oklch(0.27 0.012 300));
+--vibeui-commerce-056-fg:light-dark(oklch(0.2 0 300),oklch(0.94 0 300));
+--vibeui-commerce-056-muted:light-dark(oklch(0.53 0 300),oklch(0.73 0 300));
+--vibeui-commerce-056-border:light-dark(oklch(0.9 0 300),oklch(0.38 0 300));
+--vibeui-commerce-056-soft:light-dark(oklch(0.973 0 300),oklch(0.27 0 300));
 --vibeui-commerce-056-accent:light-dark(oklch(0.5 0.19 300),oklch(0.76 0.15 300));
 --vibeui-commerce-056-onaccent:light-dark(oklch(0.99 0 0),oklch(0.19 0.04 300));
 --vibeui-commerce-056-yes:light-dark(oklch(0.48 0.12 150),oklch(0.72 0.14 152));

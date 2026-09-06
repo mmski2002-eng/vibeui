@@ -45,10 +45,10 @@ const STYLES = `
 :where([data-vibeui-block="hero-003"]){
 --vibeui-hero-003-bg:transparent;
 --vibeui-hero-003-card:light-dark(oklch(0.995 0.002 70),oklch(0.235 0.008 55));
---vibeui-hero-003-card-alt:light-dark(oklch(0.953 0.005 250),oklch(0.285 0.011 250));
+--vibeui-hero-003-card-alt:light-dark(oklch(0.953 0 250),oklch(0.285 0 250));
 --vibeui-hero-003-ink:light-dark(oklch(0.21 0.012 55),oklch(0.95 0.006 70));
 --vibeui-hero-003-muted:light-dark(oklch(0.5 0.012 55),oklch(0.73 0.01 70));
---vibeui-hero-003-border:light-dark(oklch(0.881 0.005 250),oklch(0.38 0.011 250));
+--vibeui-hero-003-border:light-dark(oklch(0.881 0 250),oklch(0.38 0 250));
 --vibeui-hero-003-accent:light-dark(oklch(0.5 0.145 42),oklch(0.68 0.145 42));
 --vibeui-hero-003-accent-fg:light-dark(oklch(0.99 0.004 70),oklch(0.2 0.03 42));
 --vibeui-hero-003-ring:color-mix(in oklab, var(--vibeui-hero-003-accent) 70%, transparent);

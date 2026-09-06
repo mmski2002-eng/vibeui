@@ -22,11 +22,11 @@ export type Scrollarea002Props = Omit<
 // её цветом, и на прозрачном фоне тени были бы видны всегда.
 const STYLES = `
 :where([data-vibeui-block="scrollarea-002"]){
---vibeui-scrollarea-002-bg:light-dark(oklch(1 0 0),oklch(0.2 0.012 265));
---vibeui-scrollarea-002-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-scrollarea-002-bg:light-dark(oklch(1 0 0),oklch(0.2 0 265));
+--vibeui-scrollarea-002-fg:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
 --vibeui-scrollarea-002-muted:color-mix(in oklab,var(--vibeui-scrollarea-002-fg) 68%,transparent);
---vibeui-scrollarea-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.33 0.012 265));
---vibeui-scrollarea-002-shadow:light-dark(oklch(0.24 0.014 265 / 16%),oklch(0 0 0 / 55%));
+--vibeui-scrollarea-002-border:light-dark(oklch(0.9 0 265),oklch(0.33 0 265));
+--vibeui-scrollarea-002-shadow:light-dark(oklch(0.24 0 265 / 16%),oklch(0 0 0 / 55%));
 --vibeui-scrollarea-002-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-scrollarea-002-height:13rem;
 --vibeui-scrollarea-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

@@ -107,8 +107,6 @@ export async function loadLazyPreviewMap(
       return (await import("@/registry/previews-lazy/component/filters")).PREVIEWS
     case "component/frame":
       return (await import("@/registry/previews-lazy/component/frame")).PREVIEWS
-    case "component/gantt":
-      return (await import("@/registry/previews-lazy/component/gantt")).PREVIEWS
     case "component/hover-card":
       return (await import("@/registry/previews-lazy/component/hover-card")).PREVIEWS
     case "component/icon-stack":
@@ -123,8 +121,6 @@ export async function loadLazyPreviewMap(
       return (await import("@/registry/previews-lazy/component/input-otp")).PREVIEWS
     case "component/item":
       return (await import("@/registry/previews-lazy/component/item")).PREVIEWS
-    case "component/kanban":
-      return (await import("@/registry/previews-lazy/component/kanban")).PREVIEWS
     case "component/kbd":
       return (await import("@/registry/previews-lazy/component/kbd")).PREVIEWS
     case "component/label":
@@ -161,8 +157,6 @@ export async function loadLazyPreviewMap(
       return (await import("@/registry/previews-lazy/component/select")).PREVIEWS
     case "component/separator":
       return (await import("@/registry/previews-lazy/component/separator")).PREVIEWS
-    case "component/sheet":
-      return (await import("@/registry/previews-lazy/component/sheet")).PREVIEWS
     case "component/sidebar":
       return (await import("@/registry/previews-lazy/component/sidebar")).PREVIEWS
     case "component/skeleton":

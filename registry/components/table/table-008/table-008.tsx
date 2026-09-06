@@ -28,10 +28,10 @@ export type Table008Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="table-008"]){
 --vibeui-table-008-bg:transparent;
---vibeui-table-008-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-table-008-fg:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
 --vibeui-table-008-muted:color-mix(in oklab,var(--vibeui-table-008-fg) 68%,transparent);
---vibeui-table-008-border:light-dark(oklch(0.93 0.005 265),oklch(0.36 0.011 265));
---vibeui-table-008-head:light-dark(oklch(0.5 0.02 265 / 5%),oklch(0.85 0.02 265 / 7%));
+--vibeui-table-008-border:light-dark(oklch(0.93 0 265),oklch(0.36 0 265));
+--vibeui-table-008-head:light-dark(oklch(0.5 0 265 / 5%),oklch(0.85 0 265 / 7%));
 --vibeui-table-008-ok:light-dark(oklch(0.62 0.15 152),oklch(0.76 0.14 152));
 --vibeui-table-008-warn:light-dark(oklch(0.72 0.15 75),oklch(0.82 0.14 75));
 --vibeui-table-008-fail:light-dark(oklch(0.58 0.19 25),oklch(0.72 0.17 25));

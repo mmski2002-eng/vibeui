@@ -25,7 +25,7 @@ const STYLES = `:where([data-vibeui-block="avatar-018"]){
 --vibeui-avatar-018-ring:0.1875rem;
 --vibeui-avatar-018-arc:100%;
 --vibeui-avatar-018-color:light-dark(oklch(0.55 0.2 262),oklch(0.69 0.2 262));
---vibeui-avatar-018-track:light-dark(oklch(0.92 0.006 265),oklch(0.3 0.01 265));
+--vibeui-avatar-018-track:light-dark(oklch(0.92 0 265),oklch(0.3 0 265));
 --vibeui-avatar-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="avatar-018"]{
@@ -65,12 +65,12 @@ width:100%;height:100%;border-radius:inherit;object-fit:cover;display:block;
 /* Длина дуги различает роли: одного цвета мало. */
 [data-vibeui-block="avatar-018"][data-role="owner"]{--vibeui-avatar-018-arc:100%;--vibeui-avatar-018-color:light-dark(oklch(0.55 0.2 262),oklch(0.69 0.2 262))}
 [data-vibeui-block="avatar-018"][data-role="editor"]{--vibeui-avatar-018-arc:75%;--vibeui-avatar-018-color:light-dark(oklch(0.58 0.14 152),oklch(0.72 0.14 152))}
-[data-vibeui-block="avatar-018"][data-role="reader"]{--vibeui-avatar-018-arc:50%;--vibeui-avatar-018-color:light-dark(oklch(0.7 0.014 265),oklch(0.42 0.014 265))}
+[data-vibeui-block="avatar-018"][data-role="reader"]{--vibeui-avatar-018-arc:50%;--vibeui-avatar-018-color:light-dark(oklch(0.7 0 265),oklch(0.42 0 265))}
 [data-vibeui-block="avatar-018"][data-role="bot"]{--vibeui-avatar-018-arc:25%;--vibeui-avatar-018-color:light-dark(oklch(0.72 0.15 75),oklch(0.82 0.14 75))}
 [data-vibeui-block="avatar-018"][data-size="sm"]{--vibeui-avatar-018-size:2rem;--vibeui-avatar-018-ring:0.125rem}
 [data-vibeui-block="avatar-018"][data-size="lg"]{--vibeui-avatar-018-size:3.5rem;--vibeui-avatar-018-ring:0.25rem}
 [data-vibeui-block="avatar-018"] [data-part="text"]{display:flex;flex-direction:column;gap:0.0625rem;min-width:0}
-[data-vibeui-block="avatar-018"] [data-part="name"]{font-size:0.875rem;font-weight:650;color:light-dark(oklch(0.22 0.015 265),oklch(0.95 0.006 265))}
+[data-vibeui-block="avatar-018"] [data-part="name"]{font-size:0.875rem;font-weight:650;color:light-dark(oklch(0.22 0 265),oklch(0.95 0 265))}
 [data-vibeui-block="avatar-018"] [data-part="role"]{
 font-size:0.6875rem;font-weight:650;color:var(--vibeui-avatar-018-color);
 }

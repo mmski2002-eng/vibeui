@@ -32,11 +32,11 @@ export type Currency007Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="currency-007"]){
 --vibeui-currency-007-surface:transparent;
---vibeui-currency-007-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.011 265));
---vibeui-currency-007-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
---vibeui-currency-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-currency-007-field:light-dark(oklch(0.985 0 265),oklch(0.26 0 265));
+--vibeui-currency-007-shell:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-currency-007-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-currency-007-muted:color-mix(in oklab,var(--vibeui-currency-007-fg) 68%,transparent);
---vibeui-currency-007-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.013 265));
+--vibeui-currency-007-border:light-dark(oklch(0.88 0 265),oklch(0.38 0 265));
 --vibeui-currency-007-accent:light-dark(oklch(0.55 0.18 40),oklch(0.76 0.15 45));
 --vibeui-currency-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

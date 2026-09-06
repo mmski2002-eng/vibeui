@@ -26,12 +26,12 @@ export type Scrollarea007Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="scrollarea-007"]){
 --vibeui-scrollarea-007-bg:transparent;
---vibeui-scrollarea-007-fg:light-dark(oklch(0.26 0.014 265),oklch(0.93 0.006 265));
+--vibeui-scrollarea-007-fg:light-dark(oklch(0.26 0 265),oklch(0.93 0 265));
 --vibeui-scrollarea-007-muted:color-mix(in oklab,var(--vibeui-scrollarea-007-fg) 68%,transparent);
---vibeui-scrollarea-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.33 0.012 265));
---vibeui-scrollarea-007-thumb:light-dark(oklch(0.78 0.02 265),oklch(0.45 0.02 265));
---vibeui-scrollarea-007-thumb-hover:light-dark(oklch(0.66 0.03 265),oklch(0.58 0.03 265));
---vibeui-scrollarea-007-track:light-dark(oklch(0.96 0.004 265),oklch(0.26 0.01 265));
+--vibeui-scrollarea-007-border:light-dark(oklch(0.9 0 265),oklch(0.33 0 265));
+--vibeui-scrollarea-007-thumb:light-dark(oklch(0.78 0 265),oklch(0.45 0 265));
+--vibeui-scrollarea-007-thumb-hover:light-dark(oklch(0.66 0 265),oklch(0.58 0 265));
+--vibeui-scrollarea-007-track:light-dark(oklch(0.96 0 265),oklch(0.26 0 265));
 --vibeui-scrollarea-007-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-scrollarea-007-height:12rem;
 --vibeui-scrollarea-007-bar:0.5rem;

@@ -39,11 +39,11 @@ const ERROR_TEXT = "Значение «до» не может быть мень�
 const STYLES = `
 :where([data-vibeui-block="inputgroup-036"]){
 --vibeui-inputgroup-036-surface:transparent;
---vibeui-inputgroup-036-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
---vibeui-inputgroup-036-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-inputgroup-036-shell:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
+--vibeui-inputgroup-036-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-inputgroup-036-muted:color-mix(in oklab,var(--vibeui-inputgroup-036-fg) 68%,transparent);
---vibeui-inputgroup-036-field:light-dark(oklch(0.99 0.002 265),oklch(0.26 0.012 265));
---vibeui-inputgroup-036-border:light-dark(oklch(0.86 0.008 265),oklch(0.42 0.014 265));
+--vibeui-inputgroup-036-field:light-dark(oklch(0.99 0 265),oklch(0.26 0 265));
+--vibeui-inputgroup-036-border:light-dark(oklch(0.86 0 265),oklch(0.42 0 265));
 --vibeui-inputgroup-036-accent:light-dark(oklch(0.55 0.15 280),oklch(0.76 0.13 280));
 --vibeui-inputgroup-036-error:light-dark(oklch(0.56 0.19 25),oklch(0.75 0.15 25));
 --vibeui-inputgroup-036-radius:0.75rem;

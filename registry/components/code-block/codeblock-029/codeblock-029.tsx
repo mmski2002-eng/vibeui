@@ -36,7 +36,7 @@ export type Codeblock029Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="codeblock-029"]){
 --vibeui-codeblock-029-bg:transparent;
---vibeui-codeblock-029-fg:light-dark(oklch(0.27 0.016 265),oklch(0.94 0.006 265));
+--vibeui-codeblock-029-fg:light-dark(oklch(0.27 0 265),oklch(0.94 0 265));
 --vibeui-codeblock-029-muted:color-mix(in oklab,var(--vibeui-codeblock-029-fg) 66%,transparent);
 --vibeui-codeblock-029-border:light-dark(oklch(0 0 0 / 13%),oklch(1 0 0 / 13%));
 --vibeui-codeblock-029-head:light-dark(oklch(0 0 0 / 4%),oklch(1 0 0 / 6%));

@@ -26,11 +26,11 @@ const STYLES = `
 :where([data-vibeui-block="avatar-034"]){
 --vibeui-avatar-034-size:2.5rem;
 --vibeui-avatar-034-bg:transparent;
---vibeui-avatar-034-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-avatar-034-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-avatar-034-muted:color-mix(in oklab,var(--vibeui-avatar-034-fg) 68%,transparent);
---vibeui-avatar-034-border:light-dark(oklch(0.91 0.006 265),oklch(0.31 0.01 265));
+--vibeui-avatar-034-border:light-dark(oklch(0.91 0 265),oklch(0.31 0 265));
 --vibeui-avatar-034-fresh:oklch(0.62 0.15 152);
---vibeui-avatar-034-stale:oklch(0.66 0.02 265);
+--vibeui-avatar-034-stale:oklch(0.66 0 265);
 --vibeui-avatar-034-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Своя светлая подложка: тёмный текст обязан читаться на любом фоне. */

@@ -53,10 +53,10 @@ export type Commerce042Props = {
 const STYLES = `
 :where([data-vibeui-block="commerce-042"]){
 --vibeui-commerce-042-bg:transparent;
---vibeui-commerce-042-fg:light-dark(oklch(0.21 0.014 265),oklch(0.93 0.006 265));
---vibeui-commerce-042-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
---vibeui-commerce-042-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
---vibeui-commerce-042-soft:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.009 265));
+--vibeui-commerce-042-fg:light-dark(oklch(0.21 0 265),oklch(0.93 0 265));
+--vibeui-commerce-042-muted:light-dark(oklch(0.55 0 265),oklch(0.71 0 265));
+--vibeui-commerce-042-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
+--vibeui-commerce-042-soft:light-dark(oklch(0.975 0 265),oklch(0.27 0 265));
 --vibeui-commerce-042-accent:light-dark(oklch(0.6 0.16 55),oklch(0.78 0.15 60));
 --vibeui-commerce-042-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

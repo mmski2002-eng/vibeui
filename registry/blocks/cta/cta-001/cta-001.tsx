@@ -33,11 +33,11 @@ export type Cta001Props = {
 // и акцент становятся светлее, чтобы блок не сливался с окружением.
 const STYLES = `
 :where([data-vibeui-block="cta-001"]){
---vibeui-cta-001-bg:light-dark(oklch(0.21 0.02 265),oklch(0.16 0.014 265));
---vibeui-cta-001-ink:light-dark(oklch(0.98 0.003 265),oklch(0.95 0.004 265));
---vibeui-cta-001-muted:light-dark(oklch(0.76 0.012 265),oklch(0.71 0.012 265));
+--vibeui-cta-001-bg:light-dark(oklch(0.21 0 265),oklch(0.16 0 265));
+--vibeui-cta-001-ink:light-dark(oklch(0.98 0 265),oklch(0.95 0 265));
+--vibeui-cta-001-muted:light-dark(oklch(0.76 0 265),oklch(0.71 0 265));
 --vibeui-cta-001-accent:light-dark(oklch(0.72 0.16 195),oklch(0.79 0.15 195));
---vibeui-cta-001-accent-fg:light-dark(oklch(0.16 0.02 265),oklch(0.14 0.02 265));
+--vibeui-cta-001-accent-fg:light-dark(oklch(0.16 0 265),oklch(0.14 0 265));
 --vibeui-cta-001-border:light-dark(oklch(1 0 0 / 14%),oklch(1 0 0 / 22%));
 --vibeui-cta-001-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

@@ -22,11 +22,11 @@ export type Testimonials006Props = {
 // размер — а именно длина отзыва и есть признак того, что он настоящий.
 const STYLES = `
 :where([data-vibeui-block="testimonials-006"]){
---vibeui-testimonials-006-bg:oklch(0.21 0.02 275);
---vibeui-testimonials-006-card:oklch(0.26 0.024 275);
---vibeui-testimonials-006-ink:oklch(0.97 0.006 275);
---vibeui-testimonials-006-muted:oklch(0.76 0.02 275);
---vibeui-testimonials-006-border:oklch(0.34 0.026 275);
+--vibeui-testimonials-006-bg:oklch(0.21 0 275);
+--vibeui-testimonials-006-card:oklch(0.26 0 275);
+--vibeui-testimonials-006-ink:oklch(0.97 0 275);
+--vibeui-testimonials-006-muted:oklch(0.76 0 275);
+--vibeui-testimonials-006-border:oklch(0.34 0 275);
 --vibeui-testimonials-006-accent:oklch(0.78 0.15 155);
 --vibeui-testimonials-006-accent-fg:oklch(0.2 0.05 155);
 --vibeui-testimonials-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

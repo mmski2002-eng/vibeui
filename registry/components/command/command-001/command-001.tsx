@@ -31,13 +31,13 @@ export type Command001Props = Omit<ComponentProps<"div">, "children"> & {
 // границ и подсветки свои в каждой ветке, а не зеркальные.
 const STYLES = `
 :where([data-vibeui-block="command-001"]){
---vibeui-command-001-bg:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
---vibeui-command-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-command-001-bg:light-dark(oklch(1 0 0),oklch(0.22 0 265));
+--vibeui-command-001-fg:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
 --vibeui-command-001-muted:color-mix(in oklab,var(--vibeui-command-001-fg) 68%,transparent);
---vibeui-command-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
---vibeui-command-001-active:light-dark(oklch(0.55 0.02 265 / 10%),oklch(0.86 0.03 265 / 14%));
+--vibeui-command-001-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
+--vibeui-command-001-active:light-dark(oklch(0.55 0 265 / 10%),oklch(0.86 0 265 / 14%));
 --vibeui-command-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
---vibeui-command-001-shadow:light-dark(oklch(0.2 0.03 265 / 55%),oklch(0.04 0.015 265 / 72%));
+--vibeui-command-001-shadow:light-dark(oklch(0.2 0 265 / 55%),oklch(0.04 0 265 / 72%));
 --vibeui-command-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -66,7 +66,7 @@ font-family:var(--vibeui-command-001-font);
 }
 /* Затемнение живёт в top layer и до переменных корня не всегда дотягивается,
    поэтому цвет записан прямо: полупрозрачный скрим уместен в обеих темах. */
-[data-vibeui-block="command-001"] dialog::backdrop{background:oklch(0.2 0.02 265 / 45%)}
+[data-vibeui-block="command-001"] dialog::backdrop{background:oklch(0.2 0 265 / 45%)}
 [data-vibeui-block="command-001"] [data-part="search"]{
 width:100%;box-sizing:border-box;height:2.875rem;padding:0 0.875rem;
 appearance:none;border:0;border-bottom:1px solid var(--vibeui-command-001-border);
@@ -102,12 +102,12 @@ display:block;position:relative;width:100%;min-height:22rem;
 `
 
 const DEFAULT_COMMANDS: Command001Command[] = [
-  { label: "Создать компонент", group: "Действия", keys: "⌘N" },
+  { label: "Создать компонент", group: "Действия", keys: "Ctrl+N" },
   { label: "Собрать registry", group: "Действия" },
   { label: "Открыть каталог", group: "Переход", keys: "G C" },
   { label: "Открыть блоки", group: "Переход", keys: "G B" },
   { label: "Настройки проекта", group: "Переход" },
-  { label: "Переключить тему", group: "Вид", keys: "⌘⇧L" },
+  { label: "Переключить тему", group: "Вид", keys: "Ctrl+Shift+L" },
   { label: "Показать сетку", group: "Вид" },
 ]
 
@@ -242,7 +242,7 @@ export function Command001({
           }}
         >
           {triggerLabel}
-          <kbd>⌘K</kbd>
+          <kbd>Ctrl+K</kbd>
         </button>
         <dialog ref={dialog} aria-label={triggerLabel}>
           <div onKeyDown={move}>

@@ -26,10 +26,10 @@ export type Avatar028Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `:where([data-vibeui-block="avatar-028"]){
 --vibeui-avatar-028-size:2.5rem;
 --vibeui-avatar-028-bg:transparent;
---vibeui-avatar-028-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-avatar-028-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-avatar-028-muted:color-mix(in oklab,var(--vibeui-avatar-028-fg) 68%,transparent);
---vibeui-avatar-028-border:light-dark(oklch(0.91 0.006 265),oklch(0.31 0.01 265));
---vibeui-avatar-028-hover:oklch(0.55 0.02 265 / 9%);
+--vibeui-avatar-028-border:light-dark(oklch(0.91 0 265),oklch(0.31 0 265));
+--vibeui-avatar-028-hover:oklch(0.55 0 265 / 9%);
 --vibeui-avatar-028-accent:light-dark(oklch(0.55 0.2 262),oklch(0.69 0.2 262));
 --vibeui-avatar-028-danger:light-dark(oklch(0.56 0.19 25),oklch(0.70 0.19 25));
 --vibeui-avatar-028-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -48,13 +48,13 @@ color:light-dark(oklch(0.36 0.12 var(--vibeui-avatar-028-hue,265)),oklch(0.88 0.
 font:inherit;font-size:calc(var(--vibeui-avatar-028-size) * 0.36);font-weight:700;line-height:1;
 }
 [data-vibeui-block="avatar-028"] [data-part="trigger"] img{width:100%;height:100%;border-radius:inherit;object-fit:cover;display:block}
-[data-vibeui-block="avatar-028"] [data-part="trigger"]:hover{box-shadow:0 0 0 0.1875rem light-dark(oklch(0.55 0.02 265 / 16%),oklch(0.66 0.02 265 / 16%))}
+[data-vibeui-block="avatar-028"] [data-part="trigger"]:hover{box-shadow:0 0 0 0.1875rem light-dark(oklch(0.55 0 265 / 16%),oklch(0.66 0 265 / 16%))}
 [data-vibeui-block="avatar-028"] [data-part="trigger"]:focus-visible{outline:2px solid var(--vibeui-avatar-028-accent);outline-offset:2px}
 [data-vibeui-block="avatar-028"] [data-part="menu"]{
 position:fixed;margin:0;padding:0.3125rem;min-width:14rem;
 border:1px solid var(--vibeui-avatar-028-border);border-radius:0.75rem;
 background:var(--vibeui-avatar-028-bg);color:var(--vibeui-avatar-028-fg);
-box-shadow:0 18px 40px -20px oklch(0.2 0.03 265 / 45%);
+box-shadow:0 18px 40px -20px oklch(0.2 0 265 / 45%);
 font-family:var(--vibeui-avatar-028-font);
 }
 /* Якорь привязывает меню к аватару; без поддержки оно встанет по центру. */
@@ -66,11 +66,23 @@ position-area:bottom span-left;margin-top:0.375rem;
 position-try-fallbacks:flip-block,flip-inline;
 }
 }
-/* Шапка меню: под каким аккаунтом ты сидишь, видно только здесь. */
+/* Шапка меню: под каким аккаунтом ты сидишь, видно только здесь. Портрет
+   стоит слева от имени — так строка читается как одна карточка аккаунта. */
 [data-vibeui-block="avatar-028"] [data-part="head"]{
-display:flex;flex-direction:column;gap:0.0625rem;
+display:flex;align-items:center;gap:0.625rem;
 padding:0.5rem 0.5rem 0.625rem;margin-bottom:0.25rem;
 border-bottom:1px solid var(--vibeui-avatar-028-border);
+}
+[data-vibeui-block="avatar-028"] [data-part="head-face"]{
+display:grid;place-items:center;flex:none;overflow:hidden;
+width:2.25rem;height:2.25rem;border-radius:9999px;
+background:light-dark(oklch(0.9 0.06 var(--vibeui-avatar-028-hue,265)),oklch(0.34 0.065 var(--vibeui-avatar-028-hue,265)));
+color:light-dark(oklch(0.36 0.12 var(--vibeui-avatar-028-hue,265)),oklch(0.88 0.063 var(--vibeui-avatar-028-hue,265)));
+font-size:0.8125rem;font-weight:700;line-height:1;
+}
+[data-vibeui-block="avatar-028"] [data-part="head-face"] img{width:100%;height:100%;object-fit:cover;display:block}
+[data-vibeui-block="avatar-028"] [data-part="head-text"]{
+display:flex;flex-direction:column;gap:0.0625rem;min-width:0;
 }
 [data-vibeui-block="avatar-028"] [data-part="head-name"]{
 font-size:0.875rem;font-weight:650;
@@ -95,10 +107,12 @@ border-top:1px solid var(--vibeui-avatar-028-border);border-radius:0 0 0.5rem 0.
 color:var(--vibeui-avatar-028-danger);
 }
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="avatar-028"]{color-scheme:dark}
-/* Развёрнутый режим: меню стоит в потоке под кнопкой, а не в верхнем слое. */
+/* Развёрнутый режим: меню стоит в потоке, а кнопка-аватар прячется — портрет
+   в шапке меню уже показывает того же человека, две копии смотрелись бы багом. */
 [data-vibeui-block="avatar-028"]:has([data-open="true"]){display:flex;flex-direction:column;align-items:flex-start}
+[data-vibeui-block="avatar-028"]:has([data-open="true"]) [data-part="trigger"]{display:none}
 [data-vibeui-block="avatar-028"] [data-part="menu"][data-open="true"]{
-position:static;margin-top:0.375rem;
+position:static;margin-top:0;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="avatar-028"] *{animation:none!important;transition:none!important}}
 `
@@ -204,8 +218,17 @@ export function Avatar028({
           role="menu"
         >
           <div data-part="head">
-            <span data-part="head-name">{name}</span>
-            <span data-part="head-mail">{email}</span>
+            <span data-part="head-face">
+              {src ? (
+                <img src={src} alt="" />
+              ) : (
+                <span aria-hidden="true">{initials(name)}</span>
+              )}
+            </span>
+            <span data-part="head-text">
+              <span data-part="head-name">{name}</span>
+              <span data-part="head-mail">{email}</span>
+            </span>
           </div>
           {items.map((item) => (
             <button key={item} type="button" data-part="item" role="menuitem">

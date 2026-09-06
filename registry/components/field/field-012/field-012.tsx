@@ -27,12 +27,12 @@ export type Field012Props = Omit<
 // строку под полем, а после гаснет сама, без клика.
 const STYLES = `
 :where([data-vibeui-block="field-012"]){
---vibeui-field-012-bg:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
+--vibeui-field-012-bg:light-dark(oklch(1 0 0),oklch(0.24 0 265));
 --vibeui-field-012-surface:transparent;
---vibeui-field-012-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.011 265));
---vibeui-field-012-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-field-012-shell:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-field-012-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-field-012-muted:color-mix(in oklab,var(--vibeui-field-012-fg) 68%,transparent);
---vibeui-field-012-border:light-dark(oklch(0.88 0.008 265),oklch(0.41 0.012 265));
+--vibeui-field-012-border:light-dark(oklch(0.88 0 265),oklch(0.41 0 265));
 --vibeui-field-012-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
 --vibeui-field-012-warn:light-dark(oklch(0.58 0.16 75),oklch(0.78 0.14 75));
 --vibeui-field-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

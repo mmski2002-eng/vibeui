@@ -17,9 +17,9 @@ export type Aspect008Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="aspect-008"]){
 --vibeui-aspect-008-ratio:4 / 3;
---vibeui-aspect-008-base:light-dark(oklch(0.93 0.005 265),oklch(0.28 0.012 265));
---vibeui-aspect-008-shine:light-dark(oklch(0.97 0.003 265),oklch(0.35 0.014 265));
---vibeui-aspect-008-fg:light-dark(oklch(0.55 0.014 265),oklch(0.68 0.012 265));
+--vibeui-aspect-008-base:light-dark(oklch(0.93 0 265),oklch(0.28 0 265));
+--vibeui-aspect-008-shine:light-dark(oklch(0.97 0 265),oklch(0.35 0 265));
+--vibeui-aspect-008-fg:light-dark(oklch(0.55 0 265),oklch(0.68 0 265));
 --vibeui-aspect-008-radius:0.75rem;
 --vibeui-aspect-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

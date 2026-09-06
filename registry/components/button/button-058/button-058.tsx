@@ -21,11 +21,11 @@ export type Button058Props = Omit<ComponentProps<"div">, "children"> & {
 // каретка и введённый текст на месте. autoComplete остаётся current-password.
 const STYLES = `
 :where([data-vibeui-block="button-058"]){
---vibeui-button-058-surface:light-dark(oklch(1 0 0),oklch(0.24 0.014 265));
---vibeui-button-058-border:light-dark(oklch(0.88 0.006 265),oklch(0.42 0.014 265));
---vibeui-button-058-fg:light-dark(oklch(0.24 0.02 265),oklch(0.94 0.008 265));
+--vibeui-button-058-surface:light-dark(oklch(1 0 0),oklch(0.24 0 265));
+--vibeui-button-058-border:light-dark(oklch(0.88 0 265),oklch(0.42 0 265));
+--vibeui-button-058-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-button-058-muted:color-mix(in oklab,var(--vibeui-button-058-fg) 68%,transparent);
---vibeui-button-058-accent:light-dark(oklch(0.53 0.16 265),oklch(0.75 0.13 265));
+--vibeui-button-058-accent:light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));
 --vibeui-button-058-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

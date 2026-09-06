@@ -335,12 +335,6 @@ export const CATEGORIES = [
     group: "application",
   },
   {
-    slug: "gantt",
-    label: "Диаграмма Ганта",
-    en: "Gantt",
-    group: "data",
-  },
-  {
     slug: "hover-card",
     label: "Карточка по наведению",
     en: "Hover Card",
@@ -494,12 +488,6 @@ export const CATEGORIES = [
     slug: "separator",
     label: "Разделитель",
     en: "Separator",
-    group: "application",
-  },
-  {
-    slug: "sheet",
-    label: "Боковая панель",
-    en: "Sheet",
     group: "application",
   },
   {

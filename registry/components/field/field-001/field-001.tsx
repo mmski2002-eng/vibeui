@@ -24,12 +24,12 @@ export type Field001Props = Omit<
 // нему: пользователь теряет условия ровно тогда, когда они нужнее всего.
 const STYLES = `
 :where([data-vibeui-block="field-001"]){
---vibeui-field-001-bg:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
+--vibeui-field-001-bg:light-dark(oklch(1 0 0),oklch(0.24 0 265));
 --vibeui-field-001-surface:transparent;
---vibeui-field-001-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.011 265));
---vibeui-field-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-field-001-shell:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-field-001-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-field-001-muted:color-mix(in oklab,var(--vibeui-field-001-fg) 68%,transparent);
---vibeui-field-001-border:light-dark(oklch(0.88 0.008 265),oklch(0.41 0.012 265));
+--vibeui-field-001-border:light-dark(oklch(0.88 0 265),oklch(0.41 0 265));
 --vibeui-field-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
 --vibeui-field-001-danger:light-dark(oklch(0.55 0.19 25),oklch(0.73 0.16 25));
 --vibeui-field-001-mark-fg:light-dark(oklch(1 0 0),oklch(0.21 0.03 25));

@@ -46,9 +46,9 @@ export type Navbar006Props = {
 const STYLES = `
 :where([data-vibeui-block="navbar-006"]){
 --vibeui-navbar-006-bg:transparent;
---vibeui-navbar-006-ink:light-dark(oklch(0.23 0.012 265),oklch(0.94 0.006 265));
---vibeui-navbar-006-muted:light-dark(oklch(0.54 0.012 265),oklch(0.7 0.012 265));
---vibeui-navbar-006-border:light-dark(oklch(0.9 0.005 265),oklch(0.34 0.011 265));
+--vibeui-navbar-006-ink:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
+--vibeui-navbar-006-muted:light-dark(oklch(0.54 0 265),oklch(0.7 0 265));
+--vibeui-navbar-006-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
 --vibeui-navbar-006-accent:light-dark(oklch(0.52 0.16 20),oklch(0.72 0.15 20));
 --vibeui-navbar-006-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0.03 20));
 --vibeui-navbar-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -112,11 +112,11 @@ text-decoration:none;font-size:0.875rem;font-weight:620;white-space:nowrap;
 [data-vibeui-block="navbar-006"] button:focus-visible{outline:2px solid var(--vibeui-navbar-006-accent);outline-offset:2px}
 [data-vibeui-navbar-006-locales]{
 position:fixed;inset:3.5rem 1rem auto auto;margin:0;padding:0.375rem;min-width:14rem;
-border:1px solid var(--vibeui-navbar-006-border,light-dark(oklch(0.9 0.005 265),oklch(0.34 0.011 265)));
+border:1px solid var(--vibeui-navbar-006-border,light-dark(oklch(0.9 0 265),oklch(0.34 0 265)));
 border-radius:0.875rem;
-background:light-dark(oklch(0.99 0.002 265),oklch(0.26 0.014 265));
+background:light-dark(oklch(0.99 0 265),oklch(0.26 0 265));
 font-family:var(--vibeui-navbar-006-font,ui-sans-serif,system-ui,sans-serif);
-box-shadow:0 24px 56px -30px light-dark(oklch(0.2 0.03 265 / 55%),oklch(0 0 0 / 65%));
+box-shadow:0 24px 56px -30px light-dark(oklch(0.2 0 265 / 55%),oklch(0 0 0 / 65%));
 opacity:0;transform:translateY(-0.375rem);
 transition:opacity .18s ease,transform .18s ease,display .18s allow-discrete,overlay .18s allow-discrete;
 }
@@ -124,12 +124,12 @@ transition:opacity .18s ease,transform .18s ease,display .18s allow-discrete,ove
 @starting-style{[data-vibeui-navbar-006-locales]:popover-open{opacity:0;transform:translateY(-0.375rem)}}
 [data-vibeui-navbar-006-locales] a{
 display:flex;align-items:baseline;gap:0.5rem;padding:0.5rem 0.625rem;border-radius:0.625rem;
-color:light-dark(oklch(0.23 0.012 265),oklch(0.94 0.006 265));
+color:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 text-decoration:none;font-size:0.875rem;font-weight:560;
 }
-[data-vibeui-navbar-006-locales] a:hover{background:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.85 0.02 265 / 12%))}
-[data-vibeui-navbar-006-locales] a[aria-current="true"]{background:light-dark(oklch(0.55 0.02 265 / 10%),oklch(0.85 0.02 265 / 16%))}
-[data-vibeui-navbar-006-locales] [data-part="region"]{margin-left:auto;color:light-dark(oklch(0.54 0.012 265),oklch(0.7 0.012 265));font-size:0.75rem;font-weight:450}
+[data-vibeui-navbar-006-locales] a:hover{background:light-dark(oklch(0.55 0 265 / 8%),oklch(0.85 0 265 / 12%))}
+[data-vibeui-navbar-006-locales] a[aria-current="true"]{background:light-dark(oklch(0.55 0 265 / 10%),oklch(0.85 0 265 / 16%))}
+[data-vibeui-navbar-006-locales] [data-part="region"]{margin-left:auto;color:light-dark(oklch(0.54 0 265),oklch(0.7 0 265));font-size:0.75rem;font-weight:450}
 /* Где есть якорное позиционирование — список встаёт прямо под кнопкой. */
 @supports (anchor-name:--vibeui-navbar-006-globe){
 [data-vibeui-block="navbar-006"] [data-part="globe"]{anchor-name:--vibeui-navbar-006-globe}

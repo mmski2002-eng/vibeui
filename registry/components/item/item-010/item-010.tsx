@@ -26,9 +26,9 @@ export type Item010Props = Omit<ComponentProps<"ul">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="item-010"]){
 --vibeui-item-010-bg:transparent;
---vibeui-item-010-fg:light-dark(oklch(0.23 0.014 265),oklch(0.93 0.006 265));
+--vibeui-item-010-fg:light-dark(oklch(0.23 0 265),oklch(0.93 0 265));
 --vibeui-item-010-muted:color-mix(in oklab,var(--vibeui-item-010-fg) 68%,transparent);
---vibeui-item-010-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
+--vibeui-item-010-border:light-dark(oklch(0.91 0 265),oklch(0.35 0 265));
 --vibeui-item-010-hover:color-mix(in oklab,var(--vibeui-item-010-fg) 6%,var(--vibeui-item-010-bg));
 --vibeui-item-010-accent:light-dark(oklch(0.55 0.19 262),oklch(0.75 0.16 262));
 --vibeui-item-010-step:1.625rem;

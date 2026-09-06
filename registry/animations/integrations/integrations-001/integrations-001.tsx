@@ -38,7 +38,7 @@ const STYLES = `
 --vibeui-integrations-001-muted:color-mix(in oklab,var(--vibeui-integrations-001-fg) 60%,transparent);
 --vibeui-integrations-001-border:light-dark(oklch(0.92 0 0),oklch(0.275 0 0));
 --vibeui-integrations-001-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
---vibeui-integrations-001-hub:light-dark(oklch(0.98 0 0),oklch(0.26 0.01 260));
+--vibeui-integrations-001-hub:light-dark(oklch(0.98 0 0),oklch(0.26 0 260));
 --vibeui-integrations-001-n1:oklch(0.68 0.19 25);
 --vibeui-integrations-001-n2:oklch(0.76 0.15 80);
 --vibeui-integrations-001-n3:oklch(0.72 0.16 150);

@@ -24,10 +24,10 @@ export type Alert007Props = Omit<ComponentProps<"div">, "children"> & {
 // темнеет там, где тёмный контекст, и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="alert-007"]){
---vibeui-alert-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.95 0.006 265));
+--vibeui-alert-007-fg:light-dark(oklch(0.22 0 265),oklch(0.95 0 265));
 --vibeui-alert-007-muted:color-mix(in oklab,var(--vibeui-alert-007-fg) 68%,transparent);
 --vibeui-alert-007-bg:transparent;
---vibeui-alert-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-alert-007-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
 --vibeui-alert-007-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
 --vibeui-alert-007-hue:250;
 --vibeui-alert-007-radius:0.875rem;

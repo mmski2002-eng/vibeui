@@ -38,12 +38,12 @@ const STYLES = `
 --vibeui-input-010-surface:transparent;
 /* Список висит над страницей, поэтому его подложка непрозрачна всегда
    и не зависит от surface. */
---vibeui-input-010-panel:light-dark(oklch(1 0 0),oklch(0.28 0.012 265));
---vibeui-input-010-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
---vibeui-input-010-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-input-010-panel:light-dark(oklch(1 0 0),oklch(0.28 0 265));
+--vibeui-input-010-shell:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
+--vibeui-input-010-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-input-010-muted:color-mix(in oklab,var(--vibeui-input-010-fg) 68%,transparent);
---vibeui-input-010-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.012 265));
---vibeui-input-010-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
+--vibeui-input-010-field:light-dark(oklch(0.985 0 265),oklch(0.26 0 265));
+--vibeui-input-010-border:light-dark(oklch(0.88 0 265),oklch(0.42 0 265));
 --vibeui-input-010-accent:light-dark(oklch(0.53 0.15 165),oklch(0.76 0.13 165));
 --vibeui-input-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

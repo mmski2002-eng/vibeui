@@ -40,11 +40,11 @@ export type Contact004Props = {
 const STYLES = `
 :where([data-vibeui-block="contact-004"]){
 --vibeui-contact-004-bg:transparent;
---vibeui-contact-004-card:light-dark(oklch(1 0 0),oklch(0.23 0.012 265));
---vibeui-contact-004-soft:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.01 265));
---vibeui-contact-004-fg:light-dark(oklch(0.2 0.014 265),oklch(0.94 0.005 265));
---vibeui-contact-004-muted:light-dark(oklch(0.52 0.014 265),oklch(0.72 0.012 265));
---vibeui-contact-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-contact-004-card:light-dark(oklch(1 0 0),oklch(0.23 0 265));
+--vibeui-contact-004-soft:light-dark(oklch(0.975 0 265),oklch(0.27 0 265));
+--vibeui-contact-004-fg:light-dark(oklch(0.2 0 265),oklch(0.94 0 265));
+--vibeui-contact-004-muted:light-dark(oklch(0.52 0 265),oklch(0.72 0 265));
+--vibeui-contact-004-border:light-dark(oklch(0.9 0 265),oklch(0.35 0 265));
 --vibeui-contact-004-accent:light-dark(oklch(0.5 0.15 200),oklch(0.76 0.12 200));
 --vibeui-contact-004-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.03 200));
 --vibeui-contact-004-alarm:light-dark(oklch(0.55 0.19 25),oklch(0.73 0.16 25));

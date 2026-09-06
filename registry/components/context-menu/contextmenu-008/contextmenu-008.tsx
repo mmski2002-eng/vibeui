@@ -45,15 +45,15 @@ export type Contextmenu008Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="contextmenu-008"]){
 --vibeui-contextmenu-008-bg:transparent;
---vibeui-contextmenu-008-surface:light-dark(oklch(1 0 0),oklch(0.24 0.013 265));
---vibeui-contextmenu-008-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-contextmenu-008-surface:light-dark(oklch(1 0 0),oklch(0.24 0 265));
+--vibeui-contextmenu-008-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-contextmenu-008-muted:color-mix(in oklab,var(--vibeui-contextmenu-008-fg) 68%,transparent);
---vibeui-contextmenu-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
---vibeui-contextmenu-008-hover:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.014 265));
+--vibeui-contextmenu-008-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
+--vibeui-contextmenu-008-hover:light-dark(oklch(0.96 0 265),oklch(0.31 0 265));
 --vibeui-contextmenu-008-accent:light-dark(oklch(0.55 0.19 320),oklch(0.76 0.15 320));
---vibeui-contextmenu-008-shadow:light-dark(oklch(0.2 0.03 265 / 50%),oklch(0 0 0 / 72%));
---vibeui-contextmenu-008-lift:light-dark(oklch(0.2 0.03 265 / 60%),oklch(0 0 0 / 76%));
---vibeui-contextmenu-008-lift-strong:light-dark(oklch(0.2 0.03 265 / 70%),oklch(0 0 0 / 84%));
+--vibeui-contextmenu-008-shadow:light-dark(oklch(0.2 0 265 / 50%),oklch(0 0 0 / 72%));
+--vibeui-contextmenu-008-lift:light-dark(oklch(0.2 0 265 / 60%),oklch(0 0 0 / 76%));
+--vibeui-contextmenu-008-lift-strong:light-dark(oklch(0.2 0 265 / 70%),oklch(0 0 0 / 84%));
 --vibeui-contextmenu-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-contextmenu-008-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
 --vibeui-contextmenu-008-x:50%;
@@ -146,10 +146,10 @@ position:static;margin-block-start:0.5rem;
 `
 
 const DEFAULT_ITEMS: Contextmenu008Item[] = [
-  { label: "Вставить сюда", keys: "⌘ V" },
-  { label: "Выделить всё", keys: "⌘ A" },
-  { label: "Отменить", keys: "⌘ Z" },
-  { label: "Вернуть", keys: "⇧ ⌘ Z" },
+  { label: "Вставить сюда", keys: "Ctrl+V" },
+  { label: "Выделить всё", keys: "Ctrl+A" },
+  { label: "Отменить", keys: "Ctrl+Z" },
+  { label: "Вернуть", keys: "Shift Ctrl+Z" },
 ]
 
 /**

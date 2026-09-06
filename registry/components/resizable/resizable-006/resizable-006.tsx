@@ -39,12 +39,12 @@ export type Resizable006Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="resizable-006"]){
 --vibeui-resizable-006-bg:transparent;
---vibeui-resizable-006-pane:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
---vibeui-resizable-006-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-resizable-006-pane:light-dark(oklch(1 0 0),oklch(0.25 0 265));
+--vibeui-resizable-006-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-resizable-006-muted:color-mix(in oklab,var(--vibeui-resizable-006-fg) 68%,transparent);
---vibeui-resizable-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
---vibeui-resizable-006-surface:light-dark(oklch(0.975 0.004 265),oklch(0.31 0.011 265));
---vibeui-resizable-006-console:light-dark(oklch(0.26 0.02 265),oklch(0.17 0.014 265));
+--vibeui-resizable-006-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
+--vibeui-resizable-006-surface:light-dark(oklch(0.975 0 265),oklch(0.31 0 265));
+--vibeui-resizable-006-console:light-dark(oklch(0.26 0 265),oklch(0.17 0 265));
 --vibeui-resizable-006-accent:light-dark(oklch(0.52 0.14 165),oklch(0.76 0.14 165));
 --vibeui-resizable-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-resizable-006-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
@@ -74,7 +74,7 @@ flex:1;min-width:0;padding:0.625rem;overflow:auto;background:var(--vibeui-resiza
 /* Текст консоли светлый без второй ветки: её подложка тёмная в обеих темах. */
 [data-vibeui-block="resizable-006"] [data-part="console"]{
 flex:1;min-height:0;overflow:auto;padding:0.625rem 0.75rem;
-background:var(--vibeui-resizable-006-console);color:oklch(0.94 0.01 265);
+background:var(--vibeui-resizable-006-console);color:oklch(0.94 0 265);
 font-family:var(--vibeui-resizable-006-mono);font-size:0.6875rem;line-height:1.6;
 }
 [data-vibeui-block="resizable-006"] h3{

@@ -31,7 +31,7 @@ export type Carousel006Props = Omit<ComponentProps<"section">, "children"> & {
 // в любой теме страницы, и это дизайн-решение, а не недосмотр.
 const STYLES = `
 :where([data-vibeui-block="carousel-006"]){
---vibeui-carousel-006-fg:oklch(0.99 0.003 265);
+--vibeui-carousel-006-fg:oklch(0.99 0 265);
 --vibeui-carousel-006-muted:color-mix(in oklab,var(--vibeui-carousel-006-fg) 68%,transparent);
 --vibeui-carousel-006-track:oklch(1 0 0 / 35%);
 --vibeui-carousel-006-seconds:6s;

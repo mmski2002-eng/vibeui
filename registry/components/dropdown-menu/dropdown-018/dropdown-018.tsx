@@ -41,11 +41,11 @@ export type Dropdown018Props = Omit<
 // контексте плашка светлее фона страницы, а её граница светлее плашки.
 const STYLES = `
 :where([data-vibeui-block="dropdown-018"]){
---vibeui-dropdown-018-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 275));
---vibeui-dropdown-018-fg:light-dark(oklch(0.24 0.014 275),oklch(0.94 0.006 275));
+--vibeui-dropdown-018-bg:light-dark(oklch(1 0 0),oklch(0.25 0 275));
+--vibeui-dropdown-018-fg:light-dark(oklch(0.24 0 275),oklch(0.94 0 275));
 --vibeui-dropdown-018-muted:color-mix(in oklab,var(--vibeui-dropdown-018-fg) 68%,transparent);
---vibeui-dropdown-018-border:light-dark(oklch(0.9 0.006 275),oklch(0.37 0.012 275));
---vibeui-dropdown-018-hover:light-dark(oklch(0.96 0.004 275),oklch(0.32 0.014 275));
+--vibeui-dropdown-018-border:light-dark(oklch(0.9 0 275),oklch(0.37 0 275));
+--vibeui-dropdown-018-hover:light-dark(oklch(0.96 0 275),oklch(0.32 0 275));
 --vibeui-dropdown-018-accent:light-dark(oklch(0.56 0.18 275),oklch(0.76 0.14 275));
 --vibeui-dropdown-018-chip:light-dark(oklch(0.92 0.05 275),oklch(0.42 0.09 275));
 --vibeui-dropdown-018-chip-fg:light-dark(oklch(0.38 0.09 275),oklch(0.93 0.04 275));
@@ -81,7 +81,7 @@ border-style:solid;background:var(--vibeui-dropdown-018-chip);color:var(--vibeui
 position:fixed;margin:0;padding:0.375rem;min-width:15rem;box-sizing:border-box;
 background:var(--vibeui-dropdown-018-bg);color:var(--vibeui-dropdown-018-fg);
 border:1px solid var(--vibeui-dropdown-018-border);border-radius:0.875rem;
-box-shadow:0 20px 44px -24px oklch(0.2 0.03 275 / 50%);
+box-shadow:0 20px 44px -24px oklch(0.2 0 275 / 50%);
 font-family:var(--vibeui-dropdown-018-font);
 opacity:0;transform:translateY(-0.25rem);
 transition:opacity .14s ease,transform .14s ease,display .14s allow-discrete,overlay .14s allow-discrete;

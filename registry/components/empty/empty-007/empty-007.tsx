@@ -28,13 +28,13 @@ export type Empty007Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="empty-007"]){
 --vibeui-empty-007-bg:transparent;
---vibeui-empty-007-fg:light-dark(oklch(0.21 0.014 265),oklch(0.95 0.005 265));
+--vibeui-empty-007-fg:light-dark(oklch(0.21 0 265),oklch(0.95 0 265));
 --vibeui-empty-007-muted:color-mix(in oklab,var(--vibeui-empty-007-fg) 68%,transparent);
---vibeui-empty-007-border:light-dark(oklch(0.91 0.006 265),oklch(0.37 0.012 265));
---vibeui-empty-007-code:light-dark(oklch(0.97 0.003 265),oklch(0.29 0.011 265));
---vibeui-empty-007-action-fg:light-dark(oklch(0.99 0.004 265),oklch(0.18 0.012 265));
+--vibeui-empty-007-border:light-dark(oklch(0.91 0 265),oklch(0.37 0 265));
+--vibeui-empty-007-code:light-dark(oklch(0.97 0 265),oklch(0.29 0 265));
+--vibeui-empty-007-action-fg:light-dark(oklch(0.99 0 265),oklch(0.18 0 265));
 --vibeui-empty-007-danger:light-dark(oklch(0.55 0.2 25),oklch(0.74 0.16 25));
---vibeui-empty-007-danger-soft:light-dark(color-mix(in oklab,var(--vibeui-empty-007-danger) 14%,oklch(1 0 0)),color-mix(in oklab,var(--vibeui-empty-007-danger) 26%,oklch(0.2 0.01 265)));
+--vibeui-empty-007-danger-soft:light-dark(color-mix(in oklab,var(--vibeui-empty-007-danger) 14%,oklch(1 0 0)),color-mix(in oklab,var(--vibeui-empty-007-danger) 26%,oklch(0.2 0 265)));
 --vibeui-empty-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-empty-007-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 }

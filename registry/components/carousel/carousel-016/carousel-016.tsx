@@ -36,10 +36,10 @@ export type Carousel016Props = Omit<ComponentProps<"section">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="carousel-016"]){
 --vibeui-carousel-016-bg:transparent;
---vibeui-carousel-016-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-carousel-016-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-carousel-016-muted:color-mix(in oklab,var(--vibeui-carousel-016-fg) 68%,transparent);
---vibeui-carousel-016-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
---vibeui-carousel-016-hover:light-dark(oklch(0.96 0.004 265),oklch(0.32 0.012 265));
+--vibeui-carousel-016-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
+--vibeui-carousel-016-hover:light-dark(oklch(0.96 0 265),oklch(0.32 0 265));
 --vibeui-carousel-016-accent:light-dark(oklch(0.55 0.19 262),oklch(0.74 0.16 262));
 --vibeui-carousel-016-progress:0%;
 --vibeui-carousel-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -68,12 +68,12 @@ padding:1rem;box-sizing:border-box;
 background:
 radial-gradient(90% 80% at 22% 18%,oklch(0.9 0.06 var(--vibeui-carousel-016-hue,250)),transparent 70%),
 linear-gradient(150deg,oklch(0.74 0.1 var(--vibeui-carousel-016-hue,250)),oklch(0.44 0.11 var(--vibeui-carousel-016-hue,250)));
-color:oklch(0.99 0.003 265);
+color:oklch(0.99 0 265);
 opacity:0;visibility:hidden;transition:opacity .28s ease,visibility .28s ease;
 }
 [data-vibeui-block="carousel-016"] [data-part="slide"][data-live="true"]{opacity:1;visibility:visible}
 [data-vibeui-block="carousel-016"] [data-part="title"]{margin:0;font-size:1.0625rem;font-weight:680;line-height:1.2}
-[data-vibeui-block="carousel-016"] [data-part="meta"]{margin:0;font-size:0.8125rem;color:oklch(0.93 0.01 265)}
+[data-vibeui-block="carousel-016"] [data-part="meta"]{margin:0;font-size:0.8125rem;color:oklch(0.93 0 265)}
 [data-vibeui-block="carousel-016"] [data-part="bar"]{display:flex;align-items:center;gap:0.625rem}
 [data-vibeui-block="carousel-016"] [data-part="bar"] button{
 appearance:none;cursor:pointer;flex:none;

@@ -33,11 +33,11 @@ export type Tags002Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="tags-002"]){
 --vibeui-tags-002-surface:transparent;
---vibeui-tags-002-field:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
---vibeui-tags-002-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.01 265));
---vibeui-tags-002-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-tags-002-field:light-dark(oklch(1 0 0),oklch(0.22 0 265));
+--vibeui-tags-002-shell:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-tags-002-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-tags-002-muted:color-mix(in oklab,var(--vibeui-tags-002-fg) 68%,transparent);
---vibeui-tags-002-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.012 265));
+--vibeui-tags-002-border:light-dark(oklch(0.88 0 265),oklch(0.38 0 265));
 --vibeui-tags-002-chip:light-dark(oklch(0.55 0.16 255 / 12%),oklch(0.74 0.16 255 / 22%));
 --vibeui-tags-002-accent:light-dark(oklch(0.5 0.16 255),oklch(0.78 0.14 255));
 --vibeui-tags-002-ring:light-dark(oklch(0.5 0.16 255 / 18%),oklch(0.78 0.14 255 / 28%));

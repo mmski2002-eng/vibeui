@@ -22,14 +22,14 @@ const STYLES = `
 --vibeui-iconstack-005-overlap:0.625rem;
 --vibeui-iconstack-005-ring:oklch(1 0 0);
 --vibeui-iconstack-005-surface:transparent;
---vibeui-iconstack-005-dark:oklch(0.26 0.02 265);
---vibeui-iconstack-005-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.01 265));
---vibeui-iconstack-005-fg:light-dark(oklch(0.26 0.014 265),oklch(0.94 0.005 265));
+--vibeui-iconstack-005-dark:oklch(0.26 0 265);
+--vibeui-iconstack-005-border:light-dark(oklch(0.9 0 265),oklch(0.38 0 265));
+--vibeui-iconstack-005-fg:light-dark(oklch(0.26 0 265),oklch(0.94 0 265));
 /* Полосы намеренно фиксированные: приём и держится на том, что светлая
    остаётся светлой в любой теме. Их собственные токены темы не слушают. */
---vibeui-iconstack-005-light-line:oklch(0.9 0.006 265);
---vibeui-iconstack-005-light-fg:oklch(0.26 0.014 265);
---vibeui-iconstack-005-light-muted:oklch(0.55 0.014 265);
+--vibeui-iconstack-005-light-line:oklch(0.9 0 265);
+--vibeui-iconstack-005-light-fg:oklch(0.26 0 265);
+--vibeui-iconstack-005-light-muted:oklch(0.55 0 265);
 --vibeui-iconstack-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -55,7 +55,7 @@ color:var(--vibeui-iconstack-005-light-fg);
 [data-vibeui-block="iconstack-005"] [data-part="row"][data-tone="dark"]{
 background:var(--vibeui-iconstack-005-dark);
 --vibeui-iconstack-005-ring:var(--vibeui-iconstack-005-dark);
-color:oklch(0.96 0.004 265);
+color:oklch(0.96 0 265);
 }
 [data-vibeui-block="iconstack-005"] [data-part="stack"]{
 display:inline-flex;flex-direction:row-reverse;justify-content:flex-end;flex:none;

@@ -19,11 +19,11 @@ export type Tooltip014Props = Omit<ComponentProps<"span">, "children"> & {
 // хватает, вместо того чтобы кнопка молча ничего не делала.
 const STYLES = `
 :where([data-vibeui-block="tooltip-014"]){
---vibeui-tooltip-014-bg:light-dark(oklch(0.24 0.014 265),oklch(0.9 0.008 265));
---vibeui-tooltip-014-fg:light-dark(oklch(0.97 0.002 265),oklch(0.22 0.014 265));
---vibeui-tooltip-014-face:light-dark(oklch(0.94 0.003 265),oklch(0.3 0.012 265));
---vibeui-tooltip-014-border:light-dark(oklch(0.88 0.006 265),oklch(0.42 0.012 265));
---vibeui-tooltip-014-label:light-dark(oklch(0.58 0.01 265),oklch(0.74 0.012 265));
+--vibeui-tooltip-014-bg:light-dark(oklch(0.24 0 265),oklch(0.9 0 265));
+--vibeui-tooltip-014-fg:light-dark(oklch(0.97 0 265),oklch(0.22 0 265));
+--vibeui-tooltip-014-face:light-dark(oklch(0.94 0 265),oklch(0.3 0 265));
+--vibeui-tooltip-014-border:light-dark(oklch(0.88 0 265),oklch(0.42 0 265));
+--vibeui-tooltip-014-label:light-dark(oklch(0.58 0 265),oklch(0.74 0 265));
 --vibeui-tooltip-014-accent:light-dark(oklch(0.6 0.16 265),oklch(0.76 0.14 265));
 --vibeui-tooltip-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

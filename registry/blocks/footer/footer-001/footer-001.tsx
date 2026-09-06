@@ -40,9 +40,9 @@ export type Footer001Props = {
 const STYLES = `
 :where([data-vibeui-block="footer-001"]){
 --vibeui-footer-001-bg:transparent;
---vibeui-footer-001-ink:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
---vibeui-footer-001-muted:light-dark(oklch(0.52 0.014 265),oklch(0.69 0.012 265));
---vibeui-footer-001-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-footer-001-ink:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
+--vibeui-footer-001-muted:light-dark(oklch(0.52 0 265),oklch(0.69 0 265));
+--vibeui-footer-001-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-footer-001-accent:light-dark(oklch(0.52 0.19 265),oklch(0.74 0.15 265));
 --vibeui-footer-001-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

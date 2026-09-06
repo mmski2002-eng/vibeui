@@ -134,10 +134,6 @@ import {
   SEED as FrameSeed,
 } from "@/components/lab/checks/frame"
 import {
-  CHECKS as Gantt,
-  SEED as GanttSeed,
-} from "@/components/lab/checks/gantt"
-import {
   CHECKS as HoverCard,
   SEED as HoverCardSeed,
 } from "@/components/lab/checks/hover-card"
@@ -162,10 +158,6 @@ import {
   SEED as InputOtpSeed,
 } from "@/components/lab/checks/input-otp"
 import { CHECKS as Item, SEED as ItemSeed } from "@/components/lab/checks/item"
-import {
-  CHECKS as Kanban,
-  SEED as KanbanSeed,
-} from "@/components/lab/checks/kanban"
 import { CHECKS as Kbd, SEED as KbdSeed } from "@/components/lab/checks/kbd"
 import {
   CHECKS as Label,
@@ -235,10 +227,6 @@ import {
   CHECKS as Separator,
   SEED as SeparatorSeed,
 } from "@/components/lab/checks/separator"
-import {
-  CHECKS as Sheet,
-  SEED as SheetSeed,
-} from "@/components/lab/checks/sheet"
 import {
   CHECKS as Sidebar,
   SEED as SidebarSeed,
@@ -342,7 +330,6 @@ export const LAB_RUNS: Record<string, { checks: LabCheck[]; seed: number }> = {
   "file-upload": { checks: FileUpload, seed: FileUploadSeed },
   filters: { checks: Filters, seed: FiltersSeed },
   frame: { checks: Frame, seed: FrameSeed },
-  gantt: { checks: Gantt, seed: GanttSeed },
   "hover-card": { checks: HoverCard, seed: HoverCardSeed },
   "icon-stack": { checks: IconStack, seed: IconStackSeed },
   "icon-tile": { checks: IconTile, seed: IconTileSeed },
@@ -350,7 +337,6 @@ export const LAB_RUNS: Record<string, { checks: LabCheck[]; seed: number }> = {
   "input-group": { checks: InputGroup, seed: InputGroupSeed },
   "input-otp": { checks: InputOtp, seed: InputOtpSeed },
   item: { checks: Item, seed: ItemSeed },
-  kanban: { checks: Kanban, seed: KanbanSeed },
   kbd: { checks: Kbd, seed: KbdSeed },
   label: { checks: Label, seed: LabelSeed },
   menubar: { checks: Menubar, seed: MenubarSeed },
@@ -369,7 +355,6 @@ export const LAB_RUNS: Record<string, { checks: LabCheck[]; seed: number }> = {
   scrollspy: { checks: Scrollspy, seed: ScrollspySeed },
   select: { checks: Select, seed: SelectSeed },
   separator: { checks: Separator, seed: SeparatorSeed },
-  sheet: { checks: Sheet, seed: SheetSeed },
   sidebar: { checks: Sidebar, seed: SidebarSeed },
   skeleton: { checks: Skeleton, seed: SkeletonSeed },
   slider: { checks: Slider, seed: SliderSeed },

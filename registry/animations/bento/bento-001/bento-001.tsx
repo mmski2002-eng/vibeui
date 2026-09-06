@@ -32,12 +32,12 @@ export type Bento001Props = {
 const STYLES = `
 :where([data-vibeui-block="bento-001"]){
 --vibeui-bento-001-bg:transparent;
---vibeui-bento-001-fg:light-dark(oklch(0.2 0.014 265),oklch(0.97 0.004 265));
---vibeui-bento-001-muted:light-dark(oklch(0.5 0.02 265),oklch(0.74 0.018 265));
---vibeui-bento-001-border:light-dark(oklch(0.18 0.012 265 / 12%),oklch(1 0 0 / 12%));
---vibeui-bento-001-card:light-dark(oklch(0.99 0.002 265),oklch(0.235 0.012 265));
+--vibeui-bento-001-fg:light-dark(oklch(0.2 0 265),oklch(0.97 0 265));
+--vibeui-bento-001-muted:light-dark(oklch(0.5 0 265),oklch(0.74 0 265));
+--vibeui-bento-001-border:light-dark(oklch(0.18 0 265 / 12%),oklch(1 0 0 / 12%));
+--vibeui-bento-001-card:light-dark(oklch(0.99 0 265),oklch(0.235 0 265));
 --vibeui-bento-001-accent:light-dark(oklch(0.55 0.2 275),oklch(0.72 0.16 275));
---vibeui-bento-001-accent-fg:light-dark(oklch(0.99 0.004 265),oklch(0.17 0.02 265));
+--vibeui-bento-001-accent-fg:light-dark(oklch(0.99 0 265),oklch(0.17 0 265));
 --vibeui-bento-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="bento-001"]{color-scheme:dark}

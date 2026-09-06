@@ -15,8 +15,8 @@ export type Avatar009Props = Omit<ComponentProps<"span">, "children"> & {
 const STYLES = `:where([data-vibeui-block="avatar-009"]){
 --vibeui-avatar-009-size:2.5rem;
 --vibeui-avatar-009-accent:light-dark(oklch(0.62 0.17 285),oklch(0.76 0.17 285));
---vibeui-avatar-009-fg:light-dark(oklch(0.99 0.005 285),oklch(0.94 0.002 285));
---vibeui-avatar-009-dot:light-dark(oklch(0.99 0.005 285),oklch(0.88 0.005 285));
+--vibeui-avatar-009-fg:light-dark(oklch(0.99 0 285),oklch(0.94 0 285));
+--vibeui-avatar-009-dot:light-dark(oklch(0.99 0 285),oklch(0.88 0 285));
 --vibeui-avatar-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="avatar-009"]{
@@ -48,7 +48,7 @@ border-radius:9999px;background:currentColor;
 position:absolute;right:-0.25rem;bottom:-0.25rem;
 display:flex;align-items:center;gap:0.125rem;
 padding:0.1875rem 0.3125rem;border-radius:9999px;
-background:light-dark(oklch(0.22 0.02 285),oklch(0.86 0.02 285));box-shadow:0 0 0 2px oklch(1 0 0 / 85%);
+background:light-dark(oklch(0.22 0 285),oklch(0.86 0 285));box-shadow:0 0 0 2px oklch(1 0 0 / 85%);
 }
 [data-vibeui-block="avatar-009"] [data-part="typing"] i{
 width:0.1875rem;height:0.1875rem;border-radius:9999px;background:var(--vibeui-avatar-009-dot);

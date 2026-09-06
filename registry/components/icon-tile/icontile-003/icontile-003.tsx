@@ -20,8 +20,8 @@ const STYLES = `
 --vibeui-icontile-003-size:1.75rem;
 --vibeui-icontile-003-hue:152;
 --vibeui-icontile-003-surface:transparent;
---vibeui-icontile-003-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.008 265));
---vibeui-icontile-003-fg:light-dark(oklch(0.26 0.014 265),oklch(0.93 0.006 265));
+--vibeui-icontile-003-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
+--vibeui-icontile-003-fg:light-dark(oklch(0.26 0 265),oklch(0.93 0 265));
 --vibeui-icontile-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

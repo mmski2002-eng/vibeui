@@ -1,4 +1,4 @@
-import type { ComponentProps, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties, ReactElement } from "react"
 
 export type Button028Props = Omit<ComponentProps<"button">, "children"> & {
   /** Имя действия. Оно же уходит в aria-label и в подсказку. */
@@ -18,11 +18,11 @@ export type Button028Props = Omit<ComponentProps<"button">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="button-028"]){
 --vibeui-button-028-bg:transparent;
---vibeui-button-028-fg:light-dark(oklch(0.32 0.016 265),oklch(0.9 0.008 265));
---vibeui-button-028-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
---vibeui-button-028-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
---vibeui-button-028-tip:light-dark(oklch(0.24 0.02 265),oklch(0.93 0.008 265));
---vibeui-button-028-tip-fg:light-dark(oklch(0.98 0.005 265),oklch(0.22 0.02 265));
+--vibeui-button-028-fg:light-dark(oklch(0.32 0 265),oklch(0.9 0 265));
+--vibeui-button-028-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
+--vibeui-button-028-accent:light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));
+--vibeui-button-028-tip:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
+--vibeui-button-028-tip-fg:light-dark(oklch(0.98 0 265),oklch(0.22 0 265));
 --vibeui-button-028-size:2.25rem;
 --vibeui-button-028-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -69,39 +69,15 @@ opacity:1;transform:translate(-50%,0);transition-delay:.35s;
 [data-vibeui-block="button-028"] button:focus-visible + [data-part="tip"]{
 opacity:1;transform:translate(-50%,0);transition-delay:0s;
 }
-[data-vibeui-block="button-028"] [data-part="glyph"]{position:relative;display:block}
-[data-vibeui-block="button-028"] [data-icon="info"]{
-width:1.0625rem;height:1.0625rem;box-sizing:border-box;
-border:1.5px solid currentColor;border-radius:9999px;
+/* Значок — квадратный svg по центру кнопки: у нарисованных на псевдо-
+   элементах фигур центр не совпадал с центром квадрата, и значок съезжал. */
+[data-vibeui-block="button-028"] [data-part="glyph"]{
+display:block;width:1.125rem;height:1.125rem;
 }
-[data-vibeui-block="button-028"] [data-icon="info"]::before{
-content:"";position:absolute;left:50%;top:0.1875rem;width:2px;height:2px;
-margin-left:-1px;border-radius:1px;background:currentColor;
-}
-[data-vibeui-block="button-028"] [data-icon="info"]::after{
-content:"";position:absolute;left:50%;top:0.4375rem;width:2px;height:0.375rem;
-margin-left:-1px;border-radius:1px;background:currentColor;
-}
-[data-vibeui-block="button-028"] [data-icon="trash"]{
-width:0.75rem;height:0.8125rem;margin-top:0.1875rem;box-sizing:border-box;
-border:1.5px solid currentColor;border-top:0;border-radius:0 0 0.1875rem 0.1875rem;
-}
-[data-vibeui-block="button-028"] [data-icon="trash"]::before{
-content:"";position:absolute;left:-0.125rem;top:-0.1875rem;width:1rem;height:1.5px;
-border-radius:1px;background:currentColor;
-}
-[data-vibeui-block="button-028"] [data-icon="trash"]::after{
-content:"";position:absolute;left:0.25rem;top:-0.375rem;width:0.25rem;height:1.5px;
-border-radius:1px;background:currentColor;
-}
-[data-vibeui-block="button-028"] [data-icon="edit"]{
-width:0.3125rem;height:0.8125rem;box-sizing:border-box;
-border:1.5px solid currentColor;border-bottom:0;border-radius:0.125rem 0.125rem 0 0;
-transform:rotate(45deg);
-}
-[data-vibeui-block="button-028"] [data-icon="edit"]::after{
-content:"";position:absolute;left:-1.5px;top:100%;
-border:0.1875rem solid transparent;border-top-color:currentColor;
+[data-vibeui-block="button-028"] [data-part="glyph"] svg{
+display:block;width:100%;height:100%;
+fill:none;stroke:currentColor;stroke-width:1.7;
+stroke-linecap:round;stroke-linejoin:round;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="button-028"] *{animation:none!important;transition:none!important}}
 `
@@ -126,6 +102,29 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
   )
 
   return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+const GLYPHS: Record<"info" | "trash" | "edit", ReactElement> = {
+  info: (
+    <svg viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 11v5" />
+      <path d="M12 8h.01" />
+    </svg>
+  ),
+  trash: (
+    <svg viewBox="0 0 24 24">
+      <path d="M4 7h16" />
+      <path d="M9.5 7V5h5v2" />
+      <path d="M6.5 7 7.5 20h9L17.5 7" />
+    </svg>
+  ),
+  edit: (
+    <svg viewBox="0 0 24 24">
+      <path d="m4 20 .9-3.7L15.6 5.6a1.6 1.6 0 0 1 2.3 0l.5.5a1.6 1.6 0 0 1 0 2.3L7.7 19.1z" />
+      <path d="m14.4 6.8 2.8 2.8" />
+    </svg>
+  ),
 }
 
 /**
@@ -167,7 +166,9 @@ export function Button028({
         style={palette}
       >
         <button {...props} type={type} aria-label={label}>
-          <span data-part="glyph" data-icon={icon} />
+          <span data-part="glyph" data-icon={icon} aria-hidden="true">
+            {GLYPHS[icon]}
+          </span>
         </button>
         {/* Подсказка — украшение: имя действия уже есть в aria-label. */}
         <span data-part="tip" aria-hidden="true">

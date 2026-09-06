@@ -16,7 +16,7 @@ export type Avatar014Props = Omit<ComponentProps<"span">, "children"> & {
 // подложкой под clip-path: обычный border режется вместе с фигурой.
 const STYLES = `:where([data-vibeui-block="avatar-014"]){
 --vibeui-avatar-014-size:2.5rem;
---vibeui-avatar-014-ring:light-dark(oklch(0.9 0.006 265),oklch(0.19 0.01 265));
+--vibeui-avatar-014-ring:light-dark(oklch(0.9 0 265),oklch(0.19 0 265));
 --vibeui-avatar-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="avatar-014"]{
@@ -58,8 +58,8 @@ border-radius:9999px;
 [data-vibeui-block="avatar-014"][data-size="sm"]{--vibeui-avatar-014-size:2rem}
 [data-vibeui-block="avatar-014"][data-size="lg"]{--vibeui-avatar-014-size:3.5rem}
 [data-vibeui-block="avatar-014"] [data-part="text"]{display:flex;flex-direction:column;gap:0.0625rem;min-width:0}
-[data-vibeui-block="avatar-014"] [data-part="name"]{font-size:0.875rem;font-weight:650;color:light-dark(oklch(0.22 0.015 265),oklch(0.95 0.006 265))}
-[data-vibeui-block="avatar-014"] [data-part="role"]{font-size:0.75rem;color:light-dark(oklch(0.55 0.014 265),oklch(0.66 0.014 265))}
+[data-vibeui-block="avatar-014"] [data-part="name"]{font-size:0.875rem;font-weight:650;color:light-dark(oklch(0.22 0 265),oklch(0.95 0 265))}
+[data-vibeui-block="avatar-014"] [data-part="role"]{font-size:0.75rem;color:light-dark(oklch(0.55 0 265),oklch(0.66 0 265))}
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="avatar-014"]{color-scheme:dark}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="avatar-014"] *{animation:none!important;transition:none!important}}
 `

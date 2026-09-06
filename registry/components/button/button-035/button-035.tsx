@@ -21,8 +21,8 @@ export type Button035Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="button-035"]){
 --vibeui-button-035-surface:transparent;
---vibeui-button-035-border:light-dark(oklch(0.91 0.005 265),oklch(0.34 0.012 265));
---vibeui-button-035-fg:light-dark(oklch(0.42 0.012 265),oklch(0.78 0.01 265));
+--vibeui-button-035-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
+--vibeui-button-035-fg:light-dark(oklch(0.42 0 265),oklch(0.78 0 265));
 --vibeui-button-035-accent:light-dark(oklch(0.53 0.19 285),oklch(0.76 0.15 285));
 --vibeui-button-035-shade:light-dark(black,white);
 --vibeui-button-035-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

@@ -30,12 +30,12 @@ export type Field011Props = Omit<
 // текста — иначе непонятно, случилось оно вообще или нет.
 const STYLES = `
 :where([data-vibeui-block="field-011"]){
---vibeui-field-011-bg:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
+--vibeui-field-011-bg:light-dark(oklch(1 0 0),oklch(0.24 0 265));
 --vibeui-field-011-surface:transparent;
---vibeui-field-011-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-field-011-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-field-011-muted:color-mix(in oklab,var(--vibeui-field-011-fg) 68%,transparent);
---vibeui-field-011-border:light-dark(oklch(0.88 0.008 265),oklch(0.4 0.012 265));
---vibeui-field-011-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.011 265));
+--vibeui-field-011-border:light-dark(oklch(0.88 0 265),oklch(0.4 0 265));
+--vibeui-field-011-shell:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-field-011-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
 --vibeui-field-011-ok:light-dark(oklch(0.5 0.13 155),oklch(0.75 0.13 155));
 --vibeui-field-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

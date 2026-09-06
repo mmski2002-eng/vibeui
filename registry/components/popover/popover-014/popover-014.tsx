@@ -16,7 +16,10 @@ export type Popover014Props = Omit<
   ComponentProps<"div">,
   "children" | "title"
 > & {
+  /** Доступное имя кнопки: на самой кнопке стоит знак, а не слово. */
   label?: string
+  /** Знак пустой кнопки. Рядом с ним рисуется плюс. */
+  glyph?: string
   title?: string
   reactions?: Popover014Reaction[]
   /** Что уже выбрано этим человеком. */
@@ -38,14 +41,14 @@ export type Popover014Props = Omit<
 // должно стоить одинаково.
 const STYLES = `
 :where([data-vibeui-block="popover-014"]){
---vibeui-popover-014-surface:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
---vibeui-popover-014-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.006 265));
+--vibeui-popover-014-surface:light-dark(oklch(1 0 0),oklch(0.22 0 265));
+--vibeui-popover-014-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-popover-014-muted:color-mix(in oklab,var(--vibeui-popover-014-fg) 64%,transparent);
---vibeui-popover-014-border:light-dark(oklch(0.89 0.006 265),oklch(0.36 0.012 265));
+--vibeui-popover-014-border:light-dark(oklch(0.89 0 265),oklch(0.36 0 265));
 --vibeui-popover-014-hover:light-dark(oklch(0 0 0 / 5%),oklch(1 0 0 / 8%));
 --vibeui-popover-014-accent:light-dark(oklch(0.5 0.16 265),oklch(0.78 0.12 265));
 --vibeui-popover-014-chosen:color-mix(in oklab,var(--vibeui-popover-014-accent) 16%,transparent);
---vibeui-popover-014-shadow:light-dark(oklch(0.2 0.02 265 / 24%),oklch(0 0 0 / 60%));
+--vibeui-popover-014-shadow:light-dark(oklch(0.2 0 265 / 24%),oklch(0 0 0 / 60%));
 --vibeui-popover-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 anchor-name:--vibeui-popover-014-anchor;
 }
@@ -58,13 +61,24 @@ display:inline-block;font-family:var(--vibeui-popover-014-font);color:var(--vibe
 [data-vibeui-block="popover-014"] *{box-sizing:border-box}
 [data-vibeui-block="popover-014"] [data-part="trigger"]{
 appearance:none;cursor:pointer;
-display:inline-flex;align-items:center;gap:0.375rem;
-min-height:2rem;padding:0.25rem 0.625rem;
+display:inline-flex;align-items:center;gap:0.125rem;
+min-height:2rem;padding:0.25rem 0.5625rem;
+/* Ширина кнопки не зависит от выбора: плюс исчезает после нажатия, и без
+   запаса кнопка дёргалась бы, утаскивая за собой привязанную панель. */
+min-width:3.3125rem;justify-content:center;
 border:1px solid var(--vibeui-popover-014-border);border-radius:999px;
 background:var(--vibeui-popover-014-surface);color:inherit;
 font:inherit;font-size:0.8125rem;font-weight:600;
 }
+[data-vibeui-block="popover-014"] [data-part="trigger"]:hover{background:var(--vibeui-popover-014-chosen)}
 [data-vibeui-block="popover-014"] [data-part="trigger"]:focus-visible{outline:2px solid var(--vibeui-popover-014-accent);outline-offset:2px}
+/* Знак вместо слова: кнопка реакции узнаётся по смайлику, а подпись уходит
+   в aria-label и подсказку — слово «Реакция» на кнопке только шумит. */
+[data-vibeui-block="popover-014"] [data-part="glyph"]{font-size:1.0625rem;line-height:1}
+[data-vibeui-block="popover-014"] [data-part="plus"]{
+margin-left:-0.125rem;
+color:var(--vibeui-popover-014-muted);font-size:0.8125rem;font-weight:700;line-height:1;
+}
 [data-vibeui-block="popover-014"] [data-part="trigger"][data-chosen="true"]{
 background:var(--vibeui-popover-014-chosen);border-color:var(--vibeui-popover-014-accent);
 }
@@ -73,12 +87,11 @@ position:fixed;margin:0;padding:0.375rem;
 border:1px solid var(--vibeui-popover-014-border);border-radius:999px;
 background:var(--vibeui-popover-014-surface);color:var(--vibeui-popover-014-fg);
 box-shadow:0 18px 44px -26px var(--vibeui-popover-014-shadow);
-position-anchor:--vibeui-popover-014-anchor;
+position-anchor:--vibeui-popover-014-anchor;inset:auto;
 bottom:anchor(top);left:anchor(left);margin-bottom:0.5rem;
 }
 @supports not (anchor-name: --a){
-[data-vibeui-block="popover-014"]{position:relative}
-[data-vibeui-block="popover-014"] [popover]{position:absolute;bottom:calc(100% + 0.5rem);left:0;inset:auto}
+[data-vibeui-block="popover-014"] [popover]{position:fixed;inset:0;margin:auto}
 }
 [data-vibeui-block="popover-014"] [data-part="row"]{display:flex;gap:0.125rem}
 [data-vibeui-block="popover-014"] [data-part="pick"]{
@@ -99,11 +112,13 @@ overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0;
 }
 /* Раскрытая панель на месте: атрибут popover прячет её правилом браузера,
    а это правило той же специфичности его переопределяет и возвращает панель
-   в поток. Так её показывают на витрине и в документации, без верхнего слоя. */
+   в поток. Так её показывают на витрине и в документации, без верхнего слоя.
+   Только пока popover закрыт: у открытого положение задаёт верхний слой,
+   и static отправил бы панель в левый верхний угол экрана. */
 [data-vibeui-block="popover-014"][data-open]{
 display:flex;flex-direction:column;align-items:flex-start;
 }
-[data-vibeui-block="popover-014"][data-open] [popover]{
+[data-vibeui-block="popover-014"][data-open] [popover]:not(:popover-open){
 display:inline-block;position:static;inset:auto;margin:0.5rem 0 0;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="popover-014"] *{animation:none!important;transition:none!important}}
@@ -144,7 +159,8 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Popover014({
-  label = "Реакция",
+  label = "Поставить реакцию",
+  glyph = "🙂",
   title = "Как отметить",
   reactions = DEFAULT_REACTIONS,
   defaultValue = "",
@@ -190,14 +206,17 @@ export function Popover014({
           data-part="trigger"
           data-chosen={current ? true : undefined}
           popoverTarget={`${id}-panel`}
+          aria-label={current ? `${label}: ${current.label}` : label}
+          title={current ? current.label : label}
         >
-          {current ? (
-            <>
-              <span aria-hidden="true">{current.glyph}</span>
-              {current.label}
-            </>
-          ) : (
-            label
+          <span data-part="glyph" aria-hidden="true">
+            {current ? current.glyph : glyph}
+          </span>
+          {/* Плюс только у пустой кнопки: он и говорит, что реакции ещё нет. */}
+          {current ? null : (
+            <span data-part="plus" aria-hidden="true">
+              +
+            </span>
           )}
         </button>
 

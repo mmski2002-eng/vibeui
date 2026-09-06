@@ -36,11 +36,11 @@ export type Date007Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="date-007"]){
 --vibeui-date-007-surface:transparent;
---vibeui-date-007-field:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
---vibeui-date-007-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
---vibeui-date-007-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-date-007-field:light-dark(oklch(1 0 0),oklch(0.26 0 265));
+--vibeui-date-007-shell:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-date-007-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-date-007-muted:color-mix(in oklab,var(--vibeui-date-007-fg) 68%,transparent);
---vibeui-date-007-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
+--vibeui-date-007-border:light-dark(oklch(0.88 0 265),oklch(0.42 0 265));
 --vibeui-date-007-accent:light-dark(oklch(0.53 0.16 25),oklch(0.76 0.15 25));
 --vibeui-date-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

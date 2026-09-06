@@ -17,11 +17,11 @@ export type Buttongroup002Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="buttongroup-002"]){
 --vibeui-buttongroup-002-surface:transparent;
---vibeui-buttongroup-002-fg:light-dark(oklch(0.27 0.016 265),oklch(0.94 0.006 265));
+--vibeui-buttongroup-002-fg:light-dark(oklch(0.27 0 265),oklch(0.94 0 265));
 --vibeui-buttongroup-002-muted:color-mix(in oklab,var(--vibeui-buttongroup-002-fg) 68%,transparent);
---vibeui-buttongroup-002-border:light-dark(oklch(0.88 0.008 265),oklch(0.37 0.012 265));
---vibeui-buttongroup-002-hover:light-dark(oklch(0.965 0.004 265),oklch(0.3 0.012 265));
---vibeui-buttongroup-002-press:light-dark(oklch(0.93 0.006 265),oklch(0.35 0.014 265));
+--vibeui-buttongroup-002-border:light-dark(oklch(0.88 0 265),oklch(0.37 0 265));
+--vibeui-buttongroup-002-hover:light-dark(oklch(0.965 0 265),oklch(0.3 0 265));
+--vibeui-buttongroup-002-press:light-dark(oklch(0.93 0 265),oklch(0.35 0 265));
 --vibeui-buttongroup-002-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
 --vibeui-buttongroup-002-radius:0.625rem;
 --vibeui-buttongroup-002-height:2.25rem;
@@ -37,7 +37,7 @@ border:1px solid var(--vibeui-buttongroup-002-border);
 border-radius:var(--vibeui-buttongroup-002-radius);
 background:var(--vibeui-buttongroup-002-surface);
 font-family:var(--vibeui-buttongroup-002-font);
-box-shadow:0 1px 2px oklch(0.2 0.02 265 / 6%);
+box-shadow:0 1px 2px oklch(0.2 0 265 / 6%);
 }
 [data-vibeui-block="buttongroup-002"] *{box-sizing:border-box}
 [data-vibeui-block="buttongroup-002"][data-size="compact"]{--vibeui-buttongroup-002-height:1.875rem}

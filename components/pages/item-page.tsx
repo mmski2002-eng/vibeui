@@ -95,7 +95,17 @@ export async function ItemPage({
               {category ? (
                 <>
                   <li aria-hidden="true">/</li>
-                  <li>{getCategoryLabel(category, locale)}</li>
+                  <li>
+                    <Link
+                      href={localePath(
+                        locale,
+                        `${catalogBasePath(kind)}/${category}`,
+                      )}
+                      className="hover:text-shell-fg"
+                    >
+                      {getCategoryLabel(category, locale)}
+                    </Link>
+                  </li>
                 </>
               ) : null}
               <li aria-hidden="true">/</li>

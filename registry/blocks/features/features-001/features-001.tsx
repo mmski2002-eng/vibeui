@@ -38,10 +38,10 @@ export type Features001Props = {
 // выше утилит.
 const STYLES = `
 :where([data-vibeui-block="features-001"]){
---vibeui-features-001-bg:oklch(0.19 0.006 260);
---vibeui-features-001-panel:oklch(0.23 0.008 260);
---vibeui-features-001-fg:oklch(0.97 0.002 260);
---vibeui-features-001-muted:oklch(0.72 0.008 260);
+--vibeui-features-001-bg:oklch(0.19 0 260);
+--vibeui-features-001-panel:oklch(0.23 0 260);
+--vibeui-features-001-fg:oklch(0.97 0 260);
+--vibeui-features-001-muted:oklch(0.72 0 260);
 --vibeui-features-001-border:oklch(1 0 0 / 12%);
 --vibeui-features-001-accent:oklch(0.78 0.14 175);
 --vibeui-features-001-accent-fg:oklch(0.2 0.03 175);

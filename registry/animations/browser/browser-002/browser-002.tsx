@@ -14,9 +14,9 @@ export type Browser002Props = Omit<ComponentProps<"section">, "children"> & {
 // масштабом — рамка выглядит живой, не отвлекая от содержимого.
 const STYLES = `
 :where([data-vibeui-block="browser-002"]){
---vibeui-browser-002-chrome:light-dark(oklch(0.97 0.003 265),oklch(0.24 0.008 265));
---vibeui-browser-002-page:light-dark(oklch(0.99 0.002 265),oklch(0.19 0.006 265));
---vibeui-browser-002-card:light-dark(oklch(1 0 0),oklch(0.24 0.008 265));
+--vibeui-browser-002-chrome:light-dark(oklch(0.97 0 265),oklch(0.24 0 265));
+--vibeui-browser-002-page:light-dark(oklch(0.99 0 265),oklch(0.19 0 265));
+--vibeui-browser-002-card:light-dark(oklch(1 0 0),oklch(0.24 0 265));
 --vibeui-browser-002-fg:light-dark(oklch(0.205 0 0),oklch(0.95 0 0));
 --vibeui-browser-002-muted:color-mix(in oklab,var(--vibeui-browser-002-fg) 58%,transparent);
 --vibeui-browser-002-border:light-dark(oklch(0.9 0 0),oklch(0.32 0 0));

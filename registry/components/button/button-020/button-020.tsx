@@ -15,11 +15,16 @@ export type Button020Props = Omit<ComponentProps<"div">, "children"> & {
 // на этом шаге решение принимают по сумме, а не по слову «оплатить».
 const STYLES = `
 :where([data-vibeui-block="button-020"]){
---vibeui-button-020-accent:light-dark(oklch(0.55 0.17 265),oklch(0.63 0.18 265));
---vibeui-button-020-fg:oklch(0.99 0.01 265);
---vibeui-button-020-muted:color-mix(in oklab,var(--vibeui-button-020-fg) 68%,transparent);
+--vibeui-button-020-accent:light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));
+--vibeui-button-020-hover-filter:light-dark(brightness(1.45),brightness(0.9));
+/* fg — подпись на самой кнопке, она всегда светлая. Пояснение под кнопкой
+   лежит на странице, поэтому берёт цвет страницы: на светлой подложке
+   белая подсказка была невидима. */
+--vibeui-button-020-fg:light-dark(oklch(0.99 0 265),oklch(0.17 0.01 265));
+--vibeui-button-020-ink:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
+--vibeui-button-020-muted:color-mix(in oklab,var(--vibeui-button-020-ink) 66%,transparent);
 --vibeui-button-020-bg:transparent;
---vibeui-button-020-border:light-dark(oklch(0.92 0.005 265),oklch(0.34 0.012 265));
+--vibeui-button-020-border:light-dark(oklch(0.92 0 265),oklch(0.34 0 265));
 --vibeui-button-020-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -41,7 +46,7 @@ border-radius:0.75rem;
 background:var(--vibeui-button-020-accent);color:var(--vibeui-button-020-fg);
 font:inherit;font-size:0.9375rem;font-weight:650;line-height:1;
 }
-[data-vibeui-block="button-020"] button:hover{filter:brightness(0.96)}
+[data-vibeui-block="button-020"] button:hover{filter:var(--vibeui-button-020-hover-filter)}
 [data-vibeui-block="button-020"] button:focus-visible{outline:2px solid var(--vibeui-button-020-accent);outline-offset:2px}
 /* Цена в самой кнопке: решение принимают по сумме, а не по глаголу. */
 [data-vibeui-block="button-020"] [data-part="price"]{font-variant-numeric:tabular-nums}

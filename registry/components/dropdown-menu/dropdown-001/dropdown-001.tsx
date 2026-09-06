@@ -1,3 +1,6 @@
+"use client"
+
+import { useRef } from "react"
 import type { CSSProperties } from "react"
 
 export type Dropdown001Item = {
@@ -33,11 +36,11 @@ export type Dropdown001Props = {
 // контексте панель светлее фона страницы, а её граница светлее панели.
 const STYLES = `
 :where([data-vibeui-block="dropdown-001"]){
---vibeui-dropdown-001-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
+--vibeui-dropdown-001-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-dropdown-001-muted:color-mix(in oklab,var(--vibeui-dropdown-001-fg) 68%,transparent);
---vibeui-dropdown-001-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
---vibeui-dropdown-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
---vibeui-dropdown-001-hover:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.86 0.02 265 / 12%));
+--vibeui-dropdown-001-bg:light-dark(oklch(1 0 0),oklch(0.25 0 265));
+--vibeui-dropdown-001-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
+--vibeui-dropdown-001-hover:light-dark(oklch(0.55 0 265 / 8%),oklch(0.86 0 265 / 12%));
 --vibeui-dropdown-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
 --vibeui-dropdown-001-danger:light-dark(oklch(0.56 0.19 25),oklch(0.72 0.16 25));
 --vibeui-dropdown-001-radius:0.625rem;
@@ -68,12 +71,12 @@ transform:rotate(45deg) translate(-0.0625rem,-0.0625rem);
 [data-vibeui-dropdown-001-menu]{
 position:fixed;margin:0;padding:0.3125rem;
 min-width:12rem;box-sizing:border-box;
-border:1px solid var(--vibeui-dropdown-001-border,light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265)));
+border:1px solid var(--vibeui-dropdown-001-border,light-dark(oklch(0.9 0 265),oklch(0.37 0 265)));
 border-radius:var(--vibeui-dropdown-001-radius,0.625rem);
-background:var(--vibeui-dropdown-001-bg,light-dark(oklch(1 0 0),oklch(0.25 0.012 265)));
-color:var(--vibeui-dropdown-001-fg,light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265)));
+background:var(--vibeui-dropdown-001-bg,light-dark(oklch(1 0 0),oklch(0.25 0 265)));
+color:var(--vibeui-dropdown-001-fg,light-dark(oklch(0.24 0 265),oklch(0.94 0 265)));
 font-family:var(--vibeui-dropdown-001-font,ui-sans-serif,system-ui,sans-serif);
-box-shadow:0 16px 36px -18px oklch(0.2 0.03 265 / 45%);
+box-shadow:0 16px 36px -18px oklch(0.2 0 265 / 45%);
 opacity:0;transform:translateY(-0.25rem);
 transition:opacity .14s ease,transform .14s ease,display .14s allow-discrete,overlay .14s allow-discrete;
 }
@@ -94,12 +97,12 @@ padding:0.4375rem 0.5rem;border-radius:0.4375rem;
 color:inherit;text-decoration:none;font-size:0.8125rem;line-height:1.3;
 transition:background-color .14s ease;
 }
-[data-vibeui-dropdown-001-menu] [data-part="item"]:hover{background:var(--vibeui-dropdown-001-hover,light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.86 0.02 265 / 12%)))}
+[data-vibeui-dropdown-001-menu] [data-part="item"]:hover{background:var(--vibeui-dropdown-001-hover,light-dark(oklch(0.55 0 265 / 8%),oklch(0.86 0 265 / 12%)))}
 [data-vibeui-dropdown-001-menu] [data-part="item"]:focus-visible{outline:2px solid var(--vibeui-dropdown-001-accent,light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262)));outline-offset:-2px}
 [data-vibeui-dropdown-001-menu] [data-part="item"][data-danger="true"]{color:var(--vibeui-dropdown-001-danger,light-dark(oklch(0.56 0.19 25),oklch(0.72 0.16 25)))}
 [data-vibeui-dropdown-001-menu] [data-part="item"][data-separated="true"]{
 margin-top:0.3125rem;padding-top:0.5625rem;
-border-top:1px solid var(--vibeui-dropdown-001-border,light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265)));
+border-top:1px solid var(--vibeui-dropdown-001-border,light-dark(oklch(0.9 0 265),oklch(0.37 0 265)));
 border-radius:0 0 0.4375rem 0.4375rem;
 }
 /* Развёрнутый режим: меню стоит в потоке под кнопкой, а не в верхнем слое. */
@@ -156,6 +159,17 @@ export function Dropdown001({
   className,
   style,
 }: Dropdown001Props) {
+  // Ссылка внутри popover его не закрывает: браузер гасит меню только по
+  // клику мимо. В приложении меню убрал бы переход, но пункт может вести и
+  // на текущую страницу — закрываем сами.
+  const menu = useRef<HTMLDivElement>(null)
+
+  const close = () => {
+    if (menu.current?.matches(":popover-open")) {
+      menu.current.hidePopover()
+    }
+  }
+
   const palette = {
     ...(accent ? { "--vibeui-dropdown-001-accent": accent } : null),
     ...(background
@@ -184,6 +198,7 @@ export function Dropdown001({
         </button>
         <div
           id={id}
+          ref={menu}
           popover={open ? undefined : "auto"}
           data-vibeui-dropdown-001-menu=""
           data-open={open || undefined}
@@ -196,6 +211,7 @@ export function Dropdown001({
               data-danger={item.danger || undefined}
               data-separated={item.separated || undefined}
               href={item.href}
+              onClick={close}
             >
               {item.label}
             </a>

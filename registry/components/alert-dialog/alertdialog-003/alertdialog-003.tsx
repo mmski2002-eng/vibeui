@@ -28,15 +28,15 @@ export type Alertdialog003Props = Omit<
 // инерции. Закрытие по Escape равнозначно «остаться» — это самый безопасный исход.
 const STYLES = `
 :where([data-vibeui-block="alertdialog-003"]){
---vibeui-alertdialog-003-bg:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
---vibeui-alertdialog-003-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-alertdialog-003-bg:light-dark(oklch(1 0 0),oklch(0.22 0 265));
+--vibeui-alertdialog-003-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-alertdialog-003-muted:color-mix(in oklab,var(--vibeui-alertdialog-003-fg) 68%,transparent);
---vibeui-alertdialog-003-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-alertdialog-003-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
 --vibeui-alertdialog-003-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
---vibeui-alertdialog-003-on-accent:light-dark(oklch(1 0 0),oklch(0.17 0.03 262));
+--vibeui-alertdialog-003-on-accent:light-dark(oklch(1 0 0),oklch(0.17 0 262));
 --vibeui-alertdialog-003-warn:light-dark(oklch(0.66 0.15 70),oklch(0.82 0.14 78));
 --vibeui-alertdialog-003-warn-bg:light-dark(oklch(0.72 0.15 75 / 18%),oklch(0.82 0.14 78 / 20%));
---vibeui-alertdialog-003-shadow:light-dark(oklch(0.2 0.03 265 / 55%),oklch(0.02 0.01 265 / 70%));
+--vibeui-alertdialog-003-shadow:light-dark(oklch(0.2 0 265 / 55%),oklch(0.02 0 265 / 70%));
 --vibeui-alertdialog-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -61,7 +61,7 @@ background:var(--vibeui-alertdialog-003-bg);color:var(--vibeui-alertdialog-003-f
 box-shadow:0 24px 60px -24px var(--vibeui-alertdialog-003-shadow);
 font-family:var(--vibeui-alertdialog-003-font);
 }
-[data-vibeui-block="alertdialog-003"] dialog::backdrop{background:light-dark(oklch(0.2 0.02 265 / 45%),oklch(0.08 0.014 265 / 62%))}
+[data-vibeui-block="alertdialog-003"] dialog::backdrop{background:light-dark(oklch(0.2 0 265 / 45%),oklch(0.08 0 265 / 62%))}
 [data-vibeui-block="alertdialog-003"] [data-part="head"]{display:flex;gap:0.625rem;margin-bottom:0.75rem}
 [data-vibeui-block="alertdialog-003"] [data-part="mark"]{
 flex:none;display:inline-flex;align-items:center;justify-content:center;

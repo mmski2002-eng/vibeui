@@ -24,9 +24,10 @@ export type Button049Props = Omit<
 // человек со скринридером не узнает, что добавление прошло.
 const STYLES = `
 :where([data-vibeui-block="button-049"]){
---vibeui-button-049-accent:light-dark(oklch(0.53 0.16 275),oklch(0.63 0.17 275));
+--vibeui-button-049-accent:light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));
+--vibeui-button-049-hover-filter:light-dark(brightness(1.45),brightness(0.9));
 --vibeui-button-049-done:light-dark(oklch(0.5 0.13 155),oklch(0.6 0.13 155));
---vibeui-button-049-fg:light-dark(oklch(0.99 0.01 275),oklch(0.98 0.012 275));
+--vibeui-button-049-fg:light-dark(oklch(0.99 0 265),oklch(0.17 0.01 265));
 --vibeui-button-049-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

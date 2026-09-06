@@ -189,4 +189,31 @@ export const PREVIEWS = {
   "button-061": dynamic(() =>
     import("@/registry/components/button/button-061/button-061").then((module) => module.Button061),
   ),
+  "button-062": dynamic(() =>
+    import("@/registry/components/button/button-062/button-062").then((module) => module.Button062),
+  ),
+  "button-063": dynamic(() =>
+    import("@/registry/components/button/button-063/button-063").then((module) => module.Button063),
+  ),
+  "button-064": dynamic(() =>
+    import("@/registry/components/button/button-064/button-064").then((module) => module.Button064),
+  ),
+  "button-065": dynamic(() =>
+    import("@/registry/components/button/button-065/button-065").then((module) => module.Button065),
+  ),
+  "button-066": dynamic(() =>
+    import("@/registry/components/button/button-066/button-066").then((module) => module.Button066),
+  ),
+  "button-067": dynamic(() =>
+    import("@/registry/components/button/button-067/button-067").then((module) => module.Button067),
+  ),
+  "button-068": dynamic(() =>
+    import("@/registry/components/button/button-068/button-068").then((module) => module.Button068),
+  ),
+  "button-069": dynamic(() =>
+    import("@/registry/components/button/button-069/button-069").then((module) => module.Button069),
+  ),
+  "button-070": dynamic(() =>
+    import("@/registry/components/button/button-070/button-070").then((module) => module.Button070),
+  ),
 } satisfies PreviewMap

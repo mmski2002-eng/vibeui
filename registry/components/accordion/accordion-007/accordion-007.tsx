@@ -30,10 +30,10 @@ export type Accordion007Props = Omit<ComponentProps<"div">, "children"> & {
 // разделов у всех разный, а зависимость осталась бы навсегда.
 const STYLES = `
 :where([data-vibeui-block="accordion-007"]){
---vibeui-accordion-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-accordion-007-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-accordion-007-muted:color-mix(in oklab,var(--vibeui-accordion-007-fg) 68%,transparent);
 --vibeui-accordion-007-bg:transparent;
---vibeui-accordion-007-border:light-dark(oklch(0.91 0.006 265),oklch(0.31 0.01 265));
+--vibeui-accordion-007-border:light-dark(oklch(0.91 0 265),oklch(0.31 0 265));
 --vibeui-accordion-007-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.16 262));
 --vibeui-accordion-007-radius:0.875rem;
 --vibeui-accordion-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

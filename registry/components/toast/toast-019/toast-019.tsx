@@ -36,16 +36,16 @@ export type Toast019Props = Omit<ComponentProps<"div">, "children"> & {
 // темнее подложки — иначе пустая часть полосы читалась бы как заполненная.
 const STYLES = `
 :where([data-vibeui-block="toast-019"]){
---vibeui-toast-019-bg:light-dark(oklch(0.99 0.002 265),oklch(0.25 0.014 265));
---vibeui-toast-019-fg:light-dark(oklch(0.22 0.014 265),oklch(0.96 0.003 265));
+--vibeui-toast-019-bg:light-dark(oklch(0.99 0 265),oklch(0.25 0 265));
+--vibeui-toast-019-fg:light-dark(oklch(0.22 0 265),oklch(0.96 0 265));
 --vibeui-toast-019-muted:color-mix(in oklab,var(--vibeui-toast-019-fg) 68%,transparent);
---vibeui-toast-019-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.014 265));
---vibeui-toast-019-track:light-dark(oklch(0.92 0.006 265),oklch(0.33 0.012 265));
---vibeui-toast-019-hover:light-dark(oklch(0.2 0.02 265 / 7%),oklch(1 0 0 / 12%));
---vibeui-toast-019-shadow:light-dark(oklch(0.18 0.02 265 / 55%),oklch(0.05 0.01 265 / 70%));
+--vibeui-toast-019-border:light-dark(oklch(0.9 0 265),oklch(0.38 0 265));
+--vibeui-toast-019-track:light-dark(oklch(0.92 0 265),oklch(0.33 0 265));
+--vibeui-toast-019-hover:light-dark(oklch(0.2 0 265 / 7%),oklch(1 0 0 / 12%));
+--vibeui-toast-019-shadow:light-dark(oklch(0.18 0 265 / 55%),oklch(0.05 0 265 / 70%));
 --vibeui-toast-019-tone:light-dark(oklch(0.55 0.16 260),oklch(0.72 0.15 260));
 --vibeui-toast-019-success:light-dark(oklch(0.55 0.15 152),oklch(0.73 0.15 152));
---vibeui-toast-019-on-success:light-dark(oklch(0.99 0.004 265),oklch(0.18 0.03 152));
+--vibeui-toast-019-on-success:light-dark(oklch(0.99 0 265),oklch(0.18 0.03 152));
 --vibeui-toast-019-percent:0;
 --vibeui-toast-019-radius:0.875rem;
 --vibeui-toast-019-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

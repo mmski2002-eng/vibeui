@@ -61,13 +61,13 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 const STYLES = `
 :where([data-vibeui-block="pricing-004"]){
 --vibeui-pricing-004-bg:transparent;
---vibeui-pricing-004-card:light-dark(oklch(1 0 0),oklch(0.195 0.012 265));
---vibeui-pricing-004-fg:light-dark(oklch(0.2 0.01 265),oklch(0.95 0.004 265));
---vibeui-pricing-004-muted:light-dark(oklch(0.53 0.01 265),oklch(0.72 0.01 265));
---vibeui-pricing-004-line:light-dark(oklch(0.91 0.005 265),oklch(0.34 0.012 265));
---vibeui-pricing-004-soft:light-dark(oklch(0.97 0.004 265),oklch(0.26 0.013 265));
+--vibeui-pricing-004-card:light-dark(oklch(1 0 0),oklch(0.195 0 265));
+--vibeui-pricing-004-fg:light-dark(oklch(0.2 0 265),oklch(0.95 0 265));
+--vibeui-pricing-004-muted:light-dark(oklch(0.53 0 265),oklch(0.72 0 265));
+--vibeui-pricing-004-line:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
+--vibeui-pricing-004-soft:light-dark(oklch(0.97 0 265),oklch(0.26 0 265));
 --vibeui-pricing-004-accent:light-dark(oklch(0.5 0.17 265),oklch(0.75 0.15 265));
---vibeui-pricing-004-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0.03 265));
+--vibeui-pricing-004-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0 265));
 --vibeui-pricing-004-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

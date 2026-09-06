@@ -48,12 +48,12 @@ export type Navbar014Props = {
 // каталога видно именно раскрытое состояние, а не одну строку шапки.
 const STYLES = `
 :where([data-vibeui-block="navbar-014"]){
---vibeui-navbar-014-bg:light-dark(oklch(0.995 0.001 265),oklch(0.19 0.012 265));
---vibeui-navbar-014-ink:light-dark(oklch(0.22 0.015 265),oklch(0.95 0.006 265));
---vibeui-navbar-014-muted:light-dark(oklch(0.52 0.014 265),oklch(0.72 0.012 265));
---vibeui-navbar-014-border:light-dark(oklch(0.91 0.005 265),oklch(0.32 0.011 265));
---vibeui-navbar-014-panel:light-dark(oklch(0.985 0.002 265),oklch(0.23 0.014 265));
---vibeui-navbar-014-tile:light-dark(oklch(0.96 0.005 265),oklch(0.28 0.014 265));
+--vibeui-navbar-014-bg:light-dark(oklch(0.995 0 265),oklch(0.19 0 265));
+--vibeui-navbar-014-ink:light-dark(oklch(0.22 0 265),oklch(0.95 0 265));
+--vibeui-navbar-014-muted:light-dark(oklch(0.52 0 265),oklch(0.72 0 265));
+--vibeui-navbar-014-border:light-dark(oklch(0.91 0 265),oklch(0.32 0 265));
+--vibeui-navbar-014-panel:light-dark(oklch(0.985 0 265),oklch(0.23 0 265));
+--vibeui-navbar-014-tile:light-dark(oklch(0.96 0 265),oklch(0.28 0 265));
 --vibeui-navbar-014-accent:light-dark(oklch(0.55 0.19 262),oklch(0.76 0.14 262));
 --vibeui-navbar-014-accent-fg:oklch(from var(--vibeui-navbar-014-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-navbar-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -130,7 +130,7 @@ transition:background-color .16s ease;
 display:none;position:absolute;top:100%;left:0;right:0;z-index:30;
 border-bottom:1px solid var(--vibeui-navbar-014-border);
 background:var(--vibeui-navbar-014-panel);
-box-shadow:0 32px 64px -40px light-dark(oklch(0.2 0.03 265 / 55%),oklch(0 0 0 / 70%));
+box-shadow:0 32px 64px -40px light-dark(oklch(0.2 0 265 / 55%),oklch(0 0 0 / 70%));
 opacity:0;visibility:hidden;transform:translateY(-0.5rem);
 transition:opacity .2s ease,transform .2s ease,visibility .2s;
 }

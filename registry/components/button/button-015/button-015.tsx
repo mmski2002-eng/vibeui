@@ -22,10 +22,10 @@ export type Button015Props = Omit<
 // пару секунд и само возвращается — иначе непонятно, копировалось ли снова.
 const STYLES = `
 :where([data-vibeui-block="button-015"]){
---vibeui-button-015-fg:light-dark(oklch(0.3 0.014 265),oklch(0.94 0.006 265));
+--vibeui-button-015-fg:light-dark(oklch(0.3 0 265),oklch(0.94 0 265));
 --vibeui-button-015-bg:transparent;
---vibeui-button-015-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
---vibeui-button-015-hover:light-dark(oklch(0.96 0.004 265),oklch(0.32 0.012 265));
+--vibeui-button-015-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
+--vibeui-button-015-hover:light-dark(oklch(0.96 0 265),oklch(0.32 0 265));
 --vibeui-button-015-done:light-dark(oklch(0.55 0.15 152),oklch(0.76 0.14 152));
 --vibeui-button-015-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
 --vibeui-button-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

@@ -26,10 +26,10 @@ export type Features009Props = {
 // Ячейки разделены линиями сетки, а не рамками карточек.
 const STYLES = `
 :where([data-vibeui-block="features-009"]){
---vibeui-features-009-bg:oklch(0.17 0.012 250);
---vibeui-features-009-fg:oklch(0.98 0.003 250);
---vibeui-features-009-muted:oklch(0.7 0.012 250);
---vibeui-features-009-dim:oklch(0.55 0.012 250);
+--vibeui-features-009-bg:oklch(0.17 0 250);
+--vibeui-features-009-fg:oklch(0.98 0 250);
+--vibeui-features-009-muted:oklch(0.7 0 250);
+--vibeui-features-009-dim:oklch(0.55 0 250);
 --vibeui-features-009-line:oklch(1 0 0 / 12%);
 --vibeui-features-009-accent:oklch(0.8 0.16 90);
 --vibeui-features-009-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

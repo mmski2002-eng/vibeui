@@ -25,12 +25,12 @@ export type Card003Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="card-003"]){
 --vibeui-card-003-bg:transparent;
---vibeui-card-003-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-card-003-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-card-003-muted:color-mix(in oklab,var(--vibeui-card-003-fg) 68%,transparent);
---vibeui-card-003-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-card-003-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
 --vibeui-card-003-hue:250;
 --vibeui-card-003-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
---vibeui-card-003-on-accent:light-dark(oklch(0.99 0.01 265),oklch(0.18 0.02 265));
+--vibeui-card-003-on-accent:light-dark(oklch(0.99 0 265),oklch(0.18 0 265));
 --vibeui-card-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

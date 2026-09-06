@@ -30,14 +30,14 @@ export type Toast013Props = Omit<ComponentProps<"div">, "children"> & {
 // растворилась бы в тёмной странице.
 const STYLES = `
 :where([data-vibeui-block="toast-013"]){
---vibeui-toast-013-bg:light-dark(oklch(0.99 0.002 265),oklch(0.25 0.014 265));
---vibeui-toast-013-fg:light-dark(oklch(0.24 0.014 265),oklch(0.97 0.002 265));
+--vibeui-toast-013-bg:light-dark(oklch(0.99 0 265),oklch(0.25 0 265));
+--vibeui-toast-013-fg:light-dark(oklch(0.24 0 265),oklch(0.97 0 265));
 --vibeui-toast-013-muted:color-mix(in oklab,var(--vibeui-toast-013-fg) 68%,transparent);
---vibeui-toast-013-line:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.014 265));
---vibeui-toast-013-track:light-dark(oklch(0.2 0.02 265 / 14%),oklch(1 0 0 / 20%));
---vibeui-toast-013-key:light-dark(oklch(0.2 0.02 265 / 7%),oklch(1 0 0 / 12%));
---vibeui-toast-013-key-hover:light-dark(oklch(0.2 0.02 265 / 12%),oklch(1 0 0 / 18%));
---vibeui-toast-013-shadow:light-dark(oklch(0.55 0.02 265 / 20%),oklch(0.12 0.02 265 / 62%));
+--vibeui-toast-013-line:light-dark(oklch(0.9 0 265),oklch(0.38 0 265));
+--vibeui-toast-013-track:light-dark(oklch(0.2 0 265 / 14%),oklch(1 0 0 / 20%));
+--vibeui-toast-013-key:light-dark(oklch(0.2 0 265 / 7%),oklch(1 0 0 / 12%));
+--vibeui-toast-013-key-hover:light-dark(oklch(0.2 0 265 / 12%),oklch(1 0 0 / 18%));
+--vibeui-toast-013-shadow:light-dark(oklch(0.55 0 265 / 20%),oklch(0.12 0 265 / 62%));
 --vibeui-toast-013-tone:light-dark(oklch(0.5 0.12 195),oklch(0.78 0.14 195));
 --vibeui-toast-013-percent:100;
 --vibeui-toast-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

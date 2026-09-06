@@ -15,15 +15,21 @@ export type Toast010Props = Omit<ComponentProps<"div">, "children"> & {
 // ни крестика — пилюля появляется, читается за долю секунды и уходит сама.
 // Форма и вес отличают её от карточек: это реплика, а не сообщение.
 //
-// Тема берётся из color-scheme окружения через light-dark(), но палитра
-// перевёрнута: пилюля всегда контрастна странице — тёмная в светлой теме,
-// светлая в тёмной. Иначе в тёмном интерфейсе она пропала бы на фоне.
+// Пилюля тёмная в обеих темах — так её показывают снекбары везде, от
+// Material до мобильных ОС; в тёмной теме она лишь чуть светлее страницы.
+// Текст и цвет значка не берутся из темы, а выводятся из самой подложки
+// относительным цветом: подставленный проектом светлый фон сам получает
+// тёмный текст, и подбирать пару вручную не нужно.
 const STYLES = `
 :where([data-vibeui-block="toast-010"]){
---vibeui-toast-010-bg:light-dark(oklch(0.21 0.014 265),oklch(0.93 0.005 265));
---vibeui-toast-010-fg:light-dark(oklch(0.97 0.002 265),oklch(0.2 0.014 265));
---vibeui-toast-010-shadow:light-dark(oklch(0.15 0.02 265 / 70%),oklch(0.05 0.02 265 / 60%));
---vibeui-toast-010-tone:light-dark(oklch(0.78 0.13 152),oklch(0.5 0.14 152));
+--vibeui-toast-010-bg:light-dark(oklch(0.21 0 265),oklch(0.27 0 265));
+/* clamp(0,(0.62 - l) * 100,1) — переключатель «подложка тёмная»: единица на
+   тёмной, ноль на светлой. Им же поднимается светлота значка. */
+--vibeui-toast-010-fg:oklch(from var(--vibeui-toast-010-bg) clamp(0,(0.62 - l) * 100,1) 0 0);
+--vibeui-toast-010-shadow:light-dark(oklch(0.15 0 265 / 70%),oklch(0.05 0 265 / 60%));
+--vibeui-toast-010-tone-chroma:0.14;
+--vibeui-toast-010-tone-hue:152;
+--vibeui-toast-010-tone:oklch(from var(--vibeui-toast-010-bg) calc(0.5 + 0.28 * clamp(0,(0.62 - l) * 100,1)) var(--vibeui-toast-010-tone-chroma) var(--vibeui-toast-010-tone-hue));
 --vibeui-toast-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -39,8 +45,8 @@ font-family:var(--vibeui-toast-010-font);font-size:0.8125rem;line-height:1.4;
 box-shadow:0 16px 34px -20px var(--vibeui-toast-010-shadow);
 animation:vibeui-toast-010-rise .26s cubic-bezier(.2,.8,.3,1) both;
 }
-[data-vibeui-block="toast-010"][data-tone="warning"]{--vibeui-toast-010-tone:light-dark(oklch(0.82 0.15 85),oklch(0.58 0.13 85))}
-[data-vibeui-block="toast-010"][data-tone="neutral"]{--vibeui-toast-010-tone:light-dark(oklch(0.82 0.02 265),oklch(0.45 0.02 265))}
+[data-vibeui-block="toast-010"][data-tone="warning"]{--vibeui-toast-010-tone-chroma:0.15;--vibeui-toast-010-tone-hue:85}
+[data-vibeui-block="toast-010"][data-tone="neutral"]{--vibeui-toast-010-tone-chroma:0;--vibeui-toast-010-tone-hue:265}
 [data-vibeui-block="toast-010"] [data-part="glyph"]{
 flex:none;display:flex;align-items:center;justify-content:center;
 width:1.25rem;height:1.25rem;border-radius:9999px;
@@ -60,29 +66,6 @@ to{opacity:1;transform:translateY(0) scale(1)}
 `
 
 /**
- * Ветка темы для заданного фона. Палитра пилюли перевёрнута, поэтому светлая
- * подложка требует тёмной ветки: light-dark() смотрит на color-scheme, а не
- * на цвет фона.
- */
-function schemeForBackground(background: string): "light" | "dark" | undefined {
-  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
-
-  if (!match) {
-    return undefined
-  }
-
-  const hex =
-    match[1].length === 3
-      ? match[1].replace(/./g, (character) => character + character)
-      : match[1]
-  const [red, green, blue] = [0, 2, 4].map(
-    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
-  )
-
-  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "dark" : "light"
-}
-
-/**
  * Компактная пилюля-подтверждение: одна строка, без кнопок и заголовка.
  * Один файл, ноль зависимостей, собственная палитра.
  */
@@ -96,12 +79,7 @@ export function Toast010({
   ...props
 }: Toast010Props) {
   const palette = {
-    ...(background
-      ? {
-          "--vibeui-toast-010-bg": background,
-          colorScheme: schemeForBackground(background),
-        }
-      : null),
+    ...(background ? { "--vibeui-toast-010-bg": background } : null),
     ...style,
   } as CSSProperties
 

@@ -38,11 +38,11 @@ export type Checkbox018Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="checkbox-018"]){
 --vibeui-checkbox-018-bg:transparent;
---vibeui-checkbox-018-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-checkbox-018-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-checkbox-018-muted:color-mix(in oklab,var(--vibeui-checkbox-018-fg) 68%,transparent);
---vibeui-checkbox-018-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
---vibeui-checkbox-018-idle:light-dark(oklch(0.87 0.008 265),oklch(0.45 0.012 265));
---vibeui-checkbox-018-surface:light-dark(oklch(0.975 0.003 265),oklch(0.27 0.009 265));
+--vibeui-checkbox-018-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
+--vibeui-checkbox-018-idle:light-dark(oklch(0.87 0 265),oklch(0.45 0 265));
+--vibeui-checkbox-018-surface:light-dark(oklch(0.975 0 265),oklch(0.27 0 265));
 --vibeui-checkbox-018-accent:light-dark(oklch(0.64 0.16 65),oklch(0.76 0.15 65));
 --vibeui-checkbox-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

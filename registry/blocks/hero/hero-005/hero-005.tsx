@@ -23,11 +23,11 @@ export type Hero005Props = {
 const STYLES = `
 :where([data-vibeui-block="hero-005"]){
 --vibeui-hero-005-bg:transparent;
---vibeui-hero-005-fg:light-dark(oklch(0.2 0.018 265),oklch(0.97 0.003 265));
---vibeui-hero-005-muted:light-dark(oklch(0.52 0.014 265),oklch(0.72 0.012 265));
---vibeui-hero-005-panel:light-dark(oklch(0.99 0.002 265),oklch(0.21 0.018 265));
---vibeui-hero-005-tile:light-dark(oklch(0.955 0.004 265),oklch(0.25 0.018 265));
---vibeui-hero-005-line:light-dark(oklch(0.2 0.018 265 / 13%),oklch(1 0 0 / 15%));
+--vibeui-hero-005-fg:light-dark(oklch(0.2 0 265),oklch(0.97 0 265));
+--vibeui-hero-005-muted:light-dark(oklch(0.52 0 265),oklch(0.72 0 265));
+--vibeui-hero-005-panel:light-dark(oklch(0.99 0 265),oklch(0.21 0 265));
+--vibeui-hero-005-tile:light-dark(oklch(0.955 0 265),oklch(0.25 0 265));
+--vibeui-hero-005-line:light-dark(oklch(0.2 0 265 / 13%),oklch(1 0 0 / 15%));
 --vibeui-hero-005-accent:light-dark(oklch(0.52 0.13 195),oklch(0.72 0.16 195));
 --vibeui-hero-005-accent-fg:light-dark(oklch(0.99 0.005 195),oklch(0.18 0.03 195));
 --vibeui-hero-005-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

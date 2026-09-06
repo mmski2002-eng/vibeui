@@ -29,11 +29,11 @@ export type Banner005Props = Omit<ComponentProps<"div">, "children"> & {
 // инверсия светлой, дорожка и граница в ней светлее подложки.
 const STYLES = `
 :where([data-vibeui-block="banner-005"]){
---vibeui-banner-005-bg:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
---vibeui-banner-005-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-banner-005-bg:light-dark(oklch(1 0 0),oklch(0.24 0 265));
+--vibeui-banner-005-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-banner-005-muted:color-mix(in oklab,var(--vibeui-banner-005-fg) 68%,transparent);
---vibeui-banner-005-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
---vibeui-banner-005-track:light-dark(oklch(0.93 0.006 265),oklch(0.33 0.012 265));
+--vibeui-banner-005-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
+--vibeui-banner-005-track:light-dark(oklch(0.93 0 265),oklch(0.33 0 265));
 --vibeui-banner-005-calm:light-dark(oklch(0.6 0.15 250),oklch(0.72 0.14 250));
 --vibeui-banner-005-tone:var(--vibeui-banner-005-calm);
 --vibeui-banner-005-on-tone:oklch(from var(--vibeui-banner-005-tone) clamp(0,(0.62 - l) * 100,1) 0 0);

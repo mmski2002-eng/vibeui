@@ -17,13 +17,13 @@ export type Frame004Props = ComponentProps<"figure"> & {
 // плавающий белый прямоугольник.
 const STYLES = `
 :where([data-vibeui-block="frame-004"]){
---vibeui-frame-004-body:light-dark(oklch(0.93 0.005 265),oklch(0.31 0.008 265));
---vibeui-frame-004-edge:light-dark(oklch(0.78 0.008 265),oklch(0.46 0.01 265));
+--vibeui-frame-004-body:light-dark(oklch(0.93 0 265),oklch(0.31 0 265));
+--vibeui-frame-004-edge:light-dark(oklch(0.78 0 265),oklch(0.46 0 265));
 --vibeui-frame-004-screen:transparent;
---vibeui-frame-004-fg:light-dark(oklch(0.22 0.014 265),oklch(0.93 0.005 265));
+--vibeui-frame-004-fg:light-dark(oklch(0.22 0 265),oklch(0.93 0 265));
 --vibeui-frame-004-muted:color-mix(in oklab,var(--vibeui-frame-004-fg) 68%,transparent);
---vibeui-frame-004-island:light-dark(oklch(0.2 0.014 265),oklch(0.08 0.006 265));
---vibeui-frame-004-card:light-dark(oklch(0.96 0.004 265),oklch(0.36 0.008 265));
+--vibeui-frame-004-island:light-dark(oklch(0.2 0 265),oklch(0.08 0 265));
+--vibeui-frame-004-card:light-dark(oklch(0.96 0 265),oklch(0.36 0 265));
 --vibeui-frame-004-accent:light-dark(oklch(0.55 0.16 262),oklch(0.7 0.15 262));
 --vibeui-frame-004-width:15rem;
 --vibeui-frame-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -111,7 +111,7 @@ linear-gradient(130deg,color-mix(in oklab,var(--vibeui-frame-004-accent) 60%,tra
 }
 [data-vibeui-block="frame-004"] [data-part="promo"] span{
 display:block;height:0.375rem;width:70%;border-radius:9999px;
-background:oklch(0.99 0.003 265);
+background:oklch(0.99 0 265);
 }
 [data-vibeui-block="frame-004"] [data-part="promo"] span:last-child{width:44%;opacity:0.65}
 [data-vibeui-block="frame-004"] [data-part="row"]{

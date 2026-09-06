@@ -27,11 +27,11 @@ export type Combobox007Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="combobox-007"]){
 --vibeui-combobox-007-bg:transparent;
---vibeui-combobox-007-fg:light-dark(oklch(0.22 0.012 250),oklch(0.94 0.005 250));
+--vibeui-combobox-007-fg:light-dark(oklch(0.22 0 250),oklch(0.94 0 250));
 --vibeui-combobox-007-muted:color-mix(in oklab,var(--vibeui-combobox-007-fg) 68%,transparent);
---vibeui-combobox-007-border:light-dark(oklch(0.9 0.006 250),oklch(0.37 0.012 250));
---vibeui-combobox-007-field:light-dark(oklch(0.98 0.004 250),oklch(0.3 0.012 250));
---vibeui-combobox-007-active:light-dark(oklch(0.95 0.02 250),oklch(0.36 0.03 250));
+--vibeui-combobox-007-border:light-dark(oklch(0.9 0 250),oklch(0.37 0 250));
+--vibeui-combobox-007-field:light-dark(oklch(0.98 0 250),oklch(0.3 0 250));
+--vibeui-combobox-007-active:light-dark(oklch(0.95 0 250),oklch(0.36 0 250));
 --vibeui-combobox-007-accent:light-dark(oklch(0.52 0.13 250),oklch(0.76 0.13 250));
 --vibeui-combobox-007-radius:0.625rem;
 --vibeui-combobox-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

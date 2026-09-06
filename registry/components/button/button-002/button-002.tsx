@@ -20,9 +20,9 @@ export type Button002Props = ComponentProps<"button"> & {
 const STYLES = `
 :where([data-vibeui-block="button-002"]){
 /* Светлая ветка притемнена до 0.56: на прежней 0.58 подпись давала 4.2:1. */
---vibeui-button-002-accent:light-dark(oklch(0.56 0.16 258),oklch(0.72 0.145 258));
---vibeui-button-002-accent-fg:light-dark(oklch(0.99 0.004 258),oklch(0.21 0.04 258));
---vibeui-button-002-divider:light-dark(oklch(1 0 0 / 28%),oklch(0.18 0.03 258 / 30%));
+--vibeui-button-002-accent:light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));
+--vibeui-button-002-accent-fg:light-dark(oklch(0.99 0 258),oklch(0.21 0.04 258));
+--vibeui-button-002-divider:light-dark(oklch(1 0 0 / 28%),oklch(0.18 0 258 / 30%));
 --vibeui-button-002-ring:color-mix(in oklab, var(--vibeui-button-002-accent) 70%, transparent);
 --vibeui-button-002-radius:0.625rem;
 --vibeui-button-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

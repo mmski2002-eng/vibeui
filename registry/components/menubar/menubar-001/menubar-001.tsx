@@ -32,13 +32,13 @@ export type Menubar001Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="menubar-001"]){
 --vibeui-menubar-001-bg:transparent;
---vibeui-menubar-001-panel:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
---vibeui-menubar-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-menubar-001-panel:light-dark(oklch(1 0 0),oklch(0.25 0 265));
+--vibeui-menubar-001-fg:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
 --vibeui-menubar-001-muted:color-mix(in oklab,var(--vibeui-menubar-001-fg) 68%,transparent);
---vibeui-menubar-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
---vibeui-menubar-001-hover:light-dark(oklch(0.55 0.02 265 / 9%),oklch(0.88 0.02 265 / 14%));
+--vibeui-menubar-001-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-menubar-001-hover:light-dark(oklch(0.55 0 265 / 9%),oklch(0.88 0 265 / 14%));
 --vibeui-menubar-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
---vibeui-menubar-001-shadow:light-dark(oklch(0.2 0.03 265 / 45%),oklch(0 0 0 / 62%));
+--vibeui-menubar-001-shadow:light-dark(oklch(0.2 0 265 / 45%),oklch(0 0 0 / 62%));
 --vibeui-menubar-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -98,18 +98,18 @@ const DEFAULT_MENUS: Menubar001Menu[] = [
   {
     label: "Файл",
     items: [
-      { label: "Новый проект", keys: "⌘N" },
-      { label: "Открыть…", keys: "⌘O" },
-      { label: "Сохранить", keys: "⌘S" },
+      { label: "Новый проект", keys: "Ctrl+N" },
+      { label: "Открыть…", keys: "Ctrl+O" },
+      { label: "Сохранить", keys: "Ctrl+S" },
       { label: "Восстановить версию", disabled: true },
     ],
   },
   {
     label: "Правка",
     items: [
-      { label: "Отменить", keys: "⌘Z" },
-      { label: "Повторить", keys: "⇧⌘Z" },
-      { label: "Найти в проекте", keys: "⌘F" },
+      { label: "Отменить", keys: "Ctrl+Z" },
+      { label: "Повторить", keys: "Shift+Ctrl+Z" },
+      { label: "Найти в проекте", keys: "Ctrl+F" },
     ],
   },
   {

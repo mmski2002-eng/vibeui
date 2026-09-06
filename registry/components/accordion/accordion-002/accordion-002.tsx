@@ -34,12 +34,12 @@ export type Accordion002Props = Omit<ComponentProps<"div">, "children"> & {
 // поэтому подъём там набирается свечением, а не тенью.
 const STYLES = `
 :where([data-vibeui-block="accordion-002"]){
---vibeui-accordion-002-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.005 265));
+--vibeui-accordion-002-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-accordion-002-muted:color-mix(in oklab,var(--vibeui-accordion-002-fg) 68%,transparent);
 --vibeui-accordion-002-bg:transparent;
---vibeui-accordion-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.32 0.01 265));
+--vibeui-accordion-002-border:light-dark(oklch(0.9 0 265),oklch(0.32 0 265));
 --vibeui-accordion-002-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.16 262));
---vibeui-accordion-002-lift:light-dark(0 10px 26px -18px oklch(0.2 0.03 265 / 45%),0 0 20px -6px oklch(0.72 0.16 262 / 30%));
+--vibeui-accordion-002-lift:light-dark(0 10px 26px -18px oklch(0.2 0 265 / 45%),0 0 20px -6px oklch(0.72 0.16 262 / 30%));
 --vibeui-accordion-002-radius:0.875rem;
 --vibeui-accordion-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

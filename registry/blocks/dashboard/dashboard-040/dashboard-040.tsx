@@ -52,17 +52,17 @@ const STYLES = `
 :where([data-vibeui-block="dashboard-040"]){
 --vibeui-dashboard-040-bg:transparent;
 /* Карточки и жёлоб срока: подложка блока прозрачна, и рисовать их ею нечем. */
---vibeui-dashboard-040-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
---vibeui-dashboard-040-track:light-dark(oklch(0.96 0.004 265),oklch(0.21 0.012 265));
---vibeui-dashboard-040-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-dashboard-040-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
---vibeui-dashboard-040-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.011 265));
+--vibeui-dashboard-040-card:light-dark(oklch(1 0 0),oklch(0.26 0 265));
+--vibeui-dashboard-040-track:light-dark(oklch(0.96 0 265),oklch(0.21 0 265));
+--vibeui-dashboard-040-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
+--vibeui-dashboard-040-muted:light-dark(oklch(0.55 0 265),oklch(0.71 0 265));
+--vibeui-dashboard-040-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
 --vibeui-dashboard-040-accent:light-dark(oklch(0.48 0.15 285),oklch(0.75 0.14 285));
---vibeui-dashboard-040-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.03 285));
---vibeui-dashboard-040-soft:light-dark(oklch(0.96 0.02 285),oklch(0.31 0.05 285));
+--vibeui-dashboard-040-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0 285));
+--vibeui-dashboard-040-soft:light-dark(oklch(0.96 0 285),oklch(0.31 0.05 285));
 --vibeui-dashboard-040-warn:light-dark(oklch(0.62 0.16 55),oklch(0.79 0.14 55));
 --vibeui-dashboard-040-warnline:light-dark(oklch(0.79 0.09 55),oklch(0.5 0.09 55));
---vibeui-dashboard-040-done:light-dark(oklch(0.62 0.012 265),oklch(0.66 0.012 265));
+--vibeui-dashboard-040-done:light-dark(oklch(0.62 0 265),oklch(0.66 0 265));
 --vibeui-dashboard-040-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

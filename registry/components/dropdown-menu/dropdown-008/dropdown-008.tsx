@@ -36,11 +36,11 @@ export type Dropdown008Props = Omit<ComponentProps<"div">, "children"> & {
 // контексте панель светлее фона страницы, а её граница светлее панели.
 const STYLES = `
 :where([data-vibeui-block="dropdown-008"]){
---vibeui-dropdown-008-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
---vibeui-dropdown-008-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-dropdown-008-bg:light-dark(oklch(1 0 0),oklch(0.25 0 265));
+--vibeui-dropdown-008-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-dropdown-008-muted:color-mix(in oklab,var(--vibeui-dropdown-008-fg) 68%,transparent);
---vibeui-dropdown-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
---vibeui-dropdown-008-hover:light-dark(oklch(0.96 0.004 265),oklch(0.32 0.014 265));
+--vibeui-dropdown-008-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
+--vibeui-dropdown-008-hover:light-dark(oklch(0.96 0 265),oklch(0.32 0 265));
 --vibeui-dropdown-008-accent:light-dark(oklch(0.55 0.18 258),oklch(0.72 0.15 258));
 --vibeui-dropdown-008-danger:light-dark(oklch(0.56 0.19 25),oklch(0.72 0.16 25));
 --vibeui-dropdown-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -76,7 +76,7 @@ font-size:0.6875rem;font-weight:700;letter-spacing:0.02em;
 position:fixed;padding:0.3125rem;width:16rem;box-sizing:border-box;
 background:var(--vibeui-dropdown-008-bg);color:var(--vibeui-dropdown-008-fg);
 border:1px solid var(--vibeui-dropdown-008-border);border-radius:0.875rem;
-box-shadow:0 20px 44px -24px oklch(0.2 0.03 265 / 50%);
+box-shadow:0 20px 44px -24px oklch(0.2 0 265 / 50%);
 font-family:var(--vibeui-dropdown-008-font);
 opacity:0;transform:translateY(-0.25rem);
 transition:opacity .14s ease,transform .14s ease,display .14s allow-discrete,overlay .14s allow-discrete;

@@ -48,18 +48,18 @@ const STYLES = `
 :where([data-vibeui-block="dashboard-065"]){
 --vibeui-dashboard-065-bg:transparent;
 /* Карточки, чипы и клавиши: подложка блока прозрачна. */
---vibeui-dashboard-065-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
---vibeui-dashboard-065-inset:light-dark(oklch(0.985 0.003 265),oklch(0.22 0.012 265));
---vibeui-dashboard-065-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
---vibeui-dashboard-065-muted:light-dark(oklch(0.55 0.014 265),oklch(0.72 0.012 265));
---vibeui-dashboard-065-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-dashboard-065-card:light-dark(oklch(1 0 0),oklch(0.26 0 265));
+--vibeui-dashboard-065-inset:light-dark(oklch(0.985 0 265),oklch(0.22 0 265));
+--vibeui-dashboard-065-fg:light-dark(oklch(0.21 0 265),oklch(0.94 0 265));
+--vibeui-dashboard-065-muted:light-dark(oklch(0.55 0 265),oklch(0.72 0 265));
+--vibeui-dashboard-065-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
 --vibeui-dashboard-065-accent:light-dark(oklch(0.52 0.16 265),oklch(0.72 0.14 265));
 --vibeui-dashboard-065-accent-line:light-dark(oklch(0.78 0.08 265),oklch(0.55 0.1 265));
 --vibeui-dashboard-065-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.04 265));
---vibeui-dashboard-065-on-accent-muted:light-dark(oklch(0.92 0.03 265),oklch(0.32 0.06 265));
+--vibeui-dashboard-065-on-accent-muted:light-dark(oklch(0.92 0 265),oklch(0.32 0.06 265));
 --vibeui-dashboard-065-on-accent-chip:light-dark(oklch(0.6 0.14 265),oklch(0.62 0.12 265));
 --vibeui-dashboard-065-on-accent-line:light-dark(oklch(0.72 0.11 265),oklch(0.5 0.1 265));
---vibeui-dashboard-065-soft:light-dark(oklch(0.965 0.02 265),oklch(0.3 0.035 265));
+--vibeui-dashboard-065-soft:light-dark(oklch(0.965 0 265),oklch(0.3 0.035 265));
 --vibeui-dashboard-065-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 --vibeui-dashboard-065-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 container-type:inline-size;

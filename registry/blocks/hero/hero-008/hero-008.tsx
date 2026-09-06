@@ -22,12 +22,12 @@ export type Hero008Props = {
 const STYLES = `
 :where([data-vibeui-block="hero-008"]){
 --vibeui-hero-008-bg:transparent;
---vibeui-hero-008-fg:light-dark(oklch(0.19 0.01 250),oklch(0.96 0.004 250));
---vibeui-hero-008-muted:light-dark(oklch(0.52 0.012 250),oklch(0.72 0.012 250));
---vibeui-hero-008-line:light-dark(oklch(0.9 0.006 250),oklch(0.36 0.01 250));
---vibeui-hero-008-soft:light-dark(oklch(0.97 0.004 250),oklch(0.24 0.011 250));
+--vibeui-hero-008-fg:light-dark(oklch(0.19 0 250),oklch(0.96 0 250));
+--vibeui-hero-008-muted:light-dark(oklch(0.52 0 250),oklch(0.72 0 250));
+--vibeui-hero-008-line:light-dark(oklch(0.9 0 250),oklch(0.36 0 250));
+--vibeui-hero-008-soft:light-dark(oklch(0.97 0 250),oklch(0.24 0 250));
 --vibeui-hero-008-accent:light-dark(oklch(0.5 0.19 265),oklch(0.72 0.17 265));
---vibeui-hero-008-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0.03 265));
+--vibeui-hero-008-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0 265));
 --vibeui-hero-008-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

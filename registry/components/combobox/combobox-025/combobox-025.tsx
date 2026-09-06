@@ -37,12 +37,12 @@ export type Combobox025Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="combobox-025"]){
 --vibeui-combobox-025-bg:transparent;
---vibeui-combobox-025-fg:light-dark(oklch(0.22 0.02 270),oklch(0.94 0.01 270));
+--vibeui-combobox-025-fg:light-dark(oklch(0.22 0 270),oklch(0.94 0 270));
 --vibeui-combobox-025-muted:color-mix(in oklab,var(--vibeui-combobox-025-fg) 68%,transparent);
---vibeui-combobox-025-border:light-dark(oklch(0.9 0.01 270),oklch(0.36 0.016 270));
---vibeui-combobox-025-field:light-dark(oklch(0.985 0.004 270),oklch(0.27 0.014 270));
+--vibeui-combobox-025-border:light-dark(oklch(0.9 0 270),oklch(0.36 0 270));
+--vibeui-combobox-025-field:light-dark(oklch(0.985 0 270),oklch(0.27 0 270));
 --vibeui-combobox-025-active:light-dark(oklch(0.95 0.035 270),oklch(0.34 0.045 270));
---vibeui-combobox-025-panel:light-dark(oklch(0.975 0.01 270),oklch(0.29 0.018 270));
+--vibeui-combobox-025-panel:light-dark(oklch(0.975 0 270),oklch(0.29 0 270));
 --vibeui-combobox-025-accent:light-dark(oklch(0.5 0.15 270),oklch(0.74 0.15 270));
 --vibeui-combobox-025-radius:0.625rem;
 --vibeui-combobox-025-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

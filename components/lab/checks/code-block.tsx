@@ -30,7 +30,7 @@ import { Codeblock027 } from "@/registry/components/code-block/codeblock-027/cod
 import { Codeblock028 } from "@/registry/components/code-block/codeblock-028/codeblock-028"
 import { Codeblock029 } from "@/registry/components/code-block/codeblock-029/codeblock-029"
 import { Codeblock030 } from "@/registry/components/code-block/codeblock-030/codeblock-030"
-import { Code001 } from "@/registry/components/code-block/code-001/code-001"
+import { Codeblock031 } from "@/registry/components/code-block/codeblock-031/codeblock-031"
 
 const JSON_SAMPLE = `{
   "base": "https://api.vibeui.ru/v1",
@@ -324,7 +324,7 @@ export const CHECKS: LabCheck[] = [
     ),
   },
   {
-    name: "code-001",
+    name: "codeblock-031",
     title: "Блок кода",
     notes: [
       "Путь к файлу: config/api.json",
@@ -333,7 +333,7 @@ export const CHECKS: LabCheck[] = [
       "Переносить строки: включено",
     ],
     node: (
-      <Code001
+      <Codeblock031
         title="config/api.json"
         language="json"
         showNumbers={false}

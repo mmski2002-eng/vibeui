@@ -54,6 +54,15 @@ type Dictionary = {
   card: {
     copy: string
     copied: string
+    copyId: string
+    idCopied: string
+    favourite: string
+    favouriteSoon: string
+    report: string
+    reportTitle: string
+    reportPlaceholder: string
+    reportSend: string
+    reportSent: string
     toLight: string
     toDark: string
     reset: string
@@ -179,6 +188,15 @@ const RU: Dictionary = {
   card: {
     copy: "Копировать для ИИ",
     copied: "Ссылка скопирована",
+    copyId: "Скопировать идентификатор",
+    idCopied: "Идентификатор скопирован",
+    favourite: "В избранное",
+    favouriteSoon: "Избранное появится позже",
+    report: "Пожаловаться на компонент",
+    reportTitle: "Что не так с компонентом?",
+    reportPlaceholder: "Опишите проблему: что сломано, где и как повторить",
+    reportSend: "Отправить",
+    reportSent: "Спасибо, жалоба записана",
     toLight: "Светлая подложка превью",
     toDark: "Тёмная подложка превью",
     reset: "Сбросить настройки",
@@ -278,6 +296,16 @@ const EN: Dictionary = {
   card: {
     copy: "Copy for AI",
     copied: "Link copied",
+    copyId: "Copy id",
+    idCopied: "Id copied",
+    favourite: "Add to favourites",
+    favouriteSoon: "Favourites are coming later",
+    report: "Report the component",
+    reportTitle: "What is wrong with the component?",
+    reportPlaceholder:
+      "Describe the problem: what is broken, where and how to repeat it",
+    reportSend: "Send",
+    reportSent: "Thanks, the report is saved",
     toLight: "Switch preview to a light surface",
     toDark: "Switch preview to a dark surface",
     reset: "Reset settings",

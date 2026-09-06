@@ -32,9 +32,9 @@ export type Timeline012Props = Omit<ComponentProps<"section">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="timeline-012"]){
 --vibeui-timeline-012-bg:transparent;
---vibeui-timeline-012-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-timeline-012-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-timeline-012-muted:color-mix(in oklab,var(--vibeui-timeline-012-fg) 68%,transparent);
---vibeui-timeline-012-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-timeline-012-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
 --vibeui-timeline-012-accent:light-dark(oklch(0.55 0.18 262),oklch(0.74 0.16 262));
 --vibeui-timeline-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

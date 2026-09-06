@@ -42,11 +42,11 @@ export type Eventcalendar004Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="eventcalendar-004"]){
 --vibeui-eventcalendar-004-bg:transparent;
---vibeui-eventcalendar-004-panel:light-dark(oklch(1 0 0),oklch(0.24 0.011 265));
---vibeui-eventcalendar-004-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.006 265));
+--vibeui-eventcalendar-004-panel:light-dark(oklch(1 0 0),oklch(0.24 0 265));
+--vibeui-eventcalendar-004-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-eventcalendar-004-muted:color-mix(in oklab,var(--vibeui-eventcalendar-004-fg) 68%,transparent);
---vibeui-eventcalendar-004-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
---vibeui-eventcalendar-004-line:light-dark(oklch(0.96 0.004 265),oklch(0.3 0.01 265));
+--vibeui-eventcalendar-004-border:light-dark(oklch(0.91 0 265),oklch(0.35 0 265));
+--vibeui-eventcalendar-004-line:light-dark(oklch(0.96 0 265),oklch(0.3 0 265));
 --vibeui-eventcalendar-004-accent:light-dark(oklch(0.55 0.16 262),oklch(0.74 0.15 262));
 --vibeui-eventcalendar-004-personal:light-dark(oklch(0.6 0.13 165),oklch(0.76 0.12 165));
 --vibeui-eventcalendar-004-deadline:light-dark(oklch(0.58 0.19 25),oklch(0.74 0.17 25));

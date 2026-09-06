@@ -31,13 +31,13 @@ export type Calendar004Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="calendar-004"]){
 --vibeui-calendar-004-bg:transparent;
---vibeui-calendar-004-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-calendar-004-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-calendar-004-muted:color-mix(in oklab,var(--vibeui-calendar-004-fg) 68%,transparent);
---vibeui-calendar-004-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-calendar-004-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-calendar-004-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
---vibeui-calendar-004-on-accent:light-dark(oklch(0.99 0.01 265),oklch(0.19 0.03 265));
---vibeui-calendar-004-hatch-a:light-dark(oklch(0.97 0.003 265),oklch(0.27 0.012 265));
---vibeui-calendar-004-hatch-b:light-dark(oklch(0.94 0.004 265),oklch(0.31 0.012 265));
+--vibeui-calendar-004-on-accent:light-dark(oklch(0.99 0 265),oklch(0.19 0 265));
+--vibeui-calendar-004-hatch-a:light-dark(oklch(0.97 0 265),oklch(0.27 0 265));
+--vibeui-calendar-004-hatch-b:light-dark(oklch(0.94 0 265),oklch(0.31 0 265));
 --vibeui-calendar-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

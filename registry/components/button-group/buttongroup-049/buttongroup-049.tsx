@@ -31,14 +31,14 @@ export type Buttongroup049Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="buttongroup-049"]){
 --vibeui-buttongroup-049-surface:transparent;
---vibeui-buttongroup-049-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.005 265));
+--vibeui-buttongroup-049-fg:light-dark(oklch(0.25 0 265),oklch(0.95 0 265));
 --vibeui-buttongroup-049-muted:color-mix(in oklab,var(--vibeui-buttongroup-049-fg) 68%,transparent);
---vibeui-buttongroup-049-border:light-dark(oklch(0.89 0.008 265),oklch(0.4 0.012 265));
---vibeui-buttongroup-049-hover:light-dark(oklch(0.97 0.004 265),oklch(0.33 0.01 265));
+--vibeui-buttongroup-049-border:light-dark(oklch(0.89 0 265),oklch(0.4 0 265));
+--vibeui-buttongroup-049-hover:light-dark(oklch(0.97 0 265),oklch(0.33 0 265));
 /* Поповер перекрывает содержимое под собой, поэтому его подложка непрозрачна
    всегда — она не наследует прозрачный фон кнопки. */
---vibeui-buttongroup-049-panel:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
---vibeui-buttongroup-049-shadow:light-dark(oklch(0.2 0.03 265 / 16%),oklch(0 0 0 / 45%));
+--vibeui-buttongroup-049-panel:light-dark(oklch(1 0 0),oklch(0.26 0 265));
+--vibeui-buttongroup-049-shadow:light-dark(oklch(0.2 0 265 / 16%),oklch(0 0 0 / 45%));
 --vibeui-buttongroup-049-accent:light-dark(oklch(0.5 0.16 265),oklch(0.76 0.14 265));
 --vibeui-buttongroup-049-radius:0.625rem;
 --vibeui-buttongroup-049-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

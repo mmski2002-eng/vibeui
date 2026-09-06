@@ -17,10 +17,10 @@ export type Skeleton006Props = ComponentProps<"div"> & {
 // чем-то закрашивать хвост. Обе ветки light-dark() у неё свои.
 const STYLES = `
 :where([data-vibeui-block="skeleton-006"]){
---vibeui-skeleton-006-bg:light-dark(oklch(1 0 0),oklch(0.22 0.011 265));
---vibeui-skeleton-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
---vibeui-skeleton-006-base:light-dark(oklch(0.93 0.005 265),oklch(0.3 0.012 265));
---vibeui-skeleton-006-shine:light-dark(oklch(0.97 0.003 265),oklch(0.39 0.016 265));
+--vibeui-skeleton-006-bg:light-dark(oklch(1 0 0),oklch(0.22 0 265));
+--vibeui-skeleton-006-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
+--vibeui-skeleton-006-base:light-dark(oklch(0.93 0 265),oklch(0.3 0 265));
+--vibeui-skeleton-006-shine:light-dark(oklch(0.97 0 265),oklch(0.39 0 265));
 --vibeui-skeleton-006-line:0.6875rem;
 --vibeui-skeleton-006-step:1.375rem;
 --vibeui-skeleton-006-lines:3;

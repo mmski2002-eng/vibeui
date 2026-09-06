@@ -31,10 +31,10 @@ export type Collapsible003Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="collapsible-003"]){
 --vibeui-collapsible-003-bg:transparent;
---vibeui-collapsible-003-fade:light-dark(oklch(1 0 0),oklch(0.19 0.013 265));
---vibeui-collapsible-003-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-collapsible-003-fade:light-dark(oklch(1 0 0),oklch(0.19 0 265));
+--vibeui-collapsible-003-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-collapsible-003-muted:color-mix(in oklab,var(--vibeui-collapsible-003-fg) 68%,transparent);
---vibeui-collapsible-003-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-collapsible-003-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
 --vibeui-collapsible-003-accent:light-dark(oklch(0.55 0.19 28),oklch(0.76 0.15 28));
 --vibeui-collapsible-003-lines:4;
 --vibeui-collapsible-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

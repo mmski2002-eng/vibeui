@@ -56,10 +56,10 @@ export type Auth020Props = {
 const STYLES = `
 :where([data-vibeui-block="auth-020"]){
 --vibeui-auth-020-bg:transparent;
---vibeui-auth-020-card:light-dark(oklch(1 0 0),oklch(0.22 0.013 240));
---vibeui-auth-020-fg:light-dark(oklch(0.22 0.014 240),oklch(0.94 0.006 240));
---vibeui-auth-020-muted:light-dark(oklch(0.54 0.014 240),oklch(0.7 0.012 240));
---vibeui-auth-020-border:light-dark(oklch(0.9 0.006 240),oklch(0.35 0.012 240));
+--vibeui-auth-020-card:light-dark(oklch(1 0 0),oklch(0.22 0 240));
+--vibeui-auth-020-fg:light-dark(oklch(0.22 0 240),oklch(0.94 0 240));
+--vibeui-auth-020-muted:light-dark(oklch(0.54 0 240),oklch(0.7 0 240));
+--vibeui-auth-020-border:light-dark(oklch(0.9 0 240),oklch(0.35 0 240));
 --vibeui-auth-020-accent:light-dark(oklch(0.52 0.15 250),oklch(0.75 0.13 250));
 --vibeui-auth-020-danger:light-dark(oklch(0.55 0.19 25),oklch(0.75 0.16 25));
 --vibeui-auth-020-on-danger:light-dark(oklch(1 0 0),oklch(0.2 0.02 25));

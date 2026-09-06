@@ -25,10 +25,10 @@ export type Alert001Props = Omit<
 // темнеет там, где тёмный контекст, и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="alert-001"]){
---vibeui-alert-001-fg:light-dark(oklch(0.26 0.016 265),oklch(0.93 0.006 265));
+--vibeui-alert-001-fg:light-dark(oklch(0.26 0 265),oklch(0.93 0 265));
 --vibeui-alert-001-muted:color-mix(in oklab,var(--vibeui-alert-001-fg) 68%,transparent);
 --vibeui-alert-001-bg:transparent;
---vibeui-alert-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-alert-001-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
 --vibeui-alert-001-tone:light-dark(oklch(0.58 0.18 262),oklch(0.74 0.16 262));
 /* Текст действия берёт отдельный оттенок: полосе и значку хватает 3:1 как
    графике, а подписи на светлой подложке нужно 4.5:1. Тёмная ветка совпадает

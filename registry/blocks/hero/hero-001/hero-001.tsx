@@ -33,14 +33,14 @@ export type Hero001Props = {
 const STYLES = `
 :where([data-vibeui-block="hero-001"]){
 --vibeui-hero-bg:transparent;
---vibeui-hero-fg:light-dark(oklch(0.19 0.016 266),oklch(0.98 0.003 266));
---vibeui-hero-muted:light-dark(oklch(0.5 0.021 266),oklch(0.75 0.019 266));
---vibeui-hero-border:light-dark(oklch(0.16 0.014 266 / 14%),oklch(1 0 0 / 18%));
+--vibeui-hero-fg:light-dark(oklch(0.19 0 266),oklch(0.98 0 266));
+--vibeui-hero-muted:light-dark(oklch(0.5 0 266),oklch(0.75 0 266));
+--vibeui-hero-border:light-dark(oklch(0.16 0 266 / 14%),oklch(1 0 0 / 18%));
 --vibeui-hero-accent:light-dark(oklch(0.55 0.19 264),oklch(0.72 0.163 264));
---vibeui-hero-accent-fg:light-dark(oklch(0.99 0.004 266),oklch(0.17 0.02 266));
+--vibeui-hero-accent-fg:light-dark(oklch(0.99 0 266),oklch(0.17 0 266));
 --vibeui-hero-ring:color-mix(in oklab, var(--vibeui-hero-accent) 75%, transparent);
 --vibeui-hero-glow:color-mix(in oklab, var(--vibeui-hero-accent) 38%, transparent);
---vibeui-hero-grid:light-dark(oklch(0.16 0.014 266 / 7%),oklch(1 0 0 / 6%));
+--vibeui-hero-grid:light-dark(oklch(0.16 0 266 / 7%),oklch(1 0 0 / 6%));
 --vibeui-hero-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

@@ -34,11 +34,11 @@ export type Dropdown004Props = Omit<ComponentProps<"div">, "children"> & {
 // контексте панель светлее фона страницы, а её граница светлее панели.
 const STYLES = `
 :where([data-vibeui-block="dropdown-004"]){
---vibeui-dropdown-004-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 250));
---vibeui-dropdown-004-fg:light-dark(oklch(0.24 0.014 250),oklch(0.94 0.006 250));
+--vibeui-dropdown-004-bg:light-dark(oklch(1 0 0),oklch(0.25 0 250));
+--vibeui-dropdown-004-fg:light-dark(oklch(0.24 0 250),oklch(0.94 0 250));
 --vibeui-dropdown-004-muted:color-mix(in oklab,var(--vibeui-dropdown-004-fg) 68%,transparent);
---vibeui-dropdown-004-border:light-dark(oklch(0.9 0.006 250),oklch(0.37 0.012 250));
---vibeui-dropdown-004-hover:light-dark(oklch(0.96 0.004 250),oklch(0.32 0.014 250));
+--vibeui-dropdown-004-border:light-dark(oklch(0.9 0 250),oklch(0.37 0 250));
+--vibeui-dropdown-004-hover:light-dark(oklch(0.96 0 250),oklch(0.32 0 250));
 --vibeui-dropdown-004-accent:light-dark(oklch(0.58 0.15 200),oklch(0.72 0.13 200));
 --vibeui-dropdown-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -79,7 +79,7 @@ color:var(--vibeui-dropdown-004-accent);
 position:fixed;padding:0.3125rem;min-width:13.5rem;box-sizing:border-box;
 background:var(--vibeui-dropdown-004-bg);color:var(--vibeui-dropdown-004-fg);
 border:1px solid var(--vibeui-dropdown-004-border);border-radius:0.75rem;
-box-shadow:0 18px 40px -22px oklch(0.2 0.03 250 / 45%);
+box-shadow:0 18px 40px -22px oklch(0.2 0 250 / 45%);
 font-family:var(--vibeui-dropdown-004-font);
 opacity:0;transform:translateY(-0.25rem);
 transition:opacity .14s ease,transform .14s ease,display .14s allow-discrete,overlay .14s allow-discrete;
@@ -114,7 +114,7 @@ transition:background-color .14s ease,border-color .14s ease;
 background:var(--vibeui-dropdown-004-accent);border-color:var(--vibeui-dropdown-004-accent);
 }
 [data-vibeui-block="dropdown-004"] [data-part="box"] svg{width:0.75rem;height:0.75rem;opacity:0}
-[data-vibeui-block="dropdown-004"] [data-part="item"][aria-checked="true"] [data-part="box"] svg{opacity:1;color:light-dark(oklch(1 0 0),oklch(0.2 0.012 250))}
+[data-vibeui-block="dropdown-004"] [data-part="item"][aria-checked="true"] [data-part="box"] svg{opacity:1;color:light-dark(oklch(1 0 0),oklch(0.2 0 250))}
 [data-vibeui-block="dropdown-004"][data-mark="dot"] [data-part="box"]{border-radius:9999px}
 [data-vibeui-block="dropdown-004"][data-mark="dot"] [data-part="box"] svg{display:none}
 [data-vibeui-block="dropdown-004"][data-mark="dot"] [data-part="item"][aria-checked="true"] [data-part="box"]{

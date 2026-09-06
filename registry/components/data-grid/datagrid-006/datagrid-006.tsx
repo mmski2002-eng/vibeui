@@ -53,15 +53,15 @@ export type Datagrid006Props = Omit<ComponentProps<"section">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="datagrid-006"]){
 --vibeui-datagrid-006-bg:transparent;
---vibeui-datagrid-006-fg:light-dark(oklch(0.23 0.014 285),oklch(0.93 0.006 285));
+--vibeui-datagrid-006-fg:light-dark(oklch(0.23 0 285),oklch(0.93 0 285));
 --vibeui-datagrid-006-muted:color-mix(in oklab,var(--vibeui-datagrid-006-fg) 68%,transparent);
---vibeui-datagrid-006-border:light-dark(oklch(0.92 0.006 285),oklch(0.34 0.012 285));
---vibeui-datagrid-006-head:light-dark(oklch(0.975 0.003 285),oklch(0.27 0.012 285));
---vibeui-datagrid-006-field:light-dark(oklch(1 0 0),oklch(0.22 0.012 285));
+--vibeui-datagrid-006-border:light-dark(oklch(0.92 0 285),oklch(0.34 0 285));
+--vibeui-datagrid-006-head:light-dark(oklch(0.975 0 285),oklch(0.27 0 285));
+--vibeui-datagrid-006-field:light-dark(oklch(1 0 0),oklch(0.22 0 285));
 --vibeui-datagrid-006-accent:light-dark(oklch(0.52 0.16 275),oklch(0.76 0.14 275));
 --vibeui-datagrid-006-ok:light-dark(oklch(0.52 0.13 155),oklch(0.76 0.13 155));
 --vibeui-datagrid-006-warn:light-dark(oklch(0.6 0.14 75),oklch(0.8 0.13 75));
---vibeui-datagrid-006-off:light-dark(oklch(0.58 0.02 285),oklch(0.66 0.02 285));
+--vibeui-datagrid-006-off:light-dark(oklch(0.58 0 285),oklch(0.66 0 285));
 --vibeui-datagrid-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

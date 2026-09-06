@@ -51,14 +51,14 @@ const STYLES = `
 :where([data-vibeui-block="dashboard-063"]){
 --vibeui-dashboard-063-bg:transparent;
 /* Карточки, жёлоб полосы и чип отсутствия: подложка блока прозрачна. */
---vibeui-dashboard-063-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 230));
---vibeui-dashboard-063-inset:light-dark(oklch(0.985 0.003 230),oklch(0.22 0.012 230));
---vibeui-dashboard-063-fg:light-dark(oklch(0.21 0.014 230),oklch(0.94 0.005 230));
---vibeui-dashboard-063-muted:light-dark(oklch(0.55 0.014 230),oklch(0.72 0.012 230));
---vibeui-dashboard-063-border:light-dark(oklch(0.91 0.006 230),oklch(0.36 0.012 230));
+--vibeui-dashboard-063-card:light-dark(oklch(1 0 0),oklch(0.26 0 230));
+--vibeui-dashboard-063-inset:light-dark(oklch(0.985 0 230),oklch(0.22 0 230));
+--vibeui-dashboard-063-fg:light-dark(oklch(0.21 0 230),oklch(0.94 0 230));
+--vibeui-dashboard-063-muted:light-dark(oklch(0.55 0 230),oklch(0.72 0 230));
+--vibeui-dashboard-063-border:light-dark(oklch(0.91 0 230),oklch(0.36 0 230));
 --vibeui-dashboard-063-accent:light-dark(oklch(0.52 0.15 230),oklch(0.74 0.13 230));
 --vibeui-dashboard-063-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.04 230));
---vibeui-dashboard-063-soft:light-dark(oklch(0.965 0.02 230),oklch(0.31 0.04 230));
+--vibeui-dashboard-063-soft:light-dark(oklch(0.965 0 230),oklch(0.31 0.04 230));
 --vibeui-dashboard-063-picked:light-dark(oklch(0.78 0.07 230),oklch(0.56 0.09 230));
 --vibeui-dashboard-063-over:light-dark(oklch(0.57 0.19 25),oklch(0.74 0.17 25));
 --vibeui-dashboard-063-free:light-dark(oklch(0.6 0.13 155),oklch(0.76 0.14 155));

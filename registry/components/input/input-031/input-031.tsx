@@ -28,11 +28,11 @@ export type Input031Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="input-031"]){
 --vibeui-input-031-surface:transparent;
---vibeui-input-031-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
---vibeui-input-031-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-input-031-shell:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
+--vibeui-input-031-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-input-031-muted:color-mix(in oklab,var(--vibeui-input-031-fg) 68%,transparent);
---vibeui-input-031-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.012 265));
---vibeui-input-031-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.012 265));
+--vibeui-input-031-field:light-dark(oklch(0.985 0 265),oklch(0.26 0 265));
+--vibeui-input-031-border:light-dark(oklch(0.88 0 265),oklch(0.38 0 265));
 --vibeui-input-031-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
 --vibeui-input-031-bad:light-dark(oklch(0.55 0.2 25),oklch(0.74 0.16 25));
 --vibeui-input-031-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

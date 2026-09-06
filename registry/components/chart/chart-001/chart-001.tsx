@@ -32,12 +32,12 @@ export type Chart001Props = {
 // вместе со страницей и не носит собственной тёмной темы.
 const STYLES = `
 :where([data-vibeui-block="chart-001"]){
---vibeui-chart-001-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
+--vibeui-chart-001-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-chart-001-muted:color-mix(in oklab,var(--vibeui-chart-001-fg) 68%,transparent);
 --vibeui-chart-001-bg:transparent;
---vibeui-chart-001-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
---vibeui-chart-001-grid:light-dark(oklch(0.93 0.005 265),oklch(0.31 0.01 265));
---vibeui-chart-001-ring:light-dark(oklch(1 0 0),oklch(0.24 0.014 265));
+--vibeui-chart-001-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
+--vibeui-chart-001-grid:light-dark(oklch(0.93 0 265),oklch(0.31 0 265));
+--vibeui-chart-001-ring:light-dark(oklch(1 0 0),oklch(0.24 0 265));
 --vibeui-chart-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.17 262));
 --vibeui-chart-001-radius:0.875rem;
 --vibeui-chart-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

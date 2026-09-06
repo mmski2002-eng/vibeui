@@ -24,10 +24,10 @@ export type Buttongroup054Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="buttongroup-054"]){
 --vibeui-buttongroup-054-surface:transparent;
---vibeui-buttongroup-054-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.005 265));
+--vibeui-buttongroup-054-fg:light-dark(oklch(0.25 0 265),oklch(0.95 0 265));
 --vibeui-buttongroup-054-muted:color-mix(in oklab,var(--vibeui-buttongroup-054-fg) 68%,transparent);
---vibeui-buttongroup-054-border:light-dark(oklch(0.9 0.006 265),oklch(0.4 0.012 265));
---vibeui-buttongroup-054-hover:light-dark(oklch(0.955 0.005 265),oklch(0.34 0.01 265));
+--vibeui-buttongroup-054-border:light-dark(oklch(0.9 0 265),oklch(0.4 0 265));
+--vibeui-buttongroup-054-hover:light-dark(oklch(0.955 0 265),oklch(0.34 0 265));
 --vibeui-buttongroup-054-accent:light-dark(oklch(0.5 0.16 265),oklch(0.76 0.14 265));
 --vibeui-buttongroup-054-radius:0.375rem;
 --vibeui-buttongroup-054-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

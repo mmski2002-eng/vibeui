@@ -1,3 +1,6 @@
+"use client"
+
+import { useRef, useState } from "react"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Dropdown021Status = {
@@ -18,6 +21,8 @@ export type Dropdown021Props = Omit<ComponentProps<"div">, "children"> & {
   open?: boolean
   /** Имя рядом с аватаром — оно же даёт инициалы. */
   name?: string
+  /** Выбранный статус: значение из statuses. */
+  onSelect?: (value: string) => void
   /** Заголовок над списком статусов. */
   title?: string
   statuses?: Dropdown021Status[]
@@ -40,11 +45,11 @@ export type Dropdown021Props = Omit<ComponentProps<"div">, "children"> & {
 // формы слились бы в одну группу и гасили друг друга.
 const STYLES = `
 :where([data-vibeui-block="dropdown-021"]){
---vibeui-dropdown-021-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
+--vibeui-dropdown-021-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-dropdown-021-muted:color-mix(in oklab,var(--vibeui-dropdown-021-fg) 60%,transparent);
---vibeui-dropdown-021-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
---vibeui-dropdown-021-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
---vibeui-dropdown-021-hover:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.86 0.02 265 / 12%));
+--vibeui-dropdown-021-bg:light-dark(oklch(1 0 0),oklch(0.25 0 265));
+--vibeui-dropdown-021-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
+--vibeui-dropdown-021-hover:light-dark(oklch(0.55 0 265 / 8%),oklch(0.86 0 265 / 12%));
 --vibeui-dropdown-021-accent:light-dark(oklch(0.52 0.19 262),oklch(0.72 0.16 262));
 --vibeui-dropdown-021-radius:0.75rem;
 --vibeui-dropdown-021-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -92,12 +97,12 @@ transform:rotate(45deg) translate(-0.0625rem,-0.0625rem);
 [data-vibeui-dropdown-021-menu]{
 position:fixed;margin:0;padding:0.375rem;
 min-inline-size:16rem;box-sizing:border-box;
-border:1px solid var(--vibeui-dropdown-021-border,light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265)));
+border:1px solid var(--vibeui-dropdown-021-border,light-dark(oklch(0.9 0 265),oklch(0.37 0 265)));
 border-radius:var(--vibeui-dropdown-021-radius,0.75rem);
-background:var(--vibeui-dropdown-021-bg,light-dark(oklch(1 0 0),oklch(0.25 0.012 265)));
-color:var(--vibeui-dropdown-021-fg,light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265)));
+background:var(--vibeui-dropdown-021-bg,light-dark(oklch(1 0 0),oklch(0.25 0 265)));
+color:var(--vibeui-dropdown-021-fg,light-dark(oklch(0.24 0 265),oklch(0.94 0 265)));
 font-family:var(--vibeui-dropdown-021-font,ui-sans-serif,system-ui,sans-serif);
-box-shadow:0 18px 40px -20px oklch(0.2 0.03 265 / 48%);
+box-shadow:0 18px 40px -20px oklch(0.2 0 265 / 48%);
 opacity:0;transform:translateY(-0.25rem);
 transition:opacity .16s ease,transform .16s ease,display .16s allow-discrete,overlay .16s allow-discrete;
 }
@@ -130,7 +135,7 @@ font-size:0.8125rem;line-height:1.3;
 transition:background-color .14s ease;
 }
 [data-vibeui-dropdown-021-menu] [data-part="option"]:hover{
-background:var(--vibeui-dropdown-021-hover,light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.86 0.02 265 / 12%)));
+background:var(--vibeui-dropdown-021-hover,light-dark(oklch(0.55 0 265 / 8%),oklch(0.86 0 265 / 12%)));
 }
 /* Радиокнопка спрятана, но остаётся в потоке фокуса: обводку рисует подпись. */
 [data-vibeui-dropdown-021-menu] [data-part="option"] input{
@@ -163,7 +168,7 @@ opacity:0;
 [data-vibeui-dropdown-021-menu] [data-part="foot"]{
 display:flex;align-items:center;gap:0.5rem;
 margin-block-start:0.375rem;padding:0.5rem 0.5rem 0.3125rem;
-border-block-start:1px solid var(--vibeui-dropdown-021-border,light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265)));
+border-block-start:1px solid var(--vibeui-dropdown-021-border,light-dark(oklch(0.9 0 265),oklch(0.37 0 265)));
 color:var(--vibeui-dropdown-021-muted,color-mix(in oklab,currentColor 60%,transparent));
 font-size:0.75rem;line-height:1.35;
 }
@@ -181,7 +186,12 @@ position:static;opacity:1;transform:none;margin-block-start:0.375rem;
 const DEFAULT_STATUSES: Dropdown021Status[] = [
   { value: "online", label: "На связи", hint: "Отвечаю сразу", hue: 145 },
   { value: "busy", label: "Занят", hint: "Пишите, отвечу позже", hue: 85 },
-  { value: "dnd", label: "Не беспокоить", hint: "Уведомления выключены", hue: 25 },
+  {
+    value: "dnd",
+    label: "Не беспокоить",
+    hint: "Уведомления выключены",
+    hue: 25,
+  },
   { value: "away", label: "Отошёл", hint: "Вернусь через полчаса", hue: 250 },
 ]
 
@@ -228,6 +238,7 @@ export function Dropdown021({
   title = "Статус",
   statuses = DEFAULT_STATUSES,
   status = "busy",
+  onSelect,
   until = "«Не беспокоить» снимется в 18:00",
   accent,
   background = "",
@@ -238,7 +249,21 @@ export function Dropdown021({
   // Имя группы своё на каждый экземпляр: радиокнопки объединяются по владельцу
   // формы и имени, иначе два меню на странице стали бы одной группой.
   const group = `${id}-status`
-  const current = statuses.find((entry) => entry.value === status) ?? statuses[0]
+  const menu = useRef<HTMLDivElement>(null)
+  // Выбранный статус живёт в состоянии: без него кнопка не менялась бы, а
+  // меню оставалось бы открытым — нажатие выглядело бы как отказ.
+  const [chosen, setChosen] = useState(status)
+  const current =
+    statuses.find((entry) => entry.value === chosen) ?? statuses[0]
+
+  const pick = (value: string) => {
+    setChosen(value)
+    onSelect?.(value)
+
+    if (menu.current?.matches(":popover-open")) {
+      menu.current.hidePopover()
+    }
+  }
 
   const palette = {
     "--vibeui-dropdown-021-hue": String(current?.hue ?? 145),
@@ -273,6 +298,7 @@ export function Dropdown021({
           <span data-part="chevron" aria-hidden="true" />
         </button>
         <div
+          ref={menu}
           id={id}
           popover={open ? undefined : "auto"}
           data-vibeui-dropdown-021-menu=""
@@ -289,7 +315,9 @@ export function Dropdown021({
                   data-part="option"
                   style={
                     {
-                      "--vibeui-dropdown-021-option-hue": String(entry.hue ?? 145),
+                      "--vibeui-dropdown-021-option-hue": String(
+                        entry.hue ?? 145,
+                      ),
                     } as CSSProperties
                   }
                 >
@@ -297,12 +325,15 @@ export function Dropdown021({
                     type="radio"
                     name={group}
                     value={entry.value}
-                    defaultChecked={entry.value === status}
+                    checked={entry.value === current?.value}
+                    onChange={() => pick(entry.value)}
                   />
                   <span data-part="mark" aria-hidden="true" />
                   <span data-part="text">
                     {entry.label}
-                    {entry.hint ? <span data-part="hint">{entry.hint}</span> : null}
+                    {entry.hint ? (
+                      <span data-part="hint">{entry.hint}</span>
+                    ) : null}
                   </span>
                   <span data-part="tick" aria-hidden="true" />
                 </label>

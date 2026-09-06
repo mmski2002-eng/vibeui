@@ -22,13 +22,13 @@ const STYLES = `
 :where([data-vibeui-block="checkbox-001"]){
 --vibeui-checkbox-001-surface:transparent;
 --vibeui-checkbox-001-pull:-0.625rem -0.75rem;
---vibeui-checkbox-001-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.005 265));
+--vibeui-checkbox-001-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-checkbox-001-muted:color-mix(in oklab,var(--vibeui-checkbox-001-fg) 68%,transparent);
---vibeui-checkbox-001-bg:light-dark(oklch(1 0 0),oklch(0.27 0.012 265));
---vibeui-checkbox-001-border:light-dark(oklch(0.82 0.01 265),oklch(0.5 0.014 265));
+--vibeui-checkbox-001-bg:light-dark(oklch(1 0 0),oklch(0.27 0 265));
+--vibeui-checkbox-001-border:light-dark(oklch(0.82 0 265),oklch(0.5 0 265));
 --vibeui-checkbox-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.71 0.16 262));
---vibeui-checkbox-001-mark:light-dark(oklch(1 0 0),oklch(0.18 0.012 265));
---vibeui-checkbox-001-hover:light-dark(oklch(0.55 0.02 265 / 7%),oklch(0.85 0.02 265 / 10%));
+--vibeui-checkbox-001-mark:light-dark(oklch(1 0 0),oklch(0.18 0 265));
+--vibeui-checkbox-001-hover:light-dark(oklch(0.55 0 265 / 7%),oklch(0.85 0 265 / 10%));
 --vibeui-checkbox-001-radius:0.625rem;
 --vibeui-checkbox-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

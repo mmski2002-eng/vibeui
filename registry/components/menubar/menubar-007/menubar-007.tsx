@@ -39,13 +39,13 @@ export type Menubar007Props = {
 const STYLES = `
 :where([data-vibeui-block="menubar-007"]){
 --vibeui-menubar-007-bg:transparent;
---vibeui-menubar-007-panel:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
---vibeui-menubar-007-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-menubar-007-panel:light-dark(oklch(1 0 0),oklch(0.25 0 265));
+--vibeui-menubar-007-fg:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
 --vibeui-menubar-007-muted:color-mix(in oklab,var(--vibeui-menubar-007-fg) 68%,transparent);
---vibeui-menubar-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
---vibeui-menubar-007-hover:light-dark(oklch(0.55 0.02 265 / 10%),oklch(0.88 0.02 265 / 14%));
+--vibeui-menubar-007-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-menubar-007-hover:light-dark(oklch(0.55 0 265 / 10%),oklch(0.88 0 265 / 14%));
 --vibeui-menubar-007-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
---vibeui-menubar-007-shadow:light-dark(oklch(0.2 0.03 265 / 45%),oklch(0 0 0 / 62%));
+--vibeui-menubar-007-shadow:light-dark(oklch(0.2 0 265 / 45%),oklch(0 0 0 / 62%));
 --vibeui-menubar-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -110,7 +110,7 @@ const DEFAULT_MENUS: Menubar007Menu[] = [
   {
     label: "Файл",
     items: [
-      { label: "Новый проект", keys: "⌘N" },
+      { label: "Новый проект", keys: "Ctrl+N" },
       {
         label: "Открыть недавние",
         items: [
@@ -123,17 +123,17 @@ const DEFAULT_MENUS: Menubar007Menu[] = [
         label: "Экспорт",
         items: [
           { label: "В PDF" },
-          { label: "В PNG", keys: "⌘E" },
+          { label: "В PNG", keys: "Ctrl+E" },
           { label: "В архив" },
         ],
       },
-      { label: "Сохранить", keys: "⌘S" },
+      { label: "Сохранить", keys: "Ctrl+S" },
     ],
   },
   {
     label: "Правка",
     items: [
-      { label: "Отменить", keys: "⌘Z" },
+      { label: "Отменить", keys: "Ctrl+Z" },
       {
         label: "Преобразовать",
         items: [{ label: "В заглавные" }, { label: "В строчные" }],

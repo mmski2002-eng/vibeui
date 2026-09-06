@@ -31,10 +31,10 @@ export type Buttongroup044Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="buttongroup-044"]){
 --vibeui-buttongroup-044-surface:transparent;
---vibeui-buttongroup-044-fg:light-dark(oklch(0.24 0.016 265),oklch(0.95 0.005 265));
+--vibeui-buttongroup-044-fg:light-dark(oklch(0.24 0 265),oklch(0.95 0 265));
 --vibeui-buttongroup-044-muted:color-mix(in oklab,var(--vibeui-buttongroup-044-fg) 68%,transparent);
---vibeui-buttongroup-044-border:light-dark(oklch(0.88 0.008 265),oklch(0.41 0.012 265));
---vibeui-buttongroup-044-hover:light-dark(oklch(0.965 0.005 265),oklch(0.33 0.012 265));
+--vibeui-buttongroup-044-border:light-dark(oklch(0.88 0 265),oklch(0.41 0 265));
+--vibeui-buttongroup-044-hover:light-dark(oklch(0.965 0 265),oklch(0.33 0 265));
 --vibeui-buttongroup-044-accent:light-dark(oklch(0.5 0.16 265),oklch(0.77 0.13 265));
 --vibeui-buttongroup-044-radius:0.625rem;
 --vibeui-buttongroup-044-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

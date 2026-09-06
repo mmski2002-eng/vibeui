@@ -29,12 +29,12 @@ export type Togglegroup003Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="togglegroup-003"]){
 --vibeui-togglegroup-003-bg:transparent;
---vibeui-togglegroup-003-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-togglegroup-003-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-togglegroup-003-muted:color-mix(in oklab,var(--vibeui-togglegroup-003-fg) 68%,transparent);
---vibeui-togglegroup-003-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
---vibeui-togglegroup-003-surface:light-dark(oklch(0.97 0.004 265),oklch(0.26 0.01 265));
---vibeui-togglegroup-003-raised:light-dark(oklch(1 0 0),oklch(0.34 0.012 265));
---vibeui-togglegroup-003-shadow:light-dark(oklch(0.2 0.02 265 / 14%),oklch(0 0 0 / 45%));
+--vibeui-togglegroup-003-border:light-dark(oklch(0.9 0 265),oklch(0.35 0 265));
+--vibeui-togglegroup-003-surface:light-dark(oklch(0.97 0 265),oklch(0.26 0 265));
+--vibeui-togglegroup-003-raised:light-dark(oklch(1 0 0),oklch(0.34 0 265));
+--vibeui-togglegroup-003-shadow:light-dark(oklch(0.2 0 265 / 14%),oklch(0 0 0 / 45%));
 --vibeui-togglegroup-003-accent:light-dark(oklch(0.52 0.15 195),oklch(0.76 0.13 195));
 --vibeui-togglegroup-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

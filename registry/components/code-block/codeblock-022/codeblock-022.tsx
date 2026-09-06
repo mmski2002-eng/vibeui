@@ -40,12 +40,12 @@ const STYLES = `
 --vibeui-codeblock-022-chip:light-dark(oklch(0 0 0 / 6%),oklch(1 0 0 / 8%));
 --vibeui-codeblock-022-chip-on:light-dark(oklch(0.72 0.12 250 / 26%),oklch(0.6 0.12 250 / 22%));
 --vibeui-codeblock-022-public-bg:light-dark(oklch(0.8 0.12 75 / 30%),oklch(0.6 0.12 75 / 20%));
---vibeui-codeblock-022-fg:light-dark(oklch(0.26 0.016 275),oklch(0.93 0.008 275));
+--vibeui-codeblock-022-fg:light-dark(oklch(0.26 0 275),oklch(0.93 0 275));
 --vibeui-codeblock-022-muted:color-mix(in oklab,var(--vibeui-codeblock-022-fg) 68%,transparent);
 --vibeui-codeblock-022-border:light-dark(oklch(0 0 0 / 12%),oklch(1 0 0 / 12%));
 --vibeui-codeblock-022-key:light-dark(oklch(0.48 0.13 250),oklch(0.82 0.12 250));
 --vibeui-codeblock-022-value:light-dark(oklch(0.45 0.13 145),oklch(0.85 0.12 145));
---vibeui-codeblock-022-mask:light-dark(oklch(0.62 0.02 275),oklch(0.6 0.02 275));
+--vibeui-codeblock-022-mask:light-dark(oklch(0.62 0 275),oklch(0.6 0 275));
 --vibeui-codeblock-022-public:light-dark(oklch(0.52 0.13 75),oklch(0.84 0.13 75));
 --vibeui-codeblock-022-accent:light-dark(oklch(0.48 0.13 250),oklch(0.8 0.12 250));
 --vibeui-codeblock-022-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;

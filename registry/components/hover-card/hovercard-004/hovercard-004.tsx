@@ -38,10 +38,10 @@ export type Hovercard004Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="hovercard-004"]){
 --vibeui-hovercard-004-bg:transparent;
---vibeui-hovercard-004-card:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
---vibeui-hovercard-004-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-hovercard-004-card:light-dark(oklch(1 0 0),oklch(0.25 0 265));
+--vibeui-hovercard-004-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-hovercard-004-muted:color-mix(in oklab,var(--vibeui-hovercard-004-fg) 68%,transparent);
---vibeui-hovercard-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-hovercard-004-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
 --vibeui-hovercard-004-accent:light-dark(oklch(0.5 0.16 260),oklch(0.76 0.13 260));
 --vibeui-hovercard-004-lang:oklch(0.72 0.15 85);
 --vibeui-hovercard-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -59,7 +59,7 @@ font-family:var(--vibeui-hovercard-004-font);color:var(--vibeui-hovercard-004-fg
 }
 [data-vibeui-block="hovercard-004"] [data-part="line"]{margin:0;font-size:0.875rem;line-height:1.7}
 /* Карточка цепляется к паре владелец/имя, а не ко всему абзацу. */
-[data-vibeui-block="hovercard-004"] [data-part="host"]{position:relative;display:inline-block}
+[data-vibeui-block="hovercard-004"] [data-part="host"]{position:relative;display:inline-block;anchor-name:--vibeui-hovercard-004-anchor}
 [data-vibeui-block="hovercard-004"] [data-part="link"]{
 font-family:var(--vibeui-hovercard-004-mono);font-size:0.9375em;
 color:var(--vibeui-hovercard-004-accent);text-decoration:none;
@@ -72,14 +72,20 @@ border-radius:0.125rem;
    ссылка может стоять где угодно в строке, и левый край карточки на узкой
    странице легко уводит её за правый край. */
 [data-vibeui-block="hovercard-004"] [data-part="card"]{
-position:absolute;left:50%;top:calc(100% + 0.5rem);z-index:20;
+/* fixed с привязкой к якорю: absolute режет рамка карточки каталога,
+   а фиксированный слой её не замечает. */
+position:fixed;inset:auto;position-anchor:--vibeui-hovercard-004-anchor;
+top:anchor(bottom);left:anchor(center);margin-top:0.5rem;z-index:20;
 display:flex;flex-direction:column;gap:0.4375rem;
 width:18rem;max-width:calc(100vw - 2rem);box-sizing:border-box;padding:0.875rem;
 border:1px solid var(--vibeui-hovercard-004-border);border-radius:0.875rem;
 background:var(--vibeui-hovercard-004-card);
-box-shadow:0 22px 46px -28px oklch(0.2 0.02 265 / 55%);
+box-shadow:0 22px 46px -28px oklch(0.2 0 265 / 55%);
 opacity:0;visibility:hidden;translate:-50% -0.25rem;
 transition:opacity .15s ease,translate .15s ease,visibility .15s;
+}
+@supports not (anchor-name: --a){
+[data-vibeui-block="hovercard-004"] [data-part="card"]{position:absolute;inset:auto;left:50%;top:calc(100% + 0.5rem);margin-top:0}
 }
 [data-vibeui-block="hovercard-004"] [data-part="host"]:hover [data-part="card"],
 [data-vibeui-block="hovercard-004"] [data-part="host"]:focus-within [data-part="card"]{opacity:1;visibility:visible;translate:-50% 0}

@@ -35,7 +35,7 @@ export type Sidebar011Props = Omit<ComponentProps<"nav">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="sidebar-011"]){
 --vibeui-sidebar-011-bg:transparent;
---vibeui-sidebar-011-fg:light-dark(oklch(0.27 0.014 265),oklch(0.94 0.006 265));
+--vibeui-sidebar-011-fg:light-dark(oklch(0.27 0 265),oklch(0.94 0 265));
 --vibeui-sidebar-011-muted:color-mix(in oklab,var(--vibeui-sidebar-011-fg) 62%,transparent);
 --vibeui-sidebar-011-border:light-dark(oklch(0 0 0 / 11%),oklch(1 0 0 / 12%));
 --vibeui-sidebar-011-rail:light-dark(oklch(0 0 0 / 4%),oklch(1 0 0 / 5%));

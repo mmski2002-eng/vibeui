@@ -6,8 +6,8 @@ import type { PreviewLoaderMap } from "@/registry/preview-types"
 export const PREVIEWS = {
   "tabs-001": () =>
     import("@/registry/components/tabs/tabs-001/tabs-001").then((module) => module.Tabs001),
-  "tabbar-001": () =>
-    import("@/registry/components/tabs/tabbar-001/tabbar-001").then((module) => module.Tabbar001),
+  "tabs-014": () =>
+    import("@/registry/components/tabs/tabs-014/tabs-014").then((module) => module.Tabs014),
   "tabs-002": () =>
     import("@/registry/components/tabs/tabs-002/tabs-002").then((module) => module.Tabs002),
   "tabs-003": () =>
@@ -28,8 +28,6 @@ export const PREVIEWS = {
     import("@/registry/components/tabs/tabs-010/tabs-010").then((module) => module.Tabs010),
   "tabs-011": () =>
     import("@/registry/components/tabs/tabs-011/tabs-011").then((module) => module.Tabs011),
-  "tabs-012": () =>
-    import("@/registry/components/tabs/tabs-012/tabs-012").then((module) => module.Tabs012),
   "tabs-013": () =>
     import("@/registry/components/tabs/tabs-013/tabs-013").then((module) => module.Tabs013),
 } satisfies PreviewLoaderMap

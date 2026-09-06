@@ -19,12 +19,14 @@ export type Avatar039Props = Omit<ComponentProps<"header">, "children"> & {
 // становится вертикальной, в широкой — строкой с кнопкой справа.
 const STYLES = `
 :where([data-vibeui-block="avatar-039"]){
---vibeui-avatar-039-size:5.5rem;
---vibeui-avatar-039-accent:light-dark(oklch(0.52 0.14 var(--vibeui-avatar-039-hue)),oklch(0.72 0.14 var(--vibeui-avatar-039-hue)));
---vibeui-avatar-039-surface:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
---vibeui-avatar-039-border:light-dark(oklch(0.9 0.008 265),oklch(0.31 0.012 265));
---vibeui-avatar-039-fg:light-dark(oklch(0.22 0.015 265),oklch(0.96 0.005 265));
---vibeui-avatar-039-muted:color-mix(in oklab,var(--vibeui-avatar-039-fg) 68%,transparent);
+--vibeui-avatar-039-size:5.75rem;
+--vibeui-avatar-039-accent:light-dark(oklch(0.26 0.035 var(--vibeui-avatar-039-hue)),oklch(0.95 0.012 var(--vibeui-avatar-039-hue)));
+--vibeui-avatar-039-on-accent:light-dark(oklch(0.99 0 265),oklch(0.18 0 265));
+--vibeui-avatar-039-surface:light-dark(oklch(1 0 0),oklch(0.2 0 265));
+--vibeui-avatar-039-border:light-dark(oklch(0.92 0 265),oklch(0.3 0 265));
+--vibeui-avatar-039-fg:light-dark(oklch(0.22 0 265),oklch(0.96 0 265));
+--vibeui-avatar-039-muted:color-mix(in oklab,var(--vibeui-avatar-039-fg) 60%,transparent);
+--vibeui-avatar-039-shadow:light-dark(oklch(0.2 0 265 / 13%),oklch(0 0 0 / 50%));
 --vibeui-avatar-039-hue:250;
 --vibeui-avatar-039-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -34,25 +36,39 @@ display:block;width:100%;
 /* container-type отрывает ширину от содержимого: без нижней границы
    блок схлопывается внутри flex-контейнера. */
 min-width:min(100%,16rem);overflow:hidden;
-border-radius:1rem;border:1px solid var(--vibeui-avatar-039-border);
+border-radius:1.375rem;border:1px solid var(--vibeui-avatar-039-border);
 background:var(--vibeui-avatar-039-surface);color:var(--vibeui-avatar-039-fg);
 font-family:var(--vibeui-avatar-039-font);
+box-shadow:0 1px 2px var(--vibeui-avatar-039-shadow),0 28px 56px -34px var(--vibeui-avatar-039-shadow);
 }
+[data-vibeui-block="avatar-039"] *{box-sizing:border-box}
 /* Обложка нарисована градиентом: картинка обложки — забота проекта, а
-   компонент обязан выглядеть готовым и без неё. */
+   компонент обязан выглядеть готовым и без неё. Основа тёмная и почти
+   нейтральная, оттенок имени приходит подсветками — иначе на некоторых
+   именах карточка уезжала в салатовый. */
 [data-vibeui-block="avatar-039"] [data-part="cover"]{
-height:6.5rem;
+position:relative;height:7.5rem;
 background:
- radial-gradient(80% 160% at 8% -20%,oklch(0.82 0.11 calc(var(--vibeui-avatar-039-hue) - 25) / 90%) 0%,transparent 70%),
- radial-gradient(70% 140% at 95% 120%,oklch(0.5 0.13 calc(var(--vibeui-avatar-039-hue) + 55) / 80%) 0%,transparent 70%),
- linear-gradient(135deg,oklch(0.7 0.12 var(--vibeui-avatar-039-hue)),oklch(0.56 0.12 calc(var(--vibeui-avatar-039-hue) + 30)));
+ radial-gradient(90% 150% at 12% -30%,oklch(0.62 0.07 calc(var(--vibeui-avatar-039-hue) - 20) / 55%) 0%,transparent 60%),
+ radial-gradient(80% 140% at 90% 130%,oklch(0.45 0.08 calc(var(--vibeui-avatar-039-hue) + 60) / 50%) 0%,transparent 62%),
+ linear-gradient(125deg,oklch(0.23 0 258) 0%,oklch(0.29 0 265) 55%,oklch(0.2 0 272) 100%);
 }
+/* Стеклянный блик поверх обложки: тонкая верхняя подсветка и мягкий низ. */
+[data-vibeui-block="avatar-039"] [data-part="cover"]::after{
+content:"";position:absolute;inset:0;
+background:
+ linear-gradient(180deg,oklch(1 0 0 / 14%) 0%,transparent 42%),
+ linear-gradient(180deg,transparent 55%,oklch(0.15 0 265 / 22%) 100%);
+}
+/* Позиционирование обязательно: обложка тоже позиционирована и иначе
+   закрасила бы наехавший на неё портрет. */
 [data-vibeui-block="avatar-039"] [data-part="body"]{
-display:flex;flex-direction:column;gap:0.875rem;
-padding:0 1.25rem 1.25rem;
+position:relative;
+display:flex;flex-direction:column;gap:1.125rem;
+padding:0 1.375rem 1.375rem;
 }
 [data-vibeui-block="avatar-039"] [data-part="head"]{
-display:flex;flex-direction:column;gap:0.75rem;
+display:flex;flex-direction:column;gap:0.875rem;
 }
 [data-vibeui-block="avatar-039"] [data-part="face"]{
 display:flex;align-items:center;justify-content:center;flex:none;
@@ -60,7 +76,10 @@ width:var(--vibeui-avatar-039-size);height:var(--vibeui-avatar-039-size);
 /* Портрет наезжает на обложку ровно на половину своей высоты. */
 margin-top:calc(var(--vibeui-avatar-039-size) / -2);
 border-radius:9999px;overflow:hidden;
-box-shadow:0 0 0 4px var(--vibeui-avatar-039-surface);
+box-shadow:
+ 0 0 0 4px var(--vibeui-avatar-039-surface),
+ 0 0 0 5px light-dark(oklch(0.2 0 265 / 8%),oklch(1 0 0 / 10%)),
+ 0 12px 26px -14px var(--vibeui-avatar-039-shadow);
 background:light-dark(oklch(0.9 0.06 var(--vibeui-avatar-039-hue)),oklch(0.34 0.065 var(--vibeui-avatar-039-hue)));
 color:light-dark(oklch(0.36 0.12 var(--vibeui-avatar-039-hue)),oklch(0.88 0.063 var(--vibeui-avatar-039-hue)));
 font-size:calc(var(--vibeui-avatar-039-size) * 0.32);font-weight:650;line-height:1;
@@ -69,39 +88,54 @@ font-size:calc(var(--vibeui-avatar-039-size) * 0.32);font-weight:650;line-height
 width:100%;height:100%;object-fit:cover;display:block;
 }
 [data-vibeui-block="avatar-039"] [data-part="name"]{
-margin:0;font-size:1.125rem;font-weight:650;line-height:1.25;
+margin:0;font-size:1.25rem;font-weight:660;letter-spacing:-0.02em;line-height:1.2;
 }
 [data-vibeui-block="avatar-039"] [data-part="role"]{
-margin:0.125rem 0 0;color:var(--vibeui-avatar-039-muted);font-size:0.875rem;line-height:1.35;
+margin:0.25rem 0 0;color:var(--vibeui-avatar-039-muted);font-size:0.8125rem;line-height:1.4;
 }
 [data-vibeui-block="avatar-039"] [data-part="action"]{
 appearance:none;border:0;cursor:pointer;align-self:flex-start;
 display:inline-flex;align-items:center;justify-content:center;
-min-height:2.25rem;padding:0.3125rem 1rem;border-radius:0.625rem;
-background:var(--vibeui-avatar-039-accent);color:oklch(0.99 0.003 265);
-font-family:inherit;font-size:0.875rem;font-weight:600;line-height:1;
+min-height:2.375rem;padding:0.375rem 1.125rem;border-radius:9999px;
+background:var(--vibeui-avatar-039-accent);color:var(--vibeui-avatar-039-on-accent);
+font-family:inherit;font-size:0.8125rem;font-weight:600;letter-spacing:-0.01em;line-height:1;
+box-shadow:0 1px 2px var(--vibeui-avatar-039-shadow),0 10px 20px -12px var(--vibeui-avatar-039-shadow);
+transition:transform .16s ease,box-shadow .16s ease;
 }
+[data-vibeui-block="avatar-039"] [data-part="action"]:hover{
+transform:translateY(-1px);
+box-shadow:0 2px 4px var(--vibeui-avatar-039-shadow),0 16px 26px -14px var(--vibeui-avatar-039-shadow);
+}
+[data-vibeui-block="avatar-039"] [data-part="action"]:active{transform:translateY(0)}
 [data-vibeui-block="avatar-039"] [data-part="action"]:focus-visible{
 outline:2px solid var(--vibeui-avatar-039-accent);outline-offset:2px;
 }
+/* Счётчики — сегментированная панель: волоски между ячейками рисует зазор
+   в grid, залитый цветом границы. */
 [data-vibeui-block="avatar-039"] [data-part="stats"]{
-list-style:none;margin:0;padding:0;
-display:flex;flex-wrap:wrap;gap:1.5rem;
-border-top:1px solid var(--vibeui-avatar-039-border);padding-top:0.875rem;
+list-style:none;margin:0;padding:0;overflow:hidden;
+display:grid;grid-template-columns:repeat(auto-fit,minmax(6rem,1fr));gap:1px;
+border:1px solid var(--vibeui-avatar-039-border);border-radius:0.875rem;
+background:var(--vibeui-avatar-039-border);
+}
+[data-vibeui-block="avatar-039"] [data-part="stats"] li{
+padding:0.75rem 0.875rem;
+background:light-dark(oklch(0.985 0 265),oklch(0.23 0 265));
 }
 [data-vibeui-block="avatar-039"] [data-part="stats"] b{
-display:block;font-size:1rem;font-weight:650;font-variant-numeric:tabular-nums;
+display:block;font-size:1.0625rem;font-weight:660;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="avatar-039"] [data-part="stats"] span{
-color:var(--vibeui-avatar-039-muted);font-size:0.75rem;
+display:block;margin-top:0.125rem;
+color:var(--vibeui-avatar-039-muted);font-size:0.6875rem;text-transform:uppercase;letter-spacing:0.07em;
 }
 /* От ширины самой шапки: в широкой колонке имя и кнопка встают в строку. */
 @container (min-width: 30rem){
 [data-vibeui-block="avatar-039"] [data-part="head"]{
-flex-direction:row;align-items:flex-end;gap:1rem;
+flex-direction:row;align-items:flex-end;gap:1.125rem;
 }
-[data-vibeui-block="avatar-039"] [data-part="titles"]{flex:1;min-width:0;padding-bottom:0.25rem}
-[data-vibeui-block="avatar-039"] [data-part="action"]{align-self:flex-end;margin-bottom:0.25rem}
+[data-vibeui-block="avatar-039"] [data-part="titles"]{flex:1;min-width:0;padding-bottom:0.125rem}
+[data-vibeui-block="avatar-039"] [data-part="action"]{align-self:flex-end;margin-bottom:0.125rem}
 }
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="avatar-039"]{color-scheme:dark}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="avatar-039"] *{animation:none!important;transition:none!important}}

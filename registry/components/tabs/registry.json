@@ -136,7 +136,7 @@
       }
     },
     {
-      "name": "tabbar-001",
+      "name": "tabs-014",
       "type": "registry:component",
       "title": "Полоса вкладок на телефоне",
       "description": "Нижняя панель навигации для телефона: высота учитывает safe area, активный пункт помечен и точкой, не только цветом.",
@@ -145,20 +145,20 @@
       "registryDependencies": [],
       "files": [
         {
-          "path": "tabbar-001/tabbar-001.tsx",
+          "path": "tabs-014/tabs-014.tsx",
           "type": "registry:component",
-          "target": "@components/vibeui/tabbar-001.tsx"
+          "target": "@components/vibeui/tabs-014.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tabbar-001-*. Серверный: хуков нет. Нижний отступ берётся из env(safe-area-inset-bottom), иначе на iPhone пункт уходит под системную полосу. Значок со счётчиком спрятан от скринридера, а число попадает в aria-label ссылки.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tabs-014-*. Серверный: хуков нет. Нижний отступ берётся из env(safe-area-inset-bottom), иначе на iPhone пункт уходит под системную полосу. Значок со счётчиком спрятан от скринридера, а число попадает в aria-label ссылки.",
       "meta": {
         "tags": ["tabbar", "mobile", "navigation", "safe-area"],
         "ai": {
-          "export": "Tabbar001",
-          "usage": "<Tabbar001 items={[{ label: \"Каталог\" }, { label: \"Заказы\", count: 3 }]} activeLabel=\"Каталог\" />",
+          "export": "Tabs014",
+          "usage": "<Tabs014 items={[{ label: \"Каталог\" }, { label: \"Заказы\", count: 3 }]} activeLabel=\"Каталог\" />",
           "summary": "Нижняя панель навигации: четыре пункта с подписями, значок-счётчик и активный пункт с точкой. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
-            "локальную палитру --vibeui-tabbar-001-* и не подменять её токенами вашей темы",
+            "локальную палитру --vibeui-tabs-014-* и не подменять её токенами вашей темы",
             "env(safe-area-inset-bottom): без него нижний пункт уходит под системную полосу",
             "точку у активного пункта — цвета мало, когда экран на солнце",
             "aria-current=\"page\" на активной ссылке",
@@ -207,11 +207,11 @@
         "i18n": {
           "en": {
             "description": "A mobile bottom tab bar: the height accounts for the safe area, and the active item is marked by a dot, not colour alone.",
-            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-tabbar-001-* variables. Server rendered: no hooks. The bottom padding comes from env(safe-area-inset-bottom), otherwise on an iPhone the item goes under the system bar. The badge with the counter is hidden from the screen reader, and the number goes into the link's aria-label.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-tabs-014-* variables. Server rendered: no hooks. The bottom padding comes from env(safe-area-inset-bottom), otherwise on an iPhone the item goes under the system bar. The badge with the counter is hidden from the screen reader, and the number goes into the link's aria-label.",
             "ai": {
               "summary": "A bottom navigation bar: four labelled items, a counter badge and a dot on the active one. Zero dependencies, one file, no client JS.",
               "preserve": [
-                "the local --vibeui-tabbar-001-* palette — do not swap it for your theme tokens",
+                "the local --vibeui-tabs-014-* palette — do not swap it for your theme tokens",
                 "env(safe-area-inset-bottom): without it the bottom item hides under the system bar",
                 "the dot on the active item — colour alone fails in sunlight",
                 "aria-current=\"page\" on the active link",
@@ -235,7 +235,7 @@
                 "Glyphs are drawn with borders rather than an icon set: swap in your own, keeping the size.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
-              "usage": "<Tabbar001 items={[{ label: \"Catalog\" }, { label: \"Orders\", count: 3 }]} activeLabel=\"Catalog\" />"
+              "usage": "<Tabs014 items={[{ label: \"Catalog\" }, { label: \"Orders\", count: 3 }]} activeLabel=\"Catalog\" />"
             },
             "controls": {
               "activeLabel": {
@@ -1804,173 +1804,6 @@
           "width": "full"
         },
         "cardControls": ["groupLabel", "hint", "accent", "background"]
-      }
-    },
-    {
-      "name": "tabs-012",
-      "type": "registry:component",
-      "title": "Вкладки-значки",
-      "description": "Узкая полоса без подписей: имя вкладки не исчезает, а живёт в подсказке и метке для скринридера.",
-      "categories": ["tabs"],
-      "dependencies": [],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "tabs-012/tabs-012.tsx",
-          "type": "registry:component",
-          "target": "@components/vibeui/tabs-012.tsx"
-        }
-      ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tabs-012-*. Клиентский. Стрелки, Home и End ходят по вкладкам и переносят фокус, как ожидается от tablist. Значок собран из двух букв, поэтому иконочный пакет не нужен; подпись уходит в aria-label и title, а переключателем возвращается на полосу целиком. Активная вкладка помечена заливкой, а не только цветом текста.",
-      "meta": {
-        "tags": ["tabs", "icons", "compact", "keyboard"],
-        "ai": {
-          "export": "Tabs012",
-          "usage": "<Tabs012 tabs={views} currentId=\"board\" />",
-          "summary": "Компактная полоса вкладок значками: подпись в aria-label и подсказке, переключатель возвращает текст, клавиатура ходит стрелками.",
-          "preserve": [
-            "локальную палитру --vibeui-tabs-012-* и не подменять её токенами вашей темы",
-            "подпись у значка в aria-label и title: значок без имени опознаётся не всеми",
-            "заливку у активной вкладки — цвет сам по себе не переживает печать и дальтонизм",
-            "стрелки, Home и End: без них tablist недоступен с клавиатуры",
-            "tabIndex −1 у неактивных вкладок — таб не должен обходить всю полосу",
-            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
-          ],
-          "adapt": [
-            "состав вкладок, значки в поле mark и текущую через currentId",
-            "показ подписей на полосе через withLabels",
-            "подпись полосы через groupLabel",
-            "accent — цвет активной вкладки",
-            "background — подложка компонента; пусто означает штатную палитру"
-          ],
-          "notes": [
-            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
-            "Значок — две буквы, а не иконка: ради полосы из трёх кнопок иконочный пакет не подключают. Свою иконку можно передать в mark.",
-            "title показывается только по наведению мыши: он дублирует aria-label, а не заменяет его.",
-            "Панель здесь одна и меняет содержимое. Для тяжёлых панелей держите их смонтированными и переключайте видимость.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
-          ]
-        },
-        "controls": [
-          {
-            "prop": "currentId",
-            "label": "Открытая вкладка",
-            "type": "select",
-            "default": "board",
-            "options": ["grid", "board", "chart"]
-          },
-          {
-            "prop": "withLabels",
-            "label": "Показывать подписи",
-            "type": "boolean",
-            "default": false
-          },
-          {
-            "prop": "groupLabel",
-            "label": "Подпись полосы",
-            "type": "text",
-            "default": "Вид данных",
-            "maxLength": 22
-          },
-          {
-            "prop": "accent",
-            "label": "Акцент",
-            "type": "color",
-            "default": ""
-          },
-          {
-            "prop": "background",
-            "label": "Подложка",
-            "type": "color",
-            "default": ""
-          }
-        ],
-        "i18n": {
-          "en": {
-            "title": "Icon Tabs",
-            "description": "A narrow strip without captions: the tab name does not disappear but lives in the tooltip and the screen-reader label.",
-            "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-tabs-012-* variables. Client component. Arrows, Home and End walk the tabs and move focus as expected from a tablist. The mark is two letters, so no icon package is needed; the caption goes into aria-label and title and a toggle brings it back onto the strip. The active tab is marked by a fill rather than by text colour alone.",
-            "ai": {
-              "summary": "A compact icon tab strip: the caption sits in aria-label and the tooltip, a toggle brings the text back, and the keyboard walks with arrows.",
-              "preserve": [
-                "the local --vibeui-tabs-012-* palette — do not swap it for your theme tokens",
-                "the caption in aria-label and title: a mark without a name is not read by everyone",
-                "the fill on the active tab — colour alone survives neither print nor colour blindness",
-                "arrows, Home and End: without them a tablist is unreachable from the keyboard",
-                "tabIndex −1 on inactive tabs — Tab must not walk the whole strip",
-                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
-              ],
-              "adapt": [
-                "the tabs, the marks in the mark field and the open one through currentId",
-                "showing captions on the strip through withLabels",
-                "the strip label through groupLabel",
-                "accent — the active tab colour",
-                "background — the component surface; empty means the built-in palette"
-              ],
-              "notes": [
-                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
-                "The mark is two letters, not an icon: an icon package is not worth a strip of three buttons. Pass your own icon through mark if you have one.",
-                "title only appears on mouse hover: it duplicates aria-label rather than replacing it.",
-                "There is one panel here and it swaps content. For heavy panels keep them mounted and toggle visibility instead.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
-              ],
-              "usage": "<Tabs012 tabs={views} currentId=\"board\" />"
-            },
-            "controls": {
-              "currentId": {
-                "label": "Open tab"
-              },
-              "withLabels": {
-                "label": "Show captions"
-              },
-              "groupLabel": {
-                "label": "Strip label",
-                "default": "Data view"
-              },
-              "accent": {
-                "label": "Accent"
-              },
-              "background": {
-                "label": "Background"
-              }
-            },
-            "preview": {
-              "props": {
-                "groupLabel": "Data view",
-                "tabs": [
-                  {
-                    "id": "grid",
-                    "label": "Table",
-                    "mark": "Tb",
-                    "text": "Rows and columns: handy for comparing one measure across items."
-                  },
-                  {
-                    "id": "board",
-                    "label": "Board",
-                    "mark": "Bd",
-                    "text": "Cards in columns: shows which step the work is stuck on."
-                  },
-                  {
-                    "id": "chart",
-                    "label": "Chart",
-                    "mark": "Ch",
-                    "text": "One line per metric: the shape matters more than exact numbers."
-                  }
-                ]
-              }
-            }
-          }
-        },
-        "preview": {
-          "width": "full"
-        },
-        "cardControls": [
-          "currentId",
-          "withLabels",
-          "groupLabel",
-          "accent",
-          "background"
-        ]
       }
     },
     {

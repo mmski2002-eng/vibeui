@@ -29,13 +29,13 @@ export type Checkbox015Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="checkbox-015"]){
 --vibeui-checkbox-015-bg:transparent;
---vibeui-checkbox-015-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-checkbox-015-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-checkbox-015-muted:color-mix(in oklab,var(--vibeui-checkbox-015-fg) 68%,transparent);
---vibeui-checkbox-015-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-checkbox-015-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
 --vibeui-checkbox-015-accent:light-dark(oklch(0.53 0.16 265),oklch(0.66 0.16 265));
 --vibeui-checkbox-015-danger:light-dark(oklch(0.55 0.2 25),oklch(0.7 0.17 25));
 --vibeui-checkbox-015-danger-soft:light-dark(oklch(0.96 0.03 25),oklch(0.29 0.05 25));
---vibeui-checkbox-015-on-accent:oklch(0.99 0.01 265);
+--vibeui-checkbox-015-on-accent:oklch(0.99 0 265);
 --vibeui-checkbox-015-on-danger:light-dark(oklch(0.99 0.01 25),oklch(0.21 0.04 25));
 --vibeui-checkbox-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

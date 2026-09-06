@@ -36,16 +36,16 @@ export type Alertdialog013Props = Omit<
 // в истории — об этом сказано под полем, а не в документации.
 const STYLES = `
 :where([data-vibeui-block="alertdialog-013"]){
---vibeui-alertdialog-013-bg:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
---vibeui-alertdialog-013-panel:light-dark(oklch(0.97 0.003 265),oklch(0.27 0.014 265));
---vibeui-alertdialog-013-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-alertdialog-013-bg:light-dark(oklch(1 0 0),oklch(0.22 0 265));
+--vibeui-alertdialog-013-panel:light-dark(oklch(0.97 0 265),oklch(0.27 0 265));
+--vibeui-alertdialog-013-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-alertdialog-013-muted:color-mix(in oklab,var(--vibeui-alertdialog-013-fg) 68%,transparent);
---vibeui-alertdialog-013-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-alertdialog-013-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
 --vibeui-alertdialog-013-danger:light-dark(oklch(0.55 0.19 25),oklch(0.73 0.16 25));
 --vibeui-alertdialog-013-on-danger:light-dark(oklch(1 0 0),oklch(0.19 0.04 25));
 --vibeui-alertdialog-013-avatar-bg:light-dark(oklch(0.9 0.06 25),oklch(0.36 0.07 25));
 --vibeui-alertdialog-013-avatar-fg:light-dark(oklch(0.38 0.12 25),oklch(0.91 0.06 25));
---vibeui-alertdialog-013-shadow:light-dark(oklch(0.2 0.03 265 / 55%),oklch(0.02 0.01 265 / 70%));
+--vibeui-alertdialog-013-shadow:light-dark(oklch(0.2 0 265 / 55%),oklch(0.02 0 265 / 70%));
 --vibeui-alertdialog-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -70,7 +70,7 @@ background:var(--vibeui-alertdialog-013-bg);color:var(--vibeui-alertdialog-013-f
 box-shadow:0 24px 60px -24px var(--vibeui-alertdialog-013-shadow);
 font-family:var(--vibeui-alertdialog-013-font);
 }
-[data-vibeui-block="alertdialog-013"] dialog::backdrop{background:light-dark(oklch(0.2 0.02 265 / 45%),oklch(0.08 0.014 265 / 62%))}
+[data-vibeui-block="alertdialog-013"] dialog::backdrop{background:light-dark(oklch(0.2 0 265 / 45%),oklch(0.08 0 265 / 62%))}
 [data-vibeui-block="alertdialog-013"] h2{margin:0 0 0.375rem;font-size:1rem;font-weight:700;line-height:1.3}
 [data-vibeui-block="alertdialog-013"] [data-part="who"]{
 display:flex;align-items:center;gap:0.5rem;margin:0 0 0.875rem;

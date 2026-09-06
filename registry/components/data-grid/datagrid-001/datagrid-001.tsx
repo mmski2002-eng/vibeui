@@ -48,14 +48,14 @@ type SortKey = { column: Column; direction: Direction }
 const STYLES = `
 :where([data-vibeui-block="datagrid-001"]){
 --vibeui-datagrid-001-bg:transparent;
---vibeui-datagrid-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-datagrid-001-fg:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
 --vibeui-datagrid-001-muted:color-mix(in oklab,var(--vibeui-datagrid-001-fg) 68%,transparent);
---vibeui-datagrid-001-border:light-dark(oklch(0.92 0.006 265),oklch(0.34 0.012 265));
---vibeui-datagrid-001-head:light-dark(oklch(0.975 0.003 265),oklch(0.27 0.012 265));
---vibeui-datagrid-001-hover:light-dark(oklch(0.55 0.02 265 / 6%),oklch(0.78 0.03 265 / 10%));
+--vibeui-datagrid-001-border:light-dark(oklch(0.92 0 265),oklch(0.34 0 265));
+--vibeui-datagrid-001-head:light-dark(oklch(0.975 0 265),oklch(0.27 0 265));
+--vibeui-datagrid-001-hover:light-dark(oklch(0.55 0 265 / 6%),oklch(0.78 0 265 / 10%));
 --vibeui-datagrid-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
 --vibeui-datagrid-001-accent-soft:light-dark(oklch(0.55 0.2 262 / 10%),oklch(0.74 0.16 262 / 20%));
---vibeui-datagrid-001-rank-fg:light-dark(oklch(1 0 0),oklch(0.21 0.014 265));
+--vibeui-datagrid-001-rank-fg:light-dark(oklch(1 0 0),oklch(0.21 0 265));
 --vibeui-datagrid-001-radius:0.875rem;
 --vibeui-datagrid-001-pad:0.625rem;
 --vibeui-datagrid-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

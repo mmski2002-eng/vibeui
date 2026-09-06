@@ -25,10 +25,10 @@ const STYLES = `
 :where([data-vibeui-block="separator-004"]){
 --vibeui-separator-004-dash:6px;
 --vibeui-separator-004-gap:6px;
---vibeui-separator-004-line:light-dark(oklch(0.78 0.01 265),oklch(0.5 0.014 265));
+--vibeui-separator-004-line:light-dark(oklch(0.78 0 265),oklch(0.5 0 265));
 --vibeui-separator-004-surface:transparent;
---vibeui-separator-004-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
---vibeui-separator-004-fg:light-dark(oklch(0.26 0.014 265),oklch(0.94 0.006 265));
+--vibeui-separator-004-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
+--vibeui-separator-004-fg:light-dark(oklch(0.26 0 265),oklch(0.94 0 265));
 --vibeui-separator-004-muted:color-mix(in oklab,var(--vibeui-separator-004-fg) 68%,transparent);
 --vibeui-separator-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

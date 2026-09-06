@@ -1,4 +1,6 @@
-import { useId } from "react"
+"use client"
+
+import { useId, useState } from "react"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Popover005Props = Omit<ComponentProps<"div">, "children"> & {
@@ -9,6 +11,8 @@ export type Popover005Props = Omit<ComponentProps<"div">, "children"> & {
   selected?: string
   /** Пояснение под сеткой. */
   hint?: string
+  /** Выбранный цвет: имя из swatches. */
+  onSelect?: (name: string) => void
   /** Показать панель раскрытой и в потоке: витрине и документации нужна открытая. */
   defaultOpen?: boolean
   accent?: string
@@ -18,17 +22,19 @@ export type Popover005Props = Omit<ComponentProps<"div">, "children"> & {
 
 // Идея компонента: выбор цвета метки, где цвет — это radio, а не div с
 // обработчиком. Кружки нарисованы из спрятанных радиокнопок, поэтому выбор
-// работает стрелками, попадает в форму и не требует ни строчки JS.
+// работает стрелками и попадает в форму. Состояние здесь ровно одно — какой
+// цвет выбран: без него кружок на кнопке не менялся бы, и выбор выглядел бы
+// как отказ.
 const STYLES = `
 :where([data-vibeui-block="popover-005"]){
---vibeui-popover-005-bg:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
---vibeui-popover-005-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.006 265));
+--vibeui-popover-005-bg:light-dark(oklch(1 0 0),oklch(0.22 0 265));
+--vibeui-popover-005-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-popover-005-muted:color-mix(in oklab,var(--vibeui-popover-005-fg) 68%,transparent);
---vibeui-popover-005-border:light-dark(oklch(0.89 0.006 265),oklch(0.36 0.012 265));
+--vibeui-popover-005-border:light-dark(oklch(0.89 0 265),oklch(0.36 0 265));
 --vibeui-popover-005-accent:light-dark(oklch(0.55 0.17 265),oklch(0.73 0.15 265));
 --vibeui-popover-005-swatch:oklch(0.6 0.17 255);
 --vibeui-popover-005-edge:light-dark(oklch(0 0 0 / 12%),oklch(1 0 0 / 18%));
---vibeui-popover-005-shadow:light-dark(oklch(0.2 0.02 265 / 60%),oklch(0.02 0.01 265 / 72%));
+--vibeui-popover-005-shadow:light-dark(oklch(0.2 0 265 / 60%),oklch(0.02 0 265 / 72%));
 --vibeui-popover-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -60,12 +66,12 @@ width:min(14.5rem,100vw - 2rem);box-sizing:border-box;
 border:1px solid var(--vibeui-popover-005-border);border-radius:0.875rem;
 background:var(--vibeui-popover-005-bg);color:inherit;
 box-shadow:0 24px 50px -30px var(--vibeui-popover-005-shadow);
-position-anchor:--vibeui-popover-005-anchor;
+position-anchor:--vibeui-popover-005-anchor;inset:auto;
 top:anchor(bottom);left:anchor(left);margin-top:0.5rem;
 }
 [data-vibeui-block="popover-005"] [data-part="panel"]:popover-open{display:flex;flex-direction:column;gap:0.625rem}
 @supports not (anchor-name: --a){
-[data-vibeui-block="popover-005"] [data-part="panel"]{position:absolute;inset:auto;top:calc(100% + 0.5rem);left:0}
+[data-vibeui-block="popover-005"] [data-part="panel"]{position:fixed;inset:0;margin:auto}
 }
 [data-vibeui-block="popover-005"] fieldset{margin:0;padding:0;border:0;min-width:0}
 [data-vibeui-block="popover-005"] legend{
@@ -103,15 +109,17 @@ margin:0;font-size:0.75rem;line-height:1.4;color:var(--vibeui-popover-005-muted)
 }
 /* Раскрытая панель на месте: атрибут popover прячет её правилом браузера,
    а это правило той же специфичности его переопределяет и возвращает панель
-   в поток. Так её показывают на витрине и в документации, без верхнего слоя. */
-[data-vibeui-block="popover-005"][data-open] [popover]{
-display:block;position:static;inset:auto;margin:0.5rem 0 0;
+   в поток. Так её показывают на витрине и в документации, без верхнего слоя.
+   Только пока popover закрыт: у открытого положение задаёт верхний слой,
+   и static отправил бы панель в левый верхний угол экрана. */
+[data-vibeui-block="popover-005"][data-open] [popover]:not(:popover-open){
+display:flex;flex-direction:column;gap:0.625rem;position:static;inset:auto;margin:0.5rem 0 0;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="popover-005"] *{animation:none!important;transition:none!important}}
 `
 
 const DEFAULT_SWATCHES = [
-  { name: "Графит", value: "oklch(0.45 0.02 265)" },
+  { name: "Графит", value: "oklch(0.45 0 265)" },
   { name: "Синий", value: "oklch(0.6 0.17 255)" },
   { name: "Бирюзовый", value: "oklch(0.7 0.13 195)" },
   { name: "Зелёный", value: "oklch(0.68 0.16 150)" },
@@ -154,6 +162,7 @@ export function Popover005({
   swatches = DEFAULT_SWATCHES,
   selected = "Синий",
   hint = "Цвет применится ко всем задачам с этой меткой.",
+  onSelect,
   defaultOpen = false,
   accent,
   background = "",
@@ -162,8 +171,9 @@ export function Popover005({
   ...props
 }: Popover005Props) {
   const id = useId().replace(/:/g, "")
+  const [chosen, setChosen] = useState(selected)
   const current =
-    swatches.find((swatch) => swatch.name === selected) ?? swatches[0]
+    swatches.find((swatch) => swatch.name === chosen) ?? swatches[0]
   const palette = {
     ...(accent ? { "--vibeui-popover-005-accent": accent } : null),
     ...(background
@@ -220,7 +230,11 @@ export function Popover005({
                     type="radio"
                     name={`${id}-color`}
                     value={swatch.name}
-                    defaultChecked={swatch.name === current?.name}
+                    checked={swatch.name === current?.name}
+                    onChange={() => {
+                      setChosen(swatch.name)
+                      onSelect?.(swatch.name)
+                    }}
                   />
                   <span data-part="sr">{swatch.name}</span>
                 </label>

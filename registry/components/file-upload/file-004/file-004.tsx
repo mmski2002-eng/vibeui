@@ -35,11 +35,11 @@ export type File004Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="file-004"]){
 --vibeui-file-004-surface:transparent;
---vibeui-file-004-tile:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.012 265));
---vibeui-file-004-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-file-004-tile:light-dark(oklch(0.975 0 265),oklch(0.27 0 265));
+--vibeui-file-004-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-file-004-muted:color-mix(in oklab,var(--vibeui-file-004-fg) 68%,transparent);
---vibeui-file-004-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
---vibeui-file-004-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-file-004-border:light-dark(oklch(0.88 0 265),oklch(0.42 0 265));
+--vibeui-file-004-shell:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
 --vibeui-file-004-accent:light-dark(oklch(0.55 0.16 200),oklch(0.76 0.14 200));
 --vibeui-file-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

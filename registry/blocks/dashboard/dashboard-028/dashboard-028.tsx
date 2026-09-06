@@ -51,13 +51,13 @@ export type Dashboard028Props = {
 const STYLES = `
 :where([data-vibeui-block="dashboard-028"]){
 --vibeui-dashboard-028-bg:transparent;
---vibeui-dashboard-028-panel:light-dark(oklch(0.985 0.003 265),oklch(0.27 0.012 265));
---vibeui-dashboard-028-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-dashboard-028-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
---vibeui-dashboard-028-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.011 265));
+--vibeui-dashboard-028-panel:light-dark(oklch(0.985 0 265),oklch(0.27 0 265));
+--vibeui-dashboard-028-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
+--vibeui-dashboard-028-muted:light-dark(oklch(0.55 0 265),oklch(0.71 0 265));
+--vibeui-dashboard-028-border:light-dark(oklch(0.91 0 265),oklch(0.35 0 265));
 --vibeui-dashboard-028-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
 /* Текст на заливке акцента: в тёмной теме акцент светлее, и белым по нему не прочесть. */
---vibeui-dashboard-028-onaccent:light-dark(oklch(1 0 0),oklch(0.19 0.012 265));
+--vibeui-dashboard-028-onaccent:light-dark(oklch(1 0 0),oklch(0.19 0 265));
 --vibeui-dashboard-028-late:light-dark(oklch(0.55 0.18 25),oklch(0.73 0.16 25));
 --vibeui-dashboard-028-soon:light-dark(oklch(0.64 0.15 65),oklch(0.79 0.13 65));
 --vibeui-dashboard-028-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

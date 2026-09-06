@@ -59,13 +59,13 @@ const STYLES = `
 :where([data-vibeui-block="dashboard-085"]){
 --vibeui-dashboard-085-bg:transparent;
 /* Карточка отдела и жёлоб полосы: подложка самого блока прозрачна. */
---vibeui-dashboard-085-card:light-dark(oklch(1 0 0),oklch(0.26 0.012 300));
---vibeui-dashboard-085-inset:light-dark(oklch(0.985 0.003 300),oklch(0.22 0.012 300));
---vibeui-dashboard-085-fg:light-dark(oklch(0.21 0.014 300),oklch(0.94 0.005 300));
---vibeui-dashboard-085-muted:light-dark(oklch(0.54 0.014 300),oklch(0.72 0.012 300));
---vibeui-dashboard-085-border:light-dark(oklch(0.91 0.006 300),oklch(0.36 0.012 300));
+--vibeui-dashboard-085-card:light-dark(oklch(1 0 0),oklch(0.26 0 300));
+--vibeui-dashboard-085-inset:light-dark(oklch(0.985 0 300),oklch(0.22 0 300));
+--vibeui-dashboard-085-fg:light-dark(oklch(0.21 0 300),oklch(0.94 0 300));
+--vibeui-dashboard-085-muted:light-dark(oklch(0.54 0 300),oklch(0.72 0 300));
+--vibeui-dashboard-085-border:light-dark(oklch(0.91 0 300),oklch(0.36 0 300));
 --vibeui-dashboard-085-accent:light-dark(oklch(0.51 0.16 300),oklch(0.74 0.14 300));
---vibeui-dashboard-085-soft:light-dark(oklch(0.965 0.02 300),oklch(0.3 0.03 300));
+--vibeui-dashboard-085-soft:light-dark(oklch(0.965 0 300),oklch(0.3 0 300));
 --vibeui-dashboard-085-ahead:light-dark(oklch(0.58 0.13 155),oklch(0.74 0.13 155));
 --vibeui-dashboard-085-behind:light-dark(oklch(0.57 0.19 25),oklch(0.72 0.16 25));
 --vibeui-dashboard-085-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;

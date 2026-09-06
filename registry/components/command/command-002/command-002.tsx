@@ -35,12 +35,12 @@ export type Command002Props = Omit<ComponentProps<"div">, "children"> & {
 // граница светлее подложки, а не темнее — иначе панель растворяется.
 const STYLES = `
 :where([data-vibeui-block="command-002"]){
---vibeui-command-002-bg:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
---vibeui-command-002-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.006 265));
+--vibeui-command-002-bg:light-dark(oklch(1 0 0),oklch(0.21 0 265));
+--vibeui-command-002-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-command-002-muted:color-mix(in oklab,var(--vibeui-command-002-fg) 68%,transparent);
---vibeui-command-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-command-002-border:light-dark(oklch(0.9 0 265),oklch(0.35 0 265));
 --vibeui-command-002-accent:light-dark(oklch(0.55 0.19 262),oklch(0.74 0.16 262));
---vibeui-command-002-shadow:light-dark(oklch(0.2 0.03 265 / 60%),oklch(0.04 0.015 265 / 70%));
+--vibeui-command-002-shadow:light-dark(oklch(0.2 0 265 / 60%),oklch(0.04 0 265 / 70%));
 --vibeui-command-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -100,11 +100,11 @@ font-size:0.6875rem;color:var(--vibeui-command-002-muted);
 `
 
 const DEFAULT_COMMANDS: Command002Command[] = [
-  { label: "Новый компонент", group: "Действия", keys: "⌘N" },
-  { label: "Пересобрать реестр", group: "Действия", keys: "⌘R" },
+  { label: "Новый компонент", group: "Действия", keys: "Ctrl+N" },
+  { label: "Пересобрать реестр", group: "Действия", keys: "Ctrl+R" },
   { label: "Открыть каталог", group: "Переходы", keys: "G C" },
   { label: "Открыть настройки", group: "Переходы", keys: "G S" },
-  { label: "Сменить тему", group: "Вид", keys: "⌘⇧L" },
+  { label: "Сменить тему", group: "Вид", keys: "Ctrl+Shift+L" },
   { label: "Показать сетку", group: "Вид" },
 ]
 

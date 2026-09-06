@@ -35,15 +35,15 @@ export type Chart016Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="chart-016"]){
 --vibeui-chart-016-bg:transparent;
---vibeui-chart-016-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-chart-016-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-chart-016-muted:color-mix(in oklab,var(--vibeui-chart-016-fg) 68%,transparent);
---vibeui-chart-016-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
---vibeui-chart-016-band:light-dark(oklch(0.96 0.004 265),oklch(0.25 0.009 265));
---vibeui-chart-016-band-2:light-dark(oklch(0.93 0.005 265),oklch(0.29 0.011 265));
---vibeui-chart-016-band-3:light-dark(oklch(0.89 0.006 265),oklch(0.33 0.013 265));
+--vibeui-chart-016-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
+--vibeui-chart-016-band:light-dark(oklch(0.96 0 265),oklch(0.25 0 265));
+--vibeui-chart-016-band-2:light-dark(oklch(0.93 0 265),oklch(0.29 0 265));
+--vibeui-chart-016-band-3:light-dark(oklch(0.89 0 265),oklch(0.33 0 265));
 --vibeui-chart-016-accent:light-dark(oklch(0.45 0.15 265),oklch(0.74 0.14 265));
 --vibeui-chart-016-over:light-dark(oklch(0.55 0.15 155),oklch(0.76 0.14 155));
---vibeui-chart-016-plan:light-dark(oklch(0.3 0.02 265),oklch(0.9 0.012 265));
+--vibeui-chart-016-plan:light-dark(oklch(0.3 0 265),oklch(0.9 0 265));
 --vibeui-chart-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

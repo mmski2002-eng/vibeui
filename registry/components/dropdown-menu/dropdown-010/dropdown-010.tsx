@@ -33,11 +33,11 @@ export type Dropdown010Props = Omit<ComponentProps<"div">, "children"> & {
 // контексте панель светлее фона страницы, а её граница светлее панели.
 const STYLES = `
 :where([data-vibeui-block="dropdown-010"]){
---vibeui-dropdown-010-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
---vibeui-dropdown-010-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-dropdown-010-bg:light-dark(oklch(1 0 0),oklch(0.25 0 265));
+--vibeui-dropdown-010-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-dropdown-010-muted:color-mix(in oklab,var(--vibeui-dropdown-010-fg) 68%,transparent);
---vibeui-dropdown-010-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
---vibeui-dropdown-010-hover:light-dark(oklch(0.96 0.004 265),oklch(0.32 0.014 265));
+--vibeui-dropdown-010-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
+--vibeui-dropdown-010-hover:light-dark(oklch(0.96 0 265),oklch(0.32 0 265));
 --vibeui-dropdown-010-accent:light-dark(oklch(0.55 0.16 190),oklch(0.74 0.13 190));
 --vibeui-dropdown-010-on-accent:light-dark(oklch(0.99 0 0),oklch(0.19 0.03 190));
 --vibeui-dropdown-010-width:18rem;
@@ -70,7 +70,7 @@ position:fixed;padding:0.375rem;box-sizing:border-box;
 width:var(--vibeui-dropdown-010-width);
 background:var(--vibeui-dropdown-010-bg);color:var(--vibeui-dropdown-010-fg);
 border:1px solid var(--vibeui-dropdown-010-border);border-radius:0.875rem;
-box-shadow:0 20px 44px -24px oklch(0.2 0.03 265 / 50%);
+box-shadow:0 20px 44px -24px oklch(0.2 0 265 / 50%);
 font-family:var(--vibeui-dropdown-010-font);
 opacity:0;transform:translateY(-0.25rem);
 transition:opacity .14s ease,transform .14s ease,display .14s allow-discrete,overlay .14s allow-discrete;

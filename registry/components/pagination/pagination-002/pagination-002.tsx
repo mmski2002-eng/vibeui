@@ -24,10 +24,10 @@ export type Pagination002Props = Omit<ComponentProps<"nav">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="pagination-002"]){
 --vibeui-pagination-002-bg:transparent;
---vibeui-pagination-002-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-pagination-002-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-pagination-002-muted:color-mix(in oklab,var(--vibeui-pagination-002-fg) 68%,transparent);
---vibeui-pagination-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265));
---vibeui-pagination-002-hover:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.82 0.02 265 / 14%));
+--vibeui-pagination-002-border:light-dark(oklch(0.9 0 265),oklch(0.38 0 265));
+--vibeui-pagination-002-hover:light-dark(oklch(0.55 0 265 / 8%),oklch(0.82 0 265 / 14%));
 --vibeui-pagination-002-accent:light-dark(oklch(0.55 0.2 262),oklch(0.7 0.16 262));
 --vibeui-pagination-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

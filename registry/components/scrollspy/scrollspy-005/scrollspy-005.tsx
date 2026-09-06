@@ -33,9 +33,9 @@ const STYLES = `
 :where([data-vibeui-block="scrollspy-005"]){
 --vibeui-scrollspy-005-bg:transparent;
 --vibeui-scrollspy-005-sticky:Canvas;
---vibeui-scrollspy-005-fg:light-dark(oklch(0.23 0.014 265),oklch(0.93 0.006 265));
+--vibeui-scrollspy-005-fg:light-dark(oklch(0.23 0 265),oklch(0.93 0 265));
 --vibeui-scrollspy-005-muted:color-mix(in oklab,var(--vibeui-scrollspy-005-fg) 68%,transparent);
---vibeui-scrollspy-005-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-scrollspy-005-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-scrollspy-005-accent:light-dark(oklch(0.58 0.2 25),oklch(0.72 0.17 25));
 --vibeui-scrollspy-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

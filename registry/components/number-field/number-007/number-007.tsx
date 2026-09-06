@@ -30,11 +30,11 @@ export type Number007Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="number-007"]){
 --vibeui-number-007-surface:transparent;
---vibeui-number-007-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
---vibeui-number-007-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-number-007-shell:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-number-007-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-number-007-muted:color-mix(in oklab,var(--vibeui-number-007-fg) 68%,transparent);
---vibeui-number-007-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
---vibeui-number-007-track:light-dark(oklch(0.93 0.006 265),oklch(0.33 0.011 265));
+--vibeui-number-007-border:light-dark(oklch(0.88 0 265),oklch(0.42 0 265));
+--vibeui-number-007-track:light-dark(oklch(0.93 0 265),oklch(0.33 0 265));
 --vibeui-number-007-low:light-dark(oklch(0.58 0.19 25),oklch(0.72 0.16 25));
 --vibeui-number-007-mid:light-dark(oklch(0.72 0.15 75),oklch(0.82 0.14 75));
 --vibeui-number-007-high:light-dark(oklch(0.6 0.16 150),oklch(0.76 0.14 150));

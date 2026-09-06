@@ -33,9 +33,9 @@ export type Chart017Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="chart-017"]){
 --vibeui-chart-017-bg:transparent;
---vibeui-chart-017-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-chart-017-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-chart-017-muted:color-mix(in oklab,var(--vibeui-chart-017-fg) 68%,transparent);
---vibeui-chart-017-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-chart-017-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-chart-017-accent:light-dark(oklch(0.55 0.17 285),oklch(0.62 0.17 285));
 --vibeui-chart-017-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

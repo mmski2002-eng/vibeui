@@ -26,9 +26,9 @@ export type Toggle014Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="toggle-014"]){
 --vibeui-toggle-014-bg:transparent;
---vibeui-toggle-014-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-toggle-014-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-toggle-014-muted:color-mix(in oklab,var(--vibeui-toggle-014-fg) 68%,transparent);
---vibeui-toggle-014-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265));
+--vibeui-toggle-014-border:light-dark(oklch(0.9 0 265),oklch(0.38 0 265));
 --vibeui-toggle-014-accent:light-dark(oklch(0.68 0.17 55),oklch(0.79 0.15 55));
 --vibeui-toggle-014-soft:light-dark(oklch(0.96 0.03 55),oklch(0.31 0.045 55));
 --vibeui-toggle-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

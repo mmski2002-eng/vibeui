@@ -32,11 +32,11 @@ type Status = "idle" | "editing" | "saved"
 const STYLES = `
 :where([data-vibeui-block="inputgroup-029"]){
 --vibeui-inputgroup-029-surface:transparent;
---vibeui-inputgroup-029-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
---vibeui-inputgroup-029-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-inputgroup-029-shell:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
+--vibeui-inputgroup-029-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-inputgroup-029-muted:color-mix(in oklab,var(--vibeui-inputgroup-029-fg) 68%,transparent);
---vibeui-inputgroup-029-field:light-dark(oklch(0.99 0.002 265),oklch(0.26 0.012 265));
---vibeui-inputgroup-029-border:light-dark(oklch(0.86 0.008 265),oklch(0.42 0.014 265));
+--vibeui-inputgroup-029-field:light-dark(oklch(0.99 0 265),oklch(0.26 0 265));
+--vibeui-inputgroup-029-border:light-dark(oklch(0.86 0 265),oklch(0.42 0 265));
 --vibeui-inputgroup-029-accent:light-dark(oklch(0.55 0.14 250),oklch(0.76 0.13 250));
 --vibeui-inputgroup-029-saved:light-dark(oklch(0.56 0.14 155),oklch(0.75 0.13 155));
 --vibeui-inputgroup-029-radius:0.75rem;

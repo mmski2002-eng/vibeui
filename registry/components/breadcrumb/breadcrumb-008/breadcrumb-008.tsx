@@ -20,12 +20,12 @@ export type Breadcrumb008Props = Omit<ComponentProps<"nav">, "children"> & {
 // color-scheme окружения.
 const STYLES = `
 :where([data-vibeui-block="breadcrumb-008"]){
---vibeui-breadcrumb-008-fg:light-dark(oklch(0.28 0.014 265),oklch(0.94 0.008 265));
+--vibeui-breadcrumb-008-fg:light-dark(oklch(0.28 0 265),oklch(0.94 0 265));
 --vibeui-breadcrumb-008-muted:color-mix(in oklab,var(--vibeui-breadcrumb-008-fg) 68%,transparent);
---vibeui-breadcrumb-008-sep:light-dark(oklch(0.75 0.01 265),oklch(0.52 0.012 265));
---vibeui-breadcrumb-008-bg:light-dark(oklch(0.97 0.003 265),oklch(0.26 0.01 265));
---vibeui-breadcrumb-008-hover:light-dark(oklch(0.93 0.006 265),oklch(0.33 0.012 265));
---vibeui-breadcrumb-008-border:light-dark(oklch(0.91 0.006 265),oklch(0.37 0.012 265));
+--vibeui-breadcrumb-008-sep:light-dark(oklch(0.75 0 265),oklch(0.52 0 265));
+--vibeui-breadcrumb-008-bg:light-dark(oklch(0.97 0 265),oklch(0.26 0 265));
+--vibeui-breadcrumb-008-hover:light-dark(oklch(0.93 0 265),oklch(0.33 0 265));
+--vibeui-breadcrumb-008-border:light-dark(oklch(0.91 0 265),oklch(0.37 0 265));
 --vibeui-breadcrumb-008-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-breadcrumb-008-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 }

@@ -42,17 +42,17 @@ export type Commerce064Props = {
 const STYLES = `
 :where([data-vibeui-block="commerce-064"]){
 --vibeui-commerce-064-bg:transparent;
---vibeui-commerce-064-panel:light-dark(oklch(0.975 0.005 265),oklch(0.25 0.025 265));
---vibeui-commerce-064-fg:light-dark(oklch(0.22 0.018 265),oklch(0.97 0.006 265));
---vibeui-commerce-064-muted:light-dark(oklch(0.52 0.018 265),oklch(0.72 0.018 265));
---vibeui-commerce-064-border:light-dark(oklch(0.89 0.009 265),oklch(0.4 0.028 265));
+--vibeui-commerce-064-panel:light-dark(oklch(0.975 0 265),oklch(0.25 0 265));
+--vibeui-commerce-064-fg:light-dark(oklch(0.22 0 265),oklch(0.97 0 265));
+--vibeui-commerce-064-muted:light-dark(oklch(0.52 0 265),oklch(0.72 0 265));
+--vibeui-commerce-064-border:light-dark(oklch(0.89 0 265),oklch(0.4 0 265));
 --vibeui-commerce-064-accent:light-dark(oklch(0.52 0.13 145),oklch(0.78 0.16 145));
---vibeui-commerce-064-onaccent:light-dark(oklch(0.99 0 0),oklch(0.19 0.02 265));
+--vibeui-commerce-064-onaccent:light-dark(oklch(0.99 0 0),oklch(0.19 0 265));
 --vibeui-commerce-064-warn:light-dark(oklch(0.53 0.14 65),oklch(0.8 0.15 75));
 /* Бумага и краска QR не зависят от темы: код читает сканер, а ему нужен
    постоянный контраст. */
 --vibeui-commerce-064-qr-paper:oklch(0.99 0 0);
---vibeui-commerce-064-qr-ink:oklch(0.19 0.02 265);
+--vibeui-commerce-064-qr-ink:oklch(0.19 0 265);
 --vibeui-commerce-064-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-commerce-064-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 container-type:inline-size;

@@ -34,10 +34,10 @@ export type Chart026Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="chart-026"]){
 --vibeui-chart-026-bg:transparent;
---vibeui-chart-026-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-chart-026-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-chart-026-muted:color-mix(in oklab,var(--vibeui-chart-026-fg) 64%,transparent);
---vibeui-chart-026-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
---vibeui-chart-026-rule:light-dark(oklch(0.94 0.005 265),oklch(0.3 0.01 265));
+--vibeui-chart-026-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
+--vibeui-chart-026-rule:light-dark(oklch(0.94 0 265),oklch(0.3 0 265));
 --vibeui-chart-026-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-chart-026-good:light-dark(oklch(0.52 0.15 152),oklch(0.75 0.14 152));
 --vibeui-chart-026-bad:light-dark(oklch(0.55 0.19 25),oklch(0.74 0.16 25));

@@ -55,13 +55,13 @@ const TEMPLATES: Inputgroup037Template[] = [
 const STYLES = `
 :where([data-vibeui-block="inputgroup-037"]){
 --vibeui-inputgroup-037-surface:transparent;
---vibeui-inputgroup-037-menu:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
---vibeui-inputgroup-037-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
---vibeui-inputgroup-037-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-inputgroup-037-menu:light-dark(oklch(1 0 0),oklch(0.24 0 265));
+--vibeui-inputgroup-037-shell:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
+--vibeui-inputgroup-037-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-inputgroup-037-muted:color-mix(in oklab,var(--vibeui-inputgroup-037-fg) 68%,transparent);
---vibeui-inputgroup-037-field:light-dark(oklch(0.99 0.002 265),oklch(0.26 0.012 265));
---vibeui-inputgroup-037-fixed:light-dark(oklch(0.965 0.003 265),oklch(0.31 0.012 265));
---vibeui-inputgroup-037-border:light-dark(oklch(0.86 0.008 265),oklch(0.42 0.014 265));
+--vibeui-inputgroup-037-field:light-dark(oklch(0.99 0 265),oklch(0.26 0 265));
+--vibeui-inputgroup-037-fixed:light-dark(oklch(0.965 0 265),oklch(0.31 0 265));
+--vibeui-inputgroup-037-border:light-dark(oklch(0.86 0 265),oklch(0.42 0 265));
 --vibeui-inputgroup-037-accent:light-dark(oklch(0.55 0.14 190),oklch(0.78 0.12 190));
 --vibeui-inputgroup-037-radius:0.75rem;
 --vibeui-inputgroup-037-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -116,7 +116,7 @@ position:absolute;top:calc(100% + 0.375rem);right:0;left:0;z-index:2;
 margin:0;padding:0.375rem;list-style:none;
 background:var(--vibeui-inputgroup-037-menu);
 border:1px solid var(--vibeui-inputgroup-037-border);border-radius:0.75rem;
-box-shadow:0 0.75rem 1.75rem -0.75rem light-dark(oklch(0.2 0.02 265 / 0.35),oklch(0.05 0.01 265 / 0.65));
+box-shadow:0 0.75rem 1.75rem -0.75rem light-dark(oklch(0.2 0 265 / 0.35),oklch(0.05 0 265 / 0.65));
 }
 [data-vibeui-block="inputgroup-037"] [data-part="option"]{
 display:block;width:100%;text-align:left;appearance:none;cursor:pointer;

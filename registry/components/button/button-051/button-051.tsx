@@ -24,11 +24,11 @@ export type Button051Props = Omit<
 // подписи всегда в разметке, ширина берётся по длинной, кнопка не прыгает.
 const STYLES = `
 :where([data-vibeui-block="button-051"]){
---vibeui-button-051-accent:light-dark(oklch(0.5 0.16 265),oklch(0.63 0.16 265));
---vibeui-button-051-fg:light-dark(oklch(0.99 0.01 265),oklch(0.98 0.012 265));
---vibeui-button-051-surface:light-dark(oklch(1 0 0),oklch(0.25 0.014 265));
---vibeui-button-051-border:light-dark(oklch(0.87 0.006 265),oklch(0.42 0.014 265));
---vibeui-button-051-ink:light-dark(oklch(0.26 0.02 265),oklch(0.93 0.008 265));
+--vibeui-button-051-accent:light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));
+--vibeui-button-051-fg:light-dark(oklch(0.99 0 265),oklch(0.17 0.01 265));
+--vibeui-button-051-surface:light-dark(oklch(1 0 0),oklch(0.25 0 265));
+--vibeui-button-051-border:light-dark(oklch(0.87 0 265),oklch(0.42 0 265));
+--vibeui-button-051-ink:light-dark(oklch(0.26 0 265),oklch(0.93 0 265));
 --vibeui-button-051-danger:light-dark(oklch(0.55 0.19 22),oklch(0.71 0.17 22));
 --vibeui-button-051-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

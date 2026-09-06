@@ -25,11 +25,11 @@ export type Toggle010Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="toggle-010"]){
 --vibeui-toggle-010-bg:transparent;
---vibeui-toggle-010-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-toggle-010-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-toggle-010-muted:color-mix(in oklab,var(--vibeui-toggle-010-fg) 68%,transparent);
---vibeui-toggle-010-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-toggle-010-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
 --vibeui-toggle-010-accent:light-dark(oklch(0.58 0.17 250),oklch(0.76 0.14 250));
---vibeui-toggle-010-off:light-dark(oklch(0.7 0.01 265),oklch(0.48 0.012 265));
+--vibeui-toggle-010-off:light-dark(oklch(0.7 0 265),oklch(0.48 0 265));
 --vibeui-toggle-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

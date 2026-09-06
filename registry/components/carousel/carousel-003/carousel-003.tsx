@@ -36,11 +36,11 @@ export type Carousel003Props = Omit<ComponentProps<"section">, "children"> & {
 // миниатюры темнеют вместе со страницей, своей тёмной темы компонент не носит.
 const STYLES = `
 :where([data-vibeui-block="carousel-003"]){
---vibeui-carousel-003-surface:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
---vibeui-carousel-003-bg:light-dark(oklch(1 0 0),oklch(0.26 0.013 265));
---vibeui-carousel-003-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-carousel-003-surface:light-dark(oklch(1 0 0),oklch(0.21 0 265));
+--vibeui-carousel-003-bg:light-dark(oklch(1 0 0),oklch(0.26 0 265));
+--vibeui-carousel-003-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-carousel-003-muted:color-mix(in oklab,var(--vibeui-carousel-003-fg) 68%,transparent);
---vibeui-carousel-003-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-carousel-003-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
 --vibeui-carousel-003-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-carousel-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -65,10 +65,10 @@ border-radius:0.875rem;
 background:
 radial-gradient(90% 80% at 20% 20%,oklch(0.9 0.06 var(--vibeui-carousel-003-hue,250)),transparent 70%),
 linear-gradient(150deg,oklch(0.72 0.1 var(--vibeui-carousel-003-hue,250)),oklch(0.42 0.11 var(--vibeui-carousel-003-hue,250)));
-color:oklch(0.99 0.003 265);
+color:oklch(0.99 0 265);
 }
 [data-vibeui-block="carousel-003"] [data-part="title"]{margin:0;font-size:1.125rem;font-weight:680;line-height:1.2}
-[data-vibeui-block="carousel-003"] [data-part="text"]{margin:0;font-size:0.8125rem;line-height:1.45;color:oklch(0.93 0.01 265);max-width:22rem}
+[data-vibeui-block="carousel-003"] [data-part="text"]{margin:0;font-size:0.8125rem;line-height:1.45;color:oklch(0.93 0 265);max-width:22rem}
 /* Миниатюры отвечают на вопрос «что дальше», на который точки не отвечают. */
 [data-vibeui-block="carousel-003"] [data-part="thumbs"]{
 display:flex;gap:0.375rem;margin:0;padding:0;list-style:none;

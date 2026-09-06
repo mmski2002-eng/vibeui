@@ -46,15 +46,15 @@ export type Dashboard029Props = {
 const STYLES = `
 :where([data-vibeui-block="dashboard-029"]){
 --vibeui-dashboard-029-bg:transparent;
---vibeui-dashboard-029-panel:light-dark(oklch(0.985 0.003 265),oklch(0.27 0.012 265));
+--vibeui-dashboard-029-panel:light-dark(oklch(0.985 0 265),oklch(0.27 0 265));
 /* Подсветка строки под курсором: подложка бывает прозрачной, и подсветить
    строку фоном блока тогда нечем. */
---vibeui-dashboard-029-hover:light-dark(oklch(1 0 0),oklch(0.33 0.012 265));
---vibeui-dashboard-029-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-dashboard-029-muted:light-dark(oklch(0.55 0.014 265),oklch(0.71 0.012 265));
---vibeui-dashboard-029-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.011 265));
+--vibeui-dashboard-029-hover:light-dark(oklch(1 0 0),oklch(0.33 0 265));
+--vibeui-dashboard-029-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
+--vibeui-dashboard-029-muted:light-dark(oklch(0.55 0 265),oklch(0.71 0 265));
+--vibeui-dashboard-029-border:light-dark(oklch(0.91 0 265),oklch(0.35 0 265));
 --vibeui-dashboard-029-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
---vibeui-dashboard-029-pick:light-dark(oklch(0.96 0.02 262),oklch(0.36 0.055 262));
+--vibeui-dashboard-029-pick:light-dark(oklch(0.96 0 262),oklch(0.36 0.055 262));
 --vibeui-dashboard-029-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-dashboard-029-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 container-type:inline-size;

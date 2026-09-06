@@ -38,14 +38,14 @@ export type Checkbox009Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="checkbox-009"]){
 --vibeui-checkbox-009-surface:transparent;
---vibeui-checkbox-009-bg:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
---vibeui-checkbox-009-fg:light-dark(oklch(0.22 0.014 265),oklch(0.95 0.005 265));
+--vibeui-checkbox-009-bg:light-dark(oklch(1 0 0),oklch(0.26 0 265));
+--vibeui-checkbox-009-fg:light-dark(oklch(0.22 0 265),oklch(0.95 0 265));
 --vibeui-checkbox-009-muted:color-mix(in oklab,var(--vibeui-checkbox-009-fg) 68%,transparent);
---vibeui-checkbox-009-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265));
---vibeui-checkbox-009-hover:light-dark(oklch(0.975 0.003 265),oklch(0.32 0.012 265));
+--vibeui-checkbox-009-border:light-dark(oklch(0.9 0 265),oklch(0.38 0 265));
+--vibeui-checkbox-009-hover:light-dark(oklch(0.975 0 265),oklch(0.32 0 265));
 --vibeui-checkbox-009-accent:light-dark(oklch(0.56 0.16 265),oklch(0.74 0.14 265));
---vibeui-checkbox-009-badge:light-dark(oklch(0.95 0.03 265),oklch(0.34 0.05 265));
---vibeui-checkbox-009-mark:light-dark(oklch(0.99 0.01 265),oklch(0.2 0.014 265));
+--vibeui-checkbox-009-badge:light-dark(oklch(0.95 0 265),oklch(0.34 0.05 265));
+--vibeui-checkbox-009-mark:light-dark(oklch(0.99 0 265),oklch(0.2 0 265));
 --vibeui-checkbox-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

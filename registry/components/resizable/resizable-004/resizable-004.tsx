@@ -42,11 +42,11 @@ export type Resizable004Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="resizable-004"]){
 --vibeui-resizable-004-bg:transparent;
---vibeui-resizable-004-pane:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
---vibeui-resizable-004-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-resizable-004-pane:light-dark(oklch(1 0 0),oklch(0.25 0 265));
+--vibeui-resizable-004-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-resizable-004-muted:color-mix(in oklab,var(--vibeui-resizable-004-fg) 68%,transparent);
---vibeui-resizable-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
---vibeui-resizable-004-surface:light-dark(oklch(0.975 0.004 265),oklch(0.31 0.011 265));
+--vibeui-resizable-004-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
+--vibeui-resizable-004-surface:light-dark(oklch(0.975 0 265),oklch(0.31 0 265));
 --vibeui-resizable-004-accent:light-dark(oklch(0.55 0.17 275),oklch(0.74 0.15 275));
 --vibeui-resizable-004-limit:light-dark(oklch(0.62 0.16 55),oklch(0.78 0.14 55));
 --vibeui-resizable-004-badge:light-dark(oklch(0.93 0.045 55),oklch(0.38 0.06 55));

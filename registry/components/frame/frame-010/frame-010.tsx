@@ -19,10 +19,10 @@ export type Frame010Props = Omit<ComponentProps<"figure">, "title"> & {
 // z-index — так порядок наложения не зависит от порядка в разметке.
 const STYLES = `
 :where([data-vibeui-block="frame-010"]){
---vibeui-frame-010-bg:light-dark(oklch(1 0 0),oklch(0.28 0.008 265));
---vibeui-frame-010-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.005 265));
+--vibeui-frame-010-bg:light-dark(oklch(1 0 0),oklch(0.28 0 265));
+--vibeui-frame-010-fg:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
 --vibeui-frame-010-muted:color-mix(in oklab,var(--vibeui-frame-010-fg) 68%,transparent);
---vibeui-frame-010-border:light-dark(oklch(0.9 0.006 265),oklch(0.42 0.011 265));
+--vibeui-frame-010-border:light-dark(oklch(0.9 0 265),oklch(0.42 0 265));
 --vibeui-frame-010-accent:light-dark(oklch(0.55 0.16 262),oklch(0.72 0.15 262));
 --vibeui-frame-010-radius:0.75rem;
 --vibeui-frame-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

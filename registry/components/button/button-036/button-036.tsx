@@ -14,8 +14,9 @@ export type Button036Props = ComponentProps<"button"> & {
 // Оба нарисованы гранями псевдоэлементов — ни SVG, ни шрифта иконок.
 const STYLES = `
 :where([data-vibeui-block="button-036"]){
---vibeui-button-036-accent:light-dark(oklch(0.55 0.19 295),oklch(0.62 0.19 295));
---vibeui-button-036-fg:light-dark(oklch(0.99 0.01 295),oklch(0.98 0.012 295));
+--vibeui-button-036-accent:light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));
+--vibeui-button-036-hover-filter:light-dark(brightness(1.45),brightness(0.9));
+--vibeui-button-036-fg:light-dark(oklch(0.99 0 265),oklch(0.17 0.01 265));
 --vibeui-button-036-radius:0.625rem;
 --vibeui-button-036-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

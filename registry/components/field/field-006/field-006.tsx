@@ -26,14 +26,14 @@ export type Field006Props = Omit<
 // пустое, кнопка выключена: нажимать нечего, и это видно.
 const STYLES = `
 :where([data-vibeui-block="field-006"]){
---vibeui-field-006-bg:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
+--vibeui-field-006-bg:light-dark(oklch(1 0 0),oklch(0.24 0 265));
 --vibeui-field-006-surface:transparent;
---vibeui-field-006-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-field-006-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-field-006-muted:color-mix(in oklab,var(--vibeui-field-006-fg) 68%,transparent);
---vibeui-field-006-border:light-dark(oklch(0.88 0.008 265),oklch(0.4 0.012 265));
---vibeui-field-006-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.011 265));
+--vibeui-field-006-border:light-dark(oklch(0.88 0 265),oklch(0.4 0 265));
+--vibeui-field-006-shell:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-field-006-accent:light-dark(oklch(0.52 0.19 285),oklch(0.72 0.16 285));
---vibeui-field-006-on-accent:light-dark(oklch(1 0 0),oklch(0.2 0.03 285));
+--vibeui-field-006-on-accent:light-dark(oklch(1 0 0),oklch(0.2 0 285));
 --vibeui-field-006-ok:light-dark(oklch(0.5 0.13 155),oklch(0.75 0.13 155));
 --vibeui-field-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

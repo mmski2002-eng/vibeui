@@ -26,7 +26,7 @@ const STYLES = `
 :where([data-vibeui-block="icontile-013"]){
 --vibeui-icontile-013-hue:75;
 --vibeui-icontile-013-size:3.5rem;
---vibeui-icontile-013-fg:light-dark(oklch(0.26 0.014 265),oklch(0.93 0.006 265));
+--vibeui-icontile-013-fg:light-dark(oklch(0.26 0 265),oklch(0.93 0 265));
 --vibeui-icontile-013-bg:transparent;
 --vibeui-icontile-013-pad:0;
 --vibeui-icontile-013-radius:0;

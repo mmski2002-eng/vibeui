@@ -23,12 +23,12 @@ export type Spinner005Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="spinner-005"]){
 --vibeui-spinner-005-surface:transparent;
---vibeui-spinner-005-veil:light-dark(oklch(1 0 0 / 78%),oklch(0.19 0.012 265 / 78%));
---vibeui-spinner-005-border:light-dark(oklch(0.9 0.006 265),oklch(0.32 0.012 265));
---vibeui-spinner-005-fg:light-dark(oklch(0.24 0.014 265),oklch(0.95 0.005 265));
+--vibeui-spinner-005-veil:light-dark(oklch(1 0 0 / 78%),oklch(0.19 0 265 / 78%));
+--vibeui-spinner-005-border:light-dark(oklch(0.9 0 265),oklch(0.32 0 265));
+--vibeui-spinner-005-fg:light-dark(oklch(0.24 0 265),oklch(0.95 0 265));
 --vibeui-spinner-005-muted:color-mix(in oklab,var(--vibeui-spinner-005-fg) 68%,transparent);
---vibeui-spinner-005-soft:light-dark(oklch(0.96 0.004 265),oklch(0.28 0.01 265));
---vibeui-spinner-005-track:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-spinner-005-soft:light-dark(oklch(0.96 0 265),oklch(0.28 0 265));
+--vibeui-spinner-005-track:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
 --vibeui-spinner-005-accent:light-dark(oklch(0.55 0.17 262),oklch(0.72 0.16 262));
 --vibeui-spinner-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

@@ -16,9 +16,9 @@ export type Badge023Props = Omit<ComponentProps<"span">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="badge-023"]){
 --vibeui-badge-023-width:16ch;
---vibeui-badge-023-bg:light-dark(oklch(0.96 0.005 265),oklch(0.26 0.009 265));
---vibeui-badge-023-fg:light-dark(oklch(0.32 0.014 265),oklch(0.91 0.007 265));
---vibeui-badge-023-border:light-dark(oklch(0.89 0.006 265),oklch(0.4 0.011 265));
+--vibeui-badge-023-bg:light-dark(oklch(0.96 0 265),oklch(0.26 0 265));
+--vibeui-badge-023-fg:light-dark(oklch(0.32 0 265),oklch(0.91 0 265));
+--vibeui-badge-023-border:light-dark(oklch(0.89 0 265),oklch(0.4 0 265));
 --vibeui-badge-023-font:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

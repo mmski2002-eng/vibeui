@@ -19,11 +19,12 @@ export type Button029Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="button-029"]){
 --vibeui-button-029-bg:transparent;
---vibeui-button-029-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.006 265));
+--vibeui-button-029-fg:light-dark(oklch(0.26 0 265),oklch(0.94 0 265));
 --vibeui-button-029-muted:color-mix(in oklab,var(--vibeui-button-029-fg) 68%,transparent);
---vibeui-button-029-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
---vibeui-button-029-accent:light-dark(oklch(0.55 0.17 265),oklch(0.6 0.18 265));
---vibeui-button-029-accent-fg:light-dark(oklch(0.99 0.01 265),oklch(0.98 0.012 265));
+--vibeui-button-029-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
+--vibeui-button-029-accent:light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));
+--vibeui-button-029-hover-filter:light-dark(brightness(1.45),brightness(0.9));
+--vibeui-button-029-accent-fg:light-dark(oklch(0.99 0 265),oklch(0.17 0.01 265));
 --vibeui-button-029-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -53,7 +54,7 @@ transition:filter .16s ease,border-color .16s ease,background-color .16s ease;
 [data-vibeui-block="button-029"] [data-part="primary"]{
 background:var(--vibeui-button-029-accent);color:var(--vibeui-button-029-accent-fg);
 }
-[data-vibeui-block="button-029"] [data-part="primary"]:hover{filter:brightness(0.96)}
+[data-vibeui-block="button-029"] [data-part="primary"]:hover{filter:var(--vibeui-button-029-hover-filter)}
 [data-vibeui-block="button-029"] [data-part="secondary"]{
 background:transparent;color:var(--vibeui-button-029-muted);border-color:var(--vibeui-button-029-border);
 }

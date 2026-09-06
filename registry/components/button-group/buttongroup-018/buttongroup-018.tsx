@@ -32,11 +32,11 @@ export type Buttongroup018Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="buttongroup-018"]){
 --vibeui-buttongroup-018-surface:transparent;
---vibeui-buttongroup-018-thumb:light-dark(oklch(1 0 0),oklch(0.38 0.013 265));
---vibeui-buttongroup-018-track:light-dark(oklch(0.955 0.004 265),oklch(0.26 0.01 265));
---vibeui-buttongroup-018-fg:light-dark(oklch(0.25 0.016 265),oklch(0.94 0.006 265));
+--vibeui-buttongroup-018-thumb:light-dark(oklch(1 0 0),oklch(0.38 0 265));
+--vibeui-buttongroup-018-track:light-dark(oklch(0.955 0 265),oklch(0.26 0 265));
+--vibeui-buttongroup-018-fg:light-dark(oklch(0.25 0 265),oklch(0.94 0 265));
 --vibeui-buttongroup-018-muted:color-mix(in oklab,var(--vibeui-buttongroup-018-fg) 68%,transparent);
---vibeui-buttongroup-018-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-buttongroup-018-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
 --vibeui-buttongroup-018-accent:light-dark(oklch(0.53 0.16 265),oklch(0.76 0.13 265));
 --vibeui-buttongroup-018-radius:0.5rem;
 --vibeui-buttongroup-018-index:1;
@@ -68,7 +68,7 @@ position:absolute;top:0.1875rem;bottom:0.1875rem;left:0.1875rem;
 width:calc((100% - 0.375rem) / 3);
 border-radius:var(--vibeui-buttongroup-018-radius);
 background:var(--vibeui-buttongroup-018-thumb);
-box-shadow:0 1px 2px oklch(0.2 0.02 265 / 18%);
+box-shadow:0 1px 2px oklch(0.2 0 265 / 18%);
 transform:translateX(calc(var(--vibeui-buttongroup-018-index) * 100%));
 transition:transform .2s cubic-bezier(.2,.7,.3,1);
 }

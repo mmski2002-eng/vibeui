@@ -27,10 +27,10 @@ export type Scrollarea005Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="scrollarea-005"]){
 --vibeui-scrollarea-005-bg:transparent;
---vibeui-scrollarea-005-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-scrollarea-005-fg:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
 --vibeui-scrollarea-005-muted:color-mix(in oklab,var(--vibeui-scrollarea-005-fg) 68%,transparent);
---vibeui-scrollarea-005-border:light-dark(oklch(0.9 0.006 265),oklch(0.33 0.012 265));
---vibeui-scrollarea-005-rule:light-dark(oklch(0.955 0.004 265),oklch(0.28 0.01 265));
+--vibeui-scrollarea-005-border:light-dark(oklch(0.9 0 265),oklch(0.33 0 265));
+--vibeui-scrollarea-005-rule:light-dark(oklch(0.955 0 265),oklch(0.28 0 265));
 --vibeui-scrollarea-005-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-scrollarea-005-row:2.25rem;
 --vibeui-scrollarea-005-rows:6;

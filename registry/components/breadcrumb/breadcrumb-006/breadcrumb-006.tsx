@@ -28,9 +28,9 @@ export type Breadcrumb006Props = Omit<
 // вместе со страницей и не выкладывает под себя плашку.
 const STYLES = `
 :where([data-vibeui-block="breadcrumb-006"]){
---vibeui-breadcrumb-006-fg:light-dark(oklch(0.22 0.016 265),oklch(0.95 0.008 265));
+--vibeui-breadcrumb-006-fg:light-dark(oklch(0.22 0 265),oklch(0.95 0 265));
 --vibeui-breadcrumb-006-muted:color-mix(in oklab,var(--vibeui-breadcrumb-006-fg) 68%,transparent);
---vibeui-breadcrumb-006-sep:light-dark(oklch(0.78 0.01 265),oklch(0.5 0.012 265));
+--vibeui-breadcrumb-006-sep:light-dark(oklch(0.78 0 265),oklch(0.5 0 265));
 --vibeui-breadcrumb-006-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-breadcrumb-006-bg:transparent;
 --vibeui-breadcrumb-006-pad:0;

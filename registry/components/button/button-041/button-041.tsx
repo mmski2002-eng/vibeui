@@ -15,10 +15,10 @@ export type Button041Props = ComponentProps<"button"> & {
 // отдельным box-shadow-кольцом плюс outline с отступом.
 const STYLES = `
 :where([data-vibeui-block="button-041"]){
---vibeui-button-041-paper:light-dark(oklch(1 0 0),oklch(0.23 0.015 285));
+--vibeui-button-041-paper:light-dark(oklch(1 0 0),oklch(0.23 0 285));
 --vibeui-button-041-accent:light-dark(oklch(0.6 0.2 25),oklch(0.7 0.19 25));
 --vibeui-button-041-accent-end:light-dark(oklch(0.55 0.2 300),oklch(0.7 0.18 300));
---vibeui-button-041-ink:light-dark(oklch(0.26 0.02 285),oklch(0.93 0.008 285));
+--vibeui-button-041-ink:light-dark(oklch(0.26 0 285),oklch(0.93 0 285));
 --vibeui-button-041-radius:0.75rem;
 --vibeui-button-041-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

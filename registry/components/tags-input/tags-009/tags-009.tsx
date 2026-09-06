@@ -29,8 +29,8 @@ export type Tags009Props = Omit<ComponentProps<"div">, "children" | "title"> & {
 // ошибиться уже не в чем.
 const STYLES = `
 :where([data-vibeui-block="tags-009"]){
---vibeui-tags-009-bg:light-dark(oklch(0.99 0.002 265),oklch(0.23 0.014 265));
---vibeui-tags-009-fg:light-dark(oklch(0.25 0.014 265),oklch(0.95 0.005 265));
+--vibeui-tags-009-bg:light-dark(oklch(0.99 0 265),oklch(0.23 0 265));
+--vibeui-tags-009-fg:light-dark(oklch(0.25 0 265),oklch(0.95 0 265));
 --vibeui-tags-009-muted:color-mix(in oklab,var(--vibeui-tags-009-fg) 62%,transparent);
 --vibeui-tags-009-border:light-dark(oklch(0 0 0 / 14%),oklch(1 0 0 / 16%));
 --vibeui-tags-009-field:light-dark(oklch(1 0 0),oklch(1 0 0 / 5%));
@@ -38,8 +38,8 @@ const STYLES = `
 --vibeui-tags-009-hover:light-dark(oklch(0 0 0 / 5%),oklch(1 0 0 / 7%));
 --vibeui-tags-009-accent:light-dark(oklch(0.5 0.16 265),oklch(0.78 0.12 265));
 --vibeui-tags-009-new:light-dark(oklch(0.45 0.13 152),oklch(0.82 0.13 152));
---vibeui-tags-009-panel:light-dark(oklch(1 0 0),oklch(0.27 0.016 265));
---vibeui-tags-009-shadow:light-dark(oklch(0.2 0.02 265 / 26%),oklch(0 0 0 / 60%));
+--vibeui-tags-009-panel:light-dark(oklch(1 0 0),oklch(0.27 0 265));
+--vibeui-tags-009-shadow:light-dark(oklch(0.2 0 265 / 26%),oklch(0 0 0 / 60%));
 --vibeui-tags-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

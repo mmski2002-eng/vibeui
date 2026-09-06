@@ -28,10 +28,10 @@ export type File001Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="file-001"]){
 --vibeui-file-001-bg:transparent;
---vibeui-file-001-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-file-001-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-file-001-muted:color-mix(in oklab,var(--vibeui-file-001-fg) 68%,transparent);
---vibeui-file-001-border:light-dark(oklch(0.86 0.008 265),oklch(0.42 0.014 265));
---vibeui-file-001-hover:light-dark(oklch(0.97 0.003 265),oklch(0.28 0.012 265));
+--vibeui-file-001-border:light-dark(oklch(0.86 0 265),oklch(0.42 0 265));
+--vibeui-file-001-hover:light-dark(oklch(0.97 0 265),oklch(0.28 0 265));
 --vibeui-file-001-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-file-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

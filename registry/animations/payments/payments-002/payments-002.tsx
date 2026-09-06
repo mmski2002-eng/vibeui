@@ -31,8 +31,8 @@ const STYLES = `
 :where([data-vibeui-block="payments-002"]){
 --vibeui-payments-002-from:light-dark(oklch(0.5 0.16 275),oklch(0.4 0.15 275));
 --vibeui-payments-002-to:light-dark(oklch(0.28 0.09 300),oklch(0.16 0.07 300));
---vibeui-payments-002-fg:oklch(0.98 0.004 275);
---vibeui-payments-002-muted:oklch(0.98 0.004 275 / 62%);
+--vibeui-payments-002-fg:oklch(0.98 0 275);
+--vibeui-payments-002-muted:oklch(0.98 0 275 / 62%);
 --vibeui-payments-002-chip:linear-gradient(155deg,oklch(0.86 0.09 95),oklch(0.68 0.1 75));
 --vibeui-payments-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-payments-002-mono:ui-monospace,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;

@@ -31,9 +31,9 @@ export type Buttongroup052Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="buttongroup-052"]){
 --vibeui-buttongroup-052-surface:transparent;
---vibeui-buttongroup-052-fg:light-dark(oklch(0.25 0.016 265),oklch(0.95 0.005 265));
+--vibeui-buttongroup-052-fg:light-dark(oklch(0.25 0 265),oklch(0.95 0 265));
 --vibeui-buttongroup-052-muted:color-mix(in oklab,var(--vibeui-buttongroup-052-fg) 68%,transparent);
---vibeui-buttongroup-052-border:light-dark(oklch(0.89 0.008 265),oklch(0.41 0.012 265));
+--vibeui-buttongroup-052-border:light-dark(oklch(0.89 0 265),oklch(0.41 0 265));
 --vibeui-buttongroup-052-accent:light-dark(oklch(0.46 0.14 160),oklch(0.79 0.13 160));
 --vibeui-buttongroup-052-on:light-dark(oklch(0.96 0.04 160),oklch(0.3 0.05 160));
 --vibeui-buttongroup-052-radius:0.625rem;

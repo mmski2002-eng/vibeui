@@ -39,16 +39,16 @@ export type Toast024Props = Omit<ComponentProps<"div">, "children" | "title"> & 
 // неудачи: «готово» при двух отказах — самая обидная разновидность лжи.
 const STYLES = `
 :where([data-vibeui-block="toast-024"]){
---vibeui-toast-024-bg:light-dark(oklch(1 0 0),oklch(0.24 0.012 265));
---vibeui-toast-024-fg:light-dark(oklch(0.24 0.014 265),oklch(0.95 0.005 265));
+--vibeui-toast-024-bg:light-dark(oklch(1 0 0),oklch(0.24 0 265));
+--vibeui-toast-024-fg:light-dark(oklch(0.24 0 265),oklch(0.95 0 265));
 --vibeui-toast-024-muted:color-mix(in oklab,var(--vibeui-toast-024-fg) 64%,transparent);
---vibeui-toast-024-border:light-dark(oklch(0.89 0.006 265),oklch(0.36 0.012 265));
+--vibeui-toast-024-border:light-dark(oklch(0.89 0 265),oklch(0.36 0 265));
 --vibeui-toast-024-hover:light-dark(oklch(0 0 0 / 5%),oklch(1 0 0 / 7%));
 --vibeui-toast-024-track:light-dark(oklch(0 0 0 / 10%),oklch(1 0 0 / 14%));
 --vibeui-toast-024-tone:light-dark(oklch(0.5 0.16 265),oklch(0.78 0.12 265));
 --vibeui-toast-024-ok:light-dark(oklch(0.46 0.13 152),oklch(0.82 0.13 152));
 --vibeui-toast-024-error:light-dark(oklch(0.53 0.19 25),oklch(0.79 0.15 25));
---vibeui-toast-024-shadow:light-dark(oklch(0.2 0.02 265 / 22%),oklch(0 0 0 / 58%));
+--vibeui-toast-024-shadow:light-dark(oklch(0.2 0 265 / 22%),oklch(0 0 0 / 58%));
 --vibeui-toast-024-radius:0.875rem;
 --vibeui-toast-024-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

@@ -17,14 +17,14 @@ export type Tooltip005Props = Omit<ComponentProps<"span">, "children"> & {
 // однострочная подсказка на 400 пикселей нечитаема, а обрезать текст нельзя.
 const STYLES = `
 :where([data-vibeui-block="tooltip-005"]){
---vibeui-tooltip-005-bg:oklch(0.25 0.014 265);
---vibeui-tooltip-005-fg:light-dark(oklch(0.26 0.014 265),oklch(0.96 0.002 265));
+--vibeui-tooltip-005-bg:oklch(0.25 0 265);
+--vibeui-tooltip-005-fg:light-dark(oklch(0.26 0 265),oklch(0.96 0 265));
 --vibeui-tooltip-005-accent:light-dark(oklch(0.6 0.16 265),oklch(0.74 0.15 265));
---vibeui-tooltip-005-face:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
---vibeui-tooltip-005-line:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.012 265));
---vibeui-tooltip-005-facefg:light-dark(oklch(0.3 0.014 265),oklch(0.92 0.006 265));
---vibeui-tooltip-005-mark:light-dark(oklch(0.9 0.008 265),oklch(0.36 0.012 265));
---vibeui-tooltip-005-markfg:light-dark(oklch(0.42 0.014 265),oklch(0.88 0.008 265));
+--vibeui-tooltip-005-face:light-dark(oklch(1 0 0),oklch(0.26 0 265));
+--vibeui-tooltip-005-line:light-dark(oklch(0.9 0 265),oklch(0.38 0 265));
+--vibeui-tooltip-005-facefg:light-dark(oklch(0.3 0 265),oklch(0.92 0 265));
+--vibeui-tooltip-005-mark:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
+--vibeui-tooltip-005-markfg:light-dark(oklch(0.42 0 265),oklch(0.88 0 265));
 --vibeui-tooltip-005-width:17rem;
 --vibeui-tooltip-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -60,7 +60,7 @@ box-sizing:border-box;padding:0.5625rem 0.6875rem;border-radius:0.625rem;
 background:var(--vibeui-tooltip-005-bg);color:var(--vibeui-tooltip-005-fg);
 font-size:0.75rem;line-height:1.5;text-align:left;
 white-space:normal;overflow-wrap:anywhere;text-wrap:pretty;hyphens:auto;
-box-shadow:0 18px 38px -26px oklch(0.15 0.02 265 / 70%);
+box-shadow:0 18px 38px -26px oklch(0.15 0 265 / 70%);
 pointer-events:none;opacity:0;
 transform:translate(-50%,0.25rem);
 transition:opacity .14s ease,transform .14s ease;

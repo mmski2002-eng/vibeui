@@ -30,15 +30,15 @@ export type Card012Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="card-012"]){
 --vibeui-card-012-bg:transparent;
---vibeui-card-012-fg:light-dark(oklch(0.22 0.015 265),oklch(0.94 0.006 265));
+--vibeui-card-012-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-card-012-muted:color-mix(in oklab,var(--vibeui-card-012-fg) 68%,transparent);
---vibeui-card-012-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-card-012-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
 --vibeui-card-012-accent:light-dark(oklch(0.58 0.19 25),oklch(0.7 0.17 25));
 --vibeui-card-012-frame-from:light-dark(oklch(0.93 0.03 60),oklch(0.36 0.04 60));
 --vibeui-card-012-frame-to:light-dark(oklch(0.86 0.05 25),oklch(0.29 0.05 25));
---vibeui-card-012-badge-bg:light-dark(oklch(1 0 0 / 92%),oklch(0.24 0.015 265 / 90%));
---vibeui-card-012-badge-fg:light-dark(oklch(0.22 0.015 265),oklch(0.95 0.006 265));
---vibeui-card-012-scrim:light-dark(oklch(0.2 0.02 265 / 78%),oklch(0.12 0.015 265 / 84%));
+--vibeui-card-012-badge-bg:light-dark(oklch(1 0 0 / 92%),oklch(0.24 0 265 / 90%));
+--vibeui-card-012-badge-fg:light-dark(oklch(0.22 0 265),oklch(0.95 0 265));
+--vibeui-card-012-scrim:light-dark(oklch(0.2 0 265 / 78%),oklch(0.12 0 265 / 84%));
 --vibeui-card-012-scrim-fg:oklch(0.99 0 0);
 --vibeui-card-012-radius:0.9375rem;
 --vibeui-card-012-ratio:16 / 9;

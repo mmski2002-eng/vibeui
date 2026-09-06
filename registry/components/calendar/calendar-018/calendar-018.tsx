@@ -31,12 +31,12 @@ export type Calendar018Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="calendar-018"]){
 --vibeui-calendar-018-bg:transparent;
---vibeui-calendar-018-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-calendar-018-fg:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
 --vibeui-calendar-018-muted:color-mix(in oklab,var(--vibeui-calendar-018-fg) 68%,transparent);
---vibeui-calendar-018-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
---vibeui-calendar-018-hover:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.012 265));
+--vibeui-calendar-018-border:light-dark(oklch(0.91 0 265),oklch(0.35 0 265));
+--vibeui-calendar-018-hover:light-dark(oklch(0.96 0 265),oklch(0.31 0 265));
 --vibeui-calendar-018-accent:light-dark(oklch(0.52 0.16 300),oklch(0.74 0.14 300));
---vibeui-calendar-018-on-accent:light-dark(oklch(0.99 0.01 300),oklch(0.2 0.04 300));
+--vibeui-calendar-018-on-accent:light-dark(oklch(0.99 0 300),oklch(0.2 0.04 300));
 --vibeui-calendar-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

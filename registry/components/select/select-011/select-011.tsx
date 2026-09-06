@@ -36,9 +36,9 @@ const STYLES = `
 --vibeui-select-011-surface-border:transparent;
 --vibeui-select-011-surface-pad:0;
 --vibeui-select-011-surface-radius:0;
---vibeui-select-011-fg:light-dark(oklch(0.23 0.016 265),oklch(0.94 0.005 265));
+--vibeui-select-011-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-select-011-muted:color-mix(in oklab,var(--vibeui-select-011-fg) 68%,transparent);
---vibeui-select-011-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.014 265));
+--vibeui-select-011-border:light-dark(oklch(0.87 0 265),oklch(0.42 0 265));
 --vibeui-select-011-accent:light-dark(oklch(0.55 0.19 262),oklch(0.75 0.15 262));
 --vibeui-select-011-tone-open:light-dark(oklch(0.62 0.19 255),oklch(0.72 0.16 255));
 --vibeui-select-011-tone-progress:light-dark(oklch(0.75 0.16 85),oklch(0.82 0.14 85));
@@ -165,7 +165,7 @@ export function Select011({
       ? {
           "--vibeui-select-011-surface": background,
           "--vibeui-select-011-surface-border":
-            "light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265))",
+            "light-dark(oklch(0.91 0 265),oklch(0.36 0 265))",
           "--vibeui-select-011-surface-pad": "0.875rem",
           "--vibeui-select-011-surface-radius": "0.875rem",
           colorScheme: schemeForBackground(background),

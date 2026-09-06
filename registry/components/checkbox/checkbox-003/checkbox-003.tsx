@@ -30,12 +30,12 @@ export type Checkbox003Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="checkbox-003"]){
 --vibeui-checkbox-003-surface:transparent;
---vibeui-checkbox-003-bg:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
---vibeui-checkbox-003-fg:light-dark(oklch(0.22 0.014 265),oklch(0.95 0.005 265));
+--vibeui-checkbox-003-bg:light-dark(oklch(1 0 0),oklch(0.26 0 265));
+--vibeui-checkbox-003-fg:light-dark(oklch(0.22 0 265),oklch(0.95 0 265));
 --vibeui-checkbox-003-muted:color-mix(in oklab,var(--vibeui-checkbox-003-fg) 68%,transparent);
---vibeui-checkbox-003-border:light-dark(oklch(0.88 0.008 265),oklch(0.4 0.012 265));
+--vibeui-checkbox-003-border:light-dark(oklch(0.88 0 265),oklch(0.4 0 265));
 --vibeui-checkbox-003-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
---vibeui-checkbox-003-mark:light-dark(oklch(0.99 0.01 265),oklch(0.2 0.014 265));
+--vibeui-checkbox-003-mark:light-dark(oklch(0.99 0 265),oklch(0.2 0 265));
 --vibeui-checkbox-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

@@ -40,14 +40,14 @@ export type Commerce080Props = {
 const STYLES = `
 :where([data-vibeui-block="commerce-080"]){
 --vibeui-commerce-080-bg:transparent;
---vibeui-commerce-080-paper:light-dark(oklch(1 0 0),oklch(0.2 0.012 265));
---vibeui-commerce-080-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
---vibeui-commerce-080-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
---vibeui-commerce-080-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
---vibeui-commerce-080-soft:light-dark(oklch(0.975 0.004 265),oklch(0.27 0.011 265));
+--vibeui-commerce-080-paper:light-dark(oklch(1 0 0),oklch(0.2 0 265));
+--vibeui-commerce-080-fg:light-dark(oklch(0.21 0 265),oklch(0.94 0 265));
+--vibeui-commerce-080-muted:light-dark(oklch(0.55 0 265),oklch(0.7 0 265));
+--vibeui-commerce-080-border:light-dark(oklch(0.9 0 265),oklch(0.35 0 265));
+--vibeui-commerce-080-soft:light-dark(oklch(0.975 0 265),oklch(0.27 0 265));
 --vibeui-commerce-080-accent:light-dark(oklch(0.55 0.2 262),oklch(0.73 0.16 262));
 --vibeui-commerce-080-star:light-dark(oklch(0.54 0.16 78),oklch(0.84 0.15 80));
---vibeui-commerce-080-star-empty:light-dark(oklch(0.42 0.008 265),oklch(0.58 0.014 265));
+--vibeui-commerce-080-star-empty:light-dark(oklch(0.42 0 265),oklch(0.58 0 265));
 --vibeui-commerce-080-fill:0%;
 --vibeui-commerce-080-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

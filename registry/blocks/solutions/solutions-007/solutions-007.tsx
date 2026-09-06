@@ -43,11 +43,11 @@ export type Solutions007Props = {
 const STYLES = `
 :where([data-vibeui-block="solutions-007"]){
 --vibeui-solutions-007-bg:transparent;
---vibeui-solutions-007-panel:light-dark(oklch(0.975 0.004 255),oklch(0.25 0.011 260));
---vibeui-solutions-007-card:light-dark(oklch(1 0 0),oklch(0.3 0.012 260));
---vibeui-solutions-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-solutions-007-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
---vibeui-solutions-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-solutions-007-panel:light-dark(oklch(0.975 0 255),oklch(0.25 0 260));
+--vibeui-solutions-007-card:light-dark(oklch(1 0 0),oklch(0.3 0 260));
+--vibeui-solutions-007-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
+--vibeui-solutions-007-muted:light-dark(oklch(0.55 0 265),oklch(0.7 0 265));
+--vibeui-solutions-007-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
 --vibeui-solutions-007-accent:light-dark(oklch(0.52 0.19 275),oklch(0.72 0.16 275));
 --vibeui-solutions-007-warm:light-dark(oklch(0.7 0.15 62),oklch(0.79 0.13 64));
 --vibeui-solutions-007-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

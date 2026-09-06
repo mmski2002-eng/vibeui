@@ -32,12 +32,12 @@ export type Combobox011Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="combobox-011"]){
 --vibeui-combobox-011-bg:transparent;
---vibeui-combobox-011-panel:light-dark(oklch(1 0 0),oklch(0.26 0.014 215));
---vibeui-combobox-011-fg:light-dark(oklch(0.22 0.016 215),oklch(0.94 0.006 215));
+--vibeui-combobox-011-panel:light-dark(oklch(1 0 0),oklch(0.26 0 215));
+--vibeui-combobox-011-fg:light-dark(oklch(0.22 0 215),oklch(0.94 0 215));
 --vibeui-combobox-011-muted:color-mix(in oklab,var(--vibeui-combobox-011-fg) 68%,transparent);
---vibeui-combobox-011-border:light-dark(oklch(0.9 0.008 215),oklch(0.37 0.014 215));
---vibeui-combobox-011-field:light-dark(oklch(0.985 0.004 215),oklch(0.3 0.014 215));
---vibeui-combobox-011-active:light-dark(oklch(0.95 0.03 215),oklch(0.37 0.04 215));
+--vibeui-combobox-011-border:light-dark(oklch(0.9 0 215),oklch(0.37 0 215));
+--vibeui-combobox-011-field:light-dark(oklch(0.985 0 215),oklch(0.3 0 215));
+--vibeui-combobox-011-active:light-dark(oklch(0.95 0 215),oklch(0.37 0.04 215));
 --vibeui-combobox-011-accent:light-dark(oklch(0.52 0.12 215),oklch(0.78 0.12 215));
 --vibeui-combobox-011-radius:0.625rem;
 --vibeui-combobox-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

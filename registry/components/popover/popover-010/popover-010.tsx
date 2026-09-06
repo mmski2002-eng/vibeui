@@ -26,13 +26,13 @@ export type Popover010Props = Omit<ComponentProps<"div">, "children"> & {
 // закрывают карточку сразу и возвращают фокус на имя.
 const STYLES = `
 :where([data-vibeui-block="popover-010"]){
---vibeui-popover-010-surface:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
---vibeui-popover-010-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.006 265));
+--vibeui-popover-010-surface:light-dark(oklch(1 0 0),oklch(0.22 0 265));
+--vibeui-popover-010-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-popover-010-muted:color-mix(in oklab,var(--vibeui-popover-010-fg) 68%,transparent);
---vibeui-popover-010-border:light-dark(oklch(0.89 0.006 265),oklch(0.36 0.012 265));
+--vibeui-popover-010-border:light-dark(oklch(0.89 0 265),oklch(0.36 0 265));
 --vibeui-popover-010-accent:light-dark(oklch(0.55 0.16 260),oklch(0.74 0.14 260));
---vibeui-popover-010-on-accent:light-dark(oklch(1 0 0),oklch(0.17 0.03 260));
---vibeui-popover-010-shadow:light-dark(oklch(0.2 0.02 265 / 60%),oklch(0.02 0.01 265 / 72%));
+--vibeui-popover-010-on-accent:light-dark(oklch(1 0 0),oklch(0.17 0 260));
+--vibeui-popover-010-shadow:light-dark(oklch(0.2 0 265 / 60%),oklch(0.02 0 265 / 72%));
 --vibeui-popover-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -47,16 +47,24 @@ appearance:none;cursor:pointer;background:none;border:0;padding:0;
 font:inherit;font-size:0.875rem;font-weight:650;color:var(--vibeui-popover-010-accent);
 text-decoration:underline;text-decoration-color:transparent;
 transition:text-decoration-color .16s ease;
+anchor-name:--vibeui-popover-010-anchor;
 }
 [data-vibeui-block="popover-010"] [data-part="trigger"]:hover{text-decoration-color:currentColor}
 [data-vibeui-block="popover-010"] [data-part="trigger"]:focus-visible{outline:2px solid var(--vibeui-popover-010-accent);outline-offset:2px}
 [data-vibeui-block="popover-010"] [data-part="card"]{
-position:absolute;top:calc(100% + 0.5rem);left:0;z-index:20;
+/* Верхний слой, а не absolute: панель обязана лежать поверх всего,
+   иначе её режет любой предок с overflow:hidden. */
+position:fixed;margin:0;inset:auto;
+position-anchor:--vibeui-popover-010-anchor;
+top:anchor(bottom);left:anchor(left);margin-top:0.5rem;
 width:min(17rem,100vw - 2rem);box-sizing:border-box;padding:0.875rem;
 border:1px solid var(--vibeui-popover-010-border);border-radius:0.875rem;
 background:var(--vibeui-popover-010-surface);color:inherit;
 box-shadow:0 24px 50px -30px var(--vibeui-popover-010-shadow);
 animation:vibeui-popover-010-in .14s ease both;
+}
+@supports not (anchor-name: --a){
+[data-vibeui-block="popover-010"] [data-part="card"]{position:fixed;inset:0;margin:auto}
 }
 @keyframes vibeui-popover-010-in{from{opacity:0;translate:0 -0.25rem}to{opacity:1;translate:0 0}}
 [data-vibeui-block="popover-010"] [data-part="head"]{
@@ -86,8 +94,10 @@ font:inherit;font-size:0.8125rem;font-weight:650;
 [data-vibeui-block="popover-010"] [data-part="action"]:focus-visible{outline:2px solid var(--vibeui-popover-010-accent);outline-offset:2px}
 /* Раскрытая панель на месте: атрибут popover прячет её правилом браузера,
    а это правило той же специфичности его переопределяет и возвращает панель
-   в поток. Так её показывают на витрине и в документации, без верхнего слоя. */
-[data-vibeui-block="popover-010"][data-open] [popover]{
+   в поток. Так её показывают на витрине и в документации, без верхнего слоя.
+   Только пока popover закрыт: у открытого положение задаёт верхний слой,
+   и static отправил бы панель в левый верхний угол экрана. */
+[data-vibeui-block="popover-010"][data-open] [popover]:not(:popover-open){
 display:block;position:static;inset:auto;margin:0.5rem 0 0;
 }
 /* Раскрытая панель на месте: в потоке, а не поверх карточки. Так её
@@ -147,7 +157,19 @@ export function Popover010({
   const [open, setOpen] = useState(defaultOpen)
   const rootRef = useRef<HTMLDivElement>(null)
   const triggerRef = useRef<HTMLButtonElement>(null)
+  const cardRef = useRef<HTMLDivElement>(null)
   const closeTimer = useRef<ReturnType<typeof setTimeout>>(undefined)
+
+  // Панель живёт в верхнем слое: без showPopover() её обрезал бы любой предок
+  // с overflow — в карточке витрины это происходит всегда. Закрытие делает
+  // размонтирование, поэтому hidePopover() здесь не нужен.
+  useEffect(() => {
+    const node = cardRef.current
+
+    if (node && !node.matches(":popover-open")) {
+      node.showPopover()
+    }
+  }, [open])
 
   const palette = {
     ...(accent ? { "--vibeui-popover-010-accent": accent } : null),
@@ -244,8 +266,10 @@ export function Popover010({
 
         {open ? (
           <div
+            ref={cardRef}
             id={`${id}-card`}
             data-part="card"
+            popover="manual"
             role="dialog"
             aria-label={cardHint.replace("{name}", name)}
             onMouseEnter={cancelClose}

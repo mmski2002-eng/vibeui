@@ -18,7 +18,7 @@ export type Badge004Props = Omit<ComponentProps<"span">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="badge-004"]){
 --vibeui-badge-004-dot:light-dark(oklch(0.58 0.2 25),oklch(0.68 0.2 25));
---vibeui-badge-004-cut:light-dark(oklch(1 0 0),oklch(0.19 0.008 265));
+--vibeui-badge-004-cut:light-dark(oklch(1 0 0),oklch(0.19 0 265));
 --vibeui-badge-004-size:0.5rem;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -44,17 +44,17 @@ clip-path:inset(50%);white-space:nowrap;
 [data-vibeui-block="badge-004"] [data-part="sample"]{
 display:inline-flex;align-items:center;justify-content:center;
 width:2.5rem;height:2.5rem;border-radius:0.625rem;
-border:1px solid light-dark(oklch(0.9 0.006 265),oklch(0.38 0.011 265));
-background:light-dark(oklch(0.985 0.002 265),oklch(0.25 0.008 265));
+border:1px solid light-dark(oklch(0.9 0 265),oklch(0.38 0 265));
+background:light-dark(oklch(0.985 0 265),oklch(0.25 0 265));
 }
 [data-vibeui-block="badge-004"] [data-part="bell"]{
 position:relative;width:0.875rem;height:0.75rem;
-border:1.5px solid light-dark(oklch(0.42 0.014 265),oklch(0.84 0.008 265));border-radius:0.4375rem 0.4375rem 0.125rem 0.125rem;
+border:1.5px solid light-dark(oklch(0.42 0 265),oklch(0.84 0 265));border-radius:0.4375rem 0.4375rem 0.125rem 0.125rem;
 border-bottom-width:0;
 }
 [data-vibeui-block="badge-004"] [data-part="bell"]::after{
 content:"";position:absolute;left:-0.1875rem;right:-0.1875rem;bottom:-0.125rem;
-height:1.5px;background:light-dark(oklch(0.42 0.014 265),oklch(0.84 0.008 265));border-radius:9999px;
+height:1.5px;background:light-dark(oklch(0.42 0 265),oklch(0.84 0 265));border-radius:9999px;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="badge-004"] *{animation:none!important;transition:none!important}}
 `

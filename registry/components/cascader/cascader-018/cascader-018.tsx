@@ -43,10 +43,10 @@ const STYLES = `
 /* Прилипающая шапка уровня обязана быть непрозрачной, иначе строки списка
    проступают сквозь неё. Canvas берёт фон окружения по color-scheme. */
 --vibeui-cascader-018-head:Canvas;
---vibeui-cascader-018-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-cascader-018-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-cascader-018-muted:color-mix(in oklab,var(--vibeui-cascader-018-fg) 68%,transparent);
---vibeui-cascader-018-border:light-dark(oklch(0.9 0.008 265),oklch(0.35 0.012 265));
---vibeui-cascader-018-soft:light-dark(oklch(0.965 0.006 265),oklch(0.28 0.012 265));
+--vibeui-cascader-018-border:light-dark(oklch(0.9 0 265),oklch(0.35 0 265));
+--vibeui-cascader-018-soft:light-dark(oklch(0.965 0 265),oklch(0.28 0 265));
 --vibeui-cascader-018-ok:light-dark(oklch(0.6 0.13 150),oklch(0.72 0.15 150));
 --vibeui-cascader-018-repair:light-dark(oklch(0.7 0.14 75),oklch(0.79 0.15 75));
 --vibeui-cascader-018-off:light-dark(oklch(0.62 0.15 25),oklch(0.72 0.16 25));

@@ -30,9 +30,9 @@ export type Timeline003Props = Omit<ComponentProps<"section">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="timeline-003"]){
 --vibeui-timeline-003-bg:transparent;
---vibeui-timeline-003-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-timeline-003-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-timeline-003-muted:color-mix(in oklab,var(--vibeui-timeline-003-fg) 68%,transparent);
---vibeui-timeline-003-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-timeline-003-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
 --vibeui-timeline-003-done:light-dark(oklch(0.58 0.14 152),oklch(0.72 0.14 152));
 --vibeui-timeline-003-on-done:light-dark(oklch(1 0 0),oklch(0.19 0.04 152));
 --vibeui-timeline-003-accent:light-dark(oklch(0.55 0.18 262),oklch(0.72 0.16 262));

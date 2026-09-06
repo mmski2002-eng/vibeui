@@ -25,7 +25,7 @@ export type Card017Props = Omit<ComponentProps<"figure">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="card-017"]){
 --vibeui-card-017-bg:transparent;
---vibeui-card-017-fg:light-dark(oklch(0.23 0.016 265),oklch(0.94 0.006 265));
+--vibeui-card-017-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-card-017-muted:color-mix(in oklab,var(--vibeui-card-017-fg) 68%,transparent);
 --vibeui-card-017-border:light-dark(oklch(0.91 0.007 90),oklch(0.37 0.011 90));
 --vibeui-card-017-accent:light-dark(oklch(0.62 0.14 55),oklch(0.78 0.12 55));

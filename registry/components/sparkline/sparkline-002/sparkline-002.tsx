@@ -33,12 +33,12 @@ export type Sparkline002Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="sparkline-002"]){
 --vibeui-sparkline-002-bg:transparent;
---vibeui-sparkline-002-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-sparkline-002-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-sparkline-002-muted:color-mix(in oklab,var(--vibeui-sparkline-002-fg) 68%,transparent);
---vibeui-sparkline-002-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
+--vibeui-sparkline-002-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-sparkline-002-up:light-dark(oklch(0.58 0.14 155),oklch(0.76 0.13 155));
 --vibeui-sparkline-002-down:light-dark(oklch(0.6 0.16 25),oklch(0.73 0.16 25));
---vibeui-sparkline-002-flat:light-dark(oklch(0.62 0.01 265),oklch(0.66 0.01 265));
+--vibeui-sparkline-002-flat:light-dark(oklch(0.62 0 265),oklch(0.66 0 265));
 --vibeui-sparkline-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

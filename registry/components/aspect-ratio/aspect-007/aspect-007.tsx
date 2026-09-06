@@ -24,16 +24,16 @@ export type Aspect007Props = Omit<
 // вместе со страницей и по умолчанию не выкладывает под себя плашку.
 const STYLES = `
 :where([data-vibeui-block="aspect-007"]){
---vibeui-aspect-007-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-aspect-007-fg:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
 --vibeui-aspect-007-muted:color-mix(in oklab,var(--vibeui-aspect-007-fg) 68%,transparent);
 --vibeui-aspect-007-bg:transparent;
---vibeui-aspect-007-line:light-dark(oklch(0.9 0.008 265),oklch(0.33 0.012 265));
---vibeui-aspect-007-land:light-dark(oklch(0.96 0.008 110),oklch(0.26 0.012 250));
+--vibeui-aspect-007-line:light-dark(oklch(0.9 0 265),oklch(0.33 0 265));
+--vibeui-aspect-007-land:light-dark(oklch(0.96 0.008 110),oklch(0.26 0 250));
 --vibeui-aspect-007-park:light-dark(oklch(0.89 0.07 150),oklch(0.36 0.05 155));
 --vibeui-aspect-007-water:light-dark(oklch(0.86 0.07 230),oklch(0.38 0.06 235));
 --vibeui-aspect-007-road:light-dark(oklch(0.92 0.05 85),oklch(0.45 0.04 85));
---vibeui-aspect-007-border:light-dark(oklch(0.89 0.006 265),oklch(0.38 0.012 265));
---vibeui-aspect-007-pin:light-dark(oklch(1 0 0),oklch(0.26 0.014 265));
+--vibeui-aspect-007-border:light-dark(oklch(0.89 0 265),oklch(0.38 0 265));
+--vibeui-aspect-007-pin:light-dark(oklch(1 0 0),oklch(0.26 0 265));
 --vibeui-aspect-007-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
 --vibeui-aspect-007-radius:0.875rem;
 --vibeui-aspect-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

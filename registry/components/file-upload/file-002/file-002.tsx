@@ -41,11 +41,11 @@ const STYLES = `
 :where([data-vibeui-block="file-002"]){
 --vibeui-file-002-bg:transparent;
 --vibeui-file-002-surface:transparent;
---vibeui-file-002-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-file-002-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-file-002-muted:color-mix(in oklab,var(--vibeui-file-002-fg) 68%,transparent);
---vibeui-file-002-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.014 265));
---vibeui-file-002-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
---vibeui-file-002-key:light-dark(oklch(0.965 0.004 265),oklch(0.3 0.012 265));
+--vibeui-file-002-border:light-dark(oklch(0.87 0 265),oklch(0.42 0 265));
+--vibeui-file-002-shell:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
+--vibeui-file-002-key:light-dark(oklch(0.965 0 265),oklch(0.3 0 265));
 --vibeui-file-002-accent:light-dark(oklch(0.53 0.18 290),oklch(0.74 0.16 290));
 --vibeui-file-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

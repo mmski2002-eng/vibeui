@@ -33,10 +33,10 @@ const STYLES = `
 --vibeui-avatar-015-size:4.5rem;
 --vibeui-avatar-015-edit:1.75rem;
 --vibeui-avatar-015-bg:transparent;
---vibeui-avatar-015-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-avatar-015-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-avatar-015-muted:color-mix(in oklab,var(--vibeui-avatar-015-fg) 68%,transparent);
---vibeui-avatar-015-border:light-dark(oklch(0.9 0.006 265),oklch(0.31 0.01 265));
---vibeui-avatar-015-hover:oklch(0.55 0.02 265 / 9%);
+--vibeui-avatar-015-border:light-dark(oklch(0.9 0 265),oklch(0.31 0 265));
+--vibeui-avatar-015-hover:oklch(0.55 0 265 / 9%);
 --vibeui-avatar-015-accent:light-dark(oklch(0.55 0.2 262),oklch(0.69 0.2 262));
 --vibeui-avatar-015-danger:light-dark(oklch(0.56 0.19 25),oklch(0.70 0.19 25));
 --vibeui-avatar-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -78,7 +78,7 @@ mask-image:radial-gradient(circle calc(var(--vibeui-avatar-015-edit) / 2 + 2px) 
 position:fixed;margin:0;padding:0.25rem;min-width:11rem;
 border:1px solid var(--vibeui-avatar-015-border);border-radius:0.625rem;
 background:var(--vibeui-avatar-015-bg);color:var(--vibeui-avatar-015-fg);
-box-shadow:0 16px 36px -18px oklch(0.2 0.03 265 / 45%);
+box-shadow:0 16px 36px -18px oklch(0.2 0 265 / 45%);
 font-family:var(--vibeui-avatar-015-font);
 }
 /* Якорь привязывает меню к кнопке; без поддержки оно встанет по центру экрана. */
@@ -113,6 +113,12 @@ color:var(--vibeui-avatar-015-danger);
 /* Развёрнутый режим: меню стоит в потоке под кнопкой, а не в верхнем слое. */
 [data-vibeui-block="avatar-015"]:has([data-open="true"]){align-items:flex-start}
 [data-vibeui-block="avatar-015"] [data-part="slot"]:has([data-open="true"]){display:flex;flex-direction:column;align-items:flex-start}
+/* Кнопка привязана к углу гнезда, а гнездо в этом режиме выше портрета:
+   без пересчёта она уезжала на меню, оставляя вырез в портрете пустым. */
+[data-vibeui-block="avatar-015"] [data-part="slot"]:has([data-open="true"]) [data-part="edit"]{
+top:calc(var(--vibeui-avatar-015-size) - var(--vibeui-avatar-015-edit));bottom:auto;
+left:calc(var(--vibeui-avatar-015-size) - var(--vibeui-avatar-015-edit));right:auto;
+}
 [data-vibeui-block="avatar-015"] [data-part="menu"][data-open="true"]{
 position:static;opacity:1;transform:none;margin-top:0.375rem;
 }
@@ -207,7 +213,7 @@ export function Avatar015({
       >
         <span data-part="slot">
           <span data-part="face" aria-hidden="true">
-            {src ? <img src={src} alt="" /> : initials(name)}
+            {src && !removed ? <img src={src} alt="" /> : initials(name)}
           </span>
           <button
             type="button"

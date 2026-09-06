@@ -34,10 +34,10 @@ export type Button031Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="button-031"]){
 --vibeui-button-031-bg:transparent;
---vibeui-button-031-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.006 265));
+--vibeui-button-031-fg:light-dark(oklch(0.26 0 265),oklch(0.94 0 265));
 --vibeui-button-031-muted:color-mix(in oklab,var(--vibeui-button-031-fg) 68%,transparent);
---vibeui-button-031-border:light-dark(oklch(0.86 0.008 265),oklch(0.42 0.014 265));
---vibeui-button-031-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
+--vibeui-button-031-border:light-dark(oklch(0.86 0 265),oklch(0.42 0 265));
+--vibeui-button-031-accent:light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));
 --vibeui-button-031-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

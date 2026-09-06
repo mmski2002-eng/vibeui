@@ -29,13 +29,13 @@ export type Select029Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="select-029"]){
 --vibeui-select-029-surface:transparent;
---vibeui-select-029-surface-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
---vibeui-select-029-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-select-029-surface-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
+--vibeui-select-029-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-select-029-muted:color-mix(in oklab,var(--vibeui-select-029-fg) 68%,transparent);
---vibeui-select-029-field:light-dark(oklch(0.985 0.002 265),oklch(0.27 0.012 265));
---vibeui-select-029-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.012 265));
+--vibeui-select-029-field:light-dark(oklch(0.985 0 265),oklch(0.27 0 265));
+--vibeui-select-029-border:light-dark(oklch(0.87 0 265),oklch(0.42 0 265));
 --vibeui-select-029-accent:light-dark(oklch(0.55 0.19 262),oklch(0.73 0.17 262));
---vibeui-select-029-thumb-bg:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.012 265));
+--vibeui-select-029-thumb-bg:light-dark(oklch(0.96 0 265),oklch(0.31 0 265));
 --vibeui-select-029-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

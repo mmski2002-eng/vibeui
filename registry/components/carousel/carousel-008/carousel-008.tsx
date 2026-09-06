@@ -32,10 +32,10 @@ export type Carousel008Props = Omit<ComponentProps<"section">, "children"> & {
 // темнеют вместе со страницей, своей тёмной темы компонент не носит.
 const STYLES = `
 :where([data-vibeui-block="carousel-008"]){
---vibeui-carousel-008-bg:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
---vibeui-carousel-008-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-carousel-008-bg:light-dark(oklch(1 0 0),oklch(0.21 0 265));
+--vibeui-carousel-008-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-carousel-008-muted:color-mix(in oklab,var(--vibeui-carousel-008-fg) 68%,transparent);
---vibeui-carousel-008-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-carousel-008-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
 --vibeui-carousel-008-accent:light-dark(oklch(0.55 0.17 265),oklch(0.7 0.16 265));
 --vibeui-carousel-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -57,7 +57,7 @@ aspect-ratio:16 / 9;border-radius:0.75rem;
 background:
 radial-gradient(90% 80% at 25% 20%,oklch(0.92 0.06 var(--vibeui-carousel-008-hue,250)),transparent 70%),
 linear-gradient(150deg,oklch(0.82 0.08 var(--vibeui-carousel-008-hue,250)),oklch(0.58 0.1 var(--vibeui-carousel-008-hue,250)));
-color:oklch(0.99 0.003 265);font-size:1.5rem;font-weight:700;
+color:oklch(0.99 0 265);font-size:1.5rem;font-weight:700;
 font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="carousel-008"] [data-part="body"]{display:grid}
@@ -77,7 +77,7 @@ width:0.4375rem;height:0.4375rem;border-radius:9999px;background:var(--vibeui-ca
 appearance:none;cursor:pointer;
 height:2.125rem;padding:0 0.875rem;
 border:0;border-radius:0.5rem;
-background:var(--vibeui-carousel-008-accent);color:light-dark(oklch(0.99 0.01 265),oklch(0.17 0.02 265));
+background:var(--vibeui-carousel-008-accent);color:light-dark(oklch(0.99 0 265),oklch(0.17 0 265));
 font:inherit;font-size:0.8125rem;font-weight:650;
 }
 [data-vibeui-block="carousel-008"] [data-part="skip"]{

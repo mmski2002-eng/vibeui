@@ -39,7 +39,7 @@ export type Accordion003Props = Omit<ComponentProps<"div">, "children"> & {
 // «чтобы не резал глаз» — значит превратить приём в обычный акцент.
 const STYLES = `
 :where([data-vibeui-block="accordion-003"]){
---vibeui-accordion-003-fg:light-dark(oklch(0.18 0.006 265),oklch(0.95 0.004 265));
+--vibeui-accordion-003-fg:light-dark(oklch(0.18 0 265),oklch(0.95 0 265));
 --vibeui-accordion-003-muted:color-mix(in oklab,var(--vibeui-accordion-003-fg) 68%,transparent);
 --vibeui-accordion-003-highlight:light-dark(oklch(0.93 0.155 105),oklch(0.86 0.17 100));
 /* Буквы под пигментом всегда тёмные — как их красит сам браузер. */

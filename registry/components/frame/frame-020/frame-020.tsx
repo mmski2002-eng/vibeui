@@ -17,14 +17,14 @@ export type Frame020Props = Omit<ComponentProps<"figure">, "title"> & {
 // пропорцию 16 / 9 — стандарт настольной матрицы, а не 16 / 10 у ноутбука.
 const STYLES = `
 :where([data-vibeui-block="frame-020"]){
---vibeui-frame-020-body:light-dark(oklch(0.9 0.005 265),oklch(0.72 0.006 265));
---vibeui-frame-020-edge:light-dark(oklch(0.76 0.008 265),oklch(0.6 0.009 265));
---vibeui-frame-020-stand:light-dark(oklch(0.83 0.006 265),oklch(0.64 0.007 265));
+--vibeui-frame-020-body:light-dark(oklch(0.9 0 265),oklch(0.72 0 265));
+--vibeui-frame-020-edge:light-dark(oklch(0.76 0 265),oklch(0.6 0 265));
+--vibeui-frame-020-stand:light-dark(oklch(0.83 0 265),oklch(0.64 0 265));
 --vibeui-frame-020-screen:transparent;
---vibeui-frame-020-fg:light-dark(oklch(0.23 0.014 265),oklch(0.93 0.005 265));
+--vibeui-frame-020-fg:light-dark(oklch(0.23 0 265),oklch(0.93 0 265));
 --vibeui-frame-020-muted:color-mix(in oklab,var(--vibeui-frame-020-fg) 68%,transparent);
---vibeui-frame-020-soft:light-dark(oklch(0.96 0.004 265),oklch(0.33 0.008 265));
---vibeui-frame-020-panel:light-dark(oklch(1 0 0),oklch(0.28 0.009 265));
+--vibeui-frame-020-soft:light-dark(oklch(0.96 0 265),oklch(0.33 0 265));
+--vibeui-frame-020-panel:light-dark(oklch(1 0 0),oklch(0.28 0 265));
 --vibeui-frame-020-accent:light-dark(oklch(0.55 0.16 262),oklch(0.72 0.15 262));
 --vibeui-frame-020-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -39,9 +39,9 @@ font-family:var(--vibeui-frame-020-font);color:var(--vibeui-frame-020-fg);
 }
 [data-vibeui-block="frame-020"] *{box-sizing:border-box}
 [data-vibeui-block="frame-020"][data-tone="graphite"]{
---vibeui-frame-020-body:oklch(0.42 0.012 265);
---vibeui-frame-020-edge:oklch(0.55 0.012 265);
---vibeui-frame-020-stand:oklch(0.36 0.012 265);
+--vibeui-frame-020-body:oklch(0.42 0 265);
+--vibeui-frame-020-edge:oklch(0.55 0 265);
+--vibeui-frame-020-stand:oklch(0.36 0 265);
 }
 [data-vibeui-block="frame-020"] [data-part="bezel"]{
 position:relative;width:100%;padding:0.5rem;

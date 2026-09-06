@@ -46,10 +46,10 @@ export type Datagrid026Props = Omit<ComponentProps<"section">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="datagrid-026"]){
 --vibeui-datagrid-026-bg:transparent;
---vibeui-datagrid-026-fg:light-dark(oklch(0.23 0.014 285),oklch(0.93 0.006 285));
+--vibeui-datagrid-026-fg:light-dark(oklch(0.23 0 285),oklch(0.93 0 285));
 --vibeui-datagrid-026-muted:color-mix(in oklab,var(--vibeui-datagrid-026-fg) 68%,transparent);
---vibeui-datagrid-026-border:light-dark(oklch(0.92 0.006 285),oklch(0.35 0.012 285));
---vibeui-datagrid-026-head:light-dark(oklch(0.975 0.003 285),oklch(0.27 0.012 285));
+--vibeui-datagrid-026-border:light-dark(oklch(0.92 0 285),oklch(0.35 0 285));
+--vibeui-datagrid-026-head:light-dark(oklch(0.975 0 285),oklch(0.27 0 285));
 --vibeui-datagrid-026-accent:light-dark(oklch(0.5 0.16 30),oklch(0.72 0.15 30));
 --vibeui-datagrid-026-pin:light-dark(oklch(0.97 0.03 30),oklch(0.3 0.036 30));
 --vibeui-datagrid-026-up:light-dark(oklch(0.53 0.17 27),oklch(0.75 0.15 27));

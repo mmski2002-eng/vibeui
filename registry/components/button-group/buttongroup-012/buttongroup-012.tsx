@@ -19,13 +19,13 @@ export type Buttongroup012Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="buttongroup-012"]){
 --vibeui-buttongroup-012-surface:transparent;
---vibeui-buttongroup-012-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.006 265));
+--vibeui-buttongroup-012-fg:light-dark(oklch(0.26 0 265),oklch(0.94 0 265));
 --vibeui-buttongroup-012-muted:color-mix(in oklab,var(--vibeui-buttongroup-012-fg) 68%,transparent);
---vibeui-buttongroup-012-border:light-dark(oklch(0.89 0.008 265),oklch(0.37 0.012 265));
---vibeui-buttongroup-012-hover:light-dark(oklch(0.96 0.004 265),oklch(0.3 0.012 265));
+--vibeui-buttongroup-012-border:light-dark(oklch(0.89 0 265),oklch(0.37 0 265));
+--vibeui-buttongroup-012-hover:light-dark(oklch(0.96 0 265),oklch(0.3 0 265));
 --vibeui-buttongroup-012-accent:light-dark(oklch(0.52 0.17 265),oklch(0.62 0.17 265));
 --vibeui-buttongroup-012-accent-dark:light-dark(oklch(0.45 0.16 265),oklch(0.55 0.17 265));
---vibeui-buttongroup-012-on-accent:oklch(0.99 0.005 265);
+--vibeui-buttongroup-012-on-accent:oklch(0.99 0 265);
 --vibeui-buttongroup-012-radius:0.75rem;
 --vibeui-buttongroup-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -39,7 +39,7 @@ border:1px solid var(--vibeui-buttongroup-012-border);
 border-radius:1rem;
 background:var(--vibeui-buttongroup-012-surface);
 font-family:var(--vibeui-buttongroup-012-font);
-box-shadow:0 -6px 20px -18px oklch(0.2 0.02 265 / 70%);
+box-shadow:0 -6px 20px -18px oklch(0.2 0 265 / 70%);
 }
 [data-vibeui-block="buttongroup-012"] *{box-sizing:border-box}
 [data-vibeui-block="buttongroup-012"] [data-part="row"]{display:flex;gap:0.5rem}

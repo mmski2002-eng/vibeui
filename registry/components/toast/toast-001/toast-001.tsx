@@ -31,12 +31,12 @@ export type Toast001Props = Omit<
 // граница светлее подложки, а не темнее.
 const STYLES = `
 :where([data-vibeui-block="toast-001"]){
---vibeui-toast-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.97 0.002 265));
+--vibeui-toast-001-fg:light-dark(oklch(0.24 0 265),oklch(0.97 0 265));
 --vibeui-toast-001-muted:color-mix(in oklab,var(--vibeui-toast-001-fg) 68%,transparent);
---vibeui-toast-001-bg:light-dark(oklch(0.99 0.002 265),oklch(0.24 0.014 265));
---vibeui-toast-001-line:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.014 265));
---vibeui-toast-001-hover:light-dark(oklch(0.2 0.02 265 / 8%),oklch(1 0 0 / 10%));
---vibeui-toast-001-shadow:light-dark(oklch(0.55 0.02 265 / 22%),oklch(0.15 0.02 265 / 60%));
+--vibeui-toast-001-bg:light-dark(oklch(0.99 0 265),oklch(0.24 0 265));
+--vibeui-toast-001-line:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
+--vibeui-toast-001-hover:light-dark(oklch(0.2 0 265 / 8%),oklch(1 0 0 / 10%));
+--vibeui-toast-001-shadow:light-dark(oklch(0.55 0 265 / 22%),oklch(0.15 0 265 / 60%));
 --vibeui-toast-001-tone:light-dark(oklch(0.53 0.14 152),oklch(0.72 0.15 152));
 --vibeui-toast-001-radius:0.75rem;
 --vibeui-toast-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -95,7 +95,7 @@ animation-duration:calc(var(--vibeui-toast-001-duration,5) * 1s);
 }
 @keyframes vibeui-toast-001-drain{from{transform:scaleX(1)}to{transform:scaleX(0)}}
 [data-vibeui-block="toast-001"][data-tone="danger"]{--vibeui-toast-001-tone:light-dark(oklch(0.55 0.19 25),oklch(0.68 0.19 25))}
-[data-vibeui-block="toast-001"][data-tone="neutral"]{--vibeui-toast-001-tone:light-dark(oklch(0.5 0.02 265),oklch(0.8 0.02 265))}
+[data-vibeui-block="toast-001"][data-tone="neutral"]{--vibeui-toast-001-tone:light-dark(oklch(0.5 0 265),oklch(0.8 0 265))}
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="toast-001"] *{animation:none!important;transition:none!important}
 [data-vibeui-block="toast-001"] [data-part="timer"]{display:none}

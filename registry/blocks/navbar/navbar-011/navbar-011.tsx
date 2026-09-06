@@ -38,10 +38,10 @@ export type Navbar011Props = {
 const STYLES = `
 :where([data-vibeui-block="navbar-011"]){
 --vibeui-navbar-011-bg:transparent;
---vibeui-navbar-011-ink:light-dark(oklch(0.24 0.014 250),oklch(0.94 0.006 250));
---vibeui-navbar-011-on-ink:light-dark(oklch(0.99 0.003 250),oklch(0.18 0.014 250));
---vibeui-navbar-011-muted:light-dark(oklch(0.54 0.014 250),oklch(0.7 0.012 250));
---vibeui-navbar-011-border:light-dark(oklch(0.9 0.006 250),oklch(0.35 0.011 250));
+--vibeui-navbar-011-ink:light-dark(oklch(0.24 0 250),oklch(0.94 0 250));
+--vibeui-navbar-011-on-ink:light-dark(oklch(0.99 0 250),oklch(0.18 0 250));
+--vibeui-navbar-011-muted:light-dark(oklch(0.54 0 250),oklch(0.7 0 250));
+--vibeui-navbar-011-border:light-dark(oklch(0.9 0 250),oklch(0.35 0 250));
 --vibeui-navbar-011-accent:light-dark(oklch(0.5 0.16 200),oklch(0.74 0.13 200));
 --vibeui-navbar-011-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.17 0.03 200));
 --vibeui-navbar-011-mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;

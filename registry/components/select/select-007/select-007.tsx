@@ -30,10 +30,10 @@ const STYLES = `
 --vibeui-select-007-surface-border:transparent;
 --vibeui-select-007-surface-pad:0;
 --vibeui-select-007-surface-radius:0;
---vibeui-select-007-fg:light-dark(oklch(0.23 0.016 265),oklch(0.94 0.005 265));
+--vibeui-select-007-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-select-007-muted:color-mix(in oklab,var(--vibeui-select-007-fg) 68%,transparent);
---vibeui-select-007-field:light-dark(oklch(0.985 0.002 265),oklch(0.25 0.012 265));
---vibeui-select-007-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.014 265));
+--vibeui-select-007-field:light-dark(oklch(0.985 0 265),oklch(0.25 0 265));
+--vibeui-select-007-border:light-dark(oklch(0.87 0 265),oklch(0.42 0 265));
 --vibeui-select-007-accent:light-dark(oklch(0.55 0.19 245),oklch(0.76 0.15 245));
 --vibeui-select-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -160,7 +160,7 @@ export function Select007({
       ? {
           "--vibeui-select-007-surface": background,
           "--vibeui-select-007-surface-border":
-            "light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265))",
+            "light-dark(oklch(0.91 0 265),oklch(0.36 0 265))",
           "--vibeui-select-007-surface-pad": "0.875rem",
           "--vibeui-select-007-surface-radius": "0.875rem",
           colorScheme: schemeForBackground(background),

@@ -34,13 +34,13 @@ export type Number005Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="number-005"]){
 --vibeui-number-005-surface:transparent;
---vibeui-number-005-chip:light-dark(oklch(1 0 0),oklch(0.32 0.013 265));
---vibeui-number-005-field:light-dark(oklch(1 0 0),oklch(0.26 0.012 265));
---vibeui-number-005-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
---vibeui-number-005-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-number-005-chip:light-dark(oklch(1 0 0),oklch(0.32 0 265));
+--vibeui-number-005-field:light-dark(oklch(1 0 0),oklch(0.26 0 265));
+--vibeui-number-005-shell:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-number-005-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-number-005-muted:color-mix(in oklab,var(--vibeui-number-005-fg) 68%,transparent);
---vibeui-number-005-border:light-dark(oklch(0.88 0.008 265),oklch(0.42 0.014 265));
---vibeui-number-005-switch:light-dark(oklch(0.96 0.004 265),oklch(0.22 0.01 265));
+--vibeui-number-005-border:light-dark(oklch(0.88 0 265),oklch(0.42 0 265));
+--vibeui-number-005-switch:light-dark(oklch(0.96 0 265),oklch(0.22 0 265));
 --vibeui-number-005-accent:light-dark(oklch(0.5 0.14 195),oklch(0.72 0.12 195));
 --vibeui-number-005-ring:light-dark(oklch(0.5 0.14 195 / 20%),oklch(0.72 0.12 195 / 30%));
 --vibeui-number-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -90,7 +90,7 @@ transition:background-color .14s ease,color .14s ease;
 }
 [data-vibeui-block="number-005"] button[aria-pressed="true"]{
 background:var(--vibeui-number-005-chip);color:var(--vibeui-number-005-fg);
-box-shadow:0 1px 2px oklch(0.2 0.02 265 / 14%);
+box-shadow:0 1px 2px oklch(0.2 0 265 / 14%);
 }
 [data-vibeui-block="number-005"] button:focus-visible{outline:2px solid var(--vibeui-number-005-accent);outline-offset:2px}
 /* Вторая единица подписана всегда: перевод не приходится держать в голове. */

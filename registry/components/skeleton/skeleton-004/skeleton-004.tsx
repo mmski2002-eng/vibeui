@@ -19,10 +19,10 @@ export type Skeleton004Props = ComponentProps<"div"> & {
 const STYLES = `
 :where([data-vibeui-block="skeleton-004"]){
 --vibeui-skeleton-004-bg:transparent;
---vibeui-skeleton-004-head:light-dark(oklch(0.975 0.003 265),oklch(0.26 0.011 265));
---vibeui-skeleton-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
---vibeui-skeleton-004-base:light-dark(oklch(0.93 0.005 265),oklch(0.3 0.012 265));
---vibeui-skeleton-004-shine:light-dark(oklch(0.97 0.003 265),oklch(0.39 0.016 265));
+--vibeui-skeleton-004-head:light-dark(oklch(0.975 0 265),oklch(0.26 0 265));
+--vibeui-skeleton-004-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
+--vibeui-skeleton-004-base:light-dark(oklch(0.93 0 265),oklch(0.3 0 265));
+--vibeui-skeleton-004-shine:light-dark(oklch(0.97 0 265),oklch(0.39 0 265));
 --vibeui-skeleton-004-columns:1.5rem 2fr 1fr 1fr 4rem;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

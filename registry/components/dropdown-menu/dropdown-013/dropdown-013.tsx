@@ -35,11 +35,11 @@ export type Dropdown013Props = Omit<ComponentProps<"div">, "children"> & {
 // контексте кнопка и меню светлее фона страницы, а их границы светлее их самих.
 const STYLES = `
 :where([data-vibeui-block="dropdown-013"]){
---vibeui-dropdown-013-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 255));
---vibeui-dropdown-013-fg:light-dark(oklch(0.24 0.014 255),oklch(0.94 0.006 255));
+--vibeui-dropdown-013-bg:light-dark(oklch(1 0 0),oklch(0.25 0 255));
+--vibeui-dropdown-013-fg:light-dark(oklch(0.24 0 255),oklch(0.94 0 255));
 --vibeui-dropdown-013-muted:color-mix(in oklab,var(--vibeui-dropdown-013-fg) 68%,transparent);
---vibeui-dropdown-013-border:light-dark(oklch(0.9 0.006 255),oklch(0.37 0.012 255));
---vibeui-dropdown-013-hover:light-dark(oklch(0.96 0.004 255),oklch(0.32 0.014 255));
+--vibeui-dropdown-013-border:light-dark(oklch(0.9 0 255),oklch(0.37 0 255));
+--vibeui-dropdown-013-hover:light-dark(oklch(0.96 0 255),oklch(0.32 0 255));
 --vibeui-dropdown-013-danger:light-dark(oklch(0.56 0.19 25),oklch(0.72 0.16 25));
 --vibeui-dropdown-013-accent:light-dark(oklch(0.55 0.17 255),oklch(0.75 0.14 255));
 --vibeui-dropdown-013-hue:255;
@@ -75,7 +75,7 @@ font-size:0.6875rem;font-weight:700;
 position:fixed;margin:0;padding:0.3125rem;min-width:14.5rem;box-sizing:border-box;
 background:var(--vibeui-dropdown-013-bg);color:var(--vibeui-dropdown-013-fg);
 border:1px solid var(--vibeui-dropdown-013-border);border-radius:0.875rem;
-box-shadow:0 18px 40px -22px oklch(0.2 0.02 255 / 55%);
+box-shadow:0 18px 40px -22px oklch(0.2 0 255 / 55%);
 font-family:var(--vibeui-dropdown-013-font);
 opacity:0;transform:translateY(-0.25rem);
 transition:opacity .14s ease,transform .14s ease,display .14s allow-discrete,overlay .14s allow-discrete;

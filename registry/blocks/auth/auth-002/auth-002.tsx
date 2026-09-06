@@ -44,12 +44,12 @@ export type Auth002Props = {
 const STYLES = `
 :where([data-vibeui-block="auth-002"]){
 --vibeui-auth-002-bg:transparent;
---vibeui-auth-002-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-auth-002-muted:light-dark(oklch(0.55 0.014 265),oklch(0.69 0.013 265));
---vibeui-auth-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.011 265));
---vibeui-auth-002-track:light-dark(oklch(0.93 0.005 265),oklch(0.3 0.009 265));
+--vibeui-auth-002-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
+--vibeui-auth-002-muted:light-dark(oklch(0.55 0 265),oklch(0.69 0 265));
+--vibeui-auth-002-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-auth-002-track:light-dark(oklch(0.93 0 265),oklch(0.3 0 265));
 --vibeui-auth-002-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
---vibeui-auth-002-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 265));
+--vibeui-auth-002-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0 265));
 --vibeui-auth-002-weak:light-dark(oklch(0.6 0.19 25),oklch(0.71 0.16 25));
 --vibeui-auth-002-mid:light-dark(oklch(0.72 0.15 75),oklch(0.79 0.13 75));
 --vibeui-auth-002-good:light-dark(oklch(0.58 0.14 152),oklch(0.72 0.13 152));

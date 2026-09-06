@@ -20,8 +20,8 @@ export type Frame019Props = Omit<ComponentProps<"figure">, "title"> & {
 // Едва заметная пульсация свечения гасится по prefers-reduced-motion.
 const STYLES = `
 :where([data-vibeui-block="frame-019"]){
---vibeui-frame-019-bg:light-dark(oklch(1 0 0),oklch(0.23 0.012 265));
---vibeui-frame-019-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.005 265));
+--vibeui-frame-019-bg:light-dark(oklch(1 0 0),oklch(0.23 0 265));
+--vibeui-frame-019-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-frame-019-muted:color-mix(in oklab,var(--vibeui-frame-019-fg) 68%,transparent);
 --vibeui-frame-019-border-a:light-dark(oklch(0.72 0.19 320),oklch(0.78 0.17 320));
 --vibeui-frame-019-border-b:light-dark(oklch(0.75 0.17 230),oklch(0.8 0.15 230));

@@ -30,10 +30,10 @@ export type Textarea002Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="textarea-002"]){
 --vibeui-textarea-002-bg:transparent;
---vibeui-textarea-002-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-textarea-002-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-textarea-002-muted:color-mix(in oklab,var(--vibeui-textarea-002-fg) 68%,transparent);
---vibeui-textarea-002-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
---vibeui-textarea-002-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.012 265));
+--vibeui-textarea-002-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-textarea-002-field:light-dark(oklch(0.985 0 265),oklch(0.26 0 265));
 --vibeui-textarea-002-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
 --vibeui-textarea-002-danger:light-dark(oklch(0.56 0.19 25),oklch(0.72 0.16 25));
 --vibeui-textarea-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

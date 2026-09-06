@@ -33,11 +33,11 @@ export type Combobox014Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="combobox-014"]){
 --vibeui-combobox-014-bg:transparent;
---vibeui-combobox-014-fg:light-dark(oklch(0.22 0.014 285),oklch(0.94 0.006 285));
+--vibeui-combobox-014-fg:light-dark(oklch(0.22 0 285),oklch(0.94 0 285));
 --vibeui-combobox-014-muted:color-mix(in oklab,var(--vibeui-combobox-014-fg) 68%,transparent);
---vibeui-combobox-014-border:light-dark(oklch(0.9 0.008 285),oklch(0.35 0.012 285));
---vibeui-combobox-014-field:light-dark(oklch(0.985 0.004 285),oklch(0.27 0.012 285));
---vibeui-combobox-014-soft:light-dark(oklch(0.96 0.008 285),oklch(0.31 0.014 285));
+--vibeui-combobox-014-border:light-dark(oklch(0.9 0 285),oklch(0.35 0 285));
+--vibeui-combobox-014-field:light-dark(oklch(0.985 0 285),oklch(0.27 0 285));
+--vibeui-combobox-014-soft:light-dark(oklch(0.96 0 285),oklch(0.31 0 285));
 --vibeui-combobox-014-accent:light-dark(oklch(0.5 0.13 285),oklch(0.72 0.13 285));
 --vibeui-combobox-014-accentsoft:light-dark(oklch(0.94 0.04 285),oklch(0.36 0.06 285));
 --vibeui-combobox-014-radius:0.625rem;

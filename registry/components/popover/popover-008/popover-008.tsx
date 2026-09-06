@@ -24,13 +24,13 @@ export type Popover008Props = Omit<ComponentProps<"div">, "children"> & {
 // родителя при открытии ребёнка; Escape закрывает их по одному, изнутри наружу.
 const STYLES = `
 :where([data-vibeui-block="popover-008"]){
---vibeui-popover-008-bg:light-dark(oklch(1 0 0),oklch(0.22 0.012 265));
---vibeui-popover-008-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.006 265));
+--vibeui-popover-008-bg:light-dark(oklch(1 0 0),oklch(0.22 0 265));
+--vibeui-popover-008-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-popover-008-muted:color-mix(in oklab,var(--vibeui-popover-008-fg) 68%,transparent);
---vibeui-popover-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
---vibeui-popover-008-hover:light-dark(oklch(0.965 0.004 265),oklch(0.27 0.014 265));
+--vibeui-popover-008-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
+--vibeui-popover-008-hover:light-dark(oklch(0.965 0 265),oklch(0.27 0 265));
 --vibeui-popover-008-accent:light-dark(oklch(0.55 0.16 275),oklch(0.74 0.14 275));
---vibeui-popover-008-shadow:light-dark(oklch(0.2 0.02 265 / 60%),oklch(0.02 0.01 265 / 72%));
+--vibeui-popover-008-shadow:light-dark(oklch(0.2 0 265 / 60%),oklch(0.02 0 265 / 72%));
 --vibeui-popover-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -63,12 +63,12 @@ box-shadow:0 24px 52px -30px var(--vibeui-popover-008-shadow);
 }
 [data-vibeui-block="popover-008"] [data-part="panel"]{
 width:min(16rem,100vw - 2rem);
-position-anchor:--vibeui-popover-008-anchor;
+position-anchor:--vibeui-popover-008-anchor;inset:auto;
 top:anchor(bottom);left:anchor(left);margin-top:0.5rem;
 }
 [data-vibeui-block="popover-008"] [data-part="nested"]{
 width:min(14rem,100vw - 2rem);
-position-anchor:--vibeui-popover-008-sub;
+position-anchor:--vibeui-popover-008-sub;inset:auto;
 top:anchor(top);left:anchor(right);margin-left:0.5rem;
 }
 [data-vibeui-block="popover-008"] [data-part="panel"]:popover-open,
@@ -99,9 +99,11 @@ flex:none;width:1.125rem;text-align:center;color:var(--vibeui-popover-008-muted)
 }
 /* Раскрытая панель на месте: атрибут popover прячет её правилом браузера,
    а это правило той же специфичности его переопределяет и возвращает панель
-   в поток. Так её показывают на витрине и в документации, без верхнего слоя. */
-[data-vibeui-block="popover-008"][data-open] [popover]{
-display:block;position:static;inset:auto;margin:0.5rem 0 0;
+   в поток. Так её показывают на витрине и в документации, без верхнего слоя.
+   Только пока popover закрыт: у открытого положение задаёт верхний слой,
+   и static отправил бы панель в левый верхний угол экрана. */
+[data-vibeui-block="popover-008"][data-open] [popover]:not(:popover-open){
+display:flex;flex-direction:column;gap:0.125rem;position:static;inset:auto;margin:0.5rem 0 0;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="popover-008"] *{animation:none!important;transition:none!important}}
 `

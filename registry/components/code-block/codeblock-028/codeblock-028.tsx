@@ -30,7 +30,7 @@ export type Codeblock028Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="codeblock-028"]){
 --vibeui-codeblock-028-bg:transparent;
---vibeui-codeblock-028-fg:light-dark(oklch(0.27 0.016 265),oklch(0.94 0.006 265));
+--vibeui-codeblock-028-fg:light-dark(oklch(0.27 0 265),oklch(0.94 0 265));
 --vibeui-codeblock-028-muted:color-mix(in oklab,var(--vibeui-codeblock-028-fg) 66%,transparent);
 --vibeui-codeblock-028-border:light-dark(oklch(0 0 0 / 13%),oklch(1 0 0 / 13%));
 --vibeui-codeblock-028-head:light-dark(oklch(0 0 0 / 4%),oklch(1 0 0 / 6%));
@@ -111,7 +111,7 @@ const DEMO_BUTTON_STYLE: CSSProperties = {
   padding: "0.5rem 1.25rem",
   borderRadius: "0.625rem",
   background: "var(--vibeui-codeblock-028-accent)",
-  color: "light-dark(oklch(1 0 0),oklch(0.2 0.02 265))",
+  color: "light-dark(oklch(1 0 0),oklch(0.2 0 265))",
   font: "inherit",
   fontSize: "0.9375rem",
   fontWeight: 650,

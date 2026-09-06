@@ -34,12 +34,12 @@ export type Drawer003Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="drawer-003"]){
 --vibeui-drawer-003-bg:transparent;
---vibeui-drawer-003-surface:light-dark(oklch(1 0 0),oklch(0.22 0.013 265));
---vibeui-drawer-003-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-drawer-003-surface:light-dark(oklch(1 0 0),oklch(0.22 0 265));
+--vibeui-drawer-003-fg:light-dark(oklch(0.21 0 265),oklch(0.94 0 265));
 --vibeui-drawer-003-muted:color-mix(in oklab,var(--vibeui-drawer-003-fg) 68%,transparent);
---vibeui-drawer-003-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-drawer-003-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
 --vibeui-drawer-003-accent:light-dark(oklch(0.55 0.17 265),oklch(0.73 0.15 265));
---vibeui-drawer-003-on-accent:light-dark(oklch(0.99 0.01 265),oklch(0.17 0.02 265));
+--vibeui-drawer-003-on-accent:light-dark(oklch(0.99 0 265),oklch(0.17 0 265));
 --vibeui-drawer-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -63,20 +63,21 @@ min-width:1.25rem;height:1.25rem;padding:0 0.375rem;border-radius:9999px;
 background:var(--vibeui-drawer-003-accent);color:var(--vibeui-drawer-003-on-accent);
 font-size:0.6875rem;font-weight:700;
 }
-/* Ящик слева: фильтры привычно живут у левого края списка. */
+/* Ящик справа: как и остальные шторки категории — фильтры выезжают с той
+   же стороны, что и вся выдвижная навигация продукта. */
 [data-vibeui-block="drawer-003"] dialog{
-position:fixed;inset:0 auto 0 0;margin:0;
+position:fixed;inset:0 0 0 auto;margin:0;
 width:min(20rem,100vw);max-width:100vw;height:100dvh;max-height:100dvh;
 padding:0;border:0;background:var(--vibeui-drawer-003-surface);color:inherit;
-box-shadow:24px 0 60px -30px oklch(0.2 0.02 265 / 55%);
-translate:-100% 0;transition:translate .22s ease,overlay .22s allow-discrete,display .22s allow-discrete;
+box-shadow:-24px 0 60px -30px oklch(0.2 0 265 / 55%);
+translate:100% 0;transition:translate .22s ease,overlay .22s allow-discrete,display .22s allow-discrete;
 }
 [data-vibeui-block="drawer-003"] dialog[open]{translate:0 0}
 @starting-style{
-[data-vibeui-block="drawer-003"] dialog[open]{translate:-100% 0}
+[data-vibeui-block="drawer-003"] dialog[open]{translate:100% 0}
 }
 /* Затемнение позади ящика одно на обе темы: подложка гасит страницу, а не красится вместе с ней. */
-[data-vibeui-block="drawer-003"] dialog::backdrop{background:oklch(0.19 0.02 265 / 45%)}
+[data-vibeui-block="drawer-003"] dialog::backdrop{background:oklch(0.19 0 265 / 45%)}
 [data-vibeui-block="drawer-003"] [data-part="panel"]{
 display:flex;flex-direction:column;height:100%;box-sizing:border-box;
 }

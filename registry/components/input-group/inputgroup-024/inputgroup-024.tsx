@@ -39,14 +39,14 @@ const DEFAULT_VALID_CODES = ["VIBEUI10", "SALE2026"]
 const STYLES = `
 :where([data-vibeui-block="inputgroup-024"]){
 --vibeui-inputgroup-024-surface:transparent;
---vibeui-inputgroup-024-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
---vibeui-inputgroup-024-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-inputgroup-024-shell:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
+--vibeui-inputgroup-024-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-inputgroup-024-muted:color-mix(in oklab,var(--vibeui-inputgroup-024-fg) 68%,transparent);
---vibeui-inputgroup-024-field:light-dark(oklch(0.99 0.002 265),oklch(0.26 0.012 265));
---vibeui-inputgroup-024-fixed:light-dark(oklch(0.96 0.004 265),oklch(0.31 0.012 265));
---vibeui-inputgroup-024-border:light-dark(oklch(0.86 0.008 265),oklch(0.4 0.014 265));
+--vibeui-inputgroup-024-field:light-dark(oklch(0.99 0 265),oklch(0.26 0 265));
+--vibeui-inputgroup-024-fixed:light-dark(oklch(0.96 0 265),oklch(0.31 0 265));
+--vibeui-inputgroup-024-border:light-dark(oklch(0.86 0 265),oklch(0.4 0 265));
 --vibeui-inputgroup-024-accent:light-dark(oklch(0.5 0.15 315),oklch(0.73 0.14 315));
---vibeui-inputgroup-024-checking:light-dark(oklch(0.6 0.02 265),oklch(0.72 0.02 265));
+--vibeui-inputgroup-024-checking:light-dark(oklch(0.6 0 265),oklch(0.72 0 265));
 --vibeui-inputgroup-024-accepted:light-dark(oklch(0.56 0.14 155),oklch(0.76 0.14 155));
 --vibeui-inputgroup-024-rejected:light-dark(oklch(0.56 0.19 25),oklch(0.72 0.17 25));
 --vibeui-inputgroup-024-radius:0.75rem;

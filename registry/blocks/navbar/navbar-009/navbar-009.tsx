@@ -37,9 +37,9 @@ export type Navbar009Props = {
 const STYLES = `
 :where([data-vibeui-block="navbar-009"]){
 --vibeui-navbar-009-bg:transparent;
---vibeui-navbar-009-ink:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.006 265));
---vibeui-navbar-009-muted:light-dark(oklch(0.54 0.014 265),oklch(0.7 0.012 265));
---vibeui-navbar-009-border:light-dark(oklch(0.91 0.005 265),oklch(0.34 0.011 265));
+--vibeui-navbar-009-ink:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
+--vibeui-navbar-009-muted:light-dark(oklch(0.54 0 265),oklch(0.7 0 265));
+--vibeui-navbar-009-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-navbar-009-accent:light-dark(oklch(0.48 0.18 300),oklch(0.62 0.18 300));
 --vibeui-navbar-009-accent-2:light-dark(oklch(0.55 0.19 240),oklch(0.62 0.17 240));
 --vibeui-navbar-009-accent-fg:oklch(0.99 0 0);

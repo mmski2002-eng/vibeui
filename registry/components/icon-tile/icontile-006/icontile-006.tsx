@@ -20,10 +20,10 @@ const STYLES = `
 :where([data-vibeui-block="icontile-006"]){
 --vibeui-icontile-006-size:2.75rem;
 --vibeui-icontile-006-hue:262;
---vibeui-icontile-006-idle:light-dark(oklch(0.96 0.004 265),oklch(0.27 0.008 265));
+--vibeui-icontile-006-idle:light-dark(oklch(0.96 0 265),oklch(0.27 0 265));
 --vibeui-icontile-006-hover:light-dark(oklch(0.93 0.01 var(--vibeui-icontile-006-hue)),oklch(0.33 0.03 var(--vibeui-icontile-006-hue)));
---vibeui-icontile-006-fg:light-dark(oklch(0.36 0.014 265),oklch(0.91 0.008 265));
---vibeui-icontile-006-border:light-dark(oklch(0.89 0.006 265),oklch(0.4 0.01 265));
+--vibeui-icontile-006-fg:light-dark(oklch(0.36 0 265),oklch(0.91 0 265));
+--vibeui-icontile-006-border:light-dark(oklch(0.89 0 265),oklch(0.4 0 265));
 --vibeui-icontile-006-on:light-dark(oklch(0.55 0.17 var(--vibeui-icontile-006-hue)),oklch(0.62 0.17 var(--vibeui-icontile-006-hue)));
 --vibeui-icontile-006-on-border:light-dark(oklch(0.47 0.17 var(--vibeui-icontile-006-hue)),oklch(0.72 0.15 var(--vibeui-icontile-006-hue)));
 --vibeui-icontile-006-ring:light-dark(oklch(0.55 0.17 262 / 60%),oklch(0.74 0.15 262 / 70%));

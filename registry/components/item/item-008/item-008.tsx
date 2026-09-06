@@ -36,11 +36,11 @@ export type Item008Props = Omit<ComponentProps<"li">, "children" | "title"> & {
 const STYLES = `
 :where([data-vibeui-block="item-008"]){
 --vibeui-item-008-bg:transparent;
---vibeui-item-008-fg:light-dark(oklch(0.23 0.014 265),oklch(0.93 0.006 265));
+--vibeui-item-008-fg:light-dark(oklch(0.23 0 265),oklch(0.93 0 265));
 --vibeui-item-008-muted:color-mix(in oklab,var(--vibeui-item-008-fg) 68%,transparent);
---vibeui-item-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
+--vibeui-item-008-border:light-dark(oklch(0.9 0 265),oklch(0.35 0 265));
 --vibeui-item-008-accent:light-dark(oklch(0.55 0.19 262),oklch(0.75 0.16 262));
---vibeui-item-008-shadow:light-dark(oklch(0.2 0.02 265 / 14%),oklch(0 0 0 / 46%));
+--vibeui-item-008-shadow:light-dark(oklch(0.2 0 265 / 14%),oklch(0 0 0 / 46%));
 --vibeui-item-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

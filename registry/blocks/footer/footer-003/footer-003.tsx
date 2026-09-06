@@ -38,12 +38,12 @@ export type Footer003Props = {
 const STYLES = `
 :where([data-vibeui-block="footer-003"]){
 --vibeui-footer-003-bg:transparent;
---vibeui-footer-003-field:light-dark(oklch(1 0 0),oklch(0.26 0.012 250));
---vibeui-footer-003-ink:light-dark(oklch(0.21 0.014 250),oklch(0.94 0.006 250));
---vibeui-footer-003-muted:light-dark(oklch(0.5 0.014 250),oklch(0.71 0.012 250));
---vibeui-footer-003-border:light-dark(oklch(0.89 0.008 250),oklch(0.36 0.014 250));
+--vibeui-footer-003-field:light-dark(oklch(1 0 0),oklch(0.26 0 250));
+--vibeui-footer-003-ink:light-dark(oklch(0.21 0 250),oklch(0.94 0 250));
+--vibeui-footer-003-muted:light-dark(oklch(0.5 0 250),oklch(0.71 0 250));
+--vibeui-footer-003-border:light-dark(oklch(0.89 0 250),oklch(0.36 0 250));
 --vibeui-footer-003-accent:light-dark(oklch(0.5 0.17 262),oklch(0.72 0.15 262));
---vibeui-footer-003-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0.03 262));
+--vibeui-footer-003-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0 262));
 --vibeui-footer-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

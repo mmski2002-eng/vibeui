@@ -42,17 +42,17 @@ export type Hero002Props = {
 const STYLES = `
 :where([data-vibeui-block="hero-002"]){
 --vibeui-hero-002-bg:transparent;
---vibeui-hero-002-panel:light-dark(oklch(1 0 0),oklch(0.235 0.012 260));
---vibeui-hero-002-panel-alt:light-dark(oklch(0.974 0.004 255),oklch(0.28 0.013 260));
---vibeui-hero-002-fg:light-dark(oklch(0.21 0.02 260),oklch(0.96 0.004 260));
---vibeui-hero-002-muted:light-dark(oklch(0.52 0.015 260),oklch(0.72 0.014 260));
---vibeui-hero-002-border:light-dark(oklch(0.9 0.008 260),oklch(0.37 0.012 260));
+--vibeui-hero-002-panel:light-dark(oklch(1 0 0),oklch(0.235 0 260));
+--vibeui-hero-002-panel-alt:light-dark(oklch(0.974 0 255),oklch(0.28 0 260));
+--vibeui-hero-002-fg:light-dark(oklch(0.21 0 260),oklch(0.96 0 260));
+--vibeui-hero-002-muted:light-dark(oklch(0.52 0 260),oklch(0.72 0 260));
+--vibeui-hero-002-border:light-dark(oklch(0.9 0 260),oklch(0.37 0 260));
 --vibeui-hero-002-accent:light-dark(oklch(0.48 0.17 262),oklch(0.73 0.155 262));
---vibeui-hero-002-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0.022 262));
+--vibeui-hero-002-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0 262));
 --vibeui-hero-002-positive:light-dark(oklch(0.45 0.12 155),oklch(0.78 0.14 155));
 --vibeui-hero-002-ring:color-mix(in oklab, var(--vibeui-hero-002-accent) 70%, transparent);
---vibeui-hero-002-shadow:light-dark(oklch(0.21 0.02 260 / 16%),oklch(0 0 0 / 46%));
---vibeui-hero-002-dot:light-dark(oklch(0.21 0.02 260 / 7%),oklch(1 0 0 / 8%));
+--vibeui-hero-002-shadow:light-dark(oklch(0.21 0 260 / 16%),oklch(0 0 0 / 46%));
+--vibeui-hero-002-dot:light-dark(oklch(0.21 0 260 / 7%),oklch(1 0 0 / 8%));
 --vibeui-hero-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

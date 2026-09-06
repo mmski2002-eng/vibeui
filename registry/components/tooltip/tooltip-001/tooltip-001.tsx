@@ -22,8 +22,8 @@ export type Tooltip001Props = Omit<
 // половине пользователей. Всё держится на :hover и :focus-within, JS не нужен.
 const STYLES = `
 :where([data-vibeui-block="tooltip-001"]){
---vibeui-tooltip-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.97 0.002 265));
---vibeui-tooltip-001-bg:oklch(0.26 0.014 265);
+--vibeui-tooltip-001-fg:light-dark(oklch(0.24 0 265),oklch(0.97 0 265));
+--vibeui-tooltip-001-bg:oklch(0.26 0 265);
 --vibeui-tooltip-001-radius:0.4375rem;
 --vibeui-tooltip-001-gap:0.5rem;
 --vibeui-tooltip-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -72,9 +72,9 @@ const DEFAULT_TRIGGER_STYLE = `
 appearance:none;cursor:pointer;
 display:inline-flex;align-items:center;justify-content:center;
 width:2.25rem;height:2.25rem;border-radius:0.5rem;
-border:1px solid light-dark(oklch(0.88 0.008 265),oklch(0.38 0.012 265));
-background:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
-color:light-dark(oklch(0.35 0.014 265),oklch(0.9 0.006 265));font:inherit;font-size:0.9375rem;
+border:1px solid light-dark(oklch(0.88 0 265),oklch(0.38 0 265));
+background:light-dark(oklch(1 0 0),oklch(0.25 0 265));
+color:light-dark(oklch(0.35 0 265),oklch(0.9 0 265));font:inherit;font-size:0.9375rem;
 }
 [data-vibeui-block="tooltip-001"] [data-part="sample"]:focus-visible{outline:2px solid light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));outline-offset:2px}
 `

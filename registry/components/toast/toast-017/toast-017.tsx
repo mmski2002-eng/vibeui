@@ -29,12 +29,12 @@ export type Toast017Props = Omit<ComponentProps<"div">, "children"> & {
 // поднят по светлоте, чтобы читаться на тёмной карточке.
 const STYLES = `
 :where([data-vibeui-block="toast-017"]){
---vibeui-toast-017-bg:light-dark(oklch(0.99 0.002 265),oklch(0.25 0.014 265));
---vibeui-toast-017-fg:light-dark(oklch(0.22 0.014 265),oklch(0.96 0.003 265));
+--vibeui-toast-017-bg:light-dark(oklch(0.99 0 265),oklch(0.25 0 265));
+--vibeui-toast-017-fg:light-dark(oklch(0.22 0 265),oklch(0.96 0 265));
 --vibeui-toast-017-muted:color-mix(in oklab,var(--vibeui-toast-017-fg) 68%,transparent);
---vibeui-toast-017-border:light-dark(oklch(0.9 0.006 265),oklch(0.38 0.014 265));
---vibeui-toast-017-shadow:light-dark(oklch(0.18 0.02 265 / 55%),oklch(0.05 0.01 265 / 70%));
---vibeui-toast-017-hover:light-dark(oklch(0.2 0.02 265 / 5%),oklch(1 0 0 / 10%));
+--vibeui-toast-017-border:light-dark(oklch(0.9 0 265),oklch(0.38 0 265));
+--vibeui-toast-017-shadow:light-dark(oklch(0.18 0 265 / 55%),oklch(0.05 0 265 / 70%));
+--vibeui-toast-017-hover:light-dark(oklch(0.2 0 265 / 5%),oklch(1 0 0 / 10%));
 --vibeui-toast-017-danger:light-dark(oklch(0.56 0.19 25),oklch(0.74 0.17 25));
 --vibeui-toast-017-radius:0.875rem;
 --vibeui-toast-017-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

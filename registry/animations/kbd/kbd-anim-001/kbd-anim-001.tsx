@@ -46,8 +46,8 @@ const ROWS: Key[][] = [
 
 const STYLES = `
 :where([data-vibeui-block="kbd-anim-001"]){
---vibeui-kbd-anim-001-deck:light-dark(oklch(0.93 0.004 265),oklch(0.2 0.006 265));
---vibeui-kbd-anim-001-key:light-dark(oklch(0.99 0 0),oklch(0.27 0.006 265));
+--vibeui-kbd-anim-001-deck:light-dark(oklch(0.93 0 265),oklch(0.2 0 265));
+--vibeui-kbd-anim-001-key:light-dark(oklch(0.99 0 0),oklch(0.27 0 265));
 --vibeui-kbd-anim-001-fg:light-dark(oklch(0.24 0 0),oklch(0.94 0 0));
 --vibeui-kbd-anim-001-muted:color-mix(in oklab,var(--vibeui-kbd-anim-001-fg) 58%,transparent);
 --vibeui-kbd-anim-001-border:light-dark(oklch(0.88 0 0),oklch(0.34 0 0));

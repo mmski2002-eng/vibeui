@@ -31,12 +31,12 @@ export type Pagination013Props = {
 const STYLES = `
 :where([data-vibeui-block="pagination-013"]){
 --vibeui-pagination-013-bg:transparent;
---vibeui-pagination-013-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-pagination-013-fg:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
 --vibeui-pagination-013-muted:color-mix(in oklab,var(--vibeui-pagination-013-fg) 68%,transparent);
---vibeui-pagination-013-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
---vibeui-pagination-013-hover:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.86 0.02 265 / 14%));
+--vibeui-pagination-013-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
+--vibeui-pagination-013-hover:light-dark(oklch(0.55 0 265 / 8%),oklch(0.86 0 265 / 14%));
 --vibeui-pagination-013-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
---vibeui-pagination-013-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 265));
+--vibeui-pagination-013-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0 265));
 --vibeui-pagination-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

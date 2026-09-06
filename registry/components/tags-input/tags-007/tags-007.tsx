@@ -26,11 +26,11 @@ export type Tags007Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="tags-007"]){
 --vibeui-tags-007-surface:transparent;
---vibeui-tags-007-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.01 265));
---vibeui-tags-007-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-tags-007-shell:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-tags-007-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-tags-007-muted:color-mix(in oklab,var(--vibeui-tags-007-fg) 68%,transparent);
---vibeui-tags-007-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.012 265));
---vibeui-tags-007-chip:light-dark(oklch(0.96 0.004 265),oklch(0.3 0.012 265));
+--vibeui-tags-007-border:light-dark(oklch(0.88 0 265),oklch(0.38 0 265));
+--vibeui-tags-007-chip:light-dark(oklch(0.96 0 265),oklch(0.3 0 265));
 --vibeui-tags-007-accent:light-dark(oklch(0.5 0.15 265),oklch(0.78 0.13 265));
 --vibeui-tags-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

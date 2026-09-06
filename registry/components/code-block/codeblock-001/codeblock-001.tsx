@@ -29,14 +29,14 @@ const STYLES = `
 --vibeui-codeblock-001-bg:transparent;
 --vibeui-codeblock-001-head:light-dark(oklch(0 0 0 / 4%),oklch(1 0 0 / 6%));
 --vibeui-codeblock-001-hover:light-dark(oklch(0 0 0 / 4%),oklch(1 0 0 / 5%));
---vibeui-codeblock-001-fg:light-dark(oklch(0.28 0.022 275),oklch(0.93 0.008 275));
+--vibeui-codeblock-001-fg:light-dark(oklch(0.28 0 275),oklch(0.93 0 275));
 --vibeui-codeblock-001-muted:color-mix(in oklab,var(--vibeui-codeblock-001-fg) 68%,transparent);
---vibeui-codeblock-001-gutter:light-dark(oklch(0.67 0.02 275),oklch(0.52 0.03 275));
+--vibeui-codeblock-001-gutter:light-dark(oklch(0.67 0 275),oklch(0.52 0 275));
 --vibeui-codeblock-001-rule:light-dark(oklch(0 0 0 / 10%),oklch(1 0 0 / 10%));
 --vibeui-codeblock-001-border:light-dark(oklch(0 0 0 / 14%),oklch(1 0 0 / 14%));
 --vibeui-codeblock-001-keyword:light-dark(oklch(0.5 0.19 305),oklch(0.78 0.13 305));
 --vibeui-codeblock-001-string:light-dark(oklch(0.45 0.13 145),oklch(0.83 0.13 145));
---vibeui-codeblock-001-comment:light-dark(oklch(0.54 0.02 275),oklch(0.61 0.02 275));
+--vibeui-codeblock-001-comment:light-dark(oklch(0.54 0 275),oklch(0.61 0 275));
 --vibeui-codeblock-001-number:light-dark(oklch(0.53 0.14 62),oklch(0.84 0.12 72));
 --vibeui-codeblock-001-entity:light-dark(oklch(0.5 0.15 245),oklch(0.83 0.11 235));
 --vibeui-codeblock-001-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;

@@ -26,9 +26,9 @@ const STYLES = `
 --vibeui-avatar-035-size:2.5rem;
 --vibeui-avatar-035-tick:1rem;
 --vibeui-avatar-035-bg:transparent;
---vibeui-avatar-035-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-avatar-035-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-avatar-035-muted:color-mix(in oklab,var(--vibeui-avatar-035-fg) 68%,transparent);
---vibeui-avatar-035-border:light-dark(oklch(0.91 0.006 265),oklch(0.31 0.01 265));
+--vibeui-avatar-035-border:light-dark(oklch(0.91 0 265),oklch(0.31 0 265));
 --vibeui-avatar-035-person:oklch(0.55 0.2 262);
 --vibeui-avatar-035-org:oklch(0.55 0.13 195);
 --vibeui-avatar-035-creator:oklch(0.62 0.17 320);

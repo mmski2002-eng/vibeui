@@ -25,12 +25,12 @@ const STYLES = `
 :where([data-vibeui-block="codeblock-026"]){
 --vibeui-codeblock-026-bg:transparent;
 --vibeui-codeblock-026-code:light-dark(oklch(0 0 0 / 4%),oklch(1 0 0 / 5%));
---vibeui-codeblock-026-fg:light-dark(oklch(0.3 0.014 265),oklch(0.93 0.008 265));
+--vibeui-codeblock-026-fg:light-dark(oklch(0.3 0 265),oklch(0.93 0 265));
 --vibeui-codeblock-026-muted:color-mix(in oklab,var(--vibeui-codeblock-026-fg) 68%,transparent);
 --vibeui-codeblock-026-border:light-dark(oklch(0 0 0 / 13%),oklch(1 0 0 / 13%));
 --vibeui-codeblock-026-lock:light-dark(oklch(0.45 0.1 265),oklch(0.83 0.1 265));
 --vibeui-codeblock-026-lock-bg:light-dark(oklch(0.6 0.12 265 / 18%),oklch(0.62 0.12 265 / 26%));
---vibeui-codeblock-026-hatch:light-dark(oklch(0.5 0.02 265 / 7%),oklch(1 0 0 / 6%));
+--vibeui-codeblock-026-hatch:light-dark(oklch(0.5 0 265 / 7%),oklch(1 0 0 / 6%));
 --vibeui-codeblock-026-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-codeblock-026-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

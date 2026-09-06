@@ -42,11 +42,11 @@ export type Navbar001Props = {
 const STYLES = `
 :where([data-vibeui-block="navbar-001"]){
 --vibeui-navbar-001-bg:transparent;
---vibeui-navbar-001-ink:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
---vibeui-navbar-001-muted:light-dark(oklch(0.5 0.014 265),oklch(0.7 0.012 265));
---vibeui-navbar-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.011 265));
+--vibeui-navbar-001-ink:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
+--vibeui-navbar-001-muted:light-dark(oklch(0.5 0 265),oklch(0.7 0 265));
+--vibeui-navbar-001-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
 --vibeui-navbar-001-accent:light-dark(oklch(0.52 0.19 265),oklch(0.72 0.16 265));
---vibeui-navbar-001-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0.02 265));
+--vibeui-navbar-001-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0 265));
 --vibeui-navbar-001-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -106,11 +106,11 @@ background:transparent;
 [data-vibeui-navbar-001-menu]{
 position:fixed;inset:auto 0.75rem 0.75rem;margin:0;
 padding:0.625rem;
-border:1px solid var(--vibeui-navbar-001-border,light-dark(oklch(0.9 0.006 265),oklch(0.34 0.011 265)));
+border:1px solid var(--vibeui-navbar-001-border,light-dark(oklch(0.9 0 265),oklch(0.34 0 265)));
 border-radius:1rem;
-background:light-dark(oklch(0.99 0.002 265),oklch(0.25 0.014 265));
+background:light-dark(oklch(0.99 0 265),oklch(0.25 0 265));
 font-family:var(--vibeui-navbar-001-sans,ui-sans-serif,system-ui,sans-serif);
-box-shadow:0 24px 60px -28px light-dark(oklch(0.2 0.03 265 / 50%),oklch(0 0 0 / 70%));
+box-shadow:0 24px 60px -28px light-dark(oklch(0.2 0 265 / 50%),oklch(0 0 0 / 70%));
 opacity:0;transform:translateY(0.75rem);
 transition:opacity .2s ease,transform .2s ease,display .2s allow-discrete,overlay .2s allow-discrete;
 }
@@ -118,14 +118,14 @@ transition:opacity .2s ease,transform .2s ease,display .2s allow-discrete,overla
 @starting-style{[data-vibeui-navbar-001-menu]:popover-open{opacity:0;transform:translateY(0.75rem)}}
 [data-vibeui-navbar-001-menu] a{
 display:block;padding:0.625rem 0.75rem;border-radius:0.625rem;
-color:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+color:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 text-decoration:none;font-size:0.9375rem;font-weight:500;
 }
-[data-vibeui-navbar-001-menu] a:hover{background:light-dark(oklch(0.55 0.02 265 / 8%),oklch(0.85 0.02 265 / 12%))}
+[data-vibeui-navbar-001-menu] a:hover{background:light-dark(oklch(0.55 0 265 / 8%),oklch(0.85 0 265 / 12%))}
 [data-vibeui-navbar-001-menu] [data-part="action"]{
 display:flex;justify-content:center;margin-top:0.375rem;
 background:var(--vibeui-navbar-001-accent,light-dark(oklch(0.52 0.19 265),oklch(0.72 0.16 265)));
-color:var(--vibeui-navbar-001-accent-fg,light-dark(oklch(0.99 0 0),oklch(0.18 0.02 265)));
+color:var(--vibeui-navbar-001-accent-fg,light-dark(oklch(0.99 0 0),oklch(0.18 0 265)));
 }
 /* От 52rem собственной ширины — десктопная шапка. */
 @container (min-width: 52rem){

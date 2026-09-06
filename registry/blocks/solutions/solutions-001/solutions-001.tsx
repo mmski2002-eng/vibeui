@@ -41,10 +41,10 @@ export type Solutions001Props = {
 const STYLES = `
 :where([data-vibeui-block="solutions-001"]){
 --vibeui-solutions-001-bg:transparent;
---vibeui-solutions-001-panel:light-dark(oklch(0.985 0.002 265),oklch(0.27 0.012 265));
---vibeui-solutions-001-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
---vibeui-solutions-001-muted:light-dark(oklch(0.55 0.014 265),oklch(0.7 0.012 265));
---vibeui-solutions-001-border:light-dark(oklch(0.91 0.006 265),oklch(0.35 0.012 265));
+--vibeui-solutions-001-panel:light-dark(oklch(0.985 0 265),oklch(0.27 0 265));
+--vibeui-solutions-001-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
+--vibeui-solutions-001-muted:light-dark(oklch(0.55 0 265),oklch(0.7 0 265));
+--vibeui-solutions-001-border:light-dark(oklch(0.91 0 265),oklch(0.35 0 265));
 --vibeui-solutions-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.73 0.17 262));
 --vibeui-solutions-001-up:light-dark(oklch(0.58 0.14 152),oklch(0.76 0.14 152));
 --vibeui-solutions-001-down:light-dark(oklch(0.57 0.19 25),oklch(0.73 0.16 25));

@@ -33,12 +33,12 @@ export type Buttongroup016Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="buttongroup-016"]){
 --vibeui-buttongroup-016-surface:transparent;
---vibeui-buttongroup-016-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.006 265));
+--vibeui-buttongroup-016-fg:light-dark(oklch(0.26 0 265),oklch(0.94 0 265));
 --vibeui-buttongroup-016-muted:color-mix(in oklab,var(--vibeui-buttongroup-016-fg) 68%,transparent);
---vibeui-buttongroup-016-locked:light-dark(oklch(0.72 0.01 265),oklch(0.55 0.012 265));
---vibeui-buttongroup-016-border:light-dark(oklch(0.89 0.008 265),oklch(0.37 0.012 265));
---vibeui-buttongroup-016-stripe-a:light-dark(oklch(0.98 0.002 265),oklch(0.28 0.007 265));
---vibeui-buttongroup-016-stripe-b:light-dark(oklch(0.955 0.003 265),oklch(0.245 0.007 265));
+--vibeui-buttongroup-016-locked:light-dark(oklch(0.72 0 265),oklch(0.55 0 265));
+--vibeui-buttongroup-016-border:light-dark(oklch(0.89 0 265),oklch(0.37 0 265));
+--vibeui-buttongroup-016-stripe-a:light-dark(oklch(0.98 0 265),oklch(0.28 0 265));
+--vibeui-buttongroup-016-stripe-b:light-dark(oklch(0.955 0 265),oklch(0.245 0 265));
 --vibeui-buttongroup-016-on:light-dark(oklch(0.96 0.035 285),oklch(0.3 0.05 285));
 --vibeui-buttongroup-016-accent:light-dark(oklch(0.52 0.16 285),oklch(0.75 0.14 285));
 --vibeui-buttongroup-016-radius:0.625rem;

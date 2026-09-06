@@ -36,11 +36,11 @@ export type Dropdown005Props = Omit<
 // Полосы образца — исключение: они изображают сами темы и потому постоянны.
 const STYLES = `
 :where([data-vibeui-block="dropdown-005"]){
---vibeui-dropdown-005-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 285));
---vibeui-dropdown-005-fg:light-dark(oklch(0.24 0.014 285),oklch(0.94 0.006 285));
+--vibeui-dropdown-005-bg:light-dark(oklch(1 0 0),oklch(0.25 0 285));
+--vibeui-dropdown-005-fg:light-dark(oklch(0.24 0 285),oklch(0.94 0 285));
 --vibeui-dropdown-005-muted:color-mix(in oklab,var(--vibeui-dropdown-005-fg) 68%,transparent);
---vibeui-dropdown-005-border:light-dark(oklch(0.9 0.006 285),oklch(0.37 0.012 285));
---vibeui-dropdown-005-hover:light-dark(oklch(0.96 0.004 285),oklch(0.32 0.014 285));
+--vibeui-dropdown-005-border:light-dark(oklch(0.9 0 285),oklch(0.37 0 285));
+--vibeui-dropdown-005-hover:light-dark(oklch(0.96 0 285),oklch(0.32 0 285));
 --vibeui-dropdown-005-accent:light-dark(oklch(0.6 0.16 155),oklch(0.74 0.14 155));
 --vibeui-dropdown-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -73,7 +73,7 @@ transition:background-color .16s ease;
 position:fixed;padding:0.3125rem;min-width:13rem;box-sizing:border-box;
 background:var(--vibeui-dropdown-005-bg);color:var(--vibeui-dropdown-005-fg);
 border:1px solid var(--vibeui-dropdown-005-border);border-radius:0.875rem;
-box-shadow:0 18px 40px -22px oklch(0.2 0.03 285 / 45%);
+box-shadow:0 18px 40px -22px oklch(0.2 0 285 / 45%);
 font-family:var(--vibeui-dropdown-005-font);
 opacity:0;transform:translateY(-0.25rem);
 transition:opacity .14s ease,transform .14s ease,display .14s allow-discrete,overlay .14s allow-discrete;
@@ -111,10 +111,10 @@ width:1.75rem;height:1.25rem;
 border:1px solid var(--vibeui-dropdown-005-border);border-radius:0.375rem;
 }
 [data-vibeui-block="dropdown-005"] [data-part="swatch"] span{flex:1}
-[data-vibeui-block="dropdown-005"] [data-part="swatch"] span:first-child{background:oklch(0.97 0.003 285)}
-[data-vibeui-block="dropdown-005"] [data-part="swatch"] span:last-child{background:oklch(0.3 0.02 285)}
-[data-vibeui-block="dropdown-005"] [data-part="item"][data-theme="0"] [data-part="swatch"] span:last-child{background:oklch(0.97 0.003 285)}
-[data-vibeui-block="dropdown-005"] [data-part="item"][data-theme="1"] [data-part="swatch"] span:first-child{background:oklch(0.3 0.02 285)}
+[data-vibeui-block="dropdown-005"] [data-part="swatch"] span:first-child{background:oklch(0.97 0 285)}
+[data-vibeui-block="dropdown-005"] [data-part="swatch"] span:last-child{background:oklch(0.3 0 285)}
+[data-vibeui-block="dropdown-005"] [data-part="item"][data-theme="0"] [data-part="swatch"] span:last-child{background:oklch(0.97 0 285)}
+[data-vibeui-block="dropdown-005"] [data-part="item"][data-theme="1"] [data-part="swatch"] span:first-child{background:oklch(0.3 0 285)}
 [data-vibeui-block="dropdown-005"] [data-part="tick"]{
 margin-left:auto;width:1rem;height:1rem;flex:none;
 color:var(--vibeui-dropdown-005-accent);opacity:0;

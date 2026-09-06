@@ -27,11 +27,11 @@ export type Logos001Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="logos-001"]){
 --vibeui-logos-001-bg:transparent;
---vibeui-logos-001-fg:light-dark(oklch(0.22 0.014 266),oklch(0.96 0.004 266));
---vibeui-logos-001-muted:light-dark(oklch(0.5 0.018 266),oklch(0.72 0.016 266));
---vibeui-logos-001-border:light-dark(oklch(0.16 0.014 266 / 12%),oklch(1 0 0 / 14%));
+--vibeui-logos-001-fg:light-dark(oklch(0.22 0 266),oklch(0.96 0 266));
+--vibeui-logos-001-muted:light-dark(oklch(0.5 0 266),oklch(0.72 0 266));
+--vibeui-logos-001-border:light-dark(oklch(0.16 0 266 / 12%),oklch(1 0 0 / 14%));
 --vibeui-logos-001-accent:light-dark(oklch(0.55 0.19 264),oklch(0.72 0.163 264));
---vibeui-logos-001-accent-fg:light-dark(oklch(0.99 0.004 266),oklch(0.17 0.02 266));
+--vibeui-logos-001-accent-fg:light-dark(oklch(0.99 0 266),oklch(0.17 0 266));
 --vibeui-logos-001-mark-bg:color-mix(in oklab,var(--vibeui-logos-001-fg) 9%,transparent);
 --vibeui-logos-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

@@ -28,12 +28,12 @@ export type Alert011Props = Omit<
 // темнеет там, где тёмный контекст, и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="alert-011"]){
---vibeui-alert-011-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
+--vibeui-alert-011-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-alert-011-muted:color-mix(in oklab,var(--vibeui-alert-011-fg) 68%,transparent);
 --vibeui-alert-011-bg:transparent;
---vibeui-alert-011-code-bg:light-dark(oklch(0.22 0.014 265),oklch(0.16 0.012 265));
---vibeui-alert-011-code-fg:light-dark(oklch(0.93 0.006 265),oklch(0.87 0.008 265));
---vibeui-alert-011-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-alert-011-code-bg:light-dark(oklch(0.22 0 265),oklch(0.16 0 265));
+--vibeui-alert-011-code-fg:light-dark(oklch(0.93 0 265),oklch(0.87 0 265));
+--vibeui-alert-011-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
 --vibeui-alert-011-danger:light-dark(oklch(0.56 0.19 25),oklch(0.74 0.16 25));
 --vibeui-alert-011-radius:0.75rem;
 --vibeui-alert-011-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;

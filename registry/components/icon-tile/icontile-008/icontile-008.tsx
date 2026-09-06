@@ -44,13 +44,13 @@ const DEFAULT_ITEMS: Icontile008Category[] = [
 // одноцветный список.
 const STYLES = `
 :where([data-vibeui-block="icontile-008"]){
---vibeui-icontile-008-fg:light-dark(oklch(0.26 0.014 265),oklch(0.93 0.006 265));
+--vibeui-icontile-008-fg:light-dark(oklch(0.26 0 265),oklch(0.93 0 265));
 --vibeui-icontile-008-muted:color-mix(in oklab,var(--vibeui-icontile-008-fg) 68%,transparent);
---vibeui-icontile-008-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.008 265));
+--vibeui-icontile-008-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
 --vibeui-icontile-008-surface:transparent;
---vibeui-icontile-008-hover-surface:light-dark(oklch(0.97 0.008 262),oklch(0.3 0.016 262));
---vibeui-icontile-008-hover-border:light-dark(oklch(0.78 0.03 262),oklch(0.52 0.05 262));
---vibeui-icontile-008-shadow:light-dark(oklch(0.3 0.05 262 / 55%),oklch(0.05 0.03 262 / 75%));
+--vibeui-icontile-008-hover-surface:light-dark(oklch(0.97 0 262),oklch(0.3 0 262));
+--vibeui-icontile-008-hover-border:light-dark(oklch(0.78 0 262),oklch(0.52 0.05 262));
+--vibeui-icontile-008-shadow:light-dark(oklch(0.3 0.05 262 / 55%),oklch(0.05 0 262 / 75%));
 --vibeui-icontile-008-ring:light-dark(oklch(0.55 0.15 262),oklch(0.74 0.14 262));
 --vibeui-icontile-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

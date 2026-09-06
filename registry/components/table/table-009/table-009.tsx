@@ -23,13 +23,13 @@ export type Table009Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="table-009"]){
 --vibeui-table-009-bg:transparent;
---vibeui-table-009-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-table-009-fg:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
 --vibeui-table-009-muted:color-mix(in oklab,var(--vibeui-table-009-fg) 68%,transparent);
---vibeui-table-009-border:light-dark(oklch(0.92 0.006 265),oklch(0.36 0.011 265));
---vibeui-table-009-head:light-dark(oklch(0.5 0.02 265 / 5%),oklch(0.85 0.02 265 / 7%));
---vibeui-table-009-bar:light-dark(oklch(0.55 0.02 265 / 14%),oklch(0.85 0.02 265 / 18%));
+--vibeui-table-009-border:light-dark(oklch(0.92 0 265),oklch(0.36 0 265));
+--vibeui-table-009-head:light-dark(oklch(0.5 0 265 / 5%),oklch(0.85 0 265 / 7%));
+--vibeui-table-009-bar:light-dark(oklch(0.55 0 265 / 14%),oklch(0.85 0 265 / 18%));
 --vibeui-table-009-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.16 262));
---vibeui-table-009-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.02 265));
+--vibeui-table-009-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0 265));
 --vibeui-table-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

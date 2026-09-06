@@ -27,9 +27,9 @@ export type Timeline007Props = Omit<ComponentProps<"section">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="timeline-007"]){
 --vibeui-timeline-007-bg:transparent;
---vibeui-timeline-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-timeline-007-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-timeline-007-muted:color-mix(in oklab,var(--vibeui-timeline-007-fg) 68%,transparent);
---vibeui-timeline-007-border:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
+--vibeui-timeline-007-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
 --vibeui-timeline-007-done:light-dark(oklch(0.58 0.14 152),oklch(0.72 0.14 152));
 --vibeui-timeline-007-on-done:light-dark(oklch(1 0 0),oklch(0.19 0.04 152));
 --vibeui-timeline-007-accent:light-dark(oklch(0.55 0.18 262),oklch(0.74 0.16 262));

@@ -27,12 +27,12 @@ export type Newsletter001Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="newsletter-001"]){
 --vibeui-newsletter-001-bg:transparent;
---vibeui-newsletter-001-fg:light-dark(oklch(0.2 0.016 266),oklch(0.97 0.004 266));
---vibeui-newsletter-001-muted:light-dark(oklch(0.48 0.02 266),oklch(0.74 0.018 266));
---vibeui-newsletter-001-border:light-dark(oklch(0.16 0.014 266 / 16%),oklch(1 0 0 / 18%));
---vibeui-newsletter-001-field:light-dark(oklch(1 0 0),oklch(0.24 0.014 266));
+--vibeui-newsletter-001-fg:light-dark(oklch(0.2 0 266),oklch(0.97 0 266));
+--vibeui-newsletter-001-muted:light-dark(oklch(0.48 0 266),oklch(0.74 0 266));
+--vibeui-newsletter-001-border:light-dark(oklch(0.16 0 266 / 16%),oklch(1 0 0 / 18%));
+--vibeui-newsletter-001-field:light-dark(oklch(1 0 0),oklch(0.24 0 266));
 --vibeui-newsletter-001-accent:light-dark(oklch(0.55 0.19 264),oklch(0.72 0.163 264));
---vibeui-newsletter-001-accent-fg:light-dark(oklch(0.99 0.004 266),oklch(0.17 0.02 266));
+--vibeui-newsletter-001-accent-fg:light-dark(oklch(0.99 0 266),oklch(0.17 0 266));
 --vibeui-newsletter-001-success:light-dark(oklch(0.62 0.16 152),oklch(0.68 0.15 152));
 --vibeui-newsletter-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

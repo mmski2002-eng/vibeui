@@ -34,11 +34,11 @@ export type Textarea004Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="textarea-004"]){
 --vibeui-textarea-004-bg:transparent;
---vibeui-textarea-004-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-textarea-004-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-textarea-004-muted:color-mix(in oklab,var(--vibeui-textarea-004-fg) 68%,transparent);
---vibeui-textarea-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
---vibeui-textarea-004-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.012 265));
---vibeui-textarea-004-bar:light-dark(oklch(0.97 0.003 265),oklch(0.3 0.013 265));
+--vibeui-textarea-004-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-textarea-004-field:light-dark(oklch(0.985 0 265),oklch(0.26 0 265));
+--vibeui-textarea-004-bar:light-dark(oklch(0.97 0 265),oklch(0.3 0 265));
 --vibeui-textarea-004-accent:light-dark(oklch(0.55 0.19 262),oklch(0.73 0.16 262));
 --vibeui-textarea-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-textarea-004-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;

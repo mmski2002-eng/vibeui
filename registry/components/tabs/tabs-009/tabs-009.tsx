@@ -38,11 +38,11 @@ export type Tabs009Props = {
 const STYLES = `
 :where([data-vibeui-block="tabs-009"]){
 --vibeui-tabs-009-bg:transparent;
---vibeui-tabs-009-strip:light-dark(oklch(0.96 0.003 265),oklch(0.27 0.01 265));
---vibeui-tabs-009-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-tabs-009-strip:light-dark(oklch(0.96 0 265),oklch(0.27 0 265));
+--vibeui-tabs-009-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-tabs-009-muted:color-mix(in oklab,var(--vibeui-tabs-009-fg) 68%,transparent);
---vibeui-tabs-009-border:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
---vibeui-tabs-009-hover:light-dark(oklch(0.55 0.02 265 / 9%),oklch(0.85 0.02 265 / 14%));
+--vibeui-tabs-009-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
+--vibeui-tabs-009-hover:light-dark(oklch(0.55 0 265 / 9%),oklch(0.85 0 265 / 14%));
 --vibeui-tabs-009-dirty:light-dark(oklch(0.72 0.15 75),oklch(0.79 0.15 75));
 --vibeui-tabs-009-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
 --vibeui-tabs-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

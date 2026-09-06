@@ -30,11 +30,11 @@ export type Togglegroup007Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="togglegroup-007"]){
 --vibeui-togglegroup-007-bg:transparent;
---vibeui-togglegroup-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-togglegroup-007-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-togglegroup-007-muted:color-mix(in oklab,var(--vibeui-togglegroup-007-fg) 68%,transparent);
---vibeui-togglegroup-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
---vibeui-togglegroup-007-surface:light-dark(oklch(0.975 0.004 265),oklch(0.28 0.01 265));
---vibeui-togglegroup-007-shadow:light-dark(oklch(0.2 0.02 265 / 8%),oklch(0 0 0 / 35%));
+--vibeui-togglegroup-007-border:light-dark(oklch(0.9 0 265),oklch(0.35 0 265));
+--vibeui-togglegroup-007-surface:light-dark(oklch(0.975 0 265),oklch(0.28 0 265));
+--vibeui-togglegroup-007-shadow:light-dark(oklch(0.2 0 265 / 8%),oklch(0 0 0 / 35%));
 --vibeui-togglegroup-007-accent:light-dark(oklch(0.54 0.17 255),oklch(0.76 0.14 255));
 --vibeui-togglegroup-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

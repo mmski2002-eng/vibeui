@@ -18,13 +18,13 @@ export type Button048Props = Omit<ComponentProps<"button">, "children"> & {
 // настоящие логотипы приносит проект, у них свои правила использования.
 const STYLES = `
 :where([data-vibeui-block="button-048"]){
---vibeui-button-048-surface:light-dark(oklch(1 0 0),oklch(0.25 0.014 265));
---vibeui-button-048-border:light-dark(oklch(0.87 0.006 265),oklch(0.42 0.014 265));
---vibeui-button-048-fg:light-dark(oklch(0.24 0.02 265),oklch(0.94 0.008 265));
---vibeui-button-048-ring:light-dark(oklch(0.55 0.02 265 / 65%),oklch(0.78 0.02 265 / 70%));
---vibeui-button-048-hover:light-dark(oklch(0.97 0.003 265),oklch(0.3 0.016 265));
---vibeui-button-048-hover-border:light-dark(oklch(0.8 0.008 265),oklch(0.52 0.016 265));
---vibeui-button-048-mark:light-dark(oklch(0.24 0.01 265),oklch(0.9 0.008 265));
+--vibeui-button-048-surface:light-dark(oklch(1 0 0),oklch(0.25 0 265));
+--vibeui-button-048-border:light-dark(oklch(0.87 0 265),oklch(0.42 0 265));
+--vibeui-button-048-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
+--vibeui-button-048-ring:light-dark(oklch(0.55 0 265 / 65%),oklch(0.78 0 265 / 70%));
+--vibeui-button-048-hover:light-dark(oklch(0.97 0 265),oklch(0.3 0 265));
+--vibeui-button-048-hover-border:light-dark(oklch(0.8 0 265),oklch(0.52 0 265));
+--vibeui-button-048-mark:light-dark(oklch(0.24 0 265),oklch(0.9 0 265));
 --vibeui-button-048-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

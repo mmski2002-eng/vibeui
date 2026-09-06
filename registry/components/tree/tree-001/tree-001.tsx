@@ -25,10 +25,10 @@ export type Tree001Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="tree-001"]){
 --vibeui-tree-001-bg:transparent;
---vibeui-tree-001-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-tree-001-fg:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
 --vibeui-tree-001-muted:color-mix(in oklab,var(--vibeui-tree-001-fg) 68%,transparent);
---vibeui-tree-001-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
---vibeui-tree-001-hover:light-dark(oklch(0.97 0.003 265),oklch(0.29 0.01 265));
+--vibeui-tree-001-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-tree-001-hover:light-dark(oklch(0.97 0 265),oklch(0.29 0 265));
 --vibeui-tree-001-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-tree-001-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 }

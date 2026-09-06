@@ -33,12 +33,12 @@ export type Resizable003Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="resizable-003"]){
 --vibeui-resizable-003-bg:transparent;
---vibeui-resizable-003-pane:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
---vibeui-resizable-003-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-resizable-003-pane:light-dark(oklch(1 0 0),oklch(0.25 0 265));
+--vibeui-resizable-003-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-resizable-003-muted:color-mix(in oklab,var(--vibeui-resizable-003-fg) 68%,transparent);
---vibeui-resizable-003-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
---vibeui-resizable-003-surface:light-dark(oklch(0.975 0.004 265),oklch(0.31 0.011 265));
---vibeui-resizable-003-code:light-dark(oklch(0.28 0.02 265),oklch(0.18 0.014 265));
+--vibeui-resizable-003-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
+--vibeui-resizable-003-surface:light-dark(oklch(0.975 0 265),oklch(0.31 0 265));
+--vibeui-resizable-003-code:light-dark(oklch(0.28 0 265),oklch(0.18 0 265));
 --vibeui-resizable-003-accent:light-dark(oklch(0.53 0.15 145),oklch(0.76 0.15 145));
 --vibeui-resizable-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-resizable-003-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
@@ -63,7 +63,7 @@ border:1px solid var(--vibeui-resizable-003-border);border-radius:0.75rem;overfl
 [data-vibeui-block="resizable-003"] [data-part="pane"][data-role="fixed"]{flex:none}
 /* Текст кода светлый без второй ветки: подложка редактора тёмная в обеих темах. */
 [data-vibeui-block="resizable-003"] [data-part="editor"]{
-background:var(--vibeui-resizable-003-code);color:oklch(0.95 0.01 265);
+background:var(--vibeui-resizable-003-code);color:oklch(0.95 0 265);
 font-family:var(--vibeui-resizable-003-mono);font-size:0.75rem;line-height:1.6;
 padding:0.625rem 0.75rem;margin:0;white-space:pre;
 }

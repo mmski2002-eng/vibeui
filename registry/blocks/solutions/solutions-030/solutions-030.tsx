@@ -40,12 +40,12 @@ export type Solutions030Props = {
 const STYLES = `
 :where([data-vibeui-block="solutions-030"]){
 --vibeui-solutions-030-bg:transparent;
---vibeui-solutions-030-panel:light-dark(oklch(0.977 0.004 255),oklch(0.27 0.011 265));
---vibeui-solutions-030-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
---vibeui-solutions-030-muted:light-dark(oklch(0.54 0.014 265),oklch(0.69 0.012 265));
---vibeui-solutions-030-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
+--vibeui-solutions-030-panel:light-dark(oklch(0.977 0 255),oklch(0.27 0 265));
+--vibeui-solutions-030-fg:light-dark(oklch(0.21 0 265),oklch(0.94 0 265));
+--vibeui-solutions-030-muted:light-dark(oklch(0.54 0 265),oklch(0.69 0 265));
+--vibeui-solutions-030-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
 --vibeui-solutions-030-accent:light-dark(oklch(0.52 0.16 255),oklch(0.74 0.14 255));
---vibeui-solutions-030-badge-fg:light-dark(oklch(1 0 0),oklch(0.19 0.014 265));
+--vibeui-solutions-030-badge-fg:light-dark(oklch(1 0 0),oklch(0.19 0 265));
 --vibeui-solutions-030-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-solutions-030-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

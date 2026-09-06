@@ -26,10 +26,10 @@ export type Button027Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="button-027"]){
 --vibeui-button-027-bg:transparent;
---vibeui-button-027-fg:light-dark(oklch(0.26 0.016 265),oklch(0.94 0.006 265));
+--vibeui-button-027-fg:light-dark(oklch(0.26 0 265),oklch(0.94 0 265));
 --vibeui-button-027-muted:color-mix(in oklab,var(--vibeui-button-027-fg) 68%,transparent);
---vibeui-button-027-border:light-dark(oklch(0.9 0.006 265),oklch(0.36 0.012 265));
---vibeui-button-027-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
+--vibeui-button-027-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
+--vibeui-button-027-accent:light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));
 --vibeui-button-027-left:1;
 --vibeui-button-027-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

@@ -21,12 +21,12 @@ export type Devices001Props = Omit<ComponentProps<"section">, "children"> & {
 // строкой ниже, а не собственной тёмной темой.
 const STYLES = `
 :where([data-vibeui-block="devices-001"]){
---vibeui-devices-001-bg:light-dark(oklch(0.97 0.004 260),oklch(0.16 0.012 260));
+--vibeui-devices-001-bg:light-dark(oklch(0.97 0 260),oklch(0.16 0 260));
 --vibeui-devices-001-fg:light-dark(oklch(0.205 0 0),oklch(0.95 0 0));
 --vibeui-devices-001-muted:color-mix(in oklab,var(--vibeui-devices-001-fg) 58%,transparent);
---vibeui-devices-001-border:light-dark(oklch(0.88 0.006 260),oklch(0.32 0.012 260));
---vibeui-devices-001-shell:light-dark(oklch(0.86 0.006 260),oklch(0.4 0.012 260));
---vibeui-devices-001-screen:light-dark(oklch(0.99 0.002 260),oklch(0.99 0.002 260));
+--vibeui-devices-001-border:light-dark(oklch(0.88 0 260),oklch(0.32 0 260));
+--vibeui-devices-001-shell:light-dark(oklch(0.86 0 260),oklch(0.4 0 260));
+--vibeui-devices-001-screen:light-dark(oklch(0.99 0 260),oklch(0.99 0 260));
 --vibeui-devices-001-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
 --vibeui-devices-001-accent-fg:oklch(from var(--vibeui-devices-001-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-devices-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

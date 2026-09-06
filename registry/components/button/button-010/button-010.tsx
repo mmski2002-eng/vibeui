@@ -22,11 +22,11 @@ export type Button010Props = ComponentProps<"button"> & {
 // должна читаться в обеих темах. Подпись остаётся светлой в обеих ветках.
 const STYLES = `
 :where([data-vibeui-block="button-010"]){
---vibeui-button-010-bg:light-dark(oklch(0.24 0.014 265),oklch(0.34 0.016 265));
---vibeui-button-010-fg:oklch(0.98 0.003 265);
+--vibeui-button-010-bg:light-dark(oklch(0.24 0 265),oklch(0.34 0 265));
+--vibeui-button-010-fg:oklch(0.98 0 265);
 --vibeui-button-010-fill:light-dark(oklch(0.55 0.14 250),oklch(0.62 0.135 250));
 --vibeui-button-010-done:light-dark(oklch(0.6 0.14 158),oklch(0.66 0.135 158));
---vibeui-button-010-ring:light-dark(oklch(0.72 0.012 265),oklch(0.84 0.012 265));
+--vibeui-button-010-ring:light-dark(oklch(0.72 0 265),oklch(0.84 0 265));
 --vibeui-button-010-radius:0.625rem;
 --vibeui-button-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

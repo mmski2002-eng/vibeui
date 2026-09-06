@@ -26,10 +26,10 @@ export type Geo002Props = Omit<ComponentProps<"section">, "children"> & {
 // строкой ниже, а не собственной тёмной темой.
 const STYLES = `
 :where([data-vibeui-block="geo-002"]){
---vibeui-geo-002-bg-top:light-dark(oklch(0.94 0.006 260),oklch(0.19 0.012 260));
---vibeui-geo-002-bg-bottom:light-dark(oklch(0.88 0.01 260),oklch(0.09 0.01 260));
+--vibeui-geo-002-bg-top:light-dark(oklch(0.94 0 260),oklch(0.19 0 260));
+--vibeui-geo-002-bg-bottom:light-dark(oklch(0.88 0 260),oklch(0.09 0 260));
 --vibeui-geo-002-fg:light-dark(oklch(0.2 0 0),oklch(0.95 0 0));
---vibeui-geo-002-border:light-dark(oklch(0.82 0.02 240),oklch(0.34 0.02 240));
+--vibeui-geo-002-border:light-dark(oklch(0.82 0 240),oklch(0.34 0 240));
 --vibeui-geo-002-field:light-dark(oklch(0.9 0.02 150),oklch(0.22 0.03 150));
 --vibeui-geo-002-ring:color-mix(in oklab,var(--vibeui-geo-002-fg) 26%,transparent);
 --vibeui-geo-002-accent:light-dark(oklch(0.6 0.19 25),oklch(0.72 0.17 25));

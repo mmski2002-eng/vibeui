@@ -22,11 +22,11 @@ export type Input032Props = Omit<ComponentProps<"input">, "type"> & {
 const STYLES = `
 :where([data-vibeui-block="input-032"]){
 --vibeui-input-032-surface:transparent;
---vibeui-input-032-shell:light-dark(oklch(0.91 0.006 265),oklch(0.34 0.012 265));
---vibeui-input-032-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.005 265));
+--vibeui-input-032-shell:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
+--vibeui-input-032-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-input-032-muted:color-mix(in oklab,var(--vibeui-input-032-fg) 68%,transparent);
---vibeui-input-032-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.012 265));
---vibeui-input-032-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.012 265));
+--vibeui-input-032-field:light-dark(oklch(0.985 0 265),oklch(0.26 0 265));
+--vibeui-input-032-border:light-dark(oklch(0.88 0 265),oklch(0.38 0 265));
 --vibeui-input-032-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
 --vibeui-input-032-warn:light-dark(oklch(0.58 0.16 75),oklch(0.78 0.14 75));
 --vibeui-input-032-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

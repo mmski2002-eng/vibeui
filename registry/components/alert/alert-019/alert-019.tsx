@@ -26,13 +26,13 @@ export type Alert019Props = Omit<
 // темнеет там, где тёмный контекст, и не носит собственного фона.
 const STYLES = `
 :where([data-vibeui-block="alert-019"]){
---vibeui-alert-019-fg:light-dark(oklch(0.22 0.014 265),oklch(0.95 0.006 265));
+--vibeui-alert-019-fg:light-dark(oklch(0.22 0 265),oklch(0.95 0 265));
 --vibeui-alert-019-muted:color-mix(in oklab,var(--vibeui-alert-019-fg) 68%,transparent);
 --vibeui-alert-019-bg:transparent;
---vibeui-alert-019-panel:light-dark(oklch(0.975 0.004 265),oklch(0.28 0.01 265));
---vibeui-alert-019-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
+--vibeui-alert-019-panel:light-dark(oklch(0.975 0 265),oklch(0.28 0 265));
+--vibeui-alert-019-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
 --vibeui-alert-019-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
---vibeui-alert-019-accent-fg:light-dark(oklch(1 0 0),oklch(0.18 0.01 265));
+--vibeui-alert-019-accent-fg:light-dark(oklch(1 0 0),oklch(0.18 0 265));
 --vibeui-alert-019-radius:0.875rem;
 --vibeui-alert-019-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

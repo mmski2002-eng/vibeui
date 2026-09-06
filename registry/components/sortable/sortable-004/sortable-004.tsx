@@ -36,11 +36,11 @@ export type Sortable004Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="sortable-004"]){
 --vibeui-sortable-004-bg:transparent;
---vibeui-sortable-004-panel:light-dark(oklch(0.985 0.002 265),oklch(0.245 0.01 265));
---vibeui-sortable-004-row:light-dark(oklch(1 0 0),oklch(0.3 0.012 265));
---vibeui-sortable-004-fg:light-dark(oklch(0.24 0.014 265),oklch(0.93 0.006 265));
+--vibeui-sortable-004-panel:light-dark(oklch(0.985 0 265),oklch(0.245 0 265));
+--vibeui-sortable-004-row:light-dark(oklch(1 0 0),oklch(0.3 0 265));
+--vibeui-sortable-004-fg:light-dark(oklch(0.24 0 265),oklch(0.93 0 265));
 --vibeui-sortable-004-muted:color-mix(in oklab,var(--vibeui-sortable-004-fg) 68%,transparent);
---vibeui-sortable-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
+--vibeui-sortable-004-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
 --vibeui-sortable-004-accent:light-dark(oklch(0.55 0.2 262),oklch(0.73 0.16 262));
 --vibeui-sortable-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

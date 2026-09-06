@@ -29,12 +29,12 @@ export type Hero013Props = {
 const STYLES = `
 :where([data-vibeui-block="hero-013"]){
 --vibeui-hero-013-bg:transparent;
---vibeui-hero-013-fg:light-dark(oklch(0.2 0.02 220),oklch(0.94 0.008 220));
---vibeui-hero-013-muted:light-dark(oklch(0.5 0.018 220),oklch(0.7 0.015 220));
---vibeui-hero-013-card:light-dark(oklch(1 0 0),oklch(0.26 0.014 220));
---vibeui-hero-013-line:light-dark(oklch(0.88 0.012 220),oklch(0.37 0.015 220));
+--vibeui-hero-013-fg:light-dark(oklch(0.2 0 220),oklch(0.94 0 220));
+--vibeui-hero-013-muted:light-dark(oklch(0.5 0 220),oklch(0.7 0 220));
+--vibeui-hero-013-card:light-dark(oklch(1 0 0),oklch(0.26 0 220));
+--vibeui-hero-013-line:light-dark(oklch(0.88 0 220),oklch(0.37 0 220));
 --vibeui-hero-013-accent:light-dark(oklch(0.52 0.14 220),oklch(0.74 0.13 220));
---vibeui-hero-013-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0.03 220));
+--vibeui-hero-013-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0 220));
 --vibeui-hero-013-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

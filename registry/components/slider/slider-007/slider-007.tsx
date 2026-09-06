@@ -29,11 +29,11 @@ export type Slider007Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="slider-007"]){
 --vibeui-slider-007-bg:transparent;
---vibeui-slider-007-surface:light-dark(oklch(1 0 0),oklch(0.28 0.012 265));
---vibeui-slider-007-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.006 265));
+--vibeui-slider-007-surface:light-dark(oklch(1 0 0),oklch(0.28 0 265));
+--vibeui-slider-007-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-slider-007-muted:color-mix(in oklab,var(--vibeui-slider-007-fg) 68%,transparent);
---vibeui-slider-007-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
---vibeui-slider-007-track:light-dark(oklch(0.92 0.006 265),oklch(0.42 0.012 265));
+--vibeui-slider-007-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
+--vibeui-slider-007-track:light-dark(oklch(0.92 0 265),oklch(0.42 0 265));
 --vibeui-slider-007-accent:light-dark(oklch(0.62 0.15 85),oklch(0.78 0.14 85));
 --vibeui-slider-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-slider-007-fill:50%;
@@ -70,7 +70,7 @@ background:linear-gradient(to top,var(--vibeui-slider-007-accent) var(--vibeui-s
 appearance:none;-webkit-appearance:none;margin-left:-0.3125rem;
 width:1.125rem;height:1.125rem;border-radius:9999px;
 background:var(--vibeui-slider-007-surface);border:3px solid var(--vibeui-slider-007-accent);
-box-shadow:0 1px 4px oklch(0.2 0.02 265 / 30%);
+box-shadow:0 1px 4px oklch(0.2 0 265 / 30%);
 }
 [data-vibeui-block="slider-007"] input::-moz-range-thumb{
 width:1.125rem;height:1.125rem;border-radius:9999px;box-sizing:border-box;

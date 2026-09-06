@@ -40,12 +40,12 @@ const STATUS_LABEL: Record<string, string> = {
 const STYLES = `
 :where([data-vibeui-block="otp-007"]){
 --vibeui-otp-007-bg:transparent;
---vibeui-otp-007-surface:light-dark(oklch(1 0 0),oklch(0.26 0.014 265));
---vibeui-otp-007-shell:light-dark(oklch(0.91 0.006 265),oklch(0.36 0.012 265));
---vibeui-otp-007-fg:light-dark(oklch(0.21 0.014 265),oklch(0.94 0.005 265));
+--vibeui-otp-007-surface:light-dark(oklch(1 0 0),oklch(0.26 0 265));
+--vibeui-otp-007-shell:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
+--vibeui-otp-007-fg:light-dark(oklch(0.21 0 265),oklch(0.94 0 265));
 --vibeui-otp-007-muted:color-mix(in oklab,var(--vibeui-otp-007-fg) 68%,transparent);
---vibeui-otp-007-field:light-dark(oklch(0.98 0.002 265),oklch(0.26 0.014 265));
---vibeui-otp-007-border:light-dark(oklch(0.87 0.008 265),oklch(0.42 0.014 265));
+--vibeui-otp-007-field:light-dark(oklch(0.98 0 265),oklch(0.26 0 265));
+--vibeui-otp-007-border:light-dark(oklch(0.87 0 265),oklch(0.42 0 265));
 --vibeui-otp-007-accent:light-dark(oklch(0.5 0.17 250),oklch(0.74 0.15 250));
 --vibeui-otp-007-ok:light-dark(oklch(0.48 0.13 155),oklch(0.74 0.14 155));
 --vibeui-otp-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

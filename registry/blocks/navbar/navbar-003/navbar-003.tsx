@@ -37,12 +37,12 @@ export type Navbar003Props = {
 const STYLES = `
 :where([data-vibeui-block="navbar-003"]){
 --vibeui-navbar-003-bg:transparent;
---vibeui-navbar-003-ink:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.006 265));
---vibeui-navbar-003-muted:light-dark(oklch(0.53 0.014 265),oklch(0.7 0.012 265));
---vibeui-navbar-003-border:light-dark(oklch(0.91 0.005 265),oklch(0.34 0.011 265));
---vibeui-navbar-003-panel:light-dark(oklch(0.99 0.002 265),oklch(0.26 0.014 265));
+--vibeui-navbar-003-ink:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
+--vibeui-navbar-003-muted:light-dark(oklch(0.53 0 265),oklch(0.7 0 265));
+--vibeui-navbar-003-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
+--vibeui-navbar-003-panel:light-dark(oklch(0.99 0 265),oklch(0.26 0 265));
 --vibeui-navbar-003-accent:light-dark(oklch(0.53 0.2 292),oklch(0.74 0.15 292));
---vibeui-navbar-003-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0.03 292));
+--vibeui-navbar-003-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0 292));
 --vibeui-navbar-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -97,7 +97,7 @@ position:absolute;top:calc(100% + 0.5rem);left:0;z-index:30;
 width:min(24rem,80cqi);padding:0.5rem;
 border:1px solid var(--vibeui-navbar-003-border);border-radius:0.875rem;
 background:var(--vibeui-navbar-003-panel);
-box-shadow:0 26px 60px -32px light-dark(oklch(0.2 0.03 265 / 55%),oklch(0 0 0 / 65%));
+box-shadow:0 26px 60px -32px light-dark(oklch(0.2 0 265 / 55%),oklch(0 0 0 / 65%));
 opacity:0;visibility:hidden;transform:translateY(-0.375rem);
 transition:opacity .18s ease,transform .18s ease,visibility .18s;
 }

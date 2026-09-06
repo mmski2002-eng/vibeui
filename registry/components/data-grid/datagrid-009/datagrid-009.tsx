@@ -42,11 +42,11 @@ type Key = "file" | "owner" | "changed" | "size"
 const STYLES = `
 :where([data-vibeui-block="datagrid-009"]){
 --vibeui-datagrid-009-bg:transparent;
---vibeui-datagrid-009-fg:light-dark(oklch(0.23 0.012 240),oklch(0.93 0.006 240));
+--vibeui-datagrid-009-fg:light-dark(oklch(0.23 0 240),oklch(0.93 0 240));
 --vibeui-datagrid-009-muted:color-mix(in oklab,var(--vibeui-datagrid-009-fg) 68%,transparent);
---vibeui-datagrid-009-border:light-dark(oklch(0.92 0.006 240),oklch(0.34 0.012 240));
---vibeui-datagrid-009-head:light-dark(oklch(0.975 0.003 240),oklch(0.27 0.012 240));
---vibeui-datagrid-009-field:light-dark(oklch(1 0 0),oklch(0.22 0.012 240));
+--vibeui-datagrid-009-border:light-dark(oklch(0.92 0 240),oklch(0.34 0 240));
+--vibeui-datagrid-009-head:light-dark(oklch(0.975 0 240),oklch(0.27 0 240));
+--vibeui-datagrid-009-field:light-dark(oklch(1 0 0),oklch(0.22 0 240));
 --vibeui-datagrid-009-accent:light-dark(oklch(0.55 0.16 250),oklch(0.76 0.14 250));
 --vibeui-datagrid-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

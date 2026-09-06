@@ -19,8 +19,8 @@ export type Banner002Props = Omit<ComponentProps<"div">, "children"> & {
 // инверсия светлой, у подложки, границы и акцента свои пары светлот.
 const STYLES = `
 :where([data-vibeui-block="banner-002"]){
---vibeui-banner-002-bg:light-dark(oklch(0.97 0.02 220),oklch(0.27 0.03 245));
---vibeui-banner-002-fg:light-dark(oklch(0.27 0.05 240),oklch(0.93 0.015 240));
+--vibeui-banner-002-bg:light-dark(oklch(0.97 0 220),oklch(0.27 0 245));
+--vibeui-banner-002-fg:light-dark(oklch(0.27 0.05 240),oklch(0.93 0 240));
 --vibeui-banner-002-muted:color-mix(in oklab,var(--vibeui-banner-002-fg) 68%,transparent);
 --vibeui-banner-002-border:light-dark(oklch(0.86 0.05 230),oklch(0.41 0.04 240));
 --vibeui-banner-002-accent:light-dark(oklch(0.52 0.16 245),oklch(0.72 0.15 245));

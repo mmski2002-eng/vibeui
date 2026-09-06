@@ -39,11 +39,11 @@ export type Dropdown009Props = Omit<
 // контексте панель светлее фона страницы, а её граница светлее панели.
 const STYLES = `
 :where([data-vibeui-block="dropdown-009"]){
---vibeui-dropdown-009-bg:light-dark(oklch(1 0 0),oklch(0.25 0.012 265));
---vibeui-dropdown-009-fg:light-dark(oklch(0.24 0.014 265),oklch(0.94 0.006 265));
+--vibeui-dropdown-009-bg:light-dark(oklch(1 0 0),oklch(0.25 0 265));
+--vibeui-dropdown-009-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-dropdown-009-muted:color-mix(in oklab,var(--vibeui-dropdown-009-fg) 68%,transparent);
---vibeui-dropdown-009-border:light-dark(oklch(0.9 0.006 265),oklch(0.37 0.012 265));
---vibeui-dropdown-009-hover:light-dark(oklch(0.96 0.004 265),oklch(0.32 0.014 265));
+--vibeui-dropdown-009-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
+--vibeui-dropdown-009-hover:light-dark(oklch(0.96 0 265),oklch(0.32 0 265));
 --vibeui-dropdown-009-accent:light-dark(oklch(0.58 0.17 40),oklch(0.76 0.14 40));
 --vibeui-dropdown-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -80,7 +80,7 @@ transition:transform .16s ease;
 position:fixed;padding:0.3125rem;min-width:13.5rem;box-sizing:border-box;
 background:var(--vibeui-dropdown-009-bg);color:var(--vibeui-dropdown-009-fg);
 border:1px solid var(--vibeui-dropdown-009-border);border-radius:0.75rem;
-box-shadow:0 18px 40px -22px oklch(0.2 0.03 265 / 45%);
+box-shadow:0 18px 40px -22px oklch(0.2 0 265 / 45%);
 font-family:var(--vibeui-dropdown-009-font);
 opacity:0;transform:translateY(-0.25rem);
 transition:opacity .14s ease,transform .14s ease,display .14s allow-discrete,overlay .14s allow-discrete;
@@ -201,6 +201,10 @@ export function Dropdown009({
     setField(state.field)
     setDesc(state.desc)
     onChange?.(state)
+
+    // Направление применяется так же, как поле: список за спиной уже
+    // перестроился, и держать меню открытым не за чем.
+    menu.current?.hidePopover()
   }
 
   const palette = {
@@ -302,10 +306,7 @@ export function Dropdown009({
                 role="menuitemradio"
                 aria-checked={field === entry}
                 data-part="item"
-                onClick={() => {
-                  apply({ field: entry })
-                  menu.current?.hidePopover()
-                }}
+                onClick={() => apply({ field: entry })}
               >
                 {entry}
                 <svg

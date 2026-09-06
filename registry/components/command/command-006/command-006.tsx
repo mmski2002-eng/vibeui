@@ -27,20 +27,20 @@ export type Command006Props = Omit<ComponentProps<"div">, "children"> & {
 // Идея компонента: палитра как шпаргалка по горячим клавишам. Сочетание
 // хранится массивом клавиш, а не строкой, поэтому каждая клавиша получает свой
 // <kbd> и последовательности вроде «G затем C» читаются как два нажатия, а не
-// как одно. Поиск идёт и по названию, и по самим клавишам: «⌘K» находит
+// как одно. Поиск идёт и по названию, и по самим клавишам: «Ctrl+K» находит
 // команду быстрее, чем попытка вспомнить её имя.
 //
 // Тема берётся из color-scheme окружения через light-dark(): клавиша в тёмной
 // ветке чуть светлее панели, а не темнее, иначе рельеф kbd пропадает.
 const STYLES = `
 :where([data-vibeui-block="command-006"]){
---vibeui-command-006-bg:light-dark(oklch(1 0 0),oklch(0.21 0.012 265));
---vibeui-command-006-fg:light-dark(oklch(0.23 0.014 265),oklch(0.94 0.006 265));
+--vibeui-command-006-bg:light-dark(oklch(1 0 0),oklch(0.21 0 265));
+--vibeui-command-006-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-command-006-muted:color-mix(in oklab,var(--vibeui-command-006-fg) 68%,transparent);
---vibeui-command-006-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
---vibeui-command-006-key:light-dark(oklch(0.98 0.002 265),oklch(0.27 0.012 265));
+--vibeui-command-006-border:light-dark(oklch(0.9 0 265),oklch(0.35 0 265));
+--vibeui-command-006-key:light-dark(oklch(0.98 0 265),oklch(0.27 0 265));
 --vibeui-command-006-accent:light-dark(oklch(0.56 0.15 165),oklch(0.76 0.13 165));
---vibeui-command-006-shadow:light-dark(oklch(0.2 0.03 265 / 60%),oklch(0.04 0.015 265 / 70%));
+--vibeui-command-006-shadow:light-dark(oklch(0.2 0 265 / 60%),oklch(0.04 0 265 / 70%));
 --vibeui-command-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -92,13 +92,13 @@ margin:0;padding:1.125rem 0.875rem;font-size:0.875rem;color:var(--vibeui-command
 `
 
 const DEFAULT_COMMANDS: Command006Command[] = [
-  { label: "Открыть палитру", keys: ["⌘", "K"] },
-  { label: "Сохранить файл", keys: ["⌘", "S"] },
+  { label: "Открыть палитру", keys: ["Ctrl", "K"] },
+  { label: "Сохранить файл", keys: ["Ctrl", "S"] },
   { label: "Перейти к каталогу", keys: ["G", "C"] },
   { label: "Перейти к блокам", keys: ["G", "B"] },
-  { label: "Переключить панель", keys: ["⌘", "B"] },
-  { label: "Отменить действие", keys: ["⌘", "Z"] },
-  { label: "Пересобрать реестр", keys: ["⌘", "⇧", "R"] },
+  { label: "Переключить панель", keys: ["Ctrl", "B"] },
+  { label: "Отменить действие", keys: ["Ctrl", "Z"] },
+  { label: "Пересобрать реестр", keys: ["Ctrl", "Shift", "R"] },
 ]
 
 /**

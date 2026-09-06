@@ -36,12 +36,12 @@ export type Currency005Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="currency-005"]){
 --vibeui-currency-005-surface:transparent;
---vibeui-currency-005-field:light-dark(oklch(0.985 0.002 265),oklch(0.26 0.011 265));
---vibeui-currency-005-shell:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
---vibeui-currency-005-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-currency-005-field:light-dark(oklch(0.985 0 265),oklch(0.26 0 265));
+--vibeui-currency-005-shell:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-currency-005-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-currency-005-muted:color-mix(in oklab,var(--vibeui-currency-005-fg) 68%,transparent);
---vibeui-currency-005-border:light-dark(oklch(0.88 0.008 265),oklch(0.38 0.013 265));
---vibeui-currency-005-track:light-dark(oklch(0.93 0.006 265),oklch(0.32 0.012 265));
+--vibeui-currency-005-border:light-dark(oklch(0.88 0 265),oklch(0.38 0 265));
+--vibeui-currency-005-track:light-dark(oklch(0.93 0 265),oklch(0.32 0 265));
 --vibeui-currency-005-ok:light-dark(oklch(0.55 0.15 160),oklch(0.74 0.13 160));
 --vibeui-currency-005-near:light-dark(oklch(0.68 0.15 70),oklch(0.8 0.14 75));
 --vibeui-currency-005-over:light-dark(oklch(0.56 0.19 25),oklch(0.72 0.17 25));

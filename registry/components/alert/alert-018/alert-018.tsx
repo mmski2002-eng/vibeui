@@ -26,8 +26,8 @@ export type Alert018Props = Omit<
 // отдельное уведомление об успехе пришлось бы прятать по таймеру.
 const STYLES = `
 :where([data-vibeui-block="alert-018"]){
---vibeui-alert-018-fg:oklch(0.97 0.004 265);
---vibeui-alert-018-bg:oklch(0.32 0.016 265);
+--vibeui-alert-018-fg:oklch(0.97 0 265);
+--vibeui-alert-018-bg:oklch(0.32 0 265);
 --vibeui-alert-018-muted:color-mix(in oklab,var(--vibeui-alert-018-fg) 68%,transparent);
 --vibeui-alert-018-radius:9999px;
 --vibeui-alert-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -39,7 +39,7 @@ padding:0.5rem 0.9375rem;
 border-radius:var(--vibeui-alert-018-radius);
 background:var(--vibeui-alert-018-bg);color:var(--vibeui-alert-018-fg);
 font-family:var(--vibeui-alert-018-font);font-size:0.8125rem;
-box-shadow:0 12px 30px -18px oklch(0.15 0.02 265 / 70%);
+box-shadow:0 12px 30px -18px oklch(0.15 0 265 / 70%);
 }
 /* Мигающая точка вместо спиннера: связь не «грузится», она отсутствует. */
 [data-vibeui-block="alert-018"] [data-part="dot"]{

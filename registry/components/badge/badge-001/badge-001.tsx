@@ -16,10 +16,10 @@ export type Badge001Props = ComponentProps<"span"> & {
 // цветной точкой оставляет статус заметным, но не кричащим.
 const STYLES = `
 :where([data-vibeui-block="badge-001"]){
---vibeui-badge-001-fg:light-dark(oklch(0.32 0.014 265),oklch(0.92 0.006 265));
---vibeui-badge-001-bg:light-dark(oklch(0.96 0.004 265),oklch(0.27 0.009 265));
---vibeui-badge-001-border:light-dark(oklch(0.89 0.006 265),oklch(0.39 0.011 265));
---vibeui-badge-001-dot:light-dark(oklch(0.62 0.014 265),oklch(0.7 0.012 265));
+--vibeui-badge-001-fg:light-dark(oklch(0.32 0 265),oklch(0.92 0 265));
+--vibeui-badge-001-bg:light-dark(oklch(0.96 0 265),oklch(0.27 0 265));
+--vibeui-badge-001-border:light-dark(oklch(0.89 0 265),oklch(0.39 0 265));
+--vibeui-badge-001-dot:light-dark(oklch(0.62 0 265),oklch(0.7 0 265));
 --vibeui-badge-001-radius:9999px;
 --vibeui-badge-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

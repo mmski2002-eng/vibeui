@@ -6,9 +6,7 @@
       "type": "registry:component",
       "title": "Зона перетаскивания файлов",
       "description": "Зона перетаскивания, которая остаётся кнопкой: внутри настоящий выбор файла, поэтому клавиатура и телефон работают так же.",
-      "categories": [
-        "file-upload"
-      ],
+      "categories": ["file-upload"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-file-001-*. Клиентский: \"use client\". Зона — <label> со скрытым input type=\"file\", поэтому выбор доступен без мыши. Обработчики dragover и drop отменяют стандартное поведение браузера, состояние наведения выносится в data-over. Список выбранного показывает имена и размеры. Тема берётся из color-scheme окружения через light-dark(): подложки у зоны по умолчанию нет, она лежит прямо на фоне страницы и темнеет вместе с ней, а проп background включает собственную плашку.",
       "meta": {
-        "tags": [
-          "input",
-          "file",
-          "upload",
-          "drag-and-drop"
-        ],
+        "tags": ["input", "file", "upload", "drag-and-drop"],
         "preview": {
           "width": "full"
         },
@@ -157,13 +150,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-file-001-* variables. Client component: \"use client\". The zone is a <label> with a hidden input type=\"file\", so choosing is available without a mouse. The dragover and drop handlers prevent the browser's default behaviour, and the hover state is exposed as data-over. The list of picked files shows names and sizes. The theme comes from the surrounding color-scheme through light-dark(): the zone has no surface by default, it sits directly on the page background and darkens with it, while the background prop turns on a surface of its own."
           }
         },
-        "cardControls": [
-          "label",
-          "hint",
-          "sizeText",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["label", "hint", "sizeText", "accent", "background"]
       }
     },
     {
@@ -171,9 +158,7 @@
       "type": "registry:component",
       "title": "Вставка или перетаскивание",
       "description": "Зона загрузки с тремя равноправными путями: перетащить мышью, открыть диалог с клавиатуры и вставить файл из буфера обмена по Ctrl + V.",
-      "categories": [
-        "file-upload"
-      ],
+      "categories": ["file-upload"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -185,12 +170,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-file-002-*. Клиентский: \"use client\". Зона — не label, а фокусируемый элемент с role=\"button\" и tabIndex 0: Enter и пробел открывают тот же системный диалог, что и клик по скрытому input, а обработчик onPaste принимает файлы из буфера. Наведение файла выносится в data-over, стандартное поведение dragover отменяется. Все три способа перечислены внутри зоны текстом. Тема берётся из color-scheme окружения через light-dark(): подложки у панели по умолчанию нет, она лежит прямо на фоне страницы и темнеет вместе с ней, а проп background включает собственную плашку.",
       "meta": {
-        "tags": [
-          "file",
-          "upload",
-          "paste",
-          "keyboard"
-        ],
+        "tags": ["file", "upload", "paste", "keyboard"],
         "preview": {
           "width": "full"
         },
@@ -327,12 +307,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-file-002-* variables. Client component: \"use client\". The zone is not a label but a focusable element with role=\"button\" and tabIndex 0: Enter and Space open the same system dialog as a click on the hidden input, while the onPaste handler accepts files from the clipboard. A hovering file is exposed as data-over, and the default dragover behaviour is prevented. All three ways are listed as text inside the zone. The theme comes from the surrounding color-scheme through light-dark(): the panel has no surface by default, it sits directly on the page background and darkens with it, while the background prop turns on a surface of its own."
           }
         },
-        "cardControls": [
-          "label",
-          "accept",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["label", "accept", "accent", "background"]
       }
     },
     {
@@ -340,9 +315,7 @@
       "type": "registry:component",
       "title": "Очередь загрузки",
       "description": "Очередь загрузки, из которой можно выйти: у каждой строки своя полоска прогресса и своя отмена, называющая файл по имени, а не по номеру строки.",
-      "categories": [
-        "file-upload"
-      ],
+      "categories": ["file-upload"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -354,12 +327,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-file-003-*. Клиентский: \"use client\" ради отмены. Прогресс — нативный <progress> с aria-label по имени файла, поэтому доля и подпись достаются вспомогательным технологиям без ручной разметки. Строки со стопроцентным прогрессом получают data-done: полоска зеленеет, а кнопка меняет подпись с «Отменить» на «Убрать». Значения прогресса приходят пропом items — компонент их не считает. Тема берётся из color-scheme окружения через light-dark(): подложки у панели по умолчанию нет, она лежит прямо на фоне страницы и темнеет вместе с ней, а проп background включает собственную плашку.",
       "meta": {
-        "tags": [
-          "file",
-          "upload",
-          "progress",
-          "cancel"
-        ],
+        "tags": ["file", "upload", "progress", "cancel"],
         "preview": {
           "width": "full"
         },
@@ -498,11 +466,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-file-003-* variables. Client component: \"use client\" for the sake of cancelling. Progress is a native <progress> with an aria-label built from the file name, so the share and the caption reach assistive technology without hand-written markup. Rows at a hundred percent get data-done: the bar turns green and the button caption changes from \"Cancel\" to \"Remove\". The progress values arrive through the items prop — the component does not compute them. The theme comes from the surrounding color-scheme through light-dark(): the panel has no surface by default, it sits directly on the page background and darkens with it, while the background prop turns on a surface of its own."
           }
         },
-        "cardControls": [
-          "title",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "accent", "background"]
       }
     },
     {
@@ -510,9 +474,7 @@
       "type": "registry:component",
       "title": "Предпросмотр изображения",
       "description": "Загрузка одной картинки, где превью появляется прямо на месте выбора: имя вроде IMG_2047.jpg не отличает нужный кадр от соседнего.",
-      "categories": [
-        "file-upload"
-      ],
+      "categories": ["file-upload"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -524,12 +486,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-file-004-*. Клиентский: \"use client\". Превью строится из выбранного файла через URL.createObjectURL, поэтому на сервер до отправки формы ничего не летит; прошлая ссылка освобождается в useEffect через URL.revokeObjectURL, иначе вкладка копит изображения в памяти. Плитка — это <label> со скрытым input type=\"file\": и место выбора, и место показа совпадают. Тема берётся из color-scheme окружения через light-dark(): подложки у поля по умолчанию нет, оно лежит прямо на фоне страницы и темнеет вместе с ней, а проп background включает собственную плашку.",
       "meta": {
-        "tags": [
-          "file",
-          "image",
-          "preview",
-          "upload"
-        ],
+        "tags": ["file", "image", "preview", "upload"],
         "preview": {
           "width": "full"
         },
@@ -694,9 +651,7 @@
       "type": "registry:component",
       "title": "Кадрирование аватара",
       "description": "Загрузка аватара с круглой обрезкой: рамка показывает ровно то, что увидят другие, а ползунок масштаба спасает кадр с лицом у края.",
-      "categories": [
-        "file-upload"
-      ],
+      "categories": ["file-upload"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -708,14 +663,12 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-file-005-*. Клиентский: \"use client\". Круглая рамка — <label> со скрытым input type=\"file\" и overflow:hidden, поэтому обрезка видна сразу. Масштаб живёт в переменной --vibeui-file-005-zoom и применяется через transform:scale, а не через размеры — картинка не перерисовывается. Ползунок — нативный input[type=range], поэтому стрелки с клавиатуры и объявление значения достаются даром. Прошлая ссылка освобождается через revokeObjectURL. Тема берётся из color-scheme окружения через light-dark(): подложки у карточки по умолчанию нет, она лежит прямо на фоне страницы и темнеет вместе с ней, а проп background включает собственную плашку.",
       "meta": {
-        "tags": [
-          "file",
-          "avatar",
-          "crop",
-          "image"
-        ],
+        "tags": ["file", "avatar", "crop", "image"],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "photo": "/demo/avatars/anna-256.webp"
+          }
         },
         "ai": {
           "export": "File005",
@@ -854,13 +807,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-file-005-* variables. Client component: \"use client\". The circular frame is a <label> with a hidden input type=\"file\" and overflow:hidden, so the crop is visible at once. The scale lives in the --vibeui-file-005-zoom variable and is applied through transform:scale rather than through dimensions — the image is not repainted. The slider is a native input[type=range], so keyboard arrows and value announcement come free. The previous link is released through revokeObjectURL. The theme comes from the surrounding color-scheme through light-dark(): the card has no surface by default, it sits directly on the page background and darkens with it, while the background prop turns on a surface of its own."
           }
         },
-        "cardControls": [
-          "label",
-          "initials",
-          "zoom",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["label", "initials", "zoom", "accent", "background"]
       }
     },
     {
@@ -868,9 +815,7 @@
       "type": "registry:component",
       "title": "Загрузка с проверкой",
       "description": "Загрузка с правилами, которые видны до выбора: список условий стоит рядом, а отказ называет и нарушенное правило, и его предел.",
-      "categories": [
-        "file-upload"
-      ],
+      "categories": ["file-upload"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -882,12 +827,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-file-006-*. Клиентский: \"use client\" ради проверки. Расширение берётся из имени, размер — из file.size; нарушенное правило подсвечивается в списке через data-broken, а корень получает data-rejected. Сообщение об отказе стоит в role=\"alert\" и называет и правило, и предел. Атрибут accept собирается из списка formats и только фильтрует диалог, ничего не гарантируя. Тема берётся из color-scheme окружения через light-dark(): подложки у поля по умолчанию нет, оно лежит прямо на фоне страницы и темнеет вместе с ней, а проп background включает собственную плашку.",
       "meta": {
-        "tags": [
-          "file",
-          "validation",
-          "limit",
-          "upload"
-        ],
+        "tags": ["file", "validation", "limit", "upload"],
         "preview": {
           "width": "full"
         },
@@ -1021,12 +961,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-file-006-* variables. Client component: \"use client\" for the sake of the check. The extension is taken from the name, the size from file.size; the broken rule is highlighted in the list through data-broken, and the root gets data-rejected. The rejection message sits in role=\"alert\" and names both the rule and the limit. The accept attribute is assembled from the formats list and only filters the dialog, guaranteeing nothing. The theme comes from the surrounding color-scheme through light-dark(): the field has no surface by default, it sits directly on the page background and darkens with it, while the background prop turns on a surface of its own."
           }
         },
-        "cardControls": [
-          "label",
-          "maxSizeMb",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["label", "maxSizeMb", "accent", "background"]
       }
     },
     {
@@ -1034,9 +969,7 @@
       "type": "registry:component",
       "title": "Прогресс пакета",
       "description": "Одна полоска на всю пачку файлов: важен ответ «сколько ещё ждать», а подробности по каждому файлу спрятаны в раскрывающийся список.",
-      "categories": [
-        "file-upload"
-      ],
+      "categories": ["file-upload"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1048,12 +981,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-file-007-*. Серверный: раскрытие держит нативный <details>, состояния нет и гидрации тоже. Общая доля показана нативным <progress> с max по числу файлов и aria-label вида «Загружено N из M», процент посчитан из тех же чисел. Список файлов лежит внутри <details> и не занимает места, пока не нужен. Состояния файлов хранятся ключами done, active и queued, а видимые подписи приходят словарём stateText. Тема берётся из color-scheme окружения через light-dark(): подложки у сводки по умолчанию нет, она лежит прямо на фоне страницы и темнеет вместе с ней, а проп background включает собственную плашку.",
       "meta": {
-        "tags": [
-          "file",
-          "upload",
-          "progress",
-          "batch"
-        ],
+        "tags": ["file", "upload", "progress", "batch"],
         "preview": {
           "width": "full"
         },
@@ -1221,13 +1149,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-file-007-* variables. Server component: the disclosure is held by a native <details>, there is no state and no hydration either. The overall share is shown by a native <progress> with max set to the number of files and an aria-label of the form \"Uploaded N of M\", and the percentage is computed from the same numbers. The file list lies inside the <details> and takes no space until it is needed. File states are stored under the done, active and queued keys, while the visible captions arrive through the stateText dictionary. The theme comes from the surrounding color-scheme through light-dark(): the summary has no surface by default, it sits directly on the page background and darkens with it, while the background prop turns on a surface of its own."
           }
         },
-        "cardControls": [
-          "title",
-          "done",
-          "total",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "done", "total", "accent", "background"]
       }
     },
     {
@@ -1235,9 +1157,7 @@
       "type": "registry:component",
       "title": "Замена файла",
       "description": "Замена уже загруженного файла с возвратом: прошлое имя остаётся на виду вместе с кнопкой «Вернуть», пока изменение не сохранено.",
-      "categories": [
-        "file-upload"
-      ],
+      "categories": ["file-upload"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1249,12 +1169,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-file-008-*. Клиентский: \"use client\" ради хранения прошлого имени. Кнопка замены — <label> со скрытым input type=\"file\", поэтому выбор доступен с клавиатуры. После замены прошлое имя сохраняется в состоянии и показывается строкой с role=\"status\" и кнопкой возврата; строка исчезает, как только возврат нажат. Значок файла нарисован бордюрами и псевдоэлементами. Тема берётся из color-scheme окружения через light-dark(): подложки у карточки по умолчанию нет, она лежит прямо на фоне страницы и темнеет вместе с ней, а проп background включает собственную плашку.",
       "meta": {
-        "tags": [
-          "file",
-          "replace",
-          "undo",
-          "upload"
-        ],
+        "tags": ["file", "replace", "undo", "upload"],
         "preview": {
           "width": "full"
         },
@@ -1395,13 +1310,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-file-008-* variables. Client component: \"use client\" for the sake of keeping the previous name. The replace button is a <label> with a hidden input type=\"file\", so choosing is available from the keyboard. After a replacement the previous name is kept in state and shown in a line with role=\"status\" and an undo button; the line disappears as soon as undo is pressed. The file glyph is drawn with borders and pseudo-elements. The theme comes from the surrounding color-scheme through light-dark(): the card has no surface by default, it sits directly on the page background and darkens with it, while the background prop turns on a surface of its own."
           }
         },
-        "cardControls": [
-          "label",
-          "current",
-          "meta",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["label", "current", "meta", "accent", "background"]
       }
     },
     {
@@ -1409,9 +1318,7 @@
       "type": "registry:component",
       "title": "Файл или ссылка",
       "description": "Вложение из двух источников: файл с диска или ссылка. Переключение панелей держит селектор :has, поэтому состояния и клиентского JS нет.",
-      "categories": [
-        "file-upload"
-      ],
+      "categories": ["file-upload"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1423,12 +1330,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-file-009-*. Серверный: вкладки собраны на двух радиокнопках внутри подписей, а показ панели решает :has на корне по атрибуту data-choice — идентификаторов в стилях нет, поэтому компонент переносится без единой правки. Радиокнопки скрыты визуально, но остаются фокусируемыми, кольцо фокуса рисуется на подписи через :has(input:focus-visible). Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней, а проп background включает собственную плашку. Активная вкладка и поле адреса красятся отдельным токеном --vibeui-file-009-raise, поэтому прозрачная подложка не съедает поднятую плитку.",
       "meta": {
-        "tags": [
-          "file",
-          "link",
-          "tabs",
-          "upload"
-        ],
+        "tags": ["file", "link", "tabs", "upload"],
         "preview": {
           "width": "full"
         },
@@ -1572,13 +1474,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-file-009-* variables. Server component: the tabs are built on two radio inputs inside labels, and which panel shows is decided by :has on the root through the data-choice attribute — there are no identifiers in the styles, so the component ports over without a single edit. The radio inputs are hidden visually but stay focusable, and the focus ring is drawn on the label through :has(input:focus-visible). The theme comes from the surrounding color-scheme through light-dark(): the block has no surface by default, it sits directly on the page background and darkens with it, while the background prop turns on a surface of its own. The active tab and the address field are painted with a separate --vibeui-file-009-raise token, so a transparent surface does not swallow the raised tile."
           }
         },
-        "cardControls": [
-          "title",
-          "fileTab",
-          "linkTab",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "fileTab", "linkTab", "accent", "background"]
       }
     },
     {
@@ -1586,9 +1482,7 @@
       "type": "registry:component",
       "title": "Повтор загрузки",
       "description": "Сорванная загрузка с выходом: названа причина, а не «ошибка загрузки», и рядом стоит повтор — файл уже выбран, второй раз искать его не нужно.",
-      "categories": [
-        "file-upload"
-      ],
+      "categories": ["file-upload"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1600,12 +1494,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-file-010-*. Клиентский: \"use client\" ради повтора. Состояние строки выносится в data-status на корне: по нему рисуются крест, кольцо ожидания или галочка. Повтор переводит строку в состояние ожидания, а useEffect по таймеру доводит её до успеха — в настоящем проекте на месте таймера запрос. Текст состояния стоит в role=\"status\", поэтому значок никогда не работает один. Тема берётся из color-scheme окружения через light-dark(): подложки у строки по умолчанию нет, она лежит прямо на фоне страницы и темнеет вместе с ней, а проп background включает собственную плашку.",
       "meta": {
-        "tags": [
-          "file",
-          "upload",
-          "error",
-          "retry"
-        ],
+        "tags": ["file", "upload", "error", "retry"],
         "preview": {
           "width": "full"
         },

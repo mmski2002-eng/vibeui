@@ -16,13 +16,13 @@ export type Progress009Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="progress-009"]){
 --vibeui-progress-009-bg:transparent;
---vibeui-progress-009-fg:light-dark(oklch(0.24 0.016 265),oklch(0.94 0.006 265));
+--vibeui-progress-009-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-progress-009-muted:color-mix(in oklab,var(--vibeui-progress-009-fg) 68%,transparent);
---vibeui-progress-009-border:light-dark(oklch(0.9 0.006 265),oklch(0.34 0.012 265));
---vibeui-progress-009-track:light-dark(oklch(0.93 0.005 265),oklch(0.3 0.011 265));
+--vibeui-progress-009-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
+--vibeui-progress-009-track:light-dark(oklch(0.93 0 265),oklch(0.3 0 265));
 --vibeui-progress-009-accent:light-dark(oklch(0.52 0.2 292),oklch(0.7 0.17 292));
---vibeui-progress-009-on-accent:light-dark(oklch(1 0 0),oklch(0.17 0.03 292));
---vibeui-progress-009-fade:light-dark(oklch(1 0 0),oklch(0.24 0.02 292));
+--vibeui-progress-009-on-accent:light-dark(oklch(1 0 0),oklch(0.17 0 292));
+--vibeui-progress-009-fade:light-dark(oklch(1 0 0),oklch(0.24 0 292));
 --vibeui-progress-009-value:0;
 --vibeui-progress-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

@@ -38,11 +38,11 @@ export type Togglegroup004Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="togglegroup-004"]){
 --vibeui-togglegroup-004-bg:transparent;
---vibeui-togglegroup-004-fg:light-dark(oklch(0.22 0.014 265),oklch(0.94 0.005 265));
+--vibeui-togglegroup-004-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-togglegroup-004-muted:color-mix(in oklab,var(--vibeui-togglegroup-004-fg) 68%,transparent);
---vibeui-togglegroup-004-border:light-dark(oklch(0.9 0.006 265),oklch(0.35 0.012 265));
---vibeui-togglegroup-004-surface:light-dark(oklch(0.97 0.004 265),oklch(0.26 0.01 265));
---vibeui-togglegroup-004-raised:light-dark(oklch(1 0 0),oklch(0.29 0.01 265));
+--vibeui-togglegroup-004-border:light-dark(oklch(0.9 0 265),oklch(0.35 0 265));
+--vibeui-togglegroup-004-surface:light-dark(oklch(0.97 0 265),oklch(0.26 0 265));
+--vibeui-togglegroup-004-raised:light-dark(oklch(1 0 0),oklch(0.29 0 265));
 --vibeui-togglegroup-004-accent:light-dark(oklch(0.52 0.16 145),oklch(0.72 0.15 145));
 --vibeui-togglegroup-004-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0.02 145));
 --vibeui-togglegroup-004-weekend:light-dark(oklch(0.6 0.16 25),oklch(0.72 0.15 25));

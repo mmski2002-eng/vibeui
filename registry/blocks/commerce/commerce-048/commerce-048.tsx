@@ -39,11 +39,11 @@ export type Commerce048Props = {
 // Тёмная подложка блока своя, а не заимствованная у темы проекта.
 const STYLES = `
 :where([data-vibeui-block="commerce-048"]){
---vibeui-commerce-048-bg:oklch(0.18 0.03 285);
+--vibeui-commerce-048-bg:oklch(0.18 0 285);
 --vibeui-commerce-048-panel:oklch(0.24 0.035 285);
---vibeui-commerce-048-fg:oklch(0.97 0.008 285);
---vibeui-commerce-048-muted:oklch(0.72 0.02 285);
---vibeui-commerce-048-border:oklch(0.34 0.03 285);
+--vibeui-commerce-048-fg:oklch(0.97 0 285);
+--vibeui-commerce-048-muted:oklch(0.72 0 285);
+--vibeui-commerce-048-border:oklch(0.34 0 285);
 --vibeui-commerce-048-accent:oklch(0.72 0.19 45);
 --vibeui-commerce-048-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -97,7 +97,7 @@ background:var(--vibeui-commerce-048-panel);
 [data-vibeui-block="commerce-048"] [data-part="fill"]{display:block;height:100%;border-radius:9999px;background:var(--vibeui-commerce-048-accent);width:var(--vibeui-commerce-048-sold,0%)}
 [data-vibeui-block="commerce-048"] [data-part="go"]{
 appearance:none;border:0;cursor:pointer;height:3rem;padding:0 2rem;border-radius:9999px;
-background:var(--vibeui-commerce-048-accent);color:oklch(0.18 0.03 285);font:inherit;font-size:1rem;font-weight:700;
+background:var(--vibeui-commerce-048-accent);color:oklch(0.18 0 285);font:inherit;font-size:1rem;font-weight:700;
 transition:filter .16s ease;
 }
 [data-vibeui-block="commerce-048"] [data-part="go"]:hover{filter:brightness(1.08)}
