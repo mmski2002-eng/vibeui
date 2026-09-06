@@ -127,6 +127,24 @@ export const CATEGORIES = [
     en: "Contact",
     group: "marketing",
   },
+  {
+    slug: "errors",
+    label: "Страницы ошибок",
+    en: "Error Pages",
+    group: "application",
+  },
+  {
+    slug: "about",
+    label: "О компании",
+    en: "About",
+    group: "marketing",
+  },
+  {
+    slug: "cases",
+    label: "Кейсы",
+    en: "Case Studies",
+    group: "marketing",
+  },
   // Категории компонентов: одна категория — один тип. Сборных корзин
   // («Inputs», «Display») здесь нет: тип, спрятанный внутри такой корзины,
   // невозможно найти ни в списке категорий, ни по адресу.

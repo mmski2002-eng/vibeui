@@ -1,0 +1,699 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "errorpage-001",
+      "type": "registry:block",
+      "title": "Плакат 404 с поиском",
+      "description": "Страница 404 с гигантскими контурными цифрами и оранжевым штрихом: под ними поиск по каталогу и ссылки на главные разделы, чтобы тупик стал развилкой.",
+      "categories": ["errors"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "errorpage-001/errorpage-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/errorpage-001.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-errorpage-001-*. Серверный компонент, форма поиска — обычный GET-submit без JS. Цифры кода набраны штрихом через -webkit-text-stroke с фолбэком @supports: где штриха нет, цифры остаются залитыми акцентом. Раскладка центрированная колонка, размер цифр считается от собственной ширины блока (cqi). Ссылки разделов — nav с чипами, форма — role=search.",
+      "meta": {
+        "tags": ["404", "error", "search", "not found", "typography"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Errorpage001",
+          "usage": "<Errorpage001\n  title=\"Такой страницы нет\"\n  searchAction=\"/search\"\n  links={[{ label: \"Каталог\", href: \"/components\" }]}\n/>",
+          "summary": "Страница 404: контурные цифры-плакат с оранжевым штрихом, поисковая строка и чипы главных разделов. Серверный компонент, поиск работает обычным GET-submit. Один файл, своя палитра, ноль зависимостей и клиентского JS.",
+          "preserve": [
+            "локальную палитру --vibeui-errorpage-001-* — не подменять её токенами темы сайта (bg-card, border-border и подобными)",
+            "штрих вместо заливки на цифрах: залитые цифры такого размера давят на текст, а фолбэк @supports сам вернёт заливку там, где штриха нет",
+            "поиск и ссылки под кодом ошибки: 404 обязана предлагать выход, а не заканчиваться тупиком",
+            "aria-hidden на декоративных цифрах — код уже назван в заголовке, скринридеру не нужно читать его дважды",
+            "форму как GET-submit без JS: поиск обязан работать даже если скрипты страницы упали — на странице ошибки это не гипотеза",
+            "container-query для размера цифр: блок в узкой колонке должен сложиться сам, не глядя на ширину окна"
+          ],
+          "adapt": [
+            "title и description — заголовок и объяснение",
+            "searchAction и searchPlaceholder — куда уходит запрос и подсказка в строке",
+            "массив links — подписи и адреса главных разделов",
+            "accent — цвет штриха цифр, кнопки и hover-состояний",
+            "background — подложка; пусто — блок лежит на фоне страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme: чтобы блок темнел вместе с сайтом, на html должен быть объявлен color-scheme: light dark — иначе light-dark() всегда вернёт светлую ветку.",
+            "Поле поиска отправляет параметр name=q — подстройте под свой обработчик поиска.",
+            "Не выносить CSS-переменные в globals.css: блок должен остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Такой страницы нет",
+            "maxLength": 40
+          },
+          {
+            "prop": "code",
+            "label": "Код",
+            "type": "text",
+            "default": "404",
+            "maxLength": 6
+          },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+        ],
+        "i18n": {
+          "en": {
+            "title": "404 Poster with Search",
+            "description": "A 404 page with giant outlined digits in an orange stroke: below them a catalog search and links to the main sections, turning a dead end into a fork.",
+            "docs": "The block is self-contained: one file, no dependencies, its palette in local --vibeui-errorpage-001-* variables. A server component; the search form is a plain GET submit without JS. The code digits are drawn as a stroke via -webkit-text-stroke with an @supports fallback: where the stroke is unavailable the digits stay filled with the accent. The layout is a centered column and the digit size is computed from the block's own width (cqi). Section links are a nav of chips, the form carries role=search.",
+            "ai": {
+              "summary": "A 404 page: outlined poster digits with an orange stroke, a search bar and chips for the main sections. A server component, the search works as a plain GET submit. One file, its own palette, zero dependencies and zero client JS.",
+              "preserve": [
+                "the local --vibeui-errorpage-001-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the stroke instead of a fill on the digits: filled digits this large crush the text, and the @supports fallback restores the fill where the stroke is unavailable",
+                "the search and links under the error code: a 404 has to offer a way out, not end in a dead end",
+                "aria-hidden on the decorative digits — the code is already named in the heading, a screen reader should not read it twice",
+                "the form as a GET submit without JS: search must work even when the page scripts crashed — on an error page that is not hypothetical",
+                "the container query for the digit size: the block has to fold on its own in a narrow column, ignoring the window width"
+              ],
+              "adapt": [
+                "title and description — the heading and the explanation",
+                "searchAction and searchPlaceholder — where the query goes and the hint in the field",
+                "the links array — labels and addresses of the main sections",
+                "accent — the colour of the digit stroke, the button and the hover states",
+                "background — the surface; empty means the block sits on the page background"
+              ],
+              "notes": [
+                "The theme comes from color-scheme: for the block to darken with the site, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The search field submits the parameter name=q — align it with your search handler.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Errorpage001\n  title=\"This page does not exist\"\n  searchAction=\"/search\"\n  links={[{ label: \"Catalog\", href: \"/components\" }]}\n/>"
+            },
+            "controls": {
+              "title": { "label": "Heading", "default": "This page does not exist" },
+              "code": { "label": "Code", "default": "404" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "preview": {
+              "props": {
+                "title": "This page does not exist",
+                "description": "The link is outdated or the address has a typo. Try the catalog search or start from the main sections.",
+                "searchPlaceholder": "Search the catalog: \"navbar\", \"pricing\"…",
+                "searchButton": "Search",
+                "linksLabel": "Where to next",
+                "links": [
+                  { "label": "Component catalog", "href": "/components" },
+                  { "label": "Home", "href": "/" },
+                  { "label": "Docs", "href": "/docs" },
+                  { "label": "Pricing", "href": "/pricing" }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "code", "accent", "background"]
+      }
+    },
+    {
+      "name": "errorpage-002",
+      "type": "registry:block",
+      "title": "500 с кодом инцидента",
+      "description": "Страница 500 в духе «мы уже чиним»: сигнальная лента из CSS-полос, код инцидента для поддержки в пунктирной рамке, кнопка «обновить» и ссылка на статус сервисов.",
+      "categories": ["errors"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "errorpage-002/errorpage-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/errorpage-002.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-errorpage-002-*. Серверный компонент без JS: кнопка «обновить» — ссылка с пустым href, которая ведёт на текущий адрес, а при 500 повторный запрос обычно уже проходит. Сигнальная лента нарисована repeating-linear-gradient — никаких изображений. Код инцидента размечен как dl и выделен user-select:all: одно касание выделяет его целиком для копирования в тикет.",
+      "meta": {
+        "tags": ["500", "error", "incident", "status", "server"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Errorpage002",
+          "usage": "<Errorpage002\n  incident=\"INC-0906-2417\"\n  statusHref=\"/status\"\n/>",
+          "summary": "Страница 500: сигнальная лента из CSS-полос, честное «сломалось у нас», код инцидента в пунктирной рамке, кнопка обновления и ссылка на страницу статуса. Серверный компонент, один файл, своя палитра, ноль зависимостей и клиентского JS.",
+          "preserve": [
+            "локальную палитру --vibeui-errorpage-002-* — не подменять её токенами темы сайта (bg-card, border-border и подобными)",
+            "код инцидента на видном месте: с ним обращение в поддержку решается за минуты, без него — перепиской «а что вы делали»",
+            "user-select:all на коде инцидента — одно касание выделяет его целиком, на странице ошибки у человека нет терпения выделять мышью",
+            "кнопку «обновить» как ссылку с пустым href: перезагрузка обязана работать без JS — на странице 500 скрипты могли и не доехать",
+            "ленту как CSS-градиент, а не картинку: при сбое сервера внешние ресурсы могут не загрузиться вовсе",
+            "разметку dl для пары «подпись — код»: это термин и значение, а не два абзаца"
+          ],
+          "adapt": [
+            "title и description — заголовок и объяснение своими словами",
+            "incident — реальный код инцидента из вашего мониторинга",
+            "statusHref и statusLabel — адрес и подпись страницы статуса",
+            "accent — цвет ленты, кнопки и акцентных подписей",
+            "background — подложка; пусто — блок лежит на фоне страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme: чтобы блок темнел вместе с сайтом, на html должен быть объявлен color-scheme: light dark — иначе light-dark() всегда вернёт светлую ветку.",
+            "Код инцидента приходит пропом: подставляйте его из своего обработчика ошибок, дефолт — только заглушка для превью.",
+            "Не выносить CSS-переменные в globals.css: блок должен остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Сломалось на нашей стороне",
+            "maxLength": 40
+          },
+          {
+            "prop": "incident",
+            "label": "Код инцидента",
+            "type": "text",
+            "default": "INC-0906-2417",
+            "maxLength": 20
+          },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+        ],
+        "i18n": {
+          "en": {
+            "title": "500 with Incident Code",
+            "description": "A 500 page in the \"we are already on it\" spirit: a hazard tape of CSS stripes, an incident code for support in a dashed frame, a refresh button and a link to the service status.",
+            "docs": "The block is self-contained: one file, no dependencies, its palette in local --vibeui-errorpage-002-* variables. A server component with no JS: the refresh button is a link with an empty href that points at the current address, and after a 500 a repeated request usually goes through. The hazard tape is drawn with repeating-linear-gradient — no images. The incident code is marked up as a dl and carries user-select:all: one tap selects it whole for pasting into a ticket.",
+            "ai": {
+              "summary": "A 500 page: a hazard tape of CSS stripes, an honest \"it broke on our side\", an incident code in a dashed frame, a refresh button and a status page link. A server component, one file, its own palette, zero dependencies and zero client JS.",
+              "preserve": [
+                "the local --vibeui-errorpage-002-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the incident code in plain sight: with it a support request is resolved in minutes, without it — in a back-and-forth of \"what were you doing\"",
+                "user-select:all on the incident code — one tap selects it whole; on an error page nobody has the patience to drag-select",
+                "the refresh button as a link with an empty href: reloading must work without JS — on a 500 page the scripts may never have arrived",
+                "the tape as a CSS gradient, not an image: during a server failure external resources may not load at all",
+                "the dl markup for the label–code pair: it is a term and a value, not two paragraphs"
+              ],
+              "adapt": [
+                "title and description — the heading and the explanation in your own words",
+                "incident — the real incident code from your monitoring",
+                "statusHref and statusLabel — the address and label of the status page",
+                "accent — the colour of the tape, the button and the accent labels",
+                "background — the surface; empty means the block sits on the page background"
+              ],
+              "notes": [
+                "The theme comes from color-scheme: for the block to darken with the site, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The incident code arrives as a prop: feed it from your error handler, the default is only a preview placeholder.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Errorpage002\n  incident=\"INC-0906-2417\"\n  statusHref=\"/status\"\n/>"
+            },
+            "controls": {
+              "title": { "label": "Heading", "default": "It broke on our side" },
+              "incident": { "label": "Incident code", "default": "INC-0906-2417" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "preview": {
+              "props": {
+                "code": "Error 500",
+                "title": "It broke on our side",
+                "description": "The server could not build the page. We already see the error in monitoring and are fixing it. Refresh in a minute — that is usually enough.",
+                "incidentLabel": "Incident code for support",
+                "retryLabel": "Refresh the page",
+                "statusLabel": "Service status"
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "incident", "accent", "background"]
+      }
+    },
+    {
+      "name": "errorpage-003",
+      "type": "registry:block",
+      "title": "Технические работы",
+      "description": "Maintenance-страница, снимающая тревогу: время окончания работ, полосатый прогресс с процентами и подписка «напишем, когда вернёмся». Проценты и время приходят пропами.",
+      "categories": ["errors"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "errorpage-003/errorpage-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/errorpage-003.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-errorpage-003-*. Серверный компонент: прогресс приходит пропом 0–100 и кладётся в ширину заливки инлайн-стилем — это динамическое значение, классом его не выразить. Дорожка размечена role=progressbar с aria-value*. Бегущие полоски заливки и пульс точки в бейдже — CSS-анимации, обе глушатся prefers-reduced-motion. Форма подписки — обычный GET-submit без JS.",
+      "meta": {
+        "tags": ["maintenance", "progress", "downtime", "notify", "status"],
+        "preview": { "width": "full" },
+        "ai": {
+          "usage": "<Errorpage003\n  finishTime=\"сегодня к 14:00 МСК\"\n  progress={68}\n  notifyAction=\"/notify\"\n/>",
+          "export": "Errorpage003",
+          "summary": "Страница технических работ: пульсирующий бейдж, время окончания, полоса прогресса с бегущими полосками и процентами, подписка на уведомление по почте. Серверный компонент, один файл, своя палитра, ноль зависимостей и клиентского JS.",
+          "preserve": [
+            "локальную палитру --vibeui-errorpage-003-* — не подменять её токенами темы сайта (bg-card, border-border и подобными)",
+            "тройку «время — прогресс — подписка»: она снимает три тревоги разом — когда закончится, идёт ли процесс и можно ли закрыть вкладку",
+            "role=progressbar с aria-value* на дорожке: без них полоса для скринридера — просто цветной прямоугольник",
+            "ширину заливки инлайн-стилем: процент — динамическое значение из пропа, классом его не выразить",
+            "глушение анимаций в prefers-reduced-motion — бегущие полоски и пульс должны останавливаться, это уже сделано",
+            "форму подписки как GET-submit без JS: страница работ обязана работать, когда половина инфраструктуры лежит"
+          ],
+          "adapt": [
+            "finishTime — реальное время окончания работ, честное, с запасом",
+            "progress — фактический процент готовности из вашего процесса",
+            "title, description и notifyLabel — тексты своими словами",
+            "notifyAction — куда отправляется почта подписки",
+            "accent и background — акцент и подложка страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme: чтобы блок темнел вместе с сайтом, на html должен быть объявлен color-scheme: light dark — иначе light-dark() всегда вернёт светлую ветку.",
+            "Прогресс зажимается в 0–100 внутри компонента, но сам он статический: страницу нужно перегенерировать или перезагрузить, чтобы процент обновился.",
+            "Не выносить CSS-переменные в globals.css: блок должен остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Обновляем каталог",
+            "maxLength": 36
+          },
+          {
+            "prop": "finishTime",
+            "label": "Когда закончим",
+            "type": "text",
+            "default": "сегодня к 14:00 МСК",
+            "maxLength": 32
+          },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Maintenance Page",
+            "description": "A maintenance page that removes the anxiety: the finish time, a striped progress bar with a percentage and a \"we will write when we are back\" subscription. The percentage and the time arrive as props.",
+            "docs": "The block is self-contained: one file, no dependencies, its palette in local --vibeui-errorpage-003-* variables. A server component: the progress arrives as a 0–100 prop and goes into the fill width as an inline style — a dynamic value that cannot be expressed with a class. The track is marked up as role=progressbar with aria-value*. The running stripes of the fill and the pulsing badge dot are CSS animations, both silenced by prefers-reduced-motion. The subscription form is a plain GET submit without JS.",
+            "ai": {
+              "summary": "A maintenance page: a pulsing badge, the finish time, a progress bar with running stripes and a percentage, and an email notification signup. A server component, one file, its own palette, zero dependencies and zero client JS.",
+              "preserve": [
+                "the local --vibeui-errorpage-003-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the trio of time, progress and signup: it removes three anxieties at once — when it ends, whether it is moving and whether the tab can be closed",
+                "role=progressbar with aria-value* on the track: without them the bar is just a coloured rectangle to a screen reader",
+                "the fill width as an inline style: the percentage is a dynamic value from a prop and cannot be expressed with a class",
+                "the animation silencing under prefers-reduced-motion — the running stripes and the pulse must stop, and they already do",
+                "the signup form as a GET submit without JS: a maintenance page has to work while half the infrastructure is down"
+              ],
+              "adapt": [
+                "finishTime — the real finish time, honest, with a margin",
+                "progress — the actual completion percentage from your process",
+                "title, description and notifyLabel — the copy in your own words",
+                "notifyAction — where the subscription email is submitted",
+                "accent and background — the accent and the page surface"
+              ],
+              "notes": [
+                "The theme comes from color-scheme: for the block to darken with the site, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The progress is clamped to 0–100 inside the component, but it is static: the page has to be regenerated or reloaded for the percentage to update.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Errorpage003\n  finishTime=\"today by 2:00 PM UTC\"\n  progress={68}\n  notifyAction=\"/notify\"\n/>"
+            },
+            "controls": {
+              "title": { "label": "Heading", "default": "Updating the catalog" },
+              "finishTime": { "label": "Finish time", "default": "today by 2:00 PM UTC" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Maintenance",
+                "title": "Updating the catalog",
+                "description": "We are rolling out a new version of VibeUI. The site will come back on its own — no need to keep the tab open.",
+                "finishLabel": "Planned finish",
+                "finishTime": "today by 2:00 PM UTC",
+                "progressLabel": "Done",
+                "notifyLabel": "Or leave your email — we will write when everything is back.",
+                "notifyPlaceholder": "you@company.com",
+                "notifyButton": "Notify me"
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "finishTime", "accent", "background"]
+      }
+    },
+    {
+      "name": "errorpage-004",
+      "type": "registry:block",
+      "title": "403 с CSS-замком",
+      "description": "Страница «нет доступа» с замком, нарисованным чистым CSS: спокойное объяснение и два выхода — сменить аккаунт или запросить доступ у владельца.",
+      "categories": ["errors"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "errorpage-004/errorpage-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/errorpage-004.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-errorpage-004-*. Серверный компонент без JS. Замок собран из двух элементов: дужка — рамка со скруглением без нижней стороны, корпус — оранжевая плита, скважина — два псевдоэлемента (круг и ножка). Иллюстрация помечена aria-hidden — смысл несут заголовок и текст. Два действия: заливная кнопка «сменить аккаунт» и контурная «запросить доступ», под ними подсказка о сроке ответа.",
+      "meta": {
+        "tags": ["403", "forbidden", "access", "lock", "permissions"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Errorpage004",
+          "usage": "<Errorpage004\n  switchHref=\"/login\"\n  requestHref=\"/access\"\n/>",
+          "summary": "Страница 403: замок из чистого CSS, спокойное объяснение причины и два выхода — сменить аккаунт (заливная кнопка) или запросить доступ (контурная). Серверный компонент, один файл, своя палитра, ноль зависимостей и клиентского JS.",
+          "preserve": [
+            "локальную палитру --vibeui-errorpage-004-* — не подменять её токенами темы сайта (bg-card, border-border и подобными)",
+            "замок как CSS-элементы, а не картинку или иконку из библиотеки: блок обязан остаться одним файлом без ресурсов",
+            "оба выхода — «сменить аккаунт» и «запросить доступ»: у 403 всегда две причины, не тот аккаунт или не выданы права, и страница закрывает обе",
+            "иерархию кнопок: заливная — смена аккаунта (решает вопрос сразу), контурная — запрос (ждать владельца)",
+            "aria-hidden на замке: иллюстрация декоративная, смысл несут заголовок и текст",
+            "подсказку о сроке ответа под кнопками — без неё «запросить доступ» ощущается как письмо в пустоту"
+          ],
+          "adapt": [
+            "title, description и hint — тексты под вашу модель доступа",
+            "switchHref — адрес входа или смены аккаунта",
+            "requestHref — куда уходит запрос доступа",
+            "accent — цвет корпуса замка, кнопки и hover-состояний",
+            "background — подложка; пусто — блок лежит на фоне страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme: чтобы блок темнел вместе с сайтом, на html должен быть объявлен color-scheme: light dark — иначе light-dark() всегда вернёт светлую ветку.",
+            "Пропорции замка заданы в rem и связаны друг с другом: меняя размер, меняйте дужку и корпус вместе, иначе замок развалится.",
+            "Не выносить CSS-переменные в globals.css: блок должен остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Сюда нужен доступ",
+            "maxLength": 36
+          },
+          {
+            "prop": "code",
+            "label": "Код",
+            "type": "text",
+            "default": "Ошибка 403",
+            "maxLength": 16
+          },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+        ],
+        "i18n": {
+          "en": {
+            "title": "403 with a CSS Lock",
+            "description": "An access-denied page with a padlock drawn in pure CSS: a calm explanation and two ways out — switch the account or request access from the owner.",
+            "docs": "The block is self-contained: one file, no dependencies, its palette in local --vibeui-errorpage-004-* variables. A server component with no JS. The padlock is built from two elements: the shackle is a rounded border with no bottom side, the body is an orange slab, the keyhole is two pseudo-elements (a circle and a stem). The illustration is marked aria-hidden — the heading and the text carry the meaning. Two actions: a filled \"switch account\" button and an outlined \"request access\" one, with a response-time hint below.",
+            "ai": {
+              "summary": "A 403 page: a padlock in pure CSS, a calm explanation of the cause and two ways out — switch the account (filled button) or request access (outlined). A server component, one file, its own palette, zero dependencies and zero client JS.",
+              "preserve": [
+                "the local --vibeui-errorpage-004-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the padlock as CSS elements, not an image or a library icon: the block has to stay a single file with no assets",
+                "both ways out — \"switch account\" and \"request access\": a 403 always has two causes, the wrong account or missing rights, and the page covers both",
+                "the button hierarchy: filled for switching accounts (solves it right away), outlined for the request (waiting on the owner)",
+                "aria-hidden on the padlock: the illustration is decorative, the heading and the text carry the meaning",
+                "the response-time hint under the buttons — without it \"request access\" feels like a letter into the void"
+              ],
+              "adapt": [
+                "title, description and hint — the copy for your access model",
+                "switchHref — the address for signing in or switching accounts",
+                "requestHref — where the access request goes",
+                "accent — the colour of the lock body, the button and the hover states",
+                "background — the surface; empty means the block sits on the page background"
+              ],
+              "notes": [
+                "The theme comes from color-scheme: for the block to darken with the site, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The lock proportions are set in rem and tied to each other: when resizing, change the shackle and the body together or the lock falls apart.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Errorpage004\n  switchHref=\"/login\"\n  requestHref=\"/access\"\n/>"
+            },
+            "controls": {
+              "title": { "label": "Heading", "default": "You need access here" },
+              "code": { "label": "Code", "default": "Error 403" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "preview": {
+              "props": {
+                "code": "Error 403",
+                "title": "You need access here",
+                "description": "This section is not open to every team member. You may be signed in with the wrong account — or the owner has not granted you the rights yet.",
+                "switchLabel": "Switch account",
+                "requestLabel": "Request access",
+                "hint": "The request goes to the section owner. They usually reply within a business day."
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "code", "accent", "background"]
+      }
+    },
+    {
+      "name": "errorpage-005",
+      "type": "registry:block",
+      "title": "Оффлайн с чек-листом",
+      "description": "Страница «нет соединения»: пунктирная волна сигнала, нарисованная градиентом и маской, чек-лист «проверьте» и кнопка повтора. Работает целиком без сети и без JS.",
+      "categories": ["errors"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "errorpage-005/errorpage-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/errorpage-005.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-errorpage-005-*. Серверный компонент без JS. Волна — повторяющийся радиальный градиент (арки), поверх — маска из вертикальных штрихов, дающая пунктир; медленный дрейф — CSS-анимация background-position, глушится prefers-reduced-motion. Никаких изображений: в оффлайне внешние ресурсы не загрузятся. Чек-лист — ul с CSS-чекбоксами, кнопка повтора — ссылка с пустым href на текущий адрес.",
+      "meta": {
+        "tags": ["offline", "network", "connection", "checklist", "retry"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Errorpage005",
+          "usage": "<Errorpage005\n  checklist={[\"Wi-Fi включён\", \"Авиарежим выключен\"]}\n/>",
+          "summary": "Оффлайн-страница: пунктирная волна сигнала из градиента и маски, чек-лист причин на стороне пользователя и кнопка повтора. Серверный компонент, один файл, своя палитра, ноль зависимостей, изображений и клиентского JS.",
+          "preserve": [
+            "локальную палитру --vibeui-errorpage-005-* — не подменять её токенами темы сайта (bg-card, border-border и подобными)",
+            "волну как градиент с маской, а не картинку или SVG-файл: в оффлайне внешние ресурсы не загрузятся, иллюстрация обязана жить в CSS",
+            "чек-лист вместо извинений: оффлайн чинится на стороне пользователя, и полезнее подсказать, что проверить",
+            "кнопку повтора как ссылку с пустым href: повтор обязан работать без JS, ссылка ведёт на текущий адрес",
+            "глушение дрейфа волны в prefers-reduced-motion — фоновая анимация не должна отвлекать тех, кто просил её убрать",
+            "последний пункт чек-листа про другие сайты: он переводит диагноз с сайта на сеть и снимает вопрос «это у вас сломалось?»"
+          ],
+          "adapt": [
+            "title и description — заголовок и объяснение",
+            "массив checklist — пункты проверки под вашу аудиторию",
+            "retryLabel — подпись кнопки повтора",
+            "accent — цвет волны, чекбоксов и кнопки",
+            "background — подложка; пусто — блок лежит на фоне страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme: чтобы блок темнел вместе с сайтом, на html должен быть объявлен color-scheme: light dark — иначе light-dark() всегда вернёт светлую ветку.",
+            "Чтобы страница показывалась в реальном оффлайне, её должен закэшировать service worker — сам блок этого не делает, он только вёрстка.",
+            "Не выносить CSS-переменные в globals.css: блок должен остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Нет соединения",
+            "maxLength": 32
+          },
+          {
+            "prop": "retryLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Попробовать ещё раз",
+            "maxLength": 28
+          },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Offline with a Checklist",
+            "description": "A no-connection page: a dashed signal wave drawn with a gradient and a mask, a \"check these\" list and a retry button. Works entirely without the network and without JS.",
+            "docs": "The block is self-contained: one file, no dependencies, its palette in local --vibeui-errorpage-005-* variables. A server component with no JS. The wave is a repeating radial gradient (arcs) with a mask of vertical dashes on top that makes it dotted; the slow drift is a background-position CSS animation, silenced by prefers-reduced-motion. No images: offline, external resources will not load. The checklist is a ul with CSS checkboxes, the retry button is a link with an empty href pointing at the current address.",
+            "ai": {
+              "summary": "An offline page: a dashed signal wave made of a gradient and a mask, a checklist of user-side causes and a retry button. A server component, one file, its own palette, zero dependencies, images or client JS.",
+              "preserve": [
+                "the local --vibeui-errorpage-005-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the wave as a gradient with a mask, not an image or an SVG file: offline, external resources will not load, so the illustration has to live in the CSS",
+                "the checklist instead of apologies: offline is fixed on the user's side, and it is more useful to suggest what to check",
+                "the retry button as a link with an empty href: retrying must work without JS, the link points at the current address",
+                "the wave drift silencing under prefers-reduced-motion — a background animation must not distract those who asked to remove it",
+                "the last checklist item about other sites: it moves the diagnosis from the site to the network and removes the \"is it you who broke?\" question"
+              ],
+              "adapt": [
+                "title and description — the heading and the explanation",
+                "the checklist array — the check items for your audience",
+                "retryLabel — the retry button label",
+                "accent — the colour of the wave, the checkboxes and the button",
+                "background — the surface; empty means the block sits on the page background"
+              ],
+              "notes": [
+                "The theme comes from color-scheme: for the block to darken with the site, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "For the page to show up while genuinely offline it must be cached by a service worker — the block does not do that itself, it is only markup.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Errorpage005\n  checklist={[\"Wi-Fi is on\", \"Airplane mode is off\"]}\n/>"
+            },
+            "controls": {
+              "title": { "label": "Heading", "default": "No connection" },
+              "retryLabel": { "label": "Button", "default": "Try again" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "preview": {
+              "props": {
+                "title": "No connection",
+                "description": "Looks like the internet dropped. The page will wait: as soon as the network is back, you continue right where you were.",
+                "checklistLabel": "Check these",
+                "checklist": [
+                  "Wi-Fi is on and the router is not rebooting",
+                  "Airplane mode is off",
+                  "A VPN or proxy is not cutting the connection",
+                  "Other sites will not open either — then it is the network"
+                ],
+                "retryLabel": "Try again"
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "retryLabel", "accent", "background"]
+      }
+    },
+    {
+      "name": "errorpage-006",
+      "type": "registry:block",
+      "title": "Пустая выдача поиска",
+      "description": "Страница «ничего не найдено»: запрос крупно в оранжевых кавычках, CSS-лупа, советы, как переформулировать, и чипы популярных разделов — из пустоты всегда есть ссылка дальше.",
+      "categories": ["errors"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "errorpage-006/errorpage-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/errorpage-006.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-errorpage-006-*. Серверный компонент без JS. Запрос показан крупнее заголовка и обёрнут в кавычки-псевдоэлементы: человек сразу видит, что именно искалось, и замечает опечатку; overflow-wrap страхует от длинных запросов. Лупа — кольцо-рамка с повёрнутой ручкой-псевдоэлементом. Два уровня помощи: советы (ul на тёплой тинт-подложке) и популярные разделы (nav с чипами).",
+      "meta": {
+        "tags": ["search", "empty state", "no results", "tips", "suggestions"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Errorpage006",
+          "usage": "<Errorpage006\n  query=\"фиолетовый навбар со стеклом\"\n  popular={[{ label: \"Навбары\", href: \"/components?c=navbar\" }]}\n/>",
+          "summary": "Пустая выдача поиска: запрос крупно в акцентных кавычках, CSS-лупа, советы по переформулировке и чипы популярных разделов. Серверный компонент, один файл, своя палитра, ноль зависимостей и клиентского JS.",
+          "preserve": [
+            "локальную палитру --vibeui-errorpage-006-* — не подменять её токенами темы сайта (bg-card, border-border и подобными)",
+            "запрос крупнее заголовка: главное на этой странице — что именно искалось, так человек сам замечает опечатку",
+            "кавычки псевдоэлементами — не дублировать их в тексте запроса, иначе получится двойное цитирование",
+            "два уровня помощи — советы и популярные разделы: выдача не должна заканчиваться тупиком",
+            "лупу как CSS-элементы, а не иконку из библиотеки: блок обязан остаться одним файлом без ресурсов",
+            "overflow-wrap на запросе: длинный запрос без пробелов не должен разносить раскладку"
+          ],
+          "adapt": [
+            "query — реальный запрос пользователя из параметров поиска",
+            "массив tips — советы под устройство вашего поиска",
+            "массив popular — подписи и адреса популярных разделов",
+            "accent — цвет кавычек, лупы, маркеров и hover-состояний",
+            "background — подложка; пусто — блок лежит на фоне страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme: чтобы блок темнел вместе с сайтом, на html должен быть объявлен color-scheme: light dark — иначе light-dark() всегда вернёт светлую ветку.",
+            "Запрос приходит пропом: подставляйте его из строки поиска, дефолт — только заглушка для превью.",
+            "Не выносить CSS-переменные в globals.css: блок должен остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Ничего не нашлось",
+            "maxLength": 36
+          },
+          {
+            "prop": "query",
+            "label": "Запрос",
+            "type": "text",
+            "default": "фиолетовый навбар со стеклом",
+            "maxLength": 48
+          },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Empty Search Results",
+            "description": "A no-results page: the query set large in orange quotation marks, a CSS magnifier, tips on rephrasing and chips of popular sections — an empty result always links onward.",
+            "docs": "The block is self-contained: one file, no dependencies, its palette in local --vibeui-errorpage-006-* variables. A server component with no JS. The query is set larger than the heading and wrapped in pseudo-element quotation marks: the person immediately sees what exactly was searched and spots a typo; overflow-wrap guards against long queries. The magnifier is a ring border with a rotated pseudo-element handle. Two levels of help: tips (a ul on a warm tinted panel) and popular sections (a nav of chips).",
+            "ai": {
+              "summary": "Empty search results: the query set large in accent quotation marks, a CSS magnifier, rephrasing tips and chips of popular sections. A server component, one file, its own palette, zero dependencies and zero client JS.",
+              "preserve": [
+                "the local --vibeui-errorpage-006-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the query set larger than the heading: what was searched is the main thing on this page, that is how the person spots their own typo",
+                "the quotation marks as pseudo-elements — do not repeat them in the query text, or you get double quoting",
+                "the two levels of help — tips and popular sections: a results page must not end in a dead end",
+                "the magnifier as CSS elements, not a library icon: the block has to stay a single file with no assets",
+                "overflow-wrap on the query: a long query without spaces must not blow up the layout"
+              ],
+              "adapt": [
+                "query — the user's real query from the search parameters",
+                "the tips array — advice matching how your search works",
+                "the popular array — labels and addresses of popular sections",
+                "accent — the colour of the quotes, the magnifier, the markers and the hover states",
+                "background — the surface; empty means the block sits on the page background"
+              ],
+              "notes": [
+                "The theme comes from color-scheme: for the block to darken with the site, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The query arrives as a prop: feed it from the search string, the default is only a preview placeholder.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Errorpage006\n  query=\"purple glass navbar\"\n  popular={[{ label: \"Navbars\", href: \"/components?c=navbar\" }]}\n/>"
+            },
+            "controls": {
+              "title": { "label": "Heading", "default": "Nothing found" },
+              "query": { "label": "Query", "default": "purple glass navbar" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "preview": {
+              "props": {
+                "query": "purple glass navbar",
+                "title": "Nothing found",
+                "description": "The catalog has nothing for this query. It happens: blocks have simple names, and the shades are configured after installation.",
+                "tipsLabel": "Try it differently",
+                "tips": [
+                  "Describe the block more simply: \"glass navbar\" instead of an exact name",
+                  "Drop the colour from the query — any block's shade is configurable",
+                  "Search by purpose: \"pricing\", \"testimonials\", \"footer\""
+                ],
+                "popularLabel": "Popular searches",
+                "popular": [
+                  { "label": "Hero sections", "href": "/components?c=hero" },
+                  { "label": "Navbars", "href": "/components?c=navbar" },
+                  { "label": "Pricing", "href": "/components?c=pricing" },
+                  { "label": "Footers", "href": "/components?c=footer" }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "query", "accent", "background"]
+      }
+    }
+  ]
+}

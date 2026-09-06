@@ -18,6 +18,12 @@ import authRegistry from "@/registry/blocks/auth/registry.json"
 import solutionsRegistry from "@/registry/blocks/solutions/registry.json"
 import blogRegistry from "@/registry/blocks/blog/registry.json"
 import contactRegistry from "@/registry/blocks/contact/registry.json"
+import errorsRegistry from "@/registry/blocks/errors/registry.json"
+import aboutRegistry from "@/registry/blocks/about/registry.json"
+import casesRegistry from "@/registry/blocks/cases/registry.json"
+import logosRegistry from "@/registry/blocks/logos/registry.json"
+import newsletterRegistry from "@/registry/blocks/newsletter/registry.json"
+import teamRegistry from "@/registry/blocks/team/registry.json"
 import accordionRegistry from "@/registry/components/accordion/registry.json"
 import alertRegistry from "@/registry/components/alert/registry.json"
 import alertDialogRegistry from "@/registry/components/alert-dialog/registry.json"
@@ -140,11 +146,11 @@ import bentoRegistry from "@/registry/animations/bento/registry.json"
 import blogPostRegistry from "@/registry/animations/blog-post/registry.json"
 import commentsRegistry from "@/registry/animations/comments/registry.json"
 import errorRegistry from "@/registry/animations/error/registry.json"
-import logosRegistry from "@/registry/animations/logos/registry.json"
-import newsletterRegistry from "@/registry/animations/newsletter/registry.json"
+import logosAnimationRegistry from "@/registry/animations/logos/registry.json"
+import newsletterAnimationRegistry from "@/registry/animations/newsletter/registry.json"
 import processRegistry from "@/registry/animations/process/registry.json"
 import statsRegistry from "@/registry/animations/stats/registry.json"
-import teamRegistry from "@/registry/animations/team/registry.json"
+import teamAnimationRegistry from "@/registry/animations/team/registry.json"
 import maintenanceRegistry from "@/registry/animations/maintenance/registry.json"
 import notFoundRegistry from "@/registry/animations/not-found/registry.json"
 
@@ -232,6 +238,36 @@ export const SOURCES = [
     directory: "registry/blocks/contact",
     kind: "block",
     items: contactRegistry.items,
+  },
+  {
+    directory: "registry/blocks/errors",
+    kind: "block",
+    items: errorsRegistry.items,
+  },
+  {
+    directory: "registry/blocks/about",
+    kind: "block",
+    items: aboutRegistry.items,
+  },
+  {
+    directory: "registry/blocks/cases",
+    kind: "block",
+    items: casesRegistry.items,
+  },
+  {
+    directory: "registry/blocks/logos",
+    kind: "block",
+    items: logosRegistry.items,
+  },
+  {
+    directory: "registry/blocks/newsletter",
+    kind: "block",
+    items: newsletterRegistry.items,
+  },
+  {
+    directory: "registry/blocks/team",
+    kind: "block",
+    items: teamRegistry.items,
   },
   {
     directory: "registry/components/accordion",
@@ -846,12 +882,12 @@ export const SOURCES = [
   {
     directory: "registry/animations/logos",
     kind: "animation",
-    items: logosRegistry.items,
+    items: logosAnimationRegistry.items,
   },
   {
     directory: "registry/animations/newsletter",
     kind: "animation",
-    items: newsletterRegistry.items,
+    items: newsletterAnimationRegistry.items,
   },
   {
     directory: "registry/animations/process",
@@ -866,7 +902,7 @@ export const SOURCES = [
   {
     directory: "registry/animations/team",
     kind: "animation",
-    items: teamRegistry.items,
+    items: teamAnimationRegistry.items,
   },
   {
     directory: "registry/animations/maintenance",

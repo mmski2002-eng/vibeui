@@ -1,0 +1,762 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "people-001",
+      "type": "registry:block",
+      "title": "Сетка команды",
+      "description": "Сетка карточек команды: инициалы вместо фотографий, имя, роль и контакты нейтральными глифами. Самодостаточен: один файл, без зависимостей и клиентского JS.",
+      "categories": ["team"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "people-001/people-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/people-001.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-people-001-*. Серверный компонент. Число колонок считается от собственной ширины блока: одна, две, три, четыре. Люди свёрстаны списком <ul>, контакты — ссылки с aria-label, а глифы рисуются псевдоэлементами по data-kind (mail, site, chat), поэтому иконочные шрифты и логотипы брендов не нужны. Инициалы вместо фотографий: стоковые лица в разделе «Команда» вредят доверию.",
+      "meta": {
+        "tags": ["team", "grid", "cards", "about", "people"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "People001",
+          "usage": "<People001\n  title=\"Наша команда\"\n  members={[{ name: \"Анна Ковалёва\", role: \"Дизайн\", links: [{ kind: \"mail\", label: \"Почта\", href: \"mailto:anna@example.com\" }] }]}\n/>",
+          "summary": "Секция «Команда» сеткой карточек: надзаголовок, заголовок и люди с инициалами, ролью и контактами-глифами. Число колонок меняется от собственной ширины блока. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-people-001-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
+            "инициалы вместо фотографий: стоковые лица в разделе «Команда» подрывают доверие быстрее, чем их отсутствие",
+            "контакты-глифы на псевдоэлементах по data-kind — они не тянут иконочные шрифты и не устаревают вместе с логотипами брендов",
+            "aria-label на каждой ссылке контакта: сама ссылка пустая, и без подписи она немая для скринридера",
+            "семантику списка <ul>/<li> — команда перечислима, и скринридер объявит число людей",
+            "container-запросы на число колонок: в узкой колонке сетка обязана складываться сама",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "eyebrow и title — надзаголовок и заголовок секции",
+            "массив members — имя, роль и контакты каждого человека; links можно опустить",
+            "акцент через проп accent — цвет надзаголовка, инициалов и глифов при наведении",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "внешние отступы через className: секция занимает всю ширину родителя"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Глифы контактов заданы в CSS для трёх kind: mail, site, chat. Новый вид контакта — это новое правило ::before, а не новое поле данных.",
+            "Инициалы считаются из первых двух слов имени: для одного слова получится одна буква, это нормально.",
+            "Восемь человек дают ровные два ряда по четыре; ключом списка служит имя, поэтому имена должны быть уникальны."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Люди, которые собирают VibeUI",
+            "maxLength": 52
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Команда",
+            "maxLength": 20
+          },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Team Grid",
+            "description": "A grid of team cards: initials instead of photos, a name, a role and contact links drawn as neutral glyphs. Self-contained: one file, no dependencies, no client JS.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-people-001-*. A server component. The number of columns is computed from the block's own width: one, two, three, four. People are marked up as a <ul>, contacts are links with aria-label, and the glyphs are drawn by pseudo-elements keyed by data-kind (mail, site, chat), so no icon fonts or brand logos are needed. Initials instead of photos: stock faces in a Team section hurt trust.",
+            "ai": {
+              "summary": "A Team section as a card grid: an eyebrow, a heading and people with initials, a role and glyph contacts. The number of columns follows the block's own width. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-people-001-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "initials instead of photographs: stock faces in a Team section destroy trust faster than their absence",
+                "the pseudo-element contact glyphs keyed by data-kind — they pull in no icon fonts and do not age with brand logos",
+                "the aria-label on every contact link: the link itself is empty, and without the label it is mute for a screen reader",
+                "the <ul>/<li> list semantics — the team is enumerable, and a screen reader announces the number of people",
+                "the container queries on the column count: in a narrow column the grid has to fold on its own",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "eyebrow and title — the eyebrow and the section heading",
+                "the members array — each person's name, role and contacts; links may be omitted",
+                "the accent through the accent prop — it colours the eyebrow, the initials and the hovered glyphs",
+                "background — the component background; empty means no background, taking the page colour",
+                "outer spacing through className: the section fills its parent's width"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The contact glyphs are defined in CSS for three kinds: mail, site, chat. A new contact kind is a new ::before rule, not a new data field.",
+                "The initials come from the first two words of the name: a single word gives one letter, which is fine.",
+                "Eight people make two even rows of four; the list key is the name, so names must be unique."
+              ],
+              "usage": "<People001\n  title=\"Our team\"\n  members={[{ name: \"Anna Kovaleva\", role: \"Design\", links: [{ kind: \"mail\", label: \"Email\", href: \"mailto:anna@example.com\" }] }]}\n/>"
+            },
+            "controls": {
+              "title": { "label": "Heading", "default": "The people building VibeUI" },
+              "eyebrow": { "label": "Eyebrow", "default": "Team" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Team",
+                "title": "The people building VibeUI",
+                "members": [
+                  { "name": "Alexey Gromov", "role": "Founder, product", "links": [{ "kind": "mail", "label": "Email", "href": "#" }, { "kind": "site", "label": "Website", "href": "#" }] },
+                  { "name": "Vera Lapina", "role": "Design system and tokens", "links": [{ "kind": "mail", "label": "Email", "href": "#" }, { "kind": "chat", "label": "Community chat", "href": "#" }] },
+                  { "name": "Marat Gareev", "role": "Frontend engineer", "links": [{ "kind": "mail", "label": "Email", "href": "#" }, { "kind": "site", "label": "Website", "href": "#" }] },
+                  { "name": "Ksenia Orlova", "role": "Technical writer", "links": [{ "kind": "mail", "label": "Email", "href": "#" }, { "kind": "chat", "label": "Community chat", "href": "#" }] },
+                  { "name": "Nikita Belov", "role": "Registry engineer", "links": [{ "kind": "mail", "label": "Email", "href": "#" }, { "kind": "site", "label": "Website", "href": "#" }] },
+                  { "name": "Polina Tsaryova", "role": "Block designer", "links": [{ "kind": "mail", "label": "Email", "href": "#" }, { "kind": "chat", "label": "Community chat", "href": "#" }] },
+                  { "name": "Timur Akhmetov", "role": "Accessibility and QA", "links": [{ "kind": "mail", "label": "Email", "href": "#" }, { "kind": "site", "label": "Website", "href": "#" }] },
+                  { "name": "Darya Melnik", "role": "Community support", "links": [{ "kind": "mail", "label": "Email", "href": "#" }, { "kind": "chat", "label": "Community chat", "href": "#" }] }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "eyebrow", "accent", "background"]
+      }
+    },
+    {
+      "name": "people-002",
+      "type": "registry:block",
+      "title": "Команда с фильтром отделов",
+      "description": "Команда с фильтром по отделам на чистом CSS: radio-чипы и селектор :has() прячут чужие карточки без строчки JS. Самодостаточен: один файл, без зависимостей.",
+      "categories": ["team"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "people-002/people-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/people-002.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в --vibeui-people-002-*. Серверный компонент: фильтр работает без JS — чипы это скрытые radio-инпуты внутри <fieldset>, а правило с :has() прячет карточки, чей слот не совпадает с выбранным значением. Отделы получают слоты d1…d6 по порядку появления в массиве людей, поэтому CSS остаётся статичным при любых названиях отделов (до шести). Выбранный чип заливается фирменным оранжевым, каждая карточка несёт бейдж своего отдела.",
+      "meta": {
+        "tags": ["team", "filter", "departments", "css-only", "people"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "People002",
+          "usage": "<People002\n  title=\"Наша команда\"\n  members={[{ name: \"Анна Ковалёва\", role: \"Дизайн-система\", department: \"Дизайн\" }]}\n/>",
+          "summary": "Секция «Команда» с фильтром по отделам без клиентского JS: чипы — скрытые radio-инпуты, карточки прячутся CSS-селектором :has(). Список чипов собирается из отделов в данных сам. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-people-002-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
+            "CSS-механику фильтра: radio-чипы плюс :has() — фильтр обязан работать без клиентского JS",
+            "слоты d1…d6 на карточках и в правилах: они отвязывают CSS от конкретных названий отделов",
+            "<fieldset> со скрытым <legend> вокруг чипов: это одна группа выбора, а не набор независимых кнопок",
+            "заливку выбранного чипа акцентной кнопкой и почти чёрный текст на ней — выбранное состояние должно читаться без вглядывания",
+            "кольцо фокуса через :has(input:focus-visible): сам инпут невидим, фокус обязан показывать чип",
+            "инициалы вместо фотографий: стоковые лица в разделе «Команда» подрывают доверие"
+          ],
+          "adapt": [
+            "eyebrow и title — надзаголовок и заголовок секции",
+            "массив members — имя, роль и отдел; список чипов собирается из отделов автоматически",
+            "allLabel — подпись чипа, показывающего всех",
+            "акцент через проп accent — цвет надзаголовка, инициалов и заливки выбранного чипа",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Radio-группа названа vibeui-people-002-department: два экземпляра блока на одной странице разделят одну группу — переименуйте name во втором.",
+            "CSS знает шесть слотов отделов: седьмой и дальше не получают чипа, их люди видны только в режиме «Все».",
+            "Фильтр — прогрессивное улучшение поверх :has(): в браузере без поддержки чипы просто перестают прятать карточки.",
+            "Инициалы считаются из первых двух слов имени: для одного слова получится одна буква, это нормально."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Четыре отдела, один каталог",
+            "maxLength": 52
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Команда",
+            "maxLength": 20
+          },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Team With Department Filter",
+            "description": "A team section with a pure-CSS department filter: radio chips and the :has() selector hide other departments' cards without a line of JS. Self-contained: one file, no dependencies.",
+            "docs": "The block is self-contained: one file, no dependencies, its palette in --vibeui-people-002-*. A server component: the filter works without JS — the chips are hidden radio inputs inside a <fieldset>, and a :has() rule hides the cards whose slot does not match the chosen value. Departments get slots d1…d6 in order of appearance in the members array, so the CSS stays static for any department names (up to six). The selected chip is filled with the brand orange, and every card carries its department badge.",
+            "ai": {
+              "summary": "A Team section with a department filter and no client JS: the chips are hidden radio inputs, cards are hidden by the CSS :has() selector. The chip list is assembled from the departments in the data automatically. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-people-002-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the CSS filter mechanics: radio chips plus :has() — the filter has to work without client JS",
+                "the d1…d6 slots on the cards and in the rules: they decouple the CSS from the concrete department names",
+                "the <fieldset> with a hidden <legend> around the chips: it is one choice group, not a set of independent buttons",
+                "the accent-button fill of the selected chip and the near-black text on it — the selected state must read at a glance",
+                "the focus ring via :has(input:focus-visible): the input itself is invisible, so focus has to show on the chip",
+                "initials instead of photographs: stock faces in a Team section destroy trust"
+              ],
+              "adapt": [
+                "eyebrow and title — the eyebrow and the section heading",
+                "the members array — name, role and department; the chip list is assembled from the departments automatically",
+                "allLabel — the caption of the chip that shows everyone",
+                "the accent through the accent prop — it colours the eyebrow, the initials and the selected chip fill",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The radio group is named vibeui-people-002-department: two instances of the block on one page would share the group — rename the name in the second one.",
+                "The CSS knows six department slots: the seventh and beyond get no chip, and their people are visible only in the All mode.",
+                "The filter is a progressive enhancement on top of :has(): in a browser without support the chips simply stop hiding cards.",
+                "The initials come from the first two words of the name: a single word gives one letter, which is fine."
+              ],
+              "usage": "<People002\n  title=\"Our team\"\n  members={[{ name: \"Anna Kovaleva\", role: \"Design system\", department: \"Design\" }]}\n/>"
+            },
+            "controls": {
+              "title": { "label": "Heading", "default": "Four departments, one catalog" },
+              "eyebrow": { "label": "Eyebrow", "default": "Team" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Team",
+                "title": "Four departments, one catalog",
+                "allLabel": "All",
+                "members": [
+                  { "name": "Vera Lapina", "role": "Design system and tokens", "department": "Design" },
+                  { "name": "Polina Tsaryova", "role": "Block designer", "department": "Design" },
+                  { "name": "Oleg Rakov", "role": "Motion and micro-interactions", "department": "Design" },
+                  { "name": "Marat Gareev", "role": "Frontend engineer", "department": "Engineering" },
+                  { "name": "Nikita Belov", "role": "Registry engineer", "department": "Engineering" },
+                  { "name": "Inna Shtern", "role": "Infrastructure and builds", "department": "Engineering" },
+                  { "name": "Ksenia Orlova", "role": "Docs and Copy for AI", "department": "Content" },
+                  { "name": "Darya Melnik", "role": "Examples and guides", "department": "Content" },
+                  { "name": "Alexey Gromov", "role": "Founder, product", "department": "Product" }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "eyebrow", "accent", "background"]
+      }
+    },
+    {
+      "name": "people-003",
+      "type": "registry:block",
+      "title": "Ряд руководителей",
+      "description": "Три крупные карточки руководителей, у каждого — прямая речь: должность говорит, кем человек работает, а цитата — как он думает. Самодостаточен: один файл, без зависимостей.",
+      "categories": ["team"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "people-003/people-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/people-003.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в --vibeui-people-003-*. Серверный компонент. Каждый руководитель — <figure> с <blockquote> и <figcaption>; визуальный порядок «человек сверху, цитата ниже» достигается CSS-свойством order, а не перестановкой семантики. Цитата подчёркнута левой акцентной линией. До 48rem собственной ширины карточки стоят колонкой, дальше — рядом по три. Инициалы вместо фотографий: стоковые лица подрывают доверие.",
+      "meta": {
+        "tags": ["team", "leadership", "quotes", "founders"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "People003",
+          "usage": "<People003\n  title=\"Руководство\"\n  leaders={[{ name: \"Анна Ковалёва\", role: \"Директор по продукту\", quote: \"Мы продаём сэкономленный вечер, а не компоненты.\" }]}\n/>",
+          "summary": "Ряд из трёх крупных карточек руководителей: инициалы, имя, должность и прямая речь с акцентной линией. Раскладка от собственной ширины: колонка в узком контейнере, ряд по три в широком. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-people-003-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
+            "цитату у каждого руководителя: должность говорит, кем человек работает, а цитата — как он думает",
+            "семантику figure / blockquote / figcaption: это цитата с автором, а порядок «человек сверху» сделан CSS-свойством order, не перестановкой разметки",
+            "крупные карточки и ряд ровно из трёх: блок рассчитан на трёх людей, это осознанный формат, а не сетка на вырост",
+            "инициалы вместо фотографий: стоковые лица в разделе «Команда» подрывают доверие",
+            "container-запрос на 48rem: ряд обязан складываться в колонку от собственной ширины, а не от окна"
+          ],
+          "adapt": [
+            "eyebrow и title — надзаголовок и заголовок секции",
+            "массив leaders — имя, должность и цитата каждого руководителя",
+            "акцент через проп accent — цвет надзаголовка, инициалов и линии у цитаты",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Кавычки добавляются псевдоэлементами — не дублируйте их в тексте цитаты.",
+            "Блок свёрстан под три карточки: при четырёх ряд станет 3+1 — добавьте колонку в container-запросе.",
+            "Держите цитаты сопоставимой длины: карточки в ряду тянутся под самую длинную."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Кто отвечает за то, что вы скачиваете",
+            "maxLength": 52
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Руководство",
+            "maxLength": 20
+          },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Leadership Row",
+            "description": "Three large leadership cards, each with direct speech: the role says what the person does, the quote says how they think. Self-contained: one file, no dependencies.",
+            "docs": "The block is self-contained: one file, no dependencies, its palette in --vibeui-people-003-*. A server component. Every leader is a <figure> with a <blockquote> and a <figcaption>; the visual order — person on top, quote below — is achieved with the CSS order property, not by rearranging the semantics. The quote is underlined by an accent line on the left. Below 48rem of its own width the cards stack in a column, above it they stand three in a row. Initials instead of photos: stock faces destroy trust.",
+            "ai": {
+              "summary": "A row of three large leadership cards: initials, a name, a role and direct speech with an accent line. The layout follows the block's own width: a column in a narrow container, a row of three in a wide one. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-people-003-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the quote on every leader: the role says what the person does, the quote says how they think",
+                "the figure / blockquote / figcaption semantics: this is a quote with an author, and the person-on-top order is done with the CSS order property, not by rearranging the markup",
+                "the large cards and the row of exactly three: the block is designed for three people — a deliberate format, not a grid to grow into",
+                "initials instead of photographs: stock faces in a Team section destroy trust",
+                "the 48rem container query: the row has to fold into a column based on its own width, not the window"
+              ],
+              "adapt": [
+                "eyebrow and title — the eyebrow and the section heading",
+                "the leaders array — each leader's name, role and quote",
+                "the accent through the accent prop — it colours the eyebrow, the initials and the quote line",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The quotation marks are added by pseudo-elements — do not repeat them inside the quote text.",
+                "The block is designed for three cards: with four the row becomes 3+1 — add a column in the container query.",
+                "Keep the quotes comparable in length: the cards in a row stretch to the longest one."
+              ],
+              "usage": "<People003\n  title=\"Leadership\"\n  leaders={[{ name: \"Anna Kovaleva\", role: \"Chief product officer\", quote: \"We sell the saved evening, not the components.\" }]}\n/>"
+            },
+            "controls": {
+              "title": { "label": "Heading", "default": "Who answers for what you download" },
+              "eyebrow": { "label": "Eyebrow", "default": "Leadership" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Leadership",
+                "title": "Who answers for what you download",
+                "leaders": [
+                  {
+                    "name": "Alexey Gromov",
+                    "role": "Founder and product",
+                    "quote": "We do not sell components — we sell the evening in which a marketer builds a page without a developer."
+                  },
+                  {
+                    "name": "Vera Lapina",
+                    "role": "Head of design",
+                    "quote": "Every block has to survive someone else's brand: swap the accent and the copy, and it still looks designed."
+                  },
+                  {
+                    "name": "Marat Gareev",
+                    "role": "CTO",
+                    "quote": "One file and zero dependencies is not a constraint but a promise: a year from now the project builds exactly the same."
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "eyebrow", "accent", "background"]
+      }
+    },
+    {
+      "name": "people-004",
+      "type": "registry:block",
+      "title": "Команда списком",
+      "description": "Команда компактным списком: строка на человека — имя, роль, город и год прихода. Для больших составов, где сетка карточек превращается в стену. Самодостаточен: один файл, без зависимостей.",
+      "categories": ["team"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "people-004/people-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/people-004.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в --vibeui-people-004-*. Серверный компонент. Люди — <ul>, строка — грид «аватар, имя с ролью, город со стажем», разделённый волосяными линиями; имя и роль обрезаются многоточием, а не ломают сетку. В шапке — бейдж-счётчик: по умолчанию считается из длины массива, перекрывается пропом countLabel. Узкая колонка контента (56rem): список читается как оглавление, а не как таблица на всю ширину.",
+      "meta": {
+        "tags": ["team", "list", "roster", "compact", "people"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "People004",
+          "usage": "<People004\n  title=\"Вся команда\"\n  members={[{ name: \"Анна Ковалёва\", role: \"Дизайн-система\", city: \"Москва\", since: \"с 2021\" }]}\n/>",
+          "summary": "Секция «Команда» компактным списком для больших составов: строка на человека с инициалами, ролью, городом и подписью стажа, бейдж-счётчик в шапке. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-people-004-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
+            "строку вместо карточки: блок сделан для больших команд, где сетка карточек превращается в бесконечную стену",
+            "волосяные разделители и прозрачный фон строк — список легче карточек ровно настолько, насколько задумано",
+            "обрезку имени и роли многоточием: длинные строки не должны ломать грид списка",
+            "семантику <ul>/<li>: состав перечислим, и скринридер объявит число строк",
+            "инициалы вместо фотографий: стоковые лица в разделе «Команда» подрывают доверие"
+          ],
+          "adapt": [
+            "eyebrow и title — надзаголовок и заголовок секции",
+            "массив members — имя, роль, город и подпись стажа (since) каждой строки",
+            "countLabel — бейдж-счётчик в шапке; пусто — посчитается из числа людей",
+            "акцент через проп accent — надзаголовок, инициалы и тёплую подсветку строки при наведении",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Автосчётчик пишет «N человек» — для чисел, требующих формы «человека», задайте countLabel вручную.",
+            "since — свободная строка («с 2021», «3 года»): компонент её не парсит и не считает.",
+            "Ключ строки — имя, поэтому имена в списке должны быть уникальны."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Все, кто делает VibeUI",
+            "maxLength": 52
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Команда",
+            "maxLength": 20
+          },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Team as a List",
+            "description": "The team as a compact list: one row per person — name, role, city and joining year. For large rosters where a card grid turns into a wall. Self-contained: one file, no dependencies.",
+            "docs": "The block is self-contained: one file, no dependencies, its palette in --vibeui-people-004-*. A server component. People are a <ul>; a row is a grid of avatar, name with role, city with tenure, separated by hairlines; the name and the role truncate with an ellipsis instead of breaking the grid. The header carries a counter badge: by default it is computed from the array length and can be overridden with the countLabel prop. A narrow content column (56rem): the list reads like a table of contents, not a full-width table.",
+            "ai": {
+              "summary": "A Team section as a compact list for large rosters: one row per person with initials, a role, a city and a tenure caption, and a counter badge in the header. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-people-004-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the row instead of a card: the block is made for large teams, where a card grid turns into an endless wall",
+                "the hairline separators and the transparent row background — the list is lighter than cards by exactly the intended amount",
+                "the ellipsis truncation of the name and the role: long strings must not break the list grid",
+                "the <ul>/<li> semantics: the roster is enumerable, and a screen reader announces the number of rows",
+                "initials instead of photographs: stock faces in a Team section destroy trust"
+              ],
+              "adapt": [
+                "eyebrow and title — the eyebrow and the section heading",
+                "the members array — the name, role, city and tenure caption (since) of every row",
+                "countLabel — the counter badge in the header; empty computes it from the number of people",
+                "the accent through the accent prop — the eyebrow, the initials and the warm row highlight on hover",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The auto counter writes the Russian «N человек» — for languages or numbers needing another form, set countLabel manually.",
+                "since is a free-form string (\"since 2021\", \"3 years\"): the component neither parses nor computes it.",
+                "The row key is the name, so the names in the list must be unique."
+              ],
+              "usage": "<People004\n  title=\"The whole team\"\n  members={[{ name: \"Anna Kovaleva\", role: \"Design system\", city: \"Moscow\", since: \"since 2021\" }]}\n/>"
+            },
+            "controls": {
+              "title": { "label": "Heading", "default": "Everyone making VibeUI" },
+              "eyebrow": { "label": "Eyebrow", "default": "Team" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Team",
+                "title": "Everyone making VibeUI",
+                "countLabel": "12 people",
+                "members": [
+                  { "name": "Alexey Gromov", "role": "Founder, product", "city": "Saint Petersburg", "since": "since 2021" },
+                  { "name": "Vera Lapina", "role": "Design system and tokens", "city": "Moscow", "since": "since 2021" },
+                  { "name": "Marat Gareev", "role": "Frontend engineer", "city": "Kazan", "since": "since 2022" },
+                  { "name": "Ksenia Orlova", "role": "Technical writer", "city": "Tbilisi", "since": "since 2022" },
+                  { "name": "Nikita Belov", "role": "Registry engineer", "city": "Belgrade", "since": "since 2023" },
+                  { "name": "Polina Tsaryova", "role": "Block designer", "city": "Yekaterinburg", "since": "since 2023" },
+                  { "name": "Timur Akhmetov", "role": "Accessibility and QA", "city": "Almaty", "since": "since 2023" },
+                  { "name": "Inna Shtern", "role": "Infrastructure and builds", "city": "Riga", "since": "since 2024" },
+                  { "name": "Oleg Rakov", "role": "Motion and micro-interactions", "city": "Yerevan", "since": "since 2024" },
+                  { "name": "Darya Melnik", "role": "Community support", "city": "Novosibirsk", "since": "since 2024" },
+                  { "name": "Gnat Vilde", "role": "Examples and templates", "city": "Limassol", "since": "since 2025" },
+                  { "name": "Sofia Kim", "role": "Catalog growth", "city": "Minsk", "since": "since 2025" }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "eyebrow", "accent", "background"]
+      }
+    },
+    {
+      "name": "people-005",
+      "type": "registry:block",
+      "title": "Мы нанимаем",
+      "description": "Сетка команды с карточкой-приглашением в конце: пунктирная рамка «твоё место», тёплая подложка и оранжевая кнопка вакансий прямо среди будущих коллег. Самодостаточен: один файл, без зависимостей.",
+      "categories": ["team"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "people-005/people-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/people-005.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в --vibeui-people-005-*. Серверный компонент. Обычные карточки — инициалы, имя, роль; последняя ячейка сетки — приглашение: пунктирная рамка читается как «место не занято», тёплая подложка — color-mix от акцента, кнопка залита фирменным оранжевым с почти чёрным текстом. Приглашение живёт в общей сетке, а не отдельным баннером: кандидат видит свою будущую карточку рядом с будущими коллегами. Колонки 1 → 2 → 3 → 4 от собственной ширины блока.",
+      "meta": {
+        "tags": ["team", "hiring", "careers", "cta", "grid"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "People005",
+          "usage": "<People005\n  title=\"Команда растёт\"\n  ctaLabel=\"Открытые вакансии\"\n  ctaHref=\"/careers\"\n  members={[{ name: \"Анна Ковалёва\", role: \"Дизайн-система\" }]}\n/>",
+          "summary": "Сетка команды с нанимающей карточкой в конце: пунктирная рамка «твоё место», пустой аватар с плюсом, текст приглашения и оранжевая кнопка вакансий. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-people-005-* (включая accent-fill) и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
+            "карточку-приглашение внутри общей сетки, а не отдельным баннером: кандидат видит своё место рядом с будущими коллегами",
+            "пунктирную рамку и пустой аватар с плюсом — именно они означают «место ещё не занято»",
+            "заливку кнопки фирменным оранжевым с почти чёрным текстом: контраст кнопки — часть бренда, а не случайный цвет",
+            "тёплую подложку приглашения через color-mix от акцента, а не отдельный ручной цвет",
+            "инициалы вместо фотографий: стоковые лица в разделе «Команда» подрывают доверие",
+            "container-запросы на число колонок: сетка складывается от собственной ширины блока"
+          ],
+          "adapt": [
+            "eyebrow и title — надзаголовок и заголовок секции",
+            "массив members — имя и роль каждого человека",
+            "joinTitle и joinText — заголовок и текст карточки-приглашения",
+            "ctaLabel и ctaHref — подпись и адрес кнопки вакансий",
+            "акцент через проп accent — перекрашивает и акцентные детали, и заливку кнопки",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Стрелка в кнопке — псевдоэлемент ::after, не добавляйте её в ctaLabel.",
+            "Семь человек плюс приглашение дают ровные два ряда по четыре в самой широкой сетке.",
+            "Проп accent заливает и кнопку: на очень светлом акценте проверьте контраст с её почти чёрным текстом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Нас пока немного — и это вакансия",
+            "maxLength": 52
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Команда",
+            "maxLength": 20
+          },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+        ],
+        "i18n": {
+          "en": {
+            "title": "We're Hiring",
+            "description": "A team grid with an invitation card at the end: a dashed \"your seat\" frame, a warm tint and an orange vacancies button right among the future colleagues. Self-contained: one file, no dependencies.",
+            "docs": "The block is self-contained: one file, no dependencies, its palette in --vibeui-people-005-*. A server component. Regular cards hold initials, a name and a role; the last grid cell is the invitation: the dashed border reads as an unoccupied seat, the warm tint is a color-mix of the accent, and the button is filled with the brand orange and near-black text. The invitation lives inside the shared grid rather than as a separate banner: the candidate sees their future card next to their future colleagues. Columns go 1 → 2 → 3 → 4 from the block's own width.",
+            "ai": {
+              "summary": "A team grid with a hiring card at the end: a dashed \"your seat\" frame, an empty avatar with a plus, invitation copy and an orange vacancies button. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-people-005-* palette (including accent-fill) — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the invitation card inside the shared grid, not as a separate banner: the candidate sees their seat next to their future colleagues",
+                "the dashed border and the empty avatar with a plus — they are what says the seat is not taken yet",
+                "the brand-orange button fill with near-black text: the button contrast is part of the brand, not an accidental colour",
+                "the warm invitation tint via a color-mix of the accent, not a separate hand-picked colour",
+                "initials instead of photographs: stock faces in a Team section destroy trust",
+                "the container queries on the column count: the grid folds based on the block's own width"
+              ],
+              "adapt": [
+                "eyebrow and title — the eyebrow and the section heading",
+                "the members array — each person's name and role",
+                "joinTitle and joinText — the heading and the copy of the invitation card",
+                "ctaLabel and ctaHref — the caption and the address of the vacancies button",
+                "the accent through the accent prop — it recolours both the accent details and the button fill",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The arrow in the button is an ::after pseudo-element — do not add it to ctaLabel.",
+                "Seven people plus the invitation make two even rows of four in the widest grid.",
+                "The accent prop also fills the button: with a very light accent, check the contrast against its near-black text."
+              ],
+              "usage": "<People005\n  title=\"The team is growing\"\n  ctaLabel=\"Open positions\"\n  ctaHref=\"/careers\"\n  members={[{ name: \"Anna Kovaleva\", role: \"Design system\" }]}\n/>"
+            },
+            "controls": {
+              "title": { "label": "Heading", "default": "Still a small team — that is a vacancy" },
+              "eyebrow": { "label": "Eyebrow", "default": "Team" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Team",
+                "title": "Still a small team — that is a vacancy",
+                "joinTitle": "Your seat is open",
+                "joinText": "We are hiring a catalog engineer and a second technical writer. The whole team is remote.",
+                "ctaLabel": "See open roles",
+                "ctaHref": "#",
+                "members": [
+                  { "name": "Alexey Gromov", "role": "Founder, product" },
+                  { "name": "Vera Lapina", "role": "Design system and tokens" },
+                  { "name": "Marat Gareev", "role": "Frontend engineer" },
+                  { "name": "Ksenia Orlova", "role": "Technical writer" },
+                  { "name": "Nikita Belov", "role": "Registry engineer" },
+                  { "name": "Polina Tsaryova", "role": "Block designer" },
+                  { "name": "Timur Akhmetov", "role": "Accessibility and QA" }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "eyebrow", "accent", "background"]
+      }
+    },
+    {
+      "name": "people-006",
+      "type": "registry:block",
+      "title": "Цифры команды",
+      "description": "Команда цифрами: счётчики людей, городов и лет опыта плюс маленькая сетка аватаров-инициалов. Отвечает на «кто за этим стоит» быстрее любых портретов. Самодостаточен: один файл, без зависимостей.",
+      "categories": ["team"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "people-006/people-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/people-006.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в --vibeui-people-006-*. Серверный компонент. Слева — надзаголовок, заголовок, описание и сетка кружков-инициалов (имя каждого доступно скринридеру и в title кружка). Справа — счётчики, свёрстанные <dl>: пары «значение — подпись», значение поверх подписи через flex-direction:column-reverse без перестановки семантики; цифры акцентного цвета с tabular-nums. С 48rem собственной ширины блок раскладывается в две колонки.",
+      "meta": {
+        "tags": ["team", "stats", "numbers", "about"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "People006",
+          "usage": "<People006\n  title=\"Команда в цифрах\"\n  stats={[{ value: \"12\", label: \"человек в команде\" }, { value: \"9\", label: \"городов\" }]}\n  faces={[\"Анна Ковалёва\", \"Игорь Демидов\"]}\n/>",
+          "summary": "Секция «Команда» цифрами: заголовок с описанием, счётчики (люди, города, стаж) как <dl> и маленькая сетка аватаров-инициалов, показывающая масштаб без лиц. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-people-006-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
+            "счётчики как <dl>: значение и подпись — пара «термин — определение», а порядок перевёрнут CSS-ом, не в разметке",
+            "акцентный цвет и tabular-nums у значений: цифры — главный контент блока и обязаны стоять ровно",
+            "маленькую сетку инициалов вместо портретов: она показывает масштаб команды, не раскрывая лиц",
+            "скрытое имя внутри каждого кружка: для скринридера сетка — список людей, а не декорация",
+            "волосяные разделители между счётчиками — они держат колонку цифр без рамок и карточек",
+            "двухколоночную раскладку от собственной ширины блока: container-запрос на 48rem, а не media-запрос окна"
+          ],
+          "adapt": [
+            "eyebrow, title и description — текст левой колонки",
+            "массив stats — значение и подпись каждого счётчика; значение — свободная строка («9 лет», «40+»)",
+            "faces — список имён для сетки инициалов",
+            "акцент через проп accent — цвет цифр, надзаголовка и кружков",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Счётчики статичные, без JS-анимации набегания: это серверный компонент с нулём клиентского кода.",
+            "Три счётчика — базовый состав; четвёртый просто добавит строку в колонку.",
+            "Инициалы считаются из первых двух слов имени; ключи — имена, держите их уникальными."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Небольшая команда с длинной волей",
+            "maxLength": 52
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Команда",
+            "maxLength": 20
+          },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Team in Numbers",
+            "description": "The team in numbers: counters for people, cities and years of experience plus a small grid of initials avatars. Answers \"who is behind this\" faster than any portraits. Self-contained: one file, no dependencies.",
+            "docs": "The block is self-contained: one file, no dependencies, its palette in --vibeui-people-006-*. A server component. On the left — an eyebrow, a heading, a description and a grid of initials circles (each name is available to screen readers and in the circle's title). On the right — counters marked up as a <dl>: value-caption pairs, the value above the caption via flex-direction:column-reverse without rearranging the semantics; the figures are accent-coloured with tabular-nums. From 48rem of its own width the block lays out in two columns.",
+            "ai": {
+              "summary": "A Team section in numbers: a heading with a description, counters (people, cities, experience) as a <dl> and a small grid of initials avatars that shows scale without faces. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-people-006-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the counters as a <dl>: the value and the caption are a term-definition pair, and the order is flipped by CSS, not in the markup",
+                "the accent colour and tabular-nums on the values: the figures are the block's main content and have to line up",
+                "the small initials grid instead of portraits: it shows the team's scale without revealing faces",
+                "the hidden name inside every circle: to a screen reader the grid is a list of people, not decoration",
+                "the hairline separators between the counters — they hold the column of figures without borders or cards",
+                "the two-column layout driven by the block's own width: a 48rem container query, not a window media query"
+              ],
+              "adapt": [
+                "eyebrow, title and description — the copy of the left column",
+                "the stats array — the value and caption of every counter; the value is a free-form string (\"9 yrs\", \"40+\")",
+                "faces — the list of names for the initials grid",
+                "the accent through the accent prop — the colour of the figures, the eyebrow and the circles",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The counters are static, with no count-up JS animation: this is a server component with zero client code.",
+                "Three counters are the base set; a fourth simply adds a row to the column.",
+                "The initials come from the first two words of the name; the keys are the names, keep them unique."
+              ],
+              "usage": "<People006\n  title=\"The team in numbers\"\n  stats={[{ value: \"12\", label: \"people on the team\" }, { value: \"9\", label: \"cities\" }]}\n  faces={[\"Anna Kovaleva\", \"Igor Demidov\"]}\n/>"
+            },
+            "controls": {
+              "title": { "label": "Heading", "default": "A small team with a long will" },
+              "eyebrow": { "label": "Eyebrow", "default": "Team" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Team",
+                "title": "A small team with a long will",
+                "description": "VibeUI is built by a distributed team: designers, engineers and writers across nine cities. Below are numbers instead of ceremonial portraits.",
+                "stats": [
+                  { "value": "12", "label": "people on the team" },
+                  { "value": "9", "label": "cities and four time zones" },
+                  { "value": "9 yrs", "label": "average frontend experience" }
+                ],
+                "faces": [
+                  "Alexey Gromov",
+                  "Vera Lapina",
+                  "Marat Gareev",
+                  "Ksenia Orlova",
+                  "Nikita Belov",
+                  "Polina Tsaryova",
+                  "Timur Akhmetov",
+                  "Inna Shtern",
+                  "Oleg Rakov",
+                  "Darya Melnik",
+                  "Gnat Vilde",
+                  "Sofia Kim"
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "eyebrow", "accent", "background"]
+      }
+    }
+  ]
+}

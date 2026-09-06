@@ -2,13 +2,22 @@
 
 import { useEffect, useRef, useState } from "react"
 
+import {
+  DesktopFrame,
+  PHONE_BEZEL,
+  PhoneFrame,
+  TABLET_BEZEL,
+  TabletFrame,
+} from "@/components/device-frames"
 import { getDictionary, type Locale } from "@/lib/i18n"
 import type { ItemKind } from "@/registry/categories"
 
+// bezel — сколько ширины контейнера съедает корпус устройства по бокам
+// (рамка DesktopFrame — 1px с каждой стороны).
 const VIEWPORTS = [
-  { id: "desktop", width: 1440 },
-  { id: "tablet", width: 768 },
-  { id: "mobile", width: 375 },
+  { id: "desktop", width: 1440, bezel: 2 },
+  { id: "tablet", width: 768, bezel: TABLET_BEZEL * 2 + 4 },
+  { id: "mobile", width: 375, bezel: PHONE_BEZEL * 2 + 4 },
 ] as const
 
 type ViewportId = (typeof VIEWPORTS)[number]["id"]
@@ -75,12 +84,43 @@ export function BlockPreview({
     return () => observer.disconnect()
   }, [])
 
-  const frameWidth =
-    VIEWPORTS.find((item) => item.id === viewport)?.width ?? 1440
+  const current = VIEWPORTS.find((item) => item.id === viewport) ?? VIEWPORTS[0]
+  const frameWidth = current.width
   const scale =
-    containerWidth === null ? null : Math.min(1, containerWidth / frameWidth)
+    containerWidth === null
+      ? null
+      : Math.min(1, (containerWidth - current.bezel) / frameWidth)
   const measured = scale !== null
   const previewPath = `/preview/${kind}/${category}/${slug}`
+
+  // Экран: iframe шире контейнера и вписывается масштабом. position:absolute
+  // держит его вне потока: страница не может уехать по горизонтали,
+  // даже если transform по какой-то причине не применился.
+  const screen = (
+    <div
+      className="relative"
+      style={{
+        width: measured ? frameWidth * scale : undefined,
+        height: measured ? frameHeight * scale : frameHeight,
+      }}
+    >
+      <iframe
+        title={`Preview of ${slug}`}
+        src={`${previewPath}?theme=${theme}&lang=${locale}`}
+        width={frameWidth}
+        height={frameHeight}
+        className={
+          measured
+            ? "absolute top-0 left-0 block border-0"
+            : "invisible absolute top-0 left-0 block border-0"
+        }
+        style={{
+          transform: measured ? `scale(${scale})` : undefined,
+          transformOrigin: "top left",
+        }}
+      />
+    </div>
+  )
 
   return (
     <div>
@@ -125,35 +165,14 @@ export function BlockPreview({
         </div>
       </div>
 
-      <div
-        ref={containerRef}
-        className="border-shell-border overflow-hidden rounded-lg border"
-      >
-        {/* Фрейм шире контейнера и вписывается масштабом. position:absolute
-            держит его вне потока: страница не может уехать по горизонтали,
-            даже если transform по какой-то причине не применился. */}
-        <div
-          className="relative"
-          style={{
-            height: measured ? frameHeight * scale : frameHeight,
-          }}
-        >
-          <iframe
-            title={`Preview of ${slug}`}
-            src={`${previewPath}?theme=${theme}&lang=${locale}`}
-            width={frameWidth}
-            height={frameHeight}
-            className={
-              measured
-                ? "absolute top-0 left-0 block border-0"
-                : "invisible absolute top-0 left-0 block border-0"
-            }
-            style={{
-              transform: measured ? `scale(${scale})` : undefined,
-              transformOrigin: "top left",
-            }}
-          />
-        </div>
+      <div ref={containerRef} className="flex justify-center">
+        {viewport === "desktop" ? (
+          <DesktopFrame className="w-full">{screen}</DesktopFrame>
+        ) : viewport === "tablet" ? (
+          <TabletFrame>{screen}</TabletFrame>
+        ) : (
+          <PhoneFrame>{screen}</PhoneFrame>
+        )}
       </div>
     </div>
   )

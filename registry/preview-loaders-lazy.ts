@@ -39,6 +39,18 @@ export async function loadLazyPreviewMap(
       return (await import("@/registry/previews-lazy/block/blog")).PREVIEWS
     case "block/contact":
       return (await import("@/registry/previews-lazy/block/contact")).PREVIEWS
+    case "block/errors":
+      return (await import("@/registry/previews-lazy/block/errors")).PREVIEWS
+    case "block/about":
+      return (await import("@/registry/previews-lazy/block/about")).PREVIEWS
+    case "block/cases":
+      return (await import("@/registry/previews-lazy/block/cases")).PREVIEWS
+    case "block/logos":
+      return (await import("@/registry/previews-lazy/block/logos")).PREVIEWS
+    case "block/newsletter":
+      return (await import("@/registry/previews-lazy/block/newsletter")).PREVIEWS
+    case "block/team":
+      return (await import("@/registry/previews-lazy/block/team")).PREVIEWS
     case "component/accordion":
       return (await import("@/registry/previews-lazy/component/accordion")).PREVIEWS
     case "component/alert":

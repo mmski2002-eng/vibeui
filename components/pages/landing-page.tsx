@@ -2,6 +2,7 @@ import Link from "next/link"
 import { ArrowRight, Check, X } from "lucide-react"
 
 import { CatalogShell } from "@/components/catalog/catalog-shell"
+import { DesktopFrame } from "@/components/device-frames"
 import {
   CategoryExplorer,
   type ExplorerTab,
@@ -189,19 +190,14 @@ export function LandingPage({ locale }: { locale: Locale }) {
 
         {/* Живое превью в «браузерной» рамке */}
         <section className="mx-auto w-full max-w-[1100px] px-4 lg:px-6">
-          <div className="border-shell-border bg-shell-panel overflow-hidden rounded-2xl border">
-            <div className="border-shell-border flex items-center gap-1.5 border-b px-4 py-3">
-              <span className="bg-shell-accent size-2.5 rounded-full" />
-              <span className="bg-shell-border size-2.5 rounded-full" />
-              <span className="bg-shell-border size-2.5 rounded-full" />
-            </div>
+          <DesktopFrame>
             <div
               data-preview-theme="auto"
               className="bg-preview-surface flex items-center justify-center px-4 py-16"
             >
               <Activity001 />
             </div>
-          </div>
+          </DesktopFrame>
         </section>
 
         {/* Статы */}

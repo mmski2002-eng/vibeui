@@ -1,0 +1,816 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "subscribe-001",
+      "type": "registry:block",
+      "title": "Классическая подписка",
+      "description": "Центрированная подписка на рассылку: заголовок, поле e-mail, оранжевая кнопка и строка «раз в неделю, без спама». Самодостаточна: один файл, без зависимостей.",
+      "categories": ["newsletter"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "subscribe-001/subscribe-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/subscribe-001.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-subscribe-001-*. Клиентский компонент: бэкенда нет, submit гасится заглушкой, и aria-live-обёртка показывает строку успеха вместо формы. Поле подписано скрытым <label>, а не одним placeholder. Форма складывается в колонку и разворачивается в строку по собственной ширине блока (container queries), тема берётся из color-scheme окружения через light-dark(). Единственное поле e-mail — осознанно: каждый лишний инпут снижает конверсию подписки.",
+      "meta": {
+        "tags": ["newsletter", "signup", "email", "form", "cta"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Subscribe001",
+          "usage": "<Subscribe001\n  title=\"Дайджест VibeUI — раз в неделю\"\n  note=\"Раз в неделю, без спама. Отписка в один клик.\"\n/>",
+          "summary": "Классическая центрированная секция подписки: заголовок, подводка, поле e-mail с оранжевой кнопкой и строка доверия «без спама». Бэкенда нет — submit гасится заглушкой и показывает строку успеха. Один файл, своя палитра, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-subscribe-001-* — не заменять её токенами темы сайта (bg-card, border-border и подобными)",
+            "строку «раз в неделю, без спама» под формой: она отвечает на главный страх подписчика, без неё поле оставляют пустым",
+            "единственное поле e-mail — каждый дополнительный инпут снижает конверсию формы подписки",
+            "скрытый <label> у поля: placeholder исчезает при вводе и подписью не считается",
+            "aria-live-обёртку вокруг формы — без неё скринридер не узнает об успешной подписке",
+            "container-запрос на раскладку формы: колонка или строка выбирается по ширине блока, а не окна",
+            "почти чёрный текст на оранжевой кнопке: белый на этом оранжевом не проходит по контрасту"
+          ],
+          "adapt": [
+            "title и lead — заголовок и подводка секции",
+            "note и success — строка доверия и сообщение об успехе",
+            "buttonLabel и placeholder — подпись кнопки и образец адреса",
+            "акцент через проп accent — перекрасит кнопку и фокусные кольца",
+            "background — подложка блока; пусто — блок лежит прямо на фоне страницы"
+          ],
+          "notes": [
+            "Отправки на сервер нет: onSubmit гасится заглушкой. Подключая бэкенд, замените setDone на свой обработчик — разметку формы менять не нужно.",
+            "Тема берётся из color-scheme: чтобы блок темнел вместе с сайтом, на html должен быть объявлен color-scheme: light dark.",
+            "Кнопка рассчитана на короткий глагол («Подписаться»): длинная фраза сломает строку в узкой колонке.",
+            "Зелёный в строке успеха — семантика статуса, а не декоративный цвет; не перекрашивайте его в акцент."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Дайджест VibeUI — раз в неделю",
+            "maxLength": 48
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Classic Signup",
+            "description": "A centered newsletter signup: a heading, an email field, an orange button and the «once a week, no spam» line. Self-contained: one file, no dependencies.",
+            "docs": "The block is self-contained: one file, no dependencies, its palette in local --vibeui-subscribe-001-* variables. A client component: there is no backend, submit is stubbed out and an aria-live wrapper swaps the form for a success line. The field is labelled by a visually hidden <label>, not just a placeholder. The form folds into a column and unfolds into a row based on the block's own width (container queries); the theme comes from the surrounding color-scheme via light-dark(). The single email field is deliberate: every extra input lowers signup conversion.",
+            "ai": {
+              "summary": "A classic centered signup section: a heading, a lead, an email field with an orange button and the «no spam» trust line. No backend — submit is stubbed and shows a success line. One file, its own palette, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-subscribe-001-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the «once a week, no spam» line under the form: it answers the subscriber's main fear, without it the field stays empty",
+                "the single email field — every extra input lowers the signup form's conversion",
+                "the visually hidden <label> on the field: a placeholder disappears on input and does not count as a label",
+                "the aria-live wrapper around the form — without it a screen reader never learns the signup succeeded",
+                "the container query on the form layout: column or row is chosen by the block's width, not the window's",
+                "the near-black text on the orange button: white fails contrast on this orange"
+              ],
+              "adapt": [
+                "title and lead — the section heading and its lead",
+                "note and success — the trust line and the success message",
+                "buttonLabel and placeholder — the button caption and the sample address",
+                "the accent through the accent prop — it recolours the button and the focus rings",
+                "background — the block surface; empty means the block sits on the page background"
+              ],
+              "notes": [
+                "Nothing is sent to a server: onSubmit is stubbed. When wiring a backend, replace setDone with your handler — the form markup can stay as is.",
+                "The theme comes from color-scheme: for the block to darken with the site, html must declare color-scheme: light dark.",
+                "The button is sized for a short verb («Subscribe»): a long phrase breaks the row in a narrow column.",
+                "The green in the success line is status semantics, not decoration; do not repaint it with the accent."
+              ],
+              "usage": "<Subscribe001\n  title=\"The VibeUI digest — once a week\"\n  note=\"Once a week, no spam. One-click unsubscribe.\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "The VibeUI digest — once a week"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "The VibeUI digest — once a week",
+                "lead": "New catalog blocks, layout techniques and short breakdowns: how to build a site from ready-made sections without drowning in revisions.",
+                "emailLabel": "Email address",
+                "placeholder": "you@company.com",
+                "buttonLabel": "Subscribe",
+                "note": "Once a week, no spam. One-click unsubscribe.",
+                "success": "Done! Check your inbox for the confirmation email."
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "accent", "background"]
+      }
+    },
+    {
+      "name": "subscribe-002",
+      "type": "registry:block",
+      "title": "Подписка с превью письма",
+      "description": "Слева форма подписки, справа CSS-макет письма-дайджеста: видно, что придёт в ящик, ещё до ввода адреса. Самодостаточен: один файл, без зависимостей.",
+      "categories": ["newsletter"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "subscribe-002/subscribe-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/subscribe-002.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-subscribe-002-*. Клиентский компонент: submit гасится заглушкой, aria-live показывает строку успеха. Раскладка — грид из одной колонки, который разворачивается в две по собственной ширине блока (container queries). Макет письма собран чистым CSS из настоящих заголовков выпуска, а не серых полос: конкретика убеждает сильнее абстракции. Макет помечен aria-hidden — для скринридера это иллюстрация, дублирующая подводку. Тема — через light-dark() от color-scheme окружения.",
+      "meta": {
+        "tags": ["newsletter", "email preview", "signup", "two column", "form"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Subscribe002",
+          "usage": "<Subscribe002\n  title=\"Видно, на что подписываетесь\"\n  letterSubject=\"Три новых блока и приём с container queries\"\n  letterItems={[\"Полоса подписки для середины лендинга\", \"Тёмная карточка с градиент-свечением\"]}\n/>",
+          "summary": "Секция подписки в две колонки: слева надзаголовок, заголовок и форма e-mail, справа CSS-макет письма-дайджеста с темой выпуска и списком материалов. Показывает товар лицом: человек видит письмо до подписки. Бэкенда нет — submit-заглушка. Один файл, своя палитра, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-subscribe-002-* — не заменять её токенами темы сайта",
+            "макет письма с настоящими заголовками выпуска: конкретные темы убеждают сильнее серых полос-заглушек",
+            "aria-hidden на макете письма — для скринридера это украшение, содержание дублирует подводка",
+            "форму первой в DOM: на узкой ширине действие остаётся сверху, а письмо уходит вниз",
+            "скрытый <label> поля и aria-live-обёртку формы — доступность формы не завязана на JS",
+            "container-грид: колонки складываются по ширине самого блока, а не окна",
+            "почти чёрный текст на оранжевой кнопке: белый на этом оранжевом не проходит по контрасту"
+          ],
+          "adapt": [
+            "eyebrow, title и lead — надзаголовок, заголовок и подводка",
+            "letterFrom, letterSubject, letterItems и letterCta — содержимое макета письма; впишите темы своего дайджеста",
+            "note, success, buttonLabel и placeholder — строка доверия, сообщение успеха и подписи формы",
+            "акцент через проп accent — перекрасит кнопку, миниатюры письма и надзаголовок",
+            "background — подложка блока; пусто — блок лежит на фоне страницы",
+            "внешние отступы через className: секция занимает ширину родителя"
+          ],
+          "notes": [
+            "Отправки на сервер нет: onSubmit гасится заглушкой. Подключая бэкенд, замените setDone на свой обработчик.",
+            "Тема берётся из color-scheme: на html должен быть объявлен color-scheme: light dark, иначе light-dark() вернёт светлую ветку.",
+            "Три строки letterItems — баланс высоты колонок; больше пяти растянет макет письма ниже формы.",
+            "Не заменяйте CSS-макет письма скриншотом: растровая картинка не перекрасится под тему и акцент."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Видно, на что подписываетесь",
+            "maxLength": 48
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Рассылка",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Signup with Email Preview",
+            "description": "A signup form on the left, a CSS mock of the digest email on the right: you see what lands in your inbox before typing an address. Self-contained: one file, no dependencies.",
+            "docs": "The block is self-contained: one file, no dependencies, its palette in local --vibeui-subscribe-002-* variables. A client component: submit is stubbed out, aria-live shows a success line. The layout is a one-column grid that unfolds into two based on the block's own width (container queries). The email mock is built in pure CSS from real issue headlines rather than grey placeholder bars: specifics persuade better than abstraction. The mock is aria-hidden — to a screen reader it is an illustration duplicated by the lead. The theme comes from the surrounding color-scheme via light-dark().",
+            "ai": {
+              "summary": "A two-column signup section: an eyebrow, a heading and an email form on the left, a CSS mock of the digest email with the issue subject and story list on the right. It shows the product up front: people see the email before subscribing. No backend — the submit is stubbed. One file, its own palette, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-subscribe-002-* palette — do not swap it for your theme tokens",
+                "the email mock with real issue headlines: concrete topics persuade better than grey placeholder bars",
+                "aria-hidden on the email mock — to a screen reader it is decoration, its content is duplicated by the lead",
+                "the form first in the DOM: on a narrow width the action stays on top and the email drops below",
+                "the hidden field <label> and the aria-live wrapper — the form's accessibility does not depend on JS",
+                "the container grid: the columns fold by the block's own width, not the window's",
+                "the near-black text on the orange button: white fails contrast on this orange"
+              ],
+              "adapt": [
+                "eyebrow, title and lead — the eyebrow, heading and lead",
+                "letterFrom, letterSubject, letterItems and letterCta — the email mock content; put your own digest topics in",
+                "note, success, buttonLabel and placeholder — the trust line, success message and form captions",
+                "the accent through the accent prop — it recolours the button, the email thumbnails and the eyebrow",
+                "background — the block surface; empty means the block sits on the page background",
+                "outer spacing through className: the section fills its parent's width"
+              ],
+              "notes": [
+                "Nothing is sent to a server: onSubmit is stubbed. When wiring a backend, replace setDone with your handler.",
+                "The theme comes from color-scheme: html must declare color-scheme: light dark, otherwise light-dark() always returns the light branch.",
+                "Three letterItems balance the column heights; more than five stretches the email mock below the form.",
+                "Do not replace the CSS email mock with a screenshot: a raster image will not repaint with the theme and accent."
+              ],
+              "usage": "<Subscribe002\n  title=\"See what you are signing up for\"\n  letterSubject=\"Three new blocks and a container queries trick\"\n  letterItems={[\"A signup strip for mid-landing placement\", \"A dark card with a gradient glow\"]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "See what you are signing up for"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Newsletter"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Newsletter",
+                "title": "See what you are signing up for",
+                "lead": "Every Friday — a short digest: new catalog blocks, layout techniques and one idea for your next landing page. On the right is a real issue.",
+                "emailLabel": "Email address",
+                "placeholder": "you@company.com",
+                "buttonLabel": "Get the digest",
+                "note": "Once a week, no spam. One-click unsubscribe.",
+                "success": "Done! The first issue arrives on Friday.",
+                "letterFrom": "VibeUI · Digest #47",
+                "letterSubject": "Three new blocks and a container queries trick",
+                "letterItems": [
+                  "A signup strip for mid-landing placement — and when it beats the footer",
+                  "A dark card with a gradient glow: how not to overexpose the accent",
+                  "Container queries in previews: why the thumbnail no longer lies about the design"
+                ],
+                "letterCta": "Open the catalog →"
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "eyebrow", "accent", "background"]
+      }
+    },
+    {
+      "name": "subscribe-003",
+      "type": "registry:block",
+      "title": "Полоса подписки",
+      "description": "Узкая горизонтальная лента для середины лендинга: текст слева, инлайн-форма справа, тёплый тинт из акцента. Самодостаточна: один файл, без зависимостей.",
+      "categories": ["newsletter"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "subscribe-003/subscribe-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/subscribe-003.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-subscribe-003-*. Клиентский компонент: submit гасится заглушкой, aria-live показывает строку успеха. Лента подкрашена тёплым тинтом из акцента через color-mix — фон пересчитывается сам при смене accent. Раскладка от собственной ширины: на узкой колонке всё складывается в столбик, с 30rem форма встаёт в строку, с 46rem вся лента вытягивается в горизонталь. Полоса рассчитана на постановку между контентными секциями, поэтому вертикальные отступы малые.",
+      "meta": {
+        "tags": ["newsletter", "strip", "inline form", "cta", "banner"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Subscribe003",
+          "usage": "<Subscribe003\n  title=\"Не пропустите новые блоки\"\n  hint=\"Дайджест приходит по пятницам.\"\n/>",
+          "summary": "Узкая полоса подписки для середины лендинга: заголовок с подсказкой слева, инлайн-форма e-mail справа, тёплая подложка из акцента. Ставится между секциями, где читатель уже разогрет. Бэкенда нет — submit-заглушка. Один файл, своя палитра, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-subscribe-003-* — не заменять её токенами темы сайта",
+            "тёплый тинт полосы из акцента через color-mix: при смене accent фон и рамка пересчитаются сами, не фиксируйте их hex-кодом",
+            "низкий рост полосы — это пауза между секциями, а не отдельная сцена; не раздувайте её до полноценного хиро",
+            "скрытый <label> поля и aria-live-обёртку — доступность формы не завязана на JS",
+            "два container-брейкпоинта: с 30rem форма в строку, с 46rem вся лента в горизонталь — по ширине блока, а не окна",
+            "почти чёрный текст на оранжевой кнопке: белый на этом оранжевом не проходит по контрасту"
+          ],
+          "adapt": [
+            "title и hint — заголовок ленты и строка-подсказка под ним",
+            "buttonLabel, placeholder и success — подписи формы и сообщение успеха",
+            "акцент через проп accent — перекрасит тинт ленты, кнопку и фокусные кольца",
+            "background — фон вокруг ленты; пусто — лента лежит прямо на странице",
+            "внешние отступы через className: блок занимает ширину родителя"
+          ],
+          "notes": [
+            "Отправки на сервер нет: onSubmit гасится заглушкой. Подключая бэкенд, замените setDone на свой обработчик.",
+            "Тема берётся из color-scheme: на html должен быть объявлен color-scheme: light dark, иначе light-dark() вернёт светлую ветку.",
+            "Лента задумана для середины лендинга — между фичами и отзывами; в футере она конкурирует с навигацией и теряет смысл."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Не пропустите новые блоки",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Signup Strip",
+            "description": "A narrow horizontal strip for mid-landing placement: copy on the left, an inline form on the right, a warm tint mixed from the accent. Self-contained: one file, no dependencies.",
+            "docs": "The block is self-contained: one file, no dependencies, its palette in local --vibeui-subscribe-003-* variables. A client component: submit is stubbed out, aria-live shows a success line. The strip is tinted warm via color-mix from the accent — the background recomputes itself when accent changes. The layout follows the block's own width: everything stacks in a narrow column, the form becomes a row at 30rem, and the whole strip goes horizontal at 46rem. The strip is meant to sit between content sections, hence the small vertical padding.",
+            "ai": {
+              "summary": "A narrow signup strip for the middle of a landing page: a heading with a hint on the left, an inline email form on the right, a warm accent-tinted surface. It sits between sections where the reader is already warmed up. No backend — the submit is stubbed. One file, its own palette, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-subscribe-003-* palette — do not swap it for your theme tokens",
+                "the strip's warm tint mixed from the accent via color-mix: the background and border recompute when accent changes, do not freeze them as hex codes",
+                "the strip's low height — it is a pause between sections, not a scene of its own; do not inflate it into a full hero",
+                "the hidden field <label> and the aria-live wrapper — the form's accessibility does not depend on JS",
+                "the two container breakpoints: the form becomes a row at 30rem and the whole strip goes horizontal at 46rem — by the block's width, not the window's",
+                "the near-black text on the orange button: white fails contrast on this orange"
+              ],
+              "adapt": [
+                "title and hint — the strip heading and the hint line under it",
+                "buttonLabel, placeholder and success — the form captions and the success message",
+                "the accent through the accent prop — it recolours the strip tint, the button and the focus rings",
+                "background — the background around the strip; empty means the strip sits right on the page",
+                "outer spacing through className: the block fills its parent's width"
+              ],
+              "notes": [
+                "Nothing is sent to a server: onSubmit is stubbed. When wiring a backend, replace setDone with your handler.",
+                "The theme comes from color-scheme: html must declare color-scheme: light dark, otherwise light-dark() always returns the light branch.",
+                "The strip is designed for mid-landing placement — between features and testimonials; in a footer it competes with navigation and loses its point."
+              ],
+              "usage": "<Subscribe003\n  title=\"Don't miss new blocks\"\n  hint=\"The digest arrives on Fridays.\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Don't miss new blocks"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Don't miss new blocks",
+                "hint": "The VibeUI digest arrives on Fridays: fresh sections and layout techniques.",
+                "emailLabel": "Email address",
+                "placeholder": "you@company.com",
+                "buttonLabel": "Subscribe",
+                "success": "Done! The confirmation email is in your inbox."
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "accent", "background"]
+      }
+    },
+    {
+      "name": "subscribe-004",
+      "type": "registry:block",
+      "title": "Подписка с выбором тем",
+      "description": "Форма подписки с чипами-чекбоксами тем — продукт, дизайн, релизы: обещание присылать только выбранное. Самодостаточна: один файл, без зависимостей.",
+      "categories": ["newsletter"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "subscribe-004/subscribe-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/subscribe-004.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-subscribe-004-*. Клиентский компонент: submit гасится заглушкой, aria-live показывает строку успеха. Темы — настоящие <input type=\"checkbox\"> внутри чипов-«лейблов», сгруппированные в <fieldset> с <legend>: клавиатура и скринридер работают как с обычной формой. Выбранное состояние рисует CSS-селектор :has() без единой строки JS; галочка занимает место всегда, поэтому чипы не прыгают по ширине. Раскладка от собственной ширины блока, тема — через light-dark().",
+      "meta": {
+        "tags": ["newsletter", "topics", "checkbox", "preferences", "form"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Subscribe004",
+          "usage": "<Subscribe004\n  title=\"Соберите свой дайджест\"\n  topics={[{ label: \"Продукт\", on: true }, { label: \"Дизайн\" }, { label: \"Релизы\" }]}\n/>",
+          "summary": "Секция подписки с выбором тем: чипы-чекбоксы (продукт, дизайн, релизы) над полем e-mail и оранжевой кнопкой. Выбор тем обещает присылать только нужное и снимает страх «завалят письмами». Чекбоксы настоящие, состояние рисует :has() без JS. Бэкенда нет — submit-заглушка. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-subscribe-004-* — не заменять её токенами темы сайта",
+            "настоящие <input type=\"checkbox\"> внутри чипов: клавиатура и скринридер работают без единой строки JS",
+            ":has() для состояния чипа — не переписывать на useState, состояние уже живёт в самом чекбоксе",
+            "<fieldset> с <legend> вокруг тем: группировка чекбоксов — семантика, а не декорация",
+            "галочку, которая занимает место всегда: она появляется без сдвига ширины, и чипы не прыгают",
+            "скрытый <label> поля e-mail и aria-live-обёртку формы",
+            "почти чёрный текст на оранжевой кнопке: белый на этом оранжевом не проходит по контрасту"
+          ],
+          "adapt": [
+            "title и lead — заголовок и подводка",
+            "topics — список тем: label и стартовое состояние on у каждой",
+            "topicsLabel, note, success, buttonLabel и placeholder — подписи формы",
+            "акцент через проп accent — перекрасит чипы, кнопку и фокусные кольца",
+            "background — подложка блока; пусто — блок лежит на фоне страницы"
+          ],
+          "notes": [
+            "Отправки на сервер нет: onSubmit гасится заглушкой. При подключении бэкенда выбранные темы читаются из чекбоксов name=\"topics\" штатным FormData.",
+            "Подсветка чипа держится на :has(); в устаревших браузерах без него чекбоксы продолжают работать, но выбранность не видна — добавьте класс через onChange, если такие браузеры в поддержке.",
+            "Тема берётся из color-scheme: на html должен быть объявлен color-scheme: light dark.",
+            "Стартовые on-темы — осознанный дефолт: полностью пустой выбор читается как «письма не о чем», а полный — как отсутствие выбора."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Соберите свой дайджест",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Signup with Topic Picker",
+            "description": "A signup form with checkbox chips for topics — product, design, releases: a promise to send only what was chosen. Self-contained: one file, no dependencies.",
+            "docs": "The block is self-contained: one file, no dependencies, its palette in local --vibeui-subscribe-004-* variables. A client component: submit is stubbed out, aria-live shows a success line. The topics are real <input type=\"checkbox\"> elements inside chip labels, grouped in a <fieldset> with a <legend>: keyboard and screen reader work as with a plain form. The checked state is painted by the CSS :has() selector without a single line of JS; the tick always occupies its slot, so chips never jump in width. The layout follows the block's own width, the theme comes via light-dark().",
+            "ai": {
+              "summary": "A signup section with a topic picker: checkbox chips (product, design, releases) above an email field and an orange button. Choosing topics promises to send only what matters and removes the «they will flood me» fear. The checkboxes are real, the state is painted by :has() without JS. No backend — the submit is stubbed. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-subscribe-004-* palette — do not swap it for your theme tokens",
+                "the real <input type=\"checkbox\"> elements inside the chips: keyboard and screen reader work without a single line of JS",
+                ":has() for the chip state — do not rewrite it with useState, the state already lives in the checkbox itself",
+                "the <fieldset> with a <legend> around the topics: grouping checkboxes is semantics, not decoration",
+                "the tick that always occupies its slot: it appears without a width shift, so the chips never jump",
+                "the hidden email <label> and the aria-live wrapper around the form",
+                "the near-black text on the orange button: white fails contrast on this orange"
+              ],
+              "adapt": [
+                "title and lead — the heading and the lead",
+                "topics — the topic list: each item's label and initial on state",
+                "topicsLabel, note, success, buttonLabel and placeholder — the form captions",
+                "the accent through the accent prop — it recolours the chips, the button and the focus rings",
+                "background — the block surface; empty means the block sits on the page background"
+              ],
+              "notes": [
+                "Nothing is sent to a server: onSubmit is stubbed. When wiring a backend, read the chosen topics from the name=\"topics\" checkboxes with plain FormData.",
+                "The chip highlight relies on :has(); in legacy browsers without it the checkboxes still work but the selection is invisible — add a class via onChange if you support such browsers.",
+                "The theme comes from color-scheme: html must declare color-scheme: light dark.",
+                "The initially-on topics are a deliberate default: a fully empty choice reads as «letters about nothing», a fully checked one as no choice at all."
+              ],
+              "usage": "<Subscribe004\n  title=\"Build your own digest\"\n  topics={[{ label: \"Product\", on: true }, { label: \"Design\" }, { label: \"Releases\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Build your own digest"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Build your own digest",
+                "lead": "Tick what to write about: the product, the design or releases only. We send exactly what you chose — and nothing on top.",
+                "topicsLabel": "What to send",
+                "topics": [
+                  { "label": "Product", "on": true },
+                  { "label": "Design" },
+                  { "label": "Releases", "on": true }
+                ],
+                "emailLabel": "Email address",
+                "placeholder": "you@company.com",
+                "buttonLabel": "Subscribe",
+                "note": "Change topics in any email, one-click unsubscribe.",
+                "success": "Done! Your digest is built around your topics."
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "accent", "background"]
+      }
+    },
+    {
+      "name": "subscribe-005",
+      "type": "registry:block",
+      "title": "Подписка с социальным числом",
+      "description": "Форма подписки с социальным доказательством: стопка аватаров-инициалов и «12 400 подписчиков» над заголовком. Самодостаточна: один файл, без зависимостей.",
+      "categories": ["newsletter"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "subscribe-005/subscribe-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/subscribe-005.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-subscribe-005-*. Клиентский компонент: submit гасится заглушкой, aria-live показывает строку успеха. Стопка аватаров собрана из инициалов имён (readers): фото не нужны, стоковые лица рушат доверие. Каждый аватар получает свой тинт из одного акцента через color-mix и кольцо в цвет подложки, которое разрезает стопку на отдельные головы. Число набрано tabular-nums и подкрашено акцент-цветом. Раскладка от собственной ширины блока, тема — через light-dark().",
+      "meta": {
+        "tags": ["newsletter", "social proof", "avatars", "signup", "form"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Subscribe005",
+          "usage": "<Subscribe005\n  count=\"12 400\"\n  proof=\"подписчиков уже получают письмо о новых блоках\"\n/>",
+          "summary": "Секция подписки с социальным доказательством: стопка аватаров-инициалов, строка «12 400 подписчиков», заголовок и форма e-mail с оранжевой кнопкой. Число отвечает на вопрос «а читает ли это кто-то» до ввода адреса. Бэкенда нет — submit-заглушка. Один файл, своя палитра, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-subscribe-005-* — не заменять её токенами темы сайта",
+            "инициалы вместо фотографий: стоковые лица рушат доверие, которое число только что построило",
+            "число подписчиков рядом с формой — оно и есть аргумент блока; без него это обычная центрированная подписка",
+            "кольцо аватара в цвет подложки (--vibeui-subscribe-005-ring): именно оно разрезает стопку на отдельные головы",
+            "разные тинты аватаров из одного акцента через color-mix — живость без введения чужих цветов",
+            "скрытый <label> поля и aria-live-обёртку формы",
+            "почти чёрный текст на оранжевой кнопке: белый на этом оранжевом не проходит по контрасту"
+          ],
+          "adapt": [
+            "count и proof — число и подпись; пишите настоящее число: выдуманное социальное доказательство хуже его отсутствия",
+            "title — заголовок секции",
+            "readers — имена для инициалов в стопке; достаточно четырёх-шести",
+            "buttonLabel, placeholder, note и success — подписи формы",
+            "акцент через accent, подложка через background"
+          ],
+          "notes": [
+            "Отправки на сервер нет: onSubmit гасится заглушкой. Подключая бэкенд, замените setDone на свой обработчик.",
+            "Тема берётся из color-scheme: на html должен быть объявлен color-scheme: light dark.",
+            "Число набрано font-variant-numeric: tabular-nums — при живом счётчике цифры не пляшут по ширине.",
+            "Кольцо стопки задано переменной --vibeui-subscribe-005-ring под белую и почти чёрную подложку; на цветном background подстройте её под свой фон."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Дайджест, который ждут по пятницам",
+            "maxLength": 48
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Signup with Social Count",
+            "description": "A signup form with social proof: a stack of initials avatars and «12,400 subscribers» above the heading. Self-contained: one file, no dependencies.",
+            "docs": "The block is self-contained: one file, no dependencies, its palette in local --vibeui-subscribe-005-* variables. A client component: submit is stubbed out, aria-live shows a success line. The avatar stack is built from the initials of names (readers): no photos needed — stock faces destroy trust. Each avatar gets its own tint from the single accent via color-mix and a ring in the surface colour that cuts the stack into separate heads. The count is set in tabular-nums and coloured with the accent. The layout follows the block's own width, the theme comes via light-dark().",
+            "ai": {
+              "summary": "A signup section with social proof: a stack of initials avatars, a «12,400 subscribers» line, a heading and an email form with an orange button. The number answers «does anyone actually read this» before an address is typed. No backend — the submit is stubbed. One file, its own palette, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-subscribe-005-* palette — do not swap it for your theme tokens",
+                "initials instead of photographs: stock faces destroy the trust the number has just built",
+                "the subscriber count next to the form — it is the block's argument; without it this is a plain centered signup",
+                "the avatar ring in the surface colour (--vibeui-subscribe-005-ring): it is what cuts the stack into separate heads",
+                "the different avatar tints mixed from the single accent via color-mix — liveliness without foreign colours",
+                "the hidden field <label> and the aria-live wrapper around the form",
+                "the near-black text on the orange button: white fails contrast on this orange"
+              ],
+              "adapt": [
+                "count and proof — the number and its caption; use a real number: invented social proof is worse than none",
+                "title — the section heading",
+                "readers — the names behind the stacked initials; four to six is enough",
+                "buttonLabel, placeholder, note and success — the form captions",
+                "the accent through accent, the surface through background"
+              ],
+              "notes": [
+                "Nothing is sent to a server: onSubmit is stubbed. When wiring a backend, replace setDone with your handler.",
+                "The theme comes from color-scheme: html must declare color-scheme: light dark.",
+                "The count uses font-variant-numeric: tabular-nums — with a live counter the digits do not dance in width.",
+                "The stack ring is the --vibeui-subscribe-005-ring variable tuned for white and near-black surfaces; on a coloured background adjust it to your own."
+              ],
+              "usage": "<Subscribe005\n  count=\"12,400\"\n  proof=\"subscribers already get the letter about new blocks\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "The digest people wait for on Fridays"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "The digest people wait for on Fridays",
+                "count": "12,400",
+                "proof": "subscribers already get the letter about new blocks",
+                "readers": [
+                  "Anna Kovaleva",
+                  "Igor Demidov",
+                  "Maria Soboleva",
+                  "Dmitry Khan",
+                  "Olga Titova"
+                ],
+                "emailLabel": "Email address",
+                "placeholder": "you@company.com",
+                "buttonLabel": "Join in",
+                "note": "Once a week, no spam. One-click unsubscribe.",
+                "success": "Done! Welcome to the readers."
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "accent", "background"]
+      }
+    },
+    {
+      "name": "subscribe-006",
+      "type": "registry:block",
+      "title": "Тёмная карточка подписки",
+      "description": "Компактная тёмная панель с оранжевым градиент-свечением из угла: собственная подложка выделяет подписку на любом фоне страницы. Самодостаточна: один файл, без зависимостей.",
+      "categories": ["newsletter"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "subscribe-006/subscribe-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/subscribe-006.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-subscribe-006-*. Карточка осознанно не следует теме страницы: у неё собственная почти чёрная подложка без light-dark(), а оранжевое свечение собрано из двух radial-gradient через color-mix от акцента — при смене accent оно пересчитывается само. Внутри карточки принудительный color-scheme: dark, чтобы нативные поля темнели вместе с ней на светлой странице. Клиентский компонент: submit гасится заглушкой, aria-live показывает строку успеха. Раскладка от собственной ширины блока.",
+      "meta": {
+        "tags": ["newsletter", "dark", "card", "glow", "signup"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Subscribe006",
+          "usage": "<Subscribe006\n  title=\"Письма, после которых открывают редактор\"\n  note=\"Без спама. Отписка в один клик.\"\n/>",
+          "summary": "Компактная тёмная карточка подписки: бейдж, заголовок, форма e-mail и оранжевое градиент-свечение из угла. Карточка несёт собственную тёмную подложку и потому одинаково выделяется на светлой и тёмной странице. Бэкенда нет — submit-заглушка. Один файл, своя палитра, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-subscribe-006-* — не заменять её токенами темы сайта",
+            "осознанно собственную тёмную подложку карточки: она не следует теме страницы, в этом идея блока — не переводить её на light-dark()",
+            "color-scheme: dark на карточке — без него нативные поля на светлой странице остались бы светлыми и разорвали картинку",
+            "свечение из двух radial-gradient через color-mix от акцента: при смене accent оно пересчитывается само, не заменяйте его картинкой",
+            "компактную ширину карточки (26rem): это точечный призыв, а не полноэкранный хиро",
+            "скрытый <label> поля и aria-live-обёртку формы",
+            "почти чёрный текст на оранжевой кнопке: белый на этом оранжевом не проходит по контрасту"
+          ],
+          "adapt": [
+            "eyebrow, title и lead — бейдж, заголовок и подводка карточки",
+            "buttonLabel, placeholder, note и success — подписи формы и сообщение успеха",
+            "акцент через проп accent — перекрасит кнопку, бейдж и свечение разом",
+            "background — фон вокруг карточки; пусто — карточка лежит прямо на странице",
+            "внешние отступы через className: блок занимает ширину родителя"
+          ],
+          "notes": [
+            "Отправки на сервер нет: onSubmit гасится заглушкой. Подключая бэкенд, замените setDone на свой обработчик.",
+            "Карточка тёмная в обеих темах страницы — это осознанное решение, а не недоделка; поэтому у блока нет отдельной preview.surface.",
+            "Hover кнопки светлеет (mix с белым), а не темнеет: затемнение на тёмной карточке читается как disabled.",
+            "Свечение держится на прозрачности из color-mix; очень светлый accent может пересветить угол — уменьшите проценты в градиентах."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Письма, после которых открывают редактор",
+            "maxLength": 52
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Бейдж",
+            "type": "text",
+            "default": "Рассылка",
+            "maxLength": 16
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Dark Signup Card",
+            "description": "A compact dark panel with an orange gradient glow from the corner: its own surface makes the signup stand out on any page background. Self-contained: one file, no dependencies.",
+            "docs": "The block is self-contained: one file, no dependencies, its palette in local --vibeui-subscribe-006-* variables. The card deliberately does not follow the page theme: it carries its own near-black surface without light-dark(), and the orange glow is built from two radial-gradients via color-mix from the accent — it recomputes itself when accent changes. Inside the card color-scheme: dark is forced so native fields darken with it on a light page. A client component: submit is stubbed out, aria-live shows a success line. The layout follows the block's own width.",
+            "ai": {
+              "summary": "A compact dark signup card: a badge, a heading, an email form and an orange gradient glow from the corner. The card carries its own dark surface and therefore stands out equally on light and dark pages. No backend — the submit is stubbed. One file, its own palette, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-subscribe-006-* palette — do not swap it for your theme tokens",
+                "the card's deliberately own dark surface: it does not follow the page theme, that is the block's idea — do not port it to light-dark()",
+                "color-scheme: dark on the card — without it native fields on a light page would stay light and break the picture",
+                "the glow made of two radial-gradients via color-mix from the accent: it recomputes itself when accent changes, do not replace it with an image",
+                "the card's compact width (26rem): it is a pinpoint call to action, not a full-screen hero",
+                "the hidden field <label> and the aria-live wrapper around the form",
+                "the near-black text on the orange button: white fails contrast on this orange"
+              ],
+              "adapt": [
+                "eyebrow, title and lead — the card's badge, heading and lead",
+                "buttonLabel, placeholder, note and success — the form captions and the success message",
+                "the accent through the accent prop — it recolours the button, the badge and the glow at once",
+                "background — the background around the card; empty means the card sits right on the page",
+                "outer spacing through className: the block fills its parent's width"
+              ],
+              "notes": [
+                "Nothing is sent to a server: onSubmit is stubbed. When wiring a backend, replace setDone with your handler.",
+                "The card is dark in both page themes — a deliberate decision, not an omission; that is why the block sets no separate preview.surface.",
+                "The button hover lightens (a mix with white) rather than darkens: darkening on a dark card reads as disabled.",
+                "The glow relies on color-mix transparency; a very light accent can overexpose the corner — lower the percentages in the gradients."
+              ],
+              "usage": "<Subscribe006\n  title=\"Emails that make you open the editor\"\n  note=\"No spam. One-click unsubscribe.\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Emails that make you open the editor"
+              },
+              "eyebrow": {
+                "label": "Badge",
+                "default": "Newsletter"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Newsletter",
+                "title": "Emails that make you open the editor",
+                "lead": "Once a week: new VibeUI blocks, a layout technique and one ready-to-use landing page idea. Short, to the point, with code.",
+                "emailLabel": "Email address",
+                "placeholder": "you@company.com",
+                "buttonLabel": "Subscribe",
+                "note": "No spam. One-click unsubscribe in every email.",
+                "success": "Done! The confirmation email is in your inbox."
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "eyebrow", "accent", "background"]
+      }
+    }
+  ]
+}

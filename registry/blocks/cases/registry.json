@@ -1,0 +1,896 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "case-001",
+      "type": "registry:block",
+      "title": "Сетка кейсов",
+      "description": "Ровная сетка кейсов: клиент, задача одной строкой и крупная метрика результата акцентом. Самодостаточен: один файл, без зависимостей, со своей палитрой.",
+      "categories": ["cases"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "case-001/case-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/case-001.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-case-001-*. Серверный компонент. Число колонок считается от собственной ширины блока: одна, две, три. Карточка — flex-колонка: бейдж клиента сверху, задача растягивается, метрика прижата к низу над разделителем, поэтому карточки в ряду выглядят ровно при разной длине текста. Метрика набрана крупно акцентным цветом и tabular-nums — кейс читают ради цифры. Сетка — семантический список ul/li с article внутри.",
+      "meta": {
+        "tags": ["cases", "grid", "metrics", "social proof", "results"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Case001",
+          "usage": "<Case001\n  title=\"Что команды собрали на VibeUI\"\n  items={[{ client: \"Кедр Маркет\", task: \"Переехали с конструктора на свой сайт.\", metric: \"−82%\", metricLabel: \"времени на вёрстку\" }]}\n/>",
+          "summary": "Секция кейсов ровной сеткой: надзаголовок, заголовок и карточки одинакового веса. В каждой — бейдж клиента, задача одной строкой и крупная акцентная метрика результата с подписью. Число колонок следует за собственной шириной блока. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-case-001-* — не подменять её токенами темы сайта (bg-card, border-border и подобными)",
+            "иерархию карточки: клиент → задача → метрика; кейс читают ради цифры, поэтому метрика самая крупная",
+            "одну строку задачи вместо пересказа проекта — длинная история живёт на странице кейса, не в сетке",
+            "flex-колонку внутри карточки: задача растягивается, метрика прижата к низу — карточки в ряду ровные",
+            "tabular-nums на метриках: цифры в колонках не пляшут по ширине",
+            "container-запросы на числе колонок: в узкой колонке сетка складывается сама",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не тащить свою тёмную тему",
+            "прозрачный фон по умолчанию — секция лежит на фоне страницы, а не стелет под себя плашку"
+          ],
+          "adapt": [
+            "eyebrow и title — надзаголовок и заголовок секции",
+            "массив items — клиент, задача, метрика и подпись каждого кейса",
+            "акцент через проп accent — им окрашены надзаголовок, бейджи и метрики",
+            "внешние отступы через className: секция занимает ширину родителя",
+            "background — фон компонента; пусто — подложки нет, берётся цвет страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, в проекте должен быть объявлен color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Шесть кейсов дают два ровных ряда по три; при пяти последний ряд остаётся неполным.",
+            "Метрика — короткая строка вида «−82%» или «9 дней»: длинный текст сломает крупный кегль.",
+            "Не выносить CSS-переменные в globals.css: блок должен остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что команды собрали на VibeUI",
+            "maxLength": 52
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Кейсы",
+            "maxLength": 20
+          },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Case Study Grid",
+            "description": "An even grid of case studies: the client, the task in one line and a large accent result metric. Self-contained: one file, no dependencies, its own palette.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-case-001-* variables. A server component. The number of columns is computed from the block's own width: one, two, three. The card is a flex column: the client badge on top, the task stretches, the metric is pinned to the bottom above a divider, so cards in a row stay even with texts of different length. The metric is set large in the accent colour with tabular-nums — a case study is read for the number. The grid is a semantic ul/li list with an article inside.",
+            "ai": {
+              "summary": "A case study section in an even grid: an eyebrow, a heading and cards of equal weight. Each holds a client badge, the task in one line and a large accent result metric with a caption. The number of columns follows the block's own width. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-case-001-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the card hierarchy: client → task → metric; a case study is read for the number, so the metric is the largest element",
+                "the single task line instead of a project recap — the long story lives on the case page, not in the grid",
+                "the flex column inside the card: the task stretches, the metric is pinned to the bottom — cards in a row stay even",
+                "tabular-nums on the metrics: numbers in columns do not jitter in width",
+                "the container queries on the column count: in a narrow column the grid folds on its own",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the section sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "eyebrow and title — the eyebrow and the section heading",
+                "the items array — the client, task, metric and caption of every case",
+                "the accent through the accent prop — it colours the eyebrow, the badges and the metrics",
+                "outer spacing through className: the section fills its parent's width",
+                "background — the component background; empty means no backdrop, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Six cases make two even rows of three; with five the last row stays incomplete.",
+                "The metric is a short string like \"−82%\" or \"9 days\": long text breaks the large type size.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Case001\n  title=\"What teams built on VibeUI\"\n  items={[{ client: \"Kedr Market\", task: \"Moved from a site builder to their own site.\", metric: \"−82%\", metricLabel: \"time spent on markup\" }]}\n/>"
+            },
+            "controls": {
+              "title": { "label": "Heading", "default": "What teams built on VibeUI" },
+              "eyebrow": { "label": "Eyebrow", "default": "Case studies" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Case studies",
+                "title": "What teams built on VibeUI",
+                "items": [
+                  {
+                    "client": "Kedr Market",
+                    "task": "Moved from a site builder to their own site without hiring a frontend developer.",
+                    "metric": "−82%",
+                    "metricLabel": "time spent on page markup"
+                  },
+                  {
+                    "client": "Finpilot",
+                    "task": "Built a pricing page with a calculator in a single sprint.",
+                    "metric": "×3",
+                    "metricLabel": "faster launch of new pages"
+                  },
+                  {
+                    "client": "CourseLab",
+                    "task": "Course editors launched a landing page for every course themselves.",
+                    "metric": "12",
+                    "metricLabel": "landing pages in the first month"
+                  },
+                  {
+                    "client": "Atlas Logistics",
+                    "task": "Rebuilt the corporate site without pausing sales.",
+                    "metric": "9 days",
+                    "metricLabel": "from mockup to release"
+                  },
+                  {
+                    "client": "Botanica",
+                    "task": "The plant shop storefront was built by two people, founder included.",
+                    "metric": "+47%",
+                    "metricLabel": "order conversion"
+                  },
+                  {
+                    "client": "Vector Insurance",
+                    "task": "Unified ten product pages under one design system.",
+                    "metric": "−60%",
+                    "metricLabel": "site maintenance cost"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "case-002",
+      "type": "registry:block",
+      "title": "Кейс-герой",
+      "description": "Один большой кейс: развёрнутая цитата клиента, три метрики и кнопка «Читать историю». Самодостаточен: один файл, без зависимостей, со своей палитрой.",
+      "categories": ["cases"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "case-002/case-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/case-002.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-case-002-*. Серверный компонент. Панель на широкой ширине делится на две колонки: слева figure с blockquote, автором и кнопкой, справа — dl с тремя метриками за вертикальным разделителем. На узкой ширине метрики уходят под цитату и выстраиваются рядом. Кнопка — ссылка с акцентной заливкой и почти чёрным текстом, focus-visible с видимым кольцом. Кавычки цитаты добавлены псевдоэлементами.",
+      "meta": {
+        "tags": ["cases", "hero", "quote", "metrics", "cta"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Case002",
+          "usage": "<Case002\n  title=\"«Полярис»: сайт к раунду за неделю\"\n  quote=\"Мы отдали ИИ три блока и получили сайт за вечер.\"\n  metrics={[{ value: \"6 дней\", label: \"от идеи до релиза\" }]}\n  buttonHref=\"/cases/polaris\"\n/>",
+          "summary": "Один большой кейс вместо сетки: развёрнутая цитата клиента с автором, колонка из трёх метрик и кнопка «Читать историю». Так подают один по-настоящему сильный проект: цитата даёт контекст, метрики — доказательство, кнопка ведёт на полную историю. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-case-002-* — не подменять её токенами темы сайта (bg-card, border-border и подобными)",
+            "тройку «цитата — метрики — кнопка»: цитата даёт контекст, метрики доказывают, кнопка честно признаёт, что вся история сюда не влезла",
+            "семантику figure / blockquote / figcaption — это цитата с автором, а не карточка с текстом",
+            "метрики в dl: пары «подпись — значение» — это список определений, а не набор div",
+            "двухколонник только на широкой ширине: на узкой метрики уходят под цитату, а не сжимаются рядом с ней",
+            "акцентную заливку кнопки с почти чёрным текстом — это фирменная пара цветов, инверсия сломает контраст",
+            "кавычки псевдоэлементами — не дублировать их в тексте цитаты",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не тащить свою тёмную тему"
+          ],
+          "adapt": [
+            "eyebrow и title — надзаголовок и заголовок секции",
+            "quote, author и role — цитата и её автор",
+            "массив metrics — значения и подписи трёх метрик",
+            "buttonLabel и buttonHref — текст и адрес кнопки на полную историю",
+            "акцент через проп accent — им окрашены надзаголовок, метрики и заливка кнопки",
+            "background — фон компонента; пусто — подложки нет, берётся цвет страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, в проекте должен быть объявлен color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Метрик задумано три: при четырёх и больше правая колонка вытягивается и цитата теряет вес.",
+            "Кнопка — обычная ссылка <a>: подставьте реальный href страницы кейса вместо #.",
+            "Проп accent красит и текст-акцент, и заливку кнопки одним цветом — светлотный нюанс light/dark при этом теряется, это ожидаемо.",
+            "Не выносить CSS-переменные в globals.css: блок должен остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "«Полярис»: сайт к инвестиционному раунду за неделю",
+            "maxLength": 60
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Кейс",
+            "maxLength": 20
+          },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Hero Case Study",
+            "description": "One big case study: an extended client quote, three metrics and a \"Read the story\" button. Self-contained: one file, no dependencies, its own palette.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-case-002-* variables. A server component. On wide widths the panel splits into two columns: a figure with the blockquote, author and button on the left, a dl with three metrics behind a vertical divider on the right. On narrow widths the metrics drop below the quote and line up in a row. The button is a link with the accent fill and near-black text, focus-visible with a visible ring. The quotation marks are added with pseudo-elements.",
+            "ai": {
+              "summary": "One big case study instead of a grid: an extended client quote with the author, a column of three metrics and a \"Read the story\" button. This is how you present one truly strong project: the quote gives context, the metrics prove it, the button leads to the full story. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-case-002-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the quote — metrics — button trio: the quote gives context, the metrics prove it, the button honestly admits the full story does not fit here",
+                "the figure / blockquote / figcaption semantics — this is a quote with an author, not a card with text",
+                "the metrics as a dl: label — value pairs are a definition list, not a stack of divs",
+                "the two-column layout only on wide widths: on narrow ones the metrics drop below the quote instead of squeezing beside it",
+                "the accent button fill with near-black text — it is the brand colour pair, inverting it breaks the contrast",
+                "the quotation marks as pseudo-elements — do not repeat them inside the quote text",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "eyebrow and title — the eyebrow and the section heading",
+                "quote, author and role — the quote and its author",
+                "the metrics array — the values and labels of the three metrics",
+                "buttonLabel and buttonHref — the label and target of the full-story button",
+                "the accent through the accent prop — it colours the eyebrow, the metrics and the button fill",
+                "background — the component background; empty means no backdrop, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The design assumes three metrics: with four or more the right column stretches and the quote loses weight.",
+                "The button is a plain <a> link: put the real case page URL instead of #.",
+                "The accent prop paints both the text accent and the button fill with one colour — the light/dark lightness nuance is lost then, which is expected.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Case002\n  title=\"Polaris: an investor-ready site in a week\"\n  quote=\"We handed the AI three blocks and had a site by the evening.\"\n  metrics={[{ value: \"6 days\", label: \"from idea to release\" }]}\n  buttonHref=\"/cases/polaris\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Polaris: an investor-ready site in a week"
+              },
+              "eyebrow": { "label": "Eyebrow", "default": "Case study" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Case study",
+                "title": "Polaris: an investor-ready site in a week",
+                "quote": "We picked three blocks from the catalog, handed them to the AI together with the copy — and got a site we were not ashamed to show investors. Edits took one evening, not a month of agency rounds.",
+                "author": "Daria Klimova",
+                "role": "Chief product officer, Polaris",
+                "metrics": [
+                  { "value": "6 days", "label": "from idea to site release" },
+                  { "value": "2", "label": "people — the whole project team" },
+                  { "value": "+38%", "label": "leads from the new site" }
+                ],
+                "buttonLabel": "Read the story",
+                "buttonHref": "#"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "case-003",
+      "type": "registry:block",
+      "title": "До и после",
+      "description": "Кейсы парой значений «было → стало»: приглушённое «до», акцентное «после» и бейдж роста со стрелкой. Самодостаточен: один файл, без зависимостей, со своей палитрой.",
+      "categories": ["cases"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "case-003/case-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/case-003.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-case-003-*. Серверный компонент. Карточка: клиент и название метрики сверху, ниже за пунктирным разделителем пара «было → стало» — «было» приглушено и зачёркнуто, «стало» крупно акцентом, между ними инлайновая SVG-стрелка. Под парой бейдж роста со стрелкой вверх-вправо. Сетка складывается в три колонки от собственной ширины блока. Иконки — инлайновый SVG с aria-hidden, внешних файлов нет.",
+      "meta": {
+        "tags": ["cases", "before after", "comparison", "metrics", "growth"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Case003",
+          "usage": "<Case003\n  title=\"Что меняется после перехода\"\n  items={[{ client: \"Кедр Маркет\", metric: \"Запуск посадочной\", before: \"2 недели\", after: \"1 вечер\", delta: \"в 14 раз быстрее\" }]}\n/>",
+          "summary": "Кейсы в формате «до и после»: у каждой карточки клиент, название метрики, пара значений «было → стало» со стрелкой и бейдж роста. «Было» приглушено и зачёркнуто, «стало» набрано крупно акцентом — взгляд идёт по стрелке. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-case-003-* — не подменять её токенами темы сайта (bg-card, border-border и подобными)",
+            "пару «было → стало» целиком: одиночная цифра без базы сравнения не убеждает — в этом идея блока",
+            "контраст пары: «было» приглушено и зачёркнуто, «стало» крупно акцентом — взгляд ведёт стрелка",
+            "стрелку между значениями как инлайновый SVG с aria-hidden — это декорация, читалка её пропускает",
+            "бейдж роста с тёплой подложкой color-mix — он суммирует пару словами",
+            "tabular-nums на значениях: цифры не пляшут по ширине",
+            "container-запросы на числе колонок: в узкой колонке сетка складывается сама",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не тащить свою тёмную тему"
+          ],
+          "adapt": [
+            "eyebrow и title — надзаголовок и заголовок секции",
+            "массив items — клиент, метрика, значения «до» и «после» и подпись роста",
+            "акцент через проп accent — им окрашены «после», стрелки и бейджи",
+            "внешние отступы через className: секция занимает ширину родителя",
+            "background — фон компонента; пусто — подложки нет, берётся цвет страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, в проекте должен быть объявлен color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Значения «до» и «после» — короткие строки в одних единицах («90 в месяц» → «210 в месяц»): смена единиц внутри пары ломает сравнение.",
+            "Карточек задумано три — ровный ряд; при шести получится два ряда, это тоже нормально.",
+            "Рост здесь окрашен акцентом бренда, а не зелёным: зелёный в этой библиотеке зарезервирован за семантикой статусов.",
+            "Не выносить CSS-переменные в globals.css: блок должен остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что меняется после перехода на VibeUI",
+            "maxLength": 52
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "До и после",
+            "maxLength": 20
+          },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Before and After",
+            "description": "Case studies as \"was → became\" value pairs: a muted \"before\", an accent \"after\" and a growth badge with an arrow. Self-contained: one file, no dependencies, its own palette.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-case-003-* variables. A server component. The card: the client and the metric name on top, below a dashed divider the \"was → became\" pair — \"was\" is muted and struck through, \"became\" is large in the accent colour, with an inline SVG arrow between them. Under the pair sits a growth badge with an up-right arrow. The grid folds into three columns based on the block's own width. Icons are inline SVG with aria-hidden, no external files.",
+            "ai": {
+              "summary": "Case studies in a before-and-after format: each card holds the client, the metric name, a \"was → became\" value pair with an arrow and a growth badge. \"Was\" is muted and struck through, \"became\" is set large in the accent colour — the eye follows the arrow. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-case-003-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the complete \"was → became\" pair: a lone number without a baseline does not convince — that is the point of the block",
+                "the contrast of the pair: \"was\" muted and struck through, \"became\" large in the accent — the arrow leads the eye",
+                "the arrow between the values as inline SVG with aria-hidden — it is decoration, screen readers skip it",
+                "the growth badge with its warm color-mix backdrop — it sums the pair up in words",
+                "tabular-nums on the values: numbers do not jitter in width",
+                "the container queries on the column count: in a narrow column the grid folds on its own",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "eyebrow and title — the eyebrow and the section heading",
+                "the items array — the client, metric, \"before\" and \"after\" values and the growth caption",
+                "the accent through the accent prop — it colours the \"after\" values, the arrows and the badges",
+                "outer spacing through className: the section fills its parent's width",
+                "background — the component background; empty means no backdrop, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The \"before\" and \"after\" values are short strings in the same units (\"90 a month\" → \"210 a month\"): switching units inside a pair breaks the comparison.",
+                "Three cards are intended — one even row; six make two rows, which is also fine.",
+                "Growth here is painted with the brand accent, not green: green in this library is reserved for status semantics.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Case003\n  title=\"What changes after switching\"\n  items={[{ client: \"Kedr Market\", metric: \"Landing page launch\", before: \"2 weeks\", after: \"1 evening\", delta: \"14x faster\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "What changes after switching to VibeUI"
+              },
+              "eyebrow": { "label": "Eyebrow", "default": "Before and after" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Before and after",
+                "title": "What changes after switching to VibeUI",
+                "items": [
+                  {
+                    "client": "Kedr Market",
+                    "metric": "Landing page launch",
+                    "before": "2 weeks",
+                    "after": "1 evening",
+                    "delta": "14x faster"
+                  },
+                  {
+                    "client": "Finpilot",
+                    "metric": "Leads from the pricing page",
+                    "before": "90 a month",
+                    "after": "210 a month",
+                    "delta": "+133% leads"
+                  },
+                  {
+                    "client": "CourseLab",
+                    "metric": "Cost of a single page",
+                    "before": "$560",
+                    "after": "$100",
+                    "delta": "−82% spend"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "case-004",
+      "type": "registry:block",
+      "title": "Лента кейсов",
+      "description": "Кейсы горизонтальной лентой на scroll-snap: карточки с клиентом, задачей и метрикой, подсказка прокрутки. Самодостаточен: один файл, без зависимостей и JS.",
+      "categories": ["cases"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "case-004/case-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/case-004.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-case-004-*. Серверный компонент: карусель работает на CSS scroll-snap, без единой строки JS. Лента — ul с overflow-x:auto и scroll-snap-type:x mandatory; карточки фиксированной ширины min(82cqi,20rem), снап по левому краю. Справа у шапки подсказка «Листайте» со стрелкой (aria-hidden — для читалки лента и так прокручиваема). Скроллер фокусируется с клавиатуры (tabIndex, role=region, aria-label) и показывает кольцо focus-visible. Правый паддинг ленты оставляет последнюю карточку недорезанной — это тоже подсказка, что справа есть ещё.",
+      "meta": {
+        "tags": ["cases", "carousel", "scroll snap", "horizontal", "cards"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Case004",
+          "usage": "<Case004\n  title=\"Проекты, собранные на VibeUI\"\n  items={[{ client: \"Полярис\", task: \"Сайт к раунду силами двух человек.\", metric: \"6 дней\", metricLabel: \"от идеи до релиза\" }]}\n/>",
+          "summary": "Кейсы горизонтальной лентой: карточки фиксированной ширины на CSS scroll-snap, прокрутка колесом, пальцем и клавиатурой. В шапке подсказка «Листайте», обрезанная последняя карточка тоже намекает, что справа есть ещё. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-case-004-* — не подменять её токенами темы сайта (bg-card, border-border и подобными)",
+            "карусель на чистом scroll-snap — не заменять её JS-слайдером: нативная прокрутка работает жестами, колесом и клавиатурой сама",
+            "фокусируемость ленты: tabIndex, role=region и aria-label позволяют листать с клавиатуры, кольцо focus-visible показывает фокус",
+            "подсказку прокрутки и правый паддинг ленты: обрезанная последняя карточка — честный сигнал, что справа есть ещё",
+            "фиксированную ширину карточки min(82cqi,20rem): на телефоне карточка почти во всю ширину, край соседней виден",
+            "снап по левому краю (scroll-snap-align:start) — он держит ритм ленты",
+            "flex-колонку карточки: задача растягивается, метрика прижата к низу — карточки в ленте ровные",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не тащить свою тёмную тему"
+          ],
+          "adapt": [
+            "eyebrow, title и hint — надзаголовок, заголовок и текст подсказки",
+            "массив items — клиент, задача, метрика и подпись каждого кейса",
+            "акцент через проп accent — им окрашены бейджи, метрики, стрелка и скроллбар",
+            "внешние отступы через className: секция занимает ширину родителя",
+            "background — фон компонента; пусто — подложки нет, берётся цвет страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, в проекте должен быть объявлен color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Ленте нужно больше карточек, чем влезает в экран, иначе прокручивать нечего: шесть — рабочий минимум.",
+            "Подсказка скрыта от читалок aria-hidden: прокручиваемый регион и так объявлен через role и aria-label.",
+            "Стрелок-кнопок нет намеренно: без JS их пришлось бы эмулировать якорями, а нативная прокрутка доступнее.",
+            "Не выносить CSS-переменные в globals.css: блок должен остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Проекты, собранные на VibeUI",
+            "maxLength": 52
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Кейсы",
+            "maxLength": 20
+          },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Case Study Carousel",
+            "description": "Case studies as a horizontal scroll-snap strip: cards with the client, task and metric, plus a scroll hint. Self-contained: one file, no dependencies and no JS.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-case-004-* variables. A server component: the carousel runs on CSS scroll-snap without a single line of JS. The strip is a ul with overflow-x:auto and scroll-snap-type:x mandatory; the cards have a fixed width of min(82cqi,20rem) and snap to the left edge. The header carries a \"Scroll\" hint with an arrow (aria-hidden — for screen readers the strip is scrollable anyway). The scroller is keyboard-focusable (tabIndex, role=region, aria-label) and shows a focus-visible ring. The strip's right padding leaves the last card cut off — another hint that there is more to the right.",
+            "ai": {
+              "summary": "Case studies as a horizontal strip: fixed-width cards on CSS scroll-snap, scrollable by wheel, touch and keyboard. The header carries a \"Scroll\" hint, and the cut-off last card also signals there is more to the right. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-case-004-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the pure scroll-snap carousel — do not replace it with a JS slider: native scrolling handles gestures, wheel and keyboard by itself",
+                "the focusable strip: tabIndex, role=region and aria-label allow keyboard scrolling, the focus-visible ring shows focus",
+                "the scroll hint and the strip's right padding: the cut-off last card is an honest signal that there is more to the right",
+                "the fixed card width min(82cqi,20rem): on a phone the card fills almost the full width with the neighbour's edge visible",
+                "the left-edge snap (scroll-snap-align:start) — it keeps the strip's rhythm",
+                "the card's flex column: the task stretches, the metric is pinned to the bottom — cards in the strip stay even",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "eyebrow, title and hint — the eyebrow, the heading and the hint text",
+                "the items array — the client, task, metric and caption of every case",
+                "the accent through the accent prop — it colours the badges, metrics, arrow and scrollbar",
+                "outer spacing through className: the section fills its parent's width",
+                "background — the component background; empty means no backdrop, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The strip needs more cards than fit the screen, otherwise there is nothing to scroll: six is a working minimum.",
+                "The hint is hidden from screen readers with aria-hidden: the scrollable region is already announced via role and aria-label.",
+                "There are deliberately no arrow buttons: without JS they would have to be faked with anchors, and native scrolling is more accessible.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Case004\n  title=\"Projects built on VibeUI\"\n  items={[{ client: \"Polaris\", task: \"An investor-ready site by a team of two.\", metric: \"6 days\", metricLabel: \"from idea to release\" }]}\n/>"
+            },
+            "controls": {
+              "title": { "label": "Heading", "default": "Projects built on VibeUI" },
+              "eyebrow": { "label": "Eyebrow", "default": "Case studies" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Case studies",
+                "title": "Projects built on VibeUI",
+                "hint": "Scroll",
+                "items": [
+                  {
+                    "client": "Atlas Logistics",
+                    "task": "A thirty-page corporate site built without an agency.",
+                    "metric": "9 days",
+                    "metricLabel": "from mockup to release"
+                  },
+                  {
+                    "client": "Botanica",
+                    "task": "The plant shop storefront built by the founder in the evenings.",
+                    "metric": "+47%",
+                    "metricLabel": "orders over a quarter"
+                  },
+                  {
+                    "client": "Polaris",
+                    "task": "A product site for the investment round by a team of two.",
+                    "metric": "6 days",
+                    "metricLabel": "from idea to release"
+                  },
+                  {
+                    "client": "Warmhouse",
+                    "task": "A developer's landing page with a flat picker instead of a PDF catalog.",
+                    "metric": "×2",
+                    "metricLabel": "calls to the sales team"
+                  },
+                  {
+                    "client": "MedPoint+",
+                    "task": "Online clinic booking instead of a phone-line queue.",
+                    "metric": "−35%",
+                    "metricLabel": "call-center load"
+                  },
+                  {
+                    "client": "Shkatulka",
+                    "task": "Moved from a site builder to their own code without overpaying.",
+                    "metric": "$0",
+                    "metricLabel": "monthly subscriptions"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "case-005",
+      "type": "registry:block",
+      "title": "Кейсы по отраслям",
+      "description": "Список кейсов с бейджами отрасли и фильтром-чипами на CSS radio: фильтр работает без единой строки JS. Самодостаточен: один файл, без зависимостей.",
+      "categories": ["cases"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "case-005/case-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/case-005.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-case-005-*. Серверный компонент: фильтр — скрытые radio-инпуты в fieldset, чипы — их label, строки прячет селектор :has() по выбранной группе. Слотов отрасли четыре (g1–g4) плюс «все»: CSS не сравнивает произвольные значения, поэтому набор групп перечислен в стилях явно. Чипы получают акцентную заливку по :checked и кольцо по :focus-visible соседнего инпута. Строка кейса — грид: на широкой ширине метрика уходит в правую колонку. Имя radio-группы задаётся пропом filterName — менять при двух блоках на странице.",
+      "meta": {
+        "tags": ["cases", "filter", "industries", "chips", "css only", "list"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Case005",
+          "usage": "<Case005\n  title=\"Кому VibeUI уже сэкономил недели\"\n  items={[{ client: \"Кедр Маркет\", industry: \"Ритейл\", group: \"g1\", task: \"Переезд с конструктора.\", metric: \"−82% времени\" }]}\n/>",
+          "summary": "Список кейсов с бейджами отрасли и фильтром-чипами. Фильтр собран на скрытых radio-инпутах и селекторе :has() — работает без JS, ещё до гидратации. Чипы строятся из групп в данных, отраслевых слотов четыре (g1–g4) плюс «все». Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-case-005-* — не подменять её токенами темы сайта (bg-card, border-border и подобными)",
+            "фильтр на radio и :has() — не переписывать его на useState: CSS-версия работает без гидратации и не тянет «use client»",
+            "скрытие инпутов клип-паттерном, а не display:none — иначе фильтр выпадет из фокуса и перестанет работать с клавиатуры",
+            "акцентную заливку выбранного чипа с почти чёрным текстом и кольцо :focus-visible от соседнего инпута",
+            "fieldset с visually-hidden legend вокруг чипов — это одна группа выбора, читалка должна её объявить",
+            "бейдж отрасли в каждой строке: при фильтре «все» именно он объясняет принадлежность кейса",
+            "грид строки с метрикой в правой колонке на широкой ширине — метрика читается сканированием сверху вниз",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не тащить свою тёмную тему"
+          ],
+          "adapt": [
+            "eyebrow, title и allLabel — надзаголовок, заголовок и подпись чипа «все»",
+            "массив items — клиент, отрасль, группа g1–g4, задача и метрика каждого кейса",
+            "filterName — имя radio-группы; обязательно сменить, если блок стоит на странице дважды",
+            "акцент через проп accent — им окрашены чипы, бейджи и метрики",
+            "background — фон компонента; пусто — подложки нет, берётся цвет страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, в проекте должен быть объявлен color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Отраслевых слотов ровно четыре: группа вне g1–g4 не отфильтруется, потому что её нет в CSS. Нужен пятый — добавьте g5 в тип, в правило :has() и в данные.",
+            "Чипы генерируются из уникальных групп items: отрасль без кейсов чипа не получит.",
+            "Фильтр не анимирован намеренно: display:none мгновенен и не требует JS-измерений высоты.",
+            "Не выносить CSS-переменные в globals.css: блок должен остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Кому VibeUI уже сэкономил недели",
+            "maxLength": 52
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Кейсы по отраслям",
+            "maxLength": 24
+          },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Cases by Industry",
+            "description": "A case study list with industry badges and radio-chip filtering in pure CSS: the filter works without a single line of JS. Self-contained: one file, no dependencies.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-case-005-* variables. A server component: the filter is a set of hidden radio inputs in a fieldset, the chips are their labels, and rows are hidden by a :has() selector keyed to the chosen group. There are four industry slots (g1–g4) plus \"all\": CSS cannot compare arbitrary values, so the group set is enumerated in the styles explicitly. Chips get the accent fill on :checked and a ring on :focus-visible of the neighbouring input. A case row is a grid: on wide widths the metric moves into the right column. The radio group name comes from the filterName prop — change it when the block appears twice on a page.",
+            "ai": {
+              "summary": "A case study list with industry badges and chip filters. The filter is built on hidden radio inputs and the :has() selector — it works without JS, even before hydration. Chips are derived from the groups in the data, with four industry slots (g1–g4) plus \"all\". Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-case-005-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the radio-and-:has() filter — do not rewrite it with useState: the CSS version works before hydration and does not need \"use client\"",
+                "hiding the inputs with the clip pattern rather than display:none — otherwise the filter drops out of the focus order and stops working from the keyboard",
+                "the accent fill of the selected chip with near-black text and the :focus-visible ring from the neighbouring input",
+                "the fieldset with a visually hidden legend around the chips — it is a single choice group and screen readers must announce it",
+                "the industry badge on every row: with the \"all\" filter it is what explains which industry a case belongs to",
+                "the row grid with the metric in the right column on wide widths — metrics scan top to bottom",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "eyebrow, title and allLabel — the eyebrow, the heading and the \"all\" chip label",
+                "the items array — the client, industry, g1–g4 group, task and metric of every case",
+                "filterName — the radio group name; it must change if the block appears twice on a page",
+                "the accent through the accent prop — it colours the chips, badges and metrics",
+                "background — the component background; empty means no backdrop, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "There are exactly four industry slots: a group outside g1–g4 will not filter, because it is absent from the CSS. Need a fifth — add g5 to the type, the :has() rule and the data.",
+                "Chips are generated from the unique groups in items: an industry with no cases gets no chip.",
+                "The filter is deliberately not animated: display:none is instant and needs no JS height measurements.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Case005\n  title=\"Who VibeUI has already saved weeks\"\n  items={[{ client: \"Kedr Market\", industry: \"Retail\", group: \"g1\", task: \"Moving off a site builder.\", metric: \"−82% time\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Who VibeUI has already saved weeks"
+              },
+              "eyebrow": { "label": "Eyebrow", "default": "Cases by industry" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Cases by industry",
+                "title": "Who VibeUI has already saved weeks",
+                "allLabel": "All industries",
+                "items": [
+                  {
+                    "client": "Kedr Market",
+                    "industry": "Retail",
+                    "group": "g1",
+                    "task": "Moving off a site builder to their own site without hiring a frontend developer.",
+                    "metric": "−82% time"
+                  },
+                  {
+                    "client": "Shkatulka",
+                    "industry": "Retail",
+                    "group": "g1",
+                    "task": "A handmade jewellery storefront with a hundred-item catalog.",
+                    "metric": "$0 subscriptions"
+                  },
+                  {
+                    "client": "Finpilot",
+                    "industry": "Fintech",
+                    "group": "g2",
+                    "task": "A pricing page with a calculator, built in a single sprint.",
+                    "metric": "+133% leads"
+                  },
+                  {
+                    "client": "Vector Insurance",
+                    "industry": "Fintech",
+                    "group": "g2",
+                    "task": "Ten product pages unified under one design system.",
+                    "metric": "−60% maintenance"
+                  },
+                  {
+                    "client": "CourseLab",
+                    "industry": "Education",
+                    "group": "g3",
+                    "task": "Course editors launch a landing page for every new course themselves.",
+                    "metric": "12 pages/month"
+                  },
+                  {
+                    "client": "Syntax School",
+                    "industry": "Education",
+                    "group": "g3",
+                    "task": "A coding school site with a cohort schedule.",
+                    "metric": "5 days to release"
+                  },
+                  {
+                    "client": "MedPoint+",
+                    "industry": "Services",
+                    "group": "g4",
+                    "task": "Online clinic booking instead of a phone-line queue.",
+                    "metric": "−35% calls"
+                  },
+                  {
+                    "client": "Atlas Logistics",
+                    "industry": "Services",
+                    "group": "g4",
+                    "task": "A thirty-page corporate site without an agency.",
+                    "metric": "9 days to release"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "case-006",
+      "type": "registry:block",
+      "title": "Цифры внедрений",
+      "description": "Сводная полоса метрик по всем кейсам на тёплой акцентной подложке и три мини-карточки как доказательство. Самодостаточен: один файл, без зависимостей.",
+      "categories": ["cases"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "case-006/case-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/case-006.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-case-006-*. Серверный компонент. Сверху полоса-агрегат: dl с тремя большими цифрами на тёплой подложке color-mix из акцента, на широкой ширине цифры разделены вертикальными линейками. Ниже три мини-карточки кейсов: клиент, задача и метрика — намеренно мельче полосы, иерархия идёт от общего к частному. Большие цифры набраны акцентом с tabular-nums. Обе сетки складываются от собственной ширины блока.",
+      "meta": {
+        "tags": ["cases", "stats", "summary", "metrics", "numbers"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Case006",
+          "usage": "<Case006\n  title=\"Что кейсы дают в сумме\"\n  stats={[{ value: \"124\", label: \"сайта собрано за год\" }]}\n  items={[{ client: \"Полярис\", task: \"Сайт к раунду за неделю.\", metric: \"+38% заявок\" }]}\n/>",
+          "summary": "Сводка по всем внедрениям: полоса с тремя большими агрегатными цифрами на тёплой акцентной подложке и три мини-карточки конкретных кейсов под ней. Агрегат отвечает «это работает в целом», карточки — «и у таких, как вы». Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-case-006-* — не подменять её токенами темы сайта (bg-card, border-border и подобными)",
+            "иерархию «агрегат над частными»: полоса крупнее и теплее карточек — сначала общий итог, потом доказательства",
+            "тёплую подложку полосы через color-mix из акцента — она выделяет агрегат, не переходя на сплошную заливку",
+            "семантику dl для статистики: пары «подпись — значение» — это список определений",
+            "tabular-nums на цифрах: значения не пляшут по ширине",
+            "мини-карточки намеренно мельче полосы — если уравнять кегли, иерархия от общего к частному пропадёт",
+            "вертикальные разделители между цифрами только на широкой ширине — в столбике они не нужны",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не тащить свою тёмную тему"
+          ],
+          "adapt": [
+            "eyebrow и title — надзаголовок и заголовок секции",
+            "массив stats — три агрегатные цифры полосы с подписями",
+            "массив items — клиент, задача и метрика трёх мини-кейсов",
+            "акцент через проп accent — им окрашены цифры, метрики и подложка полосы",
+            "background — фон компонента; пусто — подложки нет, берётся цвет страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, в проекте должен быть объявлен color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "И статистик, и карточек задумано по три: сетки широкой ширины трёхколоночные, четвёртый элемент уедет на второй ряд.",
+            "Агрегатные цифры должны быть суммой по кейсам, а не повтором одного кейса — иначе полоса и карточки говорят одно и то же.",
+            "Не выносить CSS-переменные в globals.css: блок должен остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что кейсы дают в сумме",
+            "maxLength": 52
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Итоги внедрений",
+            "maxLength": 24
+          },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Adoption Numbers",
+            "description": "A summary strip of metrics across all case studies on a warm accent backdrop, plus three mini-cards as proof. Self-contained: one file, no dependencies.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-case-006-* variables. A server component. On top sits the aggregate strip: a dl with three large numbers on a warm color-mix backdrop derived from the accent; on wide widths the numbers are separated by vertical rules. Below are three case mini-cards: client, task and metric — deliberately smaller than the strip, the hierarchy runs from the general to the particular. The large numbers are set in the accent colour with tabular-nums. Both grids fold based on the block's own width.",
+            "ai": {
+              "summary": "A summary of all adoptions: a strip with three large aggregate numbers on a warm accent backdrop and three mini-cards of specific cases below it. The aggregate answers \"does this work at all\", the cards answer \"and for teams like yours\". Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-case-006-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the aggregate-over-particulars hierarchy: the strip is larger and warmer than the cards — the overall result first, the proof after",
+                "the strip's warm backdrop via color-mix from the accent — it highlights the aggregate without going to a solid fill",
+                "the dl semantics for the statistics: label — value pairs are a definition list",
+                "tabular-nums on the numbers: values do not jitter in width",
+                "the mini-cards deliberately smaller than the strip — equalising the type sizes kills the general-to-particular hierarchy",
+                "the vertical rules between numbers only on wide widths — a stacked column does not need them",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "eyebrow and title — the eyebrow and the section heading",
+                "the stats array — the strip's three aggregate numbers with captions",
+                "the items array — the client, task and metric of the three mini-cases",
+                "the accent through the accent prop — it colours the numbers, metrics and the strip backdrop",
+                "background — the component background; empty means no backdrop, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Both the stats and the cards are meant to come in threes: the wide grids are three-column, a fourth element wraps to a second row.",
+                "The aggregate numbers should sum across cases, not repeat a single one — otherwise the strip and the cards say the same thing.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Case006\n  title=\"What the case studies add up to\"\n  stats={[{ value: \"124\", label: \"sites built in a year\" }]}\n  items={[{ client: \"Polaris\", task: \"An investor-ready site in a week.\", metric: \"+38% leads\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "What the case studies add up to"
+              },
+              "eyebrow": { "label": "Eyebrow", "default": "Adoption results" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Adoption results",
+                "title": "What the case studies add up to",
+                "stats": [
+                  { "value": "124", "label": "sites built on VibeUI in a year" },
+                  { "value": "−70%", "label": "markup time on average across cases" },
+                  { "value": "5 days", "label": "median time from mockup to release" }
+                ],
+                "items": [
+                  {
+                    "client": "Polaris",
+                    "task": "A product site for the investment round by a team of two.",
+                    "metric": "+38% leads"
+                  },
+                  {
+                    "client": "Kedr Market",
+                    "task": "Moving off a site builder to their own code without a frontend developer.",
+                    "metric": "−82% time"
+                  },
+                  {
+                    "client": "CourseLab",
+                    "task": "Course editors launch a landing page for every course themselves.",
+                    "metric": "$100 per page"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

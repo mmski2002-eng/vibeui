@@ -1,0 +1,876 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "about-001",
+      "type": "registry:block",
+      "title": "Миссия крупно",
+      "description": "Манифест одной крупной фразой с оранжевыми маркерами на опорных словах. Самодостаточен: один файл, без зависимостей, выделение задаётся массивом сегментов.",
+      "categories": ["about"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "about-001/about-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/about-001.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-about-001-*. Серверный компонент. Текст миссии передаётся массивом сегментов {text, highlight} — выделение живёт в данных, а не в разметке, поэтому фразу можно переписать, не трогая JSX. Выделенные сегменты рендерятся тегом <mark> с маркерной подложкой через color-mix и box-decoration-break: clone, чтобы подсветка не рвалась на переносе строки. Размер набора считается от собственной ширины блока (cqi), под текстом — короткая оранжевая черта и сноска о команде.",
+      "meta": {
+        "tags": ["mission", "manifesto", "typography", "highlight", "statement"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "About001",
+          "usage": "<About001\n  eyebrow=\"О компании\"\n  segments={[\n    { text: \"Мы делаем \" },\n    { text: \"дизайн\", highlight: true },\n    { text: \" доступным каждому.\" },\n  ]}\n/>",
+          "summary": "Секция «О компании»: миссия одним крупным заявлением, опорные слова подсвечены оранжевым маркером тегом <mark>. Сегменты с флагом highlight приходят массивом. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-about-001-* — не заменять её токенами темы сайта (bg-card, text-primary и подобными)",
+            "выделение через массив сегментов: подсветка — часть контента, а не вёрстки, и должна меняться вместе с текстом",
+            "тег <mark> для выделенных слов — это семантическое выделение, а не покрашенный span",
+            "box-decoration-break: clone на маркере: без него подсветка рвётся некрасивым прямоугольником на переносе строки",
+            "масштаб набора от ширины контейнера (cqi): в узкой колонке манифест обязан уменьшаться сам",
+            "light-dark() в палитре: компонент должен следовать color-scheme окружения, а не вшивать свою тёмную тему",
+            "прозрачный фон по умолчанию — секция лежит на фоне страницы, а не подкладывает под себя плашку"
+          ],
+          "adapt": [
+            "segments — текст миссии и какие слова подсвечены",
+            "eyebrow — надзаголовок секции",
+            "footnote — сноска под манифестом; пустая строка убирает её вместе с чертой",
+            "акцент через проп accent — красит маркеры, надзаголовок и черту",
+            "background — фон секции; пусто — без фона, цвет страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, в проекте должен быть объявлен color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Подсвечивайте два-четыре сегмента: если выделено всё, не выделено ничего.",
+            "Пробелы между сегментами должны жить внутри text соседних сегментов — компонент ничего не вставляет между ними.",
+            "Не выносить CSS-переменные в globals.css: блок должен остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "О компании",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Mission, Writ Large",
+            "description": "A manifesto in one large phrase with orange markers on the key words. Self-contained: one file, no dependencies, the highlighting is driven by an array of segments.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-about-001-*. A server component. The mission text arrives as an array of {text, highlight} segments — the highlighting lives in the data, not in the markup, so the phrase can be rewritten without touching JSX. Highlighted segments render as a <mark> tag with a marker tint via color-mix and box-decoration-break: clone, so the highlight does not tear on a line break. The type scale is computed from the block's own width (cqi); below the text sits a short orange rule and a footnote about the team.",
+            "ai": {
+              "summary": "An about section: the mission as one large statement, key words highlighted with an orange marker via the <mark> tag. Segments with a highlight flag arrive as an array. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-about-001-* palette — do not swap it for your theme tokens (bg-card, text-primary and the like)",
+                "highlighting via the segments array: the emphasis is part of the content, not the markup, and must change together with the text",
+                "the <mark> tag for the highlighted words — it is semantic emphasis, not a colored span",
+                "box-decoration-break: clone on the marker: without it the highlight tears into an ugly rectangle on a line break",
+                "the type scale driven by the container width (cqi): in a narrow column the manifesto has to shrink on its own",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the section sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "segments — the mission text and which words are highlighted",
+                "eyebrow — the section eyebrow",
+                "footnote — the note below the manifesto; an empty string removes it together with the rule",
+                "the accent through the accent prop — it colours the markers, the eyebrow and the rule",
+                "background — the section background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Highlight two to four segments: when everything is emphasized, nothing is.",
+                "Spaces between segments must live inside the text of the adjacent segments — the component inserts nothing between them.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<About001\n  eyebrow=\"About us\"\n  segments={[\n    { text: \"We make \" },\n    { text: \"design\", highlight: true },\n    { text: \" available to everyone.\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "About us"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "About us",
+                "segments": [
+                  { "text": "We build a library where " },
+                  { "text": "design", "highlight": true },
+                  { "text": " stops being the bottleneck: every block is clear to an " },
+                  { "text": "AI agent", "highlight": true },
+                  { "text": " on the first pass and turns into a " },
+                  { "text": "working site", "highlight": true },
+                  { "text": " in a single evening." }
+                ],
+                "footnote": "VibeUI is a team of designers and engineers writing components for people and models at the same time."
+              }
+            }
+          }
+        },
+        "cardControls": ["eyebrow", "accent", "background"]
+      }
+    },
+    {
+      "name": "about-002",
+      "type": "registry:block",
+      "title": "История таймлайном",
+      "description": "Вехи компании на вертикальной оси: годы, оранжевые точки, короткие рассказы. Самодостаточен: один файл, без зависимостей, ось нарисована псевдоэлементами.",
+      "categories": ["about"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "about-002/about-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/about-002.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-about-002-*. Серверный компонент. Хронология — честный <ol>: ось и оранжевые точки нарисованы псевдоэлементами li, поэтому без стилей список остаётся читаемым перечнем вех. На узком контейнере год стоит над заголовком, ось слева; от 44rem собственной ширины год уезжает в левую колонку с выравниванием по правому краю, и ось встаёт между годом и текстом — координаты точки заданы в rem и не зависят от контента. Линия у последней вехи скрыта, чтобы ось не утекала в пустоту.",
+      "meta": {
+        "tags": ["timeline", "history", "milestones", "company", "story"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "About002",
+          "usage": "<About002\n  title=\"Как мы к этому пришли\"\n  items={[{ year: \"2022\", heading: \"Первый каталог\", text: \"Двадцать секций для внутренних проектов студии.\" }]}\n/>",
+          "summary": "История компании вертикальным таймлайном: надзаголовок, заголовок и список вех с годом, названием и текстом. Ось и оранжевые точки — псевдоэлементы, разметка — нумерованный список. Один файл, ноль зависимостей, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-about-002-* — не заменять её токенами темы сайта (bg-card, border-border и подобными)",
+            "разметку <ol>/<li>: хронология — упорядоченный список, и скринридер должен объявлять его как список",
+            "ось и точки псевдоэлементами — в DOM нет декоративных пустых div, контент остаётся чистым",
+            "скрытую линию у последней вехи: ось не должна утекать в пустоту под списком",
+            "ореол точки через color-mix от акцента — точка читается на любом фоне и не съедает линию",
+            "перелом раскладки по container query, а не по ширине окна: в узкой колонке таймлайн обязан сложиться сам",
+            "light-dark() в палитре: компонент следует color-scheme окружения, а не вшивает свою тёмную тему"
+          ],
+          "adapt": [
+            "items — год, заголовок и текст каждой вехи",
+            "eyebrow и title — надзаголовок и заголовок секции",
+            "акцент через проп accent — красит годы, точки и ореол",
+            "внешние отступы через className: секция занимает ширину родителя",
+            "background — фон секции; пусто — без фона, цвет страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, в проекте должен быть объявлен color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Год — строка, а не число: «2023–2024» или «сегодня» тоже валидны.",
+            "Координаты оси на широкой раскладке привязаны к ширине колонки года (6.5rem): меняя колонку, двигайте и left у ::before/::after.",
+            "Не выносить CSS-переменные в globals.css: блок должен остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Как мы к этому пришли",
+            "maxLength": 40
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "История",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Timeline History",
+            "description": "Company milestones on a vertical axis: years, orange dots, short stories. Self-contained: one file, no dependencies, the axis is drawn with pseudo-elements.",
+            "docs": "The block is self-contained: one file, no dependencies, its palette in local variables --vibeui-about-002-*. A server component. The chronology is an honest <ol>: the axis and the orange dots are drawn with li pseudo-elements, so without styles the list stays a readable sequence of milestones. In a narrow container the year sits above the heading with the axis on the left; from 44rem of the block's own width the year moves into a right-aligned left column and the axis lands between the year and the text — the dot coordinates are set in rem and do not depend on content. The line of the last milestone is hidden so the axis does not leak into emptiness.",
+            "ai": {
+              "summary": "A company history as a vertical timeline: an eyebrow, a heading and a list of milestones with a year, a name and a text. The axis and the orange dots are pseudo-elements, the markup is an ordered list. One file, zero dependencies, no client JS.",
+              "preserve": [
+                "the local --vibeui-about-002-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the <ol>/<li> markup: a chronology is an ordered list and a screen reader must announce it as one",
+                "the axis and dots as pseudo-elements — no decorative empty divs in the DOM, the content stays clean",
+                "the hidden line on the last milestone: the axis must not leak into the emptiness below the list",
+                "the dot halo via color-mix from the accent — the dot reads on any background without eating the line",
+                "the layout break via container query, not viewport width: in a narrow column the timeline has to fold on its own",
+                "light-dark() in the palette: the component follows the surrounding color-scheme rather than shipping a dark theme of its own"
+              ],
+              "adapt": [
+                "the items array — the year, heading and text of every milestone",
+                "eyebrow and title — the eyebrow and the section heading",
+                "the accent through the accent prop — it colours the years, the dots and the halo",
+                "outer spacing through className: the section fills its parent's width",
+                "background — the section background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The year is a string, not a number: \"2023–2024\" or \"today\" are valid too.",
+                "The axis coordinates in the wide layout are tied to the year column width (6.5rem): if you change the column, move the left of ::before/::after as well.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<About002\n  title=\"How we got here\"\n  items={[{ year: \"2022\", heading: \"The first catalog\", text: \"Twenty sections for the studio's internal projects.\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "How we got here"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "History"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "History",
+                "title": "How we got here",
+                "items": [
+                  {
+                    "year": "2022",
+                    "heading": "Twenty sections for ourselves",
+                    "text": "We built the first catalog for the studio's internal projects — to stop marking up the same section for the fifth time."
+                  },
+                  {
+                    "year": "2023",
+                    "heading": "An open registry",
+                    "text": "We published the blocks to a shadcn-compatible registry: a one-command install into any React project."
+                  },
+                  {
+                    "year": "2024",
+                    "heading": "Copy for AI",
+                    "text": "Every block got an instruction for an AI agent — installation stopped requiring a developer."
+                  },
+                  {
+                    "year": "2025",
+                    "heading": "Fifteen hundred blocks",
+                    "text": "The catalog grew to fifteen hundred sections, and building a site shrank from a month to a single evening."
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "eyebrow", "accent", "background"]
+      }
+    },
+    {
+      "name": "about-003",
+      "type": "registry:block",
+      "title": "Ценности сеткой",
+      "description": "Четыре карточки ценностей с иконками, нарисованными чистым CSS. Самодостаточен: один файл, без зависимостей и без иконочных библиотек.",
+      "categories": ["about"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "about-003/about-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/about-003.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-about-003-*. Серверный компонент. Иконки — не шрифт и не SVG-библиотека: четыре знака (стопка, искра, молния, кольцо) нарисованы псевдоэлементами на тёплой плашке — рамки, повороты и skew, цвет наследует акцент. Сетка складывается от собственной ширины блока: одна, две, четыре колонки. Карточка — <article> с заголовком и текстом; иконка помечена aria-hidden, потому что дублирует смысл заголовка.",
+      "meta": {
+        "tags": ["values", "grid", "cards", "css icons", "culture"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "About003",
+          "usage": "<About003\n  title=\"Во что мы верим\"\n  items={[{ icon: \"stack\", title: \"Самодостаточность\", text: \"Один файл без зависимостей.\" }]}\n/>",
+          "summary": "Ценности компании сеткой 1/2/4 колонки: карточки с CSS-иконками (стопка, искра, молния, кольцо), заголовком и текстом. Иконки — псевдоэлементы, окрашенные акцентом. Один файл, ноль зависимостей, без иконочных шрифтов и SVG.",
+          "preserve": [
+            "локальную палитру --vibeui-about-003-* — не заменять её токенами темы сайта (bg-card, border-border и подобными)",
+            "CSS-иконки на псевдоэлементах — не заменять их иконочной библиотекой: блок обязан работать без единой зависимости",
+            "aria-hidden на иконках: они декоративны и дублируют заголовок, скринридеру они только мешают",
+            "тёплую плашку под иконкой через color-mix от акцента — знак читается на обеих темах",
+            "container-запросы на числе колонок: 1 → 2 → 4 от собственной ширины блока",
+            "light-dark() в палитре: компонент следует color-scheme окружения, а не вшивает свою тёмную тему",
+            "прозрачный фон секции по умолчанию — собственный фон несут только карточки"
+          ],
+          "adapt": [
+            "items — иконка (stack | spark | bolt | ring), заголовок и текст каждой ценности",
+            "eyebrow и title — надзаголовок и заголовок секции",
+            "акцент через проп accent — красит иконки, плашки и hover-рамку",
+            "внешние отступы через className: секция занимает ширину родителя",
+            "background — фон секции; пусто — без фона, цвет страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, в проекте должен быть объявлен color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Четыре ценности дают ровный ряд на широкой раскладке; при другом числе последний ряд останется неполным.",
+            "Новый знак добавляется парой правил ::before/::after под своим data-icon — по образцу четырёх существующих.",
+            "Не выносить CSS-переменные в globals.css: блок должен остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Во что мы верим",
+            "maxLength": 36
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Ценности",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Values Grid",
+            "description": "Four value cards with icons drawn in pure CSS. Self-contained: one file, no dependencies and no icon libraries.",
+            "docs": "The block is self-contained: one file, no dependencies, its palette in local variables --vibeui-about-003-*. A server component. The icons are neither a font nor an SVG library: four signs (stack, spark, bolt, ring) are drawn with pseudo-elements on a warm tinted chip — borders, rotations and skews, the colour inherits the accent. The grid folds from the block's own width: one, two, four columns. A card is an <article> with a heading and a text; the icon carries aria-hidden because it duplicates the heading's meaning.",
+            "ai": {
+              "summary": "Company values in a 1/2/4-column grid: cards with CSS icons (stack, spark, bolt, ring), a heading and a text. The icons are pseudo-elements painted with the accent. One file, zero dependencies, no icon fonts or SVG.",
+              "preserve": [
+                "the local --vibeui-about-003-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the CSS icons built on pseudo-elements — do not replace them with an icon library: the block must work with zero dependencies",
+                "aria-hidden on the icons: they are decorative and duplicate the heading, to a screen reader they are only noise",
+                "the warm chip under the icon via color-mix from the accent — the sign reads on both themes",
+                "the container queries on the column count: 1 → 2 → 4 from the block's own width",
+                "light-dark() in the palette: the component follows the surrounding color-scheme rather than shipping a dark theme of its own",
+                "the transparent section background by default — only the cards carry a background of their own"
+              ],
+              "adapt": [
+                "the items array — the icon (stack | spark | bolt | ring), heading and text of every value",
+                "eyebrow and title — the eyebrow and the section heading",
+                "the accent through the accent prop — it colours the icons, the chips and the hover border",
+                "outer spacing through className: the section fills its parent's width",
+                "background — the section background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Four values make an even row in the wide layout; any other count leaves the last row incomplete.",
+                "A new sign is added as a pair of ::before/::after rules under its own data-icon — following the four existing ones.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<About003\n  title=\"What we believe in\"\n  items={[{ icon: \"stack\", title: \"Self-sufficiency\", text: \"One file with no dependencies.\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "What we believe in"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Values"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Values",
+                "title": "What we believe in",
+                "items": [
+                  {
+                    "icon": "stack",
+                    "title": "Self-sufficiency",
+                    "text": "A block is one file with no dependencies. Carry it into any project and it keeps working."
+                  },
+                  {
+                    "icon": "spark",
+                    "title": "Clarity for machines",
+                    "text": "We write metadata for the model as carefully as code for people: what to preserve, what to adapt."
+                  },
+                  {
+                    "icon": "bolt",
+                    "title": "Speed without losses",
+                    "text": "From picking a design to a working page — one evening. But speed does not excuse broken typography."
+                  },
+                  {
+                    "icon": "ring",
+                    "title": "Accessibility by default",
+                    "text": "Semantics, focus and contrast are a condition of entering the catalog, not a backlog item for later."
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "eyebrow", "accent", "background"]
+      }
+    },
+    {
+      "name": "about-004",
+      "type": "registry:block",
+      "title": "О нас с цифрами",
+      "description": "Рассказ о компании с доказательствами: текст слева, столбик крупных оранжевых метрик справа. Самодостаточен: один файл, без зависимостей, метрики — список определений.",
+      "categories": ["about"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "about-004/about-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/about-004.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-about-004-*. Серверный компонент. На узком контейнере метрики встают сеткой два на два под текстом; от 52rem собственной ширины — колонкой справа от рассказа. Метрики свёрстаны <dl>: в разметке подпись (dt) идёт перед значением (dd), как требует список определений, а визуально цифра стоит над подписью за счёт flex-direction: column-reverse. Цифры оранжевые, tabular-nums, размер считается от ширины контейнера.",
+      "meta": {
+        "tags": ["about", "stats", "metrics", "split", "numbers"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "About004",
+          "usage": "<About004\n  title=\"О нас\"\n  paragraphs={[\"Мы делаем библиотеку блоков для сборки сайтов.\"]}\n  stats={[{ value: \"1 500+\", label: \"блоков в каталоге\" }]}\n/>",
+          "summary": "Секция «О нас»: надзаголовок, заголовок, абзацы рассказа и четыре крупные метрики. На широком контейнере текст слева, столбик цифр справа; на узком метрики сеткой 2×2 под текстом. Метрики — семантический <dl>. Один файл, ноль зависимостей, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-about-004-* — не заменять её токенами темы сайта (bg-card, border-border и подобными)",
+            "разметку <dl>/<dt>/<dd> метрик: пара «значение — что это» должна оставаться парой и для скринридера",
+            "column-reverse в карточке метрики — визуальный порядок (цифра над подписью) достигается CSS, а не перестановкой тегов",
+            "tabular-nums на значениях: цифры в столбце не пляшут по ширине",
+            "перелом на двухколонник по container query (52rem), а не по ширине окна",
+            "light-dark() в палитре: компонент следует color-scheme окружения, а не вшивает свою тёмную тему",
+            "прозрачный фон по умолчанию — секция лежит на фоне страницы, а не подкладывает под себя плашку"
+          ],
+          "adapt": [
+            "paragraphs — абзацы рассказа о компании",
+            "stats — значение и подпись каждой метрики",
+            "eyebrow и title — надзаголовок и заголовок секции",
+            "акцент через проп accent — красит цифры и надзаголовок",
+            "background — фон секции; пусто — без фона, цвет страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, в проекте должен быть объявлен color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Значение метрики — строка: «1 500+», «1 вечер» и любые единицы валидны.",
+            "Четыре метрики дают ровную сетку 2×2 на узкой раскладке; нечётное число оставит пустую ячейку.",
+            "Не выносить CSS-переменные в globals.css: блок должен остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Компоненты, которые не нужно поддерживать",
+            "maxLength": 48
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "О нас",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "About With Numbers",
+            "description": "A company story with proof: text on the left, a column of large orange metrics on the right. Self-contained: one file, no dependencies, the metrics are a definition list.",
+            "docs": "The block is self-contained: one file, no dependencies, its palette in local variables --vibeui-about-004-*. A server component. In a narrow container the metrics form a two-by-two grid below the text; from 52rem of the block's own width they become a column to the right of the story. The metrics are marked up as a <dl>: in the markup the label (dt) precedes the value (dd), as a definition list requires, while visually the number stands above the label thanks to flex-direction: column-reverse. The numbers are orange, tabular-nums, sized from the container width.",
+            "ai": {
+              "summary": "An about section: an eyebrow, a heading, story paragraphs and four large metrics. In a wide container the text sits left with a column of numbers on the right; in a narrow one the metrics form a 2×2 grid below the text. The metrics are a semantic <dl>. One file, zero dependencies, no client JS.",
+              "preserve": [
+                "the local --vibeui-about-004-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the <dl>/<dt>/<dd> markup of the metrics: the pair \"value — what it is\" must stay a pair for a screen reader too",
+                "column-reverse in the metric card — the visual order (number above label) is achieved with CSS, not by reordering the tags",
+                "tabular-nums on the values: the numbers in the column must not dance in width",
+                "the two-column break via container query (52rem), not viewport width",
+                "light-dark() in the palette: the component follows the surrounding color-scheme rather than shipping a dark theme of its own",
+                "the transparent background by default — the section sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "paragraphs — the story paragraphs about the company",
+                "stats — the value and label of every metric",
+                "eyebrow and title — the eyebrow and the section heading",
+                "the accent through the accent prop — it colours the numbers and the eyebrow",
+                "background — the section background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "A metric value is a string: \"1,500+\", \"1 evening\" and any units are valid.",
+                "Four metrics make an even 2×2 grid in the narrow layout; an odd count leaves an empty cell.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<About004\n  title=\"About us\"\n  paragraphs={[\"We build a library of blocks for assembling sites.\"]}\n  stats={[{ value: \"1,500+\", label: \"blocks in the catalog\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Components you never have to maintain"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "About us"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "About us",
+                "title": "Components you never have to maintain",
+                "paragraphs": [
+                  "VibeUI began as the internal section kit of a small studio. We got tired of fixing the cascade of other people's libraries and decided a block must live in one file and depend on nothing but React.",
+                  "Today teams without developers build sites with this catalog: a person picks the design, an AI agent installs the block, the page works on the first run."
+                ],
+                "stats": [
+                  { "value": "1,500+", "label": "blocks in the catalog" },
+                  { "value": "0", "label": "dependencies in every block" },
+                  { "value": "1 evening", "label": "from idea to a working page" },
+                  { "value": "40+", "label": "section categories" }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "eyebrow", "accent", "background"]
+      }
+    },
+    {
+      "name": "about-005",
+      "type": "registry:block",
+      "title": "Принципы списком",
+      "description": "Нумерованный манифест: крупные оранжевые 01/02/03, рядом принцип и пояснение. Самодостаточен: один файл, без зависимостей, номера считаются на сервере.",
+      "categories": ["about"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "about-005/about-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/about-005.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-about-005-*. Серверный компонент. Принципы — честный <ol>: у каждого пункта крупный оранжевый номер 01/02/03, заголовок и пояснение. Номер печатается из индекса массива прямо в JSX, а не CSS-счётчиком — серверный рендер детерминирован, и номер виден даже там, где стили не доехали; для скринридера номер скрыт aria-hidden, порядок объявляет сам список. Пункты разделены линиями, раскладка «номер слева» считается от собственной ширины блока.",
+      "meta": {
+        "tags": ["principles", "manifesto", "list", "numbered", "culture"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "About005",
+          "usage": "<About005\n  title=\"Принципы\"\n  items={[{ title: \"Сначала блок, потом абстракция\", text: \"Дублирование дешевле преждевременного обобщения.\" }]}\n/>",
+          "summary": "Принципы компании нумерованным манифестом: <ol> с крупными оранжевыми номерами 01/02/03, заголовком и пояснением в каждом пункте. Номера печатаются из индекса массива на сервере. Один файл, ноль зависимостей, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-about-005-* — не заменять её токенами темы сайта (bg-card, border-border и подобными)",
+            "разметку <ol>/<li>: манифест — упорядоченный список, порядок пунктов — часть смысла",
+            "aria-hidden на печатных номерах — порядок скринридеру объявляет сам <ol>, дублировать его голосом не нужно",
+            "ведущий ноль в номерах (01, 02): он превращает список в документ и выравнивает колонку цифр",
+            "разделительные линии между пунктами — они держат ритм длинного списка",
+            "light-dark() в палитре: компонент следует color-scheme окружения, а не вшивает свою тёмную тему"
+          ],
+          "adapt": [
+            "items — заголовок и пояснение каждого принципа",
+            "eyebrow и title — надзаголовок и заголовок секции",
+            "акцент через проп accent — красит номера и надзаголовок",
+            "внешние отступы через className: секция занимает ширину родителя",
+            "background — фон секции; пусто — без фона, цвет страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, в проекте должен быть объявлен color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Номера идут из индекса массива: перестановка пунктов перенумерует их сама, руками номера не пишутся.",
+            "Не выносить CSS-переменные в globals.css: блок должен остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Принципы, по которым мы работаем",
+            "maxLength": 44
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Манифест",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Numbered Principles",
+            "description": "A numbered manifesto: large orange 01/02/03, a principle and an explanation beside each. Self-contained: one file, no dependencies, the numbers are computed on the server.",
+            "docs": "The block is self-contained: one file, no dependencies, its palette in local variables --vibeui-about-005-*. A server component. The principles are an honest <ol>: every item has a large orange 01/02/03 number, a heading and an explanation. The number is printed from the array index right in JSX rather than a CSS counter — the server render is deterministic and the number is visible even where styles failed to load; for a screen reader the number is hidden with aria-hidden, the order is announced by the list itself. The items are separated by rules, and the number-on-the-left layout is computed from the block's own width.",
+            "ai": {
+              "summary": "Company principles as a numbered manifesto: an <ol> with large orange 01/02/03 numbers, a heading and an explanation in every item. The numbers are printed from the array index on the server. One file, zero dependencies, no client JS.",
+              "preserve": [
+                "the local --vibeui-about-005-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the <ol>/<li> markup: a manifesto is an ordered list, the order of items is part of the meaning",
+                "aria-hidden on the printed numbers — the <ol> itself announces the order to a screen reader, no need to voice it twice",
+                "the leading zero in the numbers (01, 02): it turns the list into a document and aligns the digit column",
+                "the divider rules between items — they hold the rhythm of a long list",
+                "light-dark() in the palette: the component follows the surrounding color-scheme rather than shipping a dark theme of its own"
+              ],
+              "adapt": [
+                "the items array — the heading and explanation of every principle",
+                "eyebrow and title — the eyebrow and the section heading",
+                "the accent through the accent prop — it colours the numbers and the eyebrow",
+                "outer spacing through className: the section fills its parent's width",
+                "background — the section background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The numbers come from the array index: reordering the items renumbers them automatically, numbers are never written by hand.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<About005\n  title=\"Principles\"\n  items={[{ title: \"Block first, abstraction later\", text: \"Duplication is cheaper than premature generalization.\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "The principles we work by"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Manifesto"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Manifesto",
+                "title": "The principles we work by",
+                "items": [
+                  {
+                    "title": "Block first, abstraction later",
+                    "text": "We are not building a framework. Duplication is cheaper than premature generalization, and a plain file is cheaper than a clever package."
+                  },
+                  {
+                    "title": "Code is read by more than people",
+                    "text": "Every non-obvious decision in a block is explained. The model, like a new developer, must understand why it is done this way."
+                  },
+                  {
+                    "title": "Nothing extra in the bundle",
+                    "text": "A section drags no library behind it: take three blocks — get three files and zero new dependencies."
+                  },
+                  {
+                    "title": "Compatibility over novelty",
+                    "text": "We work with the standard shadcn CLI and ordinary project files — no custom installers or runtimes."
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "eyebrow", "accent", "background"]
+      }
+    },
+    {
+      "name": "about-006",
+      "type": "registry:block",
+      "title": "Фото-мозаика без фото",
+      "description": "Сетка «офисных» плиток на тёплых CSS-градиентах разной глубины и карточка с подписью о культуре. Самодостаточен: один файл, без зависимостей и без единой картинки.",
+      "categories": ["about"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "about-006/about-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/about-006.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-about-006-*. Серверный компонент. Плитки — заглушки под фотографии офиса: пять тонов тёплого градиента с разной долей оранжевого (8–72% через color-mix) дают сетке ритм фотоленты без единого запроса за картинкой; сверху лёгкий радиальный блик, чтобы плитка читалась как снимок при свете окна. Карточка-подпись живёт в той же сетке и на широком контейнере занимает 2×2 ячейки. Плитки помечены aria-hidden — они декоративны.",
+      "meta": {
+        "tags": ["mosaic", "gallery", "culture", "gradient", "team"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "About006",
+          "usage": "<About006\n  eyebrow=\"Команда\"\n  title=\"Культура сильнее офиса\"\n  caption=\"Распределённая команда в четырёх часовых поясах.\"\n/>",
+          "summary": "Мозаика «о команде»: карточка с надзаголовком, заголовком и подписью о культуре плюс семь декоративных плиток на тёплых оранжевых градиентах разной глубины. Ни одной картинки и ни одного сетевого запроса. Один файл, ноль зависимостей.",
+          "preserve": [
+            "локальную палитру --vibeui-about-006-* — не заменять её токенами темы сайта (bg-card, border-border и подобными)",
+            "градиентные плитки как честные заглушки: разная глубина оранжевого создаёт ритм — не красьте все плитки в один тон",
+            "aria-hidden на плитках: они декоративны, скринридеру нужна только карточка с текстом",
+            "радиальный блик на плитках — без него градиенты читаются плоскими плашками, а не «снимками»",
+            "карточку-подпись внутри сетки (2×2 на широкой раскладке), а не над ней — текст является частью мозаики",
+            "перелом сетки 2 → 4 колонки по container query от собственной ширины блока",
+            "light-dark() в палитре: компонент следует color-scheme окружения, а не вшивает свою тёмную тему"
+          ],
+          "adapt": [
+            "eyebrow и title — надзаголовок и заголовок карточки",
+            "caption — подпись о культуре команды",
+            "акцент через проп accent — задаёт весь тёплый тон мозаики и карточки",
+            "плитки: при замене на настоящие фотографии сохраняйте aspect-ratio и скругление, wide-плитка держит 2:1",
+            "background — фон секции; пусто — без фона, цвет страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, в проекте должен быть объявлен color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Состав плиток задан константой TILES в файле: тон 1–5 и флаг wide; порядок подобран так, чтобы глубокие и светлые тона чередовались.",
+            "Это осознанно не фотогалерея: если нужны настоящие фото, кладите <img> внутрь плиток вместо градиента — сетка переживёт.",
+            "Не выносить CSS-переменные в globals.css: блок должен остаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Культура сильнее офиса",
+            "maxLength": 36
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Команда",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Photo Mosaic, No Photos",
+            "description": "A grid of \"office\" tiles on warm CSS gradients of varying depth plus a card with a caption about culture. Self-contained: one file, no dependencies and not a single image.",
+            "docs": "The block is self-contained: one file, no dependencies, its palette in local variables --vibeui-about-006-*. A server component. The tiles are placeholders for office photos: five tones of a warm gradient with a different share of orange (8–72% via color-mix) give the grid the rhythm of a photo strip without a single image request; a light radial sheen on top makes a tile read like a shot taken by a window. The caption card lives in the same grid and takes a 2×2 cell area in a wide container. The tiles carry aria-hidden — they are decorative.",
+            "ai": {
+              "summary": "A team mosaic: a card with an eyebrow, a heading and a culture caption plus seven decorative tiles on warm orange gradients of varying depth. Not a single image and not a single network request. One file, zero dependencies.",
+              "preserve": [
+                "the local --vibeui-about-006-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the gradient tiles as honest placeholders: the varying depth of orange creates the rhythm — do not paint all tiles one tone",
+                "aria-hidden on the tiles: they are decorative, a screen reader only needs the text card",
+                "the radial sheen on the tiles — without it the gradients read as flat slabs, not \"shots\"",
+                "the caption card inside the grid (2×2 in the wide layout), not above it — the text is part of the mosaic",
+                "the 2 → 4 column grid break via container query from the block's own width",
+                "light-dark() in the palette: the component follows the surrounding color-scheme rather than shipping a dark theme of its own"
+              ],
+              "adapt": [
+                "eyebrow and title — the eyebrow and heading of the card",
+                "caption — the caption about the team culture",
+                "the accent through the accent prop — it sets the whole warm tone of the mosaic and the card",
+                "the tiles: when replacing them with real photos keep the aspect-ratio and rounding, the wide tile holds 2:1",
+                "background — the section background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The tile set is defined by the TILES constant in the file: tone 1–5 and a wide flag; the order alternates deep and light tones on purpose.",
+                "This is deliberately not a photo gallery: if you need real photos, put an <img> inside the tiles instead of the gradient — the grid will survive.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<About006\n  eyebrow=\"Team\"\n  title=\"Culture over office\"\n  caption=\"A distributed team across four time zones.\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Culture over office"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Team"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Team",
+                "title": "Culture over office",
+                "caption": "We are a distributed team: designers, engineers and technical writers across four time zones. Instead of shared walls — a shared standard of block quality."
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "eyebrow", "accent", "background"]
+      }
+    }
+  ]
+}
