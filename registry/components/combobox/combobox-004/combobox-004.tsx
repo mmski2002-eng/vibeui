@@ -35,7 +35,7 @@ const STYLES = `
 --vibeui-combobox-004-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
 --vibeui-combobox-004-field:light-dark(oklch(0.985 0 265),oklch(0.3 0 265));
 --vibeui-combobox-004-active:light-dark(oklch(0.955 0 265),oklch(0.35 0 265));
---vibeui-combobox-004-accent:light-dark(oklch(0.55 0.15 25),oklch(0.76 0.14 25));
+--vibeui-combobox-004-accent:light-dark(oklch(0.55 0.15 39.8),oklch(0.76 0.14 39.8));
 --vibeui-combobox-004-radius:0.625rem;
 --vibeui-combobox-004-hue:265;
 --vibeui-combobox-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

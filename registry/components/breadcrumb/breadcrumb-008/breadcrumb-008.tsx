@@ -26,7 +26,7 @@ const STYLES = `
 --vibeui-breadcrumb-008-bg:light-dark(oklch(0.97 0 265),oklch(0.26 0 265));
 --vibeui-breadcrumb-008-hover:light-dark(oklch(0.93 0 265),oklch(0.33 0 265));
 --vibeui-breadcrumb-008-border:light-dark(oklch(0.91 0 265),oklch(0.37 0 265));
---vibeui-breadcrumb-008-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
+--vibeui-breadcrumb-008-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.74 0.15 39.8));
 --vibeui-breadcrumb-008-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

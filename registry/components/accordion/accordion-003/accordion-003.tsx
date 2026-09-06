@@ -41,7 +41,7 @@ const STYLES = `
 :where([data-vibeui-block="accordion-003"]){
 --vibeui-accordion-003-fg:light-dark(oklch(0.18 0 265),oklch(0.95 0 265));
 --vibeui-accordion-003-muted:color-mix(in oklab,var(--vibeui-accordion-003-fg) 68%,transparent);
---vibeui-accordion-003-highlight:light-dark(oklch(0.93 0.155 105),oklch(0.86 0.17 100));
+--vibeui-accordion-003-highlight:light-dark(oklch(0.93 0.155 39.8),oklch(0.86 0.17 39.8));
 /* Буквы под пигментом всегда тёмные — как их красит сам браузер. */
 --vibeui-accordion-003-highlight-ink:oklch(0.19 0.02 100);
 --vibeui-accordion-003-accent:var(--vibeui-accordion-003-fg);

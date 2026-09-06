@@ -39,7 +39,7 @@ const STYLES = `
 --vibeui-buttongroup-010-fg:light-dark(oklch(0.25 0 265),oklch(0.95 0 265));
 --vibeui-buttongroup-010-muted:color-mix(in oklab,var(--vibeui-buttongroup-010-fg) 68%,transparent);
 --vibeui-buttongroup-010-border:light-dark(oklch(0.89 0 265),oklch(0.37 0 265));
---vibeui-buttongroup-010-accent:light-dark(oklch(0.53 0.17 265),oklch(0.62 0.17 265));
+--vibeui-buttongroup-010-accent:light-dark(oklch(0.53 0.17 39.8),oklch(0.62 0.17 39.8));
 --vibeui-buttongroup-010-on-accent:oklch(0.99 0 265);
 --vibeui-buttongroup-010-radius:0.5rem;
 --vibeui-buttongroup-010-count:4;

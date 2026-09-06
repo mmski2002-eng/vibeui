@@ -37,7 +37,7 @@ const STYLES = `
 --vibeui-calendar-024-muted:color-mix(in oklab,var(--vibeui-calendar-024-fg) 68%,transparent);
 --vibeui-calendar-024-border:light-dark(oklch(0.9 0 275),oklch(0.35 0 275));
 --vibeui-calendar-024-field:light-dark(oklch(0.985 0 275),oklch(0.28 0 275));
---vibeui-calendar-024-accent:light-dark(oklch(0.51 0.13 275),oklch(0.72 0.12 275));
+--vibeui-calendar-024-accent:light-dark(oklch(0.51 0.13 39.8),oklch(0.72 0.12 39.8));
 --vibeui-calendar-024-ok:light-dark(oklch(0.5 0.11 155),oklch(0.74 0.11 155));
 --vibeui-calendar-024-bad:light-dark(oklch(0.55 0.18 25),oklch(0.74 0.15 25));
 --vibeui-calendar-024-radius:0.625rem;

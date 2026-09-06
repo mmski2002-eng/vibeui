@@ -23,8 +23,8 @@ const STYLES = `
 --vibeui-buttongroup-012-muted:color-mix(in oklab,var(--vibeui-buttongroup-012-fg) 68%,transparent);
 --vibeui-buttongroup-012-border:light-dark(oklch(0.89 0 265),oklch(0.37 0 265));
 --vibeui-buttongroup-012-hover:light-dark(oklch(0.96 0 265),oklch(0.3 0 265));
---vibeui-buttongroup-012-accent:light-dark(oklch(0.52 0.17 265),oklch(0.62 0.17 265));
---vibeui-buttongroup-012-accent-dark:light-dark(oklch(0.45 0.16 265),oklch(0.55 0.17 265));
+--vibeui-buttongroup-012-accent:light-dark(oklch(0.52 0.17 39.8),oklch(0.62 0.17 39.8));
+--vibeui-buttongroup-012-accent-dark:light-dark(oklch(0.45 0.16 39.8),oklch(0.55 0.17 39.8));
 --vibeui-buttongroup-012-on-accent:oklch(0.99 0 265);
 --vibeui-buttongroup-012-radius:0.75rem;
 --vibeui-buttongroup-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

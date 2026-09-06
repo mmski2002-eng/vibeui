@@ -37,7 +37,7 @@ const STYLES = `
 --vibeui-checkbox-012-muted:color-mix(in oklab,var(--vibeui-checkbox-012-fg) 68%,transparent);
 --vibeui-checkbox-012-border:light-dark(oklch(0.9 0 265),oklch(0.38 0 265));
 --vibeui-checkbox-012-hover:light-dark(oklch(0.975 0 265),oklch(0.32 0 265));
---vibeui-checkbox-012-accent:light-dark(oklch(0.58 0.16 35),oklch(0.76 0.15 45));
+--vibeui-checkbox-012-accent:light-dark(oklch(0.58 0.16 39.8),oklch(0.76 0.15 39.8));
 --vibeui-checkbox-012-track:light-dark(oklch(0.93 0 265),oklch(0.36 0 265));
 --vibeui-checkbox-012-mark:light-dark(oklch(0.99 0.01 35),oklch(0.2 0.03 45));
 --vibeui-checkbox-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

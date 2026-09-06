@@ -40,11 +40,11 @@ const STYLES = `
 --vibeui-alertdialog-010-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-alertdialog-010-muted:color-mix(in oklab,var(--vibeui-alertdialog-010-fg) 68%,transparent);
 --vibeui-alertdialog-010-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
---vibeui-alertdialog-010-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
+--vibeui-alertdialog-010-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.18 39.8));
 --vibeui-alertdialog-010-on-accent:light-dark(oklch(1 0 0),oklch(0.17 0 262));
 --vibeui-alertdialog-010-loss:light-dark(oklch(0.57 0.19 25),oklch(0.74 0.17 25));
---vibeui-alertdialog-010-keep:light-dark(oklch(0.52 0.14 152),oklch(0.76 0.14 152));
---vibeui-alertdialog-010-when-bg:light-dark(oklch(0.55 0.2 262 / 8%),oklch(0.72 0.18 262 / 14%));
+--vibeui-alertdialog-010-keep:light-dark(oklch(0.52 0.14 39.8),oklch(0.76 0.14 39.8));
+--vibeui-alertdialog-010-when-bg:light-dark(oklch(0.55 0.2 39.8 / 8%),oklch(0.72 0.18 39.8 / 14%));
 --vibeui-alertdialog-010-shadow:light-dark(oklch(0.2 0 265 / 55%),oklch(0.02 0 265 / 70%));
 --vibeui-alertdialog-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

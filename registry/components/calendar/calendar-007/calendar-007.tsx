@@ -26,7 +26,7 @@ const STYLES = `
 --vibeui-calendar-007-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-calendar-007-muted:color-mix(in oklab,var(--vibeui-calendar-007-fg) 68%,transparent);
 --vibeui-calendar-007-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
---vibeui-calendar-007-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
+--vibeui-calendar-007-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.72 0.15 39.8));
 --vibeui-calendar-007-on-accent:light-dark(oklch(0.99 0 265),oklch(0.19 0 265));
 --vibeui-calendar-007-empty:light-dark(oklch(0.97 0 265),oklch(0.28 0 265));
 --vibeui-calendar-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

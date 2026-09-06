@@ -38,7 +38,7 @@ const STYLES = `
 --vibeui-combobox-009-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
 --vibeui-combobox-009-field:light-dark(oklch(0.985 0 265),oklch(0.3 0 265));
 --vibeui-combobox-009-active:light-dark(oklch(0.95 0 265),oklch(0.36 0 265));
---vibeui-combobox-009-accent:light-dark(oklch(0.52 0.15 265),oklch(0.76 0.14 265));
+--vibeui-combobox-009-accent:light-dark(oklch(0.52 0.15 39.8),oklch(0.76 0.14 39.8));
 --vibeui-combobox-009-ok:light-dark(oklch(0.6 0.15 150),oklch(0.74 0.16 150));
 --vibeui-combobox-009-warn:light-dark(oklch(0.72 0.15 80),oklch(0.82 0.15 80));
 --vibeui-combobox-009-down:light-dark(oklch(0.6 0.19 25),oklch(0.7 0.19 25));

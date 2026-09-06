@@ -33,7 +33,7 @@ const STYLES = `
 --vibeui-autocomplete-002-field:light-dark(oklch(0.985 0 265),oklch(0.26 0 265));
 --vibeui-autocomplete-002-panel:light-dark(oklch(1 0 0),oklch(0.24 0 265));
 --vibeui-autocomplete-002-active:light-dark(oklch(0.95 0 265),oklch(0.33 0 265));
---vibeui-autocomplete-002-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
+--vibeui-autocomplete-002-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.74 0.15 39.8));
 --vibeui-autocomplete-002-radius:0.625rem;
 --vibeui-autocomplete-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

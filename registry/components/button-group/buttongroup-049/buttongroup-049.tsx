@@ -39,7 +39,7 @@ const STYLES = `
    всегда — она не наследует прозрачный фон кнопки. */
 --vibeui-buttongroup-049-panel:light-dark(oklch(1 0 0),oklch(0.26 0 265));
 --vibeui-buttongroup-049-shadow:light-dark(oklch(0.2 0 265 / 16%),oklch(0 0 0 / 45%));
---vibeui-buttongroup-049-accent:light-dark(oklch(0.5 0.16 265),oklch(0.76 0.14 265));
+--vibeui-buttongroup-049-accent:light-dark(oklch(0.5 0.16 39.8),oklch(0.76 0.14 39.8));
 --vibeui-buttongroup-049-radius:0.625rem;
 --vibeui-buttongroup-049-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

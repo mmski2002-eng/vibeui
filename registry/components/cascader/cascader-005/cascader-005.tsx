@@ -39,7 +39,7 @@ const STYLES = `
 --vibeui-cascader-005-fg:light-dark(oklch(0.24 0.014 90),oklch(0.94 0.006 90));
 --vibeui-cascader-005-muted:color-mix(in oklab,var(--vibeui-cascader-005-fg) 68%,transparent);
 --vibeui-cascader-005-border:light-dark(oklch(0.9 0.008 90),oklch(0.38 0.012 90));
---vibeui-cascader-005-accent:light-dark(oklch(0.56 0.16 45),oklch(0.74 0.14 45));
+--vibeui-cascader-005-accent:light-dark(oklch(0.56 0.16 39.8),oklch(0.74 0.14 39.8));
 --vibeui-cascader-005-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 45));
 --vibeui-cascader-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

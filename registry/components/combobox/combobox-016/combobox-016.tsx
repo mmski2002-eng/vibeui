@@ -40,8 +40,8 @@ const STYLES = `
 --vibeui-combobox-016-border:light-dark(oklch(0.9 0.008 145),oklch(0.35 0.012 145));
 --vibeui-combobox-016-field:light-dark(oklch(0.985 0.004 145),oklch(0.27 0.012 145));
 --vibeui-combobox-016-soft:light-dark(oklch(0.96 0.008 145),oklch(0.31 0.014 145));
---vibeui-combobox-016-accent:light-dark(oklch(0.47 0.11 145),oklch(0.74 0.12 145));
---vibeui-combobox-016-accentsoft:light-dark(oklch(0.93 0.05 145),oklch(0.35 0.05 145));
+--vibeui-combobox-016-accent:light-dark(oklch(0.47 0.11 39.8),oklch(0.74 0.12 39.8));
+--vibeui-combobox-016-accentsoft:light-dark(oklch(0.93 0.05 39.8),oklch(0.35 0.05 39.8));
 --vibeui-combobox-016-onaccent:light-dark(oklch(0.99 0 0),oklch(0.19 0.02 145));
 --vibeui-combobox-016-warn:light-dark(oklch(0.55 0.13 55),oklch(0.78 0.13 55));
 --vibeui-combobox-016-radius:0.625rem;

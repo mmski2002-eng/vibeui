@@ -24,7 +24,7 @@ const STYLES = `
 --vibeui-calendar-010-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-calendar-010-muted:color-mix(in oklab,var(--vibeui-calendar-010-fg) 68%,transparent);
 --vibeui-calendar-010-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
---vibeui-calendar-010-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
+--vibeui-calendar-010-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.72 0.15 39.8));
 --vibeui-calendar-010-sheet:light-dark(oklch(0.98 0 265),oklch(0.28 0 265));
 /* Кольцо между наложенными аватарами: подложки у карточки нет, поэтому оно
    рисуется цветом страницы, а с пропом background — цветом плашки. */

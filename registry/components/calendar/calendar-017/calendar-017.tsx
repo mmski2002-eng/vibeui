@@ -27,7 +27,7 @@ const STYLES = `
 --vibeui-calendar-017-muted:color-mix(in oklab,var(--vibeui-calendar-017-fg) 68%,transparent);
 --vibeui-calendar-017-border:light-dark(oklch(0.91 0 265),oklch(0.35 0 265));
 --vibeui-calendar-017-weekend:light-dark(oklch(0.95 0 265),oklch(0.3 0 265));
---vibeui-calendar-017-accent:light-dark(oklch(0.55 0.16 25),oklch(0.75 0.14 25));
+--vibeui-calendar-017-accent:light-dark(oklch(0.55 0.16 39.8),oklch(0.75 0.14 39.8));
 --vibeui-calendar-017-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

@@ -29,7 +29,7 @@ const STYLES = `
 --vibeui-breadcrumb-015-faint:light-dark(oklch(0.78 0 265),oklch(0.5 0 265));
 --vibeui-breadcrumb-015-bone:light-dark(oklch(0.93 0 265),oklch(0.34 0 265));
 --vibeui-breadcrumb-015-sheen:light-dark(oklch(0.975 0 265),oklch(0.44 0 265));
---vibeui-breadcrumb-015-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
+--vibeui-breadcrumb-015-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.74 0.15 39.8));
 --vibeui-breadcrumb-015-bg:transparent;
 --vibeui-breadcrumb-015-pad:0;
 --vibeui-breadcrumb-015-radius:0;

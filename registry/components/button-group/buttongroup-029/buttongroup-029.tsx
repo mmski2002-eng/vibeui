@@ -30,7 +30,7 @@ const STYLES = `
 --vibeui-buttongroup-029-fg:light-dark(oklch(0.25 0 265),oklch(0.95 0 265));
 --vibeui-buttongroup-029-muted:color-mix(in oklab,var(--vibeui-buttongroup-029-fg) 68%,transparent);
 --vibeui-buttongroup-029-border:light-dark(oklch(0.89 0 265),oklch(0.4 0 265));
---vibeui-buttongroup-029-accent:light-dark(oklch(0.52 0.16 285),oklch(0.78 0.13 285));
+--vibeui-buttongroup-029-accent:light-dark(oklch(0.52 0.16 39.8),oklch(0.78 0.13 39.8));
 --vibeui-buttongroup-029-light:oklch(0.98 0 265);
 --vibeui-buttongroup-029-dark:oklch(0.29 0 265);
 --vibeui-buttongroup-029-radius:0.75rem;

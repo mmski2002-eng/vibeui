@@ -37,8 +37,8 @@ const STYLES = `
 --vibeui-calendar-013-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-calendar-013-hover:light-dark(oklch(0.96 0 265),oklch(0.31 0 265));
 --vibeui-calendar-013-note:light-dark(oklch(0.97 0 265),oklch(0.28 0 265));
---vibeui-calendar-013-accent:light-dark(oklch(0.53 0.15 165),oklch(0.76 0.13 165));
---vibeui-calendar-013-on-accent:light-dark(oklch(0.99 0.01 165),oklch(0.2 0.04 165));
+--vibeui-calendar-013-accent:light-dark(oklch(0.53 0.15 39.8),oklch(0.76 0.13 39.8));
+--vibeui-calendar-013-on-accent:light-dark(oklch(0.99 0.01 165),oklch(0.2 0.04 39.8));
 --vibeui-calendar-013-locked:light-dark(oklch(0.55 0.16 25),oklch(0.74 0.14 25));
 --vibeui-calendar-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

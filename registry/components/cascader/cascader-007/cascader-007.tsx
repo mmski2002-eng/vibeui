@@ -33,7 +33,7 @@ const STYLES = `
 --vibeui-cascader-007-fg:light-dark(oklch(0.23 0 275),oklch(0.94 0 275));
 --vibeui-cascader-007-muted:color-mix(in oklab,var(--vibeui-cascader-007-fg) 68%,transparent);
 --vibeui-cascader-007-border:light-dark(oklch(0.9 0 275),oklch(0.38 0 275));
---vibeui-cascader-007-accent:light-dark(oklch(0.53 0.2 275),oklch(0.74 0.16 275));
+--vibeui-cascader-007-accent:light-dark(oklch(0.53 0.2 39.8),oklch(0.74 0.16 39.8));
 --vibeui-cascader-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

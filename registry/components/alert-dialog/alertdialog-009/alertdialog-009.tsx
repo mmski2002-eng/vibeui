@@ -42,8 +42,8 @@ const STYLES = `
 --vibeui-alertdialog-009-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-alertdialog-009-muted:color-mix(in oklab,var(--vibeui-alertdialog-009-fg) 68%,transparent);
 --vibeui-alertdialog-009-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
---vibeui-alertdialog-009-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
---vibeui-alertdialog-009-badge-bg:light-dark(oklch(0.55 0.2 262 / 12%),oklch(0.72 0.18 262 / 18%));
+--vibeui-alertdialog-009-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.18 39.8));
+--vibeui-alertdialog-009-badge-bg:light-dark(oklch(0.55 0.2 39.8 / 12%),oklch(0.72 0.18 39.8 / 18%));
 --vibeui-alertdialog-009-danger:light-dark(oklch(0.55 0.19 25),oklch(0.72 0.17 25));
 --vibeui-alertdialog-009-on-danger:light-dark(oklch(1 0 0),oklch(0.17 0.03 25));
 --vibeui-alertdialog-009-shadow:light-dark(oklch(0.2 0 265 / 55%),oklch(0.02 0 265 / 70%));

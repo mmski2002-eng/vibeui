@@ -39,8 +39,8 @@ const STYLES = `
 --vibeui-calendar-016-muted:color-mix(in oklab,var(--vibeui-calendar-016-fg) 68%,transparent);
 --vibeui-calendar-016-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-calendar-016-track:light-dark(oklch(0.95 0 265),oklch(0.3 0 265));
---vibeui-calendar-016-accent:light-dark(oklch(0.55 0.15 210),oklch(0.72 0.13 210));
---vibeui-calendar-016-full:light-dark(oklch(0.56 0.16 25),oklch(0.74 0.14 25));
+--vibeui-calendar-016-accent:light-dark(oklch(0.55 0.15 39.8),oklch(0.72 0.13 39.8));
+--vibeui-calendar-016-full:light-dark(oklch(0.56 0.16 39.8),oklch(0.74 0.14 39.8));
 --vibeui-calendar-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

@@ -34,7 +34,7 @@ const STYLES = `
 --vibeui-buttongroup-014-muted:color-mix(in oklab,var(--vibeui-buttongroup-014-fg) 68%,transparent);
 --vibeui-buttongroup-014-border:light-dark(oklch(0.89 0 265),oklch(0.37 0 265));
 --vibeui-buttongroup-014-hover:light-dark(oklch(0.96 0 265),oklch(0.31 0 265));
---vibeui-buttongroup-014-accent:light-dark(oklch(0.52 0.16 265),oklch(0.63 0.17 265));
+--vibeui-buttongroup-014-accent:light-dark(oklch(0.52 0.16 39.8),oklch(0.63 0.17 39.8));
 --vibeui-buttongroup-014-on-accent:oklch(0.99 0 265);
 --vibeui-buttongroup-014-tip:light-dark(oklch(0.26 0 265),oklch(0.9 0 265));
 --vibeui-buttongroup-014-on-tip:light-dark(oklch(0.99 0 0),oklch(0.21 0 265));

@@ -46,7 +46,7 @@ const STYLES = `
 --vibeui-breadcrumb-013-hover:light-dark(oklch(0.96 0 265),oklch(0.32 0 265));
 --vibeui-breadcrumb-013-menu:light-dark(oklch(1 0 0),oklch(0.26 0 265));
 --vibeui-breadcrumb-013-shadow:light-dark(oklch(0.2 0 265 / 60%),oklch(0 0 0 / 70%));
---vibeui-breadcrumb-013-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
+--vibeui-breadcrumb-013-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.74 0.15 39.8));
 --vibeui-breadcrumb-013-bg:transparent;
 --vibeui-breadcrumb-013-pad:0;
 --vibeui-breadcrumb-013-radius:0;

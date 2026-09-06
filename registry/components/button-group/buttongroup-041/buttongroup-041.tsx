@@ -38,8 +38,8 @@ const STYLES = `
 --vibeui-buttongroup-041-muted:color-mix(in oklab,var(--vibeui-buttongroup-041-fg) 68%,transparent);
 --vibeui-buttongroup-041-border:light-dark(oklch(0.89 0 265),oklch(0.42 0 265));
 --vibeui-buttongroup-041-line:light-dark(oklch(0.8 0 265),oklch(0.56 0 265));
---vibeui-buttongroup-041-on:light-dark(oklch(0.95 0.045 250),oklch(0.33 0.06 250));
---vibeui-buttongroup-041-accent:light-dark(oklch(0.5 0.16 250),oklch(0.78 0.13 250));
+--vibeui-buttongroup-041-on:light-dark(oklch(0.95 0.045 39.8),oklch(0.33 0.06 39.8));
+--vibeui-buttongroup-041-accent:light-dark(oklch(0.5 0.16 39.8),oklch(0.78 0.13 39.8));
 --vibeui-buttongroup-041-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

@@ -40,7 +40,7 @@ const STYLES = `
 --vibeui-cascader-002-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-cascader-002-muted:color-mix(in oklab,var(--vibeui-cascader-002-fg) 68%,transparent);
 --vibeui-cascader-002-border:light-dark(oklch(0.9 0 265),oklch(0.38 0 265));
---vibeui-cascader-002-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.15 262));
+--vibeui-cascader-002-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.75 0.15 39.8));
 --vibeui-cascader-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

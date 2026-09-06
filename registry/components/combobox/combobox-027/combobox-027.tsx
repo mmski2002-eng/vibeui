@@ -45,7 +45,7 @@ const STYLES = `
 --vibeui-combobox-027-border:light-dark(oklch(0.9 0.006 160),oklch(0.36 0.012 160));
 --vibeui-combobox-027-field:light-dark(oklch(0.985 0.002 160),oklch(0.27 0.01 160));
 --vibeui-combobox-027-active:light-dark(oklch(0.955 0.02 160),oklch(0.34 0.03 160));
---vibeui-combobox-027-accent:light-dark(oklch(0.5 0.13 160),oklch(0.74 0.13 160));
+--vibeui-combobox-027-accent:light-dark(oklch(0.5 0.13 39.8),oklch(0.74 0.13 39.8));
 --vibeui-combobox-027-online:light-dark(oklch(0.62 0.16 150),oklch(0.72 0.16 150));
 --vibeui-combobox-027-away:light-dark(oklch(0.72 0.15 80),oklch(0.78 0.14 80));
 --vibeui-combobox-027-offline:light-dark(oklch(0.65 0.01 160),oklch(0.55 0.01 160));

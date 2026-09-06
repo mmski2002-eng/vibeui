@@ -37,7 +37,7 @@ const STYLES = `
 --vibeui-checkbox-020-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
 --vibeui-checkbox-020-paper:light-dark(oklch(0.985 0.003 90),oklch(0.25 0.006 90));
 --vibeui-checkbox-020-off:light-dark(oklch(0.95 0 265),oklch(0.31 0 265));
---vibeui-checkbox-020-accent:light-dark(oklch(0.45 0.11 260),oklch(0.65 0.13 260));
+--vibeui-checkbox-020-accent:light-dark(oklch(0.45 0.11 39.8),oklch(0.65 0.13 39.8));
 --vibeui-checkbox-020-on-accent:oklch(0.99 0 260);
 --vibeui-checkbox-020-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-checkbox-020-serif:ui-serif,Georgia,"Times New Roman",serif;

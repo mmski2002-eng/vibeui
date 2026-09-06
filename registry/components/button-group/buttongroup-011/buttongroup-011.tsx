@@ -23,7 +23,7 @@ const STYLES = `
 --vibeui-buttongroup-011-muted:color-mix(in oklab,var(--vibeui-buttongroup-011-fg) 68%,transparent);
 --vibeui-buttongroup-011-border:light-dark(oklch(0.88 0 265),oklch(0.37 0 265));
 --vibeui-buttongroup-011-hover:light-dark(oklch(0.96 0 265),oklch(0.3 0 265));
---vibeui-buttongroup-011-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
+--vibeui-buttongroup-011-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.72 0.15 39.8));
 --vibeui-buttongroup-011-danger:light-dark(oklch(0.55 0.19 25),oklch(0.74 0.15 25));
 --vibeui-buttongroup-011-danger-soft:light-dark(oklch(0.96 0.03 25),oklch(0.32 0.07 25));
 --vibeui-buttongroup-011-danger-border:light-dark(oklch(0.86 0.07 25),oklch(0.45 0.11 25));

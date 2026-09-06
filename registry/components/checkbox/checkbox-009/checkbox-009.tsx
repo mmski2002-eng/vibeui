@@ -43,8 +43,8 @@ const STYLES = `
 --vibeui-checkbox-009-muted:color-mix(in oklab,var(--vibeui-checkbox-009-fg) 68%,transparent);
 --vibeui-checkbox-009-border:light-dark(oklch(0.9 0 265),oklch(0.38 0 265));
 --vibeui-checkbox-009-hover:light-dark(oklch(0.975 0 265),oklch(0.32 0 265));
---vibeui-checkbox-009-accent:light-dark(oklch(0.56 0.16 265),oklch(0.74 0.14 265));
---vibeui-checkbox-009-badge:light-dark(oklch(0.95 0 265),oklch(0.34 0.05 265));
+--vibeui-checkbox-009-accent:light-dark(oklch(0.56 0.16 39.8),oklch(0.74 0.14 39.8));
+--vibeui-checkbox-009-badge:light-dark(oklch(0.95 0 39.8),oklch(0.34 0.05 39.8));
 --vibeui-checkbox-009-mark:light-dark(oklch(0.99 0 265),oklch(0.2 0 265));
 --vibeui-checkbox-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

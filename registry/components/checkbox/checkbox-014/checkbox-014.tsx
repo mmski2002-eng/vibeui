@@ -41,7 +41,7 @@ const STYLES = `
 --vibeui-checkbox-014-muted:color-mix(in oklab,var(--vibeui-checkbox-014-fg) 68%,transparent);
 --vibeui-checkbox-014-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
 --vibeui-checkbox-014-track:light-dark(oklch(0.94 0 265),oklch(0.3 0 265));
---vibeui-checkbox-014-accent:light-dark(oklch(0.56 0.14 150),oklch(0.68 0.15 150));
+--vibeui-checkbox-014-accent:light-dark(oklch(0.56 0.14 39.8),oklch(0.68 0.15 39.8));
 --vibeui-checkbox-014-on-accent:oklch(0.99 0.01 150);
 --vibeui-checkbox-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

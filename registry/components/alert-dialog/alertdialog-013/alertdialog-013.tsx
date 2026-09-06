@@ -43,8 +43,8 @@ const STYLES = `
 --vibeui-alertdialog-013-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
 --vibeui-alertdialog-013-danger:light-dark(oklch(0.55 0.19 25),oklch(0.73 0.16 25));
 --vibeui-alertdialog-013-on-danger:light-dark(oklch(1 0 0),oklch(0.19 0.04 25));
---vibeui-alertdialog-013-avatar-bg:light-dark(oklch(0.9 0.06 25),oklch(0.36 0.07 25));
---vibeui-alertdialog-013-avatar-fg:light-dark(oklch(0.38 0.12 25),oklch(0.91 0.06 25));
+--vibeui-alertdialog-013-avatar-bg:light-dark(oklch(0.9 0.06 39.8),oklch(0.36 0.07 39.8));
+--vibeui-alertdialog-013-avatar-fg:light-dark(oklch(0.38 0.12 39.8),oklch(0.91 0.06 39.8));
 --vibeui-alertdialog-013-shadow:light-dark(oklch(0.2 0 265 / 55%),oklch(0.02 0 265 / 70%));
 --vibeui-alertdialog-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

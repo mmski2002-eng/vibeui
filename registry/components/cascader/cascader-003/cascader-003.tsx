@@ -49,7 +49,7 @@ const STYLES = `
 --vibeui-cascader-003-fg:light-dark(oklch(0.23 0 285),oklch(0.94 0 285));
 --vibeui-cascader-003-muted:color-mix(in oklab,var(--vibeui-cascader-003-fg) 68%,transparent);
 --vibeui-cascader-003-border:light-dark(oklch(0.9 0 285),oklch(0.38 0 285));
---vibeui-cascader-003-accent:light-dark(oklch(0.56 0.17 300),oklch(0.76 0.14 300));
+--vibeui-cascader-003-accent:light-dark(oklch(0.56 0.17 39.8),oklch(0.76 0.14 39.8));
 --vibeui-cascader-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

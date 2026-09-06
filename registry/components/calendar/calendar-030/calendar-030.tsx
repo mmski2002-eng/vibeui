@@ -42,8 +42,8 @@ const STYLES = `
 --vibeui-calendar-030-faint:light-dark(oklch(0.82 0.01 165),oklch(0.43 0.012 165));
 --vibeui-calendar-030-border:light-dark(oklch(0.91 0.008 165),oklch(0.34 0.014 165));
 --vibeui-calendar-030-soft:light-dark(oklch(0.97 0.008 165),oklch(0.27 0.012 165));
---vibeui-calendar-030-accent:light-dark(oklch(0.48 0.11 165),oklch(0.72 0.12 165));
---vibeui-calendar-030-accentsoft:light-dark(oklch(0.94 0.05 165),oklch(0.31 0.05 165));
+--vibeui-calendar-030-accent:light-dark(oklch(0.48 0.11 39.8),oklch(0.72 0.12 39.8));
+--vibeui-calendar-030-accentsoft:light-dark(oklch(0.94 0.05 39.8),oklch(0.31 0.05 39.8));
 --vibeui-calendar-030-onaccent:light-dark(oklch(0.99 0 0),oklch(0.17 0.02 165));
 --vibeui-calendar-030-radius:0.75rem;
 --vibeui-calendar-030-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

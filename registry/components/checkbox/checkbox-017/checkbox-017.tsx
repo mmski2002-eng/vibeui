@@ -50,8 +50,8 @@ const STYLES = `
 --vibeui-checkbox-017-muted:color-mix(in oklab,var(--vibeui-checkbox-017-fg) 68%,transparent);
 --vibeui-checkbox-017-border:light-dark(oklch(0.91 0 265),oklch(0.37 0 265));
 --vibeui-checkbox-017-head:light-dark(oklch(0.975 0 265),oklch(0.27 0 265));
---vibeui-checkbox-017-accent:light-dark(oklch(0.52 0.16 275),oklch(0.66 0.16 275));
---vibeui-checkbox-017-picked:light-dark(oklch(0.96 0 275),oklch(0.31 0.045 275));
+--vibeui-checkbox-017-accent:light-dark(oklch(0.52 0.16 39.8),oklch(0.66 0.16 39.8));
+--vibeui-checkbox-017-picked:light-dark(oklch(0.96 0 275),oklch(0.31 0.045 39.8));
 --vibeui-checkbox-017-on-accent:oklch(0.99 0 275);
 --vibeui-checkbox-017-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

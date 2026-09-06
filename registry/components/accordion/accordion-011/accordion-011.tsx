@@ -38,7 +38,7 @@ const STYLES = `
 --vibeui-accordion-011-bg:oklch(0.21 0 265);
 --vibeui-accordion-011-raised:oklch(0.25 0 265);
 --vibeui-accordion-011-border:oklch(1 0 0 / 12%);
---vibeui-accordion-011-accent:oklch(0.72 0.16 195);
+--vibeui-accordion-011-accent:oklch(0.72 0.16 39.8);
 --vibeui-accordion-011-radius:0.875rem;
 --vibeui-accordion-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

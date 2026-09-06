@@ -45,7 +45,7 @@ const STYLES = `
 --vibeui-accordion-005-muted:color-mix(in oklab,var(--vibeui-accordion-005-fg) 68%,transparent);
 --vibeui-accordion-005-bg:transparent;
 --vibeui-accordion-005-border:light-dark(oklch(0.91 0 265),oklch(0.31 0 265));
---vibeui-accordion-005-accent:light-dark(oklch(0.55 0.2 262),oklch(0.75 0.16 262));
+--vibeui-accordion-005-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.75 0.16 39.8));
 --vibeui-accordion-005-warn:light-dark(oklch(0.68 0.15 70),oklch(0.78 0.15 75));
 /* Цвет подписи выводится из самого цвета внимания: заданный через проп warn
    оттенок не должен требовать второй настройки. */

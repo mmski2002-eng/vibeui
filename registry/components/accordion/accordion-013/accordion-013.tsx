@@ -44,11 +44,11 @@ const STYLES = `
 --vibeui-accordion-013-edge:light-dark(oklch(0.86 0.008 85),oklch(0.14 0 265));
 --vibeui-accordion-013-fg:light-dark(oklch(0.22 0 265),oklch(0.93 0 265));
 --vibeui-accordion-013-muted:color-mix(in oklab,var(--vibeui-accordion-013-fg) 68%,transparent);
---vibeui-accordion-013-accent:light-dark(oklch(0.52 0.18 258),oklch(0.72 0.16 258));
+--vibeui-accordion-013-accent:light-dark(oklch(0.52 0.18 39.8),oklch(0.72 0.16 39.8));
 --vibeui-accordion-013-press:light-dark(oklch(0.6 0.01 85 / 22%),oklch(0 0 0 / 50%));
 /* Свечение индикатора только в тёмной ветке: на светлом фоне оно не читается
    и превращается в грязь вокруг квадрата. */
---vibeui-accordion-013-led-glow:light-dark(0 0 0 transparent,0 0 6px oklch(0.72 0.16 258 / 55%));
+--vibeui-accordion-013-led-glow:light-dark(0 0 0 transparent,0 0 6px oklch(0.72 0.16 39.8 / 55%));
 --vibeui-accordion-013-travel:2px;
 --vibeui-accordion-013-radius:0.5rem;
 --vibeui-accordion-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

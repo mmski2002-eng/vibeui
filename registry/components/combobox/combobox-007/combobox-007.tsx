@@ -32,7 +32,7 @@ const STYLES = `
 --vibeui-combobox-007-border:light-dark(oklch(0.9 0 250),oklch(0.37 0 250));
 --vibeui-combobox-007-field:light-dark(oklch(0.98 0 250),oklch(0.3 0 250));
 --vibeui-combobox-007-active:light-dark(oklch(0.95 0 250),oklch(0.36 0 250));
---vibeui-combobox-007-accent:light-dark(oklch(0.52 0.13 250),oklch(0.76 0.13 250));
+--vibeui-combobox-007-accent:light-dark(oklch(0.52 0.13 39.8),oklch(0.76 0.13 39.8));
 --vibeui-combobox-007-radius:0.625rem;
 --vibeui-combobox-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-combobox-007-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;

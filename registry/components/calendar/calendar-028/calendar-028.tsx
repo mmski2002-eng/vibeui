@@ -38,8 +38,8 @@ const STYLES = `
 --vibeui-calendar-028-soft:light-dark(oklch(0.97 0.006 200),oklch(0.27 0.01 200));
 --vibeui-calendar-028-busy:light-dark(oklch(0.94 0.02 25),oklch(0.36 0.05 25));
 --vibeui-calendar-028-busyfg:light-dark(oklch(0.48 0.1 25),oklch(0.86 0.08 25));
---vibeui-calendar-028-accent:light-dark(oklch(0.5 0.11 200),oklch(0.73 0.11 200));
---vibeui-calendar-028-accentsoft:light-dark(oklch(0.93 0.05 200),oklch(0.32 0.05 200));
+--vibeui-calendar-028-accent:light-dark(oklch(0.5 0.11 39.8),oklch(0.73 0.11 39.8));
+--vibeui-calendar-028-accentsoft:light-dark(oklch(0.93 0.05 39.8),oklch(0.32 0.05 39.8));
 --vibeui-calendar-028-onaccent:light-dark(oklch(0.99 0 0),oklch(0.17 0.02 200));
 --vibeui-calendar-028-radius:0.6875rem;
 --vibeui-calendar-028-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

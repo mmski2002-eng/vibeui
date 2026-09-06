@@ -32,7 +32,7 @@ const STYLES = `
 --vibeui-calendar-012-muted:color-mix(in oklab,var(--vibeui-calendar-012-fg) 68%,transparent);
 --vibeui-calendar-012-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-calendar-012-hover:light-dark(oklch(0.96 0 265),oklch(0.29 0 265));
---vibeui-calendar-012-accent:light-dark(oklch(0.54 0.16 285),oklch(0.72 0.14 285));
+--vibeui-calendar-012-accent:light-dark(oklch(0.54 0.16 39.8),oklch(0.72 0.14 39.8));
 --vibeui-calendar-012-on-accent:light-dark(oklch(0.99 0 285),oklch(0.19 0 285));
 --vibeui-calendar-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

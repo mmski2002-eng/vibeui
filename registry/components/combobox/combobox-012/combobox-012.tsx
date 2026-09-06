@@ -44,8 +44,8 @@ const STYLES = `
 --vibeui-combobox-012-muted:color-mix(in oklab,var(--vibeui-combobox-012-fg) 68%,transparent);
 --vibeui-combobox-012-border:light-dark(oklch(0.9 0.01 130),oklch(0.38 0.016 130));
 --vibeui-combobox-012-field:light-dark(oklch(0.985 0.005 130),oklch(0.3 0.014 130));
---vibeui-combobox-012-active:light-dark(oklch(0.95 0.04 130),oklch(0.37 0.045 130));
---vibeui-combobox-012-accent:light-dark(oklch(0.48 0.12 130),oklch(0.75 0.14 130));
+--vibeui-combobox-012-active:light-dark(oklch(0.95 0.04 39.8),oklch(0.37 0.045 39.8));
+--vibeui-combobox-012-accent:light-dark(oklch(0.48 0.12 39.8),oklch(0.75 0.14 39.8));
 --vibeui-combobox-012-onaccent:light-dark(oklch(1 0 0),oklch(0.2 0.03 130));
 --vibeui-combobox-012-radius:0.625rem;
 --vibeui-combobox-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
