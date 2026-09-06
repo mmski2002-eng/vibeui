@@ -24,7 +24,7 @@ const STYLES = `:where([data-vibeui-block="avatar-018"]){
 --vibeui-avatar-018-size:2.5rem;
 --vibeui-avatar-018-ring:0.1875rem;
 --vibeui-avatar-018-arc:100%;
---vibeui-avatar-018-color:light-dark(oklch(0.55 0.2 262),oklch(0.69 0.2 262));
+--vibeui-avatar-018-color:light-dark(oklch(0.55 0.2 39.8),oklch(0.69 0.2 39.8));
 --vibeui-avatar-018-track:light-dark(oklch(0.92 0 265),oklch(0.3 0 265));
 --vibeui-avatar-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

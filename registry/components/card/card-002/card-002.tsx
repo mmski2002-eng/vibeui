@@ -34,7 +34,7 @@ const STYLES = `
 --vibeui-card-002-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-card-002-muted:color-mix(in oklab,var(--vibeui-card-002-fg) 68%,transparent);
 --vibeui-card-002-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
---vibeui-card-002-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
+--vibeui-card-002-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.74 0.15 39.8));
 /* Зелёный светлой ветки притемнён до 0.525: на 0.55 «+12.4%» давало 4.1:1. */
 --vibeui-card-002-good:light-dark(oklch(0.525 0.15 152),oklch(0.76 0.14 152));
 --vibeui-card-002-bad:light-dark(oklch(0.55 0.18 25),oklch(0.72 0.16 25));

@@ -27,7 +27,7 @@ const STYLES = `
 --vibeui-frame-007-bar:oklch(0.26 0 260);
 --vibeui-frame-007-fg:oklch(0.92 0 260);
 --vibeui-frame-007-muted:color-mix(in oklab,var(--vibeui-frame-007-fg) 68%,transparent);
---vibeui-frame-007-accent:oklch(0.78 0.16 150);
+--vibeui-frame-007-accent:oklch(0.78 0.16 39.8);
 --vibeui-frame-007-border:oklch(0.32 0 260);
 --vibeui-frame-007-radius:0.875rem;
 --vibeui-frame-007-font:ui-monospace,"Cascadia Code","Consolas","SFMono-Regular",Menlo,monospace;

@@ -28,7 +28,7 @@ const STYLES = `
 --vibeui-card-017-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-card-017-muted:color-mix(in oklab,var(--vibeui-card-017-fg) 68%,transparent);
 --vibeui-card-017-border:light-dark(oklch(0.91 0.007 90),oklch(0.37 0.011 90));
---vibeui-card-017-accent:light-dark(oklch(0.62 0.14 55),oklch(0.78 0.12 55));
+--vibeui-card-017-accent:light-dark(oklch(0.62 0.14 39.8),oklch(0.78 0.12 39.8));
 --vibeui-card-017-star:light-dark(oklch(0.74 0.15 78),oklch(0.82 0.14 78));
 --vibeui-card-017-track:light-dark(oklch(0.93 0.005 90),oklch(0.35 0.008 90));
 --vibeui-card-017-hue:60;

@@ -40,7 +40,7 @@ const STYLES = `
 --vibeui-carousel-016-muted:color-mix(in oklab,var(--vibeui-carousel-016-fg) 68%,transparent);
 --vibeui-carousel-016-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
 --vibeui-carousel-016-hover:light-dark(oklch(0.96 0 265),oklch(0.32 0 265));
---vibeui-carousel-016-accent:light-dark(oklch(0.55 0.19 262),oklch(0.74 0.16 262));
+--vibeui-carousel-016-accent:light-dark(oklch(0.55 0.19 39.8),oklch(0.74 0.16 39.8));
 --vibeui-carousel-016-progress:0%;
 --vibeui-carousel-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

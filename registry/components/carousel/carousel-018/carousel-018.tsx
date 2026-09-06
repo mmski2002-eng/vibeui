@@ -34,7 +34,7 @@ const STYLES = `
 --vibeui-carousel-018-fg:light-dark(oklch(0.24 0 265),oklch(0.95 0 265));
 --vibeui-carousel-018-muted:color-mix(in oklab,var(--vibeui-carousel-018-fg) 68%,transparent);
 --vibeui-carousel-018-border:light-dark(oklch(0.89 0 265),oklch(0.37 0 265));
---vibeui-carousel-018-accent:light-dark(oklch(0.53 0.17 22),oklch(0.78 0.13 22));
+--vibeui-carousel-018-accent:light-dark(oklch(0.53 0.17 39.8),oklch(0.78 0.13 39.8));
 --vibeui-carousel-018-dot:light-dark(oklch(0.55 0 265 / 32%),oklch(0.92 0 265 / 34%));
 --vibeui-carousel-018-radius:0.875rem;
 --vibeui-carousel-018-hue:22;

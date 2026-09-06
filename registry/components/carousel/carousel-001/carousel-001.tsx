@@ -37,7 +37,7 @@ const STYLES = `
 --vibeui-carousel-001-fg:light-dark(oklch(0.22 0 265),oklch(0.93 0 265));
 --vibeui-carousel-001-muted:color-mix(in oklab,var(--vibeui-carousel-001-fg) 68%,transparent);
 --vibeui-carousel-001-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
---vibeui-carousel-001-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
+--vibeui-carousel-001-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.74 0.15 39.8));
 --vibeui-carousel-001-radius:0.875rem;
 --vibeui-carousel-001-pad:0;
 --vibeui-carousel-001-shell:0;

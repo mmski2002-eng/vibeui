@@ -27,7 +27,7 @@ const STYLES = `
 --vibeui-frame-015-muted:color-mix(in oklab,var(--vibeui-frame-015-fg) 68%,transparent);
 --vibeui-frame-015-border:light-dark(oklch(0.89 0 265),oklch(0.4 0 265));
 --vibeui-frame-015-light:oklch(0.98 0 265);
---vibeui-frame-015-accent:light-dark(oklch(0.7 0.16 45),oklch(0.78 0.15 45));
+--vibeui-frame-015-accent:light-dark(oklch(0.7 0.16 39.8),oklch(0.78 0.15 39.8));
 --vibeui-frame-015-radius:0.875rem;
 --vibeui-frame-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -65,7 +65,7 @@ position:relative;overflow:hidden;height:100%;
 background:
 radial-gradient(60% 80% at 24% 22%,oklch(0.62 0.18 300),transparent 65%),
 radial-gradient(55% 70% at 82% 30%,oklch(0.68 0.16 35),transparent 62%),
-linear-gradient(150deg,oklch(0.34 0.09 285),var(--vibeui-frame-015-poster));
+linear-gradient(150deg,oklch(0.34 0.09 39.8),var(--vibeui-frame-015-poster));
 }
 [data-vibeui-block="frame-015"] [data-part="wave"]{
 position:absolute;inset:auto 0 0;height:46%;

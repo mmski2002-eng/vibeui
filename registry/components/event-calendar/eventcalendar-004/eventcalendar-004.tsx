@@ -47,9 +47,9 @@ const STYLES = `
 --vibeui-eventcalendar-004-muted:color-mix(in oklab,var(--vibeui-eventcalendar-004-fg) 68%,transparent);
 --vibeui-eventcalendar-004-border:light-dark(oklch(0.91 0 265),oklch(0.35 0 265));
 --vibeui-eventcalendar-004-line:light-dark(oklch(0.96 0 265),oklch(0.3 0 265));
---vibeui-eventcalendar-004-accent:light-dark(oklch(0.55 0.16 262),oklch(0.74 0.15 262));
---vibeui-eventcalendar-004-personal:light-dark(oklch(0.6 0.13 165),oklch(0.76 0.12 165));
---vibeui-eventcalendar-004-deadline:light-dark(oklch(0.58 0.19 25),oklch(0.74 0.17 25));
+--vibeui-eventcalendar-004-accent:light-dark(oklch(0.55 0.16 39.8),oklch(0.74 0.15 39.8));
+--vibeui-eventcalendar-004-personal:light-dark(oklch(0.6 0.13 39.8),oklch(0.76 0.12 39.8));
+--vibeui-eventcalendar-004-deadline:light-dark(oklch(0.58 0.19 39.8),oklch(0.74 0.17 39.8));
 --vibeui-eventcalendar-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

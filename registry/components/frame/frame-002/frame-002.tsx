@@ -59,7 +59,7 @@ padding:1rem;text-align:center;color:var(--vibeui-frame-002-light);
 background:
 radial-gradient(90% 90% at 22% 12%,oklch(0.55 0.16 285),transparent 62%),
 radial-gradient(80% 80% at 82% 88%,oklch(0.6 0.15 25),transparent 60%),
-linear-gradient(145deg,oklch(0.32 0.07 275),var(--vibeui-frame-002-screen));
+linear-gradient(145deg,oklch(0.32 0.07 39.8),var(--vibeui-frame-002-screen));
 }
 [data-vibeui-block="frame-002"] [data-part="track"]{
 position:absolute;left:0.75rem;right:0.75rem;bottom:0.75rem;

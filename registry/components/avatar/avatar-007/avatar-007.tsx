@@ -31,7 +31,7 @@ const STYLES = `:where([data-vibeui-block="avatar-007"]){
 --vibeui-avatar-007-shape:light-dark(oklch(0.92 0.05 var(--vibeui-avatar-007-hue)),oklch(0.34 0.065 var(--vibeui-avatar-007-hue)));
 --vibeui-avatar-007-initials:light-dark(oklch(0.38 0.09 var(--vibeui-avatar-007-hue)),oklch(0.88 0.063 var(--vibeui-avatar-007-hue)));
 --vibeui-avatar-007-status:light-dark(oklch(0.62 0.17 152),oklch(0.76 0.17 152));
---vibeui-avatar-007-accent:light-dark(oklch(0.55 0.17 265),oklch(0.69 0.17 265));
+--vibeui-avatar-007-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.69 0.17 39.8));
 --vibeui-avatar-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 [data-vibeui-block="avatar-007"]{

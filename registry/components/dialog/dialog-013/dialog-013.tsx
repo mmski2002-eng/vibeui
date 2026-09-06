@@ -37,7 +37,7 @@ const STYLES = `
 --vibeui-dialog-013-field:light-dark(oklch(1 0 0),oklch(0.2 0 265));
 --vibeui-dialog-013-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0 262));
 --vibeui-dialog-013-border:light-dark(oklch(0.89 0 265),oklch(0.36 0 265));
---vibeui-dialog-013-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
+--vibeui-dialog-013-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.18 39.8));
 --vibeui-dialog-013-radius:1rem;
 --vibeui-dialog-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -80,8 +80,8 @@ border-radius:0.625rem;font-size:0.75rem;line-height:1.3;
 transition:border-color .16s ease,background-color .16s ease;
 }
 [data-vibeui-dialog-013-window] [data-part="grade"]:has(input:checked){
-border-color:var(--vibeui-dialog-013-accent,light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262)));
-background:color-mix(in oklab,var(--vibeui-dialog-013-accent,light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262))) 10%,transparent);
+border-color:var(--vibeui-dialog-013-accent,light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.18 39.8)));
+background:color-mix(in oklab,var(--vibeui-dialog-013-accent,light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.18 39.8))) 10%,transparent);
 font-weight:600;
 }
 [data-vibeui-dialog-013-window] [data-part="grade"] input{position:absolute;opacity:0;width:0;height:0}
@@ -93,8 +93,8 @@ border-radius:0.625rem;background:var(--vibeui-dialog-013-field,light-dark(oklch
 font:inherit;font-size:0.875rem;line-height:1.5;
 }
 [data-vibeui-dialog-013-window] textarea:focus{
-outline:none;border-color:var(--vibeui-dialog-013-accent,light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262)));
-box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-dialog-013-accent,light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262))) 20%,transparent);
+outline:none;border-color:var(--vibeui-dialog-013-accent,light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.18 39.8)));
+box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-dialog-013-accent,light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.18 39.8))) 20%,transparent);
 }
 [data-vibeui-dialog-013-window] [data-part="actions"]{display:flex;justify-content:flex-end;gap:0.5rem;margin-top:1.125rem}
 [data-vibeui-dialog-013-window] button{
@@ -103,9 +103,9 @@ display:inline-flex;align-items:center;height:2.25rem;padding:0 1rem;
 border-radius:0.5rem;border:1px solid transparent;
 }
 [data-vibeui-dialog-013-window] [data-part="skip"]{background:transparent;color:var(--vibeui-dialog-013-muted,light-dark(oklch(0.5 0 265),oklch(0.7 0 265)));border-color:var(--vibeui-dialog-013-border,light-dark(oklch(0.89 0 265),oklch(0.36 0 265)))}
-[data-vibeui-dialog-013-window] [data-part="submit"]{background:var(--vibeui-dialog-013-accent,light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262)));color:var(--vibeui-dialog-013-on-accent,light-dark(oklch(1 0 0),oklch(0.18 0 262)))}
+[data-vibeui-dialog-013-window] [data-part="submit"]{background:var(--vibeui-dialog-013-accent,light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.18 39.8)));color:var(--vibeui-dialog-013-on-accent,light-dark(oklch(1 0 0),oklch(0.18 0 262)))}
 [data-vibeui-dialog-013-window] [data-part="submit"]:hover{filter:brightness(0.94)}
-[data-vibeui-dialog-013-window] :focus-visible{outline:2px solid var(--vibeui-dialog-013-accent,light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262)));outline-offset:2px}
+[data-vibeui-dialog-013-window] :focus-visible{outline:2px solid var(--vibeui-dialog-013-accent,light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.18 39.8)));outline-offset:2px}
 /* Popover страницу не блокирует: фон под окном иначе продолжает прокручиваться. */
 html:has([data-vibeui-dialog-013-window]:popover-open){overflow:hidden}
 /* Развёрнутый режим: окно стоит в потоке вместо кнопки, а не в верхнем слое.

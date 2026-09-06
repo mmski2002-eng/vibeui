@@ -23,8 +23,8 @@ const STYLES = `
 --vibeui-frame-019-bg:light-dark(oklch(1 0 0),oklch(0.23 0 265));
 --vibeui-frame-019-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-frame-019-muted:color-mix(in oklab,var(--vibeui-frame-019-fg) 68%,transparent);
---vibeui-frame-019-border-a:light-dark(oklch(0.72 0.19 320),oklch(0.78 0.17 320));
---vibeui-frame-019-border-b:light-dark(oklch(0.75 0.17 230),oklch(0.8 0.15 230));
+--vibeui-frame-019-border-a:light-dark(oklch(0.72 0.19 39.8),oklch(0.78 0.17 39.8));
+--vibeui-frame-019-border-b:light-dark(oklch(0.75 0.17 39.8),oklch(0.8 0.15 39.8));
 --vibeui-frame-019-glow-a:color-mix(in oklab,var(--vibeui-frame-019-border-a) 55%,transparent);
 --vibeui-frame-019-glow-b:color-mix(in oklab,var(--vibeui-frame-019-border-b) 40%,transparent);
 --vibeui-frame-019-radius:1rem;

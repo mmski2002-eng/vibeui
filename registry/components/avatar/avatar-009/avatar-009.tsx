@@ -14,7 +14,7 @@ export type Avatar009Props = Omit<ComponentProps<"span">, "children"> & {
 // «печатает» гасятся при prefers-reduced-motion, иначе они дёргают внимание.
 const STYLES = `:where([data-vibeui-block="avatar-009"]){
 --vibeui-avatar-009-size:2.5rem;
---vibeui-avatar-009-accent:light-dark(oklch(0.62 0.17 285),oklch(0.76 0.17 285));
+--vibeui-avatar-009-accent:light-dark(oklch(0.62 0.17 39.8),oklch(0.76 0.17 39.8));
 --vibeui-avatar-009-fg:light-dark(oklch(0.99 0 285),oklch(0.94 0 285));
 --vibeui-avatar-009-dot:light-dark(oklch(0.99 0 285),oklch(0.88 0 285));
 --vibeui-avatar-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -27,7 +27,7 @@ vertical-align:middle;
 border-radius:calc(var(--vibeui-avatar-009-size) * 0.32);
 background:
 radial-gradient(120% 120% at 25% 15%,color-mix(in oklab,var(--vibeui-avatar-009-accent) 55%,oklch(1 0 0)),transparent 60%),
-linear-gradient(140deg,var(--vibeui-avatar-009-accent),oklch(0.42 0.13 265));
+linear-gradient(140deg,var(--vibeui-avatar-009-accent),oklch(0.42 0.13 39.8));
 color:var(--vibeui-avatar-009-fg);font-family:var(--vibeui-avatar-009-font);
 }
 [data-vibeui-block="avatar-009"][data-size="sm"]{--vibeui-avatar-009-size:2rem}

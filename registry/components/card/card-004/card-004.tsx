@@ -34,9 +34,9 @@ const STYLES = `
 --vibeui-card-004-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
 --vibeui-card-004-frame:light-dark(oklch(0.96 0 265),oklch(0.3 0 265));
 --vibeui-card-004-frame-light:light-dark(oklch(1 0 0),oklch(0.38 0 265));
---vibeui-card-004-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
+--vibeui-card-004-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.74 0.15 39.8));
 --vibeui-card-004-on-accent:light-dark(oklch(0.99 0 265),oklch(0.18 0 265));
---vibeui-card-004-sale:light-dark(oklch(0.56 0.19 25),oklch(0.68 0.18 25));
+--vibeui-card-004-sale:light-dark(oklch(0.56 0.19 39.8),oklch(0.68 0.18 39.8));
 --vibeui-card-004-on-sale:light-dark(oklch(0.99 0.01 25),oklch(0.16 0.02 25));
 --vibeui-card-004-star:light-dark(oklch(0.72 0.15 80),oklch(0.82 0.15 80));
 --vibeui-card-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
