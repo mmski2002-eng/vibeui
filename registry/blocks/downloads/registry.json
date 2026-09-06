@@ -1,0 +1,257 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "download-001",
+      "type": "registry:block",
+      "title": "Бейджи магазинов",
+      "description": "Секция загрузки приложения с бейджами магазинов: приписка и название магазина, нейтральные плашки без брендовых логотипов. Самодостаточна: один файл, без зависимостей.",
+      "categories": ["downloads"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "download-001/download-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/download-001.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-download-001-*. Серверный компонент. Бейджи собраны своей вёрсткой (мелкая приписка сверху, название магазина крупно) без логотипов Apple или Google — только нейтральные тёмные плашки-ссылки, приподнимающиеся на наведении.",
+      "meta": {
+        "tags": ["downloads", "app", "store", "mobile", "marketing"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Download001",
+          "usage": "<Download001\n  title=\"Скачайте приложение\"\n  stores={[{ kicker: \"Загрузите в\", name: \"App Store\", href: \"#\" }]}\n/>",
+          "summary": "Секция загрузки приложения с бейджами магазинов: приписка сверху и название магазина крупно, нейтральные тёмные плашки без брендовых логотипов. Формат «скачайте приложение» для мобильного лендинга. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-download-001-* и не подменять её токенами вашей темы",
+            "бейджи без логотипов Apple и Google — своя нейтральная вёрстка вместо брендовых ассетов",
+            "структуру бейджа: мелкая приписка сверху, название магазина крупно",
+            "light-dark() в палитре: компонент следует color-scheme окружения"
+          ],
+          "adapt": [
+            "eyebrow, title и summary — надзаголовок, заголовок и подводку",
+            "массив stores — приписка, название и адрес каждого магазина",
+            "акцент через проп accent — надзаголовок и фокус-кольцо бейджа",
+            "background — подложка компонента; пусто означает «без подложки»"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme; у проекта должно быть объявлено color-scheme: light dark на html.",
+            "Бейджи стилизованы нейтрально: официальные ассеты магазинов подставьте сами при необходимости.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          { "prop": "title", "label": "Заголовок", "type": "text", "default": "Скачайте приложение", "maxLength": 40 },
+          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "Приложение", "maxLength": 24 },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+        ],
+        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "i18n": {
+          "en": {
+            "description": "An app download section with store badges: a kicker and store name, neutral plates without brand logos. Self-contained — one file, no dependencies.",
+            "ai": {
+              "summary": "An app download section with store badges: a kicker on top and the store name large, neutral dark plates without brand logos. A download-the-app format for a mobile landing. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-download-001-* palette — do not swap it for your theme tokens",
+                "badges without Apple and Google logos — a neutral custom layout instead of brand assets",
+                "the badge structure: a small kicker on top, the store name large",
+                "light-dark() in the palette: the component follows the surrounding color-scheme"
+              ],
+              "adapt": [
+                "eyebrow, title and summary — the eyebrow, heading and lead-in",
+                "the stores array — kicker, name and address of each store",
+                "the accent via the accent prop — eyebrow and badge focus ring",
+                "background — the component's backdrop; empty means no backdrop"
+              ],
+              "notes": [
+                "The theme comes from color-scheme; the project must declare color-scheme: light dark on html.",
+                "Badges are styled neutrally: substitute the official store assets yourself if needed.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Download001\n  title=\"Get the app\"\n  stores={[{ kicker: \"Download on the\", name: \"App Store\", href: \"#\" }]}\n/>"
+            },
+            "controls": {
+              "title": { "label": "Title", "default": "Get the app" },
+              "eyebrow": { "label": "Eyebrow", "default": "Mobile app" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "title": "Store Badges",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-download-001-* variables. A server component. Badges use a custom layout (small kicker on top, store name large) without Apple or Google logos — just neutral dark link plates that lift on hover."
+          }
+        }
+      }
+    },
+    {
+      "name": "download-002",
+      "type": "registry:block",
+      "title": "QR и бейджи",
+      "description": "Секция загрузки с QR-заглушкой: текст и бейджи магазинов слева, декоративный QR-узор на CSS справа. Самодостаточна: один файл, без зависимостей.",
+      "categories": ["downloads"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "download-002/download-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/download-002.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-download-002-*. Серверный компонент. QR — декоративный узор из двух repeating-linear-gradient с background-blend-mode:multiply на белом поле, а не считываемый код: у него role=\"img\" с aria-label, настоящий QR подставит приложение.",
+      "meta": {
+        "tags": ["downloads", "qr", "app", "store", "marketing"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Download002",
+          "usage": "<Download002\n  title=\"Наведите камеру\"\n  stores={[{ kicker: \"Загрузите в\", name: \"App Store\", href: \"#\" }]}\n/>",
+          "summary": "Секция загрузки с QR-заглушкой: текст и бейджи магазинов слева, декоративный QR-узор на CSS-градиентах справа. Формат «наведите камеру» для десктопного лендинга. QR декоративный, настоящий подставит приложение. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-download-002-* и не подменять её токенами вашей темы",
+            "QR как декоративный узор с role=\"img\" и aria-label — это заглушка, а не считываемый код",
+            "перелом в две колонки по container query: на узком экране всё в столбец",
+            "light-dark() в палитре: компонент следует color-scheme окружения"
+          ],
+          "adapt": [
+            "eyebrow, title, summary и qrCaption — тексты секции и подпись под кодом",
+            "массив stores — приписка, название и адрес каждого магазина",
+            "акцент через проп accent — рамка QR, надзаголовок и фокус",
+            "background — подложка компонента; пусто означает «без подложки»"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme; у проекта должно быть объявлено color-scheme: light dark на html.",
+            "QR-узор нечитаем: замените его настоящим кодом со ссылкой на страницу приложения.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          { "prop": "title", "label": "Заголовок", "type": "text", "default": "Наведите камеру", "maxLength": 40 },
+          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "Приложение", "maxLength": 24 },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+        ],
+        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "i18n": {
+          "en": {
+            "description": "A download section with a QR placeholder: text and store badges on the left, a decorative CSS QR pattern on the right. Self-contained — one file, no dependencies.",
+            "ai": {
+              "summary": "A download section with a QR placeholder: text and store badges on the left, a decorative CSS-gradient QR pattern on the right. A point-your-camera format for a desktop landing. The QR is decorative; a real one is wired by the app. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-download-002-* palette — do not swap it for your theme tokens",
+                "the QR as a decorative pattern with role=\"img\" and aria-label — it's a placeholder, not a readable code",
+                "the two-column break via container query: everything stacks when narrow",
+                "light-dark() in the palette: the component follows the surrounding color-scheme"
+              ],
+              "adapt": [
+                "eyebrow, title, summary and qrCaption — the section texts and the caption under the code",
+                "the stores array — kicker, name and address of each store",
+                "the accent via the accent prop — QR border, eyebrow and focus",
+                "background — the component's backdrop; empty means no backdrop"
+              ],
+              "notes": [
+                "The theme comes from color-scheme; the project must declare color-scheme: light dark on html.",
+                "The QR pattern is unreadable: replace it with a real code linking to the app page.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Download002\n  title=\"Point your camera\"\n  stores={[{ kicker: \"Download on the\", name: \"App Store\", href: \"#\" }]}\n/>"
+            },
+            "controls": {
+              "title": { "label": "Title", "default": "Point your camera" },
+              "eyebrow": { "label": "Eyebrow", "default": "Mobile app" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "title": "QR & Badges",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-download-002-* variables. A server component. The QR is a decorative pattern of two repeating-linear-gradients with background-blend-mode:multiply on a white field, not a readable code: it has role=\"img\" with an aria-label, and a real QR is wired by the app."
+          }
+        }
+      }
+    },
+    {
+      "name": "download-003",
+      "type": "registry:block",
+      "title": "Сборки по платформам",
+      "description": "Загрузка десктопного приложения по платформам: карточки macOS, Windows, Linux с типом файла и весом, своя система выделена. Самодостаточна: один файл, без зависимостей.",
+      "categories": ["downloads"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "download-003/download-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/download-003.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-download-003-*. Серверный компонент. Карточки платформ с глифом из первой буквы (без брендовых логотипов), типом файла и весом. Платформа с флагом primary выделена брендовой рамкой и заливкой кнопки. Число колонок считает container query.",
+      "meta": {
+        "tags": ["downloads", "desktop", "platforms", "app", "marketing"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Download003",
+          "usage": "<Download003\n  platforms={[{ name: \"macOS\", detail: \".dmg · 48 МБ\", href: \"#\", primary: true }]}\n/>",
+          "summary": "Загрузка десктопного приложения по платформам: карточки macOS, Windows, Linux с типом файла и весом. Платформа под систему пользователя выделена брендовой рамкой через флаг primary. Иконки — CSS-глифы без брендовых логотипов. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-download-003-* и не подменять её токенами вашей темы",
+            "выделение своей платформы через data-primary — рамка и заливка кнопки",
+            "глиф из первой буквы вместо брендового логотипа платформы",
+            "light-dark() в палитре: компонент следует color-scheme окружения"
+          ],
+          "adapt": [
+            "eyebrow, title и version — надзаголовок, заголовок и строку версии",
+            "массив platforms — название, детали, адрес и флаг primary каждой сборки",
+            "otherNote — подпись ссылки на прочие сборки",
+            "акцент через проп accent — рамка своей платформы, глифы и кнопка"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme; у проекта должно быть объявлено color-scheme: light dark на html.",
+            "Выделенной считается платформа с primary:true: определяйте её по системе пользователя на своей стороне.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          { "prop": "title", "label": "Заголовок", "type": "text", "default": "Скачайте для своей системы", "maxLength": 40 },
+          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "Десктоп", "maxLength": 24 },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+        ],
+        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "i18n": {
+          "en": {
+            "description": "A desktop app download by platform: macOS, Windows, Linux cards with file type and size, your own system highlighted. Self-contained — one file, no dependencies.",
+            "ai": {
+              "summary": "A desktop app download by platform: macOS, Windows, Linux cards with file type and size. The platform for the user's system is highlighted with a brand border via the primary flag. Icons are CSS glyphs, no brand logos. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-download-003-* palette — do not swap it for your theme tokens",
+                "highlighting the user's platform via data-primary — border and button fill",
+                "the first-letter glyph instead of a platform brand logo",
+                "light-dark() in the palette: the component follows the surrounding color-scheme"
+              ],
+              "adapt": [
+                "eyebrow, title and version — the eyebrow, heading and version line",
+                "the platforms array — name, detail, address and primary flag of each build",
+                "otherNote — the label of the link to other builds",
+                "the accent via the accent prop — your platform border, glyphs and button"
+              ],
+              "notes": [
+                "The theme comes from color-scheme; the project must declare color-scheme: light dark on html.",
+                "The platform with primary:true is the highlighted one: detect it from the user's system on your side.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Download003\n  platforms={[{ name: \"macOS\", detail: \".dmg · 48 MB\", href: \"#\", primary: true }]}\n/>"
+            },
+            "controls": {
+              "title": { "label": "Title", "default": "Download for your system" },
+              "eyebrow": { "label": "Eyebrow", "default": "Desktop" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "title": "Platform Builds",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-download-003-* variables. A server component. Platform cards with a first-letter glyph (no brand logos), file type and size. The platform with the primary flag is highlighted with a brand border and button fill. Column count is driven by a container query."
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,257 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "roadmap-001",
+      "type": "registry:block",
+      "title": "Доска статусов",
+      "description": "Публичный роадмап тремя колонками: Запланировано, В работе, Готово. Колонка «В работе» выделена брендовой рамкой. Самодостаточна: один файл, без зависимостей.",
+      "categories": ["roadmap"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "roadmap-001/roadmap-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/roadmap-001.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-roadmap-001-*. Серверный компонент. Три колонки статусов канбан-доской; средняя выделена рамкой через data-active. Число колонок считает container query по ширине блока: на узком экране колонки складываются в столбец.",
+      "meta": {
+        "tags": ["roadmap", "kanban", "status", "planning", "marketing"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Roadmap001",
+          "usage": "<Roadmap001\n  title=\"Над чем работаем\"\n  columns={[{ status: \"В работе\", items: [{ title: \"Новые блоки\" }] }]}\n/>",
+          "summary": "Публичный роадмап тремя колонками статусов: Запланировано, В работе, Готово. Средняя колонка выделена брендовой рамкой как фокус. Карточки — короткие пункты с необязательной подписью. Число колонок считает container query. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-roadmap-001-* и не подменять её токенами вашей темы",
+            "выделение активной колонки рамкой через data-active — это фокус внимания доски",
+            "container-запрос на число колонок: в узкой ширине доска складывается в столбец",
+            "light-dark() в палитре: компонент следует color-scheme окружения, а не носит свою тёмную тему"
+          ],
+          "adapt": [
+            "eyebrow и title — надзаголовок и заголовок секции",
+            "массив columns — статус и карточки каждой колонки",
+            "акцент через проп accent — рамка активной колонки, точки и маркеры",
+            "background — подложка компонента; пусто означает «без подложки»"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme; у проекта должно быть объявлено color-scheme: light dark на html.",
+            "Активной считается вторая колонка по индексу — переставьте колонки, если фокус на другой стадии.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          { "prop": "title", "label": "Заголовок", "type": "text", "default": "Над чем мы работаем", "maxLength": 48 },
+          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "Планы развития", "maxLength": 24 },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+        ],
+        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "i18n": {
+          "en": {
+            "description": "A public roadmap in three columns: Planned, In progress, Done. The In-progress column is highlighted with a brand border. Self-contained — one file, no dependencies.",
+            "ai": {
+              "summary": "A public roadmap in three status columns: Planned, In progress, Done. The middle column is highlighted with a brand border as the focus. Cards are short items with an optional note. Column count is driven by a container query. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-roadmap-001-* palette — do not swap it for your theme tokens",
+                "the active-column highlight via data-active — it's the board's focus",
+                "the container query on column count: the board folds to a single column when narrow",
+                "light-dark() in the palette: the component follows the surrounding color-scheme"
+              ],
+              "adapt": [
+                "eyebrow and title — the section's eyebrow and heading",
+                "the columns array — status and cards of each column",
+                "the accent via the accent prop — active-column border, dots and markers",
+                "background — the component's backdrop; empty means no backdrop"
+              ],
+              "notes": [
+                "The theme comes from color-scheme; the project must declare color-scheme: light dark on html.",
+                "The second column by index is treated as active — reorder columns if the focus is a different stage.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Roadmap001\n  title=\"What we're building\"\n  columns={[{ status: \"In progress\", items: [{ title: \"New blocks\" }] }]}\n/>"
+            },
+            "controls": {
+              "title": { "label": "Title", "default": "What we're building" },
+              "eyebrow": { "label": "Eyebrow", "default": "Roadmap" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "title": "Status Board",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-roadmap-001-* variables. A server component. Three status columns as a kanban board; the middle one is highlighted via data-active. Column count is set by a container query on the block's width: columns stack in a narrow viewport."
+          }
+        }
+      }
+    },
+    {
+      "name": "roadmap-002",
+      "type": "registry:block",
+      "title": "Таймлайн кварталов",
+      "description": "Роадмап вдоль оси времени: вехи по кварталам с состоянием и списком задач, текущий квартал выделен, прошедшие приглушены. Самодостаточна: один файл, без зависимостей.",
+      "categories": ["roadmap"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "roadmap-002/roadmap-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/roadmap-002.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-roadmap-002-*. Серверный компонент. Ось таймлайна: на узкой ширине вертикальная (border-left), на широкой горизонтальная (border-top) через container query. Текущий квартал ищется по state=\"Сейчас\", прошедшие приглушены opacity.",
+      "meta": {
+        "tags": ["roadmap", "timeline", "quarters", "planning", "marketing"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Roadmap002",
+          "usage": "<Roadmap002\n  title=\"Дорожная карта\"\n  quarters={[{ label: \"Q3 2026\", state: \"Сейчас\", items: [\"Новые блоки\"] }]}\n/>",
+          "summary": "Роадмап таймлайном по кварталам: вехи вдоль оси с подписью квартала, состоянием и списком задач. Текущий квартал выделен брендовой точкой, прошедшие приглушены. Ось меняет направление с вертикали на горизонталь по ширине. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-roadmap-002-* и не подменять её токенами вашей темы",
+            "смену направления оси по container query: вертикаль на узком, горизонталь на широком",
+            "выделение текущего квартала точкой и приглушение прошедших — это чтение времени",
+            "light-dark() в палитре: компонент следует color-scheme окружения"
+          ],
+          "adapt": [
+            "eyebrow и title — надзаголовок и заголовок секции",
+            "массив quarters — подпись, состояние и задачи каждого квартала",
+            "акцент через проп accent — точка текущего квартала, теги и маркеры",
+            "background — подложка компонента; пусто означает «без подложки»"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme; у проекта должно быть объявлено color-scheme: light dark на html.",
+            "Текущий квартал ищется по state со значением «Сейчас»; прошедшими считаются кварталы до него.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          { "prop": "title", "label": "Заголовок", "type": "text", "default": "Дорожная карта по кварталам", "maxLength": 48 },
+          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "Планы развития", "maxLength": 24 },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+        ],
+        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "i18n": {
+          "en": {
+            "description": "A roadmap along a time axis: quarter milestones with a state and a task list, the current quarter highlighted and past ones dimmed. Self-contained — one file, no dependencies.",
+            "ai": {
+              "summary": "A roadmap as a quarterly timeline: milestones along an axis with a quarter label, a state and a task list. The current quarter is marked with a brand dot, past ones are dimmed. The axis switches from vertical to horizontal by width. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-roadmap-002-* palette — do not swap it for your theme tokens",
+                "the axis-direction switch via container query: vertical when narrow, horizontal when wide",
+                "the current-quarter dot and dimming of past quarters — that's the reading of time",
+                "light-dark() in the palette: the component follows the surrounding color-scheme"
+              ],
+              "adapt": [
+                "eyebrow and title — the section's eyebrow and heading",
+                "the quarters array — label, state and tasks of each quarter",
+                "the accent via the accent prop — current-quarter dot, tags and markers",
+                "background — the component's backdrop; empty means no backdrop"
+              ],
+              "notes": [
+                "The theme comes from color-scheme; the project must declare color-scheme: light dark on html.",
+                "The current quarter is found by the state value equal to the current-marker; quarters before it count as past.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Roadmap002\n  title=\"Roadmap\"\n  quarters={[{ label: \"Q3 2026\", state: \"Now\", items: [\"New blocks\"] }]}\n/>"
+            },
+            "controls": {
+              "title": { "label": "Title", "default": "Quarterly roadmap" },
+              "eyebrow": { "label": "Eyebrow", "default": "Roadmap" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "title": "Quarter Timeline",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-roadmap-002-* variables. A server component. The timeline axis is vertical (border-left) when narrow and horizontal (border-top) when wide, via a container query. The current quarter is found by state, past ones are dimmed with opacity."
+          }
+        }
+      }
+    },
+    {
+      "name": "roadmap-003",
+      "type": "registry:block",
+      "title": "Голосование за фичи",
+      "description": "Публичный борд идей с голосованием: карточки с кнопкой-голосом и счётчиком, повторный клик снимает голос. Самодостаточна: один файл, без зависимостей.",
+      "categories": ["roadmap"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "roadmap-003/roadmap-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/roadmap-003.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-roadmap-003-*. Клиентский компонент: голос учитывается на клиенте (демо без бэкенда), кнопка объявляет состояние через aria-pressed, счётчик прибавляет единицу при активном голосе. Повторный клик снимает голос.",
+      "meta": {
+        "tags": ["roadmap", "voting", "feedback", "ideas", "marketing"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Roadmap003",
+          "usage": "<Roadmap003\n  title=\"Голосуйте за фичи\"\n  ideas={[{ title: \"Плагин Figma\", note: \"Вставка блоков\", votes: 214 }]}\n/>",
+          "summary": "Публичный борд идей с голосованием: карточки с кнопкой-голосом слева и счётчиком. Голос считается на клиенте, повторный клик снимает его, состояние объявлено через aria-pressed. Демо без бэкенда. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-roadmap-003-* и не подменять её токенами вашей темы",
+            "aria-pressed на кнопке голоса — состояние объявлено, а не показано только цветом",
+            "прибавление единицы к счётчику при активном голосе поверх базового значения votes",
+            "light-dark() в палитре: компонент следует color-scheme окружения"
+          ],
+          "adapt": [
+            "eyebrow и title — надзаголовок и заголовок секции",
+            "массив ideas — заголовок, подпись и базовое число голосов каждой идеи",
+            "акцент через проп accent — активная кнопка голоса и надзаголовок",
+            "background — подложка компонента; пусто означает «без подложки»"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme; у проекта должно быть объявлено color-scheme: light dark на html.",
+            "Голос живёт только в состоянии компонента: подключите отправку на свой бэкенд для реального учёта.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          { "prop": "title", "label": "Заголовок", "type": "text", "default": "Голосуйте за следующие фичи", "maxLength": 48 },
+          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "Планы развития", "maxLength": 24 },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+        ],
+        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "i18n": {
+          "en": {
+            "description": "A public idea board with voting: cards with a vote button and counter, clicking again removes the vote. Self-contained — one file, no dependencies.",
+            "ai": {
+              "summary": "A public idea board with voting: cards with a vote button on the left and a counter. The vote is counted client-side, clicking again removes it, state is announced through aria-pressed. A backend-less demo. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-roadmap-003-* palette — do not swap it for your theme tokens",
+                "aria-pressed on the vote button — the state is announced, not shown by colour alone",
+                "adding one to the counter when the vote is active, on top of the base votes value",
+                "light-dark() in the palette: the component follows the surrounding color-scheme"
+              ],
+              "adapt": [
+                "eyebrow and title — the section's eyebrow and heading",
+                "the ideas array — title, note and base vote count of each idea",
+                "the accent via the accent prop — active vote button and eyebrow",
+                "background — the component's backdrop; empty means no backdrop"
+              ],
+              "notes": [
+                "The theme comes from color-scheme; the project must declare color-scheme: light dark on html.",
+                "The vote lives only in component state: wire it to your backend for real tallying.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Roadmap003\n  title=\"Vote for features\"\n  ideas={[{ title: \"Figma plugin\", note: \"Insert blocks\", votes: 214 }]}\n/>"
+            },
+            "controls": {
+              "title": { "label": "Title", "default": "Vote for the next features" },
+              "eyebrow": { "label": "Eyebrow", "default": "Roadmap" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "title": "Feature Voting",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-roadmap-003-* variables. A client component: the vote is counted client-side (backend-less demo), the button announces state through aria-pressed, the counter adds one when the vote is active. Clicking again removes the vote."
+          }
+        }
+      }
+    }
+  ]
+}

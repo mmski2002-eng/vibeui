@@ -45,6 +45,20 @@ export async function loadPreviewMap(
       return (await import("@/registry/previews/block/about")).PREVIEWS
     case "block/cases":
       return (await import("@/registry/previews/block/cases")).PREVIEWS
+    case "block/changelog":
+      return (await import("@/registry/previews/block/changelog")).PREVIEWS
+    case "block/roadmap":
+      return (await import("@/registry/previews/block/roadmap")).PREVIEWS
+    case "block/careers":
+      return (await import("@/registry/previews/block/careers")).PREVIEWS
+    case "block/comparison":
+      return (await import("@/registry/previews/block/comparison")).PREVIEWS
+    case "block/waitlist":
+      return (await import("@/registry/previews/block/waitlist")).PREVIEWS
+    case "block/consent":
+      return (await import("@/registry/previews/block/consent")).PREVIEWS
+    case "block/downloads":
+      return (await import("@/registry/previews/block/downloads")).PREVIEWS
     case "block/logos":
       return (await import("@/registry/previews/block/logos")).PREVIEWS
     case "block/newsletter":

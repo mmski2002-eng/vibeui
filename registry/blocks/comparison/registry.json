@@ -1,0 +1,257 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "comparison-001",
+      "type": "registry:block",
+      "title": "Таблица «мы против них»",
+      "description": "Сравнительная таблица возможностей: строки функций и две колонки галочек, наша колонка выделена брендовым фоном. Самодостаточна: один файл, без зависимостей.",
+      "categories": ["comparison"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "comparison-001/comparison-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/comparison-001.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-comparison-001-*. Серверный компонент. Настоящая table с thead/tbody и scope у заголовков. Галочка нарисована бордюрами без иконочного шрифта, отсутствие — приглушённое тире с aria-label. Наша колонка выделена брендовым фоном шапки и лёгкой заливкой ячеек.",
+      "meta": {
+        "tags": ["comparison", "table", "features", "versus", "marketing"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Comparison001",
+          "usage": "<Comparison001\n  usLabel=\"VibeUI\"\n  themLabel=\"Обычная\"\n  rows={[{ feature: \"Ноль зависимостей\", us: true, them: false }]}\n/>",
+          "summary": "Сравнительная таблица «мы против них»: строки возможностей и две колонки с галочками, наша выделена брендовым фоном. Галочки нарисованы бордюрами, отсутствие — тире с aria-label. Настоящая table с scope у заголовков. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-comparison-001-* и не подменять её токенами вашей темы",
+            "семантику table/thead/tbody и scope у заголовков — это таблица, а не сетка div-ов",
+            "галочку из бордюров и aria-label у ячеек да/нет — доступность без иконочного шрифта",
+            "light-dark() в палитре: компонент следует color-scheme окружения"
+          ],
+          "adapt": [
+            "eyebrow и title — надзаголовок и заголовок секции",
+            "usLabel и themLabel — подписи двух колонок",
+            "массив rows — возможность и два булевых значения",
+            "акцент через проп accent — фон нашей колонки и галочки"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme; у проекта должно быть объявлено color-scheme: light dark на html.",
+            "Наша колонка — вторая (us): выделение фоном привязано к ней, поменяйте местами при другом порядке.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          { "prop": "title", "label": "Заголовок", "type": "text", "default": "Почему VibeUI, а не обычная библиотека", "maxLength": 52 },
+          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "Сравнение", "maxLength": 24 },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+        ],
+        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "i18n": {
+          "en": {
+            "description": "A feature comparison table: feature rows and two check columns, our column highlighted with a brand background. Self-contained — one file, no dependencies.",
+            "ai": {
+              "summary": "A us-versus-them comparison table: feature rows and two check columns, ours highlighted with a brand background. Checks are drawn with borders, absence is a dash with an aria-label. A real table with scope on headers. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-comparison-001-* palette — do not swap it for your theme tokens",
+                "the table/thead/tbody semantics and scope on headers — it's a table, not a grid of divs",
+                "the border-drawn check and aria-label on yes/no cells — accessibility without an icon font",
+                "light-dark() in the palette: the component follows the surrounding color-scheme"
+              ],
+              "adapt": [
+                "eyebrow and title — the section's eyebrow and heading",
+                "usLabel and themLabel — the two column labels",
+                "the rows array — feature and two boolean values",
+                "the accent via the accent prop — our column background and checks"
+              ],
+              "notes": [
+                "The theme comes from color-scheme; the project must declare color-scheme: light dark on html.",
+                "Our column is the second (us): the background highlight is tied to it, swap if the order differs.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Comparison001\n  usLabel=\"VibeUI\"\n  themLabel=\"Typical\"\n  rows={[{ feature: \"Zero dependencies\", us: true, them: false }]}\n/>"
+            },
+            "controls": {
+              "title": { "label": "Title", "default": "Why VibeUI over a typical library" },
+              "eyebrow": { "label": "Eyebrow", "default": "Comparison" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "title": "Us-vs-Them Table",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-comparison-001-* variables. A server component. A real table with thead/tbody and scope on headers. The check is drawn with borders, absence is a dimmed dash with an aria-label. Our column is highlighted with a brand header background and a light cell fill."
+          }
+        }
+      }
+    },
+    {
+      "name": "comparison-002",
+      "type": "registry:block",
+      "title": "Три подхода",
+      "description": "Сравнение тремя колонками-подходами: свой способ выделен брендовой рамкой и стоит по центру, соседи приглушены. Самодостаточна: один файл, без зависимостей.",
+      "categories": ["comparison"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "comparison-002/comparison-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/comparison-002.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-comparison-002-*. Серверный компонент. Три колонки целых подходов вместо таблицы галочек: выделенная колонка (data-highlight) получает брендовую рамку, остальные приглушены opacity. Число колонок считает container query.",
+      "meta": {
+        "tags": ["comparison", "approaches", "columns", "versus", "marketing"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Comparison002",
+          "usage": "<Comparison002\n  plans={[{ name: \"VibeUI\", tagline: \"Тот же файл\", points: [\"Ноль зависимостей\"], highlight: true }]}\n/>",
+          "summary": "Сравнение тремя колонками-подходами: название способа, строчка сути и список пунктов. Выделенная колонка получает брендовую рамку, соседи приглушены. Формат «три пути, один правильный» без таблицы галочек. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-comparison-002-* и не подменять её токенами вашей темы",
+            "выделение своей колонки через data-highlight и приглушение соседей — это фокус выбора",
+            "container-запрос на число колонок: на узком экране колонки в столбец",
+            "light-dark() в палитре: компонент следует color-scheme окружения"
+          ],
+          "adapt": [
+            "eyebrow и title — надзаголовок и заголовок секции",
+            "массив plans — название, суть, пункты и флаг highlight каждого подхода",
+            "акцент через проп accent — рамка выделенной колонки и маркеры",
+            "background — подложка компонента; пусто означает «без подложки»"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme; у проекта должно быть объявлено color-scheme: light dark на html.",
+            "Выделенной становится колонка с highlight:true; без флага все колонки равны по весу.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          { "prop": "title", "label": "Заголовок", "type": "text", "default": "Три пути собрать интерфейс", "maxLength": 48 },
+          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "Сравнение подходов", "maxLength": 24 },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+        ],
+        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "i18n": {
+          "en": {
+            "description": "A comparison of three whole approaches: your way is highlighted with a brand border and sits in the middle, the neighbours dimmed. Self-contained — one file, no dependencies.",
+            "ai": {
+              "summary": "A three-column comparison of whole approaches: the approach name, a tagline and a list of points. The highlighted column gets a brand border, the neighbours are dimmed. A three-paths, one-right format without a check table. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-comparison-002-* palette — do not swap it for your theme tokens",
+                "highlighting your column via data-highlight and dimming the neighbours — that's the choice focus",
+                "the container query on column count: columns stack when narrow",
+                "light-dark() in the palette: the component follows the surrounding color-scheme"
+              ],
+              "adapt": [
+                "eyebrow and title — the section's eyebrow and heading",
+                "the plans array — name, tagline, points and highlight flag of each approach",
+                "the accent via the accent prop — the highlighted column border and markers",
+                "background — the component's backdrop; empty means no backdrop"
+              ],
+              "notes": [
+                "The theme comes from color-scheme; the project must declare color-scheme: light dark on html.",
+                "The column with highlight:true becomes the highlighted one; without the flag all columns are equal weight.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Comparison002\n  plans={[{ name: \"VibeUI\", tagline: \"Same file\", points: [\"Zero dependencies\"], highlight: true }]}\n/>"
+            },
+            "controls": {
+              "title": { "label": "Title", "default": "Three ways to build a UI" },
+              "eyebrow": { "label": "Eyebrow", "default": "Approach comparison" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "title": "Three Approaches",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-comparison-002-* variables. A server component. Three columns of whole approaches instead of a check table: the highlighted column (data-highlight) gets a brand border, the rest are dimmed with opacity. Column count is driven by a container query."
+          }
+        }
+      }
+    },
+    {
+      "name": "comparison-003",
+      "type": "registry:block",
+      "title": "До и после",
+      "description": "Сравнение результата: строки метрик с двумя значениями «было → стало» и стрелкой, колонка «после» выделена акцентом. Самодостаточна: один файл, без зависимостей.",
+      "categories": ["comparison"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "comparison-003/comparison-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/comparison-003.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-comparison-003-*. Серверный компонент. Строки метрик с сеткой 1fr auto 1fr: значение «до» зачёркнуто и приглушено, стрелка-акцент, значение «после» крупным брендовым. У обоих значений aria-label с подписью было/стало для скринридера.",
+      "meta": {
+        "tags": ["comparison", "before-after", "metrics", "migration", "marketing"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Comparison003",
+          "usage": "<Comparison003\n  pairs={[{ label: \"Время сборки\", before: \"1 неделя\", after: \"1 вечер\" }]}\n/>",
+          "summary": "Сравнение «до и после»: строки метрик с двумя значениями и стрелкой между ними. Значение «до» зачёркнуто и приглушено, «после» — крупным брендовым акцентом. Показывает изменение чисел от было к стало, а не набор галочек. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-comparison-003-* и не подменять её токенами вашей темы",
+            "сетку 1fr auto 1fr со стрелкой по центру — это чтение перехода было → стало",
+            "aria-label с подписью было/стало у значений — состояние понятно без цвета",
+            "light-dark() в палитре: компонент следует color-scheme окружения"
+          ],
+          "adapt": [
+            "eyebrow и title — надзаголовок и заголовок секции",
+            "beforeLabel и afterLabel — подписи для скринридера",
+            "массив pairs — метрика и два значения (было, стало)",
+            "акцент через проп accent — стрелка и значение «после»"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme; у проекта должно быть объявлено color-scheme: light dark на html.",
+            "Значения — обычный текст: подставьте свои числа, единицы форматируйте на своей стороне.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          { "prop": "title", "label": "Заголовок", "type": "text", "default": "Что меняется с VibeUI", "maxLength": 48 },
+          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "До и после", "maxLength": 24 },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+        ],
+        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "i18n": {
+          "en": {
+            "description": "An outcome comparison: metric rows with two values, before → after, and an arrow, the after column highlighted with the accent. Self-contained — one file, no dependencies.",
+            "ai": {
+              "summary": "A before-and-after comparison: metric rows with two values and an arrow between them. The before value is struck through and dimmed, the after value is large in the brand accent. It shows numbers changing from before to after, not a set of checks. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-comparison-003-* palette — do not swap it for your theme tokens",
+                "the 1fr auto 1fr grid with a centred arrow — that's the before → after reading",
+                "the aria-label with a before/after tag on values — the state is clear without colour",
+                "light-dark() in the palette: the component follows the surrounding color-scheme"
+              ],
+              "adapt": [
+                "eyebrow and title — the section's eyebrow and heading",
+                "beforeLabel and afterLabel — the screen-reader labels",
+                "the pairs array — metric and two values (before, after)",
+                "the accent via the accent prop — the arrow and the after value"
+              ],
+              "notes": [
+                "The theme comes from color-scheme; the project must declare color-scheme: light dark on html.",
+                "Values are plain text: substitute your numbers, format units on your side.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Comparison003\n  pairs={[{ label: \"Build time\", before: \"1 week\", after: \"1 evening\" }]}\n/>"
+            },
+            "controls": {
+              "title": { "label": "Title", "default": "What changes with VibeUI" },
+              "eyebrow": { "label": "Eyebrow", "default": "Before & after" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "title": "Before & After",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-comparison-003-* variables. A server component. Metric rows on a 1fr auto 1fr grid: the before value is struck through and dimmed, an accent arrow, the after value large in the brand colour. Both values carry an aria-label with a before/after tag for screen readers."
+          }
+        }
+      }
+    }
+  ]
+}

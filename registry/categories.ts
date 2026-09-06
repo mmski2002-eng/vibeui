@@ -145,6 +145,48 @@ export const CATEGORIES = [
     en: "Case Studies",
     group: "marketing",
   },
+  {
+    slug: "changelog",
+    label: "История изменений",
+    en: "Changelog",
+    group: "marketing",
+  },
+  {
+    slug: "roadmap",
+    label: "Планы развития",
+    en: "Roadmap",
+    group: "marketing",
+  },
+  {
+    slug: "careers",
+    label: "Вакансии",
+    en: "Careers",
+    group: "marketing",
+  },
+  {
+    slug: "comparison",
+    label: "Сравнение",
+    en: "Comparison",
+    group: "marketing",
+  },
+  {
+    slug: "waitlist",
+    label: "Лист ожидания",
+    en: "Waitlist",
+    group: "marketing",
+  },
+  {
+    slug: "consent",
+    label: "Согласия",
+    en: "Consent",
+    group: "application",
+  },
+  {
+    slug: "downloads",
+    label: "Загрузка приложения",
+    en: "App Downloads",
+    group: "marketing",
+  },
   // Категории компонентов: одна категория — один тип. Сборных корзин
   // («Inputs», «Display») здесь нет: тип, спрятанный внутри такой корзины,
   // невозможно найти ни в списке категорий, ни по адресу.

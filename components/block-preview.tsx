@@ -14,10 +14,12 @@ import type { ItemKind } from "@/registry/categories"
 
 // bezel — сколько ширины контейнера съедает корпус устройства по бокам
 // (рамка DesktopFrame — 1px с каждой стороны).
+// Планшет и телефон — реальные пропорции экрана (3:4 и 9:16), высота
+// не зависит от размера компонента. Десктоп — по типу item'а.
 const VIEWPORTS = [
-  { id: "desktop", width: 1440, bezel: 2 },
-  { id: "tablet", width: 768, bezel: TABLET_BEZEL * 2 + 4 },
-  { id: "mobile", width: 375, bezel: PHONE_BEZEL * 2 + 4 },
+  { id: "desktop", width: 1440, height: null, bezel: 2 },
+  { id: "tablet", width: 768, height: 1024, bezel: TABLET_BEZEL * 2 + 4 },
+  { id: "mobile", width: 375, height: 667, bezel: PHONE_BEZEL * 2 + 4 },
 ] as const
 
 type ViewportId = (typeof VIEWPORTS)[number]["id"]
@@ -55,7 +57,6 @@ export function BlockPreview({
   onThemeChange: (next: HostTheme) => void
 }) {
   const t = getDictionary(locale)
-  const frameHeight = compact ? COMPONENT_FRAME_HEIGHT : SECTION_FRAME_HEIGHT
   const [viewport, setViewport] = useState<ViewportId>("desktop")
   const [containerWidth, setContainerWidth] = useState<number | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -86,6 +87,8 @@ export function BlockPreview({
 
   const current = VIEWPORTS.find((item) => item.id === viewport) ?? VIEWPORTS[0]
   const frameWidth = current.width
+  const frameHeight =
+    current.height ?? (compact ? COMPONENT_FRAME_HEIGHT : SECTION_FRAME_HEIGHT)
   const scale =
     containerWidth === null
       ? null

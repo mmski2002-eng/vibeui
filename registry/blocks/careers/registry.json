@@ -1,0 +1,257 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "career-001",
+      "type": "registry:block",
+      "title": "Вакансии по отделам",
+      "description": "Список вакансий, сгруппированный по отделам: строки ролей с местом и типом занятости, вся строка — ссылка на карточку. Самодостаточна: один файл, без зависимостей.",
+      "categories": ["careers"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "career-001/career-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/career-001.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-career-001-*. Серверный компонент. Вакансии сгруппированы по отделам, каждая роль — ссылка на всю строку с местом и типом справа и стрелкой-акцентом. При наведении строка сдвигается на 2px.",
+      "meta": {
+        "tags": ["careers", "jobs", "listing", "hiring", "marketing"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Career001",
+          "usage": "<Career001\n  title=\"К команде\"\n  groups={[{ department: \"Инженерия\", roles: [{ title: \"Фронтенд\", location: \"Удалённо\", type: \"Полная\" }] }]}\n/>",
+          "summary": "Список вакансий по отделам: заголовок отдела и строки ролей, у каждой место и тип занятости справа. Вся строка — ссылка на карточку вакансии со стрелкой-акцентом. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-career-001-* и не подменять её токенами вашей темы",
+            "строку-ссылку целиком: кликом ловится вся роль, а не только заголовок",
+            "группировку по отделам с приглушённым заголовком-надписью",
+            "light-dark() в палитре: компонент следует color-scheme окружения"
+          ],
+          "adapt": [
+            "eyebrow и title — надзаголовок и заголовок секции",
+            "массив groups — отдел и роли с местом и типом занятости",
+            "href строки роли — адрес карточки вакансии",
+            "акцент через проп accent — стрелка, рамка при наведении"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme; у проекта должно быть объявлено color-scheme: light dark на html.",
+            "href ролей по умолчанию ведёт на #: подставьте реальные адреса вакансий.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          { "prop": "title", "label": "Заголовок", "type": "text", "default": "Присоединяйтесь к команде", "maxLength": 48 },
+          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "Вакансии", "maxLength": 24 },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+        ],
+        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "i18n": {
+          "en": {
+            "description": "A job listing grouped by department: role rows with location and employment type, the whole row is a link to the posting. Self-contained — one file, no dependencies.",
+            "ai": {
+              "summary": "A job listing by department: a department heading and role rows, each with location and employment type on the right. The whole row is a link to the posting with an accent arrow. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-career-001-* palette — do not swap it for your theme tokens",
+                "the whole-row link: a click catches the entire role, not just the title",
+                "the department grouping with a dimmed heading label",
+                "light-dark() in the palette: the component follows the surrounding color-scheme"
+              ],
+              "adapt": [
+                "eyebrow and title — the section's eyebrow and heading",
+                "the groups array — department and roles with location and employment type",
+                "the role row href — the posting's address",
+                "the accent via the accent prop — arrow, hover border"
+              ],
+              "notes": [
+                "The theme comes from color-scheme; the project must declare color-scheme: light dark on html.",
+                "Role hrefs default to #: substitute real posting addresses.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Career001\n  title=\"Join us\"\n  groups={[{ department: \"Engineering\", roles: [{ title: \"Frontend\", location: \"Remote\", type: \"Full-time\" }] }]}\n/>"
+            },
+            "controls": {
+              "title": { "label": "Title", "default": "Join the team" },
+              "eyebrow": { "label": "Eyebrow", "default": "Careers" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "title": "Jobs by Department",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-career-001-* variables. A server component. Jobs are grouped by department; each role is a whole-row link with location and type on the right and an accent arrow. On hover the row shifts by 2px."
+          }
+        }
+      }
+    },
+    {
+      "name": "career-002",
+      "type": "registry:block",
+      "title": "Почему у нас",
+      "description": "Вводная секция карьеры: рассказ о команде слева, сетка перков с галочками справа и кнопка к вакансиям. Самодостаточна: один файл, без зависимостей.",
+      "categories": ["careers"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "career-002/career-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/career-002.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-career-002-*. Серверный компонент. Две колонки на широком экране: слева текст и CTA, справа сетка перков. Галочка каждого перка нарисована бордюрами (border-width 0 2 2 0 + rotate), без иконочного шрифта.",
+      "meta": {
+        "tags": ["careers", "perks", "benefits", "hiring", "marketing"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Career002",
+          "usage": "<Career002\n  title=\"Работа у нас\"\n  perks={[{ title: \"Удалёнка\", note: \"Из любого города\" }]}\n/>",
+          "summary": "Вводная секция страницы карьеры: рассказ о команде и кнопка к вакансиям слева, сетка перков справа. Галочки перков нарисованы бордюрами без иконочного шрифта. Две колонки на широком экране, один столбец на узком. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-career-002-* и не подменять её токенами вашей темы",
+            "галочку из бордюров вместо иконочного шрифта — блок остаётся без зависимостей",
+            "перелом в две колонки по container query: на узком экране всё в столбец",
+            "light-dark() в палитре: компонент следует color-scheme окружения"
+          ],
+          "adapt": [
+            "eyebrow, title и summary — надзаголовок, заголовок и рассказ",
+            "массив perks — заголовок и подпись каждого преимущества",
+            "ctaLabel и ctaHref — подпись и адрес кнопки вакансий",
+            "акцент через проп accent — кнопка, галочки и надзаголовок"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme; у проекта должно быть объявлено color-scheme: light dark на html.",
+            "Кнопка ведёт на # по умолчанию: подставьте адрес списка вакансий.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          { "prop": "title", "label": "Заголовок", "type": "text", "default": "Маленькая команда, большие задачи", "maxLength": 52 },
+          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "Работа у нас", "maxLength": 24 },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+        ],
+        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "i18n": {
+          "en": {
+            "description": "A careers intro: a story about the team on the left, a grid of check-marked perks on the right and a button to the openings. Self-contained — one file, no dependencies.",
+            "ai": {
+              "summary": "A careers-page intro: the team story and a button to openings on the left, a perks grid on the right. Perk checks are drawn with borders, no icon font. Two columns when wide, one column when narrow. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-career-002-* palette — do not swap it for your theme tokens",
+                "the border-drawn check instead of an icon font — the block stays dependency-free",
+                "the two-column break via container query: everything stacks when narrow",
+                "light-dark() in the palette: the component follows the surrounding color-scheme"
+              ],
+              "adapt": [
+                "eyebrow, title and summary — the eyebrow, heading and story",
+                "the perks array — title and note of each benefit",
+                "ctaLabel and ctaHref — the openings button's label and address",
+                "the accent via the accent prop — button, checks and eyebrow"
+              ],
+              "notes": [
+                "The theme comes from color-scheme; the project must declare color-scheme: light dark on html.",
+                "The button points to # by default: substitute the openings list address.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Career002\n  title=\"Work with us\"\n  perks={[{ title: \"Remote\", note: \"From anywhere\" }]}\n/>"
+            },
+            "controls": {
+              "title": { "label": "Title", "default": "Small team, big problems" },
+              "eyebrow": { "label": "Eyebrow", "default": "Work with us" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "title": "Why Join Us",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-career-002-* variables. A server component. Two columns when wide: text and CTA on the left, a perks grid on the right. Each perk check is drawn with borders (border-width 0 2 2 0 + rotate), no icon font."
+          }
+        }
+      }
+    },
+    {
+      "name": "career-003",
+      "type": "registry:block",
+      "title": "Карточка вакансии",
+      "description": "Страница одной вакансии: роль и метаданные, резюме, списки обязанностей и требований, кнопка отклика. Самодостаточна: один файл, без зависимостей.",
+      "categories": ["careers"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "career-003/career-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/career-003.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-career-003-*. Серверный компонент. Страница отдельной вакансии: шапка с ролью, чипы метаданных (команда, место, занятость), резюме и два списка с маркерами-акцентами, кнопка отклика внизу.",
+      "meta": {
+        "tags": ["careers", "job", "posting", "hiring", "marketing"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Career003",
+          "usage": "<Career003\n  role=\"Фронтенд-разработчик\"\n  responsibilities={[\"Писать компоненты\"]}\n  requirements={[\"React и TypeScript\"]}\n/>",
+          "summary": "Карточка одной вакансии: название роли, чипы метаданных (команда, место, занятость), резюме и два маркированных списка — обязанности и требования, кнопка отклика внизу. Формат страницы отдельной вакансии. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-career-003-* и не подменять её токенами вашей темы",
+            "разделение на обязанности и требования двумя списками — это структура вакансии",
+            "чипы метаданных строкой под ролью: команда, место, тип занятости",
+            "light-dark() в палитре: компонент следует color-scheme окружения"
+          ],
+          "adapt": [
+            "role, location, employment, team — заголовок и метаданные вакансии",
+            "summary, responsibilities, requirements — описание и два списка",
+            "ctaLabel и ctaHref — подпись и адрес кнопки отклика",
+            "акцент через проп accent — кнопка, маркеры списков и надзаголовок"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme; у проекта должно быть объявлено color-scheme: light dark на html.",
+            "Кнопка отклика ведёт на # по умолчанию: подставьте форму или почту.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          { "prop": "role", "label": "Роль", "type": "text", "default": "Фронтенд-разработчик", "maxLength": 40 },
+          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "Вакансия", "maxLength": 24 },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+        ],
+        "cardControls": ["role", "eyebrow", "accent", "background"],
+        "i18n": {
+          "en": {
+            "description": "A single job posting: the role and metadata, a summary, lists of responsibilities and requirements, an apply button. Self-contained — one file, no dependencies.",
+            "ai": {
+              "summary": "A single job posting: the role title, metadata chips (team, location, employment), a summary and two bulleted lists — responsibilities and requirements, with an apply button at the bottom. A single-posting page format. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-career-003-* palette — do not swap it for your theme tokens",
+                "splitting responsibilities and requirements into two lists — that's the posting structure",
+                "the metadata chips row under the role: team, location, employment type",
+                "light-dark() in the palette: the component follows the surrounding color-scheme"
+              ],
+              "adapt": [
+                "role, location, employment, team — the posting's title and metadata",
+                "summary, responsibilities, requirements — the description and two lists",
+                "ctaLabel and ctaHref — the apply button's label and address",
+                "the accent via the accent prop — button, list markers and eyebrow"
+              ],
+              "notes": [
+                "The theme comes from color-scheme; the project must declare color-scheme: light dark on html.",
+                "The apply button points to # by default: substitute a form or email.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Career003\n  role=\"Frontend Engineer\"\n  responsibilities={[\"Write components\"]}\n  requirements={[\"React and TypeScript\"]}\n/>"
+            },
+            "controls": {
+              "role": { "label": "Role", "default": "Frontend Engineer" },
+              "eyebrow": { "label": "Eyebrow", "default": "Open role" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "title": "Job Posting",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-career-003-* variables. A server component. A single-posting page: a header with the role, metadata chips (team, location, employment), a summary and two lists with accent markers, an apply button at the bottom."
+          }
+        }
+      }
+    }
+  ]
+}
