@@ -35,13 +35,16 @@ function searchText(item: CatalogItem, locale: Locale): string {
 export function CatalogGrid({
   items,
   locale,
+  single = false,
 }: {
   items: CatalogItem[]
   locale: Locale
+  /** Одна карточка в ряд: блоки — целые секции, вдвоём в ряд им тесно. */
+  single?: boolean
 }) {
   return (
     <div className="@container/grid">
-      <ul className="catalog-grid">
+      <ul className="catalog-grid" data-single={single ? "" : undefined}>
         {items.map((item) => (
           <li key={item.name} data-search={searchText(item, locale)}>
             <CatalogCard item={item} locale={locale} />

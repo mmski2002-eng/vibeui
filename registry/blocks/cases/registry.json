@@ -6,7 +6,9 @@
       "type": "registry:block",
       "title": "Сетка кейсов",
       "description": "Ровная сетка кейсов: клиент, задача одной строкой и крупная метрика результата акцентом. Самодостаточен: один файл, без зависимостей, со своей палитрой.",
-      "categories": ["cases"],
+      "categories": [
+        "cases"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,8 +20,16 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-case-001-*. Серверный компонент. Число колонок считается от собственной ширины блока: одна, две, три. Карточка — flex-колонка: бейдж клиента сверху, задача растягивается, метрика прижата к низу над разделителем, поэтому карточки в ряду выглядят ровно при разной длине текста. Метрика набрана крупно акцентным цветом и tabular-nums — кейс читают ради цифры. Сетка — семантический список ul/li с article внутри.",
       "meta": {
-        "tags": ["cases", "grid", "metrics", "social proof", "results"],
-        "preview": { "width": "full" },
+        "tags": [
+          "cases",
+          "grid",
+          "metrics",
+          "social proof",
+          "results"
+        ],
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Case001",
           "usage": "<Case001\n  title=\"Что команды собрали на VibeUI\"\n  items={[{ client: \"Кедр Маркет\", task: \"Переехали с конструктора на свой сайт.\", metric: \"−82%\", metricLabel: \"времени на вёрстку\" }]}\n/>",
@@ -63,8 +73,18 @@
             "default": "Кейсы",
             "maxLength": 20
           },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
         "i18n": {
           "en": {
@@ -99,10 +119,20 @@
               "usage": "<Case001\n  title=\"What teams built on VibeUI\"\n  items={[{ client: \"Kedr Market\", task: \"Moved from a site builder to their own site.\", metric: \"−82%\", metricLabel: \"time spent on markup\" }]}\n/>"
             },
             "controls": {
-              "title": { "label": "Heading", "default": "What teams built on VibeUI" },
-              "eyebrow": { "label": "Eyebrow", "default": "Case studies" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "title": {
+                "label": "Heading",
+                "default": "What teams built on VibeUI"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Case studies"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "preview": {
               "props": {
@@ -149,7 +179,13 @@
               }
             }
           }
-        }
+        },
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -157,7 +193,9 @@
       "type": "registry:block",
       "title": "Кейс-герой",
       "description": "Один большой кейс: развёрнутая цитата клиента, три метрики и кнопка «Читать историю». Самодостаточен: один файл, без зависимостей, со своей палитрой.",
-      "categories": ["cases"],
+      "categories": [
+        "cases"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -169,8 +207,16 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-case-002-*. Серверный компонент. Панель на широкой ширине делится на две колонки: слева figure с blockquote, автором и кнопкой, справа — dl с тремя метриками за вертикальным разделителем. На узкой ширине метрики уходят под цитату и выстраиваются рядом. Кнопка — ссылка с акцентной заливкой и почти чёрным текстом, focus-visible с видимым кольцом. Кавычки цитаты добавлены псевдоэлементами.",
       "meta": {
-        "tags": ["cases", "hero", "quote", "metrics", "cta"],
-        "preview": { "width": "full" },
+        "tags": [
+          "cases",
+          "hero",
+          "quote",
+          "metrics",
+          "cta"
+        ],
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Case002",
           "usage": "<Case002\n  title=\"«Полярис»: сайт к раунду за неделю\"\n  quote=\"Мы отдали ИИ три блока и получили сайт за вечер.\"\n  metrics={[{ value: \"6 дней\", label: \"от идеи до релиза\" }]}\n  buttonHref=\"/cases/polaris\"\n/>",
@@ -216,8 +262,18 @@
             "default": "Кейс",
             "maxLength": 20
           },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
         "i18n": {
           "en": {
@@ -258,9 +314,16 @@
                 "label": "Heading",
                 "default": "Polaris: an investor-ready site in a week"
               },
-              "eyebrow": { "label": "Eyebrow", "default": "Case study" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Case study"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "preview": {
               "props": {
@@ -270,16 +333,31 @@
                 "author": "Daria Klimova",
                 "role": "Chief product officer, Polaris",
                 "metrics": [
-                  { "value": "6 days", "label": "from idea to site release" },
-                  { "value": "2", "label": "people — the whole project team" },
-                  { "value": "+38%", "label": "leads from the new site" }
+                  {
+                    "value": "6 days",
+                    "label": "from idea to site release"
+                  },
+                  {
+                    "value": "2",
+                    "label": "people — the whole project team"
+                  },
+                  {
+                    "value": "+38%",
+                    "label": "leads from the new site"
+                  }
                 ],
                 "buttonLabel": "Read the story",
                 "buttonHref": "#"
               }
             }
           }
-        }
+        },
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -287,7 +365,9 @@
       "type": "registry:block",
       "title": "До и после",
       "description": "Кейсы парой значений «было → стало»: приглушённое «до», акцентное «после» и бейдж роста со стрелкой. Самодостаточен: один файл, без зависимостей, со своей палитрой.",
-      "categories": ["cases"],
+      "categories": [
+        "cases"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -299,8 +379,16 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-case-003-*. Серверный компонент. Карточка: клиент и название метрики сверху, ниже за пунктирным разделителем пара «было → стало» — «было» приглушено и зачёркнуто, «стало» крупно акцентом, между ними инлайновая SVG-стрелка. Под парой бейдж роста со стрелкой вверх-вправо. Сетка складывается в три колонки от собственной ширины блока. Иконки — инлайновый SVG с aria-hidden, внешних файлов нет.",
       "meta": {
-        "tags": ["cases", "before after", "comparison", "metrics", "growth"],
-        "preview": { "width": "full" },
+        "tags": [
+          "cases",
+          "before after",
+          "comparison",
+          "metrics",
+          "growth"
+        ],
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Case003",
           "usage": "<Case003\n  title=\"Что меняется после перехода\"\n  items={[{ client: \"Кедр Маркет\", metric: \"Запуск посадочной\", before: \"2 недели\", after: \"1 вечер\", delta: \"в 14 раз быстрее\" }]}\n/>",
@@ -345,8 +433,18 @@
             "default": "До и после",
             "maxLength": 20
           },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
         "i18n": {
           "en": {
@@ -386,9 +484,16 @@
                 "label": "Heading",
                 "default": "What changes after switching to VibeUI"
               },
-              "eyebrow": { "label": "Eyebrow", "default": "Before and after" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Before and after"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "preview": {
               "props": {
@@ -420,7 +525,13 @@
               }
             }
           }
-        }
+        },
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -428,7 +539,9 @@
       "type": "registry:block",
       "title": "Лента кейсов",
       "description": "Кейсы горизонтальной лентой на scroll-snap: карточки с клиентом, задачей и метрикой, подсказка прокрутки. Самодостаточен: один файл, без зависимостей и JS.",
-      "categories": ["cases"],
+      "categories": [
+        "cases"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -440,8 +553,16 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-case-004-*. Серверный компонент: карусель работает на CSS scroll-snap, без единой строки JS. Лента — ul с overflow-x:auto и scroll-snap-type:x mandatory; карточки фиксированной ширины min(82cqi,20rem), снап по левому краю. Справа у шапки подсказка «Листайте» со стрелкой (aria-hidden — для читалки лента и так прокручиваема). Скроллер фокусируется с клавиатуры (tabIndex, role=region, aria-label) и показывает кольцо focus-visible. Правый паддинг ленты оставляет последнюю карточку недорезанной — это тоже подсказка, что справа есть ещё.",
       "meta": {
-        "tags": ["cases", "carousel", "scroll snap", "horizontal", "cards"],
-        "preview": { "width": "full" },
+        "tags": [
+          "cases",
+          "carousel",
+          "scroll snap",
+          "horizontal",
+          "cards"
+        ],
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Case004",
           "usage": "<Case004\n  title=\"Проекты, собранные на VibeUI\"\n  items={[{ client: \"Полярис\", task: \"Сайт к раунду силами двух человек.\", metric: \"6 дней\", metricLabel: \"от идеи до релиза\" }]}\n/>",
@@ -486,8 +607,18 @@
             "default": "Кейсы",
             "maxLength": 20
           },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
         "i18n": {
           "en": {
@@ -523,10 +654,20 @@
               "usage": "<Case004\n  title=\"Projects built on VibeUI\"\n  items={[{ client: \"Polaris\", task: \"An investor-ready site by a team of two.\", metric: \"6 days\", metricLabel: \"from idea to release\" }]}\n/>"
             },
             "controls": {
-              "title": { "label": "Heading", "default": "Projects built on VibeUI" },
-              "eyebrow": { "label": "Eyebrow", "default": "Case studies" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "title": {
+                "label": "Heading",
+                "default": "Projects built on VibeUI"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Case studies"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "preview": {
               "props": {
@@ -574,7 +715,13 @@
               }
             }
           }
-        }
+        },
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -582,7 +729,9 @@
       "type": "registry:block",
       "title": "Кейсы по отраслям",
       "description": "Список кейсов с бейджами отрасли и фильтром-чипами на CSS radio: фильтр работает без единой строки JS. Самодостаточен: один файл, без зависимостей.",
-      "categories": ["cases"],
+      "categories": [
+        "cases"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -594,8 +743,17 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-case-005-*. Серверный компонент: фильтр — скрытые radio-инпуты в fieldset, чипы — их label, строки прячет селектор :has() по выбранной группе. Слотов отрасли четыре (g1–g4) плюс «все»: CSS не сравнивает произвольные значения, поэтому набор групп перечислен в стилях явно. Чипы получают акцентную заливку по :checked и кольцо по :focus-visible соседнего инпута. Строка кейса — грид: на широкой ширине метрика уходит в правую колонку. Имя radio-группы задаётся пропом filterName — менять при двух блоках на странице.",
       "meta": {
-        "tags": ["cases", "filter", "industries", "chips", "css only", "list"],
-        "preview": { "width": "full" },
+        "tags": [
+          "cases",
+          "filter",
+          "industries",
+          "chips",
+          "css only",
+          "list"
+        ],
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Case005",
           "usage": "<Case005\n  title=\"Кому VibeUI уже сэкономил недели\"\n  items={[{ client: \"Кедр Маркет\", industry: \"Ритейл\", group: \"g1\", task: \"Переезд с конструктора.\", metric: \"−82% времени\" }]}\n/>",
@@ -640,8 +798,18 @@
             "default": "Кейсы по отраслям",
             "maxLength": 24
           },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
         "i18n": {
           "en": {
@@ -681,9 +849,16 @@
                 "label": "Heading",
                 "default": "Who VibeUI has already saved weeks"
               },
-              "eyebrow": { "label": "Eyebrow", "default": "Cases by industry" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Cases by industry"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "preview": {
               "props": {
@@ -751,7 +926,13 @@
               }
             }
           }
-        }
+        },
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -759,7 +940,9 @@
       "type": "registry:block",
       "title": "Цифры внедрений",
       "description": "Сводная полоса метрик по всем кейсам на тёплой акцентной подложке и три мини-карточки как доказательство. Самодостаточен: один файл, без зависимостей.",
-      "categories": ["cases"],
+      "categories": [
+        "cases"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -771,8 +954,16 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-case-006-*. Серверный компонент. Сверху полоса-агрегат: dl с тремя большими цифрами на тёплой подложке color-mix из акцента, на широкой ширине цифры разделены вертикальными линейками. Ниже три мини-карточки кейсов: клиент, задача и метрика — намеренно мельче полосы, иерархия идёт от общего к частному. Большие цифры набраны акцентом с tabular-nums. Обе сетки складываются от собственной ширины блока.",
       "meta": {
-        "tags": ["cases", "stats", "summary", "metrics", "numbers"],
-        "preview": { "width": "full" },
+        "tags": [
+          "cases",
+          "stats",
+          "summary",
+          "metrics",
+          "numbers"
+        ],
+        "preview": {
+          "width": "full"
+        },
         "ai": {
           "export": "Case006",
           "usage": "<Case006\n  title=\"Что кейсы дают в сумме\"\n  stats={[{ value: \"124\", label: \"сайта собрано за год\" }]}\n  items={[{ client: \"Полярис\", task: \"Сайт к раунду за неделю.\", metric: \"+38% заявок\" }]}\n/>",
@@ -816,8 +1007,18 @@
             "default": "Итоги внедрений",
             "maxLength": 24
           },
-          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
-          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
         ],
         "i18n": {
           "en": {
@@ -856,18 +1057,34 @@
                 "label": "Heading",
                 "default": "What the case studies add up to"
               },
-              "eyebrow": { "label": "Eyebrow", "default": "Adoption results" },
-              "accent": { "label": "Accent" },
-              "background": { "label": "Background" }
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Adoption results"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
             },
             "preview": {
               "props": {
                 "eyebrow": "Adoption results",
                 "title": "What the case studies add up to",
                 "stats": [
-                  { "value": "124", "label": "sites built on VibeUI in a year" },
-                  { "value": "−70%", "label": "markup time on average across cases" },
-                  { "value": "5 days", "label": "median time from mockup to release" }
+                  {
+                    "value": "124",
+                    "label": "sites built on VibeUI in a year"
+                  },
+                  {
+                    "value": "−70%",
+                    "label": "markup time on average across cases"
+                  },
+                  {
+                    "value": "5 days",
+                    "label": "median time from mockup to release"
+                  }
                 ],
                 "items": [
                   {
@@ -889,7 +1106,13 @@
               }
             }
           }
-        }
+        },
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ]
       }
     }
   ]

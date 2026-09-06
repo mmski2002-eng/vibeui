@@ -202,7 +202,8 @@
             "eyebrow и title — надзаголовок и заголовок секции",
             "position и total — место в очереди и размер списка",
             "referralNote, referralCode, shareLabel — тексты реферального блока",
-            "акцент через проп accent — цифра позиции, заливка прогресса и код"
+            "акцент через проп accent — цифра позиции, заливка прогресса и код",
+            "background — подложка компонента; пусто означает «без подложки»"
           ],
           "notes": [
             "Тема берётся из color-scheme; у проекта должно быть объявлено color-scheme: light dark на html.",
@@ -232,7 +233,8 @@
                 "eyebrow and title — the section's eyebrow and heading",
                 "position and total — the queue place and list size",
                 "referralNote, referralCode, shareLabel — the referral block texts",
-                "the accent via the accent prop — position number, progress fill and code"
+                "the accent via the accent prop — position number, progress fill and code",
+                "background — the component's backdrop; empty means no backdrop"
               ],
               "notes": [
                 "The theme comes from color-scheme; the project must declare color-scheme: light dark on html.",

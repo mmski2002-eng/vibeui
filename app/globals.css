@@ -259,9 +259,17 @@
   }
 
   @container grid (min-width: 42rem) {
-    .catalog-grid {
+    .catalog-grid:not([data-single]) {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
+  }
+
+  /* Блоки — целые секции страницы. Вдвоём в ряд они мельчат: миниатюра
+     ужимается до нечитаемого. Одна карточка в ряд оставляет секции её
+     настоящую ширину. */
+  .catalog-grid[data-single] {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
   }
 
   /* Список категорий и его плотность. Значения сняты с образца.

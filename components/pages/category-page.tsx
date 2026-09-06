@@ -80,7 +80,7 @@ export function CategoryPage({
         active={category}
         heading={heading}
       >
-        <CatalogGrid items={items} locale={locale} />
+        <CatalogGrid items={items} locale={locale} single={kind === "block"} />
       </CatalogChrome>
     </CatalogShell>
   )
