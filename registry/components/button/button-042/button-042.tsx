@@ -13,9 +13,9 @@ export type Button042Props = ComponentProps<"button"> & {
 const STYLES = `
 :where([data-vibeui-block="button-042"]){
 --vibeui-button-042-cut:12px;
---vibeui-button-042-accent:light-dark(oklch(0.45 0.11 200),oklch(0.6 0.13 200));
---vibeui-button-042-fg:light-dark(oklch(0.98 0.02 200),oklch(0.97 0.022 200));
---vibeui-button-042-notch:light-dark(oklch(0.82 0.17 95),oklch(0.87 0.17 95));
+--vibeui-button-042-accent:light-dark(oklch(0.64 0.2144 39.8),oklch(0.6803 0.2144 39.8));
+--vibeui-button-042-fg:light-dark(oklch(0.98 0.02 39.8),oklch(0.97 0.022 39.8));
+--vibeui-button-042-notch:oklch(0.22 0 0);
 --vibeui-button-042-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

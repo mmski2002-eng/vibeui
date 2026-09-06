@@ -172,7 +172,7 @@
       "name": "button-002",
       "type": "registry:component",
       "title": "Кнопка с раздельным меню",
-      "description": "Кнопка с приставкой вариантов: основное действие слева, вызов альтернатив справа, между ними волосяная линия. Самодостаточна: один файл, без зависимостей.",
+      "description": "Кнопка с приставкой вариантов: основное действие слева, справа шеврон со встроенным выпадающим меню. Самодостаточна: один файл, без зависимостей.",
       "categories": ["button"],
       "dependencies": [],
       "registryDependencies": [],
@@ -183,13 +183,13 @@
           "target": "@components/vibeui/button-002.tsx"
         }
       ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-002-*. Корень — group из двух кнопок, поэтому className попадает на группу, а нативные пропсы button — на основную зону. Вторая зона вызывает onMenuClick и обязана иметь menuLabel: у неё нет видимой подписи.",
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-button-002-*. className попадает на обёртку (пилюля плюс меню), нативные пропсы button — на основную зону. Шеврон раскрывает встроенное меню из items (role=\"menu\", стрелки, Home/End, Esc, возврат фокуса); items={[]} отключает меню — тогда шеврон только вызывает onMenuClick. menuLabel обязателен по смыслу: у шеврона нет видимой подписи.",
       "meta": {
         "tags": ["button", "split", "action", "dropdown", "toolbar"],
         "ai": {
           "export": "Button002",
-          "usage": "<Button002 onClick={publish} onMenuClick={openVariants} menuLabel=\"Другие варианты\">\n  Опубликовать\n</Button002>",
-          "summary": "Кнопка из двух зон в одном пятне: слева основное действие, справа узкая приставка с шевроном для вызова альтернатив. Зоны разделены волосяной линией, приставка чуть темнее и читается как продолжение кнопки, а не как вторая кнопка. Ноль зависимостей, один файл.",
+          "usage": "<Button002 onClick={publish} menuLabel=\"Другие варианты\" items={[\n  { label: \"Запланировать\", onSelect: schedule },\n  { label: \"Сохранить черновик\", onSelect: saveDraft },\n]}>\n  Опубликовать\n</Button002>",
+          "summary": "Кнопка из двух зон в одном пятне: слева основное действие, справа узкая приставка с шевроном, раскрывающим встроенное меню вариантов. Зоны разделены волосяной линией, приставка чуть темнее и читается как продолжение кнопки; меню обслуживает клавиатуру и возвращает фокус. Ноль зависимостей, один файл.",
           "preserve": [
             "две зоны в одном пятне с общим скруглением и overflow:hidden — не разносить их в две отдельные кнопки с зазором",
             "волосяной разделитель через inset box-shadow и притопленный фон правой зоны: это и есть приём, отличающий split от пары кнопок",
@@ -197,18 +197,22 @@
             "aria-label на приставке — у неё нет текстовой подписи",
             "focus-visible с z-index:1, иначе обводка второй зоны уезжает под первую",
             "блок <style> внутри компонента",
-            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "клавиатуру меню: стрелки и Home/End двигают roving focus, Esc закрывает и возвращает фокус шеврону",
+            "aria-haspopup/aria-expanded на шевроне и role=\"menu\"/\"menuitem\" у списка — состояние объявлено, а не показано только стрелкой"
           ],
           "adapt": [
             "подпись основной зоны и menuLabel",
-            "обработчики onClick и onMenuClick",
+            "пункты items: label, onSelect, disabled",
+            "обработчики onClick, items[].onSelect и запасной onMenuClick",
             "акцент — проп accent (и accentForeground)",
-            "внешние отступы через className — он попадает на группу"
+            "внешние отступы через className — он попадает на обёртку"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
-            "Не превращай приставку в <select> или нативный dropdown: компонент только вызывает обработчик, меню рисует приложение.",
+            "items={[]} отключает встроенное меню: шеврон тогда только вызывает onMenuClick, а список рисует приложение.",
             "Не убирай разделитель — без него две зоны сливаются в одну кнопку.",
+            "Меню живёт в top layer через Popover API, а выбранный пункт становится подписью основной кнопки — основной onClick остаётся за левой зоной.",
             "Не выноси CSS-переменные в globals.css: компонент должен оставаться одним файлом."
           ]
         },
@@ -242,9 +246,9 @@
         ],
         "i18n": {
           "en": {
-            "description": "An action with a variants attachment: the main action on the left, alternatives on the right, a hairline between them. Self-contained — one file, no dependencies.",
+            "description": "An action with a variants attachment: the main action on the left, a chevron with a built-in dropdown menu on the right. Self-contained — one file, no dependencies.",
             "ai": {
-              "summary": "Two zones inside one control: the main action on the left, a narrow chevron attachment on the right for alternatives. A hairline separates them and the attachment sits slightly darker, so it reads as part of the button rather than a second one. Zero dependencies, one file.",
+              "summary": "Two zones inside one control: the main action on the left, a narrow chevron attachment on the right that unfolds a built-in variants menu. A hairline separates them and the attachment sits slightly darker, so it reads as part of the button; the menu serves the keyboard and returns focus. Zero dependencies, one file.",
               "preserve": [
                 "the two zones inside one shape, sharing a radius and overflow:hidden — do not split them into two separate buttons with a gap",
                 "the hairline via inset box-shadow and the recessed background of the right zone: that is the trick separating a split button from a pair of buttons",
@@ -252,21 +256,25 @@
                 "the aria-label on the attachment — it carries no text label",
                 "focus-visible with z-index:1, otherwise the second zone's ring slides under the first",
                 "the <style> block inside the component",
-                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the menu keyboard: arrows and Home/End move the roving focus, Esc closes and hands focus back to the chevron",
+                "aria-haspopup/aria-expanded on the chevron and role=\"menu\"/\"menuitem\" on the list — the state is announced, not just drawn with an arrow"
               ],
               "adapt": [
                 "the main label and menuLabel",
-                "the onClick and onMenuClick handlers",
+                "the menu items: label, onSelect, disabled",
+                "the onClick, items[].onSelect and fallback onMenuClick handlers",
                 "the accent through the accent prop (and accentForeground)",
-                "outer spacing through className — it lands on the group"
+                "outer spacing through className — it lands on the wrapper"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
-                "Do not turn the attachment into a <select> or a native dropdown: the component only fires a handler, the menu is your app's job.",
+                "items={[]} disables the built-in menu: the chevron then only fires onMenuClick and the list is your app's job.",
                 "Do not drop the separator — without it the two zones melt into one button.",
+                "The menu lives in the top layer via the Popover API, and the chosen item becomes the main button's label — the main onClick stays with the left zone.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
-              "usage": "<Button002 onClick={publish} onMenuClick={openVariants} menuLabel=\"More options\">\n  Publish\n</Button002>"
+              "usage": "<Button002 onClick={publish} menuLabel=\"More options\" items={[\n  { label: \"Schedule\", onSelect: schedule },\n  { label: \"Save draft\", onSelect: saveDraft },\n]}>\n  Publish\n</Button002>"
             },
             "controls": {
               "children": {
@@ -288,10 +296,21 @@
             "preview": {
               "props": {
                 "children": "Publish",
-                "menuLabel": "More options"
+                "menuLabel": "More options",
+                "items": [
+                  {
+                    "label": "Publish now"
+                  },
+                  {
+                    "label": "Schedule publication"
+                  },
+                  {
+                    "label": "Save as draft"
+                  }
+                ]
               }
             },
-            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-002-* variables. The root is a group of two buttons, so className lands on the group while the native button props land on the main zone. The second zone calls onMenuClick and must have a menuLabel: it has no visible caption."
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-002-* variables. className lands on the wrapper (pill plus menu), the native button props land on the main zone. The chevron unfolds the built-in menu from items (role=\"menu\", arrows, Home/End, Esc, focus return); items={[]} disables the menu — the chevron then only fires onMenuClick. menuLabel is required in spirit: the chevron has no visible caption."
           }
         },
         "cardControls": ["children", "menuLabel", "accent", "accentForeground"],

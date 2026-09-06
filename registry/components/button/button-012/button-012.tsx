@@ -30,7 +30,7 @@ const STYLES = `
 --vibeui-button-012-hover:light-dark(oklch(0.96 0 265),oklch(0.35 0 265));
 --vibeui-button-012-accent:light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));
 --vibeui-button-012-hover-filter:light-dark(brightness(1.45),brightness(0.9));
---vibeui-button-012-accent-fg:light-dark(oklch(0.99 0 265),oklch(0.2 0.04 265));
+--vibeui-button-012-accent-fg:light-dark(oklch(0.99 0 39.8),oklch(0.2 0.04 39.8));
 --vibeui-button-012-radius:0.625rem;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

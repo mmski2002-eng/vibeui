@@ -29,7 +29,7 @@ export type Button037Props = Omit<
 // свой transition-delay, поэтому стопка читается как раскрытие, а не рывок.
 const STYLES = `
 :where([data-vibeui-block="button-037"]){
---vibeui-button-037-accent:light-dark(oklch(0.56 0.2 25),oklch(0.66 0.19 25));
+--vibeui-button-037-accent:light-dark(oklch(0.56 0.2 39.8),oklch(0.66 0.19 39.8));
 --vibeui-button-037-fg:light-dark(oklch(0.99 0.01 25),oklch(0.98 0.014 25));
 --vibeui-button-037-surface:light-dark(oklch(1 0 0),oklch(0.25 0 265));
 --vibeui-button-037-ink:light-dark(oklch(0.26 0 265),oklch(0.93 0 265));
@@ -69,6 +69,9 @@ margin:auto;padding:0;border:0;background:none;overflow:visible;
 display:flex;flex-direction:column-reverse;align-items:center;gap:0.5rem;
 list-style:none;font-family:var(--vibeui-button-037-font);
 }
+/* display:flex перебивает браузерное display:none у закрытого popover —
+   кроме витринного режима, где веер намеренно стоит в потоке. */
+[data-vibeui-dial="button-037"]:not(:popover-open):not([data-open="true"]){display:none}
 [data-vibeui-dial="button-037"] [data-part="item"]{
 display:flex;align-items:center;gap:0.5rem;
 opacity:0;transform:translateY(0.75rem) scale(.9);

@@ -23,7 +23,7 @@ const STYLES = `
 --vibeui-button-016-bg:transparent;
 --vibeui-button-016-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
 --vibeui-button-016-hover:light-dark(oklch(0.96 0 265),oklch(0.32 0 265));
---vibeui-button-016-accent:light-dark(oklch(0.55 0.17 265),oklch(0.63 0.18 265));
+--vibeui-button-016-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.63 0.18 39.8));
 --vibeui-button-016-on-accent:oklch(0.99 0 265);
 --vibeui-button-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

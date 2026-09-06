@@ -28,8 +28,11 @@ export type Button001Props = ComponentProps<"button"> & {
 // не выжигала строку.
 const STYLES = `
 :where([data-vibeui-block="button-001"]){
---vibeui-button-001-accent:light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));
---vibeui-button-001-accent-fg:light-dark(oklch(0.99 0 264),oklch(0.21 0.045 264));
+/* Светлая ветка глубже брендового #FF5900: accent здесь и текст (soft,
+   outline), и заливка — на L 0.55 оба сочетания дают ≥4.5:1. В тёмной ветке
+   чистый #FF5900 с почти чёрной подписью. */
+--vibeui-button-001-accent:light-dark(oklch(0.55 0.2144 39.8),oklch(0.6803 0.2144 39.8));
+--vibeui-button-001-accent-fg:light-dark(oklch(0.99 0.01 39.8),oklch(0.15 0.02 39.8));
 --vibeui-button-001-soft-bg:color-mix(in oklab, var(--vibeui-button-001-accent) 14%, transparent);
 --vibeui-button-001-soft-bg-hover:color-mix(in oklab, var(--vibeui-button-001-accent) 22%, transparent);
 --vibeui-button-001-border:color-mix(in oklab, var(--vibeui-button-001-accent) 45%, transparent);

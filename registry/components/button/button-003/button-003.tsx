@@ -16,9 +16,9 @@ export type Button003Props = ComponentProps<"button"> & {
 // а не на фоне страницы.
 const STYLES = `
 :where([data-vibeui-block="button-003"]){
---vibeui-button-003-accent:light-dark(oklch(0.68 0.19 32),oklch(0.73 0.175 32));
---vibeui-button-003-accent-2:light-dark(oklch(0.6 0.21 12),oklch(0.66 0.19 12));
---vibeui-button-003-fg:oklch(0.99 0.004 32);
+--vibeui-button-003-accent:light-dark(oklch(0.68 0.19 39.8),oklch(0.73 0.175 39.8));
+--vibeui-button-003-accent-2:light-dark(oklch(0.6 0.21 25),oklch(0.66 0.19 25));
+--vibeui-button-003-fg:oklch(0.99 0.004 39.8);
 --vibeui-button-003-glow:color-mix(in oklab, var(--vibeui-button-003-accent) 55%, transparent);
 --vibeui-button-003-ring:color-mix(in oklab, var(--vibeui-button-003-accent) 75%, transparent);
 --vibeui-button-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
