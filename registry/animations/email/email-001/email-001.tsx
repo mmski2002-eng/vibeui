@@ -4,6 +4,12 @@ export type Email001Props = Omit<
   ComponentProps<"section">,
   "children" | "title"
 > & {
+  /** Подпись в шапке окна. */
+  heading?: string
+  /** Подпись поля адресата. */
+  toLabel?: string
+  /** Подпись поля темы. */
+  subjectLabel?: string
   to?: string
   subject?: string
   /** Тело письма построчно — каждая строка въезжает своей задержкой. */
@@ -212,6 +218,9 @@ export function Email001({
   subject = "Правки макета для ревью",
   body = DEFAULT_BODY,
   sendLabel = "Отправить",
+  heading = "Новое сообщение",
+  toLabel = "Кому",
+  subjectLabel = "Тема",
   accent,
   typing = true,
   unfold = true,
@@ -244,16 +253,16 @@ export function Email001({
           <div data-part="card">
             <div data-part="head">
               {PENCIL_ICON}
-              <p data-part="htitle">Новое сообщение</p>
+              <p data-part="htitle">{heading}</p>
               <span data-part="close">{CLOSE_ICON}</span>
             </div>
             <div data-part="fields">
               <div data-part="field">
-                <span data-part="flabel">Кому</span>
+                <span data-part="flabel">{toLabel}</span>
                 <span data-part="fvalue">{to}</span>
               </div>
               <div data-part="field">
-                <span data-part="flabel">Тема</span>
+                <span data-part="flabel">{subjectLabel}</span>
                 <span data-part="fvalue">{subject}</span>
               </div>
             </div>
@@ -264,7 +273,9 @@ export function Email001({
                 return (
                   <span data-part="line" key={line}>
                     {line}
-                    {last ? <span data-part="caret" aria-hidden="true" /> : null}
+                    {last ? (
+                      <span data-part="caret" aria-hidden="true" />
+                    ) : null}
                   </span>
                 )
               })}

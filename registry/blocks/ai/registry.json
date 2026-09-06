@@ -917,7 +917,7 @@
                 ]
               }
             },
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-ai-005-*. A server component: there are no hooks. The footnotes are cut out of the text by a regular expression matching the [1] pattern and turned into <sup><a> with an aria-label of the \"Источник N\" form; the anchor leads to a card with the id ai-005-source-N, and the cards carry scroll-margin-top and a :target highlight. The sources are laid out in two columns by a container query."
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-ai-005-*. A server component: there are no hooks. The footnotes are cut out of the text by a regular expression matching the [1] pattern and turned into <sup><a> with an aria-label of the \"Source N\" form; the anchor leads to a card with the id ai-005-source-N, and the cards carry scroll-margin-top and a :target highlight. The sources are laid out in two columns by a container query."
           }
         },
         "cardControls": ["title", "sourcesTitle", "accent", "background"]

@@ -6,6 +6,10 @@ import type { ComponentProps, CSSProperties } from "react"
 export type Date009Unit = "week" | "month" | "quarter"
 
 export type Date009Props = Omit<ComponentProps<"div">, "children"> & {
+  /** Сокращение дней в подписи отрезка. */
+  daysSuffix?: string
+  /** Названия месяцев в родительном падеже: «14 сентября». */
+  months?: string[]
   label?: string
   /** Какой отрезок выбирают: неделя, месяц или квартал. */
   defaultUnit?: Date009Unit
@@ -116,8 +120,8 @@ const MONTHS = [
 ]
 
 /** Человеческая запись дня: «14 сентября 2026». */
-function human(date: Date): string {
-  return `${date.getUTCDate()} ${MONTHS[date.getUTCMonth()]} ${date.getUTCFullYear()}`
+function human(date: Date, months: string[]): string {
+  return `${date.getUTCDate()} ${months[date.getUTCMonth()]} ${date.getUTCFullYear()}`
 }
 
 /**
@@ -197,6 +201,8 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Date009({
+  daysSuffix = "дн.",
+  months = MONTHS,
   label = "Период отчёта",
   defaultUnit = "month",
   defaultValue = "2026-09",
@@ -277,7 +283,10 @@ export function Date009({
           >
             {[2025, 2026].flatMap((year) =>
               [1, 2, 3, 4].map((quarter) => (
-                <option key={`${year}-Q${quarter}`} value={`${year}-Q${quarter}`}>
+                <option
+                  key={`${year}-Q${quarter}`}
+                  value={`${year}-Q${quarter}`}
+                >
                   {`${quarter} квартал ${year}`}
                 </option>
               )),
@@ -297,9 +306,11 @@ export function Date009({
         <p data-part="range" aria-live="polite">
           {span ? (
             <>
-              {human(span[0])} — {human(span[1])}
+              {human(span[0], months)} — {human(span[1], months)}
               {", "}
-              <span data-part="days">{days} дн.</span>
+              <span data-part="days">
+                {days} {daysSuffix}
+              </span>
             </>
           ) : (
             "Период не выбран"

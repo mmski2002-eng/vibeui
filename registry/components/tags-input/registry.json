@@ -6,9 +6,7 @@
       "type": "registry:component",
       "title": "Ввод тегов",
       "description": "Поле тегов: Enter и запятая добавляют, Backspace на пустом поле убирает последний — целиться в крестик не нужно.",
-      "categories": [
-        "tags-input"
-      ],
+      "categories": ["tags-input"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tags-001-*. Клиентский: \"use client\" ради ввода. Теги и черновик хранятся раздельно, повторы отсекаются молча. Поле ввода растягивается по остатку строки и переносится вместе с тегами, а счётчик показывает предел.",
       "meta": {
-        "tags": [
-          "tags",
-          "chips",
-          "input",
-          "form"
-        ],
+        "tags": ["tags", "chips", "input", "form"],
         "ai": {
           "export": "Tags001",
           "usage": "<Tags001 label=\"Теги\" defaultValue={[\"форма\"]} max={8} />",
@@ -137,10 +130,7 @@
               "props": {
                 "label": "Component tags",
                 "hint": "Enter or comma adds a tag",
-                "defaultValue": [
-                  "form",
-                  "zero deps"
-                ],
+                "defaultValue": ["form", "zero deps"],
                 "removeText": "Remove tag {tag}",
                 "placeholderText": "Add…",
                 "fullText": "Limit reached"
@@ -149,12 +139,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-tags-001-*. A client component: \"use client\" for the sake of the input. Tags and the draft are stored separately, duplicates are dropped silently. The input stretches across the remainder of the line and wraps together with the tags, while the counter shows the limit."
           }
         },
-        "cardControls": [
-          "label",
-          "max",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "max", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -165,9 +150,7 @@
       "type": "registry:component",
       "title": "Подсказки тегов",
       "description": "Теги из готового списка: свободный ввод плодит «react», «React» и «reactjs» — три тега вместо одного, и поиск по ним перестаёт работать.",
-      "categories": [
-        "tags-input"
-      ],
+      "categories": ["tags-input"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -179,12 +162,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-tags-002-*. Клиентский: список выбранного и черновик в состоянии. Подсказки отданы нативному datalist — он сам фильтрует по набранному, знает клавиатуру и на телефоне показывается системным способом, поэтому выпадающий список писать не нужно. Совпадение ищется без учёта регистра, а в список попадает канонический вариант из options. Рядом лежат кнопками ещё не выбранные варианты: до первой буквы человек не знает, что вообще можно выбрать.",
       "meta": {
-        "tags": [
-          "tags",
-          "autocomplete",
-          "datalist",
-          "form"
-        ],
+        "tags": ["tags", "autocomplete", "datalist", "form"],
         "ai": {
           "export": "Tags002",
           "usage": "<Tags002 label=\"Стек проекта\" options={[\"React\", \"TypeScript\", \"CSS\"]} defaultValue={[\"React\"]} />",
@@ -295,10 +273,7 @@
                   "GraphQL",
                   "Docker"
                 ],
-                "defaultValue": [
-                  "React",
-                  "TypeScript"
-                ],
+                "defaultValue": ["React", "TypeScript"],
                 "removeText": "Remove {tag}",
                 "placeholderText": "Start typing…",
                 "hintText": "Your own values are not accepted: the list is shared across the catalogue"
@@ -307,11 +282,7 @@
             "docs": "The component is self-contained: one file, zero dependencies, its palette in local variables --vibeui-tags-002-*. A client component: the picked list and the draft live in state. Suggestions are handed to the native datalist — it filters by what has been typed on its own, handles the keyboard and appears the system way on a phone, so there is no need to write a dropdown. The match is looked up case-insensitively, and the canonical value from options is what reaches the list. Next to it, the options not yet picked sit as buttons: until the first letter is typed a person does not know what can be chosen at all."
           }
         },
-        "cardControls": [
-          "label",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -322,9 +293,7 @@
       "type": "registry:component",
       "title": "Ограничение количества",
       "description": "Лимит-очередь вместо запертого поля: на пределе новый тег вытесняет самый старый, и кандидат на вылет подсвечен заранее.",
-      "categories": [
-        "tags-input"
-      ],
+      "categories": ["tags-input"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -336,12 +305,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-tags-003-*. Клиентский: список тегов и черновик в состоянии. На пределе поле не блокируется: новый тег добавляется, а список обрезается с конца методом slice(-max), то есть первый уходит. Пока в черновике есть текст, первый чип помечается data-doomed и перечёркивается — вытеснение обязано быть предсказуемым. Полоса заполненности и счётчик показывают лимит без пересчёта чипов глазами.",
       "meta": {
-        "tags": [
-          "tags",
-          "limit",
-          "queue",
-          "form"
-        ],
+        "tags": ["tags", "limit", "queue", "form"],
         "ai": {
           "export": "Tags003",
           "usage": "<Tags003 label=\"Интересы в ленте\" max={5} defaultValue={[\"дизайн\", \"интерфейсы\"]} />",
@@ -452,11 +416,7 @@
             "preview": {
               "props": {
                 "label": "Feed interests",
-                "defaultValue": [
-                  "design",
-                  "typography",
-                  "interfaces"
-                ],
+                "defaultValue": ["design", "typography", "interfaces"],
                 "removeText": "Remove {tag}",
                 "placeholderText": "Add an interest…",
                 "fullText": "Limit {max}: the next tag pushes out “{tag}”.",
@@ -466,12 +426,7 @@
             "docs": "The component is self-contained: one file, zero dependencies, its palette in local variables --vibeui-tags-003-*. A client component: the tag list and the draft live in state. At the limit the field is not locked: the new tag is added and the list is trimmed from the end with slice(-max), that is, the first one leaves. While the draft holds text, the first chip is marked data-doomed and struck through — eviction has to be predictable. The fill bar and the counter show the limit without recounting the chips by eye."
           }
         },
-        "cardControls": [
-          "label",
-          "max",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "max", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -482,9 +437,7 @@
       "type": "registry:component",
       "title": "Защита от дублей",
       "description": "Проверка дубликатов, которая не молчит: повтор подсвечивает уже существующий тег вспышкой и объясняет отказ словами.",
-      "categories": [
-        "tags-input"
-      ],
+      "categories": ["tags-input"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -496,12 +449,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-tags-004-*. Клиентский: список тегов, черновик и имя подсвеченного тега в состоянии. Сравнение идёт по приведённому виду — нижний регистр, схлопнутые пробелы, снятая пунктуация по краям, — поэтому «Ремонт», «ремонт» и «ремонт.» считаются одним тегом; показывается вариант, сохранённый первым. Подсветка снимается по onAnimationEnd, иначе вспышка сыграет один раз и больше не повторится. Сообщение лежит в области aria-live=\"assertive\": отказ надо услышать сразу.",
       "meta": {
-        "tags": [
-          "tags",
-          "duplicate",
-          "validation",
-          "form"
-        ],
+        "tags": ["tags", "duplicate", "validation", "form"],
         "ai": {
           "export": "Tags004",
           "usage": "<Tags004 label=\"Теги объявления\" defaultValue={[\"ремонт\", \"своими руками\"]} />",
@@ -603,10 +551,7 @@
             "preview": {
               "props": {
                 "label": "Listing tags",
-                "defaultValue": [
-                  "repair",
-                  "do it yourself"
-                ],
+                "defaultValue": ["repair", "do it yourself"],
                 "removeText": "Remove {tag}",
                 "placeholderText": "New tag…",
                 "duplicateText": "The tag “{tag}” is already there — it is highlighted above.",
@@ -616,11 +561,7 @@
             "docs": "The component is self-contained: one file, zero dependencies, its palette in local variables --vibeui-tags-004-*. A client component: the tag list, the draft and the name of the highlighted tag live in state. Comparison runs on the normalised form — lowercase, collapsed whitespace, punctuation stripped from the edges — so \"Repair\", \"repair\" and \"repair.\" count as one tag; the spelling saved first is the one shown. The highlight is cleared on onAnimationEnd, otherwise the flash plays once and never repeats again. The message sits in an aria-live=\"assertive\" region: a refusal has to be heard immediately."
           }
         },
-        "cardControls": [
-          "label",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -631,9 +572,7 @@
       "type": "registry:component",
       "title": "Разбор вставки",
       "description": "Теги по Enter, запятой и точке с запятой, а вставка списка из буфера разбирается тем же правилом и превращается в готовые чипы.",
-      "categories": [
-        "tags-input"
-      ],
+      "categories": ["tags-input"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -645,12 +584,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-tags-005-*. Клиентский: список, черновик и число добавленных из последней вставки в состоянии. Разбор один на все случаи — функция split по запятой, точке с запятой, переводу строки и табу, — поэтому набор с клавиатуры и вставка из письма ведут себя одинаково. Обработчик onPaste перехватывает только текст с разделителями: обычная вставка одного слова должна работать как обычно. Backspace на пустом поле удаляет последний чип.",
       "meta": {
-        "tags": [
-          "tags",
-          "paste",
-          "keyboard",
-          "email"
-        ],
+        "tags": ["tags", "paste", "keyboard", "email"],
         "ai": {
           "export": "Tags005",
           "usage": "<Tags005 label=\"Кому отправить\" defaultValue={[\"anna@example.com\"]} />",
@@ -752,9 +686,7 @@
             "preview": {
               "props": {
                 "label": "Send to",
-                "defaultValue": [
-                  "anna@example.com"
-                ],
+                "defaultValue": ["anna@example.com"],
                 "removeText": "Remove {tag}",
                 "placeholderText": "Type or paste a list…",
                 "pastedText": "{count} addresses added from a single paste",
@@ -764,11 +696,7 @@
             "docs": "The component is self-contained: one file, zero dependencies, its palette in local variables --vibeui-tags-005-*. A client component: the list, the draft and the number added by the last paste live in state. Parsing is one and the same for every case — a split function on comma, semicolon, newline and tab — so typing on the keyboard and pasting from an email behave identically. The onPaste handler intercepts only text with delimiters: an ordinary paste of a single word must work as usual. Backspace in an empty field removes the last chip."
           }
         },
-        "cardControls": [
-          "label",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -779,9 +707,7 @@
       "type": "registry:component",
       "title": "Цветные категории",
       "description": "Теги с цветными категориями: плоский список из пятнадцати одинаковых чипов не читается, а цвет группирует быстрее текста.",
-      "categories": [
-        "tags-input"
-      ],
+      "categories": ["tags-input"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -793,12 +719,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-tags-006-*. Клиентский: список тегов с категориями, черновик и выбранная категория в состоянии. Оттенок не выбирается вручную, а считается из названия категории хеш-функцией FNV и подставляется в --vibeui-tags-006-hue, поэтому новая категория сразу получает стабильный цвет и палитру не нужно вести отдельным списком. Все три цвета чипа — фон, текст и точка — строятся из одного оттенка в oklch, поэтому контраст не ломается на любом hue.",
       "meta": {
-        "tags": [
-          "tags",
-          "categories",
-          "color",
-          "form"
-        ],
+        "tags": ["tags", "categories", "color", "form"],
         "ai": {
           "export": "Tags006",
           "usage": "<Tags006 label=\"Метки задачи\" groups={[\"команда\", \"срочность\"]} defaultValue={[{ text: \"дизайн\", group: \"команда\" }]} />",
@@ -900,11 +821,7 @@
             "preview": {
               "props": {
                 "label": "Task labels",
-                "groups": [
-                  "team",
-                  "urgency",
-                  "product"
-                ],
+                "groups": ["team", "urgency", "product"],
                 "defaultValue": [
                   {
                     "text": "design",
@@ -928,11 +845,7 @@
             "docs": "The component is self-contained: one file, zero dependencies, its palette in local variables --vibeui-tags-006-*. A client component: the tag list with categories, the draft and the selected category live in state. The hue is not picked by hand but derived from the category name with the FNV hash function and substituted into --vibeui-tags-006-hue, so a new category gets a stable colour straight away and the palette does not have to be maintained as a separate list. All three chip colours — background, text and dot — are built from one hue in oklch, so contrast does not break at any hue."
           }
         },
-        "cardControls": [
-          "label",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -943,9 +856,7 @@
       "type": "registry:component",
       "title": "Переполнение только для чтения",
       "description": "Список тегов только для чтения со счётчиком скрытых: молча обрезанный список читается как полный, и «+3» это чинит.",
-      "categories": [
-        "tags-input"
-      ],
+      "categories": ["tags-input"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -957,12 +868,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-tags-007-*. Серверный: раскрывать список некуда, это витрина, а не форма. Видимые теги показаны обычным ul, а лишние свёрнуты в счётчик «+N»; их названия перечислены в title и aria-label, поэтому скрытое можно узнать наведением и услышать скринридером. Разметка списком, а не набором span: это перечисление, и скринридер должен назвать число элементов.",
       "meta": {
-        "tags": [
-          "tags",
-          "readonly",
-          "overflow",
-          "list"
-        ],
+        "tags": ["tags", "readonly", "overflow", "list"],
         "ai": {
           "export": "Tags007",
           "usage": "<Tags007 label=\"Метки объявления\" tags={[\"макбук\", \"2024\", \"гарантия\", \"торг\"]} visible={4} />",
@@ -1090,12 +996,7 @@
             "docs": "The component is self-contained: one file, zero dependencies, its palette in local variables --vibeui-tags-007-*. A server component: there is nothing to expand here, this is a display, not a form. The visible tags are shown as an ordinary ul, and the extra ones collapse into a \"+N\" counter; their names are listed in title and aria-label, so what is hidden can be found by hover and heard by a screen reader. Markup as a list rather than a set of spans: this is an enumeration and a screen reader has to announce the number of items."
           }
         },
-        "cardControls": [
-          "label",
-          "visible",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "visible", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -1106,9 +1007,7 @@
       "type": "registry:component",
       "title": "Приглашения по почте",
       "description": "Адреса чипами с проверкой: негодный не отбрасывается, а помечается и правится одним нажатием.",
-      "categories": [
-        "tags-input"
-      ],
+      "categories": ["tags-input"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1120,12 +1019,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tags-008-*. Клиентский. Вставка разбирается по пробелам, запятым и точкам с запятой, поэтому список из письма превращается в чипы за один раз. Проверка нарочно нестрогая — она ловит очевидное и не отвергает живые ящики. Негодный адрес остаётся чипом и по нажатию возвращается в поле; счётчик считает годные и ошибочные раздельно.",
       "meta": {
-        "tags": [
-          "tags",
-          "email",
-          "invite",
-          "validation"
-        ],
+        "tags": ["tags", "email", "invite", "validation"],
         "ai": {
           "export": "Tags008",
           "usage": "<Tags008 defaultValue={mails} />",
@@ -1272,9 +1166,7 @@
       "type": "registry:component",
       "title": "Создание нового тега",
       "description": "Выбор из готовых меток и заведение новой разделены: совпадения сверху, «Создать» — отдельной строкой внизу.",
-      "categories": [
-        "tags-input"
-      ],
+      "categories": ["tags-input"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1286,12 +1178,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tags-009-*. Клиентский. Список совпадений лежит поверх страницы, чтобы содержимое под полем не прыгало при наборе. Строка создания отделена чертой, несёт слово «Создать» и сам набранный текст, и появляется только тогда, когда такого тега нет ни среди выбранных, ни среди известных.",
       "meta": {
-        "tags": [
-          "tags",
-          "create",
-          "suggest",
-          "combobox"
-        ],
+        "tags": ["tags", "create", "suggest", "combobox"],
         "ai": {
           "export": "Tags009",
           "usage": "<Tags009 known={labels} defaultValue={chosen} />",
@@ -1425,9 +1312,7 @@
                   "support",
                   "sales"
                 ],
-                "defaultValue": [
-                  "interface"
-                ]
+                "defaultValue": ["interface"]
               }
             }
           }
@@ -1449,9 +1334,7 @@
       "type": "registry:component",
       "title": "Порядок тегов",
       "description": "Теги, у которых важен порядок: перестановка кнопками — она работает и с клавиатуры, и на телефоне.",
-      "categories": [
-        "tags-input"
-      ],
+      "categories": ["tags-input"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1463,12 +1346,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-tags-010-*. Клиентский. Порядок меняют две кнопки у каждого чипа, а не перетаскивание: подпись кнопки несёт имя тега и будущую позицию, поэтому скринридер сообщает не «кнопка вверх», а что именно и куда поедет. Номер позиции показан в самом чипе; перестановка объявляется через aria-live отдельной скрытой строкой.",
       "meta": {
-        "tags": [
-          "tags",
-          "order",
-          "priority",
-          "keyboard"
-        ],
+        "tags": ["tags", "order", "priority", "keyboard"],
         "ai": {
           "export": "Tags010",
           "usage": "<Tags010 defaultValue={directions} />",
@@ -1594,11 +1472,7 @@
                 "upTemplate": "{name}: move up to {position}",
                 "downTemplate": "{name}: move down to {position}",
                 "removeTemplate": "Remove {name}",
-                "defaultValue": [
-                  "interfaces",
-                  "research",
-                  "analytics"
-                ]
+                "defaultValue": ["interfaces", "research", "analytics"]
               }
             }
           }
@@ -1606,13 +1480,7 @@
         "preview": {
           "width": "full"
         },
-        "cardControls": [
-          "title",
-          "placeholder",
-          "hint",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "placeholder", "hint", "accent", "background"]
       }
     }
   ]

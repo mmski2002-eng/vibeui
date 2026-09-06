@@ -114,13 +114,42 @@
                 "title": "Service status",
                 "badge": "Live",
                 "services": [
-                  { "name": "API Gateway", "tone": "ok", "meta": "42 ms" },
-                  { "name": "Auth Service", "tone": "ok", "meta": "58 ms" },
-                  { "name": "Payments", "tone": "degraded", "meta": "210 ms" },
-                  { "name": "Database", "tone": "ok", "meta": "12 ms" },
-                  { "name": "Search Index", "tone": "down", "meta": "No response" },
-                  { "name": "CDN Edge", "tone": "ok", "meta": "8 ms" }
-                ]
+                  {
+                    "name": "API Gateway",
+                    "tone": "ok",
+                    "meta": "42 ms"
+                  },
+                  {
+                    "name": "Auth Service",
+                    "tone": "ok",
+                    "meta": "58 ms"
+                  },
+                  {
+                    "name": "Payments",
+                    "tone": "degraded",
+                    "meta": "210 ms"
+                  },
+                  {
+                    "name": "Database",
+                    "tone": "ok",
+                    "meta": "12 ms"
+                  },
+                  {
+                    "name": "Search Index",
+                    "tone": "down",
+                    "meta": "No response"
+                  },
+                  {
+                    "name": "CDN Edge",
+                    "tone": "ok",
+                    "meta": "8 ms"
+                  }
+                ],
+                "stateText": {
+                  "ok": "Operational",
+                  "degraded": "Degraded",
+                  "down": "Down"
+                }
               }
             }
           }
@@ -130,12 +159,36 @@
             "title": "Статус сервисов",
             "badge": "Live",
             "services": [
-              { "name": "API Gateway", "tone": "ok", "meta": "42 ms" },
-              { "name": "Auth Service", "tone": "ok", "meta": "58 ms" },
-              { "name": "Payments", "tone": "degraded", "meta": "210 ms" },
-              { "name": "Database", "tone": "ok", "meta": "12 ms" },
-              { "name": "Search Index", "tone": "down", "meta": "Нет ответа" },
-              { "name": "CDN Edge", "tone": "ok", "meta": "8 ms" }
+              {
+                "name": "API Gateway",
+                "tone": "ok",
+                "meta": "42 ms"
+              },
+              {
+                "name": "Auth Service",
+                "tone": "ok",
+                "meta": "58 ms"
+              },
+              {
+                "name": "Payments",
+                "tone": "degraded",
+                "meta": "210 ms"
+              },
+              {
+                "name": "Database",
+                "tone": "ok",
+                "meta": "12 ms"
+              },
+              {
+                "name": "Search Index",
+                "tone": "down",
+                "meta": "Нет ответа"
+              },
+              {
+                "name": "CDN Edge",
+                "tone": "ok",
+                "meta": "8 ms"
+              }
             ]
           }
         },
@@ -256,7 +309,13 @@
               "props": {
                 "title": "Service uptime",
                 "period": "Last 30 days",
-                "uptime": 99.8
+                "uptime": 99.8,
+                "stateText": {
+                  "ok": "Normal",
+                  "degraded": "Degraded",
+                  "down": "Outage"
+                },
+                "dayTemplate": "Day {index}"
               }
             }
           }

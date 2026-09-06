@@ -18,14 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-chat-001-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Ответ ассистента раскрывается ступенями (steps()) до ширины, посчитанной из длины текста через CSS-переменную --vibeui-chat-001-chars, в конце мигает текстовый курсор; всё гаснет при prefers-reduced-motion. Точка статуса в шапке дышит кольцом.",
       "meta": {
-        "tags": [
-          "chat",
-          "ai",
-          "streaming",
-          "typing",
-          "prompt",
-          "animated"
-        ],
+        "tags": ["chat", "ai", "streaming", "typing", "prompt", "animated"],
         "ai": {
           "export": "Chat001",
           "usage": "<Chat001 title=\"Ассистент\" userMessage=\"Привет\" assistantMessage=\"Чем помочь?\" streaming />",
@@ -247,7 +240,10 @@
             "title": "Аня Соколова",
             "status": "в сети",
             "messages": [
-              { "text": "Привет! Готов созвониться в 15:00?", "author": "them" },
+              {
+                "text": "Привет! Готов созвониться в 15:00?",
+                "author": "them"
+              },
               { "text": "Да, буду вовремя", "author": "me" },
               { "text": "Отлично, скину ссылку на встречу", "author": "them" }
             ]

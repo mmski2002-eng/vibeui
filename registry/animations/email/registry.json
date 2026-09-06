@@ -18,14 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-email-001-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark, поэтому в тёмном проекте не остаётся светлым. Окно письма разворачивается масштабом и прозрачностью при появлении, строки тела печатаются построчно с задержкой, после последней строки мигает курсор, а кнопка отправки держит пульсирующее кольцо. Всё гаснет при prefers-reduced-motion.",
       "meta": {
-        "tags": [
-          "email",
-          "compose",
-          "mail",
-          "typing",
-          "cursor",
-          "animated"
-        ],
+        "tags": ["email", "compose", "mail", "typing", "cursor", "animated"],
         "ai": {
           "export": "Email001",
           "usage": "<Email001 to=\"team@company.com\" subject=\"Ревью макета\" body={[\"Привет!\", \"Гляньте, пожалуйста, до пятницы.\"]} />",
@@ -127,7 +120,10 @@
                   "Attached the files, please check by Friday.",
                   "Thanks!"
                 ],
-                "sendLabel": "Send"
+                "sendLabel": "Send",
+                "heading": "New message",
+                "toLabel": "To",
+                "subjectLabel": "Subject"
               }
             }
           }
@@ -164,14 +160,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-email-002-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark, поэтому в тёмном проекте не остаётся светлым. Письма въезжают по очереди при появлении (stagger rise), непрочитанные выделены жирным именем и акцентной точкой слева, которая мягко пульсирует. Всё гаснет при prefers-reduced-motion.",
       "meta": {
-        "tags": [
-          "email",
-          "inbox",
-          "list",
-          "unread",
-          "stagger",
-          "animated"
-        ],
+        "tags": ["email", "inbox", "list", "unread", "stagger", "animated"],
         "ai": {
           "export": "Email002",
           "usage": "<Email002 title=\"Входящие\" badge=\"2 новых\" messages={[{ name: \"Анна Смирнова\", preview: \"Отправила макет\", time: \"9:41\", unread: true }]} />",

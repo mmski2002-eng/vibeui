@@ -4,6 +4,16 @@ export type Files004Props = Omit<
   ComponentProps<"section">,
   "children" | "title"
 > & {
+  /** Строка после загрузки. {name} подставляется именем файла. */
+  doneTemplate?: string
+  /** Подпись во время загрузки. {size} подставляется размером файла. */
+  uploadingTemplate?: string
+  /** Подпись после загрузки. */
+  doneLabel?: string
+  /** Первая строка подсказки в зоне загрузки. */
+  hint?: string
+  /** Вторая строка подсказки — про выбор файла вручную. */
+  hintSub?: string
   fileName?: string
   fileSize?: string
   accent?: string
@@ -169,6 +179,11 @@ const CHECK_ICON = (
  * цикл без JS, один файл, ноль зависимостей.
  */
 export function Files004({
+  doneTemplate = "{name} загружен",
+  uploadingTemplate = "Загрузка… {size}",
+  doneLabel = "Готово",
+  hint = "Перетащите файл сюда",
+  hintSub = "или нажмите, чтобы выбрать",
   fileName = "Презентация.pdf",
   fileSize = "2.4 МБ",
   accent,
@@ -203,16 +218,20 @@ export function Files004({
           </span>
           <div data-part="captions">
             <p data-part="caption" data-id="idle">
-              <span data-part="hint">Перетащите файл сюда</span>
-              <span data-part="sub">или нажмите, чтобы выбрать</span>
+              <span data-part="hint">{hint}</span>
+              <span data-part="sub">{hintSub}</span>
             </p>
             <p data-part="caption" data-id="busy">
               <span data-part="hint">{fileName}</span>
-              <span data-part="sub">Загрузка… {fileSize}</span>
+              <span data-part="sub">
+                {uploadingTemplate.replace("{size}", fileSize)}
+              </span>
             </p>
             <p data-part="caption" data-id="done">
-              <span data-part="hint">Готово</span>
-              <span data-part="sub">{fileName} загружен</span>
+              <span data-part="hint">{doneLabel}</span>
+              <span data-part="sub">
+                {doneTemplate.replace("{name}", fileName)}
+              </span>
             </p>
           </div>
           <div data-part="row">

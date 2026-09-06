@@ -3915,6 +3915,14 @@
                 "label": "Background",
                 "default": ""
               }
+            },
+            "preview": {
+              "props": {
+                "itemName": "Oversized sweater, grey melange",
+                "addedLabel": "Added",
+                "cartLabel": "To cart",
+                "closeLabel": "Close the notification"
+              }
             }
           }
         }

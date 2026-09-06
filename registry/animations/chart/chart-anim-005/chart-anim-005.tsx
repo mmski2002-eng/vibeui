@@ -4,6 +4,11 @@ export type ChartAnim005Props = Omit<
   ComponentProps<"section">,
   "children" | "title"
 > & {
+  /** Подписи шкалы интенсивности. */
+  lessLabel?: string
+  moreLabel?: string
+  /** Строка для скринридера: {title}, {rows}, {cols}. */
+  readTemplate?: string
   title?: string
   /** Пилюля справа от заголовка: период среза. */
   period?: string
@@ -123,6 +128,9 @@ const DEFAULT_DATA: number[][] = [
  * собственная палитра, клиентского JS нет.
  */
 export function ChartAnim005({
+  lessLabel = "Меньше",
+  moreLabel = "Больше",
+  readTemplate = "{title}: сетка {rows} строк на {cols} колонок, интенсивность от низкой до высокой.",
   title = "Активные часы",
   period = "4нед",
   value = "312 сессии",
@@ -184,7 +192,10 @@ export function ChartAnim005({
                 </div>
               </div>
               <p data-part="sr">
-                {title}: сетка {rows.length} строк на {cols.length} колонок, интенсивность от низкой до высокой.
+                {readTemplate
+                  .replace("{title}", title)
+                  .replace("{rows}", String(rows.length))
+                  .replace("{cols}", String(cols.length))}
               </p>
               <div data-part="grid-wrap">
                 <div data-part="rowlabels" aria-hidden="true">
@@ -221,7 +232,7 @@ export function ChartAnim005({
                 </div>
               </div>
               <div data-part="legend" aria-hidden="true">
-                <span>Меньше</span>
+                <span>{lessLabel}</span>
                 <span data-part="scale">
                   {[0.15, 0.4, 0.65, 0.9].map((level) => (
                     <span
@@ -233,7 +244,7 @@ export function ChartAnim005({
                     />
                   ))}
                 </span>
-                <span>Больше</span>
+                <span>{moreLabel}</span>
               </div>
             </div>
           </div>

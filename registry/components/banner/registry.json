@@ -2330,6 +2330,13 @@
                 "label": "Background",
                 "default": ""
               }
+            },
+            "preview": {
+              "props": {
+                "tagline": "Works offline and opens from the home screen",
+                "installLabel": "Install",
+                "dismissLabel": "Hide the install prompt"
+              }
             }
           }
         }

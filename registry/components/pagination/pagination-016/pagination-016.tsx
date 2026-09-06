@@ -158,7 +158,7 @@ export function Pagination016({
         {...props}
         data-slot="pagination"
         data-vibeui-block="pagination-016"
-        aria-label={navLabel ?? labelText.nav ?? LABEL.nav}
+        aria-label={navLabel ?? labelText.nav}
         className={className}
         style={palette}
       >
@@ -169,7 +169,7 @@ export function Pagination016({
             disabled={page === 1}
             onClick={() => setPage(Math.max(page - 1, 1))}
           >
-            {labelText.prev ?? LABEL.prev}
+            {labelText.prev}
           </button>
           <span data-part="picker">
             <label htmlFor={id} data-part="hint">
@@ -190,7 +190,7 @@ export function Pagination016({
             <span data-part="caret" aria-hidden="true" />
           </span>
           <span data-part="of">
-            {(labelText.of ?? LABEL.of).replace("{total}", String(total))}
+            {labelText.of.replace("{total}", String(total))}
           </span>
           <button
             type="button"
@@ -198,7 +198,7 @@ export function Pagination016({
             disabled={page === total}
             onClick={() => setPage(Math.min(page + 1, total))}
           >
-            {labelText.next ?? LABEL.next}
+            {labelText.next}
           </button>
         </div>
       </nav>

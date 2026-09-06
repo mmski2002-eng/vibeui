@@ -6,9 +6,7 @@
       "type": "registry:component",
       "title": "Месяц с переполнением",
       "description": "Месяц с событиями прямо в клетках: клетка держит фиксированную высоту, а всё лишнее сворачивается в «ещё N» и раскрывается нативным <details>.",
-      "categories": [
-        "event-calendar"
-      ],
+      "categories": ["event-calendar"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-eventcalendar-001-*. Серверный: хуков нет. Сетка 7×6 строится от первого понедельника, названия дней и месяца берутся из Intl. Клетка имеет min-height, поэтому загруженный день не растягивает строку месяца; события сверх visible уходят в <details>/<summary>, а всплывающий список позиционируется абсолютно и в нижних строках разворачивается вверх правилом :nth-child(n+29). Тип события различается цветом левой границы и её стилем.",
       "meta": {
-        "tags": [
-          "calendar",
-          "events",
-          "month",
-          "overflow"
-        ],
+        "tags": ["calendar", "events", "month", "overflow"],
         "preview": {
           "width": "full"
         },
@@ -215,11 +208,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-eventcalendar-001-* variables. Server-side: no hooks. The 7×6 grid is built from the first Monday, and the day and month names come from Intl. A cell has a min-height, so a busy day does not stretch the month row; events beyond visible go into <details>/<summary>, and the popup list is positioned absolutely and flips upwards in the bottom rows through the :nth-child(n+29) rule. The event type is distinguished by the colour of the left border and by its style."
           }
         },
-        "cardControls": [
-          "visible",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["visible", "accent", "background"]
       }
     },
     {
@@ -227,9 +216,7 @@
       "type": "registry:component",
       "title": "Колонки недели",
       "description": "Неделя семью колонками времени: событие ставится в проценты от рабочего дня, поэтому встреча с 9:40 не округляется до строки сетки.",
-      "categories": [
-        "event-calendar"
-      ],
+      "categories": ["event-calendar"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -241,12 +228,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-eventcalendar-002-*. Серверный: хуков нет. Колонка дня — своя система координат: высота равна рабочему интервалу, а top и height события считаются в процентах от него. Часовые линии рисует repeating-linear-gradient, а не пустые ячейки. События на весь день вынесены в отдельную строку над шкалой, потому что положения во времени у них нет. Прокрутка вбок живёт в контейнере с tabindex=0 и видимым фокусом.",
       "meta": {
-        "tags": [
-          "calendar",
-          "events",
-          "week",
-          "schedule"
-        ],
+        "tags": ["calendar", "events", "week", "schedule"],
         "preview": {
           "width": "full"
         },
@@ -452,13 +434,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own --vibeui-eventcalendar-002-* palette. Server-side: no hooks. A day column is its own coordinate system: its height equals the working interval, and an event's top and height are computed as percentages of it. The hour lines are drawn by repeating-linear-gradient rather than by empty cells. All-day events are moved into a separate row above the scale, because they have no position in time. Horizontal scrolling lives in a container with tabindex=0 and a visible focus ring."
           }
         },
-        "cardControls": [
-          "heading",
-          "dayFrom",
-          "dayTo",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["heading", "dayFrom", "dayTo", "accent", "background"]
       }
     },
     {
@@ -466,9 +442,7 @@
       "type": "registry:component",
       "title": "Дорожки дня",
       "description": "День с временной шкалой, где пересекающиеся события расходятся по дорожкам: ширина считается по своей группе наложений, а не по всему дню.",
-      "categories": [
-        "event-calendar"
-      ],
+      "categories": ["event-calendar"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -480,12 +454,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-eventcalendar-003-*. Серверный: хуков нет, вся раскладка считается при рендере чистой функцией layout(). События сортируются по началу, разбиваются на связные группы пересечений, внутри группы каждое занимает первую свободную дорожку; ширина берётся от числа дорожек именно этой группы, поэтому одно наложение утром не сужает спокойный вечер. Часовые линии рисует repeating-linear-gradient, тип события различается цветом и стилем рамки.",
       "meta": {
-        "tags": [
-          "calendar",
-          "events",
-          "day",
-          "overlap"
-        ],
+        "tags": ["calendar", "events", "day", "overlap"],
         "preview": {
           "width": "full"
         },
@@ -657,12 +626,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own --vibeui-eventcalendar-003-* palette. Server-side: no hooks — the whole layout is computed at render time by the pure layout() function. Events are sorted by start, split into connected overlap groups, and inside a group each one takes the first free lane; the width comes from the number of lanes in that particular group, so one overlap in the morning does not narrow a quiet evening. The hour lines are drawn by repeating-linear-gradient, and the event type is distinguished by colour and border style."
           }
         },
-        "cardControls": [
-          "dayFrom",
-          "dayTo",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["dayFrom", "dayTo", "accent", "background"]
       }
     },
     {
@@ -670,9 +634,7 @@
       "type": "registry:component",
       "title": "Лента ближайших",
       "description": "Лента ближайших событий, сгруппированная по дням: заголовок дня липкий, «сегодня» и «завтра» названы словами, а не датой.",
-      "categories": [
-        "event-calendar"
-      ],
+      "categories": ["event-calendar"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -684,12 +646,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-eventcalendar-004-*. Серверный: хуков нет. События фильтруются по окну days от today, сортируются по строке ISO и группируются в один проход. Заголовок дня липкий внутри прокручиваемой ленты с ограниченной высотой, поэтому карточка в сайдбаре не растёт вместе с числом встреч. Время стоит отдельной колонкой с моноширинными цифрами, тип события различается стилем левой границы, дедлайн дополнительно помечен словом.",
       "meta": {
-        "tags": [
-          "calendar",
-          "events",
-          "agenda",
-          "list"
-        ],
+        "tags": ["calendar", "events", "agenda", "list"],
         "preview": {
           "width": "full"
         },
@@ -869,12 +826,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own --vibeui-eventcalendar-004-* palette. Server-side: no hooks. Events are filtered by the days window from today, sorted by their ISO string and grouped in a single pass. The day header is sticky inside a scrollable feed of limited height, so a card in a sidebar does not grow with the number of meetings. The time sits in its own column with tabular figures, the event type is distinguished by the style of the left border, and a deadline is additionally marked with a word."
           }
         },
-        "cardControls": [
-          "heading",
-          "days",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["heading", "days", "accent", "background"]
       }
     },
     {
@@ -882,9 +834,7 @@
       "type": "registry:component",
       "title": "Легенда источников",
       "description": "Календарь нескольких источников: каждый различается и цветом, и формой метки, а показывать его или нет — переключается чекбоксом через :has().",
-      "categories": [
-        "event-calendar"
-      ],
+      "categories": ["event-calendar"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -896,12 +846,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра --vibeui-eventcalendar-005-*. Серверный: хуков нет, фильтрация целиком на CSS. Легенда — fieldset с чекбоксами, снятая галочка прячет и метки в сетке, и строки списка правилом [data-vibeui-block]:has([data-index=N]:not(:checked)) [data-source=N]{display:none}. Источник кодируется дважды: цветом из данных и формой метки (круг, квадрат, ромб, треугольник) через border-radius, rotate и clip-path. Под сеткой стоит прокручиваемый список тех же событий.",
       "meta": {
-        "tags": [
-          "calendar",
-          "events",
-          "legend",
-          "filter"
-        ],
+        "tags": ["calendar", "events", "legend", "filter"],
         "preview": {
           "width": "full"
         },
@@ -1115,12 +1060,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own --vibeui-eventcalendar-005-* palette. Server-side: no hooks, the filtering is entirely CSS. The legend is a fieldset with checkboxes; an unchecked box hides both the markers in the grid and the list rows through the rule [data-vibeui-block]:has([data-index=N]:not(:checked)) [data-source=N]{display:none}. A source is encoded twice: by the colour from the data and by the marker shape (circle, square, diamond, triangle) through border-radius, rotate and clip-path. Below the grid there is a scrollable list of the same events."
           }
         },
-        "cardControls": [
-          "heading",
-          "weeks",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["heading", "weeks", "accent", "background"]
       }
     }
   ]

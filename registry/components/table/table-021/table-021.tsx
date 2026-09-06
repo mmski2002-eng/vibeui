@@ -12,6 +12,8 @@ export type Table021Group = {
 }
 
 export type Table021Props = Omit<ComponentProps<"div">, "children"> & {
+  /** Подпись строки итога. */
+  totalLabel?: string
   groups?: Table021Group[]
   caption?: string
   /** Заголовки колонок: компонент несёт русские, проект подставляет свои. */
@@ -146,6 +148,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * зависимостей, собственная палитра.
  */
 export function Table021({
+  totalLabel = "Итого",
   groups = DEFAULT_GROUPS,
   caption = "Склад по категориям",
   columnText = COLUMN_TEXT,
@@ -168,10 +171,15 @@ export function Table021({
   } as CSSProperties
 
   const label = (key: string) => columnText[key] ?? COLUMN_TEXT[key]
-  const money = (value: number) => `${value.toLocaleString("ru-RU")} ${currency}`
+  const money = (value: number) =>
+    `${value.toLocaleString("ru-RU")} ${currency}`
   const total = groups.reduce(
     (sum, group) =>
-      sum + group.items.reduce((groupSum, item) => groupSum + item.price * item.quantity, 0),
+      sum +
+      group.items.reduce(
+        (groupSum, item) => groupSum + item.price * item.quantity,
+        0,
+      ),
     0,
   )
 
@@ -233,7 +241,7 @@ export function Table021({
               </tbody>
               <tfoot>
                 <tr>
-                  <td colSpan={3}>Итого</td>
+                  <td colSpan={3}>{totalLabel}</td>
                   <td data-align="end">{money(total)}</td>
                 </tr>
               </tfoot>

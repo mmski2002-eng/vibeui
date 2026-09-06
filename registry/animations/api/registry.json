@@ -383,14 +383,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-api-003-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Каждая дуга-попытка — свой бесконечный CSS-цикл со сдвигом фазы (animation-delay = номер попытки × длительность одной попытки), поэтому весь веер выглядит непрерывной ретрай-волной без единого JS-таймера. Все дуги, кроме последней, гаснут красным (fail); последняя приходит зелёной и подсвечивает эндпоинт кольцом (success). Число дуг задаётся пропом attempts (2–5).",
       "meta": {
-        "tags": [
-          "api",
-          "webhook",
-          "retry",
-          "delivery",
-          "animated",
-          "network"
-        ],
+        "tags": ["api", "webhook", "retry", "delivery", "animated", "network"],
         "ai": {
           "export": "Api003",
           "usage": "<Api003 title=\"Webhook\" eventLabel=\"order.created\" endpointLabel=\"Endpoint\" attempts={3} />",

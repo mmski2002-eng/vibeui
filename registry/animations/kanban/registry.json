@@ -18,14 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-kanban-anim-001-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Карточки колонок появляются вразнобой через animation-delay, вычисленный от позиции карточки среди всех карточек доски. Карточка с drag: true едет в соседнюю колонку через отдельный @keyframes на translate/scale/rotate, сдвиг посчитан в процентах от собственной ширины карточки — работает при любой ширине доски. Это иллюстрация перетаскивания, не настоящий drag-n-drop: JS не участвует. При prefers-reduced-motion анимация отключается.",
       "meta": {
-        "tags": [
-          "kanban",
-          "board",
-          "drag",
-          "tasks",
-          "animated",
-          "cycle"
-        ],
+        "tags": ["kanban", "board", "drag", "tasks", "animated", "cycle"],
         "ai": {
           "export": "KanbanAnim001",
           "usage": "<KanbanAnim001 title=\"Спринт 24\" columns={[{ title: \"К выполнению\", cards: [{ title: \"Задача\", tag: \"UI\", drag: true }] }]} duration={10} />",
@@ -108,7 +101,11 @@
                     "title": "To Do",
                     "cards": [
                       { "title": "Update the landing page", "tag": "UI" },
-                      { "title": "Set up billing", "tag": "Backend", "drag": true },
+                      {
+                        "title": "Set up billing",
+                        "tag": "Backend",
+                        "drag": true
+                      },
                       { "title": "Write tests", "tag": "QA" }
                     ]
                   },
@@ -139,7 +136,11 @@
                 "title": "К выполнению",
                 "cards": [
                   { "title": "Обновить лендинг", "tag": "UI" },
-                  { "title": "Настроить оплату", "tag": "Backend", "drag": true },
+                  {
+                    "title": "Настроить оплату",
+                    "tag": "Backend",
+                    "drag": true
+                  },
                   { "title": "Написать тесты", "tag": "QA" }
                 ]
               },

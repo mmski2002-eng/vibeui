@@ -130,7 +130,11 @@
                 "afterLabel": "After",
                 "beforeValue": 64,
                 "afterValue": 89,
-                "unit": "%"
+                "unit": "%",
+                "trendText": {
+                  "up": "up",
+                  "down": "down"
+                }
               }
             }
           }
@@ -273,7 +277,8 @@
                 "title": "Active users",
                 "value": 8412,
                 "trendValue": 12.4,
-                "periodLabel": "vs last month"
+                "periodLabel": "vs last month",
+                "trendWord": "trend"
               }
             }
           }
@@ -416,7 +421,8 @@
                 "value": 48,
                 "valueSuffix": "K",
                 "deltaValue": 8.4,
-                "periodLabel": "vs last month"
+                "periodLabel": "vs last month",
+                "deltaWord": "change"
               }
             }
           }

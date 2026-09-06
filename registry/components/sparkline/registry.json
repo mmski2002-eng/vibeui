@@ -6,9 +6,7 @@
       "type": "registry:component",
       "title": "Спарклайн показателя",
       "description": "Мини-график размером со строку: число отвечает «сколько», кривая — «куда идёт». Цвет считается из знака изменения, поэтому падение нельзя покрасить в зелёный.",
-      "categories": [
-        "sparkline"
-      ],
+      "categories": ["sparkline"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sparkline-001-*. Кривая — SVG-путь, посчитанный из массива значений на сервере: клиентского JS нет. Направление выводится из пропа delta и попадает в data-trend, от которого зависят и цвет линии, и поворот стрелки: цвет нельзя задать вручную вразрез со знаком. Компонент inline-flex, поэтому встаёт в ячейку таблицы и в строку карточки.",
       "meta": {
-        "tags": [
-          "sparkline",
-          "metric",
-          "kpi",
-          "trend"
-        ],
+        "tags": ["sparkline", "metric", "kpi", "trend"],
         "ai": {
           "export": "Sparkline001",
           "usage": "<Sparkline001\n  label=\"Установок за месяц\"\n  value=\"1 284\"\n  delta={12.4}\n  values={[12, 15, 13, 19, 24, 31, 41]}\n/>",
@@ -192,9 +185,7 @@
       "type": "registry:component",
       "title": "Таблица со спарклайнами",
       "description": "Таблица метрик, где динамика живёт прямо в строке: данные здесь уже текст, поэтому таблица и есть текстовая альтернатива кривым.",
-      "categories": [
-        "sparkline"
-      ],
+      "categories": ["sparkline"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -206,12 +197,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-sparkline-002-*. Серверный: хуков нет. Корень — настоящая таблица, поэтому текстовая альтернатива графикам не нужна отдельно: кривые помечены aria-hidden. Путь спарклайна считается из массива значений в системе 100×24 с preserveAspectRatio=\"none\", а толщина линии держится vector-effect: non-scaling-stroke. Направление выводится из знака delta с порогом в полпроцента и попадает в data-trend на строке, от которого зависят и цвет кривой, и цвет изменения.",
       "meta": {
-        "tags": [
-          "sparkline",
-          "table",
-          "metrics",
-          "trend"
-        ],
+        "tags": ["sparkline", "table", "metrics", "trend"],
         "preview": {
           "width": "full"
         },
@@ -344,57 +330,25 @@
                     "label": "Visits",
                     "value": "48,210",
                     "delta": 8.4,
-                    "values": [
-                      31,
-                      34,
-                      33,
-                      38,
-                      41,
-                      44,
-                      48
-                    ]
+                    "values": [31, 34, 33, 38, 41, 44, 48]
                   },
                   {
                     "label": "Sign-ups",
                     "value": "1,284",
                     "delta": 12.1,
-                    "values": [
-                      8,
-                      9,
-                      11,
-                      10,
-                      12,
-                      12,
-                      14
-                    ]
+                    "values": [8, 9, 11, 10, 12, 12, 14]
                   },
                   {
                     "label": "Bounce rate",
                     "value": "37.2%",
                     "delta": -3.6,
-                    "values": [
-                      44,
-                      43,
-                      41,
-                      42,
-                      39,
-                      38,
-                      37
-                    ]
+                    "values": [44, 43, 41, 42, 39, 38, 37]
                   },
                   {
                     "label": "Average order",
                     "value": "$32.40",
                     "delta": 0.2,
-                    "values": [
-                      29,
-                      30,
-                      29,
-                      30,
-                      29,
-                      30,
-                      29
-                    ]
+                    "values": [29, 30, 29, 30, 29, 30, 29]
                   }
                 ]
               }
@@ -402,12 +356,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-sparkline-002-* variables. Server-side: there are no hooks. The root is a real table, so the charts need no separate text alternative: the curves are marked aria-hidden. The sparkline path is computed from the values array in a 100×24 coordinate system with preserveAspectRatio=\"none\", and the stroke width is held by vector-effect: non-scaling-stroke. The direction is derived from the sign of delta with a half-percent threshold and lands in data-trend on the row, which drives both the curve colour and the colour of the change."
           }
         },
-        "cardControls": [
-          "caption",
-          "period",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["caption", "period", "accent", "background"]
       }
     },
     {
@@ -415,9 +364,7 @@
       "type": "registry:component",
       "title": "Спарклайн столбиками",
       "description": "Мини-график столбиками для дискретных отсчётов: столбик показывает, что между значениями ничего нет, а самый высокий выделен цветом и подписан.",
-      "categories": [
-        "sparkline"
-      ],
+      "categories": ["sparkline"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -429,12 +376,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-sparkline-003-*. Серверный, без SVG: столбики выстроены гридом по числу отсчётов, ширина делится поровну и не зависит от длины ряда. Высота столбика — доля от максимума через собственную переменную --share, с нижней границей в 2px: нулевой отсчёт обязан остаться видимым, иначе пропуск в ряду читается как сбой данных, а не как ноль. Максимум выделен цветом акцента и подписан в подвале — у ряда без осей это единственная опора в масштабе. Весь ряд помечен role=img с подписью, собранной из шаблона.",
       "meta": {
-        "tags": [
-          "sparkline",
-          "bars",
-          "metric",
-          "compact"
-        ],
+        "tags": ["sparkline", "bars", "metric", "compact"],
         "ai": {
           "export": "Sparkline003",
           "usage": "<Sparkline003\n  label=\"Заказы в день\"\n  value=\"13\"\n  values={[4, 7, 5, 9, 6, 11]}\n/>",
@@ -544,12 +486,7 @@
             }
           }
         },
-        "cardControls": [
-          "label",
-          "value",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "value", "accent", "background"],
         "preview": {
           "width": "auto"
         }
@@ -560,9 +497,7 @@
       "type": "registry:component",
       "title": "Ряд исходов",
       "description": "Ряд успехов и провалов: столбик вверх — получилось, вниз — нет. Высоту столбики не несут намеренно, вопрос к такому ряду один — как часто и где подряд.",
-      "categories": [
-        "sparkline"
-      ],
+      "categories": ["sparkline"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -574,12 +509,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-sparkline-004-*. Серверный, без SVG. Ряд собран гридом из двух строк одинаковой высоты: успех занимает верхнюю, провал — нижнюю, поэтому никаких сдвигов считать не нужно. Колонка у каждой отметки задана явно — при заданном ряде автоматическое размещение расставило бы столбики не по порядку исходов. Нулевая линия проходит посередине и держит ряд. Ничья рисуется короткой чёрточкой на самой линии: пропуск выглядел бы как отсутствие данных, а это другой смысл. Prop называется outcomes, а не results: так зовётся устаревший HTML-атрибут, и типы React сузили бы его до числа.",
       "meta": {
-        "tags": [
-          "sparkline",
-          "win-loss",
-          "status",
-          "compact"
-        ],
+        "tags": ["sparkline", "win-loss", "status", "compact"],
         "ai": {
           "export": "Sparkline004",
           "usage": "<Sparkline004\n  label=\"Ночные сборки\"\n  outcomes={[1, 1, -1, 1, 0, 1]}\n/>",
@@ -676,11 +606,7 @@
             }
           }
         },
-        "cardControls": [
-          "label",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "accent", "background"],
         "preview": {
           "width": "auto"
         }
@@ -691,9 +617,7 @@
       "type": "registry:component",
       "title": "Спарклайн с зоной нормы",
       "description": "Мини-график на фоне полосы нормы: сам ряд отвечает «росло или падало», а полоса — на главный вопрос «было ли плохо», и выходы за неё отмечены точками.",
-      "categories": [
-        "sparkline"
-      ],
+      "categories": ["sparkline"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -705,12 +629,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-sparkline-005-*. Серверный. Границы нормы приходят в тех же единицах, что и данные, и масштаб строится по объединению ряда с полосой — иначе полоса уехала бы за кадр, как только весь ряд окажется выше или ниже неё. Полоса нормы залита слабым акцентом, её края помечены пунктиром. Точки выхода за норму крупнее последней точки ряда и своего цвета: их ищут глазами в первую очередь. SVG помечен role=img с подписью из шаблона, а число выходов продублировано текстом в подвале.",
       "meta": {
-        "tags": [
-          "sparkline",
-          "threshold",
-          "monitoring",
-          "compact"
-        ],
+        "tags": ["sparkline", "threshold", "monitoring", "compact"],
         "ai": {
           "export": "Sparkline005",
           "usage": "<Sparkline005\n  label=\"Время ответа, мс\"\n  value=\"131\"\n  low={100}\n  high={160}\n  values={[120, 210, 156, 131]}\n/>",
@@ -831,13 +750,7 @@
             }
           }
         },
-        "cardControls": [
-          "label",
-          "low",
-          "high",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "low", "high", "accent", "background"],
         "preview": {
           "width": "auto"
         }

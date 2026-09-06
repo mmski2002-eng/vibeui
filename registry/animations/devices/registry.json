@@ -342,7 +342,9 @@
               }
             },
             "preview": {
-              "props": {}
+              "props": {
+                "heading": "Overview"
+              }
             }
           }
         },

@@ -2040,7 +2040,7 @@
               },
               "currentVersion": {
                 "label": "Version",
-                "default": "v4.2 (текущая)"
+                "default": "v4.2 (current)"
               },
               "stars": {
                 "label": "Stars",

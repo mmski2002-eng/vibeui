@@ -117,7 +117,11 @@
                   {
                     "name": "Starter",
                     "price": "$0",
-                    "features": ["1 project", "Up to 3 members", "Basic analytics"],
+                    "features": [
+                      "1 project",
+                      "Up to 3 members",
+                      "Basic analytics"
+                    ],
                     "ctaLabel": "Start for free"
                   },
                   {
@@ -137,10 +141,16 @@
                     "name": "Business",
                     "price": "$49",
                     "period": "/mo",
-                    "features": ["Everything in Pro", "SSO & roles", "Dedicated manager", "99.9% SLA"],
+                    "features": [
+                      "Everything in Pro",
+                      "SSO & roles",
+                      "Dedicated manager",
+                      "99.9% SLA"
+                    ],
                     "ctaLabel": "Talk to sales"
                   }
-                ]
+                ],
+                "popularLabel": "Popular"
               }
             }
           }
@@ -153,7 +163,11 @@
               {
                 "name": "Старт",
                 "price": "0 ₽",
-                "features": ["1 проект", "До 3 участников", "Базовая аналитика"],
+                "features": [
+                  "1 проект",
+                  "До 3 участников",
+                  "Базовая аналитика"
+                ],
                 "ctaLabel": "Начать бесплатно"
               },
               {
@@ -173,7 +187,12 @@
                 "name": "Бизнес",
                 "price": "4 990 ₽",
                 "period": "/мес",
-                "features": ["Всё из Про", "SSO и роли", "Выделенный менеджер", "SLA 99.9%"],
+                "features": [
+                  "Всё из Про",
+                  "SSO и роли",
+                  "Выделенный менеджер",
+                  "SLA 99.9%"
+                ],
                 "ctaLabel": "Связаться с продажами"
               }
             ]

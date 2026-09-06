@@ -81,7 +81,7 @@
             "title": "Checkout",
             "description": "A checkout summary with line items and a pay button: rows rise in one after another, the total holds a bold line at the bottom, and the pay button keeps a steady glow pulse.",
             "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-payments-001-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. Order rows rise in one after another (stagger via nth-child animation-delay), the total row is separated by a dashed line and rises in last, the pay button keeps an infinite glow pulse (box-shadow), and an accent glow breathes under the card. All animations stop under prefers-reduced-motion.",
-              "ai": {
+            "ai": {
               "summary": "An order summary: line items with prices and a total; rows rise in one after another on mount, the pay button keeps a pulsing glow, and an accent halo breathes under the card. Zero dependencies, one file, no client JS.",
               "preserve": [
                 "the local --vibeui-payments-001-* palette — do not swap it for your theme tokens",
@@ -123,12 +123,22 @@
                 "title": "Your order",
                 "badge": "3 items",
                 "items": [
-                  { "label": "Pro annual plan", "price": "$49.00" },
-                  { "label": "Extra seat", "price": "$9.00" },
-                  { "label": "Priority support", "price": "$15.00" }
+                  {
+                    "label": "Pro annual plan",
+                    "price": "$49.00"
+                  },
+                  {
+                    "label": "Extra seat",
+                    "price": "$9.00"
+                  },
+                  {
+                    "label": "Priority support",
+                    "price": "$15.00"
+                  }
                 ],
                 "total": "$73.00",
-                "payLabel": "Pay now"
+                "payLabel": "Pay now",
+                "totalLabel": "Total"
               }
             }
           }
@@ -138,9 +148,18 @@
             "title": "Ваш заказ",
             "badge": "3 позиции",
             "items": [
-              { "label": "Годовая подписка Pro", "price": "4 990 ₽" },
-              { "label": "Дополнительное место", "price": "990 ₽" },
-              { "label": "Приоритетная поддержка", "price": "1 490 ₽" }
+              {
+                "label": "Годовая подписка Pro",
+                "price": "4 990 ₽"
+              },
+              {
+                "label": "Дополнительное место",
+                "price": "990 ₽"
+              },
+              {
+                "label": "Приоритетная поддержка",
+                "price": "1 490 ₽"
+              }
             ],
             "total": "7 470 ₽",
             "payLabel": "Оплатить"
@@ -166,14 +185,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-payments-002-*. Лицо карты — фиксированный градиент (не зависит от темы страницы, как у настоящей карты), но правило для класса .dark всё равно объявлено для переменных фона. Карта покачивается вокруг вертикальной оси в бесконечном цикле (perspective + rotateY), а не переворачивается — обратной стороны нет. По чипу слева сверху раз в несколько секунд пробегает диагональный блик (та же техника, что и sheen в devices-001). Компонент декоративен: role=\"img\" с aria-label, собирающим бренд, номер, держателя и срок в одну фразу.",
       "meta": {
-        "tags": [
-          "credit-card",
-          "payments",
-          "card",
-          "chip",
-          "animated",
-          "tilt"
-        ],
+        "tags": ["credit-card", "payments", "card", "chip", "animated", "tilt"],
         "ai": {
           "export": "Payments002",
           "usage": "<Payments002 brand=\"Nova Pay\" number=\"4242 4242 4242 4242\" holder=\"A. Ivanov\" expiry=\"09/29\" />",
@@ -404,9 +416,18 @@
                 "quota": "100,000",
                 "percent": 82,
                 "meters": [
-                  { "label": "API requests", "percent": 46 },
-                  { "label": "Storage", "percent": 78 },
-                  { "label": "Outbound traffic", "percent": 33 }
+                  {
+                    "label": "API requests",
+                    "percent": 46
+                  },
+                  {
+                    "label": "Storage",
+                    "percent": 78
+                  },
+                  {
+                    "label": "Outbound traffic",
+                    "percent": 33
+                  }
                 ]
               }
             }
@@ -421,9 +442,18 @@
             "quota": "100 000",
             "percent": 82,
             "meters": [
-              { "label": "Запросы API", "percent": 46 },
-              { "label": "Хранилище", "percent": 78 },
-              { "label": "Исходящий трафик", "percent": 33 }
+              {
+                "label": "Запросы API",
+                "percent": 46
+              },
+              {
+                "label": "Хранилище",
+                "percent": 78
+              },
+              {
+                "label": "Исходящий трафик",
+                "percent": 33
+              }
             ]
           }
         },

@@ -15,6 +15,8 @@ export type Status001Props = Omit<
   ComponentProps<"section">,
   "children" | "title"
 > & {
+  /** Подписи состояний: компонент несёт русские, проект подставляет свои. */
+  stateText?: Record<Status001Tone, string>
   title?: string
   /** Пилюля справа от заголовка: индикатор живого мониторинга. */
   badge?: string
@@ -179,6 +181,7 @@ const SCAN_CYCLE_MS = 2400
  * Один файл, ноль зависимостей, собственная палитра, клиентского JS нет.
  */
 export function Status001({
+  stateText = STATUS_LABEL,
   title = "Статус сервисов",
   badge = "Live",
   services = DEFAULT_SERVICES,
@@ -227,10 +230,14 @@ export function Status001({
               <ol data-part="list">
                 {services.map((service, index) => {
                   const delayMs = (index / services.length) * SCAN_CYCLE_MS
-                  const statusText = service.status ?? STATUS_LABEL[service.tone]
+                  const statusText = service.status ?? stateText[service.tone]
 
                   return (
-                    <li data-part="row" data-tone={service.tone} key={service.name}>
+                    <li
+                      data-part="row"
+                      data-tone={service.tone}
+                      key={service.name}
+                    >
                       <span data-part="indicator" aria-hidden="true">
                         <span data-part="dot" />
                         <span

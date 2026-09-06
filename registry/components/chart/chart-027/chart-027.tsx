@@ -10,6 +10,8 @@ export type Chart027Props = Omit<
   ComponentProps<"figure">,
   "children" | "title"
 > & {
+  /** Заголовок первой колонки таблицы-дублёра. */
+  axisColumnLabel?: string
   title?: string
   axes?: Chart027Axis[]
   /** Второй контур для сравнения: длина совпадает с числом осей. Пусто — контур один. */
@@ -164,6 +166,7 @@ function polygon(values: number[]) {
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Chart027({
+  axisColumnLabel = "Ось",
   title = "Профиль продукта",
   axes = DEFAULT_AXES,
   compare = DEFAULT_COMPARE,
@@ -282,7 +285,7 @@ export function Chart027({
             <caption>{title}</caption>
             <thead>
               <tr>
-                <th scope="col">Ось</th>
+                <th scope="col">{axisColumnLabel}</th>
                 <th scope="col">{seriesLabel}</th>
                 {hasCompare ? <th scope="col">{compareLabel}</th> : null}
               </tr>

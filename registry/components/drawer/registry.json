@@ -2060,7 +2060,8 @@
                 "text": "Pick the width for the task: narrow keeps the list behind readable, wide fits a whole table. Drag the edge or press an arrow key.",
                 "widthText": ["Narrow", "Normal", "Wide"],
                 "grabberLabel": "Panel width",
-                "closeLabel": "Close"
+                "closeLabel": "Close",
+                "currentTemplate": "Width: {width} rem"
               }
             }
           }

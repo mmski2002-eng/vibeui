@@ -6,9 +6,7 @@
       "type": "registry:block",
       "title": "Аналитика трафика",
       "description": "Аналитика посещений: график с заливкой на SVG и таблица источников, где доля нарисована фоном ячейки.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-001-*. Серверный: хуков нет. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней. График построен полилинией и полигоном в SVG с preserveAspectRatio=\"none\", ось подписана только краями, а доли в таблице нарисованы линейным градиентом в фоне ячейки.",
       "meta": {
-        "tags": [
-          "solutions",
-          "analytics",
-          "chart",
-          "table"
-        ],
+        "tags": ["solutions", "analytics", "chart", "table"],
         "preview": {
           "width": "full"
         },
@@ -187,10 +180,7 @@
                   "share": "Share",
                   "trend": "Trend"
                 },
-                "axisText": [
-                  "8 March",
-                  "14 March"
-                ],
+                "axisText": ["8 March", "14 March"],
                 "totalRowText": {
                   "label": "Total",
                   "share": "100 %",
@@ -202,12 +192,7 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-001-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background and darkens along with it. The chart is built from a polyline and a polygon in SVG with preserveAspectRatio=\"none\", the axis is labelled at the edges only, and the shares in the table are drawn with a linear gradient in the cell background."
           }
         },
-        "cardControls": [
-          "title",
-          "period",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "period", "accent", "background"]
       }
     },
     {
@@ -215,9 +200,7 @@
       "type": "registry:block",
       "title": "Потребление по тарифу",
       "description": "Биллинг: расход полосой и цифрами, а превышение лимита названо строкой, а не молча упирается в край шкалы.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -229,12 +212,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-002-*. Серверный: хуков нет. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы. Переполнение выводится сравнением расхода с лимитом: полоса меняет цвет и добавляется строка с превышением. Полоса объявлена role=\"progressbar\" с текущим и предельным значением.",
       "meta": {
-        "tags": [
-          "solutions",
-          "billing",
-          "usage",
-          "limits"
-        ],
+        "tags": ["solutions", "billing", "usage", "limits"],
         "preview": {
           "width": "full"
         },
@@ -392,12 +370,7 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-002-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background. The overage is derived by comparing the usage against the limit: the bar changes colour and a row with the excess is added. The bar is declared role=\"progressbar\" with its current and maximum value."
           }
         },
-        "cardControls": [
-          "used",
-          "limit",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["used", "limit", "accent", "background"]
       }
     },
     {
@@ -405,9 +378,7 @@
       "type": "registry:block",
       "title": "Воронка продаж",
       "description": "Воронка сделок: ширина ступени считается от первой, а возраст сделки написан словами и помечен тоном.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -419,12 +390,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-003-*. Серверный: хуков нет. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы. Ширина ступени воронки считается от количества на первой ступени, поэтому видно доходимость, а не доли пирога. Список сделок идёт под воронкой, возраст помечен формой точки.",
       "meta": {
-        "tags": [
-          "solutions",
-          "crm",
-          "pipeline",
-          "deals"
-        ],
+        "tags": ["solutions", "crm", "pipeline", "deals"],
         "preview": {
           "width": "full"
         },
@@ -599,12 +565,7 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-003-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background. The width of a funnel step is computed from the count at the first step, so what shows is pass-through rather than slices of a pie. The list of deals runs under the funnel, and the age is marked by the shape of the dot."
           }
         },
-        "cardControls": [
-          "title",
-          "cta",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "cta", "accent", "background"]
       }
     },
     {
@@ -612,9 +573,7 @@
       "type": "registry:block",
       "title": "Менеджер файлов",
       "description": "Файловый список: тип подписан тремя буквами на плитке, а занятое место показано полосой до загрузки, а не после.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -626,12 +585,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-004-*. Серверный: хуков нет. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы. Тип файла задаёт оттенок плитки через переменную и подписан тремя буквами, полоса занятого места объявлена role=\"progressbar\", размеры набраны табличными цифрами.",
       "meta": {
-        "tags": [
-          "solutions",
-          "files",
-          "storage",
-          "list"
-        ],
+        "tags": ["solutions", "files", "storage", "list"],
         "preview": {
           "width": "full"
         },
@@ -796,12 +750,7 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-004-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background. The file type sets the tile's tint through a variable and is labelled with three letters, the used-space bar is declared role=\"progressbar\", and the sizes are set in tabular figures."
           }
         },
-        "cardControls": [
-          "title",
-          "usedShare",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "usedShare", "accent", "background"]
       }
     },
     {
@@ -809,9 +758,7 @@
       "type": "registry:block",
       "title": "Складские остатки",
       "description": "Остатки склада: состояние выводится из остатка и порога, поэтому цифра и метка не расходятся после списания.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -823,12 +770,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-005-*. Серверный: хуков нет. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы. Состояние позиции считает функция из остатка и порога, форма точки различает норму, нехватку и отсутствие, артикул набран моноширинным шрифтом.",
       "meta": {
-        "tags": [
-          "solutions",
-          "inventory",
-          "stock",
-          "table"
-        ],
+        "tags": ["solutions", "inventory", "stock", "table"],
         "preview": {
           "width": "full"
         },
@@ -997,12 +939,7 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-005-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background. The state of a line is computed by a function from the stock left and the threshold, the shape of the dot distinguishes normal, low and out of stock, and the SKU is set in a monospace font."
           }
         },
-        "cardControls": [
-          "title",
-          "order",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "order", "accent", "background"]
       }
     },
     {
@@ -1010,9 +947,7 @@
       "type": "registry:block",
       "title": "Слоты бронирования",
       "description": "Сетка слотов на день: занятые остаются видимыми и подписаны, свободные — кнопки, а часовой пояс написан рядом с датой.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1024,12 +959,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-006-*. Серверный: хуков нет. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы. Свободный слот выводится кнопкой, занятый — абзацем, поэтому нажать занятое время нельзя ни мышью, ни с клавиатуры. Число колонок задаётся контейнерными запросами.",
       "meta": {
-        "tags": [
-          "solutions",
-          "booking",
-          "slots",
-          "schedule"
-        ],
+        "tags": ["solutions", "booking", "slots", "schedule"],
         "preview": {
           "width": "full"
         },
@@ -1212,12 +1142,7 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-006-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background. A free slot is rendered as a button and a taken one as a paragraph, so a taken time cannot be pressed either with a mouse or from the keyboard. The number of columns is set by container queries."
           }
         },
-        "cardControls": [
-          "title",
-          "day",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "day", "accent", "background"]
       }
     },
     {
@@ -1225,9 +1150,7 @@
       "type": "registry:block",
       "title": "Доска сделок",
       "description": "Доска сделок по этапам: в шапке колонки стоит сумма этапа, а прогноз внизу взвешен вероятностью каждой сделки.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1239,12 +1162,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-007-*. Серверный: хуков нет. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы. Колонки разложены grid-auto-flow:column с горизонтальной прокруткой и переключаются в равные доли контейнерным запросом. Взвешенный прогноз считается в компоненте как сумма amount×probability/100, полоса вероятности объявлена role=\"progressbar\".",
       "meta": {
-        "tags": [
-          "solutions",
-          "crm",
-          "deals",
-          "board"
-        ],
+        "tags": ["solutions", "crm", "deals", "board"],
         "preview": {
           "width": "full"
         },
@@ -1435,12 +1353,7 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-007-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background. The columns are laid out with grid-auto-flow:column with horizontal scrolling and switch to equal fractions through a container query. The weighted forecast is computed in the component as the sum of amount×probability/100, and the probability bar is declared role=\"progressbar\"."
           }
         },
-        "cardControls": [
-          "title",
-          "forecastLabel",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "forecastLabel", "accent", "background"]
       }
     },
     {
@@ -1448,9 +1361,7 @@
       "type": "registry:block",
       "title": "Карточка сделки",
       "description": "Карточка сделки: следующий шаг стоит над историей и в рамке, а просрочка меняет рамку, подпись и тон сразу.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1462,12 +1373,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-008-*. Серверный: хуков нет. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы. Раскладка разъезжается в две колонки контейнерным запросом на внутреннем shell. История — ol с вертикальной линией на псевдоэлементе, тип события подписан буквой на кружке, просрочка следующего шага управляется атрибутом data-overdue.",
       "meta": {
-        "tags": [
-          "solutions",
-          "crm",
-          "deal",
-          "timeline"
-        ],
+        "tags": ["solutions", "crm", "deal", "timeline"],
         "preview": {
           "width": "full"
         },
@@ -1651,12 +1557,7 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-008-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background. The layout splits into two columns through a container query on the inner shell. The history is an ol with a vertical line on a pseudo-element, the event type is labelled by a letter on a circle, and an overdue next step is driven by the data-overdue attribute."
           }
         },
-        "cardControls": [
-          "company",
-          "overdue",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["company", "overdue", "accent", "background"]
       }
     },
     {
@@ -1664,9 +1565,7 @@
       "type": "registry:block",
       "title": "Продления подписок",
       "description": "Подписки с продлениями: срок написан обратным отсчётом, а выключенное автопродление помечено как предупреждение, а не как настройка.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1678,12 +1577,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-009-*. Серверный: хуков нет. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы. Строка раскладывается в три колонки контейнерным запросом. Полоса рисует долю прошедшего окна внимания window и объявлена role=\"progressbar\"; окончание «день / дня / дней» выбирает функция склонения по словарю dayText.",
       "meta": {
-        "tags": [
-          "solutions",
-          "billing",
-          "subscriptions",
-          "renewal"
-        ],
+        "tags": ["solutions", "billing", "subscriptions", "renewal"],
         "preview": {
           "width": "full"
         },
@@ -1855,12 +1749,7 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-009-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background. The row lays out in three columns through a container query. The bar draws the share of the attention window elapsed and is declared role=\"progressbar\"; the plural form of the day noun is chosen by an agreement function against the dayText dictionary."
           }
         },
-        "cardControls": [
-          "title",
-          "window",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "window", "accent", "background"]
       }
     },
     {
@@ -1868,9 +1757,7 @@
       "type": "registry:block",
       "title": "Структура выручки",
       "description": "Отчёт по выручке: столбик месяца собран из сегментов со штриховкой, поэтому итог и состав сравниваются одним взглядом.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1882,12 +1769,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-010-*. Серверный: хуков нет. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы. График построен на гриде: высота столбика считается от максимального месяца, доли сегментов — от суммы месяца. Сегменты различаются оттенком и repeating-linear-gradient, у графика есть role=\"img\" с aria-label.",
       "meta": {
-        "tags": [
-          "solutions",
-          "analytics",
-          "revenue",
-          "chart"
-        ],
+        "tags": ["solutions", "analytics", "revenue", "chart"],
         "preview": {
           "width": "full"
         },
@@ -2016,57 +1898,27 @@
                 "months": [
                   {
                     "label": "Oct",
-                    "parts": [
-                      1420,
-                      640,
-                      380,
-                      210
-                    ]
+                    "parts": [1420, 640, 380, 210]
                   },
                   {
                     "label": "Nov",
-                    "parts": [
-                      1580,
-                      690,
-                      410,
-                      260
-                    ]
+                    "parts": [1580, 690, 410, 260]
                   },
                   {
                     "label": "Dec",
-                    "parts": [
-                      2110,
-                      880,
-                      520,
-                      340
-                    ]
+                    "parts": [2110, 880, 520, 340]
                   },
                   {
                     "label": "Jan",
-                    "parts": [
-                      1490,
-                      700,
-                      460,
-                      280
-                    ]
+                    "parts": [1490, 700, 460, 280]
                   },
                   {
                     "label": "Feb",
-                    "parts": [
-                      1760,
-                      820,
-                      540,
-                      300
-                    ]
+                    "parts": [1760, 820, 540, 300]
                   },
                   {
                     "label": "Mar",
-                    "parts": [
-                      2040,
-                      960,
-                      610,
-                      380
-                    ]
+                    "parts": [2040, 960, 610, 380]
                   }
                 ],
                 "segments": [
@@ -2096,12 +1948,7 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-010-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background. The chart is built on a grid: the height of a bar is computed from the largest month and the shares of the segments from the month's total. The segments are told apart by tint and repeating-linear-gradient, and the chart has role=\"img\" with an aria-label."
           }
         },
-        "cardControls": [
-          "title",
-          "unit",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "unit", "accent", "background"]
       }
     },
     {
@@ -2109,9 +1956,7 @@
       "type": "registry:block",
       "title": "Лимиты расходов",
       "description": "Расходы по категориям: шкала у всех общая, лимит помечен засечкой, а перерасход рисуется за ней, а не упирается в край.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2123,12 +1968,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-011-*. Серверный: хуков нет. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы. Общий масштаб шкалы считается как максимум расходов и суммы лимитов, поэтому категории сравнимы. Засечка лимита — абсолютно позиционированный элемент, перерасход — второй заштрихованный отрезок после засечки; полоса объявлена role=\"progressbar\".",
       "meta": {
-        "tags": [
-          "solutions",
-          "finance",
-          "expenses",
-          "limits"
-        ],
+        "tags": ["solutions", "finance", "expenses", "limits"],
         "preview": {
           "width": "full"
         },
@@ -2295,12 +2135,7 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-011-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background. The common scale is computed as the maximum of the spending and the sum of the limits, so the categories stay comparable. The limit tick is an absolutely positioned element and the overspend a second hatched segment after the tick; the bar is declared role=\"progressbar\"."
           }
         },
-        "cardControls": [
-          "title",
-          "month",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "month", "accent", "background"]
       }
     },
     {
@@ -2308,9 +2143,7 @@
       "type": "registry:block",
       "title": "Реестр счетов",
       "description": "Реестр счетов: сверху суммы по статусам, а просроченная строка помечена полосой и числом дней прямо у срока оплаты.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2322,12 +2155,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-012-*. Серверный: хуков нет. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы. Таблица прокручивается по горизонтали внутри собственного контейнера, статус несёт букву на кружке и рамку, просрочка рисуется inset box-shadow первой ячейки строки.",
       "meta": {
-        "tags": [
-          "solutions",
-          "finance",
-          "invoices",
-          "table"
-        ],
+        "tags": ["solutions", "finance", "invoices", "table"],
         "preview": {
           "width": "full"
         },
@@ -2522,12 +2350,7 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-012-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background. The table scrolls horizontally inside its own container, the status carries a letter on a circle and a border, and being overdue is drawn with an inset box-shadow on the row's first cell."
           }
         },
-        "cardControls": [
-          "title",
-          "cta",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "cta", "accent", "background"]
       }
     },
     {
@@ -2535,9 +2358,7 @@
       "type": "registry:block",
       "title": "Движение на складе",
       "description": "Смена на складе: приёмка и отгрузка стоят двумя потоками рядом, а готовность документа написана дробью «собрано из позиций».",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2549,12 +2370,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-013-*. Серверный: хуков нет. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней. Два потока раскладываются в две колонки контейнерным запросом на внутреннем shell, направление помечено стрелкой и цветом левой границы карточки, полоса готовности объявлена role=\"progressbar\" с aria-valuemax по числу позиций.",
       "meta": {
-        "tags": [
-          "solutions",
-          "warehouse",
-          "logistics",
-          "operations"
-        ],
+        "tags": ["solutions", "warehouse", "logistics", "operations"],
         "preview": {
           "width": "full"
         },
@@ -2739,12 +2555,7 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-013-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background and darkens along with it. The two flows lay out in two columns through a container query on the inner shell, the direction is marked by an arrow and the colour of the card's left border, and the readiness bar is declared role=\"progressbar\" with aria-valuemax set to the number of lines."
           }
         },
-        "cardControls": [
-          "title",
-          "inboundTitle",
-          "outboundTitle",
-          "background"
-        ]
+        "cardControls": ["title", "inboundTitle", "outboundTitle", "background"]
       }
     },
     {
@@ -2752,9 +2563,7 @@
       "type": "registry:block",
       "title": "Рейтинг поставщиков",
       "description": "Поставщики с рейтингом: оценка нарисована пятью сегментами и продублирована числом, а под ней стоят метрики, из которых она сложилась.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2766,12 +2575,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-014-*. Серверный: хуков нет. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней. Сегменты рейтинга различают полное, половинное и пустое состояние, половина рисуется linear-gradient. Карточки раскладываются в две колонки контейнерным запросом, состояние «на паузе» меняет фон и стиль рамки, слабые метрики подсвечиваются порогами.",
       "meta": {
-        "tags": [
-          "solutions",
-          "suppliers",
-          "rating",
-          "procurement"
-        ],
+        "tags": ["solutions", "suppliers", "rating", "procurement"],
         "preview": {
           "width": "full"
         },
@@ -2951,12 +2755,7 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-014-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background and darkens along with it. The rating segments distinguish a full, a half and an empty state, and the half is drawn with a linear-gradient. The cards lay out in two columns through a container query, the paused state changes the background and the border style, and weak metrics are highlighted by thresholds."
           }
         },
-        "cardControls": [
-          "title",
-          "scoreLabel",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "scoreLabel", "accent", "background"]
       }
     },
     {
@@ -2964,9 +2763,7 @@
       "type": "registry:block",
       "title": "Маршруты доставки",
       "description": "Маршруты доставки: остановки нарисованы лентой, положение машины видно точкой на линии, а опоздание написано минутами.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2978,12 +2775,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-015-*. Серверный: хуков нет. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней. Лента остановок — ol на гриде с горизонтальной прокруткой, линия между точками рисуется псевдоэлементом ::before и закрашивается у пройденных остановок, текущая точка увеличена и обведена box-shadow.",
       "meta": {
-        "tags": [
-          "solutions",
-          "logistics",
-          "routes",
-          "delivery"
-        ],
+        "tags": ["solutions", "logistics", "routes", "delivery"],
         "preview": {
           "width": "full"
         },
@@ -3212,12 +3004,7 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-015-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background and darkens along with it. The strip of stops is an ol on a grid with horizontal scrolling, the line between the points is drawn by a ::before pseudo-element and filled in for the stops already passed, and the current point is enlarged and ringed with a box-shadow."
           }
         },
-        "cardControls": [
-          "title",
-          "lateLabel",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "lateLabel", "accent", "background"]
       }
     },
     {
@@ -3225,9 +3012,7 @@
       "type": "registry:block",
       "title": "График смен",
       "description": "График смен на неделю: матрица «человек × день» с липкой первой колонкой и строкой покрытия, которая показывает дыры в смене.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3239,12 +3024,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-016-*. Серверный: хуков нет. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней. Таблица прокручивается по горизонтали, первая колонка держится position:sticky. Смена подписана буквой и временем, больничный дополнительно заштрихован; покрытие по дням считается в компоненте и живёт в tfoot.",
       "meta": {
-        "tags": [
-          "solutions",
-          "hr",
-          "shifts",
-          "schedule"
-        ],
+        "tags": ["solutions", "hr", "shifts", "schedule"],
         "preview": {
           "width": "full"
         },
@@ -3467,11 +3247,7 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-016-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background and darkens along with it. The table scrolls horizontally, and the first column is held by position:sticky. A shift is labelled by a letter and a time, sick leave is hatched on top of that; the per-day coverage is computed in the component and lives in the tfoot."
           }
         },
-        "cardControls": [
-          "title",
-          "normHours",
-          "background"
-        ]
+        "cardControls": ["title", "normHours", "background"]
       }
     },
     {
@@ -3479,9 +3255,7 @@
       "type": "registry:block",
       "title": "Учёт рабочего времени",
       "description": "Учёт времени за день: длительность записана и часами, и полосой, а идущая прямо сейчас запись помечена рамкой и мигающей точкой.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3493,12 +3267,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-017-*. Серверный: хуков нет. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней. Полоса каждой записи считается от самой длинной за день, неоплачиваемое время окрашено нейтрально. Идущая запись помечена собственной анимацией с обязательным правилом prefers-reduced-motion; недельная сводка — столбики на гриде с role=\"img\".",
       "meta": {
-        "tags": [
-          "solutions",
-          "time",
-          "tracking",
-          "productivity"
-        ],
+        "tags": ["solutions", "time", "tracking", "productivity"],
         "preview": {
           "width": "full"
         },
@@ -3622,15 +3391,7 @@
                 "weekTitle": "Week",
                 "weekLabelText": "Hours by day of the week, {total} in total",
                 "weekTotalLabel": "Week total",
-                "weekDays": [
-                  "mon",
-                  "tue",
-                  "wed",
-                  "thu",
-                  "fri",
-                  "sat",
-                  "sun"
-                ],
+                "weekDays": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"],
                 "entries": [
                   {
                     "task": "Working through the account brief",
@@ -3679,12 +3440,7 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-017-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background and darkens along with it. The bar of every entry is computed against the longest one that day, and unpaid time is coloured neutrally. The running entry is marked with an animation of its own with a mandatory prefers-reduced-motion rule; the weekly summary is bars on a grid with role=\"img\"."
           }
         },
-        "cardControls": [
-          "title",
-          "dayNorm",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "dayNorm", "accent", "background"]
       }
     },
     {
@@ -3692,9 +3448,7 @@
       "type": "registry:block",
       "title": "Календарь отпусков",
       "description": "Календарь отсутствий: отпуск занимает диапазон ячеек гридом, а вертикальная линия сегодняшнего дня отделяет «идёт» от «запланировано».",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3706,12 +3460,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-018-*. Серверный: хуков нет. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней. Число колонок сетки задаётся переменной --vibeui-solutions-018-days, диапазон отсутствия занимает ячейки через grid-column от from до to. Тип отсутствия несёт букву и штриховку, сегодняшний день подчёркнут в линейке.",
       "meta": {
-        "tags": [
-          "solutions",
-          "hr",
-          "leave",
-          "calendar"
-        ],
+        "tags": ["solutions", "hr", "leave", "calendar"],
         "preview": {
           "width": "full"
         },
@@ -3916,12 +3665,7 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-018-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background and darkens along with it. The number of grid columns is set by the --vibeui-solutions-018-days variable, and an absence range takes its cells through grid-column from from to to. The type of absence carries a letter and hatching, and today is underlined in the ruler."
           }
         },
-        "cardControls": [
-          "title",
-          "today",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "today", "accent", "background"]
       }
     },
     {
@@ -3929,9 +3673,7 @@
       "type": "registry:block",
       "title": "Воронка найма",
       "description": "Воронка найма: между ступенями подписана конверсия шага, а кандидаты со сроком на этапе выше норматива помечены полосой.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3943,12 +3685,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-019-*. Серверный: хуков нет. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней. Ступени идут флекс-лентой с горизонтальной прокруткой, между ними вставлены вычисленные конверсии шага. Список кандидатов раскладывается в три колонки контейнерным запросом, превышение slaDays помечает строку атрибутом data-stuck.",
       "meta": {
-        "tags": [
-          "solutions",
-          "hr",
-          "hiring",
-          "funnel"
-        ],
+        "tags": ["solutions", "hr", "hiring", "funnel"],
         "preview": {
           "width": "full"
         },
@@ -4140,12 +3877,7 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-019-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background and darkens along with it. The stages run as a flex strip with horizontal scrolling, with the computed step conversions inserted between them. The list of candidates lays out in three columns through a container query, and exceeding slaDays marks the row with the data-stuck attribute."
           }
         },
-        "cardControls": [
-          "title",
-          "slaDays",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "slaDays", "accent", "background"]
       }
     },
     {
@@ -4153,9 +3885,7 @@
       "type": "registry:block",
       "title": "Объекты недвижимости",
       "description": "Подборка объектов: фильтр собран на радиокнопках и :has(), поэтому работает без JS, а цена за квадратный метр считается из цены и площади.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4167,12 +3897,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-020-*. Серверный: хуков нет. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней. Фильтр — группа радиокнопок внутри fieldset, подсветка выбранного чипа сделана на :has(input:checked), фокус ловится через :has(input:focus-visible). У legend с float стоит clear через ::after, иначе чипы обтекают подпись. Сетка карточек переключается контейнерными запросами.",
       "meta": {
-        "tags": [
-          "solutions",
-          "realestate",
-          "listings",
-          "filter"
-        ],
+        "tags": ["solutions", "realestate", "listings", "filter"],
         "preview": {
           "width": "full"
         },
@@ -4222,13 +3947,7 @@
             "label": "Выбранный фильтр",
             "type": "select",
             "default": "Все",
-            "options": [
-              "Все",
-              "Студии",
-              "1 комната",
-              "2 комнаты",
-              "3+"
-            ]
+            "options": ["Все", "Студии", "1 комната", "2 комнаты", "3+"]
           },
           {
             "prop": "accent",
@@ -4300,13 +4019,7 @@
                 "found": "6 listings found · sorted by date",
                 "currency": "£",
                 "locale": "en-GB",
-                "filters": [
-                  "All",
-                  "Studios",
-                  "1 room",
-                  "2 rooms",
-                  "3+"
-                ],
+                "filters": ["All", "Studios", "1 room", "2 rooms", "3+"],
                 "activeFilter": "All",
                 "filterLegend": "Rooms",
                 "statusText": {
@@ -4383,12 +4096,7 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-020-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background and darkens along with it. The filter is a group of radio buttons inside a fieldset, the highlight of the selected chip is done with :has(input:checked), and the focus is caught through :has(input:focus-visible). The floated legend has clear through ::after, otherwise the chips wrap around the caption. The grid of cards is switched by container queries."
           }
         },
-        "cardControls": [
-          "title",
-          "activeFilter",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "activeFilter", "accent", "background"]
       }
     },
     {
@@ -4396,9 +4104,7 @@
       "type": "registry:block",
       "title": "Бронирование переговорных",
       "description": "Сетка переговорных: матрица «комната × час», где бронь занимает диапазон колонок, а свободный час остаётся кнопкой.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4410,12 +4116,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-021-*. Серверный: хуков нет. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней. Число колонок задаётся переменной --vibeui-solutions-021-hours, бронь занимает ячейки через grid-column от from до to. Занятые часы собираются в Set, поэтому под бронью не рисуется кнопка: нажать чужую встречу нельзя ни мышью, ни с клавиатуры.",
       "meta": {
-        "tags": [
-          "solutions",
-          "booking",
-          "rooms",
-          "schedule"
-        ],
+        "tags": ["solutions", "booking", "rooms", "schedule"],
         "preview": {
           "width": "full"
         },
@@ -4615,12 +4316,7 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-021-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background and darkens along with it. The number of columns is set by the --vibeui-solutions-021-hours variable, and a booking takes its cells through grid-column from from to to. The busy hours are collected into a Set, so no button is drawn under a booking: someone else's meeting cannot be pressed either with a mouse or from the keyboard."
           }
         },
-        "cardControls": [
-          "title",
-          "day",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "day", "accent", "background"]
       }
     },
     {
@@ -4628,9 +4324,7 @@
       "type": "registry:block",
       "title": "Расписание клиники",
       "description": "Расписание приёма врача: время стоит отдельной колонкой, окно между приёмами названо словами, а отменённый приём остаётся зачёркнутым.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4642,12 +4336,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-022-*. Серверный: хуков нет. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней. Список — ol с фиксированной колонкой времени в моноширинном шрифте; на широком контейнере добавляется третья колонка статуса. Текущий приём подсвечивается фоном и обведённой точкой, окно рисуется штриховой линией на псевдоэлементе.",
       "meta": {
-        "tags": [
-          "solutions",
-          "clinic",
-          "appointments",
-          "schedule"
-        ],
+        "tags": ["solutions", "clinic", "appointments", "schedule"],
         "preview": {
           "width": "full"
         },
@@ -4838,12 +4527,7 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-022-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background and darkens along with it. The list is an ol with a fixed time column in a monospace font; in a wide container a third, status column is added. The current appointment is highlighted with a background and a ringed dot, and the window is drawn with a dashed line on a pseudo-element."
           }
         },
-        "cardControls": [
-          "title",
-          "doctor",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "doctor", "accent", "background"]
       }
     },
     {
@@ -4851,9 +4535,7 @@
       "type": "registry:block",
       "title": "Учебные группы",
       "description": "Учебные группы: дни занятий показаны семью клетками вместо строки «пн, ср, пт», а свободные места названы числом, а не процентом.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4865,12 +4547,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-023-*. Серверный: хуков нет. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней. Карточки раскладываются в две колонки контейнерным запросом. Дни — семь клеток с data-on, у набора есть полоса с role=\"progressbar\" и дробь; заполненная группа помечается атрибутом data-full, меняющим фон и рамку.",
       "meta": {
-        "tags": [
-          "solutions",
-          "education",
-          "groups",
-          "schedule"
-        ],
+        "tags": ["solutions", "education", "groups", "schedule"],
         "preview": {
           "width": "full"
         },
@@ -4994,24 +4671,13 @@
                 "freeText": "{count} free",
                 "enrolLabelText": "Enrolment for “{name}”",
                 "nextLabel": "Next lesson —",
-                "weekDays": [
-                  "mon",
-                  "tue",
-                  "wed",
-                  "thu",
-                  "fri",
-                  "sat",
-                  "sun"
-                ],
+                "weekDays": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"],
                 "groups": [
                   {
                     "name": "English · speaking",
                     "level": "B1",
                     "teacher": "Olga Panfilova",
-                    "days": [
-                      "mon",
-                      "wed"
-                    ],
+                    "days": ["mon", "wed"],
                     "time": "19:00 — 20:30",
                     "room": "room 4",
                     "enrolled": 11,
@@ -5022,11 +4688,7 @@
                     "name": "Maths · exam preparation",
                     "level": "year 11",
                     "teacher": "Kirill Vaulin",
-                    "days": [
-                      "tue",
-                      "thu",
-                      "sat"
-                    ],
+                    "days": ["tue", "thu", "sat"],
                     "time": "16:00 — 17:30",
                     "room": "room 2",
                     "enrolled": 14,
@@ -5037,9 +4699,7 @@
                     "name": "Drawing from scratch",
                     "level": "starter",
                     "teacher": "Dina Sokolova",
-                    "days": [
-                      "sat"
-                    ],
+                    "days": ["sat"],
                     "time": "11:00 — 13:00",
                     "room": "studio",
                     "enrolled": 6,
@@ -5050,10 +4710,7 @@
                     "name": "Programming in Python",
                     "level": "A2",
                     "teacher": "Alexey Remizov",
-                    "days": [
-                      "mon",
-                      "thu"
-                    ],
+                    "days": ["mon", "thu"],
                     "time": "18:00 — 19:40",
                     "room": "computer lab",
                     "enrolled": 9,
@@ -5066,12 +4723,7 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-023-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background and darkens along with it. The cards lay out in two columns through a container query. The days are seven cells with data-on, the set has a bar with role=\"progressbar\" and a fraction; a completed group is marked with the data-full attribute, which changes the background and the border."
           }
         },
-        "cardControls": [
-          "title",
-          "fullLabel",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "fullLabel", "accent", "background"]
       }
     },
     {
@@ -5079,9 +4731,7 @@
       "type": "registry:block",
       "title": "Сегменты рассылки",
       "description": "База рассылки по сегментам: у каждого сегмента написано правило отбора, а пересечения названы словами, а не спрятаны нормализацией долей.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -5093,12 +4743,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-024-*. Серверный: хуков нет. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, он лежит прямо на фоне страницы и темнеет вместе с ней. Карточки сегментов раскладываются в две колонки контейнерным запросом, доля от базы считается в компоненте и объявлена role=\"progressbar\". Правило отбора набрано моноширинным шрифтом, неподтверждённая почта помечена отдельной плашкой.",
       "meta": {
-        "tags": [
-          "solutions",
-          "marketing",
-          "segments",
-          "newsletter"
-        ],
+        "tags": ["solutions", "marketing", "segments", "newsletter"],
         "preview": {
           "width": "full"
         },
@@ -5298,12 +4943,7 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-024-*. Server-side: no hooks. The theme comes from the surrounding color-scheme through light-dark(): the block carries no panel of its own by default, it lies directly on the page background and darkens along with it. The segment cards lay out in two columns through a container query, and the share of the base is computed in the component and declared role=\"progressbar\". The selection rule is set in a monospace font, and an unconfirmed email is marked with a badge of its own."
           }
         },
-        "cardControls": [
-          "title",
-          "baseSize",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "baseSize", "accent", "background"]
       }
     },
     {
@@ -5311,9 +4951,7 @@
       "type": "registry:block",
       "title": "Очередь модерации",
       "description": "Очередь модерации: спорный текст показан цитатой целиком, у каждой карточки написан срок ожидания, а безвозвратное решение стоит последним.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -5325,12 +4963,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-025-*. Серверный: хуков нет. Карточки раскладываются в две колонки контейнерным запросом, тяжёлые случаи помечаются атрибутом data-severity, меняющим рамку и цвет полосы цитаты. Кнопка блокировки отодвинута margin-left:auto и не имеет заливки.",
       "meta": {
-        "tags": [
-          "solutions",
-          "moderation",
-          "queue",
-          "content"
-        ],
+        "tags": ["solutions", "moderation", "queue", "content"],
         "preview": {
           "width": "full"
         },
@@ -5534,9 +5167,7 @@
       "type": "registry:block",
       "title": "Выплаты партнёрам",
       "description": "Партнёрская программа: порог выплаты нарисован полосой с недостающей суммой, а комиссия каждого партнёра подкреплена его воронкой.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -5548,12 +5179,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-026-*. Серверный: хуков нет. Полоса порога объявлена role=\"progressbar\" и меняет цвет при достижении порога через data-ready. Обе таблицы прокручиваются по горизонтали внутри собственных контейнеров, статус выплаты несёт форму точки, а удержание — причину отдельной строкой.",
       "meta": {
-        "tags": [
-          "solutions",
-          "affiliate",
-          "payouts",
-          "partners"
-        ],
+        "tags": ["solutions", "affiliate", "payouts", "partners"],
         "preview": {
           "width": "full"
         },
@@ -5823,9 +5449,7 @@
       "type": "registry:block",
       "title": "Реестр оборудования",
       "description": "Реестр основных средств: остаточная стоимость и процент износа считаются из баланса и накопленной амортизации, а износ показан полосой в строке.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -5837,12 +5461,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-027-*. Серверный: хуков нет. Остаточная стоимость и процент износа — не пропы, а вычисления из balanceValue и accumulatedDepreciation построчно, а три уровня состояния различаются формой метки и словом, а не только цветом полосы.",
       "meta": {
-        "tags": [
-          "solutions",
-          "finance",
-          "table",
-          "progress"
-        ],
+        "tags": ["solutions", "finance", "table", "progress"],
         "preview": {
           "width": "full"
         },
@@ -6040,12 +5659,7 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-027-*. Server-side: no hooks. The residual value and the depreciation percentage are not props but computed per row from balanceValue and accumulatedDepreciation, and the three condition levels are told apart by the shape of the marker and by a word rather than by the colour of the bar alone."
           }
         },
-        "cardControls": [
-          "title",
-          "hint",
-          "currency",
-          "background"
-        ]
+        "cardControls": ["title", "hint", "currency", "background"]
       }
     },
     {
@@ -6053,9 +5667,7 @@
       "type": "registry:block",
       "title": "Расхождения инвентаризации",
       "description": "Инвентаризация с расхождениями: недостача и излишек считаются из учётного и фактического количества, полоса отклонения растёт от центра в сторону знака.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -6067,12 +5679,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-028-*. Серверный: хуков нет. Расхождение, сумма отклонения и статус построчно вычисляются из countedQty/actualQty, а диаграмма — двунаправленная полоса от центральной оси: направление видно по геометрии раньше, чем по знаку числа.",
       "meta": {
-        "tags": [
-          "solutions",
-          "inventory",
-          "table",
-          "chart"
-        ],
+        "tags": ["solutions", "inventory", "table", "chart"],
         "preview": {
           "width": "full"
         },
@@ -6284,13 +5891,7 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-028-*. Server-side: no hooks. The discrepancy, the variance amount and the status are computed per row from countedQty/actualQty, and the chart is a bidirectional bar from a central axis: the direction is visible from the geometry before it is visible from the sign of the number."
           }
         },
-        "cardControls": [
-          "title",
-          "hint",
-          "unitText",
-          "currency",
-          "background"
-        ]
+        "cardControls": ["title", "hint", "unitText", "currency", "background"]
       }
     },
     {
@@ -6298,9 +5899,7 @@
       "type": "registry:block",
       "title": "Производственные заказы",
       "description": "Производственные заказы по цехам: выполнение плана считается из плановых и выпущенных штук, стадия обработки — степпер точек, загрузка линии — отдельная полоса.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -6312,12 +5911,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-029-*. Серверный: хуков нет. Процент выполнения плана и остаток к выпуску пересчитываются из planQty/producedQty, а стадия обработки нарисована степпером точек по массиву stages, а не текстовой меткой.",
       "meta": {
-        "tags": [
-          "solutions",
-          "manufacturing",
-          "progress",
-          "cards"
-        ],
+        "tags": ["solutions", "manufacturing", "progress", "cards"],
         "preview": {
           "width": "full"
         },
@@ -6535,9 +6129,7 @@
       "type": "registry:block",
       "title": "Маршрутный лист",
       "description": "Технологическая карта маршрута изготовления: операции по порядку лентой с оборудованием и разрядом, накопленное время считается нарастающим итогом.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -6549,12 +6141,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-030-*. Серверный: хуков нет. Операции нарисованы вертикальной лентой с соединительной линией, а накопленное нормо-время после каждого шага — нарастающий итог, посчитанный при обходе массива operations.",
       "meta": {
-        "tags": [
-          "solutions",
-          "manufacturing",
-          "timeline",
-          "route"
-        ],
+        "tags": ["solutions", "manufacturing", "timeline", "route"],
         "preview": {
           "width": "full"
         },
@@ -6759,9 +6346,7 @@
       "type": "registry:block",
       "title": "Контроль качества",
       "description": "Контроль качества с браком: доля брака по партии считается из проверенного и бракованного количества, причины дефектов собраны в диаграмму Парето с накопленным итогом.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -6773,12 +6358,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-031-*. Серверный: хуков нет. Доля брака считается из checkedQty/defectQty по партии, а причины сортируются по частоте и получают посчитанный нарастающий процент — это и есть диаграмма Парето без внешней библиотеки.",
       "meta": {
-        "tags": [
-          "solutions",
-          "manufacturing",
-          "quality",
-          "pareto"
-        ],
+        "tags": ["solutions", "manufacturing", "quality", "pareto"],
         "preview": {
           "width": "full"
         },
@@ -7009,9 +6589,7 @@
       "type": "registry:block",
       "title": "Заявки на закупку",
       "description": "Заявки на закупку с цепочкой согласования: степпер из 4 узлов показывает пройденные и текущий шаг, держатель и просрочка по сроку считаются из данных.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -7023,12 +6601,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-032-*. Серверный: хуков нет. Стадия согласования рисуется степпером из 4 узлов через список STAGES, а просрочка по сроку потребности считается из знака числа neededInDays прямо в компоненте.",
       "meta": {
-        "tags": [
-          "solutions",
-          "procurement",
-          "approval",
-          "table"
-        ],
+        "tags": ["solutions", "procurement", "approval", "table"],
         "preview": {
           "width": "full"
         },
@@ -7222,13 +6795,7 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-032-*. Server-side: no hooks. The approval stage is drawn as a stepper of 4 nodes from the STAGES list, and being past the required-by date is derived from the sign of the neededInDays number right in the component."
           }
         },
-        "cardControls": [
-          "title",
-          "hint",
-          "holderLabel",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "hint", "holderLabel", "accent", "background"]
       }
     },
     {
@@ -7236,9 +6803,7 @@
       "type": "registry:block",
       "title": "Тендерные предложения",
       "description": "Тендер по лоту: отклонение цены от стартовой считается из чисел, минимальное предложение помечено полосой, а дедлайн подачи идёт обратным отсчётом.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -7250,12 +6815,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-033-*. Серверный: хуков нет. Отклонение цены от startPrice и метка минимального предложения считаются в компоненте из массива bids, а обратный отсчёт до дедлайна форматируется из deadlineHours.",
       "meta": {
-        "tags": [
-          "solutions",
-          "tender",
-          "procurement",
-          "table"
-        ],
+        "tags": ["solutions", "tender", "procurement", "table"],
         "preview": {
           "width": "full"
         },
@@ -7458,9 +7018,7 @@
       "type": "registry:block",
       "title": "Показания счётчиков",
       "description": "Показания приборов учёта: расход и сумма считаются из предыдущего и текущего показания с тарифом, а аномальный расход помечен сравнением со средним.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -7472,12 +7030,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-035-*. Серверный: хуков нет. Расход, сумма и отклонение от среднего считаются в компоненте из previous/current, tariffValue и average, порог аномалии задаётся пропом anomalyThreshold.",
       "meta": {
-        "tags": [
-          "solutions",
-          "utilities",
-          "metering",
-          "table"
-        ],
+        "tags": ["solutions", "utilities", "metering", "table"],
         "preview": {
           "width": "full"
         },
@@ -7700,9 +7253,7 @@
       "type": "registry:block",
       "title": "Заявки на обслуживание",
       "description": "Диспетчерские заявки ЖКХ: норматив реагирования нарисован полосой из прошедшего времени, а приоритет несёт букву в бейдже, не только цвет.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -7714,12 +7265,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-036-*. Серверный: хуков нет. Полоса норматива строится из elapsedHours/slaHours через role=\"progressbar\", просрочка и остаток времени считаются в компоненте, а не приходят готовой меткой.",
       "meta": {
-        "tags": [
-          "solutions",
-          "maintenance",
-          "dispatch",
-          "cards"
-        ],
+        "tags": ["solutions", "maintenance", "dispatch", "cards"],
         "preview": {
           "width": "full"
         },
@@ -7907,12 +7453,7 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-036-*. Server-side: no hooks. The SLA bar is built from elapsedHours/slaHours through role=\"progressbar\", and being overdue and the time remaining are computed in the component rather than arriving as a ready label."
           }
         },
-        "cardControls": [
-          "title",
-          "hint",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "hint", "accent", "background"]
       }
     },
     {
@@ -7920,9 +7461,7 @@
       "type": "registry:block",
       "title": "Обслуживание автопарка",
       "description": "Экран техобслуживания автопарка: остаток пробега до планового ТО и просрочка считаются сравнением одометра с интервалом, а не хранятся отдельной меткой.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -7934,12 +7473,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-037-*. Серверный: хуков нет. Плановый пробег ТО и остаток до него считаются из lastServiceMileage и intervalKm прямо в рендере, полоса заливается той же величиной, что подписана числом рядом.",
       "meta": {
-        "tags": [
-          "solutions",
-          "fleet",
-          "maintenance",
-          "table"
-        ],
+        "tags": ["solutions", "fleet", "maintenance", "table"],
         "preview": {
           "width": "full"
         },
@@ -8128,12 +7662,7 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-037-*. Server-side: no hooks. The due service mileage and the distance left to it are computed from lastServiceMileage and intervalKm right in the render, and the bar is filled by the same value that is spelled out as a number beside it."
           }
         },
-        "cardControls": [
-          "title",
-          "warnThresholdKm",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "warnThresholdKm", "accent", "background"]
       }
     },
     {
@@ -8141,9 +7670,7 @@
       "type": "registry:block",
       "title": "Путевые листы",
       "description": "Лента путевых листов за смену: маршрут визуализирован полосой суток с выездом и возвратом, а пробег считается разницей показаний одометра.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -8155,12 +7682,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-038-*. Серверный: хуков нет. Полоса выезда/возврата держится на доле часа от суток (timeToHours), пробег — на разнице odometerEnd и odometerStart, оба значения не хранятся отдельно от исходных полей.",
       "meta": {
-        "tags": [
-          "solutions",
-          "fleet",
-          "logistics",
-          "timeline"
-        ],
+        "tags": ["solutions", "fleet", "logistics", "timeline"],
         "preview": {
           "width": "full"
         },
@@ -8353,12 +7875,7 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-038-*. Server-side: no hooks. The departure/return bar rests on the fraction of the day an hour makes up (timeToHours) and the mileage on the difference between odometerEnd and odometerStart; neither value is stored apart from the source fields."
           }
         },
-        "cardControls": [
-          "title",
-          "shift",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "shift", "accent", "background"]
       }
     },
     {
@@ -8366,9 +7883,7 @@
       "type": "registry:block",
       "title": "Журнал заправок",
       "description": "Заправки по картам таблицей и расход л/100 км по машине против нормы: перерасход нарисован отдельным заштрихованным отрезком поверх отметки нормы.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -8380,12 +7895,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-039-*. Серверный: хуков нет. Шкала расхода общая для всех машин (вычисляется из максимума consumption), перерасход — отдельный сегмент от normPct до actualPct, а не второе число рядом.",
       "meta": {
-        "tags": [
-          "solutions",
-          "fleet",
-          "fuel",
-          "chart"
-        ],
+        "tags": ["solutions", "fleet", "fuel", "chart"],
         "preview": {
           "width": "full"
         },
@@ -8604,13 +8114,7 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-039-*. Server-side: no hooks. The consumption scale is shared by all the vehicles (computed from the maximum of consumption), and the overage is a separate segment from normPct to actualPct rather than a second number beside it."
           }
         },
-        "cardControls": [
-          "title",
-          "hint",
-          "currency",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "hint", "currency", "accent", "background"]
       }
     },
     {
@@ -8618,9 +8122,7 @@
       "type": "registry:block",
       "title": "Страховые полисы",
       "description": "Страховые полисы карточками: срок действия полосой и обратный отсчёт до окончания, тон которого считается из чисел totalDays и daysLeft.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -8632,12 +8134,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-040-*. Серверный: хуков нет. Функция urgency сравнивает daysLeft с expiryWarnDays и с нулём — на ней держатся и цвет полосы, и цвет обратного отсчёта, статус не приходит отдельным пропом.",
       "meta": {
-        "tags": [
-          "solutions",
-          "insurance",
-          "cards",
-          "timeline"
-        ],
+        "tags": ["solutions", "insurance", "cards", "timeline"],
         "preview": {
           "width": "full"
         },
@@ -8827,12 +8324,7 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-040-*. Server-side: no hooks. The urgency function compares daysLeft against expiryWarnDays and against zero — both the colour of the bar and the colour of the countdown rest on it, and the status does not arrive as a separate prop."
           }
         },
-        "cardControls": [
-          "title",
-          "expiryWarnDays",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "expiryWarnDays", "accent", "background"]
       }
     },
     {
@@ -8840,9 +8332,7 @@
       "type": "registry:block",
       "title": "Работа с убытками",
       "description": "Доска претензий колонками по стадии: срок ответа по закону и его просрочка считаются из даты направления, а не хранятся отдельной меткой.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -8854,12 +8344,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-041-*. Серверный: хуков нет. Колонки строятся фильтром claims по stage, а бейдж срока ответа — функцией deadlineUrgency от deadlineDays минус daysElapsed, показанной только для стадии «направлена».",
       "meta": {
-        "tags": [
-          "solutions",
-          "legal",
-          "board",
-          "claims"
-        ],
+        "tags": ["solutions", "legal", "board", "claims"],
         "preview": {
           "width": "full"
         },
@@ -9052,13 +8537,7 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-041-*. Server-side: no hooks. The columns are built by filtering claims by stage, and the response-deadline badge by the deadlineUrgency function of deadlineDays minus daysElapsed, shown for the sent stage only."
           }
         },
-        "cardControls": [
-          "title",
-          "hint",
-          "currency",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "hint", "currency", "accent", "background"]
       }
     },
     {
@@ -9066,9 +8545,7 @@
       "type": "registry:block",
       "title": "Судебные дела",
       "description": "Реестр судебных дел раскрывающимися карточками: стороны и заседание видны сразу, лента процессуальных событий — по клику.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -9080,12 +8557,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-042-*. Серверный: хуков нет. Карточки дел — нативные <details>/<summary>, лента событий — <ol> внутри карточки; срочность ближайшего заседания считается в компоненте из hearingInDays, а не передаётся готовой меткой.",
       "meta": {
-        "tags": [
-          "solutions",
-          "legal",
-          "cases",
-          "timeline"
-        ],
+        "tags": ["solutions", "legal", "cases", "timeline"],
         "preview": {
           "width": "full"
         },
@@ -9180,7 +8652,7 @@
                 "A card with no events still renders an empty list — always pass at least one event.",
                 "Do not lift the CSS variables into globals.css: the block has to stay a single file."
               ],
-              "usage": "<Solutions042 title=\"Court Cases\" cases={[{ number: \"CV-2024-0118\", plaintiff: \"Versta Logistics LLC\", defendant: \"Stroydvor LLC\", instance: \"первая\", claim: \"$28,400\", hearing: \"March 14, 10:30 AM, room 4\", hearingInDays: 2, events: [{ day: -40, label: \"Complaint accepted for review\", kind: \"filed\" }] }]} />"
+              "usage": "<Solutions042 title=\"Court Cases\" cases={[{ number: \"CV-2024-0118\", plaintiff: \"Versta Logistics LLC\", defendant: \"Stroydvor LLC\", instance: \"first instance\", claim: \"$28,400\", hearing: \"March 14, 10:30 AM, room 4\", hearingInDays: 2, events: [{ day: -40, label: \"Complaint accepted for review\", kind: \"filed\" }] }]} />"
             },
             "controls": {
               "title": {
@@ -9236,7 +8708,7 @@
                     "number": "A40-118203/2024",
                     "plaintiff": "Versta Logistics LLC",
                     "defendant": "Stroydvor LLC",
-                    "instance": "первая",
+                    "instance": "first instance",
                     "claim": "$27,000",
                     "hearing": "March 14, 10:30, room 4",
                     "hearingInDays": 2,
@@ -9262,7 +8734,7 @@
                     "number": "A40-95412/2024",
                     "plaintiff": "A. Gavrilova, sole trader",
                     "defendant": "Mera LLC",
-                    "instance": "апелляция",
+                    "instance": "appeal",
                     "claim": "$7,200",
                     "hearing": "March 17, 14:00, room 2",
                     "hearingInDays": 5,
@@ -9288,7 +8760,7 @@
                     "number": "A40-77031/2023",
                     "plaintiff": "Istok LLC",
                     "defendant": "Versta Logistics LLC",
-                    "instance": "кассация",
+                    "instance": "cassation",
                     "claim": "$57,000",
                     "hearing": "hearing not scheduled",
                     "hearingInDays": 0,
@@ -9314,7 +8786,7 @@
                     "number": "A40-130987/2024",
                     "plaintiff": "Nit LLC",
                     "defendant": "Stroydvor LLC",
-                    "instance": "первая",
+                    "instance": "first instance",
                     "claim": "$3,500",
                     "hearing": "held, awaiting the order",
                     "hearingInDays": -1,
@@ -9337,12 +8809,7 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-042-*. Server-side: no hooks. The case cards are native <details>/<summary> and the event feed is an <ol> inside the card; the urgency of the nearest hearing is computed in the component from hearingInDays rather than passed as a ready label."
           }
         },
-        "cardControls": [
-          "title",
-          "soonInDays",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "soonInDays", "accent", "background"]
       }
     },
     {
@@ -9350,9 +8817,7 @@
       "type": "registry:block",
       "title": "Банковская выписка",
       "description": "Выписка по счёту: приход и расход в раздельных столбцах, исходящий остаток посчитан из входящего и проведённых операций.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -9364,12 +8829,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-043-*. Серверный: хуков нет. Приход и расход — два отдельных столбца таблицы, исходящий остаток и обороты считаются в компоненте из openingBalance и списка operations, непроведённые операции исключены из остатка и помечены пунктиром.",
       "meta": {
-        "tags": [
-          "solutions",
-          "finance",
-          "banking",
-          "table"
-        ],
+        "tags": ["solutions", "finance", "banking", "table"],
         "preview": {
           "width": "full"
         },
@@ -9591,9 +9051,7 @@
       "type": "registry:block",
       "title": "Платёжные поручения",
       "description": "Реестр платёжных поручений: статус двойной подписи виден точками, итог к списанию считается только по подписанным строкам.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -9605,12 +9063,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-044-*. Серверный: хуков нет. Статус подписи считается из длины signedBy против requiredSignatures и рисуется точками прогресса, итог к списанию — сумма только полностью подписанных поручений.",
       "meta": {
-        "tags": [
-          "solutions",
-          "finance",
-          "payments",
-          "table"
-        ],
+        "tags": ["solutions", "finance", "payments", "table"],
         "preview": {
           "width": "full"
         },
@@ -9770,10 +9223,7 @@
                     "account": "40101810800000010041",
                     "amount": 2380,
                     "priority": 3,
-                    "signedBy": [
-                      "S. Tarasov",
-                      "A. Gavrilova"
-                    ]
+                    "signedBy": ["S. Tarasov", "A. Gavrilova"]
                   },
                   {
                     "recipient": "Stroydvor LLC",
@@ -9781,9 +9231,7 @@
                     "account": "40702810900000012345",
                     "amount": 2000,
                     "priority": 5,
-                    "signedBy": [
-                      "S. Tarasov"
-                    ]
+                    "signedBy": ["S. Tarasov"]
                   },
                   {
                     "recipient": "Social fund",
@@ -9799,10 +9247,7 @@
                     "account": "40702810300000098765",
                     "amount": 1065,
                     "priority": 5,
-                    "signedBy": [
-                      "A. Gavrilova",
-                      "S. Tarasov"
-                    ]
+                    "signedBy": ["A. Gavrilova", "S. Tarasov"]
                   },
                   {
                     "recipient": "P. Ivanov (payroll)",
@@ -9810,9 +9255,7 @@
                     "account": "40817810200000054321",
                     "amount": 1640,
                     "priority": 2,
-                    "signedBy": [
-                      "A. Gavrilova"
-                    ]
+                    "signedBy": ["A. Gavrilova"]
                   }
                 ]
               }
@@ -9834,9 +9277,7 @@
       "type": "registry:block",
       "title": "Валютные операции",
       "description": "Журнал валютных операций: отклонение курса сделки от курса ЦБ считается тут же, позиции по валютам показаны полосой относительно лимита.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -9848,12 +9289,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-045-*. Серверный: хуков нет. Отклонение от курса ЦБ и сумма в рублях считаются в компоненте из dealRate, cbRate и amount, позиции по валютам — полосы относительно limit с role=\"progressbar\".",
       "meta": {
-        "tags": [
-          "solutions",
-          "finance",
-          "currency",
-          "table"
-        ],
+        "tags": ["solutions", "finance", "currency", "table"],
         "preview": {
           "width": "full"
         },
@@ -10073,9 +9509,7 @@
       "type": "registry:block",
       "title": "Налоговая отчётность",
       "description": "Календарь налоговой отчётности: статус формы и обратный отсчёт до срока считаются из флагов сдачи и числа дней, а не задаются меткой.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -10087,12 +9521,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-046-*. Серверный: хуков нет. Статус формы (к сдаче/сдана/принята/уточнёнка/просрочена) считается в компоненте из submitted, accepted, amended и dueInDays; уточнёнка перекрывает остальные статусы.",
       "meta": {
-        "tags": [
-          "solutions",
-          "finance",
-          "tax",
-          "calendar"
-        ],
+        "tags": ["solutions", "finance", "tax", "calendar"],
         "preview": {
           "width": "full"
         },
@@ -10320,9 +9749,7 @@
       "type": "registry:block",
       "title": "Сверка счетов",
       "description": "Акт сверки взаиморасчётов с контрагентом: обороты по нашим данным против данных контрагента, расхождения по документам построчно и итоговое сальдо с указанием, в чью пользу.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -10334,12 +9761,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-047-*. Серверный: хуков нет. Расхождение по каждому документу и итоговое сальдо, включая то, в чью пользу оно сложилось, считаются в компоненте из числовых сумм — их не нужно передавать текстом.",
       "meta": {
-        "tags": [
-          "solutions",
-          "finance",
-          "reconciliation",
-          "table"
-        ],
+        "tags": ["solutions", "finance", "reconciliation", "table"],
         "preview": {
           "width": "full"
         },
@@ -10575,9 +9997,7 @@
       "type": "registry:block",
       "title": "Дебиторка по срокам",
       "description": "Дебиторская задолженность по корзинам срока: 0–30, 31–60, 61–90 и 90+ дней, сумма и доля каждой корзины, состав долга и список худших плательщиков.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -10589,12 +10009,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-048-*. Серверный: хуков нет. Суммы корзин, их доли и риск каждого клиента сворачиваются из списка счетов в компоненте; полоса состава портфеля и мини-шкала строки рисуются одной и той же сегментной техникой.",
       "meta": {
-        "tags": [
-          "solutions",
-          "finance",
-          "receivables",
-          "table"
-        ],
+        "tags": ["solutions", "finance", "receivables", "table"],
         "preview": {
           "width": "full"
         },
@@ -10829,13 +10244,7 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-048-*. Server-side: no hooks. The bucket totals, their shares and the risk of every customer are folded out of the invoice list in the component; the portfolio composition bar and the row's mini-bar are drawn with the same segment technique."
           }
         },
-        "cardControls": [
-          "title",
-          "asOf",
-          "currency",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "asOf", "currency", "accent", "background"]
       }
     },
     {
@@ -10843,9 +10252,7 @@
       "type": "registry:block",
       "title": "Смены на кассе",
       "description": "Кассовые смены за день: время открытия и закрытия, выручка наличными и картой, число чеков, средний чек, возвраты и расхождение по кассе при закрытии.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -10857,12 +10264,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-049-*. Серверный: хуков нет. Расхождение по кассе и средний чек считаются в компоненте из выручки, разменного фонда и возвратов; открытая смена получает отдельный статус, а не подставное нулевое расхождение.",
       "meta": {
-        "tags": [
-          "solutions",
-          "retail",
-          "cashier",
-          "table"
-        ],
+        "tags": ["solutions", "retail", "cashier", "table"],
         "preview": {
           "width": "full"
         },
@@ -11091,13 +10493,7 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-049-*. Server-side: no hooks. The register discrepancy and the average check are computed in the component from the revenue, the float and the refunds; an open shift gets a status of its own rather than a stand-in zero discrepancy."
           }
         },
-        "cardControls": [
-          "title",
-          "date",
-          "currency",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "date", "currency", "accent", "background"]
       }
     },
     {
@@ -11105,9 +10501,7 @@
       "type": "registry:block",
       "title": "Уровни лояльности",
       "description": "Уровни программы лояльности с порогами: где сейчас клиент и сколько до следующего уровня, привилегии каждого уровня и сгорание баллов по датам.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -11119,12 +10513,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-050-*. Серверный: хуков нет. Текущий уровень, остаток до следующего и позиция на шкале вычисляются в компоненте из накопленной суммы и порогов tiers; партии баллов сортируются по сроку сгорания.",
       "meta": {
-        "tags": [
-          "solutions",
-          "loyalty",
-          "tiers",
-          "progress"
-        ],
+        "tags": ["solutions", "loyalty", "tiers", "progress"],
         "preview": {
           "width": "full"
         },
@@ -11354,9 +10743,7 @@
       "type": "registry:block",
       "title": "Промо-купоны",
       "description": "Витрина промоакций с механикой скидка/подарок/кэшбэк: полоса расхода лимита активаций и пара «выручка/стоимость» на каждой карточке.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -11368,12 +10755,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-051-*. Серверный: хуков нет. Полоса расхода лимита активаций закрашивается через CSS-переменную --vibeui-solutions-051-fill, привязанную к инлайновому стилю; механика акции держится на паре «буква-маркер + подпись словом», а не на одном цвете.",
       "meta": {
-        "tags": [
-          "solutions",
-          "marketing",
-          "promotions",
-          "cards"
-        ],
+        "tags": ["solutions", "marketing", "promotions", "cards"],
         "preview": {
           "width": "full"
         },
@@ -11630,9 +11012,7 @@
       "type": "registry:block",
       "title": "Сеть франшизы",
       "description": "Реестр точек франшизы: выручка против плана одной шкалой с меткой плана, роялти суммой из ставки и соответствие стандартам трёхуровневой шкалой.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -11644,12 +11024,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-052-*. Серверный: хуков нет. Шкала «выручка/план» рисуется одним div с двумя CSS-переменными — --vibeui-solutions-052-fill для факта и --vibeui-solutions-052-plan для метки плана; статус «отстаёт от плана» компонент выводит сравнением чисел revenue и plan, а не берёт готовой меткой.",
       "meta": {
-        "tags": [
-          "solutions",
-          "franchise",
-          "table",
-          "retail"
-        ],
+        "tags": ["solutions", "franchise", "table", "retail"],
         "preview": {
           "width": "full"
         },
@@ -11859,13 +11234,7 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-052-*. Server-side: no hooks. The revenue-against-plan scale is drawn with a single div and two CSS variables — --vibeui-solutions-052-fill for the actual and --vibeui-solutions-052-plan for the plan tick; the behind-plan status is derived by the component by comparing the revenue and plan numbers rather than taken as a ready label."
           }
         },
-        "cardControls": [
-          "title",
-          "hint",
-          "currency",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "hint", "currency", "accent", "background"]
       }
     },
     {
@@ -11873,9 +11242,7 @@
       "type": "registry:block",
       "title": "Диспетчерская курьеров",
       "description": "Диспетчерская курьеров: число заказов в руках, следующий адрес с окном доставки и опозданием в минутах, отдельная очередь нераспределённых заказов.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -11887,12 +11254,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-053-*. Серверный: хуков нет. Опоздание к следующему адресу компонент считает по числу etaOffset (минуты к концу окна доставки), а не берёт готовой меткой; очередь нераспределённых заказов свёрстана отдельной колонкой без привязки к курьеру.",
       "meta": {
-        "tags": [
-          "solutions",
-          "logistics",
-          "dispatch",
-          "delivery"
-        ],
+        "tags": ["solutions", "logistics", "dispatch", "delivery"],
         "preview": {
           "width": "full"
         },
@@ -12134,9 +11496,7 @@
       "type": "registry:block",
       "title": "Отзывы клиентов",
       "description": "Экран отзывов и жалоб: гистограмма распределения оценок, доля отвеченных и срок первого ответа, лента отзывов с каналом и темой в реквизитах.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -12148,12 +11508,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-054-*. Серверный: хуков нет. Гистограмма из пяти столбиков рисуется высотой через CSS-переменную --vibeui-solutions-054-h; доля отвеченных отзывов и средний срок первого ответа компонент считает из массива reviews, а не берёт готовыми пропами.",
       "meta": {
-        "tags": [
-          "solutions",
-          "support",
-          "reviews",
-          "analytics"
-        ],
+        "tags": ["solutions", "support", "reviews", "analytics"],
         "preview": {
           "width": "full"
         },
@@ -12353,12 +11708,7 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-054-*. Server-side: no hooks. The histogram of five bars is drawn through the height in the CSS variable --vibeui-solutions-054-h; the share of answered reviews and the average first-response time are computed by the component from the reviews array rather than taken as ready props."
           }
         },
-        "cardControls": [
-          "title",
-          "hint",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "hint", "accent", "background"]
       }
     },
     {
@@ -12366,9 +11716,7 @@
       "type": "registry:block",
       "title": "Стол эскалаций",
       "description": "Стол горячих обращений с эскалацией L1→L2→L3: дорожка уровней с владельцем на каждом, SLA-таймер с остатком времени и причина подъёма.",
-      "categories": [
-        "solutions"
-      ],
+      "categories": ["solutions"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -12380,12 +11728,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-solutions-055-*. Серверный: хуков нет. Дорожка эскалации L1→L2→L3 рисуется тремя точками с состоянием data-reached; статус SLA (ok/warn/overdue) компонент выводит из числа slaMinutesRemaining, а не берёт готовой меткой.",
       "meta": {
-        "tags": [
-          "solutions",
-          "support",
-          "escalation",
-          "sla"
-        ],
+        "tags": ["solutions", "support", "escalation", "sla"],
         "preview": {
           "width": "full"
         },
@@ -12578,13 +11921,7 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-solutions-055-*. Server-side: no hooks. The L1→L2→L3 escalation track is drawn as three dots with the data-reached state; the SLA status (ok/warn/overdue) is derived by the component from the slaMinutesRemaining number rather than taken as a ready label."
           }
         },
-        "cardControls": [
-          "title",
-          "hint",
-          "warnAt",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "hint", "warnAt", "accent", "background"]
       }
     }
   ]

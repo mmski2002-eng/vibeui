@@ -240,7 +240,7 @@
             "controls": {
               "activeLabel": {
                 "label": "Active",
-                "default": "Каталог"
+                "default": "Catalog"
               },
               "accent": {
                 "label": "Accent"

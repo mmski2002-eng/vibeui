@@ -216,14 +216,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-calendar-anim-002-* переменных. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Строки дышат по кругу: поднимаются снизу с растяжкой по номеру строки, держатся видимыми, затем вместе уходят вниз, и цикл повторяется. Цвет полоски слева берётся из палитры категорий 1–4. Всё гаснет при prefers-reduced-motion.",
       "meta": {
-        "tags": [
-          "calendar",
-          "agenda",
-          "events",
-          "list",
-          "animated",
-          "stagger"
-        ],
+        "tags": ["calendar", "agenda", "events", "list", "animated", "stagger"],
         "ai": {
           "export": "CalendarAnim002",
           "usage": "<CalendarAnim002 title=\"Сегодня\" events={[{ time: \"09:00\", label: \"Дейли-синк\", category: 1 }]} />",

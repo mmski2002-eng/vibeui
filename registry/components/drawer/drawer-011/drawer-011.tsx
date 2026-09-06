@@ -7,6 +7,8 @@ export type Drawer011Props = Omit<
   ComponentProps<"div">,
   "children" | "title"
 > & {
+  /** Строка текущей ширины. {width} подставляется числом в rem. */
+  currentTemplate?: string
   triggerLabel?: string
   title?: string
   text?: string
@@ -182,6 +184,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Drawer011({
+  currentTemplate = "Ширина: {width} rem",
   triggerLabel = "Открыть панель",
   title = "Свойства блока",
   text = "Ширину подбирают под задачу: узкая не мешает списку за спиной, широкая вмещает таблицу целиком. Потяните за край или нажмите стрелку.",
@@ -347,7 +350,10 @@ export function Drawer011({
                 </div>
 
                 <p data-part="current" aria-live="polite">
-                  Ширина: {Math.round(width)} rem
+                  {currentTemplate.replace(
+                    "{width}",
+                    String(Math.round(width)),
+                  )}
                 </p>
               </div>
             </div>

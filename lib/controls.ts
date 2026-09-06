@@ -9,6 +9,14 @@ export type ControlValues = Record<string, ControlValue>
 /** Подложка превью. Переносится между витриной и страницей item'а. */
 export type PreviewTheme = "dark" | "light"
 
+/**
+ * То же плюс «как у оболочки». Значение по умолчанию именно такое: подложку
+ * кадра тогда красит CSS по атрибуту на <html>, который инлайн-скрипт ставит
+ * до первой отрисовки. Пока дефолтом был "dark", светлая страница успевала
+ * показать тёмный кадр и перекрасить его после гидратации.
+ */
+export type PreviewSurface = PreviewTheme | "auto"
+
 export function getControls(item: CatalogItem): ItemControl[] {
   return item.meta?.controls ?? []
 }
@@ -31,6 +39,15 @@ export function defaultValues(controls: ItemControl[]): ControlValues {
 
 export function resolvePreviewTheme(raw: string | undefined): PreviewTheme {
   return raw === "light" ? "light" : "dark"
+}
+
+/** Тема из ссылки: без параметра кадр следует теме оболочки. */
+export function resolvePreviewSurface(raw: string | undefined): PreviewSurface {
+  if (raw === "light" || raw === "dark") {
+    return raw
+  }
+
+  return "auto"
 }
 
 /**

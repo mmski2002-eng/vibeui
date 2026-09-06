@@ -990,7 +990,7 @@
               "props": {
                 "label": "Delivery city",
                 "placeholder": "Start typing",
-                "defaultQuery": "ка",
+                "defaultQuery": "ca",
                 "statusText": {
                   "loading": "Searching…",
                   "empty": "Nothing found — check the spelling",

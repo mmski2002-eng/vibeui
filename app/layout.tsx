@@ -30,8 +30,11 @@ const THEME_INIT_SCRIPT = `(function(){try{var t=localStorage.getItem("vibeui-sh
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
+    // Атрибут темы приходит из localStorage до гидратации, поэтому разметка
+    // сервера и клиента здесь расходятся намеренно — предупреждение гасим.
     <html
       lang="ru"
+      suppressHydrationWarning
       className={`${inter.variable} ${geistMono.variable} h-full antialiased`}
     >
       <head>

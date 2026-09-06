@@ -18,14 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-blog-anim-001-*. Полноширинная секция: container-type:inline-size делает блок собственным query-контейнером, число колонок сетки (1 → 2 → 3) считается через @container от ширины блока, а не окна. Тему берёт из окружения через light-dark() плюс строку для класса .dark, поэтому в тёмном проекте не остаётся светлым. Обложки карточек — чистые CSS-градиенты из пресетов, циклятся по индексу, без внешних картинок. Карточки появляются со стаггером (fade+rise) через nth-child animation-delay; всё гаснет при prefers-reduced-motion. Акцент задаётся пропом accent, подложка — пропом background.",
       "meta": {
-        "tags": [
-          "blog",
-          "articles",
-          "cards",
-          "grid",
-          "marketing",
-          "animated"
-        ],
+        "tags": ["blog", "articles", "cards", "grid", "marketing", "animated"],
         "ai": {
           "export": "BlogAnim001",
           "usage": "<BlogAnim001 eyebrow=\"Из блога\" title=\"Последние статьи\" posts={[{ category: \"Продукт\", title: \"...\", excerpt: \"...\", author: \"Мария Лопес\", date: \"12 авг 2026\", readTime: \"6 мин чтения\" }]} />",

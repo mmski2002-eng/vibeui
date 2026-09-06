@@ -4,6 +4,12 @@ export type Chart029Props = Omit<
   ComponentProps<"figure">,
   "children" | "title"
 > & {
+  /** Подпись строки с числом недель. */
+  weeksRowLabel?: string
+  /** Подпись строки с общим числом дней. */
+  totalRowLabel?: string
+  /** Подпись строки с числом активных дней. */
+  activeRowLabel?: string
   title?: string
   /** Недели слева направо, в каждой семь уровней 0…4 сверху вниз. */
   weeks?: number[][]
@@ -162,6 +168,9 @@ function fillTemplate(
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Chart029({
+  weeksRowLabel = "Недель в ленте",
+  totalRowLabel = "Дней всего",
+  activeRowLabel = "Дней с активностью",
   title = "Активность за полгода",
   weeks = DEFAULT_WEEKS,
   months = DEFAULT_MONTHS,
@@ -251,15 +260,15 @@ export function Chart029({
             <caption>{title}</caption>
             <tbody>
               <tr>
-                <th scope="row">Дней всего</th>
+                <th scope="row">{totalRowLabel}</th>
                 <td>{total}</td>
               </tr>
               <tr>
-                <th scope="row">Дней с активностью</th>
+                <th scope="row">{activeRowLabel}</th>
                 <td>{active}</td>
               </tr>
               <tr>
-                <th scope="row">Недель в ленте</th>
+                <th scope="row">{weeksRowLabel}</th>
                 <td>{weeks.length}</td>
               </tr>
             </tbody>

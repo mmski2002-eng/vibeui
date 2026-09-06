@@ -18,14 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-checklist-001-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark. Цикл держится на @keyframes: флажок, галочка и линия перечёркивания используют общие keyframes (vibeui-checklist-001-box/-check/-label/-strike) с animation-delay, вычисленным от позиции строки в списке через переменную --vibeui-checklist-001-duration. JS не участвует, каждый пункт отмечается в свой черёд. При prefers-reduced-motion анимация отключается.",
       "meta": {
-        "tags": [
-          "checklist",
-          "tasks",
-          "todo",
-          "progress",
-          "animated",
-          "cycle"
-        ],
+        "tags": ["checklist", "tasks", "todo", "progress", "animated", "cycle"],
         "ai": {
           "export": "Checklist001",
           "usage": "<Checklist001 title=\"Чек-лист\" items={[{ label: \"Собрать макет\", meta: \"10 мин\" }]} duration={8} />",

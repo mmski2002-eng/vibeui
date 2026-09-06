@@ -94,6 +94,9 @@ border-radius:var(--vibeui-buttongroup-009-radius);
 background:var(--vibeui-buttongroup-009-sheet);
 box-shadow:0 18px 40px -22px oklch(0.2 0 265 / 60%);
 }
+/* display:flex перебивает браузерное display:none у закрытого popover:
+   без этого лист висел раскрытым всегда. */
+[data-vibeui-block="buttongroup-009"] [data-part="sheet"]:not(:popover-open){display:none}
 /* Без anchor positioning панель встаёт по центру экрана: absolute в верхнем
    слое считался бы от вьюпорта и улетал бы в угол. */
 @supports not (anchor-name: --a){

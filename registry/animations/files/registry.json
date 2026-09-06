@@ -133,7 +133,8 @@
                     "size": "96 KB",
                     "kind": "sheet"
                   }
-                ]
+                ],
+                "countTemplate": "{count} files"
               }
             }
           }
@@ -416,7 +417,8 @@
                     "size": "44 MB",
                     "kind": "archive"
                   }
-                ]
+                ],
+                "countTemplate": "{count} files in the stack"
               }
             }
           }
@@ -543,7 +545,12 @@
             "preview": {
               "props": {
                 "fileName": "Presentation.pdf",
-                "fileSize": "2.4 MB"
+                "fileSize": "2.4 MB",
+                "hint": "Drop the file here",
+                "hintSub": "or click to choose",
+                "uploadingTemplate": "Uploading… {size}",
+                "doneLabel": "Done",
+                "doneTemplate": "{name} uploaded"
               }
             }
           }

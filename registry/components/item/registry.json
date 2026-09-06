@@ -6,9 +6,7 @@
       "type": "registry:component",
       "title": "Строка списка",
       "description": "Строка списка со ссылкой на всю площадь: обводка фокуса ставится на строку, а не на одно название.",
-      "categories": [
-        "item"
-      ],
+      "categories": ["item"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-item-001-*. Серверный: хуков нет. Ссылка растянута псевдоэлементом ::after, обводка фокуса ставится на корень через :has(a:focus-visible). Корень — <li>, поэтому строки кладутся в обычный список. Значение выровнено вправо табличными цифрами.",
       "meta": {
-        "tags": [
-          "item",
-          "list",
-          "row",
-          "link"
-        ],
+        "tags": ["item", "list", "row", "link"],
         "preview": {
           "width": "full"
         },
@@ -156,13 +149,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-item-001-* variables. Server component: no hooks. The link is stretched with an ::after pseudo-element, and the focus ring is placed on the root through :has(a:focus-visible). The root is an <li>, so the rows go into an ordinary list. The value is right-aligned in tabular figures."
           }
         },
-        "cardControls": [
-          "title",
-          "value",
-          "status",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "value", "status", "accent", "background"]
       }
     },
     {
@@ -170,9 +157,7 @@
       "type": "registry:component",
       "title": "Строка с иконкой",
       "description": "Строка списка с ведущим знаком: плитка фиксированного размера держит колонку названий на одной вертикали, а её цвет выводится из одного оттенка.",
-      "categories": [
-        "item"
-      ],
+      "categories": ["item"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -184,12 +169,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-item-002-*. Серверный: хуков и обработчиков нет. Корень — li с флексом; плитка знака имеет фиксированный квадрат 2.25rem и не сжимается, поэтому названия всех строк начинаются по одной вертикали. Фон плитки и цвет знака считаются из --vibeui-item-002-tint через color-mix, поэтому пара не может рассогласоваться. Текстовые узлы обрезаются многоточием и не ломают высоту строки.",
       "meta": {
-        "tags": [
-          "item",
-          "list",
-          "row",
-          "icon"
-        ],
+        "tags": ["item", "list", "row", "icon"],
         "preview": {
           "width": "full"
         },
@@ -308,12 +288,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-item-002-* variables. Server component: no hooks and no handlers. The root is an li with flex; the glyph tile has a fixed 2.25rem square and does not shrink, so the titles of all rows start on the same vertical. The tile background and the glyph colour are computed from --vibeui-item-002-tint through color-mix, so the pair cannot drift apart. Text nodes are truncated with an ellipsis and do not break the row height."
           }
         },
-        "cardControls": [
-          "title",
-          "glyph",
-          "tint",
-          "background"
-        ]
+        "cardControls": ["title", "glyph", "tint", "background"]
       }
     },
     {
@@ -321,9 +296,7 @@
       "type": "registry:component",
       "title": "Строка с действием",
       "description": "Строка с отдельной кнопкой справа: растянуть ссылку на всю площадь здесь нельзя, поэтому кнопка остаётся собственной целью и несёт название записи в подписи.",
-      "categories": [
-        "item"
-      ],
+      "categories": ["item"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -335,12 +308,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-item-003-*. Серверный: состояния нет, обработчик вешает вызывающий код через проп onClick. Раскладка — флекс из текстового блока и кнопки; кнопка помечена flex:none и не сжимается, текст обрезается многоточием. aria-label кнопки собирается из действия и названия строки, поэтому десять одинаковых кнопок подряд различимы на слух.",
       "meta": {
-        "tags": [
-          "item",
-          "list",
-          "row",
-          "action"
-        ],
+        "tags": ["item", "list", "row", "action"],
         "preview": {
           "width": "full"
         },
@@ -459,12 +427,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-item-003-* variables. Server component: there is no state, the handler is attached by the calling code through the onClick prop. The layout is a flex of a text block and a button; the button is marked flex:none and does not shrink, while the text is truncated with an ellipsis. The button's aria-label is assembled from the action and the row title, so ten identical buttons in a row are distinguishable by ear."
           }
         },
-        "cardControls": [
-          "title",
-          "action",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "action", "accent", "background"]
       }
     },
     {
@@ -472,9 +435,7 @@
       "type": "registry:component",
       "title": "Строка-ссылка",
       "description": "Навигационная строка, где корень блока и есть тег a: цель не эмулируется псевдоэлементом, а стрелка сдвигается одинаково на наведении и на фокусе.",
-      "categories": [
-        "item"
-      ],
+      "categories": ["item"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -486,12 +447,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-item-004-*. Серверный: хуков нет. Корневой элемент — a, поэтому строка попадает в список ссылок страницы целиком, а не одним названием, и не требует растянутого ::after, как item-001. Состояния :hover и :focus-visible описаны одним правилом, поэтому клавиатурный сценарий выглядит так же, как мышиный.",
       "meta": {
-        "tags": [
-          "item",
-          "row",
-          "link",
-          "navigation"
-        ],
+        "tags": ["item", "row", "link", "navigation"],
         "preview": {
           "width": "full"
         },
@@ -610,12 +566,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-item-004-* variables. Server component: no hooks. The root element is an a, so the row enters the page's link list as a whole rather than by its title alone, and needs no stretched ::after the way item-001 does. The :hover and :focus-visible states are described by a single rule, so the keyboard path looks the same as the mouse one."
           }
         },
-        "cardControls": [
-          "title",
-          "hint",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "hint", "accent", "background"]
       }
     },
     {
@@ -623,9 +574,7 @@
       "type": "registry:component",
       "title": "Строка с превью",
       "description": "Строка с медиа-превью, у которого место занято пропорцией 16 / 9 до загрузки картинки: строка не прыгает, а длительность продублирована текстом.",
-      "categories": [
-        "item"
-      ],
+      "categories": ["item"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -637,12 +586,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-item-005-*. Серверный: хуков нет. Превью — блок фиксированной ширины с aspect-ratio 16 / 9 и overflow:hidden; без пропа image в нём лежит градиентная заглушка, поэтому высота строки одинакова с картинкой и без неё. Метка длительности лежит поверх превью под aria-hidden и повторена во вторичной строке текстом. Название обрезается двумя строками через -webkit-line-clamp.",
       "meta": {
-        "tags": [
-          "item",
-          "row",
-          "media",
-          "thumbnail"
-        ],
+        "tags": ["item", "row", "media", "thumbnail"],
         "preview": {
           "width": "full"
         },
@@ -761,12 +705,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-item-005-* variables. Server component: no hooks. The thumbnail is a fixed-width block with aspect-ratio 16 / 9 and overflow:hidden; without the image prop it holds a gradient stand-in, so the row height is the same with a picture and without one. The duration badge lies over the thumbnail under aria-hidden and is repeated as text in the secondary line. The title is clamped to two lines through -webkit-line-clamp."
           }
         },
-        "cardControls": [
-          "title",
-          "badge",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "badge", "accent", "background"]
       }
     },
     {
@@ -774,9 +713,7 @@
       "type": "registry:component",
       "title": "Три колонки данных",
       "description": "Строка, где подробности разложены по трём подписанным колонкам парами dt/dd, а раскладка считается от собственной ширины через контейнерный запрос.",
-      "categories": [
-        "item"
-      ],
+      "categories": ["item"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -788,12 +725,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-item-006-*. Серверный: хуков нет. Корень — li с container-type:inline-size; вся раскладка лежит на внутреннем [data-part=\"shell\"], потому что контейнерный запрос действует на потомков, а не на сам контейнер. Ячейки описаны тегом dl с парами dt/dd, поэтому подпись и значение связаны разметкой. Значения набраны табличными цифрами и обрезаются многоточием.",
       "meta": {
-        "tags": [
-          "item",
-          "row",
-          "metadata",
-          "container"
-        ],
+        "tags": ["item", "row", "metadata", "container"],
         "preview": {
           "width": "full"
         },
@@ -913,11 +845,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-item-006-* variables. Server component: no hooks. The root is an li with container-type:inline-size; the whole layout lies on the inner [data-part=\"shell\"], because a container query applies to descendants rather than to the container itself. The cells are described with a dl of dt/dd pairs, so the label and the value are linked by markup. The values are set in tabular figures and are truncated with an ellipsis."
           }
         },
-        "cardControls": [
-          "title",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "accent", "background"]
       }
     },
     {
@@ -925,9 +853,7 @@
       "type": "registry:component",
       "title": "Выделяемая строка",
       "description": "Строка выбора на нативном чекбоксе: состояние живёт в разметке, галочка рисуется через :has(:checked), а компонент остаётся серверным и работает в форме.",
-      "categories": [
-        "item"
-      ],
+      "categories": ["item"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -939,12 +865,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-item-007-*. Серверный: React-состояния нет, значение держит нативный input type=checkbox и отдаёт его при отправке формы. Input не скрыт display:none, а растянут прозрачным по строке — иначе он выпал бы из последовательности фокуса. Выбранная строка меняет фон, рамку и заливку квадратика одновременно, потому что одного цвета мало при дальтонизме.",
       "meta": {
-        "tags": [
-          "item",
-          "row",
-          "checkbox",
-          "selection"
-        ],
+        "tags": ["item", "row", "checkbox", "selection"],
         "preview": {
           "width": "full"
         },
@@ -1060,12 +981,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-item-007-* variables. Server component: there is no React state, the value is held by a native input type=checkbox and submitted with the form. The input is not hidden with display:none but stretched transparently over the row — otherwise it would drop out of the focus order. A selected row changes its background, its border and the fill of the small square at once, because colour alone is not enough under colour blindness."
           }
         },
-        "cardControls": [
-          "title",
-          "defaultChecked",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "defaultChecked", "accent", "background"]
       }
     },
     {
@@ -1073,9 +989,7 @@
       "type": "registry:component",
       "title": "Строка с ручкой перетаскивания",
       "description": "Строка с ручкой переноса, где ручка — кнопка: мышью строку тянут, а с клавиатуры берут пробелом и двигают стрелками, и каждый шаг объявляется вслух.",
-      "categories": [
-        "item"
-      ],
+      "categories": ["item"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1087,12 +1001,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-item-008-*. Клиентский: \"use client\" ради режима переноса. Ручка — button с aria-pressed, обрабатывающая пробел, стрелки вверх и вниз и Escape; сам перенос выполняет вызывающий код через проп onMove, поэтому порядком владеет список, а не строка. Живая область role=status объявляет захват, шаг и отмену. Мышиный путь — нативный HTML5 drag and drop на самой строке.",
       "meta": {
-        "tags": [
-          "item",
-          "row",
-          "drag",
-          "a11y"
-        ],
+        "tags": ["item", "row", "drag", "a11y"],
         "preview": {
           "width": "full"
         },
@@ -1231,13 +1140,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-item-008-* variables. Client component: \"use client\" for the sake of the move mode. The handle is a button with aria-pressed, handling Space, the up and down arrows and Escape; the move itself is performed by the calling code through the onMove prop, so the order is owned by the list rather than by the row. A role=status live region announces the pick-up, the step and the cancel. The mouse path is native HTML5 drag and drop on the row itself."
           }
         },
-        "cardControls": [
-          "title",
-          "total",
-          "position",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "total", "position", "accent", "background"]
       }
     },
     {
@@ -1245,9 +1148,7 @@
       "type": "registry:component",
       "title": "Строка с маркером состояния",
       "description": "Строка с меткой состояния, которую можно прочитать без цвета: каждому состоянию отвечает своя форма маркера и своё слово, цвет здесь третий признак.",
-      "categories": [
-        "item"
-      ],
+      "categories": ["item"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1259,12 +1160,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-item-009-*. Серверный: хуков нет. Состояние приходит пропом state и попадает в data-state на корне; тон метки выбирается переменной --vibeui-item-009-tone, поэтому фон, рамка и текст пилюли считаются из одного значения. Форму маркера задают border-radius, clip-path и box-shadow: круг, треугольник, ромб и кольцо различимы при дальтонизме и на чёрно-белой печати.",
       "meta": {
-        "tags": [
-          "item",
-          "row",
-          "status",
-          "a11y"
-        ],
+        "tags": ["item", "row", "status", "a11y"],
         "preview": {
           "width": "full"
         },
@@ -1304,12 +1200,7 @@
             "label": "Состояние",
             "type": "select",
             "default": "ok",
-            "options": [
-              "ok",
-              "wait",
-              "fail",
-              "off"
-            ]
+            "options": ["ok", "wait", "fail", "off"]
           },
           {
             "prop": "title",
@@ -1385,11 +1276,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-item-009-* variables. Server component: no hooks. The state arrives through the state prop and lands in data-state on the root; the tone of the badge is chosen by the --vibeui-item-009-tone variable, so the background, the border and the text of the pill are computed from a single value. The shape of the marker is set by border-radius, clip-path and box-shadow: the circle, the triangle, the diamond and the ring stay distinguishable under colour blindness and in black-and-white print."
           }
         },
-        "cardControls": [
-          "state",
-          "title",
-          "background"
-        ]
+        "cardControls": ["state", "title", "background"]
       }
     },
     {
@@ -1397,9 +1284,7 @@
       "type": "registry:component",
       "title": "Плотные строки списка",
       "description": "Плотный список, где высота строки задана одной переменной шага: плотность меняется целиком, а разделители нарисованы внутренней линией без двойных стыков.",
-      "categories": [
-        "item"
-      ],
+      "categories": ["item"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1411,12 +1296,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-item-010-*. Серверный: хуков нет. Корень — ul, каждая строка это li с гридом из трёх колонок. Высота строки берётся из --vibeui-item-010-step, а проп density переключает шаг через data-density, поэтому плотность меняется одним значением. Разделитель сделан внутренней тенью на соседних строках, а не рамкой каждой: рамки удваивались бы на стыках.",
       "meta": {
-        "tags": [
-          "item",
-          "list",
-          "dense",
-          "table"
-        ],
+        "tags": ["item", "list", "dense", "table"],
         "preview": {
           "width": "full"
         },
@@ -1455,11 +1335,7 @@
             "label": "Плотность",
             "type": "select",
             "default": "tight",
-            "options": [
-              "tight",
-              "compact",
-              "cozy"
-            ]
+            "options": ["tight", "compact", "cozy"]
           },
           {
             "prop": "accent",
@@ -1561,11 +1437,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-item-010-* variables. Server component: no hooks. The root is a ul, and each row is an li with a three-column grid. The row height is taken from --vibeui-item-010-step, and the density prop switches the step through data-density, so the density changes with a single value. The divider is made with an inset shadow on adjacent rows rather than a border on each: borders would double up at the joins."
           }
         },
-        "cardControls": [
-          "density",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["density", "accent", "background"]
       }
     },
     {
@@ -1573,9 +1445,7 @@
       "type": "registry:component",
       "title": "Строка чеклиста",
       "description": "Строка задачи с чекбоксом на нативном input: выполненная задача зачёркивается, рядом — срок и плитка исполнителя с полным именем в подписи.",
-      "categories": [
-        "item"
-      ],
+      "categories": ["item"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1587,12 +1457,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-item-011-*. Серверный: React-состояния нет, значение держит нативный input type=checkbox внутри вложенной метки и отдаёт его при отправке формы, как в item-007. Input не скрыт display:none, а растянут прозрачным по своей метке — иначе он выпал бы из последовательности фокуса. Галочка переключает не только заливку квадратика, но и зачёркивание названия через :has(input:checked): выполненная задача читается сразу, без взгляда на сам чекбокс. Плитка исполнителя показывает инициалы, а полное имя лежит в aria-label.",
       "meta": {
-        "tags": [
-          "item",
-          "row",
-          "checkbox",
-          "task"
-        ],
+        "tags": ["item", "row", "checkbox", "task"],
         "preview": {
           "width": "full"
         },
@@ -1735,9 +1600,7 @@
       "type": "registry:component",
       "title": "Строка уведомления",
       "description": "Строка уведомления с непрочитанной меткой и временем: точка, полужирное название и лёгкая заливка строки — три независимых сигнала одного состояния.",
-      "categories": [
-        "item"
-      ],
+      "categories": ["item"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1749,12 +1612,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-item-012-*. Серверный: хуков нет. Непрочитанное состояние приходит пропом unread и попадает в data-unread на корне; от него зависят сразу три правила — видимость точки, вес шрифта названия и лёгкая заливка строки. Точка помечена aria-hidden, потому что дублирует смысл: настоящий сигнал для скринридера — скрытый текст «Непрочитано» перед названием, который существует в разметке только в непрочитанном состоянии.",
       "meta": {
-        "tags": [
-          "item",
-          "row",
-          "notification",
-          "unread"
-        ],
+        "tags": ["item", "row", "notification", "unread"],
         "preview": {
           "width": "full"
         },
@@ -1885,13 +1743,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-item-012-* variables. Server component: no hooks. The unread state arrives through the unread prop and lands in data-unread on the root; three rules depend on it at once — the visibility of the dot, the font weight of the title and a light tint of the row. The dot is marked aria-hidden, because it duplicates the meaning: the real signal for a screen reader is the hidden \"Unread\" text before the title, which exists in the markup only in the unread state."
           }
         },
-        "cardControls": [
-          "title",
-          "time",
-          "unread",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "time", "unread", "accent", "background"]
       }
     }
   ]

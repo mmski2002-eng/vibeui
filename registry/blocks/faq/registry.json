@@ -6,9 +6,7 @@
       "type": "registry:block",
       "title": "Вопросы с липким заголовком",
       "description": "Секция вопросов: заголовок слева остаётся на месте при прокрутке, ответы справа раскрываются нативными details — без JS и с поиском по странице.",
-      "categories": [
-        "faq"
-      ],
+      "categories": ["faq"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-faq-001-*. Раскрытие держат нативные <details>/<summary>: ответ находится поиском по странице (браузер сам раскрывает найденный раздел) и работает до гидратации. Разделы независимы намеренно — на странице вопросов люди открывают несколько сразу. Раскладка в две колонки включается container-запросом от собственной ширины блока; заголовочная колонка становится sticky.",
       "meta": {
-        "tags": [
-          "faq",
-          "questions",
-          "details",
-          "no-js"
-        ],
+        "tags": ["faq", "questions", "details", "no-js"],
         "ai": {
           "export": "Faq001",
           "usage": "<Faq001\n  title=\"Коротко о том, как это работает\"\n  items={[{ question: \"Что я получаю?\", answer: \"Один файл в вашем проекте.\" }]}\n/>",
@@ -159,11 +152,7 @@
             "default": ""
           }
         ],
-        "cardControls": [
-          "title",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["title", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -174,9 +163,7 @@
       "type": "registry:block",
       "title": "Вопросы в две колонки",
       "description": "Вопросы в две колонки на CSS columns: порядок чтения остаётся вертикальным, карточки не разрываются между колонками, каждый вопрос пронумерован.",
-      "categories": [
-        "faq"
-      ],
+      "categories": ["faq"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -188,12 +175,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-faq-002-*. Серверный компонент, раскрытие держат нативные <details>. Две колонки сделаны через column-count, а не через grid: при сетке порядок пошёл бы слева направо и нумерация запуталась бы, а columns сохраняет вертикальное чтение. break-inside:avoid не даёт карточке разорваться между колонками. Одна колонка до 44rem собственной ширины блока, две — дальше.",
       "meta": {
-        "tags": [
-          "faq",
-          "columns",
-          "details",
-          "no-js"
-        ],
+        "tags": ["faq", "columns", "details", "no-js"],
         "preview": {
           "width": "full"
         },
@@ -341,12 +323,7 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-faq-002-*. A server component; native <details> hold the disclosure. The two columns are made with column-count rather than a grid: with a grid the order would run left to right and the numbering would get tangled, while columns keep the reading vertical. break-inside:avoid stops a card from breaking across columns. One column up to 44rem of the block's own width, two beyond that."
           }
         },
-        "cardControls": [
-          "title",
-          "description",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "description", "accent", "background"]
       }
     },
     {
@@ -354,9 +331,7 @@
       "type": "registry:block",
       "title": "Вопросы по вкладкам",
       "description": "Вопросы, разложенные по категориям-вкладкам. Переключение живёт на радио-кнопках: без JS, без состояния и со штатной работой стрелок клавиатуры.",
-      "categories": [
-        "faq"
-      ],
+      "categories": ["faq"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -368,12 +343,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-faq-003-*. Серверный компонент. Вкладки собраны на радио-кнопках одной группы: они спрятаны visually-hidden, но остаются в потоке фокуса, поэтому стрелки листают вкладки так же, как в настоящем tablist. Активная вкладка и её панель находятся правилами :nth-of-type(n):checked ~ ..., поэтому поддерживается до пяти категорий — больше требует дописать правила. Ответы внутри панели — нативные details со знаком «плюс» из псевдоэлементов.",
       "meta": {
-        "tags": [
-          "faq",
-          "tabs",
-          "categories",
-          "no-js"
-        ],
+        "tags": ["faq", "tabs", "categories", "no-js"],
         "preview": {
           "width": "full"
         },
@@ -562,12 +532,7 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-faq-003-*. A server component. The tabs are built on radio buttons of a single group: they are hidden visually-hidden but stay in the focus order, so the arrows page through the tabs the same way they do in a real tablist. The active tab and its panel are matched by :nth-of-type(n):checked ~ ... rules, so up to five categories are supported — more requires writing further rules. The answers inside a panel are native details with a plus sign built from pseudo-elements."
           }
         },
-        "cardControls": [
-          "title",
-          "id",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "id", "accent", "background"]
       }
     },
     {
@@ -575,9 +540,7 @@
       "type": "registry:block",
       "title": "Вопросы с одним открытым",
       "description": "Аккордеон, в котором одновременно открыт только один ответ. Согласование делает сам браузер через одинаковый атрибут name у всех details — без JS.",
-      "categories": [
-        "faq"
-      ],
+      "categories": ["faq"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -589,12 +552,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-faq-004-*. Серверный компонент. Все <details> получают одинаковый атрибут name, и браузер закрывает предыдущий ответ при открытии следующего: это штатное поведение эксклюзивного аккордеона, а не эмуляция на состоянии. Заголовок и номера набраны засечной гарнитурой, вопросы — рубленой: контраст гарнитур отделяет разговорную часть от служебной. Раскладка узкая по замыслу — длинные ответы про условия читают в одну колонку.",
       "meta": {
-        "tags": [
-          "faq",
-          "accordion",
-          "details",
-          "exclusive"
-        ],
+        "tags": ["faq", "accordion", "details", "exclusive"],
         "preview": {
           "width": "full"
         },
@@ -740,12 +698,7 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-faq-004-*. A server component. Every <details> gets the same name attribute and the browser closes the previous answer when the next one opens: this is the standard behaviour of an exclusive accordion, not an emulation on state. The heading and the numbers are set in a serif face, the questions in a sans one: the typeface contrast separates the spoken part from the functional one. The layout is narrow by design — long answers about terms are read in one column."
           }
         },
-        "cardControls": [
-          "title",
-          "name",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "name", "accent", "background"]
       }
     },
     {
@@ -753,9 +706,7 @@
       "type": "registry:block",
       "title": "Вопросы с поиском",
       "description": "Вопросы с поиском по списку: фильтрация идёт по вопросу, ответу и теме, а число найденного объявляется вслух — иначе изменение списка остаётся незамеченным.",
-      "categories": [
-        "faq"
-      ],
+      "categories": ["faq"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -767,12 +718,7 @@
       ],
       "docs": "Блок клиентский: \"use client\" нужен ради поля поиска и useState, другого состояния нет. Один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-faq-005-*. Фильтр разбивает запрос на слова и требует совпадения каждого в склейке «вопрос + ответ + тема», поэтому «когда привезут» находит раздел про доставку. Результат считается в useMemo, чтобы список не пересобирался на каждый рендер. Счётчик найденного помечен aria-live=\"polite\": без него человек со скринридером не узнает, что список под полем изменился.",
       "meta": {
-        "tags": [
-          "faq",
-          "search",
-          "filter",
-          "client"
-        ],
+        "tags": ["faq", "search", "filter", "client"],
         "preview": {
           "width": "full"
         },
@@ -942,12 +888,7 @@
             "docs": "The block is a client one: \"use client\" is needed for the search field and useState, there is no other state. One file, no dependencies, its own palette in local variables --vibeui-faq-005-*. The filter splits the query into words and requires each of them to match in the joined \"question + answer + topic\", so \"when will it arrive\" finds the section about delivery. The result is computed in useMemo so that the list is not rebuilt on every render. The result counter is marked aria-live=\"polite\": without it a screen-reader user never learns that the list under the field has changed."
           }
         },
-        "cardControls": [
-          "title",
-          "placeholder",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "placeholder", "accent", "background"]
       }
     },
     {
@@ -955,9 +896,7 @@
       "type": "registry:block",
       "title": "Вопросы с обращением в поддержку",
       "description": "Вопросы с карточкой «не нашли ответ» рядом со списком, а не после него: на широкой раскладке карточка залипает, и до контактов не нужно долистывать.",
-      "categories": [
-        "faq"
-      ],
+      "categories": ["faq"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -969,12 +908,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-faq-006-*. Серверный компонент, раскрытие держат нативные <details>. Карточка помощи — <aside> с подписью, на широкой раскладке она становится sticky: тот, кто не нашёл свой вопрос, обычно бросает список посередине, и контакты должны быть в поле зрения именно там. Каналы связи оформлены ссылками с пояснением, а не одной кнопкой «Связаться»: пояснение отвечает на вопрос «когда мне ответят» до нажатия.",
       "meta": {
-        "tags": [
-          "faq",
-          "support",
-          "contact",
-          "sticky"
-        ],
+        "tags": ["faq", "support", "contact", "sticky"],
         "preview": {
           "width": "full"
         },
@@ -1143,12 +1077,7 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-faq-006-*. A server component; native <details> hold the disclosure. The help card is an <aside> with a label, and on the wide layout it becomes sticky: someone who has not found their question usually abandons the list halfway, and the contacts have to be in view exactly there. The contact channels are laid out as links with an explanation rather than a single \"Contact us\" button: the explanation answers \"when will I get a reply\" before the click."
           }
         },
-        "cardControls": [
-          "helpTitle",
-          "title",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["helpTitle", "title", "accent", "background"]
       }
     }
   ]

@@ -4,6 +4,8 @@ export type Metrics001Props = Omit<
   ComponentProps<"section">,
   "children" | "title"
 > & {
+  /** Слова направления для скринридера. */
+  trendText?: { up: string; down: string }
   title?: string
   /** Пилюля справа от заголовка: период сравнения. */
   period?: string
@@ -159,13 +161,31 @@ const CHEVRON_RIGHT = (
 )
 
 const ARROW_UP = (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="3"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
     <path d="M12 19V5M5 12l7-7 7 7" />
   </svg>
 )
 
 const ARROW_DOWN = (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="3"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
     <path d="M12 5v14M5 12l7 7 7-7" />
   </svg>
 )
@@ -176,6 +196,7 @@ const ARROW_DOWN = (
  * собственная палитра, клиентского JS нет.
  */
 export function Metrics001({
+  trendText = { up: "рост", down: "падение" },
   title = "Конверсия оформления",
   period = "30 дней",
   beforeLabel = "До",
@@ -233,7 +254,9 @@ export function Metrics001({
                       data-part="count"
                       data-role="before"
                       style={
-                        { "--vibeui-metrics-001-target": beforeValue } as CSSProperties
+                        {
+                          "--vibeui-metrics-001-target": beforeValue,
+                        } as CSSProperties
                       }
                     />
                     {unit}
@@ -253,7 +276,9 @@ export function Metrics001({
                       data-part="count"
                       data-role="after"
                       style={
-                        { "--vibeui-metrics-001-target": afterValue } as CSSProperties
+                        {
+                          "--vibeui-metrics-001-target": afterValue,
+                        } as CSSProperties
                       }
                     />
                     {unit}
@@ -263,7 +288,8 @@ export function Metrics001({
               <p data-part="sr">
                 {title}: {beforeLabel} {beforeValue}
                 {unit}, {afterLabel} {afterValue}
-                {unit}, {trend === "up" ? "рост" : "падение"} {deltaText}.
+                {unit}, {trend === "up" ? trendText.up : trendText.down}{" "}
+                {deltaText}.
               </p>
             </div>
           </div>

@@ -214,14 +214,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-activity-002-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark, поэтому в тёмном проекте не остаётся светлым. Цвет аватара идёт по кругу из шести оттенков по номеру строки. Строка целиком появляется по scroll-driven view-timeline карточки (собственный namespace --vibeui-activity-002, не конфликтует с activity-001 на одной странице), а аватар одновременно чуть увеличивается из уменьшенного состояния; всё гаснет при prefers-reduced-motion.",
       "meta": {
-        "tags": [
-          "activity",
-          "feed",
-          "avatar",
-          "team",
-          "commits",
-          "animated"
-        ],
+        "tags": ["activity", "feed", "avatar", "team", "commits", "animated"],
         "ai": {
           "export": "Activity002",
           "usage": "<Activity002 title=\"Активность сегодня\" badge=\"5\" events={[{ name: \"Sarah Chen\", action: \"запушила в main\", meta: \"2 мин\", detail: \"3 коммита · src/api/auth.ts\" }]} />",

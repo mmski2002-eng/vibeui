@@ -4,6 +4,10 @@ import { useId, useState } from "react"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Date011Props = Omit<ComponentProps<"div">, "children"> & {
+  /** Подпись флажка «выходные заняты». */
+  weekendLabel?: string
+  /** Названия месяцев в родительном падеже: «14 сентября». */
+  months?: string[]
   label?: string
   /** Занятые дни в формате ГГГГ-ММ-ДД: их выбрать нельзя. */
   busy?: string[]
@@ -114,14 +118,14 @@ const MONTHS = [
 const DEFAULT_BUSY = ["2026-09-15", "2026-09-16", "2026-09-22"]
 
 /** Человеческая запись дня: «15 сентября». */
-function human(value: string): string {
+function human(value: string, months: string[]): string {
   const [year, month, day] = value.split("-").map(Number)
 
   if (!year || !month || !day) {
     return value
   }
 
-  return `${day} ${MONTHS[month - 1]}`
+  return `${day} ${months[month - 1]}`
 }
 
 /** Дата в формате поля по местным часам. */
@@ -159,6 +163,8 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Date011({
+  weekendLabel = "Выходные считать занятыми",
+  months = MONTHS,
   label = "День визита",
   busy = DEFAULT_BUSY,
   skipWeekend = true,
@@ -253,11 +259,11 @@ export function Date011({
 
         {occupied ? (
           <p data-part="busy" id={`${id}-busy`} role="status">
-            {busyTemplate.replace("{date}", human(value))}
+            {busyTemplate.replace("{date}", human(value, months))}
             {nearest ? (
               <>
                 {" · "}
-                {nearestTemplate.replace("{date}", human(nearest))}
+                {nearestTemplate.replace("{date}", human(nearest, months))}
                 <button
                   type="button"
                   data-part="take"
@@ -269,7 +275,7 @@ export function Date011({
             ) : null}
           </p>
         ) : value ? (
-          <p data-part="free">{human(value)} — свободно</p>
+          <p data-part="free">{human(value, months)} — свободно</p>
         ) : null}
 
         <label data-part="weekend">
@@ -278,7 +284,7 @@ export function Date011({
             checked={weekend}
             onChange={(event) => setWeekend(event.target.checked)}
           />
-          Выходные считать занятыми
+          {weekendLabel}
         </label>
 
         <p data-part="hint">{hint}</p>

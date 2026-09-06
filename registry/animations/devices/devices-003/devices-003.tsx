@@ -3,6 +3,8 @@ import type { ComponentProps, CSSProperties } from "react"
 export type Devices003Props = Omit<ComponentProps<"section">, "children"> & {
   /** Текст для aria-label: секция декоративна, содержимого для чтения нет. */
   label?: string
+  /** Подпись в шапке макета внутри планшета. */
+  heading?: string
   accent?: string
   /** Размытые пятна за планшетом дрейфуют с разной скоростью. */
   parallax?: boolean
@@ -158,6 +160,7 @@ const ICON = (
  * карточек. Один файл, ноль зависимостей, собственная палитра.
  */
 export function Devices003({
+  heading = "Обзор",
   label = "Планшет с приложением на экране",
   accent,
   parallax = true,
@@ -205,7 +208,7 @@ export function Devices003({
                 </div>
                 <div data-part="main">
                   <div data-part="top">
-                    <p data-part="heading">Обзор</p>
+                    <p data-part="heading">{heading}</p>
                     <span data-part="badge">Live</span>
                   </div>
                   <div data-part="grid">

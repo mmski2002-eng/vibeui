@@ -4,6 +4,8 @@ export type Metrics002Props = Omit<
   ComponentProps<"section">,
   "children" | "title"
 > & {
+  /** Слово «тренд» в строке для скринридера. */
+  trendWord?: string
   title?: string
   value?: number
   valuePrefix?: string
@@ -123,13 +125,31 @@ position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);
 `
 
 const ARROW_UP = (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="3"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
     <path d="M12 19V5M5 12l7-7 7 7" />
   </svg>
 )
 
 const ARROW_DOWN = (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="3"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
     <path d="M12 5v14M5 12l7 7 7-7" />
   </svg>
 )
@@ -140,6 +160,7 @@ const ARROW_DOWN = (
  * собственная палитра, клиентского JS нет.
  */
 export function Metrics002({
+  trendWord = "тренд",
   title = "Активные пользователи",
   value = 8412,
   valuePrefix = "",
@@ -188,7 +209,9 @@ export function Metrics002({
                 {valuePrefix}
                 <span
                   data-part="count"
-                  style={{ "--vibeui-metrics-002-target": value } as CSSProperties}
+                  style={
+                    { "--vibeui-metrics-002-target": value } as CSSProperties
+                  }
                 />
                 {valueSuffix}
               </span>
@@ -197,12 +220,14 @@ export function Metrics002({
                   {trend === "up" ? ARROW_UP : ARROW_DOWN}
                   {trendText}
                 </span>
-                {periodLabel ? <span data-part="period">{periodLabel}</span> : null}
+                {periodLabel ? (
+                  <span data-part="period">{periodLabel}</span>
+                ) : null}
               </div>
               <p data-part="sr">
                 {title}: {valuePrefix}
                 {value}
-                {valueSuffix}, тренд {trendText} {periodLabel}.
+                {valueSuffix}, {trendWord} {trendText} {periodLabel}.
               </p>
             </div>
           </div>

@@ -6,9 +6,7 @@
       "type": "registry:component",
       "title": "Группа выравнивания",
       "description": "Группа кнопок-тумблеров с одиночным выбором: выравнивание применяется к образцу сразу, а внутри группы работает roving tabindex.",
-      "categories": [
-        "toggle-group"
-      ],
+      "categories": ["toggle-group"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-togglegroup-001-*. Клиентский: useState и useRef на список кнопок. Разница с категорией buttongroup принципиальная: там кнопки сцеплены как действия («Сохранить», «Отменить»), здесь каждая кнопка объявляет состояние через aria-pressed, и ровно одна из них нажата. Контейнер помечен role=\"group\" с aria-label. Фокус ходит по roving tabindex: у нажатой кнопки tabIndex=0, у остальных −1, стрелки переносят фокус с заворотом, Home и End — к краям; выбор делают Enter и пробел, поэтому проход стрелками ничего не меняет случайно.",
       "meta": {
-        "tags": [
-          "togglegroup",
-          "aria-pressed",
-          "align",
-          "roving-tabindex"
-        ],
+        "tags": ["togglegroup", "aria-pressed", "align", "roving-tabindex"],
         "preview": {
           "width": "full"
         },
@@ -64,12 +57,7 @@
             "label": "Выравнивание",
             "type": "select",
             "default": "left",
-            "options": [
-              "left",
-              "center",
-              "right",
-              "justify"
-            ]
+            "options": ["left", "center", "right", "justify"]
           },
           {
             "prop": "label",
@@ -153,12 +141,7 @@
             }
           }
         },
-        "cardControls": [
-          "defaultValue",
-          "label",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["defaultValue", "label", "accent", "background"]
       }
     },
     {
@@ -166,9 +149,7 @@
       "type": "registry:component",
       "title": "Группа начертаний",
       "description": "Группа тумблеров с множественным выбором: начертания складываются, поэтому нажатых кнопок может быть сколько угодно, а образец меняется сразу.",
-      "categories": [
-        "toggle-group"
-      ],
+      "categories": ["toggle-group"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -180,12 +161,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-togglegroup-002-*. Клиентский: useState хранит массив выбранных идентификаторов. Множественность — это и есть причина, по которой здесь aria-pressed, а не radio: три состояния включаются независимо. Подсветка не выбирает «одну активную», а следует за собственным aria-pressed каждой кнопки; образец получает начертания через data-bold, data-italic и data-underline на корне. Отличие от buttongroup: там кнопки выполняют действия и после нажатия ничего не помнят, здесь нажатие — это включённое состояние.",
       "meta": {
-        "tags": [
-          "togglegroup",
-          "multiple",
-          "formatting",
-          "aria-pressed"
-        ],
+        "tags": ["togglegroup", "multiple", "formatting", "aria-pressed"],
         "preview": {
           "width": "full"
         },
@@ -311,12 +287,7 @@
             }
           }
         },
-        "cardControls": [
-          "label",
-          "text",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["label", "text", "accent", "background"]
       }
     },
     {
@@ -324,9 +295,7 @@
       "type": "registry:component",
       "title": "Вид списка",
       "description": "Группа выбора вида вместе со списком, которым она управляет: связь объявлена через aria-controls, а три вида — это три набора правил над одной разметкой.",
-      "categories": [
-        "toggle-group"
-      ],
+      "categories": ["toggle-group"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -338,12 +307,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-togglegroup-003-*. Клиентский: useState и useId. Группа не абстрактная: она отдаёт aria-controls на конкретный список и меняет его вид атрибутом data-view на корне. Список при этом не пересобирается — меняются только правила раскладки, поэтому переключение не теряет прокрутку и фокус внутри. Это togglegroup, а не buttongroup: кнопка не запускает действие, а объявляет состояние вида через aria-pressed, и ровно одно из трёх состояний включено.",
       "meta": {
-        "tags": [
-          "togglegroup",
-          "view",
-          "aria-controls",
-          "layout"
-        ],
+        "tags": ["togglegroup", "view", "aria-controls", "layout"],
         "preview": {
           "width": "full"
         },
@@ -382,11 +346,7 @@
             "label": "Вид",
             "type": "select",
             "default": "list",
-            "options": [
-              "list",
-              "grid",
-              "compact"
-            ]
+            "options": ["list", "grid", "compact"]
           },
           {
             "prop": "label",
@@ -500,9 +460,7 @@
       "type": "registry:component",
       "title": "Фильтр по дням недели",
       "description": "Фильтр по дням недели множественным выбором: семь кружков-тумблеров, живая строка итога и отдельная кнопка-действие «Только будни».",
-      "categories": [
-        "toggle-group"
-      ],
+      "categories": ["toggle-group"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -514,12 +472,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-togglegroup-004-*. Клиентский: useState с массивом идентификаторов. Кружок — это toggle: нажат или нет, третьего не дано, поэтому у каждого aria-pressed и полное имя дня в aria-label (две буквы «Пн» без расшифровки звучат плохо). Рядом стоит «Только будни» — это не тумблер, а действие над выбором, и выглядит оно текстовой кнопкой: разница между состоянием и действием обязана читаться глазами. Выходные красятся своим цветом лишь в нажатом виде, чтобы спокойный ряд не рябил.",
       "meta": {
-        "tags": [
-          "togglegroup",
-          "weekdays",
-          "filter",
-          "multiple"
-        ],
+        "tags": ["togglegroup", "weekdays", "filter", "multiple"],
         "preview": {
           "width": "full"
         },
@@ -678,13 +631,7 @@
             }
           }
         },
-        "cardControls": [
-          "label",
-          "hint",
-          "presetText",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["label", "hint", "presetText", "accent", "background"]
       }
     },
     {
@@ -692,9 +639,7 @@
       "type": "registry:component",
       "title": "Выбор размера",
       "description": "Выбор размера одиночным тумблером: закончившиеся размеры остаются в ряду перечёркнутыми и объясняют отказ, а не исчезают из списка.",
-      "categories": [
-        "toggle-group"
-      ],
+      "categories": ["toggle-group"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -706,12 +651,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-togglegroup-005-*. Клиентский: useState на выбранный размер и на последний отказ. Недоступные размеры помечены aria-disabled, а не атрибутом disabled: такой пункт остаётся в порядке обхода, его можно прочитать и он умеет ответить, почему не работает. Отсутствие показано двумя признаками — приглушением и косой чертой через ::after, — потому что цвет один не различают. Это togglegroup: aria-pressed объявляет состояние выбора, ровно одно из шести, и значение никуда не отправляется само.",
       "meta": {
-        "tags": [
-          "togglegroup",
-          "size",
-          "commerce",
-          "aria-disabled"
-        ],
+        "tags": ["togglegroup", "size", "commerce", "aria-disabled"],
         "preview": {
           "width": "full"
         },
@@ -751,14 +691,7 @@
             "label": "Размер",
             "type": "select",
             "default": "M",
-            "options": [
-              "XS",
-              "S",
-              "M",
-              "L",
-              "XL",
-              "XXL"
-            ]
+            "options": ["XS", "S", "M", "L", "XL", "XXL"]
           },
           {
             "prop": "label",
@@ -840,12 +773,7 @@
             }
           }
         },
-        "cardControls": [
-          "defaultValue",
-          "label",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["defaultValue", "label", "accent", "background"]
       }
     },
     {
@@ -853,9 +781,7 @@
       "type": "registry:component",
       "title": "Группа каналов",
       "description": "Множественный выбор каналов уведомлений широкими карточками-тумблерами: пояснение под названием привязано через aria-describedby, а не вложено в имя кнопки.",
-      "categories": [
-        "toggle-group"
-      ],
+      "categories": ["toggle-group"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -867,12 +793,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-togglegroup-006-*. Клиентский: useState на массив и useId для идентификаторов пояснений. Каждая карточка — кнопка с коротким aria-label и aria-describedby на своё пояснение: имя остаётся коротким, а подробность приходит отдельной репликой. Выбор рисуется вложенной обводкой box-shadow inset, а не утолщением рамки: толщина границы меняла бы внутренний размер и сетка дёргалась бы на каждый клик. Раскладка — auto-fit minmax, поэтому карточки сами перестраиваются от ширины панели.",
       "meta": {
-        "tags": [
-          "togglegroup",
-          "cards",
-          "notifications",
-          "multiple"
-        ],
+        "tags": ["togglegroup", "cards", "notifications", "multiple"],
         "preview": {
           "width": "full"
         },
@@ -1005,12 +926,7 @@
             }
           }
         },
-        "cardControls": [
-          "label",
-          "emptyNote",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["label", "emptyNote", "accent", "background"]
       }
     },
     {
@@ -1018,9 +934,7 @@
       "type": "registry:component",
       "title": "Панель форматирования",
       "description": "Панель форматирования из двух групп-тумблеров с настоящими разделителями: слева множественный выбор начертаний, справа одиночный выбор выравнивания.",
-      "categories": [
-        "toggle-group"
-      ],
+      "categories": ["toggle-group"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1032,12 +946,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-togglegroup-007-*. Клиентский: useState на выравнивание, на набор начертаний и на активный индекс, useRef на список кнопок. Корень — role=\"toolbar\" с aria-orientation, внутри три role=\"group\" со своими именами, между ними role=\"separator\": панель из восьми значков подряд неразличима на слух, а разделитель режет её на смысловые куски. Фокус ходит по всей панели roving tabindex'ом — стрелки, Home и End, — а поведение внутри групп разное: слева состояния складываются, справа взаимно исключаются.",
       "meta": {
-        "tags": [
-          "togglegroup",
-          "toolbar",
-          "separator",
-          "roving-tabindex"
-        ],
+        "tags": ["togglegroup", "toolbar", "separator", "roving-tabindex"],
         "ai": {
           "export": "Togglegroup007",
           "usage": "<Togglegroup007\n  label=\"Форматирование\"\n  defaultAlign=\"left\"\n  defaultMarks={[\"bold\"]}\n/>",
@@ -1075,11 +984,7 @@
             "label": "Выравнивание",
             "type": "select",
             "default": "left",
-            "options": [
-              "left",
-              "center",
-              "right"
-            ]
+            "options": ["left", "center", "right"]
           },
           {
             "prop": "label",
@@ -1173,12 +1078,7 @@
             }
           }
         },
-        "cardControls": [
-          "defaultAlign",
-          "label",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["defaultAlign", "label", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -1189,9 +1089,7 @@
       "type": "registry:component",
       "title": "Обязательная группа",
       "description": "Группа с обязательным минимумом: последняя нажатая кнопка помечена замком и aria-disabled и на нажатие отвечает объяснением, а не молчанием.",
-      "categories": [
-        "toggle-group"
-      ],
+      "categories": ["toggle-group"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1203,12 +1101,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-togglegroup-008-*. Клиентский: useState на выбор и на последнюю заблокированную кнопку. Правило «хотя бы одно» не прячется: кнопка остаётся нажатой, получает aria-disabled и замок, а при попытке снять — короткое смещение и объяснение в строке. Заранее гасить остальные было бы враньём, они рабочие. Ниже стоит мини-таблица, которая рисуется из выбранных колонок, поэтому смысл выбора виден сразу. Это togglegroup, а не buttongroup: кнопки объявляют состояние видимости колонок.",
       "meta": {
-        "tags": [
-          "togglegroup",
-          "required",
-          "columns",
-          "validation"
-        ],
+        "tags": ["togglegroup", "required", "columns", "validation"],
         "preview": {
           "width": "full"
         },
@@ -1341,12 +1234,7 @@
             }
           }
         },
-        "cardControls": [
-          "label",
-          "minMessage",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["label", "minMessage", "accent", "background"]
       }
     },
     {
@@ -1354,9 +1242,7 @@
       "type": "registry:component",
       "title": "Переключатель представления данных",
       "description": "Одиночный выбор вида списка данных: сетка, список и таблица — это три разные HTML-разметки одних и тех же данных, а не перекраска одной вёрстки.",
-      "categories": [
-        "toggle-group"
-      ],
+      "categories": ["toggle-group"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1368,12 +1254,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-togglegroup-009-*. Клиентский: useState на вид и useId на id региона. Три вида — grid, list и table — рендерятся разными JSX-ветками, а не одной разметкой с CSS-правилами поверх: table остаётся table с thead и th, ul — списком. Кнопки переключения помечены aria-controls на общий контейнер вывода. Раскладка карточек в сетке отвечает на ширину самой панели через @container, а не на ширину окна.",
       "meta": {
-        "tags": [
-          "togglegroup",
-          "view",
-          "table",
-          "grid"
-        ],
+        "tags": ["togglegroup", "view", "table", "grid"],
         "preview": {
           "width": "full"
         },
@@ -1413,11 +1294,7 @@
             "label": "Вид",
             "type": "select",
             "default": "list",
-            "options": [
-              "grid",
-              "list",
-              "table"
-            ]
+            "options": ["grid", "list", "table"]
           },
           {
             "prop": "label",
@@ -1557,9 +1434,7 @@
       "type": "registry:component",
       "title": "Форматирование в строке",
       "description": "Множественный выбор начертаний с настоящей вложенностью тегов: жирный, курсив, зачёркнутый и моноширинный оборачивают образец друг в друга, а не красят его CSS-атрибутами.",
-      "categories": [
-        "toggle-group"
-      ],
+      "categories": ["toggle-group"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1571,12 +1446,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-togglegroup-010-*. Клиентский: useState хранит массив выбранных меток. Превью строится через reduce по фиксированному порядку меток: каждая нажатая метка оборачивает предыдущий результат в свой тег — strong, em, s или code, — поэтому дерево разметки образца совпадает с тем, что получил бы реальный текст после форматирования. Это отличает компонент от Format Group: там начертания красятся CSS-атрибутами data-bold/data-italic на одном абзаце.",
       "meta": {
-        "tags": [
-          "togglegroup",
-          "multiple",
-          "formatting",
-          "nested"
-        ],
+        "tags": ["togglegroup", "multiple", "formatting", "nested"],
         "preview": {
           "width": "full"
         },
@@ -1701,12 +1571,7 @@
             }
           }
         },
-        "cardControls": [
-          "label",
-          "text",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["label", "text", "accent", "background"]
       }
     },
     {
@@ -1714,9 +1579,7 @@
       "type": "registry:component",
       "title": "Вертикальное выравнивание",
       "description": "Одиночный выбор вертикального выравнивания содержимого: сцена меняет align-items сразу, а «растянуть» — отдельное состояние, а не просто прижатие к краю.",
-      "categories": [
-        "toggle-group"
-      ],
+      "categories": ["toggle-group"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1728,12 +1591,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-togglegroup-011-*. Клиентский: useState и useRef на список кнопок, roving tabindex — та же механика, что в Align Group, только стрелки двигают фокус по горизонтали, а меняют align-items, а не text-align. Карточка внутри сцены не имеет фиксированной высоты, поэтому «растянуть» реально меняет её форму, а не просто перемещает.",
       "meta": {
-        "tags": [
-          "togglegroup",
-          "align",
-          "vertical",
-          "roving-tabindex"
-        ],
+        "tags": ["togglegroup", "align", "vertical", "roving-tabindex"],
         "preview": {
           "width": "full"
         },
@@ -1770,12 +1628,7 @@
             "label": "Выравнивание",
             "type": "select",
             "default": "top",
-            "options": [
-              "top",
-              "middle",
-              "bottom",
-              "stretch"
-            ]
+            "options": ["top", "middle", "bottom", "stretch"]
           },
           {
             "prop": "label",
@@ -1882,9 +1735,7 @@
       "type": "registry:component",
       "title": "Переключатель периода",
       "description": "Одиночный выбор периода графика: день, неделя, месяц и год — под каждым свой набор точек и подписей оси, график пересобирается целиком, а не растягивает прежние данные.",
-      "categories": [
-        "toggle-group"
-      ],
+      "categories": ["toggle-group"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1896,12 +1747,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-togglegroup-012-*. Клиентский: useState на период. Столбцы читают высоту из процентного значения через inline style — единственный законный случай инлайновых стилей, потому что высота данных не выражается заранее заданным классом. Смена периода не анимирует старые столбцы в новые пропорции: точек становится другое количество, поэтому график рисуется заново.",
       "meta": {
-        "tags": [
-          "togglegroup",
-          "chart",
-          "period",
-          "dashboard"
-        ],
+        "tags": ["togglegroup", "chart", "period", "dashboard"],
         "preview": {
           "width": "full"
         },
@@ -1939,12 +1785,7 @@
             "label": "Период",
             "type": "select",
             "default": "month",
-            "options": [
-              "day",
-              "week",
-              "month",
-              "year"
-            ]
+            "options": ["day", "week", "month", "year"]
           },
           {
             "prop": "label",
@@ -2043,12 +1884,7 @@
             }
           }
         },
-        "cardControls": [
-          "defaultValue",
-          "label",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["defaultValue", "label", "accent", "background"]
       }
     },
     {
@@ -2056,9 +1892,7 @@
       "type": "registry:component",
       "title": "Способ доставки",
       "description": "Вертикальная группа тумблеров с одиночным выбором и подписями: каждая кнопка несёт заголовок и пояснение, а roving tabindex ходит стрелками вверх-вниз.",
-      "categories": [
-        "toggle-group"
-      ],
+      "categories": ["toggle-group"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2070,12 +1904,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-togglegroup-013-*. Клиентский: useState и useRef на список кнопок. Вертикальная раскладка — не просто повёрнутая горизонтальная: кнопки идут в столбец на всю ширину панели, у каждой есть индикатор-точка, заголовок и короткое пояснение, поэтому список остаётся читаемым без иконок. Стрелки вверх и вниз двигают roving tabindex, Home и End — к краям списка.",
       "meta": {
-        "tags": [
-          "togglegroup",
-          "vertical",
-          "list",
-          "roving-tabindex"
-        ],
+        "tags": ["togglegroup", "vertical", "list", "roving-tabindex"],
         "preview": {
           "width": "full"
         },
@@ -2112,11 +1941,7 @@
             "label": "Способ",
             "type": "select",
             "default": "courier",
-            "options": [
-              "courier",
-              "pickup",
-              "post"
-            ]
+            "options": ["courier", "pickup", "post"]
           },
           {
             "prop": "accent",
@@ -2208,12 +2033,7 @@
             }
           }
         },
-        "cardControls": [
-          "defaultValue",
-          "accent",
-          "background",
-          "label"
-        ]
+        "cardControls": ["defaultValue", "accent", "background", "label"]
       }
     },
     {
@@ -2221,9 +2041,7 @@
       "type": "registry:component",
       "title": "Приоритет с подсказками",
       "description": "Одиночный выбор приоритета значками с собственной всплывающей подсказкой у каждого: подсказка появляется по наведению и по фокусу одинаково, а не только у мыши.",
-      "categories": [
-        "toggle-group"
-      ],
+      "categories": ["toggle-group"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2235,12 +2053,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-togglegroup-014-*. Клиентский: useState на приоритет, useState на id открытой подсказки, useId на префикс идентификаторов и useRef на список кнопок для roving tabindex. Подсказка — span с role=\"tooltip\", связанный через aria-describedby только пока он показан: не постоянная ссылка на скрытый узел, а честное отсутствие описания, когда подсказки нет на экране. Escape закрывает открытую подсказку, не двигая фокус.",
       "meta": {
-        "tags": [
-          "togglegroup",
-          "icons",
-          "tooltip",
-          "priority"
-        ],
+        "tags": ["togglegroup", "icons", "tooltip", "priority"],
         "preview": {
           "width": "full"
         },
@@ -2280,12 +2093,7 @@
             "label": "Приоритет",
             "type": "select",
             "default": "medium",
-            "options": [
-              "low",
-              "medium",
-              "high",
-              "urgent"
-            ]
+            "options": ["low", "medium", "high", "urgent"]
           },
           {
             "prop": "accent",
@@ -2370,12 +2178,7 @@
             }
           }
         },
-        "cardControls": [
-          "defaultValue",
-          "accent",
-          "background",
-          "label"
-        ]
+        "cardControls": ["defaultValue", "accent", "background", "label"]
       }
     },
     {
@@ -2383,9 +2186,7 @@
       "type": "registry:component",
       "title": "Фильтр задач",
       "description": "Одиночный выбор сегмента-фильтра со счётчиком в каждой кнопке: цифра всегда считается от того же списка задач, что показывает область под группой.",
-      "categories": [
-        "toggle-group"
-      ],
+      "categories": ["toggle-group"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2397,12 +2198,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-togglegroup-015-*. Клиентский: useState на фильтр и useId на id связанного списка. Счётчик — не отдельное магическое число, а .filter().length по общему массиву задач: цифра на сегменте и содержимое списка после клика всегда согласованы. Видимый текст кнопки и её aria-label расходятся нарочно: на экране «Активные» и бейдж «12», а для скринридера — одна фраза «Активные, 12».",
       "meta": {
-        "tags": [
-          "togglegroup",
-          "filter",
-          "badge",
-          "count"
-        ],
+        "tags": ["togglegroup", "filter", "badge", "count"],
         "preview": {
           "width": "full"
         },
@@ -2441,12 +2237,7 @@
             "label": "Фильтр",
             "type": "select",
             "default": "all",
-            "options": [
-              "all",
-              "active",
-              "done",
-              "overdue"
-            ]
+            "options": ["all", "active", "done", "overdue"]
           },
           {
             "prop": "accent",
@@ -2567,12 +2358,7 @@
             }
           }
         },
-        "cardControls": [
-          "defaultValue",
-          "accent",
-          "background",
-          "label"
-        ]
+        "cardControls": ["defaultValue", "accent", "background", "label"]
       }
     },
     {
@@ -2580,9 +2366,7 @@
       "type": "registry:component",
       "title": "Сбрасываемый фильтр",
       "description": "Одиночный выбор с деселектом: повторный клик по нажатой кнопке возвращает группу в состояние «ничего не выбрано», а кнопка «Сбросить» делает то же одним действием.",
-      "categories": [
-        "toggle-group"
-      ],
+      "categories": ["toggle-group"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2594,12 +2378,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-togglegroup-016-*. Клиентский: useState на выбранное значение типа string | null. В отличие от Align Group и Size Picker, одиночный выбор здесь не держит ровно одну нажатую кнопку постоянно: клик по уже нажатой снимает её. Кнопка «Сбросить» — обычная кнопка действия, а не тумблер, и получает настоящий атрибут disabled, когда сбрасывать нечего: в отличие от Required Group, где aria-disabled объясняет отказ текстом, здесь отказ просто неприменим и объяснять нечего.",
       "meta": {
-        "tags": [
-          "togglegroup",
-          "deselect",
-          "reset",
-          "filter"
-        ],
+        "tags": ["togglegroup", "deselect", "reset", "filter"],
         "preview": {
           "width": "full"
         },
@@ -2637,11 +2416,7 @@
             "label": "Начальный фильтр",
             "type": "select",
             "default": "new",
-            "options": [
-              "new",
-              "progress",
-              "done"
-            ]
+            "options": ["new", "progress", "done"]
           },
           {
             "prop": "accent",
@@ -2725,12 +2500,7 @@
             }
           }
         },
-        "cardControls": [
-          "defaultValue",
-          "accent",
-          "background",
-          "label"
-        ]
+        "cardControls": ["defaultValue", "accent", "background", "label"]
       }
     },
     {
@@ -2738,9 +2508,7 @@
       "type": "registry:component",
       "title": "Сегмент с бегунком",
       "description": "Сегмент одиночного выбора, у которого выбранное состояние переезжает, а не перекрашивается: движение плашки показывает, откуда и куда ушёл выбор.",
-      "categories": [
-        "toggle-group"
-      ],
+      "categories": ["toggle-group"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2752,12 +2520,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-togglegroup-017-*. Клиентский: выбор держит useState. Плашка одна на всю группу и двигается translate'ом на долю ширины — анимация идёт на композиторе и не пересчитывает раскладку. Ширина сегмента задана как доля от числа кнопок через переменную --vibeui-togglegroup-017-count, а не измеряется скриптом, поэтому серверная разметка сразу приходит с плашкой на своём месте и она не прыгает при гидрации. Кнопки лежат над плашкой по z-index, цвет подписи переключается по aria-pressed. Стрелки водят фокус внутри группы, Home и End бросают на края. При prefers-reduced-motion переезд выключается, а выбор остаётся видимым по цвету подписи.",
       "meta": {
-        "tags": [
-          "toggle-group",
-          "segmented",
-          "animation",
-          "filter"
-        ],
+        "tags": ["toggle-group", "segmented", "animation", "filter"],
         "ai": {
           "export": "Togglegroup017",
           "usage": "<Togglegroup017\n  label=\"Период\"\n  defaultValue=\"week\"\n  options={[{ value: \"day\", label: \"День\" }, { value: \"week\", label: \"Неделя\" }]}\n  onChange={(value) => console.log(value)}\n/>",
@@ -2800,11 +2563,7 @@
             "label": "Выбрано",
             "type": "select",
             "default": "week",
-            "options": [
-              "day",
-              "week",
-              "month"
-            ]
+            "options": ["day", "week", "month"]
           },
           {
             "prop": "accent",
@@ -2890,12 +2649,7 @@
             }
           }
         },
-        "cardControls": [
-          "label",
-          "defaultValue",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["label", "defaultValue", "accent", "background"],
         "preview": {
           "width": "auto"
         }

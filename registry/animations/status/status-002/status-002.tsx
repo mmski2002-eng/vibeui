@@ -12,6 +12,10 @@ export type Status002Props = Omit<
   ComponentProps<"section">,
   "children" | "title"
 > & {
+  /** Подписи состояний дня. */
+  stateText?: Record<Status002Tone, string>
+  /** Подпись дня без своей метки. {index} подставляется номером. */
+  dayTemplate?: string
   title?: string
   /** Подпись под процентом, например период наблюдения. */
   period?: string
@@ -143,7 +147,13 @@ to{--vibeui-status-002-whole:var(--vibeui-status-002-target-whole,0);--vibeui-st
 
 const DEFAULT_DAYS: Status002Day[] = Array.from({ length: 30 }, (_, index) => {
   const tone: Status002Tone =
-    index === 5 ? "degraded" : index === 18 ? "down" : index === 23 ? "degraded" : "ok"
+    index === 5
+      ? "degraded"
+      : index === 18
+        ? "down"
+        : index === 23
+          ? "degraded"
+          : "ok"
   return { tone }
 })
 
@@ -156,6 +166,8 @@ const BAR_STAGGER_MS = 480
  * зависимостей, собственная палитра, клиентского JS нет.
  */
 export function Status002({
+  stateText = STATUS_LABEL,
+  dayTemplate = "День {index}",
   title = "Аптайм сервиса",
   period = "Последние 30 дней",
   uptime = 99.8,
@@ -229,7 +241,10 @@ export function Status002({
               <p data-part="sr">
                 {title}: {uptime.toFixed(1)}% {period}.{" "}
                 {days
-                  .map((day, index) => `${day.label ?? `День ${index + 1}`}: ${STATUS_LABEL[day.tone]}`)
+                  .map(
+                    (day, index) =>
+                      `${day.label ?? dayTemplate.replace("{index}", String(index + 1))}: ${stateText[day.tone]}`,
+                  )
                   .join(", ")}
               </p>
             </div>

@@ -12,6 +12,8 @@ export type Files003Props = Omit<
   ComponentProps<"section">,
   "children" | "title"
 > & {
+  /** Подпись под стопкой. {count} подставляется числом. */
+  countTemplate?: string
   files?: Files003File[]
   accent?: string
   /** Веерное раскрытие стопки при появлении. false — стопка сразу разложена. */
@@ -175,7 +177,15 @@ const KIND_ICONS: Record<Files003Kind, ReactNode> = {
     >
       <rect x="4" y="7" width="16" height="13" rx="1.5" />
       <path d="M4 11h16" />
-      <rect x="10.5" y="7" width="3" height="4" rx="0.5" fill="currentColor" stroke="none" />
+      <rect
+        x="10.5"
+        y="7"
+        width="3"
+        height="4"
+        rx="0.5"
+        fill="currentColor"
+        stroke="none"
+      />
     </svg>
   ),
   sheet: (
@@ -208,6 +218,7 @@ const DEFAULT_FILES: Files003File[] = [
  * ноль зависимостей.
  */
 export function Files003({
+  countTemplate = "{count} файла в стопке",
   files = DEFAULT_FILES,
   accent,
   fanOut = true,
@@ -249,7 +260,9 @@ export function Files003({
             </div>
           ))}
         </div>
-        <p data-part="count">{shown.length} файла в стопке</p>
+        <p data-part="count">
+          {countTemplate.replace("{count}", String(shown.length))}
+        </p>
       </section>
     </>
   )

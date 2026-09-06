@@ -15593,7 +15593,8 @@
                   "how long you have been using it"
                 ],
                 "cta": "Submit review",
-                "moderationNote": "The review goes live after a moderator checks it, usually within a day."
+                "moderationNote": "The review goes live after a moderator checks it, usually within a day.",
+                "ratingTemplate": "{value} of {max} — {label}"
               }
             }
           }

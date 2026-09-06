@@ -8,7 +8,7 @@ import { CatalogSidebar } from "@/components/catalog/catalog-sidebar"
 import { ItemWorkbench } from "@/components/catalog/item-workbench"
 import { CodeBlock } from "@/components/code-block"
 import { CopyButton } from "@/components/copy-button"
-import { resolveControlValues, resolvePreviewTheme } from "@/lib/controls"
+import { resolveControlValues, resolvePreviewSurface } from "@/lib/controls"
 import { buildCopyForAiPrompt } from "@/lib/copy-for-ai"
 import { getDictionary, localePath, type Locale } from "@/lib/i18n"
 import { localizeItem } from "@/lib/localize"
@@ -53,7 +53,7 @@ export async function ItemPage({
       typeof value === "string" ? [[key, value] as [string, string]] : [],
     ),
   )
-  const initialTheme = resolvePreviewTheme(flat.get("theme") ?? undefined)
+  const initialTheme = resolvePreviewSurface(flat.get("theme") ?? undefined)
   const initialValues = resolveControlValues(block, flat)
 
   const source = await getBlockSource(slug)

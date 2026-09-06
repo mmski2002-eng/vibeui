@@ -9,6 +9,8 @@ export type Payments001Props = Omit<
   ComponentProps<"section">,
   "children" | "title"
 > & {
+  /** Подпись строки итога. */
+  totalLabel?: string
   title?: string
   badge?: string
   items?: Payments001Item[]
@@ -177,6 +179,7 @@ const DEFAULT_ITEMS: Payments001Item[] = [
  * зависимостей, собственная палитра.
  */
 export function Payments001({
+  totalLabel = "Итого",
   title = "Ваш заказ",
   badge = "3 позиции",
   items = DEFAULT_ITEMS,
@@ -230,7 +233,7 @@ export function Payments001({
                 ))}
               </ul>
               <div data-part="total">
-                <span data-part="total-label">Итого</span>
+                <span data-part="total-label">{totalLabel}</span>
                 <span data-part="total-price">{total}</span>
               </div>
               <div data-part="footer">

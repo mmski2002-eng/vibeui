@@ -1412,7 +1412,22 @@
                   "week": "Week",
                   "month": "Month",
                   "quarter": "Quarter"
-                }
+                },
+                "months": [
+                  "January",
+                  "February",
+                  "March",
+                  "April",
+                  "May",
+                  "June",
+                  "July",
+                  "August",
+                  "September",
+                  "October",
+                  "November",
+                  "December"
+                ],
+                "daysSuffix": "days"
               }
             }
           }
@@ -1748,7 +1763,22 @@
                 "busyTemplate": "{date} is already taken",
                 "nearestTemplate": "Nearest free: {date}",
                 "takeLabel": "Take it",
-                "hint": "Busy days come from the server; the check runs before the form is sent."
+                "hint": "Busy days come from the server; the check runs before the form is sent.",
+                "months": [
+                  "January",
+                  "February",
+                  "March",
+                  "April",
+                  "May",
+                  "June",
+                  "July",
+                  "August",
+                  "September",
+                  "October",
+                  "November",
+                  "December"
+                ],
+                "weekendLabel": "Treat weekends as busy"
               }
             }
           }

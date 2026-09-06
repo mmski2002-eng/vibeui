@@ -18,6 +18,8 @@ export type Files001Props = Omit<
   ComponentProps<"section">,
   "children" | "title"
 > & {
+  /** Счётчик над списком. {count} подставляется числом. */
+  countTemplate?: string
   title?: string
   breadcrumb?: string
   tree?: Files001TreeItem[]
@@ -254,7 +256,15 @@ const KIND_ICONS: Record<Files001FileKind, ReactNode> = {
     >
       <rect x="4" y="7" width="16" height="13" rx="1.5" />
       <path d="M4 11h16" />
-      <rect x="10.5" y="7" width="3" height="4" rx="0.5" fill="currentColor" stroke="none" />
+      <rect
+        x="10.5"
+        y="7"
+        width="3"
+        height="4"
+        rx="0.5"
+        fill="currentColor"
+        stroke="none"
+      />
     </svg>
   ),
   sheet: (
@@ -294,6 +304,7 @@ const DEFAULT_FILES: Files001File[] = [
  * файлов появляется стаггером — один файл, ноль зависимостей.
  */
 export function Files001({
+  countTemplate = "{count} файла",
   title = "Проводник",
   breadcrumb = "Диск / Дизайн",
   tree = DEFAULT_TREE,
@@ -340,7 +351,10 @@ export function Files001({
                   data-active={item.active ? "true" : undefined}
                   key={item.name}
                 >
-                  <span data-part="node" data-active={item.active ? "true" : undefined}>
+                  <span
+                    data-part="node"
+                    data-active={item.active ? "true" : undefined}
+                  >
                     {FOLDER_ICON}
                     <span data-part="label">{item.name}</span>
                     {item.children ? CHEVRON_ICON : null}
@@ -363,7 +377,9 @@ export function Files001({
               ))}
             </ul>
             <div data-part="list">
-              <p data-part="listhead">{files.length} файла</p>
+              <p data-part="listhead">
+                {countTemplate.replace("{count}", String(files.length))}
+              </p>
               <ul data-part="files">
                 {files.map((file) => (
                   <li data-part="file" key={file.name}>

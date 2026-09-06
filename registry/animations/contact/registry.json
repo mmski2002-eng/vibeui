@@ -18,14 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-contact-anim-001-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark, поэтому в тёмном проекте не остаётся светлым. Раскладка считается от ширины секции (container-type): одна колонка на узкой ширине, две от 48rem. Форма настоящая — <form> с <label>, type=\"email\" и required, но обработчика отправки в ней нет: проект-хозяин обязан сам подключить action или onSubmit. Анимация на чистом CSS: поля всплывают со сдвигом, плитки-иконки выскакивают с перелётом, всё гаснет при prefers-reduced-motion.",
       "meta": {
-        "tags": [
-          "contact",
-          "form",
-          "section",
-          "landing",
-          "animated",
-          "icons"
-        ],
+        "tags": ["contact", "form", "section", "landing", "animated", "icons"],
         "ai": {
           "export": "ContactAnim001",
           "usage": "<ContactAnim001 title=\"Свяжитесь с нами\" details={[{ icon: \"email\", label: \"Email\", value: \"hello@example.com\" }]} />",

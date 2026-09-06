@@ -18,14 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-table-anim-001-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark, поэтому в тёмном проекте не остаётся светлым. Строки таблицы въезжают снизу вверх по очереди по scroll-driven view-timeline на карточке — стаггер получается срезами одного и того же таймлайна, без единой строки JS; всё гаснет при prefers-reduced-motion. Заголовки «Клиент» и «Доход» несут иконку сортировки: активная колонка — стрелкой в цвет акцента, направление задаётся sortDirection. Статус читается цветной пилюлью с точкой (success/warning/neutral).",
       "meta": {
-        "tags": [
-          "table",
-          "data",
-          "sort",
-          "status",
-          "animated",
-          "rows"
-        ],
+        "tags": ["table", "data", "sort", "status", "animated", "rows"],
         "ai": {
           "export": "TableAnim001",
           "usage": "<TableAnim001 title=\"Клиенты\" badge=\"6 записей\" sortColumn=\"value\" sortDirection=\"desc\" rows={[{ name: \"Анна Петрова\", segment: \"Enterprise\", value: \"$48 200\", statusLabel: \"Активен\", statusTone: \"success\" }]} />",

@@ -1,7 +1,7 @@
 "use client"
 
 import { Moon, Sun } from "lucide-react"
-import { useEffect, useRef } from "react"
+import { useCallback, useEffect, useRef, useSyncExternalStore } from "react"
 
 const STORAGE_KEY = "vibeui-shell-theme"
 
@@ -69,5 +69,25 @@ export function ThemeSwitch() {
       />
       <Moon ref={moonRef} className="size-3.5" aria-hidden="true" />
     </button>
+  )
+}
+
+/**
+ * Светлая ли оболочка прямо сейчас. Значение живёт в DOM (атрибут на <html>,
+ * его ставит блокирующий скрипт), поэтому читается через useSyncExternalStore:
+ * состоянием в эффекте это было бы лишним ре-рендером после гидратации.
+ * На сервере — false: разметка совпадает с тёмным дефолтом, а подложку кадра
+ * в первой отрисовке всё равно красит CSS.
+ */
+export function useShellIsLight() {
+  const subscribe = useCallback((notify: () => void) => {
+    document.addEventListener(SHELL_THEME_EVENT, notify)
+    return () => document.removeEventListener(SHELL_THEME_EVENT, notify)
+  }, [])
+
+  return useSyncExternalStore(
+    subscribe,
+    () => document.documentElement.dataset.shellTheme === "light",
+    () => false,
   )
 }

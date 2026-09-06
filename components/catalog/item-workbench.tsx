@@ -13,8 +13,9 @@ import {
   getControls,
   toSearchParams,
   type ControlValues,
-  type PreviewTheme,
+  type PreviewSurface,
 } from "@/lib/controls"
+import { useShellIsLight } from "@/components/catalog/theme-switch"
 import { getDictionary, type Locale } from "@/lib/i18n"
 import type { ItemKind } from "@/registry/categories"
 import type { CatalogItem } from "@/registry/meta"
@@ -42,11 +43,15 @@ export function ItemWorkbench({
   docUrl: string | null
   fullPrompt: string
   compact: boolean
-  initialTheme: PreviewTheme
+  initialTheme: PreviewSurface
   initialValues: ControlValues
 }) {
   const t = getDictionary(locale)
-  const [theme, setTheme] = useState<PreviewTheme>(initialTheme)
+  const [theme, setTheme] = useState<PreviewSurface>(initialTheme)
+  const shellLight = useShellIsLight()
+  // Фрейм превью грузится по ссылке с конкретной темой, «как у оболочки» в
+  // ней не выразить — поэтому здесь выбор доводится до dark/light.
+  const frameTheme = theme === "auto" ? (shellLight ? "light" : "dark") : theme
   const [values, setValues] = useState<ControlValues>(initialValues)
   const controls = getControls(item)
 
@@ -77,7 +82,7 @@ export function ItemWorkbench({
           kind={kind}
           category={category}
           compact={compact}
-          theme={theme}
+          theme={frameTheme}
           onThemeChange={setTheme}
         />
       </section>

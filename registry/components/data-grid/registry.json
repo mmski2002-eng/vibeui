@@ -1160,43 +1160,43 @@
                   {
                     "id": "ORD-8801",
                     "client": "Atlas",
-                    "status": "Оплачен",
+                    "status": "Paid",
                     "amount": 96000
                   },
                   {
                     "id": "ORD-8802",
                     "client": "Shoreline",
-                    "status": "Новый",
+                    "status": "New",
                     "amount": 12500
                   },
                   {
                     "id": "ORD-8803",
                     "client": "Branch",
-                    "status": "В работе",
+                    "status": "In progress",
                     "amount": 72000
                   },
                   {
                     "id": "ORD-8804",
                     "client": "Garnet",
-                    "status": "Оплачен",
+                    "status": "Paid",
                     "amount": 310000
                   },
                   {
                     "id": "ORD-8805",
                     "client": "Delta",
-                    "status": "Отменён",
+                    "status": "Cancelled",
                     "amount": 7500
                   },
                   {
                     "id": "ORD-8806",
                     "client": "Spruce",
-                    "status": "В работе",
+                    "status": "In progress",
                     "amount": 48000
                   },
                   {
                     "id": "ORD-8807",
                     "client": "Atlas",
-                    "status": "Новый",
+                    "status": "New",
                     "amount": 21400
                   }
                 ]
@@ -2281,42 +2281,42 @@
                     "id": "r1",
                     "request": "Handle replacement",
                     "city": "London",
-                    "status": "В работе",
+                    "status": "In progress",
                     "score": 74
                   },
                   {
                     "id": "r2",
                     "request": "Display delivery",
                     "city": "Leeds",
-                    "status": "Новая",
+                    "status": "New",
                     "score": 91
                   },
                   {
                     "id": "r3",
                     "request": "Shelf repair",
                     "city": "Brighton",
-                    "status": "В работе",
+                    "status": "In progress",
                     "score": 63
                   },
                   {
                     "id": "r4",
                     "request": "Rug return",
                     "city": "London",
-                    "status": "Архив",
+                    "status": "Archive",
                     "score": 88
                   },
                   {
                     "id": "r5",
                     "request": "Table assembly",
                     "city": "Brighton",
-                    "status": "Новая",
+                    "status": "New",
                     "score": 79
                   },
                   {
                     "id": "r6",
                     "request": "Kitchen survey",
                     "city": "Manchester",
-                    "status": "Архив",
+                    "status": "Archive",
                     "score": 95
                   }
                 ],

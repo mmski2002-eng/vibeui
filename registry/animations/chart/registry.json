@@ -643,7 +643,13 @@
                 "value": 92,
                 "min": 0,
                 "max": 100,
-                "sublabel": "All systems healthy"
+                "sublabel": "All systems healthy",
+                "stateText": {
+                  "pos": "Healthy",
+                  "warn": "Attention",
+                  "neg": "Critical"
+                },
+                "readTemplate": "{title}: {value} of {max}. {sublabel}"
               }
             }
           }
@@ -786,7 +792,10 @@
                 "value": "312 sessions",
                 "trend": 18.6,
                 "rows": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-                "cols": ["00", "04", "08", "12", "16", "20"]
+                "cols": ["00", "04", "08", "12", "16", "20"],
+                "readTemplate": "{title}: a grid of {rows} rows by {cols} columns, intensity from low to high.",
+                "lessLabel": "Less",
+                "moreLabel": "More"
               }
             }
           }

@@ -3753,24 +3753,45 @@
                         "quantity": 12,
                         "price": 42
                       },
-                      { "title": "Wave speaker", "quantity": 6, "price": 31 },
-                      { "title": "USB-C cable", "quantity": 40, "price": 3.5 }
+                      {
+                        "title": "Wave speaker",
+                        "quantity": 6,
+                        "price": 31
+                      },
+                      {
+                        "title": "USB-C cable",
+                        "quantity": 40,
+                        "price": 3.5
+                      }
                     ]
                   },
                   {
                     "category": "Furniture",
                     "items": [
-                      { "title": "Loft chair", "quantity": 8, "price": 68 },
-                      { "title": "Nord desk", "quantity": 3, "price": 154 }
+                      {
+                        "title": "Loft chair",
+                        "quantity": 8,
+                        "price": 68
+                      },
+                      {
+                        "title": "Nord desk",
+                        "quantity": 3,
+                        "price": 154
+                      }
                     ]
                   },
                   {
                     "category": "Stationery",
                     "items": [
-                      { "title": "A5 notebook", "quantity": 25, "price": 2.2 }
+                      {
+                        "title": "A5 notebook",
+                        "quantity": 25,
+                        "price": 2.2
+                      }
                     ]
                   }
-                ]
+                ],
+                "totalLabel": "Total"
               }
             },
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-table-021-*. A server component: no hooks. The category is expressed as a single th with scope=\"rowgroup\" and a rowSpan across the group's item count, rather than repeating on every row. The total is computed from every item in every category and sits in tfoot."

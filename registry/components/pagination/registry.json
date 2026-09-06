@@ -2385,7 +2385,18 @@
                 "label": "Background"
               }
             },
-            "title": "Page List Select"
+            "title": "Page List Select",
+            "preview": {
+              "props": {
+                "label": "Page",
+                "labelText": {
+                  "nav": "Page navigation",
+                  "prev": "← Back",
+                  "next": "Next →",
+                  "of": "of {total}"
+                }
+              }
+            }
           }
         },
         "cardControls": ["total", "defaultPage", "accent", "background"]

@@ -4,6 +4,10 @@ export type ChartAnim004Props = Omit<
   ComponentProps<"section">,
   "children" | "title"
 > & {
+  /** Подписи состояний. */
+  stateText?: Record<"pos" | "warn" | "neg", string>
+  /** Строка для скринридера: {title}, {value}, {max}, {sublabel}. */
+  readTemplate?: string
   title?: string
   /** Пилюля в верхнем левом углу: статус показателя. */
   status?: string
@@ -115,6 +119,8 @@ const STATUS_LABEL: Record<"pos" | "warn" | "neg", string> = {
  * собственная палитра, клиентского JS нет.
  */
 export function ChartAnim004({
+  stateText = STATUS_LABEL,
+  readTemplate = "{title}: {value} из {max}. {sublabel}",
   title = "Индекс здоровья системы",
   status,
   statusTone = "pos",
@@ -142,7 +148,7 @@ export function ChartAnim004({
 
   const fraction = Math.min(1, Math.max(0, (value - min) / (max - min || 1)))
   const off = 100 - fraction * 100
-  const statusText = status ?? STATUS_LABEL[statusTone]
+  const statusText = status ?? stateText[statusTone]
 
   return (
     <>
@@ -168,12 +174,25 @@ export function ChartAnim004({
               <p data-part="title">{title}</p>
               <div data-part="dial">
                 <p data-part="sr">
-                  {title}: {value} из {max}. {sublabel}
+                  {readTemplate
+                    .replace("{title}", title)
+                    .replace("{value}", String(value))
+                    .replace("{max}", String(max))
+                    .replace("{sublabel}", sublabel)}
                 </p>
                 <svg viewBox="0 0 120 66" role="img" aria-hidden="true">
                   <defs>
-                    <linearGradient id="vibeui-chart-anim-004-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stopColor="var(--vibeui-chart-anim-004-accent)" />
+                    <linearGradient
+                      id="vibeui-chart-anim-004-grad"
+                      x1="0%"
+                      y1="0%"
+                      x2="100%"
+                      y2="0%"
+                    >
+                      <stop
+                        offset="0%"
+                        stopColor="var(--vibeui-chart-anim-004-accent)"
+                      />
                       <stop
                         offset="100%"
                         stopColor="color-mix(in oklab, var(--vibeui-chart-anim-004-accent) 55%, transparent)"
@@ -205,12 +224,16 @@ export function ChartAnim004({
                     data-part="fill"
                     d="M10 60 A50 50 0 0 1 110 60"
                     pathLength={100}
-                    style={{ "--vibeui-chart-anim-004-off": off } as CSSProperties}
+                    style={
+                      { "--vibeui-chart-anim-004-off": off } as CSSProperties
+                    }
                   />
                 </svg>
                 <div data-part="center" aria-hidden="true">
                   <span data-part="value">{value}</span>
-                  {sublabel ? <span data-part="sublabel">{sublabel}</span> : null}
+                  {sublabel ? (
+                    <span data-part="sublabel">{sublabel}</span>
+                  ) : null}
                 </div>
               </div>
               <div data-part="range" aria-hidden="true">

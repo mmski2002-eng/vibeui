@@ -6,9 +6,7 @@
       "type": "registry:block",
       "title": "Тарифы с инверсией",
       "description": "Секция тарифов из трёх планов: рекомендованный выделен инвертированной панелью, остальные остаются лёгкими. Следует теме окружения и не тянет за собой стиль проекта.",
-      "categories": [
-        "pricing"
-      ],
+      "categories": ["pricing"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,14 +18,7 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей. Цвета живут в локальных переменных --vibeui-pricing-001-* и объявлены через light-dark(), поэтому секция следует color-scheme окружения; акцент меняется пропом accent, подложка — пропом background, по умолчанию её нет. Раскладка переключается container-запросами от ширины самого блока. Это секция лендинга, а не checkout: цены — статический контент, CTA — обычные ссылки, никакой логики биллинга в блоке нет.",
       "meta": {
-        "tags": [
-          "light",
-          "pricing",
-          "saas",
-          "plans",
-          "landing",
-          "section"
-        ],
+        "tags": ["light", "pricing", "saas", "plans", "landing", "section"],
         "ai": {
           "summary": "Секция тарифов, следующая теме окружения. Центрированная шапка: eyebrow, h2 в две части и описание. Ниже три плана в ряд: имя, описание, крупная цена с периодом, CTA-ссылка и список до четырёх пунктов с галочками. Рекомендованный план — единственная тяжёлая поверхность в блоке: инвертированная тёмная панель с акцентным бейджем, приподнятая относительно соседей. Под планами строка-сноска про условия. Ноль зависимостей, один файл, раскладка и типографика считаются от ширины блока через container-запросы и cqi.",
           "preserve": [
@@ -175,9 +166,7 @@
       "type": "registry:block",
       "title": "Три тарифа с рекомендуемым",
       "description": "Три тарифа с выделенным рекомендованным: он поднят над соседями и несёт бейдж словами, а не только цветную рамку. Кнопки прижаты к низу карточек.",
-      "categories": [
-        "pricing"
-      ],
+      "categories": ["pricing"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -189,12 +178,7 @@
       ],
       "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-002-* объявлена через light-dark(), поэтому блок следует color-scheme окружения; собственной подложки у него нет, она включается пропом background. Рекомендованный тариф помечается атрибутом data-featured: он получает толстую акцентную рамку, тень и бейдж, а на широкой ширине ещё и увеличенные вертикальные отступы. Карточки — flex-колонки, кнопка прижата к низу через margin-top:auto, поэтому нижний край ряда ровный при разном числе пунктов. Раскладка: столбец до 58rem, три колонки от 58rem container-запросом.",
       "meta": {
-        "tags": [
-          "pricing",
-          "plans",
-          "featured",
-          "cards"
-        ],
+        "tags": ["pricing", "plans", "featured", "cards"],
         "preview": {
           "width": "full"
         },
@@ -365,12 +349,7 @@
             "docs": "A server component, one file, zero dependencies. The --vibeui-pricing-002-* palette is declared through light-dark(), so the block follows the surrounding color-scheme; it has no background of its own and one is turned on by the background prop. The recommended plan is marked with the data-featured attribute: it gets a thick accent border, a shadow and a badge, and at a wide width increased vertical padding as well. The cards are flex columns and the button is pinned to the bottom with margin-top:auto, so the bottom edge of the row stays level across different numbers of points. The layout: a column up to 58rem, three columns from 58rem through a container query."
           }
         },
-        "cardControls": [
-          "title",
-          "eyebrow",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "eyebrow", "accent", "background"]
       }
     },
     {
@@ -378,9 +357,7 @@
       "type": "registry:block",
       "title": "Тарифы с переключением периода",
       "description": "Тарифы с переключателем месяц/год: состояние держат две радиокнопки, цены переключаются селектором :has() — без единой строки JavaScript.",
-      "categories": [
-        "pricing"
-      ],
+      "categories": ["pricing"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -392,12 +369,7 @@
       ],
       "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-003-* объявлена через light-dark(), поэтому блок следует color-scheme окружения; собственной подложки у него нет, она включается пропом background. Обе цены лежат в разметке, лишняя скрыта через display:none; выбор делается правилом вида [data-vibeui-block=\"pricing-003\"]:has([data-part=\"periodyear\"]:checked). Радиокнопки уводятся с экрана, но остаются в потоке фокуса, кольцо рисуется на подписи. Скидка подписана бейджем прямо в переключателе. Раскладка: столбец до 56rem, три колонки от 56rem container-запросом.",
       "meta": {
-        "tags": [
-          "pricing",
-          "toggle",
-          "no-js",
-          "annual"
-        ],
+        "tags": ["pricing", "toggle", "no-js", "annual"],
         "preview": {
           "width": "full"
         },
@@ -596,9 +568,7 @@
       "type": "registry:block",
       "title": "Таблица сравнения тарифов",
       "description": "Полная таблица сравнения тарифов: строки сгруппированы по разделам, шапка с ценами и кнопками залипает при прокрутке, на узкой ширине таблица прокручивается вбок.",
-      "categories": [
-        "pricing"
-      ],
+      "categories": ["pricing"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -610,12 +580,7 @@
       ],
       "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-004-* объявлена через light-dark(), поэтому блок следует color-scheme окружения; подложки у секции по умолчанию нет, она включается пропом background, а таблица лежит на собственной поверхности --vibeui-pricing-004-card. Разметка — настоящая таблица с несколькими <tbody>: заголовок раздела вынесен в <th scope=\"colgroup\"> с colspan, поэтому скринридер объявляет и раздел, и колонку. Шапка с ценами держится на position:sticky, иначе на длинной таблице теряется, какая колонка чья. Обёртка со overflow-x:auto и min-width:40rem у таблицы. Значение true рисуется словом из valueText.yes, false — из valueText.no.",
       "meta": {
-        "tags": [
-          "pricing",
-          "comparison",
-          "table",
-          "grouped"
-        ],
+        "tags": ["pricing", "comparison", "table", "grouped"],
         "preview": {
           "width": "full"
         },
@@ -774,27 +739,15 @@
                     "rows": [
                       {
                         "feature": "Sections available",
-                        "values": [
-                          "10",
-                          "All",
-                          "All"
-                        ]
+                        "values": ["10", "All", "All"]
                       },
                       {
                         "feature": "Projects",
-                        "values": [
-                          "1",
-                          "10",
-                          "Unlimited"
-                        ]
+                        "values": ["1", "10", "Unlimited"]
                       },
                       {
                         "feature": "Early access to new work",
-                        "values": [
-                          false,
-                          true,
-                          true
-                        ]
+                        "values": [false, true, true]
                       }
                     ]
                   },
@@ -803,27 +756,15 @@
                     "rows": [
                       {
                         "feature": "Seats",
-                        "values": [
-                          "1",
-                          "5",
-                          "Unlimited"
-                        ]
+                        "values": ["1", "5", "Unlimited"]
                       },
                       {
                         "feature": "Shared palette presets",
-                        "values": [
-                          false,
-                          true,
-                          true
-                        ]
+                        "values": [false, true, true]
                       },
                       {
                         "feature": "Hand a project to the client",
-                        "values": [
-                          false,
-                          false,
-                          true
-                        ]
+                        "values": [false, false, true]
                       }
                     ]
                   },
@@ -832,27 +773,15 @@
                     "rows": [
                       {
                         "feature": "Email reply",
-                        "values": [
-                          "3 working days",
-                          "1 working day",
-                          "4 hours"
-                        ]
+                        "values": ["3 working days", "1 working day", "4 hours"]
                       },
                       {
                         "feature": "A dedicated manager",
-                        "values": [
-                          false,
-                          false,
-                          true
-                        ]
+                        "values": [false, false, true]
                       },
                       {
                         "feature": "Invoices and closing documents",
-                        "values": [
-                          false,
-                          true,
-                          true
-                        ]
+                        "values": [false, true, true]
                       }
                     ]
                   }
@@ -876,9 +805,7 @@
       "type": "registry:block",
       "title": "Панель одного тарифа",
       "description": "Один тариф и всё, что в него входит: цена со старой ценой слева, полный перечень в две колонки справа. Выбирать не из чего, и секция этим пользуется.",
-      "categories": [
-        "pricing"
-      ],
+      "categories": ["pricing"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -890,12 +817,7 @@
       ],
       "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-005-*, тёмная фиолетовая база с тёплым акцентом. Старая цена размечена как <s>: это не оформление, а семантика — скринридер объявит её как удалённую. Перечень длинный намеренно: у одного тарифа список входящего заменяет сравнение с соседями, поэтому он занимает большую долю карточки и раскладывается в две колонки от 34rem. Раскладка карточки: один столбец до 56rem, две колонки от 56rem container-запросом.",
       "meta": {
-        "tags": [
-          "pricing",
-          "single",
-          "dark",
-          "included"
-        ],
+        "tags": ["pricing", "single", "dark", "included"],
         "preview": {
           "width": "full"
         },
@@ -1024,11 +946,7 @@
             "docs": "A server component, one file, zero dependencies. The --vibeui-pricing-005-* palette, a dark violet base with a warm accent. The old price is marked up as <s>: this is not styling but semantics — a screen reader will announce it as deleted. The list is long on purpose: with a single plan the list of what is included replaces a comparison with neighbours, so it takes up a large share of the card and is laid out in two columns from 34rem. The card layout: one column up to 56rem, two columns from 56rem through a container query."
           }
         },
-        "cardControls": [
-          "price",
-          "period",
-          "accent"
-        ]
+        "cardControls": ["price", "period", "accent"]
       }
     },
     {
@@ -1036,9 +954,7 @@
       "type": "registry:block",
       "title": "Калькулятор объёма",
       "description": "Калькулятор цены по объёму: ползунок, ступенчатый тариф и живой итог. Сумма складывается по ступеням, поэтому следующая тысяча стоит дешевле предыдущей.",
-      "categories": [
-        "pricing"
-      ],
+      "categories": ["pricing"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1050,12 +966,7 @@
       ],
       "docs": "Клиентский компонент (\"use client\"): без состояния ползунок остаётся декорацией. Один файл, ноль зависимостей, палитра --vibeui-pricing-006-* объявлена через light-dark(), поэтому блок следует color-scheme окружения; подложки у секции по умолчанию нет, она включается пропом background. Ступени заданы массивом «до скольки — почём», итог считается последовательно по ступеням, а не одной ставкой на весь объём: так работают реальные объёмные тарифы и не возникает скачка цены на границе. Значение объявляется через aria-live, активная ступень подсвечивается. Ползунок — нативный input type=range со стилизованными треком и бегунком для WebKit и Gecko.",
       "meta": {
-        "tags": [
-          "pricing",
-          "calculator",
-          "slider",
-          "client"
-        ],
+        "tags": ["pricing", "calculator", "slider", "client"],
         "preview": {
           "width": "full"
         },
@@ -1219,9 +1130,7 @@
       "type": "registry:block",
       "title": "Корпоративный тариф",
       "description": "Корпоративный тариф без цены, зато с формой: слева четыре аргумента за договор, справа короткая форма из четырёх полей и прямой адрес почты.",
-      "categories": [
-        "pricing"
-      ],
+      "categories": ["pricing"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1233,12 +1142,7 @@
       ],
       "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-007-* объявлена через light-dark(), поэтому блок следует color-scheme окружения; подложки у секции по умолчанию нет, она включается пропом background. Полей ровно столько, сколько нужно менеджеру для первого ответа: имя, рабочая почта, размер команды и задача. Размер команды — <select>, а не свободный текст: это единственное поле, по которому заявку сортируют. У всех полей есть <label> и id, подсветка на :focus-visible. Обработчика отправки нет: блок серверный, подключите action или серверное действие. От 34rem имя и почта встают в пару, от 56rem форма уходит в правую колонку.",
       "meta": {
-        "tags": [
-          "pricing",
-          "enterprise",
-          "contact",
-          "form"
-        ],
+        "tags": ["pricing", "enterprise", "contact", "form"],
         "preview": {
           "width": "full"
         },
@@ -1424,9 +1328,7 @@
       "type": "registry:block",
       "title": "Бесплатный против платного",
       "description": "Бесплатный тариф рядом с платным: светлая карточка против тёмной. В платной список делится на «всё из бесплатного» и «и сверх того», без повторов.",
-      "categories": [
-        "pricing"
-      ],
+      "categories": ["pricing"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1438,12 +1340,7 @@
       ],
       "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-008-* объявлена через light-dark(), поэтому блок следует color-scheme окружения: платная карточка всегда инвертирована относительно бесплатной — тёмная в светлой теме и светлая в тёмной. Подложки у секции по умолчанию нет, она включается пропом background. Платная карточка помечается атрибутом data-paid и переопределяет фон, цвета подписей и стиль кнопки. Список платного разбит на две части заголовком-разделителем: повторять общие пункты во второй колонке значит заставлять сравнивать строки глазами. Кнопки прижаты к низу через margin-top:auto. Раскладка: столбец до 48rem, две колонки от 48rem container-запросом.",
       "meta": {
-        "tags": [
-          "pricing",
-          "free",
-          "two-plans",
-          "contrast"
-        ],
+        "tags": ["pricing", "free", "two-plans", "contrast"],
         "preview": {
           "width": "full"
         },
@@ -1591,9 +1488,7 @@
                   "price": "$19",
                   "period": "per month",
                   "caption": "For people who build pages regularly, not once.",
-                  "features": [
-                    "Everything in the free plan"
-                  ],
+                  "features": ["Everything in the free plan"],
                   "extra": [
                     "All 1,080 sections in the catalogue",
                     "Unlimited projects",
@@ -1610,13 +1505,7 @@
             "docs": "A server component, one file, zero dependencies. The --vibeui-pricing-008-* palette is declared through light-dark(), so the block follows the surrounding color-scheme: the paid card is always inverted relative to the free one — dark in the light theme and light in the dark one. The section has no background by default and one is turned on by the background prop. The paid card is marked with the data-paid attribute and overrides the background, the caption colours and the button style. The paid list is split into two parts by a divider heading: repeating the shared items in the second column means forcing a line-by-line comparison by eye. The buttons are pinned to the bottom with margin-top:auto. The layout: a column up to 48rem, two columns from 48rem through a container query."
           }
         },
-        "cardControls": [
-          "title",
-          "note",
-          "extraLabel",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "note", "extraLabel", "accent", "background"]
       }
     },
     {
@@ -1624,9 +1513,7 @@
       "type": "registry:block",
       "title": "Тарифы с выбором валюты",
       "description": "Тарифы с выбором валюты: три суммы лежат в разметке, лишние скрыты селектором :has(). Цены округлены под рынок, а не пересчитаны по курсу.",
-      "categories": [
-        "pricing"
-      ],
+      "categories": ["pricing"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1638,12 +1525,7 @@
       ],
       "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-009-* объявлена через light-dark(), поэтому блок следует color-scheme окружения; подложки у секции по умолчанию нет, она включается пропом background. Три радиокнопки задают валюту, нужная сумма показывается правилом вида [data-vibeui-block=\"pricing-009\"]:has([data-cur=\"usd\"]:checked) [data-amount=\"usd\"]. Инпуты уводятся с экрана, но остаются в потоке фокуса, кольцо рисуется на подписи. Все три суммы прописаны в данных вручную: локальная цена всегда округлена под рынок, а не получена умножением. Раскладка: столбец, три колонки от 56rem container-запросом.",
       "meta": {
-        "tags": [
-          "pricing",
-          "currency",
-          "no-js",
-          "international"
-        ],
+        "tags": ["pricing", "currency", "no-js", "international"],
         "preview": {
           "width": "full"
         },
@@ -1848,9 +1730,7 @@
       "type": "registry:block",
       "title": "Лента пробного периода",
       "description": "Тариф с пробным периодом: слева число дней и цена после, справа лента событий — что произойдёт сегодня, за три дня до конца и в день окончания.",
-      "categories": [
-        "pricing"
-      ],
+      "categories": ["pricing"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1862,12 +1742,7 @@
       ],
       "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-010-* объявлена через light-dark(), поэтому блок следует color-scheme окружения; подложки у секции по умолчанию нет, она включается пропом background. Лента событий размечена как <ol>: порядок дней важен и должен читаться голосом, а не только цветными точками. Соединительная линия — ::before у события, у последнего скрыта. Главный страх пробного периода — «забуду отменить и спишут», поэтому ответ на него стоит прямо в ленте и продублирован тремя короткими гарантиями под кнопкой. Раскладка: столбец до 56rem, две колонки от 56rem container-запросом.",
       "meta": {
-        "tags": [
-          "pricing",
-          "trial",
-          "timeline",
-          "light"
-        ],
+        "tags": ["pricing", "trial", "timeline", "light"],
         "preview": {
           "width": "full"
         },
@@ -2047,9 +1922,7 @@
       "type": "registry:block",
       "title": "Вопросы об оплате",
       "description": "Частые вопросы именно о деньгах: гармошка на <details>, работает без JavaScript, ищется поиском по странице и печатается развёрнутой.",
-      "categories": [
-        "pricing"
-      ],
+      "categories": ["pricing"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2061,12 +1934,7 @@
       ],
       "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-011-* объявлена через light-dark(), поэтому блок следует color-scheme окружения; подложки у секции по умолчанию нет, она включается пропом background. Раскрытие построено на <details>/<summary>: без скрипта, с поддержкой браузерного поиска по странице и корректной печатью. Нативный маркер убран через list-style:none и ::-webkit-details-marker, вместо него плюс из двух псевдоэлементов, который превращается в минус по [open]. Первый вопрос открыт: пустая гармошка выглядит как список ссылок. Раскладка: столбец до 54rem, две колонки от 54rem container-запросом.",
       "meta": {
-        "tags": [
-          "pricing",
-          "faq",
-          "details",
-          "no-js"
-        ],
+        "tags": ["pricing", "faq", "details", "no-js"],
         "preview": {
           "width": "full"
         },
@@ -2213,12 +2081,7 @@
             "docs": "A server component, one file, zero dependencies. The --vibeui-pricing-011-* palette is declared through light-dark(), so the block follows the surrounding color-scheme; the section has no background by default and one is turned on by the background prop. The disclosure is built on <details>/<summary>: no script, with support for in-page browser search and correct printing. The native marker is removed through list-style:none and ::-webkit-details-marker, and in its place is a plus built from two pseudo-elements that turns into a minus on [open]. The first question is open: an empty accordion looks like a list of links. The layout: a column up to 54rem, two columns from 54rem through a container query."
           }
         },
-        "cardControls": [
-          "title",
-          "eyebrow",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "eyebrow", "accent", "background"]
       }
     },
     {
@@ -2226,9 +2089,7 @@
       "type": "registry:block",
       "title": "Гарантия возврата",
       "description": "Гарантия возврата как процедура, а не штамп: печать с числом дней слева, три шага возврата с точными сроками справа и условия отдельным абзацем.",
-      "categories": [
-        "pricing"
-      ],
+      "categories": ["pricing"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2240,12 +2101,7 @@
       ],
       "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-012-* объявлена через light-dark(), поэтому блок следует color-scheme окружения; подложки у секции по умолчанию нет, она включается пропом background. Печать нарисована коническим градиентом с пунктирным внутренним кольцом на ::before — ни картинки, ни шрифтовой иконки. Шаги размечены как <ol> с нумерованными кружками. Условия вынесены отдельным абзацем нормального кегля, а не сноской шестым: спрятанные условия читаются как подвох. Раскладка: столбец до 54rem, печать и текст в две колонки от 54rem container-запросом.",
       "meta": {
-        "tags": [
-          "pricing",
-          "guarantee",
-          "refund",
-          "trust"
-        ],
+        "tags": ["pricing", "guarantee", "refund", "trust"],
         "preview": {
           "width": "full"
         },
@@ -2399,13 +2255,7 @@
             "docs": "A server component, one file, zero dependencies. The --vibeui-pricing-012-* palette is declared through light-dark(), so the block follows the surrounding color-scheme; the section has no background by default and one is turned on by the background prop. The seal is drawn with a conic gradient and a dashed inner ring on ::before — no image and no icon font. The steps are marked up as an <ol> with numbered circles. The terms are put in a separate paragraph at normal size rather than in a sixth-size footnote: hidden terms read as a catch. The layout: a column up to 54rem, the seal and the text in two columns from 54rem through a container query."
           }
         },
-        "cardControls": [
-          "days",
-          "daysLabel",
-          "title",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["days", "daysLabel", "title", "accent", "background"]
       }
     },
     {
@@ -2413,9 +2263,7 @@
       "type": "registry:block",
       "title": "Тарифы за место",
       "description": "Тариф для команд с ценой за место: счётчик участников на кнопках и <output>, живой пересчёт счёта и явное указание, сколько мест входит в тариф.",
-      "categories": [
-        "pricing"
-      ],
+      "categories": ["pricing"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2427,12 +2275,7 @@
       ],
       "docs": "Клиентский компонент (\"use client\"): без состояния счётчик мест бессмысленен. Один файл, ноль зависимостей, палитра --vibeui-pricing-013-*, светлая база. Число мест меняется парой кнопок, а не текстовым полем со стрелками: значение нельзя испортить вставкой из буфера, а <output> с aria-live объявляет пересчёт голосом. Кнопки блокируются на границах диапазона, а не молча игнорируют нажатие. Счёт справа показывает включённые места, дополнительные и итог. Раскладка: столбец до 52rem, две колонки от 52rem container-запросом.",
       "meta": {
-        "tags": [
-          "pricing",
-          "seats",
-          "team",
-          "client"
-        ],
+        "tags": ["pricing", "seats", "team", "client"],
         "preview": {
           "width": "full"
         },
@@ -2601,9 +2444,7 @@
       "type": "registry:block",
       "title": "Конструктор дополнений",
       "description": "Конструктор тарифа на чекбоксах: цена каждой допуслуги стоит в её строке, итог складывается на месте и объявляется голосом.",
-      "categories": [
-        "pricing"
-      ],
+      "categories": ["pricing"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2615,12 +2456,7 @@
       ],
       "docs": "Клиентский компонент (\"use client\"): сумма считается на месте. Один файл, ноль зависимостей, палитра --vibeui-pricing-014-*, светлая база. Чекбоксы настоящие, а не квадратики на div: пробел, состояние и группировка достаются от браузера, а своя галочка рисуется псевдоэлементом поверх через :has(input:checked). Строки допуслуг — <label>, поэтому кликабельны целиком. Правая панель повторяет выбранное построчно и подводит итог с aria-live. Раскладка: столбец до 52rem, две колонки от 52rem container-запросом.",
       "meta": {
-        "tags": [
-          "pricing",
-          "addons",
-          "checkbox",
-          "client"
-        ],
+        "tags": ["pricing", "addons", "checkbox", "client"],
         "preview": {
           "width": "full"
         },
@@ -2778,12 +2614,7 @@
             "docs": "A client component (\"use client\"): the sum is computed in place. One file, zero dependencies, the --vibeui-pricing-014-* palette, a light base. The checkboxes are real ones rather than squares on a div: the spacebar, the state and the grouping come from the browser, and a checkmark of its own is drawn over them with a pseudo-element through :has(input:checked). The add-on rows are <label> elements, so they are clickable as a whole. The right panel echoes the selection line by line and totals it with aria-live. The layout: a column up to 52rem, two columns from 52rem through a container query."
           }
         },
-        "cardControls": [
-          "title",
-          "basePrice",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "basePrice", "accent", "background"]
       }
     },
     {
@@ -2791,9 +2622,7 @@
       "type": "registry:block",
       "title": "Итог как в чеке",
       "description": "Итог, оформленный как кассовый чек: моноширинные суммы, точечные разделители, скидка и налог отдельными строками до итога, перфорация краёв нарисована маской.",
-      "categories": [
-        "pricing"
-      ],
+      "categories": ["pricing"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2805,12 +2634,7 @@
       ],
       "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-015-*, бумажная база. Моноширинный шрифт и tabular-nums выстраивают суммы в колонку по разрядам — в чеке это не стилизация, а способ проверить сложение глазами. Позиции размечены как <dl> с парами. Верхний и нижний края вырезаны повторяющимися радиальными градиентами через mask-image с mask-composite: intersect; в браузерах без поддержки composite маска просто не даёт вырезов, и чек остаётся целым. Ширина блока намеренно узкая: чек не должен растягиваться на всю страницу.",
       "meta": {
-        "tags": [
-          "pricing",
-          "receipt",
-          "invoice",
-          "mono"
-        ],
+        "tags": ["pricing", "receipt", "invoice", "mono"],
         "preview": {
           "width": "full"
         },
@@ -2959,12 +2783,7 @@
             "docs": "A server component, one file, zero dependencies. The --vibeui-pricing-015-* palette, a paper base. The monospaced type and tabular-nums line the sums up in a column by digit place — on a receipt that is not styling but the way the addition is checked by eye. The line items are marked up as a <dl> of pairs. The top and bottom edges are cut out with repeating radial gradients through mask-image with mask-composite: intersect; in browsers without composite support the mask simply produces no cut-outs and the receipt stays whole. The block width is deliberately narrow: a receipt must not stretch across the whole page."
           }
         },
-        "cardControls": [
-          "documentNumber",
-          "total",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["documentNumber", "total", "accent", "background"]
       }
     },
     {
@@ -2972,9 +2791,7 @@
       "type": "registry:block",
       "title": "Панель промокода",
       "description": "Поле промокода, которое отвечает сразу: код проверяется на месте, результат объявляется через role=\"status\", старая цена остаётся зачёркнутой рядом с новой.",
-      "categories": [
-        "pricing"
-      ],
+      "categories": ["pricing"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2986,12 +2803,7 @@
       ],
       "docs": "Клиентский компонент (\"use client\"): без состояния поле не проверяет код. Один файл, ноль зависимостей, палитра --vibeui-pricing-016-*, светлая база. Результат проверки объявляется через role=\"status\", а не только подкрашивается зелёным и красным: цвет один не доходит до скринридера и до дальтоника. Ошибочный код не стирается — его оставляют, чтобы человек увидел опечатку. Введённый код приводится к верхнему регистру только при сравнении, а поле отображает его через text-transform. Старая цена размечена как <s>.",
       "meta": {
-        "tags": [
-          "pricing",
-          "promo",
-          "discount",
-          "client"
-        ],
+        "tags": ["pricing", "promo", "discount", "client"],
         "preview": {
           "width": "full"
         },
@@ -3139,12 +2951,7 @@
             "docs": "A client component (\"use client\"): without state the field does not check the code. One file, zero dependencies, the --vibeui-pricing-016-* palette, a light base. The check result is announced through role=\"status\" rather than only tinted green and red: colour alone reaches neither a screen reader nor a colour-blind reader. A wrong code is not cleared — it is left in place so that the person sees the typo. The entered code is uppercased only for the comparison, while the field displays it through text-transform. The old price is marked up as <s>."
           }
         },
-        "cardControls": [
-          "title",
-          "price",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "price", "accent", "background"]
       }
     },
     {
@@ -3152,9 +2959,7 @@
       "type": "registry:block",
       "title": "Тарифы перелистыванием",
       "description": "Тарифы карточками под палец: на узкой ширине горизонтальная лента со scroll-snap и подсказкой о свайпе, от 52rem — обычная сетка в три колонки.",
-      "categories": [
-        "pricing"
-      ],
+      "categories": ["pricing"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3166,12 +2971,7 @@
       ],
       "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-017-*, светлая база. На узкой ширине карточки лежат в ленте с scroll-snap-type: x mandatory и scroll-padding-left: карточка занимает min(85%, 19rem) и «прилипает» к краю, поэтому пролистывание попадает точно в карточку. Ползунок прокрутки скрыт, зато под лентой стоит подсказка о свайпе. Лента получает tabIndex=0 и role=\"group\": прокручиваемая область обязана быть достижима с клавиатуры. От 52rem лента превращается в grid, snap отключается, подсказка скрывается.",
       "meta": {
-        "tags": [
-          "pricing",
-          "mobile",
-          "scroll-snap",
-          "cards"
-        ],
+        "tags": ["pricing", "mobile", "scroll-snap", "cards"],
         "preview": {
           "props": {
             "layout": "swipe"
@@ -3344,12 +3144,7 @@
             "docs": "A server component, one file, zero dependencies. The --vibeui-pricing-017-* palette, a light base. At a narrow width the cards lie in a track with scroll-snap-type: x mandatory and scroll-padding-left: a card takes min(85%, 19rem) and snaps to the edge, so a swipe lands exactly on a card. The scrollbar is hidden, but under the track there is a hint about swiping. The track gets tabIndex=0 and role=\"group\": a scrollable region has to be reachable from the keyboard. From 52rem the track turns into a grid, the snap is switched off and the hint is hidden."
           }
         },
-        "cardControls": [
-          "title",
-          "hint",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "hint", "accent", "background"]
       }
     },
     {
@@ -3357,9 +3152,7 @@
       "type": "registry:block",
       "title": "Всё включено",
       "description": "Развёрнутый ответ на «что входит»: двенадцать пунктов разложены по трём разделам с подписями, у каждого пункта уточнение об объёме. Цена стоит в липкой колонке.",
-      "categories": [
-        "pricing"
-      ],
+      "categories": ["pricing"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3371,12 +3164,7 @@
       ],
       "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-018-*, светлая холодная база. Пункты не свалены в один список, а разложены по разделам с подписью, зачем раздел нужен: тридцать строк подряд не читают. У пункта есть уточнение серым — оно снимает вопрос «а это в каком объёме». На широкой ширине левая колонка с ценой и кнопкой становится position:sticky, чтобы длинный перечень не уводил от действия. Раскладка: столбец, пункты в две колонки от 34rem, две колонки секции от 58rem.",
       "meta": {
-        "tags": [
-          "pricing",
-          "included",
-          "list",
-          "sticky"
-        ],
+        "tags": ["pricing", "included", "list", "sticky"],
         "preview": {
           "width": "full"
         },
@@ -3569,12 +3357,7 @@
             "docs": "A server component, one file, zero dependencies. The --vibeui-pricing-018-* palette, a light cool base. The items are not dumped into a single list but laid out in sections captioned with what the section is for: thirty lines in a row do not get read. An item carries a note in grey — it removes the question \"in what volume?\". At a wide width the left column with the price and the button becomes position:sticky, so a long list does not lead the reader away from the action. The layout: a column, the items in two columns from 34rem, two section columns from 58rem."
           }
         },
-        "cardControls": [
-          "title",
-          "price",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "price", "accent", "background"]
       }
     },
     {
@@ -3582,9 +3365,7 @@
       "type": "registry:block",
       "title": "Повышение текущего тарифа",
       "description": "Экран биллинга внутри продукта: слева текущий план с расходом лимитов на <progress>, справа предложение апгрейда с разницей в счёте.",
-      "categories": [
-        "pricing"
-      ],
+      "categories": ["pricing"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3596,12 +3377,7 @@
       ],
       "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-019-*, светлая база с градиентной панелью апгрейда. Полоски расхода — нативный <progress> с aria-label, а не div с шириной в процентах: браузер сам объявляет значение и максимум, а число рядом дублирует его текстом. Полоса, перевалившая за 80 %, помечается атрибутом data-high и красится в предупреждающий цвет — именно она и есть аргумент за переход, поэтому апгрейд стоит рядом, а не в письме. Раскладка: столбец до 52rem, две колонки от 52rem.",
       "meta": {
-        "tags": [
-          "pricing",
-          "billing",
-          "upgrade",
-          "usage"
-        ],
+        "tags": ["pricing", "billing", "upgrade", "usage"],
         "preview": {
           "width": "full"
         },
@@ -3763,12 +3539,7 @@
             "docs": "A server component, one file, zero dependencies. The --vibeui-pricing-019-* palette, a light base with a gradient upgrade panel. The usage bars are a native <progress> with an aria-label rather than a div with a width in per cent: the browser announces the value and the maximum itself, and the figure beside it duplicates that as text. A bar that has passed 80% is marked with the data-high attribute and painted in the warning colour — it is precisely the argument for upgrading, which is why the upgrade stands next to it and not in an email. The layout: a column up to 52rem, two columns from 52rem."
           }
         },
-        "cardControls": [
-          "currentName",
-          "upgradeName",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["currentName", "upgradeName", "accent", "background"]
       }
     }
   ]

@@ -28,7 +28,7 @@ export function CategoryCard({
       {/* Кадр одной пропорции у всех категорий: обложки берутся у разных
           item'ов, и без общей рамки ряд карточек прыгал бы по высоте. */}
       <div
-        data-preview-theme="dark"
+        data-preview-theme="auto"
         className="border-shell-card bg-shell pointer-events-none relative flex aspect-[16/10] min-w-0 flex-col justify-center overflow-hidden rounded-xl border"
         inert
       >

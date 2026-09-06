@@ -6,9 +6,7 @@
       "type": "registry:component",
       "title": "Крошки со сворачиванием",
       "description": "Хлебные крошки, которые при нехватке места сворачиваются посередине, а не обрезаются с конца: остаются корень и текущий уровень.",
-      "categories": [
-        "breadcrumb"
-      ],
+      "categories": ["breadcrumb"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-breadcrumb-001-*. Разметка семантическая: <nav> с подписью, внутри <ol> — порядок уровней имеет значение. Текущий уровень не ссылка и помечен aria-current=\"page\". Разделитель — грань квадрата, повёрнутая на 45°, поэтому шрифтовые символы и иконки не нужны. Свёртка считается по maxVisible: первый уровень, многоточие, затем последние.",
       "meta": {
-        "tags": [
-          "breadcrumb",
-          "navigation",
-          "path",
-          "aria"
-        ],
+        "tags": ["breadcrumb", "navigation", "path", "aria"],
         "ai": {
           "export": "Breadcrumb001",
           "usage": "<Breadcrumb001\n  items={[\n    { label: \"Проекты\", href: \"/projects\" },\n    { label: \"Сайт студии\", href: \"/projects/studio\" },\n    { label: \"Главная\" },\n  ]}\n/>",
@@ -153,11 +146,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-breadcrumb-001-* variables. The markup is semantic: a <nav> with a label, and an <ol> inside — the order of the levels carries meaning. The current level is not a link and is marked with aria-current=\"page\". The separator is the border of a square rotated by 45°, so no font characters and no icons are needed. The collapse is computed from maxVisible: the first level, an ellipsis, then the last ones."
           }
         },
-        "cardControls": [
-          "maxVisible",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["maxVisible", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -168,9 +157,7 @@
       "type": "registry:component",
       "title": "Крошки через слеш",
       "description": "Минимальные крошки без рамок: разделитель нарисован в CSS, поэтому скринридер не читает «слэш» на каждом уровне.",
-      "categories": [
-        "breadcrumb"
-      ],
+      "categories": ["breadcrumb"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -182,12 +169,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-breadcrumb-002-*. Серверный: хуков нет. Разметка — nav с aria-label и упорядоченный список: порядок уровней несёт смысл. Разделитель приходит через переменную и печатается псевдоэлементом li + li::before. Последний уровень рендерится span с aria-current=\"page\", а не ссылкой.",
       "meta": {
-        "tags": [
-          "breadcrumb",
-          "navigation",
-          "minimal",
-          "a11y"
-        ],
+        "tags": ["breadcrumb", "navigation", "minimal", "a11y"],
         "preview": {
           "width": "full"
         },
@@ -312,11 +294,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-breadcrumb-002-* variables. Server component: no hooks. The markup is a nav with an aria-label and an ordered list: the order of the levels carries meaning. The separator arrives through a variable and is printed by the li + li::before pseudo-element. The last level is rendered as a span with aria-current=\"page\" rather than a link."
           }
         },
-        "cardControls": [
-          "separator",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["separator", "accent", "background"]
       }
     },
     {
@@ -324,9 +302,7 @@
       "type": "registry:component",
       "title": "Путь от главной",
       "description": "Путь с домиком в начале и шевронами между уровнями: обе фигуры нарисованы бордюрами, иконочного пакета нет.",
-      "categories": [
-        "breadcrumb"
-      ],
+      "categories": ["breadcrumb"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -338,12 +314,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-breadcrumb-003-*. Серверный: хуков нет. Домик собран из повёрнутого квадрата (крыша) и прямоугольника с обрезанной верхней гранью (стена); шеврон — два бордюра, повёрнутых на 45°. У ссылки-домика есть aria-label: иконка без имени в навигации бесполезна.",
       "meta": {
-        "tags": [
-          "breadcrumb",
-          "icon",
-          "home",
-          "css-shapes"
-        ],
+        "tags": ["breadcrumb", "icon", "home", "css-shapes"],
         "preview": {
           "width": "full"
         },
@@ -465,11 +436,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-breadcrumb-003-* variables. Server component: no hooks. The house is assembled from a rotated square (the roof) and a rectangle with its top border cut off (the wall); the chevron is two borders rotated by 45°. The house link has an aria-label: an unnamed icon in navigation is useless."
           }
         },
-        "cardControls": [
-          "homeLabel",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["homeLabel", "accent", "background"]
       }
     },
     {
@@ -477,9 +444,7 @@
       "type": "registry:component",
       "title": "Раскрываемые крошки",
       "description": "Свёрнутая середина раскрывается списком на нативном details: скрытые уровни остаются достижимы, а не просто спрятаны.",
-      "categories": [
-        "breadcrumb"
-      ],
+      "categories": ["breadcrumb"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -491,12 +456,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-breadcrumb-004-*. Серверный компонент: раскрытие держит нативный <details>, useId нужен только для имени группы. Многоточие — это <summary> с aria-label, называющим число скрытых уровней. Список скрытых крошек позиционируется абсолютно под многоточием.",
       "meta": {
-        "tags": [
-          "breadcrumb",
-          "collapse",
-          "details",
-          "no-js"
-        ],
+        "tags": ["breadcrumb", "collapse", "details", "no-js"],
         "preview": {
           "width": "full"
         },
@@ -632,11 +592,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-breadcrumb-004-* variables. Server component: the disclosure is held by a native <details>, and useId is needed only for the group name. The ellipsis is a <summary> with an aria-label naming the number of hidden levels. The list of hidden crumbs is positioned absolutely under the ellipsis."
           }
         },
-        "cardControls": [
-          "visible",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["visible", "accent", "background"]
       }
     },
     {
@@ -644,9 +600,7 @@
       "type": "registry:component",
       "title": "Прокручиваемый путь",
       "description": "Путь прокручивается вбок вместо переноса: текущий уровень прилипает к правому краю, а обрыв подтёрт маской.",
-      "categories": [
-        "breadcrumb"
-      ],
+      "categories": ["breadcrumb"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -658,12 +612,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-breadcrumb-005-*. Серверный: хуков нет. Список прокручивается по горизонтали, правый край подтёрт mask-градиентом, а текущий уровень объявлен position: sticky у правого края, поэтому он виден при любой прокрутке. overscroll-behavior-x: contain не даёт прокрутке уйти на страницу.",
       "meta": {
-        "tags": [
-          "breadcrumb",
-          "scroll",
-          "mobile",
-          "path"
-        ],
+        "tags": ["breadcrumb", "scroll", "mobile", "path"],
         "preview": {
           "width": "full"
         },
@@ -789,10 +738,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-breadcrumb-005-* variables. Server component: no hooks. The list scrolls horizontally, the right edge is wiped with a mask gradient, and the current level is declared position: sticky at the right edge, so it stays visible at any scroll position. overscroll-behavior-x: contain keeps the scroll from escaping to the page."
           }
         },
-        "cardControls": [
-          "accent",
-          "background"
-        ]
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -800,9 +746,7 @@
       "type": "registry:component",
       "title": "Путь в шапке страницы",
       "description": "Шапка страницы: путь ведёт до родителя, а «где я» отвечает заголовок — дублировать название в крошках незачем.",
-      "categories": [
-        "breadcrumb"
-      ],
+      "categories": ["breadcrumb"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -814,12 +758,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-breadcrumb-006-*. Серверный: хуков нет. Крошки лежат в nav с aria-label, заголовок — настоящий h1, поэтому структура страницы не подменяется стилями. Кегль заголовка задан clamp: на телефоне он не съедает первый экран.",
       "meta": {
-        "tags": [
-          "breadcrumb",
-          "header",
-          "heading",
-          "layout"
-        ],
+        "tags": ["breadcrumb", "header", "heading", "layout"],
         "preview": {
           "width": "full"
         },
@@ -954,12 +893,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-breadcrumb-006-* variables. Server component: no hooks. The crumbs lie in a nav with an aria-label, and the heading is a real h1, so the page structure is not faked with styles. The heading's type size is set with clamp: on a phone it does not eat the first screen."
           }
         },
-        "cardControls": [
-          "title",
-          "meta",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "meta", "accent", "background"]
       }
     },
     {
@@ -967,9 +901,7 @@
       "type": "registry:component",
       "title": "Путь с действиями",
       "description": "Строка пути с кнопками справа: на узкой ширине они уходят под путь и остаются подписанными словами, а не сжимаются в иконки.",
-      "categories": [
-        "breadcrumb"
-      ],
+      "categories": ["breadcrumb"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -981,12 +913,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-breadcrumb-007-*. Серверный: хуков нет. Корень объявлен контейнером, а раскладка живёт на внутренней панели: контейнерный запрос действует на потомков, но не на сам контейнер. От 26rem собственной ширины кнопки растягиваются на всю строку под путём. Текущий уровень режется многоточием.",
       "meta": {
-        "tags": [
-          "breadcrumb",
-          "toolbar",
-          "actions",
-          "responsive"
-        ],
+        "tags": ["breadcrumb", "toolbar", "actions", "responsive"],
         "preview": {
           "width": "full"
         },
@@ -1133,9 +1060,7 @@
       "type": "registry:component",
       "title": "Путь к файлу",
       "description": "Путь файловой системы: приходит одной строкой, разбирается на уровни и печатается моноширинным шрифтом.",
-      "categories": [
-        "breadcrumb"
-      ],
+      "categories": ["breadcrumb"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1147,12 +1072,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-breadcrumb-008-*. Серверный: хуков нет. На вход приходит строка пути, а не массив: путь так и хранится. Разделитель уходит в переменную и печатается псевдоэлементом, поэтому Windows-путь с обратным слэшем задаётся одним пропом. Имя файла — последний уровень с aria-current.",
       "meta": {
-        "tags": [
-          "breadcrumb",
-          "path",
-          "mono",
-          "files"
-        ],
+        "tags": ["breadcrumb", "path", "mono", "files"],
         "preview": {
           "width": "full"
         },
@@ -1271,12 +1191,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-breadcrumb-008-* variables. Server component: no hooks. The input is a path string rather than an array: that is how a path is stored anyway. The separator goes into a variable and is printed by a pseudo-element, so a Windows path with a backslash is set with a single prop. The filename is the last level, with aria-current."
           }
         },
-        "cardControls": [
-          "path",
-          "separator",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["path", "separator", "accent", "background"]
       }
     },
     {
@@ -1284,9 +1199,7 @@
       "type": "registry:component",
       "title": "Путь мастера",
       "description": "Путь мастера: пройденные шаги кликабельны и помечены галочкой, будущие — только номером, вперёд прыгать нельзя.",
-      "categories": [
-        "breadcrumb"
-      ],
+      "categories": ["breadcrumb"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1298,12 +1211,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-breadcrumb-009-*. Серверный: хуков нет. Состояние шага вычисляется из индекса и пропа current и выносится в data-state; ссылками становятся только пройденные шаги. Текущий шаг помечен aria-current=\"step\", а вся навигация — aria-label с номером шага и их общим числом.",
       "meta": {
-        "tags": [
-          "breadcrumb",
-          "wizard",
-          "steps",
-          "checkout"
-        ],
+        "tags": ["breadcrumb", "wizard", "steps", "checkout"],
         "preview": {
           "width": "full"
         },
@@ -1427,11 +1335,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-breadcrumb-009-* variables. Server component: no hooks. The state of a step is computed from its index and the current prop and exposed as data-state; only completed steps become links. The current step is marked with aria-current=\"step\", and the navigation as a whole with an aria-label carrying the step number and their total."
           }
         },
-        "cardControls": [
-          "current",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["current", "accent", "background"]
       }
     },
     {
@@ -1439,9 +1343,7 @@
       "type": "registry:component",
       "title": "Путь со счётчиком",
       "description": "Путь с числом записей на каждом уровне: раздел с тремя товарами и раздел с тысячей — разные решения.",
-      "categories": [
-        "breadcrumb"
-      ],
+      "categories": ["breadcrumb"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1453,12 +1355,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-breadcrumb-010-*. Серверный: хуков нет. Счётчик лежит внутри ссылки уровня, а не рядом с ней, поэтому не отрывается при переносе строки. Цифры табличные, у счётчика собственный aria-label со словами: голая цифра в потоке речи не читается.",
       "meta": {
-        "tags": [
-          "breadcrumb",
-          "counts",
-          "catalog",
-          "navigation"
-        ],
+        "tags": ["breadcrumb", "counts", "catalog", "navigation"],
         "preview": {
           "width": "full"
         },
@@ -1574,10 +1471,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-breadcrumb-010-* variables. Server component: no hooks. The counter lies inside the level link rather than beside it, so it does not detach on a line break. The figures are tabular, and the counter has its own worded aria-label: a bare number does not read in a stream of speech."
           }
         },
-        "cardControls": [
-          "accent",
-          "background"
-        ]
+        "cardControls": ["accent", "background"]
       }
     },
     {
@@ -1585,9 +1479,7 @@
       "type": "registry:component",
       "title": "Переход к соседям",
       "description": "Последний уровень — нативный select с соседними разделами: переключиться можно на месте, не возвращаясь к родителю.",
-      "categories": [
-        "breadcrumb"
-      ],
+      "categories": ["breadcrumb"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1599,12 +1491,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-breadcrumb-011-*. Серверный компонент: useId нужен только для связи скрытой подписи с select. Список соседей — нативный <select>: клавиатура, поиск по первой букве и мобильный барабан достаются от браузера. Стрелка нарисована бордюрами, потому что штатную у select не стилизовать.",
       "meta": {
-        "tags": [
-          "breadcrumb",
-          "select",
-          "switch",
-          "no-js"
-        ],
+        "tags": ["breadcrumb", "select", "switch", "no-js"],
         "preview": {
           "width": "full"
         },
@@ -1732,12 +1619,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-breadcrumb-011-* variables. Server component: useId is needed only to link the hidden label to the select. The list of siblings is a native <select>: the keyboard, first-letter search and the mobile wheel come from the browser. The arrow is drawn with borders, because the select's own one cannot be styled."
           }
         },
-        "cardControls": [
-          "rootLabel",
-          "label",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["rootLabel", "label", "accent", "background"]
       }
     },
     {
@@ -1745,9 +1627,7 @@
       "type": "registry:component",
       "title": "Ссылка на уровень выше",
       "description": "Крошки для телефона: одна названная ссылка на родителя и текущий уровень — полный путь на узком экране всё равно не читают.",
-      "categories": [
-        "breadcrumb"
-      ],
+      "categories": ["breadcrumb"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1759,12 +1639,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-breadcrumb-012-*. Серверный: хуков нет. Ссылка на родителя названа словом и имеет высоту 2rem — на телефоне это самая нажимаемая цель на странице. Текущий уровень режется многоточием и помечен aria-current. Стрелка нарисована бордюрами.",
       "meta": {
-        "tags": [
-          "breadcrumb",
-          "mobile",
-          "back",
-          "compact"
-        ],
+        "tags": ["breadcrumb", "mobile", "back", "compact"],
         "preview": {
           "width": "full"
         },
@@ -1885,12 +1760,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-breadcrumb-012-* variables. Server component: no hooks. The link to the parent is named with a word and is 2rem tall — on a phone that is the most tappable target on the page. The current level is truncated with an ellipsis and marked with aria-current. The arrow is drawn with borders."
           }
         },
-        "cardControls": [
-          "parentLabel",
-          "currentLabel",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["parentLabel", "currentLabel", "accent", "background"]
       }
     },
     {
@@ -1898,9 +1768,7 @@
       "type": "registry:component",
       "title": "Меню уровня",
       "description": "Последний уровень открывает меню соседних страниц: нативный popover со списком ссылок и пояснениями, текущая строка помечена полосой.",
-      "categories": [
-        "breadcrumb"
-      ],
+      "categories": ["breadcrumb"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1912,12 +1780,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-breadcrumb-013-*. Серверный: useId нужен только для уникального id popover и уникального anchor-name, клиентского состояния нет. Меню — нативный popover=\"auto\": верхний слой, закрытие по Esc и по клику мимо, возврат фокуса на кнопку достаются от браузера. Позиция берётся из CSS anchor positioning под @supports (anchor-name), с position-try-fallbacks на переворот; где anchor positioning не поддержан, popover остаётся карточкой по центру экрана — это рабочий вид, а не поломка. Текущая строка меню помечена и фоном, и полосой-маркером слева, чтобы «где я» читалось не только цветом.",
       "meta": {
-        "tags": [
-          "breadcrumb",
-          "popover",
-          "menu",
-          "no-js"
-        ],
+        "tags": ["breadcrumb", "popover", "menu", "no-js"],
         "preview": {
           "props": {
             "open": true
@@ -2035,10 +1898,7 @@
             "title": "Level Menu",
             "preview": {
               "props": {
-                "trail": [
-                  "Projects",
-                  "Storefront"
-                ],
+                "trail": ["Projects", "Storefront"],
                 "current": "Settings",
                 "menuTitle": "Sibling pages",
                 "triggerHint": "show sibling pages",
@@ -2071,12 +1931,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-breadcrumb-013-* variables. Server component: useId is needed only for a unique popover id and a unique anchor-name, there is no client state. The menu is a native popover=\"auto\": the top layer, closing on Esc and on an outside click, and returning focus to the button come from the browser. The position is taken from CSS anchor positioning under @supports (anchor-name), with position-try-fallbacks for the flip; where anchor positioning is unsupported the popover stays a card centred on the screen — that is a working view, not a breakage. The current row of the menu is marked both with a background and with a marker stripe on the left, so that \"where am I\" reads by more than colour."
           }
         },
-        "cardControls": [
-          "current",
-          "menuTitle",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["current", "menuTitle", "accent", "background"]
       }
     },
     {
@@ -2084,9 +1939,7 @@
       "type": "registry:component",
       "title": "Крошки с типами",
       "description": "Путь по разнородным сущностям: тип каждого узла — пространство, папка, база, таблица, запись — различается формой значка, а не только цветом.",
-      "categories": [
-        "breadcrumb"
-      ],
+      "categories": ["breadcrumb"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2098,12 +1951,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-breadcrumb-014-*. Серверный: хуков и состояния нет. Значки — инлайновый SVG в один контур на тип, поэтому пакет иконок не нужен; силуэты подобраны так, чтобы различаться без цвета (круг, язычок папки, цилиндр, сетка, лист со скосом). Цвет типа задан отдельными переменными и работает как вторая подсказка. Название типа лежит рядом со значком скрытым текстом, поэтому скринридер читает «Таблица: Сделки», а не одно имя. Разделитель — шеврон на бордюрах псевдоэлемента, чтобы не тянуть шрифт с символами.",
       "meta": {
-        "tags": [
-          "breadcrumb",
-          "icons",
-          "hierarchy",
-          "admin"
-        ],
+        "tags": ["breadcrumb", "icons", "hierarchy", "admin"],
         "preview": {
           "width": "full"
         },
@@ -2150,13 +1998,7 @@
             "label": "Тип узла",
             "type": "select",
             "default": "record",
-            "options": [
-              "space",
-              "folder",
-              "database",
-              "table",
-              "record"
-            ]
+            "options": ["space", "folder", "database", "table", "record"]
           },
           {
             "prop": "accent",
@@ -2262,12 +2104,7 @@
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-breadcrumb-014-* variables. Server component: no hooks and no state. The marks are inline SVG with a single outline per type, so no icon package is needed; the silhouettes are chosen to differ without colour (a circle, a folder tab, a cylinder, a grid, a sheet with a cut corner). The type colour is set by separate variables and works as a second hint. The type name lies next to the mark as hidden text, so a screen reader speaks \"Table: Deals\" rather than the name alone. The separator is a chevron on the borders of a pseudo-element, so as not to pull in a font with symbols."
           }
         },
-        "cardControls": [
-          "currentLabel",
-          "currentKind",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["currentLabel", "currentKind", "accent", "background"]
       }
     },
     {
@@ -2275,9 +2112,7 @@
       "type": "registry:component",
       "title": "Загружающийся сегмент",
       "description": "Путь известен из маршрута, имя последнего сегмента ещё грузится: его место держит полоса-скелетон заданной ширины, поэтому строка не прыгает.",
-      "categories": [
-        "breadcrumb"
-      ],
+      "categories": ["breadcrumb"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2289,12 +2124,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-breadcrumb-015-*. Серверный: состояние приходит пропом loading, хуков нет. Ширина заглушки задана в ch через переменную --vibeui-breadcrumb-015-width, которую проп placeholderWidth ставит инлайном: единицы ch привязаны к шрифту самой строки, поэтому место под имя резервируется одинаково при любом размере текста. Блик — сдвиг background-position на фоновом градиенте, без лишних узлов; пульсирующая точка дублирует состояние формой. Загрузка объявлена через aria-busy на элементе списка и скрытую живую область role=\"status\", а не одним цветом.",
       "meta": {
-        "tags": [
-          "breadcrumb",
-          "skeleton",
-          "loading",
-          "async"
-        ],
+        "tags": ["breadcrumb", "skeleton", "loading", "async"],
         "preview": {
           "width": "full"
         },
@@ -2414,11 +2244,7 @@
             "title": "Pending Segment",
             "preview": {
               "props": {
-                "trail": [
-                  "Catalog",
-                  "Suppliers",
-                  "Batches"
-                ],
+                "trail": ["Catalog", "Suppliers", "Batches"],
                 "currentLabel": "Batch A-1180",
                 "loadingText": "Loading the name",
                 "navLabel": "Breadcrumbs"

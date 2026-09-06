@@ -1656,7 +1656,14 @@
                 "label": "Background"
               }
             },
-            "title": "Mask After Type"
+            "title": "Mask After Type",
+            "preview": {
+              "props": {
+                "label": "Code from SMS",
+                "hint": "Each digit shows for a moment before it hides.",
+                "digitLabel": "Digit {index} of {total}"
+              }
+            }
           }
         },
         "cardControls": ["label", "length", "revealMs", "accent", "background"],

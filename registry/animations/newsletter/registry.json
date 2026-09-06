@@ -125,7 +125,8 @@
                 "title": "Stay in the loop",
                 "description": "Product updates every other week, no spam and no filler sends.",
                 "placeholder": "you@company.com",
-                "buttonLabel": "Subscribe"
+                "buttonLabel": "Subscribe",
+                "fineText": "You can unsubscribe at any time."
               }
             }
           }

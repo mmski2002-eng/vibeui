@@ -12,6 +12,8 @@ export type Chart028Props = Omit<
   ComponentProps<"figure">,
   "children" | "title"
 > & {
+  /** Заголовок первой колонки таблицы-дублёра. */
+  periodColumnLabel?: string
   title?: string
   points?: Chart028Point[]
   /** Подпись левой шкалы — той, по которой стоят столбцы. */
@@ -158,6 +160,7 @@ function ceilNice(value: number) {
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Chart028({
+  periodColumnLabel = "Период",
   title = "Заказы и конверсия",
   points = DEFAULT_POINTS,
   barLabel = "Заказы, шт",
@@ -289,7 +292,7 @@ export function Chart028({
             <caption>{title}</caption>
             <thead>
               <tr>
-                <th scope="col">Период</th>
+                <th scope="col">{periodColumnLabel}</th>
                 <th scope="col">{barLabel}</th>
                 <th scope="col">{lineLabel}</th>
               </tr>

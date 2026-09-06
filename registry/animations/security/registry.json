@@ -139,14 +139,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных --vibeui-security-002-*. Тему берёт из окружения через light-dark() плюс строку для класса .dark, поэтому в тёмном проекте не остаётся светлым. Замок — inline SVG: корпус и дужка отдельными фигурами, дужка анимируется CSS transform (translateY + rotate) с transform-box:fill-box, поэтому вращается вокруг своего основания, а не центра всего SVG. В момент посадки дужки от замка расходится кольцо-пинг. За замком дышит размытый ореол. Секция декоративна и размечена как role=\"img\" с aria-label, всё содержимое внутри aria-hidden. Всё гаснет при prefers-reduced-motion.",
       "meta": {
-        "tags": [
-          "lock",
-          "security",
-          "access",
-          "padlock",
-          "animated",
-          "glow"
-        ],
+        "tags": ["lock", "security", "access", "padlock", "animated", "glow"],
         "ai": {
           "export": "Security002",
           "usage": "<Security002 label=\"Доступ защищён\" accent=\"#3b82f6\" />",

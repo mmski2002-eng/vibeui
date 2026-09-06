@@ -4,6 +4,8 @@ export type Metrics003Props = Omit<
   ComponentProps<"section">,
   "children" | "title"
 > & {
+  /** Слово «изменение» в строке для скринридера. */
+  deltaWord?: string
   title?: string
   value?: number
   valuePrefix?: string
@@ -149,13 +151,31 @@ position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);
 `
 
 const ARROW_UP = (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="3"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
     <path d="M12 19V5M5 12l7-7 7 7" />
   </svg>
 )
 
 const ARROW_DOWN = (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="3"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
     <path d="M12 5v14M5 12l7 7 7-7" />
   </svg>
 )
@@ -184,6 +204,7 @@ function buildPath(points: number[]) {
  * зависимостей, собственная палитра, клиентского JS нет.
  */
 export function Metrics003({
+  deltaWord = "изменение",
   title = "Средний чек",
   value = 48,
   valuePrefix = "",
@@ -212,7 +233,10 @@ export function Metrics003({
 
   const coords = buildPath(points)
   const linePath = coords
-    .map((point, index) => `${index === 0 ? "M" : "L"}${point.x.toFixed(2)} ${point.y.toFixed(2)}`)
+    .map(
+      (point, index) =>
+        `${index === 0 ? "M" : "L"}${point.x.toFixed(2)} ${point.y.toFixed(2)}`,
+    )
     .join(" ")
   const areaPath = `${linePath} L${CHART_WIDTH} ${CHART_HEIGHT} L0 ${CHART_HEIGHT} Z`
   const last = coords[coords.length - 1]
@@ -243,7 +267,11 @@ export function Metrics003({
                       {valuePrefix}
                       <span
                         data-part="count"
-                        style={{ "--vibeui-metrics-003-target": value } as CSSProperties}
+                        style={
+                          {
+                            "--vibeui-metrics-003-target": value,
+                          } as CSSProperties
+                        }
                       />
                       {valueSuffix}
                     </span>
@@ -270,7 +298,7 @@ export function Metrics003({
               <p data-part="sr">
                 {title}: {valuePrefix}
                 {value}
-                {valueSuffix}, изменение {deltaText} {periodLabel}.
+                {valueSuffix}, {deltaWord} {deltaText} {periodLabel}.
               </p>
             </div>
           </div>

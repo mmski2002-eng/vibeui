@@ -1,6 +1,8 @@
 import type { CSSProperties } from "react"
 
 export type Commerce080Props = {
+  /** Подпись оценки: {value} — балл, {max} — максимум, {label} — слово. */
+  ratingTemplate?: string
   id?: string
   title?: string
   product?: string
@@ -172,6 +174,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * числом. Один файл, ноль зависимостей, собственная палитра.
  */
 export function Commerce080({
+  ratingTemplate = "{value} из {max} — {label}",
   id = "commerce-080",
   title = "Оставить отзыв",
   product = "О товаре: беспроводные наушники Aria Pro",
@@ -247,7 +250,10 @@ export function Commerce080({
                         name={ratingName}
                         value={value}
                         required
-                        aria-label={`${value} из 5 — ${label}`}
+                        aria-label={ratingTemplate
+                          .replace("{value}", String(value))
+                          .replace("{max}", String(stars.length))
+                          .replace("{label}", label)}
                       />
                       <span
                         data-part="hit"
@@ -263,7 +269,10 @@ export function Commerce080({
                   const value = index + 1
                   return (
                     <span key={value} data-part="word" data-value={value}>
-                      {value} из 5 — {label}
+                      {ratingTemplate
+                        .replace("{value}", String(value))
+                        .replace("{max}", String(stars.length))
+                        .replace("{label}", label)}
                     </span>
                   )
                 })}

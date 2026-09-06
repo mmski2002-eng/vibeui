@@ -6,9 +6,7 @@
       "type": "registry:component",
       "title": "Линейный график",
       "description": "Линейный график на чистом SVG: путь считается из массива точек на сервере. Ни библиотеки графиков, ни клиентского JS — картинка видна до гидратации и печатается.",
-      "categories": [
-        "chart"
-      ],
+      "categories": ["chart"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-chart-001-*. Путь линии и заливки собирается из точек прямо в разметке: значения нормируются к области 320×120, нижняя граница опускается на четверть размаха ниже минимума, чтобы линия не лежала на оси. Толщина линии не искажается при растяжении благодаря vector-effect:non-scaling-stroke. Весь график — figure с figcaption и aria-label у svg.",
       "meta": {
-        "tags": [
-          "chart",
-          "line",
-          "svg",
-          "analytics"
-        ],
+        "tags": ["chart", "line", "svg", "analytics"],
         "preview": {
           "width": "full"
         },
@@ -195,13 +188,7 @@
             }
           }
         },
-        "cardControls": [
-          "title",
-          "unit",
-          "markPeak",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "unit", "markPeak", "accent", "background"]
       }
     },
     {
@@ -209,9 +196,7 @@
       "type": "registry:component",
       "title": "Столбчатый график",
       "description": "Столбчатая диаграмма на разметке: высота столбца — процент в CSS-переменной, а не SVG. График остаётся текстом, поэтому масштабируется и печатается.",
-      "categories": [
-        "chart"
-      ],
+      "categories": ["chart"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -223,12 +208,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-chart-002-*. Столбцы — обычные элементы во flex-раскладке; высота каждого приходит переменной --vibeui-chart-002-bar-height в процентах от максимума. Сетка нарисована повторяющимся градиентом фона области, а не отдельными элементами. Подписи оси помечены aria-hidden, потому что каждое значение уже прочитано скрытым текстом внутри столбца.",
       "meta": {
-        "tags": [
-          "chart",
-          "bar",
-          "analytics",
-          "no-svg"
-        ],
+        "tags": ["chart", "bar", "analytics", "no-svg"],
         "preview": {
           "width": "full"
         },
@@ -387,13 +367,7 @@
             }
           }
         },
-        "cardControls": [
-          "title",
-          "unit",
-          "showValues",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "unit", "showValues", "accent", "background"]
       }
     },
     {
@@ -401,9 +375,7 @@
       "type": "registry:component",
       "title": "Кольцевая диаграмма",
       "description": "Кольцевая диаграмма на conic-gradient: доли складываются в один градиент, дырка вырезается маской, легенда обязательна.",
-      "categories": [
-        "chart"
-      ],
+      "categories": ["chart"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -415,12 +387,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-chart-003-*. Серверный: хуков нет. Кольцо строится одним conic-gradient: начало каждого сектора считается суммой предыдущих значений, поэтому во время отрисовки ничего не мутируется. Дырка вырезана radial-gradient-маской, само кольцо помечено aria-hidden — смысл несёт легенда с процентами.",
       "meta": {
-        "tags": [
-          "chart",
-          "donut",
-          "conic-gradient",
-          "svg-free"
-        ],
+        "tags": ["chart", "donut", "conic-gradient", "svg-free"],
         "ai": {
           "export": "Chart003",
           "usage": "<Chart003 slices={[{ label: \"Поиск\", value: 28 }]} title=\"Источники\" />",
@@ -560,12 +527,7 @@
             }
           }
         },
-        "cardControls": [
-          "title",
-          "unit",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["title", "unit", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -576,9 +538,7 @@
       "type": "registry:component",
       "title": "Полосы рейтинга",
       "description": "Рейтинг горизонтальными полосами: длину глаз сравнивает точнее угла, а числа справа отвечают «насколько».",
-      "categories": [
-        "chart"
-      ],
+      "categories": ["chart"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -590,12 +550,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-chart-004-*. Серверный: хуков нет. Каждая строка — сетка из подписи, числа и полосы во всю ширину, поэтому числа стоят ровным столбцом. Ширина заливки — процент от максимума, у полосы есть role=\"img\" с подписью, лидер выделен насыщенностью.",
       "meta": {
-        "tags": [
-          "chart",
-          "ranking",
-          "bars",
-          "top"
-        ],
+        "tags": ["chart", "ranking", "bars", "top"],
         "ai": {
           "export": "Chart004",
           "usage": "<Chart004 rows={[{ label: \"Каталог\", value: 4820 }]} unit=\"визитов\" />",
@@ -738,12 +693,7 @@
             }
           }
         },
-        "cardControls": [
-          "title",
-          "unit",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["title", "unit", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -754,9 +704,7 @@
       "type": "registry:component",
       "title": "Столбцы с накоплением",
       "description": "Одна полоса, разложенная на доли: «из чего состоит целое» в одну строку там, где кольцо съело бы треть карточки.",
-      "categories": [
-        "chart"
-      ],
+      "categories": ["chart"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -768,12 +716,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-chart-005-*. Серверный: хуков нет. Полоса — флекс, ширина каждой доли задаётся flex-basis в процентах. Доли уже восьми процентов не подписываются внутри: подпись в них не помещается, для них есть легенда. У каждой доли своё role=\"img\" с процентом.",
       "meta": {
-        "tags": [
-          "chart",
-          "stacked",
-          "share",
-          "breakdown"
-        ],
+        "tags": ["chart", "stacked", "share", "breakdown"],
         "preview": {
           "width": "full"
         },
@@ -921,12 +864,7 @@
             }
           }
         },
-        "cardControls": [
-          "title",
-          "total",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "total", "accent", "background"]
       }
     },
     {
@@ -934,9 +872,7 @@
       "type": "registry:component",
       "title": "График с заливкой",
       "description": "График с заливкой под линией на чистом SVG: заливка подчёркивает объём, но линия остаётся главной.",
-      "categories": [
-        "chart"
-      ],
+      "categories": ["chart"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -948,12 +884,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-chart-006-*. Серверный: хуков нет. Путь линии и площадь считаются из массива точек в системе 300×110, толщина линии не масштабируется благодаря vector-effect. Сетка — три линии; последняя точка помечена кружком. У svg есть role=\"img\" с диапазоном значений.",
       "meta": {
-        "tags": [
-          "chart",
-          "area",
-          "svg",
-          "trend"
-        ],
+        "tags": ["chart", "area", "svg", "trend"],
         "preview": {
           "width": "full"
         },
@@ -1084,12 +1015,7 @@
             }
           }
         },
-        "cardControls": [
-          "title",
-          "unit",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "unit", "accent", "background"]
       }
     },
     {
@@ -1097,9 +1023,7 @@
       "type": "registry:component",
       "title": "Спидометр",
       "description": "Полукруглая шкала показателя с риской цели: пустая часть дуги показывает, сколько осталось до плана.",
-      "categories": [
-        "chart"
-      ],
+      "categories": ["chart"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1111,12 +1035,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-chart-007-*. Серверный: хуков нет. Дуга рисуется одним path и заполняется через stroke-dasharray от длины полуокружности. Риска цели строится тригонометрией из доли: точка на радиусе и точка чуть дальше. У svg есть role=\"img\" со значением и целью.",
       "meta": {
-        "tags": [
-          "chart",
-          "gauge",
-          "kpi",
-          "target"
-        ],
+        "tags": ["chart", "gauge", "kpi", "target"],
         "ai": {
           "export": "Chart007",
           "usage": "<Chart007 title=\"План продаж\" value={74} target={85} />",
@@ -1248,13 +1167,7 @@
             }
           }
         },
-        "cardControls": [
-          "value",
-          "target",
-          "title",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["value", "target", "title", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -1265,9 +1178,7 @@
       "type": "registry:component",
       "title": "Воронка",
       "description": "Воронка с процентами перехода: главное в ней не ширина полос, а сколько людей теряется между шагами.",
-      "categories": [
-        "chart"
-      ],
+      "categories": ["chart"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1279,12 +1190,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-chart-008-*. Серверный: хуков нет. Ширина шага — доля от первого, насыщенность заливки считается через color-mix от той же доли. Между шагами печатается процент потерь относительно предыдущего. У каждой полосы есть role=\"img\" с абсолютным значением.",
       "meta": {
-        "tags": [
-          "chart",
-          "funnel",
-          "conversion",
-          "analytics"
-        ],
+        "tags": ["chart", "funnel", "conversion", "analytics"],
         "preview": {
           "width": "full"
         },
@@ -1426,12 +1332,7 @@
             }
           }
         },
-        "cardControls": [
-          "title",
-          "unit",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "unit", "accent", "background"]
       }
     },
     {
@@ -1439,9 +1340,7 @@
       "type": "registry:component",
       "title": "Полосы сравнения",
       "description": "Две серии столбиков рядом: пары стоят вплотную, а группы разделены зазором — сравнение идёт внутри пары.",
-      "categories": [
-        "chart"
-      ],
+      "categories": ["chart"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1453,12 +1352,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-chart-009-*. Серверный: хуков нет. Высота столбика — процент от общего максимума обеих серий, поэтому периоды сравнимы. Прошлый период выводится через color-mix от акцента, у каждой пары role=\"img\" с обоими значениями. Ось подписей повторяет раскладку графика зазорами.",
       "meta": {
-        "tags": [
-          "chart",
-          "compare",
-          "bars",
-          "periods"
-        ],
+        "tags": ["chart", "compare", "bars", "periods"],
         "preview": {
           "width": "full"
         },
@@ -1632,9 +1526,7 @@
       "type": "registry:component",
       "title": "Колонки с осью",
       "description": "Столбцы с настоящей осью значений: верх шкалы округляется до круглого числа, поэтому деления подписаны как 0 / 300 / 600, а не как 0 / 217 / 434.",
-      "categories": [
-        "chart"
-      ],
+      "categories": ["chart"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1646,12 +1538,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-chart-010-*. Серверный: хуков нет. Ось, деления и столбцы лежат в одном SVG 324×150, поэтому подписи не разъезжаются с колонками ни на какой ширине. Верх шкалы считает niceCeil: значение поднимается до 1 / 2 / 2.5 / 5 × 10ⁿ. Сам SVG помечен aria-hidden, а данные продублированы визуально скрытой таблицей.",
       "meta": {
-        "tags": [
-          "chart",
-          "columns",
-          "axis",
-          "svg"
-        ],
+        "tags": ["chart", "columns", "axis", "svg"],
         "preview": {
           "width": "full"
         },
@@ -1804,12 +1691,7 @@
             }
           }
         },
-        "cardControls": [
-          "title",
-          "unit",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "unit", "accent", "background"]
       }
     },
     {
@@ -1817,9 +1699,7 @@
       "type": "registry:component",
       "title": "Тренд пунктиром",
       "description": "Линия с отмеченными точками и выноской последнего значения прямо на графике: «где узлы» и «сколько сейчас» отвечаются одной картинкой.",
-      "categories": [
-        "chart"
-      ],
+      "categories": ["chart"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1831,12 +1711,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-chart-011-*. Серверный: хуков нет. Путь линии считается из массива точек в системе 300×136, нижняя граница опускается на четверть размаха ниже минимума, чтобы линия не лежала на оси. Последняя точка залита сплошным, над ней стоит тёмная плашка-выноска: её ширина оценивается по числу знаков, а позиция подрезается краем viewBox. Данные продублированы визуально скрытой таблицей.",
       "meta": {
-        "tags": [
-          "chart",
-          "line",
-          "trend",
-          "svg"
-        ],
+        "tags": ["chart", "line", "trend", "svg"],
         "preview": {
           "width": "full"
         },
@@ -1985,12 +1860,7 @@
             }
           }
         },
-        "cardControls": [
-          "title",
-          "unit",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "unit", "accent", "background"]
       }
     },
     {
@@ -1998,9 +1868,7 @@
       "type": "registry:component",
       "title": "Градиентная заливка",
       "description": "Площадь с вертикальным градиентом и пунктиром среднего: заливка гаснет к оси и не спорит с линией, а среднее даёт точку отсчёта.",
-      "categories": [
-        "chart"
-      ],
+      "categories": ["chart"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2012,12 +1880,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-chart-012-*. Серверный: хуков нет. Заливка — linearGradient в defs от 42% непрозрачности акцента до 2%, поэтому площадь читается как объём, а не как цветное пятно. Линия рисуется поверх той же последовательности точек, среднее считается по массиву и печатается подписью у пунктира. Данные продублированы визуально скрытой таблицей.",
       "meta": {
-        "tags": [
-          "chart",
-          "area",
-          "gradient",
-          "svg"
-        ],
+        "tags": ["chart", "area", "gradient", "svg"],
         "preview": {
           "width": "full"
         },
@@ -2152,13 +2015,7 @@
             }
           }
         },
-        "cardControls": [
-          "title",
-          "unit",
-          "showAverage",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "unit", "showAverage", "accent", "background"]
       }
     },
     {
@@ -2166,9 +2023,7 @@
       "type": "registry:component",
       "title": "Кольцо с итогом",
       "description": "Кольцо, у которого дырка занята делом: в центре стоит итог, секторы разделены настоящими зазорами, а легенда несёт числа и проценты.",
-      "categories": [
-        "chart"
-      ],
+      "categories": ["chart"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2180,12 +2035,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-chart-013-*. Серверный: хуков нет. Секторы — обводка одной окружности радиуса 42 через stroke-dasharray и stroke-dashoffset, начало каждого считается суммой предыдущих длин. Из длины сектора вычитается фиксированный зазор, поэтому соседние доли не сливаются. Итог и подпись стоят SVG-текстом в центре, цвет сектора задаётся инлайновым style, чтобы работали CSS-переменные палитры.",
       "meta": {
-        "tags": [
-          "chart",
-          "donut",
-          "kpi",
-          "svg"
-        ],
+        "tags": ["chart", "donut", "kpi", "svg"],
         "preview": {
           "width": "full"
         },
@@ -2342,13 +2192,7 @@
             }
           }
         },
-        "cardControls": [
-          "title",
-          "centerLabel",
-          "unit",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "centerLabel", "unit", "accent", "background"]
       }
     },
     {
@@ -2356,9 +2200,7 @@
       "type": "registry:component",
       "title": "Спидометр с зонами",
       "description": "Полукруговой датчик с окрашенными зонами и стрелкой: стрелка отвечает «сколько», зоны — «это норма или уже плохо».",
-      "categories": [
-        "chart"
-      ],
+      "categories": ["chart"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2370,12 +2212,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-chart-014-*. Серверный: хуков нет. Каждая зона — отдельная дуга, посчитанная тригонометрией из своей доли шкалы; стрелка идёт из центра к точке на укороченном радиусе. Границы зон продублированы списком под шкалой, поэтому смысл не держится на одном цвете. У svg есть role=\"img\" со значением и именем текущей зоны.",
       "meta": {
-        "tags": [
-          "chart",
-          "gauge",
-          "kpi",
-          "zones"
-        ],
+        "tags": ["chart", "gauge", "kpi", "zones"],
         "ai": {
           "export": "Chart014",
           "usage": "<Chart014\n  title=\"Индекс удовлетворённости\"\n  value={78}\n  unit=\"баллов из 100\"\n/>",
@@ -2523,13 +2360,7 @@
             }
           }
         },
-        "cardControls": [
-          "value",
-          "title",
-          "unit",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["value", "title", "unit", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -2540,9 +2371,7 @@
       "type": "registry:component",
       "title": "Колонки с накоплением",
       "description": "Столбцы, разложенные на слои: высота отвечает «сколько всего», доли внутри — «из чего», а легенда называет серии по именам.",
-      "categories": [
-        "chart"
-      ],
+      "categories": ["chart"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2554,12 +2383,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-chart-015-*. Серверный: хуков нет. Высота столбца — процент от общего максимума суммы периода, слои внутри складываются флексом по flex-grow, поэтому пересчёт долей в пиксели не нужен. Стек развёрнут column-reverse, чтобы первая серия оставалась у основания. Область помечена aria-hidden, данные продублированы визуально скрытой таблицей с итогом по каждому периоду.",
       "meta": {
-        "tags": [
-          "chart",
-          "stacked",
-          "columns",
-          "legend"
-        ],
+        "tags": ["chart", "stacked", "columns", "legend"],
         "preview": {
           "width": "full"
         },
@@ -2684,63 +2508,34 @@
                   "period": "Period",
                   "total": "Total"
                 },
-                "series": [
-                  "New",
-                  "Returning",
-                  "Partner"
-                ],
+                "series": ["New", "Returning", "Partner"],
                 "periods": [
                   {
                     "label": "May",
-                    "values": [
-                      42,
-                      28,
-                      12
-                    ]
+                    "values": [42, 28, 12]
                   },
                   {
                     "label": "Jun",
-                    "values": [
-                      51,
-                      30,
-                      14
-                    ]
+                    "values": [51, 30, 14]
                   },
                   {
                     "label": "Jul",
-                    "values": [
-                      46,
-                      36,
-                      18
-                    ]
+                    "values": [46, 36, 18]
                   },
                   {
                     "label": "Aug",
-                    "values": [
-                      58,
-                      41,
-                      15
-                    ]
+                    "values": [58, 41, 15]
                   },
                   {
                     "label": "Sep",
-                    "values": [
-                      64,
-                      44,
-                      22
-                    ]
+                    "values": [64, 44, 22]
                   }
                 ]
               }
             }
           }
         },
-        "cardControls": [
-          "title",
-          "unit",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "unit", "accent", "background"]
       }
     },
     {
@@ -2748,9 +2543,7 @@
       "type": "registry:component",
       "title": "План против факта",
       "description": "Bullet-график «план против факта»: тонкая полоса факта на качественных диапазонах, риска плана поперёк и процент выполнения числом.",
-      "categories": [
-        "chart"
-      ],
+      "categories": ["chart"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2762,12 +2555,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-chart-016-*. Серверный: хуков нет. Шкала каждой строки — план, растянутый до scaleMax, поэтому риска плана стоит в одном и том же месте у всех строк и глаз сравнивает перевыполнение, а не абсолютные величины разной природы. Качественные диапазоны нарисованы одним linear-gradient фона дорожки, факт меняет цвет при достижении плана. Все числа продублированы текстом в строке.",
       "meta": {
-        "tags": [
-          "chart",
-          "bullet",
-          "target",
-          "kpi"
-        ],
+        "tags": ["chart", "bullet", "target", "kpi"],
         "preview": {
           "width": "full"
         },
@@ -2932,13 +2720,7 @@
             }
           }
         },
-        "cardControls": [
-          "title",
-          "unit",
-          "scaleMax",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "unit", "scaleMax", "accent", "background"]
       }
     },
     {
@@ -2946,9 +2728,7 @@
       "type": "registry:component",
       "title": "Воронка конверсии",
       "description": "Симметричная воронка настоящей формы: каждая ступень — трапеция на clip-path, скос между шагами и есть потеря, а процент перехода подписан.",
-      "categories": [
-        "chart"
-      ],
+      "categories": ["chart"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2960,12 +2740,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-chart-017-*. Серверный: хуков нет. Форма ступени целиком живёт в clip-path: polygon, координаты углов приходят четырьмя CSS-переменными из доли шага и доли следующего шага, поэтому фигура тянется вместе с контейнером и не требует ни SVG, ни псевдоэлементов с бордерами. Ширина ступени ограничена снизу третью ширины: узкая ступень не схлопывается в линию, и в ней помещаются число и хвост подписи. Подпись внутри ступени сужена padding до ширины трапеции на высоте строки и обрезается многоточием, а не срезом clip-path посреди буквы. Данные продублированы визуально скрытой таблицей.",
       "meta": {
-        "tags": [
-          "funnel",
-          "conversion",
-          "clip-path",
-          "analytics"
-        ],
+        "tags": ["funnel", "conversion", "clip-path", "analytics"],
         "ai": {
           "export": "Chart017",
           "usage": "<Chart017\n  title=\"Воронка установки\"\n  unit=\"человек за неделю\"\n  steps={[{ label: \"Открыли каталог\", value: 12400 }]}\n/>",
@@ -3116,12 +2891,7 @@
         "preview": {
           "width": "full"
         },
-        "cardControls": [
-          "title",
-          "unit",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "unit", "accent", "background"]
       }
     },
     {
@@ -3129,9 +2899,7 @@
       "type": "registry:component",
       "title": "Каскадный график",
       "description": "Waterfall: как из начального остатка получился конечный. Приходы и расходы висят на накопленной сумме, итоги стоят на нуле, перемычки держат уровень.",
-      "categories": [
-        "chart"
-      ],
+      "categories": ["chart"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3143,12 +2911,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-chart-018-*. Серверный: хуков нет. Накопленная сумма считается заранее: каждому столбцу нужны и низ, и верх, поэтому один проход по шагам превращает значения в пары от-до. Столбцы с флагом total рисуются от нуля, остальные — от предыдущего уровня; цвет берётся из знака значения, а не из данных. Пунктирные перемычки соединяют вершину шага с началом следующего. Данные продублированы визуально скрытой таблицей с накопленным итогом.",
       "meta": {
-        "tags": [
-          "chart",
-          "waterfall",
-          "finance",
-          "svg"
-        ],
+        "tags": ["chart", "waterfall", "finance", "svg"],
         "preview": {
           "width": "full"
         },
@@ -3309,12 +3072,7 @@
             }
           }
         },
-        "cardControls": [
-          "title",
-          "unit",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "unit", "accent", "background"]
       }
     },
     {
@@ -3322,9 +3080,7 @@
       "type": "registry:component",
       "title": "Диаграмма рассеяния",
       "description": "Диаграмма рассеяния для связи двух величин: обе оси подписаны и начинаются с нуля, деления округлены, точки полупрозрачны — наложения видно.",
-      "categories": [
-        "chart"
-      ],
+      "categories": ["chart"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3336,12 +3092,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-chart-019-*. Серверный: хуков нет. Верх каждой оси округляется niceCeil до 1 / 2 / 2.5 / 5 × 10ⁿ, поэтому деления подписаны круглыми числами. Подпись оси Y повёрнута вдоль неё через transform: горизонтальная съела бы треть ширины карточки. Точки полупрозрачны, чтобы наложения читались как сгущение. Данные продублированы визуально скрытой таблицей с обеими координатами.",
       "meta": {
-        "tags": [
-          "chart",
-          "scatter",
-          "axes",
-          "svg"
-        ],
+        "tags": ["chart", "scatter", "axes", "svg"],
         "preview": {
           "width": "full"
         },
@@ -3515,12 +3266,7 @@
             }
           }
         },
-        "cardControls": [
-          "xLabel",
-          "yLabel",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["xLabel", "yLabel", "accent", "background"]
       }
     },
     {
@@ -3528,9 +3274,7 @@
       "type": "registry:component",
       "title": "Радиальные показатели",
       "description": "Несколько показателей одним объектом: концентрические дуги на общем центре и легенда с процентами и абсолютными числами.",
-      "categories": [
-        "chart"
-      ],
+      "categories": ["chart"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3542,12 +3286,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-chart-020-*. Серверный: хуков нет. Каждая метрика живёт на своей окружности: длина окружности считается из радиуса, заполнение задаётся stroke-dasharray, поворот на −90° переносит старт наверх. Радиусы лежат отдельным массивом, поэтому геометрию можно менять, не трогая математику. Кольцо помечено aria-hidden: смысл несёт легенда, где у каждой метрики есть и процент, и «значение из предела».",
       "meta": {
-        "tags": [
-          "chart",
-          "radial",
-          "progress",
-          "metrics"
-        ],
+        "tags": ["chart", "radial", "progress", "metrics"],
         "preview": {
           "width": "full"
         },
@@ -3690,12 +3429,7 @@
             }
           }
         },
-        "cardControls": [
-          "title",
-          "unit",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "unit", "accent", "background"]
       }
     },
     {
@@ -3703,9 +3437,7 @@
       "type": "registry:component",
       "title": "Тепловая карта активности",
       "description": "Тепловая карта «день недели × время суток»: насыщенность клетки считается через color-mix от доли максимума, шкала — одна переменная акцента.",
-      "categories": [
-        "chart"
-      ],
+      "categories": ["chart"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3717,12 +3449,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-chart-021-*. Серверный: хуков нет. Карта — CSS-грид, число колонок приходит переменной --vibeui-chart-021-cols, поэтому шаг сетки часов меняется одним пропом. Каждая клетка получает --vibeui-chart-021-level с долей максимума, а цвет считается color-mix между акцентом и пустым фоном: вся шкала интенсивности держится на одной переменной. Строки дней собираются во фрагментах, чтобы попадать прямо в грид. Данные продублированы визуально скрытой таблицей день×час.",
       "meta": {
-        "tags": [
-          "heatmap",
-          "activity",
-          "grid",
-          "color-mix"
-        ],
+        "tags": ["heatmap", "activity", "grid", "color-mix"],
         "preview": {
           "width": "full"
         },
@@ -3853,25 +3580,12 @@
                 },
                 "rowHeader": "Day",
                 "hourLabel": "{hour}:00",
-                "days": [
-                  "Mon",
-                  "Tue",
-                  "Wed",
-                  "Thu",
-                  "Fri",
-                  "Sat",
-                  "Sun"
-                ]
+                "days": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
               }
             }
           }
         },
-        "cardControls": [
-          "title",
-          "unit",
-          "accent",
-          "background"
-        ]
+        "cardControls": ["title", "unit", "accent", "background"]
       }
     },
     {
@@ -3879,9 +3593,7 @@
       "type": "registry:component",
       "title": "Движение в рейтинге",
       "description": "Рейтинг, в котором место важнее величины: номер позиции отдельной колонкой и движение относительно прошлого замера — «был четвёртым, стал вторым».",
-      "categories": [
-        "chart"
-      ],
+      "categories": ["chart"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3893,12 +3605,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-chart-022-*. Серверный: хуков нет. Строка — сетка из номера, имени, движения и значения; полоса занимает всю ширину строки снизу, поэтому числа стоят ровным столбцом. Движение считается как разница прошлого места и текущего: вверх — это уменьшение номера, поэтому знак обратен привычному. Тройка лидеров выделена через nth-child, а не флагом в данных.",
       "meta": {
-        "tags": [
-          "chart",
-          "ranking",
-          "movement",
-          "top"
-        ],
+        "tags": ["chart", "ranking", "movement", "top"],
         "ai": {
           "export": "Chart022",
           "usage": "<Chart022\n  title=\"Топ страниц за неделю\"\n  unit=\"визитов\"\n  rows={[{ label: \"Тарифы\", value: 5240, wasRank: 3 }]}\n/>",
@@ -4066,13 +3773,7 @@
             }
           }
         },
-        "cardControls": [
-          "title",
-          "unit",
-          "showMoves",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["title", "unit", "showMoves", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -4083,9 +3784,7 @@
       "type": "registry:component",
       "title": "Сужающаяся воронка",
       "description": "Воронка продаж одной сплошной сужающейся фигурой: полосы этапов стыкуются без зазоров, а название, число и процент перехода вынесены на выносные линии сбоку.",
-      "categories": [
-        "chart"
-      ],
+      "categories": ["chart"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4097,12 +3796,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-chart-023-*. Серверный, клиентского JS нет. Воронка рисуется одним SVG-полигоном на этап: соседние полосы делят общую границу, поэтому переход между этапами выглядит непрерывным конусом, а не стопкой раздельных блоков. Подписи и проценты потерь стоят снаружи фигуры на тонких выносных линиях — внутри узкой нижней полосы текст физически не поместился бы. У SVG aria-hidden, а данные для скринридера лежат в визуально скрытой таблице с caption и scope.",
       "meta": {
-        "tags": [
-          "chart",
-          "funnel",
-          "conversion",
-          "sales"
-        ],
+        "tags": ["chart", "funnel", "conversion", "sales"],
         "ai": {
           "export": "Chart023",
           "usage": "<Chart023\n  title=\"Воронка продаж\"\n  unit=\"сделок за месяц\"\n  stages={[{ label: \"Лиды\", value: 3400 }]}\n/>",
@@ -4249,12 +3943,7 @@
             }
           }
         },
-        "cardControls": [
-          "title",
-          "unit",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["title", "unit", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -4265,9 +3954,7 @@
       "type": "registry:component",
       "title": "Мост бюджета",
       "description": "Waterfall на боку: статьи бюджета строками, шкала со значениями сверху, а уголковый пунктирный коннектор ведёт от конца одной полосы к началу следующей.",
-      "categories": [
-        "chart"
-      ],
+      "categories": ["chart"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4279,12 +3966,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-chart-024-*. Серверный, клиентского JS нет. В отличие от вертикального waterfall, здесь строки — это статьи, а шкала со значениями идёт сверху: длинные названия статей не приходится сжимать в вертикальный текст. Приход и расход красит столбец по знаку значения, а не по названию статьи — расход нельзя случайно сделать зелёным. Пунктирный коннектор соединяет конец одной полосы с началом следующей по вертикали.",
       "meta": {
-        "tags": [
-          "chart",
-          "waterfall",
-          "budget",
-          "finance"
-        ],
+        "tags": ["chart", "waterfall", "budget", "finance"],
         "ai": {
           "export": "Chart024",
           "usage": "<Chart024\n  title=\"Мост от остатка к остатку\"\n  unit=\"тысяч рублей\"\n  steps={[{ label: \"Остаток на начало\", value: 860, total: true }]}\n/>",
@@ -4440,12 +4122,7 @@
             }
           }
         },
-        "cardControls": [
-          "title",
-          "unit",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["title", "unit", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -4456,9 +4133,7 @@
       "type": "registry:component",
       "title": "Карта по часам",
       "description": "Тепловая карта «день × час» кружками вместо заливки клеток: величина закодирована радиусом, поэтому карта читается и там, где цветовой контраст слабый.",
-      "categories": [
-        "chart"
-      ],
+      "categories": ["chart"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4470,12 +4145,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-chart-025-*. Серверный, клиентского JS нет. Матрица «день × час» строится не заливкой клеток сетки, а кружками на SVG: радиус несёт величину, а непрозрачность дублирует её вторым каналом. Матрица по умолчанию не хранится литералом на 168 чисел, а считается формулой дневной активности с провалом по выходным. Данные для скринридера — в визуально скрытой таблице с caption и scope у заголовков.",
       "meta": {
-        "tags": [
-          "chart",
-          "heatmap",
-          "activity",
-          "punch-card"
-        ],
+        "tags": ["chart", "heatmap", "activity", "punch-card"],
         "ai": {
           "export": "Chart025",
           "usage": "<Chart025\n  title=\"Активность по часам\"\n  unit=\"событий в час\"\n  matrix={[[2, 4, 18, 34]]}\n/>",
@@ -4588,15 +4258,7 @@
               "props": {
                 "title": "Hourly activity",
                 "unit": "events per hour",
-                "days": [
-                  "Mon",
-                  "Tue",
-                  "Wed",
-                  "Thu",
-                  "Fri",
-                  "Sat",
-                  "Sun"
-                ],
+                "days": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
                 "legendText": {
                   "less": "rarer",
                   "more": "more often"
@@ -4607,12 +4269,7 @@
             }
           }
         },
-        "cardControls": [
-          "title",
-          "unit",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["title", "unit", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -4623,9 +4280,7 @@
       "type": "registry:component",
       "title": "Строки со спарклайнами",
       "description": "Показатели строками, у каждой свой микрографик: числа отвечают «сколько сейчас», спарклайн — «как шло», и оба ответа читаются одним взглядом.",
-      "categories": [
-        "chart"
-      ],
+      "categories": ["chart"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4637,12 +4292,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-chart-026-*. Серверный. Каждая строка — grid из трёх колонок: имя, числа, микрографик. Спарклайн — SVG 68×22 с preserveAspectRatio=none, поэтому тянется по ширине колонки без пересчёта путей; ряд нормализуется по собственным минимуму и максимуму, а не по общей шкале — сравнивают форму, а не высоту. Цвет изменения выбирает prop riseIsGood: там, где рост означает потери (отток, время ответа), знак «плюс» должен быть красным. У́же 24rem раскладка ломается на две колонки, а спарклайн уходит под строку во всю ширину. Данные продублированы скрытой таблицей: SVG помечен aria-hidden.",
       "meta": {
-        "tags": [
-          "chart",
-          "sparkline",
-          "metrics",
-          "dashboard"
-        ],
+        "tags": ["chart", "sparkline", "metrics", "dashboard"],
         "ai": {
           "export": "Chart026",
           "usage": "<Chart026\n  title=\"Показатели за месяц\"\n  rows={[{ label: \"Выручка\", value: \"4,8 млн\", change: 12.4, series: [31, 34, 33, 38] }]}\n/>",
@@ -4756,73 +4406,32 @@
                     "label": "Revenue",
                     "value": "4.8M",
                     "change": 12.4,
-                    "series": [
-                      31,
-                      34,
-                      33,
-                      38,
-                      41,
-                      39,
-                      44,
-                      48
-                    ]
+                    "series": [31, 34, 33, 38, 41, 39, 44, 48]
                   },
                   {
                     "label": "New customers",
                     "value": "312",
                     "change": 5.1,
-                    "series": [
-                      22,
-                      25,
-                      24,
-                      23,
-                      27,
-                      26,
-                      29,
-                      31
-                    ]
+                    "series": [22, 25, 24, 23, 27, 26, 29, 31]
                   },
                   {
                     "label": "Repeat orders",
                     "value": "41%",
                     "change": 2.6,
-                    "series": [
-                      33,
-                      34,
-                      36,
-                      35,
-                      38,
-                      37,
-                      40,
-                      41
-                    ]
+                    "series": [33, 34, 36, 35, 38, 37, 40, 41]
                   },
                   {
                     "label": "Average order",
                     "value": "$168",
                     "change": -3.2,
-                    "series": [
-                      19,
-                      21,
-                      20,
-                      18,
-                      17,
-                      18,
-                      16,
-                      15
-                    ]
+                    "series": [19, 21, 20, 18, 17, 18, 16, 15]
                   }
                 ]
               }
             }
           }
         },
-        "cardControls": [
-          "title",
-          "riseIsGood",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["title", "riseIsGood", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -4833,9 +4442,7 @@
       "type": "registry:component",
       "title": "Паутина",
       "description": "Радар сравнивает профиль целиком: форма многоугольника показывает, где просели относительно остального, а пунктирный контур держит эталон для сравнения.",
-      "categories": [
-        "chart"
-      ],
+      "categories": ["chart"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4847,12 +4454,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-chart-027-*. Серверный. Точки считаются тригонометрией от центра: первый луч смотрит вверх, дальше по часовой стрелке. Сетка — три концентрических многоугольника той же формы, что и данные, поэтому уровни читаются вдоль лучей. Подписи осей прижимаются по стороне: справа start, слева end, сверху и снизу middle — иначе левые подписи налезают на фигуру. Второй контур рисуется пунктиром и появляется, только если длина compare совпадает с числом осей. Значения задаются в процентах от края паутины: общая шкала обязательна, иначе форма ничего не значит. Данные продублированы скрытой таблицей, SVG помечен aria-hidden.",
       "meta": {
-        "tags": [
-          "chart",
-          "radar",
-          "comparison",
-          "profile"
-        ],
+        "tags": ["chart", "radar", "comparison", "profile"],
         "ai": {
           "export": "Chart027",
           "usage": "<Chart027\n  title=\"Профиль продукта\"\n  axes={[{ label: \"Скорость\", value: 82 }, { label: \"Цена\", value: 47 }]}\n  compare={[70, 70]}\n/>",
@@ -4990,17 +4592,13 @@
                     "label": "Support",
                     "value": 71
                   }
-                ]
+                ],
+                "axisColumnLabel": "Axis"
               }
             }
           }
         },
-        "cardControls": [
-          "title",
-          "seriesLabel",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["title", "seriesLabel", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -5011,9 +4609,7 @@
       "type": "registry:component",
       "title": "Столбцы и линия",
       "description": "Две величины разной природы на одном поле: столбцы держат объём по левой шкале, линия — долю по правой, и вторая ось честно говорит, что единицы у них разные.",
-      "categories": [
-        "chart"
-      ],
+      "categories": ["chart"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -5025,12 +4621,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-chart-028-*. Серверный. У столбцов и линии свои шкалы: верх каждой округляется вверх до круглого числа функцией ceilNice, поэтому подписи осей читаются, а не заканчиваются на 1137. Столбцы стоят от нуля — иначе их высоты нельзя сравнивать; линия идёт по центрам столбцов. Заливка столбцов бледнее линии через color-mix от акцента: объём здесь фон, а вопрос задаётся к доле. Левые подписи прижаты к концу строки, правые — к началу, чтобы обе колонки цифр стояли ровно. Данные продублированы скрытой таблицей, SVG помечен aria-hidden.",
       "meta": {
-        "tags": [
-          "chart",
-          "combo",
-          "bar",
-          "line"
-        ],
+        "tags": ["chart", "combo", "bar", "line"],
         "ai": {
           "export": "Chart028",
           "usage": "<Chart028\n  title=\"Заказы и конверсия\"\n  points={[{ label: \"Июл\", bar: 1140, line: 3.8 }]}\n  lineSuffix=\"%\"\n/>",
@@ -5185,7 +4776,8 @@
                     "bar": 1080,
                     "line": 4.1
                   }
-                ]
+                ],
+                "periodColumnLabel": "Period"
               }
             }
           }
@@ -5207,9 +4799,7 @@
       "type": "registry:component",
       "title": "Лента активности",
       "description": "Полгода одной лентой: клетка — день, столбец — неделя, и вопрос к ней не «сколько именно», а «где провалы и как долго держится серия».",
-      "categories": [
-        "chart"
-      ],
+      "categories": ["chart"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -5221,12 +4811,7 @@
       ],
       "docs": "Один файл, ноль зависимостей, палитра --vibeui-chart-029-*. Серверный, без SVG: лента собрана на CSS Grid с grid-auto-flow:column, поэтому недели идут столбцами, а дни строками. Уровень задаётся числом 0…4, а не самим значением: пять ступеней различимы глазом, непрерывная шкала на клетке 12×12 — уже нет. Ступени строятся через color-mix от акцента, так что перекрасить график можно одной переменной. Лента прокручивается внутри себя (overflow-x:auto с overscroll-behavior:contain), а не растягивает страницу. Подписи месяцев и дней помечены aria-hidden; сводка вынесена в скрытую таблицу.",
       "meta": {
-        "tags": [
-          "chart",
-          "heatmap",
-          "activity",
-          "calendar"
-        ],
+        "tags": ["chart", "heatmap", "activity", "calendar"],
         "ai": {
           "export": "Chart029",
           "usage": "<Chart029\n  title=\"Активность за полгода\"\n  weeks={[[0, 1, 2, 3, 4, 1, 0]]}\n  months={[\"Март\", \"Апрель\"]}\n/>",
@@ -5359,15 +4944,10 @@
                   "August",
                   "September"
                 ],
-                "days": [
-                  "Mon",
-                  "",
-                  "Wed",
-                  "",
-                  "Fri",
-                  "",
-                  "Sun"
-                ]
+                "days": ["Mon", "", "Wed", "", "Fri", "", "Sun"],
+                "totalRowLabel": "Days total",
+                "activeRowLabel": "Days with activity",
+                "weeksRowLabel": "Weeks in the ribbon"
               }
             }
           }

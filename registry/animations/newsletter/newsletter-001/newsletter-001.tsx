@@ -4,6 +4,8 @@ export type Newsletter001Props = Omit<
   ComponentProps<"section">,
   "children" | "title"
 > & {
+  /** Мелкая строка под формой. */
+  fineText?: string
   title?: string
   description?: string
   placeholder?: string
@@ -144,6 +146,7 @@ const CHECK = (
  * и обратно. Один файл, ноль зависимостей, собственная палитра.
  */
 export function Newsletter001({
+  fineText = "Отписаться можно в любой момент.",
   title = "Будьте в курсе обновлений",
   description = "Раз в две недели — главное о продукте, без спама и рассылок «на всякий случай».",
   placeholder = "you@company.com",
@@ -193,7 +196,7 @@ export function Newsletter001({
               </span>
             </button>
           </div>
-          <p data-part="fine">Отписаться можно в любой момент.</p>
+          <p data-part="fine">{fineText}</p>
         </div>
       </section>
     </>

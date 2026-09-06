@@ -14,6 +14,8 @@ export type PricingAnim001Props = Omit<
   ComponentProps<"section">,
   "children" | "title"
 > & {
+  /** Плашка на выделенном тарифе. */
+  popularLabel?: string
   title?: string
   description?: string
   plans?: PricingAnim001Plan[]
@@ -176,12 +178,7 @@ const DEFAULT_PLANS: PricingAnim001Plan[] = [
     name: "Бизнес",
     price: "4 990 ₽",
     period: "/мес",
-    features: [
-      "Всё из Про",
-      "SSO и роли",
-      "Выделенный менеджер",
-      "SLA 99.9%",
-    ],
+    features: ["Всё из Про", "SSO и роли", "Выделенный менеджер", "SLA 99.9%"],
     ctaLabel: "Связаться с продажами",
   },
 ]
@@ -192,6 +189,7 @@ const DEFAULT_PLANS: PricingAnim001Plan[] = [
  * палитра.
  */
 export function PricingAnim001({
+  popularLabel = "Популярно",
   title = "Тарифы, которые растут вместе с вами",
   description = "Начните бесплатно и переходите на старший план, когда команде понадобится больше.",
   plans = DEFAULT_PLANS,
@@ -230,7 +228,7 @@ export function PricingAnim001({
                 key={plan.name}
               >
                 {plan.popular ? (
-                  <span data-part="badge">Популярно</span>
+                  <span data-part="badge">{popularLabel}</span>
                 ) : null}
                 <p data-part="name">{plan.name}</p>
                 <div data-part="price-row">

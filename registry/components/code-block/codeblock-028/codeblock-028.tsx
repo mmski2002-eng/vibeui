@@ -4,6 +4,8 @@ export type Codeblock028Props = Omit<
   ComponentProps<"figure">,
   "children" | "title"
 > & {
+  /** Подпись демо-кнопки в результате, когда children не переданы. */
+  demoLabel?: string
   title?: string
   /** Что показывать на вкладке результата: живой пример, а не картинка. */
   children?: ReactNode
@@ -144,6 +146,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Codeblock028({
+  demoLabel = "Продолжить",
   title = "components/ui/button.tsx",
   children,
   code = DEFAULT_CODE,
@@ -205,7 +208,7 @@ export function Codeblock028({
         <div data-part="result">
           {children ?? (
             <button type="button" style={DEMO_BUTTON_STYLE}>
-              Продолжить
+              {demoLabel}
             </button>
           )}
         </div>
