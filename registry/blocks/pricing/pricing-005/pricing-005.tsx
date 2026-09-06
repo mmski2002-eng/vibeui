@@ -28,10 +28,10 @@ const STYLES = `
 --vibeui-pricing-005-bg:oklch(0.21 0 275);
 --vibeui-pricing-005-fg:oklch(0.98 0 275);
 --vibeui-pricing-005-muted:oklch(0.75 0 275);
---vibeui-pricing-005-panel:oklch(0.26 0.035 275);
+--vibeui-pricing-005-panel:oklch(0.26 0.035 39.8);
 --vibeui-pricing-005-line:oklch(1 0 0 / 14%);
---vibeui-pricing-005-accent:oklch(0.82 0.15 100);
---vibeui-pricing-005-accent-fg:oklch(0.2 0.04 100);
+--vibeui-pricing-005-accent:oklch(0.82 0.15 39.8);
+--vibeui-pricing-005-accent-fg:oklch(0.2 0.04 39.8);
 --vibeui-pricing-005-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

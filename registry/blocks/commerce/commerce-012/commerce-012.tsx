@@ -47,11 +47,11 @@ const STYLES = `
 --vibeui-commerce-012-muted:light-dark(oklch(0.55 0 265),oklch(0.72 0 265));
 --vibeui-commerce-012-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
 --vibeui-commerce-012-soft:light-dark(oklch(0.975 0 265),oklch(0.27 0 265));
---vibeui-commerce-012-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
+--vibeui-commerce-012-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.17 39.8));
 --vibeui-commerce-012-ok:light-dark(oklch(0.58 0.14 152),oklch(0.76 0.14 152));
 --vibeui-commerce-012-on-ok:light-dark(oklch(1 0 0),oklch(0.19 0.02 152));
---vibeui-commerce-012-face:light-dark(oklch(0.88 0.07 262),oklch(0.38 0.08 262));
---vibeui-commerce-012-on-face:light-dark(oklch(0.28 0.06 262),oklch(0.95 0 262));
+--vibeui-commerce-012-face:light-dark(oklch(0.88 0.07 39.8),oklch(0.38 0.08 39.8));
+--vibeui-commerce-012-on-face:light-dark(oklch(0.28 0.06 39.8),oklch(0.95 0 262));
 --vibeui-commerce-012-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

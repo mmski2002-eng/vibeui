@@ -46,11 +46,11 @@ const STYLES = `
 --vibeui-ai-014-fg:light-dark(oklch(0.21 0 265),oklch(0.94 0 265));
 --vibeui-ai-014-muted:light-dark(oklch(0.53 0 265),oklch(0.7 0 265));
 --vibeui-ai-014-border:light-dark(oklch(0.91 0 265),oklch(0.37 0 265));
---vibeui-ai-014-accent:light-dark(oklch(0.52 0.17 268),oklch(0.74 0.14 268));
---vibeui-ai-014-on-accent:light-dark(oklch(1 0 0),oklch(0.2 0 268));
---vibeui-ai-014-system:light-dark(oklch(0.62 0.13 268),oklch(0.7 0.13 268));
---vibeui-ai-014-context:light-dark(oklch(0.6 0.14 200),oklch(0.71 0.12 200));
---vibeui-ai-014-chat:light-dark(oklch(0.65 0.15 60),oklch(0.76 0.13 60));
+--vibeui-ai-014-accent:light-dark(oklch(0.52 0.17 39.8),oklch(0.74 0.14 39.8));
+--vibeui-ai-014-on-accent:oklch(0.15 0.02 39.8);
+--vibeui-ai-014-system:light-dark(oklch(0.62 0.13 39.8),oklch(0.7 0.13 39.8));
+--vibeui-ai-014-context:light-dark(oklch(0.6 0.14 39.8),oklch(0.71 0.12 39.8));
+--vibeui-ai-014-chat:light-dark(oklch(0.65 0.15 39.8),oklch(0.76 0.13 39.8));
 --vibeui-ai-014-free:light-dark(oklch(0.92 0 265),oklch(0.34 0 265));
 --vibeui-ai-014-warn:light-dark(oklch(0.55 0.16 55),oklch(0.78 0.13 65));
 --vibeui-ai-014-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

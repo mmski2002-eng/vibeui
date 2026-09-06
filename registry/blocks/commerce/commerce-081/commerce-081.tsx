@@ -60,8 +60,8 @@ const STYLES = `
 --vibeui-commerce-081-bg:light-dark(oklch(1 0 0),oklch(0.22 0 265));
 --vibeui-commerce-081-soft:light-dark(oklch(0.975 0 265),oklch(0.27 0 265));
 --vibeui-commerce-081-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
---vibeui-commerce-081-accent:light-dark(oklch(0.55 0.2 262),oklch(0.73 0.16 262));
---vibeui-commerce-081-accent-fg:light-dark(oklch(1 0 0),oklch(0.17 0 265));
+--vibeui-commerce-081-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.73 0.16 39.8));
+--vibeui-commerce-081-accent-fg:oklch(0.15 0.02 39.8);
 --vibeui-commerce-081-ok:light-dark(oklch(0.55 0.14 152),oklch(0.75 0.14 152));
 --vibeui-commerce-081-bad:light-dark(oklch(0.58 0.19 25),oklch(0.74 0.16 25));
 --vibeui-commerce-081-star:light-dark(oklch(0.54 0.16 78),oklch(0.84 0.15 80));

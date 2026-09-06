@@ -62,12 +62,12 @@ const STYLES = `
 --vibeui-dashboard-058-fg:light-dark(oklch(0.21 0.014 190),oklch(0.94 0.005 190));
 --vibeui-dashboard-058-muted:light-dark(oklch(0.55 0.014 190),oklch(0.72 0.012 190));
 --vibeui-dashboard-058-border:light-dark(oklch(0.91 0.006 190),oklch(0.36 0.012 190));
---vibeui-dashboard-058-accent:light-dark(oklch(0.5 0.12 190),oklch(0.76 0.11 190));
---vibeui-dashboard-058-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.03 190));
---vibeui-dashboard-058-soft:light-dark(oklch(0.965 0.02 190),oklch(0.31 0.04 190));
---vibeui-dashboard-058-conflict:light-dark(oklch(0.68 0.15 72),oklch(0.79 0.14 72));
---vibeui-dashboard-058-conflict-soft:light-dark(oklch(0.975 0.02 72),oklch(0.3 0.045 72));
---vibeui-dashboard-058-conflict-ink:light-dark(oklch(0.48 0.11 72),oklch(0.84 0.12 72));
+--vibeui-dashboard-058-accent:light-dark(oklch(0.55 0.12 39.8),oklch(0.76 0.11 39.8));
+--vibeui-dashboard-058-on-accent:oklch(0.15 0.02 39.8);
+--vibeui-dashboard-058-soft:light-dark(oklch(0.965 0.02 190),oklch(0.31 0.04 39.8));
+--vibeui-dashboard-058-conflict:light-dark(oklch(0.68 0.15 39.8),oklch(0.79 0.14 39.8));
+--vibeui-dashboard-058-conflict-soft:light-dark(oklch(0.975 0.02 72),oklch(0.3 0.045 39.8));
+--vibeui-dashboard-058-conflict-ink:light-dark(oklch(0.48 0.11 39.8),oklch(0.84 0.12 39.8));
 --vibeui-dashboard-058-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 container-type:inline-size;
 }

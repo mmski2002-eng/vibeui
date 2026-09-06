@@ -52,10 +52,10 @@ const STYLES = `
 --vibeui-commerce-069-muted:light-dark(oklch(0.53 0 300),oklch(0.73 0 300));
 --vibeui-commerce-069-border:light-dark(oklch(0.9 0 300),oklch(0.38 0 300));
 --vibeui-commerce-069-soft:light-dark(oklch(0.972 0 300),oklch(0.27 0 300));
---vibeui-commerce-069-accent:light-dark(oklch(0.5 0.16 300),oklch(0.76 0.14 300));
+--vibeui-commerce-069-accent:light-dark(oklch(0.55 0.16 39.8),oklch(0.76 0.14 39.8));
 --vibeui-commerce-069-live:light-dark(oklch(0.47 0.12 150),oklch(0.78 0.14 150));
---vibeui-commerce-069-pause:light-dark(oklch(0.58 0.13 75),oklch(0.82 0.14 75));
---vibeui-commerce-069-end:light-dark(oklch(0.54 0.16 25),oklch(0.73 0.15 25));
+--vibeui-commerce-069-pause:light-dark(oklch(0.58 0.13 39.8),oklch(0.82 0.14 39.8));
+--vibeui-commerce-069-end:light-dark(oklch(0.54 0.16 39.8),oklch(0.73 0.15 39.8));
 --vibeui-commerce-069-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

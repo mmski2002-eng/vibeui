@@ -30,8 +30,8 @@ const STYLES = `
 --vibeui-testimonials-003-ink:light-dark(oklch(0.2 0.02 70),oklch(0.95 0.008 80));
 --vibeui-testimonials-003-muted:light-dark(oklch(0.47 0.02 70),oklch(0.73 0.014 80));
 --vibeui-testimonials-003-border:light-dark(oklch(0.87 0.016 80),oklch(0.36 0.018 75));
---vibeui-testimonials-003-accent:light-dark(oklch(0.5 0.13 45),oklch(0.74 0.13 55));
---vibeui-testimonials-003-on-accent:light-dark(oklch(0.99 0 0),oklch(0.2 0.05 45));
+--vibeui-testimonials-003-accent:light-dark(oklch(0.55 0.13 39.8),oklch(0.74 0.13 39.8));
+--vibeui-testimonials-003-on-accent:oklch(0.15 0.02 39.8);
 --vibeui-testimonials-003-serif:ui-serif,Georgia,"Times New Roman",serif;
 --vibeui-testimonials-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

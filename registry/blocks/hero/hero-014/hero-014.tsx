@@ -25,13 +25,13 @@ export type Hero014Props = {
 // слой, а секция обязана быть статичной и попадать в кэш страницы.
 const STYLES = `
 :where([data-vibeui-block="hero-014"]){
---vibeui-hero-014-bg:oklch(0.18 0.04 285);
+--vibeui-hero-014-bg:oklch(0.18 0.04 39.8);
 --vibeui-hero-014-fg:oklch(0.97 0 285);
 --vibeui-hero-014-muted:oklch(0.74 0 285);
---vibeui-hero-014-tile:oklch(0.24 0.045 285);
+--vibeui-hero-014-tile:oklch(0.24 0.045 39.8);
 --vibeui-hero-014-line:oklch(1 0 0 / 14%);
---vibeui-hero-014-accent:oklch(0.8 0.17 95);
---vibeui-hero-014-accent-fg:oklch(0.2 0.05 95);
+--vibeui-hero-014-accent:oklch(0.8 0.17 39.8);
+--vibeui-hero-014-accent-fg:oklch(0.2 0.05 39.8);
 --vibeui-hero-014-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

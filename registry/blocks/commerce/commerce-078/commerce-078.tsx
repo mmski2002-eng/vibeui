@@ -57,7 +57,7 @@ const STYLES = `
 --vibeui-commerce-078-fg:oklch(0.97 0 285);
 --vibeui-commerce-078-muted:oklch(0.73 0 285);
 --vibeui-commerce-078-border:oklch(0.37 0 285);
---vibeui-commerce-078-accent:oklch(0.82 0.14 85);
+--vibeui-commerce-078-accent:oklch(0.82 0.14 39.8);
 --vibeui-commerce-078-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

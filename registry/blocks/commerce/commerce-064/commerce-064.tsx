@@ -46,8 +46,8 @@ const STYLES = `
 --vibeui-commerce-064-fg:light-dark(oklch(0.22 0 265),oklch(0.97 0 265));
 --vibeui-commerce-064-muted:light-dark(oklch(0.52 0 265),oklch(0.72 0 265));
 --vibeui-commerce-064-border:light-dark(oklch(0.89 0 265),oklch(0.4 0 265));
---vibeui-commerce-064-accent:light-dark(oklch(0.52 0.13 145),oklch(0.78 0.16 145));
---vibeui-commerce-064-onaccent:light-dark(oklch(0.99 0 0),oklch(0.19 0 265));
+--vibeui-commerce-064-accent:light-dark(oklch(0.52 0.13 39.8),oklch(0.78 0.16 39.8));
+--vibeui-commerce-064-onaccent:oklch(0.15 0.02 39.8);
 --vibeui-commerce-064-warn:light-dark(oklch(0.53 0.14 65),oklch(0.8 0.15 75));
 /* Бумага и краска QR не зависят от темы: код читает сканер, а ему нужен
    постоянный контраст. */

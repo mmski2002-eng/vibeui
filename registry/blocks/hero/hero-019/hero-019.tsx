@@ -40,7 +40,7 @@ const STYLES = `
 --vibeui-hero-019-card:light-dark(oklch(1 0 0),oklch(0.25 0 258));
 --vibeui-hero-019-field:light-dark(oklch(0.985 0 258),oklch(0.22 0 258));
 --vibeui-hero-019-line:light-dark(oklch(0.89 0 258),oklch(0.36 0 258));
---vibeui-hero-019-accent:light-dark(oklch(0.53 0.17 262),oklch(0.72 0.15 262));
+--vibeui-hero-019-accent:light-dark(oklch(0.53 0.17 39.8),oklch(0.72 0.15 39.8));
 --vibeui-hero-019-accent-fg:oklch(from var(--vibeui-hero-019-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-hero-019-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

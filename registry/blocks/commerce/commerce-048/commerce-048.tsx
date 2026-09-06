@@ -40,11 +40,11 @@ export type Commerce048Props = {
 const STYLES = `
 :where([data-vibeui-block="commerce-048"]){
 --vibeui-commerce-048-bg:oklch(0.18 0 285);
---vibeui-commerce-048-panel:oklch(0.24 0.035 285);
+--vibeui-commerce-048-panel:oklch(0.24 0.035 39.8);
 --vibeui-commerce-048-fg:oklch(0.97 0 285);
 --vibeui-commerce-048-muted:oklch(0.72 0 285);
 --vibeui-commerce-048-border:oklch(0.34 0 285);
---vibeui-commerce-048-accent:oklch(0.72 0.19 45);
+--vibeui-commerce-048-accent:oklch(0.72 0.19 39.8);
 --vibeui-commerce-048-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

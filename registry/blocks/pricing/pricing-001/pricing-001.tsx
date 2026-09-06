@@ -56,8 +56,8 @@ const STYLES = `
 --vibeui-pricing-001-ink:light-dark(oklch(0.2 0 285),oklch(0.95 0 285));
 --vibeui-pricing-001-muted:light-dark(oklch(0.5 0 285),oklch(0.72 0 285));
 --vibeui-pricing-001-border:light-dark(oklch(0.9 0 285),oklch(0.34 0 285));
---vibeui-pricing-001-accent:light-dark(oklch(0.55 0.19 295),oklch(0.74 0.16 295));
---vibeui-pricing-001-accent-fg:light-dark(oklch(0.99 0 285),oklch(0.19 0 295));
+--vibeui-pricing-001-accent:light-dark(oklch(0.55 0.19 39.8),oklch(0.74 0.16 39.8));
+--vibeui-pricing-001-accent-fg:oklch(0.15 0.02 39.8);
 --vibeui-pricing-001-featured-bg:light-dark(oklch(0.2 0 285),oklch(0.95 0 285));
 --vibeui-pricing-001-featured-fg:light-dark(oklch(0.98 0 285),oklch(0.2 0 285));
 --vibeui-pricing-001-featured-muted:light-dark(oklch(0.74 0 285),oklch(0.45 0 285));

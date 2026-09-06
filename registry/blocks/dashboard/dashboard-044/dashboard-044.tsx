@@ -48,10 +48,10 @@ const STYLES = `
 --vibeui-dashboard-044-fg:light-dark(oklch(0.22 0.014 20),oklch(0.94 0.005 20));
 --vibeui-dashboard-044-muted:light-dark(oklch(0.55 0.014 20),oklch(0.72 0.012 20));
 --vibeui-dashboard-044-border:light-dark(oklch(0.91 0.007 20),oklch(0.36 0.012 20));
---vibeui-dashboard-044-p1:light-dark(oklch(0.55 0.2 25),oklch(0.7 0.18 25));
---vibeui-dashboard-044-p2:light-dark(oklch(0.64 0.16 60),oklch(0.78 0.14 60));
---vibeui-dashboard-044-p3:light-dark(oklch(0.55 0.06 250),oklch(0.7 0.06 250));
---vibeui-dashboard-044-accent:light-dark(oklch(0.5 0.15 25),oklch(0.72 0.15 25));
+--vibeui-dashboard-044-p1:light-dark(oklch(0.55 0.2 39.8),oklch(0.7 0.18 39.8));
+--vibeui-dashboard-044-p2:light-dark(oklch(0.64 0.16 39.8),oklch(0.78 0.14 39.8));
+--vibeui-dashboard-044-p3:light-dark(oklch(0.55 0.06 39.8),oklch(0.7 0.06 39.8));
+--vibeui-dashboard-044-accent:light-dark(oklch(0.55 0.15 39.8),oklch(0.72 0.15 39.8));
 /* Текст на цветной заливке: в тёмной ветке заливки светлее фона. */
 --vibeui-dashboard-044-on-fill:light-dark(oklch(1 0 0),oklch(0.2 0.03 25));
 --vibeui-dashboard-044-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

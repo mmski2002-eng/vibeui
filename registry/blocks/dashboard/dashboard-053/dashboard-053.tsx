@@ -60,9 +60,9 @@ const STYLES = `
 --vibeui-dashboard-053-fg:light-dark(oklch(0.22 0.014 160),oklch(0.94 0.005 160));
 --vibeui-dashboard-053-muted:light-dark(oklch(0.53 0.014 160),oklch(0.72 0.012 160));
 --vibeui-dashboard-053-border:light-dark(oklch(0.91 0.006 160),oklch(0.36 0.012 160));
---vibeui-dashboard-053-accent:light-dark(oklch(0.5 0.13 160),oklch(0.76 0.12 160));
---vibeui-dashboard-053-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.03 160));
---vibeui-dashboard-053-soft:light-dark(oklch(0.95 0.025 160),oklch(0.32 0.045 160));
+--vibeui-dashboard-053-accent:light-dark(oklch(0.55 0.13 39.8),oklch(0.76 0.12 39.8));
+--vibeui-dashboard-053-on-accent:oklch(0.15 0.02 39.8);
+--vibeui-dashboard-053-soft:light-dark(oklch(0.95 0.025 160),oklch(0.32 0.045 39.8));
 --vibeui-dashboard-053-bad:light-dark(oklch(0.58 0.19 25),oklch(0.72 0.17 25));
 --vibeui-dashboard-053-bad-line:light-dark(oklch(0.8 0.09 25),oklch(0.45 0.1 25));
 --vibeui-dashboard-053-bad-soft:light-dark(oklch(0.96 0.022 25),oklch(0.3 0.05 25));

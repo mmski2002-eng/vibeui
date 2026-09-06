@@ -47,12 +47,12 @@ const STYLES = `
 --vibeui-commerce-070-border:light-dark(oklch(0.9 0.008 210),oklch(0.38 0.016 210));
 --vibeui-commerce-070-soft:light-dark(oklch(0.972 0.006 210),oklch(0.27 0.016 210));
 --vibeui-commerce-070-land:light-dark(oklch(0.94 0.02 160),oklch(0.3 0.025 160));
---vibeui-commerce-070-water:light-dark(oklch(0.9 0.045 215),oklch(0.36 0.055 215));
+--vibeui-commerce-070-water:light-dark(oklch(0.9 0.045 39.8),oklch(0.36 0.055 39.8));
 --vibeui-commerce-070-grid:light-dark(oklch(0.88 0.012 210),oklch(0.37 0.02 210));
 --vibeui-commerce-070-road:light-dark(oklch(0.99 0 0),oklch(0.47 0.02 210));
 --vibeui-commerce-070-veil:light-dark(oklch(1 0 0 / 88%),oklch(0.21 0.014 210 / 88%));
---vibeui-commerce-070-accent:light-dark(oklch(0.48 0.15 215),oklch(0.75 0.14 215));
---vibeui-commerce-070-onaccent:light-dark(oklch(0.99 0 0),oklch(0.19 0.04 215));
+--vibeui-commerce-070-accent:light-dark(oklch(0.55 0.15 39.8),oklch(0.75 0.14 39.8));
+--vibeui-commerce-070-onaccent:oklch(0.15 0.02 39.8);
 --vibeui-commerce-070-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

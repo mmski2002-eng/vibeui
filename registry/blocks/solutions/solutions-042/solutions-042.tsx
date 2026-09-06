@@ -64,9 +64,9 @@ const STYLES = `
 --vibeui-solutions-042-fg:light-dark(oklch(0.21 0 265),oklch(0.94 0 265));
 --vibeui-solutions-042-muted:light-dark(oklch(0.54 0 265),oklch(0.69 0 265));
 --vibeui-solutions-042-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
---vibeui-solutions-042-accent:light-dark(oklch(0.48 0.15 265),oklch(0.72 0.14 265));
---vibeui-solutions-042-urgent:light-dark(oklch(0.57 0.19 25),oklch(0.71 0.17 25));
---vibeui-solutions-042-soon:light-dark(oklch(0.65 0.15 75),oklch(0.78 0.14 75));
+--vibeui-solutions-042-accent:light-dark(oklch(0.55 0.15 39.8),oklch(0.72 0.14 39.8));
+--vibeui-solutions-042-urgent:light-dark(oklch(0.57 0.19 39.8),oklch(0.71 0.17 39.8));
+--vibeui-solutions-042-soon:light-dark(oklch(0.65 0.15 39.8),oklch(0.78 0.14 39.8));
 --vibeui-solutions-042-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-solutions-042-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

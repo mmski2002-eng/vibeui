@@ -48,11 +48,11 @@ const STYLES = `
 --vibeui-dashboard-057-fg:light-dark(oklch(0.21 0 300),oklch(0.94 0 300));
 --vibeui-dashboard-057-muted:light-dark(oklch(0.55 0 300),oklch(0.72 0 300));
 --vibeui-dashboard-057-border:light-dark(oklch(0.91 0 300),oklch(0.36 0 300));
---vibeui-dashboard-057-accent:light-dark(oklch(0.5 0.17 300),oklch(0.76 0.14 300));
---vibeui-dashboard-057-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.045 300));
---vibeui-dashboard-057-accent-line:light-dark(oklch(0.86 0.05 300),oklch(0.44 0.08 300));
---vibeui-dashboard-057-accent-edge:light-dark(oklch(0.78 0.08 300),oklch(0.52 0.11 300));
---vibeui-dashboard-057-soft:light-dark(oklch(0.965 0 300),oklch(0.31 0.045 300));
+--vibeui-dashboard-057-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.76 0.14 39.8));
+--vibeui-dashboard-057-on-accent:oklch(0.15 0.02 39.8);
+--vibeui-dashboard-057-accent-line:light-dark(oklch(0.86 0.05 39.8),oklch(0.44 0.08 39.8));
+--vibeui-dashboard-057-accent-edge:light-dark(oklch(0.78 0.08 39.8),oklch(0.52 0.11 39.8));
+--vibeui-dashboard-057-soft:light-dark(oklch(0.965 0 300),oklch(0.31 0.045 39.8));
 --vibeui-dashboard-057-warn:light-dark(oklch(0.57 0.19 25),oklch(0.72 0.17 25));
 --vibeui-dashboard-057-warn-soft:light-dark(oklch(0.97 0.018 25),oklch(0.28 0.05 25));
 --vibeui-dashboard-057-warn-line:light-dark(oklch(0.84 0.08 25),oklch(0.46 0.1 25));

@@ -60,7 +60,7 @@ const STYLES = `
 --vibeui-commerce-020-muted:light-dark(oklch(0.55 0 265),oklch(0.7 0 265));
 --vibeui-commerce-020-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-commerce-020-soft:light-dark(oklch(0.975 0 265),oklch(0.27 0 265));
---vibeui-commerce-020-accent:light-dark(oklch(0.55 0.2 262),oklch(0.73 0.16 262));
+--vibeui-commerce-020-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.73 0.16 39.8));
 --vibeui-commerce-020-ok:light-dark(oklch(0.55 0.14 152),oklch(0.75 0.14 152));
 --vibeui-commerce-020-bad:light-dark(oklch(0.58 0.19 25),oklch(0.74 0.16 25));
 --vibeui-commerce-020-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

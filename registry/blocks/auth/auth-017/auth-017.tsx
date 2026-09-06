@@ -68,10 +68,10 @@ const STYLES = `
 --vibeui-auth-017-fg:light-dark(oklch(0.22 0.016 150),oklch(0.94 0.006 150));
 --vibeui-auth-017-muted:light-dark(oklch(0.53 0.014 150),oklch(0.7 0.012 150));
 --vibeui-auth-017-border:light-dark(oklch(0.89 0.01 150),oklch(0.35 0.012 150));
---vibeui-auth-017-accent:light-dark(oklch(0.5 0.14 150),oklch(0.74 0.13 150));
---vibeui-auth-017-accent-2:light-dark(oklch(0.6 0.15 190),oklch(0.76 0.12 190));
---vibeui-auth-017-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 150));
---vibeui-auth-017-tint:light-dark(oklch(0.5 0.14 150 / 12%),oklch(0.74 0.13 150 / 18%));
+--vibeui-auth-017-accent:light-dark(oklch(0.55 0.14 39.8),oklch(0.74 0.13 39.8));
+--vibeui-auth-017-accent-2:light-dark(oklch(0.6 0.15 39.8),oklch(0.76 0.12 39.8));
+--vibeui-auth-017-on-accent:oklch(0.15 0.02 39.8);
+--vibeui-auth-017-tint:light-dark(oklch(0.5 0.14 39.8 / 12%),oklch(0.74 0.13 39.8 / 18%));
 --vibeui-auth-017-sheet:light-dark(oklch(0.55 0.02 150 / 5%),oklch(0.85 0.02 150 / 8%));
 --vibeui-auth-017-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

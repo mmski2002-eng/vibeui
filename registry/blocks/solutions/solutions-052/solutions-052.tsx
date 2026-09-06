@@ -54,7 +54,7 @@ const STYLES = `
 --vibeui-solutions-052-fg:light-dark(oklch(0.21 0 220),oklch(0.94 0 220));
 --vibeui-solutions-052-muted:light-dark(oklch(0.54 0 220),oklch(0.69 0 220));
 --vibeui-solutions-052-border:light-dark(oklch(0.9 0 220),oklch(0.36 0 220));
---vibeui-solutions-052-accent:light-dark(oklch(0.55 0.13 190),oklch(0.74 0.12 190));
+--vibeui-solutions-052-accent:light-dark(oklch(0.55 0.13 39.8),oklch(0.74 0.12 39.8));
 --vibeui-solutions-052-good:light-dark(oklch(0.58 0.14 152),oklch(0.73 0.13 152));
 --vibeui-solutions-052-warn:light-dark(oklch(0.68 0.15 85),oklch(0.8 0.14 85));
 --vibeui-solutions-052-risk:light-dark(oklch(0.57 0.19 30),oklch(0.73 0.16 30));

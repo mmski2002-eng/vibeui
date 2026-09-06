@@ -26,8 +26,8 @@ const STYLES = `
 --vibeui-hero-007-fg:light-dark(oklch(0.19 0 300),oklch(0.97 0 300));
 --vibeui-hero-007-muted:light-dark(oklch(0.5 0 300),oklch(0.7 0 300));
 --vibeui-hero-007-line:light-dark(oklch(0.19 0 300 / 15%),oklch(1 0 0 / 16%));
---vibeui-hero-007-accent:light-dark(oklch(0.52 0.2 305),oklch(0.7 0.19 305));
---vibeui-hero-007-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.17 0.04 305));
+--vibeui-hero-007-accent:light-dark(oklch(0.52 0.2 39.8),oklch(0.7 0.19 39.8));
+--vibeui-hero-007-accent-fg:oklch(0.15 0.02 39.8);
 /* Постер всегда тёмный — это кадр, а не подложка; текст на нём светлый в обеих темах. */
 --vibeui-hero-007-on-poster:oklch(0.97 0 300);
 --vibeui-hero-007-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -61,7 +61,7 @@ position:relative;display:block;margin:2.25rem 0 0;aspect-ratio:16 / 9;border-ra
 border:1px solid var(--vibeui-hero-007-line);text-decoration:none;color:var(--vibeui-hero-007-on-poster);
 background:
 radial-gradient(60% 80% at 22% 18%,color-mix(in oklab,var(--vibeui-hero-007-accent) 55%,transparent),transparent 70%),
-conic-gradient(from 210deg at 70% 80%,oklch(0.35 0.13 250),oklch(0.28 0.1 320),oklch(0.22 0.06 280),oklch(0.35 0.13 250));
+conic-gradient(from 210deg at 70% 80%,oklch(0.35 0.13 39.8),oklch(0.28 0.1 25),oklch(0.22 0.06 45),oklch(0.35 0.13 39.8));
 transition:transform .2s ease,border-color .2s ease;
 }
 [data-vibeui-block="hero-007"] [data-part="player"]:hover{transform:translateY(-2px);border-color:var(--vibeui-hero-007-accent)}

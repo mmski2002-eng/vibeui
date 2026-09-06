@@ -31,7 +31,7 @@ const STYLES = `
 --vibeui-features-009-muted:oklch(0.7 0 250);
 --vibeui-features-009-dim:oklch(0.55 0 250);
 --vibeui-features-009-line:oklch(1 0 0 / 12%);
---vibeui-features-009-accent:oklch(0.8 0.16 90);
+--vibeui-features-009-accent:oklch(0.8 0.16 39.8);
 --vibeui-features-009-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

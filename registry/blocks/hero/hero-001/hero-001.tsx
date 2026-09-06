@@ -36,8 +36,8 @@ const STYLES = `
 --vibeui-hero-fg:light-dark(oklch(0.19 0 266),oklch(0.98 0 266));
 --vibeui-hero-muted:light-dark(oklch(0.5 0 266),oklch(0.75 0 266));
 --vibeui-hero-border:light-dark(oklch(0.16 0 266 / 14%),oklch(1 0 0 / 18%));
---vibeui-hero-accent:light-dark(oklch(0.55 0.19 264),oklch(0.72 0.163 264));
---vibeui-hero-accent-fg:light-dark(oklch(0.99 0 266),oklch(0.17 0 266));
+--vibeui-hero-accent:light-dark(oklch(0.55 0.2144 39.8),oklch(0.6803 0.2144 39.8));
+--vibeui-hero-accent-fg:light-dark(oklch(0.15 0.02 39.8),oklch(0.15 0.02 39.8));
 --vibeui-hero-ring:color-mix(in oklab, var(--vibeui-hero-accent) 75%, transparent);
 --vibeui-hero-glow:color-mix(in oklab, var(--vibeui-hero-accent) 38%, transparent);
 --vibeui-hero-grid:light-dark(oklch(0.16 0 266 / 7%),oklch(1 0 0 / 6%));

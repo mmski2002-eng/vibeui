@@ -36,8 +36,8 @@ const STYLES = `
 --vibeui-navbar-002-ink:oklch(0.97 0 265);
 --vibeui-navbar-002-muted:oklch(0.72 0 265);
 --vibeui-navbar-002-border:oklch(0.35 0 265);
---vibeui-navbar-002-accent:oklch(0.72 0.16 152);
---vibeui-navbar-002-accent-fg:oklch(0.2 0.04 152);
+--vibeui-navbar-002-accent:oklch(0.72 0.16 39.8);
+--vibeui-navbar-002-accent-fg:oklch(0.2 0.04 39.8);
 --vibeui-navbar-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

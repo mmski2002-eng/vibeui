@@ -58,8 +58,8 @@ const STYLES = `
 --vibeui-solutions-024-fg:light-dark(oklch(0.21 0.014 170),oklch(0.94 0.005 170));
 --vibeui-solutions-024-muted:light-dark(oklch(0.53 0.013 170),oklch(0.7 0.012 170));
 --vibeui-solutions-024-border:light-dark(oklch(0.9 0.006 170),oklch(0.36 0.012 170));
---vibeui-solutions-024-accent:light-dark(oklch(0.53 0.14 170),oklch(0.74 0.13 170));
---vibeui-solutions-024-pending:light-dark(oklch(0.65 0.16 55),oklch(0.62 0.15 55));
+--vibeui-solutions-024-accent:light-dark(oklch(0.53 0.14 39.8),oklch(0.74 0.13 39.8));
+--vibeui-solutions-024-pending:light-dark(oklch(0.65 0.16 39.8),oklch(0.62 0.15 39.8));
 --vibeui-solutions-024-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-solutions-024-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

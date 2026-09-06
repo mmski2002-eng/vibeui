@@ -55,11 +55,11 @@ const STYLES = `
 --vibeui-dashboard-028-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-dashboard-028-muted:light-dark(oklch(0.55 0 265),oklch(0.71 0 265));
 --vibeui-dashboard-028-border:light-dark(oklch(0.91 0 265),oklch(0.35 0 265));
---vibeui-dashboard-028-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
+--vibeui-dashboard-028-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.17 39.8));
 /* Текст на заливке акцента: в тёмной теме акцент светлее, и белым по нему не прочесть. */
---vibeui-dashboard-028-onaccent:light-dark(oklch(1 0 0),oklch(0.19 0 265));
+--vibeui-dashboard-028-onaccent:oklch(0.15 0.02 39.8);
 --vibeui-dashboard-028-late:light-dark(oklch(0.55 0.18 25),oklch(0.73 0.16 25));
---vibeui-dashboard-028-soon:light-dark(oklch(0.64 0.15 65),oklch(0.79 0.13 65));
+--vibeui-dashboard-028-soon:light-dark(oklch(0.64 0.15 39.8),oklch(0.79 0.13 39.8));
 --vibeui-dashboard-028-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

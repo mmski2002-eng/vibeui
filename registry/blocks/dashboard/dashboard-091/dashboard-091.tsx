@@ -57,9 +57,9 @@ const STYLES = `
 --vibeui-dashboard-091-fg:light-dark(oklch(0.21 0 250),oklch(0.94 0 250));
 --vibeui-dashboard-091-muted:light-dark(oklch(0.54 0 250),oklch(0.72 0 250));
 --vibeui-dashboard-091-border:light-dark(oklch(0.91 0 250),oklch(0.36 0 250));
---vibeui-dashboard-091-accent:light-dark(oklch(0.46 0.13 250),oklch(0.74 0.13 250));
+--vibeui-dashboard-091-accent:light-dark(oklch(0.55 0.13 39.8),oklch(0.74 0.13 39.8));
 --vibeui-dashboard-091-soft:light-dark(oklch(0.965 0 250),oklch(0.3 0 250));
---vibeui-dashboard-091-gap:light-dark(oklch(0.62 0.16 45),oklch(0.76 0.14 45));
+--vibeui-dashboard-091-gap:light-dark(oklch(0.62 0.16 39.8),oklch(0.76 0.14 39.8));
 --vibeui-dashboard-091-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 --vibeui-dashboard-091-serif:ui-serif,Georgia,"Times New Roman",serif;
 container-type:inline-size;

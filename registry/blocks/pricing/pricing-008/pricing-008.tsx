@@ -69,8 +69,8 @@ const STYLES = `
 --vibeui-pricing-008-darkfg:light-dark(oklch(0.98 0 285),oklch(0.2 0 285));
 --vibeui-pricing-008-darkmuted:light-dark(oklch(0.74 0 285),oklch(0.46 0 285));
 --vibeui-pricing-008-darkline:light-dark(oklch(1 0 0 / 16%),oklch(0 0 0 / 14%));
---vibeui-pricing-008-accent:light-dark(oklch(0.7 0.17 300),oklch(0.55 0.19 300));
---vibeui-pricing-008-accent-fg:light-dark(oklch(0.18 0.04 300),oklch(0.99 0 300));
+--vibeui-pricing-008-accent:light-dark(oklch(0.7 0.17 39.8),oklch(0.55 0.19 39.8));
+--vibeui-pricing-008-accent-fg:light-dark(oklch(0.18 0.04 39.8),oklch(0.99 0 300));
 --vibeui-pricing-008-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

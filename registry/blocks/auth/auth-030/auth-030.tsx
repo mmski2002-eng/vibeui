@@ -39,9 +39,9 @@ const STYLES = `
 --vibeui-auth-030-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-auth-030-muted:light-dark(oklch(0.53 0 265),oklch(0.71 0 265));
 --vibeui-auth-030-border:light-dark(oklch(0.89 0 265),oklch(0.36 0 265));
---vibeui-auth-030-accent:light-dark(oklch(0.52 0.18 262),oklch(0.76 0.15 262));
---vibeui-auth-030-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0 265));
---vibeui-auth-030-soft:light-dark(oklch(0.52 0.18 262 / 8%),oklch(0.76 0.15 262 / 14%));
+--vibeui-auth-030-accent:light-dark(oklch(0.52 0.18 39.8),oklch(0.76 0.15 39.8));
+--vibeui-auth-030-on-accent:oklch(0.15 0.02 39.8);
+--vibeui-auth-030-soft:light-dark(oklch(0.52 0.18 39.8 / 8%),oklch(0.76 0.15 39.8 / 14%));
 --vibeui-auth-030-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

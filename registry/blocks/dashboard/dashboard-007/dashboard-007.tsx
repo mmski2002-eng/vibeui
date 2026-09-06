@@ -38,7 +38,7 @@ const STYLES = `
 --vibeui-dashboard-007-fg:light-dark(oklch(0.22 0 265),oklch(0.95 0 265));
 --vibeui-dashboard-007-muted:light-dark(oklch(0.55 0 265),oklch(0.71 0 265));
 --vibeui-dashboard-007-border:light-dark(oklch(0.91 0 265),oklch(0.37 0 265));
---vibeui-dashboard-007-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-dashboard-007-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.74 0.16 39.8));
 --vibeui-dashboard-007-up:light-dark(oklch(0.58 0.14 152),oklch(0.76 0.14 152));
 --vibeui-dashboard-007-down:light-dark(oklch(0.57 0.19 25),oklch(0.74 0.16 25));
 --vibeui-dashboard-007-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

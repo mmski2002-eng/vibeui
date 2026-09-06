@@ -54,8 +54,8 @@ const STYLES = `
 --vibeui-commerce-074-muted:light-dark(oklch(0.53 0.016 15),oklch(0.73 0.014 15));
 --vibeui-commerce-074-border:light-dark(oklch(0.9 0.01 15),oklch(0.38 0.018 15));
 --vibeui-commerce-074-soft:light-dark(oklch(0.975 0.008 25),oklch(0.27 0.02 25));
---vibeui-commerce-074-accent:light-dark(oklch(0.52 0.16 10),oklch(0.78 0.15 10));
---vibeui-commerce-074-onaccent:light-dark(oklch(0.99 0 0),oklch(0.2 0.05 10));
+--vibeui-commerce-074-accent:light-dark(oklch(0.52 0.16 39.8),oklch(0.78 0.15 39.8));
+--vibeui-commerce-074-onaccent:oklch(0.15 0.02 39.8);
 --vibeui-commerce-074-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -124,10 +124,10 @@ background:var(--vibeui-commerce-074-surface);font:inherit;font-size:0.875rem;co
 [data-vibeui-block="commerce-074"] [data-part="card"]{
 border-radius:1rem;padding:1.125rem;color:oklch(0.99 0 0);min-height:10rem;
 display:flex;flex-direction:column;justify-content:space-between;
-background:linear-gradient(140deg,oklch(0.58 0.15 10),oklch(0.42 0.12 340));
+background:linear-gradient(140deg,oklch(0.58 0.15 10),oklch(0.42 0.12 39.8));
 }
 [data-vibeui-block="commerce-074"] [data-part="shell"]:has(#commerce-074-design-forest:checked) [data-part="card"]{background:linear-gradient(140deg,oklch(0.55 0.13 150),oklch(0.38 0.1 190))}
-[data-vibeui-block="commerce-074"] [data-part="shell"]:has(#commerce-074-design-sea:checked) [data-part="card"]{background:linear-gradient(140deg,oklch(0.56 0.13 225),oklch(0.4 0.11 265))}
+[data-vibeui-block="commerce-074"] [data-part="shell"]:has(#commerce-074-design-sea:checked) [data-part="card"]{background:linear-gradient(140deg,oklch(0.56 0.13 39.8),oklch(0.4 0.11 39.8))}
 [data-vibeui-block="commerce-074"] [data-part="cardtop"]{font-size:0.6875rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;opacity:0.85}
 [data-vibeui-block="commerce-074"] [data-part="cardsum"]{margin:0;font-size:2rem;font-weight:750;line-height:1;font-variant-numeric:tabular-nums}
 [data-vibeui-block="commerce-074"] [data-part="cardfoot"]{margin:0;font-size:0.75rem;opacity:0.85}

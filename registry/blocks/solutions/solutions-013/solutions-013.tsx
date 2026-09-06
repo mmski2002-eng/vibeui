@@ -48,10 +48,10 @@ const STYLES = `
 --vibeui-solutions-013-fg:light-dark(oklch(0.21 0 250),oklch(0.94 0 250));
 --vibeui-solutions-013-muted:light-dark(oklch(0.54 0 250),oklch(0.7 0 250));
 --vibeui-solutions-013-border:light-dark(oklch(0.9 0 250),oklch(0.36 0 250));
---vibeui-solutions-013-in:light-dark(oklch(0.55 0.15 200),oklch(0.74 0.13 200));
---vibeui-solutions-013-out:light-dark(oklch(0.6 0.16 60),oklch(0.78 0.14 60));
+--vibeui-solutions-013-in:light-dark(oklch(0.55 0.15 39.8),oklch(0.74 0.13 39.8));
+--vibeui-solutions-013-out:light-dark(oklch(0.6 0.16 39.8),oklch(0.78 0.14 39.8));
 --vibeui-solutions-013-on-flow:light-dark(oklch(1 0 0),oklch(0.2 0 250));
---vibeui-solutions-013-accent:light-dark(oklch(0.5 0.17 265),oklch(0.72 0.16 265));
+--vibeui-solutions-013-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.72 0.16 39.8));
 --vibeui-solutions-013-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-solutions-013-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

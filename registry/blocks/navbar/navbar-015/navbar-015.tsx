@@ -39,7 +39,7 @@ const STYLES = `
 --vibeui-navbar-015-ink:light-dark(oklch(0.2 0.012 85),oklch(0.95 0.005 85));
 --vibeui-navbar-015-muted:light-dark(oklch(0.5 0.012 85),oklch(0.73 0.01 85));
 --vibeui-navbar-015-border:light-dark(oklch(0.9 0.006 85),oklch(0.31 0.008 85));
---vibeui-navbar-015-accent:light-dark(oklch(0.5 0.13 25),oklch(0.75 0.13 25));
+--vibeui-navbar-015-accent:light-dark(oklch(0.55 0.13 39.8),oklch(0.75 0.13 39.8));
 --vibeui-navbar-015-accent-fg:oklch(from var(--vibeui-navbar-015-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-navbar-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

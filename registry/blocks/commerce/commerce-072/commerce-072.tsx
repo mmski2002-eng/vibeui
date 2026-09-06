@@ -39,8 +39,8 @@ const STYLES = `
 --vibeui-commerce-072-muted:light-dark(oklch(0.53 0.016 320),oklch(0.73 0.014 320));
 --vibeui-commerce-072-border:light-dark(oklch(0.9 0.008 320),oklch(0.38 0.018 320));
 --vibeui-commerce-072-soft:light-dark(oklch(0.973 0.008 320),oklch(0.27 0.018 320));
---vibeui-commerce-072-accent:light-dark(oklch(0.5 0.16 330),oklch(0.77 0.15 330));
---vibeui-commerce-072-onaccent:light-dark(oklch(0.99 0 0),oklch(0.2 0.05 330));
+--vibeui-commerce-072-accent:light-dark(oklch(0.55 0.16 39.8),oklch(0.77 0.15 39.8));
+--vibeui-commerce-072-onaccent:oklch(0.15 0.02 39.8);
 /* Обложка нарисована светлым градиентом в обеих темах, поэтому кнопка
    поверх неё держит собственную тёмную краску, а не цвет темы. */
 --vibeui-commerce-072-oncover:oklch(0.2 0.014 320);

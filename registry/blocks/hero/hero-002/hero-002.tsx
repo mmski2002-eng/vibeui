@@ -47,8 +47,8 @@ const STYLES = `
 --vibeui-hero-002-fg:light-dark(oklch(0.21 0 260),oklch(0.96 0 260));
 --vibeui-hero-002-muted:light-dark(oklch(0.52 0 260),oklch(0.72 0 260));
 --vibeui-hero-002-border:light-dark(oklch(0.9 0 260),oklch(0.37 0 260));
---vibeui-hero-002-accent:light-dark(oklch(0.48 0.17 262),oklch(0.73 0.155 262));
---vibeui-hero-002-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0 262));
+--vibeui-hero-002-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.73 0.155 39.8));
+--vibeui-hero-002-accent-fg:oklch(0.15 0.02 39.8);
 --vibeui-hero-002-positive:light-dark(oklch(0.45 0.12 155),oklch(0.78 0.14 155));
 --vibeui-hero-002-ring:color-mix(in oklab, var(--vibeui-hero-002-accent) 70%, transparent);
 --vibeui-hero-002-shadow:light-dark(oklch(0.21 0 260 / 16%),oklch(0 0 0 / 46%));
@@ -106,9 +106,9 @@ const FILL = "bg-[var(--vibeui-hero-002-border)]"
 // Декоративные аватары: без имён и лиц, только градиентные заливки.
 const AVATARS = [
   "linear-gradient(140deg,color-mix(in oklab,var(--vibeui-hero-002-accent) 55%,white),var(--vibeui-hero-002-accent))",
-  "linear-gradient(140deg,oklch(0.76 0.1 205),oklch(0.56 0.12 215))",
+  "linear-gradient(140deg,oklch(0.76 0.1 39.8),oklch(0.56 0.12 39.8))",
   "linear-gradient(140deg,oklch(0.8 0.09 80),oklch(0.63 0.12 55))",
-  "linear-gradient(140deg,oklch(0.77 0.09 330),oklch(0.57 0.14 315))",
+  "linear-gradient(140deg,oklch(0.77 0.09 39.8),oklch(0.57 0.14 39.8))",
 ]
 
 const ACTIVITY_ROWS = [

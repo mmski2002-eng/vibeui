@@ -32,11 +32,11 @@ export type Blog004Props = {
 const STYLES = `
 :where([data-vibeui-block="blog-004"]){
 --vibeui-blog-004-bg:oklch(0.21 0 265);
---vibeui-blog-004-panel:oklch(0.26 0.032 265);
+--vibeui-blog-004-panel:oklch(0.26 0.032 39.8);
 --vibeui-blog-004-fg:oklch(0.97 0 265);
 --vibeui-blog-004-muted:oklch(0.76 0 265);
 --vibeui-blog-004-border:oklch(0.36 0 265);
---vibeui-blog-004-accent:oklch(0.72 0.16 155);
+--vibeui-blog-004-accent:oklch(0.72 0.16 39.8);
 --vibeui-blog-004-alarm:oklch(0.72 0.15 25);
 --vibeui-blog-004-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

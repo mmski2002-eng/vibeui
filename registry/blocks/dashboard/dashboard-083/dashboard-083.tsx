@@ -52,9 +52,9 @@ const STYLES = `
 --vibeui-dashboard-083-fg:light-dark(oklch(0.21 0.014 165),oklch(0.94 0.005 165));
 --vibeui-dashboard-083-muted:light-dark(oklch(0.54 0.014 165),oklch(0.72 0.012 165));
 --vibeui-dashboard-083-border:light-dark(oklch(0.91 0.006 165),oklch(0.36 0.012 165));
---vibeui-dashboard-083-accent:light-dark(oklch(0.5 0.12 165),oklch(0.76 0.13 165));
+--vibeui-dashboard-083-accent:light-dark(oklch(0.55 0.12 39.8),oklch(0.76 0.13 39.8));
 --vibeui-dashboard-083-soft:light-dark(oklch(0.965 0.02 165),oklch(0.3 0.03 165));
---vibeui-dashboard-083-block:light-dark(oklch(0.57 0.19 25),oklch(0.72 0.16 25));
+--vibeui-dashboard-083-block:light-dark(oklch(0.57 0.19 39.8),oklch(0.72 0.16 39.8));
 --vibeui-dashboard-083-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 container-type:inline-size;
 }

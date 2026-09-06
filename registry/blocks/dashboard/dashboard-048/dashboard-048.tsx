@@ -55,8 +55,8 @@ const STYLES = `
 --vibeui-dashboard-048-fg:light-dark(oklch(0.22 0.014 200),oklch(0.94 0.005 200));
 --vibeui-dashboard-048-muted:light-dark(oklch(0.55 0.014 200),oklch(0.72 0.012 200));
 --vibeui-dashboard-048-border:light-dark(oklch(0.91 0.006 200),oklch(0.36 0.012 200));
---vibeui-dashboard-048-accent:light-dark(oklch(0.5 0.13 200),oklch(0.75 0.12 200));
---vibeui-dashboard-048-soft:light-dark(oklch(0.96 0.02 200),oklch(0.32 0.04 200));
+--vibeui-dashboard-048-accent:light-dark(oklch(0.55 0.13 39.8),oklch(0.75 0.12 39.8));
+--vibeui-dashboard-048-soft:light-dark(oklch(0.96 0.02 200),oklch(0.32 0.04 39.8));
 --vibeui-dashboard-048-ok:light-dark(oklch(0.56 0.13 155),oklch(0.74 0.13 155));
 --vibeui-dashboard-048-warn:light-dark(oklch(0.66 0.15 70),oklch(0.81 0.13 70));
 --vibeui-dashboard-048-bad:light-dark(oklch(0.58 0.19 25),oklch(0.72 0.17 25));

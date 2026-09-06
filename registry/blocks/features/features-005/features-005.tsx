@@ -28,8 +28,8 @@ const STYLES = `
 --vibeui-features-005-fg:oklch(0.97 0.006 160);
 --vibeui-features-005-muted:oklch(0.75 0.02 160);
 --vibeui-features-005-line:oklch(1 0 0 / 14%);
---vibeui-features-005-accent:oklch(0.78 0.16 155);
---vibeui-features-005-no:oklch(0.72 0.11 30);
+--vibeui-features-005-accent:oklch(0.78 0.16 39.8);
+--vibeui-features-005-no:oklch(0.72 0.11 39.8);
 --vibeui-features-005-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

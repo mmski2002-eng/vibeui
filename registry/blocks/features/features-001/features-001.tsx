@@ -43,7 +43,7 @@ const STYLES = `
 --vibeui-features-001-fg:oklch(0.97 0 260);
 --vibeui-features-001-muted:oklch(0.72 0 260);
 --vibeui-features-001-border:oklch(1 0 0 / 12%);
---vibeui-features-001-accent:oklch(0.78 0.14 175);
+--vibeui-features-001-accent:oklch(0.78 0.14 39.8);
 --vibeui-features-001-accent-fg:oklch(0.2 0.03 175);
 --vibeui-features-001-accent-soft:color-mix(in oklab, var(--vibeui-features-001-accent) 16%, transparent);
 --vibeui-features-001-ring:color-mix(in oklab, var(--vibeui-features-001-accent) 70%, transparent);

@@ -33,8 +33,8 @@ const STYLES = `
 --vibeui-hero-013-muted:light-dark(oklch(0.5 0 220),oklch(0.7 0 220));
 --vibeui-hero-013-card:light-dark(oklch(1 0 0),oklch(0.26 0 220));
 --vibeui-hero-013-line:light-dark(oklch(0.88 0 220),oklch(0.37 0 220));
---vibeui-hero-013-accent:light-dark(oklch(0.52 0.14 220),oklch(0.74 0.13 220));
---vibeui-hero-013-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0 220));
+--vibeui-hero-013-accent:light-dark(oklch(0.52 0.14 39.8),oklch(0.74 0.13 39.8));
+--vibeui-hero-013-accent-fg:oklch(0.15 0.02 39.8);
 --vibeui-hero-013-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

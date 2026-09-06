@@ -42,8 +42,8 @@ const STYLES = `
 --vibeui-contact-003-fg:light-dark(oklch(0.2 0 265),oklch(0.94 0 265));
 --vibeui-contact-003-muted:light-dark(oklch(0.52 0 265),oklch(0.72 0 265));
 --vibeui-contact-003-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
---vibeui-contact-003-accent:light-dark(oklch(0.5 0.17 285),oklch(0.74 0.14 285));
---vibeui-contact-003-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0 285));
+--vibeui-contact-003-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.74 0.14 39.8));
+--vibeui-contact-003-on-accent:oklch(0.15 0.02 39.8);
 --vibeui-contact-003-alarm:light-dark(oklch(0.55 0.19 25),oklch(0.73 0.16 25));
 --vibeui-contact-003-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

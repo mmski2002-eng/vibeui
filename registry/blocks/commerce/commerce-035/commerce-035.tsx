@@ -52,8 +52,8 @@ const STYLES = `
 --vibeui-commerce-035-muted:light-dark(oklch(0.55 0 265),oklch(0.7 0 265));
 --vibeui-commerce-035-border:light-dark(oklch(0.91 0 265),oklch(0.35 0 265));
 --vibeui-commerce-035-soft:light-dark(oklch(0.975 0 265),oklch(0.27 0 265));
---vibeui-commerce-035-accent:light-dark(oklch(0.53 0.17 15),oklch(0.75 0.15 15));
---vibeui-commerce-035-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.03 15));
+--vibeui-commerce-035-accent:light-dark(oklch(0.53 0.17 39.8),oklch(0.75 0.15 39.8));
+--vibeui-commerce-035-on-accent:oklch(0.15 0.02 39.8);
 --vibeui-commerce-035-paper-top:light-dark(oklch(0.98 0.012 85),oklch(0.3 0.021 85));
 --vibeui-commerce-035-paper-bottom:light-dark(oklch(0.99 0.008 85),oklch(0.33 0.017 85));
 --vibeui-commerce-035-shadow:light-dark(oklch(0.2 0 265 / 8%),oklch(0 0 0 / 45%));

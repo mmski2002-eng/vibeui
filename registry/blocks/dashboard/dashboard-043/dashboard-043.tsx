@@ -53,7 +53,7 @@ const STYLES = `
 --vibeui-dashboard-043-ok:light-dark(oklch(0.58 0.13 155),oklch(0.75 0.14 155));
 --vibeui-dashboard-043-warn:light-dark(oklch(0.66 0.15 70),oklch(0.81 0.14 70));
 --vibeui-dashboard-043-bad:light-dark(oklch(0.58 0.19 25),oklch(0.72 0.17 25));
---vibeui-dashboard-043-accent:light-dark(oklch(0.5 0.14 240),oklch(0.74 0.13 240));
+--vibeui-dashboard-043-accent:light-dark(oklch(0.55 0.14 39.8),oklch(0.74 0.13 39.8));
 /* Текст на заливке предупреждения: в тёмной ветке заливка светлая. */
 --vibeui-dashboard-043-on-warn:light-dark(oklch(1 0 0),oklch(0.21 0.04 70));
 --vibeui-dashboard-043-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

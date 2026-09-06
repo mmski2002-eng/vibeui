@@ -45,8 +45,8 @@ export type Auth031Props = {
 // остаётся тёмной в обеих ветках — это дизайн-идея блока.
 const STYLES = `
 :where([data-vibeui-block="auth-031"]){
---vibeui-auth-031-accent:oklch(0.62 0.19 292);
---vibeui-auth-031-panel:oklch(0.22 0.05 292);
+--vibeui-auth-031-accent:oklch(0.62 0.19 39.8);
+--vibeui-auth-031-panel:oklch(0.22 0.05 39.8);
 --vibeui-auth-031-ink:oklch(0.98 0 292);
 --vibeui-auth-031-fg:light-dark(oklch(0.21 0 292),oklch(0.95 0 292));
 --vibeui-auth-031-dim:light-dark(oklch(0.52 0 292),oklch(0.72 0 292));
@@ -87,8 +87,8 @@ padding:1.5rem;
 color:var(--vibeui-auth-031-ink);
 background:
 radial-gradient(72% 62% at 10% 6%,color-mix(in oklab,var(--vibeui-auth-031-accent) 78%,transparent),transparent 62%),
-radial-gradient(64% 74% at 94% 20%,oklch(0.63 0.2 342 / 62%),transparent 64%),
-radial-gradient(88% 84% at 68% 104%,oklch(0.6 0.16 214 / 56%),transparent 62%),
+radial-gradient(64% 74% at 94% 20%,oklch(0.63 0.2 39.8 / 62%),transparent 64%),
+radial-gradient(88% 84% at 68% 104%,oklch(0.6 0.16 39.8 / 56%),transparent 62%),
 var(--vibeui-auth-031-panel);
 }
 /* Паттерн поверх градиента: панель должна читаться плотной, а не пустой

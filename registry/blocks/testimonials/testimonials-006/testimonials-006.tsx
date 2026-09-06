@@ -27,8 +27,8 @@ const STYLES = `
 --vibeui-testimonials-006-ink:oklch(0.97 0 275);
 --vibeui-testimonials-006-muted:oklch(0.76 0 275);
 --vibeui-testimonials-006-border:oklch(0.34 0 275);
---vibeui-testimonials-006-accent:oklch(0.78 0.15 155);
---vibeui-testimonials-006-accent-fg:oklch(0.2 0.05 155);
+--vibeui-testimonials-006-accent:oklch(0.78 0.15 39.8);
+--vibeui-testimonials-006-accent-fg:oklch(0.2 0.05 39.8);
 --vibeui-testimonials-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

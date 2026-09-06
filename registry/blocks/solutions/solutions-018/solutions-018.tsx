@@ -52,10 +52,10 @@ const STYLES = `
 --vibeui-solutions-018-muted:light-dark(oklch(0.55 0 240),oklch(0.7 0 240));
 --vibeui-solutions-018-border:light-dark(oklch(0.91 0 240),oklch(0.36 0 240));
 --vibeui-solutions-018-vacation:light-dark(oklch(0.62 0.15 200),oklch(0.66 0.14 200));
---vibeui-solutions-018-sick:light-dark(oklch(0.62 0.17 30),oklch(0.66 0.16 30));
---vibeui-solutions-018-remote:light-dark(oklch(0.6 0.13 285),oklch(0.64 0.13 285));
---vibeui-solutions-018-study:light-dark(oklch(0.62 0.13 145),oklch(0.66 0.13 145));
---vibeui-solutions-018-accent:light-dark(oklch(0.5 0.17 250),oklch(0.74 0.15 250));
+--vibeui-solutions-018-sick:light-dark(oklch(0.62 0.17 39.8),oklch(0.66 0.16 39.8));
+--vibeui-solutions-018-remote:light-dark(oklch(0.6 0.13 39.8),oklch(0.64 0.13 39.8));
+--vibeui-solutions-018-study:light-dark(oklch(0.62 0.13 39.8),oklch(0.66 0.13 39.8));
+--vibeui-solutions-018-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.74 0.15 39.8));
 --vibeui-solutions-018-days:31;
 --vibeui-solutions-018-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

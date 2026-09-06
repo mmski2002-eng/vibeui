@@ -66,8 +66,8 @@ const STYLES = `
 --vibeui-commerce-054-border:light-dark(oklch(0.9 0 230),oklch(0.38 0 230));
 --vibeui-commerce-054-soft:light-dark(oklch(0.972 0 230),oklch(0.27 0 230));
 --vibeui-commerce-054-chip:light-dark(oklch(1 0 0),oklch(0.22 0 230));
---vibeui-commerce-054-accent:light-dark(oklch(0.5 0.15 235),oklch(0.74 0.13 235));
---vibeui-commerce-054-onaccent:light-dark(oklch(0.99 0 0),oklch(0.2 0.04 235));
+--vibeui-commerce-054-accent:light-dark(oklch(0.55 0.15 39.8),oklch(0.74 0.13 39.8));
+--vibeui-commerce-054-onaccent:oklch(0.15 0.02 39.8);
 --vibeui-commerce-054-warn:light-dark(oklch(0.55 0.14 60),oklch(0.8 0.13 70));
 --vibeui-commerce-054-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

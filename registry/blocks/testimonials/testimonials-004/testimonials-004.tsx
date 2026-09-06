@@ -28,7 +28,7 @@ const STYLES = `
 --vibeui-testimonials-004-ink:light-dark(oklch(0.21 0 250),oklch(0.95 0 250));
 --vibeui-testimonials-004-muted:light-dark(oklch(0.5 0 250),oklch(0.72 0 250));
 --vibeui-testimonials-004-border:light-dark(oklch(0.91 0 250),oklch(0.34 0 250));
---vibeui-testimonials-004-accent:light-dark(oklch(0.48 0.15 245),oklch(0.75 0.14 245));
+--vibeui-testimonials-004-accent:light-dark(oklch(0.55 0.15 39.8),oklch(0.75 0.14 39.8));
 --vibeui-testimonials-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

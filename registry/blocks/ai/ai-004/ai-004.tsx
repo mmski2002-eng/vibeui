@@ -50,8 +50,8 @@ const STYLES = `
 --vibeui-ai-004-muted:light-dark(oklch(0.54 0 265),oklch(0.69 0 265));
 --vibeui-ai-004-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-ai-004-bubble:light-dark(oklch(0.97 0 265),oklch(0.3 0 265));
---vibeui-ai-004-accent:light-dark(oklch(0.53 0.17 276),oklch(0.74 0.15 276));
---vibeui-ai-004-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0 276));
+--vibeui-ai-004-accent:light-dark(oklch(0.53 0.17 39.8),oklch(0.74 0.15 39.8));
+--vibeui-ai-004-on-accent:oklch(0.15 0.02 39.8);
 --vibeui-ai-004-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

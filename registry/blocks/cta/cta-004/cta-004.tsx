@@ -25,11 +25,11 @@ export type Cta004Props = {
 // иначе блок бьёт по глазам ярче всего остального на экране.
 const STYLES = `
 :where([data-vibeui-block="cta-004"]){
---vibeui-cta-004-accent:light-dark(oklch(0.52 0.2 268),oklch(0.45 0.18 268));
+--vibeui-cta-004-accent:light-dark(oklch(0.52 0.2 39.8),oklch(0.45 0.18 39.8));
 --vibeui-cta-004-ink:light-dark(oklch(0.99 0 268),oklch(0.96 0 268));
---vibeui-cta-004-muted:light-dark(oklch(0.9 0.04 268),oklch(0.85 0.04 268));
+--vibeui-cta-004-muted:light-dark(oklch(0.9 0.04 39.8),oklch(0.85 0.04 39.8));
 --vibeui-cta-004-button:light-dark(oklch(1 0 0),oklch(0.93 0 268));
---vibeui-cta-004-button-fg:light-dark(oklch(0.28 0.14 268),oklch(0.24 0.12 268));
+--vibeui-cta-004-button-fg:light-dark(oklch(0.28 0.14 39.8),oklch(0.24 0.12 39.8));
 --vibeui-cta-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -41,7 +41,7 @@ container-type:inline-size;
    блок схлопывается внутри flex-контейнера. */
 min-width:min(100%,16rem);
 display:block;position:relative;isolation:isolate;overflow:hidden;
-background:linear-gradient(135deg,var(--vibeui-cta-004-accent),color-mix(in oklab,var(--vibeui-cta-004-accent) 62%,oklch(0.42 0.19 320)));
+background:linear-gradient(135deg,var(--vibeui-cta-004-accent),color-mix(in oklab,var(--vibeui-cta-004-accent) 62%,oklch(0.42 0.19 39.8)));
 color:var(--vibeui-cta-004-ink);font-family:var(--vibeui-cta-004-font);
 }
 [data-vibeui-block="cta-004"] [data-part="grid"]{

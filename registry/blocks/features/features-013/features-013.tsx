@@ -36,7 +36,7 @@ const STYLES = `
 --vibeui-features-013-muted:oklch(0.72 0 220);
 --vibeui-features-013-panel:oklch(0.23 0 220);
 --vibeui-features-013-line:oklch(1 0 0 / 12%);
---vibeui-features-013-accent:oklch(0.76 0.13 195);
+--vibeui-features-013-accent:oklch(0.76 0.13 39.8);
 --vibeui-features-013-warn:oklch(0.8 0.13 85);
 --vibeui-features-013-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

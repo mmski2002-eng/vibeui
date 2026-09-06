@@ -37,7 +37,7 @@ const STYLES = `
 --vibeui-features-018-fg:oklch(0.22 0.015 90);
 --vibeui-features-018-muted:oklch(0.5 0.014 90);
 --vibeui-features-018-line:oklch(0.9 0.01 90);
---vibeui-features-018-accent:oklch(0.52 0.12 165);
+--vibeui-features-018-accent:oklch(0.52 0.12 39.8);
 --vibeui-features-018-soft:color-mix(in oklab,var(--vibeui-features-018-accent) 12%,transparent);
 --vibeui-features-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

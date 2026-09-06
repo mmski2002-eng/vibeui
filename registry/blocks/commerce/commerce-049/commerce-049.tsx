@@ -52,7 +52,7 @@ const STYLES = `
 --vibeui-commerce-049-muted:light-dark(oklch(0.53 0 250),oklch(0.72 0 250));
 --vibeui-commerce-049-border:light-dark(oklch(0.91 0 250),oklch(0.36 0 250));
 --vibeui-commerce-049-soft:light-dark(oklch(0.975 0 250),oklch(0.27 0 250));
---vibeui-commerce-049-accent:light-dark(oklch(0.48 0.12 195),oklch(0.74 0.12 195));
+--vibeui-commerce-049-accent:light-dark(oklch(0.55 0.12 39.8),oklch(0.74 0.12 39.8));
 --vibeui-commerce-049-onbanner:oklch(0.99 0 0);
 --vibeui-commerce-049-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -79,7 +79,7 @@ min-height:15rem;display:flex;flex-direction:column;justify-content:flex-end;
 color:var(--vibeui-commerce-049-onbanner);
 background:
 linear-gradient(180deg,oklch(0.2 0.05 200 / 10%),oklch(0.16 0.05 200 / 78%)),
-linear-gradient(115deg,oklch(0.62 0.13 195),oklch(0.45 0.11 265) 55%,oklch(0.55 0.14 25));
+linear-gradient(115deg,oklch(0.62 0.13 195),oklch(0.45 0.11 39.8) 55%,oklch(0.55 0.14 25));
 }
 [data-vibeui-block="commerce-049"] [data-part="chip"]{
 align-self:flex-start;display:inline-flex;height:1.625rem;align-items:center;padding:0 0.75rem;border-radius:9999px;

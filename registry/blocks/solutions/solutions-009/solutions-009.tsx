@@ -50,7 +50,7 @@ const STYLES = `
 --vibeui-solutions-009-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-solutions-009-muted:light-dark(oklch(0.55 0 265),oklch(0.7 0 265));
 --vibeui-solutions-009-border:light-dark(oklch(0.9 0 265),oklch(0.35 0 265));
---vibeui-solutions-009-accent:light-dark(oklch(0.55 0.16 165),oklch(0.75 0.14 165));
+--vibeui-solutions-009-accent:light-dark(oklch(0.55 0.16 39.8),oklch(0.75 0.14 39.8));
 --vibeui-solutions-009-warn:light-dark(oklch(0.65 0.17 45),oklch(0.79 0.14 48));
 --vibeui-solutions-009-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

@@ -42,8 +42,8 @@ const STYLES = `
 --vibeui-commerce-051-muted:light-dark(oklch(0.53 0.014 145),oklch(0.72 0.012 145));
 --vibeui-commerce-051-border:light-dark(oklch(0.9 0.008 145),oklch(0.36 0.012 145));
 --vibeui-commerce-051-soft:light-dark(oklch(0.97 0.008 145),oklch(0.29 0.01 145));
---vibeui-commerce-051-accent:light-dark(oklch(0.46 0.11 155),oklch(0.74 0.12 155));
---vibeui-commerce-051-onaccent:light-dark(oklch(0.99 0 0),oklch(0.18 0.02 155));
+--vibeui-commerce-051-accent:light-dark(oklch(0.55 0.11 39.8),oklch(0.74 0.12 39.8));
+--vibeui-commerce-051-onaccent:oklch(0.15 0.02 39.8);
 --vibeui-commerce-051-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }

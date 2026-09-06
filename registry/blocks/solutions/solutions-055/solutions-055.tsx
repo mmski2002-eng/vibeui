@@ -57,7 +57,7 @@ const STYLES = `
 --vibeui-solutions-055-fg:light-dark(oklch(0.22 0.016 25),oklch(0.94 0.006 25));
 --vibeui-solutions-055-muted:light-dark(oklch(0.54 0.014 25),oklch(0.69 0.013 25));
 --vibeui-solutions-055-border:light-dark(oklch(0.9 0.007 25),oklch(0.36 0.014 25));
---vibeui-solutions-055-accent:light-dark(oklch(0.55 0.19 25),oklch(0.72 0.17 25));
+--vibeui-solutions-055-accent:light-dark(oklch(0.55 0.19 39.8),oklch(0.72 0.17 39.8));
 --vibeui-solutions-055-ok:light-dark(oklch(0.58 0.14 152),oklch(0.73 0.13 152));
 --vibeui-solutions-055-warn:light-dark(oklch(0.68 0.15 75),oklch(0.8 0.14 75));
 --vibeui-solutions-055-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;

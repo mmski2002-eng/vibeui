@@ -47,7 +47,7 @@ const STYLES = `
 --vibeui-commerce-080-muted:light-dark(oklch(0.55 0 265),oklch(0.7 0 265));
 --vibeui-commerce-080-border:light-dark(oklch(0.9 0 265),oklch(0.35 0 265));
 --vibeui-commerce-080-soft:light-dark(oklch(0.975 0 265),oklch(0.27 0 265));
---vibeui-commerce-080-accent:light-dark(oklch(0.55 0.2 262),oklch(0.73 0.16 262));
+--vibeui-commerce-080-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.73 0.16 39.8));
 --vibeui-commerce-080-star:light-dark(oklch(0.54 0.16 78),oklch(0.84 0.15 80));
 --vibeui-commerce-080-star-empty:light-dark(oklch(0.42 0 265),oklch(0.58 0 265));
 --vibeui-commerce-080-fill:0%;

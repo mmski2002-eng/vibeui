@@ -28,8 +28,8 @@ const STYLES = `
 --vibeui-hero-012-muted:light-dark(oklch(0.51 0 265),oklch(0.72 0 265));
 --vibeui-hero-012-card:light-dark(oklch(1 0 0),oklch(0.235 0 265));
 --vibeui-hero-012-line:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
---vibeui-hero-012-accent:light-dark(oklch(0.55 0.2 300),oklch(0.73 0.17 300));
---vibeui-hero-012-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0 300));
+--vibeui-hero-012-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.73 0.17 39.8));
+--vibeui-hero-012-accent-fg:oklch(0.15 0.02 39.8);
 --vibeui-hero-012-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-hero-012-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 container-type:inline-size;

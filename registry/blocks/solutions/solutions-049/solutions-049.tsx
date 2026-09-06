@@ -53,10 +53,10 @@ const STYLES = `
 --vibeui-solutions-049-fg:light-dark(oklch(0.21 0 265),oklch(0.94 0 265));
 --vibeui-solutions-049-muted:light-dark(oklch(0.55 0 265),oklch(0.69 0 265));
 --vibeui-solutions-049-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
---vibeui-solutions-049-accent:light-dark(oklch(0.5 0.17 265),oklch(0.72 0.15 265));
---vibeui-solutions-049-over:light-dark(oklch(0.6 0.15 152),oklch(0.74 0.14 152));
---vibeui-solutions-049-short:light-dark(oklch(0.58 0.2 25),oklch(0.73 0.17 25));
---vibeui-solutions-049-open:light-dark(oklch(0.6 0.13 255),oklch(0.75 0.12 255));
+--vibeui-solutions-049-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.72 0.15 39.8));
+--vibeui-solutions-049-over:light-dark(oklch(0.6 0.15 39.8),oklch(0.74 0.14 39.8));
+--vibeui-solutions-049-short:light-dark(oklch(0.58 0.2 39.8),oklch(0.73 0.17 39.8));
+--vibeui-solutions-049-open:light-dark(oklch(0.6 0.13 39.8),oklch(0.75 0.12 39.8));
 --vibeui-solutions-049-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-solutions-049-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

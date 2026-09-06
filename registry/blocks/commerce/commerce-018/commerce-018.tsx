@@ -50,7 +50,7 @@ const STYLES = `
 --vibeui-commerce-018-muted:light-dark(oklch(0.55 0 265),oklch(0.7 0 265));
 --vibeui-commerce-018-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-commerce-018-soft:light-dark(oklch(0.975 0 265),oklch(0.27 0 265));
---vibeui-commerce-018-accent:light-dark(oklch(0.55 0.2 262),oklch(0.73 0.16 262));
+--vibeui-commerce-018-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.73 0.16 39.8));
 --vibeui-commerce-018-ok:light-dark(oklch(0.58 0.14 152),oklch(0.76 0.14 152));
 --vibeui-commerce-018-low:light-dark(oklch(0.7 0.15 75),oklch(0.82 0.14 75));
 --vibeui-commerce-018-off:light-dark(oklch(0.63 0 265),oklch(0.63 0 265));

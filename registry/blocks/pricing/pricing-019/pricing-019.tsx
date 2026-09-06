@@ -45,8 +45,8 @@ const STYLES = `
 --vibeui-pricing-019-card:light-dark(oklch(1 0 0),oklch(0.25 0 265));
 --vibeui-pricing-019-line:light-dark(oklch(0.89 0 265),oklch(0.37 0 265));
 --vibeui-pricing-019-track:light-dark(oklch(0.92 0 265),oklch(0.34 0 265));
---vibeui-pricing-019-accent:light-dark(oklch(0.52 0.17 265),oklch(0.72 0.15 265));
---vibeui-pricing-019-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0 265));
+--vibeui-pricing-019-accent:light-dark(oklch(0.52 0.17 39.8),oklch(0.72 0.15 39.8));
+--vibeui-pricing-019-accent-fg:oklch(0.15 0.02 39.8);
 --vibeui-pricing-019-warn:light-dark(oklch(0.65 0.16 55),oklch(0.79 0.15 55));
 --vibeui-pricing-019-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

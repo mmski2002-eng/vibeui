@@ -45,8 +45,8 @@ const STYLES = `
 --vibeui-navbar-001-ink:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-navbar-001-muted:light-dark(oklch(0.5 0 265),oklch(0.7 0 265));
 --vibeui-navbar-001-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
---vibeui-navbar-001-accent:light-dark(oklch(0.52 0.19 265),oklch(0.72 0.16 265));
---vibeui-navbar-001-accent-fg:light-dark(oklch(0.99 0 0),oklch(0.18 0 265));
+--vibeui-navbar-001-accent:light-dark(oklch(0.52 0.19 39.8),oklch(0.72 0.16 39.8));
+--vibeui-navbar-001-accent-fg:oklch(0.15 0.02 39.8);
 --vibeui-navbar-001-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
 }
@@ -124,7 +124,7 @@ text-decoration:none;font-size:0.9375rem;font-weight:500;
 [data-vibeui-navbar-001-menu] a:hover{background:light-dark(oklch(0.55 0 265 / 8%),oklch(0.85 0 265 / 12%))}
 [data-vibeui-navbar-001-menu] [data-part="action"]{
 display:flex;justify-content:center;margin-top:0.375rem;
-background:var(--vibeui-navbar-001-accent,light-dark(oklch(0.52 0.19 265),oklch(0.72 0.16 265)));
+background:var(--vibeui-navbar-001-accent,light-dark(oklch(0.52 0.19 39.8),oklch(0.72 0.16 39.8)));
 color:var(--vibeui-navbar-001-accent-fg,light-dark(oklch(0.99 0 0),oklch(0.18 0 265)));
 }
 /* От 52rem собственной ширины — десктопная шапка. */

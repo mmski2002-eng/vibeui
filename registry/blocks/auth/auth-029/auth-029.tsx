@@ -62,8 +62,8 @@ const STYLES = `
 --vibeui-auth-029-fg:light-dark(oklch(0.23 0.016 20),oklch(0.94 0.006 20));
 --vibeui-auth-029-muted:light-dark(oklch(0.54 0.014 20),oklch(0.71 0.012 20));
 --vibeui-auth-029-border:light-dark(oklch(0.9 0.008 20),oklch(0.37 0.014 20));
---vibeui-auth-029-accent:light-dark(oklch(0.54 0.2 25),oklch(0.72 0.17 25));
---vibeui-auth-029-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0.03 25));
+--vibeui-auth-029-accent:light-dark(oklch(0.54 0.2 39.8),oklch(0.72 0.17 39.8));
+--vibeui-auth-029-on-accent:oklch(0.15 0.02 39.8);
 --vibeui-auth-029-bad-soft:light-dark(oklch(0.54 0.2 25 / 7%),oklch(0.72 0.17 25 / 14%));
 --vibeui-auth-029-ok:light-dark(oklch(0.52 0.12 152),oklch(0.78 0.12 152));
 --vibeui-auth-029-ok-soft:light-dark(oklch(0.52 0.12 152 / 8%),oklch(0.78 0.12 152 / 14%));
