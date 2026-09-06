@@ -30,4 +30,25 @@ export const PREVIEWS = {
   "footer-008": dynamic(() =>
     import("@/registry/blocks/footer/footer-008/footer-008").then((module) => module.Footer008),
   ),
+  "footer-009": dynamic(() =>
+    import("@/registry/blocks/footer/footer-009/footer-009").then((module) => module.Footer009),
+  ),
+  "footer-010": dynamic(() =>
+    import("@/registry/blocks/footer/footer-010/footer-010").then((module) => module.Footer010),
+  ),
+  "footer-011": dynamic(() =>
+    import("@/registry/blocks/footer/footer-011/footer-011").then((module) => module.Footer011),
+  ),
+  "footer-012": dynamic(() =>
+    import("@/registry/blocks/footer/footer-012/footer-012").then((module) => module.Footer012),
+  ),
+  "footer-013": dynamic(() =>
+    import("@/registry/blocks/footer/footer-013/footer-013").then((module) => module.Footer013),
+  ),
+  "footer-014": dynamic(() =>
+    import("@/registry/blocks/footer/footer-014/footer-014").then((module) => module.Footer014),
+  ),
+  "footer-015": dynamic(() =>
+    import("@/registry/blocks/footer/footer-015/footer-015").then((module) => module.Footer015),
+  ),
 } satisfies PreviewMap

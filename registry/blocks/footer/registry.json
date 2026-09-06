@@ -1742,6 +1742,1248 @@
         },
         "cardControls": ["company", "cookieLabel", "accent", "background"]
       }
+    },
+    {
+      "name": "footer-009",
+      "type": "registry:block",
+      "title": "Мега-подвал с подпиской",
+      "description": "Мега-подвал: строка подписки на рассылку сверху, карта сайта в пять колонок и нижний ряд с копирайтом и соцссылками. Самодостаточен: один файл, без зависимостей.",
+      "categories": ["footer"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footer-009/footer-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footer-009.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-footer-009-*. Серверный компонент, клиентского JS нет. Строка подписки стоит первой: до подвала доходят самые вовлечённые посетители, и форма здесь конвертирует лучше, чем в середине страницы. Каждая колонка карты сайта — отдельный <nav> со своей подписью, иначе скринридер читает тридцать ссылок одной кашей. Колонки раскрываются от 2 до 5 по собственной ширине блока через container queries, поэтому в узкой врезке блок честно показывает мобильную раскладку.",
+      "meta": {
+        "tags": ["footer", "sitemap", "newsletter", "social", "mega"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Footer009",
+          "usage": "<Footer009\n  subscribeTitle=\"Раз в месяц — письмо о новых секциях\"\n  columns={[{ title: \"Продукт\", links: [{ label: \"Тарифы\", href: \"/pricing\" }] }]}\n  social={[{ label: \"Telegram\", href: \"https://t.me/example\" }]}\n/>",
+          "summary": "Мега-подвал: сверху строка подписки с полем почты и оранжевой кнопкой, под ней карта сайта в пять колонок, внизу копирайт и соцссылки-пилюли. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-footer-009-* и не подменять её токенами вашей темы",
+            "строку подписки первой: до подвала доходят самые вовлечённые посетители, форма здесь конвертирует лучше",
+            "каждую колонку отдельным <nav> с подписью — иначе скринридер читает тридцать ссылок одной кашей",
+            "поле почты с type=\"email\", autoComplete и aria-label: без них не работают мобильная клавиатура и автозаполнение",
+            "заливку кнопки фирменным оранжевым и почти чёрный текст на ней — контраст этой пары рассчитан",
+            "переход колонок 2 → 3 → 5 по собственной ширине блока (container queries), а не по ширине окна",
+            "блок <style> внутри компонента — в нём палитра, форма и раскладка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — подвал ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "subscribeTitle, subscribeNote, emailPlaceholder и buttonLabel — тексты формы подписки",
+            "массив columns — колонки карты сайта, их подписи и ссылки",
+            "массив social — соцссылки нижнего ряда",
+            "copyright — строка копирайта",
+            "акцент через проп accent — цвет кнопки, наведения и фокуса",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Форма подписки никуда не отправляет данные: подключите action или обработчик к своему сервису рассылки.",
+            "Пять колонок раскрываются только от 64rem собственной ширины блока: в узкой врезке будет две-три, это задумано.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "subscribeTitle",
+            "label": "Заголовок подписки",
+            "type": "text",
+            "default": "Раз в месяц — письмо о новых секциях",
+            "maxLength": 60
+          },
+          {
+            "prop": "buttonLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Подписаться",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Mega Footer",
+            "description": "A mega footer: a newsletter row on top, a five-column sitemap and a bottom row with the copyright and social links. Self-contained: one file, no dependencies.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-footer-009-* variables. A server component with no client JS. The newsletter row comes first: the most engaged visitors are the ones who reach the footer, and the form converts better here than in the middle of the page. Each sitemap column is its own <nav> with a label — otherwise a screen reader reads thirty links as one mush. The columns expand from 2 to 5 based on the block's own width via container queries, so in a narrow slot the block honestly shows the mobile layout.",
+            "ai": {
+              "summary": "A mega footer: a newsletter row with an email field and an orange button on top, a five-column sitemap below it, and a bottom row with the copyright and pill-shaped social links. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-footer-009-* palette — do not swap it for your theme tokens",
+                "the newsletter row first: the most engaged visitors reach the footer, the form converts better here",
+                "each column as its own <nav> with a label — otherwise a screen reader reads thirty links as one mush",
+                "the email field with type=\"email\", autoComplete and aria-label: without them the mobile keyboard and autofill do not work",
+                "the brand-orange button fill with near-black text on it — the contrast of this pair is calculated",
+                "the 2 → 3 → 5 column progression driven by the block's own width (container queries), not the viewport",
+                "the <style> block inside the component — it holds the palette, the form and the layout",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent ground by default — the footer sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "subscribeTitle, subscribeNote, emailPlaceholder and buttonLabel — the newsletter form texts",
+                "the columns array — the sitemap columns, their labels and links",
+                "the social array — the social links in the bottom row",
+                "copyright — the copyright line",
+                "the accent through the accent prop — it colours the button, hover and focus",
+                "background — the component ground; empty means no ground, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The newsletter form does not send anything: wire the action or a handler to your mailing service.",
+                "The five columns unfold only from 64rem of the block's own width: a narrow slot gets two or three, by design.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Footer009\n  subscribeTitle=\"A monthly letter about new sections\"\n  columns={[{ title: \"Product\", links: [{ label: \"Pricing\", href: \"/pricing\" }] }]}\n  social={[{ label: \"Telegram\", href: \"https://t.me/example\" }]}\n/>"
+            },
+            "controls": {
+              "subscribeTitle": {
+                "label": "Newsletter title",
+                "default": "A monthly letter about new sections"
+              },
+              "buttonLabel": {
+                "label": "Button",
+                "default": "Subscribe"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "subscribeTitle": "A monthly letter about new sections",
+                "subscribeNote": "No spam and no sales pitches: only new library blocks, layout techniques and teardowns of other people's landing pages.",
+                "emailPlaceholder": "Your email",
+                "buttonLabel": "Subscribe",
+                "columns": [
+                  {
+                    "title": "Product",
+                    "links": [
+                      { "label": "Features", "href": "#features" },
+                      { "label": "Pricing", "href": "#pricing" },
+                      { "label": "Integrations", "href": "#integrations" },
+                      { "label": "What's new", "href": "#changelog" }
+                    ]
+                  },
+                  {
+                    "title": "Use cases",
+                    "links": [
+                      { "label": "Landing pages", "href": "#landing" },
+                      { "label": "Online stores", "href": "#store" },
+                      { "label": "Portfolios", "href": "#portfolio" },
+                      { "label": "Blogs", "href": "#blog-sites" }
+                    ]
+                  },
+                  {
+                    "title": "Resources",
+                    "links": [
+                      { "label": "Documentation", "href": "#docs" },
+                      { "label": "Examples", "href": "#examples" },
+                      { "label": "Blog", "href": "#blog" },
+                      { "label": "Webinars", "href": "#webinars" }
+                    ]
+                  },
+                  {
+                    "title": "Company",
+                    "links": [
+                      { "label": "About us", "href": "#about" },
+                      { "label": "Careers", "href": "#jobs" },
+                      { "label": "Partners", "href": "#partners" },
+                      { "label": "Press kit", "href": "#press" }
+                    ]
+                  },
+                  {
+                    "title": "Support",
+                    "links": [
+                      { "label": "Help center", "href": "#help" },
+                      { "label": "Community", "href": "#community" },
+                      { "label": "Service status", "href": "#status" },
+                      { "label": "Contact", "href": "#contacts" }
+                    ]
+                  }
+                ],
+                "social": [
+                  { "label": "Telegram", "href": "#telegram" },
+                  { "label": "YouTube", "href": "#youtube" },
+                  { "label": "GitHub", "href": "#github" },
+                  { "label": "X", "href": "#x" }
+                ],
+                "copyright": "© 2026 Atlas Ltd. All rights reserved."
+              }
+            }
+          }
+        },
+        "cardControls": ["subscribeTitle", "buttonLabel", "accent", "background"]
+      }
+    },
+    {
+      "name": "footer-010",
+      "type": "registry:block",
+      "title": "Подвал с большим логотипом",
+      "description": "Подвал с гигантским полупрозрачным wordmark: колонки ссылок сверху, под ними имя бренда во всю ширину, срезанное нижним краем. Самодостаточен: один файл, без зависимостей.",
+      "categories": ["footer"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footer-010/footer-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footer-010.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-footer-010-*. Серверный компонент. Wordmark набран цветом color-mix от чернил с прозрачностью, а не отдельным серым: так он остаётся различимым на любой подложке и в обеих темах без второй пары значений. Размер задан в cqi и масштабируется от собственной ширины блока, отрицательный нижний отступ вместе с overflow:hidden на корне срезает надпись нижним краем — это и есть приём. Wordmark скрыт от скринридера: имя бренда уже есть в копирайте.",
+      "meta": {
+        "tags": ["footer", "wordmark", "brand", "typography"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Footer010",
+          "usage": "<Footer010\n  brand=\"Формат\"\n  tagline=\"Секции для сайтов, которые собирают своими руками.\"\n  columns={[{ title: \"Продукт\", links: [{ label: \"Тарифы\", href: \"/pricing\" }] }]}\n/>",
+          "summary": "Подвал с гигантским полупрозрачным wordmark внизу: слоган и колонки ссылок сверху, строка копирайта, под ней имя бренда во всю ширину блока, срезанное нижним краем. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-footer-010-* и не подменять её токенами вашей темы",
+            "цвет wordmark через color-mix от чернил с прозрачностью — он различим на любой подложке и в обеих темах без второй пары значений",
+            "отрицательный нижний отступ wordmark и overflow:hidden на корне: срез нижним краем и есть приём, без него это просто большая надпись",
+            "aria-hidden, user-select:none и pointer-events:none на wordmark — это украшение, а не контент",
+            "размер wordmark в cqi — он масштабируется от собственной ширины блока и не вылезает за край",
+            "каждую колонку отдельным <nav> с подписью — иначе скринридер читает все ссылки одной кашей",
+            "блок <style> внутри компонента — в нём палитра, wordmark и раскладка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — подвал ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "brand — имя бренда, оно же текст wordmark",
+            "tagline — слоган в левой колонке",
+            "массив columns — колонки ссылок, их подписи и адреса",
+            "copyright — строка копирайта",
+            "акцент через проп accent — цвет наведения на ссылки и фокуса",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Wordmark стоит в одну строку без переносов: имя длиннее 8–10 букв уменьшите через font-size у [data-part=\"wordmark\"] или сократите.",
+            "Wordmark берётся из пропа brand автоматически — отдельного пропа для него нет, чтобы имена не разъехались.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Бренд",
+            "type": "text",
+            "default": "Формат",
+            "maxLength": 12
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Big Wordmark Footer",
+            "description": "A footer with a giant translucent wordmark: link columns on top, the brand name across the full width below them, cropped by the bottom edge. Self-contained: one file, no dependencies.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-footer-010-* variables. A server component. The wordmark is set in a color-mix of the ink with transparency rather than a separate grey: it stays discernible on any ground and in both themes without a second pair of values. Its size is set in cqi and scales with the block's own width; a negative bottom margin together with overflow:hidden on the root crops the lettering with the bottom edge — that crop is the whole trick. The wordmark is hidden from screen readers: the brand name is already in the copyright.",
+            "ai": {
+              "summary": "A footer with a giant translucent wordmark at the bottom: the tagline and link columns on top, the copyright row, and below it the brand name across the full width of the block, cropped by the bottom edge. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-footer-010-* palette — do not swap it for your theme tokens",
+                "the wordmark colour as a color-mix of the ink with transparency — discernible on any ground and in both themes without a second pair of values",
+                "the wordmark's negative bottom margin and overflow:hidden on the root: the bottom-edge crop is the whole trick, without it this is just big text",
+                "aria-hidden, user-select:none and pointer-events:none on the wordmark — it is decoration, not content",
+                "the wordmark size in cqi — it scales with the block's own width and never overflows",
+                "each column as its own <nav> with a label — otherwise a screen reader reads all the links as one mush",
+                "the <style> block inside the component — it holds the palette, the wordmark and the layout",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent ground by default — the footer sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "brand — the brand name, which is also the wordmark text",
+                "tagline — the slogan in the left column",
+                "the columns array — the link columns, their labels and addresses",
+                "copyright — the copyright line",
+                "the accent through the accent prop — it colours link hover and focus",
+                "background — the component ground; empty means no ground, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The wordmark stays on one unwrapped line: for a name longer than 8–10 letters reduce the font-size on [data-part=\"wordmark\"] or shorten it.",
+                "The wordmark is taken from the brand prop automatically — there is no separate prop, so the names cannot drift apart.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Footer010\n  brand=\"Format\"\n  tagline=\"Sections for sites people assemble with their own hands.\"\n  columns={[{ title: \"Product\", links: [{ label: \"Pricing\", href: \"/pricing\" }] }]}\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Brand",
+                "default": "Format"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "brand": "Format",
+                "tagline": "Sections for sites people assemble with their own hands: copy the file into the project — and the layout is done.",
+                "columns": [
+                  {
+                    "title": "Product",
+                    "links": [
+                      { "label": "Features", "href": "#features" },
+                      { "label": "Pricing", "href": "#pricing" },
+                      { "label": "What's new", "href": "#changelog" }
+                    ]
+                  },
+                  {
+                    "title": "Resources",
+                    "links": [
+                      { "label": "Documentation", "href": "#docs" },
+                      { "label": "Examples", "href": "#examples" },
+                      { "label": "Blog", "href": "#blog" }
+                    ]
+                  },
+                  {
+                    "title": "Company",
+                    "links": [
+                      { "label": "About us", "href": "#about" },
+                      { "label": "Careers", "href": "#jobs" },
+                      { "label": "Contact", "href": "#contacts" }
+                    ]
+                  },
+                  {
+                    "title": "Legal",
+                    "links": [
+                      { "label": "Terms", "href": "#terms" },
+                      { "label": "Privacy", "href": "#privacy" },
+                      { "label": "Cookies", "href": "#cookies" }
+                    ]
+                  }
+                ],
+                "copyright": "© 2026 Format Ltd. All rights reserved."
+              }
+            }
+          }
+        },
+        "cardControls": ["brand", "accent", "background"]
+      }
+    },
+    {
+      "name": "footer-011",
+      "type": "registry:block",
+      "title": "Подвал с переключателями",
+      "description": "Подвал с панелью настроек региона: колонки ссылок плюс селекты языка и валюты и декоративный переключатель темы. Самодостаточен: один файл, без зависимостей.",
+      "categories": ["footer"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footer-011/footer-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footer-011.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-footer-011-*. Серверный компонент: селекты — нативные <select> и работают без JS, переключатель темы декоративный, логику вешает проект. Свои выпадашки ломают клавиатуру и мобильные пикеры ради косметики, поэтому селекты нативные, а стрелка нарисована двумя градиентами — appearance:none убирает браузерную, и без своей селект выглядит обычным полем. Панель настроек собрана в правой колонке отдельной карточкой с тёплым тинтом из акцента: там её ищут по привычке из крупных магазинов.",
+      "meta": {
+        "tags": ["footer", "language", "currency", "theme", "settings"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Footer011",
+          "usage": "<Footer011\n  languages={[\"Русский\", \"English\"]}\n  currencies={[\"₽ Рубль\", \"€ Евро\"]}\n  columns={[{ title: \"Продукт\", links: [{ label: \"Тарифы\", href: \"/pricing\" }] }]}\n/>",
+          "summary": "Подвал с колонками ссылок и панелью переключателей: нативные селекты языка и валюты, декоративный сегментный переключатель темы, внизу копирайт и имя бренда. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-footer-011-* и не подменять её токенами вашей темы",
+            "нативные <select> — свои выпадашки ломают клавиатуру и мобильные пикеры ради косметики",
+            "шеврон селекта двумя градиентами: appearance:none убирает браузерную стрелку, без своей селект выглядит обычным полем",
+            "связку label + select: подпись кликабельна и достаётся скринридеру",
+            "переключатель темы группой role=\"group\" с aria-labelledby и aria-pressed на кнопках",
+            "панель настроек отдельной карточкой с тёплым тинтом из акцента через color-mix",
+            "каждую колонку отдельным <nav> с подписью — иначе скринридер читает все ссылки одной кашей",
+            "блок <style> внутри компонента — в нём палитра, селекты и раскладка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "массив columns — колонки ссылок, их подписи и адреса",
+            "languages и languageLabel — список языков и подпись селекта",
+            "currencies и currencyLabel — список валют и подпись селекта",
+            "themeLabel — подпись переключателя темы",
+            "brand и copyright — имя бренда и строка копирайта",
+            "accent и background — акцент панели и подложка; пустой background означает «по цвету страницы»"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Селекты и кнопки темы ничего не переключают сами: подключите обработчики — язык и валюту к своему роутингу, тему обычно к next-themes.",
+            "Первый элемент массивов languages и currencies — выбранное по умолчанию значение.",
+            "В узкой врезке панель настроек встаёт под колонки, а её поля — в ряд: это задумано.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Бренд",
+            "type": "text",
+            "default": "Компас",
+            "maxLength": 20
+          },
+          {
+            "prop": "languageLabel",
+            "label": "Подпись языка",
+            "type": "text",
+            "default": "Язык",
+            "maxLength": 16
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Preferences Footer",
+            "description": "A footer with a regional preferences panel: link columns plus language and currency selects and a decorative theme switcher. Self-contained: one file, no dependencies.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-footer-011-* variables. A server component: the selects are native <select> elements and work without JS, the theme switcher is decorative and the project wires the logic. Custom dropdowns break the keyboard and mobile pickers for the sake of cosmetics, so the selects are native, and the arrow is drawn with two gradients — appearance:none removes the browser one, and without a replacement the select looks like a plain field. The preferences panel sits in the right column as its own card with a warm accent tint: that is where people look for it out of habit from large stores.",
+            "ai": {
+              "summary": "A footer with link columns and a preferences panel: native language and currency selects, a decorative segmented theme switcher, and a bottom row with the copyright and the brand name. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-footer-011-* palette — do not swap it for your theme tokens",
+                "the native <select> elements — custom dropdowns break the keyboard and mobile pickers for the sake of cosmetics",
+                "the select chevron drawn with two gradients: appearance:none removes the browser arrow, and without a replacement the select looks like a plain field",
+                "the label + select pairing: the caption is clickable and reaches the screen reader",
+                "the theme switcher as a role=\"group\" with aria-labelledby and aria-pressed on the buttons",
+                "the preferences panel as its own card with a warm accent tint via color-mix",
+                "each column as its own <nav> with a label — otherwise a screen reader reads all the links as one mush",
+                "the <style> block inside the component — it holds the palette, the selects and the layout",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "the columns array — the link columns, their labels and addresses",
+                "languages and languageLabel — the language list and the select caption",
+                "currencies and currencyLabel — the currency list and the select caption",
+                "themeLabel — the theme switcher caption",
+                "brand and copyright — the brand name and the copyright line",
+                "accent and background — the panel accent and the ground; an empty background means the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The selects and theme buttons do not switch anything by themselves: wire the handlers — language and currency to your routing, the theme usually to next-themes.",
+                "The first item of the languages and currencies arrays is the value selected by default.",
+                "In a narrow slot the preferences panel drops below the columns and its fields line up in a row: by design.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Footer011\n  languages={[\"English\", \"Deutsch\"]}\n  currencies={[\"$ Dollar\", \"€ Euro\"]}\n  columns={[{ title: \"Product\", links: [{ label: \"Pricing\", href: \"/pricing\" }] }]}\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Brand",
+                "default": "Compass"
+              },
+              "languageLabel": {
+                "label": "Language caption",
+                "default": "Language"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "brand": "Compass",
+                "languageLabel": "Language",
+                "languages": ["English", "Deutsch", "Español", "Français"],
+                "currencyLabel": "Currency",
+                "currencies": ["$ Dollar", "€ Euro", "£ Pound"],
+                "themeLabel": "Theme",
+                "themeOptions": ["Light", "Dark", "Auto"],
+                "columns": [
+                  {
+                    "title": "Product",
+                    "links": [
+                      { "label": "Features", "href": "#features" },
+                      { "label": "Pricing", "href": "#pricing" },
+                      { "label": "Integrations", "href": "#integrations" },
+                      { "label": "What's new", "href": "#changelog" }
+                    ]
+                  },
+                  {
+                    "title": "Resources",
+                    "links": [
+                      { "label": "Documentation", "href": "#docs" },
+                      { "label": "Examples", "href": "#examples" },
+                      { "label": "Blog", "href": "#blog" },
+                      { "label": "Webinars", "href": "#webinars" }
+                    ]
+                  },
+                  {
+                    "title": "Company",
+                    "links": [
+                      { "label": "About us", "href": "#about" },
+                      { "label": "Careers", "href": "#jobs" },
+                      { "label": "Partners", "href": "#partners" },
+                      { "label": "Contact", "href": "#contacts" }
+                    ]
+                  }
+                ],
+                "copyright": "© 2026 Compass Ltd. All rights reserved."
+              }
+            }
+          }
+        },
+        "cardControls": ["brand", "languageLabel", "accent", "background"]
+      }
+    },
+    {
+      "name": "footer-012",
+      "type": "registry:block",
+      "title": "Подвал со статусом сервиса",
+      "description": "Подвал с плашкой состояния сервиса над колонками: зелёная пульсирующая точка, аптайм и ссылка на страницу статуса. Самодостаточен: один файл, без зависимостей.",
+      "categories": ["footer"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footer-012/footer-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footer-012.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-footer-012-*. Серверный компонент. Плашка статуса стоит первой, над колонками: в подвал спускаются в двух случаях — что-то ищут или что-то сломалось, и вторым статус нужен сразу, а не мелкой ссылкой в углу. Зелёный в блоке семантический: он означает «работает» и на другие роли не тратится; тинт плашки замешан из него через color-mix. Точка пульсирует лёгким box-shadow, и анимация глушится в prefers-reduced-motion. Аптайм набран tabular-nums, чтобы цифры не плясали при обновлении.",
+      "meta": {
+        "tags": ["footer", "status", "uptime", "monitoring"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Footer012",
+          "usage": "<Footer012\n  statusText=\"Все системы работают\"\n  uptime=\"99,98 % за последние 90 дней\"\n  statusHref=\"https://status.example.ru\"\n/>",
+          "summary": "Подвал со строкой состояния сервиса: плашка с зелёной пульсирующей точкой, текстом «Все системы работают», аптаймом и ссылкой на страницу статуса, ниже четыре колонки ссылок и копирайт. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-footer-012-* и не подменять её токенами вашей темы",
+            "плашку статуса первой, над колонками: в подвал спускаются когда что-то сломалось, и статус нужен сразу",
+            "зелёный только в роли семантики «работает» — на другие роли он в блоке не тратится",
+            "тинт и рамку плашки из зелёного через color-mix — они перекрашиваются вместе с семантикой",
+            "пульс точки лёгким box-shadow и его отключение в prefers-reduced-motion",
+            "tabular-nums у аптайма — цифры не пляшут по ширине при обновлении",
+            "каждую колонку отдельным <nav> с подписью — иначе скринридер читает все ссылки одной кашей",
+            "блок <style> внутри компонента — в нём палитра, плашка и раскладка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — подвал ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "statusText и uptime — текст состояния и цифры аптайма",
+            "statusLinkLabel и statusHref — подпись и адрес страницы статуса",
+            "массив columns — колонки ссылок, их подписи и адреса",
+            "copyright — строка копирайта",
+            "акцент через проп accent — цвет ссылки статуса, наведения и фокуса",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Статус в блоке статический: подтягивайте реальное состояние со своего мониторинга — врать статусом хуже, чем не показывать его вовсе.",
+            "При инциденте меняйте и текст, и цвет точки через --vibeui-footer-012-ok: зелёная точка рядом с текстом про сбой — противоречие.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "statusText",
+            "label": "Текст статуса",
+            "type": "text",
+            "default": "Все системы работают",
+            "maxLength": 40
+          },
+          {
+            "prop": "uptime",
+            "label": "Аптайм",
+            "type": "text",
+            "default": "99,98 % за последние 90 дней",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Status Footer",
+            "description": "A footer with a service-status bar above the columns: a pulsing green dot, the uptime figure and a link to the status page. Self-contained: one file, no dependencies.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-footer-012-* variables. A server component. The status bar comes first, above the columns: people descend to the footer for one of two reasons — they are looking for something, or something broke, and the latter need the status immediately rather than as a tiny corner link. Green in this block is semantic: it means “operational” and is spent on nothing else; the bar's tint is mixed from it via color-mix. The dot pulses with a light box-shadow, and the animation is silenced under prefers-reduced-motion. The uptime is set in tabular-nums so the digits do not dance when updated.",
+            "ai": {
+              "summary": "A footer with a service-status row: a bar with a pulsing green dot, an “All systems operational” text, the uptime figure and a link to the status page, with four link columns and the copyright below. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-footer-012-* palette — do not swap it for your theme tokens",
+                "the status bar first, above the columns: people come to the footer when something broke, and they need the status immediately",
+                "green only in its semantic role of “operational” — it is spent on nothing else in the block",
+                "the bar's tint and border mixed from the green via color-mix — they recolour together with the semantics",
+                "the dot's pulse as a light box-shadow and its shutdown under prefers-reduced-motion",
+                "tabular-nums on the uptime — the digits do not jitter in width when updated",
+                "each column as its own <nav> with a label — otherwise a screen reader reads all the links as one mush",
+                "the <style> block inside the component — it holds the palette, the bar and the layout",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent ground by default — the footer sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "statusText and uptime — the status text and the uptime figures",
+                "statusLinkLabel and statusHref — the label and address of the status page",
+                "the columns array — the link columns, their labels and addresses",
+                "copyright — the copyright line",
+                "the accent through the accent prop — it colours the status link, hover and focus",
+                "background — the component ground; empty means no ground, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The status in the block is static: feed it the real state from your monitoring — lying with a status is worse than not showing one at all.",
+                "During an incident change both the text and the dot colour via --vibeui-footer-012-ok: a green dot next to an outage text is a contradiction.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Footer012\n  statusText=\"All systems operational\"\n  uptime=\"99.98% over the last 90 days\"\n  statusHref=\"https://status.example.com\"\n/>"
+            },
+            "controls": {
+              "statusText": {
+                "label": "Status text",
+                "default": "All systems operational"
+              },
+              "uptime": {
+                "label": "Uptime",
+                "default": "99.98% over the last 90 days"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "statusText": "All systems operational",
+                "uptime": "99.98% over the last 90 days",
+                "statusLinkLabel": "Status page →",
+                "columns": [
+                  {
+                    "title": "Product",
+                    "links": [
+                      { "label": "Features", "href": "#features" },
+                      { "label": "Pricing", "href": "#pricing" },
+                      { "label": "Integrations", "href": "#integrations" },
+                      { "label": "What's new", "href": "#changelog" }
+                    ]
+                  },
+                  {
+                    "title": "Developers",
+                    "links": [
+                      { "label": "Documentation", "href": "#docs" },
+                      { "label": "API", "href": "#api" },
+                      { "label": "Examples", "href": "#examples" },
+                      { "label": "Release notes", "href": "#release-notes" }
+                    ]
+                  },
+                  {
+                    "title": "Company",
+                    "links": [
+                      { "label": "About us", "href": "#about" },
+                      { "label": "Blog", "href": "#blog" },
+                      { "label": "Careers", "href": "#jobs" },
+                      { "label": "Contact", "href": "#contacts" }
+                    ]
+                  },
+                  {
+                    "title": "Support",
+                    "links": [
+                      { "label": "Help center", "href": "#help" },
+                      { "label": "Community", "href": "#community" },
+                      { "label": "Report an issue", "href": "#report" },
+                      { "label": "Terms of service", "href": "#terms" }
+                    ]
+                  }
+                ],
+                "copyright": "© 2026 Impulse Ltd. All rights reserved."
+              }
+            }
+          }
+        },
+        "cardControls": ["statusText", "uptime", "accent", "background"]
+      }
+    },
+    {
+      "name": "footer-013",
+      "type": "registry:block",
+      "title": "Минимальный подвал по центру",
+      "description": "Минимальный подвал по центру: знак, имя бренда, одна строка ссылок, соцсети и копирайт в узкой центральной колонке. Самодостаточен: один файл, без зависимостей.",
+      "categories": ["footer"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footer-013/footer-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footer-013.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-footer-013-*. Серверный компонент. Всё содержимое собрано в узкую центральную колонку 44rem: минимализм держится на воздухе, растянутый на всю ширину он разваливается. Ссылки собраны в один <nav> — это одна навигация, а не пять групп, и городить колонки ради пяти ссылок значит претендовать на масштаб, которого нет. Знак нарисован акцентной заливкой через mask-image, поэтому перекрашивается пропом accent без правки SVG. Соцссылки — текстовые пилюли: ради трёх ссылок не тащим набор иконок.",
+      "meta": {
+        "tags": ["footer", "minimal", "centered", "landing"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Footer013",
+          "usage": "<Footer013\n  brand=\"Точка\"\n  links={[{ label: \"Тарифы\", href: \"/pricing\" }]}\n  social={[{ label: \"Telegram\", href: \"https://t.me/example\" }]}\n/>",
+          "summary": "Минимальный подвал по центру: круглый знак из акцента, имя бренда, одна строка ссылок, соцссылки-пилюли и копирайт под тонкой линией — всё в узкой центральной колонке. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-footer-013-* и не подменять её токенами вашей темы",
+            "узкую центральную колонку 44rem: минимализм держится на воздухе, растянутый на всю ширину он разваливается",
+            "одну навигацию одним <nav> — это одна строка ссылок, а не пять групп с подписями",
+            "знак акцентной заливкой через mask-image — он перекрашивается пропом accent без правки SVG",
+            "соцссылки текстовыми пилюлями: ради трёх ссылок не тащим набор иконок",
+            "блок <style> внутри компонента — в нём палитра и раскладка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — подвал ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "brand — имя бренда под знаком",
+            "массив links — строка ссылок",
+            "массив social — соцссылки-пилюли",
+            "copyright — строка копирайта",
+            "акцент через проп accent — цвет знака, наведения и фокуса",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Блок рассчитан на лендинги и продуктовые страницы: если ссылок больше шести-семи, берите подвал с колонками, строка перестанет читаться.",
+            "Ссылки ведут на якоря-заглушки — подставьте реальные адреса.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Бренд",
+            "type": "text",
+            "default": "Точка",
+            "maxLength": 20
+          },
+          {
+            "prop": "copyright",
+            "label": "Копирайт",
+            "type": "text",
+            "default": "© 2026 ООО «Точка». Все права защищены.",
+            "maxLength": 60
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Centered Minimal Footer",
+            "description": "A minimal centered footer: a mark, the brand name, one row of links, social links and the copyright in a narrow central column. Self-contained: one file, no dependencies.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-footer-013-* variables. A server component. Everything sits in a narrow 44rem central column: minimalism rests on air, and stretched to full width it falls apart. The links live in a single <nav> — this is one navigation, not five groups, and building columns for five links would claim a scale that is not there. The mark is drawn with the accent fill through a mask-image, so the accent prop recolours it without touching any SVG. The social links are text pills: three links do not justify shipping an icon set.",
+            "ai": {
+              "summary": "A minimal centered footer: a round accent mark, the brand name, one row of links, pill-shaped social links and the copyright under a thin rule — all in a narrow central column. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-footer-013-* palette — do not swap it for your theme tokens",
+                "the narrow 44rem central column: minimalism rests on air, stretched to full width it falls apart",
+                "the single navigation as one <nav> — it is one row of links, not five labelled groups",
+                "the mark as an accent fill through mask-image — the accent prop recolours it without touching any SVG",
+                "the social links as text pills: three links do not justify shipping an icon set",
+                "the <style> block inside the component — it holds the palette and the layout",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent ground by default — the footer sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "brand — the brand name under the mark",
+                "the links array — the row of links",
+                "the social array — the pill-shaped social links",
+                "copyright — the copyright line",
+                "the accent through the accent prop — it colours the mark, hover and focus",
+                "background — the component ground; empty means no ground, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The block is meant for landing and product pages: with more than six or seven links take a columned footer, the row stops reading.",
+                "The links point at placeholder anchors — put the real addresses in.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Footer013\n  brand=\"Dot\"\n  links={[{ label: \"Pricing\", href: \"/pricing\" }]}\n  social={[{ label: \"Telegram\", href: \"https://t.me/example\" }]}\n/>"
+            },
+            "controls": {
+              "brand": {
+                "label": "Brand",
+                "default": "Dot"
+              },
+              "copyright": {
+                "label": "Copyright",
+                "default": "© 2026 Dot Ltd. All rights reserved."
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "brand": "Dot",
+                "links": [
+                  { "label": "Features", "href": "#features" },
+                  { "label": "Pricing", "href": "#pricing" },
+                  { "label": "Documentation", "href": "#docs" },
+                  { "label": "Blog", "href": "#blog" },
+                  { "label": "Contact", "href": "#contacts" }
+                ],
+                "social": [
+                  { "label": "Telegram", "href": "#telegram" },
+                  { "label": "YouTube", "href": "#youtube" },
+                  { "label": "GitHub", "href": "#github" }
+                ],
+                "copyright": "© 2026 Dot Ltd. All rights reserved."
+              }
+            }
+          }
+        },
+        "cardControls": ["brand", "copyright", "accent", "background"]
+      }
+    },
+    {
+      "name": "footer-014",
+      "type": "registry:block",
+      "title": "Подвал с последними статьями",
+      "description": "Подвал с колонкой «В блоге»: обычные колонки ссылок плюс три свежих материала с датами и ссылка на все статьи. Самодостаточен: один файл, без зависимостей.",
+      "categories": ["footer"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footer-014/footer-014.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footer-014.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-footer-014-*. Серверный компонент. Даты статей размечены <time datetime>: машиночитаемая дата остаётся в разметке, даже когда подпись человеку — «12 августа». Дата стоит над заголовком: сначала свежесть, потом тема — свежие даты в подвале работают сигналом живости проекта. Вся карточка статьи — одна ссылка с наведением на заголовке. Колонка блога — отдельный <nav> со своей подписью, как и каждая колонка ссылок; двухчастная раскладка включается только от 64rem собственной ширины блока.",
+      "meta": {
+        "tags": ["footer", "blog", "articles", "content"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Footer014",
+          "usage": "<Footer014\n  blogTitle=\"В блоге\"\n  posts={[{ title: \"Как мы ускорили сборку\", href: \"/blog/build\", date: \"2026-08-28\", dateLabel: \"28 августа 2026\" }]}\n/>",
+          "summary": "Подвал с последними статьями: три колонки ссылок слева, справа колонка «В блоге» с тремя материалами — дата над заголовком — и ссылкой на все статьи, внизу копирайт. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-footer-014-* и не подменять её токенами вашей темы",
+            "даты в <time dateTime>: машиночитаемая дата остаётся в разметке при любой человеческой подписи",
+            "дату над заголовком, а не после него: сначала свежесть, потом тема",
+            "tabular-nums у дат — цифры не пляшут по ширине",
+            "всю карточку статьи одной ссылкой с наведением на заголовке — цель клика крупная, а не узкая строка",
+            "колонку блога отдельным <nav> со своей подписью, как и каждую колонку ссылок",
+            "двухчастную раскладку только от 64rem собственной ширины блока (container queries)",
+            "блок <style> внутри компонента — в нём палитра и раскладка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "массив columns — колонки ссылок, их подписи и адреса",
+            "массив posts — статьи: title, href, date (ISO) и dateLabel (подпись человеку)",
+            "blogTitle, blogLinkLabel и blogHref — подпись колонки и ссылка на все статьи",
+            "copyright — строка копирайта",
+            "акцент через проп accent — цвет наведения и ссылки на блог",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Заброшенный блог с датой двухлетней давности говорит о компании больше, чем слоган: обновляйте posts или уберите колонку целиком.",
+            "Заполняйте оба поля даты: date — ISO для машин, dateLabel — подпись человеку; расходиться они не должны.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "blogTitle",
+            "label": "Подпись колонки",
+            "type": "text",
+            "default": "В блоге",
+            "maxLength": 24
+          },
+          {
+            "prop": "blogLinkLabel",
+            "label": "Ссылка на блог",
+            "type": "text",
+            "default": "Все статьи →",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Latest Posts Footer",
+            "description": "A footer with a “From the blog” column: regular link columns plus three fresh posts with dates and a link to all articles. Self-contained: one file, no dependencies.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-footer-014-* variables. A server component. Post dates are marked up with <time datetime>: the machine-readable date stays in the markup even when the human caption is “August 12”. The date sits above the title: freshness first, then the topic — fresh dates in a footer act as a liveness signal for the project. The whole post card is a single link with hover on the title. The blog column is its own <nav> with a label, like every link column; the two-part layout kicks in only from 64rem of the block's own width.",
+            "ai": {
+              "summary": "A footer with the latest posts: three link columns on the left, a “From the blog” column on the right with three posts — date above title — and a link to all articles, with the copyright below. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-footer-014-* palette — do not swap it for your theme tokens",
+                "the dates in <time dateTime>: the machine-readable date stays in the markup under any human caption",
+                "the date above the title, not after it: freshness first, then the topic",
+                "tabular-nums on the dates — the digits do not jitter in width",
+                "the whole post card as a single link with hover on the title — the click target is large, not a narrow line",
+                "the blog column as its own <nav> with a label, like every link column",
+                "the two-part layout only from 64rem of the block's own width (container queries)",
+                "the <style> block inside the component — it holds the palette and the layout",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "the columns array — the link columns, their labels and addresses",
+                "the posts array — the articles: title, href, date (ISO) and dateLabel (the human caption)",
+                "blogTitle, blogLinkLabel and blogHref — the column label and the link to all articles",
+                "copyright — the copyright line",
+                "the accent through the accent prop — it colours hover and the blog link",
+                "background — the component ground; empty means no ground, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "An abandoned blog with a two-year-old date says more about a company than any slogan: keep posts fresh or drop the column entirely.",
+                "Fill both date fields: date is the ISO value for machines, dateLabel is the human caption; they must not diverge.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Footer014\n  blogTitle=\"From the blog\"\n  posts={[{ title: \"How we sped up the build\", href: \"/blog/build\", date: \"2026-08-28\", dateLabel: \"August 28, 2026\" }]}\n/>"
+            },
+            "controls": {
+              "blogTitle": {
+                "label": "Column label",
+                "default": "From the blog"
+              },
+              "blogLinkLabel": {
+                "label": "Blog link",
+                "default": "All articles →"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "blogTitle": "From the blog",
+                "blogLinkLabel": "All articles →",
+                "posts": [
+                  {
+                    "title": "How we made the catalog build three times faster",
+                    "href": "#post-build",
+                    "date": "2026-08-28",
+                    "dateLabel": "August 28, 2026"
+                  },
+                  {
+                    "title": "A design system without a design system: techniques for small teams",
+                    "href": "#post-design",
+                    "date": "2026-08-12",
+                    "dateLabel": "August 12, 2026"
+                  },
+                  {
+                    "title": "Why sections beat templates: a teardown of five landing pages",
+                    "href": "#post-sections",
+                    "date": "2026-07-30",
+                    "dateLabel": "July 30, 2026"
+                  }
+                ],
+                "columns": [
+                  {
+                    "title": "Product",
+                    "links": [
+                      { "label": "Features", "href": "#features" },
+                      { "label": "Pricing", "href": "#pricing" },
+                      { "label": "Integrations", "href": "#integrations" },
+                      { "label": "What's new", "href": "#changelog" }
+                    ]
+                  },
+                  {
+                    "title": "Resources",
+                    "links": [
+                      { "label": "Documentation", "href": "#docs" },
+                      { "label": "Examples", "href": "#examples" },
+                      { "label": "Webinars", "href": "#webinars" },
+                      { "label": "Help center", "href": "#help" }
+                    ]
+                  },
+                  {
+                    "title": "Company",
+                    "links": [
+                      { "label": "About us", "href": "#about" },
+                      { "label": "Careers", "href": "#jobs" },
+                      { "label": "Partners", "href": "#partners" },
+                      { "label": "Contact", "href": "#contacts" }
+                    ]
+                  }
+                ],
+                "copyright": "© 2026 Verse Ltd. All rights reserved."
+              }
+            }
+          }
+        },
+        "cardControls": ["blogTitle", "blogLinkLabel", "accent", "background"]
+      }
+    },
+    {
+      "name": "footer-015",
+      "type": "registry:block",
+      "title": "Подвал с призывом",
+      "description": "Подвал с CTA-плашкой: тёплая панель с заголовком и оранжевой кнопкой сверху, ниже обычные колонки ссылок и копирайт. Самодостаточен: один файл, без зависимостей.",
+      "categories": ["footer"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footer-015/footer-015.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footer-015.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-footer-015-*. Серверный компонент. CTA-плашка стоит именно в подвале не случайно: это последний экран, и посетитель, долиставший сюда, уже прочитал аргументы — ему нужна не ещё одна выгода, а кнопка. Тёплый тинт и рамка плашки замешаны из акцента через color-mix, поэтому при смене accent панель перекрашивается сама. Вторичное действие — ссылка, а не вторая кнопка: два равных призыва отменяют друг друга. Каждая колонка ссылок — отдельный <nav> со своей подписью.",
+      "meta": {
+        "tags": ["footer", "cta", "conversion", "action"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Footer015",
+          "usage": "<Footer015\n  ctaTitle=\"Соберите свой сайт из готовых секций\"\n  ctaButtonLabel=\"Начать бесплатно\"\n  ctaHref=\"/signup\"\n/>",
+          "summary": "Подвал с призывом: сверху тёплая CTA-плашка с заголовком, пояснением, оранжевой кнопкой и вторичной ссылкой, ниже четыре колонки ссылок и копирайт. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-footer-015-* и не подменять её токенами вашей темы",
+            "CTA-плашку первой: это последний экран, долиставшему нужна кнопка, а не ещё одна выгода",
+            "заливку кнопки фирменным оранжевым и почти чёрный текст на ней — контраст этой пары рассчитан",
+            "тёплый тинт и рамку плашки из акцента через color-mix — панель перекрашивается вместе с accent",
+            "вторичное действие ссылкой, а не второй кнопкой: два равных призыва отменяют друг друга",
+            "каждую колонку отдельным <nav> с подписью — иначе скринридер читает все ссылки одной кашей",
+            "двухколоночную раскладку плашки только от 56rem собственной ширины блока",
+            "блок <style> внутри компонента — в нём палитра, плашка и раскладка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — подвал ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "ctaTitle и ctaNote — заголовок и пояснение призыва",
+            "ctaButtonLabel и ctaHref — подпись и адрес кнопки",
+            "ctaSecondaryLabel и ctaSecondaryHref — вторичная ссылка",
+            "массив columns — колонки ссылок, их подписи и адреса",
+            "copyright — строка копирайта",
+            "accent и background — акцент кнопки и плашки; пустой background означает «по цвету страницы»"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Кнопка и ссылки ведут на якоря-заглушки — подставьте реальные адреса регистрации и каталога.",
+            "В узкой врезке действия встают под текст плашки — это задумано, не чините.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "ctaTitle",
+            "label": "Заголовок призыва",
+            "type": "text",
+            "default": "Соберите свой сайт из готовых секций",
+            "maxLength": 60
+          },
+          {
+            "prop": "ctaButtonLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Начать бесплатно",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Call-to-Action Footer",
+            "description": "A footer with a CTA panel: a warm plate with a heading and an orange button on top, regular link columns and the copyright below. Self-contained: one file, no dependencies.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-footer-015-* variables. A server component. The CTA panel sits in the footer on purpose: this is the last screen, and a visitor who scrolled this far has already read the arguments — they need a button, not one more benefit. The panel's warm tint and border are mixed from the accent via color-mix, so changing accent recolours the panel by itself. The secondary action is a link, not a second button: two equal calls cancel each other out. Each link column is its own <nav> with a label.",
+            "ai": {
+              "summary": "A call-to-action footer: a warm CTA panel with a heading, a note, an orange button and a secondary link on top, four link columns and the copyright below. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-footer-015-* palette — do not swap it for your theme tokens",
+                "the CTA panel first: this is the last screen, the visitor who scrolled here needs a button, not one more benefit",
+                "the brand-orange button fill with near-black text on it — the contrast of this pair is calculated",
+                "the panel's warm tint and border mixed from the accent via color-mix — it recolours together with accent",
+                "the secondary action as a link, not a second button: two equal calls cancel each other out",
+                "each column as its own <nav> with a label — otherwise a screen reader reads all the links as one mush",
+                "the panel's two-column layout only from 56rem of the block's own width",
+                "the <style> block inside the component — it holds the palette, the panel and the layout",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent ground by default — the footer sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "ctaTitle and ctaNote — the heading and the note of the call",
+                "ctaButtonLabel and ctaHref — the button label and address",
+                "ctaSecondaryLabel and ctaSecondaryHref — the secondary link",
+                "the columns array — the link columns, their labels and addresses",
+                "copyright — the copyright line",
+                "accent and background — the button and panel accent and the ground; an empty background means the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The button and links point at placeholder anchors — put the real signup and catalog addresses in.",
+                "In a narrow slot the actions drop below the panel text — by design, do not fix it.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Footer015\n  ctaTitle=\"Assemble your site from ready-made sections\"\n  ctaButtonLabel=\"Start for free\"\n  ctaHref=\"/signup\"\n/>"
+            },
+            "controls": {
+              "ctaTitle": {
+                "label": "Call heading",
+                "default": "Assemble your site from ready-made sections"
+              },
+              "ctaButtonLabel": {
+                "label": "Button",
+                "default": "Start for free"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "ctaTitle": "Assemble your site from ready-made sections",
+                "ctaNote": "Pick the blocks in the catalog, hand them to your AI agent — and get a working page, not a mockup.",
+                "ctaButtonLabel": "Start for free",
+                "ctaSecondaryLabel": "Browse the catalog",
+                "columns": [
+                  {
+                    "title": "Product",
+                    "links": [
+                      { "label": "Features", "href": "#features" },
+                      { "label": "Pricing", "href": "#pricing" },
+                      { "label": "Integrations", "href": "#integrations" },
+                      { "label": "What's new", "href": "#changelog" }
+                    ]
+                  },
+                  {
+                    "title": "Resources",
+                    "links": [
+                      { "label": "Documentation", "href": "#docs" },
+                      { "label": "Examples", "href": "#examples" },
+                      { "label": "Blog", "href": "#blog" },
+                      { "label": "Webinars", "href": "#webinars" }
+                    ]
+                  },
+                  {
+                    "title": "Company",
+                    "links": [
+                      { "label": "About us", "href": "#about" },
+                      { "label": "Careers", "href": "#jobs" },
+                      { "label": "Partners", "href": "#partners" },
+                      { "label": "Contact", "href": "#contacts" }
+                    ]
+                  },
+                  {
+                    "title": "Legal",
+                    "links": [
+                      { "label": "Terms", "href": "#terms" },
+                      { "label": "Privacy", "href": "#privacy" },
+                      { "label": "Cookies", "href": "#cookies" },
+                      { "label": "Public offer", "href": "#offer" }
+                    ]
+                  }
+                ],
+                "copyright": "© 2026 Vector Ltd. All rights reserved."
+              }
+            }
+          }
+        },
+        "cardControls": ["ctaTitle", "ctaButtonLabel", "accent", "background"]
+      }
     }
   ]
 }

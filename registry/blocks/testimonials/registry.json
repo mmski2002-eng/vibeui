@@ -6,7 +6,9 @@
       "type": "registry:block",
       "title": "Отзывы с главным",
       "description": "Секция отзывов с иерархией: один крупный отзыв засечным шрифтом на две колонки, остальные мелкие. Стена одинаковых карточек читается как шум.",
-      "categories": ["testimonials"],
+      "categories": [
+        "testimonials"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,7 +20,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-001-*. Число колонок и размер главной цитаты считаются от собственной ширины блока через container-запросы. Разметка семантическая: каждый отзыв — <figure> с <blockquote> и <figcaption>. Аватар — инициалы на подложке акцента: фотографии в отзывах чаще всего стоковые и портят доверие сильнее, чем их отсутствие.",
       "meta": {
-        "tags": ["testimonials", "social proof", "reviews", "quotes"],
+        "tags": [
+          "testimonials",
+          "social proof",
+          "reviews",
+          "quotes"
+        ],
         "ai": {
           "export": "Testimonials001",
           "usage": "<Testimonials001\n  title=\"Что говорят те, кто уже собрал сайт\"\n  items={[{ quote: \"...\", name: \"Анна Ковалёва\", role: \"Арт-директор\", featured: true }]}\n/>",
@@ -163,7 +170,12 @@
             "default": ""
           }
         ],
-        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ],
         "preview": {
           "width": "full"
         }
@@ -174,7 +186,9 @@
       "type": "registry:block",
       "title": "Ровная сетка отзывов",
       "description": "Ровная сетка отзывов карточками: все отзывы равны по весу, автор внизу, а рядом подписан источник — отзыв без источника читается как написанный маркетологом.",
-      "categories": ["testimonials"],
+      "categories": [
+        "testimonials"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -186,7 +200,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-002-*. Серверный компонент. Число колонок считается от собственной ширины блока: одна, две, три. Карточка — flex-колонка, где цитата растягивается, а подпись прижата вниз, поэтому карточки в ряду выглядят одинаковыми независимо от длины текста. Разметка семантическая: каждый отзыв — <figure> с <blockquote> и <figcaption>. Инициалы вместо фотографий: стоковое лицо в отзыве заметно и вредит доверию.",
       "meta": {
-        "tags": ["testimonials", "grid", "social proof", "reviews"],
+        "tags": [
+          "testimonials",
+          "grid",
+          "social proof",
+          "reviews"
+        ],
         "preview": {
           "width": "full"
         },
@@ -346,7 +365,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-testimonials-002-*. A server component. The number of columns is computed from the block's own width: one, two, three. The card is a flex column where the quote stretches and the caption is pushed to the bottom, so cards in a row look identical no matter how long the text is. The markup is semantic: every testimonial is a <figure> with a <blockquote> and a <figcaption>. Initials instead of photos: a stock face in a testimonial is noticeable and hurts trust."
           }
         },
-        "cardControls": ["title", "eyebrow", "accent", "background"]
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -354,7 +378,9 @@
       "type": "registry:block",
       "title": "Одна большая цитата",
       "description": "Одна крупная цитата вместо стены карточек: засечный набор во всю ширину, автор с компанией и три проверяемые цифры под ней.",
-      "categories": ["testimonials"],
+      "categories": [
+        "testimonials"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -366,7 +392,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-003-*. Серверный компонент. Кегль цитаты считается в cqi от собственной ширины блока, строки выравниваются через text-wrap:balance. Кавычка — крупный знак в отдельном слое с pointer-events:none и user-select:none, обрезанный краем секции: это подложка, а не украшение, поэтому она не мешает выделять текст. Цифры размечены списком определений <dl>: значение и подпись — пара, а не два независимых абзаца.",
       "meta": {
-        "tags": ["testimonials", "quote", "case study", "metrics"],
+        "tags": [
+          "testimonials",
+          "quote",
+          "case study",
+          "metrics"
+        ],
         "preview": {
           "width": "full"
         },
@@ -508,7 +539,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-testimonials-003-*. A server component. The type size of the quote is computed in cqi from the block's own width, and the lines are balanced with text-wrap:balance. The quotation mark is a large glyph in a separate layer with pointer-events:none and user-select:none, clipped by the edge of the section: it is a backdrop rather than an ornament, so it does not get in the way of selecting the text. The numbers are marked up as a definition list <dl>: the value and its caption are a pair, not two independent paragraphs."
           }
         },
-        "cardControls": ["name", "company", "accent", "background"]
+        "cardControls": [
+          "name",
+          "company",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -516,7 +552,9 @@
       "type": "registry:block",
       "title": "Строка логотипов с цитатой",
       "description": "Лента логотипов, где под каждым стоит своя цитата. Обычная полоса логотипов ничего не доказывает — здесь узнавание и доказательство собраны в одном элементе.",
-      "categories": ["testimonials"],
+      "categories": [
+        "testimonials"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -528,7 +566,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-004-*. Серверный компонент. Логотипы — текстовые начертания со знаком, вырезанным из конического градиента через mask-image: внешних файлов нет, знак перекрашивается вместе с акцентом. Ячейки разделены только горизонтальными линиями, без рамок и теней: полоса логотипов должна читаться как список, а не как набор карточек. Колонки считаются от собственной ширины блока: одна, две, четыре.",
       "meta": {
-        "tags": ["testimonials", "logos", "clients", "social proof"],
+        "tags": [
+          "testimonials",
+          "logos",
+          "clients",
+          "social proof"
+        ],
         "preview": {
           "width": "full"
         },
@@ -676,7 +719,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-testimonials-004-*. A server component. The logos are text wordmarks with a glyph cut out of a conic gradient through mask-image: there are no external files, and the glyph is recoloured along with the accent. The cells are separated by horizontal rules alone, with no borders and no shadows: a logo strip has to read as a list rather than as a set of cards. The columns are computed from the block's own width: one, two, four."
           }
         },
-        "cardControls": ["title", "description", "accent", "background"]
+        "cardControls": [
+          "title",
+          "description",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -684,7 +732,9 @@
       "type": "registry:block",
       "title": "Отзывы со звёздами",
       "description": "Отзывы с оценками в звёздах: звёзды вырезаны clip-path и заливаются на нужную долю, а средняя оценка стоит в шапке вместе с числом отзывов.",
-      "categories": ["testimonials"],
+      "categories": [
+        "testimonials"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -696,7 +746,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-005-*. Серверный компонент. Звезда — фигура clip-path, а не шрифтовой знак: она одинакова во всех системах и красится переменной. Половинная оценка делается линейным градиентом с резкой границей на 50 %, состояние передаётся атрибутом data-filled. Каждый ряд звёзд помечен role=\"img\" с текстовой оценкой в aria-label — иначе скринридер прочитает пять одинаковых пустых элементов. Число колонок считается от собственной ширины блока.",
       "meta": {
-        "tags": ["testimonials", "rating", "stars", "reviews"],
+        "tags": [
+          "testimonials",
+          "rating",
+          "stars",
+          "reviews"
+        ],
         "preview": {
           "width": "full"
         },
@@ -869,7 +924,12 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-testimonials-005-*. A server component. The star is a clip-path shape rather than a font glyph: it is identical across systems and takes its colour from a variable. A half rating is made with a linear gradient with a hard stop at 50 %, and the state is passed through the data-filled attribute. Every row of stars is marked role=\"img\" with the score as text in aria-label — otherwise a screen reader reads out five identical empty elements. The number of columns is computed from the block's own width."
           }
         },
-        "cardControls": ["average", "total", "accent", "background"]
+        "cardControls": [
+          "average",
+          "total",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -877,7 +937,9 @@
       "type": "registry:block",
       "title": "Стена отзывов",
       "description": "Стена отзывов колонками разной высоты на CSS columns: карточки укладываются встык без подсчёта высот, а длина цитаты остаётся такой, какой её написали.",
-      "categories": ["testimonials"],
+      "categories": [
+        "testimonials"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -889,7 +951,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-006-*. Серверный компонент. Кладка сделана на column-count с break-inside:avoid: карточки укладываются встык без единой строки JS и без измерения высот. Ровная сетка заставила бы подрезать цитаты под общий размер, а именно длина отзыва и есть признак того, что его писал человек. Блок намеренно тёмный — стена карточек на светлом фоне выглядит как таблица. Флаг highlight подсвечивает отдельные карточки градиентом от акцента.",
       "meta": {
-        "tags": ["testimonials", "masonry", "wall", "dark"],
+        "tags": [
+          "testimonials",
+          "masonry",
+          "wall",
+          "dark"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1040,7 +1107,1609 @@
             "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-testimonials-006-*. A server component. The masonry is built on column-count with break-inside:avoid: the cards stack flush without a single line of JS and without measuring heights. An even grid would force the quotes to be trimmed to a common size, and it is precisely the length of a testimonial that shows a human wrote it. The block is deliberately dark — a wall of cards on a light background looks like a table. The highlight flag lights up individual cards with a gradient from the accent."
           }
         },
-        "cardControls": ["title", "description", "accent"]
+        "cardControls": [
+          "title",
+          "description",
+          "accent"
+        ]
+      }
+    },
+    {
+      "name": "testimonials-007",
+      "type": "registry:block",
+      "title": "Бегущая лента отзывов",
+      "description": "Две бегущие ленты отзывов навстречу друг другу: пауза по наведению, reduced-motion останавливает движение. Самодостаточен: один файл, без зависимостей, движение — чистый CSS.",
+      "categories": [
+        "testimonials"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "testimonials-007/testimonials-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/testimonials-007.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-007-*. Серверный компонент, движение — чистый CSS. Трек каждой ленты содержит две копии ряда (вторая скрыта aria-hidden) и анимируется translateX(-50%): когда первая копия уезжает, её место занимает вторая, и цикл бесшовен. Ленты идут навстречу друг другу с разной длительностью, наведение ставит анимацию на паузу, mask-градиенты растворяют края, prefers-reduced-motion останавливает ленты совсем.",
+      "meta": {
+        "tags": [
+          "testimonials",
+          "marquee",
+          "animation",
+          "social proof",
+          "scroll"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Testimonials007",
+          "usage": "<Testimonials007\n  title=\"Лента тех, кто уже собрал сайт\"\n  items={[{ quote: \"Собрали лендинг за вечер.\", name: \"Анна Ковалёва\", role: \"Маркетинг\" }]}\n/>",
+          "summary": "Секция отзывов с двумя бегущими лентами карточек: верхняя едет влево, нижняя вправо, наведение ставит ленту на паузу. Движение собрано на CSS-анимации трека из двух копий ряда, поэтому цикл бесшовный, а компонент остаётся серверным. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-testimonials-007-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
+            "встречное движение лент с разной длительностью: синхронные однонаправленные ряды читаются как один зациклившийся элемент, а не как поток отзывов",
+            "две копии ряда в треке и aria-hidden на второй — без дубля цикл рвётся, а со «зрячим» дублем скринридер читает каждый отзыв дважды",
+            "паузу анимации по наведению: бегущий текст невозможно читать, пауза — единственное, что делает ленту честной",
+            "остановку лент в prefers-reduced-motion — движущаяся секция для людей с вестибулярными нарушениями хуже, чем её отсутствие",
+            "mask-градиенты по краям лент: карточка, обрезанная в лоб краем блока, выглядит багом вёрстки",
+            "блок <style> внутри компонента — в нём палитра, анимации и карточка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "массив items — цитата, имя и должность; блок сам делит его на две ленты",
+            "тексты eyebrow и title",
+            "акцент через проп accent — цвет надзаголовка и подложки инициалов",
+            "длительность в keyframes-правилах, если лента едет слишком быстро для вашего числа карточек",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Ленте нужен объём: от шести отзывов. С двумя-тремя карточками дубль ряда виден невооружённым глазом и ощущение потока пропадает.",
+            "На тач-устройствах hover-паузы нет — лента едет непрерывно, поэтому не прячьте в неё ничего обязательного к прочтению.",
+            "При prefers-reduced-motion видны только карточки, попавшие в кадр: важнейшие отзывы ставьте в начало массива.",
+            "Отзывы должны быть настоящими. Придуманная цитата с должностью — это ложь о продукте, а не оформление.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Лента тех, кто уже собрал сайт",
+            "maxLength": 48
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Отзывы",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Scrolling Testimonial Marquee",
+            "description": "Two testimonial marquees running toward each other: hover pauses the motion, reduced-motion stops it. Self-contained: one file, no dependencies, the motion is pure CSS.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-testimonials-007-*. A server component; the motion is pure CSS. Each marquee track holds two copies of the row (the second is aria-hidden) and animates translateX(-50%): as the first copy leaves, the second takes its place, so the loop is seamless. The rows run toward each other at different speeds, hovering pauses the animation, mask gradients dissolve the edges, and prefers-reduced-motion stops the marquees entirely.",
+            "ai": {
+              "summary": "A testimonials section with two marquee rows of cards: the top one runs left, the bottom one right, and hovering pauses a row. The motion is a CSS animation of a track built from two copies of the row, so the loop is seamless and the component stays a server one. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-testimonials-007-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the opposing directions and different durations: synchronized one-way rows read as a single looping element, not a stream of testimonials",
+                "the two copies of the row inside the track with aria-hidden on the second — without the duplicate the loop breaks, and with a visible duplicate a screen reader announces every quote twice",
+                "the pause on hover: scrolling text cannot be read, and the pause is the only thing that keeps a marquee honest",
+                "stopping the rows under prefers-reduced-motion — a moving section is worse than none for people with vestibular disorders",
+                "the mask gradients on the row edges: a card cut off flat by the block edge looks like a layout bug",
+                "the <style> block inside the component — it holds the palette, the animations and the card",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the items array — quote, name and role; the block splits it into the two rows itself",
+                "the eyebrow and title copy",
+                "the accent through the accent prop — it colours the eyebrow and the initials backdrop",
+                "the durations in the keyframes rules if the marquee runs too fast for your number of cards",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "A marquee needs volume: six testimonials or more. With two or three cards the duplicated row is visible to the naked eye and the feeling of a stream is gone.",
+                "Touch devices have no hover pause — the row keeps moving, so never put anything that must be read into it.",
+                "Under prefers-reduced-motion only the cards inside the frame are visible: put the strongest quotes at the start of the array.",
+                "Testimonials have to be real. An invented quote with a job title is a lie about the product, not decoration.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Testimonials007\n  title=\"A stream of teams who already shipped\"\n  items={[{ quote: \"We built the landing page in an evening.\", name: \"Anna Kovalyova\", role: \"Marketing\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "A stream of teams who already shipped"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Testimonials"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Testimonials",
+                "title": "A stream of teams who already shipped",
+                "items": [
+                  {
+                    "quote": "We built the landing page in an evening: picked the blocks, handed them to the agent, fixed the copy.",
+                    "name": "Anna Kovalyova",
+                    "role": "Marketing, Severny Put"
+                  },
+                  {
+                    "quote": "Components arrive as plain files. Nothing to update — and nothing to break.",
+                    "name": "Igor Demidov",
+                    "role": "CTO, Sturm"
+                  },
+                  {
+                    "quote": "For once the agent did not invent its own section and installed exactly the one I chose.",
+                    "name": "Pyotr Lyakhov",
+                    "role": "Frontend developer"
+                  },
+                  {
+                    "quote": "We hit the campaign launch date. First time in three years.",
+                    "name": "Maria Soboleva",
+                    "role": "Course producer"
+                  },
+                  {
+                    "quote": "One designer, five projects. The library took the routine and gave him his time back.",
+                    "name": "Dmitry Khan",
+                    "role": "Founder, Plot studio"
+                  },
+                  {
+                    "quote": "We took three blocks — and did not get forty megabytes of dependencies on top.",
+                    "name": "Olga Titova",
+                    "role": "Engineer, fintech"
+                  },
+                  {
+                    "quote": "We overrode the brand variables in an hour and the sections dropped into the old site with no conflicts.",
+                    "name": "Pavel Gusev",
+                    "role": "CTO, Remark"
+                  },
+                  {
+                    "quote": "We used to argue about markup for weeks. Now we only argue about the copy.",
+                    "name": "Irina Belova",
+                    "role": "Product manager"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "testimonials-008",
+      "type": "registry:block",
+      "title": "Отзывы с результатом",
+      "description": "Три карточки, где над цитатой стоит крупная метрика результата: −40% времени, 2 дня, 0 зависимостей. Цифра отвечает «что мне это даст» быстрее цитаты. Самодостаточен: один файл, без зависимостей.",
+      "categories": [
+        "testimonials"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "testimonials-008/testimonials-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/testimonials-008.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-008-*. Серверный компонент. Карточка — flex-колонка: метрика акцентным цветом, подпись к ней, дальше цитата, растянутая на свободное место, и автор, прижатый вниз, — поэтому карточки в ряду ровные при разной длине текста. Цифры набраны с font-variant-numeric:tabular-nums, число колонок считается от собственной ширины блока: одна, две, три.",
+      "meta": {
+        "tags": [
+          "testimonials",
+          "metrics",
+          "results",
+          "social proof",
+          "numbers"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Testimonials008",
+          "usage": "<Testimonials008\n  title=\"Цифры, которые называют сами команды\"\n  items={[{ metric: \"−40%\", metricLabel: \"времени на вёрстку\", quote: \"Секции берём готовыми.\", name: \"Анна Ковалёва\", role: \"Маркетинг\" }]}\n/>",
+          "summary": "Секция отзывов, где каждая карточка начинается с крупной метрики результата, а цитата под ней объясняет, откуда результат взялся. Метрика набрана акцентным цветом и табличными цифрами, сетка перестраивается от собственной ширины блока. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-testimonials-008-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
+            "иерархию карточки: метрика, подпись, цитата, автор — цифра отвечает на «что мне это даст» быстрее любой цитаты, цитата объясняет цифру",
+            "акцентный цвет только на метрике: покрашенная цитата или рамка отнимут у цифры статус главного элемента",
+            "tabular-nums на метрике — пропорциональные цифры в крупном кегле пляшут по ширине",
+            "flex-колонку внутри карточки: цитата тянется, автор прижат вниз, и карточки в ряду выглядят ровными",
+            "семантику figure / blockquote / figcaption — это цитата с автором, а не карточка с текстом",
+            "container-запросы на число колонок: в узкой колонке сетка обязана складываться сама",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "массив items — метрика, её подпись, цитата, имя и должность",
+            "тексты eyebrow и title",
+            "акцент через проп accent — цвет надзаголовка и метрик",
+            "внешние отступы через className: секция занимает всю ширину родителя",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Метрики должны быть настоящими и проверяемыми: выдуманная цифра в отзыве — прямая ложь о продукте.",
+            "Знак в метрике — часть смысла: «−40%» и «40%» читаются противоположно, минус набирайте типографским знаком −, а не дефисом.",
+            "Подпись метрики продолжает цифру («времени на вёрстку»), а не дублирует цитату.",
+            "Три карточки дают один ровный ряд; шесть — два. Ряд из четырёх на этой сетке не собирается.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Цифры, которые называют сами команды",
+            "maxLength": 48
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Результаты",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Testimonials with Results",
+            "description": "Three cards where a large result metric sits above the quote: −40% time, 2 days, 0 dependencies. A number answers \"what do I get\" faster than a quote. Self-contained: one file, no dependencies.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-testimonials-008-*. A server component. The card is a flex column: the metric in the accent colour, its caption, then the quote stretched over the free space and the author pinned to the bottom — so cards in a row stay even with texts of different lengths. The digits use font-variant-numeric:tabular-nums, and the column count follows the block's own width: one, two, three.",
+            "ai": {
+              "summary": "A testimonials section where every card opens with a large result metric and the quote below explains where the result came from. The metric is set in the accent colour with tabular figures, and the grid reflows on the block's own width. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-testimonials-008-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the card hierarchy: metric, caption, quote, author — the number answers \"what do I get\" faster than any quote, and the quote explains the number",
+                "the accent colour on the metric only: a coloured quote or border would strip the number of its lead role",
+                "tabular-nums on the metric — proportional digits at a large size wobble in width",
+                "the flex column inside the card: the quote stretches, the author is pinned to the bottom, and cards in a row look even",
+                "the figure / blockquote / figcaption semantics — this is a quote with an author, not a card with text",
+                "the container queries on the column count: in a narrow column the grid has to fold on its own",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the items array — the metric, its caption, the quote, the name and the role",
+                "the eyebrow and title copy",
+                "the accent through the accent prop — it colours the eyebrow and the metrics",
+                "outer spacing through className: the section fills its parent's width",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "Metrics have to be real and verifiable: an invented number in a testimonial is a direct lie about the product.",
+                "The sign is part of the meaning: \"−40%\" and \"40%\" read as opposites; set the minus as a typographic − rather than a hyphen.",
+                "The metric caption continues the number (\"of markup time\"), it does not duplicate the quote.",
+                "Three cards make one even row; six make two. A row of four does not fit this grid.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Testimonials008\n  title=\"Numbers the teams name themselves\"\n  items={[{ metric: \"−40%\", metricLabel: \"of markup time\", quote: \"We take the sections ready-made.\", name: \"Anna Kovalyova\", role: \"Marketing\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Numbers the teams name themselves"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Results"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Results",
+                "title": "Numbers the teams name themselves",
+                "items": [
+                  {
+                    "metric": "−40%",
+                    "metricLabel": "of landing page markup time",
+                    "quote": "We take the sections ready-made and the agent installs them itself. Our hands finally reach the copy and the offers — the things that actually move conversion.",
+                    "name": "Anna Kovalyova",
+                    "role": "Head of marketing, Severny Put"
+                  },
+                  {
+                    "metric": "2 days",
+                    "metricLabel": "from mockup to production",
+                    "quote": "A week used to sit between \"the design is ready\" and \"the page is live\". Now the blocks match the preview one to one, and there is nothing to argue about.",
+                    "name": "Dmitry Khan",
+                    "role": "Founder, Plot studio"
+                  },
+                  {
+                    "metric": "0",
+                    "metricLabel": "dependencies added",
+                    "quote": "We took five blocks — not a single line was added to package.json. Nothing to update or fix a year from now, and that is the best part.",
+                    "name": "Olga Titova",
+                    "role": "Engineer, fintech"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "testimonials-009",
+      "type": "registry:block",
+      "title": "Стена постов",
+      "description": "Стена отзывов, оформленных как посты соцсети: аватар-инициалы, ник, текст и лайк-счётчик, masonry на CSS columns. Пост выглядит честнее полированной цитаты. Самодостаточен: один файл, без зависимостей.",
+      "categories": [
+        "testimonials"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "testimonials-009/testimonials-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/testimonials-009.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-009-*. Серверный компонент. Masonry собрана на column-count с break-inside:avoid: посты разной длины ложатся плотно без строки JS и без измерения высот. Каждый пост — article с шапкой (инициалы, имя, ник), текстом и подвалом с сердцем-SVG и счётчиком лайков; счётчик форматируется через Intl.NumberFormat. Число колонок считается от собственной ширины блока: одна, две, три.",
+      "meta": {
+        "tags": [
+          "testimonials",
+          "social",
+          "masonry",
+          "posts",
+          "wall"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Testimonials009",
+          "usage": "<Testimonials009\n  title=\"Что пишут о нас в сети\"\n  items={[{ name: \"Анна Ковалёва\", handle: \"@akovaleva\", text: \"Собрала лендинг за вечер.\", likes: 214 }]}\n/>",
+          "summary": "Стена отзывов в стиле постов соцсети: аватар из инициалов, имя, ник с собакой, текст поста и лайк-счётчик с сердцем. Посты разной длины укладываются masonry-кладкой на CSS columns, компонент серверный. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-testimonials-009-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
+            "masonry на column-count с break-inside:avoid — посты разной длины ложатся плотно без JS; ровная сетка заставила бы резать тексты под одну высоту",
+            "разную длину постов: одинаково подстриженные абзацы выдают редактуру, а стена живёт именно разнобоем",
+            "анатомию поста — аватар, имя, ник, текст, лайки: именно эти детали делают отзыв похожим на пост, а не на карточку с лендинга",
+            "инициалы вместо фотографий: стоковое лицо в отзыве заметно и вредит доверию",
+            "лайк-счётчик с aria-label — для скринридера голое число без подписи ничего не значит",
+            "блок <style> внутри компонента — в нём палитра, кладка и пост",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "массив items — имя, ник, текст поста и число лайков",
+            "тексты eyebrow и title",
+            "акцент через проп accent — цвет надзаголовка, инициалов и сердца",
+            "локаль форматирования лайков в formatLikes, если сайт не русскоязычный",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "CSS columns раскладывает посты сверху вниз, потом вправо: первый пост массива окажется в левом верхнем углу, порядок чтения идёт по колонкам.",
+            "Стене нужен объём: шесть-девять постов. Три поста в три колонки — это не стена, а три одинокие карточки.",
+            "Лайки — часть доверия: круглые числа вроде 100 и 500 выглядят придуманными.",
+            "Посты должны быть настоящими, в идеале — со ссылками на оригиналы у вас под рукой.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что пишут о нас в сети",
+            "maxLength": 48
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Отзывы",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Social Post Wall",
+            "description": "A wall of testimonials styled as social posts: initials avatar, handle, text and a like counter, masonry on CSS columns. A post reads as more honest than a polished quote. Self-contained: one file, no dependencies.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-testimonials-009-*. A server component. The masonry is built on column-count with break-inside:avoid: posts of different lengths pack tightly without a line of JS and without measuring heights. Every post is an article with a header (initials, name, handle), the text and a footer with an SVG heart and a like counter formatted through Intl.NumberFormat. The column count follows the block's own width: one, two, three.",
+            "ai": {
+              "summary": "A wall of testimonials styled as social posts: an initials avatar, a name, an @handle, the post text and a like counter with a heart. Posts of different lengths pack into a masonry on CSS columns, and the component stays a server one. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-testimonials-009-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the masonry on column-count with break-inside:avoid — posts of different lengths pack tightly without JS; an even grid would force the texts to be cut to one height",
+                "the varying post lengths: identically trimmed paragraphs betray editing, and the wall lives on the unevenness",
+                "the post anatomy — avatar, name, handle, text, likes: these details are what makes a testimonial look like a post rather than a landing page card",
+                "initials instead of photographs: a stock face in a testimonial is noticed and costs trust",
+                "the aria-label on the like counter — to a screen reader a bare number without a caption means nothing",
+                "the <style> block inside the component — it holds the palette, the masonry and the post",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the items array — the name, handle, post text and like count",
+                "the eyebrow and title copy",
+                "the accent through the accent prop — it colours the eyebrow, the initials and the heart",
+                "the like formatting locale in formatLikes if the site is not Russian",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "CSS columns lays the posts top to bottom, then rightward: the first item of the array lands in the top left corner, and the reading order runs down each column.",
+                "A wall needs volume: six to nine posts. Three posts in three columns is not a wall, it is three lonely cards.",
+                "Likes are part of the trust: round numbers like 100 and 500 look invented.",
+                "The posts have to be real — ideally with links to the originals at hand.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Testimonials009\n  title=\"What people post about us\"\n  items={[{ name: \"Anna Kovalyova\", handle: \"@akovaleva\", text: \"Built the landing page in an evening.\", likes: 214 }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "What people post about us"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Testimonials"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Testimonials",
+                "title": "What people post about us",
+                "items": [
+                  {
+                    "name": "Anna Kovalyova",
+                    "handle": "@akovaleva",
+                    "text": "Built the course landing page in one evening. Picked the blocks in the catalog, handed them to the agent — it installed everything itself. Fixed the copy in the morning and launched the ads.",
+                    "likes": 214
+                  },
+                  {
+                    "name": "Igor Demidov",
+                    "handle": "@idemidov",
+                    "text": "Components arrive as plain files in the project. Nothing breaks on update, because there is nothing to update.",
+                    "likes": 187
+                  },
+                  {
+                    "name": "Pyotr Lyakhov",
+                    "handle": "@plyakhov",
+                    "text": "For the first time the agent did not invent its own version of a section and installed exactly the one I chose. The bundled AI instruction does the trick.",
+                    "likes": 342
+                  },
+                  {
+                    "name": "Maria Soboleva",
+                    "handle": "@msoboleva",
+                    "text": "Two days — and the campaign page is in production, copy included. We hit the launch date, which had not happened in three years.",
+                    "likes": 96
+                  },
+                  {
+                    "name": "Dmitry Khan",
+                    "handle": "@dkhan",
+                    "text": "We have one designer and five projects. The library took over the routine and left him the work he was actually hired for. Sections match the preview one to one, so there is nothing left to argue about.",
+                    "likes": 158
+                  },
+                  {
+                    "name": "Olga Titova",
+                    "handle": "@otitova",
+                    "text": "Took three blocks — zero new dependencies. Best part.",
+                    "likes": 421
+                  },
+                  {
+                    "name": "Pavel Gusev",
+                    "handle": "@pgusev",
+                    "text": "Overrode the brand variables in an hour and the sections dropped into the existing site with no style conflicts.",
+                    "likes": 133
+                  },
+                  {
+                    "name": "Irina Belova",
+                    "handle": "@ibelova",
+                    "text": "We used to argue about markup. Now we only argue about the copy — and that is progress.",
+                    "likes": 267
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "testimonials-010",
+      "type": "registry:block",
+      "title": "Цитата на весь экран",
+      "description": "Одна цитата гигантской засечной типографикой с оранжевыми кавычками и автором внизу. Заявление: у нас есть отзыв, который стоит целой секции. Самодостаточен: один файл, без зависимостей.",
+      "categories": [
+        "testimonials"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "testimonials-010/testimonials-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/testimonials-010.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-010-*. Серверный компонент. Цитата набрана системной засечной гарнитурой кеглем clamp(1.75rem…4.25rem) от собственной ширины блока, text-wrap:balance выравнивает строки. Кавычки — псевдоэлементы ::before и ::after акцентного цвета: открывающая увеличена и вынесена в поле слева, закрывающая стоит в строке. Автор отделён короткой акцентной чертой, сделанной ::before у figcaption.",
+      "meta": {
+        "tags": [
+          "testimonials",
+          "quote",
+          "typography",
+          "hero",
+          "statement"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Testimonials010",
+          "usage": "<Testimonials010\n  quote=\"Мы перестали спорить о вёрстке.\"\n  name=\"Анна Ковалёва\"\n  role=\"Арт-директор, студия «Полёт»\"\n/>",
+          "summary": "Одна цитата на всю секцию: гигантская засечная типографика, оранжевые кавычки-псевдоэлементы, автор внизу за короткой акцентной чертой. Кегль считается от собственной ширины блока, ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-testimonials-010-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
+            "гигантский кегль цитаты: это блок-заявление, уменьшенный до «обычного» размера он теряет причину существовать",
+            "кавычки псевдоэлементами акцентного цвета — они маркируют жанр раньше, чем прочитано первое слово, и не попадают в текст при копировании",
+            "засечную гарнитуру цитаты: контраст с гротеском окружения отличает голос человека от голоса интерфейса",
+            "text-wrap:balance — без него последняя строка гигантского кегля повисает одним словом",
+            "семантику figure / blockquote / figcaption — это цитата с автором, а не заголовок",
+            "вынос открывающей кавычки в левое поле на широкой ширине: висячая пунктуация держит левый край текста ровным",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "quote, name и role — цитата и подпись автора",
+            "акцент через проп accent — цвет кавычек и черты у автора",
+            "гарнитуру цитаты через переменную --vibeui-testimonials-010-serif, если у бренда есть своя акцидентная",
+            "внешние отступы через className: секция занимает всю ширину родителя",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Цитата — до 20–25 слов: гигантский кегль превращает длинный текст в стену, ради которой блок не задуман.",
+            "Кавычки добавляются псевдоэлементами — не дублируйте их в тексте цитаты.",
+            "Один такой блок на страницу: второй отменяет эффект первого.",
+            "Отзыв должен быть настоящим, а автор — согласным на такую заметность: это самая громкая цитата на сайте.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "quote",
+            "label": "Цитата",
+            "type": "text",
+            "default": "Мы перестали спорить о вёрстке. Дизайнер выбирает блок, агент ставит ровно его — и на страницу попадает то, что было в превью.",
+            "maxLength": 160
+          },
+          {
+            "prop": "name",
+            "label": "Автор",
+            "type": "text",
+            "default": "Анна Ковалёва",
+            "maxLength": 32
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Full-Screen Quote",
+            "description": "A single quote in giant serif typography with orange quotation marks and the author below. A statement: we have a testimonial worth a whole section. Self-contained: one file, no dependencies.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-testimonials-010-*. A server component. The quote is set in the system serif at clamp(1.75rem…4.25rem) computed from the block's own width, with text-wrap:balance evening out the lines. The quotation marks are ::before and ::after pseudo-elements in the accent colour: the opening one is enlarged and hung into the left margin, the closing one stays in the line. The author is set off by a short accent dash drawn with a ::before on the figcaption.",
+            "ai": {
+              "summary": "One quote filling the section: giant serif typography, orange pseudo-element quotation marks, the author below behind a short accent dash. The size is computed from the block's own width; zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-testimonials-010-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the giant quote size: this is a statement block, and shrunk to a \"normal\" size it loses its reason to exist",
+                "the pseudo-element quotation marks in the accent colour — they mark the genre before the first word is read and never end up in copied text",
+                "the serif face of the quote: the contrast with the surrounding sans separates a human voice from the interface voice",
+                "text-wrap:balance — without it the last line of a giant setting dangles as a single word",
+                "the figure / blockquote / figcaption semantics — this is a quote with an author, not a heading",
+                "the opening mark hung into the left margin at wide sizes: hanging punctuation keeps the left edge of the text straight",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "quote, name and role — the quote and the author's caption",
+                "the accent through the accent prop — it colours the quotation marks and the author dash",
+                "the quote typeface through the --vibeui-testimonials-010-serif variable if the brand has a display face of its own",
+                "outer spacing through className: the section fills its parent's width",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "Keep the quote to 20–25 words: at a giant size a long text becomes the wall this block was not designed for.",
+                "The quotation marks are added by pseudo-elements — do not repeat them inside the quote text.",
+                "One such block per page: a second one cancels the effect of the first.",
+                "The testimonial has to be real and the author fine with this prominence: it is the loudest quote on the site.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Testimonials010\n  quote=\"We stopped arguing about markup.\"\n  name=\"Anna Kovalyova\"\n  role=\"Art director, Polyot studio\"\n/>"
+            },
+            "controls": {
+              "quote": {
+                "label": "Quote",
+                "default": "We stopped arguing about markup. The designer picks a block, the agent installs exactly that one — and the page gets what the preview showed."
+              },
+              "name": {
+                "label": "Author",
+                "default": "Anna Kovalyova"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "quote": "We stopped arguing about markup. The designer picks a block, the agent installs exactly that one — and the page gets what the preview showed.",
+                "name": "Anna Kovalyova",
+                "role": "Art director, Polyot studio"
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "quote",
+          "name",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "testimonials-011",
+      "type": "registry:block",
+      "title": "Рейтинги площадок",
+      "description": "Ряд карточек с оценками продукта на независимых площадках: звёзды, балл 4,8/5 и число отзывов. Оценка на чужой платформе убедительнее цитаты на своём сайте. Самодостаточен: один файл, без зависимостей.",
+      "categories": [
+        "testimonials"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "testimonials-011/testimonials-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/testimonials-011.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-011-*. Серверный компонент. Звёзды — два наложенных ряда SVG: серый снизу, акцентный сверху, обрезанный по ширине на score/5 — дробная оценка закрашивается честно, без округления до целых. У ряда звёзд aria-label с оценкой, сами SVG скрыты от скринридера. Балл выводится с запятой через toFixed и tabular-nums, сетка карточек считается от собственной ширины блока: одна, две, четыре колонки.",
+      "meta": {
+        "tags": [
+          "testimonials",
+          "ratings",
+          "stars",
+          "social proof",
+          "platforms"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Testimonials011",
+          "usage": "<Testimonials011\n  title=\"Оценки на площадках\"\n  items={[{ platform: \"G2\", score: 4.8, reviews: \"312 отзывов\" }]}\n/>",
+          "summary": "Ряд карточек с рейтингами продукта на внешних площадках: название площадки, ряд звёзд, закрашенный ровно на величину оценки, балл из пяти и число отзывов. Дробная закраска сделана обрезкой акцентного слоя звёзд по ширине. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-testimonials-011-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
+            "двухслойные звёзды с обрезкой по ширине: закраска на 4,8 из 5 видна честно — округление до пяти целых звёзд превращает рейтинг в декорацию",
+            "число отзывов под баллом: оценка 4,9 по трём отзывам и по пятистам — разные утверждения",
+            "aria-label на ряде звёзд и aria-hidden на SVG — скринридеру нужна оценка числом, а не десять path подряд",
+            "tabular-nums на балле — пропорциональные цифры в крупном кегле пляшут по ширине",
+            "равный вес карточек: площадки — свидетели, выделение одной подрывает остальных",
+            "container-запросы на число колонок: одна, две, четыре — от собственной ширины блока",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "массив items — площадка, оценка от 0 до 5 и строка с числом отзывов",
+            "тексты eyebrow и title",
+            "акцент через проп accent — цвет надзаголовка и закрашенных звёзд",
+            "формат балла в formatScore: для англоязычного сайта замените запятую на точку",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Оценки и числа отзывов должны совпадать с реальными на площадках и обновляться: посетитель проверяет их в один клик, расхождение хуже отсутствия секции.",
+            "score принимает дробные значения от 0 до 5; всё вне диапазона обрезается при расчёте ширины закраски.",
+            "Названия площадок набраны текстом, без логотипов: официальные бейджи площадок ставьте по их собственным правилам.",
+            "Четыре карточки дают один ровный ряд на широкой ширине; при трёх ряд будет неполным.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Оценки на площадках, которые нам не принадлежат",
+            "maxLength": 52
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Рейтинги",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Platform Ratings",
+            "description": "A row of cards with the product's scores on independent platforms: stars, a 4.8/5 rating and the review count. A score on someone else's platform beats a quote on your own site. Self-contained: one file, no dependencies.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-testimonials-011-*. A server component. The stars are two stacked SVG rows: a grey one below and an accent one above, clipped in width to score/5 — a fractional score is filled honestly, with no rounding to whole stars. The star row carries an aria-label with the score while the SVGs themselves are hidden from screen readers. The score is printed via toFixed with tabular-nums, and the card grid follows the block's own width: one, two, four columns.",
+            "ai": {
+              "summary": "A row of cards with the product's ratings on external platforms: the platform name, a star row filled exactly to the score, the mark out of five and the review count. The fractional fill is done by clipping the accent star layer in width. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-testimonials-011-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the two-layer stars clipped in width: a 4.8-of-5 fill stays honest — rounding to five whole stars turns the rating into decoration",
+                "the review count under the score: a 4.9 from three reviews and from five hundred are different claims",
+                "the aria-label on the star row and aria-hidden on the SVGs — a screen reader needs the score as a number, not ten paths in a row",
+                "tabular-nums on the score — proportional digits at a large size wobble in width",
+                "the equal weight of the cards: the platforms are witnesses, and promoting one undermines the rest",
+                "the container queries on the column count: one, two, four — from the block's own width",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the items array — the platform, a score from 0 to 5 and the review count string",
+                "the eyebrow and title copy",
+                "the accent through the accent prop — it colours the eyebrow and the filled stars",
+                "the score format in formatScore: for an English site replace the comma with a dot",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The scores and review counts must match the real ones on the platforms and be kept fresh: a visitor verifies them in one click, and a mismatch is worse than no section at all.",
+                "score accepts fractional values from 0 to 5; anything outside the range is clamped when the fill width is computed.",
+                "The platform names are set as text, without logos: place official platform badges under their own guidelines.",
+                "Four cards make one even row at the wide width; with three the row stays incomplete.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Testimonials011\n  title=\"Scores on the platforms\"\n  items={[{ platform: \"G2\", score: 4.8, reviews: \"312 reviews\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Scores on platforms we do not own"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Ratings"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Ratings",
+                "title": "Scores on platforms we do not own",
+                "items": [
+                  {
+                    "platform": "G2",
+                    "score": 4.8,
+                    "reviews": "312 reviews"
+                  },
+                  {
+                    "platform": "Product Hunt",
+                    "score": 4.9,
+                    "reviews": "184 reviews"
+                  },
+                  {
+                    "platform": "Trustpilot",
+                    "score": 4.7,
+                    "reviews": "526 reviews"
+                  },
+                  {
+                    "platform": "GitHub",
+                    "score": 4.9,
+                    "reviews": "2,340 stars"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "testimonials-012",
+      "type": "registry:block",
+      "title": "Отзывы по сегментам",
+      "description": "Отзывы, разложенные по сегментам аудитории: стартапы, агентства, продуктовые команды. Табы работают на radio-инпутах без строчки JS. Самодостаточен: один файл, без зависимостей.",
+      "categories": [
+        "testimonials"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "testimonials-012/testimonials-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/testimonials-012.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-012-*. Серверный компонент: табы собраны на radio-инпутах внутри label и селекторах :has() — переключение сегментов работает без JS, клавиатура получает стрелки радиогруппы бесплатно. Активный таб заливается акцентом с почти чёрным текстом, панель показывается правилом «:has(input[value=N]:checked) → панель N»; поддержано до четырёх сегментов. В каждом сегменте — сетка из двух цитат-figure.",
+      "meta": {
+        "tags": [
+          "testimonials",
+          "tabs",
+          "segments",
+          "social proof",
+          "css-only"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Testimonials012",
+          "usage": "<Testimonials012\n  title=\"Каждый хвалит за своё\"\n  segments={[{ label: \"Стартапы\", items: [{ quote: \"Лендинг был готов к утру.\", name: \"Павел Гусев\", role: \"Сооснователь\" }] }]}\n/>",
+          "summary": "Секция отзывов с CSS-табами по сегментам аудитории: стартапы, агентства, продуктовые команды. Переключение работает на radio-инпутах и :has() без клиентского JS, в каждом сегменте по две цитаты. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-testimonials-012-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
+            "radio-инпуты с :has() вместо useState: переключение обязано работать без JS, иначе блок перестаёт быть серверным",
+            "разбиение отзывов по сегментам — посетитель ищет отзыв «про таких, как я», общая куча отнимает у него этот шанс",
+            "инпут внутри label: связь работает без id, и блок не создаёт конфликтов идентификаторов",
+            "видимое кольцо фокуса через :has(input:focus-visible) — клавиатурному пользователю нужно видеть, на каком он табе",
+            "акцентную заливку активного таба с почти чёрным текстом — контраст на оранжевом держит только тёмный текст",
+            "семантику figure / blockquote / figcaption у цитат — это цитаты с авторами, а не карточки",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "массив segments — подпись сегмента и его цитаты (имя, должность, текст)",
+            "тексты eyebrow и title",
+            "акцент через проп accent — цвет надзаголовка, активного таба и инициалов",
+            "имя радиогруппы в атрибуте name, если блок стоит на странице дважды",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Имя радиогруппы фиксированное: два экземпляра блока на одной странице свяжутся в одну группу — при повторе переименуйте name у инпутов.",
+            "Поддержано до четырёх сегментов: CSS-правила показа панелей написаны для value 0–3, лишние сегменты обрезаются.",
+            "Селектор :has() требует современного браузера (Chrome 105+, Safari 15.4+, Firefox 121+); без него останется виден только первый сегмент.",
+            "Скрытые панели существуют в DOM и находятся поиском по странице — это нормально для CSS-табов.",
+            "Отзывы должны быть настоящими, а сегменты — совпадать с тем, как вы реально делите аудиторию."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Каждый хвалит за своё",
+            "maxLength": 48
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Отзывы",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Segmented Testimonials",
+            "description": "Testimonials sorted by audience segment: startups, agencies, product teams. The tabs run on radio inputs without a line of JS. Self-contained: one file, no dependencies.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-testimonials-012-*. A server component: the tabs are built on radio inputs inside labels and :has() selectors — switching segments works without JS, and the keyboard gets the radio group's arrow keys for free. The active tab is filled with the accent and near-black text; a panel is shown by the rule \":has(input[value=N]:checked) → panel N\", with up to four segments supported. Each segment holds a grid of two figure quotes.",
+            "ai": {
+              "summary": "A testimonials section with CSS tabs by audience segment: startups, agencies, product teams. Switching runs on radio inputs and :has() with no client JS, and every segment holds two quotes. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-testimonials-012-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the radio inputs with :has() instead of useState: switching has to work without JS, otherwise the block stops being a server component",
+                "the split of testimonials into segments — a visitor looks for a quote \"from someone like me\", and one common pile takes that chance away",
+                "the input inside the label: the pairing works without ids, so the block creates no identifier conflicts",
+                "the visible focus ring via :has(input:focus-visible) — a keyboard user needs to see which tab they are on",
+                "the accent fill of the active tab with near-black text — only dark text holds contrast on orange",
+                "the figure / blockquote / figcaption semantics of the quotes — these are quotes with authors, not cards",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the segments array — the segment label and its quotes (name, role, text)",
+                "the eyebrow and title copy",
+                "the accent through the accent prop — it colours the eyebrow, the active tab and the initials",
+                "the radio group name attribute if the block appears twice on a page",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The radio group name is fixed: two instances of the block on one page would join into one group — rename the inputs' name when repeating it.",
+                "Up to four segments are supported: the panel rules are written for values 0–3, extra segments are cut off.",
+                "The :has() selector needs a modern browser (Chrome 105+, Safari 15.4+, Firefox 121+); without it only the first segment stays visible.",
+                "Hidden panels exist in the DOM and are reachable by in-page search — that is normal for CSS tabs.",
+                "The testimonials have to be real, and the segments should match how you actually split your audience."
+              ],
+              "usage": "<Testimonials012\n  title=\"Each praises their own thing\"\n  segments={[{ label: \"Startups\", items: [{ quote: \"The landing page was ready by morning.\", name: \"Pavel Gusev\", role: \"Co-founder\" }] }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Each praises their own thing"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Testimonials"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Testimonials",
+                "title": "Each praises their own thing",
+                "segments": [
+                  {
+                    "label": "Startups",
+                    "items": [
+                      {
+                        "quote": "There are two of us and no designer. We picked the blocks, handed them to the agent — the investor landing page was ready for the morning meeting.",
+                        "name": "Pavel Gusev",
+                        "role": "Co-founder, Remark"
+                      },
+                      {
+                        "quote": "We counted every day to launch. The library saved us weeks: the page looks like a studio worked on it.",
+                        "name": "Maria Soboleva",
+                        "role": "CEO, Sloy"
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Agencies",
+                    "items": [
+                      {
+                        "quote": "Five projects a month per designer. The blocks took the routine, and the designer kept the work he was hired for.",
+                        "name": "Dmitry Khan",
+                        "role": "Founder, Plot studio"
+                      },
+                      {
+                        "quote": "The client sees the preview and gets exactly it. The most expensive phrase in our estimates — \"it looks different on the site\" — is gone.",
+                        "name": "Irina Belova",
+                        "role": "Account director, Verstak"
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Product teams",
+                    "items": [
+                      {
+                        "quote": "Marketing builds landing pages without queueing for the frontend team. For the first time in a year engineering works on the product, not on landing pages.",
+                        "name": "Igor Demidov",
+                        "role": "CTO, Sturm"
+                      },
+                      {
+                        "quote": "The blocks arrived as files in the repository, zero new dependencies. Our security audit cleared them in a day.",
+                        "name": "Olga Titova",
+                        "role": "Engineer, fintech"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "testimonials-013",
+      "type": "registry:block",
+      "title": "До и после",
+      "description": "Отзыв, разложенный в историю перемены: панель боли «до», акцентная панель результата «после» и подтверждающая цитата под ними. Самодостаточен: один файл, без зависимостей.",
+      "categories": [
+        "testimonials"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "testimonials-013/testimonials-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/testimonials-013.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-013-*. Серверный компонент. Две панели-article в сетке: «Было» набрано приглушённым цветом с маркерами-тире, «Стало» подсвечено тёплым тинтом акцента через color-mix и маркерами-галочками — контраст виден до чтения, одним оформлением, без красного и зелёного. Под панелями figure с цитатой и автором, отделённая линией. На узкой ширине панели складываются в колонку: «Было» всегда читается первым.",
+      "meta": {
+        "tags": [
+          "testimonials",
+          "before-after",
+          "comparison",
+          "case study",
+          "story"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Testimonials013",
+          "usage": "<Testimonials013\n  title=\"Что изменилось после перехода\"\n  beforePoints={[\"Неделя вёрстки на страницу\"]}\n  afterPoints={[\"Страница собирается за вечер\"]}\n  quote=\"Маркетинг собирает страницы сам.\"\n  name=\"Ирина Белова\"\n  role=\"Продакт-менеджер\"\n/>",
+          "summary": "Секция-сравнение: панель боли «Было» приглушённым цветом, панель результата «Стало» с тёплой акцентной подсветкой, под ними цитата клиента, подтверждающая перемену. Раскладка считается от собственной ширины блока. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-testimonials-013-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
+            "асимметрию панелей: «Было» приглушено, «Стало» подсвечено акцентом — равные панели превращают историю перемены в таблицу сравнения",
+            "тёплый тинт «Стало» через color-mix от акцента, а не зелёный: зелёный и красный в этой библиотеке зарезервированы за семантикой статусов",
+            "цитату под панелями — без голоса человека сравнение читается как обещание маркетолога, а не как опыт",
+            "порядок «Было» → «Стало» и на узкой ширине тоже: история перемены рассказывается только в эту сторону",
+            "маркеры-тире у боли и галочки у результата: разные маркеры считываются быстрее, чем разные цвета",
+            "семантику: панели — article со своими заголовками, цитата — figure с blockquote и figcaption",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "beforePoints и afterPoints — пункты боли и результата; заголовки панелей beforeTitle и afterTitle",
+            "quote, name, role — цитата и подпись автора",
+            "тексты eyebrow и title",
+            "акцент через проп accent — цвет подсветки «Стало», галочек и кавычек",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Пункты «до» и «после» работают парами: каждой боли — её разрешение, лишний пункт с одной стороны ломает зеркальность.",
+            "Три-четыре пункта на панель — потолок: длинные списки превращают историю в чек-лист.",
+            "Пункты «после» пишите фактами с цифрами, а не прилагательными: «за вечер» убеждает, «быстро» — нет.",
+            "Цитата должна принадлежать реальному человеку из этой истории, а не «собирательному клиенту».",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что изменилось после перехода",
+            "maxLength": 48
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "История клиента",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Before and After",
+            "description": "A testimonial unfolded into a story of change: a \"before\" pain panel, an accented \"after\" result panel and a confirming quote below them. Self-contained: one file, no dependencies.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-testimonials-013-*. A server component. Two article panels in a grid: \"Before\" is set in a muted colour with dash markers, \"After\" is lit with a warm accent tint via color-mix and check markers — the contrast is visible before reading, through styling alone, with no red or green. Below the panels sits a figure with the quote and the author, set off by a rule. At narrow widths the panels stack into a column: \"Before\" always reads first.",
+            "ai": {
+              "summary": "A comparison section: the \"Before\" pain panel in a muted colour, the \"After\" result panel with a warm accent highlight, and a client quote below confirming the change. The layout follows the block's own width. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-testimonials-013-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the asymmetry of the panels: \"Before\" muted, \"After\" lit with the accent — equal panels turn a story of change into a comparison table",
+                "the warm \"After\" tint via color-mix from the accent rather than green: green and red in this library are reserved for status semantics",
+                "the quote below the panels — without a human voice the comparison reads as a marketer's promise, not an experience",
+                "the Before → After order at narrow widths too: a story of change is told in that direction only",
+                "the dash markers on the pains and the checks on the results: different markers scan faster than different colours",
+                "the semantics: the panels are articles with their own headings, the quote is a figure with a blockquote and figcaption",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "beforePoints and afterPoints — the pain and result items; the panel headings beforeTitle and afterTitle",
+                "quote, name, role — the quote and the author's caption",
+                "the eyebrow and title copy",
+                "the accent through the accent prop — it colours the \"After\" highlight, the checks and the quotation marks",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The before and after items work in pairs: every pain gets its resolution, and an extra item on one side breaks the mirror.",
+                "Three or four items per panel is the ceiling: long lists turn the story into a checklist.",
+                "Write the \"after\" items as facts with numbers, not adjectives: \"in one evening\" convinces, \"fast\" does not.",
+                "The quote must belong to a real person from this story, not a \"composite customer\".",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Testimonials013\n  title=\"What changed after switching\"\n  beforePoints={[\"A week of markup per page\"]}\n  afterPoints={[\"A page comes together in an evening\"]}\n  quote=\"Marketing builds the pages itself.\"\n  name=\"Irina Belova\"\n  role=\"Product manager\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "What changed after switching"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Customer story"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Customer story",
+                "title": "What changed after switching",
+                "beforeTitle": "Before",
+                "beforePoints": [
+                  "A week of markup for every landing page",
+                  "A month-long task queue to the frontend team",
+                  "\"The site does not look like the mockup\"",
+                  "Campaign launches slipped because of markup"
+                ],
+                "afterTitle": "After",
+                "afterPoints": [
+                  "A page comes together in an evening from ready blocks",
+                  "The marketer installs sections via the agent",
+                  "Preview and production match one to one",
+                  "We hit launch dates with a day to spare"
+                ],
+                "quote": "We lived in the markup queue for months. Now marketing builds the pages itself, and for the first time in a year engineering works on the product.",
+                "name": "Irina Belova",
+                "role": "Product manager, Severnaya Pochta"
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "testimonials-014",
+      "type": "registry:block",
+      "title": "Видео-отзыв",
+      "description": "Постер видео-отзыва с кнопкой play (декорация, без плеера) и текстовой расшифровкой цитаты рядом. Большинство не нажмёт play — суть должна дойти и до них. Самодостаточен: один файл, без зависимостей.",
+      "categories": [
+        "testimonials"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "testimonials-014/testimonials-014.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/testimonials-014.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-014-*. Серверный компонент. Постер — панель 16:9 с градиентом из тёплых тёмных тонов акцента, оранжевой кнопкой play и подписью с длительностью; вся панель декоративна и скрыта aria-hidden, потому что неработающий настоящий button обманул бы клавиатуру и скринридер. Рядом — расшифровка: figure с цитатой и автором под подписью «Расшифровка». На широкой ширине постер и текст стоят в две колонки 7:5, на узкой складываются.",
+      "meta": {
+        "tags": [
+          "testimonials",
+          "video",
+          "transcript",
+          "social proof",
+          "poster"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Testimonials014",
+          "usage": "<Testimonials014\n  title=\"Две минуты о том, как это работает\"\n  posterLabel=\"Анна Ковалёва — о переходе\"\n  duration=\"2:14\"\n  quote=\"Неделю вёрстки мы превратили в один вечер.\"\n  name=\"Анна Ковалёва\"\n  role=\"Руководитель маркетинга\"\n/>",
+          "summary": "Секция видео-отзыва: слева постер 16:9 с оранжевой кнопкой play и длительностью, справа текстовая расшифровка цитаты с автором. Постер — декорация без плеера и видеофайла, реальное видео подключается на месте. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-testimonials-014-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
+            "расшифровку рядом с постером — большинство посетителей не нажмёт play, и суть отзыва обязана дойти и до них",
+            "aria-hidden на постере, пока не подключено настоящее видео: нарисованная кнопка, притворяющаяся рабочим button, обманывает клавиатуру и скринридер",
+            "пропорцию 16:9 у постера — это обещание видео, панель произвольной формы читается как баннер",
+            "плашку длительности: она сообщает цену клика («две минуты») до нажатия",
+            "тёмный градиент постера из тонов акцента с color-scheme:dark — подписи на нём всегда светлые, в обеих темах",
+            "семантику figure / blockquote / figcaption у расшифровки — это цитата с автором, а не абзац текста",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "quote, name, role — расшифровка и подпись автора",
+            "posterLabel, duration и transcriptLabel — подпись на постере, длительность и заголовок расшифровки",
+            "тексты eyebrow и title",
+            "акцент через проп accent — цвет кнопки play, кавычек и надзаголовка",
+            "постер целиком: замените градиент кадром из видео, а при подключении плеера снимите aria-hidden и сделайте кнопку настоящей",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Кнопка play не интерактивна намеренно: блок не тянет плеер и видеофайл. Подключая видео, оборачивайте постер в ссылку или button с aria-label и убирайте aria-hidden.",
+            "Расшифровка — не подпись к видео, а его замена для читающих: в ней должна быть самая сильная мысль отзыва.",
+            "Длительность указывайте честно: «2:14» обещает две минуты, и обещание проверяется первым же кликом.",
+            "Цитата в расшифровке должна дословно совпадать с тем, что говорится в видео.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Две минуты о том, как это работает",
+            "maxLength": 48
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Видео-отзыв",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Video Testimonial",
+            "description": "A video testimonial poster with a play button (decorative, no player) and the text transcript of the quote beside it. Most people will not press play — the point has to reach them too. Self-contained: one file, no dependencies.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-testimonials-014-*. A server component. The poster is a 16:9 panel with a gradient of warm dark accent tones, an orange play button and a caption with the duration; the whole panel is decorative and aria-hidden, because a non-working real button would betray the keyboard and the screen reader. Beside it is the transcript: a figure with the quote and the author under a \"Transcript\" label. At wide widths the poster and the text sit in 7:5 columns; at narrow ones they stack.",
+            "ai": {
+              "summary": "A video testimonial section: a 16:9 poster with an orange play button and a duration on the left, the text transcript of the quote with its author on the right. The poster is decoration without a player or video file; the real video is wired up on site. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-testimonials-014-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the transcript beside the poster — most visitors will not press play, and the point of the testimonial has to reach them too",
+                "aria-hidden on the poster until a real video is wired up: a painted button pretending to be a working one betrays the keyboard and the screen reader",
+                "the 16:9 ratio of the poster — it is the promise of a video, and a panel of arbitrary shape reads as a banner",
+                "the duration badge: it states the cost of the click (\"two minutes\") before it is made",
+                "the dark accent-toned poster gradient with color-scheme:dark — its captions stay light in both themes",
+                "the figure / blockquote / figcaption semantics of the transcript — it is a quote with an author, not a paragraph",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "quote, name, role — the transcript and the author's caption",
+                "posterLabel, duration and transcriptLabel — the poster caption, the running time and the transcript heading",
+                "the eyebrow and title copy",
+                "the accent through the accent prop — it colours the play button, the quotation marks and the eyebrow",
+                "the poster as a whole: replace the gradient with a video still, and when wiring a player remove aria-hidden and make the button real",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The play button is deliberately non-interactive: the block ships no player or video file. When adding a video, wrap the poster in a link or button with an aria-label and drop the aria-hidden.",
+                "The transcript is not a caption but a replacement for readers: it must carry the strongest thought of the testimonial.",
+                "State the duration honestly: \"2:14\" promises two minutes, and the promise is checked with the very first click.",
+                "The transcript quote must match what is actually said in the video, word for word.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Testimonials014\n  title=\"Two minutes on how it works\"\n  posterLabel=\"Anna Kovalyova — on switching\"\n  duration=\"2:14\"\n  quote=\"We turned a week of markup into one evening.\"\n  name=\"Anna Kovalyova\"\n  role=\"Head of marketing\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Two minutes on how it works"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Video testimonial"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Video testimonial",
+                "title": "Two minutes on how it works",
+                "posterLabel": "Anna Kovalyova — on switching to VibeUI",
+                "duration": "2:14",
+                "transcriptLabel": "Transcript",
+                "quote": "I picked the blocks in the catalog and simply handed the link to the agent. An hour later the sections stood in the project — exactly as I saw them in the preview. We turned a week of markup into one evening.",
+                "name": "Anna Kovalyova",
+                "role": "Head of marketing, Severny Put"
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "title",
+          "eyebrow",
+          "accent",
+          "background"
+        ]
+      }
+    },
+    {
+      "name": "testimonials-015",
+      "type": "registry:block",
+      "title": "Цитата с логотипами",
+      "description": "Крупная цитата с плашкой компании автора и строкой текстовых логотипов клиентов снизу: один голос убеждает, строка логотипов показывает, что он не единственный. Самодостаточен: один файл, без зависимостей.",
+      "categories": [
+        "testimonials"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "testimonials-015/testimonials-015.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/testimonials-015.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-015-*. Серверный компонент. Центрированная figure: цитата кеглем от собственной ширины блока с акцентными кавычками-псевдоэлементами, под ней плашка-пилюля с инициалами компании, именем и должностью автора. Ниже, за линией, строка логотипов клиентов — словесные метки текстом в приглушённом цвете: чужие SVG в registry-блоке — это обещание прав на чужие знаки, а текст заменяется своим за минуту.",
+      "meta": {
+        "tags": [
+          "testimonials",
+          "quote",
+          "logos",
+          "clients",
+          "social proof"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Testimonials015",
+          "usage": "<Testimonials015\n  quote=\"Мы собрали новый сайт за спринт.\"\n  name=\"Дмитрий Хан\"\n  role=\"Основатель\"\n  company=\"Студия «Плот»\"\n  logos={[\"Северный путь\", \"Sturm\", \"Плот\"]}\n/>",
+          "summary": "Крупная центрированная цитата с акцентными кавычками, под ней плашка компании с инициалами, именем и должностью автора, а внизу за линией — строка текстовых логотипов клиентов. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-testimonials-015-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
+            "связку «цитата + строка логотипов»: голос убеждает, логотипы показывают массовость — порознь каждая половина слабее",
+            "плашку-пилюлю компании под цитатой: подпись с компанией объясняет, почему этому голосу стоит верить",
+            "текстовые логотипы вместо картинок — словесные метки не требуют прав на чужие SVG и заменяются своими за минуту",
+            "приглушённый цвет логотипов: клиенты — фон доверия, а не соревнование с цитатой за внимание",
+            "кавычки псевдоэлементами акцентного цвета — они маркируют жанр и не попадают в текст при копировании",
+            "семантику figure / blockquote / figcaption — это цитата с автором, а не заголовок с подписью",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "quote, name, role, company — цитата и подпись автора с компанией",
+            "массив logos и подпись logosLabel над ним",
+            "акцент через проп accent — цвет кавычек и инициалов компании",
+            "внешние отступы через className: секция занимает всю ширину родителя",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Логотипы — текстом намеренно: у блока нет прав на чужие SVG-знаки. Заменяя на настоящие логотипы, берите файлы у самих клиентов и с их согласия.",
+            "Четыре–семь логотипов достаточно: длинная строка переносится и превращается в список.",
+            "Автор цитаты должен быть из числа компаний в строке — иначе связка «голос + клиенты» распадается.",
+            "Кавычки добавляются псевдоэлементами — не дублируйте их в тексте цитаты.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "quote",
+            "label": "Цитата",
+            "type": "text",
+            "default": "Мы собрали новый маркетинговый сайт за спринт. Блоки легли в проект как родные, и агент ни разу не изобрёл ничего от себя.",
+            "maxLength": 160
+          },
+          {
+            "prop": "logosLabel",
+            "label": "Подпись логотипов",
+            "type": "text",
+            "default": "Нам доверяют",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Quote with Logos",
+            "description": "A large quote with the author's company plaque and a row of text client logos below: one voice convinces, the logo row shows it is not the only one. Self-contained: one file, no dependencies.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-testimonials-015-*. A server component. A centred figure: the quote sized from the block's own width with accent pseudo-element quotation marks, and below it a pill plaque with the company initials, the author's name and role. Further down, behind a rule, sits the row of client logos — wordmarks set as text in a muted colour: shipping others' SVGs in a registry block is a claim to rights over their marks, while text is replaced with your own in a minute.",
+            "ai": {
+              "summary": "A large centred quote with accent quotation marks, a company plaque with initials, name and role below it, and a row of text client logos behind a rule at the bottom. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-testimonials-015-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the pairing of the quote and the logo row: the voice convinces, the logos show scale — apart, each half is weaker",
+                "the company pill under the quote: a caption with the company explains why this voice deserves trust",
+                "the text logos instead of images — wordmarks need no rights to others' SVGs and are swapped for your own in a minute",
+                "the muted colour of the logos: the clients are a backdrop of trust, not a competition with the quote for attention",
+                "the pseudo-element quotation marks in the accent colour — they mark the genre and never end up in copied text",
+                "the figure / blockquote / figcaption semantics — this is a quote with an author, not a heading with a caption",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "quote, name, role, company — the quote and the author's caption with the company",
+                "the logos array and the logosLabel caption above it",
+                "the accent through the accent prop — it colours the quotation marks and the company initials",
+                "outer spacing through className: the section fills its parent's width",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The logos are text on purpose: the block holds no rights to others' SVG marks. When swapping in real logos, get the files from the clients themselves, with their consent.",
+                "Four to seven logos are enough: a long row wraps and turns into a list.",
+                "The quote's author should belong to one of the companies in the row — otherwise the \"voice + clients\" pairing falls apart.",
+                "The quotation marks are added by pseudo-elements — do not repeat them inside the quote text.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Testimonials015\n  quote=\"We built the new site in one sprint.\"\n  name=\"Dmitry Khan\"\n  role=\"Founder\"\n  company=\"Plot studio\"\n  logos={[\"Severny Put\", \"Sturm\", \"Plot\"]}\n/>"
+            },
+            "controls": {
+              "quote": {
+                "label": "Quote",
+                "default": "We built the new marketing site in one sprint. The blocks fit the project like they were born there, and the agent never invented a thing."
+              },
+              "logosLabel": {
+                "label": "Logos caption",
+                "default": "Trusted by"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "quote": "We built the new marketing site in one sprint. The blocks fit the project like they were born there, and the agent never invented a thing.",
+                "name": "Dmitry Khan",
+                "role": "Founder",
+                "company": "Plot studio",
+                "logosLabel": "Trusted by",
+                "logos": [
+                  "Severny Put",
+                  "Sturm",
+                  "Plot",
+                  "Remark",
+                  "Verstak",
+                  "Sloy"
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "quote",
+          "logosLabel",
+          "accent",
+          "background"
+        ]
       }
     }
   ]

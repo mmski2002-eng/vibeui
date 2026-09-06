@@ -1079,6 +1079,1578 @@
         },
         "cardControls": ["helpTitle", "title", "accent", "background"]
       }
+    },
+    {
+      "name": "faq-007",
+      "type": "registry:block",
+      "title": "Вопросы с фильтром-чипами",
+      "description": "Вопросы с фильтром по категориям: чипы сверху переключают список правилами CSS на радио-кнопках, ответы раскрываются нативными details — без JS.",
+      "categories": ["faq"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "faq-007/faq-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/faq-007.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-faq-007-*. Серверный компонент. Чипы — это метки радио-кнопок одной группы: радио спрятаны visually-hidden, но остаются в потоке фокуса, а выбранная категория прячет чужие вопросы правилами :nth-of-type(n):checked ~. Поддерживаются четыре категории плюс чип «Все» — больше требует дописать правила. Внутри списка нативные details со знаком «плюс» из псевдоэлементов; в строке вопроса подписана его категория, чтобы режим «Все» оставался читаемым.",
+      "meta": {
+        "tags": ["faq", "filter", "chips", "categories", "no-js"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Faq007",
+          "usage": "<Faq007\n  title=\"Ответы по каждой части сделки\"\n  groups={[{ label: \"Оплата\", items: [{ question: \"Сколько это стоит?\", answer: \"Открытая часть бесплатна.\" }] }]}\n/>",
+          "summary": "Секция вопросов с фильтром-чипами: лента категорий-пилюль сверху, под ней общий список раскрывающихся вопросов. Выбор чипа прячет чужие вопросы чистым CSS на радио-кнопках, поэтому клиентского JS нет. Активный чип залит акцентом, у каждого вопроса подписана его категория. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-faq-007-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
+            "радио-кнопки фильтра visually-hidden, а не display:none: скрытые через display элементы выпадают из фокуса, и чипы перестают переключаться с клавиатуры",
+            "порядок разметки: сначала все радио, потом лента чипов, потом список — правила :checked ~ работают только вперёд по соседям",
+            "чип «Все» с defaultChecked у его радио: без него список открывается уже отфильтрованным без видимой причины",
+            "связку label htmlFor с радио: на ней держатся и клик по чипу, и доступное имя переключателя",
+            "кольцо фокуса, перенесённое с радио на чип — иначе фокус на невидимом элементе не виден нигде",
+            "нативные details у вопросов: поиск по странице сам раскрывает найденный ответ, всё работает до гидратации",
+            "container-запрос вместо медиазапроса: в узкой колонке секция обязана перестраиваться сама",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "массив groups — категории и вопросы внутри каждой (до четырёх категорий)",
+            "тексты eyebrow, title и allLabel — подпись чипа «показать всё»",
+            "id — имя группы радио; на странице с двумя такими блоками оно обязано различаться",
+            "акцент через проп accent — заливка активного чипа, знак и кольцо фокуса",
+            "внешние отступы через className",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Категорий поддерживается четыре: правила фильтра написаны до пятой радио-кнопки, лишние группы компонент отрезает сам.",
+            "Фильтр прячет вопросы через display:none: открытый ответ из другой категории остаётся открытым и вернётся раскрытым.",
+            "Подпись категории в строке вопроса нужна режиму «Все» — не убирайте её, даже если кажется избыточной.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Ответы по каждой части сделки",
+            "maxLength": 44
+          },
+          {
+            "prop": "allLabel",
+            "label": "Чип «все»",
+            "type": "text",
+            "default": "Все",
+            "maxLength": 16
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["title", "allLabel", "accent", "background"],
+        "i18n": {
+          "en": {
+            "title": "Chip Filter FAQ",
+            "description": "A FAQ with category filtering: chips on top switch the list through CSS rules on radio buttons, and the answers open with native details — no JS.",
+            "ai": {
+              "summary": "A FAQ section with filter chips: a rail of pill-shaped categories on top, a shared list of expanding questions below. Picking a chip hides the other questions with pure CSS on radio buttons, so there is no client JS. The active chip is filled with the accent, and every question carries its category label. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-faq-007-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the filter radios as visually-hidden rather than display:none: elements hidden that way fall out of the focus order and the chips stop switching from the keyboard",
+                "the markup order: all radios first, then the chip rail, then the list — the :checked ~ rules only reach forward through siblings",
+                "the \"All\" chip with defaultChecked on its radio: without it the list opens already filtered for no visible reason",
+                "the label htmlFor link to the radio: both the chip click and the control's accessible name rest on it",
+                "the focus ring moved from the radio onto the chip — otherwise focus on an invisible element is visible nowhere",
+                "the native details on the questions: find-on-page opens the matching answer by itself, everything works before hydration",
+                "the container query instead of a media query: in a narrow column the section has to reflow on its own",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the groups array — the categories and the questions inside each (up to four categories)",
+                "the eyebrow, title and allLabel copy — the label of the \"show everything\" chip",
+                "id — the radio group name; two such blocks on one page need different ids",
+                "the accent through the accent prop — the active chip fill, the sign and the focus ring",
+                "outer spacing through className",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Four categories are supported: the filter rules go up to the fifth radio, extra groups are trimmed by the component itself.",
+                "The filter hides questions with display:none: an open answer from another category stays open and comes back expanded.",
+                "The category label in the question row serves the \"All\" view — keep it even if it looks redundant.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Faq007\n  title=\"Answers for every part of the deal\"\n  groups={[{ label: \"Billing\", items: [{ question: \"How much does it cost?\", answer: \"The open part is free.\" }] }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Answers for every part of the deal"
+              },
+              "allLabel": {
+                "label": "\"All\" chip",
+                "default": "All"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Questions",
+                "title": "Answers for every part of the deal",
+                "allLabel": "All",
+                "groups": [
+                  {
+                    "label": "Install",
+                    "items": [
+                      {
+                        "question": "How does a component get into my project?",
+                        "answer": "Through the install command from the card or the Copy for AI link: the file is downloaded from the registry into components/vibeui. No build step, no setup — it becomes an ordinary project file."
+                      },
+                      {
+                        "question": "Do I need Tailwind or a component library?",
+                        "answer": "No. The styles live inside the file as plain CSS with local variables, so the block works in any React project regardless of your styling system."
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Billing",
+                    "items": [
+                      {
+                        "question": "How much do the blocks cost?",
+                        "answer": "The catalogue is open: use the blocks in personal and commercial projects alike. If paid sets appear, they will be marked separately before you install anything."
+                      },
+                      {
+                        "question": "Do I need a subscription to keep a block working?",
+                        "answer": "No. Once installed, the file belongs to your project and connects to nothing. Updating means simply installing the newer version over it."
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Licence",
+                    "items": [
+                      {
+                        "question": "Can I use the blocks in client projects?",
+                        "answer": "Yes, without restrictions: after installation the file is part of your project — change it, rename it, hand it over with the site."
+                      },
+                      {
+                        "question": "Do I have to credit the catalogue?",
+                        "answer": "No, a link back is not required. We appreciate a mention, but the licence does not demand one."
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-faq-007-*. A server component. The chips are labels of radio buttons in a single group: the radios are hidden visually-hidden but stay in the focus order, and the chosen category hides the other questions through :nth-of-type(n):checked ~ rules. Four categories plus the \"All\" chip are supported — more requires writing further rules. The list holds native details with a plus sign built from pseudo-elements; each question row carries its category label so the \"All\" view stays readable."
+          }
+        }
+      }
+    },
+    {
+      "name": "faq-008",
+      "type": "registry:block",
+      "title": "Вопросы и поддержка рядом",
+      "description": "Аккордеон вопросов и липкая карточка «не нашли — напишите» с оранжевой кнопкой в соседней колонке: выход в поддержку виден в любой точке списка.",
+      "categories": ["faq"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "faq-008/faq-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/faq-008.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-faq-008-*. Серверный компонент, раскрытие держат нативные <details>. Карточка помощи — <aside> на тёплой акцентной подложке через color-mix, с одной залитой кнопкой и строкой о времени ответа под ней. На широкой раскладке карточка становится sticky: кто не нашёл вопрос, бросает список посередине, и кнопка должна быть в поле зрения именно там. Раскладка включается container-запросом от собственной ширины блока.",
+      "meta": {
+        "tags": ["faq", "support", "cta", "sticky", "no-js"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Faq008",
+          "usage": "<Faq008\n  title=\"Вопросы о работе с каталогом\"\n  cardTitle=\"Не нашли свой вопрос?\"\n  buttonLabel=\"Написать в поддержку\"\n  buttonHref=\"/support\"\n/>",
+          "summary": "Секция вопросов в две колонки: слева аккордеон на нативных details, справа карточка «не нашли свой вопрос» на тёплой акцентной подложке с одной залитой кнопкой и обещанием срока ответа. На широкой раскладке карточка залипает при прокрутке списка. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-faq-008-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
+            "карточку помощи рядом со списком, а не под ним: кто не нашёл вопрос, бросает чтение посередине",
+            "sticky у карточки только на широкой раскладке — в одной колонке залипший блок перекрывает вопросы",
+            "одну кнопку в карточке, а не меню каналов: у блока ровно один следующий шаг",
+            "тёплую подложку карточки через color-mix от акцента — заливать её сплошным оранжевым нельзя, текст перестанет читаться",
+            "строку о времени ответа под кнопкой: она снимает главное сомнение до нажатия",
+            "нативные details: поиск по странице сам раскрывает найденный вопрос, всё работает до гидратации",
+            "container-запрос вместо медиазапроса: в узком контейнере колонки обязаны складываться сами",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку секции по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "title и массив items — заголовок и сами вопросы с ответами",
+            "cardTitle, cardText и note — тексты карточки помощи",
+            "buttonLabel и buttonHref — подпись и адрес кнопки",
+            "акцент через проп accent — заливка кнопки, подложка карточки, стрелки и фокус",
+            "внешние отступы через className",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Не обещайте в note того, чего не выдерживаете: «отвечаем в течение дня» проверяют сразу.",
+            "Sticky работает, только если у родителя нет overflow:hidden — проверьте обёртку страницы.",
+            "Кнопка — ссылка <a>: подставьте адрес формы, почты или мессенджера, обработчик ей не нужен.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Вопросы о работе с каталогом",
+            "maxLength": 44
+          },
+          {
+            "prop": "cardTitle",
+            "label": "Заголовок карточки",
+            "type": "text",
+            "default": "Не нашли свой вопрос?",
+            "maxLength": 32
+          },
+          {
+            "prop": "buttonLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Написать в поддержку",
+            "maxLength": 28
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["title", "cardTitle", "buttonLabel", "accent", "background"],
+        "i18n": {
+          "en": {
+            "title": "FAQ with Support Card",
+            "description": "A question accordion with a sticky \"didn't find it — write to us\" card and an orange button in the next column: the way to support stays in view at any point of the list.",
+            "ai": {
+              "summary": "A two-column FAQ section: an accordion on native details on the left, a \"didn't find your question\" card on a warm accent-tinted panel with a single filled button and a promised response time on the right. On the wide layout the card sticks while the list scrolls. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-faq-008-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the help card beside the list rather than under it: people who do not find their question abandon the reading halfway",
+                "sticky on the card only on the wide layout — in a single column a stuck block covers the questions",
+                "one button in the card, not a menu of channels: the block has exactly one next step",
+                "the card's warm panel via color-mix from the accent — do not fill it with solid orange, the text stops being readable",
+                "the response-time line under the button: it removes the main doubt before the click",
+                "the native details: find-on-page opens the matching question by itself, everything works before hydration",
+                "the container query instead of a media query: in a narrow container the columns have to fold on their own",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent section background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "title and the items array — the heading and the questions with answers",
+                "cardTitle, cardText and note — the help card copy",
+                "buttonLabel and buttonHref — the button label and address",
+                "the accent through the accent prop — the button fill, the card panel, the arrows and focus",
+                "outer spacing through className",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Do not promise in the note what you cannot keep: \"we reply within a day\" gets tested immediately.",
+                "Sticky only works when no ancestor has overflow:hidden — check the page wrapper.",
+                "The button is an <a> link: point it at a form, an email or a messenger, it needs no handler.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Faq008\n  title=\"Questions about the catalogue\"\n  cardTitle=\"Didn't find your question?\"\n  buttonLabel=\"Message support\"\n  buttonHref=\"/support\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Questions about the catalogue"
+              },
+              "cardTitle": {
+                "label": "Card heading",
+                "default": "Didn't find your question?"
+              },
+              "buttonLabel": {
+                "label": "Button",
+                "default": "Message support"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Questions about the catalogue",
+                "cardTitle": "Didn't find your question?",
+                "cardText": "Write to us — we will look into your case and add the answer to this list so the next person has it easier.",
+                "buttonLabel": "Message support",
+                "note": "We reply within one working day.",
+                "items": [
+                  {
+                    "question": "Why is a catalogue block better than one generated from scratch?",
+                    "answer": "The block is already laid out and tested on both themes and on narrow screens. The agent only fills in content instead of inventing the layout — fewer fixes, a predictable result."
+                  },
+                  {
+                    "question": "What does the AI agent get from the Copy for AI button?",
+                    "answer": "An instruction with the block id, the install command and the list of what must not change: animations, spacing, behaviour on narrow screens. The agent installs the real file, not a paraphrase."
+                  },
+                  {
+                    "question": "Will the block break when the project's dependencies update?",
+                    "answer": "No: it has none. One file, styles inside, no packages — there is nothing to update or keep in sync."
+                  },
+                  {
+                    "question": "How do I recolour it for my brand?",
+                    "answer": "All the colours live in local CSS variables at the top of the file. Override them and the block repaints without touching the rest of the markup."
+                  },
+                  {
+                    "question": "Can several blocks share one page?",
+                    "answer": "Yes, the blocks know nothing about each other and do not conflict: each has its own palette and its own variable prefix."
+                  }
+                ]
+              }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-faq-008-*. A server component; native <details> hold the disclosure. The help card is an <aside> on a warm accent-tinted panel made with color-mix, carrying one filled button and a response-time line under it. On the wide layout the card becomes sticky: someone who has not found their question abandons the list halfway, and the button has to be in view exactly there. The layout switches through a container query against the block's own width."
+          }
+        }
+      }
+    },
+    {
+      "name": "faq-009",
+      "type": "registry:block",
+      "title": "Нумерованные вопросы",
+      "description": "Вопросы с крупными порядковыми номерами и якорным id на каждом: на конкретный ответ можно сослаться из письма или чата поддержки.",
+      "categories": ["faq"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "faq-009/faq-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/faq-009.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-faq-009-*. Серверный компонент, раскрытие держат нативные <details>. Номер набран крупно акцентным цветом и считается сам по порядку массива. Каждый details получает якорный id вида «faq-q-1» из пропа idPrefix, а scroll-margin-top не даёт фиксированной шапке сайта накрыть вопрос после перехода по якорю. На широкой раскладке ответ выровнен по колонке текста вопроса, а не по номеру — так глаз не спотыкается.",
+      "meta": {
+        "tags": ["faq", "numbered", "anchors", "details", "no-js"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Faq009",
+          "usage": "<Faq009\n  title=\"Пять шагов от каталога до готовой страницы\"\n  idPrefix=\"faq-q\"\n  items={[{ question: \"С чего начать?\", answer: \"Выберите блоки в каталоге.\" }]}\n/>",
+          "summary": "Секция вопросов с крупной нумерацией: порядковый номер набран акцентным цветом, вопросы раскрываются нативными details, у каждого — якорный id для прямых ссылок. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-faq-009-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
+            "якорные id на details и scroll-margin-top: без отступа фиксированная шапка сайта накрывает вопрос после перехода по якорю",
+            "нумерацию из порядка массива, а не из данных — руками её не проставлять, при перестановке вопросов она пересчитается сама",
+            "табличные цифры в номере (font-variant-numeric): без них 11 и 17 имеют разную ширину и колонка дрожит",
+            "нативные details вместо кнопок с состоянием: поиск по странице и работа до гидратации достаются даром",
+            "выравнивание ответа по колонке текста вопроса на широкой раскладке, а не по номеру",
+            "видимое кольцо фокуса на summary: раскрытие обязано работать с клавиатуры",
+            "container-запрос вместо медиазапроса: в узкой колонке отступ ответа обязан пропадать сам",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "тексты eyebrow и title",
+            "массив items — вопросы и ответы; номера считаются сами",
+            "idPrefix — префикс якорей; на странице с двумя такими блоками он обязан различаться",
+            "акцент через проп accent — цвет номеров, надзаголовка, знака и фокуса",
+            "внешние отступы через className",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Ссылка на конкретный ответ — адрес страницы плюс #faq-q-3; браузер прокрутит к вопросу, раскрыть его человек должен сам.",
+            "Номера ведут счёт до 99 без переполнения; больше двадцати вопросов — повод разбить список на разделы другим блоком.",
+            "Значение scroll-margin-top подобрано под шапку в 4–5rem: если ваша выше, увеличьте его в стилях блока.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Пять шагов от каталога до готовой страницы",
+            "maxLength": 52
+          },
+          {
+            "prop": "idPrefix",
+            "label": "Префикс якорей",
+            "type": "text",
+            "default": "faq-q",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["title", "idPrefix", "accent", "background"],
+        "i18n": {
+          "en": {
+            "title": "Numbered FAQ",
+            "description": "Questions with large ordinal numbers and an anchor id on each one: a specific answer can be linked from an email or a support chat.",
+            "ai": {
+              "summary": "A FAQ section with large numbering: the ordinal is set in the accent colour, the questions open with native details, and each one carries an anchor id for direct links. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-faq-009-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the anchor ids on the details and scroll-margin-top: without the offset a fixed site header covers the question after an anchor jump",
+                "the numbering derived from array order rather than data — do not hand-write it, it recounts itself when questions are reordered",
+                "the tabular figures in the number (font-variant-numeric): without them 11 and 17 have different widths and the column jitters",
+                "native details instead of stateful buttons: find-on-page and pre-hydration behaviour come for free",
+                "aligning the answer with the question text column on the wide layout, not with the number",
+                "the visible focus ring on summary: opening has to work from the keyboard",
+                "the container query instead of a media query: in a narrow column the answer indent has to disappear on its own",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the eyebrow and title copy",
+                "the items array — the questions and answers; the numbers count themselves",
+                "idPrefix — the anchor prefix; two such blocks on one page need different prefixes",
+                "the accent through the accent prop — it colours the numbers, the eyebrow, the sign and focus",
+                "outer spacing through className",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "A link to a specific answer is the page address plus #faq-q-3; the browser scrolls to the question, opening it is up to the reader.",
+                "The numbers count to 99 without overflowing; more than twenty questions is a reason to split the list into sections with another block.",
+                "The scroll-margin-top value suits a 4–5rem header: if yours is taller, raise it in the block styles.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Faq009\n  title=\"Five steps from catalogue to finished page\"\n  idPrefix=\"faq-q\"\n  items={[{ question: \"Where do I start?\", answer: \"Pick blocks in the catalogue.\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Five steps from catalogue to finished page"
+              },
+              "idPrefix": {
+                "label": "Anchor prefix",
+                "default": "faq-q"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "How it works",
+                "title": "Five steps from catalogue to finished page",
+                "items": [
+                  {
+                    "question": "Where do I start building a page from blocks?",
+                    "answer": "Pick sections in the catalogue for your scenario: a hero, features, testimonials, questions. Each can be previewed live on both themes before installing."
+                  },
+                  {
+                    "question": "How do I hand the chosen block to an AI agent?",
+                    "answer": "The Copy for AI button puts a ready instruction on the clipboard: the block id, the install command and the list of what the agent must keep. Paste it into the chat."
+                  },
+                  {
+                    "question": "What is the agent not allowed to change during installation?",
+                    "answer": "Animations, typography, spacing and behaviour on narrow screens — the instruction locks these. Content, links and brand colours change freely."
+                  },
+                  {
+                    "question": "How do I link to a specific answer in this list?",
+                    "answer": "Every question has an anchor id: add it to the page address after a hash and the browser scrolls exactly to the question."
+                  },
+                  {
+                    "question": "What if the catalogue is missing the block I need?",
+                    "answer": "Tell us which scenario is not covered. Frequent requests enter the catalogue plan first — half the sections here appeared that way."
+                  }
+                ]
+              }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-faq-009-*. A server component; native <details> hold the disclosure. The number is set large in the accent colour and counts itself from array order. Every details gets an anchor id like \"faq-q-1\" from the idPrefix prop, and scroll-margin-top keeps a fixed site header from covering the question after an anchor jump. On the wide layout the answer aligns with the question text column rather than the number, so the eye does not stumble."
+          }
+        }
+      }
+    },
+    {
+      "name": "faq-010",
+      "type": "registry:block",
+      "title": "Популярные вопросы сверху",
+      "description": "Частые вопросы подняты наверх, раскрыты и помечены бейджем: большинству хватает первых трёх ответов без единого клика, остальное свёрнуто ниже.",
+      "categories": ["faq"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "faq-010/faq-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/faq-010.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-faq-010-*. Серверный компонент, раскрытие держат нативные <details>. Вопросы с флагом popular попадают в верхнюю группу: карточка на тёплой подложке через color-mix, бейдж «частый вопрос» и атрибут open — ответ виден сразу. Остальные вопросы свёрнуты под отдельным подзаголовком. Деление задаётся флагом в данных, а не позицией в массиве: порядок внутри групп можно менять свободно.",
+      "meta": {
+        "tags": ["faq", "popular", "badge", "details", "no-js"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Faq010",
+          "usage": "<Faq010\n  title=\"Ответы, которые ищут чаще всего\"\n  items={[{ question: \"Сколько стоит?\", answer: \"Открытая часть бесплатна.\", popular: true }]}\n/>",
+          "summary": "Секция вопросов с приоритетом: помеченные как частые подняты наверх, раскрыты по умолчанию и выделены бейджем и тёплой подложкой, остальные свёрнуты ниже под подзаголовком. Всё на нативных details, без клиентского JS. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-faq-010-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
+            "атрибут open у частых вопросов: смысл блока в том, что главные ответы видны без единого клика",
+            "деление по флагу popular в данных, а не по позиции в массиве — переставлять вопросы можно, не ломая группировку",
+            "бейдж и тёплую подложку только у верхней группы: если выделить всё, не выделено ничего",
+            "подзаголовок над свёрнутой частью — без него нижняя группа читается как продолжение раскрытой",
+            "нативные details вместо кнопок с состоянием: поиск по странице и работа до гидратации достаются даром",
+            "видимое кольцо фокуса на summary: раскрытие обязано работать с клавиатуры",
+            "container-запрос вместо медиазапроса: раскладка обязана считаться от собственной ширины блока",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку секции по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "массив items — вопросы, ответы и флаг popular",
+            "тексты title, badgeLabel и restLabel",
+            "акцент через проп accent — бейдж, подложка частых, знак и фокус",
+            "внешние отступы через className",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Держите в частых два-четыре вопроса: пять раскрытых ответов — это уже стена текста, а не подборка главного.",
+            "Какие вопросы частые — решают данные поддержки, а не маркетинг: смотрите, о чём реально спрашивают.",
+            "Если ни один вопрос не помечен popular, верхняя группа не рендерится и блок превращается в обычный список.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Ответы, которые ищут чаще всего",
+            "maxLength": 44
+          },
+          {
+            "prop": "badgeLabel",
+            "label": "Текст бейджа",
+            "type": "text",
+            "default": "Частый вопрос",
+            "maxLength": 20
+          },
+          {
+            "prop": "restLabel",
+            "label": "Подзаголовок остальных",
+            "type": "text",
+            "default": "Остальные вопросы",
+            "maxLength": 28
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["title", "badgeLabel", "restLabel", "accent", "background"],
+        "i18n": {
+          "en": {
+            "title": "Popular First FAQ",
+            "description": "Frequent questions lifted to the top, opened and marked with a badge: the first three answers cover most visitors without a single click, the rest stays collapsed below.",
+            "ai": {
+              "summary": "A prioritised FAQ section: questions marked as frequent are lifted to the top, opened by default and highlighted with a badge and a warm panel, while the rest stays collapsed under a subheading. All on native details, no client JS. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-faq-010-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the open attribute on the frequent questions: the point of the block is that the key answers are visible without a single click",
+                "the split by the popular flag in the data rather than array position — questions can be reordered without breaking the grouping",
+                "the badge and the warm panel on the top group only: when everything is highlighted, nothing is",
+                "the subheading over the collapsed part — without it the lower group reads as a continuation of the opened one",
+                "native details instead of stateful buttons: find-on-page and pre-hydration behaviour come for free",
+                "the visible focus ring on summary: opening has to work from the keyboard",
+                "the container query instead of a media query: the layout has to follow the block's own width",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent section background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the items array — questions, answers and the popular flag",
+                "the title, badgeLabel and restLabel copy",
+                "the accent through the accent prop — the badge, the panel of the frequent group, the sign and focus",
+                "outer spacing through className",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Keep two to four questions in the frequent group: five opened answers is a wall of text, not a highlight reel.",
+                "Which questions are frequent is decided by support data, not marketing: look at what people actually ask.",
+                "If no question is marked popular, the top group is not rendered and the block becomes a plain list.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Faq010\n  title=\"The answers people look for most\"\n  items={[{ question: \"How much does it cost?\", answer: \"The open part is free.\", popular: true }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "The answers people look for most"
+              },
+              "badgeLabel": {
+                "label": "Badge text",
+                "default": "Frequent question"
+              },
+              "restLabel": {
+                "label": "Rest subheading",
+                "default": "Other questions"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "The answers people look for most",
+                "badgeLabel": "Frequent question",
+                "restLabel": "Other questions",
+                "items": [
+                  {
+                    "question": "How much does the catalogue cost?",
+                    "answer": "The open part is free for personal and commercial projects alike. If paid sets appear, they will be marked separately before installation.",
+                    "popular": true
+                  },
+                  {
+                    "question": "What exactly do I get after installing a block?",
+                    "answer": "One file in your project — the same one you saw in the preview. No build step, no wrappers, no tie to our theme: the block carries its own palette and zero dependencies.",
+                    "popular": true
+                  },
+                  {
+                    "question": "Does the agent really install this exact component?",
+                    "answer": "Yes. Copy for AI hands the agent the block id and the install command, so it downloads the real file from the registry instead of recreating something similar from a description.",
+                    "popular": true
+                  },
+                  {
+                    "question": "How do I recolour a block for my brand?",
+                    "answer": "Override the local CSS variables at the top of the file: the colours, the accent and the radii live there. The rest of the markup stays untouched."
+                  },
+                  {
+                    "question": "Do the blocks work with a dark theme?",
+                    "answer": "Yes, the palette is built on light-dark(): the block follows the page theme automatically, no separate dark version needed."
+                  },
+                  {
+                    "question": "May I edit the installed file?",
+                    "answer": "You should: the file belongs to your project. Change content and colours freely; keep the layout and the narrow-screen behaviour."
+                  },
+                  {
+                    "question": "What if a block renders incorrectly?",
+                    "answer": "Most often the project has no color-scheme: light dark declared on html — without it the palette stays light. If that is not it, write to us with a screenshot."
+                  }
+                ]
+              }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-faq-010-*. A server component; native <details> hold the disclosure. Questions flagged popular go into the top group: a card on a warm color-mix panel, a \"frequent question\" badge and the open attribute — the answer is visible immediately. The remaining questions stay collapsed under their own subheading. The split comes from a flag in the data rather than array position: order within the groups can change freely."
+          }
+        }
+      }
+    },
+    {
+      "name": "faq-011",
+      "type": "registry:block",
+      "title": "Разделы вопросов",
+      "description": "Двухуровневый список вопросов: разделы с заголовками и счётчиком видны все сразу, внутри каждого — раскрывающиеся ответы на нативных details.",
+      "categories": ["faq"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "faq-011/faq-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/faq-011.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-faq-011-*. Серверный компонент, раскрытие держат нативные <details>. В отличие от вкладок все разделы видны одновременно: человек находит свою тему глазами при прокрутке, ничего не переключая. На широкой раскладке заголовок раздела с описанием и счётчиком уходит в левую колонку, вопросы — в правую; в узкой колонке раздел складывается в один столбец. Раскладка включается container-запросом от собственной ширины блока.",
+      "meta": {
+        "tags": ["faq", "sections", "grouped", "details", "no-js"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Faq011",
+          "usage": "<Faq011\n  title=\"Вопросы по разделам\"\n  groups={[{ label: \"Оплата\", description: \"Тарифы и счета.\", items: [{ question: \"Это бесплатно?\", answer: \"Да, открытая часть бесплатна.\" }] }]}\n/>",
+          "summary": "Секция вопросов с двухуровневой структурой: разделы идут друг за другом, у каждого заголовок, короткое описание и счётчик вопросов, внутри — раскрывающиеся ответы. Все разделы видны сразу, без вкладок и переключателей. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-faq-011-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
+            "все разделы на одной странице, а не за вкладками: тему находят глазами при прокрутке, ничего не переключая",
+            "двухколоночную раскладку раздела на широкой ширине — заголовок слева держит контекст, пока читают вопросы справа",
+            "счётчик вопросов у заголовка раздела: он обещает объём до раскрытия",
+            "нативные details вместо кнопок с состоянием: поиск по странице и работа до гидратации достаются даром",
+            "разделители между вопросами тоньше, чем между разделами — иерархия держится на контрасте линий",
+            "видимое кольцо фокуса на summary: раскрытие обязано работать с клавиатуры",
+            "container-запрос вместо медиазапроса: в узкой колонке раздел обязан складываться в один столбец сам",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "массив groups — разделы, их описания и вопросы внутри",
+            "тексты eyebrow и title",
+            "акцент через проп accent — счётчики, надзаголовок, знак и фокус",
+            "внешние отступы через className",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Три-пять разделов — рабочий диапазон: при большем количестве страница превращается в справочник, лучше взять блок с вкладками или поиском.",
+            "Описание раздела необязательно: без него заголовок просто остаётся один в левой колонке.",
+            "Названия разделов держите в одно-два слова — длинные ломают левую колонку.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Вопросы по разделам",
+            "maxLength": 40
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "База знаний",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "i18n": {
+          "en": {
+            "title": "Sectioned FAQ",
+            "description": "A two-level question list: sections with headings and a counter are all visible at once, and inside each one the answers open on native details.",
+            "ai": {
+              "summary": "A FAQ section with a two-level structure: sections follow one another, each with a heading, a short description and a question counter, with expanding answers inside. All sections are visible at once — no tabs, no switches. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-faq-011-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "all sections on one page rather than behind tabs: people find their topic by eye while scrolling, switching nothing",
+                "the two-column section layout on the wide width — the heading on the left keeps context while the questions are read on the right",
+                "the question counter next to the section heading: it promises the volume before anything is opened",
+                "native details instead of stateful buttons: find-on-page and pre-hydration behaviour come for free",
+                "the dividers between questions thinner than between sections — the hierarchy rests on the contrast of lines",
+                "the visible focus ring on summary: opening has to work from the keyboard",
+                "the container query instead of a media query: in a narrow column the section has to fold into one column on its own",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the groups array — the sections, their descriptions and the questions inside",
+                "the eyebrow and title copy",
+                "the accent through the accent prop — the counters, the eyebrow, the sign and focus",
+                "outer spacing through className",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Three to five sections is the working range: with more the page turns into a handbook — take the tabbed or searchable block instead.",
+                "The section description is optional: without it the heading simply stands alone in the left column.",
+                "Keep section names to one or two words — long ones break the left column.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Faq011\n  title=\"Questions by section\"\n  groups={[{ label: \"Billing\", description: \"Plans and invoices.\", items: [{ question: \"Is it free?\", answer: \"Yes, the open part is free.\" }] }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Questions by section"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Knowledge base"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Knowledge base",
+                "title": "Questions by section",
+                "groups": [
+                  {
+                    "label": "Billing",
+                    "description": "Plans, invoices and what the free part includes.",
+                    "items": [
+                      {
+                        "question": "Is the open part of the catalogue really free?",
+                        "answer": "Yes, commercial use included. We earn on paid sets and services, not on the basic blocks."
+                      },
+                      {
+                        "question": "Could blocks become paid retroactively?",
+                        "answer": "No. An installed file is yours forever; we technically cannot change terms for what you already downloaded — the block connects to nothing."
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Install",
+                    "description": "How a block gets into the project and what it needs.",
+                    "items": [
+                      {
+                        "question": "Which command installs a block?",
+                        "answer": "The shadcn install command with the block address from its card. The file is downloaded from the registry into your project's components/vibeui."
+                      },
+                      {
+                        "question": "What does the project need for a block to work?",
+                        "answer": "Only React. Styles are inside the file, there are no dependencies, and the block is not tied to Tailwind or our theme."
+                      },
+                      {
+                        "question": "Can I skip the CLI?",
+                        "answer": "Yes: copy the block source into your project by hand — it is the same file the command installs."
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Licence",
+                    "description": "Rights to the files after installation.",
+                    "items": [
+                      {
+                        "question": "Who owns an installed block?",
+                        "answer": "Your project. Change it, rename it, sell it with the site — there are no restrictions."
+                      },
+                      {
+                        "question": "Can projects with blocks be open-sourced?",
+                        "answer": "Yes. The block becomes an ordinary file of your repository and inherits whatever licence you choose for the project."
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-faq-011-*. A server component; native <details> hold the disclosure. Unlike tabs, all sections are visible at once: people find their topic by eye while scrolling, switching nothing. On the wide layout the section heading with its description and counter moves into the left column and the questions into the right; in a narrow column the section folds into a single one. The layout switches through a container query against the block's own width."
+          }
+        }
+      }
+    },
+    {
+      "name": "faq-012",
+      "type": "registry:block",
+      "title": "Все ответы открыты",
+      "description": "Сетка карточек вопрос-ответ без аккордеона: весь текст виден сразу, индексируется поисковиками и размечен микроданными schema.org/FAQPage.",
+      "categories": ["faq"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "faq-012/faq-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/faq-012.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-faq-012-*. Серверный компонент без единого интерактивного элемента: ответы открыты всегда, поэтому текст читается по диагонали, находится Ctrl+F и попадает в индекс целиком. Секция размечена микроданными schema.org/FAQPage (Question/acceptedAnswer/Answer) — поисковик получает структуру вопрос-ответ без JSON-LD. Вопрос помечен акцентной вертикальной чертой из псевдоэлемента. Сетка: одна колонка, две от 40rem, три от 62rem собственной ширины блока.",
+      "meta": {
+        "tags": ["faq", "grid", "open", "seo", "schema"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Faq012",
+          "usage": "<Faq012\n  title=\"Всё о каталоге на одном экране\"\n  items={[{ question: \"Что такое VibeUI?\", answer: \"Каталог готовых секций для сайтов.\" }]}\n/>",
+          "summary": "Секция вопрос-ответ без аккордеона: карточки в сетке, все ответы видны сразу. Подходит для SEO-страниц — текст индексируется целиком и размечен микроданными schema.org/FAQPage. Интерактива нет вовсе. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-faq-012-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
+            "открытые ответы: сворачивание в аккордеон убивает смысл блока — мгновенное чтение и полную индексацию",
+            "микроданные schema.org/FAQPage на секции и Question/Answer на карточках: это структура для поисковика, а не декор",
+            "акцентную черту у вопроса из псевдоэлемента — она отделяет вопрос от ответа без лишней разметки",
+            "min-inline-size:0 у карточки: без него длинное слово растягивает колонку сетки за край блока",
+            "container-запросы вместо медиазапросов: число колонок обязано считаться от собственной ширины блока",
+            "семантику article для каждой пары вопрос-ответ",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "массив items — вопросы и ответы",
+            "тексты eyebrow и title",
+            "акцент через проп accent — надзаголовок и черта у вопросов",
+            "внешние отступы через className",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Держите ответы соизмеримыми по длине: один огромный ответ растягивает всю строку сетки.",
+            "Разметка FAQPage должна быть на странице одна: если таких блоков два, микроданные оставьте только у одного.",
+            "Блок для коротких фактических ответов; длинные инструкции со скриншотами лучше уводить в отдельные статьи.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Всё о каталоге на одном экране",
+            "maxLength": 44
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Вопросы и ответы",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "i18n": {
+          "en": {
+            "title": "All Answers Open",
+            "description": "A grid of question-answer cards with no accordion: all the text is visible at once, fully indexable and marked up with schema.org/FAQPage microdata.",
+            "ai": {
+              "summary": "A question-answer section without an accordion: cards in a grid, every answer visible immediately. Built for SEO pages — the text is indexed in full and marked up with schema.org/FAQPage microdata. No interactivity at all. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-faq-012-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the open answers: folding them into an accordion kills the point of the block — instant reading and full indexing",
+                "the schema.org/FAQPage microdata on the section and Question/Answer on the cards: it is structure for the search engine, not decoration",
+                "the accent bar on the question built from a pseudo-element — it separates question from answer without extra markup",
+                "min-inline-size:0 on the card: without it a long word stretches the grid column past the block edge",
+                "container queries instead of media queries: the column count has to follow the block's own width",
+                "the article semantics for every question-answer pair",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the items array — the questions and answers",
+                "the eyebrow and title copy",
+                "the accent through the accent prop — the eyebrow and the bar next to the questions",
+                "outer spacing through className",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Keep the answers comparable in length: one huge answer stretches the whole grid row.",
+                "There must be only one FAQPage markup per page: with two such blocks, keep the microdata on one of them only.",
+                "The block suits short factual answers; long instructions with screenshots belong in separate articles.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Faq012\n  title=\"Everything about the catalogue on one screen\"\n  items={[{ question: \"What is VibeUI?\", answer: \"A catalogue of ready-made site sections.\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Everything about the catalogue on one screen"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Questions and answers"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Questions and answers",
+                "title": "Everything about the catalogue on one screen",
+                "items": [
+                  {
+                    "question": "What is VibeUI?",
+                    "answer": "A catalogue of ready-made site sections designed for working with an AI agent: pick a design, copy the instruction — the agent installs the real component into the project."
+                  },
+                  {
+                    "question": "How is a block different from a template?",
+                    "answer": "A template dictates the whole site, a block — one section. Blocks combine in any order and know nothing about each other: each has its own palette and styles."
+                  },
+                  {
+                    "question": "Which technologies does the project need?",
+                    "answer": "Only React. The styles live inside the file as plain CSS, no dependencies are needed and Tailwind is optional."
+                  },
+                  {
+                    "question": "How does a block get into the project?",
+                    "answer": "Through the install command from the block card or the Copy for AI instruction. The file is downloaded from the registry and becomes an ordinary file of your repository."
+                  },
+                  {
+                    "question": "Is a dark theme supported?",
+                    "answer": "Yes, every block's palette is built on light-dark() and follows the page theme. No separate dark version is needed."
+                  },
+                  {
+                    "question": "What can be changed after installation?",
+                    "answer": "Content, links and brand colours — freely. Keep the layout, the animations and the narrow-screen behaviour: they are the design of the block."
+                  }
+                ]
+              }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-faq-012-*. A server component without a single interactive element: the answers are always open, so the text scans diagonally, is found with Ctrl+F and enters the index in full. The section carries schema.org/FAQPage microdata (Question/acceptedAnswer/Answer) — the search engine gets the question-answer structure without JSON-LD. The question is marked with an accent vertical bar from a pseudo-element. The grid: one column, two from 40rem, three from 62rem of the block's own width."
+          }
+        }
+      }
+    },
+    {
+      "name": "faq-013",
+      "type": "registry:block",
+      "title": "Вопросы с формой внизу",
+      "description": "Аккордеон вопросов и форма «задать свой вопрос» под ним: поле с кнопкой на тёплой подложке. Бэкенда нет — адрес приёма подставляется пропом.",
+      "categories": ["faq"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "faq-013/faq-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/faq-013.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-faq-013-*. Серверный компонент, раскрытие держат нативные <details>. Форма внизу — обычный <form method=\"get\"> с одним текстовым полем и залитой кнопкой: обработчика в блоке нет намеренно, адрес приёма подставляется пропом formAction. Форма стоит после списка, а не до: сначала человек ищет ответ сам, и только дочитав — спрашивает. Тёплая подложка формы собрана через color-mix от акцента.",
+      "meta": {
+        "tags": ["faq", "form", "ask", "details", "no-js"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Faq013",
+          "usage": "<Faq013\n  title=\"Спрашивают перед стартом\"\n  formTitle=\"Не нашли ответа? Задайте свой вопрос\"\n  formAction=\"/api/ask\"\n  items={[{ question: \"Нужно ли уметь программировать?\", answer: \"Нет, блоки ставит AI-агент.\" }]}\n/>",
+          "summary": "Секция вопросов с формой обратной связи: сверху аккордеон на нативных details, внизу карточка «задайте свой вопрос» с текстовым полем и залитой кнопкой. Бэкенда в блоке нет — форма отправляется на адрес из пропа formAction. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-faq-013-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
+            "форму после списка, а не до него: сначала человек ищет ответ сам, и только дочитав — спрашивает",
+            "нативную отправку формы без onSubmit: блок остаётся серверным, а обработчик задаётся адресом formAction",
+            "required у поля — пустой вопрос не должен уходить, и браузер скажет об этом сам без единой строки JS",
+            "aria-label у поля из заголовка формы: placeholder исчезает при наборе и подписью не считается",
+            "подсказку под формой о том, куда уйдёт вопрос и когда ждать ответ",
+            "нативные details у списка: поиск по странице и работа до гидратации достаются даром",
+            "тёплую подложку формы через color-mix от акцента, а не сплошную заливку",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку секции по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "title и массив items — заголовок и сами вопросы",
+            "formTitle, placeholder, buttonLabel и formHint — тексты формы",
+            "formAction — адрес обработчика; по умолчанию «#», подставьте свой endpoint или страницу",
+            "акцент через проп accent — заливка кнопки, подложка формы, знак и фокус",
+            "внешние отступы через className",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Без своего formAction отправка ведёт на текущую страницу с ?question= в адресе — для продакшена подключите endpoint, форму сервиса или mailto.",
+            "Поле одно намеренно: каждый дополнительный input снижает число отправок, почту спросите в ответном письме.",
+            "Вопросы из формы — готовый список кандидатов в этот же аккордеон: отвечаете один раз, дополняете список.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Спрашивают перед стартом",
+            "maxLength": 40
+          },
+          {
+            "prop": "formTitle",
+            "label": "Заголовок формы",
+            "type": "text",
+            "default": "Не нашли ответа? Задайте свой вопрос",
+            "maxLength": 48
+          },
+          {
+            "prop": "buttonLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Отправить",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["title", "formTitle", "buttonLabel", "accent", "background"],
+        "i18n": {
+          "en": {
+            "title": "FAQ with Ask Form",
+            "description": "A question accordion with an \"ask your own question\" form below it: a field and a button on a warm panel. No backend — the receiving address comes from a prop.",
+            "ai": {
+              "summary": "A FAQ section with a feedback form: an accordion on native details on top, an \"ask your own question\" card with a text field and a filled button below. The block has no backend — the form submits to the address from the formAction prop. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-faq-013-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the form after the list, not before it: first the visitor looks for the answer, and only having read through — asks",
+                "the native form submission without onSubmit: the block stays a server component and the handler is set by the formAction address",
+                "the required on the field — an empty question must not go through, and the browser says so itself without a line of JS",
+                "the aria-label on the field taken from the form heading: the placeholder disappears while typing and does not count as a label",
+                "the hint under the form about where the question goes and when to expect a reply",
+                "the native details in the list: find-on-page and pre-hydration behaviour come for free",
+                "the form's warm panel via color-mix from the accent rather than a solid fill",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent section background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "title and the items array — the heading and the questions themselves",
+                "formTitle, placeholder, buttonLabel and formHint — the form copy",
+                "formAction — the handler address; \"#\" by default, point it at your endpoint or page",
+                "the accent through the accent prop — the button fill, the form panel, the sign and focus",
+                "outer spacing through className",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Without your own formAction the submission leads to the current page with ?question= in the address — wire an endpoint, a form service or a mailto for production.",
+                "One field on purpose: every extra input lowers the number of submissions; ask for the email in your reply.",
+                "Questions from the form are a ready list of candidates for this very accordion: answer once, extend the list.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Faq013\n  title=\"Asked before starting\"\n  formTitle=\"Didn't find an answer? Ask your own question\"\n  formAction=\"/api/ask\"\n  items={[{ question: \"Do I need to code?\", answer: \"No, the AI agent installs the blocks.\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Asked before starting"
+              },
+              "formTitle": {
+                "label": "Form heading",
+                "default": "Didn't find an answer? Ask your own question"
+              },
+              "buttonLabel": {
+                "label": "Button",
+                "default": "Send"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Asked before starting",
+                "formTitle": "Didn't find an answer? Ask your own question",
+                "placeholder": "For example: will the catalogue suit an online store?",
+                "buttonLabel": "Send",
+                "formHint": "The question goes to the catalogue team. We reply by email within one working day.",
+                "items": [
+                  {
+                    "question": "How fast does the agent assemble a page from blocks?",
+                    "answer": "A section installs with one command, and a page of five or six sections comes together in a single session with the agent — most of the time goes to your content, not the layout."
+                  },
+                  {
+                    "question": "Do I need to know how to code?",
+                    "answer": "No. Pick blocks in the catalogue and hand the instructions to the agent. The code arrives in the project ready-made; editing it by hand is optional."
+                  },
+                  {
+                    "question": "What happens if I ask the agent to \"make something similar\" without the catalogue?",
+                    "answer": "The agent generates the section from scratch and the result differs every time: spacing drifts, the mobile layout breaks. The catalogue instruction installs a proven file — the outcome is predictable."
+                  },
+                  {
+                    "question": "Are the blocks compatible with each other?",
+                    "answer": "Yes, each lives in its own styles and does not affect its neighbours. Any catalogue sections can share one page in any order."
+                  }
+                ]
+              }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-faq-013-*. A server component; native <details> hold the disclosure. The form below is a plain <form method=\"get\"> with one text field and a filled button: the block has no handler on purpose — the receiving address comes from the formAction prop. The form stands after the list, not before it: first the visitor looks for the answer, and only having read through — asks. The form's warm panel is built with color-mix from the accent."
+          }
+        }
+      }
+    },
+    {
+      "name": "faq-014",
+      "type": "registry:block",
+      "title": "Мини-вопросы для лендинга",
+      "description": "Компактный мини-FAQ для конца лендинга: три главных вопроса узкой колонкой и ссылка «все вопросы» на полную страницу.",
+      "categories": ["faq"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "faq-014/faq-014.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/faq-014.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-faq-014-*. Серверный компонент, раскрытие держат нативные <details>. Компактность намеренная: колонка 40rem, уменьшенные отступы и три вопроса — перед призывом к действию человек снимает последние сомнения, а не читает справочник. Всё остальное уводит акцентная ссылка со стрелкой из псевдоэлемента на полную страницу вопросов. Раскладка считается от собственной ширины блока.",
+      "meta": {
+        "tags": ["faq", "compact", "landing", "details", "no-js"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Faq014",
+          "usage": "<Faq014\n  title=\"Остались вопросы?\"\n  linkLabel=\"Все вопросы и ответы\"\n  linkHref=\"/faq\"\n  items={[{ question: \"Это бесплатно?\", answer: \"Да, открытая часть бесплатна.\" }]}\n/>",
+          "summary": "Компактная секция из трёх вопросов для конца лендинга: узкая колонка, тонкие разделители, под списком акцентная ссылка на полную страницу вопросов. Раскрытие — нативные details, клиентского JS нет. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-faq-014-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
+            "три-четыре вопроса как потолок: блок снимает последние сомнения перед CTA, а не заменяет страницу вопросов",
+            "узкую колонку и уменьшенные отступы — мини-FAQ не должен спорить по весу с соседними секциями лендинга",
+            "ссылку «все вопросы» под списком: длинный хвост вопросов живёт на отдельной странице, а не здесь",
+            "стрелку ссылки из псевдоэлемента — без иконочной библиотеки",
+            "нативные details вместо кнопок с состоянием: поиск по странице и работа до гидратации достаются даром",
+            "видимое кольцо фокуса на summary и ссылке: всё обязано работать с клавиатуры",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "массив items — три главных вопроса с короткими ответами",
+            "title — заголовок секции",
+            "linkLabel и linkHref — подпись и адрес ссылки на полную страницу",
+            "акцент через проп accent — знак, ссылка и фокус",
+            "внешние отступы через className",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Ответы держите в одно-два предложения: длинный текст в мини-формате читается хуже, чем на полной странице.",
+            "Ставьте блок перед финальным CTA лендинга — он написан именно под это место.",
+            "Если полной страницы вопросов нет, поставьте в linkHref якорь на подробную секцию или уберите ссылку из разметки.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Остались вопросы?",
+            "maxLength": 32
+          },
+          {
+            "prop": "linkLabel",
+            "label": "Текст ссылки",
+            "type": "text",
+            "default": "Все вопросы и ответы",
+            "maxLength": 28
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["title", "linkLabel", "accent", "background"],
+        "i18n": {
+          "en": {
+            "title": "Mini FAQ",
+            "description": "A compact mini-FAQ for the end of a landing page: three key questions in a narrow column and an \"all questions\" link to the full page.",
+            "ai": {
+              "summary": "A compact three-question section for the end of a landing page: a narrow column, thin dividers, and an accent link to the full questions page under the list. Disclosure is native details, no client JS. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-faq-014-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "three or four questions as the ceiling: the block removes the last doubts before the CTA, it does not replace a questions page",
+                "the narrow column and the reduced spacing — a mini-FAQ must not compete in weight with the neighbouring landing sections",
+                "the \"all questions\" link under the list: the long tail of questions lives on a separate page, not here",
+                "the link arrow built from a pseudo-element — no icon library",
+                "native details instead of stateful buttons: find-on-page and pre-hydration behaviour come for free",
+                "the visible focus ring on the summary and the link: everything has to work from the keyboard",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the items array — the three key questions with short answers",
+                "title — the section heading",
+                "linkLabel and linkHref — the label and address of the full-page link",
+                "the accent through the accent prop — the sign, the link and focus",
+                "outer spacing through className",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Keep the answers to one or two sentences: long text reads worse in the mini format than on a full page.",
+                "Place the block right before the landing page's final CTA — it is written for exactly that spot.",
+                "If there is no full questions page, point linkHref at an anchor of a detailed section or remove the link from the markup.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Faq014\n  title=\"Still have questions?\"\n  linkLabel=\"All questions and answers\"\n  linkHref=\"/faq\"\n  items={[{ question: \"Is it free?\", answer: \"Yes, the open part is free.\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Still have questions?"
+              },
+              "linkLabel": {
+                "label": "Link text",
+                "default": "All questions and answers"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Still have questions?",
+                "linkLabel": "All questions and answers",
+                "items": [
+                  {
+                    "question": "Is it free?",
+                    "answer": "Yes, the open part of the catalogue is free, commercial projects included. Paid sets will be marked separately."
+                  },
+                  {
+                    "question": "Do I need to know how to code?",
+                    "answer": "No: pick a block, copy the AI instruction — the agent installs the component into the project itself."
+                  },
+                  {
+                    "question": "What do I get after installation?",
+                    "answer": "One dependency-free file in your project. It is yours: change the content and colours, deploy anywhere."
+                  }
+                ]
+              }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-faq-014-*. A server component; native <details> hold the disclosure. The compactness is deliberate: a 40rem column, reduced spacing and three questions — before the call to action a visitor sheds the last doubts rather than reading a handbook. Everything else is carried away by the accent link with a pseudo-element arrow to the full questions page. The layout follows the block's own width."
+          }
+        }
+      }
+    },
+    {
+      "name": "faq-015",
+      "type": "registry:block",
+      "title": "Ответы со скриншотами",
+      "description": "Вопросы, на которые проще показать: внутри раскрытого ответа свёрстан слот под скриншот — заглушка с градиентной рамкой и подписью, готовая к замене на img.",
+      "categories": ["faq"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "faq-015/faq-015.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/faq-015.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-faq-015-*. Серверный компонент, раскрытие держат нативные <details>. Слот скриншота — <figure> c aspect-ratio 16/9, пунктирной рамкой и мягким градиентом из тинтов акцента через color-mix: место под иллюстрацию видно сразу, а пропорции и подпись уже свёрстаны — при замене заглушки настоящим <img> вёрстка не прыгнет. Вопрос без imageLabel рендерится без слота, поэтому текстовые и иллюстрированные ответы живут в одном списке.",
+      "meta": {
+        "tags": ["faq", "screenshots", "media", "details", "no-js"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Faq015",
+          "usage": "<Faq015\n  title=\"Вопросы, на которые проще показать\"\n  items={[{ question: \"Где кнопка Copy for AI?\", answer: \"В правом верхнем углу карточки.\", imageLabel: \"Скриншот: карточка блока\" }]}\n/>",
+          "summary": "Секция вопросов, где часть ответов иллюстрируется: внутри раскрытого details после текста лежит слот под скриншот — заглушка 16:9 с градиентной рамкой и подписью. Слот заменяется настоящим img без сдвига вёрстки. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-faq-015-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
+            "aspect-ratio 16/9 у слота: при замене заглушки настоящим изображением вёрстка не должна прыгнуть",
+            "порядок «текст, потом картинка»: ответ обязан работать и без иллюстрации — скриншот уточняет, а не заменяет",
+            "слоты только у вопросов с imageLabel — пустая рамка без подписи выглядит как сломанная загрузка",
+            "градиент и пунктир заглушки из тинтов акцента через color-mix, а не из сплошных цветов",
+            "подпись слота как figcaption внутри figure: при замене на img она становится честной подписью иллюстрации",
+            "нативные details вместо кнопок с состоянием: поиск по странице и работа до гидратации достаются даром",
+            "видимое кольцо фокуса на summary: раскрытие обязано работать с клавиатуры",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "массив items — вопросы, ответы и подписи imageLabel (пусто — без слота)",
+            "тексты eyebrow и title",
+            "замена заглушек настоящими скриншотами: вместо figcaption положите в figure тег img с alt",
+            "акцент через проп accent — рамка и градиент слотов, знак и фокус",
+            "внешние отступы через className",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Заглушка — временное состояние: до продакшена замените слоты настоящими скриншотами или уберите imageLabel у вопросов без них.",
+            "Кладите изображению loading=\"lazy\": ответы свёрнуты, и грузить скрытые скриншоты сразу незачем.",
+            "Если скриншоты не 16:9, поменяйте aspect-ratio слота под их реальную пропорцию заранее.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Вопросы, на которые проще показать",
+            "maxLength": 44
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Наглядно",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "i18n": {
+          "en": {
+            "title": "FAQ with Screenshot Slots",
+            "description": "Questions that are easier shown: inside an opened answer sits a screenshot slot — a placeholder with a gradient frame and a caption, ready to be swapped for an img.",
+            "ai": {
+              "summary": "A FAQ section where some answers are illustrated: after the text inside an opened details lies a screenshot slot — a 16:9 placeholder with a gradient frame and a caption. The slot swaps for a real img with no layout shift. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-faq-015-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
+                "the 16/9 aspect-ratio of the slot: when the placeholder is replaced with a real image, the layout must not jump",
+                "the \"text first, then picture\" order: the answer has to work without the illustration — a screenshot clarifies, it does not replace",
+                "slots only on questions with imageLabel — an empty frame without a caption looks like a broken load",
+                "the placeholder's gradient and dashes made from accent tints via color-mix, not from solid colours",
+                "the slot caption as a figcaption inside the figure: after the swap to img it becomes an honest illustration caption",
+                "native details instead of stateful buttons: find-on-page and pre-hydration behaviour come for free",
+                "the visible focus ring on summary: opening has to work from the keyboard",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the items array — questions, answers and the imageLabel captions (empty means no slot)",
+                "the eyebrow and title copy",
+                "replacing the placeholders with real screenshots: put an img with alt into the figure instead of the figcaption",
+                "the accent through the accent prop — the slot frame and gradient, the sign and focus",
+                "outer spacing through className",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The placeholder is a temporary state: before production, swap the slots for real screenshots or drop imageLabel on questions without them.",
+                "Give the image loading=\"lazy\": the answers are collapsed, there is no point loading hidden screenshots upfront.",
+                "If your screenshots are not 16:9, change the slot's aspect-ratio to their real proportion in advance.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Faq015\n  title=\"Questions that are easier shown\"\n  items={[{ question: \"Where is the Copy for AI button?\", answer: \"In the top right corner of the card.\", imageLabel: \"Screenshot: the block card\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Questions that are easier shown"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Visually"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Visually",
+                "title": "Questions that are easier shown",
+                "items": [
+                  {
+                    "question": "Where is the Copy for AI button on a block card?",
+                    "answer": "In the top right corner of the card and on the block page next to the preview. Pressing it puts a ready agent instruction on the clipboard.",
+                    "imageLabel": "Screenshot: block card with the Copy for AI button"
+                  },
+                  {
+                    "question": "What does the preview look like on the dark theme?",
+                    "answer": "The surface switcher sits right above the preview: a block can be checked on the light and the dark theme before installing — the palette switches by itself.",
+                    "imageLabel": "Screenshot: block preview with the theme switcher"
+                  },
+                  {
+                    "question": "What appears in the project after installation?",
+                    "answer": "One file in components/vibeui with a clear name. Inside — the component, its styles and types; no other project files are touched.",
+                    "imageLabel": "Screenshot: project tree with the installed file"
+                  },
+                  {
+                    "question": "Can I see the source before installing?",
+                    "answer": "Yes, the Code tab on the block page shows the very file that arrives in the project: what you see is what you get."
+                  }
+                ]
+              }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-faq-015-*. A server component; native <details> hold the disclosure. The screenshot slot is a <figure> with a 16/9 aspect-ratio, a dashed frame and a soft gradient of accent tints via color-mix: the place for the illustration is visible at once, and the proportions and the caption are already laid out — swapping the placeholder for a real <img> causes no layout jump. A question without imageLabel renders without a slot, so text-only and illustrated answers live in one list."
+          }
+        }
+      }
     }
   ]
 }

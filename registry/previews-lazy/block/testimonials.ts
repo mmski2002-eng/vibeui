@@ -24,4 +24,31 @@ export const PREVIEWS = {
   "testimonials-006": dynamic(() =>
     import("@/registry/blocks/testimonials/testimonials-006/testimonials-006").then((module) => module.Testimonials006),
   ),
+  "testimonials-007": dynamic(() =>
+    import("@/registry/blocks/testimonials/testimonials-007/testimonials-007").then((module) => module.Testimonials007),
+  ),
+  "testimonials-008": dynamic(() =>
+    import("@/registry/blocks/testimonials/testimonials-008/testimonials-008").then((module) => module.Testimonials008),
+  ),
+  "testimonials-009": dynamic(() =>
+    import("@/registry/blocks/testimonials/testimonials-009/testimonials-009").then((module) => module.Testimonials009),
+  ),
+  "testimonials-010": dynamic(() =>
+    import("@/registry/blocks/testimonials/testimonials-010/testimonials-010").then((module) => module.Testimonials010),
+  ),
+  "testimonials-011": dynamic(() =>
+    import("@/registry/blocks/testimonials/testimonials-011/testimonials-011").then((module) => module.Testimonials011),
+  ),
+  "testimonials-012": dynamic(() =>
+    import("@/registry/blocks/testimonials/testimonials-012/testimonials-012").then((module) => module.Testimonials012),
+  ),
+  "testimonials-013": dynamic(() =>
+    import("@/registry/blocks/testimonials/testimonials-013/testimonials-013").then((module) => module.Testimonials013),
+  ),
+  "testimonials-014": dynamic(() =>
+    import("@/registry/blocks/testimonials/testimonials-014/testimonials-014").then((module) => module.Testimonials014),
+  ),
+  "testimonials-015": dynamic(() =>
+    import("@/registry/blocks/testimonials/testimonials-015/testimonials-015").then((module) => module.Testimonials015),
+  ),
 } satisfies PreviewMap

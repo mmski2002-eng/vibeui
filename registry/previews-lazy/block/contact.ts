@@ -24,4 +24,31 @@ export const PREVIEWS = {
   "contact-006": dynamic(() =>
     import("@/registry/blocks/contact/contact-006/contact-006").then((module) => module.Contact006),
   ),
+  "contact-007": dynamic(() =>
+    import("@/registry/blocks/contact/contact-007/contact-007").then((module) => module.Contact007),
+  ),
+  "contact-008": dynamic(() =>
+    import("@/registry/blocks/contact/contact-008/contact-008").then((module) => module.Contact008),
+  ),
+  "contact-009": dynamic(() =>
+    import("@/registry/blocks/contact/contact-009/contact-009").then((module) => module.Contact009),
+  ),
+  "contact-010": dynamic(() =>
+    import("@/registry/blocks/contact/contact-010/contact-010").then((module) => module.Contact010),
+  ),
+  "contact-011": dynamic(() =>
+    import("@/registry/blocks/contact/contact-011/contact-011").then((module) => module.Contact011),
+  ),
+  "contact-012": dynamic(() =>
+    import("@/registry/blocks/contact/contact-012/contact-012").then((module) => module.Contact012),
+  ),
+  "contact-013": dynamic(() =>
+    import("@/registry/blocks/contact/contact-013/contact-013").then((module) => module.Contact013),
+  ),
+  "contact-014": dynamic(() =>
+    import("@/registry/blocks/contact/contact-014/contact-014").then((module) => module.Contact014),
+  ),
+  "contact-015": dynamic(() =>
+    import("@/registry/blocks/contact/contact-015/contact-015").then((module) => module.Contact015),
+  ),
 } satisfies PreviewMap

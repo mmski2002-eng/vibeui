@@ -968,6 +968,1482 @@
         },
         "cardControls": ["title", "afterTitle", "accent", "background"]
       }
+    },
+    {
+      "name": "blog-007",
+      "type": "registry:block",
+      "title": "Карточки выпусков",
+      "description": "Сетка выпусков журнала с обложками из фирменного оранжевого градиента: вместо иллюстраций — крупный номер выпуска, поэтому публикация не ждёт дизайнера.",
+      "categories": ["blog"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "blog-007/blog-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/blog-007.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-007-*. Серверный: хуков нет. Обложка — линейный градиент из трёх остановок акцентной заливки, номер выпуска вдавлен полупрозрачной тёмной краской, ассетов и картинок нет вовсе. Ссылка заголовка растянута ::after на всю карточку, обводку держит :focus-within. Две и три колонки включаются container query.",
+      "meta": {
+        "tags": ["blog", "cards", "gradient", "issues", "grid"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Blog007",
+          "usage": "<Blog007 title=\"Выпуски о сборке сайтов\" posts={[{ issue: \"№14\", title: \"Блок без зависимостей\", excerpt: \"…\", date: \"20 марта 2026\", readingTime: \"7 мин\" }]} />",
+          "summary": "Сетка выпусков журнала: карточки с градиентной обложкой, номером выпуска, анонсом, датой и временем чтения. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-blog-007-* и не подменять её токенами вашей темы",
+            "обложку-градиент с номером выпуска: сериальность видна сразу, а публикация не ждёт иллюстратора",
+            "растянутую ссылку на заголовке — отдельная кнопка «читать» в списке ссылок бесполезна",
+            ":focus-within на карточке: при клавиатурном обходе обводка охватывает весь анонс",
+            "обрезку анонса тремя строками, иначе карточки в ряду разной высоты",
+            "тег <time> у даты — её понимают агрегаторы и поиск",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "массив posts: номер, заголовок, анонс, дата и время чтения",
+            "eyebrow и title над сеткой",
+            "issueLabel — подпись рядом с номером на обложке",
+            "акцент через проп accent: он перекрашивает и текст, и заливку обложек",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Ключом списка служит номер выпуска — два одинаковых issue сломают отрисовку.",
+            "Обложка декоративна и скрыта aria-hidden: номер продублирован текстом в строке метаданных.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Выпуски о сборке сайтов",
+            "maxLength": 40
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Журнал VibeUI",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Issue Cards",
+            "description": "A grid of journal issues with covers made of the brand orange gradient: a large issue number instead of illustrations, so publishing never waits for a designer.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-007-*. A server component: there are no hooks. The cover is a linear gradient of three accent stops, the issue number is pressed in with translucent dark ink, and there are no assets or images at all. The heading link is stretched over the whole card with ::after, and :focus-within holds the ring. Two and three columns are turned on by a container query.",
+            "ai": {
+              "summary": "A grid of journal issues: cards with a gradient cover, issue number, excerpt, date and reading time. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-blog-007-* palette — do not swap it for your theme tokens",
+                "the gradient cover with the issue number: seriality is visible at once, and publishing never waits for an illustrator",
+                "the stretched link on the heading — a separate «read more» is useless in a link list",
+                ":focus-within on the card: keyboard navigation should ring the whole announcement",
+                "clamping the excerpt to three lines, or cards in a row end up uneven",
+                "the <time> tag on the date — aggregators and search understand it",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the posts array: number, title, excerpt, date and reading time",
+                "eyebrow and title above the grid",
+                "issueLabel — the caption next to the number on the cover",
+                "the accent through the accent prop: it recolours both the text and the cover fill",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The list key is the issue number — two equal issues break rendering.",
+                "The cover is decorative and aria-hidden: the number is duplicated as text in the meta line.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Blog007 title=\"Issues on building sites\" posts={[{ issue: \"№14\", title: \"A block with zero dependencies\", excerpt: \"…\", date: \"20 March 2026\", readingTime: \"7 min\" }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Issues on building sites"
+              },
+              "eyebrow": {
+                "label": "Overline",
+                "default": "VibeUI journal"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "VibeUI journal",
+                "title": "Issues on building sites",
+                "issueLabel": "Issue",
+                "posts": [
+                  {
+                    "issue": "№12",
+                    "title": "Sections that assemble themselves",
+                    "excerpt": "How the catalogue hands the agent a ready file rather than a picture: palette, layout and instructions in one place.",
+                    "date": "21 February 2026",
+                    "readingTime": "6 min"
+                  },
+                  {
+                    "issue": "№13",
+                    "title": "One accent for the whole library",
+                    "excerpt": "Why the brand rests on a single orange and ten neutrals — and what that gives fifteen hundred blocks.",
+                    "date": "7 March 2026",
+                    "readingTime": "8 min"
+                  },
+                  {
+                    "issue": "№14",
+                    "title": "A block with zero dependencies",
+                    "excerpt": "What has to live in one file for a component to survive the move into any foreign project untouched.",
+                    "date": "20 March 2026",
+                    "readingTime": "7 min"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "eyebrow", "accent", "background"]
+      }
+    },
+    {
+      "name": "blog-008",
+      "type": "registry:block",
+      "title": "Главная и лента",
+      "description": "Главная журнала: слева крупный featured-материал на тёплой оранжевой плашке, справа плотная лента из четырёх строк — один текст получает всё внимание, остальные перечислены.",
+      "categories": ["blog"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "blog-008/blog-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/blog-008.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-008-*. Серверный: хуков нет. Featured-карточка лежит на тёплом тинте color-mix от акцента, лента справа — строки без обложек: строка стоит дешевле карточки и не спорит с главным материалом. Обе зоны кликаются растянутыми ссылками ::after, обводку держит :focus-within. Две колонки включает container query на 56rem, до этого лента стоит под карточкой.",
+      "meta": {
+        "tags": ["blog", "featured", "feed", "layout", "magazine"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Blog008",
+          "usage": "<Blog008 featured={{ topic: \"Практика\", title: \"…\", excerpt: \"…\", author: \"…\", date: \"…\", readingTime: \"9 мин\" }} items={[{ topic: \"Вёрстка\", title: \"…\", date: \"…\", readingTime: \"7 мин\" }]} />",
+          "summary": "Главная блога: один крупный анонс с автором и лента из четырёх компактных строк. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-blog-008-* и не подменять её токенами вашей темы",
+            "иерархию «один крупный плюс четыре строки»: раздать всем карточки — значит потерять главный материал",
+            "строки без обложек в ленте — строка стоит дешевле карточки и не спорит с featured",
+            "растянутые ссылки и :focus-within на карточке и строках",
+            "тёплый тинт featured-плашки через color-mix от акцента, а не отдельным цветом",
+            "тег <time> у дат — их понимают агрегаторы и поиск",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "объект featured: рубрика, заголовок, анонс, автор и метрики чтения",
+            "массив items — строки ленты",
+            "eyebrow и title над раскладкой",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Ключ строки ленты — заголовок: две статьи с одинаковым названием сломают отрисовку.",
+            "Число строк кодом не ограничено, но пятая делает колонку выше featured-карточки — иерархия расползается.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Главное за месяц",
+            "maxLength": 32
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Свежее",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Front Page Feed",
+            "description": "A journal front page: a large featured piece on a warm orange panel on the left, a dense four-row feed on the right — one text gets all the attention, the rest are listed.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-008-*. A server component: there are no hooks. The featured card sits on a warm color-mix tint of the accent, and the feed on the right is rows without covers: a row costs less than a card and does not compete with the lead piece. Both zones are clickable through stretched ::after links, and :focus-within holds the ring. Two columns are turned on by a container query at 56rem; below that the feed stacks under the card.",
+            "ai": {
+              "summary": "A blog front page: one large announcement with an author and a feed of four compact rows. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-blog-008-* palette — do not swap it for your theme tokens",
+                "the «one large plus four rows» hierarchy: giving everyone a card means losing the lead piece",
+                "rows without covers in the feed — a row costs less than a card and does not compete with the featured one",
+                "the stretched links and :focus-within on the card and the rows",
+                "the warm featured tint made with color-mix from the accent rather than a separate colour",
+                "the <time> tag on the dates — aggregators and search understand it",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the featured object: topic, heading, excerpt, author and reading metrics",
+                "the items array — the feed rows",
+                "eyebrow and title above the layout",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The feed row key is the title: two articles with the same name break rendering.",
+                "The row count is not limited in code, but a fifth row makes the column taller than the featured card — the hierarchy falls apart.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Blog008 featured={{ topic: \"Practice\", title: \"…\", excerpt: \"…\", author: \"…\", date: \"…\", readingTime: \"9 min\" }} items={[{ topic: \"CSS\", title: \"…\", date: \"…\", readingTime: \"7 min\" }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "This month's highlights"
+              },
+              "eyebrow": {
+                "label": "Overline",
+                "default": "Latest"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Latest",
+                "title": "This month's highlights",
+                "featured": {
+                  "topic": "Practice",
+                  "title": "A site in one evening: a marketer builds a landing page from ready blocks",
+                  "excerpt": "A step-by-step walkthrough with no editing tricks: picking sections in the catalogue, «Copy for AI», an agent install and three text tweaks. We count the hours and see where vibe-coding actually stumbles.",
+                  "author": "Vera Slavina",
+                  "date": "26 March 2026",
+                  "readingTime": "9 min"
+                },
+                "items": [
+                  {
+                    "topic": "CSS",
+                    "title": "Container queries: a block measures itself, not the window",
+                    "date": "20 March 2026",
+                    "readingTime": "7 min"
+                  },
+                  {
+                    "topic": "Working with AI",
+                    "title": "What the agent reads in metadata before installing",
+                    "date": "14 March 2026",
+                    "readingTime": "5 min"
+                  },
+                  {
+                    "topic": "Components",
+                    "title": "Why every block has its own palette, not theme tokens",
+                    "date": "7 March 2026",
+                    "readingTime": "6 min"
+                  },
+                  {
+                    "topic": "Product",
+                    "title": "A catalogue of fifteen hundred blocks with no database",
+                    "date": "28 February 2026",
+                    "readingTime": "8 min"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "eyebrow", "accent", "background"]
+      }
+    },
+    {
+      "name": "blog-009",
+      "type": "registry:block",
+      "title": "Карточка автора",
+      "description": "Карточка автора блога: аватар из инициалов, роль, биография и соцссылки слева, три последних статьи справа — доверие к автору проверяют его текстами.",
+      "categories": ["blog"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "blog-009/blog-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/blog-009.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-009-*. Серверный: хуков нет. Аватар — инициалы на тёплой оранжевой заливке color-mix, картинок и ассетов нет. Соцссылки — настоящие <a> пилюлями с видимым фокус-кольцом, список последних статей — отдельная колонка, которую container query уводит вправо на широком блоке.",
+      "meta": {
+        "tags": ["blog", "author", "profile", "bio", "links"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Blog009",
+          "usage": "<Blog009 name=\"Вера Славина\" role=\"Редактор VibeUI\" links={[{ label: \"Телеграм\", href: \"#\" }]} articles={[{ title: \"…\", date: \"…\", readingTime: \"6 мин\" }]} />",
+          "summary": "Карточка автора: инициалы-аватар, роль, биография, соцссылки и три последних статьи. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-blog-009-* и не подменять её токенами вашей темы",
+            "аватар из инициалов на тёплой заливке: карточка не ждёт фотографии и не тянет ассеты",
+            "список последних статей рядом с биографией — автору верят по текстам, а не по должности",
+            "фокус-кольца на соцссылках и ссылках статей: это настоящие <a>, а не декоративные пилюли",
+            "тег <time> у дат статей — их понимают агрегаторы и поиск",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "name, role и bio автора",
+            "массив links — соцссылки с подписями",
+            "массив articles и заголовок articlesTitle",
+            "eyebrow над карточкой",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Инициалы берутся из первых двух слов имени: у псевдонима в одно слово будет одна буква.",
+            "Ключи списков — подпись ссылки и заголовок статьи: дубли сломают отрисовку.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "name",
+            "label": "Имя автора",
+            "type": "text",
+            "default": "Вера Славина",
+            "maxLength": 32
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Автор",
+            "maxLength": 16
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Author Card",
+            "description": "A blog author card: an initials avatar, role, bio and social links on the left, the three latest articles on the right — trust in an author is checked by their texts.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-009-*. A server component: there are no hooks. The avatar is initials on a warm orange color-mix fill; there are no images or assets. The social links are real <a> pills with a visible focus ring, and the latest-articles list is a separate column that a container query moves to the right on a wide block.",
+            "ai": {
+              "summary": "An author card: initials avatar, role, bio, social links and the three latest articles. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-blog-009-* palette — do not swap it for your theme tokens",
+                "the initials avatar on a warm fill: the card does not wait for a photo and pulls no assets",
+                "the latest-articles list beside the bio — an author is trusted by texts, not by job title",
+                "the focus rings on social and article links: these are real <a> elements, not decorative pills",
+                "the <time> tag on article dates — aggregators and search understand it",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the author's name, role and bio",
+                "the links array — social links with captions",
+                "the articles array and the articlesTitle heading",
+                "the eyebrow above the card",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The initials come from the first two words of the name: a one-word pen name yields a single letter.",
+                "The list keys are the link caption and the article title: duplicates break rendering.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Blog009 name=\"Vera Slavina\" role=\"VibeUI editor\" links={[{ label: \"Telegram\", href: \"#\" }]} articles={[{ title: \"…\", date: \"…\", readingTime: \"6 min\" }]} />"
+            },
+            "controls": {
+              "name": {
+                "label": "Author name",
+                "default": "Vera Slavina"
+              },
+              "eyebrow": {
+                "label": "Overline",
+                "default": "Author"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Author",
+                "name": "Vera Slavina",
+                "role": "VibeUI editor. Writes about interfaces, components and building sites with AI",
+                "bio": "Spent seven years building product interfaces, now explains how to assemble them from ready blocks. Takes the catalogue's decisions apart from the inside: why a section is built this way and what is safe to touch.",
+                "links": [
+                  { "label": "Telegram" },
+                  { "label": "GitHub" },
+                  { "label": "RSS" }
+                ],
+                "articlesTitle": "Latest articles",
+                "articles": [
+                  {
+                    "title": "Hand the layout to the agent: how «Copy for AI» moves a block",
+                    "date": "26 March 2026",
+                    "readingTime": "9 min"
+                  },
+                  {
+                    "title": "Container queries: a block measures itself, not the window",
+                    "date": "20 March 2026",
+                    "readingTime": "7 min"
+                  },
+                  {
+                    "title": "One orange for fifteen hundred blocks",
+                    "date": "7 March 2026",
+                    "readingTime": "6 min"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": ["name", "eyebrow", "accent", "background"]
+      }
+    },
+    {
+      "name": "blog-010",
+      "type": "registry:block",
+      "title": "Липкое оглавление",
+      "description": "Макет статьи с липким оглавлением сбоку: активный пункт отмечен оранжевой полосой и цветом, на узком блоке колонка становится обычным списком перед текстом.",
+      "categories": ["blog"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "blog-010/blog-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/blog-010.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-010-*. Серверный: активный пункт задаётся пропом activeId и помечается aria-current — наблюдателя пересечений нет намеренно. Оглавление — nav с aria-label, пункты сидят на общей левой линии, активный перекрывает её оранжевой полосой. Липкость включает container query на 56rem, заголовки несут id и scroll-margin-top, ширина текста ограничена в ch.",
+      "meta": {
+        "tags": ["blog", "toc", "sticky", "article", "navigation"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Blog010",
+          "usage": "<Blog010 title=\"Путь блока\" activeId=\"copy\" sections={[{ id: \"copy\", heading: \"Что копирует Copy for AI\", paragraphs: [\"…\"] }]} />",
+          "summary": "Макет статьи с липким оглавлением: nav-колонка едет с прокруткой, активный пункт оранжевый, текст собран из тех же секций. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-blog-010-* и не подменять её токенами вашей темы",
+            "оглавление из тех же секций, что и текст: руками собранный список разойдётся с содержанием",
+            "aria-current у активного пункта — состояние не должно отличаться только цветом",
+            "липкость только на широком блоке: на телефоне липкая колонка съедает экран",
+            "scroll-margin-top у заголовков — без него якорь прилипает к кромке окна",
+            "ширину текста в ch, а не в пикселях: мера строки зависит от кегля, а не от разрешения",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "массив sections: идентификаторы, заголовки и абзацы",
+            "activeId — какой пункт подсвечен",
+            "eyebrow и title над макетом",
+            "tocTitle — заголовок оглавления",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Активный пункт статичен: живую подсветку по скроллу вешает вызывающий код через IntersectionObserver, обновляя activeId.",
+            "Идентификаторы секций приходят из данных — дубли столкнут якоря.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Путь блока: от каталога до вашего сайта",
+            "maxLength": 60
+          },
+          {
+            "prop": "tocTitle",
+            "label": "Заголовок оглавления",
+            "type": "text",
+            "default": "Содержание",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Sticky Contents",
+            "description": "An article layout with a sticky table of contents: the active item is marked with an orange bar and colour, and on a narrow block the column becomes a plain list before the text.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-010-*. A server component: the active item is set by the activeId prop and marked with aria-current — there is deliberately no intersection observer. The contents are a nav with aria-label, the items sit on a shared left line, and the active one overlays it with an orange bar. Stickiness is turned on by a container query at 56rem, the headings carry an id and scroll-margin-top, and the text measure is limited in ch.",
+            "ai": {
+              "summary": "An article layout with sticky contents: the nav column travels with the scroll, the active item is orange, and the text is built from the same sections. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-blog-010-* palette — do not swap it for your theme tokens",
+                "the contents built from the same sections as the text: a hand-written list drifts from the content",
+                "aria-current on the active item — state must not differ by colour alone",
+                "stickiness only on a wide block: a sticky column eats a phone screen",
+                "scroll-margin-top on the headings — without it the anchor sticks to the window edge",
+                "the text measure in ch, not pixels: line length should follow the font size, not the resolution",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the sections array: ids, headings and paragraphs",
+                "activeId — which item is highlighted",
+                "eyebrow and title above the layout",
+                "tocTitle — the contents heading",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The active item is static: live scroll highlighting is the caller's job via IntersectionObserver, updating activeId.",
+                "Section ids come from the data — duplicates collide the anchors.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Blog010 title=\"A block's journey\" activeId=\"copy\" sections={[{ id: \"copy\", heading: \"What Copy for AI copies\", paragraphs: [\"…\"] }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "A block's journey: from catalogue to your site"
+              },
+              "tocTitle": {
+                "label": "Contents heading",
+                "default": "Contents"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Guide",
+                "title": "A block's journey: from catalogue to your site",
+                "tocTitle": "Contents",
+                "activeId": "blog-010-copy",
+                "sections": [
+                  {
+                    "id": "blog-010-pick",
+                    "heading": "Picking a block in the catalogue",
+                    "paragraphs": [
+                      "The catalogue shows a live render, not a screenshot: the thumbnail is built from the same file that lands in your project. What you see in the preview is the future section of your site.",
+                      "Category filters narrow fifteen hundred blocks down to a couple of dozen. Taste decides the rest: every block carries its own idea, not ten variations of one grid."
+                    ]
+                  },
+                  {
+                    "id": "blog-010-copy",
+                    "heading": "What «Copy for AI» copies",
+                    "paragraphs": [
+                      "The button hands the agent an instruction rather than code: the block id, the install command, the dependency list and the rules — what to preserve and what may be adapted.",
+                      "The instruction is generated from the block's metadata. There are no hand-written descriptions, so it never drifts from the code."
+                    ]
+                  },
+                  {
+                    "id": "blog-010-install",
+                    "heading": "The agent installs it",
+                    "paragraphs": [
+                      "The agent runs the shadcn CLI command and the block file appears in the project as an ordinary component. No library runtime — from here on it is your code.",
+                      "The block's palette lives in its local variables, so a foreign theme cannot break it: the section looks the same as in the catalogue."
+                    ]
+                  },
+                  {
+                    "id": "blog-010-adapt",
+                    "heading": "Adapting to the brand",
+                    "paragraphs": [
+                      "Content changes through props, the accent colour through the accent prop. The instruction says to leave the layout and animations alone: they are the design the block was chosen for."
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "tocTitle", "accent", "background"]
+      }
+    },
+    {
+      "name": "blog-011",
+      "type": "registry:block",
+      "title": "Архив по месяцам",
+      "description": "Архив-таймлайн: статьи сгруппированы по месяцам вдоль вертикальной оси с оранжевыми точками — паузы и плотные месяцы видны без чтения дат.",
+      "categories": ["blog"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "blog-011/blog-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/blog-011.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-011-*. Серверный: хуков нет. Ось — левая граница списка, точка месяца сидит на ней псевдоэлементом и оторвана от линии обводкой цветом страницы. Группы — ol по месяцам, внутри ul статей. На широком блоке container query переносит дату и время чтения к правому краю строки.",
+      "meta": {
+        "tags": ["blog", "archive", "timeline", "months", "list"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Blog011",
+          "usage": "<Blog011 title=\"Журнал по месяцам\" groups={[{ month: \"Март 2026\", posts: [{ title: \"…\", date: \"26 марта\", readingTime: \"9 мин\" }] }]} />",
+          "summary": "Архив статей таймлайном: месяцы с оранжевыми точками на вертикальной оси, под каждым — список статей с датой и временем чтения. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-blog-011-* и не подменять её токенами вашей темы",
+            "ось с точками месяцев: ритм публикаций виден без чтения дат",
+            "обводку точки цветом страницы — без неё точка сливается с линией оси",
+            "вложенные списки ol и ul: месяцы упорядочены, статьи внутри — просто перечень",
+            "тег <time> у дат — их понимают агрегаторы и поиск",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "массив groups: месяц и статьи внутри",
+            "eyebrow и title над таймлайном",
+            "ссылки href у статей",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Обводка точки берёт цвет из --vibeui-blog-011-page: если блок стоит на нестандартном фоне без пропа background, задайте эту переменную цветом подложки.",
+            "Блок не сортирует месяцы и статьи — они выводятся в порядке массива.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Журнал по месяцам",
+            "maxLength": 32
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Архив",
+            "maxLength": 16
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Monthly Archive",
+            "description": "A timeline archive: articles grouped by month along a vertical axis with orange dots — pauses and busy months are visible without reading the dates.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-011-*. A server component: there are no hooks. The axis is the list's left border, and each month's dot sits on it as a pseudo-element, separated from the line by a ring in the page colour. The groups are an ol of months with a ul of articles inside. On a wide block a container query moves the date and reading time to the right edge of the row.",
+            "ai": {
+              "summary": "An article archive as a timeline: months with orange dots on a vertical axis, each followed by a list of articles with date and reading time. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-blog-011-* palette — do not swap it for your theme tokens",
+                "the axis with month dots: the publishing rhythm is visible without reading the dates",
+                "the page-coloured ring around the dot — without it the dot merges with the axis line",
+                "the nested ol and ul: months are ordered, the articles inside are a plain list",
+                "the <time> tag on the dates — aggregators and search understand it",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the groups array: the month and the articles inside",
+                "eyebrow and title above the timeline",
+                "the href links on the articles",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The dot ring takes its colour from --vibeui-blog-011-page: if the block stands on a non-standard background without the background prop, set that variable to the surface colour.",
+                "The block does not sort months or articles — they render in array order.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Blog011 title=\"The journal by month\" groups={[{ month: \"March 2026\", posts: [{ title: \"…\", date: \"26 March\", readingTime: \"9 min\" }] }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "The journal by month"
+              },
+              "eyebrow": {
+                "label": "Overline",
+                "default": "Archive"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Archive",
+                "title": "The journal by month",
+                "groups": [
+                  {
+                    "month": "March 2026",
+                    "posts": [
+                      {
+                        "title": "Hand the layout to the agent: how «Copy for AI» moves a block",
+                        "date": "26 March",
+                        "readingTime": "9 min"
+                      },
+                      {
+                        "title": "Container queries: a block measures itself, not the window",
+                        "date": "20 March",
+                        "readingTime": "7 min"
+                      },
+                      {
+                        "title": "One orange for fifteen hundred blocks",
+                        "date": "7 March",
+                        "readingTime": "6 min"
+                      }
+                    ]
+                  },
+                  {
+                    "month": "February 2026",
+                    "posts": [
+                      {
+                        "title": "A catalogue with no database: the registry as the source of truth",
+                        "date": "28 February",
+                        "readingTime": "8 min"
+                      },
+                      {
+                        "title": "Sections that assemble themselves",
+                        "date": "21 February",
+                        "readingTime": "6 min"
+                      }
+                    ]
+                  },
+                  {
+                    "month": "January 2026",
+                    "posts": [
+                      {
+                        "title": "Why a block needs its own palette",
+                        "date": "30 January",
+                        "readingTime": "5 min"
+                      },
+                      {
+                        "title": "A preview that does not lie: one file for the storefront and the install",
+                        "date": "16 January",
+                        "readingTime": "7 min"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "eyebrow", "accent", "background"]
+      }
+    },
+    {
+      "name": "blog-012",
+      "type": "registry:block",
+      "title": "Плитки рубрик",
+      "description": "Сетка рубрик блога плитками: имя темы, крупный оранжевый счётчик статей и строка о содержимом — честный ответ на вопрос, есть ли там что читать.",
+      "categories": ["blog"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "blog-012/blog-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/blog-012.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-012-*. Серверный: хуков нет. Счётчик набран крупно акцентом, подпись под числом отдаёт проп countLabel. Плитка кликается растянутой ссылкой ::after на имени рубрики, hover подкладывает тёплый тинт color-mix от акцента. Две и три колонки включаются container query.",
+      "meta": {
+        "tags": ["blog", "topics", "categories", "grid", "tiles"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Blog012",
+          "usage": "<Blog012 title=\"О чём пишет журнал\" topics={[{ name: \"Вёрстка\", count: \"14\", note: \"Раскладки и container queries\" }]} />",
+          "summary": "Сетка рубрик плитками: имя темы, крупный счётчик статей и описание в одну строку. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-blog-012-* и не подменять её токенами вашей темы",
+            "крупный счётчик: число статей — главный ответ рубрики, прятать его мелким кеглем нечестно",
+            "растянутую ссылку на имени рубрики и :focus-within на плитке",
+            "строку о содержимом: имя рубрики без расшифровки понятно только редакции",
+            "тёплый тинт на hover через color-mix от акцента, а не отдельным цветом",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "массив topics: имя, счётчик, описание и ссылка",
+            "countLabel — подпись под числом",
+            "eyebrow и title над сеткой",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Счётчик — строка, а не число: блок ничего не считает и покажет то, что передали.",
+            "Ключ плитки — имя рубрики: дубли сломают отрисовку.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "О чём пишет журнал",
+            "maxLength": 32
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Рубрики",
+            "maxLength": 16
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Topic Tiles",
+            "description": "A grid of blog topics as tiles: the topic name, a large orange article counter and one line on the contents — an honest answer to whether there is anything to read.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-012-*. A server component: there are no hooks. The counter is set large in the accent colour, and the caption under the number comes from the countLabel prop. The tile is clickable through a stretched ::after link on the topic name, and hover lays a warm color-mix tint of the accent underneath. Two and three columns are turned on by a container query.",
+            "ai": {
+              "summary": "A grid of topic tiles: the name, a large article counter and a one-line description. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-blog-012-* palette — do not swap it for your theme tokens",
+                "the large counter: the article count is the topic's main answer, hiding it in small type is dishonest",
+                "the stretched link on the topic name and :focus-within on the tile",
+                "the contents line: a topic name without explanation is clear only to the editors",
+                "the warm hover tint made with color-mix from the accent rather than a separate colour",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the topics array: name, counter, description and link",
+                "countLabel — the caption under the number",
+                "eyebrow and title above the grid",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The counter is a string, not a number: the block counts nothing and shows what it is given.",
+                "The tile key is the topic name: duplicates break rendering.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Blog012 title=\"What the journal writes about\" topics={[{ name: \"CSS\", count: \"14\", note: \"Layouts and container queries\" }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "What the journal writes about"
+              },
+              "eyebrow": {
+                "label": "Overline",
+                "default": "Topics"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Topics",
+                "title": "What the journal writes about",
+                "countLabel": "articles",
+                "topics": [
+                  {
+                    "name": "CSS",
+                    "count": "14",
+                    "note": "Layouts, container queries, typography and everything that holds the grid."
+                  },
+                  {
+                    "name": "Components",
+                    "count": "11",
+                    "note": "Catalogue block walkthroughs: why a section is built this way and not another."
+                  },
+                  {
+                    "name": "Working with AI",
+                    "count": "9",
+                    "note": "How the agent reads instructions and what to put in metadata so it stops inventing."
+                  },
+                  {
+                    "name": "Product",
+                    "count": "7",
+                    "note": "VibeUI's own decisions: the catalogue, previews and a block's journey to a foreign project."
+                  },
+                  {
+                    "name": "Accessibility",
+                    "count": "6",
+                    "note": "Focus, keyboard and screen readers — the things a screenshot cannot show."
+                  },
+                  {
+                    "name": "Process",
+                    "count": "5",
+                    "note": "How fifteen hundred blocks get built, checked and kept from falling apart."
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "eyebrow", "accent", "background"]
+      }
+    },
+    {
+      "name": "blog-013",
+      "type": "registry:block",
+      "title": "Шапка статьи",
+      "description": "Шапка поста: тег рубрики, крупный заголовок, лид и строка автора с датой и временем чтения; сверху — декоративная оранжевая полоса прогресса чтения.",
+      "categories": ["blog"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "blog-013/blog-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/blog-013.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-013-*. Серверный: полоса прогресса статичная и декоративная — ширину задаёт проп progress в процентах, живой прогресс требует скролл-слушателя и остаётся вызывающему коду. Корень — <header> с h1: блок рассчитан на верх страницы статьи. Аватар — инициалы на тёплой заливке, полоса скрыта aria-hidden.",
+      "meta": {
+        "tags": ["blog", "hero", "article", "header", "progress"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Blog013",
+          "usage": "<Blog013 topic=\"Работа с ИИ\" title=\"Отдайте вёрстку агенту\" author=\"Вера Славина\" readingTime=\"9 минут чтения\" progress={24} />",
+          "summary": "Шапка статьи: тег, заголовок h1, лид, автор с инициалами-аватаром, дата, время чтения и декоративная полоса прогресса сверху. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-blog-013-* и не подменять её токенами вашей темы",
+            "h1 в корне: это шапка страницы статьи, второй h1 на странице недопустим",
+            "тонкую полосу прогресса и её трек из полупрозрачного акцента — она обозначает жанр лонгрида, а не меряет скролл",
+            "время чтения в строке автора: это последний вопрос перед чтением, а не подвальная мелочь",
+            "аватар из инициалов — шапка не ждёт фотографии автора и не тянет ассеты",
+            "тег <time> у даты — её понимают агрегаторы и поиск",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "topic, title и lede",
+            "author, role, date и readingTime",
+            "progress — ширина полосы в процентах",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Полоса не двигается при прокрутке: чтобы сделать её живой, обновляйте проп progress из скролл-слушателя вызывающего кода.",
+            "Значение progress обрезается в границы 0–100 внутри блока.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Отдайте вёрстку агенту: как «Copy for AI» переносит блок в проект",
+            "maxLength": 80
+          },
+          {
+            "prop": "topic",
+            "label": "Рубрика",
+            "type": "text",
+            "default": "Работа с ИИ",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Article Hero",
+            "description": "A post hero: a topic tag, a large heading, a lede and an author line with date and reading time; on top — a decorative orange reading-progress bar.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-013-*. A server component: the progress bar is static and decorative — its width is set by the progress prop in percent, and live progress needs a scroll listener, which stays with the caller. The root is a <header> with an h1: the block is meant for the top of an article page. The avatar is initials on a warm fill, and the bar is hidden with aria-hidden.",
+            "ai": {
+              "summary": "An article hero: tag, h1 heading, lede, author with an initials avatar, date, reading time and a decorative progress bar on top. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-blog-013-* palette — do not swap it for your theme tokens",
+                "the h1 at the root: this is the article page header, a second h1 on the page is not allowed",
+                "the thin progress bar and its track of translucent accent — it signals the longread genre rather than measuring scroll",
+                "the reading time in the author line: it is the last question before reading, not a footer detail",
+                "the initials avatar — the hero does not wait for an author photo and pulls no assets",
+                "the <time> tag on the date — aggregators and search understand it",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "topic, title and lede",
+                "author, role, date and readingTime",
+                "progress — the bar width in percent",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The bar does not move on scroll: to make it live, update the progress prop from a scroll listener in the calling code.",
+                "The progress value is clamped to 0–100 inside the block.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Blog013 topic=\"Working with AI\" title=\"Hand the layout to the agent\" author=\"Vera Slavina\" readingTime=\"9 minutes read\" progress={24} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Hand the layout to the agent: how «Copy for AI» moves a block into a project"
+              },
+              "topic": {
+                "label": "Topic",
+                "default": "Working with AI"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "topic": "Working with AI",
+                "title": "Hand the layout to the agent: how «Copy for AI» moves a block into a project",
+                "lede": "The catalogue button hands the agent an instruction rather than code: what to install, what to preserve and what may change. We break down how it is generated and why the agent stops inventing extras.",
+                "author": "Vera Slavina",
+                "role": "VibeUI editor",
+                "date": "26 March 2026",
+                "readingTime": "9 minutes read",
+                "progress": 24
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "topic", "accent", "background"]
+      }
+    },
+    {
+      "name": "blog-014",
+      "type": "registry:block",
+      "title": "Читать дальше",
+      "description": "Блок «читайте дальше» горизонтальными строками: рубрика, заголовок, время чтения и стрелка у края — под дочитанной статьёй три строки занимают меньше экрана, чем ряд обложек.",
+      "categories": ["blog"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "blog-014/blog-014.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/blog-014.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-014-*. Серверный: хуков нет. Корень — <aside> с aria-label: это дополнение к статье, а не самостоятельный раздел. Строки кликаются растянутой ссылкой ::after, обводку держит :focus-within, стрелка уезжает вправо на hover и глушится prefers-reduced-motion. Ссылка на весь архив стоит в шапке блока.",
+      "meta": {
+        "tags": ["blog", "related", "next", "rows", "recirculation"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Blog014",
+          "usage": "<Blog014 title=\"Читать дальше\" items={[{ topic: \"Вёрстка\", title: \"…\", readingTime: \"7 мин\" }]} allLabel=\"Все статьи журнала\" />",
+          "summary": "Три горизонтальные строки «читать дальше» со стрелкой у правого края и ссылка на все статьи. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-blog-014-* и не подменять её токенами вашей темы",
+            "строки вместо карточек: под дочитанной статьёй вертикальное место дорого",
+            "<aside> с aria-label — это дополнение к статье, а не равный ей раздел",
+            "стрелку и её сдвиг на hover: строка обязана читаться как ссылка ещё до наведения",
+            "растянутую ссылку и :focus-within на строке — кликается и обводится вся строка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "массив items: рубрика, заголовок, время чтения и ссылка",
+            "title блока",
+            "allLabel и ссылку allHref",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Подбор статей блок не делает — показывает то, что передал вызывающий код.",
+            "Три строки — рабочий максимум: длинный список превращает блок в ещё одну ленту.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Читать дальше",
+            "maxLength": 28
+          },
+          {
+            "prop": "allLabel",
+            "label": "Ссылка на архив",
+            "type": "text",
+            "default": "Все статьи журнала",
+            "maxLength": 28
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Up Next",
+            "description": "An «up next» block as horizontal rows: topic, title, reading time and an arrow at the edge — under a finished article three rows take less screen than a row of covers.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-014-*. A server component: there are no hooks. The root is an <aside> with aria-label: this supplements the article, it is not a section in its own right. The rows are clickable through a stretched ::after link, :focus-within holds the ring, and the arrow slides right on hover and is muted by prefers-reduced-motion. The link to the whole archive sits in the block header.",
+            "ai": {
+              "summary": "Three horizontal «up next» rows with an arrow at the right edge and a link to all articles. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-blog-014-* palette — do not swap it for your theme tokens",
+                "rows instead of cards: vertical space under a finished article is expensive",
+                "the <aside> with aria-label — this supplements the article, it is not its equal",
+                "the arrow and its hover slide: the row has to read as a link before any hover",
+                "the stretched link and :focus-within on the row — the whole row is clickable and ringed",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the items array: topic, title, reading time and link",
+                "the block title",
+                "allLabel and the allHref link",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The block does not pick the articles — it renders whatever the caller passes.",
+                "Three rows is the working maximum: a long list turns the block into another feed.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Blog014 title=\"Up next\" items={[{ topic: \"CSS\", title: \"…\", readingTime: \"7 min\" }]} allLabel=\"All journal articles\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Up next"
+              },
+              "allLabel": {
+                "label": "Archive link",
+                "default": "All journal articles"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Up next",
+                "allLabel": "All journal articles",
+                "items": [
+                  {
+                    "topic": "CSS",
+                    "title": "Container queries: a block measures itself, not the window",
+                    "readingTime": "7 min"
+                  },
+                  {
+                    "topic": "Working with AI",
+                    "title": "What the agent reads in metadata before installing a block",
+                    "readingTime": "5 min"
+                  },
+                  {
+                    "topic": "Components",
+                    "title": "Why every block needs its own palette",
+                    "readingTime": "6 min"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "allLabel", "accent", "background"]
+      }
+    },
+    {
+      "name": "blog-015",
+      "type": "registry:block",
+      "title": "Дайджест недели",
+      "description": "Нумерованный дайджест: пять ссылок с комментарием и источником, номера рисует CSS-счётчик, снизу — плашка подписки с оранжевой кнопкой.",
+      "categories": ["blog"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "blog-015/blog-015.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/blog-015.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-015-*. Серверный: хуков нет. Номера ставит CSS-счётчик с decimal-leading-zero — порядок на экране нельзя рассинхронизировать с разметкой. Каждая запись — грид «номер плюс текст», номер тянется на три ряда. Плашка подписки — ссылка-кнопка с акцентной заливкой и почти чёрным текстом; формы и отправки в блоке нет намеренно.",
+      "meta": {
+        "tags": ["blog", "digest", "links", "newsletter", "list"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Blog015",
+          "usage": "<Blog015 title=\"Дайджест недели\" links={[{ title: \"…\", note: \"…\", source: \"Журнал VibeUI\" }]} subscribeLabel=\"Подписаться\" />",
+          "summary": "Дайджест: нумерованный список из пяти ссылок с комментариями и источником, снизу плашка подписки с кнопкой. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-blog-015-* и не подменять её токенами вашей темы",
+            "комментарий у каждой ссылки: ссылка без объяснения, зачем её открывать, в дайджесте не живёт",
+            "номера CSS-счётчиком — порядок нельзя рассинхронизировать с разметкой",
+            "табличные цифры и ведущий ноль в номерах: колонка номеров не пляшет",
+            "почти чёрный текст на акцентной кнопке — белый на оранжевом не проходит по контрасту",
+            "источник у каждой ссылки: дайджест без источников читается как реклама",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "массив links: заголовок, комментарий, источник и ссылка",
+            "eyebrow и title дайджеста",
+            "subscribeTitle, subscribeNote, subscribeLabel и subscribeHref",
+            "акцент через проп accent: он перекрашивает и номера, и кнопку",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Кнопка подписки — ссылка, а не форма: сбор почты остаётся вызывающему коду, для формы возьмите блок подписки на рассылку.",
+            "Ключ записи — заголовок: дубли сломают отрисовку.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Дайджест недели",
+            "maxLength": 28
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Выпуск №21",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Weekly Digest",
+            "description": "A numbered digest: five links with a comment and a source, numbers drawn by a CSS counter, and a subscribe strip with an orange button at the bottom.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-015-*. A server component: there are no hooks. The numbers are set by a CSS counter with decimal-leading-zero — the on-screen order cannot drift from the markup. Every entry is a «number plus text» grid with the number spanning three rows. The subscribe strip is a button-styled link with the accent fill and near-black text; there is deliberately no form or submission in the block.",
+            "ai": {
+              "summary": "A digest: a numbered list of five links with comments and a source, plus a subscribe strip with a button below. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-blog-015-* palette — do not swap it for your theme tokens",
+                "the comment on every link: a link without a reason to open it does not belong in a digest",
+                "the CSS-counter numbers — the order cannot drift from the markup",
+                "the tabular digits and leading zero in the numbers: the number column does not dance",
+                "the near-black text on the accent button — white on orange fails the contrast check",
+                "the source on every link: a digest without sources reads as advertising",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the links array: title, comment, source and href",
+                "the digest's eyebrow and title",
+                "subscribeTitle, subscribeNote, subscribeLabel and subscribeHref",
+                "the accent through the accent prop: it recolours both the numbers and the button",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The subscribe button is a link, not a form: collecting emails stays with the caller — take the newsletter block for a form.",
+                "The entry key is the title: duplicates break rendering.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Blog015 title=\"Weekly digest\" links={[{ title: \"…\", note: \"…\", source: \"VibeUI journal\" }]} subscribeLabel=\"Subscribe\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Weekly digest"
+              },
+              "eyebrow": {
+                "label": "Overline",
+                "default": "Issue №21"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Issue №21",
+                "title": "Weekly digest",
+                "subscribeTitle": "The digest by email every Friday",
+                "subscribeNote": "Five links with comments: what to read and why. No filler, no repeats.",
+                "subscribeLabel": "Subscribe",
+                "links": [
+                  {
+                    "title": "Hand the layout to the agent",
+                    "note": "The week's lead text: how «Copy for AI» turns a chosen block into a ready section of someone else's project.",
+                    "source": "VibeUI journal"
+                  },
+                  {
+                    "title": "Container queries in the field",
+                    "note": "A block measures its own width, not the window — and the catalogue preview stops lying about mobile layout.",
+                    "source": "VibeUI journal"
+                  },
+                  {
+                    "title": "One orange for the whole library",
+                    "note": "Why the brand rests on a single accent and how the neutrals keep fifteen hundred blocks from arguing.",
+                    "source": "VibeUI journal"
+                  },
+                  {
+                    "title": "A catalogue with no database",
+                    "note": "The registry as the single source of truth: the data lives in code, and that is a decision, not debt.",
+                    "source": "VibeUI journal"
+                  },
+                  {
+                    "title": "Focus you can actually see",
+                    "note": "We test the blocks with a keyboard: where the focus ring is honest and where a section cannot be crossed without a mouse.",
+                    "source": "VibeUI journal"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "eyebrow", "accent", "background"]
+      }
     }
   ]
 }

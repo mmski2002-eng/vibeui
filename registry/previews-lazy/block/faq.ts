@@ -24,4 +24,31 @@ export const PREVIEWS = {
   "faq-006": dynamic(() =>
     import("@/registry/blocks/faq/faq-006/faq-006").then((module) => module.Faq006),
   ),
+  "faq-007": dynamic(() =>
+    import("@/registry/blocks/faq/faq-007/faq-007").then((module) => module.Faq007),
+  ),
+  "faq-008": dynamic(() =>
+    import("@/registry/blocks/faq/faq-008/faq-008").then((module) => module.Faq008),
+  ),
+  "faq-009": dynamic(() =>
+    import("@/registry/blocks/faq/faq-009/faq-009").then((module) => module.Faq009),
+  ),
+  "faq-010": dynamic(() =>
+    import("@/registry/blocks/faq/faq-010/faq-010").then((module) => module.Faq010),
+  ),
+  "faq-011": dynamic(() =>
+    import("@/registry/blocks/faq/faq-011/faq-011").then((module) => module.Faq011),
+  ),
+  "faq-012": dynamic(() =>
+    import("@/registry/blocks/faq/faq-012/faq-012").then((module) => module.Faq012),
+  ),
+  "faq-013": dynamic(() =>
+    import("@/registry/blocks/faq/faq-013/faq-013").then((module) => module.Faq013),
+  ),
+  "faq-014": dynamic(() =>
+    import("@/registry/blocks/faq/faq-014/faq-014").then((module) => module.Faq014),
+  ),
+  "faq-015": dynamic(() =>
+    import("@/registry/blocks/faq/faq-015/faq-015").then((module) => module.Faq015),
+  ),
 } satisfies PreviewMap

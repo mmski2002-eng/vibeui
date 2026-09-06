@@ -1077,6 +1077,1504 @@
         },
         "cardControls": ["title", "phoneLabel", "accent", "background"]
       }
+    },
+    {
+      "name": "contact-007",
+      "type": "registry:block",
+      "title": "Каналы связи",
+      "description": "Три канала связи равными карточками: у каждого назначение, честное время ответа плашкой и одно действие оранжевой ссылкой.",
+      "categories": ["contact"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "contact-007/contact-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/contact-007.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contact-007-*. Серверный: хуков нет. Иконки — inline-SVG внутри файла, пакетов иконок не тянут. Время ответа вынесено плашкой с точкой-маркером, действие — настоящая ссылка: mailto:, tel: или якорь чата. Сетка встаёт в три колонки по container query.",
+      "meta": {
+        "tags": ["contact", "channels", "chat", "email", "phone"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Contact007",
+          "usage": "<Contact007 items={[{ label: \"Чат\", description: \"Быстрые вопросы по установке.\", reply: \"Отвечаем за 10 минут\", linkLabel: \"Написать в чат\", href: \"#chat\", icon: \"chat\" }]} />",
+          "summary": "Три карточки каналов: чат, почта и телефон — у каждого назначение, время ответа и одно действие. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-contact-007-* и не подменять её токенами вашей темы",
+            "время ответа отдельной плашкой: именно оно решает, каким каналом воспользоваться",
+            "одно действие на карточку — два равных линка заставляют выбирать дважды",
+            "настоящие ссылки mailto: и tel: — на телефоне это одно касание вместо перенабора",
+            "inline-SVG иконки внутри файла: пакет иконок ради трёх картинок — лишняя зависимость",
+            "равный вес карточек: выпяченный канал перегружает свою очередь обращений",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "массив items — каналы, их описания, время ответа и ссылки",
+            "icon у канала — chat, mail или phone",
+            "title, description и eyebrow",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Плашка времени ответа — публичное обещание: не ставьте цифру, которую не держите.",
+            "Ключ списка — label канала: два канала с одинаковым названием сломают отрисовку.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Выберите канал — мы уже на месте",
+            "maxLength": 40
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Контакты",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "Three contact channels as equal cards: each carries its purpose, an honest reply-time badge and a single action as an orange link.",
+            "ai": {
+              "summary": "Three channel cards: chat, email and phone — each with a purpose, a reply time and one action. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-contact-007-* palette — do not swap it for your theme tokens",
+                "the reply time as a separate badge: it is what decides which channel to use",
+                "one action per card — two equal links force people to choose twice",
+                "real mailto: and tel: links — on a phone that is one tap instead of retyping",
+                "the inline SVG icons inside the file: an icon package for three pictures is a needless dependency",
+                "the equal weight of the cards: an inflated channel overloads its own queue",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the items array — the channels, their descriptions, reply times and links",
+                "the icon per channel — chat, mail or phone",
+                "title, description and eyebrow",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The reply-time badge is a public promise: do not publish a number you cannot hold.",
+                "The list key is the channel label: two channels with the same name break rendering.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Contact007 items={[{ label: \"Chat\", description: \"Quick setup questions.\", reply: \"Reply within 10 minutes\", linkLabel: \"Open the chat\", href: \"#chat\", icon: \"chat\" }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Pick a channel — we are already here"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Contacts"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Contact Channels",
+            "preview": {
+              "props": {
+                "eyebrow": "Contacts",
+                "title": "Pick a channel — we are already here",
+                "description": "Each channel has its own reply time. The badge under the name is honest: we hold these numbers rather than promise them.",
+                "items": [
+                  {
+                    "label": "Chat",
+                    "description": "Quick questions: installing a block, a promo code, catalog access. A real person answers, not a bot.",
+                    "reply": "Reply within 10 minutes",
+                    "linkLabel": "Open the chat",
+                    "href": "#chat",
+                    "icon": "chat"
+                  },
+                  {
+                    "label": "Email",
+                    "description": "Detailed questions: registry integration, invoices, partnership. Screenshots and links speed up the answer.",
+                    "reply": "Reply within 4 hours",
+                    "linkLabel": "hello@vibeui.ru",
+                    "href": "mailto:hello@vibeui.ru",
+                    "icon": "mail"
+                  },
+                  {
+                    "label": "Phone",
+                    "description": "When it is urgent: the build will not ship and the release is today. Straight talk, no scripts.",
+                    "reply": "Mon–Fri, 10:00–19:00",
+                    "linkLabel": "+7 495 120-45-90",
+                    "href": "tel:+74951204590",
+                    "icon": "phone"
+                  }
+                ]
+              }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-contact-007-*. Server-side: no hooks. The icons are inline SVG inside the file and pull in no icon packages. The reply time sits in a badge with a dot marker, and the action is a real link: mailto:, tel: or a chat anchor. The grid goes into three columns through a container query."
+          }
+        },
+        "cardControls": ["title", "eyebrow", "accent", "background"]
+      }
+    },
+    {
+      "name": "contact-008",
+      "type": "registry:block",
+      "title": "Форма с темой обращения",
+      "description": "Центрированная форма, где тема обращения — первый и главный элемент: select направляет письмо нужной команде, ниже — поля, согласие и кнопка.",
+      "categories": ["contact"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "contact-008/contact-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/contact-008.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contact-008-*. Серверный: валидация нативная, ошибки показываются по :user-invalid и связаны с полями через aria-describedby, текст ошибки всегда присутствует в разметке. Select стилизован через appearance:none, стрелку рисует псевдоэлемент обёртки — сам список остаётся нативным. Имя и почта встают парой по container query.",
+      "meta": {
+        "tags": ["contact", "form", "select", "consent"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Contact008",
+          "usage": "<Contact008 topics={[\"Вопрос по установке блока\", \"Лицензия и оплата\"]} submitLabel=\"Отправить\" />",
+          "summary": "Центрированная форма связи: select темы первым полем, имя, почта, сообщение, чекбокс согласия и кнопка. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-contact-008-* и не подменять её токенами вашей темы",
+            "тему обращения первым полем: без неё письмо попадает не в тот отдел и лежит два дня",
+            "нативный select — кастомный дропдаун ломает клавиатуру и мобильные пикеры",
+            ":user-invalid вместо :invalid — пустое поле не должно краснеть до первого ввода",
+            "текст ошибки в разметке всегда: появившийся из ниоткуда узел скринридер не найдёт",
+            "чекбокс согласия перед кнопкой, а не мелким шрифтом после отправки",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "массив topics — темы обращения",
+            "title, description и eyebrow",
+            "submitLabel, consentLabel и responseNote",
+            "fieldText — подписи полей, плейсхолдеры и тексты ошибок",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Отправку, защиту от ботов и ответ пользователю реализует вызывающий код: блок несёт только разметку и проверку в браузере.",
+            "minLength у сообщения считает символы, а не слова: строка из двадцати пробелов пройдёт проверку.",
+            "Идентификаторы полей фиксированы: две такие формы на странице дадут дублирующиеся id.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Напишите нам",
+            "maxLength": 40
+          },
+          {
+            "prop": "submitLabel",
+            "label": "Подпись кнопки",
+            "type": "text",
+            "default": "Отправить",
+            "maxLength": 28
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A centered form where the topic is the first and loudest element: the select routes the message to the right team, with fields, consent and a button below.",
+            "ai": {
+              "summary": "A centered contact form: a topic select first, then name, email, message, a consent checkbox and a button. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-contact-008-* palette — do not swap it for your theme tokens",
+                "the topic as the first field: without it the message lands in the wrong inbox and sits for two days",
+                "the native select — a custom dropdown breaks the keyboard and mobile pickers",
+                ":user-invalid instead of :invalid — an untouched field must not turn red",
+                "the error text always present in the markup: a node appearing from nowhere is not found by a screen reader",
+                "the consent checkbox before the button, not in fine print after submission",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the topics array — the request subjects",
+                "title, description and eyebrow",
+                "submitLabel, consentLabel and responseNote",
+                "fieldText — the field labels, placeholders and error texts",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Submission, bot protection and the confirmation belong to the caller: the block carries markup and in-browser validation only.",
+                "minLength counts characters, not words: twenty spaces pass the check.",
+                "Field ids are fixed: two of these forms on one page produce duplicate ids.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Contact008 topics={[\"Installing a block\", \"Licence and billing\"]} submitLabel=\"Send\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Write to us"
+              },
+              "submitLabel": {
+                "label": "Button caption",
+                "default": "Send"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Topic Contact Form",
+            "preview": {
+              "props": {
+                "eyebrow": "Get in touch",
+                "title": "Write to us",
+                "description": "Pick a topic — the message goes straight to whoever owns it, with no forwarding between departments.",
+                "topics": [
+                  "Installing a block",
+                  "Licence and billing",
+                  "Preview is broken",
+                  "Partnership",
+                  "Something else"
+                ],
+                "submitLabel": "Send",
+                "consentLabel": "I agree to my personal data being processed to answer this message.",
+                "responseNote": "We answer within one business day. The topic decides who gets the email.",
+                "fieldText": {
+                  "topic": "Topic",
+                  "name": "How should we address you",
+                  "namePlaceholder": "Name",
+                  "nameError": "Write your name — then the reply is addressed to a person.",
+                  "email": "Email",
+                  "emailPlaceholder": "you@company.com",
+                  "emailError": "Check the address: it needs an @ and a domain.",
+                  "message": "Message",
+                  "messagePlaceholder": "We are assembling a landing page from VibeUI blocks — a question about adapting the palette to our brand…",
+                  "messageError": "A couple of sentences is enough: this text is still too short."
+                }
+              }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-contact-008-*. Server-side: the validation is native, the errors are shown through :user-invalid and tied to the fields with aria-describedby, and the error text is always present in the markup. The select is styled with appearance:none while the arrow is drawn by the wrapper's pseudo-element — the list itself stays native. The name and email pair up through a container query."
+          }
+        },
+        "cardControls": ["title", "submitLabel", "accent", "background"]
+      }
+    },
+    {
+      "name": "contact-009",
+      "type": "registry:block",
+      "title": "Офисы и часовые пояса",
+      "description": "Карточки городов с локальным временем крупными табличными цифрами: часовой пояс подписан рядом, адрес — текстом, время статично из данных.",
+      "categories": ["contact"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "contact-009/contact-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/contact-009.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contact-009-*. Серверный: хуков нет и времени он не считает — время приходит пропсами статикой, поэтому подпись под сеткой прямо говорит, что это ориентир по поясам, а не живые часы. Цифры набраны tabular-nums, чтобы карточки не прыгали. Адрес размечен элементом address. Сетка 1→2→3 колонки по container query.",
+      "meta": {
+        "tags": ["contact", "offices", "timezones", "locations"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Contact009",
+          "usage": "<Contact009 offices={[{ city: \"Москва\", role: \"Штаб-квартира\", time: \"14:05\", zone: \"UTC+3\", address: \"Большая Дмитровка, 14\" }]} />",
+          "summary": "Карточки офисов: город, роль, локальное время крупно, часовой пояс и адрес. Время статично из данных. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-contact-009-* и не подменять её токенами вашей темы",
+            "tabular-nums у времени: без них цифры разной ширины ломают ровный ряд карточек",
+            "подпись часового пояса рядом со временем — по ней читатель сам поймёт, рабочий ли час",
+            "сноску о статичности времени: живых часов без JS не бывает, а враньё хуже честного ориентира",
+            "роль офиса над городом — без неё три адреса превращаются в просто географию",
+            "адрес в элементе address, а не в безымянном div",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "массив offices — города, роли, время, пояса и адреса",
+            "title, description и eyebrow",
+            "footNote — подпись под сеткой",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Время не тикает: обновляйте его при правке контента или замените живыми часами в вызывающем коде.",
+            "Ключ списка — город: два офиса в одном городе потребуют разных названий.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Три города, одна команда",
+            "maxLength": 40
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "Офисы",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "City cards with the local time in large tabular digits: the time zone is labelled beside it, the address is text, and the time is static data.",
+            "ai": {
+              "summary": "Office cards: city, role, the local time set large, the time zone and the address. The time is static data. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-contact-009-* palette — do not swap it for your theme tokens",
+                "tabular-nums on the time: without them digits of different widths break the even row of cards",
+                "the time zone label beside the time — it lets the reader work out whether it is a working hour",
+                "the footnote about the time being static: there are no live clocks without JS, and lying is worse than an honest reference",
+                "the office role above the city — without it three addresses are just geography",
+                "the address in an address element rather than a nameless div",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the offices array — the cities, roles, times, zones and addresses",
+                "title, description and eyebrow",
+                "footNote — the caption under the grid",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The time does not tick: update it when editing the content, or replace it with live clocks in the calling code.",
+                "The list key is the city: two offices in one city need distinct names.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Contact009 offices={[{ city: \"Moscow\", role: \"Headquarters\", time: \"14:05\", zone: \"UTC+3\", address: \"14 Bolshaya Dmitrovka\" }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Three cities, one team"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": "Offices"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Offices and Time Zones",
+            "preview": {
+              "props": {
+                "eyebrow": "Offices",
+                "title": "Three cities, one team",
+                "description": "Check the local time before calling: an email always arrives, a call into the night shift does not.",
+                "offices": [
+                  {
+                    "city": "Moscow",
+                    "role": "Headquarters",
+                    "time": "14:05",
+                    "zone": "UTC+3",
+                    "address": "14 Bolshaya Dmitrovka, bldg 2",
+                    "note": "Come after 11:00 — mornings are for planning."
+                  },
+                  {
+                    "city": "Berlin",
+                    "role": "Design and catalog",
+                    "time": "13:05",
+                    "zone": "UTC+2",
+                    "address": "Rosenthaler Straße 40, Mitte",
+                    "note": "Meetings by appointment: the coworking admits guests by list."
+                  },
+                  {
+                    "city": "Singapore",
+                    "role": "Support for Asian clients",
+                    "time": "19:05",
+                    "zone": "UTC+8",
+                    "address": "8 Marina View, Asia Square Tower 1",
+                    "note": "Evening here is midday in Moscow: the shifts overlap."
+                  }
+                ],
+                "footNote": "The times on the cards are static and set in the block data — a time-zone reference, not live clocks."
+              }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-contact-009-*. Server-side: no hooks and no time computation — the time arrives as static props, so the caption under the grid says outright that it is a time-zone reference, not a live clock. The digits are set in tabular-nums so the cards do not jump. The address is marked up with the address element. The grid goes 1→2→3 columns through container queries."
+          }
+        },
+        "cardControls": ["title", "eyebrow", "accent", "background"]
+      }
+    },
+    {
+      "name": "contact-010",
+      "type": "registry:block",
+      "title": "Обещание ответа",
+      "description": "Форма поддержки рядом с SLA-плашкой «отвечаем за 4 часа»: оранжевая молния, условия обещания и факты списком вместо голого слогана.",
+      "categories": ["contact"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "contact-010/contact-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/contact-010.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contact-010-*. Серверный: валидация нативная, ошибки по :user-invalid и aria-describedby, текст ошибки всегда в разметке. SLA-панель залита тёплым тинтом через color-mix от акцента, молния — inline-SVG без пакетов иконок. Колонки 2fr/3fr включаются container query.",
+      "meta": {
+        "tags": ["contact", "support", "sla", "form"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Contact010",
+          "usage": "<Contact010 slaTitle=\"Отвечаем за 4 часа\" slaPoints={[\"Среднее время ответа — 2 ч 40 мин\"]} submitLabel=\"Написать в поддержку\" />",
+          "summary": "Форма поддержки и SLA-плашка рядом: молния, обещанный срок, условия и факты списком. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-contact-010-* и не подменять её токенами вашей темы",
+            "SLA-плашку рядом с формой: обещанный срок — главный аргумент оставить контакты",
+            "условия обещания под цифрой — «за 4 часа» без указания рабочих часов читается как враньё",
+            "факты списком под обещанием: голая цифра — маркетинг, цифра с историей — обязательство",
+            ":user-invalid вместо :invalid — пустое поле не должно краснеть до первого ввода",
+            "текст ошибки в разметке всегда: появившийся из ниоткуда узел скринридер не найдёт",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "slaTitle, slaText и slaPoints",
+            "title, description и eyebrow",
+            "submitLabel",
+            "fieldText — подписи полей, плейсхолдеры и тексты ошибок",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Отправку, защиту от ботов и ответ пользователю реализует вызывающий код: блок несёт только разметку и проверку в браузере.",
+            "SLA — публичное обязательство: синхронизируйте цифры плашки с реальным регламентом поддержки.",
+            "Идентификаторы полей фиксированы: две такие формы на странице дадут дублирующиеся id.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Напишите — ответим быстро",
+            "maxLength": 40
+          },
+          {
+            "prop": "slaTitle",
+            "label": "Обещание",
+            "type": "text",
+            "default": "Отвечаем за 4 часа",
+            "maxLength": 28
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A support form beside an SLA panel promising a reply within 4 hours: an orange lightning bolt, the terms of the promise and facts as a list instead of a bare slogan.",
+            "ai": {
+              "summary": "A support form and an SLA panel side by side: a lightning bolt, the promised time, its terms and facts as a list. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-contact-010-* palette — do not swap it for your theme tokens",
+                "the SLA panel beside the form: the promised time is the main argument for leaving contacts",
+                "the terms under the number — «within 4 hours» without stated working hours reads as a lie",
+                "the facts list under the promise: a bare number is marketing, a number with history is a commitment",
+                ":user-invalid instead of :invalid — an untouched field must not turn red",
+                "the error text always present in the markup: a node appearing from nowhere is not found by a screen reader",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "slaTitle, slaText and slaPoints",
+                "title, description and eyebrow",
+                "submitLabel",
+                "fieldText — the field labels, placeholders and error texts",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Submission, bot protection and the reply belong to the caller: the block carries markup and in-browser validation only.",
+                "An SLA is a public commitment: keep the panel's numbers in sync with the real support policy.",
+                "Field ids are fixed: two of these forms on one page produce duplicate ids.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Contact010 slaTitle=\"Reply within 4 hours\" slaPoints={[\"Average reply time — 2 h 40 min\"]} submitLabel=\"Write to support\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Write — we answer fast"
+              },
+              "slaTitle": {
+                "label": "Promise",
+                "default": "Reply within 4 hours"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Reply Promise",
+            "preview": {
+              "props": {
+                "eyebrow": "Support",
+                "title": "Write — we answer fast",
+                "description": "We measure our reply speed and show it right here. The promise on the left is a public commitment, not a slogan.",
+                "slaTitle": "Reply within 4 hours",
+                "slaText": "The promise applies during working hours: Mon–Fri, 10:00 to 19:00 Moscow time. Night emails get answered first thing in the morning.",
+                "slaPoints": [
+                  "Average reply time over the last month — 2 hours 40 minutes",
+                  "If we miss the deadline — a free month of subscription",
+                  "The ticket number arrives by email right after sending"
+                ],
+                "submitLabel": "Write to support",
+                "fieldText": {
+                  "name": "Name",
+                  "namePlaceholder": "How should we address you",
+                  "nameError": "Write your name — then the reply is addressed to a person.",
+                  "email": "Email",
+                  "emailPlaceholder": "you@company.com",
+                  "emailError": "Check the address: it needs an @ and a domain.",
+                  "message": "What happened",
+                  "messagePlaceholder": "A catalog block will not install: shadcn complains about the registry. Attaching the error text…",
+                  "messageError": "A couple of sentences is enough: this text is still too short."
+                }
+              }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-contact-010-*. Server-side: the validation is native, errors go through :user-invalid and aria-describedby, and the error text is always in the markup. The SLA panel is filled with a warm tint via color-mix from the accent, and the lightning bolt is an inline SVG with no icon packages. The 2fr/3fr columns are turned on by a container query."
+          }
+        },
+        "cardControls": ["title", "slaTitle", "accent", "background"]
+      }
+    },
+    {
+      "name": "contact-011",
+      "type": "registry:block",
+      "title": "Слоты на демо",
+      "description": "Сетка демо-слотов по дням недели: вся неделя — одна радиогруппа, занятые окна подписаны, а подтверждение с полем почты появляется после выбора на чистом CSS.",
+      "categories": ["contact"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "contact-011/contact-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/contact-011.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contact-011-*. Серверный: слоты всех дней — одна радиогруппа, состояние читается через :has(input:checked), фокус — через :has(input:focus-visible); радиокнопки убраны визуально, но остаются в потоке фокуса. Блок подтверждения с почтой и кнопкой скрыт до выбора слота и появляется селектором :has без строчки JS. Занятые слоты disabled, подписаны и остаются в сетке. Колонки дней включаются container query.",
+      "meta": {
+        "tags": ["contact", "demo", "schedule", "slots", "booking"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Contact011",
+          "usage": "<Contact011 days={[{ label: \"Вторник\", note: \"13 мая\", slots: [{ time: \"11:00\" }, { time: \"13:00\", taken: true }] }]} submitLabel=\"Забронировать\" />",
+          "summary": "Сетка демо-слотов по дням недели радиогруппой: занятые окна подписаны, подтверждение с почтой раскрывается после выбора через :has. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-contact-011-* и не подменять её токенами вашей темы",
+            "занятый слот на месте и с подписью: дыра в сетке читается как «сюда можно»",
+            "радиокнопки в потоке фокуса: убраны визуально, но не display:none",
+            "подтверждение после выбора — форма не давит пустыми полями раньше времени",
+            "кнопку отправки внутри блока подтверждения: снаружи форма ушла бы без выбранного слота",
+            "галочку в выбранном чипе — одним цветом выбор не передать",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "массив days со слотами и занятостью",
+            "title, description и eyebrow",
+            "confirmText и submitLabel",
+            "labels — легенда, подпись «занято», подсказка и поле почты",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Бронирование и отправку реализует вызывающий код: блок только показывает сетку и собирает выбор.",
+            "Занятость приходит из данных и не обновляется сама — перезапрашивайте слоты перед отправкой.",
+            "Раскрытие подтверждения держится на :has — в браузерах без него поле почты останется скрытым.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Выберите время — покажем VibeUI вживую",
+            "maxLength": 44
+          },
+          {
+            "prop": "submitLabel",
+            "label": "Подпись кнопки",
+            "type": "text",
+            "default": "Забронировать",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A grid of demo slots by weekday: the whole week is one radio group, taken windows are labelled, and the confirmation with an email field appears after a pick — in pure CSS.",
+            "ai": {
+              "summary": "A weekday grid of demo slots as one radio group: taken windows are labelled, and the email confirmation unfolds after a pick through :has. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-contact-011-* palette — do not swap it for your theme tokens",
+                "the taken slot kept in place and labelled: a gap in the grid reads as «available»",
+                "the radios kept in the focus order: visually removed, not display:none",
+                "the confirmation after the pick — the form must not press with empty fields ahead of time",
+                "the submit button inside the confirmation block: outside it the form would go off without a chosen slot",
+                "the check mark in the selected chip — colour alone cannot carry the selection",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the days array with slots and availability",
+                "title, description and eyebrow",
+                "confirmText and submitLabel",
+                "labels — the legend, the «taken» caption, the hint and the email field",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Booking and submission belong to the caller: the block only renders the grid and collects the pick.",
+                "Availability comes from the data and does not refresh itself — re-fetch the slots before submitting.",
+                "The confirmation reveal relies on :has — in browsers without it the email field stays hidden.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Contact011 days={[{ label: \"Tuesday\", note: \"13 May\", slots: [{ time: \"11:00\" }, { time: \"13:00\", taken: true }] }]} submitLabel=\"Book the slot\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Pick a time — we will show VibeUI live"
+              },
+              "submitLabel": {
+                "label": "Button caption",
+                "default": "Book the slot"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Demo Slots",
+            "preview": {
+              "props": {
+                "eyebrow": "Demo",
+                "title": "Pick a time — we will show VibeUI live",
+                "description": "Half an hour without slides: we assemble a page from catalog blocks on your own materials. The grid is the team's real schedule.",
+                "days": [
+                  {
+                    "label": "Tuesday",
+                    "note": "13 May",
+                    "slots": [
+                      {
+                        "time": "11:00"
+                      },
+                      {
+                        "time": "13:00",
+                        "taken": true
+                      },
+                      {
+                        "time": "15:00"
+                      },
+                      {
+                        "time": "17:00"
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Wednesday",
+                    "note": "14 May",
+                    "slots": [
+                      {
+                        "time": "11:00",
+                        "taken": true
+                      },
+                      {
+                        "time": "13:00"
+                      },
+                      {
+                        "time": "15:00"
+                      },
+                      {
+                        "time": "17:00",
+                        "taken": true
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Thursday",
+                    "note": "15 May",
+                    "slots": [
+                      {
+                        "time": "11:00"
+                      },
+                      {
+                        "time": "13:00"
+                      },
+                      {
+                        "time": "15:00",
+                        "taken": true
+                      },
+                      {
+                        "time": "17:00"
+                      }
+                    ]
+                  }
+                ],
+                "confirmText": "Window picked. Leave your email — we will send the invitation and the meeting link.",
+                "submitLabel": "Book the slot",
+                "labels": {
+                  "legend": "Free windows this week, Moscow time",
+                  "taken": "taken",
+                  "hint": "Pick a window — after that we only ask for an email for the invitation.",
+                  "email": "Email for the invitation",
+                  "emailPlaceholder": "you@company.com",
+                  "emailError": "Check the address: it needs an @ and a domain."
+                }
+              }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-contact-011-*. Server-side: the slots of all days form one radio group, the state is read through :has(input:checked) and the focus through :has(input:focus-visible); the radios are removed visually but stay in the focus order. The confirmation block with the email and the button is hidden until a slot is picked and appears through a :has selector without a line of JS. Taken slots are disabled, labelled and stay in the grid. The day columns are turned on by a container query."
+          }
+        },
+        "cardControls": ["title", "submitLabel", "accent", "background"]
+      }
+    },
+    {
+      "name": "contact-012",
+      "type": "registry:block",
+      "title": "Форма с вложением",
+      "description": "Обращение в поддержку с пунктирной зоной вложения: label растягивает клик на всю область, а видимый нативный input сам показывает имя выбранного файла.",
+      "categories": ["contact"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "contact-012/contact-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/contact-012.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contact-012-*. Серверный: дропзона — label вокруг нативного input type=\"file\": клик по всей пунктирной области открывает диалог, кнопка выбора стилизована через ::file-selector-button, а имя выбранного файла показывает сам нативный контрол — без JS его иначе не показать. Фокус на зоне виден через :has(input:focus-visible), ошибки полей — по :user-invalid.",
+      "meta": {
+        "tags": ["contact", "form", "upload", "attachment"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Contact012",
+          "usage": "<Contact012 dropTitle=\"Выберите файл или перетащите его на кнопку\" dropHint=\"PNG, PDF или ZIP до 10 МБ\" submitLabel=\"Отправить обращение\" />",
+          "summary": "Форма поддержки с вложением: почта, описание и пунктирная зона на нативном input file. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-contact-012-* и не подменять её токенами вашей темы",
+            "видимый нативный input file: спрятанный контрол лишает пользователя имени выбранного файла",
+            "label вокруг всей зоны — маленькая кнопка «выбрать файл» промахивается на телефоне",
+            "подпись форматов и лимита до выбора файла, а не ошибкой после",
+            "::file-selector-button вместо JS-кнопки: стили без скриптов и синтетических кликов",
+            ":user-invalid вместо :invalid — пустое поле не должно краснеть до первого ввода",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "dropTitle, dropHint и accept у input",
+            "title, description и eyebrow",
+            "submitLabel и responseNote",
+            "fieldText — подписи полей, плейсхолдеры и тексты ошибок",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Отправку и приём файла реализует вызывающий код: блок сам ничего никуда не загружает.",
+            "Перетаскивание файла ловит сам input, а не вся пунктирная зона: drag-and-drop на всю область требует JS.",
+            "accept фильтрует по расширению и легко обходится — серверную проверку файла он не отменяет.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Покажите проблему файлом",
+            "maxLength": 40
+          },
+          {
+            "prop": "submitLabel",
+            "label": "Подпись кнопки",
+            "type": "text",
+            "default": "Отправить обращение",
+            "maxLength": 28
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A support request with a dashed attachment zone: the label stretches the click across the whole area, while the visible native input shows the chosen file name by itself.",
+            "ai": {
+              "summary": "A support form with an attachment: email, description and a dashed zone built on a native file input. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-contact-012-* palette — do not swap it for your theme tokens",
+                "the visible native file input: a hidden control robs the user of the chosen file name",
+                "the label around the whole zone — a small «choose file» button gets missed on a phone",
+                "the formats and size limit stated before the choice, not as an error after",
+                "::file-selector-button instead of a JS button: styling without scripts or synthetic clicks",
+                ":user-invalid instead of :invalid — an untouched field must not turn red",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "dropTitle, dropHint and the input's accept",
+                "title, description and eyebrow",
+                "submitLabel and responseNote",
+                "fieldText — the field labels, placeholders and error texts",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Submission and receiving the file belong to the caller: the block uploads nothing by itself.",
+                "Dropping a file is caught by the input itself, not the whole dashed zone: full-area drag-and-drop needs JS.",
+                "accept filters by extension and is easily bypassed — it does not replace a server-side file check.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Contact012 dropTitle=\"Choose a file or drop it on the button\" dropHint=\"PNG, PDF or ZIP up to 10 MB\" submitLabel=\"Send the request\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Show the problem as a file"
+              },
+              "submitLabel": {
+                "label": "Button caption",
+                "default": "Send the request"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Attachment Form",
+            "preview": {
+              "props": {
+                "eyebrow": "Support",
+                "title": "Show the problem as a file",
+                "description": "A screenshot or a project archive halves the reply time: no detail-hunting over a long thread.",
+                "dropTitle": "Choose a file or drop it on the button",
+                "dropHint": "PNG, PDF or ZIP up to 10 MB. One file per request.",
+                "submitLabel": "Send the request",
+                "responseNote": "The file goes along with the form, there is no separate upload. We answer within one business day.",
+                "fieldText": {
+                  "email": "Email",
+                  "emailPlaceholder": "you@company.com",
+                  "emailError": "Check the address: it needs an @ and a domain.",
+                  "message": "Describe the question",
+                  "messagePlaceholder": "We customised the hero block from the catalog and the palette broke. Screenshot attached.",
+                  "messageError": "A couple of sentences is enough: this text is still too short."
+                }
+              }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-contact-012-*. Server-side: the drop area is a label around a native input type=\"file\": a click anywhere on the dashed area opens the dialog, the choose button is styled through ::file-selector-button, and the chosen file name is shown by the native control itself — there is no other way to show it without JS. Focus on the zone is visible through :has(input:focus-visible), field errors go through :user-invalid."
+          }
+        },
+        "cardControls": ["title", "submitLabel", "accent", "background"]
+      }
+    },
+    {
+      "name": "contact-013",
+      "type": "registry:block",
+      "title": "Сначала ответы",
+      "description": "Мини-FAQ из трёх details и короткая форма «не нашли — спросите» ниже: список закрывает частые вопросы до того, как письмо уйдёт в поддержку.",
+      "categories": ["contact"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "contact-013/contact-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/contact-013.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contact-013-*. Серверный: раскрытие держат нативные details/summary, поэтому браузер сам раскрывает раздел, найденный поиском по странице. Номера вопросов рисует CSS-счётчик, стрелку — псевдоэлемент. Форма — textarea и почта с ошибками по :user-invalid; на широком блоке почта и кнопка встают в ряд по container query.",
+      "meta": {
+        "tags": ["contact", "faq", "questions", "form"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Contact013",
+          "usage": "<Contact013 questions={[{ question: \"Чем блоки отличаются от шаблона?\", answer: \"…\" }]} formTitle=\"Не нашли — спросите\" />",
+          "summary": "Мини-FAQ из трёх details с CSS-нумерацией и короткая форма вопроса под списком. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-contact-013-* и не подменять её токенами вашей темы",
+            "порядок «сначала ответы, потом форма»: форма вместо списка возвращает те же вопросы в поддержку",
+            "нативные details: браузер раскрывает раздел, найденный поиском по странице",
+            "короткий список из трёх главных вопросов — двадцать пунктов возвращают человека в поиск",
+            "форму из двух полей: длинная анкета читается как наказание за ненайденный ответ",
+            ":user-invalid вместо :invalid — пустое поле не должно краснеть до первого ввода",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "массив questions с вопросами и ответами",
+            "title, description и eyebrow",
+            "formTitle, submitLabel и responseNote",
+            "fieldText — подписи полей, плейсхолдеры и тексты ошибок",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Отправку и ответ пользователю реализует вызывающий код: блок несёт только разметку и проверку в браузере.",
+            "Ответы выводятся обычным текстом: ссылки и списки внутри не разбираются.",
+            "Идентификаторы полей фиксированы: два таких блока на странице дадут дублирующиеся id.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Сначала ответы",
+            "maxLength": 32
+          },
+          {
+            "prop": "formTitle",
+            "label": "Заголовок формы",
+            "type": "text",
+            "default": "Не нашли — спросите",
+            "maxLength": 28
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A mini-FAQ of three details plus a short «did not find it — ask» form below: the list closes the frequent questions before the email leaves for support.",
+            "ai": {
+              "summary": "A mini-FAQ of three details with CSS numbering and a short question form under the list. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-contact-013-* palette — do not swap it for your theme tokens",
+                "the order «answers first, form second»: a form instead of the list sends the same questions back to support",
+                "the native details: the browser expands a section found by page search",
+                "the short list of the three main questions — twenty entries send people back to the search bar",
+                "the two-field form: a long questionnaire reads as punishment for not finding the answer",
+                ":user-invalid instead of :invalid — an untouched field must not turn red",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "the questions array with questions and answers",
+                "title, description and eyebrow",
+                "formTitle, submitLabel and responseNote",
+                "fieldText — the field labels, placeholders and error texts",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Submission and the reply belong to the caller: the block carries markup and in-browser validation only.",
+                "Answers render as plain text: links and lists inside are not parsed.",
+                "Field ids are fixed: two of these blocks on one page produce duplicate ids.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Contact013 questions={[{ question: \"How are blocks different from a template?\", answer: \"…\" }]} formTitle=\"Did not find it — ask\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Answers first"
+              },
+              "formTitle": {
+                "label": "Form heading",
+                "default": "Did not find it — ask"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Answers First",
+            "preview": {
+              "props": {
+                "eyebrow": "Questions",
+                "title": "Answers first",
+                "description": "Three questions that open almost every email. If yours is not here, the form is right under the list.",
+                "questions": [
+                  {
+                    "question": "How are VibeUI blocks different from a template?",
+                    "answer": "Every block is one self-contained file with no dependencies: it is copied into the project by the shadcn command and lives on as your own code. Nothing to update or untangle."
+                  },
+                  {
+                    "question": "Can I change a block's palette to match my brand?",
+                    "answer": "Yes. All the block's colours live in its local CSS variables, and the accent is passed as the accent prop. Swapping a couple of values is enough — the layout and typography stay untouched."
+                  },
+                  {
+                    "question": "Do I need my own backend to install them?",
+                    "answer": "No. The blocks install from a static registry via npx shadcn add with the component address. The forms inside are markup with browser validation — wire the submission to any handler of yours."
+                  }
+                ],
+                "formTitle": "Did not find it — ask",
+                "submitLabel": "Ask",
+                "responseNote": "We answer by email within one business day. Good questions end up in this list.",
+                "fieldText": {
+                  "question": "Your question",
+                  "questionPlaceholder": "For example: how do I wire the blocks into a project on an older Next?",
+                  "questionError": "One word is not enough — write the whole question.",
+                  "email": "Email for the reply",
+                  "emailPlaceholder": "you@company.com",
+                  "emailError": "Check the address: it needs an @ and a domain."
+                }
+              }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-contact-013-*. Server-side: native details/summary hold the disclosure, so the browser opens a section found by the page search on its own. The question numbers are drawn by a CSS counter, the arrow by a pseudo-element. The form is a textarea plus an email with errors through :user-invalid; on a wide block the email and the button line up through a container query."
+          }
+        },
+        "cardControls": ["title", "formTitle", "accent", "background"]
+      }
+    },
+    {
+      "name": "contact-014",
+      "type": "registry:block",
+      "title": "Карточка поддержки",
+      "description": "Одна карточка: статус «онлайн» зелёной точкой, часы работы по дням таблицей и кнопки каналов — чат главный, почта и звонок рядом.",
+      "categories": ["contact"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "contact-014/contact-014.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/contact-014.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contact-014-*. Серверный: хуков нет. Статус — данные блока, а не проверка смены: точка пульсирует CSS-анимацией и глушится prefers-reduced-motion. Часы размечены таблицей с заголовками строк и caption. Кнопки каналов — настоящие ссылки: якорь чата, mailto: и tel:; главный канал залит акцентом. Иконки — inline-SVG.",
+      "meta": {
+        "tags": ["contact", "support", "status", "hours", "channels"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Contact014",
+          "usage": "<Contact014 statusLabel=\"Сейчас онлайн\" hours={[{ days: \"Пн–Пт\", time: \"10:00 — 19:00\" }]} channels={[{ label: \"Чат\", href: \"#chat\", icon: \"chat\", primary: true }]} />",
+          "summary": "Карточка поддержки: статус онлайн точкой, часы работы таблицей по дням и кнопки каналов. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-contact-014-* и не подменять её токенами вашей темы",
+            "зелёный только у статуса: это семантика доступности, а не декоративный акцент",
+            "подпись статуса словом рядом с точкой — одним цветом статус не передать",
+            "часы работы таблицей: это данные в две колонки, и вслух они читаются парами",
+            "выходной день строкой в таблице, а не выброшен: отсутствие строки читается как «работаем»",
+            "один главный канал акцентом, остальные рамкой — три равные кнопки заставляют гадать",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "title, statusLabel и statusNote",
+            "hours — часы работы по дням",
+            "channels — подписи, ссылки, иконки и главный канал",
+            "note и hoursCaption",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Статус статичен и приходит из данных: реальную доступность смены проверяет вызывающий код.",
+            "Пульс точки — CSS-анимация, она отключается prefers-reduced-motion вместе с остальным движением.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Поддержка VibeUI",
+            "maxLength": 32
+          },
+          {
+            "prop": "statusLabel",
+            "label": "Подпись статуса",
+            "type": "text",
+            "default": "Сейчас онлайн",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A single card: an «online» status with a green dot, opening hours by day in a table and channel buttons — chat first, email and call beside it.",
+            "ai": {
+              "summary": "A support card: an online status dot, opening hours as a per-day table and channel buttons. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-contact-014-* palette — do not swap it for your theme tokens",
+                "green reserved for the status: it is availability semantics, not a decorative accent",
+                "the status spelled out beside the dot — colour alone cannot carry a status",
+                "the opening hours as a table: two columns of data, read aloud as pairs",
+                "the day off as a table row rather than dropped: a missing row reads as «open»",
+                "one primary channel filled with the accent, the rest outlined — three equal buttons make people guess",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "title, statusLabel and statusNote",
+                "hours — the opening times by day",
+                "channels — the captions, links, icons and the primary channel",
+                "note and hoursCaption",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The status is static and comes from the data: checking the real shift availability belongs to the caller.",
+                "The dot's pulse is a CSS animation and is silenced by prefers-reduced-motion along with the rest of the motion.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Contact014 statusLabel=\"Online now\" hours={[{ days: \"Mon–Fri\", time: \"10:00 — 19:00\" }]} channels={[{ label: \"Chat\", href: \"#chat\", icon: \"chat\", primary: true }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "VibeUI support"
+              },
+              "statusLabel": {
+                "label": "Status caption",
+                "default": "Online now"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Support Card",
+            "preview": {
+              "props": {
+                "title": "VibeUI support",
+                "statusLabel": "Online now",
+                "statusNote": "Average first reply in chat — 10 minutes. The status is set by the block data, not by checking the shift.",
+                "hoursCaption": "Opening hours",
+                "hours": [
+                  {
+                    "days": "Monday — Friday",
+                    "time": "10:00 — 19:00"
+                  },
+                  {
+                    "days": "Saturday",
+                    "time": "11:00 — 16:00"
+                  },
+                  {
+                    "days": "Sunday",
+                    "time": "Closed",
+                    "closed": true
+                  }
+                ],
+                "channels": [
+                  {
+                    "label": "Chat",
+                    "href": "#chat",
+                    "icon": "chat",
+                    "primary": true
+                  },
+                  {
+                    "label": "Email",
+                    "href": "mailto:help@vibeui.ru",
+                    "icon": "mail"
+                  },
+                  {
+                    "label": "Call",
+                    "href": "tel:+74951204590",
+                    "icon": "phone"
+                  }
+                ],
+                "note": "Outside the shift the chat still takes messages: they are handled first in the morning."
+              }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-contact-014-*. Server-side: no hooks. The status is block data, not a shift check: the dot pulses with a CSS animation silenced by prefers-reduced-motion. The hours are marked up as a table with row headers and a caption. The channel buttons are real links: a chat anchor, mailto: and tel:; the primary channel is filled with the accent. The icons are inline SVG."
+          }
+        },
+        "cardControls": ["title", "statusLabel", "accent", "background"]
+      }
+    },
+    {
+      "name": "contact-015",
+      "type": "registry:block",
+      "title": "Карта-заглушка с офисом",
+      "description": "Декоративная CSS-карта во весь блок: сетка улиц градиентами, диагональный проспект, пульсирующий оранжевый пин — и карточка адреса поверх.",
+      "categories": ["contact"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "contact-015/contact-015.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/contact-015.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contact-015-*. Серверный: хуков нет. Карта нарисована слоями фоновых градиентов — две repeating-linear-gradient-сетки улиц, диагональный проспект и тёплое пятно от акцента; внешних запросов и куки нет. Рисунок помечен aria-hidden: смысл несёт карточка с адресом и ссылка в настоящие карты. На узком блоке карточка встаёт под карту, на широком ложится поверх absolute-позиционированием по container query.",
+      "meta": {
+        "tags": ["contact", "map", "office", "address"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Contact015",
+          "usage": "<Contact015 address=\"Москва, Большая Дмитровка, 14\" mapHref=\"https://maps.example\" mapLabel=\"Открыть в картах\" />",
+          "summary": "Декоративная CSS-карта с сеткой улиц, оранжевым пином и карточкой адреса поверх. Ни одного внешнего запроса. Ноль зависимостей, один файл, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-contact-015-* и не подменять её токенами вашей темы",
+            "aria-hidden на рисунке карты и адрес текстом в карточке: заглушка декоративна",
+            "ссылку «открыть в картах» — точность положения даёт только она",
+            "карточку под картой на узкой ширине: поверх она закрыла бы весь рисунок",
+            "пин каплей с пульс-кольцом — статичная точка теряется на сетке улиц",
+            "подсказку про вход и этаж: люди теряются на последних тридцати метрах",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "cardTitle, address и addressNote",
+            "hoursLine — строка часов в карточке",
+            "mapHref и mapLabel",
+            "title и eyebrow над картой",
+            "акцент через проп accent",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Заглушка не показывает настоящее положение офиса: точность даёт только ссылка в карты.",
+            "Пульс кольца — CSS-анимация, она отключается prefers-reduced-motion вместе с остальным движением.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Офис на карте",
+            "maxLength": 32
+          },
+          {
+            "prop": "address",
+            "label": "Адрес",
+            "type": "text",
+            "default": "Москва, Большая Дмитровка, 14, строение 2",
+            "maxLength": 60
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Подложка",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "description": "A decorative CSS map across the whole block: a street grid of gradients, a diagonal avenue, a pulsing orange pin — and the address card on top.",
+            "ai": {
+              "summary": "A decorative CSS map with a street grid, an orange pin and an address card on top. Not a single external request. Zero dependencies, one file, no client JS.",
+              "preserve": [
+                "the local --vibeui-contact-015-* palette — do not swap it for your theme tokens",
+                "aria-hidden on the map drawing and the address as text in the card: the placeholder is decorative",
+                "the «open in maps» link — only it gives positional precision",
+                "the card below the map at narrow widths: on top it would cover the whole drawing",
+                "the teardrop pin with the pulse ring — a static dot gets lost on the street grid",
+                "the hint about the entrance and floor: people get lost in the last thirty metres",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "cardTitle, address and addressNote",
+                "hoursLine — the hours line in the card",
+                "mapHref and mapLabel",
+                "title and eyebrow above the map",
+                "the accent through the accent prop",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The placeholder does not show the real location: only the maps link gives precision.",
+                "The ring's pulse is a CSS animation and is silenced by prefers-reduced-motion along with the rest of the motion.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Contact015 address=\"14 Bolshaya Dmitrovka, Moscow\" mapHref=\"https://maps.example\" mapLabel=\"Open in maps\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "The office on the map"
+              },
+              "address": {
+                "label": "Address",
+                "default": "14 Bolshaya Dmitrovka, bldg 2, Moscow"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "title": "Map Placeholder Office",
+            "preview": {
+              "props": {
+                "eyebrow": "How to find us",
+                "title": "The office on the map",
+                "cardTitle": "VibeUI studio",
+                "address": "14 Bolshaya Dmitrovka, bldg 2, Moscow",
+                "addressNote": "Entrance from the courtyard, a blue door with no sign. Second floor, right to the end of the corridor.",
+                "hoursLine": "Mon–Fri, 10:00–19:00 · coffee for guests",
+                "mapHref": "https://maps.example",
+                "mapLabel": "Open in maps"
+              }
+            },
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-contact-015-*. Server-side: no hooks. The map is drawn with layered background gradients — two repeating-linear-gradient street grids, a diagonal avenue and a warm accent blob; no external requests and no cookies. The drawing is aria-hidden: the meaning is carried by the address card and the link out to real maps. At narrow widths the card sits under the map; on a wide block it overlays it with absolute positioning through a container query."
+          }
+        },
+        "cardControls": ["title", "address", "accent", "background"]
+      }
     }
   ]
 }

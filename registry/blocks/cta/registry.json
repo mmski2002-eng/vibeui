@@ -919,6 +919,1346 @@
         },
         "cardControls": ["badge", "title", "accent", "background"]
       }
+    },
+    {
+      "name": "cta-007",
+      "type": "registry:block",
+      "title": "Призыв с формой в строку",
+      "description": "Компактный призыв с формой почты в одну строку: поле и оранжевая кнопка стоят рядом капсулами, а под ними одна фраза, снимающая страх спама.",
+      "categories": ["cta"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "cta-007/cta-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/cta-007.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cta-007-*. Серверный компонент: поле неуправляемое, форма отправляется обычным POST и работает до гидратации. Подпись поля скрыта визуально, но связана через htmlFor — однострочная форма не терпит видимой подписи, а скринридер обязан её слышать. От 34rem поле и кнопка встают в один ряд через grid-template-columns:1fr auto, до этого идут колонкой.",
+      "meta": {
+        "tags": ["cta", "email", "form", "inline", "conversion"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Cta007",
+          "usage": "<Cta007\n  title=\"Оставьте почту — пришлём доступ к каталогу\"\n  submitLabel=\"Получить доступ\"\n  note=\"Никакого спама: одно письмо, отписка не понадобится.\"\n/>",
+          "summary": "Центрированный призыв с формой почты в одну строку: надзаголовок, заголовок, короткое объяснение, поле с оранжевой кнопкой рядом и строка против страха спама. Форма настоящая и работает без клиентского кода. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-cta-007-* и не подменять её токенами вашей темы (bg-input, ring-ring и подобными)",
+            "скрытую подпись поля со связью htmlFor: капсула в одну строку не оставляет места видимой подписи, но скринридер обязан слышать, что это за поле",
+            "type=\"email\" вместе с autoComplete=\"email\" и required — на телефоне это другая клавиатура и проверка без JS",
+            "форму с настоящим action и method: подписка обязана работать до гидратации",
+            "строку note под формой — она снимает страх спама ровно в момент, когда его вводят",
+            "кегль заголовка в cqi от собственной ширины блока: медиазапросы дадут мобильный размер в узкой колонке",
+            "кольца фокуса у поля и кнопки — форма и есть единственное интерактивное место секции",
+            "блок <style> внутри компонента — в нём палитра, форма и раскладка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "eyebrow, title и description — надзаголовок, заголовок и объяснение",
+            "emailLabel и placeholder — скрытая подпись и пример адреса",
+            "submitLabel и note — кнопка и строка под формой",
+            "action — адрес вашего обработчика формы",
+            "акцент через проп accent — цвет кнопки, надзаголовка и колец фокуса",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Форма уходит на #subscribe: подставьте адрес своего обработчика и имя поля.",
+            "Это короткий призыв в конце страницы; для развёрнутой подписки на рассылку с видимой подписью поля возьмите cta-003.",
+            "Блок не показывает состояние «спасибо, проверьте почту»: сделайте отдельную страницу или добавьте своё состояние.",
+            "Не добавляйте в форму второе поле: имя, компания и телефон убивают конверсию однострочной формы."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Оставьте почту — пришлём доступ к каталогу",
+            "maxLength": 56
+          },
+          {
+            "prop": "submitLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Получить доступ",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Inline Email CTA",
+            "description": "A compact CTA with a one-line email form: the field and the orange button stand side by side as capsules, with one phrase beneath that removes the fear of spam.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-cta-007-* variables. A server component: the field is uncontrolled, the form is submitted by a plain POST and works before hydration. The field label is visually hidden but tied through htmlFor — a one-line form leaves no room for a visible label, yet a screen reader has to hear it. From 34rem the field and the button stand in one row through grid-template-columns:1fr auto; below that they run as a column.",
+            "ai": {
+              "summary": "A centred CTA with a one-line email form: an eyebrow, a heading, a short explanation, a field with an orange button beside it and a line against the fear of spam. The form is real and works without client code. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-cta-007-* palette — do not swap it for your theme tokens (bg-input, ring-ring and the like)",
+                "the hidden field label tied through htmlFor: a one-line capsule leaves no room for a visible label, yet a screen reader has to hear what the field is",
+                "type=\"email\" together with autoComplete=\"email\" and required — on a phone that is a different keyboard and validation without JS",
+                "the form with a real action and method: subscribing has to work before hydration",
+                "the note line under the form — it removes the fear of spam exactly when the address is being typed",
+                "the heading size in cqi from the block's own width: media queries give a mobile size inside a narrow column",
+                "the focus rings on the field and the button — the form is the only interactive place in the section",
+                "the <style> block inside the component — it holds the palette, the form and the layout",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "eyebrow, title and description — the eyebrow, the heading and the explanation",
+                "emailLabel and placeholder — the hidden label and the example address",
+                "submitLabel and note — the button and the line under the form",
+                "action — the address of your form handler",
+                "the accent through the accent prop — it colours the button, the eyebrow and the focus rings",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The form posts to #subscribe: point it at your own handler and field name.",
+                "This is a short end-of-page CTA; for a full newsletter section with a visible field label take cta-003.",
+                "The block shows no \"thanks, check your inbox\" state: use a separate page or add your own state.",
+                "Do not add a second field to the form: name, company and phone kill the conversion of a one-line form."
+              ],
+              "usage": "<Cta007\n  title=\"Leave your email — we will send access\"\n  submitLabel=\"Get access\"\n  note=\"No spam: one letter, you will not need to unsubscribe.\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Leave your email — we will send access"
+              },
+              "submitLabel": {
+                "label": "Button",
+                "default": "Get access"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Early access",
+                "title": "Leave your email — we will send access",
+                "description": "One letter with a link to the full catalogue of sections and instructions on handing them to your AI agent. No warm-up sequences.",
+                "emailLabel": "Email address",
+                "placeholder": "you@example.com",
+                "submitLabel": "Get access",
+                "note": "No spam: one letter, you will not need to unsubscribe."
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "submitLabel", "accent", "background"]
+      }
+    },
+    {
+      "name": "cta-008",
+      "type": "registry:block",
+      "title": "Призыв с отсчётом",
+      "description": "Призыв с отсчётом до дедлайна: три плитки «дни — часы — минуты» над одной кнопкой. Цифры статичны и приходят пропсами — тикание остаётся за проектом.",
+      "categories": ["cta"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "cta-008/cta-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/cta-008.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cta-008-*. Серверный компонент: отсчёт намеренно статический, дни, часы и минуты приходят строковыми пропсами. Тикающий таймер потребовал бы клиентского кода и всё равно врал бы до гидратации — честнее отдать цифры проекту. Плитки набраны с font-variant-numeric:tabular-nums, чтобы значения разной ширины не расшатывали раскладку, двоеточия между ними скрыты от скринридера.",
+      "meta": {
+        "tags": ["cta", "countdown", "deadline", "urgency", "launch"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Cta008",
+          "usage": "<Cta008\n  title=\"Цена вырастет после запуска\"\n  days=\"02\"\n  hours=\"14\"\n  minutes=\"45\"\n  actionLabel=\"Забрать по старой цене\"\n/>",
+          "summary": "Центрированный призыв с отсчётом: надзаголовок, заголовок, объяснение, три плитки времени с подписями, одна кнопка и строка-примечание. Цифры статичны и приходят пропсами, клиентского JS нет. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-cta-008-* и не подменять её токенами вашей темы",
+            "статические цифры пропсами: серверный компонент не может тикать, а таймер в registry-блоке всё равно врал бы до гидратации — тикание добавляется обёрткой проекта",
+            "font-variant-numeric:tabular-nums у значений — иначе «11» уже «44» и плитки дышат при смене цифр",
+            "подписи под цифрами, а не рядом: «02 дней» читается плиткой, а не предложением",
+            "двоеточия между плитками с aria-hidden — скринридеру нужны цифры с подписями, а не пунктуация",
+            "одну кнопку под отсчётом: дедлайн работает только с одним действием",
+            "кегль заголовка и цифр в cqi от собственной ширины блока",
+            "блок <style> внутри компонента — в нём палитра, плитки и раскладка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "eyebrow, title и description — надзаголовок, заголовок и объяснение",
+            "days, hours и minutes — значения отсчёта строками",
+            "daysLabel, hoursLabel и minutesLabel — подписи плиток",
+            "actionLabel, actionHref и note — кнопка и примечание под ней",
+            "акцент через проп accent — цвет цифр, кнопки и надзаголовка",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Тикание делается клиентской обёрткой в вашем проекте: считайте остаток до даты и передавайте days/hours/minutes пропсами.",
+            "Дедлайн обязан быть настоящим: отсчёт, который каждый день начинается заново, читается как обман и топит доверие ко всей странице.",
+            "Держите значения двузначными («02», а не «2») — плитки останутся одной ширины.",
+            "Не добавляйте секунды: без тикания застывшие секунды выглядят сломанными."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Цена вырастет после запуска",
+            "maxLength": 48
+          },
+          {
+            "prop": "days",
+            "label": "Дни",
+            "type": "text",
+            "default": "02",
+            "maxLength": 3
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Countdown CTA",
+            "description": "A deadline countdown CTA: three tiles for days, hours and minutes above a single button. The digits are static and come through props — ticking stays with the project.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-cta-008-* variables. A server component: the countdown is deliberately static, the days, hours and minutes arrive as string props. A ticking timer would require client code and would still lie before hydration — handing the digits to the project is more honest. The tiles are set with font-variant-numeric:tabular-nums so values of different widths do not rock the layout, and the colons between them are hidden from screen readers.",
+            "ai": {
+              "summary": "A centred countdown CTA: an eyebrow, a heading, an explanation, three time tiles with captions, one button and a small note. The digits are static and come through props; there is no client JS. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-cta-008-* palette — do not swap it for your theme tokens",
+                "the static digits through props: a server component cannot tick, and a timer inside a registry block would lie before hydration anyway — ticking is added by a project wrapper",
+                "font-variant-numeric:tabular-nums on the values — otherwise \"11\" and \"44\" differ in width and the tiles breathe as digits change",
+                "the captions under the digits rather than beside them: \"02 days\" reads as a tile, not as a sentence",
+                "the colons between tiles with aria-hidden — a screen reader needs the digits with captions, not the punctuation",
+                "the single button under the countdown: a deadline only works with one action",
+                "the heading and digit sizes in cqi from the block's own width",
+                "the <style> block inside the component — it holds the palette, the tiles and the layout",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "eyebrow, title and description — the eyebrow, the heading and the explanation",
+                "days, hours and minutes — the countdown values as strings",
+                "daysLabel, hoursLabel and minutesLabel — the tile captions",
+                "actionLabel, actionHref and note — the button and the note under it",
+                "the accent through the accent prop — it colours the digits, the button and the eyebrow",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Ticking is done by a client wrapper in your project: compute the remaining time and pass days/hours/minutes as props.",
+                "The deadline has to be real: a countdown that restarts every day reads as a trick and sinks trust in the whole page.",
+                "Keep the values two-digit (\"02\", not \"2\") — the tiles stay the same width.",
+                "Do not add seconds: frozen seconds without ticking look broken."
+              ],
+              "usage": "<Cta008\n  title=\"The price goes up after launch\"\n  days=\"02\"\n  hours=\"14\"\n  minutes=\"45\"\n  actionLabel=\"Lock in the old price\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "The price goes up after launch"
+              },
+              "days": {
+                "label": "Days",
+                "default": "02"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Plans launch",
+                "title": "The price goes up after launch",
+                "description": "The catalogue is open at the starting price while the first teams are joining. After the deadline the plan becomes regular — no exceptions, no promo codes.",
+                "days": "02",
+                "hours": "14",
+                "minutes": "45",
+                "daysLabel": "days",
+                "hoursLabel": "hours",
+                "minutesLabel": "minutes",
+                "actionLabel": "Lock in the old price",
+                "note": "The price is fixed for a year from the moment of payment."
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "days", "accent", "background"]
+      }
+    },
+    {
+      "name": "cta-009",
+      "type": "registry:block",
+      "title": "Оранжевая полоса",
+      "description": "Полоса фирменного оранжевого во всю ширину: чёрная типографика, одна белая кнопка и ни одного лишнего элемента.",
+      "categories": ["cta"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "cta-009/cta-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/cta-009.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cta-009-*. Серверный компонент. Собственный оранжевый фон — осознанное исключение из правила «прозрачной подложки»: контраст полосы с остальной страницей и есть дизайн блока. Текст фиксированно тёмный в обеих темах — полоса не темнеет вместе со страницей, иначе она перестаёт быть полосой. От 44rem текст и кнопка встают в один ряд через grid-template-columns:1fr auto, до этого кнопка уходит под текст.",
+      "meta": {
+        "tags": ["cta", "banner", "brand", "color", "conversion"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Cta009",
+          "usage": "<Cta009\n  title=\"Хватит листать — соберите свою страницу\"\n  actionLabel=\"Открыть каталог\"\n  actionHref=\"/components\"\n/>",
+          "summary": "Полоса призыва во всю ширину на сплошной оранжевой заливке: заголовок с коротким объяснением слева, одна белая кнопка справа. Тёмная типографика фиксирована в обеих темах. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-cta-009-* — полоса остаётся оранжевой в обеих ветках light-dark(): собственный фон здесь осознанное исключение из правила прозрачной подложки, контраст полосы со страницей и есть дизайн блока",
+            "фиксированно тёмный текст: полоса не темнеет вместе с темой, иначе перестаёт быть полосой",
+            "белую кнопку — оранжевая кнопка на оранжевой полосе исчезает",
+            "один заголовок и одну кнопку: полоса не место для выбора из нескольких действий",
+            "кегль заголовка в cqi от собственной ширины блока и ограничение строк в ch",
+            "переход кнопки под текст на узкой раскладке — кнопка справа от переносящегося заголовка ломает чтение",
+            "блок <style> внутри компонента — в нём палитра и раскладка"
+          ],
+          "adapt": [
+            "title и description — заголовок и объяснение",
+            "actionLabel и actionHref — кнопка",
+            "акцент через проп accent — перекрашивает всю полосу",
+            "background — то же, что accent, но с приоритетом: удобно для точечной перекраски",
+            "внешние отступы через className: полоса занимает всю ширину родителя"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Текст всегда тёмный: блок рассчитан на яркие заливки. Перекрасите полосу в тёмный цвет — текст пропадёт, проверяйте контраст.",
+            "Одна полоса на страницу: вторая превращает акцент в обои.",
+            "Не ставьте её рядом с другой цветной плитой (например cta-004) — заливки спорят друг с другом.",
+            "Не добавляйте в полосу форму или список: для этого есть другие блоки категории."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Хватит листать — соберите свою страницу",
+            "maxLength": 52
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Открыть каталог",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Orange Band CTA",
+            "description": "A full-width band of the brand orange: black typography, one white button and not a single extra element.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-cta-009-* variables. A server component. The own orange background is a deliberate exception to the transparent-background rule: the contrast between the band and the rest of the page is the design of this block. The text is fixed dark in both themes — the band does not darken with the page, otherwise it stops being a band. From 44rem the text and the button stand in one row through grid-template-columns:1fr auto; below that the button drops under the text.",
+            "ai": {
+              "summary": "A full-width CTA band on a solid orange fill: a heading with a short explanation on the left, one white button on the right. The dark typography is fixed in both themes. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-cta-009-* palette — the band stays orange in both light-dark() branches: the own background is a deliberate exception to the transparent-background rule here, the contrast between the band and the page is the design of this block",
+                "the fixed dark text: the band does not darken with the theme, otherwise it stops being a band",
+                "the white button — an orange button on an orange band disappears",
+                "the single heading and single button: a band is no place for a choice between several actions",
+                "the heading size in cqi from the block's own width and the line limits in ch",
+                "the button dropping under the text on the narrow layout — a button beside a wrapping heading breaks the reading",
+                "the <style> block inside the component — it holds the palette and the layout"
+              ],
+              "adapt": [
+                "title and description — the heading and the explanation",
+                "actionLabel and actionHref — the button",
+                "the accent through the accent prop — it recolours the whole band",
+                "background — same as accent but with priority: handy for a one-off recolour",
+                "outer spacing through className: the band fills its parent's width"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The text is always dark: the block is designed for bright fills. Recolour the band into a dark colour and the text vanishes — check the contrast.",
+                "One band per page: a second one turns the accent into wallpaper.",
+                "Do not place it next to another coloured slab (cta-004 for instance) — the fills fight each other.",
+                "Do not put a form or a list into the band: other blocks of the category exist for that."
+              ],
+              "usage": "<Cta009\n  title=\"Stop scrolling — build your page\"\n  actionLabel=\"Open the catalogue\"\n  actionHref=\"/components\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Stop scrolling — build your page"
+              },
+              "actionLabel": {
+                "label": "Button",
+                "default": "Open the catalogue"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Stop scrolling — build your page",
+                "description": "Pick the sections in the catalogue, hand the link to your AI agent and get a site that looks exactly like the preview.",
+                "actionLabel": "Open the catalogue"
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "actionLabel", "accent", "background"]
+      }
+    },
+    {
+      "name": "cta-010",
+      "type": "registry:block",
+      "title": "Призыв с чек-листом",
+      "description": "Призыв в две колонки: слева обещание с кнопкой, справа четыре галочки выгод. Галочки нарисованы CSS-уголком — без иконочной библиотеки.",
+      "categories": ["cta"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "cta-010/cta-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/cta-010.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cta-010-*. Серверный компонент. Галочка — псевдоэлемент с двумя границами, повёрнутый на 42 градуса, на круге из тёплого тинта через color-mix: иконочная библиотека ради четырёх галочек сломала бы правило одного файла. Раскладка от собственной ширины: до 46rem одна колонка, дальше текст и чек-лист встают рядом в пропорции 1.2:1.",
+      "meta": {
+        "tags": ["cta", "checklist", "benefits", "split", "conversion"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Cta010",
+          "usage": "<Cta010\n  title=\"Всё, что нужно для первой страницы\"\n  actionLabel=\"Начать бесплатно\"\n  items={[\"Готовые секции\", \"Один файл на блок\", \"Инструкция для AI\", \"Тёмная тема\"]}\n/>",
+          "summary": "Двухколоночный призыв: слева надзаголовок, заголовок, объяснение, кнопка и приметка, справа список из четырёх выгод с оранжевыми галочками. Галочки нарисованы CSS, клиентского JS нет. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-cta-010-* и не подменять её токенами вашей темы",
+            "галочку CSS-уголком на тинтованном круге, а не иконку из библиотеки: блок обязан оставаться одним файлом и переживать смену акцента вместе с палитрой",
+            "тёплый тинт круга через color-mix от акцента — сплошная оранжевая заливка под каждой галочкой превратила бы список в светофор",
+            "разметку списком <ul>/<li>: скринридер объявляет число пунктов, и это часть смысла чек-листа",
+            "четыре пункта: столько читают рядом с кнопкой, дальше начинается страница «возможности»",
+            "приметку под кнопкой — она снимает возражение в момент решения",
+            "двухколоночную раскладку от собственной ширины блока: в узкой колонке блок складывается сам",
+            "блок <style> внутри компонента — в нём палитра, галочки и раскладка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "eyebrow, title и description — надзаголовок, заголовок и объяснение",
+            "массив items — пункты чек-листа",
+            "actionLabel и actionHref — кнопка",
+            "note — приметка под кнопкой",
+            "акцент через проп accent — цвет галочек, кнопки и надзаголовка",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Пункты — короткие проверяемые факты, а не абзацы: длинный пункт переносится и убивает ритм галочек.",
+            "Больше четырёх выгод — это уже секция «возможности», а не призыв: лишнее уводите туда.",
+            "Не заменяйте CSS-галочки эмодзи: эмодзи не перекрашиваются акцентом и разъезжаются по платформам.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Всё, что нужно для первой страницы",
+            "maxLength": 48
+          },
+          {
+            "prop": "note",
+            "label": "Приметка",
+            "type": "text",
+            "default": "Без карты и без звонка с менеджером.",
+            "maxLength": 44
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Checklist CTA",
+            "description": "A two-column CTA: a promise with a button on the left, four benefit checkmarks on the right. The checks are drawn with a CSS corner — no icon library.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-cta-010-* variables. A server component. The checkmark is a pseudo-element with two borders rotated 42 degrees, sitting on a circle of warm tint made with color-mix: an icon library for four checkmarks would break the one-file rule. The layout is driven by the block's own width: below 46rem one column, beyond that the text and the checklist stand side by side in a 1.2:1 ratio.",
+            "ai": {
+              "summary": "A two-column CTA: on the left an eyebrow, a heading, an explanation, a button and a note; on the right a list of four benefits with orange checkmarks. The checks are drawn in CSS, there is no client JS. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-cta-010-* palette — do not swap it for your theme tokens",
+                "the checkmark as a CSS corner on a tinted circle rather than a library icon: the block has to stay a single file and survive an accent change together with the palette",
+                "the warm circle tint through color-mix from the accent — a solid orange fill under every check would turn the list into a traffic light",
+                "the <ul>/<li> list markup: a screen reader announces the number of items, and that is part of a checklist's meaning",
+                "four items: that is how many get read next to a button, beyond that a features page begins",
+                "the note under the button — it removes the objection at the moment of decision",
+                "the two-column layout driven by the block's own width: in a narrow column the block folds on its own",
+                "the <style> block inside the component — it holds the palette, the checks and the layout",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "eyebrow, title and description — the eyebrow, the heading and the explanation",
+                "the items array — the checklist entries",
+                "actionLabel and actionHref — the button",
+                "note — the note under the button",
+                "the accent through the accent prop — it colours the checks, the button and the eyebrow",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Items are short verifiable facts, not paragraphs: a long item wraps and kills the rhythm of the checks.",
+                "More than four benefits is already a features section, not a CTA: move the rest there.",
+                "Do not replace the CSS checks with emoji: emoji cannot be recoloured by the accent and drift across platforms.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Cta010\n  title=\"Everything a first page needs\"\n  actionLabel=\"Start free\"\n  items={[\"Ready-made sections\", \"One file per block\", \"AI instructions included\", \"Dark theme out of the box\"]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Everything a first page needs"
+              },
+              "note": {
+                "label": "Side note",
+                "default": "No card and no call with a manager."
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "What is inside",
+                "title": "Everything a first page needs",
+                "description": "Not a pile of buttons but finished sections: hero, pricing, testimonials, CTA. Copy the install command — your AI agent does the rest.",
+                "actionLabel": "Start free",
+                "note": "No card and no call with a manager.",
+                "items": [
+                  "Ready-made sections instead of markup from scratch",
+                  "One file per block — no dependency chain",
+                  "An AI-agent instruction with every component",
+                  "Light and dark themes out of the box"
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "note", "accent", "background"]
+      }
+    },
+    {
+      "name": "cta-011",
+      "type": "registry:block",
+      "title": "Два пути",
+      "description": "Две панели для двух аудиторий: разработчику — команда npx в код-плашке, команде — кнопка демо. Входы разные, потому что решения принимают по-разному.",
+      "categories": ["cta"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "cta-011/cta-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/cta-011.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cta-011-*. Серверный компонент. Код-плашка тёмная в обеих темах: терминал не бывает светло-серым, и команда должна читаться как команда. Панель для команд подкрашена тёплым тинтом через color-mix — веса панелей различаются, но обе остаются настоящими входами. Длинная команда прокручивается по горизонтали, а не ломает раскладку. От 44rem панели встают рядом равными долями.",
+      "meta": {
+        "tags": ["cta", "developers", "teams", "demo", "split"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Cta011",
+          "usage": "<Cta011\n  title=\"Начните так, как удобно вам\"\n  command=\"npx shadcn@latest add @vibeui/cta-011\"\n  teamActionLabel=\"Запросить демо\"\n/>",
+          "summary": "Секция с двумя путями к продукту: панель для разработчиков с командой npx в тёмной код-плашке и ссылкой на документацию, панель для команд с кнопкой демо. Клиентского JS нет. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-cta-011-* и не подменять её токенами вашей темы",
+            "два разных входа — команду и кнопку демо: аудитории принимают решения по-разному, и сводить оба пути к двум одинаковым кнопкам значит потерять обоих",
+            "код-плашку тёмной в обеих темах: терминал не бывает светло-серым, команда обязана читаться как команда",
+            "overflow-x:auto у плашки — длинная команда прокручивается, а не разрывает панель",
+            "знак $ с user-select:none: выделение и копирование команды мышью не должно захватывать промпт",
+            "тёплый тинт панели команд через color-mix — веса панелей различаются, но обе остаются настоящими входами, а не главным и второстепенным",
+            "двухколоночную раскладку от собственной ширины блока: в узкой колонке панели складываются сами",
+            "блок <style> внутри компонента — в нём палитра, плашка и раскладка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "title и description — общий заголовок и объяснение",
+            "devTitle, devText и command — панель разработчиков и её команда",
+            "devLinkLabel и devLinkHref — ссылка на документацию",
+            "teamTitle, teamText, teamActionLabel и teamActionHref — панель команд и её кнопка",
+            "акцент через проп accent — цвет промпта, ссылки, кнопки и тинта",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Подставьте настоящую команду вашего пакета: блок показывает её как текст и не проверяет.",
+            "Кнопки «копировать» здесь нет намеренно — это серверный компонент; терминальная плашка с копированием есть в cta-014.",
+            "Если аудитория одна, возьмите блок с одной кнопкой: две панели ради симметрии — шум.",
+            "Не добавляйте третью панель: выбор из трёх путей в конце страницы уже не выбор."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Начните так, как удобно вам",
+            "maxLength": 48
+          },
+          {
+            "prop": "command",
+            "label": "Команда",
+            "type": "text",
+            "default": "npx shadcn@latest add @vibeui/cta-011",
+            "maxLength": 64
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Two Paths CTA",
+            "description": "Two panels for two audiences: a developer gets an npx command in a code plate, a team gets a demo button. The entries differ because decisions are made differently.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-cta-011-* variables. A server component. The code plate is dark in both themes: a terminal is never light grey, and a command has to read as a command. The teams panel is tinted warm through color-mix — the panels differ in weight, yet both remain real entry points. A long command scrolls horizontally instead of breaking the layout. From 44rem the panels stand side by side in equal shares.",
+            "ai": {
+              "summary": "A section with two paths to the product: a developers panel with an npx command in a dark code plate and a documentation link, and a teams panel with a demo button. No client JS. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-cta-011-* palette — do not swap it for your theme tokens",
+                "the two different entries — a command and a demo button: the audiences decide differently, and collapsing both paths into two identical buttons loses both",
+                "the code plate dark in both themes: a terminal is never light grey, a command has to read as a command",
+                "overflow-x:auto on the plate — a long command scrolls instead of tearing the panel",
+                "the $ sign with user-select:none: selecting and copying the command with the mouse must not capture the prompt",
+                "the warm tint of the teams panel through color-mix — the panels differ in weight, yet both stay real entries rather than a primary and a leftover",
+                "the two-column layout driven by the block's own width: in a narrow column the panels fold on their own",
+                "the <style> block inside the component — it holds the palette, the plate and the layout",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "title and description — the shared heading and explanation",
+                "devTitle, devText and command — the developers panel and its command",
+                "devLinkLabel and devLinkHref — the documentation link",
+                "teamTitle, teamText, teamActionLabel and teamActionHref — the teams panel and its button",
+                "the accent through the accent prop — it colours the prompt, the link, the button and the tint",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "Put your package's real command in: the block renders it as text and does not validate it.",
+                "There is deliberately no copy button — this is a server component; the terminal plate with copying lives in cta-014.",
+                "If you have one audience, take a single-button block: two panels for the sake of symmetry are noise.",
+                "Do not add a third panel: a choice of three paths at the end of a page is no longer a choice."
+              ],
+              "usage": "<Cta011\n  title=\"Start the way that suits you\"\n  command=\"npx shadcn@latest add @vibeui/cta-011\"\n  teamActionLabel=\"Request a demo\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Start the way that suits you"
+              },
+              "command": {
+                "label": "Command",
+                "default": "npx shadcn@latest add @vibeui/cta-011"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Start the way that suits you",
+                "description": "A developer installs a section with one command. A manager would rather see a live demo and ask questions — both entries are real.",
+                "devTitle": "For developers",
+                "devText": "The section arrives as a plain file in your project. No SDK, no package subscription — a command and that is it.",
+                "devLinkLabel": "Read the docs",
+                "teamTitle": "For teams",
+                "teamText": "We will show how the catalogue fits your process: from picking a section to a finished page at the client's.",
+                "teamActionLabel": "Request a demo"
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "command", "accent", "background"]
+      }
+    },
+    {
+      "name": "cta-012",
+      "type": "registry:block",
+      "title": "Призыв с доверием",
+      "description": "Призыв с социальным доказательством: под кнопкой стопка аватаров-инициалов и строка «5 000+ команд уже строят». Аватары рисуются из имён, без картинок.",
+      "categories": ["cta"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "cta-012/cta-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/cta-012.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cta-012-*. Серверный компонент. Аватары — круги с инициалами, вычисленными из имён: без внешних файлов и без стоковых лиц. Стопка накладывается отрицательным отступом, кольцо вокруг каждого круга нарисовано box-shadow и имитирует цвет страницы. Вся стопка помечена aria-hidden: скринридеру важна строка доказательства, а не декорация.",
+      "meta": {
+        "tags": ["cta", "social-proof", "trust", "avatars", "conversion"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Cta012",
+          "usage": "<Cta012\n  title=\"Стройте страницы вместе с теми, кто уже строит\"\n  actionLabel=\"Присоединиться\"\n  proof=\"5 000+ команд уже строят на VibeUI\"\n/>",
+          "summary": "Центрированный призыв: надзаголовок, заголовок, объяснение, одна кнопка, а под ней стопка аватаров-инициалов и строка социального доказательства. Клиентского JS нет. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-cta-012-* и не подменять её токенами вашей темы",
+            "аватары-инициалы, вычисленные из имён, а не фотографии: без внешних файлов, и инициалы честнее стоковых лиц, которые всё равно никто не разглядывает",
+            "aria-hidden на стопке аватаров — скринридеру важна строка доказательства, а не декоративные круги",
+            "наложение кругов кольцом через box-shadow: border с прозрачностью показал бы сквозь себя соседний аватар",
+            "строку proof рядом со стопкой — цифра без лиц читается как статистика, лица без цифры как декорация, работают они вместе",
+            "одну кнопку: социальное доказательство подпирает одно действие, а не меню",
+            "кегль заголовка в cqi от собственной ширины блока",
+            "блок <style> внутри компонента — в нём палитра, аватары и раскладка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "eyebrow, title и description — надзаголовок, заголовок и объяснение",
+            "actionLabel и actionHref — кнопка",
+            "names — имена для инициалов в стопке",
+            "proof — строка доказательства с цифрой",
+            "акцент через проп accent — цвет инициалов, кнопки и надзаголовка",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Цифра в proof обязана быть настоящей: выдуманное «5 000+» вскрывается одним вопросом в поддержку.",
+            "Четырёх-шести имён достаточно: стопка длиннее превращается в гусеницу.",
+            "Кольцо вокруг аватаров имитирует цвет страницы; на нестандартной подложке подстройте --vibeui-cta-012-ring под её цвет.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Стройте страницы вместе с теми, кто уже строит",
+            "maxLength": 56
+          },
+          {
+            "prop": "proof",
+            "label": "Доказательство",
+            "type": "text",
+            "default": "5 000+ команд уже строят на VibeUI",
+            "maxLength": 44
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Social Proof CTA",
+            "description": "A CTA with social proof: under the button a stack of initial avatars and a line saying \"5,000+ teams already build\". The avatars are drawn from names, no images.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-cta-012-* variables. A server component. The avatars are circles with initials computed from names: no external files and no stock faces. The stack overlaps through a negative margin, and the ring around each circle is drawn with box-shadow to imitate the page colour. The whole stack is aria-hidden: what matters to a screen reader is the proof line, not the decoration.",
+            "ai": {
+              "summary": "A centred CTA: an eyebrow, a heading, an explanation, one button, and beneath it a stack of initial avatars with a social proof line. No client JS. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-cta-012-* palette — do not swap it for your theme tokens",
+                "the initial avatars computed from names rather than photos: no external files, and initials are more honest than stock faces nobody examines anyway",
+                "aria-hidden on the avatar stack — a screen reader needs the proof line, not the decorative circles",
+                "the circle overlap ringed through box-shadow: a semi-transparent border would show the neighbouring avatar through itself",
+                "the proof line next to the stack — a number without faces reads as statistics, faces without a number as decoration; they work together",
+                "the single button: social proof props up one action, not a menu",
+                "the heading size in cqi from the block's own width",
+                "the <style> block inside the component — it holds the palette, the avatars and the layout",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "eyebrow, title and description — the eyebrow, the heading and the explanation",
+                "actionLabel and actionHref — the button",
+                "names — the names behind the initials in the stack",
+                "proof — the proof line with the number",
+                "the accent through the accent prop — it colours the initials, the button and the eyebrow",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The number in proof has to be real: a made-up \"5,000+\" unravels with one support question.",
+                "Four to six names are enough: a longer stack turns into a caterpillar.",
+                "The ring around the avatars imitates the page colour; on a non-standard background tune --vibeui-cta-012-ring to match it.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Cta012\n  title=\"Build pages with those who already build\"\n  actionLabel=\"Join in\"\n  proof=\"5,000+ teams already build with VibeUI\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Build pages with those who already build"
+              },
+              "proof": {
+                "label": "Proof line",
+                "default": "5,000+ teams already build with VibeUI"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Already on board",
+                "title": "Build pages with those who already build",
+                "description": "Teams assemble sites from ready-made sections and hand the routine to an AI agent. Join in — your first layout will be ready today.",
+                "actionLabel": "Join in",
+                "names": [
+                  "Anna Kovaleva",
+                  "Igor Demidov",
+                  "Maria Soboleva",
+                  "Peter Lyakhov",
+                  "Olga Titova"
+                ],
+                "proof": "5,000+ teams already build with VibeUI"
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "proof", "accent", "background"]
+      }
+    },
+    {
+      "name": "cta-013",
+      "type": "registry:block",
+      "title": "Липкая полоса",
+      "description": "Тонкий бар-анонс с одним сообщением и одной кнопкой. Позиционирование статическое: где полосе липнуть — верх, низ, над подвалом — решает страница.",
+      "categories": ["cta"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "cta-013/cta-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/cta-013.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cta-013-*. Серверный компонент, размечен как <aside>: полоса — дополнение к странице, а не её раздел. Позиционирование намеренно статическое — прилипание задаётся снаружи через className (position:sticky и top, z-index по вкусу проекта). Фон бара — тёплый тинт от акцента через color-mix поверх прозрачного, поэтому полоса заметна на любом цвете страницы, не пряча его.",
+      "meta": {
+        "tags": ["cta", "banner", "announcement", "sticky", "bar"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Cta013",
+          "usage": "<Cta013\n  message=\"В каталоге девять новых секций призыва.\"\n  actionLabel=\"Смотреть\"\n  className=\"sticky top-0 z-50\"\n/>",
+          "summary": "Тонкая полоса-анонс: жирное сообщение, приглушённое пояснение и маленькая оранжевая кнопка в одной строке. Позиция статическая, прилипание добавляется снаружи. Клиентского JS нет. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-cta-013-* и не подменять её токенами вашей темы",
+            "статическое позиционирование: где полосе липнуть, решает страница — прилипание задаётся снаружи через className, а зашитый в блок position:fixed воевал бы с любым макетом",
+            "тёплый тинт бара через color-mix от акцента поверх прозрачного — полоса заметна на любом цвете страницы, не закрашивая его",
+            "тонкие вертикальные отступы: полоса, которая липнет к экрану, не имеет права съедать его высоту",
+            "разметку <aside> — полоса является дополнением к странице, а не её разделом",
+            "разный вес сообщения и пояснения: жирное — что случилось, приглушённое — что делать",
+            "перенос кнопки на новую строку через flex-wrap в узкой колонке, а не сжатие текста",
+            "блок <style> внутри компонента — в нём палитра и раскладка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "message и detail — сообщение и пояснение",
+            "actionLabel и actionHref — кнопка",
+            "прилипание через className: sticky top-0 плюс z-index вашего проекта",
+            "акцент через проп accent — цвет тинта и кнопки",
+            "background — подложка под тинтом; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Чтобы полоса прилипла: добавьте через className position:sticky (или fixed) с top:0 и z-index выше контента страницы.",
+            "Кнопки закрытия нет намеренно: состояние «скрыто» требует JS и хранения выбора — добавьте своей обёрткой, если полоса надоедает.",
+            "Держите сообщение в одну мысль: полоса, которую читают дольше двух секунд, — уже секция.",
+            "Одна полоса на страницу; полоса поверх полосы — верный способ получить закрытую вкладку."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "message",
+            "label": "Сообщение",
+            "type": "text",
+            "default": "В каталоге девять новых секций призыва.",
+            "maxLength": 56
+          },
+          {
+            "prop": "actionLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Смотреть",
+            "maxLength": 20
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Sticky Bar CTA",
+            "description": "A thin announcement bar with one message and one button. The positioning is static: where the bar sticks — top, bottom, above the footer — is the page's decision.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-cta-013-* variables. A server component marked up as <aside>: the bar is an addition to the page, not a section of it. The positioning is deliberately static — sticking is applied from outside through className (position:sticky with top, z-index to the project's taste). The bar background is a warm accent tint through color-mix over transparency, so the bar stays visible on any page colour without hiding it.",
+            "ai": {
+              "summary": "A thin announcement bar: a bold message, a muted detail and a small orange button in one line. The position is static; sticking is added from outside. No client JS. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-cta-013-* palette — do not swap it for your theme tokens",
+                "the static positioning: where the bar sticks is the page's decision — sticking is applied from outside through className, while a position:fixed baked into the block would fight any layout",
+                "the warm bar tint through color-mix from the accent over transparency — the bar stays visible on any page colour without painting over it",
+                "the thin vertical padding: a bar that sticks to the screen has no right to eat its height",
+                "the <aside> markup — the bar is an addition to the page, not a section of it",
+                "the different weight of the message and the detail: bold for what happened, muted for what to do",
+                "the button wrapping to a new line through flex-wrap in a narrow column rather than squeezing the text",
+                "the <style> block inside the component — it holds the palette and the layout",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "message and detail — the message and the detail",
+                "actionLabel and actionHref — the button",
+                "sticking through className: sticky top-0 plus your project's z-index",
+                "the accent through the accent prop — it colours the tint and the button",
+                "background — the layer under the tint; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "To make the bar stick: add position:sticky (or fixed) with top:0 through className and a z-index above the page content.",
+                "There is deliberately no close button: a \"hidden\" state needs JS and stored choice — add it with your own wrapper if the bar gets tiresome.",
+                "Keep the message to one thought: a bar that takes more than two seconds to read is already a section.",
+                "One bar per page; a bar on top of a bar is a sure way to get the tab closed."
+              ],
+              "usage": "<Cta013\n  message=\"Nine new CTA sections just landed in the catalogue.\"\n  actionLabel=\"Browse\"\n  className=\"sticky top-0 z-50\"\n/>"
+            },
+            "controls": {
+              "message": {
+                "label": "Message",
+                "default": "Nine new CTA sections just landed in the catalogue."
+              },
+              "actionLabel": {
+                "label": "Button",
+                "default": "Browse"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "message": "Nine new CTA sections just landed in the catalogue.",
+                "detail": "Have a look while they sit at the top of the list.",
+                "actionLabel": "Browse"
+              }
+            }
+          }
+        },
+        "cardControls": ["message", "actionLabel", "accent", "background"]
+      }
+    },
+    {
+      "name": "cta-014",
+      "type": "registry:block",
+      "title": "Команда установки",
+      "description": "Терминальная плашка с командой npx и кнопкой «Копировать»: подпись кнопки меняется на «Скопировано» и возвращается сама. Единственный клиентский блок категории.",
+      "categories": ["cta"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "cta-014/cta-014.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/cta-014.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cta-014-*. Клиентский компонент — копирование через navigator.clipboard без JS не бывает, и это единственная причина \"use client\"; без пропсов блок рендерится полностью. Плашка тёмная в обеих темах: терминал не бывает светло-серым. Подпись кнопки меняется на «Скопировано» и возвращается через две секунды, повторные клики сбрасывают таймер через ref.",
+      "meta": {
+        "tags": ["cta", "terminal", "developers", "clipboard", "install"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Cta014",
+          "usage": "<Cta014\n  title=\"Одна команда — и секция в проекте\"\n  command=\"npx shadcn@latest add @vibeui/cta-014\"\n  copyLabel=\"Копировать\"\n/>",
+          "summary": "Центрированный призыв для разработчиков: заголовок, объяснение и терминальная плашка с шапкой-окном, командой npx и кнопкой копирования. Кнопка подтверждает копирование сменой подписи. Ноль зависимостей, один файл, своя палитра, клиентский код — только clipboard.",
+          "preserve": [
+            "локальную палитру --vibeui-cta-014-* и не подменять её токенами вашей темы",
+            "\"use client\" ровно ради navigator.clipboard: копирование без JS не бывает, но других причин клиентского кода в блоке нет — не добавляйте их",
+            "терминальную плашку тёмной в обеих темах: терминал не бывает светло-серым, команда обязана читаться как команда",
+            "смену подписи кнопки на copiedLabel с возвратом через две секунды — подтверждение копирования обязано быть видимым, а исчезать само",
+            "знак $ с user-select:none: выделение команды мышью и двойным кликом не захватывает промпт, копируется только команда",
+            "overflow-x:auto у строки команды — длинная команда прокручивается, а не разрывает плашку",
+            "зелёный цвет только у состояния «скопировано»: это семантика успеха, а не декорация",
+            "блок <style> внутри компонента — в нём палитра, плашка и раскладка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "eyebrow, title и description — надзаголовок, заголовок и объяснение",
+            "command — команда установки вашего компонента",
+            "windowTitle, copyLabel и copiedLabel — заголовок окна и подписи кнопки",
+            "note — строка под плашкой",
+            "акцент через проп accent — цвет промпта, надзаголовка и рамок фокуса",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "navigator.clipboard работает только в secure context (https или localhost): вне его кнопка молча ничего не сделает.",
+            "Подставьте команду своего пакета: блок показывает и копирует её как текст, не проверяя.",
+            "Три точки в шапке — декорация окна, они помечены aria-hidden; не превращайте их в кнопки.",
+            "Не убирайте кнопку копирования: выделять команду в <pre> руками — ровно то трение, ради которого блок существует."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Одна команда — и секция в проекте",
+            "maxLength": 48
+          },
+          {
+            "prop": "command",
+            "label": "Команда",
+            "type": "text",
+            "default": "npx shadcn@latest add @vibeui/cta-014",
+            "maxLength": 64
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Install Command CTA",
+            "description": "A terminal plate with an npx command and a Copy button: the button label flips to \"Copied\" and returns by itself. The only client block of the category.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-cta-014-* variables. A client component — copying via navigator.clipboard does not exist without JS, and that is the only reason for \"use client\"; the block renders fully without props. The plate is dark in both themes: a terminal is never light grey. The button label flips to \"Copied\" and returns after two seconds; repeated clicks reset the timer through a ref.",
+            "ai": {
+              "summary": "A centred developer CTA: a heading, an explanation and a terminal plate with a window header, an npx command and a copy button. The button confirms the copy by changing its label. Zero dependencies, one file, its own palette; the only client code is the clipboard.",
+              "preserve": [
+                "the local --vibeui-cta-014-* palette — do not swap it for your theme tokens",
+                "\"use client\" exactly for navigator.clipboard: copying does not exist without JS, but there is no other reason for client code in the block — do not add any",
+                "the terminal plate dark in both themes: a terminal is never light grey, a command has to read as a command",
+                "the button label flipping to copiedLabel and returning after two seconds — the copy confirmation has to be visible and to disappear on its own",
+                "the $ sign with user-select:none: selecting the command with the mouse or a double click does not capture the prompt, only the command is copied",
+                "overflow-x:auto on the command line — a long command scrolls instead of tearing the plate",
+                "the green colour only on the \"copied\" state: it is success semantics, not decoration",
+                "the <style> block inside the component — it holds the palette, the plate and the layout",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "eyebrow, title and description — the eyebrow, the heading and the explanation",
+                "command — the install command of your component",
+                "windowTitle, copyLabel and copiedLabel — the window title and the button labels",
+                "note — the line under the plate",
+                "the accent through the accent prop — it colours the prompt, the eyebrow and the focus rings",
+                "background — the component background; empty means no background, taking the page colour"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "navigator.clipboard only works in a secure context (https or localhost): outside it the button silently does nothing.",
+                "Put your package's command in: the block shows and copies it as text without validating.",
+                "The three dots in the header are window decoration marked aria-hidden; do not turn them into buttons.",
+                "Do not remove the copy button: hand-selecting a command inside a <pre> is exactly the friction this block exists to remove."
+              ],
+              "usage": "<Cta014\n  title=\"One command — and the section is in\"\n  command=\"npx shadcn@latest add @vibeui/cta-014\"\n  copyLabel=\"Copy\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "One command — and the section is in"
+              },
+              "command": {
+                "label": "Command",
+                "default": "npx shadcn@latest add @vibeui/cta-014"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Install",
+                "title": "One command — and the section is in",
+                "description": "No accounts, no downloads: the command brings the component file straight into your project, then your AI agent takes it from there.",
+                "windowTitle": "Terminal",
+                "copyLabel": "Copy",
+                "copiedLabel": "Copied",
+                "note": "Works in any project with shadcn/ui set up."
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "command", "accent", "background"]
+      }
+    },
+    {
+      "name": "cta-015",
+      "type": "registry:block",
+      "title": "Приложение и QR",
+      "description": "Призыв поставить приложение: плашки сторов без брендовых логотипов и QR-заглушка, нарисованная CSS-паттерном на белой плате.",
+      "categories": ["cta"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "cta-015/cta-015.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/cta-015.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cta-015-*. Серверный компонент. QR-заглушка — шахматный узор repeating-conic-gradient и три угловых маркера из псевдоэлементов, помечена aria-hidden: это макет места под настоящий код. Плата под QR всегда белая, узор всегда тёмный — сканеру нужен тёмный рисунок на светлом, темнить плату вместе с темой нельзя. Плашки сторов нарисованы текстом, без брендовых логотипов. От 46rem текст и QR встают рядом.",
+      "meta": {
+        "tags": ["cta", "mobile", "app", "qr", "download"],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Cta015",
+          "usage": "<Cta015\n  title=\"Смотрите секции с телефона\"\n  qrCaption=\"Наведите камеру\"\n  badges={[{ caption: \"Скачать для\", store: \"iOS\", href: \"#ios\" }]}\n/>",
+          "summary": "Двухколоночный призыв поставить приложение: слева заголовок, объяснение и плашки сторов, справа белая плата с QR-заглушкой и подписью. QR и плашки нарисованы CSS, внешних файлов нет. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
+          "preserve": [
+            "локальную палитру --vibeui-cta-015-* и не подменять её токенами вашей темы",
+            "aria-hidden на QR-заглушке: это макет места под настоящий код, скринридеру там читать нечего",
+            "белую плату и тёмный узор QR в обеих темах — сканеру нужен тёмный рисунок на светлом, QR, потемневший вместе с темой, перестаёт сканироваться",
+            "три угловых маркера: именно они делают паттерн узнаваемым как QR, без них это просто шахматная доска",
+            "плашки сторов нарисованными текстом, без брендовых логотипов — логотипы сторов являются чужими товарными знаками со своими правилами использования",
+            "плашки как ссылки <a>, а не кнопки: путь в стор — это переход, и он обязан работать без JS",
+            "двухколоночную раскладку от собственной ширины блока: в узкой колонке QR уходит под текст",
+            "блок <style> внутри компонента — в нём палитра, узор и раскладка",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
+            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
+          ],
+          "adapt": [
+            "eyebrow, title и description — надзаголовок, заголовок и объяснение",
+            "badges — подписи и адреса плашек (caption, store, href)",
+            "qrCaption — подпись под QR",
+            "акцент через проп accent — цвет надзаголовка и рамок фокуса",
+            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
+            "внешние отступы через className"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Заглушка не сканируется: перед запуском замените [data-part=\"qr\"] настоящим QR — картинкой или своим генератором.",
+            "Официальные бейджи сторов берутся из их брендовых гайдлайнов, и у каждого свои правила размеров и отступов.",
+            "Ведите обе плашки на реальные адреса приложений, а не на главную сайта.",
+            "Не перекрашивайте узор QR в акцент: контраст и сканируемость важнее бренда."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Смотрите секции с телефона",
+            "maxLength": 44
+          },
+          {
+            "prop": "qrCaption",
+            "label": "Подпись у QR",
+            "type": "text",
+            "default": "Наведите камеру",
+            "maxLength": 28
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "App QR CTA",
+            "description": "An app-install CTA: store plaques without brand logos and a QR placeholder drawn as a CSS pattern on a white plate.",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-cta-015-* variables. A server component. The QR placeholder is a repeating-conic-gradient checker pattern with three corner finder markers made of pseudo-elements, marked aria-hidden: it is a mock of the place for a real code. The plate under the QR is always white and the pattern always dark — a scanner needs a dark drawing on a light ground, and darkening the plate with the theme is not allowed. The store plaques are drawn as text, with no brand logos. From 46rem the text and the QR stand side by side.",
+            "ai": {
+              "summary": "A two-column app-install CTA: on the left a heading, an explanation and store plaques; on the right a white plate with a QR placeholder and a caption. The QR and the plaques are drawn in CSS, no external files. Zero dependencies, one file, its own palette, no client JS.",
+              "preserve": [
+                "the local --vibeui-cta-015-* palette — do not swap it for your theme tokens",
+                "aria-hidden on the QR placeholder: it is a mock of the place for a real code, a screen reader has nothing to read there",
+                "the white plate and the dark QR pattern in both themes — a scanner needs a dark drawing on a light ground, and a QR darkened with the theme stops scanning",
+                "the three corner finder markers: they are what makes the pattern recognisable as a QR, without them it is just a checkerboard",
+                "the store plaques drawn as text with no brand logos — store logos are third-party trademarks with usage rules of their own",
+                "the plaques as <a> links rather than buttons: the way to a store is navigation and has to work without JS",
+                "the two-column layout driven by the block's own width: in a narrow column the QR drops under the text",
+                "the <style> block inside the component — it holds the palette, the pattern and the layout",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
+                "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
+              ],
+              "adapt": [
+                "eyebrow, title and description — the eyebrow, the heading and the explanation",
+                "badges — the plaque captions and addresses (caption, store, href)",
+                "qrCaption — the caption under the QR",
+                "the accent through the accent prop — it colours the eyebrow and the focus rings",
+                "background — the component background; empty means no background, taking the page colour",
+                "outer spacing through className"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The placeholder does not scan: before launch replace [data-part=\"qr\"] with a real QR — an image or your own generator.",
+                "Official store badges come from their brand guidelines, each with its own rules for sizes and margins.",
+                "Point both plaques at the apps' real store addresses, not at the site's home page.",
+                "Do not recolour the QR pattern into the accent: contrast and scannability outrank the brand."
+              ],
+              "usage": "<Cta015\n  title=\"Browse the sections from your phone\"\n  qrCaption=\"Point your camera\"\n  badges={[{ caption: \"Get it for\", store: \"iOS\", href: \"#ios\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Browse the sections from your phone"
+              },
+              "qrCaption": {
+                "label": "QR caption",
+                "default": "Point your camera"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "The catalogue in your pocket",
+                "title": "Browse the sections from your phone",
+                "description": "Save the blocks you like on the go, then hand the shortlist to your AI agent at your desk. Point your camera — the install takes a minute.",
+                "qrCaption": "Point your camera",
+                "badges": [
+                  { "caption": "Get it for", "store": "iOS", "href": "#ios" },
+                  {
+                    "caption": "Get it for",
+                    "store": "Android",
+                    "href": "#android"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": ["title", "qrCaption", "accent", "background"]
+      }
     }
   ]
 }
