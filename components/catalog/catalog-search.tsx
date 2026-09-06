@@ -41,7 +41,7 @@ export function CatalogSearch({
             onChange("")
           }
         }}
-        className="text-shell-fg placeholder:text-shell-muted caret-shell-accent focus-visible:ring-shell-ring h-9 w-full rounded-md bg-transparent pr-9 pl-9 text-sm outline-none focus-visible:ring-2"
+        className="text-shell-fg placeholder:text-shell-muted caret-shell-accent focus-visible:ring-shell-ring/35 h-9 w-full rounded-md bg-transparent pr-9 pl-9 text-sm outline-none focus-visible:ring-1"
       />
 
       {value !== "" ? (
