@@ -49,7 +49,7 @@ export function CategoryExplorer({
             className={
               "focus-visible:ring-shell-ring inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none " +
               (tab.key === active
-                ? "bg-shell-elevated text-shell-fg"
+                ? "bg-shell-accent text-shell-accent-fg"
                 : "text-shell-muted hover:text-shell-fg hover:bg-shell-panel")
             }
           >
@@ -57,7 +57,9 @@ export function CategoryExplorer({
             <span
               className={
                 "text-xs tabular-nums " +
-                (tab.key === active ? "text-shell-muted" : "text-shell-muted/70")
+                (tab.key === active
+                  ? "text-shell-accent-fg/70"
+                  : "text-shell-muted/70")
               }
             >
               {tab.count}
@@ -68,7 +70,7 @@ export function CategoryExplorer({
 
       <ul className="grid grid-cols-2 gap-x-6 gap-y-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
         {current.categories.map((category) => (
-          <li key={`${current.key}:${category.slug}`}>
+          <li key={`${current.key}:${category.href}`}>
             <Link
               href={localePath(locale, category.href)}
               className="group focus-visible:ring-shell-ring flex items-center gap-2 rounded-md py-0.5 text-sm transition-colors focus-visible:ring-2 focus-visible:outline-none"

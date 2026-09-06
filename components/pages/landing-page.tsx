@@ -21,7 +21,7 @@ const GROUP_OF = new Map<string, string>(
 )
 
 const BTN_PRIMARY =
-  "bg-shell-fg text-shell inline-flex h-11 items-center justify-center gap-2 rounded-full px-6 text-sm font-medium transition-opacity hover:opacity-90 focus-visible:ring-shell-ring focus-visible:ring-2 focus-visible:outline-none"
+  "bg-shell-accent text-shell-accent-fg inline-flex h-11 items-center justify-center gap-2 rounded-full px-6 text-sm font-medium transition-opacity hover:opacity-90 focus-visible:ring-shell-ring focus-visible:ring-2 focus-visible:outline-none"
 const BTN_GHOST =
   "border-shell-border text-shell-fg hover:bg-shell-panel hover:border-shell-border-strong inline-flex h-11 items-center justify-center gap-2 rounded-full border px-6 text-sm font-medium transition-colors focus-visible:ring-shell-ring focus-visible:ring-2 focus-visible:outline-none"
 
@@ -57,11 +57,18 @@ export function LandingPage({ locale }: { locale: Locale }) {
   )
   const categoriesTotal = allCategories.length
   const groupsTotal = new Set(
-    allCategories.map((category) => GROUP_OF.get(category.slug)).filter(Boolean),
+    allCategories
+      .map((category) => GROUP_OF.get(category.slug))
+      .filter(Boolean),
   ).size
 
   const tabs: ExplorerTab[] = [
-    { key: "all", label: en ? "All" : "Все", count: total, categories: allCategories },
+    {
+      key: "all",
+      label: en ? "All" : "Все",
+      count: total,
+      categories: allCategories,
+    },
     ...kinds.map((entry) => ({
       key: entry.kind,
       label: entry.copy.title,
@@ -149,6 +156,10 @@ export function LandingPage({ locale }: { locale: Locale }) {
             href={localePath(locale, catalogBasePath("animation"))}
             className="border-shell-border bg-shell-panel text-shell-muted hover:text-shell-fg hover:border-shell-border-strong mx-auto inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-medium transition-colors"
           >
+            <span
+              className="bg-shell-accent size-1.5 shrink-0 rounded-full"
+              aria-hidden="true"
+            />
             {en ? "New · Animations section" : "Новое · раздел Анимации"}
             <ArrowRight className="size-3" aria-hidden="true" />
           </Link>
@@ -163,7 +174,10 @@ export function LandingPage({ locale }: { locale: Locale }) {
           </p>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            <Link href={localePath(locale, "/components")} className={BTN_PRIMARY}>
+            <Link
+              href={localePath(locale, "/components")}
+              className={BTN_PRIMARY}
+            >
               {en ? "Browse components" : "Смотреть компоненты"}
               <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
@@ -177,12 +191,12 @@ export function LandingPage({ locale }: { locale: Locale }) {
         <section className="mx-auto w-full max-w-[1100px] px-4 lg:px-6">
           <div className="border-shell-border bg-shell-panel overflow-hidden rounded-2xl border">
             <div className="border-shell-border flex items-center gap-1.5 border-b px-4 py-3">
-              <span className="bg-shell-border size-2.5 rounded-full" />
+              <span className="bg-shell-accent size-2.5 rounded-full" />
               <span className="bg-shell-border size-2.5 rounded-full" />
               <span className="bg-shell-border size-2.5 rounded-full" />
             </div>
             <div
-              data-preview-theme="dark"
+              data-preview-theme="auto"
               className="bg-preview-surface flex items-center justify-center px-4 py-16"
             >
               <Activity001 />
@@ -227,9 +241,12 @@ export function LandingPage({ locale }: { locale: Locale }) {
                   <p className="text-shell-muted text-sm leading-relaxed">
                     {entry.copy.description}
                   </p>
-                  <span className="text-shell-fg mt-auto inline-flex items-center gap-1.5 pt-2 text-sm font-medium">
+                  <span className="text-shell-fg group-hover:text-shell-accent mt-auto inline-flex items-center gap-1.5 pt-2 text-sm font-medium transition-colors">
                     {en ? "Open" : "Открыть"}
-                    <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+                    <ArrowRight
+                      className="size-4 transition-transform group-hover:translate-x-0.5"
+                      aria-hidden="true"
+                    />
                   </span>
                 </Link>
               </li>
@@ -240,7 +257,9 @@ export function LandingPage({ locale }: { locale: Locale }) {
         {/* Сравнение */}
         <section className="mx-auto w-full max-w-[1100px] px-4 py-12 lg:px-6">
           <h2 className="text-shell-fg mb-8 text-center text-2xl font-semibold tracking-tight sm:text-3xl">
-            {en ? "Handcrafted, not re-invented" : "Готовый, а не пересозданный"}
+            {en
+              ? "Handcrafted, not re-invented"
+              : "Готовый, а не пересозданный"}
           </h2>
           <div className="grid gap-4 md:grid-cols-2">
             <div className="border-shell-border bg-shell-panel rounded-2xl border p-6">
@@ -249,21 +268,30 @@ export function LandingPage({ locale }: { locale: Locale }) {
               </h3>
               <ul className="flex flex-col gap-3">
                 {compareBad.map((line) => (
-                  <li key={line} className="text-shell-muted flex gap-2.5 text-sm">
-                    <X className="mt-0.5 size-4 shrink-0 opacity-70" aria-hidden="true" />
+                  <li
+                    key={line}
+                    className="text-shell-muted flex gap-2.5 text-sm"
+                  >
+                    <X
+                      className="mt-0.5 size-4 shrink-0 opacity-70"
+                      aria-hidden="true"
+                    />
                     {line}
                   </li>
                 ))}
               </ul>
             </div>
-            <div className="border-shell-border bg-shell-elevated rounded-2xl border p-6">
+            <div className="border-shell-accent/40 bg-shell-elevated rounded-2xl border p-6">
               <h3 className="text-shell-fg mb-4 font-semibold">
                 {en ? "With VibeUI" : "С VibeUI"}
               </h3>
               <ul className="flex flex-col gap-3">
                 {compareGood.map((line) => (
                   <li key={line} className="text-shell-fg flex gap-2.5 text-sm">
-                    <Check className="text-shell-accent mt-0.5 size-4 shrink-0" aria-hidden="true" />
+                    <Check
+                      className="text-shell-accent mt-0.5 size-4 shrink-0"
+                      aria-hidden="true"
+                    />
                     {line}
                   </li>
                 ))}
@@ -309,7 +337,10 @@ export function LandingPage({ locale }: { locale: Locale }) {
               : "Открой каталог, выбери компонент, отдай его агенту."}
           </p>
           <div className="mt-8 flex justify-center">
-            <Link href={localePath(locale, "/components")} className={BTN_PRIMARY}>
+            <Link
+              href={localePath(locale, "/components")}
+              className={BTN_PRIMARY}
+            >
               {en ? "Browse components" : "Смотреть компоненты"}
               <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
@@ -321,7 +352,7 @@ export function LandingPage({ locale }: { locale: Locale }) {
           <div className="mx-auto flex w-full max-w-[1440px] flex-col gap-8 px-4 py-12 sm:flex-row sm:justify-between lg:px-6">
             <div className="max-w-xs">
               <span className="text-shell-fg text-base font-semibold tracking-tight">
-                VibeUI
+                Vibe<span className="text-shell-accent">UI</span>
               </span>
               <p className="text-shell-muted mt-2 text-sm leading-relaxed">
                 {en

@@ -16,7 +16,7 @@ import {
   defaultValues,
   toSearchParams,
   type ControlValues,
-  type PreviewTheme,
+  type PreviewSurface,
 } from "@/lib/controls"
 import { getDictionary, type Locale } from "@/lib/i18n"
 import { itemCode } from "@/lib/item-code"
@@ -40,7 +40,7 @@ const CodeSheet = dynamic(() =>
 )
 
 const TOGGLE =
-  "border-shell-border text-shell-muted hover:text-shell-fg hover:border-shell-border-strong hover:bg-shell-panel focus-visible:ring-shell-ring inline-flex size-7 shrink-0 items-center justify-center rounded-md border transition-colors focus-visible:ring-2 focus-visible:outline-none"
+  "border-shell-border text-shell-muted hover:text-shell-accent hover:border-shell-border-strong hover:bg-shell-panel focus-visible:ring-shell-ring inline-flex size-7 shrink-0 items-center justify-center rounded-md border transition-colors focus-visible:ring-2 focus-visible:outline-none"
 
 /**
  * Интерактивная часть карточки: подложка превью, настройка и подпись.
@@ -99,23 +99,15 @@ export function CardInteractive({
     }
   }
 
-  const [theme, setTheme] = useState<PreviewTheme>("dark")
+  // "auto" — подложку красит CSS по теме оболочки. Так кадр правильный уже в
+  // первой отрисовке: раньше карточка стартовала тёмной и перекрашивалась
+  // эффектом после гидратации, и светлая страница мигала.
+  const [theme, setTheme] = useState<PreviewSurface>("auto")
 
-  // Подложка карточки следует за темой оболочки: и на старте (если человек
-  // уже переключил сайт на светлую — начинать с тёмного кадра было бы
-  // противоречием на виду), и живьём при клике на переключатель темы в
-  // шапке. Начальное состояние ставится из эффекта: на сервере атрибута нет,
-  // а взять его из document прямо в рендере сломало бы гидратацию.
+  // Переключение темы сайта возвращает кадр к «как у оболочки»: человек
+  // сменил тему целиком, и локальный выбор в карточке больше не актуален.
   useEffect(() => {
-    if (document.documentElement.dataset.shellTheme === "light") {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setTheme("light")
-    }
-
-    const onShellTheme = (event: Event) => {
-      const light = (event as CustomEvent<{ light: boolean }>).detail.light
-      setTheme(light ? "light" : "dark")
-    }
+    const onShellTheme = () => setTheme("auto")
 
     document.addEventListener(SHELL_THEME_EVENT, onShellTheme)
     return () => document.removeEventListener(SHELL_THEME_EVENT, onShellTheme)
@@ -181,7 +173,6 @@ export function CardInteractive({
     }
   }, [])
 
-  const isDark = theme === "dark"
   const params = toSearchParams(controls, values)
   // Пока настройки не трогали, в кадре живёт серверная миниатюра, и JS
   // конфигуратора на витрину не едет. Первое нажатие значка переводит кадр
@@ -202,9 +193,13 @@ export function CardInteractive({
       : docUrl
     : null
 
-  // Тема переносится всегда, значения — только изменённые.
+  // Тема переносится, только если её выбрали руками: "auto" — это отсутствие
+  // выбора, и страница item'а решит сама по теме оболочки.
   const itemParams = new URLSearchParams(params)
-  itemParams.set("theme", theme)
+
+  if (theme !== "auto") {
+    itemParams.set("theme", theme)
+  }
 
   return (
     <>
@@ -379,19 +374,34 @@ export function CardInteractive({
               </button>
             ) : null}
 
+            {/* Обе иконки в разметке, видимую выбирает CSS: при "auto"
+                текущая подложка известна только из атрибута на <html>, а
+                читать его в рендере нельзя — сломается гидратация. */}
             <button
               type="button"
-              onClick={() => setTheme(isDark ? "light" : "dark")}
-              aria-pressed={isDark}
+              onClick={() => {
+                const shellLight =
+                  document.documentElement.dataset.shellTheme === "light"
+
+                setTheme((current) =>
+                  current === "auto"
+                    ? shellLight
+                      ? "dark"
+                      : "light"
+                    : current === "dark"
+                      ? "light"
+                      : "dark",
+                )
+              }}
               className={TOGGLE}
             >
-              {isDark ? (
+              <span data-theme-icon="sun">
                 <Sun className="size-3.5" aria-hidden="true" />
-              ) : (
+                <span className="sr-only">{t.card.toLight}</span>
+              </span>
+              <span data-theme-icon="moon">
                 <Moon className="size-3.5" aria-hidden="true" />
-              )}
-              <span className="sr-only">
-                {isDark ? t.card.toLight : t.card.toDark}
+                <span className="sr-only">{t.card.toDark}</span>
               </span>
             </button>
 

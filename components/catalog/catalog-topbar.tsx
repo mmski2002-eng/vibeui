@@ -21,7 +21,9 @@ export function CatalogTopbar({
             href={localePath(locale, "/")}
             className="text-shell-fg focus-visible:ring-shell-ring rounded-sm text-base font-semibold tracking-tight focus-visible:ring-2 focus-visible:outline-none"
           >
-            VibeUI
+            {/* Оранжевое «UI» — wordmark; на логотипы контраст-требования
+                WCAG не распространяются. */}
+            Vibe<span className="text-shell-accent">UI</span>
           </Link>
           <span className="border-shell-border text-shell-muted hidden rounded-full border px-2 py-0.5 text-xs sm:inline">
             {t.topbar.items(itemCount)}

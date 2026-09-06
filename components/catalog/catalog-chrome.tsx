@@ -16,7 +16,8 @@ export type NavCategory = {
   count: number
 }
 
-const ACTIVE = "bg-shell-elevated text-shell-fg"
+const ACTIVE =
+  "bg-shell-elevated text-shell-fg shadow-[inset_2px_0_0_var(--shell-accent)]"
 const IDLE = "text-shell-fg hover:bg-shell-elevated"
 
 function itemClass(active: boolean) {

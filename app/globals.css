@@ -56,8 +56,12 @@
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
+  /* Брендовый оранжевый (#FF5900). Текст на нём — почти чёрный: белый даёт
+     ~3.1:1 и заваливает AA, чёрный — ~6.7:1. В светлой теме ступень темнее
+     (L 0.64): чистый #FF5900 на белом даёт 2.9:1 и не добирает 3:1 даже для
+     иконок и крупного текста. */
+  --primary: oklch(0.64 0.2144 39.8);
+  --primary-foreground: oklch(0.145 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
   --muted: oklch(0.97 0 0);
@@ -67,7 +71,7 @@
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  --ring: oklch(0.64 0.2144 39.8);
   --radius: 0.625rem;
 }
 
@@ -82,8 +86,8 @@
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.205 0 0);
   --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
+  --primary: oklch(0.6803 0.2144 39.8);
+  --primary-foreground: oklch(0.145 0 0);
   --secondary: oklch(0.269 0 0);
   --secondary-foreground: oklch(0.985 0 0);
   --muted: oklch(0.269 0 0);
@@ -93,7 +97,7 @@
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
+  --ring: oklch(0.6803 0.2144 39.8);
 }
 
 @layer base {
@@ -114,7 +118,7 @@
      при своей теме. */
   html:has(.catalog-shell):not([data-shell-theme="light"]) {
     color-scheme: dark;
-    scrollbar-color: oklch(0.35 0 0) oklch(0.185 0 0);
+    scrollbar-color: oklch(0.35 0 0) oklch(0.16 0 0);
   }
 
   html[data-shell-theme="light"]:has(.catalog-shell) {
@@ -129,9 +133,11 @@
      и preview не должны перекрашиваться от контекста каталога. Поэтому здесь
      не используется класс .dark — он каскадит на всё поддерево, включая блоки. */
   .catalog-shell {
-    --shell-bg: oklch(0.145 0 0);
-    --shell-panel: oklch(0.185 0 0);
-    --shell-elevated: oklch(0.225 0 0);
+    /* Брендовая глубина: фон почти чёрный (deep black), панель на ступень
+       выше, elevated — oil black #1A1A1A из брендбука. */
+    --shell-bg: oklch(0.115 0 0);
+    --shell-panel: oklch(0.16 0 0);
+    --shell-elevated: oklch(0.2178 0 0);
     /* Подложка превью мелкого компонента. Светлая нейтральная, а не
        тёмная: большинство UI-компонентов рассчитаны на светлую
        поверхность, и на тёмной подложке текстовые кнопки не читаются. */
@@ -149,13 +155,14 @@
     --shell-card-border-strong: oklch(1 0 0 / 8%);
     --shell-fg: oklch(0.985 0 0);
     --shell-muted: oklch(0.708 0 0);
-    --shell-accent: oklch(0.985 0 0);
-    --shell-accent-fg: oklch(0.185 0 0);
-    --shell-ring: oklch(0.708 0 0);
+    /* Брендовый оранжевый (#FF5900); текст на нём тёмный — см. --primary. */
+    --shell-accent: oklch(0.6803 0.2144 39.8);
+    --shell-accent-fg: oklch(0.145 0 0);
+    --shell-ring: oklch(0.6803 0.2144 39.8);
     /* Дефолт кадра — тот же почти-чёрный, что и страница: карточка не должна
        быть светлее фона, её отделяет рамка. Значение перекрывается атрибутом
        data-preview-theme, который ставит переключатель карточки. */
-    --preview-surface: oklch(0.145 0 0);
+    --preview-surface: oklch(0.115 0 0);
   }
 
   /* Светлая тема оболочки. Переключатель ставит атрибут на <html>, а не на
@@ -175,9 +182,10 @@
     --shell-card-border-strong: oklch(0 0 0 / 8%);
     --shell-fg: oklch(0.145 0 0);
     --shell-muted: oklch(0.45 0 0);
-    --shell-accent: oklch(0.205 0 0);
-    --shell-accent-fg: oklch(0.985 0 0);
-    --shell-ring: oklch(0.556 0 0);
+    /* Ступень темнее брендового #FF5900 — см. комментарий у --primary. */
+    --shell-accent: oklch(0.64 0.2144 39.8);
+    --shell-accent-fg: oklch(0.145 0 0);
+    --shell-ring: oklch(0.64 0.2144 39.8);
   }
 
   /* Подложка превью на карточке. Переключателем меняется только она:
@@ -192,8 +200,44 @@
   }
 
   [data-preview-theme="dark"] {
-    --preview-surface: oklch(0.145 0 0);
+    --preview-surface: oklch(0.115 0 0);
     color-scheme: dark;
+  }
+
+  /* Кадр без явного выбора идёт за темой оболочки. Красит его CSS, а не
+     React: атрибут на <html> ставит блокирующий скрипт до первой отрисовки,
+     поэтому светлая страница больше не мигает тёмным кадром на перезагрузке. */
+  [data-preview-theme="auto"] {
+    --preview-surface: oklch(0.115 0 0);
+    color-scheme: dark;
+  }
+
+  html[data-shell-theme="light"] [data-preview-theme="auto"] {
+    --preview-surface: oklch(0.97 0.002 265);
+    color-scheme: light;
+    scrollbar-color: auto;
+  }
+
+  /* Значок переключателя показывает, куда переключит, поэтому у кадра со
+     светлой подложкой это луна, у тёмного — солнце. Для «как у оболочки»
+     выбор делает тот же CSS: в рендере читать <html> нельзя, это сломало бы
+     гидратацию. */
+  [data-preview-theme="light"] [data-theme-icon="sun"],
+  [data-preview-theme="dark"] [data-theme-icon="moon"],
+  [data-preview-theme="auto"] [data-theme-icon="moon"] {
+    display: none;
+  }
+
+  html[data-shell-theme="light"]
+    [data-preview-theme="auto"]
+    [data-theme-icon="sun"] {
+    display: none;
+  }
+
+  html[data-shell-theme="light"]
+    [data-preview-theme="auto"]
+    [data-theme-icon="moon"] {
+    display: inline;
   }
 
   /* Сетка витрины. Колонки считает container query по ширине самой сетки:
