@@ -1,0 +1,257 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "event-001",
+      "type": "registry:block",
+      "title": "Афиша списком",
+      "description": "Список ближайших событий: строки с плашкой даты слева, названием и деталями в центре, кнопкой записи справа. Самодостаточна: один файл, без зависимостей.",
+      "categories": ["events"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "event-001/event-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/event-001.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-event-001-*. Серверный компонент. Строка события — grid: плашка даты (число крупно, месяц под ним на тёплом фоне), информация и кнопка. На узком экране кнопка переносится под содержимое через grid-column, на широком встаёт справа.",
+      "meta": {
+        "tags": ["events", "schedule", "listing", "agenda", "marketing"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Event001",
+          "usage": "<Event001\n  events={[{ day: \"18\", month: \"сен\", title: \"Вебинар\", meta: \"19:00\", format: \"Онлайн\" }]}\n/>",
+          "summary": "Афиша списком: строки событий с плашкой даты слева, названием и метаданными в центре, кнопкой записи справа. Плашка даты — число крупно и месяц под ним на тёплом фоне. На узком экране кнопка переносится вниз. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-event-001-* и не подменять её токенами вашей темы",
+            "плашку даты как отдельный блок с числом и месяцем — это якорь строки",
+            "перенос кнопки под содержимое на узком экране через grid-column",
+            "light-dark() в палитре: компонент следует color-scheme окружения"
+          ],
+          "adapt": [
+            "eyebrow, title и ctaLabel — надзаголовок, заголовок и подпись кнопки",
+            "массив events — день, месяц, название, детали и формат каждого события",
+            "акцент через проп accent — плашка даты, формат и кнопка",
+            "background — подложка компонента; пусто означает «без подложки»"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme; у проекта должно быть объявлено color-scheme: light dark на html.",
+            "Кнопки ведут на # по умолчанию: подставьте адреса записи на события.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          { "prop": "title", "label": "Заголовок", "type": "text", "default": "Ближайшие мероприятия", "maxLength": 40 },
+          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "События", "maxLength": 24 },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+        ],
+        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "i18n": {
+          "en": {
+            "description": "A list of upcoming events: rows with a date plate on the left, title and details in the middle, a register button on the right. Self-contained — one file, no dependencies.",
+            "ai": {
+              "summary": "An events list: rows with a date plate on the left, title and metadata in the middle, a register button on the right. The date plate has the day large and the month below on a warm background. On a narrow screen the button wraps below. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-event-001-* palette — do not swap it for your theme tokens",
+                "the date plate as a distinct block with day and month — it anchors the row",
+                "wrapping the button below the content on a narrow screen via grid-column",
+                "light-dark() in the palette: the component follows the surrounding color-scheme"
+              ],
+              "adapt": [
+                "eyebrow, title and ctaLabel — the eyebrow, heading and button label",
+                "the events array — day, month, title, details and format of each event",
+                "the accent via the accent prop — date plate, format and button",
+                "background — the component's backdrop; empty means no backdrop"
+              ],
+              "notes": [
+                "The theme comes from color-scheme; the project must declare color-scheme: light dark on html.",
+                "Buttons point to # by default: substitute the event registration addresses.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Event001\n  events={[{ day: \"18\", month: \"Sep\", title: \"Webinar\", meta: \"7pm\", format: \"Online\" }]}\n/>"
+            },
+            "controls": {
+              "title": { "label": "Title", "default": "Upcoming events" },
+              "eyebrow": { "label": "Eyebrow", "default": "Events" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "title": "Event List",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-event-001-* variables. A server component. An event row is a grid: a date plate (day large, month below on a warm background), the info and a button. On a narrow screen the button wraps below the content via grid-column; on a wide screen it sits on the right."
+          }
+        }
+      }
+    },
+    {
+      "name": "event-002",
+      "type": "registry:block",
+      "title": "Карточка события",
+      "description": "Страница одного мероприятия: обложка-градиент с бейджем, описание, детали (дата, время, место, цена), спикеры инициалами и кнопка регистрации. Самодостаточна: один файл, без зависимостей.",
+      "categories": ["events"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "event-002/event-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/event-002.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-event-002-*. Серверный компонент. Обложка — тёплый градиент с полупрозрачным бейджем. Детали сеткой 2×2, спикеры — стопка аватаров из инициалов с обводкой цветом карточки. Инициалы вместо фото: стоковое лицо вредит доверию.",
+      "meta": {
+        "tags": ["events", "conference", "detail", "registration", "marketing"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Event002",
+          "usage": "<Event002\n  title=\"VibeConf\"\n  dateLabel=\"12 октября\"\n  speakers={[\"Анна Ковалёва\"]}\n/>",
+          "summary": "Карточка одного события: тёплая обложка-градиент с бейджем, заголовок, описание, детали сеткой (дата, время, место, цена), спикеры инициалами и кнопка регистрации. Формат страницы отдельного мероприятия. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-event-002-* и не подменять её токенами вашей темы",
+            "обложку-градиент с бейджем вместо стокового фото",
+            "инициалы спикеров вместо фотографий: стоковое лицо бьёт по доверию",
+            "light-dark() в палитре: компонент следует color-scheme окружения"
+          ],
+          "adapt": [
+            "eyebrow, badge, title, summary — надзаголовок, бейдж, заголовок и описание",
+            "dateLabel, timeLabel, placeLabel, priceLabel — детали события",
+            "массив speakers и ctaLabel/ctaHref — спикеры и кнопка регистрации",
+            "акцент через проп accent — надзаголовок, детали и кнопка"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme; у проекта должно быть объявлено color-scheme: light dark на html.",
+            "Инициалы считаются из первых двух слов имени спикера.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          { "prop": "title", "label": "Заголовок", "type": "text", "default": "VibeConf: интерфейсы для вайбкодинга", "maxLength": 52 },
+          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "Конференция", "maxLength": 24 },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+        ],
+        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "i18n": {
+          "en": {
+            "description": "A single event page: a gradient cover with a badge, a summary, details (date, time, place, price), speakers by initials and a register button. Self-contained — one file, no dependencies.",
+            "ai": {
+              "summary": "A single event card: a warm gradient cover with a badge, a title, a summary, details in a grid (date, time, place, price), speakers by initials and a register button. A single-event page format. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-event-002-* palette — do not swap it for your theme tokens",
+                "the gradient cover with a badge instead of a stock photo",
+                "speaker initials instead of photos: a stock face hurts trust",
+                "light-dark() in the palette: the component follows the surrounding color-scheme"
+              ],
+              "adapt": [
+                "eyebrow, badge, title, summary — the eyebrow, badge, heading and summary",
+                "dateLabel, timeLabel, placeLabel, priceLabel — the event details",
+                "the speakers array and ctaLabel/ctaHref — speakers and the register button",
+                "the accent via the accent prop — eyebrow, details and button"
+              ],
+              "notes": [
+                "The theme comes from color-scheme; the project must declare color-scheme: light dark on html.",
+                "Initials are taken from the first two words of the speaker's name.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Event002\n  title=\"VibeConf\"\n  dateLabel=\"Oct 12\"\n  speakers={[\"Anna Kovaleva\"]}\n/>"
+            },
+            "controls": {
+              "title": { "label": "Title", "default": "VibeConf: interfaces for vibe coding" },
+              "eyebrow": { "label": "Eyebrow", "default": "Conference" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "title": "Event Card",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-event-002-* variables. A server component. The cover is a warm gradient with a semi-transparent badge. Details are a 2×2 grid, speakers are a stack of initial avatars ringed in the card colour. Initials instead of photos: a stock face hurts trust."
+          }
+        }
+      }
+    },
+    {
+      "name": "event-003",
+      "type": "registry:block",
+      "title": "Сетка расписания",
+      "description": "Сетка предстоящих событий карточками: тёплая полоса сверху, дата, название, формат и остаток мест. Три колонки на широком экране. Самодостаточна: один файл, без зависимостей.",
+      "categories": ["events"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "event-003/event-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/event-003.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-event-003-*. Серверный компонент. Карточки-ссылки с тёплой полосой-градиентом сверху, датой акцентом, названием и футером «формат — остаток мест». Число колонок считает container query. Название flex:1 держит футер прижатым вниз при разной длине.",
+      "meta": {
+        "tags": ["events", "schedule", "grid", "agenda", "marketing"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Event003",
+          "usage": "<Event003\n  events={[{ title: \"Вебинар\", date: \"18 сентября\", format: \"Онлайн\", spots: \"40 мест\" }]}\n/>",
+          "summary": "Сетка предстоящих событий карточками: тёплая полоса сверху, дата акцентом, название, формат и остаток мест. Три колонки на широком экране, один столбец на узком. Формат компактной афиши, где важны дата и наличие мест. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-event-003-* и не подменять её токенами вашей темы",
+            "название flex:1, чтобы футер прижимался вниз при разной длине",
+            "остаток мест акцентом в футере — это триггер записи",
+            "light-dark() в палитре: компонент следует color-scheme окружения"
+          ],
+          "adapt": [
+            "eyebrow и title — надзаголовок и заголовок секции",
+            "массив events — название, дата, формат и остаток мест каждого события",
+            "акцент через проп accent — полоса, дата и остаток мест",
+            "background — подложка компонента; пусто означает «без подложки»"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme; у проекта должно быть объявлено color-scheme: light dark на html.",
+            "Карточки ведут на # по умолчанию: подставьте адреса страниц событий.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          { "prop": "title", "label": "Заголовок", "type": "text", "default": "Расписание на месяц", "maxLength": 40 },
+          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "События", "maxLength": 24 },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+        ],
+        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "i18n": {
+          "en": {
+            "description": "A grid of upcoming events as cards: a warm top bar, date, title, format and remaining spots. Three columns on a wide screen. Self-contained — one file, no dependencies.",
+            "ai": {
+              "summary": "A grid of upcoming events as cards: a warm top bar, date in the accent, title, format and remaining spots. Three columns when wide, one column when narrow. A compact agenda format where date and availability matter. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-event-003-* palette — do not swap it for your theme tokens",
+                "the title flex:1 so the footer stays pinned down across varying lengths",
+                "remaining spots in the accent in the footer — that's the signup trigger",
+                "light-dark() in the palette: the component follows the surrounding color-scheme"
+              ],
+              "adapt": [
+                "eyebrow and title — the section's eyebrow and heading",
+                "the events array — title, date, format and remaining spots of each event",
+                "the accent via the accent prop — the bar, date and remaining spots",
+                "background — the component's backdrop; empty means no backdrop"
+              ],
+              "notes": [
+                "The theme comes from color-scheme; the project must declare color-scheme: light dark on html.",
+                "Cards point to # by default: substitute the event page addresses.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Event003\n  events={[{ title: \"Webinar\", date: \"Sep 18\", format: \"Online\", spots: \"40 spots\" }]}\n/>"
+            },
+            "controls": {
+              "title": { "label": "Title", "default": "This month's schedule" },
+              "eyebrow": { "label": "Eyebrow", "default": "Events" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "title": "Schedule Grid",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-event-003-* variables. A server component. Link cards with a warm gradient bar on top, the date in the accent, a title and a format—remaining-spots footer. Column count is driven by a container query. The title flex:1 keeps the footer pinned down across varying lengths."
+          }
+        }
+      }
+    }
+  ]
+}

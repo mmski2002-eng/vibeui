@@ -1,0 +1,257 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "podcast-001",
+      "type": "registry:block",
+      "title": "Список эпизодов",
+      "description": "Лента выпусков подкаста: строки с кнопкой play, номером, названием, гостем и длительностью. Строка кликается целиком. Самодостаточна: один файл, без зависимостей.",
+      "categories": ["podcast"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "podcast-001/podcast-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/podcast-001.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-podcast-001-*. Серверный компонент. Строка выпуска — grid: кнопка play (круг с треугольником из бордюров), номер, информация (название и гость) и длительность. Строка — ссылка целиком с aria-label; воспроизведение подключает приложение.",
+      "meta": {
+        "tags": ["podcast", "episodes", "audio", "listing", "marketing"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Podcast001",
+          "usage": "<Podcast001\n  episodes={[{ number: \"12\", title: \"Выпуск\", guest: \"Гость\", duration: \"48 мин\" }]}\n/>",
+          "summary": "Лента выпусков подкаста: строки с кнопкой play, номером, названием, гостем и длительностью. Кнопка play нарисована бордюрами. Строка кликается целиком, воспроизведение подключает приложение. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-podcast-001-* и не подменять её токенами вашей темы",
+            "кнопку play из бордюров (круг + треугольник) без иконочного шрифта",
+            "строку-ссылку целиком с aria-label — кликом ловится весь выпуск",
+            "light-dark() в палитре: компонент следует color-scheme окружения"
+          ],
+          "adapt": [
+            "eyebrow, title и playLabel — надзаголовок, заголовок и подпись действия",
+            "массив episodes — номер, название, гость и длительность каждого выпуска",
+            "акцент через проп accent — кнопка play, номер и рамка",
+            "background — подложка компонента; пусто означает «без подложки»"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme; у проекта должно быть объявлено color-scheme: light dark на html.",
+            "Строки ведут на # по умолчанию: подключите воспроизведение или страницу выпуска.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          { "prop": "title", "label": "Заголовок", "type": "text", "default": "Свежие выпуски", "maxLength": 40 },
+          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "Подкаст", "maxLength": 24 },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+        ],
+        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "i18n": {
+          "en": {
+            "description": "A podcast episode feed: rows with a play button, number, title, guest and duration. The whole row is a link. Self-contained — one file, no dependencies.",
+            "ai": {
+              "summary": "A podcast episode feed: rows with a play button, number, title, guest and duration. The play button is drawn with borders. The whole row is a link, playback wired by the app. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-podcast-001-* palette — do not swap it for your theme tokens",
+                "the play button from borders (circle + triangle) without an icon font",
+                "the whole-row link with an aria-label — a click catches the whole episode",
+                "light-dark() in the palette: the component follows the surrounding color-scheme"
+              ],
+              "adapt": [
+                "eyebrow, title and playLabel — the eyebrow, heading and action label",
+                "the episodes array — number, title, guest and duration of each episode",
+                "the accent via the accent prop — play button, number and border",
+                "background — the component's backdrop; empty means no backdrop"
+              ],
+              "notes": [
+                "The theme comes from color-scheme; the project must declare color-scheme: light dark on html.",
+                "Rows point to # by default: wire playback or the episode page.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Podcast001\n  episodes={[{ number: \"12\", title: \"Episode\", guest: \"Guest\", duration: \"48 min\" }]}\n/>"
+            },
+            "controls": {
+              "title": { "label": "Title", "default": "Latest episodes" },
+              "eyebrow": { "label": "Eyebrow", "default": "Podcast" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "title": "Episode List",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-podcast-001-* variables. A server component. An episode row is a grid: a play button (circle with a triangle from borders), the number, the info (title and guest) and duration. The row is a whole link with an aria-label; playback is wired by the app."
+          }
+        }
+      }
+    },
+    {
+      "name": "podcast-002",
+      "type": "registry:block",
+      "title": "Карточка выпуска",
+      "description": "Страница одного выпуска: обложка-монограмма, название, описание, мини-плеер с прогрессом и ссылки на площадки прослушивания. Самодостаточна: один файл, без зависимостей.",
+      "categories": ["podcast"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "podcast-002/podcast-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/podcast-002.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-podcast-002-*. Серверный компонент. Обложка — квадратный градиент с первой буквой названия подкаста. Мини-плеер: кнопка play из бордюров и статичная дорожка прогресса с role=progressbar. Реальное воспроизведение подключает приложение.",
+      "meta": {
+        "tags": ["podcast", "episode", "player", "audio", "marketing"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Podcast002",
+          "usage": "<Podcast002\n  episodeTitle=\"Выпуск\"\n  platforms={[\"Spotify\", \"Apple Podcasts\"]}\n/>",
+          "summary": "Карточка одного выпуска: обложка-монограмма градиентом, название, описание, мини-плеер (кнопка play и дорожка прогресса) и ссылки на площадки. Формат страницы эпизода. Прогресс статичный, воспроизведение подключает приложение. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-podcast-002-* и не подменять её токенами вашей темы",
+            "обложку-монограмму градиентом с первой буквой вместо стокового арта",
+            "дорожку прогресса с role=\"progressbar\" и aria-valuenow",
+            "light-dark() в палитре: компонент следует color-scheme окружения"
+          ],
+          "adapt": [
+            "eyebrow, showTitle, episodeTitle, summary — метки, названия и описание",
+            "durationLabel, dateLabel — длительность и дата выпуска",
+            "массив platforms и playLabel — площадки и подпись кнопки play",
+            "акцент через проп accent — обложка, кнопка play и заливка прогресса"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme; у проекта должно быть объявлено color-scheme: light dark на html.",
+            "Прогресс статичен (35%): подключите реальное воспроизведение и обновление дорожки.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          { "prop": "episodeTitle", "label": "Название выпуска", "type": "text", "default": "Как ИИ меняет фронтенд", "maxLength": 44 },
+          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "Выпуск 12", "maxLength": 24 },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+        ],
+        "cardControls": ["episodeTitle", "eyebrow", "accent", "background"],
+        "i18n": {
+          "en": {
+            "description": "A single episode page: a monogram cover, title, summary, a mini player with progress and links to listening platforms. Self-contained — one file, no dependencies.",
+            "ai": {
+              "summary": "A single episode card: a gradient monogram cover, title, summary, a mini player (play button and progress bar) and platform links. An episode-page format. Progress is static, playback wired by the app. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-podcast-002-* palette — do not swap it for your theme tokens",
+                "the gradient monogram cover with the first letter instead of stock art",
+                "the progress bar with role=\"progressbar\" and aria-valuenow",
+                "light-dark() in the palette: the component follows the surrounding color-scheme"
+              ],
+              "adapt": [
+                "eyebrow, showTitle, episodeTitle, summary — labels, titles and summary",
+                "durationLabel, dateLabel — the episode duration and date",
+                "the platforms array and playLabel — platforms and the play button label",
+                "the accent via the accent prop — cover, play button and progress fill"
+              ],
+              "notes": [
+                "The theme comes from color-scheme; the project must declare color-scheme: light dark on html.",
+                "Progress is static (35%): wire real playback and progress updates.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Podcast002\n  episodeTitle=\"Episode\"\n  platforms={[\"Spotify\", \"Apple Podcasts\"]}\n/>"
+            },
+            "controls": {
+              "episodeTitle": { "label": "Episode title", "default": "How AI is changing frontend" },
+              "eyebrow": { "label": "Eyebrow", "default": "Episode 12" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "title": "Episode Card",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-podcast-002-* variables. A server component. The cover is a square gradient with the first letter of the show title. The mini player: a border-drawn play button and a static progress track with role=progressbar. Real playback is wired by the app."
+          }
+        }
+      }
+    },
+    {
+      "name": "podcast-003",
+      "type": "registry:block",
+      "title": "Промо с подпиской",
+      "description": "Вводная секция подкаста: описание шоу и ссылки на площадки слева, компактная сетка последних выпусков справа. Самодостаточна: один файл, без зависимостей.",
+      "categories": ["podcast"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "podcast-003/podcast-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/podcast-003.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-podcast-003-*. Серверный компонент. Две колонки на широком экране: слева описание и площадки (первая ссылка — акцентная кнопка «Слушать», остальные — обведённые), справа список последних выпусков карточками. Число колонок считает container query.",
+      "meta": {
+        "tags": ["podcast", "subscribe", "promo", "audio", "marketing"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Podcast003",
+          "usage": "<Podcast003\n  title=\"Подкаст\"\n  episodes={[{ number: \"12\", title: \"Выпуск\", duration: \"48 мин\" }]}\n/>",
+          "summary": "Промо подкаста с подпиской: слева описание шоу и ссылки на площадки (первая — акцентная кнопка), справа компактная сетка последних выпусков с номером и длительностью. Формат вводной секции, зовущей подписаться. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-podcast-003-* и не подменять её токенами вашей темы",
+            "первую ссылку-площадку как акцентную кнопку, остальные обведёнными",
+            "перелом в две колонки по container query: на узком экране всё в столбец",
+            "light-dark() в палитре: компонент следует color-scheme окружения"
+          ],
+          "adapt": [
+            "eyebrow, title, summary — надзаголовок, заголовок и описание шоу",
+            "массив episodes — номер, название и длительность последних выпусков",
+            "массив platforms и subscribeLabel — площадки и подпись группы подписки",
+            "акцент через проп accent — кнопка площадки, номера выпусков и рамки"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme; у проекта должно быть объявлено color-scheme: light dark на html.",
+            "Первая площадка визуально выделена как основное действие — поставьте её первой в массиве.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          { "prop": "title", "label": "Заголовок", "type": "text", "default": "«Вайб» — о том, как строят интерфейсы", "maxLength": 52 },
+          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "Подкаст", "maxLength": 24 },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+        ],
+        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "i18n": {
+          "en": {
+            "description": "A podcast intro: the show description and platform links on the left, a compact grid of latest episodes on the right. Self-contained — one file, no dependencies.",
+            "ai": {
+              "summary": "A podcast promo with subscribe: the show description and platform links (the first an accent button) on the left, a compact grid of latest episodes with number and duration on the right. An intro-section format inviting to subscribe. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-podcast-003-* palette — do not swap it for your theme tokens",
+                "the first platform link as an accent button, the rest outlined",
+                "the two-column break via container query: everything stacks when narrow",
+                "light-dark() in the palette: the component follows the surrounding color-scheme"
+              ],
+              "adapt": [
+                "eyebrow, title, summary — the eyebrow, heading and show description",
+                "the episodes array — number, title and duration of the latest episodes",
+                "the platforms array and subscribeLabel — platforms and the subscribe group label",
+                "the accent via the accent prop — platform button, episode numbers and borders"
+              ],
+              "notes": [
+                "The theme comes from color-scheme; the project must declare color-scheme: light dark on html.",
+                "The first platform is visually the primary action — put it first in the array.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Podcast003\n  title=\"Podcast\"\n  episodes={[{ number: \"12\", title: \"Episode\", duration: \"48 min\" }]}\n/>"
+            },
+            "controls": {
+              "title": { "label": "Title", "default": "Vibe — on how interfaces get built" },
+              "eyebrow": { "label": "Eyebrow", "default": "Podcast" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "title": "Podcast Promo",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-podcast-003-* variables. A server component. Two columns on a wide screen: the description and platforms on the left (the first link an accent Listen button, the rest outlined), a list of latest episodes as cards on the right. Column count is driven by a container query."
+          }
+        }
+      }
+    }
+  ]
+}

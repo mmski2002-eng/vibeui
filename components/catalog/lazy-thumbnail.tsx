@@ -66,10 +66,16 @@ export function LazyThumbnail({
   aspect?: string
 }) {
   const frameRef = useRef<HTMLDivElement>(null)
+  const scaleRef = useRef<HTMLDivElement>(null)
   const [visible, setVisible] = useState(false)
   const [Preview, setPreview] = useState<ComponentType<PreviewProps> | null>(
     null,
   )
+  // Высота кадра блока: масштаб вписывает блок по ширине, но высокая секция
+  // (hero, тарифы) при этом вылезает за кадр 16/9 и обрезается сверху/снизу.
+  // Меряем реальную высоту блока в 1280px и задаём кадру ту же высоту в
+  // масштабе — тогда секция влезает целиком.
+  const [frameHeight, setFrameHeight] = useState<number>()
 
   useEffect(() => {
     const frame = frameRef.current
@@ -112,6 +118,40 @@ export function LazyThumbnail({
       cancelled = true
     }
   }, [category, kind, slug, visible])
+
+  // Кадр блока подгоняет высоту под масштабированную высоту секции. Меряем
+  // layout-высоту блока (offsetHeight не учитывает transform: scale, поэтому
+  // это высота в натуральных 1280px) и умножаем на масштаб = ширина кадра /
+  // 1280. Пересчёт на ресайзе: ширина кадра меняется, масштаб вместе с ней.
+  useEffect(() => {
+    if (compact || !Preview || !visible) {
+      return
+    }
+
+    const frame = frameRef.current
+    const scale = scaleRef.current
+
+    if (!frame || !scale) {
+      return
+    }
+
+    const measure = () => {
+      const width = frame.clientWidth
+      const naturalHeight = scale.offsetHeight
+
+      if (width > 0 && naturalHeight > 0) {
+        setFrameHeight((naturalHeight * width) / SECTION_WIDTH)
+      }
+    }
+
+    measure()
+
+    const observer = new ResizeObserver(measure)
+    observer.observe(frame)
+    observer.observe(scale)
+
+    return () => observer.disconnect()
+  }, [compact, Preview, visible])
 
   // Ряд состояний: тот же компонент, разные пропсы. Кадр мелкого компонента
   // иначе стоит почти пустым, а размеры и состояния присутствия с витрины
@@ -165,12 +205,18 @@ export function LazyThumbnail({
       style={
         {
           "--thumbnail-width": `${SECTION_WIDTH}px`,
-          aspectRatio: aspect ?? "16 / 9",
-        } as CSSProperties
+          // Пока высота не измерена (до загрузки чанка) — пропорция секции,
+          // чтобы кадр не был нулевым. После измерения высота точна под блок.
+          ...(frameHeight
+            ? { height: `${frameHeight}px` }
+            : { aspectRatio: aspect ?? "16 / 9" }),
+        } as unknown as CSSProperties
       }
     >
       <div className="block-thumbnail-frame">
-        <div className="block-thumbnail-scale preview-fade">{content}</div>
+        <div ref={scaleRef} className="block-thumbnail-scale preview-fade">
+          {content}
+        </div>
       </div>
     </div>
   )

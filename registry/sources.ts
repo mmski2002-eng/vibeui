@@ -28,6 +28,11 @@ import comparisonRegistry from "@/registry/blocks/comparison/registry.json"
 import waitlistRegistry from "@/registry/blocks/waitlist/registry.json"
 import consentRegistry from "@/registry/blocks/consent/registry.json"
 import downloadsRegistry from "@/registry/blocks/downloads/registry.json"
+import portfolioRegistry from "@/registry/blocks/portfolio/registry.json"
+import eventsRegistry from "@/registry/blocks/events/registry.json"
+import videoRegistry from "@/registry/blocks/video/registry.json"
+import podcastRegistry from "@/registry/blocks/podcast/registry.json"
+import pressRegistry from "@/registry/blocks/press/registry.json"
 import logosRegistry from "@/registry/blocks/logos/registry.json"
 import newsletterRegistry from "@/registry/blocks/newsletter/registry.json"
 import teamRegistry from "@/registry/blocks/team/registry.json"
@@ -295,6 +300,31 @@ export const SOURCES = [
     directory: "registry/blocks/downloads",
     kind: "block",
     items: downloadsRegistry.items,
+  },
+  {
+    directory: "registry/blocks/portfolio",
+    kind: "block",
+    items: portfolioRegistry.items,
+  },
+  {
+    directory: "registry/blocks/events",
+    kind: "block",
+    items: eventsRegistry.items,
+  },
+  {
+    directory: "registry/blocks/video",
+    kind: "block",
+    items: videoRegistry.items,
+  },
+  {
+    directory: "registry/blocks/podcast",
+    kind: "block",
+    items: podcastRegistry.items,
+  },
+  {
+    directory: "registry/blocks/press",
+    kind: "block",
+    items: pressRegistry.items,
   },
   {
     directory: "registry/blocks/logos",

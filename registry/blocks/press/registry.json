@@ -1,0 +1,257 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "pres-001",
+      "type": "registry:block",
+      "title": "Упоминания в прессе",
+      "description": "Карточки упоминаний: название издания wordmark-текстом, цитата из публикации и дата. Карточка — ссылка на материал. Самодостаточна: один файл, без зависимостей.",
+      "categories": ["press"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "pres-001/pres-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/pres-001.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-pres-001-*. Серверный компонент. Название издания — wordmark-текстом без реальных логотипов СМИ, цитата в кавычках-псевдоэлементах в blockquote. Карточка — ссылка на публикацию, число колонок считает container query.",
+      "meta": {
+        "tags": ["press", "mentions", "media", "quotes", "marketing"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Pres001",
+          "usage": "<Pres001\n  mentions={[{ outlet: \"ТехВестник\", quote: \"Отзыв\", date: \"Сентябрь 2026\" }]}\n/>",
+          "summary": "Упоминания в прессе: карточки с названием издания wordmark-текстом, цитатой из публикации в кавычках и датой. Логотипы СМИ не используются. Карточка — ссылка на материал. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-pres-001-* и не подменять её токенами вашей темы",
+            "название издания wordmark-текстом без реальных логотипов СМИ",
+            "цитату в blockquote с кавычками-псевдоэлементами — не дублируйте кавычки в тексте",
+            "light-dark() в палитре: компонент следует color-scheme окружения"
+          ],
+          "adapt": [
+            "eyebrow и title — надзаголовок и заголовок секции",
+            "массив mentions — издание, цитата и дата каждой публикации",
+            "акцент через проп accent — надзаголовок, дата и рамка при наведении",
+            "background — подложка компонента; пусто означает «без подложки»"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme; у проекта должно быть объявлено color-scheme: light dark на html.",
+            "Карточки ведут на # по умолчанию: подставьте адреса публикаций.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          { "prop": "title", "label": "Заголовок", "type": "text", "default": "В прессе", "maxLength": 40 },
+          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "О нас пишут", "maxLength": 24 },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+        ],
+        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "i18n": {
+          "en": {
+            "description": "Mention cards: the outlet name as a wordmark, a quote from the publication and a date. The card links to the piece. Self-contained — one file, no dependencies.",
+            "ai": {
+              "summary": "Press mentions: cards with the outlet name as a wordmark, a quote from the publication in guillemets and a date. No outlet logos. The card links to the piece. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-pres-001-* palette — do not swap it for your theme tokens",
+                "the outlet name as a wordmark without real outlet logos",
+                "the quote in a blockquote with pseudo-element guillemets — do not duplicate quotes in the text",
+                "light-dark() in the palette: the component follows the surrounding color-scheme"
+              ],
+              "adapt": [
+                "eyebrow and title — the section's eyebrow and heading",
+                "the mentions array — outlet, quote and date of each publication",
+                "the accent via the accent prop — eyebrow, date and hover border",
+                "background — the component's backdrop; empty means no backdrop"
+              ],
+              "notes": [
+                "The theme comes from color-scheme; the project must declare color-scheme: light dark on html.",
+                "Cards point to # by default: substitute the publication addresses.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Pres001\n  mentions={[{ outlet: \"TechHerald\", quote: \"A review\", date: \"September 2026\" }]}\n/>"
+            },
+            "controls": {
+              "title": { "label": "Title", "default": "In the press" },
+              "eyebrow": { "label": "Eyebrow", "default": "Press coverage" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "title": "Press Mentions",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-pres-001-* variables. A server component. The outlet name is a wordmark without real outlet logos, the quote is in a blockquote with pseudo-element guillemets. The card links to the publication, column count driven by a container query."
+          }
+        }
+      }
+    },
+    {
+      "name": "pres-002",
+      "type": "registry:block",
+      "title": "Медиа-кит",
+      "description": "Карточки ассетов бренда: превью-плитка, описание и кнопка скачивания формата (логотип, палитра, шрифты). Самодостаточна: один файл, без зависимостей.",
+      "categories": ["press"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "pres-002/pres-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/pres-002.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-pres-002-*. Серверный компонент. Карточки ассетов с превью-плиткой (тёплый градиент с монограммой, оттенок по nth-child), описанием и кнопкой скачивания с форматом. Кнопка прижата к низу карточки через margin-top:auto. Число колонок считает container query.",
+      "meta": {
+        "tags": ["press", "media-kit", "brand", "download", "marketing"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Pres002",
+          "usage": "<Pres002\n  assets={[{ title: \"Логотип\", note: \"SVG и PNG\", format: \"SVG · PNG\" }]}\n/>",
+          "summary": "Медиа-кит: карточки ассетов бренда (логотип, палитра, шрифты) с превью-плиткой градиентом, описанием и кнопкой скачивания формата. Формат раздела для прессы с официальными ассетами. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-pres-002-* и не подменять её токенами вашей темы",
+            "превью-плитки градиентом по nth-child вместо реальных превью",
+            "кнопку скачивания, прижатую к низу карточки через margin-top:auto",
+            "light-dark() в палитре: компонент следует color-scheme окружения"
+          ],
+          "adapt": [
+            "eyebrow, title, summary — надзаголовок, заголовок и подводку",
+            "массив assets — название, описание и формат каждого ассета",
+            "downloadLabel — подпись кнопки скачивания",
+            "акцент через проп accent — надзаголовок, превью и рамка кнопки"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme; у проекта должно быть объявлено color-scheme: light dark на html.",
+            "Кнопки ведут на # по умолчанию: подставьте адреса файлов ассетов.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          { "prop": "title", "label": "Заголовок", "type": "text", "default": "Ассеты бренда", "maxLength": 40 },
+          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "Медиа-кит", "maxLength": 24 },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+        ],
+        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "i18n": {
+          "en": {
+            "description": "Brand asset cards: a preview tile, a description and a format download button (logo, palette, fonts). Self-contained — one file, no dependencies.",
+            "ai": {
+              "summary": "A media kit: brand asset cards (logo, palette, fonts) with a gradient preview tile, a description and a format download button. A press-section format with official assets. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-pres-002-* palette — do not swap it for your theme tokens",
+                "gradient preview tiles by nth-child instead of real previews",
+                "the download button pinned to the bottom of the card via margin-top:auto",
+                "light-dark() in the palette: the component follows the surrounding color-scheme"
+              ],
+              "adapt": [
+                "eyebrow, title, summary — the eyebrow, heading and lead-in",
+                "the assets array — title, note and format of each asset",
+                "downloadLabel — the download button label",
+                "the accent via the accent prop — eyebrow, preview and button border"
+              ],
+              "notes": [
+                "The theme comes from color-scheme; the project must declare color-scheme: light dark on html.",
+                "Buttons point to # by default: substitute the asset file addresses.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Pres002\n  assets={[{ title: \"Logo\", note: \"SVG and PNG\", format: \"SVG · PNG\" }]}\n/>"
+            },
+            "controls": {
+              "title": { "label": "Title", "default": "Brand assets" },
+              "eyebrow": { "label": "Eyebrow", "default": "Media kit" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "title": "Media Kit",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-pres-002-* variables. A server component. Asset cards with a preview tile (warm gradient with a monogram, hue by nth-child), a description and a format download button. The button is pinned to the bottom via margin-top:auto. Column count is driven by a container query."
+          }
+        }
+      }
+    },
+    {
+      "name": "pres-003",
+      "type": "registry:block",
+      "title": "Контакты для прессы",
+      "description": "Контакты пресс-службы и факты о компании двумя колонками: справка и контакт слева, сетка ключевых цифр справа. Самодостаточна: один файл, без зависимостей.",
+      "categories": ["press"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "pres-003/pres-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/pres-003.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-pres-003-*. Серверный компонент. Две колонки на широком экране: слева справка, карточка контакта пресс-службы с mailto и кнопка письма, справа сетка фактов (значение акцентом, подпись под ним). Число колонок и раскладку считает container query.",
+      "meta": {
+        "tags": ["press", "contact", "facts", "media", "marketing"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Pres003",
+          "usage": "<Pres003\n  contactEmail=\"press@site.example\"\n  facts={[{ label: \"Основана\", value: \"2025\" }]}\n/>",
+          "summary": "Контакты для прессы и факты о компании двумя колонками: справка и карточка контакта пресс-службы с кнопкой письма слева, сетка ключевых фактов (основана, команда, пользователи) справа. Формат нижней части пресс-страницы. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-pres-003-* и не подменять её токенами вашей темы",
+            "контакт пресс-службы с mailto-ссылкой и кнопкой письма",
+            "значение факта акцентом крупно, подпись под ним — это цифры для журналиста",
+            "light-dark() в палитре: компонент следует color-scheme окружения"
+          ],
+          "adapt": [
+            "eyebrow, title, summary — надзаголовок, заголовок и справку",
+            "contactName, contactEmail, ctaLabel — контакт пресс-службы и кнопка",
+            "массив facts — подпись и значение каждого факта",
+            "акцент через проп accent — значения фактов, ссылка и кнопка"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme; у проекта должно быть объявлено color-scheme: light dark на html.",
+            "contactEmail подставляется в mailto: укажите реальный адрес пресс-службы.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          { "prop": "title", "label": "Заголовок", "type": "text", "default": "Связаться и взять цифры", "maxLength": 40 },
+          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "Для прессы", "maxLength": 24 },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+        ],
+        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "i18n": {
+          "en": {
+            "description": "Press contact and company facts in two columns: a note and contact on the left, a grid of key numbers on the right. Self-contained — one file, no dependencies.",
+            "ai": {
+              "summary": "Press contact and company facts in two columns: a note and a press-office contact card with an email button on the left, a grid of key facts (founded, team, users) on the right. A press-page footer format. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-pres-003-* palette — do not swap it for your theme tokens",
+                "the press-office contact with a mailto link and an email button",
+                "the fact value large in the accent with a label below — those are the numbers for a journalist",
+                "light-dark() in the palette: the component follows the surrounding color-scheme"
+              ],
+              "adapt": [
+                "eyebrow, title, summary — the eyebrow, heading and note",
+                "contactName, contactEmail, ctaLabel — the press-office contact and button",
+                "the facts array — label and value of each fact",
+                "the accent via the accent prop — fact values, link and button"
+              ],
+              "notes": [
+                "The theme comes from color-scheme; the project must declare color-scheme: light dark on html.",
+                "contactEmail goes into the mailto: set the real press-office address.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Pres003\n  contactEmail=\"press@site.example\"\n  facts={[{ label: \"Founded\", value: \"2025\" }]}\n/>"
+            },
+            "controls": {
+              "title": { "label": "Title", "default": "Get in touch and grab the numbers" },
+              "eyebrow": { "label": "Eyebrow", "default": "For press" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "title": "Press Contact",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-pres-003-* variables. A server component. Two columns on a wide screen: a note, a press-office contact card with mailto and an email button on the left, a grid of facts (value in the accent, label below) on the right. Columns and layout driven by a container query."
+          }
+        }
+      }
+    }
+  ]
+}

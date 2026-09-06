@@ -94,8 +94,8 @@ export default async function PreviewPage({
     <div
       className={
         (query.theme === "dark" ? "dark " : "") +
-        "bg-background min-h-screen" +
-        (centered ? " flex items-center justify-center p-10" : "")
+        "bg-background min-h-screen overflow-x-hidden" +
+        (centered ? " flex justify-center p-4 sm:p-10" : "")
       }
     >
       <Block {...props} />

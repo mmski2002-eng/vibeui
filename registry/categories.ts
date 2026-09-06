@@ -187,6 +187,36 @@ export const CATEGORIES = [
     en: "App Downloads",
     group: "marketing",
   },
+  {
+    slug: "portfolio",
+    label: "Портфолио",
+    en: "Portfolio",
+    group: "marketing",
+  },
+  {
+    slug: "events",
+    label: "События",
+    en: "Events",
+    group: "marketing",
+  },
+  {
+    slug: "video",
+    label: "Видео",
+    en: "Video",
+    group: "marketing",
+  },
+  {
+    slug: "podcast",
+    label: "Подкаст",
+    en: "Podcast",
+    group: "marketing",
+  },
+  {
+    slug: "press",
+    label: "Пресс-кит",
+    en: "Press Kit",
+    group: "marketing",
+  },
   // Категории компонентов: одна категория — один тип. Сборных корзин
   // («Inputs», «Display») здесь нет: тип, спрятанный внутри такой корзины,
   // невозможно найти ни в списке категорий, ни по адресу.

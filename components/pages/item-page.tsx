@@ -150,7 +150,6 @@ export async function ItemPage({
             locale={locale}
             docUrl={docUrl}
             fullPrompt={aiPrompt}
-            compact={kind !== "block"}
             initialTheme={initialTheme}
             initialValues={initialValues}
           />

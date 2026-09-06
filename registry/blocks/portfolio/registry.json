@@ -1,0 +1,257 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "portfolio-001",
+      "type": "registry:block",
+      "title": "Masonry-галерея",
+      "description": "Портфолио masonry-сеткой: плитки работ разной высоты и ширины с градиентными обложками, категория и название поверх. Самодостаточна: один файл, без зависимостей.",
+      "categories": ["portfolio"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "portfolio-001/portfolio-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/portfolio-001.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-portfolio-001-*. Серверный компонент. Masonry через grid-auto-rows и span tall/wide (grid-row/column span 2), включается по container query. Обложки — тёплые градиенты, оттенок сдвигается по nth-child; поверх затемняющий градиент для читаемости подписи.",
+      "meta": {
+        "tags": ["portfolio", "gallery", "masonry", "works", "marketing"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Portfolio001",
+          "usage": "<Portfolio001\n  title=\"Избранные работы\"\n  works={[{ title: \"Лендинг\", category: \"Веб\", span: \"tall\" }]}\n/>",
+          "summary": "Портфолио masonry-сеткой: плитки работ разной высоты и ширины с градиентными обложками. Категория и название поверх затемнения. Плитки tall/wide растягиваются на две ячейки. Обложки брендовыми градиентами вместо стоковых фото. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-portfolio-001-* и не подменять её токенами вашей темы",
+            "градиентные обложки вместо стоковых фото — своя вёрстка без ассетов",
+            "span tall/wide на grid-row/column и masonry через grid-auto-rows",
+            "light-dark() в палитре: компонент следует color-scheme окружения"
+          ],
+          "adapt": [
+            "eyebrow и title — надзаголовок и заголовок секции",
+            "массив works — название, категория и span каждой плитки",
+            "акцент через проп accent — надзаголовок и фокус-кольцо",
+            "background — подложка компонента; пусто означает «без подложки»"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme; у проекта должно быть объявлено color-scheme: light dark на html.",
+            "Обложки — градиенты по nth-child: реальные превью работ подставьте фоном плитки.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          { "prop": "title", "label": "Заголовок", "type": "text", "default": "Избранные работы", "maxLength": 40 },
+          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "Портфолио", "maxLength": 24 },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+        ],
+        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "i18n": {
+          "en": {
+            "description": "A masonry portfolio: work tiles of varying height and width with gradient covers, category and title on top. Self-contained — one file, no dependencies.",
+            "ai": {
+              "summary": "A masonry portfolio: work tiles of varying height and width with gradient covers. Category and title over a darkening overlay. Tall/wide tiles span two cells. Covers use brand gradients instead of stock photos. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-portfolio-001-* palette — do not swap it for your theme tokens",
+                "gradient covers instead of stock photos — a custom layout with no assets",
+                "the tall/wide span on grid-row/column and masonry via grid-auto-rows",
+                "light-dark() in the palette: the component follows the surrounding color-scheme"
+              ],
+              "adapt": [
+                "eyebrow and title — the section's eyebrow and heading",
+                "the works array — title, category and span of each tile",
+                "the accent via the accent prop — eyebrow and focus ring",
+                "background — the component's backdrop; empty means no backdrop"
+              ],
+              "notes": [
+                "The theme comes from color-scheme; the project must declare color-scheme: light dark on html.",
+                "Covers are gradients by nth-child: place real work previews as the tile background.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Portfolio001\n  title=\"Selected work\"\n  works={[{ title: \"Landing\", category: \"Web\", span: \"tall\" }]}\n/>"
+            },
+            "controls": {
+              "title": { "label": "Title", "default": "Selected work" },
+              "eyebrow": { "label": "Eyebrow", "default": "Portfolio" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "title": "Masonry Gallery",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-portfolio-001-* variables. A server component. Masonry via grid-auto-rows and tall/wide span (grid-row/column span 2), enabled by a container query. Covers are warm gradients whose hue shifts by nth-child; a darkening gradient on top keeps the caption readable."
+          }
+        }
+      }
+    },
+    {
+      "name": "portfolio-002",
+      "type": "registry:block",
+      "title": "Галерея с фильтром",
+      "description": "Портфолио с клиентским фильтром по тегу: чипы направлений над сеткой карточек работ с градиентными обложками. Самодостаточна: один файл, без зависимостей.",
+      "categories": ["portfolio"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "portfolio-002/portfolio-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/portfolio-002.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-portfolio-002-*. Клиентский компонент: чипы фильтруют сетку по тегу через состояние и hidden на карточках. Набор чипов выводится из данных, активный объявлен через aria-pressed. Обложки — градиенты по nth-child.",
+      "meta": {
+        "tags": ["portfolio", "gallery", "filter", "works", "marketing"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Portfolio002",
+          "usage": "<Portfolio002\n  works={[{ title: \"Лендинг\", client: \"Финпилот\", tag: \"Веб\" }]}\n/>",
+          "summary": "Портфолио с клиентским фильтром по тегу: чипы направлений над сеткой карточек. Набор чипов из данных, активный через aria-pressed, фильтрация через hidden. Карточка — градиентная обложка, клиент и название работы. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-portfolio-002-* и не подменять её токенами вашей темы",
+            "вывод набора чипов из данных и aria-pressed на активном",
+            "фильтрацию через hidden на карточках, а не удаление из DOM",
+            "light-dark() в палитре: компонент следует color-scheme окружения"
+          ],
+          "adapt": [
+            "eyebrow, title и allLabel — надзаголовок, заголовок и подпись «Все»",
+            "массив works — название, клиент и тег каждой работы",
+            "акцент через проп accent — активный чип, подпись клиента и рамка",
+            "background — подложка компонента; пусто означает «без подложки»"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme; у проекта должно быть объявлено color-scheme: light dark на html.",
+            "Теги — обычный текст: набор чипов формируется из уникальных works[].tag.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          { "prop": "title", "label": "Заголовок", "type": "text", "default": "Работы по направлениям", "maxLength": 40 },
+          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "Портфолио", "maxLength": 24 },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+        ],
+        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "i18n": {
+          "en": {
+            "description": "A portfolio with a client-side tag filter: direction chips above a grid of work cards with gradient covers. Self-contained — one file, no dependencies.",
+            "ai": {
+              "summary": "A portfolio with a client-side tag filter: direction chips above a card grid. Chip set from data, active via aria-pressed, filtering via hidden. A card has a gradient cover, the client and the work title. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-portfolio-002-* palette — do not swap it for your theme tokens",
+                "deriving the chip set from data and aria-pressed on the active one",
+                "filtering via hidden on cards rather than removing them from the DOM",
+                "light-dark() in the palette: the component follows the surrounding color-scheme"
+              ],
+              "adapt": [
+                "eyebrow, title and allLabel — the eyebrow, heading and the All label",
+                "the works array — title, client and tag of each work",
+                "the accent via the accent prop — active chip, client label and border",
+                "background — the component's backdrop; empty means no backdrop"
+              ],
+              "notes": [
+                "The theme comes from color-scheme; the project must declare color-scheme: light dark on html.",
+                "Tags are plain text: the chip set is built from the unique works[].tag values.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Portfolio002\n  works={[{ title: \"Landing\", client: \"Finpilot\", tag: \"Web\" }]}\n/>"
+            },
+            "controls": {
+              "title": { "label": "Title", "default": "Work by discipline" },
+              "eyebrow": { "label": "Eyebrow", "default": "Portfolio" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "title": "Filtered Gallery",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-portfolio-002-* variables. A client component: chips filter the grid by tag via state and hidden on cards. The chip set is derived from the data, the active one announced via aria-pressed. Covers are gradients by nth-child."
+          }
+        }
+      }
+    },
+    {
+      "name": "portfolio-003",
+      "type": "registry:block",
+      "title": "Кейс-плитки",
+      "description": "Портфолио кейс-плитками: карточки с клиентом, метрикой результата и названием работы, ссылка «читать кейс» проявляется на наведении. Самодостаточна: один файл, без зависимостей.",
+      "categories": ["portfolio"],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "portfolio-003/portfolio-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/portfolio-003.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-portfolio-003-*. Серверный компонент. Кейс-плитки с упором на результат: клиент, крупная метрика акцентом, название и ссылка «читать кейс», которая проявляется на наведении/фокусе (opacity+translate). Сверху тёплая полоса-градиент. reduced-motion показывает ссылку сразу.",
+      "meta": {
+        "tags": ["portfolio", "cases", "results", "works", "marketing"],
+        "preview": { "width": "full" },
+        "ai": {
+          "export": "Portfolio003",
+          "usage": "<Portfolio003\n  cases={[{ client: \"Финпилот\", title: \"Лендинг за спринт\", result: \"−60% времени\" }]}\n/>",
+          "summary": "Портфолио кейс-плитками с упором на результат: клиент, крупная метрика акцентом, название и ссылка «читать кейс», проявляющаяся на наведении. Плитки в две колонки, сверху тёплая полоса. Ноль зависимостей, один файл, своя палитра.",
+          "preserve": [
+            "локальную палитру --vibeui-portfolio-003-* и не подменять её токенами вашей темы",
+            "крупную метрику результата акцентом — смысловой центр кейс-плитки",
+            "проявление ссылки по наведению/фокусу и её показ сразу при reduced-motion",
+            "light-dark() в палитре: компонент следует color-scheme окружения"
+          ],
+          "adapt": [
+            "eyebrow, title и linkLabel — надзаголовок, заголовок и подпись ссылки",
+            "массив cases — клиент, название и метрика результата каждого кейса",
+            "акцент через проп accent — метрика, полоса и ссылка",
+            "background — подложка компонента; пусто означает «без подложки»"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme; у проекта должно быть объявлено color-scheme: light dark на html.",
+            "Ссылки ведут на # по умолчанию: подставьте адреса страниц кейсов.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          { "prop": "title", "label": "Заголовок", "type": "text", "default": "Работы с измеримым результатом", "maxLength": 48 },
+          { "prop": "eyebrow", "label": "Надзаголовок", "type": "text", "default": "Кейсы", "maxLength": 24 },
+          { "prop": "accent", "label": "Акцент", "type": "color", "default": "" },
+          { "prop": "background", "label": "Фон", "type": "color", "default": "" }
+        ],
+        "cardControls": ["title", "eyebrow", "accent", "background"],
+        "i18n": {
+          "en": {
+            "description": "A portfolio in case tiles: cards with the client, a result metric and the work title, a read-the-case link revealed on hover. Self-contained — one file, no dependencies.",
+            "ai": {
+              "summary": "A portfolio in result-first case tiles: the client, a large accent metric, the title and a read-the-case link revealed on hover. Tiles in two columns with a warm top bar. Zero dependencies, one file, its own palette.",
+              "preserve": [
+                "the local --vibeui-portfolio-003-* palette — do not swap it for your theme tokens",
+                "the large result metric in the accent — the semantic centre of the case tile",
+                "revealing the link on hover/focus and showing it immediately under reduced-motion",
+                "light-dark() in the palette: the component follows the surrounding color-scheme"
+              ],
+              "adapt": [
+                "eyebrow, title and linkLabel — the eyebrow, heading and link label",
+                "the cases array — client, title and result metric of each case",
+                "the accent via the accent prop — the metric, bar and link",
+                "background — the component's backdrop; empty means no backdrop"
+              ],
+              "notes": [
+                "The theme comes from color-scheme; the project must declare color-scheme: light dark on html.",
+                "Links point to # by default: substitute the case page addresses.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Portfolio003\n  cases={[{ client: \"Finpilot\", title: \"Landing in a sprint\", result: \"-60% time\" }]}\n/>"
+            },
+            "controls": {
+              "title": { "label": "Title", "default": "Work with measurable results" },
+              "eyebrow": { "label": "Eyebrow", "default": "Case studies" },
+              "accent": { "label": "Accent" },
+              "background": { "label": "Background" }
+            },
+            "title": "Case Tiles",
+            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-portfolio-003-* variables. A server component. Result-first case tiles: the client, a large accent metric, the title and a read-the-case link revealed on hover/focus (opacity+translate). A warm gradient bar on top. reduced-motion shows the link immediately."
+          }
+        }
+      }
+    }
+  ]
+}

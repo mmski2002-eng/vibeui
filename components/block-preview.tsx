@@ -14,10 +14,8 @@ import type { ItemKind } from "@/registry/categories"
 
 // bezel — сколько ширины контейнера съедает корпус устройства по бокам
 // (рамка DesktopFrame — 1px с каждой стороны).
-// Планшет и телефон — реальные пропорции экрана (3:4 и 9:16), высота
-// не зависит от размера компонента. Десктоп — по типу item'а.
 const VIEWPORTS = [
-  { id: "desktop", width: 1440, height: null, bezel: 2 },
+  { id: "desktop", width: 1440, height: 810, bezel: 2 },
   { id: "tablet", width: 768, height: 1024, bezel: TABLET_BEZEL * 2 + 4 },
   { id: "mobile", width: 375, height: 667, bezel: PHONE_BEZEL * 2 + 4 },
 ] as const
@@ -25,14 +23,8 @@ const VIEWPORTS = [
 type ViewportId = (typeof VIEWPORTS)[number]["id"]
 type HostTheme = "light" | "dark"
 
-// TODO: высота фрейма фиксирована. Блок выше неё будет обрезан — авто-высота
-// через postMessage откладывается до появления таких блоков.
-const SECTION_FRAME_HEIGHT = 760
-
-// Мелкому компоненту секционная высота не нужна: под одной кнопкой оставалось
-// бы больше 600px пустого фрейма.
-const COMPONENT_FRAME_HEIGHT = 320
-
+// Экраны фиксированные: десктоп 16:9, планшет 3:4, телефон 9:16. Контент выше
+// экрана прокручивается внутри iframe, шире — не бывает (overflow-x скрыт).
 // Ниже этой ширины Desktop-фрейм сжимается сильнее чем вдвое и не читается,
 // поэтому по умолчанию показываем Mobile.
 const NARROW_CONTAINER = 700
@@ -43,7 +35,6 @@ export function BlockPreview({
   slug,
   kind,
   category,
-  compact = false,
   theme,
   locale,
   onThemeChange,
@@ -51,7 +42,6 @@ export function BlockPreview({
   slug: string
   kind: ItemKind
   category: string
-  compact?: boolean
   theme: HostTheme
   locale: Locale
   onThemeChange: (next: HostTheme) => void
@@ -87,8 +77,7 @@ export function BlockPreview({
 
   const current = VIEWPORTS.find((item) => item.id === viewport) ?? VIEWPORTS[0]
   const frameWidth = current.width
-  const frameHeight =
-    current.height ?? (compact ? COMPONENT_FRAME_HEIGHT : SECTION_FRAME_HEIGHT)
+  const frameHeight = current.height
   const scale =
     containerWidth === null
       ? null

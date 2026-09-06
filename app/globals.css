@@ -372,7 +372,11 @@
     position: absolute;
     inset: 0;
     display: flex;
-    align-items: center;
+    /* Верх, а не центр: кадр теперь ровно высотой масштабированного блока
+       (её задаёт lazy-thumbnail), и масштаб с transform-origin:top center
+       должен начинаться от верхней кромки кадра, чтобы блок влез впритык. */
+    align-items: flex-start;
+    justify-content: center;
   }
 
   .block-thumbnail-scale {
@@ -384,20 +388,23 @@
        контейнер max-w-[1440px], sidebar 14rem + gap 2rem от lg,
        сетка 1 / 2 колонки с gap 1.5rem. */
     transform: scale(0.27);
-    transform-origin: left center;
+    /* Центр, а не левый край: при одной колонке карточка шире масштаба, и с
+       origin:left блок прижимался влево. Центрирование держит его посередине
+       кадра независимо от того, заполнил масштаб всю ширину или нет. */
+    transform-origin: top center;
   }
 
-  /* 2 колонки рядом с sidebar: карточка ~476px */
+  /* Одна колонка рядом с sidebar: карточка ~1020px */
   @media (min-width: 80rem) {
     .block-thumbnail-scale {
-      transform: scale(0.37);
+      transform: scale(0.8);
     }
   }
 
-  /* контейнер упёрся в max-w-[1440px]: карточка ~556px */
+  /* контейнер упёрся в max-w-[1440px]: карточка ~1140px */
   @media (min-width: 90rem) {
     .block-thumbnail-scale {
-      transform: scale(0.42);
+      transform: scale(0.89);
     }
   }
 

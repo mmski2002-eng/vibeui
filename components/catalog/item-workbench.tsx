@@ -32,7 +32,6 @@ export function ItemWorkbench({
   locale,
   docUrl,
   fullPrompt,
-  compact,
   initialTheme,
   initialValues,
 }: {
@@ -42,7 +41,6 @@ export function ItemWorkbench({
   locale: Locale
   docUrl: string | null
   fullPrompt: string
-  compact: boolean
   initialTheme: PreviewSurface
   initialValues: ControlValues
 }) {
@@ -81,7 +79,6 @@ export function ItemWorkbench({
           slug={item.name}
           kind={kind}
           category={category}
-          compact={compact}
           theme={frameTheme}
           onThemeChange={setTheme}
         />
