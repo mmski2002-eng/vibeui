@@ -40,7 +40,7 @@ const STYLES = `
 --vibeui-hovercard-005-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0.006 90));
 --vibeui-hovercard-005-muted:color-mix(in oklab,var(--vibeui-hovercard-005-fg) 68%,transparent);
 --vibeui-hovercard-005-border:light-dark(oklch(0.89 0.01 90),oklch(0.37 0.014 70));
---vibeui-hovercard-005-accent:light-dark(oklch(0.48 0.13 45),oklch(0.79 0.13 55));
+--vibeui-hovercard-005-accent:light-dark(oklch(0.48 0.13 39.8),oklch(0.79 0.13 39.8));
 --vibeui-hovercard-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

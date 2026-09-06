@@ -29,8 +29,8 @@ const STYLES = `
 --vibeui-progress-004-track:light-dark(oklch(0.93 0 265),oklch(0.3 0 265));
 /* Светлая ветка притемнена до 0.535: этим же цветом набрано «PDF» на бледной
    плитке, и на 0.55 подпись давала 4.3:1. */
---vibeui-progress-004-accent:light-dark(oklch(0.535 0.19 262),oklch(0.72 0.16 262));
---vibeui-progress-004-tile:light-dark(oklch(0.95 0 262),oklch(0.32 0.045 262));
+--vibeui-progress-004-accent:light-dark(oklch(0.535 0.19 39.8),oklch(0.72 0.16 39.8));
+--vibeui-progress-004-tile:light-dark(oklch(0.95 0 262),oklch(0.32 0.045 39.8));
 --vibeui-progress-004-value:0;
 --vibeui-progress-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

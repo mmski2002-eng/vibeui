@@ -41,7 +41,7 @@ const STYLES = `
 --vibeui-input-013-muted:color-mix(in oklab,var(--vibeui-input-013-fg) 68%,transparent);
 --vibeui-input-013-field:light-dark(oklch(0.985 0 265),oklch(0.27 0 265));
 --vibeui-input-013-border:light-dark(oklch(0.88 0 265),oklch(0.41 0 265));
---vibeui-input-013-accent:light-dark(oklch(0.5 0.16 300),oklch(0.72 0.15 300));
+--vibeui-input-013-accent:light-dark(oklch(0.5 0.16 39.8),oklch(0.72 0.15 39.8));
 --vibeui-input-013-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0 300));
 --vibeui-input-013-bad:light-dark(oklch(0.55 0.2 25),oklch(0.73 0.16 25));
 --vibeui-input-013-ok:light-dark(oklch(0.48 0.13 155),oklch(0.76 0.13 155));

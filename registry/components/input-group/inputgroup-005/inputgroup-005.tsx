@@ -32,7 +32,7 @@ const STYLES = `
 --vibeui-inputgroup-005-field:light-dark(oklch(0.99 0 265),oklch(0.27 0 265));
 --vibeui-inputgroup-005-fixed:light-dark(oklch(0.955 0 265),oklch(0.32 0 265));
 --vibeui-inputgroup-005-border:light-dark(oklch(0.86 0 265),oklch(0.44 0 265));
---vibeui-inputgroup-005-accent:light-dark(oklch(0.5 0.18 275),oklch(0.7 0.16 275));
+--vibeui-inputgroup-005-accent:light-dark(oklch(0.5 0.18 39.8),oklch(0.7 0.16 39.8));
 --vibeui-inputgroup-005-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0 275));
 --vibeui-inputgroup-005-radius:999px;
 --vibeui-inputgroup-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

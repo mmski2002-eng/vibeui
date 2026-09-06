@@ -16,11 +16,11 @@ const DEFAULT_PREVIEW =
   "data:image/svg+xml;utf8," +
   encodeURIComponent(
     '<svg xmlns="http://www.w3.org/2000/svg" width="160" height="100">' +
-      '<rect width="160" height="100" fill="#dbe4ff"/>' +
-      '<circle cx="40" cy="66" r="26" fill="#a9bcf5"/>' +
-      '<rect x="70" y="18" width="76" height="10" rx="5" fill="#7c93e6"/>' +
-      '<rect x="70" y="36" width="56" height="8" rx="4" fill="#a9bcf5"/>' +
-      '<path d="M0 100 L54 52 L92 82 L128 46 L160 78 L160 100 Z" fill="#c3d0f8"/>' +
+      '<rect width="160" height="100" fill="#ffe4d6"/>' +
+      '<circle cx="40" cy="66" r="26" fill="#ffbf9e"/>' +
+      '<rect x="70" y="18" width="76" height="10" rx="5" fill="#f0763a"/>' +
+      '<rect x="70" y="36" width="56" height="8" rx="4" fill="#ffbf9e"/>' +
+      '<path d="M0 100 L54 52 L92 82 L128 46 L160 78 L160 100 Z" fill="#ffd2b8"/>' +
       "</svg>",
   )
 
@@ -39,8 +39,8 @@ const STYLES = `
 --vibeui-tooltip-015-muted:color-mix(in oklab,var(--vibeui-tooltip-015-fg) 68%,transparent);
 --vibeui-tooltip-015-border:light-dark(oklch(0.9 0 265),oklch(0.4 0 265));
 --vibeui-tooltip-015-thumb:light-dark(oklch(0.94 0 265),oklch(0.33 0 265));
---vibeui-tooltip-015-link:light-dark(oklch(0.5 0.16 265),oklch(0.78 0.13 265));
---vibeui-tooltip-015-accent:light-dark(oklch(0.57 0.17 265),oklch(0.76 0.15 265));
+--vibeui-tooltip-015-link:light-dark(oklch(0.5 0.16 39.8),oklch(0.78 0.13 39.8));
+--vibeui-tooltip-015-accent:light-dark(oklch(0.57 0.17 39.8),oklch(0.76 0.15 39.8));
 --vibeui-tooltip-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

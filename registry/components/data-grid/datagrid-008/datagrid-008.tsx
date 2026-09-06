@@ -51,7 +51,7 @@ const STYLES = `
 --vibeui-datagrid-008-head:light-dark(oklch(0.975 0 230),oklch(0.27 0 230));
 --vibeui-datagrid-008-panel:light-dark(oklch(0.98 0 230),oklch(0.25 0 230));
 --vibeui-datagrid-008-field:light-dark(oklch(1 0 0),oklch(0.21 0 230));
---vibeui-datagrid-008-accent:light-dark(oklch(0.52 0.15 235),oklch(0.76 0.13 235));
+--vibeui-datagrid-008-accent:light-dark(oklch(0.52 0.15 39.8),oklch(0.76 0.13 39.8));
 --vibeui-datagrid-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

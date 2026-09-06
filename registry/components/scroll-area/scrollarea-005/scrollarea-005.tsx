@@ -31,7 +31,7 @@ const STYLES = `
 --vibeui-scrollarea-005-muted:color-mix(in oklab,var(--vibeui-scrollarea-005-fg) 68%,transparent);
 --vibeui-scrollarea-005-border:light-dark(oklch(0.9 0 265),oklch(0.33 0 265));
 --vibeui-scrollarea-005-rule:light-dark(oklch(0.955 0 265),oklch(0.28 0 265));
---vibeui-scrollarea-005-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
+--vibeui-scrollarea-005-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.74 0.15 39.8));
 --vibeui-scrollarea-005-row:2.25rem;
 --vibeui-scrollarea-005-rows:6;
 --vibeui-scrollarea-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

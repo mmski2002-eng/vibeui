@@ -76,7 +76,7 @@ border:1px solid light-dark(oklch(0.88 0 265),oklch(0.38 0 265));
 background:light-dark(oklch(1 0 0),oklch(0.25 0 265));
 color:light-dark(oklch(0.35 0 265),oklch(0.9 0 265));font:inherit;font-size:0.9375rem;
 }
-[data-vibeui-block="tooltip-001"] [data-part="sample"]:focus-visible{outline:2px solid light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));outline-offset:2px}
+[data-vibeui-block="tooltip-001"] [data-part="sample"]:focus-visible{outline:2px solid light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.18 39.8));outline-offset:2px}
 `
 
 /**

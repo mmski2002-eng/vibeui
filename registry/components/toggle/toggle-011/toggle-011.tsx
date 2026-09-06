@@ -23,8 +23,8 @@ export type Toggle011Props = Omit<
 const STYLES = `
 :where([data-vibeui-block="toggle-011"]){
 --vibeui-toggle-011-border:oklch(0.9 0 265);
---vibeui-toggle-011-accent-light:oklch(0.72 0.16 75);
---vibeui-toggle-011-accent-dark:oklch(0.62 0.14 265);
+--vibeui-toggle-011-accent-light:oklch(0.72 0.16 39.8);
+--vibeui-toggle-011-accent-dark:oklch(0.62 0.14 39.8);
 --vibeui-toggle-011-panel-bg:oklch(1 0 0);
 --vibeui-toggle-011-panel-fg:oklch(0.22 0 265);
 --vibeui-toggle-011-sample-bg:oklch(0.97 0 265);

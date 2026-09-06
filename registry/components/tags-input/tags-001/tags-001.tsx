@@ -38,8 +38,8 @@ const STYLES = `
 --vibeui-tags-001-muted:color-mix(in oklab,var(--vibeui-tags-001-fg) 68%,transparent);
 --vibeui-tags-001-border:light-dark(oklch(0.88 0 265),oklch(0.38 0 265));
 --vibeui-tags-001-chip:light-dark(oklch(0.96 0 265),oklch(0.3 0 265));
---vibeui-tags-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.18 262));
---vibeui-tags-001-ring:light-dark(oklch(0.55 0.2 262 / 22%),oklch(0.72 0.18 262 / 30%));
+--vibeui-tags-001-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.18 39.8));
+--vibeui-tags-001-ring:light-dark(oklch(0.55 0.2 39.8 / 22%),oklch(0.72 0.18 39.8 / 30%));
 --vibeui-tags-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

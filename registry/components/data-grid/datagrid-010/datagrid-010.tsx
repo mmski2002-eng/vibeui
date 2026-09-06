@@ -54,7 +54,7 @@ const STYLES = `
 --vibeui-datagrid-010-border:light-dark(oklch(0.92 0.006 20),oklch(0.34 0.012 20));
 --vibeui-datagrid-010-head:light-dark(oklch(0.975 0.004 20),oklch(0.27 0.012 20));
 --vibeui-datagrid-010-field:light-dark(oklch(1 0 0),oklch(0.22 0.012 20));
---vibeui-datagrid-010-accent:light-dark(oklch(0.55 0.17 25),oklch(0.75 0.15 25));
+--vibeui-datagrid-010-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.75 0.15 39.8));
 --vibeui-datagrid-010-on-accent:light-dark(oklch(1 0 0),oklch(0.2 0.02 25));
 --vibeui-datagrid-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

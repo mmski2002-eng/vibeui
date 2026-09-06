@@ -22,7 +22,7 @@ const STYLES = `
 --vibeui-progress-002-muted:color-mix(in oklab,var(--vibeui-progress-002-fg) 68%,transparent);
 --vibeui-progress-002-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
 --vibeui-progress-002-track:light-dark(oklch(0.93 0 265),oklch(0.3 0 265));
---vibeui-progress-002-accent:light-dark(oklch(0.55 0.19 262),oklch(0.7 0.16 262));
+--vibeui-progress-002-accent:light-dark(oklch(0.55 0.19 39.8),oklch(0.7 0.16 39.8));
 --vibeui-progress-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

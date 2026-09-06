@@ -20,7 +20,7 @@ const STYLES = `
 --vibeui-switch-014-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-switch-014-track:light-dark(oklch(0.72 0 265),oklch(0.46 0 265));
 --vibeui-switch-014-thumb:light-dark(oklch(1 0 0),oklch(0.93 0 265));
---vibeui-switch-014-accent:light-dark(oklch(0.55 0.16 155),oklch(0.62 0.15 155));
+--vibeui-switch-014-accent:light-dark(oklch(0.55 0.16 39.8),oklch(0.62 0.15 39.8));
 --vibeui-switch-014-mark:light-dark(oklch(1 0 0 / 55%),oklch(1 0 0 / 45%));
 --vibeui-switch-014-mark-active:light-dark(oklch(1 0 0 / 95%),oklch(1 0 0 / 90%));
 --vibeui-switch-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

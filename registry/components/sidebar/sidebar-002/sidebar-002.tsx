@@ -30,7 +30,7 @@ const STYLES = `
 --vibeui-sidebar-002-border:light-dark(oklch(0.91 0 265),oklch(0.35 0 265));
 --vibeui-sidebar-002-hover:light-dark(oklch(0.55 0 265 / 8%),oklch(0.85 0 265 / 11%));
 --vibeui-sidebar-002-active:light-dark(oklch(0.55 0 265 / 13%),oklch(0.85 0 265 / 18%));
---vibeui-sidebar-002-accent:light-dark(oklch(0.55 0.2 262),oklch(0.73 0.17 262));
+--vibeui-sidebar-002-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.73 0.17 39.8));
 --vibeui-sidebar-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

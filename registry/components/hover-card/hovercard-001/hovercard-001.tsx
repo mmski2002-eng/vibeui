@@ -32,7 +32,7 @@ const STYLES = `
 --vibeui-hovercard-001-muted:color-mix(in oklab,var(--vibeui-hovercard-001-fg) 68%,transparent);
 --vibeui-hovercard-001-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
 --vibeui-hovercard-001-hue:250;
---vibeui-hovercard-001-accent:light-dark(oklch(0.55 0.17 265),oklch(0.76 0.14 265));
+--vibeui-hovercard-001-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.76 0.14 39.8));
 --vibeui-hovercard-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

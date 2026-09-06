@@ -45,10 +45,10 @@ const STYLES = `
 --vibeui-inputgroup-024-field:light-dark(oklch(0.99 0 265),oklch(0.26 0 265));
 --vibeui-inputgroup-024-fixed:light-dark(oklch(0.96 0 265),oklch(0.31 0 265));
 --vibeui-inputgroup-024-border:light-dark(oklch(0.86 0 265),oklch(0.4 0 265));
---vibeui-inputgroup-024-accent:light-dark(oklch(0.5 0.15 315),oklch(0.73 0.14 315));
+--vibeui-inputgroup-024-accent:light-dark(oklch(0.5 0.15 39.8),oklch(0.73 0.14 39.8));
 --vibeui-inputgroup-024-checking:light-dark(oklch(0.6 0 265),oklch(0.72 0 265));
---vibeui-inputgroup-024-accepted:light-dark(oklch(0.56 0.14 155),oklch(0.76 0.14 155));
---vibeui-inputgroup-024-rejected:light-dark(oklch(0.56 0.19 25),oklch(0.72 0.17 25));
+--vibeui-inputgroup-024-accepted:light-dark(oklch(0.56 0.14 39.8),oklch(0.76 0.14 39.8));
+--vibeui-inputgroup-024-rejected:light-dark(oklch(0.56 0.19 39.8),oklch(0.72 0.17 39.8));
 --vibeui-inputgroup-024-radius:0.75rem;
 --vibeui-inputgroup-024-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-inputgroup-024-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;

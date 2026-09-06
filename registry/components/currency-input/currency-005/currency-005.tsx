@@ -43,8 +43,8 @@ const STYLES = `
 --vibeui-currency-005-border:light-dark(oklch(0.88 0 265),oklch(0.38 0 265));
 --vibeui-currency-005-track:light-dark(oklch(0.93 0 265),oklch(0.32 0 265));
 --vibeui-currency-005-ok:light-dark(oklch(0.55 0.15 160),oklch(0.74 0.13 160));
---vibeui-currency-005-near:light-dark(oklch(0.68 0.15 70),oklch(0.8 0.14 75));
---vibeui-currency-005-over:light-dark(oklch(0.56 0.19 25),oklch(0.72 0.17 25));
+--vibeui-currency-005-near:light-dark(oklch(0.68 0.15 39.8),oklch(0.8 0.14 39.8));
+--vibeui-currency-005-over:light-dark(oklch(0.56 0.19 39.8),oklch(0.72 0.17 39.8));
 --vibeui-currency-005-accent:var(--vibeui-currency-005-ok);
 --vibeui-currency-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-currency-005-fill:0%;

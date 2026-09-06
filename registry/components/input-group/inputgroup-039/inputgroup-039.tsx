@@ -52,7 +52,7 @@ const STYLES = `
 --vibeui-inputgroup-039-muted:color-mix(in oklab,var(--vibeui-inputgroup-039-fg) 68%,transparent);
 --vibeui-inputgroup-039-fixed:light-dark(oklch(0.965 0 265),oklch(0.31 0 265));
 --vibeui-inputgroup-039-border:light-dark(oklch(0.86 0 265),oklch(0.42 0 265));
---vibeui-inputgroup-039-accent:light-dark(oklch(0.55 0.15 260),oklch(0.77 0.13 260));
+--vibeui-inputgroup-039-accent:light-dark(oklch(0.55 0.15 39.8),oklch(0.77 0.13 39.8));
 --vibeui-inputgroup-039-danger:light-dark(oklch(0.56 0.19 25),oklch(0.75 0.15 25));
 --vibeui-inputgroup-039-radius:0.75rem;
 --vibeui-inputgroup-039-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

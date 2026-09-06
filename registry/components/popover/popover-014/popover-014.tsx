@@ -46,7 +46,7 @@ const STYLES = `
 --vibeui-popover-014-muted:color-mix(in oklab,var(--vibeui-popover-014-fg) 64%,transparent);
 --vibeui-popover-014-border:light-dark(oklch(0.89 0 265),oklch(0.36 0 265));
 --vibeui-popover-014-hover:light-dark(oklch(0 0 0 / 5%),oklch(1 0 0 / 8%));
---vibeui-popover-014-accent:light-dark(oklch(0.5 0.16 265),oklch(0.78 0.12 265));
+--vibeui-popover-014-accent:light-dark(oklch(0.5 0.16 39.8),oklch(0.78 0.12 39.8));
 --vibeui-popover-014-chosen:color-mix(in oklab,var(--vibeui-popover-014-accent) 16%,transparent);
 --vibeui-popover-014-shadow:light-dark(oklch(0.2 0 265 / 24%),oklch(0 0 0 / 60%));
 --vibeui-popover-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

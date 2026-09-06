@@ -54,7 +54,7 @@ const STYLES = `
 --vibeui-textarea-010-field:light-dark(oklch(1 0 0),oklch(0.25 0 265));
 --vibeui-textarea-010-chip:light-dark(oklch(0.965 0 265),oklch(0.31 0 265));
 --vibeui-textarea-010-border:light-dark(oklch(0.88 0 265),oklch(0.37 0 265));
---vibeui-textarea-010-accent:light-dark(oklch(0.54 0.19 265),oklch(0.74 0.15 265));
+--vibeui-textarea-010-accent:light-dark(oklch(0.54 0.19 39.8),oklch(0.74 0.15 39.8));
 --vibeui-textarea-010-on-accent:oklch(from var(--vibeui-textarea-010-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-textarea-010-radius:1.125rem;
 --vibeui-textarea-010-line:1.55;

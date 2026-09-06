@@ -37,7 +37,7 @@ const STYLES = `
 --vibeui-drawer-006-fg:light-dark(oklch(0.21 0 265),oklch(0.94 0 265));
 --vibeui-drawer-006-muted:color-mix(in oklab,var(--vibeui-drawer-006-fg) 68%,transparent);
 --vibeui-drawer-006-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
---vibeui-drawer-006-accent:light-dark(oklch(0.55 0.17 265),oklch(0.73 0.15 265));
+--vibeui-drawer-006-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.73 0.15 39.8));
 --vibeui-drawer-006-on-accent:light-dark(oklch(0.99 0 265),oklch(0.17 0 265));
 --vibeui-drawer-006-warn:light-dark(oklch(0.62 0.15 65),oklch(0.81 0.13 75));
 --vibeui-drawer-006-warn-bg:light-dark(oklch(0.96 0.04 85),oklch(0.32 0.05 75));

@@ -19,7 +19,7 @@ const STYLES = `
 :where([data-vibeui-block="tooltip-005"]){
 --vibeui-tooltip-005-bg:oklch(0.25 0 265);
 --vibeui-tooltip-005-fg:light-dark(oklch(0.26 0 265),oklch(0.96 0 265));
---vibeui-tooltip-005-accent:light-dark(oklch(0.6 0.16 265),oklch(0.74 0.15 265));
+--vibeui-tooltip-005-accent:light-dark(oklch(0.6 0.16 39.8),oklch(0.74 0.15 39.8));
 --vibeui-tooltip-005-face:light-dark(oklch(1 0 0),oklch(0.26 0 265));
 --vibeui-tooltip-005-line:light-dark(oklch(0.9 0 265),oklch(0.38 0 265));
 --vibeui-tooltip-005-facefg:light-dark(oklch(0.3 0 265),oklch(0.92 0 265));

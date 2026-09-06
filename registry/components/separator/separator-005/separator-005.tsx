@@ -44,9 +44,9 @@ color:var(--vibeui-separator-005-fg);
 font-size:0.75rem;line-height:1;
 }
 [data-vibeui-block="separator-005"][data-tone="accent"]{
---vibeui-separator-005-disc:light-dark(oklch(0.94 0.05 262),oklch(0.31 0.07 262));
---vibeui-separator-005-line:light-dark(oklch(0.85 0.05 262),oklch(0.47 0.09 262));
---vibeui-separator-005-fg:light-dark(oklch(0.45 0.16 262),oklch(0.85 0.11 262));
+--vibeui-separator-005-disc:light-dark(oklch(0.94 0.05 39.8),oklch(0.31 0.07 39.8));
+--vibeui-separator-005-line:light-dark(oklch(0.85 0.05 39.8),oklch(0.47 0.09 39.8));
+--vibeui-separator-005-fg:light-dark(oklch(0.45 0.16 39.8),oklch(0.85 0.11 39.8));
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="separator-005"] *{animation:none!important;transition:none!important}}
 `

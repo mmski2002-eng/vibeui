@@ -22,7 +22,7 @@ const STYLES = `
 --vibeui-tooltip-012-mark:light-dark(oklch(0.55 0 265),oklch(0.84 0 265));
 --vibeui-tooltip-012-face:light-dark(oklch(0.95 0 265),oklch(0.3 0 265));
 --vibeui-tooltip-012-line:light-dark(oklch(0.82 0 265),oklch(0.44 0 265));
---vibeui-tooltip-012-accent:light-dark(oklch(0.6 0.16 265),oklch(0.74 0.15 265));
+--vibeui-tooltip-012-accent:light-dark(oklch(0.6 0.16 39.8),oklch(0.74 0.15 39.8));
 --vibeui-tooltip-012-width:13.5rem;
 --vibeui-tooltip-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

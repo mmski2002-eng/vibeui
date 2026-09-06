@@ -33,7 +33,7 @@ const STYLES = `
 --vibeui-phoneinput-006-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-phoneinput-006-muted:color-mix(in oklab,var(--vibeui-phoneinput-006-fg) 68%,transparent);
 --vibeui-phoneinput-006-field-border:light-dark(oklch(0.85 0 265),oklch(0.4 0 265));
---vibeui-phoneinput-006-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.17 262));
+--vibeui-phoneinput-006-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.17 39.8));
 --vibeui-phoneinput-006-error:light-dark(oklch(0.55 0.2 25),oklch(0.75 0.16 25));
 --vibeui-phoneinput-006-error-soft:light-dark(oklch(0.96 0.03 25),oklch(0.3 0.05 25));
 --vibeui-phoneinput-006-radius:0.625rem;

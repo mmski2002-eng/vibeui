@@ -42,7 +42,7 @@ const STYLES = `
 --vibeui-togglegroup-015-muted:color-mix(in oklab,var(--vibeui-togglegroup-015-fg) 68%,transparent);
 --vibeui-togglegroup-015-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
 --vibeui-togglegroup-015-surface:light-dark(oklch(0.97 0 265),oklch(0.28 0 265));
---vibeui-togglegroup-015-accent:light-dark(oklch(0.55 0.15 265),oklch(0.73 0.13 265));
+--vibeui-togglegroup-015-accent:light-dark(oklch(0.55 0.15 39.8),oklch(0.73 0.13 39.8));
 --vibeui-togglegroup-015-on-accent:light-dark(oklch(0.99 0 0),oklch(0.18 0 265));
 --vibeui-togglegroup-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

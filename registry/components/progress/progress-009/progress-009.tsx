@@ -20,7 +20,7 @@ const STYLES = `
 --vibeui-progress-009-muted:color-mix(in oklab,var(--vibeui-progress-009-fg) 68%,transparent);
 --vibeui-progress-009-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
 --vibeui-progress-009-track:light-dark(oklch(0.93 0 265),oklch(0.3 0 265));
---vibeui-progress-009-accent:light-dark(oklch(0.52 0.2 292),oklch(0.7 0.17 292));
+--vibeui-progress-009-accent:light-dark(oklch(0.52 0.2 39.8),oklch(0.7 0.17 39.8));
 --vibeui-progress-009-on-accent:light-dark(oklch(1 0 0),oklch(0.17 0 292));
 --vibeui-progress-009-fade:light-dark(oklch(1 0 0),oklch(0.24 0 292));
 --vibeui-progress-009-value:0;

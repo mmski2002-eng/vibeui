@@ -33,7 +33,7 @@ const STYLES = `
 --vibeui-filters-003-muted:color-mix(in oklab,var(--vibeui-filters-003-fg) 68%,transparent);
 --vibeui-filters-003-border:light-dark(oklch(0.9 0 265),oklch(0.4 0 265));
 --vibeui-filters-003-shell:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
---vibeui-filters-003-accent:light-dark(oklch(0.53 0.18 250),oklch(0.74 0.15 250));
+--vibeui-filters-003-accent:light-dark(oklch(0.53 0.18 39.8),oklch(0.74 0.15 39.8));
 --vibeui-filters-003-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0 250));
 --vibeui-filters-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

@@ -39,7 +39,7 @@ const STYLES = `
 --vibeui-input-015-muted:color-mix(in oklab,var(--vibeui-input-015-fg) 68%,transparent);
 --vibeui-input-015-field:light-dark(oklch(0.985 0 265),oklch(0.27 0 265));
 --vibeui-input-015-border:light-dark(oklch(0.88 0 265),oklch(0.41 0 265));
---vibeui-input-015-accent:light-dark(oklch(0.5 0.15 150),oklch(0.76 0.14 150));
+--vibeui-input-015-accent:light-dark(oklch(0.5 0.15 39.8),oklch(0.76 0.14 39.8));
 --vibeui-input-015-bad:light-dark(oklch(0.55 0.2 25),oklch(0.73 0.16 25));
 --vibeui-input-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

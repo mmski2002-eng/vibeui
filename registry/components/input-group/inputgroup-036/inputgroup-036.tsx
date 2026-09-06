@@ -44,7 +44,7 @@ const STYLES = `
 --vibeui-inputgroup-036-muted:color-mix(in oklab,var(--vibeui-inputgroup-036-fg) 68%,transparent);
 --vibeui-inputgroup-036-field:light-dark(oklch(0.99 0 265),oklch(0.26 0 265));
 --vibeui-inputgroup-036-border:light-dark(oklch(0.86 0 265),oklch(0.42 0 265));
---vibeui-inputgroup-036-accent:light-dark(oklch(0.55 0.15 280),oklch(0.76 0.13 280));
+--vibeui-inputgroup-036-accent:light-dark(oklch(0.55 0.15 39.8),oklch(0.76 0.13 39.8));
 --vibeui-inputgroup-036-error:light-dark(oklch(0.56 0.19 25),oklch(0.75 0.15 25));
 --vibeui-inputgroup-036-radius:0.75rem;
 --vibeui-inputgroup-036-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

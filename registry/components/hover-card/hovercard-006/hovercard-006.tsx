@@ -39,9 +39,9 @@ const STYLES = `
 --vibeui-hovercard-006-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-hovercard-006-muted:color-mix(in oklab,var(--vibeui-hovercard-006-fg) 68%,transparent);
 --vibeui-hovercard-006-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
---vibeui-hovercard-006-accent:light-dark(oklch(0.55 0.18 20),oklch(0.66 0.17 20));
---vibeui-hovercard-006-face:light-dark(oklch(0.92 0.04 265),oklch(0.38 0.05 265));
---vibeui-hovercard-006-face-fg:light-dark(oklch(0.36 0.07 265),oklch(0.92 0.04 265));
+--vibeui-hovercard-006-accent:light-dark(oklch(0.55 0.18 39.8),oklch(0.66 0.17 39.8));
+--vibeui-hovercard-006-face:light-dark(oklch(0.92 0.04 39.8),oklch(0.38 0.05 39.8));
+--vibeui-hovercard-006-face-fg:light-dark(oklch(0.36 0.07 39.8),oklch(0.92 0.04 39.8));
 --vibeui-hovercard-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

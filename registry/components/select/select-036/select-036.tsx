@@ -43,7 +43,7 @@ const STYLES = `
 --vibeui-select-036-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-select-036-muted:color-mix(in oklab,var(--vibeui-select-036-fg) 68%,transparent);
 --vibeui-select-036-border:light-dark(oklch(0.87 0 265),oklch(0.4 0 265));
---vibeui-select-036-accent:light-dark(oklch(0.52 0.18 262),oklch(0.76 0.15 262));
+--vibeui-select-036-accent:light-dark(oklch(0.52 0.18 39.8),oklch(0.76 0.15 39.8));
 --vibeui-select-036-on-accent:oklch(from var(--vibeui-select-036-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-select-036-tint:color-mix(in oklab,var(--vibeui-select-036-accent) 14%,transparent);
 --vibeui-select-036-mark:color-mix(in oklab,var(--vibeui-select-036-accent) 26%,transparent);

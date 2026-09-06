@@ -27,7 +27,7 @@ const STYLES = `
 --vibeui-stepper-001-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-stepper-001-muted:color-mix(in oklab,var(--vibeui-stepper-001-fg) 68%,transparent);
 --vibeui-stepper-001-line:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
---vibeui-stepper-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.16 262));
+--vibeui-stepper-001-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.16 39.8));
 --vibeui-stepper-001-accent-fg:light-dark(oklch(1 0 0),oklch(0.19 0 262));
 --vibeui-stepper-001-surface:light-dark(oklch(1 0 0),oklch(0.2 0 265));
 --vibeui-stepper-001-size:1.75rem;

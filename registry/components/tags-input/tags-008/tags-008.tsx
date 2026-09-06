@@ -35,7 +35,7 @@ const STYLES = `
 --vibeui-tags-008-border:light-dark(oklch(0 0 0 / 14%),oklch(1 0 0 / 16%));
 --vibeui-tags-008-field:light-dark(oklch(1 0 0),oklch(1 0 0 / 5%));
 --vibeui-tags-008-chip:light-dark(oklch(0 0 0 / 6%),oklch(1 0 0 / 9%));
---vibeui-tags-008-accent:light-dark(oklch(0.5 0.16 265),oklch(0.78 0.12 265));
+--vibeui-tags-008-accent:light-dark(oklch(0.5 0.16 39.8),oklch(0.78 0.12 39.8));
 --vibeui-tags-008-ok:light-dark(oklch(0.45 0.13 152),oklch(0.82 0.13 152));
 --vibeui-tags-008-bad:light-dark(oklch(0.53 0.19 25),oklch(0.79 0.15 25));
 --vibeui-tags-008-bad-bg:light-dark(oklch(0.95 0.05 25),oklch(0.32 0.07 25));

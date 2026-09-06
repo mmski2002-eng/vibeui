@@ -40,7 +40,7 @@ const STYLES = `
 --vibeui-inputgroup-015-field:light-dark(oklch(0.99 0 265),oklch(0.26 0 265));
 --vibeui-inputgroup-015-fixed:light-dark(oklch(0.96 0 265),oklch(0.31 0 265));
 --vibeui-inputgroup-015-border:light-dark(oklch(0.86 0 265),oklch(0.4 0 265));
---vibeui-inputgroup-015-accent:light-dark(oklch(0.52 0.16 230),oklch(0.74 0.14 230));
+--vibeui-inputgroup-015-accent:light-dark(oklch(0.52 0.16 39.8),oklch(0.74 0.14 39.8));
 --vibeui-inputgroup-015-radius:0.75rem;
 --vibeui-inputgroup-015-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-inputgroup-015-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;

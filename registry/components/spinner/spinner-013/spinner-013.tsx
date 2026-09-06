@@ -27,7 +27,7 @@ const STYLES = `
 :where([data-vibeui-block="spinner-013"]){
 --vibeui-spinner-013-height:3px;
 --vibeui-spinner-013-track:transparent;
---vibeui-spinner-013-accent:light-dark(oklch(0.55 0.19 262),oklch(0.72 0.16 262));
+--vibeui-spinner-013-accent:light-dark(oklch(0.55 0.19 39.8),oklch(0.72 0.16 39.8));
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
    next-themes и shadcn ставят класс .dark и его не объявляют. */

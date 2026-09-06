@@ -55,10 +55,10 @@ const STYLES = `
 --vibeui-datagrid-023-border:light-dark(oklch(0.92 0 285),oklch(0.35 0 285));
 --vibeui-datagrid-023-head:light-dark(oklch(0.975 0 285),oklch(0.27 0 285));
 --vibeui-datagrid-023-panel:light-dark(oklch(0.985 0 285),oklch(0.26 0 285));
---vibeui-datagrid-023-accent:light-dark(oklch(0.5 0.14 145),oklch(0.76 0.13 145));
+--vibeui-datagrid-023-accent:light-dark(oklch(0.5 0.14 39.8),oklch(0.76 0.13 39.8));
 --vibeui-datagrid-023-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0 285));
 --vibeui-datagrid-023-bad:light-dark(oklch(0.53 0.19 27),oklch(0.77 0.16 27));
---vibeui-datagrid-023-badbg:light-dark(oklch(0.97 0.03 27),oklch(0.31 0.055 27));
+--vibeui-datagrid-023-badbg:light-dark(oklch(0.97 0.03 27),oklch(0.31 0.055 39.8));
 --vibeui-datagrid-023-new:light-dark(oklch(0.96 0.04 145),oklch(0.31 0.05 145));
 --vibeui-datagrid-023-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

@@ -33,7 +33,7 @@ const STYLES = `
 --vibeui-stepper-004-muted:color-mix(in oklab,var(--vibeui-stepper-004-fg) 68%,transparent);
 --vibeui-stepper-004-border:light-dark(oklch(0.92 0 265),oklch(0.32 0 265));
 --vibeui-stepper-004-line:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
---vibeui-stepper-004-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.16 262));
+--vibeui-stepper-004-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.16 39.8));
 /* Светлые ветки притемнены: этими же цветами набраны подписи состояний под
    кружками, и на прежних 0.55 и 0.65 «Готово» давало 4.1:1, «Пропущен» — 3.0:1. */
 --vibeui-stepper-004-done:light-dark(oklch(0.525 0.14 155),oklch(0.74 0.14 155));

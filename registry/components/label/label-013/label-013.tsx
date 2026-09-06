@@ -23,7 +23,7 @@ const STYLES = `
 --vibeui-label-013-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-label-013-muted:color-mix(in oklab,var(--vibeui-label-013-fg) 68%,transparent);
 --vibeui-label-013-field-border:light-dark(oklch(0.85 0 265),oklch(0.4 0 265));
---vibeui-label-013-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.16 262));
+--vibeui-label-013-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.16 39.8));
 --vibeui-label-013-error:light-dark(oklch(0.55 0.2 25),oklch(0.76 0.15 25));
 --vibeui-label-013-error-soft:light-dark(oklch(0.96 0.03 25),oklch(0.31 0.055 25));
 --vibeui-label-013-radius:0.625rem;

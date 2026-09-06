@@ -50,7 +50,7 @@ const STYLES = `
 --vibeui-contextmenu-008-muted:color-mix(in oklab,var(--vibeui-contextmenu-008-fg) 68%,transparent);
 --vibeui-contextmenu-008-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
 --vibeui-contextmenu-008-hover:light-dark(oklch(0.96 0 265),oklch(0.31 0 265));
---vibeui-contextmenu-008-accent:light-dark(oklch(0.55 0.19 320),oklch(0.76 0.15 320));
+--vibeui-contextmenu-008-accent:light-dark(oklch(0.55 0.19 39.8),oklch(0.76 0.15 39.8));
 --vibeui-contextmenu-008-shadow:light-dark(oklch(0.2 0 265 / 50%),oklch(0 0 0 / 72%));
 --vibeui-contextmenu-008-lift:light-dark(oklch(0.2 0 265 / 60%),oklch(0 0 0 / 76%));
 --vibeui-contextmenu-008-lift-strong:light-dark(oklch(0.2 0 265 / 70%),oklch(0 0 0 / 84%));

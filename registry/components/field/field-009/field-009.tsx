@@ -32,7 +32,7 @@ const STYLES = `
 --vibeui-field-009-muted:color-mix(in oklab,var(--vibeui-field-009-fg) 68%,transparent);
 --vibeui-field-009-border:light-dark(oklch(0.88 0 265),oklch(0.4 0 265));
 --vibeui-field-009-shell:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
---vibeui-field-009-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-field-009-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.74 0.16 39.8));
 --vibeui-field-009-label:9rem;
 --vibeui-field-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

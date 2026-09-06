@@ -41,11 +41,11 @@ const STYLES = `
 --vibeui-input-016-border:light-dark(oklch(0.9 0 265),oklch(0.38 0 265));
 --vibeui-input-016-field:light-dark(oklch(0.985 0 265),oklch(0.26 0 265));
 --vibeui-input-016-chip:light-dark(oklch(0.95 0 265),oklch(0.32 0 265));
---vibeui-input-016-accent:light-dark(oklch(0.55 0.17 265),oklch(0.72 0.15 265));
+--vibeui-input-016-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.72 0.15 39.8));
 --vibeui-input-016-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0 265));
 --vibeui-input-016-weak:light-dark(oklch(0.58 0.19 25),oklch(0.74 0.16 25));
 --vibeui-input-016-fair:light-dark(oklch(0.72 0.16 75),oklch(0.82 0.15 75));
---vibeui-input-016-strong:light-dark(oklch(0.58 0.15 152),oklch(0.78 0.14 152));
+--vibeui-input-016-strong:light-dark(oklch(0.58 0.15 39.8),oklch(0.78 0.14 39.8));
 --vibeui-input-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

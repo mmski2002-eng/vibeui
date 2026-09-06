@@ -42,8 +42,8 @@ const STYLES = `
 --vibeui-hovercard-004-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-hovercard-004-muted:color-mix(in oklab,var(--vibeui-hovercard-004-fg) 68%,transparent);
 --vibeui-hovercard-004-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
---vibeui-hovercard-004-accent:light-dark(oklch(0.5 0.16 260),oklch(0.76 0.13 260));
---vibeui-hovercard-004-lang:oklch(0.72 0.15 85);
+--vibeui-hovercard-004-accent:light-dark(oklch(0.5 0.16 39.8),oklch(0.76 0.13 39.8));
+--vibeui-hovercard-004-lang:oklch(0.72 0.15 39.8);
 --vibeui-hovercard-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-hovercard-004-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 }

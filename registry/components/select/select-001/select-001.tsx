@@ -36,7 +36,7 @@ const STYLES = `
 --vibeui-select-001-muted:color-mix(in oklab,var(--vibeui-select-001-fg) 68%,transparent);
 --vibeui-select-001-bg:light-dark(oklch(1 0 0),oklch(0.23 0 265));
 --vibeui-select-001-border:light-dark(oklch(0.87 0 265),oklch(0.41 0 265));
---vibeui-select-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-select-001-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.74 0.16 39.8));
 --vibeui-select-001-radius:0.625rem;
 --vibeui-select-001-height:2.75rem;
 --vibeui-select-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

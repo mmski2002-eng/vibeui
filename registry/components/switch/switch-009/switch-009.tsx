@@ -24,9 +24,9 @@ const STYLES = `
    иначе день на тёмной странице перестал бы быть днём. */
 --vibeui-switch-009-day:oklch(0.82 0.11 230);
 --vibeui-switch-009-night:oklch(0.32 0.06 275);
---vibeui-switch-009-sun:oklch(0.88 0.15 85);
+--vibeui-switch-009-sun:oklch(0.88 0.15 39.8);
 --vibeui-switch-009-moon:oklch(0.95 0 265);
---vibeui-switch-009-accent:light-dark(oklch(0.55 0.19 275),oklch(0.75 0.16 275));
+--vibeui-switch-009-accent:light-dark(oklch(0.55 0.19 39.8),oklch(0.75 0.16 39.8));
 --vibeui-switch-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

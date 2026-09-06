@@ -58,7 +58,7 @@ const STYLES = `
 --vibeui-datagrid-006-border:light-dark(oklch(0.92 0 285),oklch(0.34 0 285));
 --vibeui-datagrid-006-head:light-dark(oklch(0.975 0 285),oklch(0.27 0 285));
 --vibeui-datagrid-006-field:light-dark(oklch(1 0 0),oklch(0.22 0 285));
---vibeui-datagrid-006-accent:light-dark(oklch(0.52 0.16 275),oklch(0.76 0.14 275));
+--vibeui-datagrid-006-accent:light-dark(oklch(0.52 0.16 39.8),oklch(0.76 0.14 39.8));
 --vibeui-datagrid-006-ok:light-dark(oklch(0.52 0.13 155),oklch(0.76 0.13 155));
 --vibeui-datagrid-006-warn:light-dark(oklch(0.6 0.14 75),oklch(0.8 0.13 75));
 --vibeui-datagrid-006-off:light-dark(oklch(0.58 0 285),oklch(0.66 0 285));

@@ -59,7 +59,7 @@ const STYLES = `
 --vibeui-date-013-panel:light-dark(oklch(1 0 0),oklch(0.24 0 265));
 --vibeui-date-013-hover:light-dark(oklch(0.96 0 265),oklch(0.3 0 265));
 --vibeui-date-013-shadow:light-dark(oklch(0.2 0 265 / 55%),oklch(0 0 0 / 70%));
---vibeui-date-013-accent:light-dark(oklch(0.52 0.15 175),oklch(0.76 0.13 175));
+--vibeui-date-013-accent:light-dark(oklch(0.52 0.15 39.8),oklch(0.76 0.13 39.8));
 /* Текст на заливке выводится из светлоты акцента: пользовательский цвет
    приходит один на обе ветки темы, и фиксированный белый однажды окажется
    белым на жёлтом. */

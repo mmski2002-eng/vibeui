@@ -62,7 +62,7 @@ const STYLES = `
 --vibeui-inputgroup-037-field:light-dark(oklch(0.99 0 265),oklch(0.26 0 265));
 --vibeui-inputgroup-037-fixed:light-dark(oklch(0.965 0 265),oklch(0.31 0 265));
 --vibeui-inputgroup-037-border:light-dark(oklch(0.86 0 265),oklch(0.42 0 265));
---vibeui-inputgroup-037-accent:light-dark(oklch(0.55 0.14 190),oklch(0.78 0.12 190));
+--vibeui-inputgroup-037-accent:light-dark(oklch(0.55 0.14 39.8),oklch(0.78 0.12 39.8));
 --vibeui-inputgroup-037-radius:0.75rem;
 --vibeui-inputgroup-037-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

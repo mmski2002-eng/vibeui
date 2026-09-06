@@ -30,7 +30,7 @@ const STYLES = `
 --vibeui-toggle-007-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-toggle-007-muted:color-mix(in oklab,var(--vibeui-toggle-007-fg) 68%,transparent);
 --vibeui-toggle-007-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
---vibeui-toggle-007-accent:light-dark(oklch(0.54 0.16 320),oklch(0.76 0.13 320));
+--vibeui-toggle-007-accent:light-dark(oklch(0.54 0.16 39.8),oklch(0.76 0.13 39.8));
 --vibeui-toggle-007-hover:light-dark(oklch(0.97 0 265),oklch(0.29 0 265));
 --vibeui-toggle-007-scale:1;
 --vibeui-toggle-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

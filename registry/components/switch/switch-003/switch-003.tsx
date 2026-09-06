@@ -30,7 +30,7 @@ const STYLES = `
 --vibeui-switch-003-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-switch-003-track:light-dark(oklch(0.88 0 265),oklch(0.43 0 265));
 --vibeui-switch-003-thumb:light-dark(oklch(1 0 0),oklch(0.93 0 265));
---vibeui-switch-003-accent:light-dark(oklch(0.55 0.19 262),oklch(0.73 0.16 262));
+--vibeui-switch-003-accent:light-dark(oklch(0.55 0.19 39.8),oklch(0.73 0.16 39.8));
 --vibeui-switch-003-hover:light-dark(oklch(0.55 0 265 / 6%),oklch(0.88 0 265 / 10%));
 --vibeui-switch-003-on-text:"Вкл";
 --vibeui-switch-003-off-text:"Выкл";

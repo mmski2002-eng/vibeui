@@ -23,7 +23,7 @@ const STYLES = `
 --vibeui-progress-008-muted:color-mix(in oklab,var(--vibeui-progress-008-fg) 68%,transparent);
 --vibeui-progress-008-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
 --vibeui-progress-008-track:light-dark(oklch(0.92 0 265),oklch(0.3 0 265));
---vibeui-progress-008-accent:light-dark(oklch(0.55 0.19 262),oklch(0.71 0.16 262));
+--vibeui-progress-008-accent:light-dark(oklch(0.55 0.19 39.8),oklch(0.71 0.16 39.8));
 --vibeui-progress-008-value:0;
 --vibeui-progress-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

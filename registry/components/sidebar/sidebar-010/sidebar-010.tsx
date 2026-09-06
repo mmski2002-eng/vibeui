@@ -40,9 +40,9 @@ const STYLES = `
 --vibeui-sidebar-010-muted:color-mix(in oklab,var(--vibeui-sidebar-010-fg) 62%,transparent);
 --vibeui-sidebar-010-border:light-dark(oklch(0 0 0 / 11%),oklch(1 0 0 / 12%));
 --vibeui-sidebar-010-hover:light-dark(oklch(0 0 0 / 5%),oklch(1 0 0 / 7%));
---vibeui-sidebar-010-accent:light-dark(oklch(0.5 0.16 265),oklch(0.8 0.12 265));
+--vibeui-sidebar-010-accent:light-dark(oklch(0.5 0.16 39.8),oklch(0.8 0.12 39.8));
 --vibeui-sidebar-010-active:color-mix(in oklab,var(--vibeui-sidebar-010-accent) 14%,transparent);
---vibeui-sidebar-010-pin:light-dark(oklch(0.6 0.14 75),oklch(0.82 0.12 75));
+--vibeui-sidebar-010-pin:light-dark(oklch(0.6 0.14 39.8),oklch(0.82 0.12 39.8));
 --vibeui-sidebar-010-radius:0.5rem;
 --vibeui-sidebar-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

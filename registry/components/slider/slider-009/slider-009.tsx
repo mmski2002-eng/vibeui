@@ -30,7 +30,7 @@ const STYLES = `
 --vibeui-slider-009-muted:color-mix(in oklab,var(--vibeui-slider-009-fg) 68%,transparent);
 --vibeui-slider-009-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
 --vibeui-slider-009-track:light-dark(oklch(0.92 0 265),oklch(0.42 0 265));
---vibeui-slider-009-accent:light-dark(oklch(0.58 0.19 292),oklch(0.74 0.16 292));
+--vibeui-slider-009-accent:light-dark(oklch(0.58 0.19 39.8),oklch(0.74 0.16 39.8));
 --vibeui-slider-009-on-accent:light-dark(oklch(1 0 0),oklch(0.18 0 292));
 --vibeui-slider-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-slider-009-fill:60%;

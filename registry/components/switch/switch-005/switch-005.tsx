@@ -30,7 +30,7 @@ const STYLES = `
 --vibeui-switch-005-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-switch-005-track:light-dark(oklch(0.88 0 265),oklch(0.43 0 265));
 --vibeui-switch-005-thumb:light-dark(oklch(1 0 0),oklch(0.93 0 265));
---vibeui-switch-005-accent:light-dark(oklch(0.55 0.16 155),oklch(0.72 0.15 155));
+--vibeui-switch-005-accent:light-dark(oklch(0.55 0.16 39.8),oklch(0.72 0.15 39.8));
 --vibeui-switch-005-danger:light-dark(oklch(0.55 0.2 25),oklch(0.68 0.18 25));
 --vibeui-switch-005-danger-tint:light-dark(oklch(0.55 0.2 25 / 8%),oklch(0.68 0.18 25 / 16%));
 --vibeui-switch-005-danger-ink:light-dark(oklch(1 0 0),oklch(0.18 0.04 25));

@@ -33,7 +33,7 @@ const STYLES = `
 --vibeui-textarea-008-muted:color-mix(in oklab,var(--vibeui-textarea-008-fg) 68%,transparent);
 --vibeui-textarea-008-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
 --vibeui-textarea-008-field:light-dark(oklch(0.97 0 265),oklch(0.25 0 265));
---vibeui-textarea-008-accent:light-dark(oklch(0.5 0.16 250),oklch(0.73 0.14 250));
+--vibeui-textarea-008-accent:light-dark(oklch(0.5 0.16 39.8),oklch(0.73 0.14 39.8));
 --vibeui-textarea-008-ok:light-dark(oklch(0.52 0.14 155),oklch(0.74 0.14 155));
 --vibeui-textarea-008-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-textarea-008-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;

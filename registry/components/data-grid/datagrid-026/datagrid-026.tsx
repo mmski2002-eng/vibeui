@@ -50,8 +50,8 @@ const STYLES = `
 --vibeui-datagrid-026-muted:color-mix(in oklab,var(--vibeui-datagrid-026-fg) 68%,transparent);
 --vibeui-datagrid-026-border:light-dark(oklch(0.92 0 285),oklch(0.35 0 285));
 --vibeui-datagrid-026-head:light-dark(oklch(0.975 0 285),oklch(0.27 0 285));
---vibeui-datagrid-026-accent:light-dark(oklch(0.5 0.16 30),oklch(0.72 0.15 30));
---vibeui-datagrid-026-pin:light-dark(oklch(0.97 0.03 30),oklch(0.3 0.036 30));
+--vibeui-datagrid-026-accent:light-dark(oklch(0.5 0.16 39.8),oklch(0.72 0.15 39.8));
+--vibeui-datagrid-026-pin:light-dark(oklch(0.97 0.03 30),oklch(0.3 0.036 39.8));
 --vibeui-datagrid-026-up:light-dark(oklch(0.53 0.17 27),oklch(0.75 0.15 27));
 --vibeui-datagrid-026-down:light-dark(oklch(0.48 0.13 155),oklch(0.74 0.13 155));
 --vibeui-datagrid-026-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 30));

@@ -48,7 +48,7 @@ const STYLES = `
 --vibeui-contextmenu-004-muted:color-mix(in oklab,var(--vibeui-contextmenu-004-fg) 68%,transparent);
 --vibeui-contextmenu-004-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
 --vibeui-contextmenu-004-hover:light-dark(oklch(0.96 0 265),oklch(0.31 0 265));
---vibeui-contextmenu-004-accent:light-dark(oklch(0.58 0.17 300),oklch(0.76 0.14 300));
+--vibeui-contextmenu-004-accent:light-dark(oklch(0.58 0.17 39.8),oklch(0.76 0.14 39.8));
 --vibeui-contextmenu-004-shadow:light-dark(oklch(0.2 0 265 / 50%),oklch(0 0 0 / 72%));
 --vibeui-contextmenu-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-contextmenu-004-x:50%;

@@ -23,7 +23,7 @@ const STYLES = `
 --vibeui-label-001-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-label-001-muted:color-mix(in oklab,var(--vibeui-label-001-fg) 68%,transparent);
 --vibeui-label-001-field-border:light-dark(oklch(0.85 0 265),oklch(0.4 0 265));
---vibeui-label-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.72 0.16 262));
+--vibeui-label-001-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.72 0.16 39.8));
 --vibeui-label-001-required:light-dark(oklch(0.58 0.19 25),oklch(0.74 0.16 25));
 --vibeui-label-001-radius:0.625rem;
 --vibeui-label-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

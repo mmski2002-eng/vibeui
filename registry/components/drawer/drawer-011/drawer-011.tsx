@@ -44,7 +44,7 @@ const STYLES = `
 --vibeui-drawer-011-head:light-dark(oklch(0 0 0 / 3%),oklch(1 0 0 / 4%));
 --vibeui-drawer-011-hover:light-dark(oklch(0 0 0 / 5%),oklch(1 0 0 / 7%));
 --vibeui-drawer-011-grip:light-dark(oklch(0 0 0 / 16%),oklch(1 0 0 / 22%));
---vibeui-drawer-011-accent:light-dark(oklch(0.5 0.16 265),oklch(0.78 0.12 265));
+--vibeui-drawer-011-accent:light-dark(oklch(0.5 0.16 39.8),oklch(0.78 0.12 39.8));
 --vibeui-drawer-011-soft:color-mix(in oklab,var(--vibeui-drawer-011-accent) 14%,transparent);
 --vibeui-drawer-011-scrim:light-dark(oklch(0.2 0 265 / 42%),oklch(0 0 0 / 62%));
 --vibeui-drawer-011-shadow:light-dark(oklch(0.2 0 265 / 40%),oklch(0 0 0 / 70%));

@@ -35,7 +35,7 @@ const STYLES = `
 --vibeui-field-004-border:light-dark(oklch(0.88 0 265),oklch(0.4 0 265));
 --vibeui-field-004-shell:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-field-004-track:light-dark(oklch(0.92 0 265),oklch(0.36 0 265));
---vibeui-field-004-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-field-004-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.74 0.16 39.8));
 --vibeui-field-004-danger:light-dark(oklch(0.58 0.19 30),oklch(0.74 0.16 30));
 --vibeui-field-004-ratio:0;
 --vibeui-field-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
