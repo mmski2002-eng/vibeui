@@ -1,6 +1,6 @@
 "use client"
 
-import { useId, useRef, useState } from "react"
+import { useEffect, useId, useRef, useState } from "react"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Textarea005Person = {
@@ -75,14 +75,26 @@ box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-textarea-005-accent) 18%,tr
    привязка к нижнему краю поля. Подложка у него своя: список всплывает
    над страницей и обязан быть непрозрачным. */
 [data-vibeui-block="textarea-005"] [data-part="menu"]{
-position:absolute;left:0;right:0;top:calc(100% + 0.25rem);z-index:2;
-margin:0;padding:0.25rem;list-style:none;
+margin:auto;padding:0.25rem;list-style:none;overflow:visible;
+min-width:14rem;
 border:1px solid var(--vibeui-textarea-005-border);border-radius:0.625rem;
 background:var(--vibeui-textarea-005-panel);
 box-shadow:0 8px 24px var(--vibeui-textarea-005-shadow);
 animation:vibeui-textarea-005-in .14s ease-out;
 }
 @keyframes vibeui-textarea-005-in{from{opacity:0;transform:translateY(-0.25rem)}to{opacity:1;transform:none}}
+/* Список живёт в верхнем слое нативного popover: absolute внутри поля
+   обрезался карточкой каталога и любым родителем с overflow. Где anchor
+   поддержан — он висит под полем, где нет — по центру экрана. */
+@supports (anchor-name: --vibeui-textarea-005-anchor){
+[data-vibeui-block="textarea-005"] [data-part="field"]{anchor-name:--vibeui-textarea-005-anchor}
+[data-vibeui-block="textarea-005"] [data-part="menu"]{
+position-anchor:--vibeui-textarea-005-anchor;
+position-area:block-end span-inline-end;
+width:anchor-size(width);margin:0.25rem 0 0;
+position-try-fallbacks:flip-block;
+}
+}
 [data-vibeui-block="textarea-005"] [data-part="item"]{
 display:flex;width:100%;align-items:center;gap:0.5rem;
 padding:0.375rem 0.5rem;border:0;border-radius:0.375rem;
@@ -187,6 +199,26 @@ export function Textarea005({
     setQuery(null)
   }
 
+  // popover="manual", а не "auto": клик в поле — это не «мимо списка», и
+  // light dismiss гасил бы подсказку ровно в момент набора имени.
+  const menu = useRef<HTMLUListElement>(null)
+
+  useEffect(() => {
+    const list = menu.current
+
+    if (!list) {
+      return
+    }
+
+    list.showPopover()
+
+    return () => {
+      if (list.matches(":popover-open")) {
+        list.hidePopover()
+      }
+    }
+  }, [matches.length])
+
   const palette = {
     ...(accent ? { "--vibeui-textarea-005-accent": accent } : null),
     ...(background
@@ -229,7 +261,7 @@ export function Textarea005({
             onBlur={() => setQuery(null)}
           />
           {matches.length > 0 ? (
-            <ul data-part="menu">
+            <ul ref={menu} data-part="menu" popover="manual">
               {matches.map((person) => (
                 <li key={person.handle}>
                   <button

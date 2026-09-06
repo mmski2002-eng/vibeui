@@ -125,8 +125,6 @@ export async function loadLazyPreviewMap(
       return (await import("@/registry/previews-lazy/component/kbd")).PREVIEWS
     case "component/label":
       return (await import("@/registry/previews-lazy/component/label")).PREVIEWS
-    case "component/menubar":
-      return (await import("@/registry/previews-lazy/component/menubar")).PREVIEWS
     case "component/native-select":
       return (await import("@/registry/previews-lazy/component/native-select")).PREVIEWS
     case "component/navigation-menu":
@@ -147,8 +145,6 @@ export async function loadLazyPreviewMap(
       return (await import("@/registry/previews-lazy/component/range")).PREVIEWS
     case "component/rating":
       return (await import("@/registry/previews-lazy/component/rating")).PREVIEWS
-    case "component/resizable":
-      return (await import("@/registry/previews-lazy/component/resizable")).PREVIEWS
     case "component/scroll-area":
       return (await import("@/registry/previews-lazy/component/scroll-area")).PREVIEWS
     case "component/scrollspy":

@@ -157,6 +157,8 @@ export function CatalogChrome({
               <input
                 type="text"
                 value={filter}
+                autoComplete="off"
+                name="vibeui-category-filter"
                 onChange={(event) => setFilter(event.target.value)}
                 aria-label={t.catalog.filterCategories}
                 placeholder={t.catalog.filterCategories}

@@ -20,9 +20,6 @@
       "meta": {
         "tags": ["context-menu", "popover", "right-click", "a11y"],
         "preview": {
-          "props": {
-            "open": true
-          },
           "width": "full"
         },
         "ai": {
@@ -155,8 +152,7 @@
                   }
                 ],
                 "hint": "Right-click the area — or use the button",
-                "actionLabel": "Actions",
-                "open": true
+                "actionLabel": "Actions"
               }
             }
           }
@@ -183,9 +179,6 @@
       "meta": {
         "tags": ["contextmenu", "files", "popover", "touch"],
         "preview": {
-          "props": {
-            "open": true
-          },
           "width": "full"
         },
         "ai": {
@@ -321,8 +314,7 @@
                 "deleteLabel": "Delete",
                 "menuLabel": "Actions",
                 "moreLabel": "Actions: {file}",
-                "doneText": "{action}: {file}",
-                "open": true
+                "doneText": "{action}: {file}"
               }
             }
           }
@@ -349,9 +341,6 @@
       "meta": {
         "tags": ["contextmenu", "submenu", "files", "keyboard"],
         "preview": {
-          "props": {
-            "open": true
-          },
           "width": "full"
         },
         "ai": {
@@ -475,8 +464,7 @@
                 "menuLabel": "Actions: {file}",
                 "openLabel": "Open",
                 "propertiesLabel": "Properties",
-                "doneText": "{file} → {action}",
-                "open": true
+                "doneText": "{file} → {action}"
               }
             }
           }
@@ -503,9 +491,6 @@
       "meta": {
         "tags": ["contextmenu", "clipboard", "state", "board"],
         "preview": {
-          "props": {
-            "open": true
-          },
           "width": "full"
         },
         "ai": {
@@ -619,8 +604,7 @@
                 "bufferLabel": "Buffer:",
                 "bufferEmpty": "empty",
                 "pasteDisabledHint": "buffer is empty",
-                "copyText": "{name} — copy",
-                "open": true
+                "copyText": "{name} — copy"
               }
             }
           }
@@ -647,9 +631,6 @@
       "meta": {
         "tags": ["contextmenu", "selection", "text", "popover"],
         "preview": {
-          "props": {
-            "open": true
-          },
           "width": "full"
         },
         "ai": {
@@ -765,8 +746,7 @@
                 "hint": "right-click the paragraph",
                 "menuLabel": "Selection actions",
                 "quoteText": "“{text}”",
-                "doneText": "{action}: “{text}”",
-                "open": true
+                "doneText": "{action}: “{text}”"
               }
             }
           }
@@ -793,9 +773,6 @@
       "meta": {
         "tags": ["contextmenu", "table", "row", "keyboard"],
         "preview": {
-          "props": {
-            "open": true
-          },
           "width": "full"
         },
         "ai": {
@@ -933,8 +910,7 @@
                 ],
                 "deleteLabel": "Delete row",
                 "menuLabel": "Row: {row}",
-                "menuTitle": "Row",
-                "open": true
+                "menuTitle": "Row"
               }
             }
           }
@@ -961,9 +937,6 @@
       "meta": {
         "tags": ["contextmenu", "table", "columns", "checkbox"],
         "preview": {
-          "props": {
-            "open": true
-          },
           "width": "full"
         },
         "ai": {
@@ -1078,8 +1051,7 @@
                 "buttonText": "Columns: {count}",
                 "menuLabel": "Column visibility",
                 "menuTitle": "Columns",
-                "lockNote": "The last column cannot be hidden",
-                "open": true
+                "lockNote": "The last column cannot be hidden"
               }
             }
           }
@@ -1106,9 +1078,6 @@
       "meta": {
         "tags": ["contextmenu", "hint", "shortcuts", "touch"],
         "preview": {
-          "props": {
-            "open": true
-          },
           "width": "full"
         },
         "ai": {
@@ -1232,8 +1201,7 @@
                 "sectionLabel": "Canvas with a context menu",
                 "touchNote": "on a phone — long press",
                 "actionLabel": "Open menu",
-                "menuLabel": "Edit",
-                "open": true
+                "menuLabel": "Edit"
               }
             }
           }
@@ -1260,9 +1228,6 @@
       "meta": {
         "tags": ["contextmenu", "files", "danger", "a11y"],
         "preview": {
-          "props": {
-            "open": true
-          },
           "width": "full"
         },
         "ai": {
@@ -1415,9 +1380,6 @@
       "meta": {
         "tags": ["contextmenu", "selection", "formatting", "text"],
         "preview": {
-          "props": {
-            "open": true
-          },
           "width": "full"
         },
         "ai": {

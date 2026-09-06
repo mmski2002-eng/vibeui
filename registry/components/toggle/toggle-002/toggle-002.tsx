@@ -71,6 +71,12 @@ border-color:var(--vibeui-toggle-002-accent);
 color:var(--vibeui-toggle-002-accent);
 }
 [data-vibeui-block="toggle-002"] [data-part="button"][aria-pressed="true"] svg path{fill:currentColor}
+/* Обе строки состояния лежат в одной ячейке грида, невидимая держит место:
+   иначе блок менялся в размере на каждом нажатии, потому что «Закреплено
+   вверху списка» длиннее «Не закреплено». */
+[data-vibeui-block="toggle-002"] [data-part="states"]{display:grid;width:100%}
+[data-vibeui-block="toggle-002"] [data-part="states"] > *{grid-area:1 / 1}
+[data-vibeui-block="toggle-002"] [data-ghost="true"]{visibility:hidden;pointer-events:none}
 [data-vibeui-block="toggle-002"] [data-part="state"]{
 margin:0;font-size:0.75rem;line-height:1.4;color:var(--vibeui-toggle-002-muted);
 }
@@ -155,9 +161,14 @@ export function Toggle002({
           </svg>
           {label}
         </button>
-        <p data-part="state" role="status">
-          {pressed ? onLabel : offLabel}
-        </p>
+        <span data-part="states">
+          <span data-part="state" data-ghost="true" aria-hidden="true">
+            {onLabel.length >= offLabel.length ? onLabel : offLabel}
+          </span>
+          <p data-part="state" role="status">
+            {pressed ? onLabel : offLabel}
+          </p>
+        </span>
       </div>
     </>
   )

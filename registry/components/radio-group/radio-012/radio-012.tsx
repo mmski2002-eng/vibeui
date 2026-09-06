@@ -32,7 +32,7 @@ const STYLES = `
 --vibeui-radio-012-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-radio-012-muted:color-mix(in oklab,var(--vibeui-radio-012-fg) 68%,transparent);
 --vibeui-radio-012-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
---vibeui-radio-012-accent:light-dark(oklch(0.5 0 265),oklch(0.8 0 265));
+--vibeui-radio-012-accent:light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));
 --vibeui-radio-012-edge:light-dark(oklch(0 0 0 / 10%),oklch(1 0 0 / 18%));
 --vibeui-radio-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

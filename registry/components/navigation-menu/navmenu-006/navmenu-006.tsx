@@ -1,4 +1,7 @@
-import type { CSSProperties } from "react"
+"use client"
+
+import { useState } from "react"
+import type { CSSProperties, MouseEvent as ReactMouseEvent } from "react"
 
 export type Navmenu006Section = {
   label: string
@@ -179,6 +182,40 @@ export function Navmenu006({
   className,
   style,
 }: Navmenu006Props) {
+  const [active, setActive] = useState(current)
+
+  // Демо-данные ведут в "#": без этого клик по пункту прокручивает страницу
+  // вверх и меняет адрес, а меню остаётся прежним. Ссылка с настоящим href
+  // из данных проходит дальше и работает как обычная.
+  const onNavigate = (event: ReactMouseEvent<HTMLElement>) => {
+    const link = (event.target as HTMLElement).closest("a")
+
+    if (!link || !link.getAttribute("href")?.startsWith("#")) {
+      return
+    }
+
+    event.preventDefault()
+
+    // Панель может быть и в верхнем слое, и развёрнутой в потоке витрины:
+    // ссылка внутри неё — это переход, а не смена активного раздела.
+    const panel = link.closest<HTMLElement>(
+      '[popover],[data-part="panel"],[data-part="menu"],[data-part="sheet"],[data-part="sub"]',
+    )
+    const label = link.textContent?.trim()
+
+    if (panel) {
+      if (panel.matches(":popover-open")) {
+        panel.hidePopover()
+      }
+
+      return
+    }
+
+    if (label) {
+      setActive(label)
+    }
+  }
+
   const palette = {
     ...(accent ? { "--vibeui-navmenu-006-accent": accent } : null),
     ...(background
@@ -198,6 +235,7 @@ export function Navmenu006({
       <nav
         data-slot="navigation-menu"
         data-vibeui-block="navmenu-006"
+        onClick={onNavigate}
         aria-label={label}
         className={className}
         style={palette}
@@ -245,7 +283,7 @@ export function Navmenu006({
                       data-part="plain"
                       href={section.href ?? "#"}
                       aria-current={
-                        section.label === current ? "page" : undefined
+                        section.label === active ? "page" : undefined
                       }
                     >
                       {section.label}

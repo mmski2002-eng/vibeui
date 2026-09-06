@@ -125,8 +125,6 @@ export async function loadPreviewMap(
       return (await import("@/registry/previews/component/kbd")).PREVIEWS
     case "component/label":
       return (await import("@/registry/previews/component/label")).PREVIEWS
-    case "component/menubar":
-      return (await import("@/registry/previews/component/menubar")).PREVIEWS
     case "component/native-select":
       return (await import("@/registry/previews/component/native-select")).PREVIEWS
     case "component/navigation-menu":
@@ -147,8 +145,6 @@ export async function loadPreviewMap(
       return (await import("@/registry/previews/component/range")).PREVIEWS
     case "component/rating":
       return (await import("@/registry/previews/component/rating")).PREVIEWS
-    case "component/resizable":
-      return (await import("@/registry/previews/component/resizable")).PREVIEWS
     case "component/scroll-area":
       return (await import("@/registry/previews/component/scroll-area")).PREVIEWS
     case "component/scrollspy":

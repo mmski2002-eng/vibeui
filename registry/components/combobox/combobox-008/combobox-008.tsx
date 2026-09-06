@@ -103,6 +103,10 @@ color:inherit;font:inherit;font-size:0.75rem;font-weight:600;
 [data-vibeui-block="combobox-008"] [data-part="chip"]:hover{background:var(--vibeui-combobox-008-active)}
 [data-vibeui-block="combobox-008"] [data-part="chip"]:focus-visible{outline:2px solid var(--vibeui-combobox-008-accent);outline-offset:1px}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="combobox-008"] *{animation:none!important;transition:none!important}}
+/* Скрытый список: у ul браузерный display перебивает hidden, если
+   компонент задаёт ему свой. */
+[data-vibeui-block="combobox-008"] [role="listbox"][hidden]{display:none}
+
 `
 
 const DEFAULT_OPTIONS = [
@@ -185,6 +189,9 @@ export function Combobox008({
     return options.filter((option) => option.toLowerCase().includes(needle))
   }, [options, ready])
 
+  const [open, setOpen] = useState(false)
+  const pressingList = useRef(false)
+
   const palette = {
     ...(accent ? { "--vibeui-combobox-008-accent": accent } : null),
     ...(background
@@ -237,6 +244,38 @@ export function Combobox008({
         {...props}
         data-slot="combobox"
         data-vibeui-block="combobox-008"
+        onFocusCapture={() => setOpen(true)}
+        onBlurCapture={(event) => {
+          // Уход фокуса за пределы поля закрывает список; переход внутрь
+          // (поле → кнопка очистки) оставляет его открытым. Нажатие по строке
+          // списка фокус тоже уводит, но список должен дожить до выбора.
+          if (pressingList.current) {
+            return
+          }
+
+          if (!event.currentTarget.contains(event.relatedTarget as Node)) {
+            setOpen(false)
+          }
+        }}
+        onKeyDownCapture={(event) => {
+          if (event.key === "Escape") {
+            setOpen(false)
+          }
+        }}
+        onPointerDownCapture={(event) => {
+          // Гасить нажатие нельзя: часть строк выбирается на mousedown, и
+          // preventDefault отменил бы сам выбор. Держим флаг и не закрываем
+          // список, пока кнопка мыши не отпущена.
+          if ((event.target as HTMLElement).closest('[role="listbox"]')) {
+            pressingList.current = true
+            return
+          }
+
+          setOpen(true)
+        }}
+        onPointerUpCapture={() => {
+          pressingList.current = false
+        }}
         className={className}
         style={palette}
       >
@@ -248,7 +287,7 @@ export function Combobox008({
             role="combobox"
             autoComplete="off"
             placeholder={placeholder}
-            aria-expanded="true"
+            aria-expanded={open}
             aria-controls={`${id}-list`}
             aria-autocomplete="list"
             aria-busy={loading}
@@ -296,7 +335,7 @@ export function Combobox008({
             role="listbox"
             aria-label={label}
             data-part="list"
-            hidden={loading || showEmpty}
+            hidden={!open || loading || showEmpty}
           >
             {rows.map((option, index) => (
               <li

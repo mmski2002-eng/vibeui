@@ -20,6 +20,15 @@ export type Command002Props = Omit<ComponentProps<"div">, "children"> & {
   /** Строка после запуска команды; {command} — её название. */
   doneText?: string
   /** Подложка панели. Пусто — цвет по умолчанию из палитры. */
+  /** Подпись кнопки, которая открывает палитру. */
+  triggerLabel?: string
+  /**
+   * Показать палитру раскрытой в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  defaultOpen?: boolean
+  /** id всплывающего слоя: на странице он обязан быть уникальным. */
+  menuId?: string
   background?: string
   accent?: string
 }
@@ -97,6 +106,64 @@ padding:0.4375rem 0.875rem;border-top:1px solid var(--vibeui-command-002-border)
 font-size:0.6875rem;color:var(--vibeui-command-002-muted);
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="command-002"] *{animation:none!important;transition:none!important}}
+/* Оболочка: в потоке видна только кнопка, панель всплывает под ней в
+   верхнем слое нативного popover — карточка каталога её не обрезает,
+   Esc и клик мимо достаются от браузера. */
+[data-vibeui-shell="command-002"]{
+display:inline-flex;box-sizing:border-box;
+font-family:var(--vibeui-command-002-font,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif);
+}
+:where(.dark,[data-theme="dark"]) [data-vibeui-shell="command-002"]{color-scheme:dark}
+[data-vibeui-shell="command-002"] [data-part="open"]{
+appearance:none;cursor:pointer;
+display:inline-flex;align-items:center;gap:0.625rem;
+min-height:2.375rem;padding:0 0.875rem;box-sizing:border-box;
+border:1px solid light-dark(oklch(0.88 0 265),oklch(0.36 0 265));
+border-radius:0.625rem;
+background:light-dark(oklch(1 0 0),oklch(0.24 0.01 265));
+color:light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));
+font:inherit;font-size:0.875rem;font-weight:650;line-height:1;
+transition:border-color .16s ease;
+}
+[data-vibeui-shell="command-002"] [data-part="open"]:hover{
+border-color:light-dark(oklch(0.6 0 265),oklch(0.55 0 265));
+}
+[data-vibeui-shell="command-002"] [data-part="open"]:focus-visible{
+outline:2px solid light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));outline-offset:2px;
+}
+[data-vibeui-shell="command-002"] [data-part="open"] kbd{
+font:inherit;font-size:0.75rem;
+padding:0.125rem 0.375rem;border-radius:0.3125rem;
+border:1px solid light-dark(oklch(0.88 0 265),oklch(0.4 0 265));
+color:color-mix(in oklab,currentColor 70%,transparent);
+}
+[data-vibeui-menu="command-002"]{
+margin:auto;padding:0;border:0;background:none;overflow:visible;
+width:max-content;max-width:min(92vw,34rem);
+}
+/* Где anchor поддержан — панель висит под кнопкой; где нет — остаётся
+   по центру экрана силами самого popover. */
+@supports (anchor-name: --vibeui-command-002-anchor){
+[data-vibeui-shell="command-002"] [data-part="open"]{anchor-name:--vibeui-command-002-anchor}
+[data-vibeui-menu="command-002"]{
+position-anchor:--vibeui-command-002-anchor;
+position-area:block-end span-inline-end;
+margin:0.375rem 0 0;
+position-try-fallbacks:flip-block;
+}
+}
+/* Развёрнутый режим витрины: панель стоит в потоке под кнопкой. Только пока
+   popover закрыт — у открытого положение задаёт верхний слой. */
+[data-vibeui-shell="command-002"]:has([data-open="true"]:not(:popover-open)){
+flex-direction:column;align-items:flex-start;
+}
+[data-vibeui-menu="command-002"][data-open="true"]:not(:popover-open){
+position:static;margin:0.375rem 0 0;
+}
+[data-vibeui-shell="command-002"] dialog::backdrop{
+background:oklch(0 0 0 / 45%);
+}
+
 `
 
 const DEFAULT_COMMANDS: Command002Command[] = [
@@ -141,6 +208,9 @@ export function Command002({
   emptyText = "Ничего не нашлось. Попробуйте другое слово.",
   hintText = "↑↓ выбор · Enter запуск · Esc сброс",
   doneText = "Выполнено: {command}",
+  triggerLabel = "Открыть палитру",
+  defaultOpen = false,
+  menuId = "vibeui-command-002-panel",
   background = "",
   accent,
   className,
@@ -207,67 +277,90 @@ export function Command002({
       <style href="vibeui-command-002" precedence="medium">
         {STYLES}
       </style>
-      <div
-        {...props}
-        data-slot="command"
-        data-vibeui-block="command-002"
-        className={className}
-        style={palette}
-        role="dialog"
-        aria-label={label}
-      >
-        <div data-part="field">
-          <span data-part="glyph" aria-hidden="true">
-            ⌕
-          </span>
-          <input
-            type="text"
-            role="combobox"
-            aria-expanded={ordered.length > 0}
-            aria-controls={listId}
-            aria-autocomplete="list"
-            aria-activedescendant={
-              current ? `${rowId}-${ordered.indexOf(current)}` : undefined
-            }
-            aria-label={placeholder}
-            placeholder={placeholder}
-            value={query}
-            onChange={(event) => {
-              setQuery(event.target.value)
-              setActive(0)
-            }}
-            onKeyDown={onKeyDown}
-          />
+      <div data-vibeui-shell="command-002">
+        <button
+          type="button"
+          data-part="open"
+          popoverTarget={defaultOpen ? undefined : menuId}
+        >
+          {triggerLabel}
+          <kbd>Ctrl+K</kbd>
+        </button>
+        <div
+          id={menuId}
+          popover={defaultOpen ? undefined : "auto"}
+          data-open={defaultOpen || undefined}
+          data-vibeui-menu="command-002"
+          aria-label={triggerLabel}
+        >
+          <div
+            {...props}
+            data-slot="command"
+            data-vibeui-block="command-002"
+            className={className}
+            style={palette}
+            role="dialog"
+            aria-label={label}
+          >
+            <div data-part="field">
+              <span data-part="glyph" aria-hidden="true">
+                ⌕
+              </span>
+              <input
+                type="text"
+                role="combobox"
+                aria-expanded={ordered.length > 0}
+                aria-controls={listId}
+                aria-autocomplete="list"
+                aria-activedescendant={
+                  current ? `${rowId}-${ordered.indexOf(current)}` : undefined
+                }
+                aria-label={placeholder}
+                placeholder={placeholder}
+                value={query}
+                onChange={(event) => {
+                  setQuery(event.target.value)
+                  setActive(0)
+                }}
+                onKeyDown={onKeyDown}
+              />
+            </div>
+            {ordered.length === 0 ? (
+              <p data-part="empty">{emptyText}</p>
+            ) : (
+              <ul
+                id={listId}
+                data-part="list"
+                role="listbox"
+                aria-label={label}
+              >
+                {Object.entries(groups).map(([group, rows]) => (
+                  <li key={group} role="presentation">
+                    <p data-part="group">{group}</p>
+                    <ul data-part="list" role="group" aria-label={group}>
+                      {rows.map((command) => (
+                        <li
+                          key={command.label}
+                          id={`${rowId}-${ordered.indexOf(command)}`}
+                          data-part="row"
+                          role="option"
+                          aria-selected={current?.label === command.label}
+                          onClick={() => setChosen(command.label)}
+                        >
+                          {command.label}
+                          {command.keys ? <kbd>{command.keys}</kbd> : null}
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+                ))}
+              </ul>
+            )}
+            <p data-part="foot" role="status">
+              {chosen ? doneText.replace("{command}", chosen) : hintText}
+            </p>
+          </div>
         </div>
-        {ordered.length === 0 ? (
-          <p data-part="empty">{emptyText}</p>
-        ) : (
-          <ul id={listId} data-part="list" role="listbox" aria-label={label}>
-            {Object.entries(groups).map(([group, rows]) => (
-              <li key={group} role="presentation">
-                <p data-part="group">{group}</p>
-                <ul data-part="list" role="group" aria-label={group}>
-                  {rows.map((command) => (
-                    <li
-                      key={command.label}
-                      id={`${rowId}-${ordered.indexOf(command)}`}
-                      data-part="row"
-                      role="option"
-                      aria-selected={current?.label === command.label}
-                      onClick={() => setChosen(command.label)}
-                    >
-                      {command.label}
-                      {command.keys ? <kbd>{command.keys}</kbd> : null}
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            ))}
-          </ul>
-        )}
-        <p data-part="foot" role="status">
-          {chosen ? doneText.replace("{command}", chosen) : hintText}
-        </p>
       </div>
     </>
   )

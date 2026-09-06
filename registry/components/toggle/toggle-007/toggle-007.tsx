@@ -51,7 +51,9 @@ display:flex;align-items:center;justify-content:space-between;gap:0.75rem;
 }
 [data-vibeui-block="toggle-007"] button{
 appearance:none;cursor:pointer;font:inherit;
-display:inline-flex;align-items:baseline;gap:0.3125rem;
+/* Две «A» разного кегля выравниваются по центру кнопки, а не по базовой
+   линии: с baseline пара букв прижималась к низу и висела не по центру. */
+display:inline-flex;align-items:center;gap:0.3125rem;
 height:2.125rem;padding:0 0.75rem;
 border:1px solid var(--vibeui-toggle-007-border);border-radius:0.5rem;
 background:var(--vibeui-toggle-007-bg);color:var(--vibeui-toggle-007-fg);

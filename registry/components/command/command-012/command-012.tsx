@@ -17,6 +17,15 @@ export type Command012Props = Omit<ComponentProps<"div">, "children"> & {
   countText?: string
   onApply?: (values: string[]) => void
   /** Подложка панели. Пусто — цвет по умолчанию из палитры. */
+  /** Подпись кнопки, которая открывает палитру. */
+  triggerLabel?: string
+  /**
+   * Показать палитру раскрытой в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  defaultOpen?: boolean
+  /** id всплывающего слоя: на странице он обязан быть уникальным. */
+  menuId?: string
   background?: string
   accent?: string
 }
@@ -102,6 +111,64 @@ font:inherit;font-size:0.8125rem;font-weight:650;
 outline:2px solid var(--vibeui-command-012-accent);outline-offset:2px;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="command-012"] *{animation:none!important;transition:none!important}}
+/* Оболочка: в потоке видна только кнопка, панель всплывает под ней в
+   верхнем слое нативного popover — карточка каталога её не обрезает,
+   Esc и клик мимо достаются от браузера. */
+[data-vibeui-shell="command-012"]{
+display:inline-flex;box-sizing:border-box;
+font-family:var(--vibeui-command-012-font,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif);
+}
+:where(.dark,[data-theme="dark"]) [data-vibeui-shell="command-012"]{color-scheme:dark}
+[data-vibeui-shell="command-012"] [data-part="open"]{
+appearance:none;cursor:pointer;
+display:inline-flex;align-items:center;gap:0.625rem;
+min-height:2.375rem;padding:0 0.875rem;box-sizing:border-box;
+border:1px solid light-dark(oklch(0.88 0 265),oklch(0.36 0 265));
+border-radius:0.625rem;
+background:light-dark(oklch(1 0 0),oklch(0.24 0.01 265));
+color:light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));
+font:inherit;font-size:0.875rem;font-weight:650;line-height:1;
+transition:border-color .16s ease;
+}
+[data-vibeui-shell="command-012"] [data-part="open"]:hover{
+border-color:light-dark(oklch(0.6 0 265),oklch(0.55 0 265));
+}
+[data-vibeui-shell="command-012"] [data-part="open"]:focus-visible{
+outline:2px solid light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));outline-offset:2px;
+}
+[data-vibeui-shell="command-012"] [data-part="open"] kbd{
+font:inherit;font-size:0.75rem;
+padding:0.125rem 0.375rem;border-radius:0.3125rem;
+border:1px solid light-dark(oklch(0.88 0 265),oklch(0.4 0 265));
+color:color-mix(in oklab,currentColor 70%,transparent);
+}
+[data-vibeui-menu="command-012"]{
+margin:auto;padding:0;border:0;background:none;overflow:visible;
+width:max-content;max-width:min(92vw,34rem);
+}
+/* Где anchor поддержан — панель висит под кнопкой; где нет — остаётся
+   по центру экрана силами самого popover. */
+@supports (anchor-name: --vibeui-command-012-anchor){
+[data-vibeui-shell="command-012"] [data-part="open"]{anchor-name:--vibeui-command-012-anchor}
+[data-vibeui-menu="command-012"]{
+position-anchor:--vibeui-command-012-anchor;
+position-area:block-end span-inline-end;
+margin:0.375rem 0 0;
+position-try-fallbacks:flip-block;
+}
+}
+/* Развёрнутый режим витрины: панель стоит в потоке под кнопкой. Только пока
+   popover закрыт — у открытого положение задаёт верхний слой. */
+[data-vibeui-shell="command-012"]:has([data-open="true"]:not(:popover-open)){
+flex-direction:column;align-items:flex-start;
+}
+[data-vibeui-menu="command-012"][data-open="true"]:not(:popover-open){
+position:static;margin:0.375rem 0 0;
+}
+[data-vibeui-shell="command-012"] dialog::backdrop{
+background:oklch(0 0 0 / 45%);
+}
+
 `
 
 const DEFAULT_ITEMS = [
@@ -153,6 +220,9 @@ export function Command012({
   emptyText = "Ничего не нашлось. Уточните запрос.",
   countText = "Отмечено: {count}",
   onApply,
+  triggerLabel = "Открыть палитру",
+  defaultOpen = false,
+  menuId = "vibeui-command-012-panel",
   background = "",
   accent,
   className,
@@ -229,78 +299,96 @@ export function Command012({
       <style href="vibeui-command-012" precedence="medium">
         {STYLES}
       </style>
-      <div
-        {...props}
-        data-slot="command"
-        data-vibeui-block="command-012"
-        className={className}
-        style={palette}
-        role="dialog"
-        aria-label={label}
-      >
-        <div data-part="field">
-          <input
-            type="text"
-            role="combobox"
-            aria-expanded={rows.length > 0}
-            aria-controls={listId}
-            aria-autocomplete="list"
-            aria-activedescendant={
-              current ? `${rowId}-${rows.indexOf(current)}` : undefined
-            }
-            aria-label={placeholder}
-            placeholder={placeholder}
-            value={query}
-            onChange={(event) => {
-              setQuery(event.target.value)
-              setActive(0)
-            }}
-            onKeyDown={onKeyDown}
-          />
-        </div>
-        {rows.length === 0 ? (
-          <p data-part="empty">{emptyText}</p>
-        ) : (
-          <ul
-            id={listId}
-            data-part="list"
-            role="listbox"
-            aria-multiselectable="true"
-            aria-label={listLabel}
+      <div data-vibeui-shell="command-012">
+        <button
+          type="button"
+          data-part="open"
+          popoverTarget={defaultOpen ? undefined : menuId}
+        >
+          {triggerLabel}
+          <kbd>Ctrl+K</kbd>
+        </button>
+        <div
+          id={menuId}
+          popover={defaultOpen ? undefined : "auto"}
+          data-open={defaultOpen || undefined}
+          data-vibeui-menu="command-012"
+          aria-label={triggerLabel}
+        >
+          <div
+            {...props}
+            data-slot="command"
+            data-vibeui-block="command-012"
+            className={className}
+            style={palette}
+            role="dialog"
+            aria-label={label}
           >
-            {rows.map((row, index) => (
-              <li
-                key={row}
-                id={`${rowId}-${index}`}
-                data-part="row"
-                role="option"
-                aria-selected={selected.includes(row)}
-                data-active={current === row}
-                onClick={() => {
-                  setActive(index)
-                  toggle(row)
+            <div data-part="field">
+              <input
+                type="text"
+                role="combobox"
+                aria-expanded={rows.length > 0}
+                aria-controls={listId}
+                aria-autocomplete="list"
+                aria-activedescendant={
+                  current ? `${rowId}-${rows.indexOf(current)}` : undefined
+                }
+                aria-label={placeholder}
+                placeholder={placeholder}
+                value={query}
+                onChange={(event) => {
+                  setQuery(event.target.value)
+                  setActive(0)
                 }}
+                onKeyDown={onKeyDown}
+              />
+            </div>
+            {rows.length === 0 ? (
+              <p data-part="empty">{emptyText}</p>
+            ) : (
+              <ul
+                id={listId}
+                data-part="list"
+                role="listbox"
+                aria-multiselectable="true"
+                aria-label={listLabel}
               >
-                <span data-part="check" aria-hidden="true">
-                  {selected.includes(row) ? "✓" : ""}
-                </span>
-                {row}
-              </li>
-            ))}
-          </ul>
-        )}
-        <div data-part="foot">
-          <span data-part="count" role="status">
-            {countText.replace("{count}", String(selected.length))}
-          </span>
-          <button
-            type="button"
-            data-part="apply"
-            disabled={selected.length === 0}
-            onClick={() => onApply?.(selected)}
-          >
-            {applyLabel}
-          </button>
+                {rows.map((row, index) => (
+                  <li
+                    key={row}
+                    id={`${rowId}-${index}`}
+                    data-part="row"
+                    role="option"
+                    aria-selected={selected.includes(row)}
+                    data-active={current === row}
+                    onClick={() => {
+                      setActive(index)
+                      toggle(row)
+                    }}
+                  >
+                    <span data-part="check" aria-hidden="true">
+                      {selected.includes(row) ? "✓" : ""}
+                    </span>
+                    {row}
+                  </li>
+                ))}
+              </ul>
+            )}
+            <div data-part="foot">
+              <span data-part="count" role="status">
+                {countText.replace("{count}", String(selected.length))}
+              </span>
+              <button
+                type="button"
+                data-part="apply"
+                disabled={selected.length === 0}
+                onClick={() => onApply?.(selected)}
+              >
+                {applyLabel}
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </>

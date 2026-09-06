@@ -63,6 +63,14 @@ font-family:var(--vibeui-select-003-font);color:var(--vibeui-select-003-fg);
 position:absolute;inset:0;width:100%;height:100%;
 opacity:0;cursor:pointer;font:inherit;
 }
+/* Системный список рисует браузер по цветам самого <select>: у
+   прозрачного он берёт белый, и в тёмной теме всплывал светлый
+   список поверх тёмной страницы. */
+[data-vibeui-block="select-003"] select,
+[data-vibeui-block="select-003"] option,
+[data-vibeui-block="select-003"] optgroup{
+background-color:light-dark(oklch(1 0 0),oklch(0.24 0.01 265));color:var(--vibeui-select-003-fg);
+}
 [data-vibeui-block="select-003"] [data-part="trigger"]{
 display:flex;align-items:center;gap:0.625rem;
 box-sizing:border-box;width:100%;min-height:3rem;padding:0.5rem 2.25rem 0.5rem 0.5rem;

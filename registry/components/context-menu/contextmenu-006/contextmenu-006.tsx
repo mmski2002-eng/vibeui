@@ -209,6 +209,8 @@ export function Contextmenu006({
   }
 
   // Клавиша меню и Shift+F10 приходят тем же событием, но без координат.
+  // Меню открывается и обычным кликом: на витрине и на тачпаде правая
+  // кнопка есть не у всех, а строка без единой реакции читается как сломанная.
   const onContextMenu = (
     event: MouseEvent<HTMLTableRowElement>,
     name: string,
@@ -272,6 +274,7 @@ export function Contextmenu006({
                 tabIndex={0}
                 aria-selected={target === row.name}
                 onContextMenu={(event) => onContextMenu(event, row.name)}
+                onClick={(event) => onContextMenu(event, row.name)}
               >
                 <td>{row.name}</td>
                 <td>

@@ -34,8 +34,8 @@ const STYLES = `
 --vibeui-radio-015-muted:color-mix(in oklab,var(--vibeui-radio-015-fg) 68%,transparent);
 --vibeui-radio-015-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
 --vibeui-radio-015-ring:light-dark(oklch(0.74 0 265),oklch(0.5 0 265));
---vibeui-radio-015-accent:light-dark(oklch(0.55 0.17 260),oklch(0.75 0.15 260));
---vibeui-radio-015-tint:light-dark(oklch(0.55 0.17 260 / 7%),oklch(0.75 0.15 260 / 16%));
+--vibeui-radio-015-accent:light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));
+--vibeui-radio-015-tint:light-dark(oklch(0.24 0.015 265 / 6%),oklch(0.93 0.006 265 / 12%));
 /* Миниатюры остаются фиксированными: они рисуют светлую и тёмную тему как
    картинку выбора, а не как оформление компонента. */
 --vibeui-radio-015-thumb-light-bg:oklch(0.98 0 265);

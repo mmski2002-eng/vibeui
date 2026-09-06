@@ -164,10 +164,6 @@ import {
   SEED as LabelSeed,
 } from "@/components/lab/checks/label"
 import {
-  CHECKS as Menubar,
-  SEED as MenubarSeed,
-} from "@/components/lab/checks/menubar"
-import {
   CHECKS as NativeSelect,
   SEED as NativeSelectSeed,
 } from "@/components/lab/checks/native-select"
@@ -207,10 +203,6 @@ import {
   CHECKS as Rating,
   SEED as RatingSeed,
 } from "@/components/lab/checks/rating"
-import {
-  CHECKS as Resizable,
-  SEED as ResizableSeed,
-} from "@/components/lab/checks/resizable"
 import {
   CHECKS as ScrollArea,
   SEED as ScrollAreaSeed,
@@ -339,7 +331,6 @@ export const LAB_RUNS: Record<string, { checks: LabCheck[]; seed: number }> = {
   item: { checks: Item, seed: ItemSeed },
   kbd: { checks: Kbd, seed: KbdSeed },
   label: { checks: Label, seed: LabelSeed },
-  menubar: { checks: Menubar, seed: MenubarSeed },
   "native-select": { checks: NativeSelect, seed: NativeSelectSeed },
   "navigation-menu": { checks: NavigationMenu, seed: NavigationMenuSeed },
   "number-field": { checks: NumberField, seed: NumberFieldSeed },
@@ -350,7 +341,6 @@ export const LAB_RUNS: Record<string, { checks: LabCheck[]; seed: number }> = {
   "radio-group": { checks: RadioGroup, seed: RadioGroupSeed },
   range: { checks: Range, seed: RangeSeed },
   rating: { checks: Rating, seed: RatingSeed },
-  resizable: { checks: Resizable, seed: ResizableSeed },
   "scroll-area": { checks: ScrollArea, seed: ScrollAreaSeed },
   scrollspy: { checks: Scrollspy, seed: ScrollspySeed },
   select: { checks: Select, seed: SelectSeed },

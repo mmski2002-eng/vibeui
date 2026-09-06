@@ -305,11 +305,19 @@ export function Commerce033({
               <div data-part="fields">
                 <label data-part="field">
                   <span>{label("loginEmail")}</span>
-                  <input type="email" defaultValue={value("loginEmail")} />
+                  <input
+                    type="email"
+                    autoComplete="username"
+                    defaultValue={value("loginEmail")}
+                  />
                 </label>
                 <label data-part="field">
                   <span>{label("password")}</span>
-                  <input type="password" defaultValue="" />
+                  <input
+                    type="password"
+                    autoComplete="current-password"
+                    defaultValue=""
+                  />
                 </label>
               </div>
               <p data-part="why">{loginNote}</p>

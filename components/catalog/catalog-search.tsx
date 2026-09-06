@@ -28,6 +28,11 @@ export function CatalogSearch({
       <input
         type="text"
         value={value}
+        /* Поле поиска не участвует в автозаполнении: рядом с демо-полем
+           пароля браузер принимал его за логин и подставлял туда сохранённую
+           пару. */
+        autoComplete="off"
+        name="vibeui-catalog-search"
         aria-label={t.catalog.search}
         placeholder={t.catalog.search}
         onChange={(event) => onChange(event.target.value)}

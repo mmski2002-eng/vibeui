@@ -26,6 +26,15 @@ export type Command013Props = Omit<ComponentProps<"div">, "children"> & {
   /** Строка после запуска; {command} — что запустили. */
   doneText?: string
   /** Подложка панели. Пусто — цвет по умолчанию из палитры. */
+  /** Подпись кнопки, которая открывает палитру. */
+  triggerLabel?: string
+  /**
+   * Показать палитру раскрытой в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  defaultOpen?: boolean
+  /** id всплывающего слоя: на странице он обязан быть уникальным. */
+  menuId?: string
   background?: string
   accent?: string
 }
@@ -125,6 +134,64 @@ padding:0.4375rem 0.875rem;border-top:1px solid var(--vibeui-command-013-border)
 font-size:0.6875rem;color:var(--vibeui-command-013-muted);
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="command-013"] *{animation:none!important;transition:none!important}}
+/* Оболочка: в потоке видна только кнопка, панель всплывает под ней в
+   верхнем слое нативного popover — карточка каталога её не обрезает,
+   Esc и клик мимо достаются от браузера. */
+[data-vibeui-shell="command-013"]{
+display:inline-flex;box-sizing:border-box;
+font-family:var(--vibeui-command-013-font,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif);
+}
+:where(.dark,[data-theme="dark"]) [data-vibeui-shell="command-013"]{color-scheme:dark}
+[data-vibeui-shell="command-013"] [data-part="open"]{
+appearance:none;cursor:pointer;
+display:inline-flex;align-items:center;gap:0.625rem;
+min-height:2.375rem;padding:0 0.875rem;box-sizing:border-box;
+border:1px solid light-dark(oklch(0.88 0 265),oklch(0.36 0 265));
+border-radius:0.625rem;
+background:light-dark(oklch(1 0 0),oklch(0.24 0.01 265));
+color:light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));
+font:inherit;font-size:0.875rem;font-weight:650;line-height:1;
+transition:border-color .16s ease;
+}
+[data-vibeui-shell="command-013"] [data-part="open"]:hover{
+border-color:light-dark(oklch(0.6 0 265),oklch(0.55 0 265));
+}
+[data-vibeui-shell="command-013"] [data-part="open"]:focus-visible{
+outline:2px solid light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));outline-offset:2px;
+}
+[data-vibeui-shell="command-013"] [data-part="open"] kbd{
+font:inherit;font-size:0.75rem;
+padding:0.125rem 0.375rem;border-radius:0.3125rem;
+border:1px solid light-dark(oklch(0.88 0 265),oklch(0.4 0 265));
+color:color-mix(in oklab,currentColor 70%,transparent);
+}
+[data-vibeui-menu="command-013"]{
+margin:auto;padding:0;border:0;background:none;overflow:visible;
+width:max-content;max-width:min(92vw,34rem);
+}
+/* Где anchor поддержан — панель висит под кнопкой; где нет — остаётся
+   по центру экрана силами самого popover. */
+@supports (anchor-name: --vibeui-command-013-anchor){
+[data-vibeui-shell="command-013"] [data-part="open"]{anchor-name:--vibeui-command-013-anchor}
+[data-vibeui-menu="command-013"]{
+position-anchor:--vibeui-command-013-anchor;
+position-area:block-end span-inline-end;
+margin:0.375rem 0 0;
+position-try-fallbacks:flip-block;
+}
+}
+/* Развёрнутый режим витрины: панель стоит в потоке под кнопкой. Только пока
+   popover закрыт — у открытого положение задаёт верхний слой. */
+[data-vibeui-shell="command-013"]:has([data-open="true"]:not(:popover-open)){
+flex-direction:column;align-items:flex-start;
+}
+[data-vibeui-menu="command-013"][data-open="true"]:not(:popover-open){
+position:static;margin:0.375rem 0 0;
+}
+[data-vibeui-shell="command-013"] dialog::backdrop{
+background:oklch(0 0 0 / 45%);
+}
+
 `
 
 const DEFAULT_ENTRIES: Command013Entry[] = [
@@ -172,6 +239,9 @@ export function Command013({
   emptyText = "Точных совпадений нет — спросите ассистента.",
   hintText = "↑↓ выбор · Enter запуск · Esc сброс",
   doneText = "Запущено: {command}",
+  triggerLabel = "Открыть палитру",
+  defaultOpen = false,
+  menuId = "vibeui-command-013-panel",
   background = "",
   accent,
   className,
@@ -235,101 +305,126 @@ export function Command013({
       <style href="vibeui-command-013" precedence="medium">
         {STYLES}
       </style>
-      <div
-        {...props}
-        data-slot="command"
-        data-vibeui-block="command-013"
-        className={className}
-        style={palette}
-        role="dialog"
-        aria-label={label}
-      >
-        <div data-part="field">
-          <span data-part="glyph" aria-hidden="true">
-            ⌕
-          </span>
-          <input
-            type="text"
-            role="combobox"
-            aria-expanded
-            aria-controls={listId}
-            aria-autocomplete="list"
-            aria-activedescendant={`${rowId}-${current}`}
-            aria-label={placeholder}
-            placeholder={placeholder}
-            value={query}
-            onChange={(event) => {
-              setQuery(event.target.value)
-              setActive(0)
-            }}
-            onKeyDown={onKeyDown}
-          />
-        </div>
-        <ul id={listId} data-part="list" role="listbox" aria-label={listLabel}>
-          <li
-            id={`${rowId}-0`}
-            data-part="ask"
-            role="option"
-            aria-selected={current === 0}
-            onClick={() => run(0)}
+      <div data-vibeui-shell="command-013">
+        <button
+          type="button"
+          data-part="open"
+          popoverTarget={defaultOpen ? undefined : menuId}
+        >
+          {triggerLabel}
+          <kbd>Ctrl+K</kbd>
+        </button>
+        <div
+          id={menuId}
+          popover={defaultOpen ? undefined : "auto"}
+          data-open={defaultOpen || undefined}
+          data-vibeui-menu="command-013"
+          aria-label={triggerLabel}
+        >
+          <div
+            {...props}
+            data-slot="command"
+            data-vibeui-block="command-013"
+            className={className}
+            style={palette}
+            role="dialog"
+            aria-label={label}
           >
-            <span data-part="spark" aria-hidden="true">
-              <svg viewBox="0 0 16 16" fill="none">
-                <path
-                  d="M8 1.5 9.4 5.6 13.5 7l-4.1 1.4L8 12.5 6.6 8.4 2.5 7l4.1-1.4L8 1.5Zm4.5 6.8.6 1.7 1.7.6-1.7.6-.6 1.7-.6-1.7-1.7-.6 1.7-.6.6-1.7Z"
-                  fill="currentColor"
-                />
-              </svg>
-            </span>
-            <span data-part="text">
-              {query.trim() ? (
-                <>
-                  {askLabel}: <b>{query.trim()}</b>
-                </>
-              ) : (
-                askIdleText
-              )}
-            </span>
-            <span data-part="hint">Enter</span>
-          </li>
-          {found.length > 0 ? (
-            <li role="presentation">
-              <p data-part="group">{listLabel}</p>
-            </li>
-          ) : null}
-          {found.map((entry, index) => (
-            <li
-              key={entry.label}
-              id={`${rowId}-${index + 1}`}
-              data-part="row"
-              role="option"
-              aria-selected={current === index + 1}
-              onClick={() => run(index + 1)}
-            >
-              <span data-part="mark" aria-hidden="true">
-                <svg viewBox="0 0 16 16" fill="none">
-                  <path
-                    d="M3 8h9m0 0L8.5 4.5M12 8l-3.5 3.5"
-                    stroke="currentColor"
-                    strokeWidth="1.4"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
+            <div data-part="field">
+              <span data-part="glyph" aria-hidden="true">
+                ⌕
               </span>
-              <span data-part="text">{entry.label}</span>
-              {entry.hint ? <span data-part="hint">{entry.hint}</span> : null}
-            </li>
-          ))}
-          {found.length === 0 ? (
-            <li role="presentation">
-              <p data-part="empty">{emptyText}</p>
-            </li>
-          ) : null}
-        </ul>
-        <p data-part="foot" role="status">
-          {chosen ? doneText.replace("{command}", chosen) : hintText}
-        </p>
+              <input
+                type="text"
+                role="combobox"
+                aria-expanded
+                aria-controls={listId}
+                aria-autocomplete="list"
+                aria-activedescendant={`${rowId}-${current}`}
+                aria-label={placeholder}
+                placeholder={placeholder}
+                value={query}
+                onChange={(event) => {
+                  setQuery(event.target.value)
+                  setActive(0)
+                }}
+                onKeyDown={onKeyDown}
+              />
+            </div>
+            <ul
+              id={listId}
+              data-part="list"
+              role="listbox"
+              aria-label={listLabel}
+            >
+              <li
+                id={`${rowId}-0`}
+                data-part="ask"
+                role="option"
+                aria-selected={current === 0}
+                onClick={() => run(0)}
+              >
+                <span data-part="spark" aria-hidden="true">
+                  <svg viewBox="0 0 16 16" fill="none">
+                    <path
+                      d="M8 1.5 9.4 5.6 13.5 7l-4.1 1.4L8 12.5 6.6 8.4 2.5 7l4.1-1.4L8 1.5Zm4.5 6.8.6 1.7 1.7.6-1.7.6-.6 1.7-.6-1.7-1.7-.6 1.7-.6.6-1.7Z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </span>
+                <span data-part="text">
+                  {query.trim() ? (
+                    <>
+                      {askLabel}: <b>{query.trim()}</b>
+                    </>
+                  ) : (
+                    askIdleText
+                  )}
+                </span>
+                <span data-part="hint">Enter</span>
+              </li>
+              {found.length > 0 ? (
+                <li role="presentation">
+                  <p data-part="group">{listLabel}</p>
+                </li>
+              ) : null}
+              {found.map((entry, index) => (
+                <li
+                  key={entry.label}
+                  id={`${rowId}-${index + 1}`}
+                  data-part="row"
+                  role="option"
+                  aria-selected={current === index + 1}
+                  onClick={() => run(index + 1)}
+                >
+                  <span data-part="mark" aria-hidden="true">
+                    <svg viewBox="0 0 16 16" fill="none">
+                      <path
+                        d="M3 8h9m0 0L8.5 4.5M12 8l-3.5 3.5"
+                        stroke="currentColor"
+                        strokeWidth="1.4"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </span>
+                  <span data-part="text">{entry.label}</span>
+                  {entry.hint ? (
+                    <span data-part="hint">{entry.hint}</span>
+                  ) : null}
+                </li>
+              ))}
+              {found.length === 0 ? (
+                <li role="presentation">
+                  <p data-part="empty">{emptyText}</p>
+                </li>
+              ) : null}
+            </ul>
+            <p data-part="foot" role="status">
+              {chosen ? doneText.replace("{command}", chosen) : hintText}
+            </p>
+          </div>
+        </div>
       </div>
     </>
   )

@@ -244,7 +244,17 @@ export function Command001({
           {triggerLabel}
           <kbd>Ctrl+K</kbd>
         </button>
-        <dialog ref={dialog} aria-label={triggerLabel}>
+        {/* Клик по подложке закрывает панель: нативный <dialog> сам этого
+            не делает, а модалка без выхода мышью — ловушка. */}
+        <dialog
+          ref={dialog}
+          aria-label={triggerLabel}
+          onClick={(event) => {
+            if (event.target === dialog.current) {
+              dialog.current?.close()
+            }
+          }}
+        >
           <div onKeyDown={move}>
             <input
               data-part="search"

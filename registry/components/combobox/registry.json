@@ -20,9 +20,6 @@
       "meta": {
         "tags": ["combobox", "filter", "keyboard", "a11y"],
         "preview": {
-          "props": {
-            "defaultOpen": true
-          },
           "width": "full"
         },
         "ai": {

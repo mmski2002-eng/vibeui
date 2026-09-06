@@ -62,9 +62,17 @@ font-family:var(--vibeui-rating-002-font);color:var(--vibeui-rating-002-fg);
 [data-vibeui-block="rating-002"] legend{
 float:left;width:100%;padding:0;margin-bottom:0.5rem;font-size:0.875rem;font-weight:650;
 }
+/* Межбуквенного зазора нет намеренно: он добавляется и после последней
+   звезды, поэтому доля закраски в процентах переставала совпадать с
+   оценкой — «четыре» заливало чуть меньше четырёх звёзд. */
+/* Ряд занимает ровно ширину пяти звёзд: как flex-элемент он растягивался
+   на всю карточку, и доля закраски в процентах считалась от неё, а не от
+   звёзд — «три с половиной» заливало все пять. Межбуквенного зазора нет по
+   той же причине: он добавляется и после последней звезды. */
 [data-vibeui-block="rating-002"] [data-part="stars"]{
 clear:both;position:relative;display:inline-block;
-font-size:1.75rem;line-height:1;letter-spacing:0.125rem;
+align-self:flex-start;width:max-content;
+font-size:1.75rem;line-height:1;letter-spacing:0;
 }
 [data-vibeui-block="rating-002"] [data-part="track"]{color:var(--vibeui-rating-002-empty)}
 /* Закраска — полоса поверх серого ряда: дробность сводится к процентам. */

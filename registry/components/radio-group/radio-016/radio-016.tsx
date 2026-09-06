@@ -49,9 +49,9 @@ const STYLES = `
 --vibeui-radio-016-muted:color-mix(in oklab,var(--vibeui-radio-016-fg) 68%,transparent);
 --vibeui-radio-016-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
 --vibeui-radio-016-ring:light-dark(oklch(0.74 0 265),oklch(0.5 0 265));
---vibeui-radio-016-accent:light-dark(oklch(0.55 0.18 290),oklch(0.76 0.15 290));
---vibeui-radio-016-on-accent:light-dark(oklch(1 0 0),oklch(0.2 0 290));
---vibeui-radio-016-tint:light-dark(oklch(0.55 0.18 290 / 7%),oklch(0.76 0.15 290 / 16%));
+--vibeui-radio-016-accent:light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));
+--vibeui-radio-016-on-accent:light-dark(oklch(0.99 0 265),oklch(0.17 0.01 265));
+--vibeui-radio-016-tint:light-dark(oklch(0.24 0.015 265 / 6%),oklch(0.93 0.006 265 / 12%));
 --vibeui-radio-016-dash:light-dark(oklch(0.78 0 265),oklch(0.48 0 265));
 --vibeui-radio-016-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
@@ -79,8 +79,12 @@ padding:0.5rem 0.375rem;font-size:0.75rem;
 align-items:flex-end;color:var(--vibeui-radio-016-muted);font-size:0.6875rem;
 border-bottom:1px solid var(--vibeui-radio-016-border);
 }
+/* Столбцу плана нужна своя минимальная ширина: в узкой карточке ячейки
+   схлопывались, и «1 590 ₽» разрывалось по пробелу. Не влезло — таблица
+   прокручивается вбок, это честнее сломанной вёрстки. */
 [data-vibeui-block="radio-016"] [data-part="cell"][data-role="plan"]{
-position:relative;flex-direction:column;align-items:flex-start;gap:0.25rem;
+position:relative;flex-direction:column;align-items:center;text-align:center;gap:0.25rem;
+padding-top:1.5rem;
 cursor:pointer;border-bottom:1px solid var(--vibeui-radio-016-border);
 border-radius:0.5rem 0.5rem 0 0;
 transition:background-color .16s ease;
@@ -108,14 +112,16 @@ border:1.5px solid var(--vibeui-radio-016-ring);background:transparent;
 border-color:var(--vibeui-radio-016-accent);
 background:radial-gradient(circle at 50% 50%,var(--vibeui-radio-016-accent) 0 0.1875rem,transparent 0.1875rem);
 }
+/* Плашка стоит над кружком, а не рядом с ним: в узкой колонке они
+   перекрывались. */
 [data-vibeui-block="radio-016"] [data-part="badge"]{
-position:absolute;top:0.375rem;right:0.25rem;
+position:absolute;top:0.1875rem;left:50%;transform:translateX(-50%);
 padding:0.0625rem 0.375rem;border-radius:9999px;
 background:var(--vibeui-radio-016-accent);color:var(--vibeui-radio-016-on-accent);
 font-size:0.5625rem;font-weight:700;letter-spacing:0.02em;
 }
-[data-vibeui-block="radio-016"] [data-part="plan-name"]{font-weight:650;padding-right:3.25rem}
-[data-vibeui-block="radio-016"] [data-part="plan-price"]{font-weight:750;font-variant-numeric:tabular-nums}
+[data-vibeui-block="radio-016"] [data-part="plan-name"]{font-weight:650}
+[data-vibeui-block="radio-016"] [data-part="plan-price"]{font-weight:750;white-space:nowrap;font-variant-numeric:tabular-nums}
 [data-vibeui-block="radio-016"] [data-part="plan-period"]{
 font-weight:500;font-size:0.625rem;color:var(--vibeui-radio-016-muted);
 }
@@ -200,7 +206,7 @@ export function Radio016({
   } as CSSProperties
 
   const gridStyle: CSSProperties = {
-    gridTemplateColumns: `minmax(6.5rem,1.3fr) repeat(${plans.length}, minmax(4.25rem,1fr))`,
+    gridTemplateColumns: `minmax(7rem,1.2fr) repeat(${plans.length}, minmax(6.75rem,1fr))`,
   }
 
   return (

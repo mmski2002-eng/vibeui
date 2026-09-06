@@ -81,8 +81,12 @@ color:var(--vibeui-input-001-muted);
 transform-origin:left top;pointer-events:none;
 transition:transform .16s ease,color .16s ease;
 }
-/* Поле пустое и не в фокусе — подпись стоит на месте текста. */
+/* Поле пустое и не в фокусе — подпись стоит на месте текста, ровно по
+   центру поля. Сдвиг считается от высоты: у крупного размера он свой. */
 [data-vibeui-block="input-001"] input:placeholder-shown:not(:focus) + [data-part="label"]{
+transform:translateY(0.5625rem) scale(1.32);
+}
+[data-vibeui-block="input-001"][data-size="lg"] input:placeholder-shown:not(:focus) + [data-part="label"]{
 transform:translateY(0.8125rem) scale(1.32);
 }
 [data-vibeui-block="input-001"] input:focus + [data-part="label"]{color:var(--vibeui-input-001-accent)}

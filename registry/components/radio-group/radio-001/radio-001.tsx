@@ -35,8 +35,8 @@ const STYLES = `
 --vibeui-radio-001-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
 --vibeui-radio-001-muted:color-mix(in oklab,var(--vibeui-radio-001-fg) 68%,transparent);
 --vibeui-radio-001-border:light-dark(oklch(0.9 0 265),oklch(0.35 0 265));
---vibeui-radio-001-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
---vibeui-radio-001-tint:light-dark(oklch(0.55 0.2 262 / 7%),oklch(0.74 0.16 262 / 15%));
+--vibeui-radio-001-accent:light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));
+--vibeui-radio-001-tint:light-dark(oklch(0.24 0.015 265 / 6%),oklch(0.93 0.006 265 / 12%));
 --vibeui-radio-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -62,7 +62,7 @@ padding:0.625rem 0.75rem;border-radius:0.625rem;cursor:pointer;
 border:1px solid var(--vibeui-radio-001-border);
 }
 [data-vibeui-block="radio-001"] input{
-appearance:none;flex:none;margin:0.125rem 0 0;cursor:pointer;
+appearance:none;flex:none;margin:0.0625rem 0 0;cursor:pointer;
 width:1.125rem;height:1.125rem;border-radius:9999px;
 border:1.5px solid var(--vibeui-radio-001-muted);background:transparent;
 }
@@ -75,8 +75,15 @@ border-color:var(--vibeui-radio-001-accent);border-width:5px;
 border-color:var(--vibeui-radio-001-accent);background:var(--vibeui-radio-001-tint);
 }
 [data-vibeui-block="radio-001"] [data-part="text"]{display:flex;flex-direction:column;gap:0.125rem;min-width:0}
-[data-vibeui-block="radio-001"] [data-part="label"]{display:flex;justify-content:space-between;gap:0.75rem;font-size:0.875rem;font-weight:600}
-[data-vibeui-block="radio-001"] [data-part="price"]{font-variant-numeric:tabular-nums;font-weight:650}
+/* Название тянется, цена держится одной строкой у правого края: без nowrap
+   «5 900 ₽» разрывалось по пробелу и уезжало под подпись. */
+[data-vibeui-block="radio-001"] [data-part="label"]{
+display:flex;align-items:baseline;justify-content:space-between;gap:0.75rem;
+font-size:0.875rem;font-weight:600;line-height:1.3;
+}
+[data-vibeui-block="radio-001"] [data-part="price"]{
+flex:none;white-space:nowrap;font-variant-numeric:tabular-nums;font-weight:650;
+}
 [data-vibeui-block="radio-001"] [data-part="hint"]{font-size:0.75rem;line-height:1.4;color:var(--vibeui-radio-001-muted)}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="radio-001"] *{animation:none!important;transition:none!important}}
 `

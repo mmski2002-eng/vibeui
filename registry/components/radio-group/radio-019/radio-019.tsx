@@ -34,7 +34,7 @@ const STYLES = `
 --vibeui-radio-019-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-radio-019-muted:color-mix(in oklab,var(--vibeui-radio-019-fg) 68%,transparent);
 --vibeui-radio-019-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
---vibeui-radio-019-accent:light-dark(oklch(0.55 0.19 262),oklch(0.75 0.16 262));
+--vibeui-radio-019-accent:light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));
 --vibeui-radio-019-lock:light-dark(oklch(0.66 0.13 75),oklch(0.79 0.13 75));
 --vibeui-radio-019-lock-tint:light-dark(oklch(0.66 0.13 75 / 12%),oklch(0.79 0.13 75 / 16%));
 --vibeui-radio-019-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

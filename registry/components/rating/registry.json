@@ -6,9 +6,7 @@
       "type": "registry:component",
       "title": "Оценка звёздами",
       "description": "Оценка звёздами без JS: звёзды идут в разметке обратно и разворачиваются flex, поэтому подсветка работает одним селектором.",
-      "categories": [
-        "rating"
-      ],
+      "categories": ["rating"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -20,12 +18,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-rating-001-*. Серверный: хуков нет, состояние держат радиокнопки. Порядок звёзд в разметке обратный, а flex-direction: row-reverse возвращает их на место — только так соседний селектор ~ красит звёзды левее. Подпись оценки тоже выбирается CSS: видна строка, чей value отмечен.",
       "meta": {
-        "tags": [
-          "rating",
-          "stars",
-          "radio",
-          "no-js"
-        ],
+        "tags": ["rating", "stars", "radio", "no-js"],
         "ai": {
           "export": "Rating001",
           "usage": "<Rating001 legend=\"Оцените компонент\" max={5} defaultValue={4} />",
@@ -148,13 +141,7 @@
             "preview": {
               "props": {
                 "legend": "Rate this component",
-                "hints": [
-                  "Poor",
-                  "So-so",
-                  "Okay",
-                  "Good",
-                  "Excellent"
-                ],
+                "hints": ["Poor", "So-so", "Okay", "Good", "Excellent"],
                 "starLabel": "{value} of {max}"
               }
             }
@@ -168,16 +155,6 @@
           "background"
         ],
         "preview": {
-          "states": [
-            {
-              "name": "vibeui-rating-001-low",
-              "defaultValue": 1
-            },
-            {
-              "name": "vibeui-rating-001-high",
-              "defaultValue": 5
-            }
-          ],
           "width": "full"
         }
       }
@@ -187,9 +164,7 @@
       "type": "registry:component",
       "title": "Половинки звёзд",
       "description": "Звёзды с половинками без единой строки JS: закраска задаётся полосой поверх серого ряда, а ширина полосы — отмеченной радиокнопкой через :has().",
-      "categories": [
-        "rating"
-      ],
+      "categories": ["rating"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -201,12 +176,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-rating-002-*. Серверный: всё держится на радиокнопках и :has(). Половинки сделаны не разрезанными звёздами, а полосой закраски поверх серого ряда — любая дробность сводится к одному числу процентов в переменной --vibeui-rating-002-fill. Зоны нажатия — десять прозрачных меток по половине звезды, спозиционированных абсолютно поверх ряда; выбор мышью попадает в половинку, а стрелки работают как в обычной группе радиокнопок.",
       "meta": {
-        "tags": [
-          "rating",
-          "stars",
-          "half",
-          "css-only"
-        ],
+        "tags": ["rating", "stars", "half", "css-only"],
         "ai": {
           "export": "Rating002",
           "usage": "<Rating002 legend=\"Насколько понравилось\" name=\"quality\" defaultValue={3.5} />",
@@ -329,12 +299,7 @@
             }
           }
         },
-        "cardControls": [
-          "legend",
-          "defaultValue",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["legend", "defaultValue", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -345,9 +310,7 @@
       "type": "registry:component",
       "title": "Шкала из десяти",
       "description": "Десятибалльная шкала пронумерованными клетками: на десяти делениях звёзды приходится пересчитывать глазами, а цифра называет оценку сразу.",
-      "categories": [
-        "rating"
-      ],
+      "categories": ["rating"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -359,12 +322,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-rating-003-*. Клиентский: оценка в состоянии, есть обработка стрелок. Группа собрана на ролях radiogroup и radio с ручным roving tabindex: фокус входит в группу один раз, а стрелки двигают выбор внутри — десять кнопок в табуляции означали бы десять лишних нажатий Tab до следующего поля. Клетки до выбранной заливаются приглушённым акцентом через color-mix, поэтому оценка читается и как число, и как длина.",
       "meta": {
-        "tags": [
-          "rating",
-          "scale",
-          "survey",
-          "keyboard"
-        ],
+        "tags": ["rating", "scale", "survey", "keyboard"],
         "ai": {
           "export": "Rating003",
           "usage": "<Rating003 label=\"Оцените сервис\" max={10} defaultValue={8} />",
@@ -517,14 +475,6 @@
           "background"
         ],
         "preview": {
-          "states": [
-            {
-              "defaultValue": 3
-            },
-            {
-              "defaultValue": 9
-            }
-          ],
           "width": "full"
         }
       }
@@ -534,9 +484,7 @@
       "type": "registry:component",
       "title": "Лица эмодзи",
       "description": "Оценка лицами: звёзды спрашивают «сколько», а эмодзи — «как это было», и на вопрос о впечатлении так отвечают быстрее.",
-      "categories": [
-        "rating"
-      ],
+      "categories": ["rating"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -548,12 +496,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-rating-004-*. Серверный: всё держится на радиокнопках и :has(). Невыбранные лица обесцвечены фильтром grayscale и приглушены прозрачностью — цветной ряд из пяти рожиц выглядит нарядно, но не показывает выбор. Подпись под рядом переключается правилами :has по значению отмеченной радиокнопки, поэтому текста в JS нет вовсе.",
       "meta": {
-        "tags": [
-          "rating",
-          "emoji",
-          "feedback",
-          "css-only"
-        ],
+        "tags": ["rating", "emoji", "feedback", "css-only"],
         "ai": {
           "export": "Rating004",
           "usage": "<Rating004 legend=\"Как вам заказ?\" name=\"mood\" defaultValue={4} />",
@@ -694,12 +637,7 @@
             }
           }
         },
-        "cardControls": [
-          "legend",
-          "defaultValue",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["legend", "defaultValue", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -710,9 +648,7 @@
       "type": "registry:component",
       "title": "Голос пальцем",
       "description": "Бинарная оценка со счётчиками: «помогла ли статья» — вопрос с двумя ответами, и пять звёзд тут только удлиняют выбор.",
-      "categories": [
-        "rating"
-      ],
+      "categories": ["rating"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -724,12 +660,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-rating-005-*. Клиентский: голос в состоянии. Повторное нажатие на ту же кнопку снимает голос — случайный клик обязан откатываться. Счётчики складываются из пришедших чисел и собственного голоса, поэтому цифра двигается сразу после нажатия: «спасибо, учтено» без движения счётчика выглядит как обман. Состояние кнопок передаётся через aria-pressed, а цвет зоны — через data-vote.",
       "meta": {
-        "tags": [
-          "rating",
-          "vote",
-          "thumbs",
-          "feedback"
-        ],
+        "tags": ["rating", "vote", "thumbs", "feedback"],
         "ai": {
           "export": "Rating005",
           "usage": "<Rating005 question=\"Статья оказалась полезной?\" up={128} down={6} />",
@@ -865,13 +796,7 @@
             }
           }
         },
-        "cardControls": [
-          "question",
-          "up",
-          "down",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["question", "up", "down", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -882,9 +807,7 @@
       "type": "registry:component",
       "title": "Обязательная причина",
       "description": "Оценка, которая ниже порога требует комментарий: три звезды сами по себе не говорят, что чинить.",
-      "categories": [
-        "rating"
-      ],
+      "categories": ["rating"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -896,12 +819,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-rating-006-*. Клиентский: оценка и текст в состоянии, поле комментария появляется условно. Ниже порога открывается обязательное поле, а кнопка отправки остаётся выключенной, пока в нём меньше минимума символов; при высокой оценке поля нет вовсе — требовать текст от довольного человека значит потерять и оценку. Счётчик показывает, сколько символов осталось до порога, а не сколько уже написано.",
       "meta": {
-        "tags": [
-          "rating",
-          "feedback",
-          "validation",
-          "form"
-        ],
+        "tags": ["rating", "feedback", "validation", "form"],
         "ai": {
           "export": "Rating006",
           "usage": "<Rating006 legend=\"Оцените доставку\" threshold={3} minLength={20} />",
@@ -1055,9 +973,7 @@
       "type": "registry:component",
       "title": "Сводка средней оценки",
       "description": "Показ средней оценки с числом отзывов и разбивкой по звёздам: 4,5 из пятёрок и четвёрок и 4,5 из пятёрок и единиц — разные товары.",
-      "categories": [
-        "rating"
-      ],
+      "categories": ["rating"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1069,12 +985,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-rating-007-*. Серверный: тут нечего нажимать, поэтому нет ни кнопок, ни радиокнопок — только текст и полосы. Дробная средняя показана полосой закраски поверх серого ряда через переменную --vibeui-rating-007-fill: округлять 4.7 до пяти звёзд значит врать в пользу товара. Ряд звёзд помечен role=\"img\" с полным aria-label, поэтому скринридер читает одну фразу вместо пяти символов. Число отзывов склоняется по правилу русских числительных.",
       "meta": {
-        "tags": [
-          "rating",
-          "readonly",
-          "reviews",
-          "summary"
-        ],
+        "tags": ["rating", "readonly", "reviews", "summary"],
         "ai": {
           "export": "Rating007",
           "usage": "<Rating007 value={4.7} count={1284} breakdown={[842, 271, 98, 41, 32]} />",
@@ -1200,12 +1111,7 @@
             }
           }
         },
-        "cardControls": [
-          "value",
-          "count",
-          "accent",
-          "background"
-        ],
+        "cardControls": ["value", "count", "accent", "background"],
         "preview": {
           "width": "full"
         }
@@ -1216,9 +1122,7 @@
       "type": "registry:component",
       "title": "Шкала NPS",
       "description": "Шкала NPS от нуля до десяти с зонами критиков, нейтралов и сторонников — раскрашенными до ответа, а не после.",
-      "categories": [
-        "rating"
-      ],
+      "categories": ["rating"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1230,12 +1134,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-rating-008-*. Серверный: всё держится на радиокнопках и :has(). Шкала начинается с нуля и делится на три зоны — 0–6, 7–8, 9–10; цвет зоны проставлен через data-zone сразу, потому что человек должен видеть, что семёрка здесь не «хорошо». Ответная реплика переключается правилами :has по значению отмеченной кнопки: одиннадцать селекторов сгруппированы в три набора.",
       "meta": {
-        "tags": [
-          "rating",
-          "nps",
-          "survey",
-          "css-only"
-        ],
+        "tags": ["rating", "nps", "survey", "css-only"],
         "ai": {
           "export": "Rating008",
           "usage": "<Rating008 legend=\"Насколько вероятно, что вы порекомендуете нас коллеге?\" name=\"nps\" />",
@@ -1388,9 +1287,7 @@
       "type": "registry:component",
       "title": "Распределение голосов",
       "description": "Распределение голосов по звёздам: средняя оценка показана меткой на шкале от одного до пяти, а под ней — счётчик голосов на каждую отметку.",
-      "categories": [
-        "rating"
-      ],
+      "categories": ["rating"],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1402,12 +1299,7 @@
       ],
       "docs": "Компонент самодостаточен: один файл, ноль зависимостей, палитра в локальных переменных --vibeui-rating-009-*. Серверный: только чтение, кликать не по чему. Средняя выведена не звёздами, а меткой на шкале от одного до пяти — деление считается средневзвешенным по votes, поэтому число и его место на шкале не могут разойтись. Под шкалой — не только проценты, а живые числа голосов на каждую отметку: одинаковая доля из тысячи и из десяти голосов — разная надёжность, и это видно по счётчику.",
       "meta": {
-        "tags": [
-          "rating",
-          "distribution",
-          "votes",
-          "summary"
-        ],
+        "tags": ["rating", "distribution", "votes", "summary"],
         "ai": {
           "export": "Rating009",
           "usage": "<Rating009 votes={[612, 205, 71, 24, 18]} />",
@@ -1506,10 +1398,7 @@
             }
           }
         },
-        "cardControls": [
-          "accent",
-          "background"
-        ],
+        "cardControls": ["accent", "background"],
         "preview": {
           "width": "full"
         }

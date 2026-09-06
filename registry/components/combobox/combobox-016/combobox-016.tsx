@@ -132,6 +132,10 @@ margin:0;font-size:0.78rem;color:var(--vibeui-combobox-016-muted);
 }
 [data-vibeui-block="combobox-016"][data-full="true"] [data-part="note"]{color:var(--vibeui-combobox-016-warn)}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="combobox-016"] *{animation:none!important;transition:none!important}}
+/* Скрытый список: у ul браузерный display перебивает hidden, если
+   компонент задаёт ему свой. */
+[data-vibeui-block="combobox-016"] [role="listbox"][hidden]{display:none}
+
 `
 
 const SKILLS = [
@@ -268,6 +272,9 @@ export function Combobox016({
     }
   }
 
+  const [open, setOpen] = useState(false)
+  const pressingList = useRef(false)
+
   const palette = {
     ...(accent ? { "--vibeui-combobox-016-accent": accent } : null),
     ...(background
@@ -290,6 +297,38 @@ export function Combobox016({
         onKeyDown={handleKeyDown}
         data-slot="combobox"
         data-vibeui-block="combobox-016"
+        onFocusCapture={() => setOpen(true)}
+        onBlurCapture={(event) => {
+          // Уход фокуса за пределы поля закрывает список; переход внутрь
+          // (поле → кнопка очистки) оставляет его открытым. Нажатие по строке
+          // списка фокус тоже уводит, но список должен дожить до выбора.
+          if (pressingList.current) {
+            return
+          }
+
+          if (!event.currentTarget.contains(event.relatedTarget as Node)) {
+            setOpen(false)
+          }
+        }}
+        onKeyDownCapture={(event) => {
+          if (event.key === "Escape") {
+            setOpen(false)
+          }
+        }}
+        onPointerDownCapture={(event) => {
+          // Гасить нажатие нельзя: часть строк выбирается на mousedown, и
+          // preventDefault отменил бы сам выбор. Держим флаг и не закрываем
+          // список, пока кнопка мыши не отпущена.
+          if ((event.target as HTMLElement).closest('[role="listbox"]')) {
+            pressingList.current = true
+            return
+          }
+
+          setOpen(true)
+        }}
+        onPointerUpCapture={() => {
+          pressingList.current = false
+        }}
         data-full={full}
         className={className}
         style={palette}
@@ -323,7 +362,7 @@ export function Combobox016({
           role="combobox"
           autoComplete="off"
           placeholder={placeholder}
-          aria-expanded="true"
+          aria-expanded={open}
           aria-controls={`${id}-list`}
           aria-autocomplete="list"
           aria-describedby={`${id}-note`}
@@ -333,6 +372,7 @@ export function Combobox016({
         <ul
           id={`${id}-list`}
           role="listbox"
+          hidden={!open}
           aria-multiselectable="true"
           aria-label={label}
           data-part="list"

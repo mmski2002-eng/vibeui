@@ -61,7 +61,6 @@ import inputOtpRegistry from "@/registry/components/input-otp/registry.json"
 import itemRegistry from "@/registry/components/item/registry.json"
 import kbdRegistry from "@/registry/components/kbd/registry.json"
 import labelRegistry from "@/registry/components/label/registry.json"
-import menubarRegistry from "@/registry/components/menubar/registry.json"
 import nativeSelectRegistry from "@/registry/components/native-select/registry.json"
 import navigationMenuRegistry from "@/registry/components/navigation-menu/registry.json"
 import numberFieldRegistry from "@/registry/components/number-field/registry.json"
@@ -72,7 +71,6 @@ import progressRegistry from "@/registry/components/progress/registry.json"
 import radioGroupRegistry from "@/registry/components/radio-group/registry.json"
 import rangeRegistry from "@/registry/components/range/registry.json"
 import ratingRegistry from "@/registry/components/rating/registry.json"
-import resizableRegistry from "@/registry/components/resizable/registry.json"
 import scrollAreaRegistry from "@/registry/components/scroll-area/registry.json"
 import scrollspyRegistry from "@/registry/components/scrollspy/registry.json"
 import selectRegistry from "@/registry/components/select/registry.json"
@@ -451,11 +449,6 @@ export const SOURCES = [
     items: labelRegistry.items,
   },
   {
-    directory: "registry/components/menubar",
-    kind: "component",
-    items: menubarRegistry.items,
-  },
-  {
     directory: "registry/components/native-select",
     kind: "component",
     items: nativeSelectRegistry.items,
@@ -504,11 +497,6 @@ export const SOURCES = [
     directory: "registry/components/rating",
     kind: "component",
     items: ratingRegistry.items,
-  },
-  {
-    directory: "registry/components/resizable",
-    kind: "component",
-    items: resizableRegistry.items,
   },
   {
     directory: "registry/components/scroll-area",

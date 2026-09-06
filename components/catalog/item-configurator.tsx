@@ -148,8 +148,9 @@ export function ConfigurablePreview({
   /** Демо-содержимое витрины: под ним лежат дефолты компонента, поверх — контролы. */
   previewProps?: Record<string, unknown>
 }) {
-  const [Preview, setPreview] =
-    useState<ComponentType<PreviewProps> | null>(null)
+  const [Preview, setPreview] = useState<ComponentType<PreviewProps> | null>(
+    null,
+  )
 
   useEffect(() => {
     let cancelled = false
@@ -170,7 +171,19 @@ export function ConfigurablePreview({
   }
 
   return (
-    <div className={full ? "w-full max-w-[30rem]" : undefined}>
+    // Демо-ссылки компонентов ведут в "#": без перехвата клик по превью
+    // прокручивает страницу к началу и меняет адрес.
+    <div
+      className={full ? "w-full max-w-[30rem]" : undefined}
+      onClick={(event) => {
+        const link = (event.target as HTMLElement).closest("a")
+        const href = link?.getAttribute("href")
+
+        if (link && (href === "#" || href === "" || href === null)) {
+          event.preventDefault()
+        }
+      }}
+    >
       <Preview {...previewProps} {...toProps(controls, values)} />
     </div>
   )

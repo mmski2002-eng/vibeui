@@ -6,6 +6,7 @@ import {
   useState,
   type ComponentType,
   type CSSProperties,
+  type MouseEvent,
 } from "react"
 
 import { loadLazyPreviewMap } from "@/registry/preview-loaders-lazy"
@@ -31,6 +32,20 @@ const SECTION_WIDTH = 1280
  * (`@starting-style`), чтобы анимация начиналась ровно в момент вставки
  * загруженного компонента, а не в момент старта загрузки.
  */
+/**
+ * Гасит переход по демо-ссылке внутри превью. В компонентах каталога ссылки
+ * ведут в "#": на витрине такой клик прокручивает страницу к началу и меняет
+ * адрес, хотя человек просто щёлкнул по карточке.
+ */
+function holdDemoLinks(event: MouseEvent<HTMLDivElement>) {
+  const link = (event.target as HTMLElement).closest("a")
+  const href = link?.getAttribute("href")
+
+  if (link && (href === "#" || href === "" || href === null)) {
+    event.preventDefault()
+  }
+}
+
 export function LazyThumbnail({
   slug,
   kind,
@@ -119,6 +134,7 @@ export function LazyThumbnail({
       <div
         ref={frameRef}
         className="bg-preview-surface flex min-h-44 w-full flex-1 items-center justify-center overflow-hidden p-6 lg:px-8 lg:py-10"
+        onClick={holdDemoLinks}
       >
         <div
           className={
@@ -145,6 +161,7 @@ export function LazyThumbnail({
     <div
       ref={frameRef}
       className="bg-preview-surface @container relative w-full overflow-hidden"
+      onClick={holdDemoLinks}
       style={
         {
           "--thumbnail-width": `${SECTION_WIDTH}px`,

@@ -120,7 +120,6 @@
 | `kbd`             | Kbd             |     6 | display            |
 | `label`           | Label           |     8 | label              |
 | `menu`            | Menu            |     7 | menu               |
-| `menubar`         | Menubar         |     8 | navigation         |
 | `native-select`   | Native Select   |     7 | nativeselect       |
 | `navigation-menu` | Navigation Menu |     8 | navigation         |
 | `number-field`    | Number Field    |     8 | inputs             |
@@ -131,7 +130,6 @@
 | `radio-group`     | Radio Group     |     8 | inputs             |
 | `range`           | Range           |     7 | inputs             |
 | `rating`          | Rating          |     8 | inputs             |
-| `resizable`       | Resizable       |     7 | resizable          |
 | `scroll-area`     | Scroll Area     |     7 | display            |
 | `scrollspy`       | Scrollspy       |     7 | navigation         |
 | `select`          | Select          |     9 | inputs             |

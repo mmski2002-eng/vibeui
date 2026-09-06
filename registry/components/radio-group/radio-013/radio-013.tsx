@@ -28,8 +28,8 @@ const STYLES = `
 --vibeui-radio-013-muted:color-mix(in oklab,var(--vibeui-radio-013-fg) 68%,transparent);
 --vibeui-radio-013-ring:light-dark(oklch(0.74 0 265),oklch(0.46 0 265));
 --vibeui-radio-013-border:light-dark(oklch(0.9 0 265),oklch(0.36 0 265));
---vibeui-radio-013-accent:light-dark(oklch(0.55 0.17 150),oklch(0.78 0.15 150));
---vibeui-radio-013-on-accent:light-dark(oklch(1 0 0),oklch(0.19 0.02 150));
+--vibeui-radio-013-accent:light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));
+--vibeui-radio-013-on-accent:light-dark(oklch(0.99 0 265),oklch(0.17 0.01 265));
 --vibeui-radio-013-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

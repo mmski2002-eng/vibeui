@@ -168,15 +168,7 @@
           }
         },
         "preview": {
-          "width": "full",
-          "states": [
-            {
-              "defaultChecked": false
-            },
-            {
-              "defaultChecked": true
-            }
-          ]
+          "width": "full"
         },
         "cardControls": [
           "label",
@@ -208,15 +200,7 @@
       "meta": {
         "tags": ["switch", "card", "settings", "toggle"],
         "preview": {
-          "width": "full",
-          "states": [
-            {
-              "defaultChecked": false
-            },
-            {
-              "defaultChecked": true
-            }
-          ]
+          "width": "full"
         },
         "ai": {
           "export": "Switch002",
@@ -556,15 +540,7 @@
       "meta": {
         "tags": ["switch", "icon", "state", "toggle"],
         "preview": {
-          "width": "full",
-          "states": [
-            {
-              "defaultChecked": false
-            },
-            {
-              "defaultChecked": true
-            }
-          ]
+          "width": "full"
         },
         "ai": {
           "export": "Switch004",
@@ -1397,15 +1373,7 @@
       "meta": {
         "tags": ["switch", "theme", "dark-mode", "animation"],
         "preview": {
-          "width": "full",
-          "states": [
-            {
-              "defaultChecked": false
-            },
-            {
-              "defaultChecked": true
-            }
-          ]
+          "width": "full"
         },
         "ai": {
           "export": "Switch009",
@@ -1707,15 +1675,7 @@
           }
         },
         "preview": {
-          "width": "full",
-          "states": [
-            {
-              "defaultChecked": false
-            },
-            {
-              "defaultChecked": true
-            }
-          ]
+          "width": "full"
         },
         "cardControls": [
           "label",
@@ -2393,15 +2353,7 @@
           }
         },
         "preview": {
-          "width": "full",
-          "states": [
-            {
-              "defaultChecked": false
-            },
-            {
-              "defaultChecked": true
-            }
-          ]
+          "width": "full"
         },
         "cardControls": [
           "label",

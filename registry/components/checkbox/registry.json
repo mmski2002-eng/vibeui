@@ -160,17 +160,7 @@
           }
         },
         "preview": {
-          "width": "full",
-          "states": [
-            {
-              "description": "",
-              "defaultChecked": false
-            },
-            {
-              "description": "",
-              "defaultChecked": true
-            }
-          ]
+          "width": "full"
         },
         "cardControls": [
           "label",
@@ -1098,15 +1088,7 @@
       "meta": {
         "tags": ["checkbox", "mobile", "touch", "form"],
         "preview": {
-          "width": "full",
-          "states": [
-            {
-              "defaultChecked": false
-            },
-            {
-              "defaultChecked": true
-            }
-          ]
+          "width": "full"
         },
         "ai": {
           "export": "Checkbox008",

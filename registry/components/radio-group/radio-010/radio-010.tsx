@@ -33,8 +33,8 @@ const STYLES = `
 --vibeui-radio-010-muted:color-mix(in oklab,var(--vibeui-radio-010-fg) 68%,transparent);
 --vibeui-radio-010-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
 --vibeui-radio-010-rail:light-dark(oklch(0.97 0 265),oklch(0.29 0 265));
---vibeui-radio-010-accent:light-dark(oklch(0.52 0.17 235),oklch(0.66 0.15 235));
---vibeui-radio-010-on-accent:light-dark(oklch(1 0 0),oklch(0.15 0 235));
+--vibeui-radio-010-accent:light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));
+--vibeui-radio-010-on-accent:light-dark(oklch(0.99 0 265),oklch(0.17 0.01 265));
 --vibeui-radio-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-radio-010-count:3;
 }

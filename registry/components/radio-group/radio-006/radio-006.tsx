@@ -33,8 +33,8 @@ const STYLES = `
 --vibeui-radio-006-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-radio-006-muted:color-mix(in oklab,var(--vibeui-radio-006-fg) 68%,transparent);
 --vibeui-radio-006-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
---vibeui-radio-006-accent:light-dark(oklch(0.55 0.19 30),oklch(0.75 0.15 30));
---vibeui-radio-006-tint:light-dark(oklch(0.55 0.19 30 / 8%),oklch(0.75 0.15 30 / 16%));
+--vibeui-radio-006-accent:light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));
+--vibeui-radio-006-tint:light-dark(oklch(0.24 0.015 265 / 6%),oklch(0.93 0.006 265 / 12%));
 --vibeui-radio-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

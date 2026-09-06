@@ -22,6 +22,15 @@ export type Command003Props = Omit<ComponentProps<"div">, "children"> & {
   /** Ответ, когда поиск ничего не нашёл. */
   emptyText?: string
   /** Подложка панели. Пусто — цвет по умолчанию из палитры. */
+  /** Подпись кнопки, которая открывает палитру. */
+  triggerLabel?: string
+  /**
+   * Показать палитру раскрытой в потоке страницы: витрина, скриншот, отладка.
+   * В этом режиме popover не используется, поэтому Esc и клик мимо не работают.
+   */
+  defaultOpen?: boolean
+  /** id всплывающего слоя: на странице он обязан быть уникальным. */
+  menuId?: string
   background?: string
   accent?: string
 }
@@ -93,6 +102,64 @@ flex:none;width:1rem;text-align:center;color:var(--vibeui-command-003-muted);fon
 margin:0;padding:1.125rem 0.875rem;font-size:0.875rem;color:var(--vibeui-command-003-muted);
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="command-003"] *{animation:none!important;transition:none!important}}
+/* Оболочка: в потоке видна только кнопка, панель всплывает под ней в
+   верхнем слое нативного popover — карточка каталога её не обрезает,
+   Esc и клик мимо достаются от браузера. */
+[data-vibeui-shell="command-003"]{
+display:inline-flex;box-sizing:border-box;
+font-family:var(--vibeui-command-003-font,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif);
+}
+:where(.dark,[data-theme="dark"]) [data-vibeui-shell="command-003"]{color-scheme:dark}
+[data-vibeui-shell="command-003"] [data-part="open"]{
+appearance:none;cursor:pointer;
+display:inline-flex;align-items:center;gap:0.625rem;
+min-height:2.375rem;padding:0 0.875rem;box-sizing:border-box;
+border:1px solid light-dark(oklch(0.88 0 265),oklch(0.36 0 265));
+border-radius:0.625rem;
+background:light-dark(oklch(1 0 0),oklch(0.24 0.01 265));
+color:light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));
+font:inherit;font-size:0.875rem;font-weight:650;line-height:1;
+transition:border-color .16s ease;
+}
+[data-vibeui-shell="command-003"] [data-part="open"]:hover{
+border-color:light-dark(oklch(0.6 0 265),oklch(0.55 0 265));
+}
+[data-vibeui-shell="command-003"] [data-part="open"]:focus-visible{
+outline:2px solid light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));outline-offset:2px;
+}
+[data-vibeui-shell="command-003"] [data-part="open"] kbd{
+font:inherit;font-size:0.75rem;
+padding:0.125rem 0.375rem;border-radius:0.3125rem;
+border:1px solid light-dark(oklch(0.88 0 265),oklch(0.4 0 265));
+color:color-mix(in oklab,currentColor 70%,transparent);
+}
+[data-vibeui-menu="command-003"]{
+margin:auto;padding:0;border:0;background:none;overflow:visible;
+width:max-content;max-width:min(92vw,34rem);
+}
+/* Где anchor поддержан — панель висит под кнопкой; где нет — остаётся
+   по центру экрана силами самого popover. */
+@supports (anchor-name: --vibeui-command-003-anchor){
+[data-vibeui-shell="command-003"] [data-part="open"]{anchor-name:--vibeui-command-003-anchor}
+[data-vibeui-menu="command-003"]{
+position-anchor:--vibeui-command-003-anchor;
+position-area:block-end span-inline-end;
+margin:0.375rem 0 0;
+position-try-fallbacks:flip-block;
+}
+}
+/* Развёрнутый режим витрины: панель стоит в потоке под кнопкой. Только пока
+   popover закрыт — у открытого положение задаёт верхний слой. */
+[data-vibeui-shell="command-003"]:has([data-open="true"]:not(:popover-open)){
+flex-direction:column;align-items:flex-start;
+}
+[data-vibeui-menu="command-003"][data-open="true"]:not(:popover-open){
+position:static;margin:0.375rem 0 0;
+}
+[data-vibeui-shell="command-003"] dialog::backdrop{
+background:oklch(0 0 0 / 45%);
+}
+
 `
 
 const DEFAULT_COMMANDS = [
@@ -148,6 +215,9 @@ export function Command003({
   clearLabel = "очистить",
   emptyHistoryText = "История пуста — начните вводить название команды.",
   emptyText = "Совпадений нет. Попробуйте другое слово.",
+  triggerLabel = "Открыть палитру",
+  defaultOpen = false,
+  menuId = "vibeui-command-003-panel",
   background = "",
   accent,
   className,
@@ -213,73 +283,91 @@ export function Command003({
       <style href="vibeui-command-003" precedence="medium">
         {STYLES}
       </style>
-      <div
-        {...props}
-        data-slot="command"
-        data-vibeui-block="command-003"
-        className={className}
-        style={paletteStyle}
-        role="dialog"
-        aria-label={label}
-      >
-        <input
-          type="text"
-          role="combobox"
-          aria-expanded={rows.length > 0}
-          aria-controls={listId}
-          aria-autocomplete="list"
-          aria-activedescendant={
-            current ? `${rowId}-${rows.indexOf(current)}` : undefined
-          }
-          aria-label={placeholder}
-          placeholder={placeholder}
-          value={query}
-          onChange={(event) => {
-            setQuery(event.target.value)
-            setActive(0)
-          }}
-          onKeyDown={onKeyDown}
-        />
-        <p data-part="mode">
-          {browsing
-            ? recentText
-            : foundText.replace("{count}", String(rows.length))}
-          {browsing && history.length > 0 ? (
-            <button
-              type="button"
-              data-part="clear"
-              onClick={() => setHistory([])}
-            >
-              {clearLabel}
-            </button>
-          ) : null}
-        </p>
-        {rows.length === 0 ? (
-          <p data-part="empty">{browsing ? emptyHistoryText : emptyText}</p>
-        ) : (
-          <ul
-            id={listId}
-            data-part="list"
-            role="listbox"
-            aria-label={listLabel}
+      <div data-vibeui-shell="command-003">
+        <button
+          type="button"
+          data-part="open"
+          popoverTarget={defaultOpen ? undefined : menuId}
+        >
+          {triggerLabel}
+          <kbd>Ctrl+K</kbd>
+        </button>
+        <div
+          id={menuId}
+          popover={defaultOpen ? undefined : "auto"}
+          data-open={defaultOpen || undefined}
+          data-vibeui-menu="command-003"
+          aria-label={triggerLabel}
+        >
+          <div
+            {...props}
+            data-slot="command"
+            data-vibeui-block="command-003"
+            className={className}
+            style={paletteStyle}
+            role="dialog"
+            aria-label={label}
           >
-            {rows.map((command, index) => (
-              <li
-                key={command}
-                id={`${rowId}-${index}`}
-                data-part="row"
-                role="option"
-                aria-selected={current === command}
-                onClick={() => run(command)}
+            <input
+              type="text"
+              role="combobox"
+              aria-expanded={rows.length > 0}
+              aria-controls={listId}
+              aria-autocomplete="list"
+              aria-activedescendant={
+                current ? `${rowId}-${rows.indexOf(current)}` : undefined
+              }
+              aria-label={placeholder}
+              placeholder={placeholder}
+              value={query}
+              onChange={(event) => {
+                setQuery(event.target.value)
+                setActive(0)
+              }}
+              onKeyDown={onKeyDown}
+            />
+            <p data-part="mode">
+              {browsing
+                ? recentText
+                : foundText.replace("{count}", String(rows.length))}
+              {browsing && history.length > 0 ? (
+                <button
+                  type="button"
+                  data-part="clear"
+                  onClick={() => setHistory([])}
+                >
+                  {clearLabel}
+                </button>
+              ) : null}
+            </p>
+            {rows.length === 0 ? (
+              <p data-part="empty">{browsing ? emptyHistoryText : emptyText}</p>
+            ) : (
+              <ul
+                id={listId}
+                data-part="list"
+                role="listbox"
+                aria-label={listLabel}
               >
-                <span data-part="tick" aria-hidden="true">
-                  {browsing ? "↺" : "›"}
-                </span>
-                {command}
-              </li>
-            ))}
-          </ul>
-        )}
+                {rows.map((command, index) => (
+                  <li
+                    key={command}
+                    id={`${rowId}-${index}`}
+                    data-part="row"
+                    role="option"
+                    aria-selected={current === command}
+                    onClick={() => run(command)}
+                  >
+                    <span data-part="tick" aria-hidden="true">
+                      {browsing ? "↺" : "›"}
+                    </span>
+                    {command}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
       </div>
     </>
   )

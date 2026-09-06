@@ -156,6 +156,9 @@ export function Input032({
             {...props}
             id={inputId}
             type="password"
+            /* Поле придуманного пароля: сохранённую пару сюда подставлять
+               нечего, а без подсказки браузер лезет в соседние поля. */
+            autoComplete="new-password"
             placeholder={placeholder}
             aria-describedby={showWarn ? warnId : undefined}
             onFocus={(event) => {

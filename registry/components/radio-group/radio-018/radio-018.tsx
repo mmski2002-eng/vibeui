@@ -38,10 +38,10 @@ const STYLES = `
 --vibeui-radio-018-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-radio-018-muted:color-mix(in oklab,var(--vibeui-radio-018-fg) 68%,transparent);
 --vibeui-radio-018-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
---vibeui-radio-018-accent:light-dark(oklch(0.55 0.19 262),oklch(0.75 0.16 262));
+--vibeui-radio-018-accent:light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));
 --vibeui-radio-018-danger:light-dark(oklch(0.55 0.2 25),oklch(0.7 0.17 25));
 --vibeui-radio-018-danger-soft:light-dark(oklch(0.96 0.03 25),oklch(0.29 0.05 25));
---vibeui-radio-018-on-accent:oklch(0.99 0 265);
+--vibeui-radio-018-on-accent:light-dark(oklch(0.99 0 265),oklch(0.17 0.01 265));
 --vibeui-radio-018-on-danger:light-dark(oklch(0.99 0.01 25),oklch(0.21 0.04 25));
 --vibeui-radio-018-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

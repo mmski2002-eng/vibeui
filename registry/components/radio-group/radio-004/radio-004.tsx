@@ -33,8 +33,8 @@ const STYLES = `
 --vibeui-radio-004-muted:color-mix(in oklab,var(--vibeui-radio-004-fg) 68%,transparent);
 --vibeui-radio-004-border:light-dark(oklch(0.91 0 265),oklch(0.36 0 265));
 --vibeui-radio-004-ring:light-dark(oklch(0.74 0 265),oklch(0.53 0 265));
---vibeui-radio-004-accent:light-dark(oklch(0.55 0.16 155),oklch(0.76 0.15 155));
---vibeui-radio-004-tint:light-dark(oklch(0.55 0.16 155 / 6%),oklch(0.76 0.15 155 / 14%));
+--vibeui-radio-004-accent:light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));
+--vibeui-radio-004-tint:light-dark(oklch(0.24 0.015 265 / 6%),oklch(0.93 0.006 265 / 12%));
 --vibeui-radio-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -85,12 +85,15 @@ background:radial-gradient(circle at 50% 50%,var(--vibeui-radio-004-accent) 0 0.
 }
 [data-vibeui-block="radio-004"] input:focus-visible{outline:2px solid var(--vibeui-radio-004-accent);outline-offset:2px}
 [data-vibeui-block="radio-004"] [data-part="text"]{display:flex;flex-direction:column;gap:0.1875rem;flex:1 1 auto;min-width:0}
+/* Пометка переносится на свою строку, а не отжимает название: в узкой
+   колонке «Только я» иначе рвалось по слову. */
 [data-vibeui-block="radio-004"] [data-part="head"]{
-display:flex;align-items:baseline;justify-content:space-between;gap:0.5rem;
-font-size:0.875rem;font-weight:600;
+display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;
+gap:0.25rem 0.5rem;font-size:0.875rem;font-weight:600;line-height:1.3;
 }
 [data-vibeui-block="radio-004"] [data-part="meta"]{
-flex:none;font-size:0.625rem;font-weight:600;letter-spacing:0.03em;
+flex:none;white-space:nowrap;
+font-size:0.625rem;font-weight:600;letter-spacing:0.03em;
 text-transform:uppercase;color:var(--vibeui-radio-004-muted);
 }
 [data-vibeui-block="radio-004"] [data-part="description"]{

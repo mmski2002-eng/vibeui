@@ -35,9 +35,9 @@ const STYLES = `
 --vibeui-radio-003-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-radio-003-muted:color-mix(in oklab,var(--vibeui-radio-003-fg) 68%,transparent);
 --vibeui-radio-003-border:light-dark(oklch(0.9 0 265),oklch(0.37 0 265));
---vibeui-radio-003-accent:light-dark(oklch(0.5 0.19 285),oklch(0.72 0.16 285));
---vibeui-radio-003-tint:light-dark(oklch(0.5 0.19 285 / 7%),oklch(0.72 0.16 285 / 16%));
---vibeui-radio-003-on-accent:light-dark(oklch(1 0 0),oklch(0.2 0 285));
+--vibeui-radio-003-accent:light-dark(oklch(0.24 0.015 265),oklch(0.93 0.006 265));
+--vibeui-radio-003-tint:light-dark(oklch(0.24 0.015 265 / 6%),oklch(0.93 0.006 265 / 12%));
+--vibeui-radio-003-on-accent:light-dark(oklch(0.99 0 265),oklch(0.17 0.01 265));
 --vibeui-radio-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -62,7 +62,7 @@ clear:both;display:grid;gap:0.625rem;
 grid-template-columns:repeat(auto-fit,minmax(7.5rem,1fr));
 }
 [data-vibeui-block="radio-003"] [data-part="plan"]{
-position:relative;display:flex;flex-direction:column;gap:0.375rem;
+position:relative;display:flex;flex-direction:column;gap:0.375rem;min-width:0;
 padding:0.75rem;border-radius:0.75rem;cursor:pointer;
 border:1.5px solid var(--vibeui-radio-003-border);
 background:var(--vibeui-radio-003-card);
@@ -96,14 +96,19 @@ border-right:2px solid var(--vibeui-radio-003-on-accent);
 border-bottom:2px solid var(--vibeui-radio-003-on-accent);
 transform:rotate(45deg);
 }
+/* Плашка не шире плитки и не лезет под галочку: длинная подпись раньше
+   растягивала колонку и уезжала за край карточки. */
 [data-vibeui-block="radio-003"] [data-part="badge"]{
-align-self:flex-start;padding:0.0625rem 0.375rem;border-radius:9999px;
+align-self:flex-start;box-sizing:border-box;max-width:calc(100% - 1.5rem);
+padding:0.125rem 0.4375rem;border-radius:9999px;
 background:var(--vibeui-radio-003-accent);color:var(--vibeui-radio-003-on-accent);
-font-size:0.625rem;font-weight:700;letter-spacing:0.03em;text-transform:uppercase;
+font-size:0.625rem;font-weight:700;letter-spacing:0.03em;line-height:1.3;
+text-transform:uppercase;
 }
 [data-vibeui-block="radio-003"] [data-part="name"]{font-size:0.8125rem;font-weight:650;padding-right:1.25rem}
 [data-vibeui-block="radio-003"] [data-part="price"]{
-font-size:1.125rem;font-weight:750;line-height:1.1;font-variant-numeric:tabular-nums;
+display:flex;flex-wrap:wrap;align-items:baseline;gap:0.25rem;
+font-size:1.125rem;font-weight:750;line-height:1.15;font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="radio-003"] [data-part="period"]{font-size:0.6875rem;font-weight:500;color:var(--vibeui-radio-003-muted)}
 /* Список внутри label — не ul, а span'ы: содержимое label ограничено

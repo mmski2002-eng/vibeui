@@ -395,12 +395,6 @@ export const CATEGORIES = [
     group: "application",
   },
   {
-    slug: "menubar",
-    label: "Строка меню",
-    en: "Menubar",
-    group: "navigation",
-  },
-  {
     slug: "native-select",
     label: "Нативный список",
     en: "Native Select",
@@ -458,12 +452,6 @@ export const CATEGORIES = [
     slug: "rating",
     label: "Оценка",
     en: "Rating",
-    group: "application",
-  },
-  {
-    slug: "resizable",
-    label: "Панели с ручкой",
-    en: "Resizable",
     group: "application",
   },
   {

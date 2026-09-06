@@ -154,6 +154,9 @@ export function Tooltip007({
             id="vibeui-tooltip-007-input"
             name={name}
             type="password"
+            /* Новый пароль, а не сохранённый: без этого браузер подставлял в
+               соседние поля страницы сохранённую пару логин-пароль. */
+            autoComplete="new-password"
             placeholder={placeholder}
             aria-describedby="vibeui-tooltip-007-hint"
           />
