@@ -25,8 +25,8 @@ export type Banner008Props = Omit<ComponentProps<"div">, "children"> & {
 // и в тёмной ветке light-dark() они светлее.
 const STYLES = `
 :where([data-vibeui-block="banner-008"]){
---vibeui-banner-008-from:light-dark(oklch(0.42 0.15 315),oklch(0.5 0.16 315));
---vibeui-banner-008-to:light-dark(oklch(0.46 0.16 265),oklch(0.55 0.16 265));
+--vibeui-banner-008-from:light-dark(oklch(0.42 0.15 39.8),oklch(0.5 0.16 39.8));
+--vibeui-banner-008-to:light-dark(oklch(0.46 0.16 39.8),oklch(0.55 0.16 39.8));
 --vibeui-banner-008-bg:linear-gradient(100deg,var(--vibeui-banner-008-from),var(--vibeui-banner-008-to));
 --vibeui-banner-008-fg:oklch(0.98 0.01 315);
 --vibeui-banner-008-muted:color-mix(in oklab,var(--vibeui-banner-008-fg) 68%,transparent);

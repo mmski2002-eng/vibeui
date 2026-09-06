@@ -29,7 +29,7 @@ const STYLES = `
 --vibeui-banner-014-muted:color-mix(in oklab,var(--vibeui-banner-014-fg) 66%,transparent);
 --vibeui-banner-014-surface:light-dark(oklch(0.96 0 245),oklch(0.27 0 245));
 --vibeui-banner-014-border:light-dark(oklch(0.87 0 245),oklch(0.4 0 245));
---vibeui-banner-014-accent:light-dark(oklch(0.45 0.11 245),oklch(0.82 0.1 245));
+--vibeui-banner-014-accent:light-dark(oklch(0.45 0.11 39.8),oklch(0.82 0.1 39.8));
 /* Акцентом набрана версия: светлота ограничивается по обе стороны, чтобы
    цвет проекта не исчез ни на светлой подложке, ни на тёмной. */
 --vibeui-banner-014-ink:oklch(from var(--vibeui-banner-014-accent) clamp(0.42,l,0.86) c h);

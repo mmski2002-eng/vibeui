@@ -20,7 +20,7 @@ export type Alert003Props = Omit<ComponentProps<"p">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="alert-003"]){
 --vibeui-alert-003-fg:light-dark(oklch(0.38 0 265),oklch(0.78 0 265));
---vibeui-alert-003-tone:light-dark(oklch(0.58 0.18 262),oklch(0.74 0.16 262));
+--vibeui-alert-003-tone:light-dark(oklch(0.58 0.18 39.8),oklch(0.74 0.16 39.8));
 --vibeui-alert-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

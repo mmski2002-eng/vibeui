@@ -35,7 +35,7 @@ const STYLES = `
 --vibeui-chart-009-muted:color-mix(in oklab,var(--vibeui-chart-009-fg) 68%,transparent);
 --vibeui-chart-009-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-chart-009-track:light-dark(oklch(0.93 0 265),oklch(0.32 0 265));
---vibeui-chart-009-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
+--vibeui-chart-009-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.74 0.15 39.8));
 --vibeui-chart-009-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

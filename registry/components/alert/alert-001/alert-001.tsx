@@ -29,11 +29,11 @@ const STYLES = `
 --vibeui-alert-001-muted:color-mix(in oklab,var(--vibeui-alert-001-fg) 68%,transparent);
 --vibeui-alert-001-bg:transparent;
 --vibeui-alert-001-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
---vibeui-alert-001-tone:light-dark(oklch(0.58 0.18 262),oklch(0.74 0.16 262));
+--vibeui-alert-001-tone:light-dark(oklch(0.58 0.18 39.8),oklch(0.74 0.16 39.8));
 /* Текст действия берёт отдельный оттенок: полосе и значку хватает 3:1 как
    графике, а подписи на светлой подложке нужно 4.5:1. Тёмная ветка совпадает
    с тоном — там его светлоты хватает. */
---vibeui-alert-001-ink:light-dark(oklch(0.55 0.18 262),oklch(0.74 0.16 262));
+--vibeui-alert-001-ink:light-dark(oklch(0.55 0.18 39.8),oklch(0.74 0.16 39.8));
 --vibeui-alert-001-radius:0.75rem;
 --vibeui-alert-001-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;
@@ -83,16 +83,16 @@ display:flex;align-items:center;flex:none;gap:0.5rem;
 font-size:0.8125rem;font-weight:500;color:var(--vibeui-alert-001-ink);
 }
 [data-vibeui-block="alert-001"][data-tone="success"]{
---vibeui-alert-001-tone:light-dark(oklch(0.58 0.15 152),oklch(0.75 0.14 152));
---vibeui-alert-001-ink:light-dark(oklch(0.525 0.15 152),oklch(0.75 0.14 152));
+--vibeui-alert-001-tone:light-dark(oklch(0.58 0.15 39.8),oklch(0.75 0.14 39.8));
+--vibeui-alert-001-ink:light-dark(oklch(0.525 0.15 39.8),oklch(0.75 0.14 39.8));
 }
 [data-vibeui-block="alert-001"][data-tone="warning"]{
---vibeui-alert-001-tone:light-dark(oklch(0.68 0.15 70),oklch(0.81 0.14 75));
---vibeui-alert-001-ink:light-dark(oklch(0.55 0.15 70),oklch(0.81 0.14 75));
+--vibeui-alert-001-tone:light-dark(oklch(0.68 0.15 39.8),oklch(0.81 0.14 39.8));
+--vibeui-alert-001-ink:light-dark(oklch(0.55 0.15 39.8),oklch(0.81 0.14 39.8));
 }
 [data-vibeui-block="alert-001"][data-tone="danger"]{
---vibeui-alert-001-tone:light-dark(oklch(0.56 0.19 25),oklch(0.72 0.17 25));
---vibeui-alert-001-ink:light-dark(oklch(0.56 0.19 25),oklch(0.72 0.17 25));
+--vibeui-alert-001-tone:light-dark(oklch(0.56 0.19 39.8),oklch(0.72 0.17 39.8));
+--vibeui-alert-001-ink:light-dark(oklch(0.56 0.19 39.8),oklch(0.72 0.17 39.8));
 }
 /* В узкой колонке действие уходит под текст, а не сжимает его. */
 @container (max-width: 26rem){

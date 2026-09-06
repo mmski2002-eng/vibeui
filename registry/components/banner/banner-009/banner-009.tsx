@@ -31,8 +31,8 @@ const STYLES = `
 --vibeui-banner-009-fg:light-dark(oklch(0.23 0 265),oklch(0.94 0 265));
 --vibeui-banner-009-muted:color-mix(in oklab,var(--vibeui-banner-009-fg) 68%,transparent);
 --vibeui-banner-009-surface:light-dark(oklch(0.98 0.012 85),oklch(0.28 0.026 85));
---vibeui-banner-009-border:light-dark(oklch(0.88 0.05 85),oklch(0.42 0.05 85));
---vibeui-banner-009-accent:light-dark(oklch(0.52 0.13 85),oklch(0.82 0.12 85));
+--vibeui-banner-009-border:light-dark(oklch(0.88 0.05 39.8),oklch(0.42 0.05 39.8));
+--vibeui-banner-009-accent:light-dark(oklch(0.52 0.13 39.8),oklch(0.82 0.12 39.8));
 /* Текст на акценте считается из его светлоты: проект задаёт один цвет на обе
    ветки темы, и фиксированный однажды окажется тёмным на тёмном. */
 --vibeui-banner-009-on-accent:oklch(from var(--vibeui-banner-009-accent) clamp(0,(0.62 - l) * 100,1) 0 0);

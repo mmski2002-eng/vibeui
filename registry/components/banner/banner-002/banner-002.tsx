@@ -20,10 +20,10 @@ export type Banner002Props = Omit<ComponentProps<"div">, "children"> & {
 const STYLES = `
 :where([data-vibeui-block="banner-002"]){
 --vibeui-banner-002-bg:light-dark(oklch(0.97 0 220),oklch(0.27 0 245));
---vibeui-banner-002-fg:light-dark(oklch(0.27 0.05 240),oklch(0.93 0 240));
+--vibeui-banner-002-fg:light-dark(oklch(0.27 0.05 39.8),oklch(0.93 0 240));
 --vibeui-banner-002-muted:color-mix(in oklab,var(--vibeui-banner-002-fg) 68%,transparent);
---vibeui-banner-002-border:light-dark(oklch(0.86 0.05 230),oklch(0.41 0.04 240));
---vibeui-banner-002-accent:light-dark(oklch(0.52 0.16 245),oklch(0.72 0.15 245));
+--vibeui-banner-002-border:light-dark(oklch(0.86 0.05 39.8),oklch(0.41 0.04 39.8));
+--vibeui-banner-002-accent:light-dark(oklch(0.52 0.16 39.8),oklch(0.72 0.15 39.8));
 --vibeui-banner-002-chip:light-dark(oklch(1 0 0 / 65%),oklch(1 0 0 / 10%));
 --vibeui-banner-002-on-accent:oklch(from var(--vibeui-banner-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-banner-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

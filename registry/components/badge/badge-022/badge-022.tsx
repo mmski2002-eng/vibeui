@@ -20,7 +20,7 @@ const STYLES = `
 :where([data-vibeui-block="badge-022"]){
 --vibeui-badge-022-bg:light-dark(oklch(0.97 0 265),oklch(0.27 0 265));
 --vibeui-badge-022-border:light-dark(oklch(0.89 0 265),oklch(0.41 0 265));
---vibeui-badge-022-accent:light-dark(oklch(0.53 0.19 25),oklch(0.72 0.17 25));
+--vibeui-badge-022-accent:light-dark(oklch(0.53 0.19 39.8),oklch(0.72 0.17 39.8));
 --vibeui-badge-022-muted:light-dark(oklch(0.54 0 265),oklch(0.69 0 265));
 --vibeui-badge-022-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

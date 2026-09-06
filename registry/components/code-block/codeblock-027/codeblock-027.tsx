@@ -34,14 +34,14 @@ export type Codeblock027Props = {
 const STYLES = `
 :where([data-vibeui-block="codeblock-027"]){
 --vibeui-codeblock-027-bg:transparent;
---vibeui-codeblock-027-head:light-dark(oklch(0.62 0.16 25 / 12%),oklch(0.5 0.13 22 / 28%));
+--vibeui-codeblock-027-head:light-dark(oklch(0.62 0.16 39.8 / 12%),oklch(0.5 0.13 39.8 / 28%));
 --vibeui-codeblock-027-fg:light-dark(oklch(0.26 0.014 20),oklch(0.94 0.008 20));
 --vibeui-codeblock-027-muted:color-mix(in oklab,var(--vibeui-codeblock-027-fg) 68%,transparent);
 --vibeui-codeblock-027-dim:light-dark(oklch(0.64 0.012 20),oklch(0.52 0.014 20));
 --vibeui-codeblock-027-border:light-dark(oklch(0 0 0 / 12%),oklch(1 0 0 / 12%));
 --vibeui-codeblock-027-hover:light-dark(oklch(0 0 0 / 5%),oklch(1 0 0 / 5%));
 --vibeui-codeblock-027-bad:light-dark(oklch(0.52 0.2 25),oklch(0.75 0.19 25));
---vibeui-codeblock-027-mark:light-dark(oklch(0.66 0.18 25 / 16%),oklch(0.55 0.18 25 / 26%));
+--vibeui-codeblock-027-mark:light-dark(oklch(0.66 0.18 39.8 / 16%),oklch(0.55 0.18 39.8 / 26%));
 --vibeui-codeblock-027-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-codeblock-027-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

@@ -44,7 +44,7 @@ const STYLES = `
 --vibeui-codeblock-030-border:light-dark(oklch(0 0 0 / 13%),oklch(1 0 0 / 13%));
 --vibeui-codeblock-030-head:light-dark(oklch(0 0 0 / 4%),oklch(1 0 0 / 6%));
 --vibeui-codeblock-030-chip:light-dark(oklch(1 0 0),oklch(1 0 0 / 14%));
---vibeui-codeblock-030-accent:light-dark(oklch(0.5 0.16 265),oklch(0.8 0.12 265));
+--vibeui-codeblock-030-accent:light-dark(oklch(0.5 0.16 39.8),oklch(0.8 0.12 39.8));
 --vibeui-codeblock-030-info:light-dark(oklch(0.52 0.11 235),oklch(0.78 0.1 235));
 --vibeui-codeblock-030-warn:light-dark(oklch(0.56 0.13 75),oklch(0.82 0.13 75));
 --vibeui-codeblock-030-error:light-dark(oklch(0.52 0.19 25),oklch(0.78 0.16 25));

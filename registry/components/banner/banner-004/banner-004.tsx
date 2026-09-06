@@ -21,11 +21,11 @@ export type Banner004Props = Omit<ComponentProps<"div">, "children"> & {
 // инверсия светлой, жёлтый в ней приглушён, а граница светлее подложки.
 const STYLES = `
 :where([data-vibeui-block="banner-004"]){
---vibeui-banner-004-bg:light-dark(oklch(0.97 0.05 95),oklch(0.29 0.045 90));
---vibeui-banner-004-fg:light-dark(oklch(0.32 0.07 75),oklch(0.93 0.04 92));
+--vibeui-banner-004-bg:light-dark(oklch(0.97 0.05 39.8),oklch(0.29 0.045 39.8));
+--vibeui-banner-004-fg:light-dark(oklch(0.32 0.07 39.8),oklch(0.93 0.04 39.8));
 --vibeui-banner-004-muted:color-mix(in oklab,var(--vibeui-banner-004-fg) 68%,transparent);
---vibeui-banner-004-stripe:light-dark(oklch(0.86 0.11 95),oklch(0.63 0.1 92));
---vibeui-banner-004-border:light-dark(oklch(0.82 0.11 95),oklch(0.46 0.08 92));
+--vibeui-banner-004-stripe:light-dark(oklch(0.86 0.11 39.8),oklch(0.63 0.1 39.8));
+--vibeui-banner-004-border:light-dark(oklch(0.82 0.11 39.8),oklch(0.46 0.08 39.8));
 --vibeui-banner-004-chip:light-dark(oklch(1 0 0 / 55%),oklch(1 0 0 / 8%));
 --vibeui-banner-004-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-banner-004-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;

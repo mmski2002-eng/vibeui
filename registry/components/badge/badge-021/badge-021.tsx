@@ -33,16 +33,16 @@ letter-spacing:0.09em;text-transform:uppercase;vertical-align:middle;
    Красная заливка одинакова в обеих темах намеренно: сигнал «это боевое»
    не имеет права слабеть от того, что страница потемнела. */
 [data-vibeui-block="badge-021"][data-env="prod"]{
---vibeui-badge-021-bg:oklch(0.5 0.18 25);
+--vibeui-badge-021-bg:oklch(0.5 0.18 39.8);
 --vibeui-badge-021-fg:oklch(0.99 0.01 25);
 border-color:transparent;border-radius:0;padding:0 0.875rem;
 clip-path:polygon(0.4rem 0,100% 0,calc(100% - 0.4rem) 100%,0 100%);
 }
 /* Предпродакшен: обычная пилюля — промежуточная форма между двумя крайними. */
 [data-vibeui-block="badge-021"][data-env="stage"]{
---vibeui-badge-021-bg:light-dark(oklch(0.96 0.05 80),oklch(0.32 0.06 78));
---vibeui-badge-021-fg:light-dark(oklch(0.42 0.09 70),oklch(0.9 0.08 82));
---vibeui-badge-021-border:light-dark(oklch(0.85 0.09 80),oklch(0.5 0.09 80));
+--vibeui-badge-021-bg:light-dark(oklch(0.96 0.05 39.8),oklch(0.32 0.06 39.8));
+--vibeui-badge-021-fg:light-dark(oklch(0.42 0.09 39.8),oklch(0.9 0.08 39.8));
+--vibeui-badge-021-border:light-dark(oklch(0.85 0.09 39.8),oklch(0.5 0.09 39.8));
 border-radius:9999px;
 }
 /* Разработка: пунктир, «ещё не настоящее». */

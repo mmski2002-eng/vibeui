@@ -43,7 +43,7 @@ const STYLES = `
 --vibeui-toast-019-track:light-dark(oklch(0.92 0 265),oklch(0.33 0 265));
 --vibeui-toast-019-hover:light-dark(oklch(0.2 0 265 / 7%),oklch(1 0 0 / 12%));
 --vibeui-toast-019-shadow:light-dark(oklch(0.18 0 265 / 55%),oklch(0.05 0 265 / 70%));
---vibeui-toast-019-tone:light-dark(oklch(0.55 0.16 260),oklch(0.72 0.15 260));
+--vibeui-toast-019-tone:light-dark(oklch(0.55 0.16 39.8),oklch(0.72 0.15 39.8));
 --vibeui-toast-019-success:light-dark(oklch(0.55 0.15 152),oklch(0.73 0.15 152));
 --vibeui-toast-019-on-success:light-dark(oklch(0.99 0 265),oklch(0.18 0.03 152));
 --vibeui-toast-019-percent:0;

@@ -42,9 +42,9 @@ const STYLES = `
 --vibeui-codeblock-029-head:light-dark(oklch(0 0 0 / 4%),oklch(1 0 0 / 6%));
 --vibeui-codeblock-029-key:light-dark(oklch(0 0 0 / 6%),oklch(1 0 0 / 10%));
 --vibeui-codeblock-029-key-hover:light-dark(oklch(0 0 0 / 10%),oklch(1 0 0 / 16%));
---vibeui-codeblock-029-slot:light-dark(oklch(0.95 0.03 85),oklch(0.32 0.04 85));
---vibeui-codeblock-029-slot-line:light-dark(oklch(0.72 0.11 75),oklch(0.62 0.1 75));
---vibeui-codeblock-029-accent:light-dark(oklch(0.5 0.16 265),oklch(0.8 0.12 265));
+--vibeui-codeblock-029-slot:light-dark(oklch(0.95 0.03 85),oklch(0.32 0.04 39.8));
+--vibeui-codeblock-029-slot-line:light-dark(oklch(0.72 0.11 39.8),oklch(0.62 0.1 39.8));
+--vibeui-codeblock-029-accent:light-dark(oklch(0.5 0.16 39.8),oklch(0.8 0.12 39.8));
 --vibeui-codeblock-029-ok:light-dark(oklch(0.48 0.14 152),oklch(0.8 0.14 152));
 --vibeui-codeblock-029-prompt:light-dark(oklch(0.5 0.13 152),oklch(0.78 0.14 152));
 --vibeui-codeblock-029-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;

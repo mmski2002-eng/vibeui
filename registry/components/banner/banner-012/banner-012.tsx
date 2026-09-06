@@ -32,7 +32,7 @@ const STYLES = `
 --vibeui-banner-012-muted:color-mix(in oklab,var(--vibeui-banner-012-fg) 66%,transparent);
 --vibeui-banner-012-surface:light-dark(oklch(0.98 0 300),oklch(0.26 0 300));
 --vibeui-banner-012-border:light-dark(oklch(0.9 0 300),oklch(0.38 0 300));
---vibeui-banner-012-accent:light-dark(oklch(0.5 0.19 300),oklch(0.8 0.14 300));
+--vibeui-banner-012-accent:light-dark(oklch(0.5 0.19 39.8),oklch(0.8 0.14 39.8));
 /* Текст на акценте считается из его светлоты: проект передаёт один цвет на
    обе ветки темы, и фиксированный однажды окажется тёмным на тёмном. */
 --vibeui-banner-012-on-accent:oklch(from var(--vibeui-banner-012-accent) clamp(0,(0.62 - l) * 100,1) 0 0);

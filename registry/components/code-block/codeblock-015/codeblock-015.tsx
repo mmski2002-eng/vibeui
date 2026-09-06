@@ -40,7 +40,7 @@ const STYLES = `
 --vibeui-codeblock-015-fg:light-dark(oklch(0.26 0 260),oklch(0.93 0 260));
 --vibeui-codeblock-015-muted:color-mix(in oklab,var(--vibeui-codeblock-015-fg) 68%,transparent);
 --vibeui-codeblock-015-border:light-dark(oklch(0 0 0 / 12%),oklch(1 0 0 / 12%));
---vibeui-codeblock-015-accent:light-dark(oklch(0.5 0.16 250),oklch(0.8 0.13 250));
+--vibeui-codeblock-015-accent:light-dark(oklch(0.5 0.16 39.8),oklch(0.8 0.13 39.8));
 --vibeui-codeblock-015-keyword:light-dark(oklch(0.48 0.19 300),oklch(0.79 0.13 300));
 --vibeui-codeblock-015-string:light-dark(oklch(0.45 0.14 145),oklch(0.83 0.12 145));
 --vibeui-codeblock-015-comment:light-dark(oklch(0.58 0 260),oklch(0.6 0 260));

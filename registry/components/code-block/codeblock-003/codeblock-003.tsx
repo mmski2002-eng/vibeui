@@ -29,8 +29,8 @@ const STYLES = `
 --vibeui-codeblock-003-muted:color-mix(in oklab,var(--vibeui-codeblock-003-fg) 68%,transparent);
 --vibeui-codeblock-003-border:light-dark(oklch(0 0 0 / 13%),oklch(1 0 0 / 13%));
 --vibeui-codeblock-003-active:light-dark(oklch(0.22 0.02 210),oklch(0.98 0.01 210));
---vibeui-codeblock-003-accent:light-dark(oklch(0.5 0.11 195),oklch(0.78 0.13 195));
---vibeui-codeblock-003-flag:light-dark(oklch(0.53 0.1 195),oklch(0.8 0.12 195));
+--vibeui-codeblock-003-accent:light-dark(oklch(0.5 0.11 39.8),oklch(0.78 0.13 39.8));
+--vibeui-codeblock-003-flag:light-dark(oklch(0.53 0.1 39.8),oklch(0.8 0.12 39.8));
 --vibeui-codeblock-003-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-codeblock-003-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

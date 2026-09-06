@@ -32,8 +32,8 @@ const STYLES = `
 --vibeui-toast-006-track:light-dark(oklch(0.2 0 265 / 10%),oklch(1 0 0 / 14%));
 --vibeui-toast-006-hover:light-dark(oklch(0.2 0 265 / 8%),oklch(1 0 0 / 10%));
 --vibeui-toast-006-shadow:light-dark(oklch(0.55 0 265 / 20%),oklch(0.15 0 265 / 65%));
---vibeui-toast-006-tone:light-dark(oklch(0.52 0.13 200),oklch(0.7 0.16 200));
---vibeui-toast-006-tone-end:light-dark(oklch(0.7 0.14 150),oklch(0.85 0.13 150));
+--vibeui-toast-006-tone:light-dark(oklch(0.52 0.13 39.8),oklch(0.7 0.16 39.8));
+--vibeui-toast-006-tone-end:light-dark(oklch(0.7 0.14 39.8),oklch(0.85 0.13 39.8));
 --vibeui-toast-006-value:0;
 --vibeui-toast-006-radius:0.875rem;
 --vibeui-toast-006-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

@@ -24,7 +24,7 @@ const STYLES = `
 --vibeui-banner-006-bg:light-dark(oklch(0.25 0 265),oklch(0.31 0 265));
 --vibeui-banner-006-fg:light-dark(oklch(0.96 0 265),oklch(0.95 0 265));
 --vibeui-banner-006-muted:color-mix(in oklab,var(--vibeui-banner-006-fg) 68%,transparent);
---vibeui-banner-006-tone:light-dark(oklch(0.78 0.13 75),oklch(0.82 0.12 75));
+--vibeui-banner-006-tone:light-dark(oklch(0.78 0.13 39.8),oklch(0.82 0.12 39.8));
 /* Полоса всегда тёмная, а тоном красится индикатор связи: светлота
    поднимается до читаемой, иначе тёмный тон проекта сливается с фоном. */
 --vibeui-banner-006-tone-ink:oklch(from var(--vibeui-banner-006-tone) max(l,0.72) c h);

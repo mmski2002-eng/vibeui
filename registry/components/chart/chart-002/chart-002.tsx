@@ -34,8 +34,8 @@ const STYLES = `
 --vibeui-chart-002-bg:transparent;
 --vibeui-chart-002-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-chart-002-grid:light-dark(oklch(0.94 0 265),oklch(0.3 0 265));
---vibeui-chart-002-bar:light-dark(oklch(0.88 0 262),oklch(0.4 0.045 262));
---vibeui-chart-002-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.17 262));
+--vibeui-chart-002-bar:light-dark(oklch(0.88 0 262),oklch(0.4 0.045 39.8));
+--vibeui-chart-002-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.74 0.17 39.8));
 --vibeui-chart-002-radius:0.875rem;
 --vibeui-chart-002-height:9rem;
 --vibeui-chart-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;

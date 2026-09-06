@@ -24,12 +24,12 @@ export type Alert002Props = Omit<
 // меняется тоном. Но светлота заливки у тёмной темы своя — через light-dark().
 const STYLES = `
 :where([data-vibeui-block="alert-002"]){
---vibeui-alert-002-bg:light-dark(oklch(0.45 0.17 25),oklch(0.44 0.15 25));
+--vibeui-alert-002-bg:light-dark(oklch(0.45 0.17 39.8),oklch(0.44 0.15 39.8));
 --vibeui-alert-002-fg:light-dark(oklch(0.99 0.01 25),oklch(0.97 0.02 25));
 /* Приглушённый цвет задан отдельным тоном, а не прозрачностью основного:
    полупрозрачный текст на заливке падал до 3.1:1. Заливка ради описания
    притемнена во всех тонах: на прежней светлой оно держало только 3.1:1. */
---vibeui-alert-002-muted:light-dark(oklch(0.92 0.04 25),oklch(0.88 0.05 25));
+--vibeui-alert-002-muted:light-dark(oklch(0.92 0.04 39.8),oklch(0.88 0.05 39.8));
 --vibeui-alert-002-radius:0.75rem;
 --vibeui-alert-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

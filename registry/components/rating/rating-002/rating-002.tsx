@@ -43,7 +43,7 @@ const STYLES = `
    закраска всё же читалась ярче пустой звезды, серый уведён темнее охры —
    как в тёмной ветке, где золото светлее серого. */
 --vibeui-rating-002-empty:light-dark(oklch(0.42 0 265),oklch(0.58 0 265));
---vibeui-rating-002-accent:light-dark(oklch(0.54 0.16 78),oklch(0.84 0.15 80));
+--vibeui-rating-002-accent:light-dark(oklch(0.54 0.16 39.8),oklch(0.84 0.15 39.8));
 --vibeui-rating-002-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-rating-002-fill:0%;
 }

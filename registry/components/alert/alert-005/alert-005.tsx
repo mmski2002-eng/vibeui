@@ -34,7 +34,7 @@ const STYLES = `
 --vibeui-alert-005-muted:color-mix(in oklab,var(--vibeui-alert-005-fg) 68%,transparent);
 --vibeui-alert-005-bg:transparent;
 --vibeui-alert-005-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
---vibeui-alert-005-tone:light-dark(oklch(0.58 0.18 262),oklch(0.74 0.16 262));
+--vibeui-alert-005-tone:light-dark(oklch(0.58 0.18 39.8),oklch(0.74 0.16 39.8));
 --vibeui-alert-005-radius:0.75rem;
 --vibeui-alert-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }

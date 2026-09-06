@@ -31,9 +31,9 @@ const STYLES = `
 --vibeui-sparkline-005-bg:transparent;
 --vibeui-sparkline-005-fg:light-dark(oklch(0.22 0 265),oklch(0.94 0 265));
 --vibeui-sparkline-005-muted:color-mix(in oklab,var(--vibeui-sparkline-005-fg) 62%,transparent);
---vibeui-sparkline-005-accent:light-dark(oklch(0.55 0.17 265),oklch(0.74 0.15 265));
+--vibeui-sparkline-005-accent:light-dark(oklch(0.55 0.17 39.8),oklch(0.74 0.15 39.8));
 --vibeui-sparkline-005-band:color-mix(in oklab,var(--vibeui-sparkline-005-accent) 14%,transparent);
---vibeui-sparkline-005-breach:light-dark(oklch(0.55 0.19 25),oklch(0.74 0.16 25));
+--vibeui-sparkline-005-breach:light-dark(oklch(0.55 0.19 39.8),oklch(0.74 0.16 39.8));
 --vibeui-sparkline-005-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а

@@ -29,7 +29,7 @@ const STYLES = `
 --vibeui-codeblock-011-fg:light-dark(oklch(0.28 0.018 60),oklch(0.93 0.008 60));
 --vibeui-codeblock-011-muted:color-mix(in oklab,var(--vibeui-codeblock-011-fg) 68%,transparent);
 --vibeui-codeblock-011-border:light-dark(oklch(0 0 0 / 13%),oklch(1 0 0 / 13%));
---vibeui-codeblock-011-accent:light-dark(oklch(0.52 0.13 70),oklch(0.83 0.13 75));
+--vibeui-codeblock-011-accent:light-dark(oklch(0.52 0.13 39.8),oklch(0.83 0.13 39.8));
 --vibeui-codeblock-011-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 --vibeui-codeblock-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 timeline-scope:--vibeui-codeblock-011-track;

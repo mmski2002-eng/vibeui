@@ -32,7 +32,7 @@ const STYLES = `
 --vibeui-alert-014-muted:color-mix(in oklab,var(--vibeui-alert-014-fg) 68%,transparent);
 --vibeui-alert-014-bg:transparent;
 --vibeui-alert-014-border:light-dark(oklch(0.9 0 265),oklch(0.34 0 265));
---vibeui-alert-014-state:light-dark(oklch(0.58 0.15 152),oklch(0.74 0.16 152));
+--vibeui-alert-014-state:light-dark(oklch(0.58 0.15 39.8),oklch(0.74 0.16 39.8));
 --vibeui-alert-014-radius:0.75rem;
 --vibeui-alert-014-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 container-type:inline-size;

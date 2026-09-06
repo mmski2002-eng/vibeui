@@ -32,7 +32,7 @@ const STYLES = `
 --vibeui-alert-013-muted:color-mix(in oklab,var(--vibeui-alert-013-fg) 68%,transparent);
 --vibeui-alert-013-bg:transparent;
 --vibeui-alert-013-border:light-dark(oklch(0.89 0 265),oklch(0.34 0 265));
---vibeui-alert-013-accent:light-dark(oklch(0.55 0.2 262),oklch(0.74 0.16 262));
+--vibeui-alert-013-accent:light-dark(oklch(0.55 0.2 39.8),oklch(0.74 0.16 39.8));
 --vibeui-alert-013-accent-fg:light-dark(oklch(1 0 0),oklch(0.18 0 265));
 --vibeui-alert-013-shadow:light-dark(oklch(0.2 0 265 / 45%),oklch(0.05 0 265 / 70%));
 --vibeui-alert-013-radius:1rem;
