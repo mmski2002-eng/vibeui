@@ -264,6 +264,125 @@
     }
   }
 
+  /* Обзор вариантов. Крупное превью честно показывает дизайн, но один
+     первый экран занимает почти всю высоту окна, и сравнить девятнадцать
+     вариантов подряд нельзя. В обзоре карточка ужимается до кадра, кода,
+     названия и трёх признаков — по ним варианты и различают.
+
+     Живой рендер остаётся тем же: мельче только кадр, а не источник. */
+  [data-grid-view="overview"] .catalog-grid {
+    gap: 1rem;
+  }
+
+  /* Колонки обзора. Все правила ниже держат ОДИНАКОВУЮ специфичность
+     внутри своей ветки: стоит добавить :not([data-single]) только части
+     из них — и правило для телефона начинает перебивать правило для
+     широкого экрана на любой ширине, потому что оно специфичнее. */
+
+  /* Компоненты: мелкие, их можно класть плотно. */
+  @container grid (min-width: 19rem) {
+    [data-grid-view="overview"] .catalog-grid:not([data-single]) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @container grid (min-width: 46rem) {
+    [data-grid-view="overview"] .catalog-grid:not([data-single]) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @container grid (min-width: 66rem) {
+    [data-grid-view="overview"] .catalog-grid:not([data-single]) {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  /* Секции: на телефоне остаются в одну колонку — вдвоём от них ничего
+     не останется. */
+  @container grid (min-width: 34rem) {
+    [data-grid-view="overview"] .catalog-grid[data-single] {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+  }
+
+  @container grid (min-width: 56rem) {
+    [data-grid-view="overview"] .catalog-grid[data-single] {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+  }
+
+  /* Показ этих частей задаётся здесь, а не утилитами Tailwind: слой
+     utilities идёт после components и перебил бы правила режима обзора
+     независимо от специфичности. */
+  [data-part="toolbar"],
+  [data-part="actions"] {
+    display: flex;
+  }
+
+  [data-part="facts"] {
+    display: none;
+  }
+
+  /* Панель настройки и кнопки выдачи из обзора уходят: они про работу с
+     одним выбранным вариантом, а здесь идёт сравнение. */
+  [data-grid-view="overview"] [data-part="toolbar"],
+  [data-grid-view="overview"] [data-part="actions"] {
+    display: none;
+  }
+
+  /* Карточки обзора не тянутся до высоты самой высокой в ряду: у кнопки и
+     у таблицы содержимое разной высоты, а stretch делал их одинаково
+     громоздкими. Теперь каждая занимает столько, сколько просит её
+     содержимое, — ничего не обрезается, но ряд перестаёт быть высотой по
+     худшему случаю. */
+  [data-grid-view="overview"] .catalog-grid {
+    align-items: start;
+  }
+
+  /* Высота и поля кадра задаются здесь, а не утилитами min-h-44 и py-10:
+     слой utilities идёт после components и не дал бы обзору ужать кадр. */
+  [data-part="frame"] {
+    min-height: 11rem;
+    padding: 1.5rem;
+  }
+
+  @media (min-width: 64rem) {
+    [data-part="frame"] {
+      padding: 2.5rem 2rem;
+    }
+  }
+
+  /* В обзоре кадр ужимается до содержимого: мелкой кнопке не нужны
+     сорокапиксельные поля, из-за которых карточка была вдвое выше самого
+     компонента. Нижняя граница оставлена, чтобы совсем крошечные значки
+     не схлопывались в полоску. */
+  [data-grid-view="overview"] [data-part="frame"],
+  [data-grid-view="overview"] [data-part="frame"]:where(*) {
+    min-height: 5rem;
+    padding: 0.75rem;
+  }
+
+  /* Кадр секции в обзоре ограничивается по высоте. Высоту ему задаёт JS:
+     блок рендерится в свои 1280px и вписывается масштабом, поэтому первый
+     экран остаётся семисотпиксельным даже в узкой колонке. max-height
+     перебивает инлайновую высоту, и на экран влезает шесть вариантов
+     вместо одного; видна верхняя часть секции — заголовок и главная
+     кнопка, то есть ровно то, чем варианты и различаются. */
+  [data-grid-view="overview"] .catalog-grid[data-single] [data-part="frame"] {
+    max-height: 15rem;
+  }
+
+  [data-grid-view="overview"] [data-part="caption"] {
+    padding: 0.5rem 0.5rem 0.25rem;
+  }
+
+  [data-grid-view="overview"] [data-part="facts"] {
+    display: flex;
+  }
+
   /* Блоки — целые секции страницы. Вдвоём в ряд они мельчат: миниатюра
      ужимается до нечитаемого. Одна карточка в ряд оставляет секции её
      настоящую ширину. */

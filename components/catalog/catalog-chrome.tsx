@@ -1,10 +1,10 @@
 "use client"
 
 import Link from "next/link"
-import { Filter, LayoutGrid, Rows3 } from "lucide-react"
-import { useEffect, useRef, useState, type ReactNode } from "react"
+import { Filter, LayoutGrid, Maximize2, Rows3, Grid2x2 } from "lucide-react"
+import { useEffect, useState, type ReactNode } from "react"
 
-import { CatalogSearch } from "@/components/catalog/catalog-search"
+import { SearchBox } from "@/components/catalog/search-box"
 import { ScrollArea } from "@/components/catalog/scroll-area"
 import { getDictionary, localePath, type Locale } from "@/lib/i18n"
 import type { ItemKind } from "@/registry/categories"
@@ -35,10 +35,10 @@ function itemClass(active: boolean) {
  * (`/components/<категория>`), поэтому её можно отправить ссылкой, а страница
  * грузит десятки items вместо всей витрины.
  *
- * Поиск фильтрует открытую страницу на месте и переносит запрос в адрес
- * (`?search=`), чтобы ссылку с уже применённым поиском можно было отправить.
- * Карточки при этом остаются серверными: обвязка только прячет неподошедшие
- * по `data-search` на элементе списка.
+ * Поиск глобальный и живёт отдельно от страницы: он подсказывает по всему
+ * каталогу и уводит на `/search`. Скрывать карточки открытой категории он
+ * больше не пытается — так «тарифы» на `/components` находились ничем,
+ * потому что категория `pricing` лежит в блоках.
  */
 export function CatalogChrome({
   locale,
@@ -65,22 +65,11 @@ export function CatalogChrome({
   // разные, и общее положение прокрутки увело бы меню не туда.
   const navScrollKey = `vibeui-nav-scroll:${kind}`
   const navViewKey = `vibeui-nav-view:${kind}`
-  const [query, setQuery] = useState("")
-  const [empty, setEmpty] = useState(false)
-  const gridRef = useRef<HTMLDivElement>(null)
-
-  // Запрос из адреса читается на клиенте, а не через useSearchParams: страницы
-  // витрины статические, и хук увёл бы их в рендер по запросу. Значение
-  // приходится ставить именно из эффекта: на сервере адреса нет, а поле
-  // управляемое — начальное состояние из window сломало бы гидратацию.
-  useEffect(() => {
-    const initial = new URLSearchParams(window.location.search).get("search")
-
-    if (initial) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setQuery(initial)
-    }
-  }, [])
+  // Режим витрины отдельный от плотности бокового списка: там уплотняется
+  // меню, здесь — сами карточки. Ключ привязан к типу каталога: в кнопках
+  // семьдесят вариантов и нужен обзор, а блок занимает экран целиком.
+  const gridViewKey = `vibeui-grid-view:${kind}`
+  const [overview, setOverview] = useState(false)
 
   // Плотность списка переживает переход между категориями: страница меняется
   // целиком, а меню слева для человека остаётся тем же самым.
@@ -96,39 +85,15 @@ export function CatalogChrome({
   }, [navViewKey])
 
   useEffect(() => {
-    const grid = gridRef.current
-
-    if (!grid) {
-      return
-    }
-
-    const needle = query.trim().toLowerCase()
-    const cards = grid.querySelectorAll<HTMLElement>("li[data-search]")
-    let shown = 0
-
-    for (const card of cards) {
-      const match =
-        needle === "" || (card.dataset.search ?? "").includes(needle)
-
-      card.hidden = !match
-
-      if (match) {
-        shown += 1
+    try {
+      if (window.sessionStorage.getItem(gridViewKey) === "overview") {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setOverview(true)
       }
+    } catch {
+      // Без хранилища витрина просто открывается крупными превью.
     }
-
-    setEmpty(cards.length > 0 && shown === 0)
-
-    const url = new URL(window.location.href)
-
-    if (needle === "") {
-      url.searchParams.delete("search")
-    } else {
-      url.searchParams.set("search", needle)
-    }
-
-    window.history.replaceState(null, "", url)
-  }, [query])
+  }, [gridViewKey])
 
   const base = catalogBasePath(kind)
   const needle = filter.trim().toLowerCase()
@@ -137,6 +102,16 @@ export function CatalogChrome({
         category.label.toLowerCase().includes(needle),
       )
     : categories
+
+  function setGridView(next: boolean) {
+    setOverview(next)
+
+    try {
+      window.sessionStorage.setItem(gridViewKey, next ? "overview" : "large")
+    } catch {
+      // Без хранилища режим просто не переживёт переход между категориями.
+    }
+  }
 
   const allLabel =
     kind === "block"
@@ -147,7 +122,7 @@ export function CatalogChrome({
 
   return (
     <>
-      <div className="border-shell-border bg-shell sticky top-14 z-20 border-b">
+      <div className="border-shell-border bg-shell sticky top-[var(--catalog-header-height)] z-20 border-b">
         <div className="mx-auto flex w-full max-w-[1440px] items-center gap-3 px-4 py-2 lg:gap-8 lg:px-6">
           <div className="hidden shrink-0 items-center gap-1 lg:flex lg:w-56">
             <div className="relative min-w-0 flex-1">
@@ -202,7 +177,47 @@ export function CatalogChrome({
             </button>
           </div>
 
-          <CatalogSearch locale={locale} value={query} onChange={setQuery} />
+          <SearchBox locale={locale} kind={kind} />
+
+          {/* Обзор против крупного превью. Один первый экран занимает почти
+              всю высоту окна, и сравнить девятнадцать вариантов подряд
+              невозможно — в обзоре они укладываются в один экран. */}
+          <div
+            role="group"
+            aria-label={t.catalog.viewMode}
+            className="border-shell-border flex shrink-0 items-center gap-0.5 rounded-md border p-0.5"
+          >
+            <button
+              type="button"
+              onClick={() => setGridView(true)}
+              aria-pressed={overview}
+              title={t.catalog.overview}
+              className={
+                "focus-visible:ring-shell-ring inline-flex size-7 items-center justify-center rounded transition-colors focus-visible:ring-2 focus-visible:outline-none " +
+                (overview
+                  ? "bg-shell-elevated text-shell-fg"
+                  : "text-shell-muted hover:text-shell-fg")
+              }
+            >
+              <Grid2x2 className="size-4" aria-hidden="true" />
+              <span className="sr-only">{t.catalog.overview}</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setGridView(false)}
+              aria-pressed={!overview}
+              title={t.catalog.largePreview}
+              className={
+                "focus-visible:ring-shell-ring inline-flex size-7 items-center justify-center rounded transition-colors focus-visible:ring-2 focus-visible:outline-none " +
+                (overview
+                  ? "text-shell-muted hover:text-shell-fg"
+                  : "bg-shell-elevated text-shell-fg")
+              }
+            >
+              <Maximize2 className="size-4" aria-hidden="true" />
+              <span className="sr-only">{t.catalog.largePreview}</span>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -310,13 +325,7 @@ export function CatalogChrome({
             ))}
           </div>
 
-          <div ref={gridRef}>{children}</div>
-
-          {empty ? (
-            <p className="text-shell-muted py-16 text-center text-sm">
-              {t.catalog.searchEmpty}
-            </p>
-          ) : null}
+          <div data-grid-view={overview ? "overview" : "large"}>{children}</div>
         </main>
       </div>
     </>

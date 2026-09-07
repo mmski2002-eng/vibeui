@@ -41,7 +41,9 @@ function holdDemoLinks(event: MouseEvent<HTMLDivElement>) {
   const link = (event.target as HTMLElement).closest("a")
   const href = link?.getAttribute("href")
 
-  if (link && (href === "#" || href === "" || href === null)) {
+  // Якорные ссылки демо («#», «#top») в каталоге уводят на верх страницы
+  // витрины, а не блока — гасим их вместе с пустыми.
+  if (link && (href == null || href === "" || href.startsWith("#"))) {
     event.preventDefault()
   }
 }
@@ -173,7 +175,8 @@ export function LazyThumbnail({
     return (
       <div
         ref={frameRef}
-        className="bg-preview-surface flex min-h-44 w-full flex-1 items-center justify-center overflow-hidden p-6 lg:px-8 lg:py-10"
+        data-part="frame"
+        className="bg-preview-surface flex w-full flex-1 items-center justify-center overflow-hidden"
         onClick={holdDemoLinks}
       >
         <div
@@ -198,24 +201,31 @@ export function LazyThumbnail({
     // Низкий блок (шапка сайта — одна строка на всю ширину) просит свою
     // пропорцию через `meta.preview.aspect`: в кадре 16/9 он занял бы десятую
     // часть высоты, и на витрине от него осталась бы полоска в пустоте.
+    //
+    // Внешняя обёртка тянется на всю высоту карточки и центрирует кадр по
+    // вертикали: в ряду сетки карточки одной высоты, и низкий блок иначе
+    // прилипал к верху над пустотой. Замер масштаба берёт только ширину,
+    // поэтому рост обёртки по высоте его не трогает.
     <div
       ref={frameRef}
-      className="bg-preview-surface @container relative w-full overflow-hidden"
+      className="bg-preview-surface @container flex w-full flex-1 items-center overflow-hidden"
       onClick={holdDemoLinks}
-      style={
-        {
-          "--thumbnail-width": `${SECTION_WIDTH}px`,
+      style={{ "--thumbnail-width": `${SECTION_WIDTH}px` } as CSSProperties}
+    >
+      <div
+        className="relative w-full"
+        style={
           // Пока высота не измерена (до загрузки чанка) — пропорция секции,
           // чтобы кадр не был нулевым. После измерения высота точна под блок.
-          ...(frameHeight
+          frameHeight
             ? { height: `${frameHeight}px` }
-            : { aspectRatio: aspect ?? "16 / 9" }),
-        } as unknown as CSSProperties
-      }
-    >
-      <div className="block-thumbnail-frame">
-        <div ref={scaleRef} className="block-thumbnail-scale preview-fade">
-          {content}
+            : { aspectRatio: aspect ?? "16 / 9" }
+        }
+      >
+        <div className="block-thumbnail-frame">
+          <div ref={scaleRef} className="block-thumbnail-scale preview-fade">
+            {content}
+          </div>
         </div>
       </div>
     </div>

@@ -99,6 +99,9 @@ export function CardInteractive({
     }
   }
 
+  // Кадр превью: по нему слушаются просьбы блока сменить свет.
+  const frameRef = useRef<HTMLDivElement>(null)
+
   // "auto" — подложку красит CSS по теме оболочки. Так кадр правильный уже в
   // первой отрисовке: раньше карточка стартовала тёмной и перекрашивалась
   // эффектом после гидратации, и светлая страница мигала.
@@ -107,10 +110,28 @@ export function CardInteractive({
   // Переключение темы сайта возвращает кадр к «как у оболочки»: человек
   // сменил тему целиком, и локальный выбор в карточке больше не актуален.
   useEffect(() => {
+    // Блок внутри кадра умеет сам просить свет: шнур-выключатель шлёт
+    // всплывающее theme-change. Переключаем подложку этой карточки — ту же,
+    // что и кнопка луны в её шапке, — а не тему всего сайта.
+    const onBlockTheme = (event: Event) => {
+      const detail = (event as CustomEvent<{ isDark?: boolean }>).detail
+
+      if (typeof detail?.isDark === "boolean") {
+        setTheme(detail.isDark ? "dark" : "light")
+      }
+    }
+
     const onShellTheme = () => setTheme("auto")
 
+    const frame = frameRef.current
+
     document.addEventListener(SHELL_THEME_EVENT, onShellTheme)
-    return () => document.removeEventListener(SHELL_THEME_EVENT, onShellTheme)
+    frame?.addEventListener("theme-change", onBlockTheme)
+
+    return () => {
+      document.removeEventListener(SHELL_THEME_EVENT, onShellTheme)
+      frame?.removeEventListener("theme-change", onBlockTheme)
+    }
   }, [])
   const [values, setValues] = useState<ControlValues>(() =>
     defaultValues(controls),
@@ -136,7 +157,6 @@ export function CardInteractive({
   const [reportSent, setReportSent] = useState(false)
   const [favourite, setFavourite] = useState(false)
 
-  const frameRef = useRef<HTMLDivElement>(null)
   const [floor, setFloor] = useState<number>()
 
   useEffect(() => {
@@ -212,7 +232,10 @@ export function CardInteractive({
         {/* Отдельная полоса, а не наложение поверх кадра: у компонентов
             высота разная, и при переключении настройки содержимое доезжало
             до кнопок и уходило под них. Теперь кадру достаётся своя область. */}
-        <div className="border-shell-border bg-shell flex shrink-0 items-center justify-between gap-2 border-b px-1.5 py-1.5">
+        <div
+          data-part="toolbar"
+          className="border-shell-border bg-shell shrink-0 items-center justify-between gap-2 border-b px-1.5 py-1.5"
+        >
           <div className="flex min-w-0 items-center gap-1">
             {cardControls.map((control) => {
               const value = values[control.prop]
@@ -516,7 +539,10 @@ export function CardInteractive({
       {/* Имя слева, кнопки справа. Обрезки многоточием здесь быть не должно:
           имя item'а и есть смысл карточки — длинное переносится на вторую
           строку, а кнопки остаются на своём месте. */}
-      <div className="flex flex-wrap items-start justify-between gap-2 px-2 py-1.5">
+      <div
+        data-part="caption"
+        className="flex flex-wrap items-start justify-between gap-2 px-2 py-1.5"
+      >
         <h3 className="text-shell-muted min-w-0 flex-1 basis-40 text-xs leading-5 break-words">
           {/* Код item'а копируется нажатием: по нему его называют в переписке
               и ищут в каталоге, где половина имён похожа друг на друга. */}
@@ -547,7 +573,10 @@ export function CardInteractive({
           </Link>
         </h3>
 
-        <div className="relative z-10 flex shrink-0 items-center gap-1.5">
+        <div
+          data-part="actions"
+          className="relative z-10 shrink-0 items-center gap-1.5"
+        >
           <button
             type="button"
             onClick={() => {
