@@ -79,7 +79,7 @@ min-height:15rem;display:flex;flex-direction:column;justify-content:flex-end;
 color:var(--vibeui-commerce-049-onbanner);
 background:
 linear-gradient(180deg,oklch(0.2 0.05 200 / 10%),oklch(0.16 0.05 200 / 78%)),
-linear-gradient(115deg,oklch(0.62 0.13 195),oklch(0.45 0.11 39.8) 55%,oklch(0.55 0.14 25));
+linear-gradient(115deg,oklch(0.62 0.13 50),oklch(0.45 0.11 39.8) 55%,oklch(0.55 0.14 25));
 }
 [data-vibeui-block="commerce-049"] [data-part="chip"]{
 align-self:flex-start;display:inline-flex;height:1.625rem;align-items:center;padding:0 0.75rem;border-radius:9999px;

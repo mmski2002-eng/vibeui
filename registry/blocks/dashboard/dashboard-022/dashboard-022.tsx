@@ -204,7 +204,7 @@ function hue(name: string) {
     hash = Math.imul(hash, 16777619)
   }
 
-  return ((hash >>> 0) % 12) * 30
+  return [12, 22, 32, 39.8, 48, 58][(hash >>> 0) % 6]
 }
 
 function state(item: Dashboard022Integration) {

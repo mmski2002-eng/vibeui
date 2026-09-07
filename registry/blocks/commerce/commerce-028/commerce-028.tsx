@@ -74,7 +74,7 @@ color:var(--vibeui-commerce-028-fg);font-family:var(--vibeui-commerce-028-sans);
 [data-vibeui-block="commerce-028"] [data-part="shell"]{max-width:68rem;margin:0 auto;padding:0 1rem 1.5rem}
 [data-vibeui-block="commerce-028"] [data-part="cover"]{
 height:7rem;border-radius:0 0 1.25rem 1.25rem;margin-bottom:-2.75rem;
-background:linear-gradient(115deg,oklch(0.42 0.11 165),oklch(0.6 0.13 39.8));
+background:linear-gradient(115deg,oklch(0.42 0.11 25),oklch(0.6 0.13 39.8));
 }
 [data-vibeui-block="commerce-028"] [data-part="head"]{
 position:relative;display:grid;gap:0.875rem;padding:0 0.25rem;

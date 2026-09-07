@@ -76,7 +76,7 @@ font-size:0.9375rem;font-weight:600;text-decoration:none;transition:background-c
 position:relative;margin:0;min-height:16rem;overflow:hidden;
 background:
 radial-gradient(70% 60% at 20% 20%,color-mix(in oklab,var(--vibeui-hero-010-accent) 70%,white),transparent 70%),
-radial-gradient(80% 70% at 85% 90%,oklch(0.82 0.11 195),transparent 72%),
+radial-gradient(80% 70% at 85% 90%,oklch(0.82 0.11 55),transparent 72%),
 linear-gradient(160deg,oklch(0.72 0.13 39.8),oklch(0.5 0.16 39.8));
 }
 [data-vibeui-block="hero-010"] [data-part="cut"]{

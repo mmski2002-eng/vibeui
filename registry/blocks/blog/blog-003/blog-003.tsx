@@ -185,7 +185,7 @@ export function Blog003({
   ctaLabel = "Читать статью",
   href = "#",
   coverLabel = "Выпуск №14",
-  hue = 300,
+  hue = 39.8,
   background = "",
   accent,
   className,
@@ -218,7 +218,7 @@ export function Blog003({
             <div
               data-part="cover"
               style={{
-                background: `linear-gradient(150deg, oklch(0.74 0.15 ${hue}), oklch(0.46 0.2 ${hue + 35}))`,
+                background: `linear-gradient(150deg, oklch(0.74 0.15 ${hue}), oklch(0.46 0.2 ${hue + 14}))`,
               }}
             >
               <span data-part="cover-label">{coverLabel}</span>

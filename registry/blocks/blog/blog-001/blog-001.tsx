@@ -161,13 +161,17 @@ const DEFAULT_POSTS: Blog001Post[] = [
   },
 ]
 
+// Тёплая брендовая палитра обложек: hue не по всему кругу, а в диапазоне
+// амбер→терракота вокруг фирменного 39.8, чтобы карточки не уходили в синий.
+const COVER_HUES = [12, 22, 32, 39.8, 48, 58]
+
 function hue(name: string) {
   let hash = 2166136261
   for (const symbol of name) {
     hash ^= symbol.codePointAt(0) ?? 0
     hash = Math.imul(hash, 16777619)
   }
-  return ((hash >>> 0) % 12) * 30
+  return COVER_HUES[(hash >>> 0) % COVER_HUES.length]
 }
 
 /**
@@ -246,7 +250,7 @@ export function Blog001({
                     data-part="cover"
                     aria-hidden="true"
                     style={{
-                      background: `linear-gradient(135deg, oklch(0.72 0.16 ${tone}), oklch(0.5 0.19 ${tone + 40}))`,
+                      background: `linear-gradient(135deg, oklch(0.72 0.16 ${tone}), oklch(0.5 0.19 ${tone + 14}))`,
                     }}
                   />
                   <div data-part="body">
