@@ -1,7 +1,10 @@
 # CLAUDE.md — VibeUI
 
 ## Главные правила
-Минимизируй линт и билд, делай толкьо при надобности, не нагружай комп.
+
+Экономь токены! Работай рационально. Не используй агентов без необходимости. Время не важно, лучше построить дешевле и без потери качества.
+Соблюдай цветовой бренд, описан в BREND.jfif в корне проекта.
+Минимизируй линт и билд, делай толкьо при надобности, не нагружай комп. Билд, линт, тайпчек только после согласования с пользователем.
 Не выдавай прочитанное за факт, пока сам не проверил. Дневник и память — контекст, не истина.
 Если на GitHub/npm есть зрелая открытая реализация — используй её, не пиши с нуля.
 Не переписывай проект с нуля.
@@ -16,7 +19,7 @@
 [docs/PROJECT_CONTEXT.md](docs/PROJECT_CONTEXT.md). Если сведения расходятся,
 предпочитать более свежий `PROJECT_CONTEXT.md` и фактический код/`package.json`.
 
-Контекст: [docs/PRODUCT.md](docs/PRODUCT.md) — продукт и сценарий, [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — устройство кода, [docs/ROADMAP.md](docs/ROADMAP.md) — фазы и Definition of Done.
+Контекст: [docs/PRODUCT.md](docs/PRODUCT.md) — продукт и сценарий, [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — устройство кода, [docs/ROADMAP.md](docs/ROADMAP.md) — фазы и Definition of Done, [docs/SEARCH.md](docs/SEARCH.md) — поиск по каталогу и что делает item находимым, [docs/SCENARIOS.md](docs/SCENARIOS.md) — вход в каталог со стороны задачи.
 
 ## Product
 
@@ -114,6 +117,9 @@ app/
   page.tsx                       landing
   components/page.tsx            каталог
   components/[slug]/page.tsx     страница компонента
+  search/page.tsx                выдача поиска (единственная динамическая страница)
+  api/search/route.ts            подсказки поиска
+  scenarios/[slug]/page.tsx      сценарий: задача, разложенная в секции
   r/[name]/route.ts              registry endpoint (shadcn-compatible JSON)
 components/                      UI приложения (шапка, фильтры, карточки)
 components/ui/                   primitives из shadcn (сейчас пусто)
@@ -122,6 +128,10 @@ registry/
   blocks/<category>/registry.json  metadata блоков (source of truth)
   blocks/<category>/<name>/      распространяемый блок
 lib/utils.ts                     cn() и утилиты
+lib/search/dictionary.ts         синонимы и стемминг поиска
+lib/search/engine.ts             индекс и ранжирование (server-only)
+lib/scenario.ts                  резолв сценария и промпт на целую страницу
+registry/scenarios.ts            сценарии: задача → упорядоченные секции
 components.json                  конфиг shadcn CLI
 public/r/                        сгенерированные registry JSON
 ```
@@ -138,6 +148,14 @@ public/r/                        сгенерированные registry JSON
 - Client Components только когда реально нужна клиентская интерактивность
   (`"use client"` — как можно ниже по дереву);
 - переиспользуемые UI primitives отдельно от registry blocks;
+- поиск по каталогу — глобальный и серверный: он ищет по всему ассортименту
+  независимо от открытого раздела, а находимость item'а определяется только
+  его metadata (см. [docs/SEARCH.md](docs/SEARCH.md)). Фильтрацию карточек
+  по DOM (`data-search`) не возвращать: из-за неё «тарифы» на `/components`
+  не находились ничем;
+- сценарии (`registry/scenarios.ts`) — вход со стороны задачи: они ссылаются
+  на категории, а не на конкретные items, и ничего не устанавливают сами
+  (см. [docs/SCENARIOS.md](docs/SCENARIOS.md)). Это не `kind: "template"`;
 - компоненты registry переносимы: копируются в чужой проект и работают;
 - каждый registry block самостоятельно декларирует свои зависимости
   (npm-пакеты + внутренние файлы) в metadata;
@@ -173,6 +191,7 @@ public/r/                        сгенерированные registry JSON
   а не «что».
 
 ## Workflow
+
 Если работаешь с браузером через плэйврайт, открыл его и закончил - закрой. Не держи открытым когда не работаешь с ним.
 Перед большой задачей:
 
@@ -192,10 +211,22 @@ public/r/                        сгенерированные registry JSON
       раскладка от собственной ширины, `prefers-reduced-motion`;
 - [ ] metadata без `TODO`: description, tags, `ai.summary/preserve/adapt`,
       для компонентов — `ai.usage` и `controls`;
+- [ ] находимость: `title` — как вещь назовёт человек, `description` содержит
+      слова, которыми её ищут, `tags` — английские синонимы, `categories[0]`
+      верная. Отдельного места «прописать item в поиск» нет, всё решает
+      metadata ([docs/SEARCH.md](docs/SEARCH.md));
 - [ ] перевод `meta.i18n.en` с тем же числом пунктов в списках;
 - [ ] `npm run meta:validate`, `lint`, `build` зелёные;
 - [ ] глазами: `/preview/<name>`, карточка каталога, страница item'а,
-      обе подложки превью, mobile / tablet / desktop.
+      обе подложки превью, mobile / tablet / desktop;
+- [ ] поиском: `/search?q=<как это назовёт человек>` — item в выдаче есть.
+
+Новая категория — сверх этого две правки:
+
+- запись в `SYNONYMS` (`lib/search/dictionary.ts`), иначе категория находится
+  только по своей подписи. Формат — в [docs/SEARCH.md](docs/SEARCH.md);
+- шаг в подходящем сценарии (`registry/scenarios.ts`), если категория входит
+  в типовую страницу. Формат — в [docs/SCENARIOS.md](docs/SCENARIOS.md).
 
 ## Git
 
