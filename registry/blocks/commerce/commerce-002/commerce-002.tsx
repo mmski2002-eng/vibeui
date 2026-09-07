@@ -14,6 +14,10 @@ export type Commerce002Props = {
   rating?: number
   reviews?: number
   summary?: string
+  /** Фото товара. Без него на том же месте остаётся цветное поле. */
+  image?: string
+  /** Миниатюры под кадром: три поля, любое можно оставить пустым. */
+  thumbs?: string[]
   sizes?: Commerce002Option[]
   facts?: { label: string; value: string }[]
   cta?: string
@@ -77,15 +81,27 @@ font-family:var(--vibeui-commerce-002-sans);color:var(--vibeui-commerce-002-fg);
 [data-vibeui-block="commerce-002"] [data-part="gallery"]{display:flex;flex-direction:column;gap:0.5rem}
 [data-vibeui-block="commerce-002"] [data-part="shot"]{
 aspect-ratio:1 / 1;border-radius:0.875rem;
-background:
+overflow:hidden;
+}
+/* Подложка — только когда фото нет: блок обязан быть полноценным
+   без единого внешнего файла. */
+[data-vibeui-block="commerce-002"] [data-part="shot"][data-empty="true"]{background:
 radial-gradient(120% 90% at 30% 20%, light-dark(oklch(0.94 0.08 var(--vibeui-commerce-002-hue,262)),oklch(0.46 0.09 var(--vibeui-commerce-002-hue,262))), transparent 70%),
-light-dark(oklch(0.96 0.02 var(--vibeui-commerce-002-hue,262)),oklch(0.34 0.03 var(--vibeui-commerce-002-hue,262)));
+light-dark(oklch(0.96 0.02 var(--vibeui-commerce-002-hue,262)),oklch(0.34 0.03 var(--vibeui-commerce-002-hue,262)));}
+[data-vibeui-block="commerce-002"] [data-part="shot"] img{
+display:block;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="commerce-002"] [data-part="thumbs"]{display:flex;gap:0.375rem}
 [data-vibeui-block="commerce-002"] [data-part="thumb"]{
 flex:1 1 0;aspect-ratio:1 / 1;border-radius:0.5rem;
-background:light-dark(oklch(0.95 0.03 var(--vibeui-commerce-002-hue,262)),oklch(0.36 0.04 var(--vibeui-commerce-002-hue,262)));
 border:1px solid var(--vibeui-commerce-002-border);
+overflow:hidden;
+}
+/* Подложка — только когда фото нет: блок обязан быть полноценным
+   без единого внешнего файла. */
+[data-vibeui-block="commerce-002"] [data-part="thumb"][data-empty="true"]{background:light-dark(oklch(0.95 0.03 var(--vibeui-commerce-002-hue,262)),oklch(0.36 0.04 var(--vibeui-commerce-002-hue,262)));}
+[data-vibeui-block="commerce-002"] [data-part="thumb"] img{
+display:block;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="commerce-002"] [data-part="brand"]{margin:0;font-size:0.75rem;color:var(--vibeui-commerce-002-muted)}
 [data-vibeui-block="commerce-002"] h2{margin:0.125rem 0 0.375rem;font-size:1.25rem;font-weight:700;letter-spacing:-0.01em;line-height:1.2}
@@ -196,6 +212,8 @@ export function Commerce002({
   rating = 4.7,
   reviews = 213,
   summary = "Плотное полотно, широкая посадка и рукав-реглан. Не тянется после стирки и держит форму на плечах.",
+  image = "",
+  thumbs = [],
   sizes = DEFAULT_SIZES,
   facts = DEFAULT_FACTS,
   cta = "В корзину",
@@ -233,11 +251,32 @@ export function Commerce002({
       >
         <div data-part="layout">
           <div data-part="gallery">
-            <div data-part="shot" aria-hidden="true" />
+            <div
+              data-part="shot"
+              data-empty={image ? undefined : "true"}
+              aria-hidden={image ? undefined : true}
+            >
+              {image ? (
+                <img src={image} alt="" loading="lazy" decoding="async" />
+              ) : null}
+            </div>
             <div data-part="thumbs" aria-hidden="true">
-              <span data-part="thumb" />
-              <span data-part="thumb" />
-              <span data-part="thumb" />
+              {[0, 1, 2].map((index) => (
+                <span
+                  key={index}
+                  data-part="thumb"
+                  data-empty={thumbs[index] ? undefined : "true"}
+                >
+                  {thumbs[index] ? (
+                    <img
+                      src={thumbs[index]}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : null}
+                </span>
+              ))}
             </div>
           </div>
 

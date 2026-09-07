@@ -7,6 +7,8 @@ export type Commerce029Hit = {
   price: string
   stock: string
   hue?: number
+  /** Фото товара. Без него на том же месте остаётся цветное поле. */
+  image?: string
 }
 
 export type Commerce029Refine = {
@@ -147,7 +149,13 @@ padding:0.625rem;border:1px solid var(--vibeui-commerce-029-border);border-radiu
 [data-vibeui-block="commerce-029"] [data-part="hit"]:has(a:focus-visible){outline:2px solid var(--vibeui-commerce-029-accent);outline-offset:2px}
 [data-vibeui-block="commerce-029"] [data-part="thumb"]{
 aspect-ratio:1;border-radius:0.75rem;
-background:linear-gradient(150deg,oklch(0.94 0.05 var(--vibeui-commerce-029-hue,262)),oklch(0.85 0.09 var(--vibeui-commerce-029-hue,262)));
+overflow:hidden;
+}
+/* Подложка — только когда фото нет: блок обязан быть полноценным
+   без единого внешнего файла. */
+[data-vibeui-block="commerce-029"] [data-part="thumb"][data-empty="true"]{background:linear-gradient(150deg,oklch(0.94 0.05 var(--vibeui-commerce-029-hue,262)),oklch(0.85 0.09 var(--vibeui-commerce-029-hue,262)));}
+[data-vibeui-block="commerce-029"] [data-part="thumb"] img{
+display:block;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="commerce-029"] [data-part="name"]{margin:0;font-size:0.875rem;font-weight:650;line-height:1.35}
 [data-vibeui-block="commerce-029"] [data-part="name"] a{color:inherit;text-decoration:none;outline:none}
@@ -368,7 +376,15 @@ export function Commerce029({
                   } as CSSProperties
                 }
               >
-                <span data-part="thumb" aria-hidden="true" />
+                <span
+                  data-part="thumb"
+                  data-empty={hit.image ? undefined : "true"}
+                  aria-hidden={hit.image ? undefined : true}
+                >
+                  {hit.image ? (
+                    <img src={hit.image} alt="" loading="lazy" decoding="async" />
+                  ) : null}
+                </span>
                 <div>
                   <p data-part="name">
                     <a href="#product">{hit.title}</a>

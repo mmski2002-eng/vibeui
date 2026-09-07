@@ -9,6 +9,8 @@ export type Commerce001Product = {
   reviews?: number
   badge?: string
   hue?: number
+  /** Фото товара. Без него на том же месте остаётся цветное поле. */
+  image?: string
 }
 
 export type Commerce001Props = {
@@ -80,12 +82,19 @@ position:relative;display:flex;flex-direction:column;overflow:hidden;
 background:var(--vibeui-commerce-001-card);
 border:1px solid var(--vibeui-commerce-001-border);border-radius:0.875rem;
 }
-/* Обложка — цветное поле, а не картинка: блок не тянет чужие файлы. */
+/* Место под фото держит пропорцию, поэтому раскладка не прыгает, пока
+   картинка грузится. Фото необязательно: без него в той же рамке остаётся
+   цветное поле — блок обязан быть полноценным без единого внешнего файла. */
 [data-vibeui-block="commerce-001"] [data-part="shot"]{
-aspect-ratio:4 / 3;
+aspect-ratio:4 / 3;overflow:hidden;
+}
+[data-vibeui-block="commerce-001"] [data-part="shot"][data-empty="true"]{
 background:
 radial-gradient(120% 90% at 30% 20%, light-dark(oklch(0.94 0.07 var(--vibeui-commerce-001-hue,262)),oklch(0.46 0.08 var(--vibeui-commerce-001-hue,262))), transparent 70%),
 light-dark(oklch(0.96 0.02 var(--vibeui-commerce-001-hue,262)),oklch(0.34 0.03 var(--vibeui-commerce-001-hue,262)));
+}
+[data-vibeui-block="commerce-001"] [data-part="shot"] img{
+display:block;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="commerce-001"] [data-part="badge"]{
 position:absolute;top:0.5rem;left:0.5rem;
@@ -232,7 +241,20 @@ export function Commerce001({
                   } as CSSProperties
                 }
               >
-                <div data-part="shot" aria-hidden="true" />
+                <div
+                  data-part="shot"
+                  data-empty={product.image ? undefined : "true"}
+                  aria-hidden={product.image ? undefined : true}
+                >
+                  {product.image ? (
+                    <img
+                      src={product.image}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : null}
+                </div>
                 {product.badge ? (
                   <span data-part="badge">{product.badge}</span>
                 ) : null}

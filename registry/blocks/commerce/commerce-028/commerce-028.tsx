@@ -11,6 +11,8 @@ export type Commerce028Line = {
   price: string
   spec: string
   hue?: number
+  /** Фото товара. Без него на том же месте остаётся цветное поле. */
+  image?: string
 }
 
 export type Commerce028Props = {
@@ -139,7 +141,13 @@ display:flex;flex-direction:column;
 [data-vibeui-block="commerce-028"] [data-part="card"]:has(a:focus-visible){outline:2px solid var(--vibeui-commerce-028-accent);outline-offset:2px}
 [data-vibeui-block="commerce-028"] [data-part="shot"]{
 aspect-ratio:4 / 3;
-background:linear-gradient(150deg,oklch(0.94 0.05 var(--vibeui-commerce-028-hue,165)),oklch(0.85 0.09 var(--vibeui-commerce-028-hue,165)));
+overflow:hidden;
+}
+/* Подложка — только когда фото нет: блок обязан быть полноценным
+   без единого внешнего файла. */
+[data-vibeui-block="commerce-028"] [data-part="shot"][data-empty="true"]{background:linear-gradient(150deg,oklch(0.94 0.05 var(--vibeui-commerce-028-hue,165)),oklch(0.85 0.09 var(--vibeui-commerce-028-hue,165)));}
+[data-vibeui-block="commerce-028"] [data-part="shot"] img{
+display:block;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="commerce-028"] [data-part="body"]{padding:0.625rem 0.75rem 0.75rem;display:grid;gap:0.1875rem}
 [data-vibeui-block="commerce-028"] [data-part="name"]{margin:0;font-size:0.8125rem;font-weight:600;line-height:1.32}
@@ -314,7 +322,15 @@ export function Commerce028({
                   } as CSSProperties
                 }
               >
-                <span data-part="shot" aria-hidden="true" />
+                <span
+                  data-part="shot"
+                  data-empty={product.image ? undefined : "true"}
+                  aria-hidden={product.image ? undefined : true}
+                >
+                  {product.image ? (
+                    <img src={product.image} alt="" loading="lazy" decoding="async" />
+                  ) : null}
+                </span>
                 <div data-part="body">
                   <p data-part="name">
                     <a href="#product">{product.title}</a>

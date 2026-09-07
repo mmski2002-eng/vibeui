@@ -6,6 +6,8 @@ export type Commerce050Card = {
   spec: string
   price: string
   hue?: number
+  /** Фото товара. Без него на том же месте остаётся цветное поле. */
+  image?: string
 }
 
 export type Commerce050Props = {
@@ -66,7 +68,13 @@ color:var(--vibeui-commerce-050-fg);font-family:var(--vibeui-commerce-050-sans);
 [data-vibeui-block="commerce-050"] [data-part="card"]:has(a:focus-visible){outline:2px solid var(--vibeui-commerce-050-accent);outline-offset:2px}
 [data-vibeui-block="commerce-050"] [data-part="cover"]{
 display:block;aspect-ratio:4/3;
-background:linear-gradient(155deg,oklch(0.94 0.05 var(--vibeui-commerce-050-hue,285)),oklch(0.85 0.09 var(--vibeui-commerce-050-hue,285)));
+overflow:hidden;
+}
+/* Подложка — только когда фото нет: блок обязан быть полноценным
+   без единого внешнего файла. */
+[data-vibeui-block="commerce-050"] [data-part="cover"][data-empty="true"]{background:linear-gradient(155deg,oklch(0.94 0.05 var(--vibeui-commerce-050-hue,285)),oklch(0.85 0.09 var(--vibeui-commerce-050-hue,285)));}
+[data-vibeui-block="commerce-050"] [data-part="cover"] img{
+display:block;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="commerce-050"] [data-part="body"]{padding:0.5rem 0.625rem 0.75rem}
 [data-vibeui-block="commerce-050"] [data-part="name"]{margin:0;font-size:0.8125rem;font-weight:650;line-height:1.35}
@@ -255,7 +263,15 @@ export function Commerce050({
                   } as CSSProperties
                 }
               >
-                <span data-part="cover" aria-hidden="true" />
+                <span
+                  data-part="cover"
+                  data-empty={card.image ? undefined : "true"}
+                  aria-hidden={card.image ? undefined : true}
+                >
+                  {card.image ? (
+                    <img src={card.image} alt="" loading="lazy" decoding="async" />
+                  ) : null}
+                </span>
                 <div data-part="body">
                   <p data-part="name">
                     <a href="#product">{card.title}</a>

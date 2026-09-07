@@ -6,6 +6,8 @@ export type Commerce026Pick = {
   price: string
   note?: string
   hue?: number
+  /** Фото товара. Без него на том же месте остаётся цветное поле. */
+  image?: string
 }
 
 export type Commerce026Props = {
@@ -106,7 +108,13 @@ display:flex;flex-direction:column;
 [data-vibeui-block="commerce-026"] [data-part="pick"]:has(a:focus-visible){outline:2px solid var(--vibeui-commerce-026-accent);outline-offset:2px}
 [data-vibeui-block="commerce-026"] [data-part="cover"]{
 aspect-ratio:1;
-background:linear-gradient(150deg,oklch(0.94 0.05 var(--vibeui-commerce-026-hue,262)),oklch(0.86 0.09 var(--vibeui-commerce-026-hue,262)));
+overflow:hidden;
+}
+/* Подложка — только когда фото нет: блок обязан быть полноценным
+   без единого внешнего файла. */
+[data-vibeui-block="commerce-026"] [data-part="cover"][data-empty="true"]{background:linear-gradient(150deg,oklch(0.94 0.05 var(--vibeui-commerce-026-hue,262)),oklch(0.86 0.09 var(--vibeui-commerce-026-hue,262)));}
+[data-vibeui-block="commerce-026"] [data-part="cover"] img{
+display:block;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="commerce-026"] [data-part="body"]{padding:0.5rem 0.625rem 0.625rem}
 [data-vibeui-block="commerce-026"] [data-part="name"]{margin:0;font-size:0.75rem;font-weight:650;line-height:1.3}
@@ -241,7 +249,15 @@ export function Commerce026({
                   } as CSSProperties
                 }
               >
-                <span data-part="cover" aria-hidden="true" />
+                <span
+                  data-part="cover"
+                  data-empty={pick.image ? undefined : "true"}
+                  aria-hidden={pick.image ? undefined : true}
+                >
+                  {pick.image ? (
+                    <img src={pick.image} alt="" loading="lazy" decoding="async" />
+                  ) : null}
+                </span>
                 <div data-part="body">
                   <p data-part="name">
                     <a href="#product">{pick.title}</a>

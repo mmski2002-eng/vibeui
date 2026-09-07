@@ -11,6 +11,8 @@ export type Commerce024Item = {
   drop?: string
   stock: "in" | "low" | "out"
   hue?: number
+  /** Фото товара. Без него на том же месте остаётся цветное поле. */
+  image?: string
 }
 
 export type Commerce024Props = {
@@ -89,7 +91,13 @@ border:1px solid var(--vibeui-commerce-024-border);border-radius:0.875rem;overfl
 }
 [data-vibeui-block="commerce-024"] [data-part="cover"]{
 aspect-ratio:4/3;
-background:linear-gradient(150deg,oklch(0.94 0.05 var(--vibeui-commerce-024-hue,262)),oklch(0.86 0.09 var(--vibeui-commerce-024-hue,262)));
+overflow:hidden;
+}
+/* Подложка — только когда фото нет: блок обязан быть полноценным
+   без единого внешнего файла. */
+[data-vibeui-block="commerce-024"] [data-part="cover"][data-empty="true"]{background:linear-gradient(150deg,oklch(0.94 0.05 var(--vibeui-commerce-024-hue,262)),oklch(0.86 0.09 var(--vibeui-commerce-024-hue,262)));}
+[data-vibeui-block="commerce-024"] [data-part="cover"] img{
+display:block;width:100%;height:100%;object-fit:cover;
 }
 /* Сердце — кнопка удаления, поэтому у него собственная подпись с именем товара. */
 [data-vibeui-block="commerce-024"] [data-part="heart"]{
@@ -288,7 +296,15 @@ export function Commerce024({
                   >
                     ♥
                   </button>
-                  <span data-part="cover" aria-hidden="true" />
+                  <span
+                    data-part="cover"
+                    data-empty={item.image ? undefined : "true"}
+                    aria-hidden={item.image ? undefined : true}
+                  >
+                    {item.image ? (
+                      <img src={item.image} alt="" loading="lazy" decoding="async" />
+                    ) : null}
+                  </span>
                   <div data-part="body">
                     <h3>{item.title}</h3>
                     <p data-part="prices">

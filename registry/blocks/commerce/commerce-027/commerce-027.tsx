@@ -14,6 +14,8 @@ export type Commerce027Item = {
   old?: string
   badge?: string
   hue?: number
+  /** Фото товара. Без него на том же месте остаётся цветное поле. */
+  image?: string
 }
 
 export type Commerce027Fact = {
@@ -156,7 +158,14 @@ display:flex;flex-direction:column;background:var(--vibeui-commerce-027-bg);
 [data-vibeui-block="commerce-027"] [data-part="item"]:has(a:focus-visible){outline:2px solid var(--vibeui-commerce-027-accent);outline-offset:2px}
 [data-vibeui-block="commerce-027"] [data-part="cover"]{
 position:relative;aspect-ratio:1;
-background:linear-gradient(150deg,oklch(0.95 0.045 var(--vibeui-commerce-027-hue,262)),oklch(0.87 0.085 var(--vibeui-commerce-027-hue,262)));
+overflow:hidden;
+}
+/* Подложка — только когда фото нет: блок обязан быть полноценным
+   без единого внешнего файла. */
+[data-vibeui-block="commerce-027"] [data-part="cover"][data-empty="true"]{background:linear-gradient(150deg,oklch(0.95 0.045 var(--vibeui-commerce-027-hue,262)),oklch(0.87 0.085 var(--vibeui-commerce-027-hue,262)));}
+[data-vibeui-block="commerce-027"] [data-part="cover"] img{
+display:block;width:100%;height:100%;object-fit:cover;
+position:absolute;inset:0;
 }
 [data-vibeui-block="commerce-027"] [data-part="badge"]{
 position:absolute;top:0.5rem;left:0.5rem;padding:0.1875rem 0.4375rem;border-radius:0.4375rem;
@@ -339,7 +348,14 @@ export function Commerce027({
                     } as CSSProperties
                   }
                 >
-                  <span data-part="cover" aria-hidden="true">
+                  <span
+                    data-part="cover"
+                    data-empty={item.image ? undefined : "true"}
+                    aria-hidden="true"
+                  >
+                    {item.image ? (
+                      <img src={item.image} alt="" loading="lazy" decoding="async" />
+                    ) : null}
                     {item.badge ? (
                       <span data-part="badge">{item.badge}</span>
                     ) : null}

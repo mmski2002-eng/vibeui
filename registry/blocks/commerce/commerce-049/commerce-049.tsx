@@ -11,6 +11,8 @@ export type Commerce049Item = {
   material: string
   price: string
   hue?: number
+  /** Фото товара. Без него на том же месте остаётся цветное поле. */
+  image?: string
 }
 
 export type Commerce049Props = {
@@ -110,7 +112,13 @@ border:1px solid var(--vibeui-commerce-049-border);border-radius:1rem;padding:1r
 [data-vibeui-block="commerce-049"] [data-part="item"]:has(a:focus-visible){outline:2px solid var(--vibeui-commerce-049-accent);outline-offset:2px}
 [data-vibeui-block="commerce-049"] [data-part="cover"]{
 display:block;aspect-ratio:4/5;
-background:linear-gradient(160deg,oklch(0.94 0.05 var(--vibeui-commerce-049-hue,195)),oklch(0.84 0.1 var(--vibeui-commerce-049-hue,195)));
+overflow:hidden;
+}
+/* Подложка — только когда фото нет: блок обязан быть полноценным
+   без единого внешнего файла. */
+[data-vibeui-block="commerce-049"] [data-part="cover"][data-empty="true"]{background:linear-gradient(160deg,oklch(0.94 0.05 var(--vibeui-commerce-049-hue,195)),oklch(0.84 0.1 var(--vibeui-commerce-049-hue,195)));}
+[data-vibeui-block="commerce-049"] [data-part="cover"] img{
+display:block;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="commerce-049"] [data-part="body"]{padding:0.5rem 0.625rem 0.75rem}
 [data-vibeui-block="commerce-049"] [data-part="name"]{margin:0;font-size:0.8125rem;font-weight:650;line-height:1.35}
@@ -286,7 +294,15 @@ export function Commerce049({
                     } as CSSProperties
                   }
                 >
-                  <span data-part="cover" aria-hidden="true" />
+                  <span
+                    data-part="cover"
+                    data-empty={item.image ? undefined : "true"}
+                    aria-hidden={item.image ? undefined : true}
+                  >
+                    {item.image ? (
+                      <img src={item.image} alt="" loading="lazy" decoding="async" />
+                    ) : null}
+                  </span>
                   <div data-part="body">
                     <p data-part="name">
                       <a href="#product">{item.title}</a>

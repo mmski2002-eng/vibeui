@@ -7,6 +7,8 @@ export type Commerce072Pick = {
   price: string
   because: string
   hue?: number
+  /** Фото товара. Без него на том же месте остаётся цветное поле. */
+  image?: string
 }
 
 export type Commerce072Props = {
@@ -69,7 +71,13 @@ display:flex;flex-direction:column;
 [data-vibeui-block="commerce-072"] [data-part="pick"]:has(a:focus-visible){outline:2px solid var(--vibeui-commerce-072-accent);outline-offset:2px}
 [data-vibeui-block="commerce-072"] [data-part="cover"]{
 display:block;aspect-ratio:5/4;
-background:linear-gradient(150deg,oklch(0.94 0.05 var(--vibeui-commerce-072-hue,330)),oklch(0.84 0.1 var(--vibeui-commerce-072-hue,330)));
+overflow:hidden;
+}
+/* Подложка — только когда фото нет: блок обязан быть полноценным
+   без единого внешнего файла. */
+[data-vibeui-block="commerce-072"] [data-part="cover"][data-empty="true"]{background:linear-gradient(150deg,oklch(0.94 0.05 var(--vibeui-commerce-072-hue,330)),oklch(0.84 0.1 var(--vibeui-commerce-072-hue,330)));}
+[data-vibeui-block="commerce-072"] [data-part="cover"] img{
+display:block;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="commerce-072"] [data-part="body"]{padding:0.625rem 0.75rem 0.75rem;display:flex;flex-direction:column;gap:0.375rem;flex:1}
 [data-vibeui-block="commerce-072"] [data-part="name"]{margin:0;font-size:0.875rem;font-weight:650;line-height:1.3}
@@ -222,7 +230,15 @@ export function Commerce072({
                   } as CSSProperties
                 }
               >
-                <span data-part="cover" aria-hidden="true" />
+                <span
+                  data-part="cover"
+                  data-empty={pick.image ? undefined : "true"}
+                  aria-hidden={pick.image ? undefined : true}
+                >
+                  {pick.image ? (
+                    <img src={pick.image} alt="" loading="lazy" decoding="async" />
+                  ) : null}
+                </span>
                 <button type="button" data-part="hide">
                   {hide}
                   <span data-part="sr"> — {pick.title}</span>

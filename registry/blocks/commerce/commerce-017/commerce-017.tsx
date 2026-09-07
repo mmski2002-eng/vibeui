@@ -5,6 +5,8 @@ export type Commerce017Product = {
   title: string
   price: string
   hue?: number
+  /** Фото товара. Без него на том же месте остаётся цветное поле. */
+  image?: string
   best?: boolean
 }
 
@@ -96,7 +98,13 @@ font-weight:600;font-size:0.75rem;
 [data-vibeui-block="commerce-017"] thead [data-part="rowhead"]{background:var(--vibeui-commerce-017-soft)}
 [data-vibeui-block="commerce-017"] [data-part="shot"]{
 display:block;width:100%;max-width:5rem;aspect-ratio:4/3;border-radius:0.5rem;margin-bottom:0.375rem;
-background:linear-gradient(145deg,oklch(0.94 0.05 var(--vibeui-commerce-017-hue,262)),oklch(0.86 0.09 var(--vibeui-commerce-017-hue,262)));
+overflow:hidden;
+}
+/* Подложка — только когда фото нет: блок обязан быть полноценным
+   без единого внешнего файла. */
+[data-vibeui-block="commerce-017"] [data-part="shot"][data-empty="true"]{background:linear-gradient(145deg,oklch(0.94 0.05 var(--vibeui-commerce-017-hue,262)),oklch(0.86 0.09 var(--vibeui-commerce-017-hue,262)));}
+[data-vibeui-block="commerce-017"] [data-part="shot"] img{
+display:block;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="commerce-017"] [data-part="name"]{display:block;font-size:0.8125rem;font-weight:650;line-height:1.25}
 [data-vibeui-block="commerce-017"] [data-part="price"]{display:block;margin-top:0.125rem;font-size:0.875rem;font-weight:700;font-variant-numeric:tabular-nums}
@@ -230,7 +238,15 @@ export function Commerce017({
                           } as CSSProperties
                         }
                       >
-                        <span data-part="shot" aria-hidden="true" />
+                        <span
+                          data-part="shot"
+                          data-empty={product.image ? undefined : "true"}
+                          aria-hidden={product.image ? undefined : true}
+                        >
+                          {product.image ? (
+                            <img src={product.image} alt="" loading="lazy" decoding="async" />
+                          ) : null}
+                        </span>
                         <span data-part="name">{product.title}</span>
                         <span data-part="price">{product.price}</span>
                         {product.best ? (

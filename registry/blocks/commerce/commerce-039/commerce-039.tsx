@@ -10,6 +10,8 @@ export type Commerce039Deal = {
   cut: string
   left: number
   hue?: number
+  /** Фото товара. Без него на том же месте остаётся цветное поле. */
+  image?: string
 }
 
 export type Commerce039Props = {
@@ -81,7 +83,14 @@ border:1px solid var(--vibeui-commerce-039-border);border-radius:1.125rem;overfl
 [data-vibeui-block="commerce-039"] [data-part="deal"]:has(a:focus-visible){outline:2px solid var(--vibeui-commerce-039-accent);outline-offset:2px}
 [data-vibeui-block="commerce-039"] [data-part="cover"]{
 position:relative;aspect-ratio:4 / 3;
-background:linear-gradient(150deg,oklch(0.94 0.05 var(--vibeui-commerce-039-hue,25)),oklch(0.85 0.09 var(--vibeui-commerce-039-hue,25)));
+overflow:hidden;
+}
+/* Подложка — только когда фото нет: блок обязан быть полноценным
+   без единого внешнего файла. */
+[data-vibeui-block="commerce-039"] [data-part="cover"][data-empty="true"]{background:linear-gradient(150deg,oklch(0.94 0.05 var(--vibeui-commerce-039-hue,25)),oklch(0.85 0.09 var(--vibeui-commerce-039-hue,25)));}
+[data-vibeui-block="commerce-039"] [data-part="cover"] img{
+display:block;width:100%;height:100%;object-fit:cover;
+position:absolute;inset:0;
 }
 [data-vibeui-block="commerce-039"] [data-part="cut"]{
 position:absolute;top:0.5rem;left:0.5rem;padding:0.25rem 0.5rem;border-radius:0.5rem;
@@ -242,7 +251,14 @@ export function Commerce039({
                   } as CSSProperties
                 }
               >
-                <span data-part="cover" aria-hidden="true">
+                <span
+                    data-part="cover"
+                    data-empty={deal.image ? undefined : "true"}
+                    aria-hidden="true"
+                  >
+                    {deal.image ? (
+                      <img src={deal.image} alt="" loading="lazy" decoding="async" />
+                    ) : null}
                   <span data-part="cut">{deal.cut}</span>
                   <span data-part="grade">{deal.grade}</span>
                 </span>

@@ -6,7 +6,9 @@
       "type": "registry:block",
       "title": "Сетка товаров",
       "description": "Витрина товаров: карточка ведёт на товар, кнопка кладёт в корзину — два действия, которые нельзя объединять в одну цель.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -18,9 +20,47 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-001-*. Серверный: хуков нет. Число колонок считается контейнерным запросом от ширины блока. Обложка нарисована градиентом по оттенку товара, поэтому блок не тянет чужие файлы. Кнопка корзины поднята над растянутой ссылкой через z-index. Тема берётся из color-scheme окружения через light-dark(): подложки по умолчанию нет, её включает проп background.",
       "meta": {
-        "tags": ["commerce", "product", "grid", "shop"],
+        "tags": [
+          "commerce",
+          "product",
+          "grid",
+          "shop"
+        ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "products": [
+              {
+                "title": "Настольная лампа «Луч»",
+                "brand": "Свет и форма",
+                "price": "4 900 ₽",
+                "oldPrice": "6 400 ₽",
+                "rating": 4.8,
+                "reviews": 126,
+                "badge": "−23 %",
+                "hue": 75,
+                "image": "/demo/products/product-07.webp"
+              },
+              {
+                "title": "Кресло «Пикник»",
+                "brand": "Дом и сад",
+                "price": "18 400 ₽",
+                "rating": 4.6,
+                "reviews": 84,
+                "hue": 152,
+                "image": "/demo/products/product-21.webp"
+              },
+              {
+                "title": "Ваза «Гребень»",
+                "brand": "Свет и форма",
+                "price": "7 200 ₽",
+                "rating": 4.9,
+                "reviews": 41,
+                "hue": 262,
+                "image": "/demo/products/product-27.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Commerce001",
@@ -134,44 +174,47 @@
             "title": "Product Grid",
             "preview": {
               "props": {
-                "title": "This week's picks",
-                "cta": "Add to cart",
-                "reviewsText": "{count} reviews",
-                "oldPriceLabel": "Old price",
-                "locale": "en-US",
                 "products": [
                   {
                     "title": "Ray desk lamp",
                     "brand": "Light & Form",
-                    "price": "$49",
-                    "oldPrice": "$64",
+                    "price": "$59",
+                    "oldPrice": "$77",
                     "rating": 4.8,
                     "reviews": 126,
                     "badge": "−23%",
-                    "hue": 75
+                    "hue": 75,
+                    "image": "/demo/products/product-07.webp"
                   },
                   {
                     "title": "Picnic armchair",
                     "brand": "House & Garden",
-                    "price": "$184",
+                    "price": "$219",
                     "rating": 4.6,
                     "reviews": 84,
-                    "hue": 152
+                    "hue": 152,
+                    "image": "/demo/products/product-21.webp"
                   },
                   {
-                    "title": "Steps shelf",
+                    "title": "Ridge vase",
                     "brand": "Light & Form",
-                    "price": "$72",
+                    "price": "$86",
                     "rating": 4.9,
                     "reviews": 41,
-                    "hue": 262
+                    "hue": 262,
+                    "image": "/demo/products/product-27.webp"
                   }
                 ]
               }
             }
           }
         },
-        "cardControls": ["title", "cta", "accent", "background"]
+        "cardControls": [
+          "title",
+          "cta",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -179,7 +222,9 @@
       "type": "registry:block",
       "title": "Карточка товара",
       "description": "Карточка товара: размеры радиокнопками, недоступный вариант остаётся видимым, срок доставки стоит рядом с кнопкой.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -191,9 +236,17 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-002-*. Серверный: хуков нет, выбор размера держат радиокнопки. Раскладка на две колонки включается контейнерным запросом. Галерея нарисована градиентом, характеристики выведены списком определений. Тема берётся из color-scheme окружения через light-dark(): подложки по умолчанию нет, её включает проп background.",
       "meta": {
-        "tags": ["commerce", "product", "detail", "sizes"],
+        "tags": [
+          "commerce",
+          "product",
+          "detail",
+          "sizes"
+        ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "image": "/demo/products/product-tall-07.webp"
+          }
         },
         "ai": {
           "export": "Commerce002",
@@ -318,58 +371,18 @@
             "title": "Product Detail",
             "preview": {
               "props": {
-                "brand": "Light & Form",
-                "title": "Quiet Evening sweatshirt",
-                "price": "$54",
-                "oldPrice": "$69",
-                "summary": "Heavy jersey, a relaxed fit and raglan sleeves. It does not stretch out in the wash and keeps its shape at the shoulders.",
-                "sizes": [
-                  {
-                    "label": "S",
-                    "value": "s",
-                    "available": true
-                  },
-                  {
-                    "label": "M",
-                    "value": "m",
-                    "available": true
-                  },
-                  {
-                    "label": "L",
-                    "value": "l",
-                    "available": false
-                  },
-                  {
-                    "label": "XL",
-                    "value": "xl",
-                    "available": true
-                  }
-                ],
-                "facts": [
-                  {
-                    "label": "Fabric",
-                    "value": "92% cotton, 8% elastane"
-                  },
-                  {
-                    "label": "Care",
-                    "value": "Machine wash at 30°, no bleach"
-                  },
-                  {
-                    "label": "SKU",
-                    "value": "VU-1042"
-                  }
-                ],
-                "cta": "Add to cart",
-                "secondary": "Save for later",
-                "delivery": "Arrives tomorrow if ordered today",
-                "sizeLabel": "Size",
-                "reviewsText": "{count} reviews",
-                "locale": "en-US"
+                "image": "/demo/products/product-tall-07.webp"
               }
             }
           }
         },
-        "cardControls": ["title", "price", "delivery", "accent", "background"]
+        "cardControls": [
+          "title",
+          "price",
+          "delivery",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -377,7 +390,9 @@
       "type": "registry:block",
       "title": "Корзина",
       "description": "Корзина: итог считается из строк, а полоса до бесплатной доставки стоит над кнопкой — это причина добрать товар.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -389,7 +404,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-003-*. Клиентский: \"use client\" ради количества и удаления. Сумма товаров, доставка и итог выводятся из массива строк, поэтому цифры не расходятся после правки. Полоса прогресса до бесплатной доставки исчезает при переходе порога. Тема берётся из color-scheme окружения через light-dark(): подложки по умолчанию нет, её включает проп background.",
       "meta": {
-        "tags": ["commerce", "cart", "checkout", "totals"],
+        "tags": [
+          "commerce",
+          "cart",
+          "checkout",
+          "totals"
+        ],
         "preview": {
           "width": "full"
         },
@@ -544,7 +564,12 @@
             }
           }
         },
-        "cardControls": ["title", "freeFrom", "accent", "background"]
+        "cardControls": [
+          "title",
+          "freeFrom",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -552,7 +577,9 @@
       "type": "registry:block",
       "title": "Шаг оформления",
       "description": "Шаг оформления: способ доставки радиогруппой, итог рядом с формой, а кнопка оплаты подписана суммой.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -564,7 +591,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-004-*. Серверный: хуков нет. Шаги помечены формой значка, способ доставки собран радиокнопками в fieldset, поля адреса разложены гридом с контейнерным запросом, итог вынесен в отдельную колонку рядом с формой. Тема берётся из color-scheme окружения через light-dark(): подложки по умолчанию нет, её включает проп background.",
       "meta": {
-        "tags": ["commerce", "checkout", "delivery", "form"],
+        "tags": [
+          "commerce",
+          "checkout",
+          "delivery",
+          "form"
+        ],
         "preview": {
           "width": "full"
         },
@@ -762,7 +794,12 @@
             }
           }
         },
-        "cardControls": ["total", "cta", "accent", "background"]
+        "cardControls": [
+          "total",
+          "cta",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -770,7 +807,9 @@
       "type": "registry:block",
       "title": "Плитки категорий",
       "description": "Витрина категорий мозаикой: крупная плитка задаётся флагом в данных, а число товаров видно до перехода.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -782,7 +821,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-005-*. Серверный: хуков нет. Сетка перестраивается контейнерными запросами, крупная плитка получает два столбца по флагу wide в данных. Ссылка растянута псевдоэлементом, а обводка фокуса ставится на плитку через :has(). Тема берётся из color-scheme окружения через light-dark(): подложки по умолчанию нет, её включает проп background.",
       "meta": {
-        "tags": ["commerce", "category", "tiles", "navigation"],
+        "tags": [
+          "commerce",
+          "category",
+          "tiles",
+          "navigation"
+        ],
         "preview": {
           "width": "full"
         },
@@ -936,7 +980,12 @@
             }
           }
         },
-        "cardControls": ["title", "lead", "accent", "background"]
+        "cardControls": [
+          "title",
+          "lead",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -944,7 +993,9 @@
       "type": "registry:block",
       "title": "Сводка отзывов",
       "description": "Отзывы с разбивкой по оценкам: доли считаются из массива, а пометка о покупке стоит у автора, а не под текстом.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -956,7 +1007,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-006-*. Серверный: хуков нет. Число оценок и доли полос считаются из массива spread, поэтому разбивка всегда сходится со средним. Оценка каждого отзыва продублирована числом, а полосы нарисованы фоном без библиотеки графиков. Тема берётся из color-scheme окружения через light-dark(): подложки по умолчанию нет, её включает проп background.",
       "meta": {
-        "tags": ["commerce", "reviews", "rating", "trust"],
+        "tags": [
+          "commerce",
+          "reviews",
+          "rating",
+          "trust"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1105,7 +1161,12 @@
             }
           }
         },
-        "cardControls": ["title", "average", "accent", "background"]
+        "cardControls": [
+          "title",
+          "average",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1113,7 +1174,9 @@
       "type": "registry:block",
       "title": "Витрина категории",
       "description": "Витрина категории: сортировка и число найденного стоят в одной строке с заголовком, а снятые фильтры видно чипами.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1125,7 +1188,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-007-*. Серверный: хуков нет, сортировка сделана нативным select с defaultValue. Число колонок считается контейнерными запросами от ширины блока, обложка нарисована градиентом по оттенку товара. Ссылка растянута псевдоэлементом, а обводка фокуса ставится на карточку через :has(). Тема берётся из color-scheme окружения через light-dark(): подложки по умолчанию нет, её включает проп background.",
       "meta": {
-        "tags": ["commerce", "catalog", "grid", "sorting"],
+        "tags": [
+          "commerce",
+          "catalog",
+          "grid",
+          "sorting"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1244,8 +1312,16 @@
             "preview": {
               "props": {
                 "title": "Living room furniture",
-                "crumbs": ["Catalogue", "Home", "Living room"],
-                "chips": ["Wood", "Under $600", "In stock"],
+                "crumbs": [
+                  "Catalogue",
+                  "Home",
+                  "Living room"
+                ],
+                "chips": [
+                  "Wood",
+                  "Under $600",
+                  "In stock"
+                ],
                 "sorts": [
                   "Most popular",
                   "Cheapest first",
@@ -1310,7 +1386,12 @@
             }
           }
         },
-        "cardControls": ["title", "found", "accent", "background"]
+        "cardControls": [
+          "title",
+          "found",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1318,7 +1399,9 @@
       "type": "registry:block",
       "title": "Товар с галереей",
       "description": "Страница товара с галереей на радиокнопках: кадр переключается без JS, а вариант выбирается образцом цвета с подписью.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1330,7 +1413,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-008-*. Серверный: хуков нет — кадр галереи держат радиокнопки, а показ делает соседний селектор ~. Две колонки включаются контейнерным запросом, выбор цвета собран из радиокнопок в fieldset, состояние образца ставится через :has(). Идентификаторы кадров фиксированы, поэтому два экземпляра на одной странице конфликтуют. Тема берётся из color-scheme окружения через light-dark(): подложки по умолчанию нет, её включает проп background.",
       "meta": {
-        "tags": ["commerce", "product", "gallery", "variants"],
+        "tags": [
+          "commerce",
+          "product",
+          "gallery",
+          "variants"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1475,12 +1563,22 @@
                     "note": "made to order"
                   }
                 ],
-                "shots": ["Full view", "Back", "Fabric close-up", "In a room"]
+                "shots": [
+                  "Full view",
+                  "Back",
+                  "Fabric close-up",
+                  "In a room"
+                ]
               }
             }
           }
         },
-        "cardControls": ["title", "price", "accent", "background"]
+        "cardControls": [
+          "title",
+          "price",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1488,7 +1586,9 @@
       "type": "registry:block",
       "title": "Корзина с полкой рекомендаций",
       "description": "Корзина с полкой «отложено»: товар, который не готовы купить сейчас, сохраняется отдельно и не мешает считать итог.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1500,7 +1600,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-009-*. Серверный: количество держит нативный select, состояния нет. Две колонки включаются контейнерным запросом, итог прилипает через position:sticky, строки итога выведены списком определений с обёрткой display:contents. Отложенные позиции отличаются пунктирной рамкой и приглушённым фоном. Тема берётся из color-scheme окружения через light-dark(): подложки по умолчанию нет, её включает проп background.",
       "meta": {
-        "tags": ["commerce", "cart", "wishlist", "totals"],
+        "tags": [
+          "commerce",
+          "cart",
+          "wishlist",
+          "totals"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1682,7 +1787,12 @@
             }
           }
         },
-        "cardControls": ["title", "cta", "accent", "background"]
+        "cardControls": [
+          "title",
+          "cta",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1690,7 +1800,9 @@
       "type": "registry:block",
       "title": "Оформление на одном экране",
       "description": "Оформление в один экран: контакты, доставка и оплата без шагов, а поля карты появляются только под выбранной оплатой картой.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1702,7 +1814,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-010-*. Серверный: раскрытие полей карты сделано через :has() у выбранной радиокнопки, состояния нет. Разделы собраны в fieldset с legend, сетка полей и колонка итога включаются контейнерными запросами, итог прилипает через position:sticky. Кнопка оплаты лежит вне формы и связана с ней атрибутом form. Тема берётся из color-scheme окружения через light-dark(): подложки по умолчанию нет, её включает проп background.",
       "meta": {
-        "tags": ["commerce", "checkout", "payment", "form"],
+        "tags": [
+          "commerce",
+          "checkout",
+          "payment",
+          "form"
+        ],
         "preview": {
           "width": "full"
         },
@@ -1878,7 +1995,12 @@
             }
           }
         },
-        "cardControls": ["total", "cta", "accent", "background"]
+        "cardControls": [
+          "total",
+          "cta",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -1886,7 +2008,9 @@
       "type": "registry:block",
       "title": "Заказ оформлен",
       "description": "Подтверждение заказа: номер и срок доставки набраны крупно и стоят выше состава, а ниже перечислено, что произойдёт дальше.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1898,7 +2022,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-011-*. Серверный: хуков нет. Два ключевых факта вынесены в карточки, которые встают в две колонки контейнерным запросом; номер выделяется целиком через user-select:all. Состав заказа выведен списком, реквизиты — списком определений с обёрткой display:contents. Тема берётся из color-scheme окружения через light-dark(): подложки по умолчанию нет, её включает проп background.",
       "meta": {
-        "tags": ["commerce", "order", "confirmation", "receipt"],
+        "tags": [
+          "commerce",
+          "order",
+          "confirmation",
+          "receipt"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2062,7 +2191,12 @@
             }
           }
         },
-        "cardControls": ["order", "eta", "accent", "background"]
+        "cardControls": [
+          "order",
+          "eta",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2070,7 +2204,9 @@
       "type": "registry:block",
       "title": "Отслеживание доставки",
       "description": "Отслеживание доставки: этапы различаются формой значка, а не цветом, полоса разворачивается по ширине блока, история спрятана в details.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2082,7 +2218,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-012-*. Серверный: хуков нет, подробная история сложена в нативный details. Полоса этапов вертикальная по умолчанию и становится горизонтальной по контейнерному запросу — соединители перерисовываются псевдоэлементом. Текущий этап помечен кольцом с анимацией, выключенной в prefers-reduced-motion. Тема берётся из color-scheme окружения через light-dark(): подложки по умолчанию нет, её включает проп background.",
       "meta": {
-        "tags": ["commerce", "delivery", "tracking", "timeline"],
+        "tags": [
+          "commerce",
+          "delivery",
+          "tracking",
+          "timeline"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2255,7 +2396,12 @@
             }
           }
         },
-        "cardControls": ["eta", "status", "accent", "background"]
+        "cardControls": [
+          "eta",
+          "status",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2263,7 +2409,9 @@
       "type": "registry:block",
       "title": "История заказов",
       "description": "Список заказов покупателя: у каждой строки одно действие по её состоянию, а состав свёрнут в стопку миниатюр с остатком числом.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2275,7 +2423,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-013-*. Серверный: фильтр собран радиокнопками в fieldset со скрытой legend, состояния нет. Строка заказа перестраивается в две колонки контейнерным запросом; статус помечен цветной точкой и словом, миниатюры наложены отрицательным margin с остатком в отдельном кружке.",
       "meta": {
-        "tags": ["commerce", "orders", "account", "history"],
+        "tags": [
+          "commerce",
+          "orders",
+          "account",
+          "history"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2390,7 +2543,12 @@
             "preview": {
               "props": {
                 "title": "My orders",
-                "tabs": ["All", "On the way", "Delivered", "Cancelled"],
+                "tabs": [
+                  "All",
+                  "On the way",
+                  "Delivered",
+                  "Cancelled"
+                ],
                 "empty": "No orders in this tab.",
                 "filterLabel": "Show",
                 "orderText": "Order no. {id}",
@@ -2403,8 +2561,14 @@
                     "status": "way",
                     "statusLabel": "On the way, arrives 12 March",
                     "total": "$515",
-                    "items": ["Haze armchair", "Overcast throw × 2"],
-                    "hues": [75, 262],
+                    "items": [
+                      "Haze armchair",
+                      "Overcast throw × 2"
+                    ],
+                    "hues": [
+                      75,
+                      262
+                    ],
                     "action": "Track"
                   },
                   {
@@ -2413,8 +2577,16 @@
                     "status": "done",
                     "statusLabel": "Delivered 5 February",
                     "total": "$123",
-                    "items": ["Dusk floor lamp", "E27 bulb", "Mist rug"],
-                    "hues": [150, 40, 20],
+                    "items": [
+                      "Dusk floor lamp",
+                      "E27 bulb",
+                      "Mist rug"
+                    ],
+                    "hues": [
+                      150,
+                      40,
+                      20
+                    ],
                     "action": "Write a review"
                   },
                   {
@@ -2423,8 +2595,12 @@
                     "status": "cancel",
                     "statusLabel": "Cancelled, refunded",
                     "total": "$49",
-                    "items": ["Ray lamp"],
-                    "hues": [200],
+                    "items": [
+                      "Ray lamp"
+                    ],
+                    "hues": [
+                      200
+                    ],
                     "action": "Reorder"
                   }
                 ]
@@ -2432,7 +2608,12 @@
             }
           }
         },
-        "cardControls": ["title", "empty", "accent", "background"]
+        "cardControls": [
+          "title",
+          "empty",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2440,7 +2621,9 @@
       "type": "registry:block",
       "title": "Заявка на возврат",
       "description": "Заявка на возврат: причина выбирается из списка, поле для подробностей появляется только у «другого», а срок возврата стоит вверху.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2452,7 +2635,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-014-*. Серверный: раскрытие поля подробностей сделано на :has() у последней радиокнопки, состояния нет. Позиции выбираются чекбоксами, причина и способ возврата — радиокнопками в fieldset; выбранная строка подсвечивается через :has(input:checked). Срок вынесен в предупреждающую плашку над формой.",
       "meta": {
-        "tags": ["commerce", "returns", "form", "support"],
+        "tags": [
+          "commerce",
+          "returns",
+          "form",
+          "support"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2626,7 +2814,13 @@
             }
           }
         },
-        "cardControls": ["title", "deadline", "cta", "accent", "background"]
+        "cardControls": [
+          "title",
+          "deadline",
+          "cta",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2634,7 +2828,9 @@
       "type": "registry:block",
       "title": "Отзывы с фильтрами",
       "description": "Отзывы с фильтром, который показывает число совпадений до нажатия: пустой фильтр выключен, а под кнопками стоит «показано N из M».",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2646,7 +2842,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-015-*. Клиентский: \"use client\" ради выбранного фильтра. Счётчики у кнопок и средняя оценка считаются из массива отзывов, поэтому не расходятся с выборкой. Нажатое состояние передаётся aria-pressed, изменение выборки объявляется через aria-live, сетка в две колонки включается контейнерным запросом.",
       "meta": {
-        "tags": ["commerce", "reviews", "filter", "rating"],
+        "tags": [
+          "commerce",
+          "reviews",
+          "filter",
+          "rating"
+        ],
         "preview": {
           "width": "full"
         },
@@ -2847,7 +3048,13 @@
             }
           }
         },
-        "cardControls": ["title", "empty", "star", "accent", "background"]
+        "cardControls": [
+          "title",
+          "empty",
+          "star",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -2855,7 +3062,9 @@
       "type": "registry:block",
       "title": "Выбор комплекта",
       "description": "Комплект «часто берут вместе»: сумма пересчитывается от галочек, а основной товар нельзя снять — иначе получается набор без товара.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -2867,7 +3076,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-016-*. Клиентский: \"use client\" ради выбранных позиций. Сумма и скидка комплекта считаются из выбранных элементов, поэтому цифры не расходятся. Цепочка карточек становится горизонтальной по контейнерному запросу, выбранная карточка подсвечивается через :has(input:checked).",
       "meta": {
-        "tags": ["commerce", "bundle", "upsell", "cart"],
+        "tags": [
+          "commerce",
+          "bundle",
+          "upsell",
+          "cart"
+        ],
         "preview": {
           "width": "full"
         },
@@ -3030,7 +3244,13 @@
             }
           }
         },
-        "cardControls": ["title", "cta", "saving", "accent", "background"]
+        "cardControls": [
+          "title",
+          "cta",
+          "saving",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -3038,7 +3258,9 @@
       "type": "registry:block",
       "title": "Таблица сравнения",
       "description": "Сравнение товаров таблицей: одинаковые строки прячутся одной галочкой, первая колонка залипает при прокрутке, лучшее значение подписано словом.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3050,7 +3272,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-017-*. Серверный: переключатель «только различия» работает через :has() у чекбокса, строки с одинаковыми значениями помечаются в разметке флагом data-same. Таблица прокручивается по горизонтали в фокусируемом контейнере, заголовки строк залипают через position:sticky.",
       "meta": {
-        "tags": ["commerce", "compare", "table", "specs"],
+        "tags": [
+          "commerce",
+          "compare",
+          "table",
+          "specs"
+        ],
         "preview": {
           "width": "full"
         },
@@ -3209,36 +3436,66 @@
                 "rows": [
                   {
                     "label": "Frame",
-                    "values": ["Oak", "Oak", "Oak"]
+                    "values": [
+                      "Oak",
+                      "Oak",
+                      "Oak"
+                    ]
                   },
                   {
                     "label": "Upholstery",
-                    "values": ["Wool", "Linen", "Hopsack"]
+                    "values": [
+                      "Wool",
+                      "Linen",
+                      "Hopsack"
+                    ]
                   },
                   {
                     "label": "Warranty",
-                    "values": ["12 years", "5 years", "3 years"],
+                    "values": [
+                      "12 years",
+                      "5 years",
+                      "3 years"
+                    ],
                     "best": 0
                   },
                   {
                     "label": "Weight",
-                    "values": ["18 kg", "23 kg", "16 kg"],
+                    "values": [
+                      "18 kg",
+                      "23 kg",
+                      "16 kg"
+                    ],
                     "best": 2
                   },
                   {
                     "label": "Assembly",
-                    "values": ["Not needed", "Not needed", "Not needed"]
+                    "values": [
+                      "Not needed",
+                      "Not needed",
+                      "Not needed"
+                    ]
                   },
                   {
                     "label": "Delivery",
-                    "values": ["Tomorrow", "5 days", "Tomorrow"]
+                    "values": [
+                      "Tomorrow",
+                      "5 days",
+                      "Tomorrow"
+                    ]
                   }
                 ]
               }
             }
           }
         },
-        "cardControls": ["title", "toggle", "cta", "accent", "background"]
+        "cardControls": [
+          "title",
+          "toggle",
+          "cta",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -3246,7 +3503,9 @@
       "type": "registry:block",
       "title": "Наличие в магазинах",
       "description": "Наличие по магазинам: количество названо числом, а строка без товара показывает срок подвоза и предлагает подписку вместо тупика.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3258,7 +3517,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-018-*. Серверный: город выбирается нативным select, состояния нет. Уровень наличия выводится из числа и красит точку, подпись пересчитывается тем же правилом. Строка магазина перестраивается в две колонки контейнерным запросом.",
       "meta": {
-        "tags": ["commerce", "stock", "stores", "pickup"],
+        "tags": [
+          "commerce",
+          "stock",
+          "stores",
+          "pickup"
+        ],
         "preview": {
           "width": "full"
         },
@@ -3409,7 +3673,11 @@
                   "few": "Only {count} left",
                   "many": "{count} on the floor"
                 },
-                "cities": ["London", "Manchester", "Leeds"],
+                "cities": [
+                  "London",
+                  "Manchester",
+                  "Leeds"
+                ],
                 "stores": [
                   {
                     "id": "1",
@@ -3458,7 +3726,9 @@
       "type": "registry:block",
       "title": "Подписка со скидкой",
       "description": "Подписка на товар: разовая цена и цена по подписке видны рядом, периодичность появляется под подпиской и сразу называет дату первой доставки.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3470,7 +3740,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-019-*. Серверный: блок периодичности раскрывается через :has() у радиокнопки подписки, состояния нет. Способы покупки и периоды собраны в fieldset со скрытыми legend, выбор подсвечивается через :has(input:checked). Две колонки способов включаются контейнерным запросом.",
       "meta": {
-        "tags": ["commerce", "subscription", "pricing", "retention"],
+        "tags": [
+          "commerce",
+          "subscription",
+          "pricing",
+          "retention"
+        ],
         "preview": {
           "width": "full"
         },
@@ -3634,7 +3909,13 @@
             }
           }
         },
-        "cardControls": ["once", "regular", "discount", "accent", "background"]
+        "cardControls": [
+          "once",
+          "regular",
+          "discount",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -3642,7 +3923,9 @@
       "type": "registry:block",
       "title": "Промокод",
       "description": "Промокод в корзине: скидка сразу становится отдельной строкой итога, ошибка объявляется в aria-live, применённый код можно снять.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3654,7 +3937,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-020-*. Клиентский: \"use client\" ради введённого кода, применённой скидки и сообщения. Скидка считается от суммы товаров, поэтому итог сходится после любой правки. Сообщение живёт в области aria-live, применённый код показан чипом с кнопкой снятия, поле принимает Enter.",
       "meta": {
-        "tags": ["commerce", "promo", "discount", "cart"],
+        "tags": [
+          "commerce",
+          "promo",
+          "discount",
+          "cart"
+        ],
         "preview": {
           "width": "full"
         },
@@ -3814,7 +4102,13 @@
             }
           }
         },
-        "cardControls": ["goods", "cta", "placeholder", "accent", "background"]
+        "cardControls": [
+          "goods",
+          "cta",
+          "placeholder",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -3822,7 +4116,9 @@
       "type": "registry:block",
       "title": "Способы доставки",
       "description": "Выбор доставки: у каждого способа названы обе цены — деньги и время, а день и интервал появляются только под курьером.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -3834,7 +4130,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-021-*. Серверный: выбор дня и интервала раскрывается через :has() у радиокнопки курьера, состояния нет. Способы собраны в fieldset со скрытой legend, выбранный подсвечивается через :has(input:checked), лента дней прокручивается по горизонтали.",
       "meta": {
-        "tags": ["commerce", "shipping", "delivery", "checkout"],
+        "tags": [
+          "commerce",
+          "shipping",
+          "delivery",
+          "checkout"
+        ],
         "preview": {
           "width": "full"
         },
@@ -3998,12 +4299,21 @@
                     "day": "Sat"
                   }
                 ],
-                "slots": ["10:00 – 14:00", "14:00 – 18:00", "18:00 – 22:00"]
+                "slots": [
+                  "10:00 – 14:00",
+                  "14:00 – 18:00",
+                  "18:00 – 22:00"
+                ]
               }
             }
           }
         },
-        "cardControls": ["title", "cta", "accent", "background"]
+        "cardControls": [
+          "title",
+          "cta",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -4011,7 +4321,9 @@
       "type": "registry:block",
       "title": "Сохранённые карты",
       "description": "Оплата сохранёнными картами: карта узнаётся по банку и четырём цифрам, истекающая помечена заранее, новая карта — такой же вариант списка.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4023,7 +4335,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-022-*. Серверный: поля новой карты раскрываются через :has() у её радиокнопки, состояния нет. Строка карты — контейнер с label в display:contents, чтобы поле CVC оставалось отдельным элементом внутри той же сетки. Раскладка полей новой карты включается контейнерным запросом.",
       "meta": {
-        "tags": ["commerce", "payment", "cards", "checkout"],
+        "tags": [
+          "commerce",
+          "payment",
+          "cards",
+          "checkout"
+        ],
         "preview": {
           "width": "full"
         },
@@ -4182,7 +4499,12 @@
             }
           }
         },
-        "cardControls": ["amount", "cta", "accent", "background"]
+        "cardControls": [
+          "amount",
+          "cta",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -4190,7 +4512,9 @@
       "type": "registry:block",
       "title": "Чек с налогами",
       "description": "Чек с позициями и налогом: НДС посчитан по ставкам и подписан «в том числе», суммы выведены из позиций, нижний край вырезан маской.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4202,7 +4526,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-023-*. Серверный: хуков нет. Итог, скидка и налог по каждой ставке считаются из массива позиций, поэтому чек сходится после любой правки. Нижний зубчатый край сделан маской из двух градиентов, QR нарисован conic-gradient, цифры набраны моноширинным шрифтом с табличными цифрами.",
       "meta": {
-        "tags": ["commerce", "receipt", "tax", "invoice"],
+        "tags": [
+          "commerce",
+          "receipt",
+          "tax",
+          "invoice"
+        ],
         "preview": {
           "width": "full"
         },
@@ -4374,7 +4703,13 @@
             }
           }
         },
-        "cardControls": ["title", "cta", "shipping", "accent", "background"]
+        "cardControls": [
+          "title",
+          "cta",
+          "shipping",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -4382,7 +4717,9 @@
       "type": "registry:block",
       "title": "Сетка избранного",
       "description": "Избранное как список ожидания: падение цены и возврат в продажу названы словами, а удаление можно отменить строкой возврата.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4394,7 +4731,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-024-*. Клиентский: \"use client\" ради удаления и отмены. Удалённый товар держится в состоянии до следующего удаления, строка отмены объявляется через aria-live. Сетка перестраивается контейнерными запросами, кнопка сердца лежит поверх обложки и несёт имя товара в подписи.",
       "meta": {
-        "tags": ["commerce", "wishlist", "favorites", "grid"],
+        "tags": [
+          "commerce",
+          "wishlist",
+          "favorites",
+          "grid"
+        ],
         "preview": {
           "width": "full"
         },
@@ -4561,7 +4903,13 @@
             }
           }
         },
-        "cardControls": ["title", "cta", "love", "accent", "background"]
+        "cardControls": [
+          "title",
+          "cta",
+          "love",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -4569,7 +4917,9 @@
       "type": "registry:block",
       "title": "Боковые фильтры",
       "description": "Боковые фильтры каталога: у каждого значения стоит число товаров, группы свёрнуты в details, выбранное собрано чипами наверху.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4581,7 +4931,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-025-*. Серверный: группы раскрываются нативным details, состояния нет. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, она включается пропом background. Корневой элемент — aside с максимальной шириной колонки; цветовые значения помечены образцом и подписью, кнопка применения прилипает снизу через position:sticky и несёт число товаров.",
       "meta": {
-        "tags": ["commerce", "filters", "sidebar", "catalog"],
+        "tags": [
+          "commerce",
+          "filters",
+          "sidebar",
+          "catalog"
+        ],
         "preview": {
           "width": "full"
         },
@@ -4696,7 +5051,10 @@
             "preview": {
               "props": {
                 "title": "Filters",
-                "chips": ["Oak", "Sand"],
+                "chips": [
+                  "Oak",
+                  "Sand"
+                ],
                 "cta": "Show {count} items",
                 "reset": "Reset",
                 "priceTitle": "Price, $",
@@ -4797,7 +5155,12 @@
             }
           }
         },
-        "cardControls": ["cta", "found", "accent", "background"]
+        "cardControls": [
+          "cta",
+          "found",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -4805,7 +5168,9 @@
       "type": "registry:block",
       "title": "Пустая корзина",
       "description": "Пустая корзина, которая продолжает разговор: под объяснением стоит подборка из недавно просмотренного, а картинка нарисована CSS.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -4817,7 +5182,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-026-*. Серверный: хуков нет. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, она включается пропом background. Иллюстрация сумки собрана из псевдоэлементов с clip-path, поэтому блок не тянет ассеты. Сетка подборки перестраивается контейнерным запросом, ссылка карточки растянута псевдоэлементом, фокус ставится на карточку через :has().",
       "meta": {
-        "tags": ["commerce", "cart", "empty-state", "recommendations"],
+        "tags": [
+          "commerce",
+          "cart",
+          "empty-state",
+          "recommendations"
+        ],
         "preview": {
           "width": "full"
         },
@@ -4982,7 +5352,13 @@
             }
           }
         },
-        "cardControls": ["title", "cta", "secondary", "accent", "background"]
+        "cardControls": [
+          "title",
+          "cta",
+          "secondary",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -4990,7 +5366,9 @@
       "type": "registry:block",
       "title": "Главная магазина",
       "description": "Главная магазина: баннер акции со сроком словами, ряд кураторских подборок и сетка ходовых товаров одним экраном.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -5002,7 +5380,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-027-*. Серверный: хуков нет. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, она включается пропом background, а баннер намеренно остаётся тёмным в обеих темах. Баннер разворачивается в две колонки контейнерным запросом, плитки подборок и сетка товаров считают число колонок от ширины блока. Обложки нарисованы градиентом по оттенку из данных, ссылки растянуты псевдоэлементом, фокус ставится на карточку через :has(). Срок акции выведен текстом, а не таймером.",
       "meta": {
-        "tags": ["commerce", "storefront", "banner", "collections"],
+        "tags": [
+          "commerce",
+          "storefront",
+          "banner",
+          "collections"
+        ],
         "preview": {
           "width": "full"
         },
@@ -5213,7 +5596,12 @@
             }
           }
         },
-        "cardControls": ["headline", "cta", "accent", "background"]
+        "cardControls": [
+          "headline",
+          "cta",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -5221,7 +5609,9 @@
       "type": "registry:block",
       "title": "Страница бренда",
       "description": "Страница бренда: монограмма вместо файла логотипа, факты о производителе строкой цифр и сетка его товаров под навигацией разделов.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -5233,7 +5623,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-028-*. Серверный: хуков нет. Тема берётся из color-scheme окружения через light-dark(): подложки у блока по умолчанию нет, она включается пропом background. Монограмма собирается из первой буквы названия, поэтому картинка логотипа не нужна. Факты выведены списком определений с обёрткой display:contents и переставляются контейнерным запросом, разделы бренда — настоящая навигация со ссылками и горизонтальной прокруткой, сетка товаров считает колонки от ширины блока.",
       "meta": {
-        "tags": ["commerce", "brand", "profile", "grid"],
+        "tags": [
+          "commerce",
+          "brand",
+          "profile",
+          "grid"
+        ],
         "preview": {
           "width": "full"
         },
@@ -5420,7 +5815,12 @@
             }
           }
         },
-        "cardControls": ["brand", "follow", "accent", "background"]
+        "cardControls": [
+          "brand",
+          "follow",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -5428,7 +5828,9 @@
       "type": "registry:block",
       "title": "Результаты поиска",
       "description": "Экран поиска: исправление опечатки объявлено словами со ссылкой на исходный запрос, а уточнения стоят чипами выше выдачи.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -5440,7 +5842,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-029-*. Серверный: хуков нет; тема берётся из color-scheme окружения через light-dark(), подложки у блока по умолчанию нет и она включается пропом background; поле поиска — обычная форма role=\"search\" с defaultValue. Число найденного объявлено в aria-live, строки выдачи перестраиваются контейнерным запросом с трёх колонок на две, миниатюры нарисованы градиентом. Исправление запроса показано отдельной плашкой со ссылкой на поиск без исправления.",
       "meta": {
-        "tags": ["commerce", "search", "results", "refine"],
+        "tags": [
+          "commerce",
+          "search",
+          "results",
+          "refine"
+        ],
         "preview": {
           "width": "full"
         },
@@ -5575,15 +5982,28 @@
                 "refines": [
                   {
                     "group": "Type",
-                    "values": ["Desk", "Wall", "Floor", "Pendant"]
+                    "values": [
+                      "Desk",
+                      "Wall",
+                      "Floor",
+                      "Pendant"
+                    ]
                   },
                   {
                     "group": "Price",
-                    "values": ["under $60", "$60–180", "over $180"]
+                    "values": [
+                      "under $60",
+                      "$60–180",
+                      "over $180"
+                    ]
                   },
                   {
                     "group": "Light",
-                    "values": ["Warm", "Neutral", "Dimmable"]
+                    "values": [
+                      "Warm",
+                      "Neutral",
+                      "Dimmable"
+                    ]
                   }
                 ],
                 "related": [
@@ -5630,7 +6050,12 @@
             }
           }
         },
-        "cardControls": ["query", "found", "accent", "background"]
+        "cardControls": [
+          "query",
+          "found",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -5638,7 +6063,9 @@
       "type": "registry:block",
       "title": "Таблица размеров",
       "description": "Выбор размера с таблицей мерок рядом: таблица открывается в details, а раскупленный размер остаётся видимым и зачёркнутым.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -5650,7 +6077,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-030-*. Серверный: тема берётся из color-scheme окружения через light-dark(), подложки у блока по умолчанию нет и она включается пропом background; выбор держат радиокнопки в fieldset, таблица сложена в нативный details. Недоступный размер помечен disabled и зачёркиванием, остаток выведен второй строкой в кнопке. Таблица прокручивается по горизонтали в своей обёртке, первая колонка залипает через position:sticky. Legend получает clear:both, иначе следующие flex-дети обтекают её.",
       "meta": {
-        "tags": ["commerce", "product", "sizes", "table"],
+        "tags": [
+          "commerce",
+          "product",
+          "sizes",
+          "table"
+        ],
         "preview": {
           "width": "full"
         },
@@ -5825,7 +6257,12 @@
             }
           }
         },
-        "cardControls": ["title", "hint", "accent", "background"]
+        "cardControls": [
+          "title",
+          "hint",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -5833,7 +6270,9 @@
       "type": "registry:block",
       "title": "Карта пунктов самовывоза",
       "description": "Доставка и самовывоз одним экраном: список пунктов с картой-заглушкой раскрывается только под выбранным самовывозом.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -5845,7 +6284,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-031-*. Серверный: тема берётся из color-scheme окружения через light-dark(), подложки у блока по умолчанию нет и она включается пропом background; раскрытие панелей сделано через :has() у отмеченной радиокнопки, состояния нет. Карта нарисована слоями линейных градиентов — сетка кварталов, река и метки: настоящая карта требует ключа, скрипта и стороннего домена. Метки позиционируются процентами из данных, панель раскладывается на две колонки контейнерным запросом.",
       "meta": {
-        "tags": ["commerce", "delivery", "pickup", "map"],
+        "tags": [
+          "commerce",
+          "delivery",
+          "pickup",
+          "map"
+        ],
         "preview": {
           "width": "full"
         },
@@ -6020,7 +6464,12 @@
             }
           }
         },
-        "cardControls": ["city", "cta", "accent", "background"]
+        "cardControls": [
+          "city",
+          "cta",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -6028,7 +6477,9 @@
       "type": "registry:block",
       "title": "Пошаговое оформление",
       "description": "Оформление в три шага: пройденный шаг сворачивается в строку с готовым ответом и кнопкой «Изменить», открыт всегда один.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -6040,7 +6491,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-032-*. Серверный: тема берётся из color-scheme окружения через light-dark(), подложки у блока по умолчанию нет и она включается пропом background; открытый шаг задаётся числом current, состояние живёт в маршруте, а не в компоненте. Состояние шага различается формой значка — галочка, кольцо, номер, — а не только цветом. Колонка итога прилипает через position:sticky и встаёт рядом с шагами контейнерным запросом.",
       "meta": {
-        "tags": ["commerce", "checkout", "steps", "summary"],
+        "tags": [
+          "commerce",
+          "checkout",
+          "steps",
+          "summary"
+        ],
         "preview": {
           "width": "full"
         },
@@ -6216,7 +6672,12 @@
             }
           }
         },
-        "cardControls": ["current", "cta", "accent", "background"]
+        "cardControls": [
+          "current",
+          "cta",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -6224,7 +6685,9 @@
       "type": "registry:block",
       "title": "Оформление без регистрации",
       "description": "Заказ без регистрации: гостевой путь стоит первым и выбран по умолчанию, а польза аккаунта названа списком рядом.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -6236,7 +6699,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-033-*. Серверный: тема берётся из color-scheme окружения через light-dark(), подложки у блока по умолчанию нет и она включается пропом background; форма гостя и форма входа раскрываются через :has() у отмеченной радиокнопки, состояния нет. Карточки выбора собраны из радиокнопок в fieldset, поля раскладываются гридом по контейнерному запросу, предложение завести аккаунт вынесено отдельным чекбоксом после оплаты.",
       "meta": {
-        "tags": ["commerce", "checkout", "guest", "account"],
+        "tags": [
+          "commerce",
+          "checkout",
+          "guest",
+          "account"
+        ],
         "preview": {
           "width": "full"
         },
@@ -6396,7 +6864,12 @@
             }
           }
         },
-        "cardControls": ["title", "cta", "accent", "background"]
+        "cardControls": [
+          "title",
+          "cta",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -6404,7 +6877,9 @@
       "type": "registry:block",
       "title": "Рассрочка",
       "description": "Оплата с рассрочкой: платёж и переплата считаются из суммы заказа, а график платежей показан датами, а не количеством частей.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -6416,7 +6891,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-034-*. Серверный: тема берётся из color-scheme окружения через light-dark(), подложки у блока по умолчанию нет и она включается пропом background; планы собраны радиокнопками в fieldset, состояния нет. Платёж и переплата выводятся из числа amount и доли overpay, поэтому цифры не расходятся после смены цены. Планы встают в три колонки контейнерным запросом, суммы набраны табличными цифрами. Legend получает clear:both, иначе следующие flex-дети обтекают его.",
       "meta": {
-        "tags": ["commerce", "payment", "installments", "schedule"],
+        "tags": [
+          "commerce",
+          "payment",
+          "installments",
+          "schedule"
+        ],
         "preview": {
           "width": "full"
         },
@@ -6588,7 +7068,12 @@
             }
           }
         },
-        "cardControls": ["amount", "cta", "accent", "background"]
+        "cardControls": [
+          "amount",
+          "cta",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -6596,7 +7081,9 @@
       "type": "registry:block",
       "title": "Подарочная упаковка",
       "description": "Подарочная упаковка и открытка: образцы коробок нарисованы CSS, а текст открытки сразу показан так, как его увидит получатель.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -6608,7 +7095,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-035-*. Серверный: тема берётся из color-scheme окружения через light-dark(), подложки у блока по умолчанию нет и она включается пропом background; упаковка выбирается радиокнопками в fieldset, счётчика символов нет — лимит держит maxLength у textarea и подпись под ней. Образцы коробок собраны из градиента и двух псевдоэлементов, поэтому картинки не нужны. Превью открытки набрано другим шрифтовым стеком и раскладывается рядом с полем контейнерным запросом.",
       "meta": {
-        "tags": ["commerce", "gift", "wrapping", "card"],
+        "tags": [
+          "commerce",
+          "gift",
+          "wrapping",
+          "card"
+        ],
         "preview": {
           "width": "full"
         },
@@ -6772,7 +7264,12 @@
             }
           }
         },
-        "cardControls": ["price", "limit", "accent", "background"]
+        "cardControls": [
+          "price",
+          "limit",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -6780,7 +7277,9 @@
       "type": "registry:block",
       "title": "Календарь доставки",
       "description": "Подписка на регулярную доставку: выбранная периодичность сразу отмечена датами на календаре месяца, первая доставка обведена.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -6792,7 +7291,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-036-*. Серверный: тема берётся из color-scheme окружения через light-dark(), подложки у блока по умолчанию нет и она включается пропом background; периодичность держат радиокнопки, календарь строится из firstDay, startDay и шага периода. Разметка календаря — настоящая таблица с заголовками столбцов, поэтому скринридер читает дни как даты. Первая доставка отличается не только цветом, но и кольцом; колонка условий прилипает через position:sticky.",
       "meta": {
-        "tags": ["commerce", "subscription", "calendar", "delivery"],
+        "tags": [
+          "commerce",
+          "subscription",
+          "calendar",
+          "delivery"
+        ],
         "preview": {
           "width": "full"
         },
@@ -6835,7 +7339,11 @@
             "label": "Периодичность",
             "type": "select",
             "default": "biweek",
-            "options": ["week", "biweek", "month"]
+            "options": [
+              "week",
+              "biweek",
+              "month"
+            ]
           },
           {
             "prop": "cta",
@@ -6923,7 +7431,15 @@
                 "dropsLegend": "delivery days",
                 "firstLegend": "The first delivery is ringed",
                 "rulesLabel": "Subscription terms",
-                "weekdays": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"],
+                "weekdays": [
+                  "mon",
+                  "tue",
+                  "wed",
+                  "thu",
+                  "fri",
+                  "sat",
+                  "sun"
+                ],
                 "periods": [
                   {
                     "value": "week",
@@ -6954,7 +7470,12 @@
             }
           }
         },
-        "cardControls": ["period", "cta", "accent", "background"]
+        "cardControls": [
+          "period",
+          "cta",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -6962,7 +7483,9 @@
       "type": "registry:block",
       "title": "Выбор товаров к возврату",
       "description": "Возврат с выбором позиций: у каждой строки заказа своя причина и своё количество, а невозвратная позиция остаётся с объяснением.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -6974,9 +7497,46 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-037-*. Серверный: отметка позиции — чекбокс, количество и причина — нативные select, состояния нет. Невозвратная строка помечена атрибутом data-blocked, её чекбокс отключён, а вместо полей выводится объяснение. Колонка суммы прилипает через position:sticky и встаёт рядом со списком контейнерным запросом.",
       "meta": {
-        "tags": ["commerce", "returns", "order", "refund"],
+        "tags": [
+          "commerce",
+          "returns",
+          "order",
+          "refund"
+        ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "lines": [
+              {
+                "id": "1",
+                "title": "Свитшот «Тихий вечер»",
+                "spec": "Размер L, серый",
+                "price": "5 400 ₽",
+                "count": 2,
+                "hue": 262,
+                "image": "/demo/products/product-tall-07.webp"
+              },
+              {
+                "id": "2",
+                "title": "Плед «Пасмурно»",
+                "spec": "Шерсть, 140×200",
+                "price": "7 400 ₽",
+                "count": 1,
+                "hue": 150,
+                "image": "/demo/products/product-16.webp"
+              },
+              {
+                "id": "3",
+                "title": "Свеча «Отмель»",
+                "spec": "Инжир и кедр, 200 г",
+                "price": "1 900 ₽",
+                "count": 1,
+                "hue": 75,
+                "image": "/demo/products/product-15.webp",
+                "blocked": "Товар вскрыт и относится к парфюмерии — по закону возврату не подлежит."
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Commerce037",
@@ -7144,7 +7704,12 @@
             }
           }
         },
-        "cardControls": ["order", "deadline", "accent", "background"]
+        "cardControls": [
+          "order",
+          "deadline",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -7152,7 +7717,9 @@
       "type": "registry:block",
       "title": "Условия гарантии",
       "description": "Гарантия и сервис: покрытые и непокрытые случаи стоят в одной таблице, а покрытие помечено значком и словом, а не цветом строки.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -7164,7 +7731,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-038-*. Серверный: хуков нет. Срок гарантии вынесен в плашку рядом с заголовком, цифры сервиса собраны карточками, таблица случаев прокручивается по горизонтали в своей обёртке. Покрытие обозначено формой значка — круг с галочкой против квадрата с крестом — и подписью словами, поэтому читается без различения цветов.",
       "meta": {
-        "tags": ["commerce", "warranty", "service", "support"],
+        "tags": [
+          "commerce",
+          "warranty",
+          "service",
+          "support"
+        ],
         "preview": {
           "width": "full"
         },
@@ -7368,7 +7940,12 @@
             }
           }
         },
-        "cardControls": ["term", "cta", "accent", "background"]
+        "cardControls": [
+          "term",
+          "cta",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -7376,7 +7953,9 @@
       "type": "registry:block",
       "title": "Сетка уценённого",
       "description": "Витрина уценки, где на каждой карточке написана причина скидки: «витринный образец» продаёт лучше и возвращается реже, чем голое «−40%».",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -7388,7 +7967,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-039-*. Серверный: хуков нет. Карточка несёт ярлык скидки, категорию уценки и описание дефекта отдельным блоком с цветной чертой. Остаток назван числом и продублирован полосой, ширина которой считается из числа штук. Ссылка растянута псевдоэлементом, кнопка поднята над ней через z-index, сетка перестраивается контейнерными запросами.",
       "meta": {
-        "tags": ["commerce", "outlet", "discount", "grid"],
+        "tags": [
+          "commerce",
+          "outlet",
+          "discount",
+          "grid"
+        ],
         "preview": {
           "width": "full"
         },
@@ -7553,7 +8137,12 @@
             }
           }
         },
-        "cardControls": ["title", "cta", "accent", "background"]
+        "cardControls": [
+          "title",
+          "cta",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -7561,7 +8150,9 @@
       "type": "registry:block",
       "title": "Предзаказ и релиз",
       "description": "Предзаказ, где дата выхода набрана крупнее цены: сначала отвечаем «когда», потом «сколько», а условие списания стоит рядом с кнопкой.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -7573,7 +8164,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-040-*. Серверный: хуков нет. Полоса до релиза статична, её ширина приходит числом progress — живой отсчёт требует клиентского времени и врёт на закешированной странице. Бонусы предзаказа помечены другой формой значка, две колонки включаются контейнерным запросом, старая цена выведена тегом s со скрытой подписью.",
       "meta": {
-        "tags": ["commerce", "preorder", "release", "product"],
+        "tags": [
+          "commerce",
+          "preorder",
+          "release",
+          "product"
+        ],
         "preview": {
           "width": "full"
         },
@@ -7739,7 +8335,12 @@
             }
           }
         },
-        "cardControls": ["release", "progress", "accent", "background"]
+        "cardControls": [
+          "release",
+          "progress",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -7747,7 +8348,9 @@
       "type": "registry:block",
       "title": "Цепочка комплекта",
       "description": "Набор товаров комплектом: цепочка карточек со знаком «плюс», а выгода доказана сравнением суммы по отдельности и цены набора.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -7759,7 +8362,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-041-*. Серверный: хуков нет, галочек нет — набор продаётся целиком. Цепочка перестраивается из столбца в строку контейнерным запросом, разделители «плюс» нарисованы псевдоэлементом и скрыты от скринридера, поэтому список читается списком. Сумма по отдельности выведена зачёркиванием рядом с ценой набора.",
       "meta": {
-        "tags": ["commerce", "bundle", "kit", "savings"],
+        "tags": [
+          "commerce",
+          "bundle",
+          "kit",
+          "savings"
+        ],
         "preview": {
           "width": "full"
         },
@@ -7916,7 +8524,12 @@
             }
           }
         },
-        "cardControls": ["together", "cta", "accent", "background"]
+        "cardControls": [
+          "together",
+          "cta",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -7924,7 +8537,9 @@
       "type": "registry:block",
       "title": "Бонусные баллы",
       "description": "Бонусные баллы: рядом с балансом названы курс к рублю, срок сгорания и предел списания — без них число баллов ни о чём не говорит.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -7936,7 +8551,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-042-*. Серверный: хуков нет. Баланс и начисление форматируются через toLocaleString, поэтому разряды не расходятся с локалью. Полоса до следующего уровня статична и приходит числом progress, начисление и предел списания выведены списком определений с обёрткой display:contents, правила программы собраны карточками в две колонки по контейнерному запросу.",
       "meta": {
-        "tags": ["commerce", "loyalty", "points", "rewards"],
+        "tags": [
+          "commerce",
+          "loyalty",
+          "points",
+          "rewards"
+        ],
         "preview": {
           "width": "full"
         },
@@ -8109,7 +8729,12 @@
             }
           }
         },
-        "cardControls": ["balance", "cta", "accent", "background"]
+        "cardControls": [
+          "balance",
+          "cta",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -8117,7 +8742,9 @@
       "type": "registry:block",
       "title": "Предложения продавцов",
       "description": "Сравнение продавцов по итоговой цене: сумма товара с доставкой считается в блоке, а ярлык лучшего предложения объясняет, чем оно лучшее.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -8129,7 +8756,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-043-*. Серверный: сортировка сделана нативным select с defaultValue, состояния нет. Итоговая цена считается сложением price и shipping, поэтому дешёвый товар с дорогой доставкой не выглядит выгодным. Строка предложения перестраивается в три колонки контейнерным запросом, лучшее предложение помечено рамкой и ярлыком с формулировкой причины.",
       "meta": {
-        "tags": ["commerce", "marketplace", "sellers", "compare"],
+        "tags": [
+          "commerce",
+          "marketplace",
+          "sellers",
+          "compare"
+        ],
         "preview": {
           "width": "full"
         },
@@ -8305,7 +8937,12 @@
             }
           }
         },
-        "cardControls": ["product", "cta", "accent", "background"]
+        "cardControls": [
+          "product",
+          "cta",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -8313,7 +8950,9 @@
       "type": "registry:block",
       "title": "Вопросы о товаре",
       "description": "Вопросы о товаре: ответ продавца и ответ покупателя помечены по-разному, потому что один и тот же текст весит от них по-разному.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -8325,7 +8964,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-044-*. Серверный: ветки сложены в нативный details, открытым по умолчанию оставлен первый вопрос через флаг open в данных. Ответ продавца отличается цветной чертой и ярлыком, ответ покупателя — ярлыком «купил товар». Число ответов вынесено в заголовок вопроса, форма нового вопроса стоит внизу пунктирной карточкой.",
       "meta": {
-        "tags": ["commerce", "questions", "answers", "product"],
+        "tags": [
+          "commerce",
+          "questions",
+          "answers",
+          "product"
+        ],
         "preview": {
           "width": "full"
         },
@@ -8518,7 +9162,12 @@
             }
           }
         },
-        "cardControls": ["title", "cta", "accent", "background"]
+        "cardControls": [
+          "title",
+          "cta",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -8526,7 +9175,9 @@
       "type": "registry:block",
       "title": "Адреса покупателя",
       "description": "Профиль покупателя вокруг адресов: основной помечен словом и стоит первым, у каждого адреса свой получатель и своя подсказка курьеру.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -8538,7 +9189,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-045-*. Серверный: хуков нет. Инициалы собираются из имени, поэтому файл аватара не нужен. Счётчики профиля выведены списком определений с обёрткой display:contents, карточки адресов встают в две колонки контейнерным запросом, действия помечены aria-label с названием адреса, у основного адреса кнопка «сделать основным» не рисуется.",
       "meta": {
-        "tags": ["commerce", "profile", "addresses", "account"],
+        "tags": [
+          "commerce",
+          "profile",
+          "addresses",
+          "account"
+        ],
         "preview": {
           "width": "full"
         },
@@ -8725,7 +9381,12 @@
             }
           }
         },
-        "cardControls": ["name", "addLabel", "accent", "background"]
+        "cardControls": [
+          "name",
+          "addLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -8733,7 +9394,9 @@
       "type": "registry:block",
       "title": "Липкая корзина",
       "description": "Корзина под узкий экран: итог с кнопкой прилипает к нижнему краю, а под панелью оставлен отступ, чтобы последняя строка не пряталась.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -8745,9 +9408,46 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-046-*. Серверный: количество показано кнопками без состояния, обработчики за вызывающим кодом. Шапка и панель итога держатся на position:sticky сверху и снизу, между списком и панелью стоит распорка, иначе последняя строка уходит под кнопку. Ширина ограничена 26rem, а на широком контейнере блок обводится рамкой контейнерным запросом.",
       "meta": {
-        "tags": ["commerce", "cart", "mobile", "sticky"],
+        "tags": [
+          "commerce",
+          "cart",
+          "mobile",
+          "sticky"
+        ],
         "preview": {
-          "width": "full"
+          "width": "full",
+          "props": {
+            "lines": [
+              {
+                "id": "1",
+                "title": "Торшер «Сумерки»",
+                "spec": "Ясень, тканый абажур",
+                "price": "16 200 ₽",
+                "count": 1,
+                "hue": 75,
+                "image": "/demo/products/product-07.webp"
+              },
+              {
+                "id": "2",
+                "title": "Плед «Пасмурно»",
+                "spec": "Шерсть, 140×200, серый",
+                "price": "14 800 ₽",
+                "count": 2,
+                "hue": 150,
+                "image": "/demo/products/product-16.webp"
+              },
+              {
+                "id": "3",
+                "title": "Свеча «Отмель»",
+                "spec": "Инжир и кедр, 200 г",
+                "price": "1 900 ₽",
+                "count": 1,
+                "hue": 262,
+                "gift": true,
+                "image": "/demo/products/product-15.webp"
+              }
+            ]
+          }
         },
         "ai": {
           "export": "Commerce046",
@@ -8916,7 +9616,12 @@
             }
           }
         },
-        "cardControls": ["total", "cta", "accent", "background"]
+        "cardControls": [
+          "total",
+          "cta",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -8924,7 +9629,9 @@
       "type": "registry:block",
       "title": "Сезонная главная",
       "description": "Главная магазина вокруг сезона: у подборки есть срок и число товаров, а крупная плитка задаётся флагом в данных.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -8936,7 +9643,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-047-*. Серверный: хуков нет. Сетка подборок и полоса преимуществ перестраиваются контейнерными запросами, крупная плитка получает два столбца по атрибуту data-wide, который ставится из флага wide в данных. Обложки нарисованы градиентом по оттенку, ссылка растянута псевдоэлементом, фокус ловится на плитке через :has().",
       "meta": {
-        "tags": ["commerce", "home", "season", "collections"],
+        "tags": [
+          "commerce",
+          "home",
+          "season",
+          "collections"
+        ],
         "preview": {
           "width": "full"
         },
@@ -9116,7 +9828,12 @@
             }
           }
         },
-        "cardControls": ["season", "title", "accent", "background"]
+        "cardControls": [
+          "season",
+          "title",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -9124,7 +9841,9 @@
       "type": "registry:block",
       "title": "Отсчёт до конца распродажи",
       "description": "Лендинг распродажи с таймером: цифры приходят пропами и подтверждены датой в теге time, а пороги скидки стоят рядом со сроком.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -9136,7 +9855,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-048-*. Серверный: хуков нет — значения таймера приходят пропами, а тикать их заставляет вызывающий код. Дата продублирована атрибутом dateTime у time. Полоса разобранного товара считается от процента через локальную переменную, тёмная подложка своя, пульс точки выключается в prefers-reduced-motion.",
       "meta": {
-        "tags": ["commerce", "sale", "countdown", "landing"],
+        "tags": [
+          "commerce",
+          "sale",
+          "countdown",
+          "landing"
+        ],
         "preview": {
           "width": "full"
         },
@@ -9292,7 +10016,11 @@
             }
           }
         },
-        "cardControls": ["title", "soldPercent", "accent"]
+        "cardControls": [
+          "title",
+          "soldPercent",
+          "accent"
+        ]
       }
     },
     {
@@ -9300,7 +10028,9 @@
       "type": "registry:block",
       "title": "Баннер коллекции",
       "description": "Страница коллекции с баннером: над обложкой стоит контекст — кто собрал, когда и сколько вещей внутри.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -9312,7 +10042,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-049-*. Серверный: хуков нет. Баннер собран из двух наложенных градиентов — нижний рисует фон, верхний даёт затемнение под текстом, поэтому подпись читается и на фотографии. Крошки выведены списком в nav, сетка вещей и колонка с рассказом включаются контейнерными запросами.",
       "meta": {
-        "tags": ["commerce", "collection", "banner", "catalog"],
+        "tags": [
+          "commerce",
+          "collection",
+          "banner",
+          "catalog"
+        ],
         "preview": {
           "width": "full"
         },
@@ -9491,7 +10226,12 @@
             }
           }
         },
-        "cardControls": ["title", "curator", "accent", "background"]
+        "cardControls": [
+          "title",
+          "curator",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -9499,7 +10239,9 @@
       "type": "registry:block",
       "title": "Каталог с автоподгрузкой",
       "description": "Каталог с бесконечной прокруткой, у которого есть выход: скелетоны, счётчик в aria-live и кнопка «показать ещё».",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -9511,7 +10253,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-050-*. Серверный: хуков нет, подгрузку выполняет вызывающий код. Скелетоны нарисованы движущимся градиентом и скрыты от скринридера через aria-hidden, счётчик объявляется в aria-live, а строка загрузки помечена role=status. Число колонок считается контейнерными запросами, анимация выключается в prefers-reduced-motion.",
       "meta": {
-        "tags": ["commerce", "catalog", "pagination", "skeleton"],
+        "tags": [
+          "commerce",
+          "catalog",
+          "pagination",
+          "skeleton"
+        ],
         "preview": {
           "width": "full"
         },
@@ -9700,7 +10447,12 @@
             }
           }
         },
-        "cardControls": ["total", "skeletons", "accent", "background"]
+        "cardControls": [
+          "total",
+          "skeletons",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -9708,7 +10460,9 @@
       "type": "registry:block",
       "title": "Переключатель сетки и списка",
       "description": "Каталог с переключателем «плиткой или списком»: раскладку и состав полей меняет :has(), без единой строки JS.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -9720,7 +10474,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-051-*. Серверный: вид держат две радиокнопки в fieldset со скрытой legend, а раскладку переключает :has() на оболочке. В списке дополнительно показываются описание и наличие — правила display на этих узлах и есть смысл переключателя. Идентификаторы радиокнопок фиксированы, поэтому два экземпляра на странице делят один переключатель.",
       "meta": {
-        "tags": ["commerce", "catalog", "view", "toggle"],
+        "tags": [
+          "commerce",
+          "catalog",
+          "view",
+          "toggle"
+        ],
         "preview": {
           "width": "full"
         },
@@ -9885,7 +10644,12 @@
             }
           }
         },
-        "cardControls": ["title", "found", "accent", "background"]
+        "cardControls": [
+          "title",
+          "found",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -9893,7 +10657,9 @@
       "type": "registry:block",
       "title": "Товар с видео",
       "description": "Страница товара с видеообзором: запуск только вручную, главы с таймкодами рядом, расшифровка в details.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -9905,7 +10671,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-052-*. Серверный: хуков нет, плеер — заглушка с кнопкой запуска, которую подключает вызывающий код. Треугольник кнопки нарисован границами псевдоэлемента, главы выведены нумерованным списком кнопок, расшифровка сложена в нативный details. Две колонки включаются контейнерным запросом.",
       "meta": {
-        "tags": ["commerce", "product", "video", "review"],
+        "tags": [
+          "commerce",
+          "product",
+          "video",
+          "review"
+        ],
         "preview": {
           "width": "full"
         },
@@ -10067,7 +10838,12 @@
             }
           }
         },
-        "cardControls": ["title", "duration", "accent", "background"]
+        "cardControls": [
+          "title",
+          "duration",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -10075,7 +10851,9 @@
       "type": "registry:block",
       "title": "Конфигуратор опций",
       "description": "Конфигуратор товара: цена и срок изготовления считаются из выбранных опций, а код конфигурации собирается из их значений.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -10087,7 +10865,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-053-*. Клиентский: \"use client\" ради состояния выбора — радиогруппы держат опции, чекбоксы дополнительные работы. Итог, срок и код конфигурации выводятся из выбора при каждом рендере, а не хранятся отдельно. Сводка помечена aria-live, раскладка на две колонки включается контейнерным запросом.",
       "meta": {
-        "tags": ["commerce", "product", "configurator", "options"],
+        "tags": [
+          "commerce",
+          "product",
+          "configurator",
+          "options"
+        ],
         "preview": {
           "width": "full"
         },
@@ -10307,7 +11090,12 @@
             }
           }
         },
-        "cardControls": ["title", "base", "accent", "background"]
+        "cardControls": [
+          "title",
+          "base",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -10315,7 +11103,9 @@
       "type": "registry:block",
       "title": "Калькулятор цены",
       "description": "Расчёт стоимости услуги по параметрам: видно не только число, но и как оно получилось, и когда включается минимальный заказ.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -10327,7 +11117,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-054-*. Клиентский: \"use client\" ради состояния параметров. Площадь задаётся ползунком, число окон — числовым полем, срочность радиогруппой с коэффициентом. Расшифровка показывает каждую строку с множителем, итог помечен aria-live, а порог минимального заказа выводится отдельным предупреждением.",
       "meta": {
-        "tags": ["commerce", "service", "calculator", "pricing"],
+        "tags": [
+          "commerce",
+          "service",
+          "calculator",
+          "pricing"
+        ],
         "preview": {
           "width": "full"
         },
@@ -10492,7 +11287,12 @@
             }
           }
         },
-        "cardControls": ["ratePerArea", "minimum", "accent", "background"]
+        "cardControls": [
+          "ratePerArea",
+          "minimum",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -10500,7 +11300,9 @@
       "type": "registry:block",
       "title": "Таблица совместимости",
       "description": "Таблица совместимости товара с моделями: состояние названо словом и формой значка, а первая колонка залипает при прокрутке.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -10512,7 +11314,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-055-*. Серверный: хуков нет. Данные выведены настоящей таблицей с caption и заголовками строк, поэтому связь ячейки с моделью читается скринридером. Значок состояния различается формой: круг, треугольник через clip-path и квадрат. Обёртка со скроллом получает tabIndex, чтобы таблица прокручивалась с клавиатуры.",
       "meta": {
-        "tags": ["commerce", "product", "compatibility", "table"],
+        "tags": [
+          "commerce",
+          "product",
+          "compatibility",
+          "table"
+        ],
         "preview": {
           "width": "full"
         },
@@ -10691,7 +11498,12 @@
             }
           }
         },
-        "cardControls": ["product", "title", "accent", "background"]
+        "cardControls": [
+          "product",
+          "title",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -10699,7 +11511,9 @@
       "type": "registry:block",
       "title": "Цифровая лицензия",
       "description": "Страница цифрового товара: три лицензии радиокнопками, панель прав переключается на :has(), а разрешённое и запрещённое разведены.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -10711,7 +11525,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-056-*. Серверный: хуков нет — панель прав показывается селектором :has() на оболочке по выбранной радиокнопке. Списки прав помечены псевдоэлементами разной формы, характеристики выведены списком определений с обёрткой display:contents. Идентификаторы лицензий фиксированы, поэтому два экземпляра на странице конфликтуют.",
       "meta": {
-        "tags": ["commerce", "digital", "license", "download"],
+        "tags": [
+          "commerce",
+          "digital",
+          "license",
+          "download"
+        ],
         "preview": {
           "width": "full"
         },
@@ -10878,7 +11697,9 @@
                       "print an unlimited run",
                       "hand the file to contractors under a contract"
                     ],
-                    "denied": ["resell the file as-is as a standalone product"]
+                    "denied": [
+                      "resell the file as-is as a standalone product"
+                    ]
                   }
                 ],
                 "facts": [
@@ -10915,7 +11736,12 @@
             }
           }
         },
-        "cardControls": ["kind", "cta", "accent", "background"]
+        "cardControls": [
+          "kind",
+          "cta",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -10923,7 +11749,9 @@
       "type": "registry:block",
       "title": "Запись на услугу",
       "description": "Запись на услугу: занятое время остаётся видимым и отключённым, а сетка нужного дня показывается через :has() без JS.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -10935,7 +11763,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-057-*. Серверный: день и время держат две радиогруппы, сетку выбранного дня показывает :has() на оболочке. Занятые слоты остаются в разметке с атрибутом disabled и перечёркиванием, а слово «занято» спрятано для скринридера. Раскладка на две колонки включается контейнерным запросом.",
       "meta": {
-        "tags": ["commerce", "service", "booking", "schedule"],
+        "tags": [
+          "commerce",
+          "service",
+          "booking",
+          "schedule"
+        ],
         "preview": {
           "width": "full"
         },
@@ -11181,7 +12014,12 @@
             }
           }
         },
-        "cardControls": ["title", "price", "accent", "background"]
+        "cardControls": [
+          "title",
+          "price",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -11189,7 +12027,9 @@
       "type": "registry:block",
       "title": "Программа курса",
       "description": "Страница курса с программой в details: у каждого урока стоит хронометраж, а бесплатные помечены отдельно.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -11201,7 +12041,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-058-*. Серверный: модули сложены в нативные details, первый открыт по флагу openFirst. Маркер summary скрыт, номер модуля нарисован квадратом, уроки выведены нумерованным списком с хронометражом. Колонка с ценой и автором встаёт рядом по контейнерному запросу.",
       "meta": {
-        "tags": ["commerce", "course", "syllabus", "education"],
+        "tags": [
+          "commerce",
+          "course",
+          "syllabus",
+          "education"
+        ],
         "preview": {
           "width": "full"
         },
@@ -11442,7 +12287,13 @@
             }
           }
         },
-        "cardControls": ["title", "price", "openFirst", "accent", "background"]
+        "cardControls": [
+          "title",
+          "price",
+          "openFirst",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -11450,7 +12301,9 @@
       "type": "registry:block",
       "title": "Корзина с несколькими продавцами",
       "description": "Корзина маркетплейса: товары сгруппированы по продавцам, у каждой группы свои условия доставки, срок и промежуточный итог.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -11462,7 +12315,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-059-*. Серверный: хуков нет. Каждая группа продавца — отдельная карточка с шапкой условий, списком строк и подвалом промежуточного итога. Общий итог вынесен в липкую колонку, которая встаёт рядом по контейнерному запросу; строки итога выведены списком определений с обёрткой display:contents.",
       "meta": {
-        "tags": ["commerce", "cart", "marketplace", "sellers"],
+        "tags": [
+          "commerce",
+          "cart",
+          "marketplace",
+          "sellers"
+        ],
         "preview": {
           "width": "full"
         },
@@ -11661,7 +12519,12 @@
             }
           }
         },
-        "cardControls": ["title", "total", "accent", "background"]
+        "cardControls": [
+          "title",
+          "total",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -11669,7 +12532,9 @@
       "type": "registry:block",
       "title": "Корзина с разделением отправлений",
       "description": "Корзина с раздельной доставкой: две посылки с причиной задержки у каждой и выбор между ожиданием и отправкой частями.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -11681,7 +12546,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-060-*. Серверный: способ доставки держит радиогруппа, состояния нет. Обе цены — доставка и итог — написаны прямо внутри вариантов, потому что без JS пересчитать итог нечем, а прятать разницу нельзя. Карточки посылок и варианты встают в две колонки по контейнерному запросу.",
       "meta": {
-        "tags": ["commerce", "cart", "shipping", "split"],
+        "tags": [
+          "commerce",
+          "cart",
+          "shipping",
+          "split"
+        ],
         "preview": {
           "width": "full"
         },
@@ -11861,7 +12731,12 @@
             }
           }
         },
-        "cardControls": ["title", "cta", "accent", "background"]
+        "cardControls": [
+          "title",
+          "cta",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -11869,7 +12744,9 @@
       "type": "registry:block",
       "title": "Адресная книга",
       "description": "Шаг оформления с адресной книгой: сохранённые адреса радиогруппой, а форма нового раскрывается на :has() только под своим вариантом.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -11881,7 +12758,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-061-*. Серверный: адреса держит радиогруппа, форма нового адреса показывается селектором :has() у оболочки книги. Кнопка правки вынесена из подписи и позиционируется абсолютно, чтобы не попадать внутрь label. Поля адреса встают в две колонки по контейнерному запросу.",
       "meta": {
-        "tags": ["commerce", "checkout", "address", "form"],
+        "tags": [
+          "commerce",
+          "checkout",
+          "address",
+          "form"
+        ],
         "preview": {
           "width": "full"
         },
@@ -12043,7 +12925,12 @@
             }
           }
         },
-        "cardControls": ["title", "cta", "accent", "background"]
+        "cardControls": [
+          "title",
+          "cta",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -12051,7 +12938,9 @@
       "type": "registry:block",
       "title": "Пункты выдачи",
       "description": "Выбор пункта выдачи списком по расстоянию: часы работы, срок хранения и ограничения по габаритам видны до выбора.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -12063,7 +12952,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-062-*. Серверный: пункты — радиогруппа в fieldset, состояния нет. Каждая карточка несёт расстояние, часы, цену, срок и набор возможностей чипами, а ограничение по габаритам выведено отдельной строкой. Поиск рядом — обычное поле со скрытой подписью, запрос выполняет вызывающий код.",
       "meta": {
-        "tags": ["commerce", "checkout", "pickup", "delivery"],
+        "tags": [
+          "commerce",
+          "checkout",
+          "pickup",
+          "delivery"
+        ],
         "preview": {
           "width": "full"
         },
@@ -12199,7 +13093,11 @@
                     "hours": "Daily 09:00–22:00",
                     "price": "Free",
                     "eta": "12 March",
-                    "perks": ["Fitting room", "Card payment", "7-day storage"]
+                    "perks": [
+                      "Fitting room",
+                      "Card payment",
+                      "7-day storage"
+                    ]
                   },
                   {
                     "value": "bolshoy",
@@ -12209,7 +13107,9 @@
                     "hours": "Open around the clock",
                     "price": "Free",
                     "eta": "12 March",
-                    "perks": ["3-day storage"],
+                    "perks": [
+                      "3-day storage"
+                    ],
                     "limit": "Parcels up to 40×35×25 cm and 15 kg only: an armchair will not fit here."
                   },
                   {
@@ -12220,7 +13120,11 @@
                     "hours": "Mon–Fri 10:00–19:00",
                     "price": "Free",
                     "eta": "11 March",
-                    "perks": ["Oversized goods", "Forklift", "14-day storage"],
+                    "perks": [
+                      "Oversized goods",
+                      "Forklift",
+                      "14-day storage"
+                    ],
                     "limit": "Collection against a passport only, a proxy has to be arranged in advance."
                   }
                 ]
@@ -12228,7 +13132,12 @@
             }
           }
         },
-        "cardControls": ["title", "cta", "accent", "background"]
+        "cardControls": [
+          "title",
+          "cta",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -12236,7 +13145,9 @@
       "type": "registry:block",
       "title": "Оплата по частям",
       "description": "Оплата двумя картами: сумма второй считается как остаток, поэтому недоплата невозможна, а перебор объявляется ошибкой.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -12248,7 +13159,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-063-*. Клиентский: \"use client\" ради суммы первой карты. Ползунок и числовое поле связаны одним состоянием, остаток вычисляется из итога, а при выходе за границы кнопка блокируется и появляется сообщение с role=alert. Строка остатка помечена aria-live.",
       "meta": {
-        "tags": ["commerce", "payment", "cards", "split"],
+        "tags": [
+          "commerce",
+          "payment",
+          "cards",
+          "split"
+        ],
         "preview": {
           "width": "full"
         },
@@ -12393,7 +13309,12 @@
             }
           }
         },
-        "cardControls": ["total", "cta", "accent", "background"]
+        "cardControls": [
+          "total",
+          "cta",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -12401,7 +13322,9 @@
       "type": "registry:block",
       "title": "Оплата криптовалютой",
       "description": "Оплата криптовалютой: сеть выбирается явно, адрес выделяется целиком, а предупреждение о неверной сети стоит над кнопкой.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -12413,7 +13336,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-064-*. Серверный: сеть держит радиогруппа, состояния нет. QR нарисован сеткой из ячеек по массиву, а не картинкой: блок остаётся одним файлом. Адрес и комментарий выделяются целиком через user-select:all, тёмная подложка своя, мигание точки выключается в prefers-reduced-motion.",
       "meta": {
-        "tags": ["commerce", "payment", "crypto", "wallet"],
+        "tags": [
+          "commerce",
+          "payment",
+          "crypto",
+          "wallet"
+        ],
         "preview": {
           "width": "full"
         },
@@ -12567,7 +13495,12 @@
             }
           }
         },
-        "cardControls": ["amount", "memo", "accent", "background"]
+        "cardControls": [
+          "amount",
+          "memo",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -12575,7 +13508,9 @@
       "type": "registry:block",
       "title": "Квитанция об оплате",
       "description": "Экран успешной оплаты с чеком: сумма набрана крупно, номер операции копируется целиком, нижний край чека вырезан маской.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -12587,7 +13522,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-065-*. Серверный: хуков нет. Строки чека выведены списком определений с обёрткой display:contents, номер операции выделяется целиком через user-select:all, а зубчатый край нарисован повторяющейся маской из радиального градиента — без картинки. Время платежа продублировано атрибутом dateTime.",
       "meta": {
-        "tags": ["commerce", "payment", "receipt", "success"],
+        "tags": [
+          "commerce",
+          "payment",
+          "receipt",
+          "success"
+        ],
         "preview": {
           "width": "full"
         },
@@ -12743,7 +13683,12 @@
             }
           }
         },
-        "cardControls": ["amount", "status", "accent", "background"]
+        "cardControls": [
+          "amount",
+          "status",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -12751,7 +13696,9 @@
       "type": "registry:block",
       "title": "Платёж отклонён",
       "description": "Экран отказа в оплате: причина набрана крупнее статуса, код банка стоит отдельной строкой, а срок брони заказа назван.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -12763,7 +13710,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-066-*. Серверный: хуков нет. Реквизиты попытки выведены списком определений с обёрткой display:contents, шаги — нумерованным списком на CSS-счётчике, а код ответа банка выделяется целиком через user-select:all. Отдельным блоком объяснено удержание средств по отклонённой операции.",
       "meta": {
-        "tags": ["commerce", "payment", "error", "recovery"],
+        "tags": [
+          "commerce",
+          "payment",
+          "error",
+          "recovery"
+        ],
         "preview": {
           "width": "full"
         },
@@ -12919,7 +13871,12 @@
             }
           }
         },
-        "cardControls": ["reason", "code", "accent", "background"]
+        "cardControls": [
+          "reason",
+          "code",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -12927,7 +13884,9 @@
       "type": "registry:block",
       "title": "Баланс счёта",
       "description": "Кабинет с балансом: доступная сумма отделена от денег в пути, а бонусы и кэшбэк разложены по карманам со сроками сгорания.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -12939,7 +13898,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-067-*. Серверный: хуков нет. Баланс вынесен в градиентный герой, карманы — сетка карточек с необязательной строкой сгорания, последние движения выведены списком со знаком суммы и отдельным атрибутом для положительных. Сетка карманов перестраивается контейнерными запросами.",
       "meta": {
-        "tags": ["commerce", "account", "balance", "bonuses"],
+        "tags": [
+          "commerce",
+          "account",
+          "balance",
+          "bonuses"
+        ],
         "preview": {
           "width": "full"
         },
@@ -13111,7 +14075,12 @@
             }
           }
         },
-        "cardControls": ["balance", "topUp", "accent", "background"]
+        "cardControls": [
+          "balance",
+          "topUp",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -13119,7 +14088,9 @@
       "type": "registry:block",
       "title": "История платежей",
       "description": "История платежей: итоги периода стоят над таблицей, статус назван словом и подкреплён формой значка, возвраты идут в общем списке.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -13131,7 +14102,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-068-*. Серверный: период выбирается нативным select с defaultValue, запрос делает вызывающий код. Данные выведены настоящей таблицей с caption, значки состояний различаются формой через clip-path, обёртка со скроллом получает tabIndex. Есть отдельное пустое состояние.",
       "meta": {
-        "tags": ["commerce", "payments", "history", "table"],
+        "tags": [
+          "commerce",
+          "payments",
+          "history",
+          "table"
+        ],
         "preview": {
           "width": "full"
         },
@@ -13332,7 +14308,12 @@
             }
           }
         },
-        "cardControls": ["period", "spent", "accent", "background"]
+        "cardControls": [
+          "period",
+          "spent",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -13340,7 +14321,9 @@
       "type": "registry:block",
       "title": "Управление подписками",
       "description": "Управление подписками: суммы в месяц и в год посчитаны сверху, а у каждой строки видна дата списания, карта и кнопка паузы рядом с отменой.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -13352,7 +14335,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-069-*. Серверный: хуков нет. Состояние подписки помечено словом и значком разной формы, дата следующего списания вынесена в отдельную плашку, а действия собраны в ряд, где отмена отодвинута вправо через margin-left:auto. Название подписки продублировано в скрытой подписи каждой кнопки.",
       "meta": {
-        "tags": ["commerce", "subscriptions", "account", "billing"],
+        "tags": [
+          "commerce",
+          "subscriptions",
+          "account",
+          "billing"
+        ],
         "preview": {
           "width": "full"
         },
@@ -13524,7 +14512,12 @@
             }
           }
         },
-        "cardControls": ["title", "monthly", "accent", "background"]
+        "cardControls": [
+          "title",
+          "monthly",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -13532,7 +14525,9 @@
       "type": "registry:block",
       "title": "Карта отправлений",
       "description": "Отслеживание посылки на карте-заглушке: карта нарисована CSS, а все точки продублированы списком со временем.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -13544,7 +14539,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-070-*. Серверный: хуков нет. Карта собрана из слоёв градиентов — вода, сетка кварталов и дороги, — а точки расставлены процентами через локальные переменные. Карта помечена role=img с подписью, а маршрут продублирован нумерованным списком; пульс текущей точки выключается в prefers-reduced-motion.",
       "meta": {
-        "tags": ["commerce", "delivery", "tracking", "map"],
+        "tags": [
+          "commerce",
+          "delivery",
+          "tracking",
+          "map"
+        ],
         "preview": {
           "width": "full"
         },
@@ -13711,7 +14711,12 @@
             }
           }
         },
-        "cardControls": ["eta", "status", "accent", "background"]
+        "cardControls": [
+          "eta",
+          "status",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -13719,7 +14724,9 @@
       "type": "registry:block",
       "title": "Купить снова",
       "description": "Блок «купить снова» из истории: частота покупок и дата последней видны до нажатия, а подорожание названо словами.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -13731,7 +14738,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-071-*. Серверный: хуков нет. Лента собрана гридом с автоколонками и прокруткой с привязкой scroll-snap, карточки остаются обычными элементами списка со ссылкой, растянутой псевдоэлементом. Кнопка добавления поднята над ссылкой z-index'ом, имя товара продублировано в скрытой подписи.",
       "meta": {
-        "tags": ["commerce", "reorder", "history", "rail"],
+        "tags": [
+          "commerce",
+          "reorder",
+          "history",
+          "rail"
+        ],
         "preview": {
           "width": "full"
         },
@@ -13891,7 +14903,12 @@
             }
           }
         },
-        "cardControls": ["title", "cta", "accent", "background"]
+        "cardControls": [
+          "title",
+          "cta",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -13899,7 +14916,9 @@
       "type": "registry:block",
       "title": "Персональная подборка",
       "description": "Персональные рекомендации с причиной у каждой карточки и кнопкой «не интересно», которая правит выдачу.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -13911,7 +14930,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-072-*. Серверный: хуков нет. Причина рекомендации выведена отдельной плашкой внутри карточки, кнопка скрытия поднята над растянутой ссылкой z-index'ом и лежит поверх обложки, а объяснение механики сложено в нативный details. Сетка перестраивается контейнерными запросами.",
       "meta": {
-        "tags": ["commerce", "recommendations", "personal", "grid"],
+        "tags": [
+          "commerce",
+          "recommendations",
+          "personal",
+          "grid"
+        ],
         "preview": {
           "width": "full"
         },
@@ -14068,7 +15092,12 @@
             }
           }
         },
-        "cardControls": ["title", "hide", "accent", "background"]
+        "cardControls": [
+          "title",
+          "hide",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -14076,7 +15105,9 @@
       "type": "registry:block",
       "title": "Недавно смотрели",
       "description": "Недавно просмотренное по дням: у каждой строки время просмотра и своё удаление, а над списком — кнопка очистки истории.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -14088,7 +15119,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-073-*. Серверный: хуков нет. Просмотры сгруппированы по дням в отдельные списки с заголовком, строка — обычный элемент списка со ссылкой, растянутой псевдоэлементом, и кнопкой удаления поверх неё. Есть пустое состояние и примечание о том, как используется история.",
       "meta": {
-        "tags": ["commerce", "history", "viewed", "privacy"],
+        "tags": [
+          "commerce",
+          "history",
+          "viewed",
+          "privacy"
+        ],
         "preview": {
           "width": "full"
         },
@@ -14271,7 +15307,12 @@
             }
           }
         },
-        "cardControls": ["title", "clearLabel", "accent", "background"]
+        "cardControls": [
+          "title",
+          "clearLabel",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -14279,7 +15320,9 @@
       "type": "registry:block",
       "title": "Подарочная карта",
       "description": "Покупка подарочного сертификата: номинал и дизайн радиокнопками, превью открытки меняется на :has(), правила стоят рядом с кнопкой.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -14291,7 +15334,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-074-*. Серверный: номинал и дизайн держат две радиогруппы, а фон превью меняется селектором :has() на оболочке по выбранному дизайну. Поля отправки собраны гридом, подпись на открытке — textarea с ограничением длины. Идентификаторы дизайнов зашиты в CSS.",
       "meta": {
-        "tags": ["commerce", "gift", "certificate", "checkout"],
+        "tags": [
+          "commerce",
+          "gift",
+          "certificate",
+          "checkout"
+        ],
         "preview": {
           "width": "full"
         },
@@ -14472,7 +15520,12 @@
             }
           }
         },
-        "cardControls": ["title", "cta", "accent", "background"]
+        "cardControls": [
+          "title",
+          "cta",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -14480,7 +15533,9 @@
       "type": "registry:block",
       "title": "Округление в пользу фонда",
       "description": "Благотворительное округление суммы: надбавка считается от реального чека, а галочка снята по умолчанию.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -14492,7 +15547,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-075-*. Клиентский: \"use client\" ради галочки и выбора фонда. Надбавка вычисляется округлением суммы заказа вверх до заданного шага, итог помечен aria-live, а группа фондов выключается атрибутом disabled у fieldset, пока округление не включено. Объяснение механики платежа сложено в details.",
       "meta": {
-        "tags": ["commerce", "checkout", "charity", "donation"],
+        "tags": [
+          "commerce",
+          "checkout",
+          "charity",
+          "donation"
+        ],
         "preview": {
           "width": "full"
         },
@@ -14641,7 +15701,12 @@
             }
           }
         },
-        "cardControls": ["order", "roundTo", "accent", "background"]
+        "cardControls": [
+          "order",
+          "roundTo",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -14649,7 +15714,9 @@
       "type": "registry:block",
       "title": "Оптовые уровни цен",
       "description": "Оптовый прайс по количеству: пороги таблицей, текущий уровень помечен словом, а до следующего посчитан конкретный шаг.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -14661,7 +15728,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-076-*. Серверный: хуков нет. Пороги выведены настоящей таблицей с caption и заголовками строк, текущий уровень помечен атрибутом data-current и подписью словом. Условия работы собраны списком определений с обёрткой display:contents, обёртка со скроллом получает tabIndex.",
       "meta": {
-        "tags": ["commerce", "wholesale", "pricing", "b2b"],
+        "tags": [
+          "commerce",
+          "wholesale",
+          "pricing",
+          "b2b"
+        ],
         "preview": {
           "width": "full"
         },
@@ -14854,7 +15926,12 @@
             }
           }
         },
-        "cardControls": ["title", "cta", "accent", "background"]
+        "cardControls": [
+          "title",
+          "cta",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -14862,7 +15939,9 @@
       "type": "registry:block",
       "title": "Наличие поблизости",
       "description": "Наличие в магазинах поблизости: расстояние продублировано временем в пути, последний экземпляр помечен, есть выход для тех, у кого рядом ничего нет.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -14874,7 +15953,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-077-*. Серверный: хуков нет. Строка магазина несёт расстояние, время в пути, часы работы, количество и срок брони; последний экземпляр помечается атрибутом data-last, который меняет и цвет, и форму значка. Внизу отдельная секция подписки на поступление.",
       "meta": {
-        "tags": ["commerce", "stock", "stores", "pickup"],
+        "tags": [
+          "commerce",
+          "stock",
+          "stores",
+          "pickup"
+        ],
         "preview": {
           "width": "full"
         },
@@ -15036,7 +16120,12 @@
             }
           }
         },
-        "cardControls": ["title", "reserve", "accent", "background"]
+        "cardControls": [
+          "title",
+          "reserve",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -15044,7 +16133,9 @@
       "type": "registry:block",
       "title": "Программа лояльности",
       "description": "Программа лояльности покупателя: уровень с датой удержания, полоса прогресса до следующего и сравнение уровней колонками.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -15056,7 +16147,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-078-*. Серверный: хуков нет. Прогресс нарисован полосой с ролью progressbar и шириной из локальной переменной, уровни выведены карточками с одинаковым набором строк, текущий помечен атрибутом data-current. Правила начисления сложены в нативный details, тёмная подложка своя.",
       "meta": {
-        "tags": ["commerce", "loyalty", "levels", "account"],
+        "tags": [
+          "commerce",
+          "loyalty",
+          "levels",
+          "account"
+        ],
         "preview": {
           "width": "full"
         },
@@ -15234,7 +16330,12 @@
             }
           }
         },
-        "cardControls": ["levelName", "progress", "accent", "background"]
+        "cardControls": [
+          "levelName",
+          "progress",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -15242,7 +16343,9 @@
       "type": "registry:block",
       "title": "История цены",
       "description": "Сравнение цены с историей: минимум за период и дата минимума рядом со скидкой, график столбиками без библиотеки.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -15254,7 +16357,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-079-*. Серверный: хуков нет. Столбики нарисованы элементами с высотой из локальной переменной, нормированной по минимуму и максимуму ряда; график помечен aria-hidden, а все значения продублированы списком определений под ним. Минимальная точка выделена отдельным цветом по флагу low.",
       "meta": {
-        "tags": ["commerce", "price", "history", "chart"],
+        "tags": [
+          "commerce",
+          "price",
+          "history",
+          "chart"
+        ],
         "preview": {
           "width": "full"
         },
@@ -15430,7 +16538,12 @@
             }
           }
         },
-        "cardControls": ["price", "minPrice", "accent", "background"]
+        "cardControls": [
+          "price",
+          "minPrice",
+          "accent",
+          "background"
+        ]
       }
     },
     {
@@ -15438,7 +16551,9 @@
       "type": "registry:block",
       "title": "Форма отзыва о товаре",
       "description": "Отзыв о товаре звёздами и текстом: оценка сразу читается словом — «Отлично, 5 из 5», а не голым числом, а памятка «что писать» стоит рядом с полем, а не после него.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -15450,7 +16565,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-080-*. Серверный компонент: оценка звёздами собрана на радиокнопках и правиле :has(), подпись выбранной оценки словом переключается тем же правилом — без единой строки клиентского JS. Радиогруппа оценки именуется от prop id, поэтому два экземпляра блока на одной странице не сольются в одну группу.",
       "meta": {
-        "tags": ["commerce", "review", "form", "rating"],
+        "tags": [
+          "commerce",
+          "review",
+          "form",
+          "rating"
+        ],
         "preview": {
           "width": "full"
         },
@@ -15576,7 +16696,13 @@
                 "title": "Leave a review",
                 "product": "About the product: Aria Pro wireless headphones",
                 "legend": "Rating",
-                "stars": ["Poor", "Fair", "Okay", "Good", "Excellent"],
+                "stars": [
+                  "Poor",
+                  "Fair",
+                  "Okay",
+                  "Good",
+                  "Excellent"
+                ],
                 "ratingHint": "Rating is required",
                 "nameLabel": "Name",
                 "namePlaceholder": "How to sign the review",
@@ -15613,7 +16739,9 @@
       "type": "registry:block",
       "title": "Быстрый просмотр товара",
       "description": "Быстрый просмотр товара из сетки: окно на HTML popover без перехода со страницы, миниатюры переключают крупный кадр правилом :has(), а наличие названо словом и значком, а не одним цветом.",
-      "categories": ["commerce"],
+      "categories": [
+        "commerce"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -15625,7 +16753,12 @@
       ],
       "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-commerce-081-*. Серверный компонент: окно держит HTML popover (popoverTarget), открытие и закрытие, Esc и клик мимо — всё от браузера. Переключение кадра галереи и выбор варианта собраны на радиокнопках и правиле :has(). Идентификатор окна и имена радиогрупп зависят от prop id, поэтому несколько карточек с быстрым просмотром на одной странице не конфликтуют.",
       "meta": {
-        "tags": ["commerce", "quick-view", "modal", "product"],
+        "tags": [
+          "commerce",
+          "quick-view",
+          "modal",
+          "product"
+        ],
         "preview": {
           "width": "full",
           "props": {
@@ -15804,7 +16937,13 @@
             }
           }
         },
-        "cardControls": ["product", "price", "oldPrice", "stock", "accent"]
+        "cardControls": [
+          "product",
+          "price",
+          "oldPrice",
+          "stock",
+          "accent"
+        ]
       }
     }
   ]

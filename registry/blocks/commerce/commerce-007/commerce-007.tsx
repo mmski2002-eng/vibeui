@@ -9,6 +9,8 @@ export type Commerce007Product = {
   rating: number
   votes: number
   hue?: number
+  /** Фото товара. Без него на том же месте остаётся цветное поле. */
+  image?: string
   badge?: string
 }
 
@@ -120,7 +122,13 @@ background:var(--vibeui-commerce-007-card);
 [data-vibeui-block="commerce-007"] [data-part="card"]:has(a:focus-visible){outline:2px solid var(--vibeui-commerce-007-accent);outline-offset:2px}
 [data-vibeui-block="commerce-007"] [data-part="cover"]{
 aspect-ratio:4/3;
-background:linear-gradient(150deg,light-dark(oklch(0.93 0.06 var(--vibeui-commerce-007-hue,262)),oklch(0.42 0.07 var(--vibeui-commerce-007-hue,262))),light-dark(oklch(0.86 0.09 var(--vibeui-commerce-007-hue,262)),oklch(0.32 0.06 var(--vibeui-commerce-007-hue,262))));
+overflow:hidden;
+}
+/* Подложка — только когда фото нет: блок обязан быть полноценным
+   без единого внешнего файла. */
+[data-vibeui-block="commerce-007"] [data-part="cover"][data-empty="true"]{background:linear-gradient(150deg,light-dark(oklch(0.93 0.06 var(--vibeui-commerce-007-hue,262)),oklch(0.42 0.07 var(--vibeui-commerce-007-hue,262))),light-dark(oklch(0.86 0.09 var(--vibeui-commerce-007-hue,262)),oklch(0.32 0.06 var(--vibeui-commerce-007-hue,262))));}
+[data-vibeui-block="commerce-007"] [data-part="cover"] img{
+display:block;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="commerce-007"] [data-part="badge"]{
 position:absolute;top:0.5rem;left:0.5rem;z-index:1;
@@ -337,7 +345,15 @@ export function Commerce007({
                 {product.badge ? (
                   <span data-part="badge">{product.badge}</span>
                 ) : null}
-                <span data-part="cover" aria-hidden="true" />
+                <span
+                  data-part="cover"
+                  data-empty={product.image ? undefined : "true"}
+                  aria-hidden={product.image ? undefined : true}
+                >
+                  {product.image ? (
+                    <img src={product.image} alt="" loading="lazy" decoding="async" />
+                  ) : null}
+                </span>
                 <div data-part="body">
                   <h3>
                     <a href="#product">{product.title}</a>

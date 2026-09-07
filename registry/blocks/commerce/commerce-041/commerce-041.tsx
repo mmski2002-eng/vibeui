@@ -6,6 +6,8 @@ export type Commerce041Part = {
   role: string
   price: string
   hue?: number
+  /** Фото товара. Без него на том же месте остаётся цветное поле. */
+  image?: string
 }
 
 export type Commerce041Props = {
@@ -85,7 +87,13 @@ background:var(--vibeui-commerce-041-fg);color:var(--vibeui-commerce-041-onfg);f
 }
 [data-vibeui-block="commerce-041"] [data-part="shot"]{
 flex:0 0 auto;width:4rem;aspect-ratio:1;border-radius:0.875rem;
-background:linear-gradient(150deg,oklch(0.94 0.05 var(--vibeui-commerce-041-hue,145)),oklch(0.85 0.09 var(--vibeui-commerce-041-hue,145)));
+overflow:hidden;
+}
+/* Подложка — только когда фото нет: блок обязан быть полноценным
+   без единого внешнего файла. */
+[data-vibeui-block="commerce-041"] [data-part="shot"][data-empty="true"]{background:linear-gradient(150deg,oklch(0.94 0.05 var(--vibeui-commerce-041-hue,145)),oklch(0.85 0.09 var(--vibeui-commerce-041-hue,145)));}
+[data-vibeui-block="commerce-041"] [data-part="shot"] img{
+display:block;width:100%;height:100%;object-fit:cover;
 }
 @container (min-width: 42rem){
 [data-vibeui-block="commerce-041"] [data-part="shot"]{width:100%;aspect-ratio:4 / 3}
@@ -242,7 +250,15 @@ export function Commerce041({
                   } as CSSProperties
                 }
               >
-                <span data-part="shot" aria-hidden="true" />
+                <span
+                  data-part="shot"
+                  data-empty={part.image ? undefined : "true"}
+                  aria-hidden={part.image ? undefined : true}
+                >
+                  {part.image ? (
+                    <img src={part.image} alt="" loading="lazy" decoding="async" />
+                  ) : null}
+                </span>
                 <div>
                   <span data-part="role">{part.role}</span>
                   <p data-part="name">

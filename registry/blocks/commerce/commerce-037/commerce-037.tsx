@@ -7,6 +7,8 @@ export type Commerce037Line = {
   price: string
   count: number
   hue?: number
+  /** Фото товара. Без него на том же месте остаётся цветное поле. */
+  image?: string
   blocked?: string
 }
 
@@ -90,7 +92,13 @@ display:grid;grid-template-columns:auto 3rem minmax(0,1fr) auto;gap:0.625rem;ali
 [data-vibeui-block="commerce-037"] [data-part="pick"]{margin:0;width:1.125rem;height:1.125rem;accent-color:var(--vibeui-commerce-037-accent)}
 [data-vibeui-block="commerce-037"] [data-part="thumb"]{
 aspect-ratio:1;border-radius:0.625rem;
-background:linear-gradient(150deg,oklch(0.94 0.05 var(--vibeui-commerce-037-hue,30)),oklch(0.85 0.09 var(--vibeui-commerce-037-hue,30)));
+overflow:hidden;
+}
+/* Подложка — только когда фото нет: блок обязан быть полноценным
+   без единого внешнего файла. */
+[data-vibeui-block="commerce-037"] [data-part="thumb"][data-empty="true"]{background:linear-gradient(150deg,oklch(0.94 0.05 var(--vibeui-commerce-037-hue,30)),oklch(0.85 0.09 var(--vibeui-commerce-037-hue,30)));}
+[data-vibeui-block="commerce-037"] [data-part="thumb"] img{
+display:block;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="commerce-037"] [data-part="name"]{margin:0;font-size:0.875rem;font-weight:650;line-height:1.35}
 [data-vibeui-block="commerce-037"] [data-part="spec"]{margin:0.125rem 0 0;font-size:0.75rem;color:var(--vibeui-commerce-037-muted)}
@@ -270,7 +278,15 @@ export function Commerce037({
                       disabled={Boolean(line.blocked)}
                       aria-label={pickLabel.replace("{title}", line.title)}
                     />
-                    <span data-part="thumb" aria-hidden="true" />
+                    <span
+                      data-part="thumb"
+                      data-empty={line.image ? undefined : "true"}
+                      aria-hidden={line.image ? undefined : true}
+                    >
+                      {line.image ? (
+                        <img src={line.image} alt="" loading="lazy" decoding="async" />
+                      ) : null}
+                    </span>
                     <div>
                       <p data-part="name">{line.title}</p>
                       <p data-part="spec">

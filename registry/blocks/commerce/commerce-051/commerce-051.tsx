@@ -8,6 +8,8 @@ export type Commerce051Row = {
   price: string
   stock: string
   hue?: number
+  /** Фото товара. Без него на том же месте остаётся цветное поле. */
+  image?: string
 }
 
 export type Commerce051Props = {
@@ -82,7 +84,13 @@ display:flex;flex-direction:column;
 [data-vibeui-block="commerce-051"] [data-part="row"]:has(a:focus-visible){outline:2px solid var(--vibeui-commerce-051-accent);outline-offset:2px}
 [data-vibeui-block="commerce-051"] [data-part="cover"]{
 flex:none;display:block;aspect-ratio:4/3;
-background:linear-gradient(155deg,oklch(0.94 0.05 var(--vibeui-commerce-051-hue,155)),oklch(0.85 0.09 var(--vibeui-commerce-051-hue,155)));
+overflow:hidden;
+}
+/* Подложка — только когда фото нет: блок обязан быть полноценным
+   без единого внешнего файла. */
+[data-vibeui-block="commerce-051"] [data-part="cover"][data-empty="true"]{background:linear-gradient(155deg,oklch(0.94 0.05 var(--vibeui-commerce-051-hue,155)),oklch(0.85 0.09 var(--vibeui-commerce-051-hue,155)));}
+[data-vibeui-block="commerce-051"] [data-part="cover"] img{
+display:block;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="commerce-051"] [data-part="body"]{padding:0.5rem 0.75rem 0.75rem;flex:1;display:flex;flex-direction:column}
 [data-vibeui-block="commerce-051"] [data-part="name"]{margin:0;font-size:0.875rem;font-weight:650;line-height:1.35}
@@ -261,7 +269,15 @@ export function Commerce051({
                   } as CSSProperties
                 }
               >
-                <span data-part="cover" aria-hidden="true" />
+                <span
+                  data-part="cover"
+                  data-empty={row.image ? undefined : "true"}
+                  aria-hidden={row.image ? undefined : true}
+                >
+                  {row.image ? (
+                    <img src={row.image} alt="" loading="lazy" decoding="async" />
+                  ) : null}
+                </span>
                 <div data-part="body">
                   <p data-part="name">
                     <a href="#product">{row.title}</a>
